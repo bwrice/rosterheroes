@@ -39,5 +39,9 @@ return [
             'tolerance' => env('STRIPE_WEBHOOK_TOLERANCE', 300),
         ],
     ],
-
+    'google' => [
+        'client_id' => '258626353781-o1t3lhsod2cfnb1lt0nps43ajod8d908.apps.googleusercontent.com',
+        'client_secret' => 'IdSBr2_dMTfSyMCqy6gF9tG9',
+        'redirect' => 'https://rosterheroestwo.dev/login/google/callback',
+    ],
 ];
