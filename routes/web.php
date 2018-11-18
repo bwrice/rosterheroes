@@ -17,3 +17,7 @@ Route::get('login/google/callback', 'Auth\LoginController@handleProviderCallback
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
