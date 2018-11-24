@@ -1,0 +1,18 @@
+<?php
+
+use App\Helpers\ModelNameSeeding\ModelNameSeederMigration;
+
+class DummyClass extends ModelNameSeederMigration
+{
+    protected function getModelClass(): string
+    {
+        return '';
+    }
+
+    public function getSeedNames(): array
+    {
+        return [
+            //
+        ];
+    }
+}
