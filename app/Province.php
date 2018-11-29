@@ -48,14 +48,4 @@ class Province extends Model
         return $this->belongsToMany(self::class, 'borders', 'border_id', 'province_id')
             ->withTimestamps();
     }
-
-//    /**
-//     * @param Builder $query
-//     * @param int $count
-//     * @return Builder
-//     */
-//    public function scopeBordersCount(Builder $query, int $count)
-//    {
-//        return $query->borders()->count() == $count;
-//    }
 }
