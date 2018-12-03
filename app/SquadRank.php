@@ -14,4 +14,6 @@ class SquadRank extends Model
     const SQUADRON = 'squadron';
     const BATTALION = 'battalion';
     const LEGION = 'legion';
+
+    protected $guarded = [];
 }

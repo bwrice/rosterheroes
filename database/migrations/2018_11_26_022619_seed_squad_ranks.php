@@ -11,7 +11,6 @@ class SeedSquadRanks extends ModelNameSeederMigration
 
     public function getSeedNames(): array
     {
-        \App\SquadRank::unguard();
         return [
             \App\SquadRank::CREW,
             \App\SquadRank::TROUPE,

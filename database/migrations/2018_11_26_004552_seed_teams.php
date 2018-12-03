@@ -353,8 +353,8 @@ class SeedTeams extends Migration
                         'abbreviation' => 'BKN'
                     ],
                     [
-                        'name' => 'New York',
-                        'location' => 'Knicks',
+                        'name' => 'Knicks',
+                        'location' => 'New York',
                         'abbreviation' => 'NY'
                     ],
                     [
@@ -650,8 +650,6 @@ class SeedTeams extends Migration
                 ]
             ]
         ];
-
-        \App\Team::unguard();
 
         foreach ($sports as $sport) {
             foreach ($sport['teams'] as $team) {

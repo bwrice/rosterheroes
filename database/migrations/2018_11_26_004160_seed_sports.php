@@ -32,8 +32,6 @@ class SeedSports extends Migration
             ],
         ];
 
-        \App\Sport::unguard();
-
         foreach ($sports as $sport)
         {
             \App\Sport::create([

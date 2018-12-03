@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Team extends Model
+class MaterialType extends Model
 {
     protected $guarded = [];
 }

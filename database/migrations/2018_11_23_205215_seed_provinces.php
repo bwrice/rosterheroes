@@ -6071,7 +6071,7 @@ class SeedProvinces extends Migration
                         'name' => 'Kanjhir',
                         'continent' => \App\Continent::VINDOBERON,
                         'borders' => [293,364,365,367,372,373],
-                        'realm_color' => '#3c588a',
+                        'realm_color' => '#647997',
                         'realm_x' => 32.957161,
                         'realm_y' => 28.652702,
                         'focus_x' => 75,
@@ -7824,6 +7824,10 @@ class SeedProvinces extends Migration
     public function down()
     {
         \Illuminate\Support\Facades\DB::table('borders')->truncate();
+        $provinces = \App\Province::all();
+        $provinces->each(function(\App\Province $province){
+           $province->vectorPaths()->delete();
+        });
         \App\Province::query()->delete();
     }
 }
