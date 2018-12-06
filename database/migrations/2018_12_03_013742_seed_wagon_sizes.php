@@ -6,15 +6,15 @@ class SeedWagonSizes extends ModelNameSeederMigration
 {
     protected function getModelClass(): string
     {
-        return \App\WagonSize::class;
+        return \App\Wagons\WagonSizes\WagonSize::class;
     }
 
     public function getSeedNames(): array
     {
         return [
-            \App\WagonSize::SMALL,
-            \App\WagonSize::MEDIUM,
-            \App\WagonSize::LARGE
+            \App\Wagons\WagonSizes\WagonSize::SMALL,
+            \App\Wagons\WagonSizes\WagonSize::MEDIUM,
+            \App\Wagons\WagonSizes\WagonSize::LARGE
         ];
     }
 }

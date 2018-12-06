@@ -16,12 +16,13 @@ class CreateWagonsTable extends Migration
         Schema::create('wagons', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('wagon_size_id')->unsigned();
-            $table->morphs('has_wagon');
+            $table->integer('squad_id')->unsigned();
             $table->timestamps();
         });
 
         Schema::table('wagons', function (Blueprint $table) {
             $table->foreign('wagon_size_id')->references('id')->on('wagon_sizes');
+            $table->foreign('squad_id')->references('id')->on('squads');
         });
     }
 

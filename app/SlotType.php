@@ -2,8 +2,19 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class SlotType
+ * @package App
+ *
+ * @property int $id
+ * @property string $name
+ *
+ * @method static Builder heroTypes()
+ */
 class SlotType extends Model
 {
 
@@ -27,5 +38,27 @@ class SlotType extends Model
     public function vectorPaths()
     {
         return $this->morphMany(VectorPath::class, 'has_paths');
+    }
+
+    /**
+     * @param Builder $builder
+     * @return Builder
+     */
+    public function scopeHeroTypes(Builder $builder)
+    {
+        return $builder->whereIn('name', [
+            self::FEET,
+            self::HANDS,
+            self::HEAD,
+            self::LEFT_ARM,
+            self::RIGHT_ARM,
+            self::LEFT_WRIST,
+            self::RIGHT_WRIST,
+            self::LEFT_RING,
+            self::RIGHT_RING,
+            self::NECK,
+            self::WAIST,
+            self::TORSO
+        ]);
     }
 }

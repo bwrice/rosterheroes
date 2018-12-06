@@ -17,9 +17,19 @@ use Illuminate\Database\Eloquent\Model;
  * @property Collection $borderedBy
  *
  * @method static Builder bordersCount(int $count)
+ * @method static Builder starting
  */
 class Province extends Model
 {
+    const STARTING_PROVINCES = [
+        'Prasynein',
+        'Thona',
+        'Joichela',
+        'Baoca',
+        'Zynden',
+        'Keplyos'
+    ];
+
     protected $guarded = [];
 
     public function vectorPaths()
@@ -47,5 +57,20 @@ class Province extends Model
     {
         return $this->belongsToMany(self::class, 'borders', 'border_id', 'province_id')
             ->withTimestamps();
+    }
+
+    /**
+     * @return static
+     */
+    public static function getStarting()
+    {
+        /** @var Province $province */
+        $province = self::starting()->inRandomOrder()->first();
+        return $province;
+    }
+
+    public function scopeStarting(Builder $builder)
+    {
+        return $builder->whereIn('name', self::STARTING_PROVINCES);
     }
 }

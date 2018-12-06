@@ -22,4 +22,16 @@ class ProvinceTest extends TestCase
            $this->assertEquals( $borderIDs, $borderByIDs, $province->name );
         });
     }
+
+    /**
+     * @test
+     */
+    public function it_will_return_a_starting_province()
+    {
+        for($i = 1; $i <= 40; $i++) {
+            $province = Province::getStarting();
+            $this->assertNotNull($province);
+        }
+    }
+
 }

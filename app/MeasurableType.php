@@ -2,8 +2,18 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class MeasurableType
+ * @package App
+ *
+ * @property int $id
+ * @property string $name
+ *
+ * @method static Builder heroTypes()
+ */
 class MeasurableType extends Model
 {
 
@@ -25,4 +35,28 @@ class MeasurableType extends Model
     const WRATH = 'wrath';
 
     protected $guarded = [];
+
+    /**
+     * @param Builder $builder
+     * @return Builder
+     */
+    public function scopeHeroTypes(Builder $builder)
+    {
+        return $builder->whereIn('name', [
+            self::STRENGTH,
+            self::VALOR,
+            self::AGILITY,
+            self::FOCUS,
+            self::APTITUDE,
+            self::INTELLIGENCE,
+            self::HEALTH,
+            self::STAMINA,
+            self::MANA,
+            self::PASSION,
+            self::BALANCE,
+            self::HONOR,
+            self::PRESTIGE,
+            self::WRATH
+        ]);
+    }
 }
