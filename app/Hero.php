@@ -16,6 +16,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $hero_rank_id
  * @property string $name
  *
+ * @property HeroClass $heroClass
+ *
  * @property Collection $slots
  * @property Collection $measurables
  */
@@ -32,7 +34,30 @@ class Hero extends Model
         return $this->morphMany(Measurable::class, 'has_measurables');
     }
 
-    public function build( Squad $squad, $heroData)
+    public function heroClass()
+    {
+        return $this->belongsTo(HeroClass::class);
+    }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function getItems()
+    {
+        $items = collect();
+        $this->slots()->with('items')->get()->each(function(Slot $slot) use (&$items) {
+            $items->merge($slot->items);
+        });
+
+        return $items->unique();
+    }
+
+    public function getClassBehavior()
+    {
+        return $this->heroClass->getBehavior();
+    }
+
+    public function build(Squad $squad, $heroData)
     {
         $this->squad_id = $squad->id;
         $this->hero_race_id = HeroRace::where('name', '=', $heroData['race'])->first()->id;
@@ -69,6 +94,15 @@ class Hero extends Model
     }
 
     protected function addStartingGear()
+    {
+        $blueprints = $this->heroClass->getBehavior()->getStartItemBlueprints();
+        $items = $blueprints->generate();
+        $items->each(function (Item $item) {
+            $this->equip($item);
+        });
+    }
+
+    public function equip(Item $item)
     {
 
     }

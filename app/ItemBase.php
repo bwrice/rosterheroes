@@ -52,4 +52,14 @@ class ItemBase extends Model
     {
         return $this->belongsToMany(MeasurableType::class, 'item_base_measurable_type', 'item_base_id', 'type_id')->withTimestamps();
     }
+
+    public function itemTypes()
+    {
+        return $this->hasMany(ItemType::class);
+    }
+
+    public function itemGroup()
+    {
+        return $this->belongsTo(ItemGroup::class);
+    }
 }

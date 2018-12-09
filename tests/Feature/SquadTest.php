@@ -82,8 +82,8 @@ class SquadTest extends TestCase
                $this->assertEquals(1, $slotsOfSlotType->count(), 'Correct amount of hero slots of slot type: ' . $slotType->name);
             });
 
-            $slotTypes = MeasurableType::heroTypes()->get();
-            $slotTypes->each(function(MeasurableType $measurableType) use ($hero) {
+            $measurableTypes = MeasurableType::heroTypes()->get();
+            $measurableTypes->each(function(MeasurableType $measurableType) use ($hero) {
                $measurablesOfType = $hero->measurables->filter(function(Measurable $heroMeasurable) use ($measurableType){
                    return $heroMeasurable->measurable_type_id == $measurableType->id;
                });
