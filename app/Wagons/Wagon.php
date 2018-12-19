@@ -2,7 +2,8 @@
 
 namespace App\Wagons;
 
-use App\Slot;
+use App\Slots\Slot;
+use App\Slots\Slottable;
 use App\SlotType;
 use App\Squad;
 use App\Wagons\WagonSizes\WagonSize;
@@ -55,5 +56,10 @@ class Wagon extends Model
     public function squad()
     {
         return $this->belongsTo(Squad::class);
+    }
+
+    public function equip(Slottable $slottable)
+    {
+
     }
 }

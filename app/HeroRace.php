@@ -25,4 +25,36 @@ class HeroRace extends Model
     {
         return $this->belongsToMany(Position::class)->withTimestamps();
     }
+
+    /**
+     * @return static
+     */
+    public static function human()
+    {
+        return self::where('name', '=', self::HUMAN)->first();
+    }
+
+    /**
+     * @return static
+     */
+    public static function elf()
+    {
+        return self::where('name', '=', self::ELF)->first();
+    }
+
+    /**
+     * @return static
+     */
+    public static function dwarf()
+    {
+        return self::where('name', '=', self::DWARF)->first();
+    }
+
+    /**
+     * @return static
+     */
+    public static function orc()
+    {
+        return self::where('name', '=', self::ORC)->first();
+    }
 }

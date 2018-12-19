@@ -39,4 +39,28 @@ class HeroClass extends Model
 
         throw new \RuntimeException("Unable to determine Hero Class Behavior");
     }
+
+    /**
+     * @return static
+     */
+    public static function warrior()
+    {
+        return self::where('name', '=', self::WARRIOR)->first();
+    }
+
+    /**
+     * @return static
+     */
+    public static function ranger()
+    {
+        return self::where('name', '=', self::RANGER)->first();
+    }
+
+    /**
+     * @return static
+     */
+    public static function sorcerer()
+    {
+        return self::where('name', '=', self::SORCERER)->first();
+    }
 }

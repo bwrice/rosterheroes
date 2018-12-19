@@ -2,6 +2,10 @@
 
 namespace App;
 
+use App\Slots\Slot;
+use App\Slots\SlotCollection;
+use App\Slots\Slottable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,8 +21,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $name
  *
  * @property HeroClass $heroClass
+ * @property Squad $squad
  *
- * @property Collection $slots
+ * @property SlotCollection $slots
  * @property Collection $measurables
  */
 class Hero extends Model
@@ -37,6 +42,11 @@ class Hero extends Model
     public function heroClass()
     {
         return $this->belongsTo(HeroClass::class);
+    }
+
+    protected function getWagon()
+    {
+        return $this->squad->wagon;
     }
 
     /**
@@ -102,8 +112,24 @@ class Hero extends Model
         });
     }
 
-    public function equip(Item $item)
+    public function equip(Slottable $slottable)
     {
+        $slotTypes = $slottable->getSlotTypes();
+        $slotsCount = $slottable->getSlotsCount();
 
+        $slotsOfType = $this->slots->withSlotTypes($slotTypes->pluck('id')->toArray());
+        $emptySlots = $slotsOfType->slotEmpty();
+
+        $diff = $emptySlots->count() - $slotsCount;
+
+        if ( $diff >= 0 ) {
+
+        } else {
+
+            $slotsToEmpty = $slotsOfType->slotFilled()->take($diff);
+            $slottables = $slotsToEmpty->getSlottables();
+            $slottables = $slottables->removeFromSlots();
+
+        }
     }
 }

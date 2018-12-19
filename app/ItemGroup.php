@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Items\ItemBases\ItemBase;
 use Illuminate\Database\Eloquent\Model;
 
 class ItemGroup extends Model

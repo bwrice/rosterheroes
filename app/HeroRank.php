@@ -23,6 +23,30 @@ class HeroRank extends Model
      */
     public static function getStarting()
     {
+        return self::private();
+    }
+
+    /**
+     * @return static
+     */
+    public static function private()
+    {
         return self::where('name', '=', self::PRIVATE)->first();
+    }
+
+    /**
+     * @return static
+     */
+    public static function corporal()
+    {
+        return self::where('name', '=', self::CORPORAL)->first();
+    }
+
+    /**
+     * @return static
+     */
+    public static function sergeant()
+    {
+        return self::where('name', '=', self::SERGEANT)->first();
     }
 }

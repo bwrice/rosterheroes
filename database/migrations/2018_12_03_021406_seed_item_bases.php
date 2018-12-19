@@ -19,7 +19,7 @@ class SeedItemBases extends Migration
 
         $itemBases = [
             [
-                'name' => \App\ItemBase::DAGGER,
+                'name' => \App\Items\ItemBases\ItemBase::DAGGER,
                 'group' => \App\ItemGroup::WEAPON,
                 'slot_types' => [
                     \App\SlotType::RIGHT_ARM,
@@ -31,7 +31,7 @@ class SeedItemBases extends Migration
                 ]
             ],
             [
-                'name' => \App\ItemBase::SWORD,
+                'name' => \App\Items\ItemBases\ItemBase::SWORD,
                 'group' => \App\ItemGroup::WEAPON,
                 'slot_types' => [
                     \App\SlotType::RIGHT_ARM,
@@ -43,7 +43,7 @@ class SeedItemBases extends Migration
                 ]
             ],
             [
-                'name' => \App\ItemBase::AXE,
+                'name' => \App\Items\ItemBases\ItemBase::AXE,
                 'group' => \App\ItemGroup::WEAPON,
                 'slot_types' => [
                     \App\SlotType::RIGHT_ARM,
@@ -55,7 +55,7 @@ class SeedItemBases extends Migration
                 ]
             ],
             [
-                'name' => \App\ItemBase::MACE,
+                'name' => \App\Items\ItemBases\ItemBase::MACE,
                 'group' => \App\ItemGroup::WEAPON,
                 'slot_types' => [
                     \App\SlotType::RIGHT_ARM,
@@ -67,7 +67,7 @@ class SeedItemBases extends Migration
                 ]
             ],
             [
-                'name' => \App\ItemBase::BOW,
+                'name' => \App\Items\ItemBases\ItemBase::BOW,
                 'group' => \App\ItemGroup::WEAPON,
                 'slot_types' => [
                     \App\SlotType::RIGHT_ARM,
@@ -79,7 +79,7 @@ class SeedItemBases extends Migration
                 ]
             ],
             [
-                'name' => \App\ItemBase::CROSSBOW,
+                'name' => \App\Items\ItemBases\ItemBase::CROSSBOW,
                 'group' => \App\ItemGroup::WEAPON,
                 'slot_types' => [
                     \App\SlotType::RIGHT_ARM,
@@ -92,7 +92,7 @@ class SeedItemBases extends Migration
                 ]
             ],
             [
-                'name' => \App\ItemBase::THROWING_WEAPON,
+                'name' => \App\Items\ItemBases\ItemBase::THROWING_WEAPON,
                 'group' => \App\ItemGroup::WEAPON,
                 'slot_types' => [
                     \App\SlotType::RIGHT_ARM,
@@ -104,7 +104,7 @@ class SeedItemBases extends Migration
                 ]
             ],
             [
-                'name' => \App\ItemBase::POLE_ARM,
+                'name' => \App\Items\ItemBases\ItemBase::POLE_ARM,
                 'group' => \App\ItemGroup::WEAPON,
                 'slot_types' => [
                     \App\SlotType::RIGHT_ARM,
@@ -117,7 +117,7 @@ class SeedItemBases extends Migration
                 ]
             ],
             [
-                'name' => \App\ItemBase::TWO_HAND_SWORD,
+                'name' => \App\Items\ItemBases\ItemBase::TWO_HAND_SWORD,
                 'group' => \App\ItemGroup::WEAPON,
                 'slot_types' => [
                     \App\SlotType::RIGHT_ARM,
@@ -130,7 +130,7 @@ class SeedItemBases extends Migration
                 ]
             ],
             [
-                'name' => \App\ItemBase::TWO_HAND_AXE,
+                'name' => \App\Items\ItemBases\ItemBase::TWO_HAND_AXE,
                 'group' => \App\ItemGroup::WEAPON,
                 'slot_types' => [
                     \App\SlotType::RIGHT_ARM,
@@ -142,7 +142,7 @@ class SeedItemBases extends Migration
                 ]
             ],
             [
-                'name' => \App\ItemBase::WAND,
+                'name' => \App\Items\ItemBases\ItemBase::WAND,
                 'group' => \App\ItemGroup::WEAPON,
                 'slot_types' => [
                     \App\SlotType::RIGHT_ARM,
@@ -154,7 +154,7 @@ class SeedItemBases extends Migration
                 ]
             ],
             [
-                'name' => \App\ItemBase::ORB,
+                'name' => \App\Items\ItemBases\ItemBase::ORB,
                 'group' => \App\ItemGroup::WEAPON,
                 'slot_types' => [
                     \App\SlotType::RIGHT_ARM,
@@ -166,7 +166,7 @@ class SeedItemBases extends Migration
                 ]
             ],
             [
-                'name' => \App\ItemBase::STAFF,
+                'name' => \App\Items\ItemBases\ItemBase::STAFF,
                 'group' => \App\ItemGroup::WEAPON,
                 'slot_types' => [
                     \App\SlotType::RIGHT_ARM,
@@ -179,7 +179,7 @@ class SeedItemBases extends Migration
                 ]
             ],
             [
-                'name' => \App\ItemBase::PSIONIC_ONE_HAND,
+                'name' => \App\Items\ItemBases\ItemBase::PSIONIC_ONE_HAND,
                 'group' => \App\ItemGroup::WEAPON,
                 'slot_types' => [
                     \App\SlotType::RIGHT_ARM,
@@ -192,7 +192,7 @@ class SeedItemBases extends Migration
                 ]
             ],
             [
-                'name' => \App\ItemBase::PSIONIC_TWO_HAND,
+                'name' => \App\Items\ItemBases\ItemBase::PSIONIC_TWO_HAND,
                 'group' => \App\ItemGroup::WEAPON,
                 'slot_types' => [
                     \App\SlotType::RIGHT_ARM,
@@ -205,7 +205,7 @@ class SeedItemBases extends Migration
                 ]
             ],
             [
-                'name' => \App\ItemBase::SHIELD,
+                'name' => \App\Items\ItemBases\ItemBase::SHIELD,
                 'group' => \App\ItemGroup::ARMOR,
                 'slot_types' => [
                     \App\SlotType::LEFT_ARM
@@ -215,7 +215,7 @@ class SeedItemBases extends Migration
                 ]
             ],
             [
-                'name' => \App\ItemBase::PSIONIC_SHIELD,
+                'name' => \App\Items\ItemBases\ItemBase::PSIONIC_SHIELD,
                 'group' => \App\ItemGroup::ARMOR,
                 'slot_types' => [
                     \App\SlotType::LEFT_ARM
@@ -225,7 +225,7 @@ class SeedItemBases extends Migration
                 ]
             ],
             [
-                'name' => \App\ItemBase::HELMET,
+                'name' => \App\Items\ItemBases\ItemBase::HELMET,
                 'group' => \App\ItemGroup::ARMOR,
                 'slot_types' => [
                     \App\SlotType::HEAD
@@ -235,7 +235,7 @@ class SeedItemBases extends Migration
                 ]
             ],
             [
-                'name' => \App\ItemBase::CAP,
+                'name' => \App\Items\ItemBases\ItemBase::CAP,
                 'group' => \App\ItemGroup::ARMOR,
                 'slot_types' => [
                     \App\SlotType::HEAD
@@ -245,7 +245,7 @@ class SeedItemBases extends Migration
                 ]
             ],
             [
-                'name' => \App\ItemBase::EYE_WEAR,
+                'name' => \App\Items\ItemBases\ItemBase::EYE_WEAR,
                 'group' => \App\ItemGroup::ARMOR,
                 'slot_types' => [
                     \App\SlotType::HEAD
@@ -255,7 +255,7 @@ class SeedItemBases extends Migration
                 ]
             ],
             [
-                'name' => \App\ItemBase::HEAVY_ARMOR,
+                'name' => \App\Items\ItemBases\ItemBase::HEAVY_ARMOR,
                 'group' => \App\ItemGroup::ARMOR,
                 'slot_types' => [
                     \App\SlotType::TORSO
@@ -265,7 +265,7 @@ class SeedItemBases extends Migration
                 ]
             ],
             [
-                'name' => \App\ItemBase::LIGHT_ARMOR,
+                'name' => \App\Items\ItemBases\ItemBase::LIGHT_ARMOR,
                 'group' => \App\ItemGroup::ARMOR,
                 'slot_types' => [
                     \App\SlotType::TORSO
@@ -275,7 +275,7 @@ class SeedItemBases extends Migration
                 ]
             ],
             [
-                'name' => \App\ItemBase::ROBES,
+                'name' => \App\Items\ItemBases\ItemBase::ROBES,
                 'group' => \App\ItemGroup::ARMOR,
                 'slot_types' => [
                     \App\SlotType::TORSO
@@ -285,7 +285,7 @@ class SeedItemBases extends Migration
                 ]
             ],
             [
-                'name' => \App\ItemBase::GLOVES,
+                'name' => \App\Items\ItemBases\ItemBase::GLOVES,
                 'group' => \App\ItemGroup::ARMOR,
                 'slot_types' => [
                     \App\SlotType::HANDS
@@ -295,7 +295,7 @@ class SeedItemBases extends Migration
                 ]
             ],
             [
-                'name' => \App\ItemBase::GAUNTLETS,
+                'name' => \App\Items\ItemBases\ItemBase::GAUNTLETS,
                 'group' => \App\ItemGroup::ARMOR,
                 'slot_types' => [
                     \App\SlotType::HANDS
@@ -305,7 +305,7 @@ class SeedItemBases extends Migration
                 ]
             ],
             [
-                'name' => \App\ItemBase::SHOES,
+                'name' => \App\Items\ItemBases\ItemBase::SHOES,
                 'group' => \App\ItemGroup::ARMOR,
                 'slot_types' => [
                     \App\SlotType::FEET
@@ -315,7 +315,7 @@ class SeedItemBases extends Migration
                 ]
             ],
             [
-                'name' => \App\ItemBase::BOOTS,
+                'name' => \App\Items\ItemBases\ItemBase::BOOTS,
                 'group' => \App\ItemGroup::ARMOR,
                 'slot_types' => [
                     \App\SlotType::FEET
@@ -325,7 +325,7 @@ class SeedItemBases extends Migration
                 ]
             ],
             [
-                'name' => \App\ItemBase::BELT,
+                'name' => \App\Items\ItemBases\ItemBase::BELT,
                 'group' => \App\ItemGroup::ARMOR,
                 'slot_types' => [
                     \App\SlotType::WAIST
@@ -335,7 +335,7 @@ class SeedItemBases extends Migration
                 ]
             ],
             [
-                'name' => \App\ItemBase::SASH,
+                'name' => \App\Items\ItemBases\ItemBase::SASH,
                 'group' => \App\ItemGroup::ARMOR,
                 'slot_types' => [
                     \App\SlotType::WAIST
@@ -345,7 +345,7 @@ class SeedItemBases extends Migration
                 ]
             ],
             [
-                'name' => \App\ItemBase::NECKLACE,
+                'name' => \App\Items\ItemBases\ItemBase::NECKLACE,
                 'group' => \App\ItemGroup::JEWELRY,
                 'slot_types' => [
                     \App\SlotType::NECK
@@ -355,7 +355,7 @@ class SeedItemBases extends Migration
                 ]
             ],
             [
-                'name' => \App\ItemBase::BRACELET,
+                'name' => \App\Items\ItemBases\ItemBase::BRACELET,
                 'group' => \App\ItemGroup::JEWELRY,
                 'slot_types' => [
                     \App\SlotType::LEFT_WRIST,
@@ -366,7 +366,7 @@ class SeedItemBases extends Migration
                 ]
             ],
             [
-                'name' => \App\ItemBase::RING,
+                'name' => \App\Items\ItemBases\ItemBase::RING,
                 'group' => \App\ItemGroup::JEWELRY,
                 'slot_types' => [
                     \App\SlotType::LEFT_RING,
@@ -377,7 +377,7 @@ class SeedItemBases extends Migration
                 ]
             ],
             [
-                'name' => \App\ItemBase::CROWN,
+                'name' => \App\Items\ItemBases\ItemBase::CROWN,
                 'group' => \App\ItemGroup::JEWELRY,
                 'slot_types' => [
                     \App\SlotType::HEAD
@@ -396,7 +396,7 @@ class SeedItemBases extends Migration
             ] );
 
             $measurableTypesToSave = $measurableTypes->whereIn( 'name', $itemBase['measurable types'] );
-            /** @var \App\ItemBase $itemBaseCreated */
+            /** @var \App\Items\ItemBases\ItemBase $itemBaseCreated */
             $itemBaseCreated->measurableTypes()->saveMany( $measurableTypesToSave );
 
             //Add universal and wagon slot type to all current item bases
@@ -416,6 +416,6 @@ class SeedItemBases extends Migration
     {
         \Illuminate\Support\Facades\DB::table('item_base_slot_type')->truncate();
         \Illuminate\Support\Facades\DB::table('item_base_measurable_type')->truncate();
-        \App\ItemBase::query()->delete();
+        \App\Items\ItemBases\ItemBase::query()->delete();
     }
 }

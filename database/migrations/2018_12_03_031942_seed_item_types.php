@@ -13,7 +13,7 @@ class SeedItemTypes extends Migration
      */
     public function up()
     {
-        $itemBases = \App\ItemBase::all();
+        $itemBases = \App\Items\ItemBases\ItemBase::all();
         $materialTypes = \App\MaterialType::all();
         $itemTypes = [
 
@@ -22,7 +22,7 @@ class SeedItemTypes extends Migration
              */
 
             [
-                'base' => \App\ItemBase::DAGGER,
+                'base' => \App\Items\ItemBases\ItemBase::DAGGER,
                 'name' => 'Knife',
                 'grade' => 6,
                 'material_types' => [
@@ -84,7 +84,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::WAND,
+                'base' => \App\Items\ItemBases\ItemBase::WAND,
                 'name' => 'Sprig',
                 'grade' => 7,
 
@@ -147,7 +147,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::MACE,
+                'base' => \App\Items\ItemBases\ItemBase::MACE,
                 'name' => 'Club',
                 'grade' => 8,
 
@@ -210,7 +210,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::SWORD,
+                'base' => \App\Items\ItemBases\ItemBase::SWORD,
                 'name' => 'Short Sword',
                 'grade' => 9,
 
@@ -273,7 +273,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::STAFF,
+                'base' => \App\Items\ItemBases\ItemBase::STAFF,
                 'name' => 'Lesser Staff',
                 'grade' => 10,
 
@@ -336,7 +336,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::AXE,
+                'base' => \App\Items\ItemBases\ItemBase::AXE,
                 'name' => 'Hatchet',
                 'grade' => 12,
 
@@ -399,7 +399,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::BOW,
+                'base' => \App\Items\ItemBases\ItemBase::BOW,
                 'name' => 'Straight Bow',
                 'grade' => 13,
 
@@ -462,7 +462,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::TWO_HAND_SWORD,
+                'base' => \App\Items\ItemBases\ItemBase::TWO_HAND_SWORD,
                 'name' => 'Longsword',
                 'grade' => 14,
 
@@ -525,7 +525,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::THROWING_WEAPON,
+                'base' => \App\Items\ItemBases\ItemBase::THROWING_WEAPON,
                 'name' => 'Throwing Knives',
                 'grade' => 15,
 
@@ -588,7 +588,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::MACE,
+                'base' => \App\Items\ItemBases\ItemBase::MACE,
                 'name' => 'Cudgel',
                 'grade' => 16,
 
@@ -651,7 +651,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::POLE_ARM,
+                'base' => \App\Items\ItemBases\ItemBase::POLE_ARM,
                 'name' => 'Spear',
                 'grade' => 17,
 
@@ -714,7 +714,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::CROSSBOW,
+                'base' => \App\Items\ItemBases\ItemBase::CROSSBOW,
                 'name' => 'Light Crossbow',
                 'grade' => 18,
 
@@ -777,7 +777,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::DAGGER,
+                'base' => \App\Items\ItemBases\ItemBase::DAGGER,
                 'name' => 'Kris',
                 'grade' => 19,
 
@@ -840,7 +840,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::ORB,
+                'base' => \App\Items\ItemBases\ItemBase::ORB,
                 'name' => 'Lesser Orb',
                 'grade' => 20,
 
@@ -904,7 +904,7 @@ class SeedItemTypes extends Migration
             ],
             [
 
-                'base' => \App\ItemBase::TWO_HAND_AXE,
+                'base' => \App\Items\ItemBases\ItemBase::TWO_HAND_AXE,
                 'name' => 'Bardiche',
                 'grade' => 21,
 
@@ -967,7 +967,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::WAND,
+                'base' => \App\Items\ItemBases\ItemBase::WAND,
                 'name' => 'Lesser Wand',
                 'grade' => 22,
 
@@ -1030,7 +1030,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::SWORD,
+                'base' => \App\Items\ItemBases\ItemBase::SWORD,
                 'name' => 'Falchion',
                 'grade' => 23,
 
@@ -1093,7 +1093,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::BOW,
+                'base' => \App\Items\ItemBases\ItemBase::BOW,
                 'name' => 'Longbow',
                 'grade' => 24,
 
@@ -1156,7 +1156,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::DAGGER,
+                'base' => \App\Items\ItemBases\ItemBase::DAGGER,
                 'name' => 'Dirk',
                 'grade' => 26,
 
@@ -1219,7 +1219,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::STAFF,
+                'base' => \App\Items\ItemBases\ItemBase::STAFF,
                 'name' => 'Rod',
                 'grade' => 27,
 
@@ -1282,7 +1282,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::TWO_HAND_SWORD,
+                'base' => \App\Items\ItemBases\ItemBase::TWO_HAND_SWORD,
                 'name' => 'Bastard Sword',
                 'grade' => 28,
 
@@ -1345,7 +1345,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::POLE_ARM,
+                'base' => \App\Items\ItemBases\ItemBase::POLE_ARM,
                 'name' => 'Glaive',
                 'grade' => 29,
 
@@ -1408,7 +1408,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::PSIONIC_ONE_HAND,
+                'base' => \App\Items\ItemBases\ItemBase::PSIONIC_ONE_HAND,
                 'name' => 'Spell Blade',
                 'grade' => 30,
 
@@ -1471,7 +1471,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::AXE,
+                'base' => \App\Items\ItemBases\ItemBase::AXE,
                 'name' => 'Hand Axe',
                 'grade' => 31,
 
@@ -1534,7 +1534,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::PSIONIC_TWO_HAND,
+                'base' => \App\Items\ItemBases\ItemBase::PSIONIC_TWO_HAND,
                 'name' => 'Spell Cleaver',
                 'grade' => 32,
 
@@ -1597,7 +1597,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::CROSSBOW,
+                'base' => \App\Items\ItemBases\ItemBase::CROSSBOW,
                 'name' => 'Heavy Crossbow',
                 'grade' => 33,
 
@@ -1660,7 +1660,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::MACE,
+                'base' => \App\Items\ItemBases\ItemBase::MACE,
                 'name' => 'Flail',
                 'grade' => 34,
 
@@ -1723,7 +1723,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::BOW,
+                'base' => \App\Items\ItemBases\ItemBase::BOW,
                 'name' => 'Recurve Bow',
                 'grade' => 36,
 
@@ -1786,7 +1786,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::THROWING_WEAPON,
+                'base' => \App\Items\ItemBases\ItemBase::THROWING_WEAPON,
                 'name' => 'Throwing Stars',
                 'grade' => 37,
 
@@ -1849,7 +1849,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::WAND,
+                'base' => \App\Items\ItemBases\ItemBase::WAND,
                 'name' => 'Scepter',
                 'grade' => 38,
 
@@ -1912,7 +1912,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::AXE,
+                'base' => \App\Items\ItemBases\ItemBase::AXE,
                 'name' => 'Pickaxe',
                 'grade' => 39,
 
@@ -1975,7 +1975,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::TWO_HAND_AXE,
+                'base' => \App\Items\ItemBases\ItemBase::TWO_HAND_AXE,
                 'name' => 'Lance',
                 'grade' => 41,
 
@@ -2038,7 +2038,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::POLE_ARM,
+                'base' => \App\Items\ItemBases\ItemBase::POLE_ARM,
                 'name' => 'Scythe',
                 'grade' => 42,
 
@@ -2101,7 +2101,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::DAGGER,
+                'base' => \App\Items\ItemBases\ItemBase::DAGGER,
                 'name' => 'Katar',
                 'grade' => 43,
 
@@ -2164,7 +2164,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::STAFF,
+                'base' => \App\Items\ItemBases\ItemBase::STAFF,
                 'name' => 'Greater Staff',
                 'grade' => 44,
 
@@ -2227,7 +2227,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::SWORD,
+                'base' => \App\Items\ItemBases\ItemBase::SWORD,
                 'name' => 'Scimitar',
                 'grade' => 45,
 
@@ -2290,7 +2290,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::BOW,
+                'base' => \App\Items\ItemBases\ItemBase::BOW,
                 'name' => 'Reflex Bow',
                 'grade' => 46,
 
@@ -2353,7 +2353,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::TWO_HAND_SWORD,
+                'base' => \App\Items\ItemBases\ItemBase::TWO_HAND_SWORD,
                 'name' => 'Nagamaki',
                 'grade' => 49,
 
@@ -2416,7 +2416,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::ORB,
+                'base' => \App\Items\ItemBases\ItemBase::ORB,
                 'name' => 'Greater Orb',
                 'grade' => 50,
 
@@ -2479,7 +2479,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::POLE_ARM,
+                'base' => \App\Items\ItemBases\ItemBase::POLE_ARM,
                 'name' => 'Trident',
                 'grade' => 51,
 
@@ -2542,7 +2542,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::AXE,
+                'base' => \App\Items\ItemBases\ItemBase::AXE,
                 'name' => 'Sickle',
                 'grade' => 52,
 
@@ -2605,7 +2605,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::CROSSBOW,
+                'base' => \App\Items\ItemBases\ItemBase::CROSSBOW,
                 'name' => 'Arbalest',
                 'grade' => 53,
 
@@ -2668,7 +2668,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::MACE,
+                'base' => \App\Items\ItemBases\ItemBase::MACE,
                 'name' => 'Battle Mace',
                 'grade' => 54,
 
@@ -2731,7 +2731,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::DAGGER,
+                'base' => \App\Items\ItemBases\ItemBase::DAGGER,
                 'name' => 'Stiletto',
                 'grade' => 55,
 
@@ -2794,7 +2794,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::WAND,
+                'base' => \App\Items\ItemBases\ItemBase::WAND,
                 'name' => 'Greater Wand',
                 'grade' => 56,
 
@@ -2857,7 +2857,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::AXE,
+                'base' => \App\Items\ItemBases\ItemBase::AXE,
                 'name' => 'Ono',
                 'grade' => 57,
 
@@ -2920,7 +2920,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::STAFF,
+                'base' => \App\Items\ItemBases\ItemBase::STAFF,
                 'name' => 'Master\'s Rod',
                 'grade' => 58,
 
@@ -2983,7 +2983,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::SWORD,
+                'base' => \App\Items\ItemBases\ItemBase::SWORD,
                 'name' => 'Sabre',
                 'grade' => 59,
 
@@ -3046,7 +3046,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::BOW,
+                'base' => \App\Items\ItemBases\ItemBase::BOW,
                 'name' => 'Composite Bow',
                 'grade' => 60,
 
@@ -3109,7 +3109,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::TWO_HAND_SWORD,
+                'base' => \App\Items\ItemBases\ItemBase::TWO_HAND_SWORD,
                 'name' => 'Claymore',
                 'grade' => 61,
 
@@ -3172,7 +3172,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::PSIONIC_ONE_HAND,
+                'base' => \App\Items\ItemBases\ItemBase::PSIONIC_ONE_HAND,
                 'name' => 'Mind Blade',
                 'grade' => 62,
 
@@ -3235,7 +3235,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::POLE_ARM,
+                'base' => \App\Items\ItemBases\ItemBase::POLE_ARM,
                 'name' => 'Halberd',
                 'grade' => 63,
 
@@ -3298,7 +3298,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::TWO_HAND_AXE,
+                'base' => \App\Items\ItemBases\ItemBase::TWO_HAND_AXE,
                 'name' => 'Great Axe',
                 'grade' => 64,
 
@@ -3361,7 +3361,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::PSIONIC_TWO_HAND,
+                'base' => \App\Items\ItemBases\ItemBase::PSIONIC_TWO_HAND,
                 'name' => 'Mind Cleaver',
                 'grade' => 65,
 
@@ -3424,7 +3424,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::AXE,
+                'base' => \App\Items\ItemBases\ItemBase::AXE,
                 'name' => 'Broad Axe',
                 'grade' => 66,
 
@@ -3487,7 +3487,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::THROWING_WEAPON,
+                'base' => \App\Items\ItemBases\ItemBase::THROWING_WEAPON,
                 'name' => 'Javelins',
                 'grade' => 67,
 
@@ -3550,7 +3550,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::DAGGER,
+                'base' => \App\Items\ItemBases\ItemBase::DAGGER,
                 'name' => 'Knight\'s Dagger',
                 'grade' => 68,
 
@@ -3613,7 +3613,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::TWO_HAND_SWORD,
+                'base' => \App\Items\ItemBases\ItemBase::TWO_HAND_SWORD,
                 'name' => 'Greatsword',
                 'grade' => 70,
 
@@ -3676,7 +3676,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::WAND,
+                'base' => \App\Items\ItemBases\ItemBase::WAND,
                 'name' => 'Greater Scepter',
                 'grade' => 71,
 
@@ -3739,7 +3739,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::BOW,
+                'base' => \App\Items\ItemBases\ItemBase::BOW,
                 'name' => 'Battle Bow',
                 'grade' => 72,
 
@@ -3802,7 +3802,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::MACE,
+                'base' => \App\Items\ItemBases\ItemBase::MACE,
                 'name' => 'Morning Star',
                 'grade' => 74,
 
@@ -3865,7 +3865,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::CROSSBOW,
+                'base' => \App\Items\ItemBases\ItemBase::CROSSBOW,
                 'name' => 'Repeating Crossbow',
                 'grade' => 76,
 
@@ -3928,7 +3928,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::DAGGER,
+                'base' => \App\Items\ItemBases\ItemBase::DAGGER,
                 'name' => 'Gladius',
                 'grade' => 77,
 
@@ -3991,7 +3991,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::STAFF,
+                'base' => \App\Items\ItemBases\ItemBase::STAFF,
                 'name' => 'Battle Staff',
                 'grade' => 78,
 
@@ -4054,7 +4054,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::SWORD,
+                'base' => \App\Items\ItemBases\ItemBase::SWORD,
                 'name' => 'Rapier',
                 'grade' => 79,
 
@@ -4117,7 +4117,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::POLE_ARM,
+                'base' => \App\Items\ItemBases\ItemBase::POLE_ARM,
                 'name' => 'Naginata',
                 'grade' => 80,
 
@@ -4180,7 +4180,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::TWO_HAND_AXE,
+                'base' => \App\Items\ItemBases\ItemBase::TWO_HAND_AXE,
                 'name' => 'Labrys',
                 'grade' => 81,
 
@@ -4243,7 +4243,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::BOW,
+                'base' => \App\Items\ItemBases\ItemBase::BOW,
                 'name' => 'Compound Bow',
                 'grade' => 82,
 
@@ -4306,7 +4306,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::TWO_HAND_SWORD,
+                'base' => \App\Items\ItemBases\ItemBase::TWO_HAND_SWORD,
                 'name' => 'Katana',
                 'grade' => 83,
 
@@ -4369,7 +4369,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::MACE,
+                'base' => \App\Items\ItemBases\ItemBase::MACE,
                 'name' => 'War Hammer',
                 'grade' => 84,
 
@@ -4432,7 +4432,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::THROWING_WEAPON,
+                'base' => \App\Items\ItemBases\ItemBase::THROWING_WEAPON,
                 'name' => 'Exploding Flasks',
                 'grade' => 86,
 
@@ -4495,7 +4495,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::AXE,
+                'base' => \App\Items\ItemBases\ItemBase::AXE,
                 'name' => 'Battle Axe',
                 'grade' => 87,
 
@@ -4558,7 +4558,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::PSIONIC_ONE_HAND,
+                'base' => \App\Items\ItemBases\ItemBase::PSIONIC_ONE_HAND,
                 'name' => 'Conjure Blade',
                 'grade' => 88,
 
@@ -4621,7 +4621,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::ORB,
+                'base' => \App\Items\ItemBases\ItemBase::ORB,
                 'name' => 'Magus Orb',
                 'grade' => 89,
 
@@ -4684,7 +4684,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::PSIONIC_TWO_HAND,
+                'base' => \App\Items\ItemBases\ItemBase::PSIONIC_TWO_HAND,
                 'name' => 'Conjure Cleaver',
                 'grade' => 90,
 
@@ -4747,7 +4747,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::DAGGER,
+                'base' => \App\Items\ItemBases\ItemBase::DAGGER,
                 'name' => 'Ninjato',
                 'grade' => 91,
 
@@ -4810,7 +4810,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::POLE_ARM,
+                'base' => \App\Items\ItemBases\ItemBase::POLE_ARM,
                 'name' => 'War Scythe',
                 'grade' => 92,
 
@@ -4873,7 +4873,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::WAND,
+                'base' => \App\Items\ItemBases\ItemBase::WAND,
                 'name' => 'Magus Scepter',
                 'grade' => 93,
 
@@ -4936,7 +4936,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::SWORD,
+                'base' => \App\Items\ItemBases\ItemBase::SWORD,
                 'name' => 'War Sword',
                 'grade' => 94,
 
@@ -4999,7 +4999,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::CROSSBOW,
+                'base' => \App\Items\ItemBases\ItemBase::CROSSBOW,
                 'name' => 'Heavy Arbalest',
                 'grade' => 95,
 
@@ -5062,7 +5062,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::BOW,
+                'base' => \App\Items\ItemBases\ItemBase::BOW,
                 'name' => 'War Bow',
                 'grade' => 96,
 
@@ -5125,7 +5125,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::TWO_HAND_AXE,
+                'base' => \App\Items\ItemBases\ItemBase::TWO_HAND_AXE,
                 'name' => 'Giant\'s Axe',
                 'grade' => 97,
 
@@ -5188,7 +5188,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::STAFF,
+                'base' => \App\Items\ItemBases\ItemBase::STAFF,
                 'name' => 'Magus Staff',
                 'grade' => 98,
 
@@ -5251,7 +5251,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::TWO_HAND_SWORD,
+                'base' => \App\Items\ItemBases\ItemBase::TWO_HAND_SWORD,
                 'name' => 'Giant\'s Sword',
                 'grade' => 99,
 
@@ -5319,7 +5319,7 @@ class SeedItemTypes extends Migration
              */
 
             [
-                'base' => \App\ItemBase::CAP,
+                'base' => \App\Items\ItemBases\ItemBase::CAP,
                 'name' => 'Fez',
                 'grade' => 6,
 
@@ -5382,7 +5382,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::SHIELD,
+                'base' => \App\Items\ItemBases\ItemBase::SHIELD,
                 'name' => 'Buckler',
                 'grade' => 8,
 
@@ -5445,7 +5445,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::HELMET,
+                'base' => \App\Items\ItemBases\ItemBase::HELMET,
                 'name' => 'Kettle Hat',
                 'grade' => 9,
 
@@ -5508,7 +5508,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::ROBES,
+                'base' => \App\Items\ItemBases\ItemBase::ROBES,
                 'name' => 'Frock',
                 'grade' => 10,
 
@@ -5571,7 +5571,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::SHOES,
+                'base' => \App\Items\ItemBases\ItemBase::SHOES,
                 'name' => 'Slippers',
                 'grade' => 11,
 
@@ -5634,7 +5634,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::LIGHT_ARMOR,
+                'base' => \App\Items\ItemBases\ItemBase::LIGHT_ARMOR,
                 'name' => 'Light Cuirass',
                 'grade' => 12,
 
@@ -5697,7 +5697,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::BOOTS,
+                'base' => \App\Items\ItemBases\ItemBase::BOOTS,
                 'name' => 'Light Boots',
                 'grade' => 13,
 
@@ -5760,7 +5760,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::GLOVES,
+                'base' => \App\Items\ItemBases\ItemBase::GLOVES,
                 'name' => 'Light Gloves',
                 'grade' => 14,
 
@@ -5823,7 +5823,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::HEAVY_ARMOR,
+                'base' => \App\Items\ItemBases\ItemBase::HEAVY_ARMOR,
                 'name' => 'Breastplate',
                 'grade' => 15,
 
@@ -5886,7 +5886,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::CAP,
+                'base' => \App\Items\ItemBases\ItemBase::CAP,
                 'name' => 'Beret',
                 'grade' => 16,
 
@@ -5949,7 +5949,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::SHIELD,
+                'base' => \App\Items\ItemBases\ItemBase::SHIELD,
                 'name' => 'Targe',
                 'grade' => 17,
 
@@ -6012,7 +6012,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::GAUNTLETS,
+                'base' => \App\Items\ItemBases\ItemBase::GAUNTLETS,
                 'name' => 'Light Gauntlets',
                 'grade' => 18,
 
@@ -6075,7 +6075,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::HELMET,
+                'base' => \App\Items\ItemBases\ItemBase::HELMET,
                 'name' => 'Skullcap',
                 'grade' => 19,
 
@@ -6138,7 +6138,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::BELT,
+                'base' => \App\Items\ItemBases\ItemBase::BELT,
                 'name' => 'Light Belt',
                 'grade' => 23,
 
@@ -6201,7 +6201,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::SASH,
+                'base' => \App\Items\ItemBases\ItemBase::SASH,
                 'name' => 'Pupil\'s Sash',
                 'grade' => 25,
 
@@ -6264,7 +6264,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::HELMET,
+                'base' => \App\Items\ItemBases\ItemBase::HELMET,
                 'name' => 'Spangenhelm',
                 'grade' => 27,
 
@@ -6327,7 +6327,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::SHIELD,
+                'base' => \App\Items\ItemBases\ItemBase::SHIELD,
                 'name' => 'Heavy Buckler',
                 'grade' => 29,
 
@@ -6390,7 +6390,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::GLOVES,
+                'base' => \App\Items\ItemBases\ItemBase::GLOVES,
                 'name' => 'Gages',
                 'grade' => 31,
 
@@ -6453,7 +6453,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::ROBES,
+                'base' => \App\Items\ItemBases\ItemBase::ROBES,
                 'name' => 'Coat',
                 'grade' => 32,
 
@@ -6516,7 +6516,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::CAP,
+                'base' => \App\Items\ItemBases\ItemBase::CAP,
                 'name' => 'Busby',
                 'grade' => 33,
 
@@ -6579,7 +6579,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::BOOTS,
+                'base' => \App\Items\ItemBases\ItemBase::BOOTS,
                 'name' => 'Heavy Boots',
                 'grade' => 34,
 
@@ -6642,7 +6642,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::HELMET,
+                'base' => \App\Items\ItemBases\ItemBase::HELMET,
                 'name' => 'Helm',
                 'grade' => 35,
 
@@ -6705,7 +6705,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::PSIONIC_SHIELD,
+                'base' => \App\Items\ItemBases\ItemBase::PSIONIC_SHIELD,
                 'name' => 'Barrier',
                 'grade' => 37,
 
@@ -6768,7 +6768,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::SHOES,
+                'base' => \App\Items\ItemBases\ItemBase::SHOES,
                 'name' => 'Clogs',
                 'grade' => 38,
 
@@ -6831,7 +6831,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::GAUNTLETS,
+                'base' => \App\Items\ItemBases\ItemBase::GAUNTLETS,
                 'name' => 'Heavy Gauntlets',
                 'grade' => 39,
 
@@ -6894,7 +6894,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::LIGHT_ARMOR,
+                'base' => \App\Items\ItemBases\ItemBase::LIGHT_ARMOR,
                 'name' => 'Plackart',
                 'grade' => 40,
 
@@ -6957,7 +6957,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::EYE_WEAR,
+                'base' => \App\Items\ItemBases\ItemBase::EYE_WEAR,
                 'name' => 'Goggles',
                 'grade' => 41,
 
@@ -7020,7 +7020,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::SHIELD,
+                'base' => \App\Items\ItemBases\ItemBase::SHIELD,
                 'name' => 'Rondache',
                 'grade' => 42,
 
@@ -7083,7 +7083,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::HEAVY_ARMOR,
+                'base' => \App\Items\ItemBases\ItemBase::HEAVY_ARMOR,
                 'name' => 'Chainmail',
                 'grade' => 43,
 
@@ -7146,7 +7146,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::HELMET,
+                'base' => \App\Items\ItemBases\ItemBase::HELMET,
                 'name' => 'Helm',
                 'grade' => 45,
 
@@ -7209,7 +7209,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::CAP,
+                'base' => \App\Items\ItemBases\ItemBase::CAP,
                 'name' => 'Trilby',
                 'grade' => 48,
 
@@ -7272,7 +7272,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::BELT,
+                'base' => \App\Items\ItemBases\ItemBase::BELT,
                 'name' => 'Heavy Belt',
                 'grade' => 50,
 
@@ -7335,7 +7335,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::SASH,
+                'base' => \App\Items\ItemBases\ItemBase::SASH,
                 'name' => 'Veteran\'s Sash',
                 'grade' => 51,
 
@@ -7398,7 +7398,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::GLOVES,
+                'base' => \App\Items\ItemBases\ItemBase::GLOVES,
                 'name' => 'Gages',
                 'grade' => 52,
 
@@ -7461,7 +7461,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::HELMET,
+                'base' => \App\Items\ItemBases\ItemBase::HELMET,
                 'name' => 'Bascinet',
                 'grade' => 53,
 
@@ -7524,7 +7524,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::SHIELD,
+                'base' => \App\Items\ItemBases\ItemBase::SHIELD,
                 'name' => 'Heater Shield',
                 'grade' => 55,
 
@@ -7587,7 +7587,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::LIGHT_ARMOR,
+                'base' => \App\Items\ItemBases\ItemBase::LIGHT_ARMOR,
                 'name' => 'Heavy Cuirass',
                 'grade' => 56,
 
@@ -7650,7 +7650,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::HEAVY_ARMOR,
+                'base' => \App\Items\ItemBases\ItemBase::HEAVY_ARMOR,
                 'name' => 'Scalemail',
                 'grade' => 57,
 
@@ -7713,7 +7713,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::SHOES,
+                'base' => \App\Items\ItemBases\ItemBase::SHOES,
                 'name' => 'Pantofles',
                 'grade' => 58,
 
@@ -7776,7 +7776,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::ROBES,
+                'base' => \App\Items\ItemBases\ItemBase::ROBES,
                 'name' => 'Mantle',
                 'grade' => 59,
 
@@ -7839,7 +7839,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::CAP,
+                'base' => \App\Items\ItemBases\ItemBase::CAP,
                 'name' => 'Tubetieka',
                 'grade' => 60,
 
@@ -7902,7 +7902,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::BOOTS,
+                'base' => \App\Items\ItemBases\ItemBase::BOOTS,
                 'name' => 'Combat Boots',
                 'grade' => 61,
 
@@ -7965,7 +7965,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::HELMET,
+                'base' => \App\Items\ItemBases\ItemBase::HELMET,
                 'name' => 'Armet',
                 'grade' => 62,
 
@@ -8028,7 +8028,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::PSIONIC_SHIELD,
+                'base' => \App\Items\ItemBases\ItemBase::PSIONIC_SHIELD,
                 'name' => 'Force-field',
                 'grade' => 64,
 
@@ -8091,7 +8091,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::SHIELD,
+                'base' => \App\Items\ItemBases\ItemBase::SHIELD,
                 'name' => 'Kite Shield',
                 'grade' => 66,
 
@@ -8154,7 +8154,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::GAUNTLETS,
+                'base' => \App\Items\ItemBases\ItemBase::GAUNTLETS,
                 'name' => 'Battle Gauntlets',
                 'grade' => 68,
 
@@ -8217,7 +8217,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::EYE_WEAR,
+                'base' => \App\Items\ItemBases\ItemBase::EYE_WEAR,
                 'name' => 'Specs',
                 'grade' => 70,
 
@@ -8280,7 +8280,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::HELMET,
+                'base' => \App\Items\ItemBases\ItemBase::HELMET,
                 'name' => 'Sallet',
                 'grade' => 71,
 
@@ -8343,7 +8343,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::GLOVES,
+                'base' => \App\Items\ItemBases\ItemBase::GLOVES,
                 'name' => 'Wizard Hands',
                 'grade' => 73,
 
@@ -8406,7 +8406,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::BELT,
+                'base' => \App\Items\ItemBases\ItemBase::BELT,
                 'name' => 'Captain\'s Belt',
                 'grade' => 74,
 
@@ -8469,7 +8469,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::SASH,
+                'base' => \App\Items\ItemBases\ItemBase::SASH,
                 'name' => 'Master\'s Sash',
                 'grade' => 75,
 
@@ -8532,7 +8532,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::CAP,
+                'base' => \App\Items\ItemBases\ItemBase::CAP,
                 'name' => 'Wizard\'s Cap',
                 'grade' => 76,
 
@@ -8595,7 +8595,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::ROBES,
+                'base' => \App\Items\ItemBases\ItemBase::ROBES,
                 'name' => 'Cape',
                 'grade' => 77,
 
@@ -8658,7 +8658,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::SHIELD,
+                'base' => \App\Items\ItemBases\ItemBase::SHIELD,
                 'name' => 'Gothic Shield',
                 'grade' => 78,
 
@@ -8721,7 +8721,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::LIGHT_ARMOR,
+                'base' => \App\Items\ItemBases\ItemBase::LIGHT_ARMOR,
                 'name' => 'Hauberk',
                 'grade' => 79,
 
@@ -8784,7 +8784,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::HELMET,
+                'base' => \App\Items\ItemBases\ItemBase::HELMET,
                 'name' => 'Great Bascinet',
                 'grade' => 80,
 
@@ -8847,7 +8847,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::HEAVY_ARMOR,
+                'base' => \App\Items\ItemBases\ItemBase::HEAVY_ARMOR,
                 'name' => 'Platemail',
                 'grade' => 82,
 
@@ -8910,7 +8910,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::SHIELD,
+                'base' => \App\Items\ItemBases\ItemBase::SHIELD,
                 'name' => 'Tower Shield',
                 'grade' => 85,
 
@@ -8973,7 +8973,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::HELMET,
+                'base' => \App\Items\ItemBases\ItemBase::HELMET,
                 'name' => 'Fluted Armet',
                 'grade' => 88,
 
@@ -9036,7 +9036,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::EYE_WEAR,
+                'base' => \App\Items\ItemBases\ItemBase::EYE_WEAR,
                 'name' => 'Seers',
                 'grade' => 89,
 
@@ -9099,7 +9099,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::SHOES,
+                'base' => \App\Items\ItemBases\ItemBase::SHOES,
                 'name' => 'Magus Pantofles',
                 'grade' => 90,
 
@@ -9162,7 +9162,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::GLOVES,
+                'base' => \App\Items\ItemBases\ItemBase::GLOVES,
                 'name' => 'Sorcerer Palms',
                 'grade' => 91,
 
@@ -9225,7 +9225,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::SASH,
+                'base' => \App\Items\ItemBases\ItemBase::SASH,
                 'name' => 'Magus Sash',
                 'grade' => 92,
 
@@ -9288,7 +9288,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::GAUNTLETS,
+                'base' => \App\Items\ItemBases\ItemBase::GAUNTLETS,
                 'name' => 'War Gauntlets',
                 'grade' => 92,
 
@@ -9351,7 +9351,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::PSIONIC_SHIELD,
+                'base' => \App\Items\ItemBases\ItemBase::PSIONIC_SHIELD,
                 'name' => 'Citadel',
                 'grade' => 93,
 
@@ -9414,7 +9414,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::BOOTS,
+                'base' => \App\Items\ItemBases\ItemBase::BOOTS,
                 'name' => 'Spartan Sandals',
                 'grade' => 93,
 
@@ -9477,7 +9477,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::CAP,
+                'base' => \App\Items\ItemBases\ItemBase::CAP,
                 'name' => 'Sorcerer\'s Hat',
                 'grade' => 94,
 
@@ -9540,7 +9540,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::ROBES,
+                'base' => \App\Items\ItemBases\ItemBase::ROBES,
                 'name' => 'Cloak',
                 'grade' => 94,
 
@@ -9603,7 +9603,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::LIGHT_ARMOR,
+                'base' => \App\Items\ItemBases\ItemBase::LIGHT_ARMOR,
                 'name' => 'Ranger\'s Suit',
                 'grade' => 94,
 
@@ -9666,7 +9666,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::BELT,
+                'base' => \App\Items\ItemBases\ItemBase::BELT,
                 'name' => 'Giant\'s Belt',
                 'grade' => 95,
 
@@ -9729,7 +9729,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::HELMET,
+                'base' => \App\Items\ItemBases\ItemBase::HELMET,
                 'name' => 'Sallet with Bevor',
                 'grade' => 95,
 
@@ -9792,7 +9792,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::HEAVY_ARMOR,
+                'base' => \App\Items\ItemBases\ItemBase::HEAVY_ARMOR,
                 'name' => 'Phalanx Suit',
                 'grade' => 96,
 
@@ -9855,7 +9855,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::SHIELD,
+                'base' => \App\Items\ItemBases\ItemBase::SHIELD,
                 'name' => 'Giant\'s Shield',
                 'grade' => 97,
 
@@ -9923,7 +9923,7 @@ class SeedItemTypes extends Migration
              */
 
             [
-                'base' => \App\ItemBase::RING,
+                'base' => \App\Items\ItemBases\ItemBase::RING,
                 'name' => 'Band',
                 'grade' => 10,
 
@@ -9986,7 +9986,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::BRACELET,
+                'base' => \App\Items\ItemBases\ItemBase::BRACELET,
                 'name' => 'Shackle',
                 'grade' => 10,
 
@@ -10049,7 +10049,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::NECKLACE,
+                'base' => \App\Items\ItemBases\ItemBase::NECKLACE,
                 'name' => 'Beeds',
                 'grade' => 10,
 
@@ -10112,7 +10112,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::CROWN,
+                'base' => \App\Items\ItemBases\ItemBase::CROWN,
                 'name' => 'Headband',
                 'grade' => 28,
 
@@ -10175,7 +10175,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::RING,
+                'base' => \App\Items\ItemBases\ItemBase::RING,
                 'name' => 'Ring',
                 'grade' => 30,
 
@@ -10238,7 +10238,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::BRACELET,
+                'base' => \App\Items\ItemBases\ItemBase::BRACELET,
                 'name' => 'Bracelet',
                 'grade' => 30,
 
@@ -10301,7 +10301,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::NECKLACE,
+                'base' => \App\Items\ItemBases\ItemBase::NECKLACE,
                 'name' => 'Necklace',
                 'grade' => 30,
 
@@ -10364,7 +10364,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::CROWN,
+                'base' => \App\Items\ItemBases\ItemBase::CROWN,
                 'name' => 'Circlet',
                 'grade' => 36,
 
@@ -10427,7 +10427,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::CROWN,
+                'base' => \App\Items\ItemBases\ItemBase::CROWN,
                 'name' => 'Chaplet',
                 'grade' => 46,
 
@@ -10490,7 +10490,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::RING,
+                'base' => \App\Items\ItemBases\ItemBase::RING,
                 'name' => 'Heavy Band',
                 'grade' => 50,
 
@@ -10553,7 +10553,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::BRACELET,
+                'base' => \App\Items\ItemBases\ItemBase::BRACELET,
                 'name' => 'Arm Band',
                 'grade' => 50,
 
@@ -10616,7 +10616,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::NECKLACE,
+                'base' => \App\Items\ItemBases\ItemBase::NECKLACE,
                 'name' => 'Locket',
                 'grade' => 50,
 
@@ -10679,7 +10679,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::CROWN,
+                'base' => \App\Items\ItemBases\ItemBase::CROWN,
                 'name' => 'Tiara',
                 'grade' => 54,
 
@@ -10742,7 +10742,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::CROWN,
+                'base' => \App\Items\ItemBases\ItemBase::CROWN,
                 'name' => 'Coronet',
                 'grade' => 69,
 
@@ -10805,7 +10805,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::RING,
+                'base' => \App\Items\ItemBases\ItemBase::RING,
                 'name' => 'Signet',
                 'grade' => 70,
 
@@ -10868,7 +10868,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::BRACELET,
+                'base' => \App\Items\ItemBases\ItemBase::BRACELET,
                 'name' => 'Bangle',
                 'grade' => 70,
 
@@ -10931,7 +10931,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::NECKLACE,
+                'base' => \App\Items\ItemBases\ItemBase::NECKLACE,
                 'name' => 'Pendant',
                 'grade' => 70,
 
@@ -10994,7 +10994,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::CROWN,
+                'base' => \App\Items\ItemBases\ItemBase::CROWN,
                 'name' => 'Queen\'s Crown',
                 'grade' => 81,
 
@@ -11057,7 +11057,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::RING,
+                'base' => \App\Items\ItemBases\ItemBase::RING,
                 'name' => 'Royal Signet',
                 'grade' => 90,
 
@@ -11120,7 +11120,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::BRACELET,
+                'base' => \App\Items\ItemBases\ItemBase::BRACELET,
                 'name' => 'Armlet',
                 'grade' => 90,
 
@@ -11183,7 +11183,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::NECKLACE,
+                'base' => \App\Items\ItemBases\ItemBase::NECKLACE,
                 'name' => 'Amulet',
                 'grade' => 90,
 
@@ -11246,7 +11246,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\ItemBase::CROWN,
+                'base' => \App\Items\ItemBases\ItemBase::CROWN,
                 'name' => 'King\'s Crown',
                 'grade' => 92,
 

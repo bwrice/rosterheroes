@@ -7,7 +7,7 @@ use App\HeroClass;
 use App\HeroRace;
 use App\Measurable;
 use App\MeasurableType;
-use App\Slot;
+use App\Slots\Slot;
 use App\SlotType;
 use App\Squad;
 use Illuminate\Foundation\Testing\DatabaseTransactions;

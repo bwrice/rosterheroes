@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Slots\Slot;
+use App\Slots\Slottable;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -12,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property ItemType $itemType
  */
-class Item extends Model
+class Item extends Model implements Slottable
 {
     protected $guarded = [];
 
@@ -24,5 +26,20 @@ class Item extends Model
     public function itemType()
     {
         return $this->belongsTo(ItemType::class);
+    }
+
+    public function slots()
+    {
+        return $this->morphMany(Slot::class, 'slottable');
+    }
+
+    public function getSlotTypeIDs(): array
+    {
+        return $this->itemType->itemBase->slotTypes->pluck('id')->toArray();
+    }
+
+    public function getSlotsCount(): int
+    {
+        return $this->itemType->itemBase->getSlotsCount();
     }
 }
