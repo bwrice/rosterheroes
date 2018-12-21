@@ -9,7 +9,11 @@
 namespace App\Items\ItemBases\Behaviors;
 
 
-class ThrowingWeaponBehavior
+class ThrowingWeaponBehavior extends ItemBaseBehavior
 {
 
+    public function getSlotsCount(): int
+    {
+        return 1;
+    }
 }

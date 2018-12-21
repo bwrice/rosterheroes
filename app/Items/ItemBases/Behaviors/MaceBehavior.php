@@ -9,7 +9,11 @@
 namespace App\Items\ItemBases\Behaviors;
 
 
-class MaceBehavior
+class MaceBehavior extends ItemBaseBehavior
 {
 
+    public function getSlotsCount(): int
+    {
+        return 1;
+    }
 }

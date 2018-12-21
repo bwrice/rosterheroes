@@ -9,7 +9,11 @@
 namespace App\Items\ItemBases\Behaviors;
 
 
-class AxeBehavior
+class AxeBehavior extends ItemBaseBehavior
 {
 
+    public function getSlotsCount(): int
+    {
+        return 1;
+    }
 }

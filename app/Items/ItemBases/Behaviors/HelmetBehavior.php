@@ -9,7 +9,11 @@
 namespace App\Items\ItemBases\Behaviors;
 
 
-class HelmetBehavior
+class HelmetBehavior extends ItemBaseBehavior
 {
 
+    public function getSlotsCount(): int
+    {
+        return 1;
+    }
 }

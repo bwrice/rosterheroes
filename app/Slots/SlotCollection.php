@@ -47,7 +47,7 @@ class SlotCollection extends Collection
     public function getSlottables()
     {
         $slottableCollection = new SlottableCollection();
-        $this->each(function (Slot $slot) use ($slottableCollection) {
+        $this->loadMissing('slottable')->each(function (Slot $slot) use ($slottableCollection) {
            $slottable = $slot->slottable;
            if ($slottable) {
                $slottableCollection->push($slottable);

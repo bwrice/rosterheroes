@@ -79,17 +79,17 @@ class ItemBlueprintTest extends TestCase
 
         $attackIDs = $attacks->pluck('id')->toArray();
 
-        $blueprint = factory( ItemBlueprint::class )->create([
+        $blueprint = factory(ItemBlueprint::class)->create([
             'item_type_id' => $itemType,
         ]);
 
         /** @var ItemBlueprint $blueprint */
-        $blueprint->attacks()->attach( $attackIDs );
+        $blueprint->attacks()->attach($attackIDs);
 
         /** @var Item $item */
         $item = $blueprint->generate();
 
-        $this->assertDatabaseHas( 'items', [
+        $this->assertDatabaseHas('items', [
             'id' => $item->id
         ]);
 
@@ -110,7 +110,7 @@ class ItemBlueprintTest extends TestCase
 
         $this->assertNotNull( $itemGroup );
 
-        $blueprint = factory( ItemBlueprint::class )->create([
+        $blueprint = factory(ItemBlueprint::class)->create([
             'item_type_id' => null,
             'item_group_id' => $itemGroup->id
         ]);

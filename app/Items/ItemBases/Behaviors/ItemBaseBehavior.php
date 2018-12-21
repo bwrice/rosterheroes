@@ -11,5 +11,5 @@ namespace App\Items\ItemBases\Behaviors;
 
 abstract class ItemBaseBehavior
 {
-
+    abstract public function getSlotsCount(): int;
 }

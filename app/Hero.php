@@ -2,9 +2,13 @@
 
 namespace App;
 
+use App\Slots\Equipper;
+use App\Slots\HasSlots;
 use App\Slots\Slot;
 use App\Slots\SlotCollection;
 use App\Slots\Slottable;
+use App\Slots\SlottableCollection;
+use function foo\func;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -26,7 +30,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property SlotCollection $slots
  * @property Collection $measurables
  */
-class Hero extends Model
+class Hero extends Model implements HasSlots
 {
 
     public function slots()
@@ -112,24 +116,68 @@ class Hero extends Model
         });
     }
 
-    public function equip(Slottable $slottable)
+    /**
+     * @return Equipper
+     */
+    protected function getEquipper()
     {
-        $slotTypes = $slottable->getSlotTypes();
-        $slotsCount = $slottable->getSlotsCount();
+        return app()->make(Equipper::class);
+    }
 
-        $slotsOfType = $this->slots->withSlotTypes($slotTypes->pluck('id')->toArray());
-        $emptySlots = $slotsOfType->slotEmpty();
+    /**
+     * @param Slottable $slottable
+     */
+    protected function equip(Slottable $slottable)
+    {
+        $this->getEquipper()->equip($this, $slottable);
+    }
 
-        $diff = $emptySlots->count() - $slotsCount;
+    /**
+     * @param int $count
+     * @param array $slotTypeIDs
+     * @return SlotCollection
+     */
+    public function getEmptySlots(int $count, array $slotTypeIDs = []): SlotCollection
+    {
+        return $this->slots->slotEmpty();
+    }
 
-        if ( $diff >= 0 ) {
+    /**
+     * @return HasSlots
+     */
+    public function getBackupHasSlots(): ?HasSlots
+    {
+        return $this->getWagon();
+    }
 
-        } else {
+    /**
+     * @param int $count
+     * @param array $slotTypeIDs
+     * @return SlottableCollection
+     */
+    public function emptySlots(int $count, array $slotTypeIDs = []): SlottableCollection
+    {
+        //TODO: Next step is to move this all to SlotCollection
+        $slottables = new SlottableCollection();
+        $this->slots->filter(function(Slot $slot) use ($slotTypeIDs) {
+            return in_array( $slot->slot_type_id, $slotTypeIDs );
+        })->loadMissing('slottable')->filter(function (Slot $slot) {
+            return $slot->slottable !== null;
+        })->take($count)->each(function (Slot $slot) use ($slottables) {
+            $slottables->push($slot->slottable);
+        });
 
-            $slotsToEmpty = $slotsOfType->slotFilled()->take($diff);
-            $slottables = $slotsToEmpty->getSlottables();
-            $slottables = $slottables->removeFromSlots();
+        return $slottables;
+    }
 
-        }
+    /**
+     * @param array $with
+     * @return HasSlots
+     *
+     * Wraps Eloquent fresh() method to force HasSlots return type
+     */
+    public function getFresh($with = []): HasSlots
+    {
+        return $this->fresh($with);
     }
 }

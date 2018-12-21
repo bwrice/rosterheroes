@@ -12,11 +12,11 @@ namespace App\Slots;
 interface HasSlots
 {
     /**
-     * @param array $slotTypeIDs
      * @param int $count
+     * @param array $slotTypeIDs
      * @return SlotCollection
      */
-    public function getEmptySlots( array $slotTypeIDs, int $count ): SlotCollection;
+    public function getEmptySlots(int $count, array $slotTypeIDs = []): SlotCollection;
 
     /**
      * @return HasSlots
@@ -24,14 +24,15 @@ interface HasSlots
     public function getBackupHasSlots(): ?HasSlots;
 
     /**
+     * @param array $with
      * @return HasSlots
      */
-    public function fresh(): HasSlots;
+    public function getFresh($with = []): HasSlots;
 
     /**
-     * @param array $slotTypeIDs
      * @param int $count
+     * @param array $slotTypeIDs
      * @return SlottableCollection
      */
-    public function emptySlots( array $slotTypeIDs, int $count ): SlottableCollection;
+    public function emptySlots(int $count, array $slotTypeIDs = []): SlottableCollection;
 }

@@ -15,7 +15,7 @@ class Equipper
     {
         $slotTypeIDs = $slottable->getSlotTypeIDs();
         $slotsNeededCount = $slottable->getSlotsCount();
-        $emptySlots = $hasSlots->getEmptySlots( $slotTypeIDs, $slotsNeededCount );
+        $emptySlots = $hasSlots->getEmptySlots($slotsNeededCount, $slotTypeIDs);
 
         $slotsToEmptyCount = $slotsNeededCount - $emptySlots->count();
 
@@ -31,12 +31,12 @@ class Equipper
                 throw new \RuntimeException("Not enough empty slots with no back-up available");
             }
 
-            $unequippedSlottables = $hasSlots->emptySlots($slotTypeIDs, $slotsToEmptyCount);
+            $unequippedSlottables = $hasSlots->emptySlots($slotsToEmptyCount, $slotTypeIDs);
             $unequippedSlottables->each(function (Slottable $slottable) use ($backup) {
                 $this->equip($backup, $slottable, false);
             });
 
-            $this->equip( $hasSlots->fresh(), $slottable, true );
+            $this->equip( $hasSlots->getFresh(), $slottable, true );
 
         } else {
             $slots = $emptySlots->take($slotsNeededCount);

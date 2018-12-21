@@ -2,9 +2,11 @@
 
 namespace App\Items\ItemBases;
 
+use App\HeroRank;
 use App\ItemGroup;
 use App\Items\ItemBases\Behaviors\AxeBehavior;
 use App\Items\ItemBases\Behaviors\BeltBehavior;
+use App\Items\ItemBases\Behaviors\BootsBehavior;
 use App\Items\ItemBases\Behaviors\BowBehavior;
 use App\Items\ItemBases\Behaviors\BraceletBehavior;
 use App\Items\ItemBases\Behaviors\CapBehavior;
@@ -16,6 +18,7 @@ use App\Items\ItemBases\Behaviors\GauntletsBehavior;
 use App\Items\ItemBases\Behaviors\GlovesBehavior;
 use App\Items\ItemBases\Behaviors\HeavyArmorBehavior;
 use App\Items\ItemBases\Behaviors\HelmetBehavior;
+use App\Items\ItemBases\Behaviors\ItemBaseBehavior;
 use App\Items\ItemBases\Behaviors\LightArmorBehavior;
 use App\Items\ItemBases\Behaviors\MaceBehavior;
 use App\Items\ItemBases\Behaviors\NecklaceBehavior;
@@ -109,6 +112,17 @@ class ItemBase extends Model
         return $this->belongsTo(ItemGroup::class);
     }
 
+    /**
+     * @return int
+     */
+    public function getSlotsCount()
+    {
+        return $this->getBehavior()->getSlotsCount();
+    }
+
+    /**
+     * @return ItemBaseBehavior
+     */
     public function getBehavior()
     {
         switch( $this->name ) {
@@ -162,6 +176,8 @@ class ItemBase extends Model
                 return app()->make(GlovesBehavior::class);
             case self::GAUNTLETS:
                 return app()->make(GauntletsBehavior::class);
+            case self::BOOTS:
+                return app()->make( BootsBehavior::class );
             case self::SHOES:
                 return app()->make(ShoesBehavior::class);
             case self::BELT:
