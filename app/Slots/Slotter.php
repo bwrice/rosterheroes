@@ -9,9 +9,9 @@
 namespace App\Slots;
 
 
-class Equipper
+class Slotter
 {
-    public function equip(HasSlots $hasSlots, Slottable $slottable, $secondAttempt = false)
+    public function slot(HasSlots $hasSlots, Slottable $slottable, $secondAttempt = false)
     {
         $slotTypeIDs = $slottable->getSlotTypeIDs();
         $slotsNeededCount = $slottable->getSlotsCount();
@@ -31,12 +31,17 @@ class Equipper
                 throw new \RuntimeException("Not enough empty slots with no back-up available");
             }
 
-            $unequippedSlottables = $hasSlots->emptySlots($slotsToEmptyCount, $slotTypeIDs);
-            $unequippedSlottables->each(function (Slottable $slottable) use ($backup) {
-                $this->equip($backup, $slottable, false);
+            // Get slots we need to remove from their slots to make space for what we intend to slot
+            $slottables = $hasSlots->getSlots()->filled()->take($slotsToEmptyCount)->getSlottables();
+            // Now get the slots those slottables are currently slotted into and empty them
+            $slottables->getSlots()->emptySlottables();
+            // Re-slot the slottables that were removed
+            $slottables->each(function (Slottable $slottable) use ($backup) {
+                $this->slot($backup, $slottable, false);
             });
 
-            $this->equip( $hasSlots->getFresh(), $slottable, true );
+            //Now try to slot the original slottable again
+            $this->slot( $hasSlots->getFresh(), $slottable, true );
 
         } else {
             $slots = $emptySlots->take($slotsNeededCount);

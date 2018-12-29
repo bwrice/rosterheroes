@@ -11,6 +11,13 @@ namespace App\Slots;
 
 use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
 
+/**
+ * Interface Slottable
+ * @package App\Slots
+ *
+ * @property int|null $slot_type_id
+ * @property string|null
+ */
 interface Slottable
 {
     public function getSlotTypeIDs(): array;
@@ -21,4 +28,6 @@ interface Slottable
      * @return HasOneOrMany
      */
     public function slots();
+
+    public function getSlots(): SlotCollection;
 }

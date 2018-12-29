@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Spell extends Model
 {
+    const RELATION_MORPH_MAP_KEY = 'spells';
 
     protected $guarded = [];
 

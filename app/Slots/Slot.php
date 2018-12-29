@@ -16,9 +16,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $slot_type_id
  * @property int $slottable_id
  * @property string $slottable_type
+ * @property int $has_slots_id
+ * @property string $has_slots_type
  *
  * @property Collection $items
  * @property Slottable $slottable
+ * @property SlotType $slotType
  */
 class Slot extends Model
 {

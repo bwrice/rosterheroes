@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Slots\Slot;
+use App\Slots\SlotCollection;
 use App\Slots\Slottable;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,9 +14,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  *
  * @property ItemType $itemType
+ * @property SlotCollection $slots
  */
 class Item extends Model implements Slottable
 {
+    const RELATION_MORPH_MAP = 'items';
+
     protected $guarded = [];
 
     public function enchantments()
@@ -41,5 +45,10 @@ class Item extends Model implements Slottable
     public function getSlotsCount(): int
     {
         return $this->itemType->itemBase->getSlotsCount();
+    }
+
+    public function getSlots(): SlotCollection
+    {
+        return $this->slots;
     }
 }

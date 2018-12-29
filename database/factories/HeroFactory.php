@@ -29,7 +29,8 @@ $factory->afterCreating(\App\Hero::class, function(\App\Hero $hero, Faker $faker
     $measurableTypes = \App\MeasurableType::heroTypes()->get();
     $measurableTypes->each(function (\App\MeasurableType $measurableType) use($hero) {
        $hero->measurables()->create([
-           'measurable_type_id' => $measurableType->id
+           'measurable_type_id' => $measurableType->id,
+           'amount_raised' => 0
        ]);
     });
 });

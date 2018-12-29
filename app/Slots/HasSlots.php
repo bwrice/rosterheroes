@@ -29,10 +29,15 @@ interface HasSlots
      */
     public function getFresh($with = []): HasSlots;
 
+//    /**
+//     * @param int $count
+//     * @param array $slotTypeIDs
+//     * @return SlottableCollection
+//     */
+//    public function emptySlots(int $count, array $slotTypeIDs = []): SlottableCollection;
+
     /**
-     * @param int $count
-     * @param array $slotTypeIDs
-     * @return SlottableCollection
+     * @return SlotCollection
      */
-    public function emptySlots(int $count, array $slotTypeIDs = []): SlottableCollection;
+    public function getSlots(): SlotCollection;
 }

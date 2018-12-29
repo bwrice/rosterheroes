@@ -13,11 +13,12 @@ use Illuminate\Database\Eloquent\Collection;
 
 class SlottableCollection extends Collection
 {
-    public function removeFromSlots()
+    public function getSlots()
     {
-        $this->each(function (Slottable $slottable) {
-           $slottable->removeFromSlots();
+        $slotCollection = new SlotCollection();
+        $this->loadMissing('slots')->each(function (Slottable $slottable) use (&$slotCollection) {
+           $slotCollection = $slotCollection->merge($slottable->getSlots());
         });
-        return $this;
+        return $slotCollection;
     }
 }

@@ -15,6 +15,7 @@ class HeroTest extends TestCase
      */
     public function it_can_equip_an_item()
     {
+        //Move this to an integration test, SlotterTest will cover the unit functionality
         /** @var Item $item */
         $item = factory(Item::class)->create();
         /** @var Hero $hero */
