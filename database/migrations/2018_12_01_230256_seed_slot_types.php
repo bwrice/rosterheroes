@@ -117,10 +117,6 @@ class SeedSlotTypes extends Migration
                 ]
             ],
             [
-                'name' => \App\SlotType::WAGON,
-                'paths' => []
-            ],
-            [
                 'name' => \App\SlotType::UNIVERSAL,
                 'paths' => []
             ]

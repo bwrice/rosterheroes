@@ -35,7 +35,7 @@ class AddWagonSlots
 
         if($diff > 0) {
             /** @var SlotType $slotType */
-            $slotType = SlotType::where('name', '=', SlotType::WAGON)->first();
+            $slotType = SlotType::where('name', '=', SlotType::UNIVERSAL)->first();
             for($i = 1; $i <= $diff; $i++) {
                 $wagon->slots()->create([
                     'slot_type_id' => $slotType->id

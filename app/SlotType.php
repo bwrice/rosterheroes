@@ -30,7 +30,6 @@ class SlotType extends Model
     const LEFT_WRIST = 'left-wrist';
     const RIGHT_RING = 'right-ring';
     const LEFT_RING = 'left-ring';
-    const WAGON = 'wagon';
     const UNIVERSAL = 'universal';
 
     protected $guarded = [];

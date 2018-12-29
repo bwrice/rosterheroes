@@ -27,6 +27,11 @@ class Item extends Model implements Slottable
         return $this->belongsToMany(Enchantment::class)->withTimestamps();
     }
 
+    public function itemBlueprint()
+    {
+        return $this->belongsTo(ItemBlueprint::class);
+    }
+
     public function itemType()
     {
         return $this->belongsTo(ItemType::class);

@@ -70,7 +70,7 @@ class SquadTest extends TestCase
         $this->assertNotNull($squad->wagon,"The Squad has a wagon");
         $this->assertEquals($squad->wagon->squad_id, $squad->id, "The Wagon belongs to the Squad");
         $wagonSlotsCount = $squad->wagon->slots()->get()->filter(function (Slot $slot) {
-            return $slot->slotType->name == SlotType::WAGON;
+            return $slot->slotType->name == SlotType::UNIVERSAL;
         })->count();
         $this->assertEquals($squad->wagon->wagonSize->getBehavior()->getTotalSlotsCount(), $wagonSlotsCount, "Wagon has it's slots");
 

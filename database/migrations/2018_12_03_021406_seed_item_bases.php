@@ -401,7 +401,6 @@ class SeedItemBases extends Migration
 
             //Add universal and wagon slot type to all current item bases
             $itemBase['slot_types'][] = \App\SlotType::UNIVERSAL;
-            $itemBase['slot_types'][] = \App\SlotType::WAGON;
             $slotTypesToSave = $slotTypes->whereIn( 'name', $itemBase['slot_types'] );
             $itemBaseCreated->slotTypes()->saveMany( $slotTypesToSave );
         }
