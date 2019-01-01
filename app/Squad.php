@@ -3,20 +3,30 @@
 namespace App;
 
 use App\Events\HeroCreated;
+use App\Events\SquadFavorIncreased;
 use App\Events\SquadCreated;
+use App\Events\SquadCreationRequested;
+use App\Events\SquadGoldIncreased;
+use App\Events\SquadSalaryIncreased;
 use App\Wagons\Wagon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Ramsey\Uuid\Uuid;
 
 /**
  * Class Squad
  * @package App
  *
  * @property int $id
+ * @property string $uuid
  * @property int $user_id
  * @property string $name
  * @property int $squad_rank_id
  * @property int $province_id
+ * @property int $salary
+ * @property int $experience
+ * @property int $gold
+ * @property int $favor
  *
  * @property Province $province
  * @property Wagon $wagon
@@ -24,60 +34,84 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Squad extends Model
 {
+    const STARTING_GOLD = 500;
+    const STARTING_FAVOR = 100;
+    const STARTING_SALARY = 30000;
+
     protected $guarded = [];
 
     /**
      * @param int $userID
      * @param string $name
      * @param array $heroesData
-     *
      * @return Squad
+     * @throws \Exception
      *
      * Creates a new Squad with Heroes and triggers associated events
      */
     public static function generate(int $userID, string $name, array $heroesData)
     {
         /** @var Squad $squad */
-        $squad = self::create([
+        $squad = self::createWithAttributes([
             'user_id' => $userID,
             'name' => $name,
             'squad_rank_id' => SquadRank::getStarting()->id,
-            'province_id' => Province::getStarting()->id,
+            'province_id' => Province::getStarting()->id
         ]);
 
+        // Hooked into for adding wagon
         event(new SquadCreated($squad));
 
-        $heroClasses = HeroClass::all();
-        $heroRaces = HeroRace::all();
-        $startingRank = HeroRank::getStarting();
+        // Give starting salary, gold and favor to new squad
+        $squad->increaseSalary(self::STARTING_SALARY);
+        $squad->increaseGold(self::STARTING_GOLD);
+        $squad->increaseFavor(self::STARTING_FAVOR);
 
         foreach($heroesData as $hero) {
-            /** @var Hero $hero */
-            $hero = $squad->heroes()->create([
-                'name' => $hero['name'],
-                'hero_class_id' => $heroClasses->where('name', '=', $hero['class'])->first()->id,
-                'hero_race_id' => $heroRaces->where('name', '=', $hero['race'])->first()->id,
-                'hero_rank_id' => $startingRank->id
-            ]);
 
-            event(new HeroCreated($hero));
+            Hero::generate($squad, $hero['name'], $hero['class'], $hero['race']);
         }
 
         return $squad->load('heroes', 'wagon', 'province');
     }
 
-    public function build(User $user, string $name, array $heroesData)
+    public function increaseSalary(int $amount)
     {
-        $this->user_id = $user->id;
-        $this->name = $name;
-        $this->squad_rank_id = SquadRank::getStarting()->id;
-        $this->province_id = Province::getStarting()->id;
-        $this->save();
-        (new Wagon)->build($this);
-        foreach($heroesData as $heroData) {
-            (new Hero)->build($this, $heroData);
-        }
-        return $this->fresh();
+        event(new SquadSalaryIncreased($this->uuid, $amount));
+    }
+
+    public function increaseGold(int $amount)
+    {
+        event(new SquadGoldIncreased($this->uuid, $amount));
+    }
+
+    public function increaseFavor(int $amount)
+    {
+        event(new SquadFavorIncreased($this->uuid, $amount));
+    }
+
+    /**
+     * @param array $attributes
+     * @return Squad|null
+     * @throws \Exception
+     */
+    public static function createWithAttributes(array $attributes)
+    {
+        $uuid = (string) Uuid::uuid4();
+
+        $attributes['uuid'] = $uuid;
+
+        event(new SquadCreationRequested($attributes));
+
+        return self::uuid($uuid);
+    }
+
+    /*
+     * A helper method to quickly retrieve an account by uuid.
+     */
+    public static function uuid(string $uuid): ?Squad
+    {
+        return static::where('uuid', $uuid)->first();
     }
 
     public function wagon()

@@ -15,11 +15,16 @@ class CreateSquadsTable extends Migration
     {
         Schema::create('squads', function (Blueprint $table) {
             $table->increments('id');
+            $table->uuid('uuid');
             $table->string('name')->unique();
             $table->integer('user_id')->unsigned();
             $table->integer('squad_rank_id')->unsigned();
             $table->integer('province_id')->unsigned();
             $table->integer('nation_id')->unsigned()->nullable();
+            $table->integer('salary')->unsigned()->default(0);
+            $table->bigInteger('experience')->unsigned()->default(0);
+            $table->bigInteger('gold')->unsigned()->default(0);
+            $table->bigInteger('favor')->unsigned()->default(0);
             $table->timestamps();
         });
 

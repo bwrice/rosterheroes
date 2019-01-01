@@ -6,8 +6,12 @@ $factory->define(\App\Squad::class, function (Faker $faker) {
 
     return [
         'user_id' => factory(\App\User::class)->create()->id,
+        'uuid' => (string) \Ramsey\Uuid\Uuid::uuid4(),
         'province_id' => \App\Province::getStarting()->id,
         'squad_rank_id' => \App\SquadRank::getStarting()->id,
+        'salary' => \App\Squad::STARTING_SALARY,
+        'gold' => \App\Squad::STARTING_GOLD,
+        'favor' => \App\Squad::STARTING_FAVOR,
         'name' => $faker->company,
     ];
 });

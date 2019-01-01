@@ -22,8 +22,8 @@ class CreateStoreHousesTable extends Migration
 
 
         Schema::table('store_houses', function (Blueprint $table) {
-            $table->foreign('squad_id')->references('id')->on('squads');
             $table->foreign('store_house_type_id')->references('id')->on('store_house_types');
+            $table->foreign('squad_id')->references('id')->on('squads');
         });
     }
 

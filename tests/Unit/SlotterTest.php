@@ -368,6 +368,24 @@ class SlotterTest extends TestCase
      */
     public function slotting_to_a_full_wagon_will_stash_the_item_if_no_store_house_is_available()
     {
+        $firstItemBaseName = ItemBase::SWORD;
+        $itemBase = ItemBase::where('name', '=', $firstItemBaseName)->first();
 
+        /** @var ItemBlueprint $itemBlueprint */
+        $itemBlueprint = factory(ItemBlueprint::class)->create([
+            'item_type_id' => null, //Override default set by factory
+            'item_base_id' => $itemBase->id
+        ]);
+
+        $firstItem = $itemBlueprint->generate();
+
+        $wagonSlotCount = $this->squad->wagon->slots()->count();
+        // delete all but the slots needed for the first item
+        $wagon = $this->squad->wagon;
+        $wagon->slots()->take($wagonSlotCount - $firstItem->getSlotsCount())->delete();
+        $wagon = $wagon->fresh();
+
+        $this->slotter->slot($wagon, $firstItem);
+        //TODO build test for Squad that it will create a stash or return a storehouse
     }
 }

@@ -15,6 +15,7 @@ class CreateNationsTable extends Migration
     {
         Schema::create('nations', function (Blueprint $table) {
             $table->increments('id');
+            $table->uuid('uuid');
             $table->string('name');
             $table->timestamps();
         });

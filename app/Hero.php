@@ -2,6 +2,9 @@
 
 namespace App;
 
+use App\Events\HeroCreated;
+use App\Events\HeroCreationRequested;
+use App\Events\SquadCreationRequested;
 use App\Slots\Slotter;
 use App\Slots\HasSlots;
 use App\Slots\Slot;
@@ -12,6 +15,7 @@ use function foo\func;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Ramsey\Uuid\Uuid;
 
 /**
  * Class Hero
@@ -25,6 +29,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $name
  *
  * @property HeroClass $heroClass
+ * @property HeroRace $heroRace
  * @property Squad $squad
  *
  * @property SlotCollection $slots
@@ -51,6 +56,11 @@ class Hero extends Model implements HasSlots
         return $this->belongsTo(HeroClass::class);
     }
 
+    public function heroRace()
+    {
+        return $this->belongsTo(HeroRace::class);
+    }
+
     public function squad()
     {
         return $this->belongsTo(Squad::class);
@@ -59,6 +69,46 @@ class Hero extends Model implements HasSlots
     protected function getWagon()
     {
         return $this->squad->wagon;
+    }
+
+    public static function generate(Squad $squad, $name, $heroClass, $heroRace)
+    {
+        $hero = self::createWithAttributes([
+            'squad_id' => $squad->id,
+            'name' => $name,
+            'hero_class_id' => HeroClass::where('name', '=', $heroClass)->first()->id,
+            'hero_race_id' => HeroRace::where('name', '=', $heroRace)->first()->id,
+            'hero_rank_id' => HeroRank::getStarting()->id
+        ]);
+
+        // Hooked into for adding slots, measurables...
+        event(new HeroCreated($hero));
+
+        return $hero;
+    }
+
+    /**
+     * @param array $attributes
+     * @return Hero|null
+     * @throws \Exception
+     */
+    public static function createWithAttributes(array $attributes)
+    {
+        $uuid = (string) Uuid::uuid4();
+
+        $attributes['uuid'] = $uuid;
+
+        event(new HeroCreationRequested($attributes));
+
+        return self::uuid($uuid);
+    }
+
+    /*
+     * A helper method to quickly retrieve an account by uuid.
+     */
+    public static function uuid(string $uuid): ?Hero
+    {
+        return static::where('uuid', $uuid)->first();
     }
 
     /**

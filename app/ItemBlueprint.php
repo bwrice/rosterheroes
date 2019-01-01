@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Events\ItemBlueprintCreated;
 use App\Items\ItemBases\ItemBase;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -55,7 +56,8 @@ class ItemBlueprint extends Model
     }
 
     /**
-     * @return Item
+     * @return Item|null
+     * @throws \Exception
      */
     public function generate()
     {
@@ -64,13 +66,7 @@ class ItemBlueprint extends Model
         $materialType = $this->getMaterialType($itemType);
 
         /** @var Item $item */
-        $item = Item::create([
-            'item_class_id' => $itemClass->id,
-            'item_type_id' => $itemType->id,
-            'material_type_id' => $materialType->id,
-            'item_blueprint_id' => $this->id,
-            'name' => $this->item_name
-        ]);
+        $item = Item::generate($itemClass, $itemType, $materialType, $this);
 
         $this->attachEnchantments($item, $itemClass, $this->enchantments, $this->enchantments_power);
 
@@ -255,5 +251,10 @@ class ItemBlueprint extends Model
         }
 
         return $itemType;
+    }
+
+    protected static function triggerCreatedEvent(array $attributes)
+    {
+        event(new ItemBlueprintCreated($attributes));
     }
 }

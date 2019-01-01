@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use App\Events\SquadCreated;
 use App\Events\WagonCreated;
+use App\Squad;
 use App\Wagons\Wagon;
 use App\Wagons\WagonSizes\WagonSize;
 use Illuminate\Queue\InteractsWithQueue;
@@ -32,7 +33,7 @@ class CreateNewWagon
         $squad = $event->squad;
         /** @var Wagon $wagon */
         $wagon = $squad->wagon()->create([
-            'squad_id' => $event->squad->id,
+            'squad_id' => $squad->id,
             'wagon_size_id' => WagonSize::getStarting()->id
         ]);
 

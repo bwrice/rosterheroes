@@ -7,6 +7,7 @@ use App\Events\SquadCreated;
 use App\Events\WagonCreated;
 use App\Listeners\AddHeroMeasurables;
 use App\Listeners\AddHeroSlots;
+use App\Listeners\AddSquadStartingGold;
 use App\Listeners\AddWagonSlots;
 use App\Listeners\CreateNewWagon;
 use Illuminate\Support\Facades\Event;

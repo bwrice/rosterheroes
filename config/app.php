@@ -179,6 +179,7 @@ return [
          * Custom Service Providers
          */
         \App\Providers\RelationsServiceProvider::class,
+//        \App\Providers\ProjectorServiceProvider::class
     ],
 
     /*

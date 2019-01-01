@@ -19,7 +19,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class SquadTest extends TestCase
 {
-    use DatabaseTransactions;
+//    use DatabaseTransactions;
 
     /**
      * @test
@@ -30,22 +30,22 @@ class SquadTest extends TestCase
 
         $heroesData = [
             [
-                'name' => 'HeroOne',
+                'name' => 'HeroOne-' . uniqid(),
                 'class' => HeroClass::WARRIOR,
                 'race' => HeroRace::DWARF
             ],
             [
-                'name' => 'HeroTwo',
+                'name' => 'HeroTwo-' . uniqid(),
                 'class' => HeroClass::WARRIOR,
                 'race' => HeroRace::ORC,
             ],
             [
-                'name' => 'HeroThree',
+                'name' => 'HeroThree-' . uniqid(),
                 'class' => HeroClass::RANGER,
                 'race' => HeroRace::HUMAN
             ],
             [
-                'name' => 'HeroFour',
+                'name' => 'HeroFour-' . uniqid(),
                 'class' => HeroClass::SORCERER,
                 'race' => HeroRace::ELF
             ],
@@ -54,7 +54,7 @@ class SquadTest extends TestCase
         /** @var User $user */
         $user = Passport::actingAs(factory(User::class)->create());
 
-        $name = 'MyAwesomeSquad';
+        $name = 'MyAwesomeSquad-' . uniqid();
 
         $response = $this->post('api/squad/create', [
            'name' => $name,
@@ -69,6 +69,10 @@ class SquadTest extends TestCase
         $this->assertEquals($user->squads->first()->id, $squad->id);
         $this->assertNotNull($squad->wagon,"The Squad has a wagon");
         $this->assertEquals($squad->wagon->squad_id, $squad->id, "The Wagon belongs to the Squad");
+        $this->assertEquals(Squad::STARTING_SALARY, $squad->salary, "Squad has starting salary");
+        $this->assertEquals(Squad::STARTING_GOLD, $squad->gold, "Squad has starting gold");
+        $this->assertEquals(Squad::STARTING_FAVOR, $squad->favor, "Squad has starting favor");
+
         $wagonSlotsCount = $squad->wagon->slots()->get()->filter(function (Slot $slot) {
             return $slot->slotType->name == SlotType::UNIVERSAL;
         })->count();

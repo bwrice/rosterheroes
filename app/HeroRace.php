@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * @package App
  *
  * @property int $id
+ * @property string $name
  * @property Collection $positions
  */
 class HeroRace extends Model
