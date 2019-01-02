@@ -128,4 +128,30 @@ class Squad extends Model
     {
         return $this->hasMany(Hero::class);
     }
+
+    public function stashes()
+    {
+        return $this->hasMany(Stash::class);
+    }
+
+
+    public function getLocalStash()
+    {
+        return $this->stashes()->firstOrCreate([
+            'province_id' => $this->province_id
+        ]);
+    }
+
+    public function storeHouses()
+    {
+        return $this->hasMany(StoreHouse::class);
+    }
+
+    /**
+     * @return StoreHouse|null
+     */
+    public function getLocalStoreHouse(): ?StoreHouse
+    {
+        return $this->storeHouses()->where('province_id', '=', $this->province_id)->first();
+    }
 }
