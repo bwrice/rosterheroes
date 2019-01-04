@@ -86,7 +86,9 @@ class Wagon extends Model implements HasSlots
      */
     public function getBackupHasSlots(): ?HasSlots
     {
-        // TODO: Implement getBackupHasSlots() method.
+        $storeHouse = $this->squad->getLocalStoreHouse();
+
+        return $storeHouse ?: $this->squad->getLocalStash();
     }
 
     /**

@@ -3,12 +3,15 @@
 namespace App;
 
 use App\Slots\HasSlots;
+use App\Slots\Slot;
 use App\Slots\SlotCollection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Stash
  * @package App
+ *
+ * @property SlotCollection $slots
  */
 class Stash extends Model implements HasSlots
 {
@@ -24,6 +27,11 @@ class Stash extends Model implements HasSlots
         return $this->belongsTo(Province::class);
     }
 
+    public function slots()
+    {
+        return $this->morphMany(Slot::class, 'has_slots');
+    }
+
     /**
      * @param int $count
      * @param array $slotTypeIDs
@@ -31,7 +39,7 @@ class Stash extends Model implements HasSlots
      */
     public function getEmptySlots(int $count, array $slotTypeIDs = []): SlotCollection
     {
-        // TODO: Implement getEmptySlots() method.
+        //TODO create slots as needed
     }
 
     /**
@@ -56,6 +64,6 @@ class Stash extends Model implements HasSlots
      */
     public function getSlots(): SlotCollection
     {
-        // TODO: Implement getSlots() method.
+        return $this->slots;
     }
 }
