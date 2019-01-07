@@ -39,8 +39,48 @@ class Stash extends Model implements HasSlots
      */
     public function getEmptySlots(int $count, array $slotTypeIDs = []): SlotCollection
     {
-        //TODO create slots as needed
+        $slotTypeIDs = $slotTypeIDs ?: SlotType::where('name', '=', SlotType::UNIVERSAL)->pluck('id')->toArray();
+        $emptySlots = $this->slots->slotEmpty()->withSlotTypes($slotTypeIDs);
+
+        $diff = $count - $emptySlots->count();
+        if ($diff > 0) {
+            $newSlots = $this->createEmptySlots($diff, $slotTypeIDs);
+            $emptySlots = $emptySlots->merge($newSlots);
+        }
+        return $emptySlots;
     }
+
+    public function createEmptySlots(int $count, array $slotTypeIDs): SlotCollection
+    {
+        $slotCollection = new SlotCollection();
+
+        if ($count > 0 && $slotTypeIDs) {
+            $slotTypeID = $this->getPreferredSlotTypeID($slotTypeIDs);
+
+            for ($i = 1; $i <= $count; $i++) {
+                $slotCollection = $slotCollection->push($this->slots()->create([
+                    'slot_type_id' => $slotTypeID
+                ]));
+            }
+        }
+
+        return $slotCollection;
+    }
+
+    /**
+     * @param array $slotTypeIDs
+     * @return int
+     */
+    public function getPreferredSlotTypeID(array $slotTypeIDs)
+    {
+        $universalSlotTypeID = SlotType::where('name', '=', SlotType::UNIVERSAL)->first()->id;
+        if($slotTypeIDs) {
+            return in_array($universalSlotTypeID, $slotTypeIDs) ? $universalSlotTypeID : array_values($slotTypeIDs)[0];
+        } else {
+            return $universalSlotTypeID;
+        }
+    }
+
 
     /**
      * @return HasSlots

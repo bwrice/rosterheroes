@@ -8,6 +8,10 @@ use App\Events\SquadCreated;
 use App\Events\SquadCreationRequested;
 use App\Events\SquadGoldIncreased;
 use App\Events\SquadSalaryIncreased;
+use App\Slots\HasSlots;
+use App\Slots\Slot;
+use App\Slots\SlotCollection;
+use App\Squads\MobileStorage\MobileStorageRank;
 use App\Wagons\Wagon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -29,10 +33,11 @@ use Ramsey\Uuid\Uuid;
  * @property int $favor
  *
  * @property Province $province
- * @property Wagon $wagon
+ * @property MobileStorageRank $mobileStorageRank
+ * @property SlotCollection $slots
  * @property Collection $heroes
  */
-class Squad extends Model
+class Squad extends Model implements HasSlots
 {
     const STARTING_GOLD = 500;
     const STARTING_FAVOR = 100;
@@ -56,6 +61,7 @@ class Squad extends Model
             'user_id' => $userID,
             'name' => $name,
             'squad_rank_id' => SquadRank::getStarting()->id,
+            'mobile_storage_rank_id' => MobileStorageRank::getStarting()->id,
             'province_id' => Province::getStarting()->id
         ]);
 
@@ -72,7 +78,7 @@ class Squad extends Model
             Hero::generate($squad, $hero['name'], $hero['class'], $hero['race']);
         }
 
-        return $squad->load('heroes', 'wagon', 'province');
+        return $squad->load('heroes', 'province');
     }
 
     public function increaseSalary(int $amount)
@@ -114,9 +120,9 @@ class Squad extends Model
         return static::where('uuid', $uuid)->first();
     }
 
-    public function wagon()
+    public function mobileStorageRank()
     {
-        return $this->hasOne(Wagon::class);
+        return $this->belongsTo(MobileStorageRank::class);
     }
 
     public function province()
@@ -127,6 +133,11 @@ class Squad extends Model
     public function heroes()
     {
         return $this->hasMany(Hero::class);
+    }
+
+    public function slots()
+    {
+        return $this->morphMany(Slot::class, 'has_slots');
     }
 
     public function stashes()
@@ -153,5 +164,40 @@ class Squad extends Model
     public function getLocalStoreHouse(): ?StoreHouse
     {
         return $this->storeHouses()->where('province_id', '=', $this->province_id)->first();
+    }
+
+    /**
+     * @param int $count
+     * @param array $slotTypeIDs
+     * @return SlotCollection
+     */
+    public function getEmptySlots(int $count, array $slotTypeIDs = []): SlotCollection
+    {
+        return $this->slots->slotEmpty()->withSlotTypes($slotTypeIDs);
+    }
+
+    /**
+     * @return HasSlots
+     */
+    public function getBackupHasSlots(): ?HasSlots
+    {
+        return $this->getLocalStash();
+    }
+
+    /**
+     * @param array $with
+     * @return HasSlots
+     */
+    public function getFresh($with = []): HasSlots
+    {
+        return $this->fresh($with);
+    }
+
+    /**
+     * @return SlotCollection
+     */
+    public function getSlots(): SlotCollection
+    {
+        return $this->slots;
     }
 }

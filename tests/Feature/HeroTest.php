@@ -7,6 +7,7 @@ use App\HeroClass;
 use App\HeroRace;
 use App\Measurable;
 use App\MeasurableType;
+use App\Player;
 use App\Slots\Slot;
 use App\SlotType;
 use App\Squad;
@@ -18,6 +19,14 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class HeroTest extends TestCase
 {
     use DatabaseTransactions;
+
+    /**
+     * @test
+     */
+    public function it_can_add_a_player_with_the_correct_position()
+    {
+        $player = factory(Player::class)->create();
+    }
 
 //    /**
 //     * @test

@@ -66,11 +66,6 @@ class Hero extends Model implements HasSlots
         return $this->belongsTo(Squad::class);
     }
 
-    protected function getWagon()
-    {
-        return $this->squad->wagon;
-    }
-
     public static function generate(Squad $squad, $name, $heroClass, $heroRace)
     {
         $hero = self::createWithAttributes([
@@ -205,7 +200,7 @@ class Hero extends Model implements HasSlots
      */
     public function getBackupHasSlots(): ?HasSlots
     {
-        return $this->getWagon();
+        return $this->squad;
     }
 
     /**

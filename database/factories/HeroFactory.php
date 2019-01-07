@@ -19,13 +19,15 @@ $factory->define(\App\Hero::class, function (Faker $faker) {
     ];
 });
 
-$factory->afterCreating(\App\Hero::class, function(\App\Hero $hero, Faker $faker) {
+$factory->afterCreatingState(\App\Hero::class, 'with-slots', function(\App\Hero $hero, Faker $faker) {
     $heroSlotTypes = \App\SlotType::heroTypes()->get();
     $heroSlotTypes->each(function (\App\SlotType $slotType) use ($hero) {
         $hero->slots()->create([
             'slot_type_id' => $slotType->id,
         ]);
     });
+});
+$factory->afterCreatingState(\App\Hero::class, 'with-measurables', function(\App\Hero $hero, Faker $faker) {
     $measurableTypes = \App\MeasurableType::heroTypes()->get();
     $measurableTypes->each(function (\App\MeasurableType $measurableType) use($hero) {
        $hero->measurables()->create([

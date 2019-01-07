@@ -202,12 +202,12 @@ class SlotterTest extends TestCase
 
     /**
      * @test
-     * @dataProvider provides_it_can_slot_and_replace_items_on_heroes_and_move_them_to_wagon
+     * @dataProvider provides_it_can_slot_and_replace_items_on_heroes_and_move_them_to_squad
      *
      * @param $firstItemBaseName
      * @param $secondItemBaseName
      */
-    public function it_can_slot_and_replace_items_on_heroes_and_move_them_to_wagon($firstItemBaseName, $secondItemBaseName)
+    public function it_can_slot_and_replace_items_on_heroes_and_move_them_to_squad($firstItemBaseName, $secondItemBaseName)
     {
         /** @var Hero $hero */
         $hero = $this->squad->heroes->random();
@@ -238,10 +238,8 @@ class SlotterTest extends TestCase
 
         $this->slotter->slot($hero, $itemTwo);
 
-        $wagon = $this->squad->wagon;
-
-        $itemOne->slots->each(function (Slot $slot) use ($wagon) {
-            $this->assertEquals($wagon->id, $slot->has_slots_id, "First item now slotted in wagon");
+        $itemOne->slots->each(function (Slot $slot) {
+            $this->assertEquals($this->squad->id, $slot->has_slots_id, "First item now slotted in squad");
         });
 
         $itemTwo->slots->each(function (Slot $slot) use ($hero) {
@@ -249,7 +247,7 @@ class SlotterTest extends TestCase
         });
     }
 
-    public function provides_it_can_slot_and_replace_items_on_heroes_and_move_them_to_wagon()
+    public function provides_it_can_slot_and_replace_items_on_heroes_and_move_them_to_squad()
     {
         return [
             'helmet replaced with helmet' => [
@@ -281,9 +279,9 @@ class SlotterTest extends TestCase
 
     /**
      * @test
-     * @dataProvider provides_it_can_slot_single_slot_items_with_multi_slot_options_and_only_move_one_to_the_wagon_if_possible
+     * @dataProvider provides_it_can_slot_single_slot_items_with_multi_slot_options_and_only_move_one_to_the_squad_if_possible
      */
-    public function it_can_slot_single_slot_items_with_multi_slot_options_and_only_move_one_to_the_wagon_if_possible($firstItemBaseName, $secondItemBaseName, $thirdItemBaseName)
+    public function it_can_slot_single_slot_items_with_multi_slot_options_and_only_move_one_to_the_squad_if_possible($firstItemBaseName, $secondItemBaseName, $thirdItemBaseName)
     {
         /** @var Hero $hero */
         $hero = $this->squad->heroes->random();
@@ -326,8 +324,6 @@ class SlotterTest extends TestCase
 
         $this->slotter->slot($hero, $itemThree);
 
-        $wagon = $this->squad->wagon;
-
         $this->assertEquals(1, $itemOne->slots->count(), "Single slot item only taking up one slot");
         $this->assertEquals(1, $itemTwo->slots->count(), "Single slot item only taking up one slot");
         $this->assertEquals(1, $itemThree->slots->count(), "Single slot item only taking up one slot");
@@ -337,12 +333,12 @@ class SlotterTest extends TestCase
         $slotThree = $itemThree->slots->first();
 
 
-        $this->assertEquals($wagon->id, $slotOne->has_slots_id, "First item now slotted in wagon");
+        $this->assertEquals($this->squad->id, $slotOne->has_slots_id, "First item now slotted in squad");
         $this->assertEquals($hero->id, $slotTwo->has_slots_id, "Second item is still slotted in hero");
         $this->assertEquals($hero->id, $slotThree->has_slots_id, "Third item now slotted in hero");
     }
 
-    public function provides_it_can_slot_single_slot_items_with_multi_slot_options_and_only_move_one_to_the_wagon_if_possible()
+    public function provides_it_can_slot_single_slot_items_with_multi_slot_options_and_only_move_one_to_the_squad_if_possible()
     {
         return [
             'dagger and sword slotted and then axe slotted' => [
@@ -365,10 +361,14 @@ class SlotterTest extends TestCase
 
     /**
      * @test
+     * @dataProvider provides_slotting_to_a_full_squad_will_stash_the_item_if_no_store_house_is_available
      */
-    public function slotting_to_a_full_wagon_will_stash_the_item_if_no_store_house_is_available()
+    public function slotting_to_a_full_squad_will_stash_the_item_if_no_store_house_is_available($slotsToKeepCount, $firstItemBaseName, $secondItemBaseName)
     {
-        $firstItemBaseName = ItemBase::SWORD;
+        $squadSlotCount = $this->squad->slots()->count();
+        // delete all slots but the slots to keep
+        $this->squad->slots()->take($squadSlotCount - $slotsToKeepCount)->delete();
+
         $itemBase = ItemBase::where('name', '=', $firstItemBaseName)->first();
 
         /** @var ItemBlueprint $itemBlueprint */
@@ -379,13 +379,66 @@ class SlotterTest extends TestCase
 
         $firstItem = $itemBlueprint->generate();
 
-        $wagonSlotCount = $this->squad->wagon->slots()->count();
-        // delete all but the slots needed for the first item
-        $wagon = $this->squad->wagon;
-        $wagon->slots()->take($wagonSlotCount - $firstItem->getSlotsCount())->delete();
-        $wagon = $wagon->fresh();
+        // delete local storehouse if it exists
+        if($this->squad->getLocalStoreHouse()) {
+            $this->squad->getLocalStoreHouse()->delete();
+        }
+        $squad = $this->squad->fresh();
 
-        $this->slotter->slot($wagon, $firstItem);
-        //TODO build test for Squad that it will create a stash or return a storehouse
+        $this->slotter->slot($squad, $firstItem);
+
+        $firstItemSlots = $firstItem->slots()->get();
+        $this->assertEquals($firstItem->getSlotsCount(), $firstItemSlots->count(), "First item is slotted");
+
+        $firstItemSlots->each(function (Slot $slot) {
+            $this->assertEquals($this->squad->id, $slot->has_slots_id, "item slots belong to squad");
+        });
+
+        $itemBase = ItemBase::where('name', '=', $secondItemBaseName)->first();
+
+        /** @var ItemBlueprint $itemBlueprint */
+        $itemBlueprint = factory(ItemBlueprint::class)->create([
+            'item_type_id' => null, //Override default set by factory
+            'item_base_id' => $itemBase->id
+        ]);
+
+        $secondItem = $itemBlueprint->generate();
+        $this->slotter->slot($squad, $secondItem);
+
+        $secondItemSlots = $secondItem->slots()->get();
+        $this->assertEquals($secondItem->getSlotsCount(), $secondItemSlots->count(), "Second item is slotted");
+
+        $secondItemSlots->each(function (Slot $slot) {
+            $this->assertEquals($this->squad->id, $slot->has_slots_id, "item slots belong to squad");
+        });
+
+        // Now verify first item is still slotted, but slotted in stash
+        $firstItemSlots = $firstItem->slots()->get();
+        $this->assertEquals($firstItem->getSlotsCount(), $firstItemSlots->count(), "First item is STILL slotted");
+
+        $firstItemSlots->each(function (Slot $slot) {
+            $this->assertEquals($this->squad->getLocalStash()->id, $slot->has_slots_id, "item slots belong to squad's STASH");
+        });
+    }
+
+    public function provides_slotting_to_a_full_squad_will_stash_the_item_if_no_store_house_is_available()
+    {
+        return [
+            'single replacing singe' => [
+                'squadSlotsCount' => 1,
+                'firstItemBase' => ItemBase::SWORD,
+                'secondItemBase' => ItemBase::HELMET
+            ],
+            'double replacing double' => [
+                'squadSlotsCount' => 2,
+                'firstItemBase' => ItemBase::TWO_HAND_SWORD,
+                'secondItemBase' => ItemBase::PSIONIC_TWO_HAND
+            ],
+            'double replacing single' => [
+                'squadSlotsCount' => 2,
+                'firstItemBase' => ItemBase::SHIELD,
+                'secondItemBase' => ItemBase::CROSSBOW
+            ]
+        ];
     }
 }

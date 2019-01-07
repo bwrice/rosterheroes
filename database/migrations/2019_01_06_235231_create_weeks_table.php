@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePlayersTable extends Migration
+class CreateWeeksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,9 @@ class CreatePlayersTable extends Migration
      */
     public function up()
     {
-        Schema::create('players', function (Blueprint $table) {
+        Schema::create('weeks', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('team_id')->unsigned();
-            $table->string('name');
             $table->timestamps();
-        });
-
-        Schema::table('players', function (Blueprint $table) {
-            $table->foreign('team_id')->references('id')->on('teams');
         });
     }
 
@@ -32,6 +26,6 @@ class CreatePlayersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('players');
+        Schema::dropIfExists('weeks');
     }
 }

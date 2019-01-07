@@ -19,6 +19,7 @@ class CreateSquadsTable extends Migration
             $table->string('name')->unique();
             $table->integer('user_id')->unsigned();
             $table->integer('squad_rank_id')->unsigned();
+            $table->tinyInteger('mobile_storage_rank_id')->unsigned();
             $table->integer('province_id')->unsigned();
             $table->integer('nation_id')->unsigned()->nullable();
             $table->integer('salary')->unsigned()->default(0);
@@ -31,6 +32,7 @@ class CreateSquadsTable extends Migration
         Schema::table('squads', function (Blueprint $table) {
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('squad_rank_id')->references('id')->on('squad_ranks');
+            $table->foreign('mobile_storage_rank_id')->references('id')->on('mobile_storage_ranks');
             $table->foreign('province_id')->references('id')->on('provinces');
             $table->foreign('nation_id')->references('id')->on('nations');
         });

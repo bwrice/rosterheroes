@@ -7,6 +7,7 @@ use App\Events\SquadCreated;
 use App\Events\WagonCreated;
 use App\Listeners\AddHeroMeasurables;
 use App\Listeners\AddHeroSlots;
+use App\Listeners\AddSquadSlots;
 use App\Listeners\AddSquadStartingGold;
 use App\Listeners\AddWagonSlots;
 use App\Listeners\CreateNewWagon;
@@ -27,11 +28,11 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
         SquadCreated::class => [
-            CreateNewWagon::class
+            AddSquadSlots::class
         ],
-        WagonCreated::class => [
-            AddWagonSlots::class
-        ],
+//        WagonCreated::class => [
+//            AddWagonSlots::class
+//        ],
         HeroCreated::class => [
             AddHeroSlots::class,
             AddHeroMeasurables::class
