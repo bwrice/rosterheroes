@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Auth;
 
 class SquadController extends Controller
 {
-    public function create(Request $request, Squad $squad)
+    public function store(Request $request)
     {
 
 //        /** @var User $user */

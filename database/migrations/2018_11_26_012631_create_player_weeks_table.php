@@ -17,6 +17,7 @@ class CreatePlayerWeeksTable extends Migration
             $table->increments('id');
             $table->uuid('uuid');
             $table->integer('player_id')->unsigned();
+            $table->integer('week_id')->unsigned();
             $table->smallInteger('initial_salary');
             $table->smallInteger('salary');
             $table->timestamps();
@@ -24,6 +25,7 @@ class CreatePlayerWeeksTable extends Migration
 
         Schema::table('player_weeks', function (Blueprint $table) {
             $table->foreign('player_id')->references('id')->on('players');
+            $table->foreign('week_id')->references('id')->on('weeks');
         });
     }
 

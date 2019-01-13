@@ -6,13 +6,17 @@ use Faker\Generator as Faker;
 $factory->define(\App\Hero::class, function (Faker $faker) {
 
     $name = 'TestHero' . str_random(8);
-    $race = \App\HeroRace::human();
-    $class = \App\HeroClass::warrior();
+    $race = \App\HeroRace::query()->inRandomOrder()->first();
+    $class = \App\HeroClass::query()->inRandomOrder()->first();
     $rank = \App\HeroRank::private();
+    $uuid = (string) \Ramsey\Uuid\Uuid::uuid4();
 
     return [
         'name' => $name,
-        'squad_id' => factory(\App\Squad::class)->create()->id,
+        'uuid' => $uuid,
+        'squad_id' => function () {
+            return factory(\App\Squad::class)->create()->id;
+        },
         'hero_race_id' => $race->id,
         'hero_class_id' => $class->id,
         'hero_rank_id' => $rank->id,

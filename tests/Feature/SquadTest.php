@@ -56,7 +56,7 @@ class SquadTest extends TestCase
 
         $name = 'MyAwesomeSquad-' . uniqid();
 
-        $response = $this->post('api/squad/create', [
+        $response = $this->post('api/squads', [
            'name' => $name,
            'heroes' => $heroesData
         ]);

@@ -4,14 +4,12 @@ namespace App;
 
 use App\Events\HeroCreated;
 use App\Events\HeroCreationRequested;
-use App\Events\SquadCreationRequested;
 use App\Slots\Slotter;
 use App\Slots\HasSlots;
 use App\Slots\Slot;
 use App\Slots\SlotCollection;
 use App\Slots\Slottable;
 use App\Slots\SlottableCollection;
-use function foo\func;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -26,17 +24,25 @@ use Ramsey\Uuid\Uuid;
  * @property int $hero_race_id
  * @property int $hero_class_id
  * @property int $hero_rank_id
+ * @property int $player_week_id
+ * @property int $salary
  * @property string $name
  *
  * @property HeroClass $heroClass
  * @property HeroRace $heroRace
  * @property Squad $squad
+ * @property PlayerWeek $playerWeek
  *
  * @property SlotCollection $slots
  * @property Collection $measurables
  */
-class Hero extends Model implements HasSlots
+class Hero extends EventSourcedModel implements HasSlots
 {
+    public function getRouteKeyName()
+    {
+        return 'uuid';
+    }
+
     const RELATION_MORPH_MAP_KEY = 'heroes';
 
     protected $guarded = [];
@@ -65,6 +71,12 @@ class Hero extends Model implements HasSlots
     {
         return $this->belongsTo(Squad::class);
     }
+
+    public function playerWeek()
+    {
+        return $this->belongsTo(PlayerWeek::class);
+    }
+
 
     public static function generate(Squad $squad, $name, $heroClass, $heroRace)
     {
@@ -230,5 +242,12 @@ class Hero extends Model implements HasSlots
     public function getSlots(): SlotCollection
     {
         return $this->slots;
+    }
+
+    public function addPlayerWeek(PlayerWeek $playerWeek)
+    {
+        $this->player_week_id = $playerWeek->id;
+        $this->salary = $playerWeek->salary;
+        $this->save();
     }
 }

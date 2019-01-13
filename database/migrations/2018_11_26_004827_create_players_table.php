@@ -15,6 +15,7 @@ class CreatePlayersTable extends Migration
     {
         Schema::create('players', function (Blueprint $table) {
             $table->increments('id');
+            $table->uuid('uuid');
             $table->integer('team_id')->unsigned();
             $table->string('name');
             $table->timestamps();

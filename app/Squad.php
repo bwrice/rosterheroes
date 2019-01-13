@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Events\HeroCreated;
 use App\Events\SquadFavorIncreased;
 use App\Events\SquadCreated;
 use App\Events\SquadCreationRequested;
@@ -12,7 +11,6 @@ use App\Slots\HasSlots;
 use App\Slots\Slot;
 use App\Slots\SlotCollection;
 use App\Squads\MobileStorage\MobileStorageRank;
-use App\Wagons\Wagon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Ramsey\Uuid\Uuid;
@@ -32,6 +30,7 @@ use Ramsey\Uuid\Uuid;
  * @property int $gold
  * @property int $favor
  *
+ * @property User $user
  * @property Province $province
  * @property MobileStorageRank $mobileStorageRank
  * @property SlotCollection $slots
@@ -143,6 +142,11 @@ class Squad extends Model implements HasSlots
     public function stashes()
     {
         return $this->hasMany(Stash::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
 

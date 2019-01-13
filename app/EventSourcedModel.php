@@ -11,46 +11,30 @@ use Ramsey\Uuid\Uuid;
  * Class EventSourcedModel
  * @package App
  *
- * @method static Builder uuid($uuid)
+ * @property string $uuid
  */
 abstract class EventSourcedModel extends Model
 {
+    protected  $guarded = [];
+
     /**
-     * Indicates if the IDs are auto-incrementing.
      *
-     * @var bool
+     * A helper method to quickly retrieve an account by uuid.
+     *
+     * @param string $uuid
+     * @return static|null
      */
-    public $incrementing = false;
-
-    protected $keyType = 'string';
+    public static function uuid(string $uuid)
+    {
+        return static::where('uuid', $uuid)->first();
+    }
 
     /**
-     * @param $attributes
-     * @throws \Exception
-     *
+     * @param string $uuid
      * @return static
      */
-    public static function createWithAttributes(array $attributes = [])
+    public static function uuidOrFail(string $uuid)
     {
-        $attributes['id'] = (string) Uuid::uuid4();
-
-        new SquadCreated($attributes);
-
-        return static::find($attributes['id']);
+        return static::query()->where('uuid', $uuid)->firstOrFail();
     }
-
-    abstract protected static function triggerCreatedEvent(array $attributes);
-
-    public function scopeUuid(Builder $query, $uuid)
-    {
-        return $query->where('uuid', '=', $uuid);
-    }
-
-//    /*
-//     * A helper method to quickly retrieve an account by uuid.
-//     */
-//    public static function uuid(string $uuid): ?self
-//    {
-//        return static::where('uuid', $uuid)->first();
-//    }
 }

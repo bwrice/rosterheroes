@@ -13,8 +13,11 @@ use Illuminate\Http\Request;
 |
 */
 
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware('auth:api')->post('/squad/create', 'SquadController@create');
+Route::middleware('auth:api')->post('/squads', 'SquadController@store');
+
+Route::middleware('auth:api')->post('/hero/{heroUuid}/player-week/{playerWeekUuid}', 'HeroPlayerWeekController@store');
