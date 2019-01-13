@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGamePlayerPivot extends Migration
+class CreatePlayerPositionPivot extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,17 @@ class CreateGamePlayerPivot extends Migration
      */
     public function up()
     {
-        Schema::create('game_player', function (Blueprint $table) {
-            $table->integer('game_id')->unsigned();
+        Schema::create('player_position', function (Blueprint $table) {
             $table->integer('player_id')->unsigned();
+            $table->integer('position_id')->unsigned();
+            $table->primary(['player_id', 'position_id']);
             $table->timestamps();
-            $table->primary(['game_id', 'player_id']);
         });
 
-        Schema::table('game_player', function (Blueprint $table) {
-            $table->foreign('game_id')->references('id')->on('games');
+
+        Schema::table('player_position', function (Blueprint $table) {
             $table->foreign('player_id')->references('id')->on('players');
+            $table->foreign('position_id')->references('id')->on('positions');
         });
     }
 
@@ -33,8 +34,6 @@ class CreateGamePlayerPivot extends Migration
      */
     public function down()
     {
-        Schema::table('game_player', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('player_position');
     }
 }

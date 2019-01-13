@@ -7,6 +7,7 @@ use App\Events\SquadCreated;
 use App\Events\SquadCreationRequested;
 use App\Events\SquadGoldIncreased;
 use App\Events\SquadSalaryIncreased;
+use App\Heroes\HeroCollection;
 use App\Slots\HasSlots;
 use App\Slots\Slot;
 use App\Slots\SlotCollection;
@@ -34,7 +35,7 @@ use Ramsey\Uuid\Uuid;
  * @property Province $province
  * @property MobileStorageRank $mobileStorageRank
  * @property SlotCollection $slots
- * @property Collection $heroes
+ * @property HeroCollection $heroes
  */
 class Squad extends Model implements HasSlots
 {
@@ -203,5 +204,13 @@ class Squad extends Model implements HasSlots
     public function getSlots(): SlotCollection
     {
         return $this->slots;
+    }
+
+    /**
+     * @return int
+     */
+    public function availableSalary()
+    {
+        return $this->salary - $this->heroes->totalSalary();
     }
 }

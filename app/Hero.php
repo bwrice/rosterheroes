@@ -4,6 +4,9 @@ namespace App;
 
 use App\Events\HeroCreated;
 use App\Events\HeroCreationRequested;
+use App\Exceptions\NonMatchingPositionException;
+use App\Exceptions\NotEnoughSalaryException;
+use App\Heroes\HeroCollection;
 use App\Slots\Slotter;
 use App\Slots\HasSlots;
 use App\Slots\Slot;
@@ -46,6 +49,11 @@ class Hero extends EventSourcedModel implements HasSlots
     const RELATION_MORPH_MAP_KEY = 'heroes';
 
     protected $guarded = [];
+
+    public function newCollection(array $models = [])
+    {
+        return new HeroCollection($models);
+    }
 
     public function slots()
     {
@@ -244,8 +252,25 @@ class Hero extends EventSourcedModel implements HasSlots
         return $this->slots;
     }
 
+    /**
+     * @return int
+     */
+    public function availableSalary()
+    {
+        $heroSalary = $this->salary ?: 0;
+        return $this->squad->availableSalary() - $heroSalary;
+    }
+
     public function addPlayerWeek(PlayerWeek $playerWeek)
     {
+        if (! $this->heroRace->positions->intersect($playerWeek->player->positions)->count() > 0 ) {
+            throw new NonMatchingPositionException("Hero's race doesn't support player week's position");
+        }
+
+        if ($playerWeek->salary > $this->availableSalary()) {
+            throw new NotEnoughSalaryException( $this->availableSalary(), $playerWeek->salary);
+        }
+
         $this->player_week_id = $playerWeek->id;
         $this->salary = $playerWeek->salary;
         $this->save();

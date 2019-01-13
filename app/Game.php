@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -9,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * @package App
  *
  * @property int $id
+ * @property Carbon $starts_at
  *
  * @property Team $homeTeam
  * @property Team $awayTeam
@@ -16,6 +18,12 @@ use Illuminate\Database\Eloquent\Model;
 class Game extends Model
 {
     protected $guarded = [];
+
+    protected $dates = [
+        'starts_at',
+        'created_at',
+        'updated_at'
+    ];
 
     public function homeTeam()
     {

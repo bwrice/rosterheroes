@@ -29,4 +29,8 @@ class PlayerWeek extends EventSourcedModel
     {
         return $this->belongsTo(Player::class);
     }
+
+    public function gameHasStarted()
+    {
+    }
 }

@@ -2,22 +2,25 @@
 
 namespace App\Providers;
 
+use App\Exceptions\NoCurrentWeekException;
 use App\Projectors\ItemBlueprintProjector;
+use App\Week;
 use Illuminate\Support\ServiceProvider;
 use Spatie\EventProjector\Projectionist;
 
 class AppServiceProvider extends ServiceProvider
 {
     /**
-     * Bootstrap any application services.
-     *
-     * @return void
+     * @throws NoCurrentWeekException
      */
-    public function boot(Projectionist $projectionist)
+    public function boot()
     {
-        $projectionist->addProjectors([
-            ItemBlueprintProjector::class
-        ]);
+        // Set the current week
+        Week::setCurrent(Week::query()->orderBy('ends_at')->whereNull('finalized_at')->first());
+
+        if (Week::current() == null) {
+            throw new NoCurrentWeekException();
+        }
     }
 
     /**

@@ -20,6 +20,10 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Week extends Model
 {
+    protected static $current = null;
+
+    protected static $testCurrent = null;
+
     protected $guarded = [];
 
     protected $dates = [
@@ -34,9 +38,19 @@ class Week extends Model
         'finalized_at'
     ];
 
+    public static function setCurrent(Week $week = null)
+    {
+        self::$current = $week;
+    }
+
     public static function current()
     {
-        return self::query()->orderBy('ends_at')->whereNull('finalized_at')->first();
+        return self::$testCurrent ?: self::$current;
+    }
+
+    public static function setTestCurrent(Week $week = null)
+    {
+        self::$testCurrent = $week;
     }
 
     /**
