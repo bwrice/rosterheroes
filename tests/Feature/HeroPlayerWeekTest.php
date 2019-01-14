@@ -7,6 +7,7 @@ use App\Hero;
 use App\HeroRace;
 use App\Player;
 use App\PlayerWeek;
+use App\Team;
 use App\Week;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -34,21 +35,34 @@ class HeroPlayerWeekTest extends TestCase
         $heroRace = HeroRace::where('name', '=', $heroRaceName)->first();
         $position = $heroRace->positions()->inRandomOrder()->first();
 
-        $week = Week::current();
+        /** @var Week $week */
+        $week = factory(Week::class)->create();
 
-        $game = factory(Game::class)->create([
-            'week_id' => $week->id,
-            'starts_at' => $week->everything_locks_at->copy()->addHours(6)
-        ]);
+        Week::setTestCurrent($week);
 
         /** @var Player $player */
         $player = factory(Player::class)->create();
-        $player->games()->attach($game);
         $player->positions()->attach($position);
 
         /** @var PlayerWeek $playerWeek */
         $playerWeek = factory(PlayerWeek::class)->create([
             'player_id' => $player->id
+        ]);
+
+        /** @var Team $homeTeam */
+        $homeTeam = $player->team;
+        $sportID = $homeTeam->sport->id;
+
+        /** @var Team $awayTeam */
+        $awayTeam = Team::query()->whereHas('sport', function(Builder $builder) use ($sportID) {
+            return $builder->where('id', '=', $sportID);
+        })->inRandomOrder()->first();
+
+        $game = factory(Game::class)->create([
+            'week_id' => $week,
+            'home_team_id' => $homeTeam->id,
+            'away_team_id' => $awayTeam->id,
+            'starts_at' => $week->everything_locks_at->addHours(3)
         ]);
 
         /** @var Hero $hero */
@@ -67,6 +81,7 @@ class HeroPlayerWeekTest extends TestCase
         $this->assertEquals($playerWeek->id, $hero->fresh()->playerWeek->id);
 
         Carbon::setTestNow(); // clear testing mock
+        Week::setTestCurrent(); // clear test week
     }
 
     public function provides_a_hero_can_add_a_player_week()

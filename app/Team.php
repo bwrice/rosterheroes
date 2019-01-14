@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -19,5 +20,24 @@ class Team extends Model
     public function sport()
     {
         return $this->belongsTo(Sport::class);
+    }
+
+    public function homeGames()
+    {
+        return $this->belongsToMany(Game::class, 'game_team', 'home_team_id')->withTimestamps();
+    }
+
+    public function awayGames()
+    {
+        return $this->belongsToMany(Game::class, 'game_team', 'away_team_id')->withTimestamps();
+    }
+
+    public function getThisWeeksGame()
+    {
+        return Week::current()->games()->whereHas('homeTeam', function (Builder $builder) {
+            return $builder->where('id', '=', $this->id);
+        })->orWhereHas('awayTeam', function (Builder $builder) {
+            return $builder->where('id', '=', $this->id);
+        })->first();
     }
 }

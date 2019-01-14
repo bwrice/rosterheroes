@@ -38,19 +38,27 @@ class Week extends Model
         'finalized_at'
     ];
 
-    public static function setCurrent(Week $week = null)
-    {
-        self::$current = $week;
-    }
-
+    /**
+     * @return Week
+     */
     public static function current()
     {
         return self::$testCurrent ?: self::$current;
     }
 
+    public static function setCurrent(Week $week = null)
+    {
+        self::$current = $week;
+    }
+
     public static function setTestCurrent(Week $week = null)
     {
         self::$testCurrent = $week;
+    }
+
+    public function games()
+    {
+        return $this->hasMany(Game::class);
     }
 
     /**

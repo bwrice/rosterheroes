@@ -4,6 +4,7 @@ namespace App;
 
 use App\Events\HeroCreated;
 use App\Events\HeroCreationRequested;
+use App\Exceptions\GameStartedException;
 use App\Exceptions\NonMatchingPositionException;
 use App\Exceptions\NotEnoughSalaryException;
 use App\Heroes\HeroCollection;
@@ -261,6 +262,10 @@ class Hero extends EventSourcedModel implements HasSlots
         return $this->squad->availableSalary() - $heroSalary;
     }
 
+    /**
+     * @param PlayerWeek $playerWeek
+     * @throws GameStartedException
+     */
     public function addPlayerWeek(PlayerWeek $playerWeek)
     {
         if (! $this->heroRace->positions->intersect($playerWeek->player->positions)->count() > 0 ) {
@@ -269,6 +274,10 @@ class Hero extends EventSourcedModel implements HasSlots
 
         if ($playerWeek->salary > $this->availableSalary()) {
             throw new NotEnoughSalaryException( $this->availableSalary(), $playerWeek->salary);
+        }
+
+        if ($playerWeek->player->getThisWeeksGame()->starts_at->isPast()) {
+            throw new GameStartedException();
         }
 
         $this->player_week_id = $playerWeek->id;

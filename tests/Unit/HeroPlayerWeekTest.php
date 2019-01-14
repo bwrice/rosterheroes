@@ -9,6 +9,7 @@ use App\HeroRace;
 use App\Player;
 use App\PlayerWeek;
 use App\Position;
+use App\Team;
 use App\Week;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -22,6 +23,8 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class HeroPlayerWeekTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /**
      * @test
      * @dataProvider provides_a_hero_will_fail_to_add_a_non_matching_position_player_week
@@ -36,16 +39,13 @@ class HeroPlayerWeekTest extends TestCase
 
         $playerPosition = Position::query()->whereNotIn('id', $allowedPositionIDs)->inRandomOrder()->first();
 
-        $week = Week::current();
+        /** @var Week $week */
+        $week = factory(Week::class)->create();
 
-        $game = factory(Game::class)->create([
-            'week_id' => $week->id,
-            'starts_at' => $week->everything_locks_at->copy()->addHours(6)
-        ]);
+        Week::setTestCurrent($week);
 
         /** @var Player $player */
         $player = factory(Player::class)->create();
-        $player->games()->attach($game);
         $player->positions()->attach($playerPosition);
 
         /** @var PlayerWeek $playerWeek */
@@ -53,11 +53,26 @@ class HeroPlayerWeekTest extends TestCase
             'player_id' => $player->id
         ]);
 
+        /** @var Team $homeTeam */
+        $homeTeam = $player->team;
+        $sportID = $homeTeam->sport->id;
+
+        /** @var Team $awayTeam */
+        $awayTeam = Team::query()->whereHas('sport', function(Builder $builder) use ($sportID) {
+            return $builder->where('id', '=', $sportID);
+        })->inRandomOrder()->first();
+
+        $game = factory(Game::class)->create([
+            'week_id' => $week,
+            'home_team_id' => $homeTeam->id,
+            'away_team_id' => $awayTeam->id,
+            'starts_at' => $week->everything_locks_at->addHours(3)
+        ]);
+
         /** @var Hero $hero */
         $hero = factory(Hero::class)->create([
             'hero_race_id' => $heroRace->id
         ]);
-
 
         // Mock 6 hours before everything locks
         Carbon::setTestNow($week->everything_locks_at->copy()->subHours(6));
@@ -75,6 +90,7 @@ class HeroPlayerWeekTest extends TestCase
         } finally {
 
             Carbon::setTestNow(); // clear testing mock
+            Week::setTestCurrent(); // clear test week
         }
 
         $this->fail("PlayerWeek with invalid position was added to Hero");
@@ -103,12 +119,10 @@ class HeroPlayerWeekTest extends TestCase
      */
     public function a_hero_will_fail_to_add_a_player_week_with_a_salary_too_high()
     {
-        $week = Week::current();
+        /** @var Week $week */
+        $week = factory(Week::class)->create();
 
-        $game = factory(Game::class)->create([
-            'week_id' => $week->id,
-            'starts_at' => $week->everything_locks_at->copy()->addHours(6)
-        ]);
+        Week::setTestCurrent($week);
 
         /** @var HeroRace $heroRace */
         $heroRace = HeroRace::query()->inRandomOrder()->first();
@@ -116,8 +130,23 @@ class HeroPlayerWeekTest extends TestCase
 
         /** @var Player $player */
         $player = factory(Player::class)->create();
-        $player->games()->attach($game);
         $player->positions()->attach($position);
+
+        /** @var Team $homeTeam */
+        $homeTeam = $player->team;
+        $sportID = $homeTeam->sport->id;
+
+        /** @var Team $awayTeam */
+        $awayTeam = Team::query()->whereHas('sport', function(Builder $builder) use ($sportID) {
+            return $builder->where('id', '=', $sportID);
+        })->inRandomOrder()->first();
+
+        $game = factory(Game::class)->create([
+            'week_id' => $week,
+            'home_team_id' => $homeTeam->id,
+            'away_team_id' => $awayTeam->id,
+            'starts_at' => $week->everything_locks_at->addHours(3)
+        ]);
 
         /** @var PlayerWeek $playerWeek */
         $playerWeek = factory(PlayerWeek::class)->create([
@@ -151,6 +180,7 @@ class HeroPlayerWeekTest extends TestCase
         } finally {
 
             Carbon::setTestNow(); // clear testing mock
+            Week::setTestCurrent(); // clear test week
         }
 
         $this->fail("PlayerWeek with too high of a salary was added to Hero");
@@ -161,13 +191,10 @@ class HeroPlayerWeekTest extends TestCase
      */
     public function a_hero_will_fail_to_add_a_player_that_has_a_game_that_has_started()
     {
-        $week = Week::current();
+        /** @var Week $week */
+        $week = factory(Week::class)->create();
 
-        /** @var Game $game */
-        $game = factory(Game::class)->create([
-            'week_id' => $week->id,
-            'starts_at' => $week->everything_locks_at->copy()->addHours(6)
-        ]);
+        Week::setTestCurrent($week);
 
         /** @var HeroRace $heroRace */
         $heroRace = HeroRace::query()->inRandomOrder()->first();
@@ -175,8 +202,23 @@ class HeroPlayerWeekTest extends TestCase
 
         /** @var Player $player */
         $player = factory(Player::class)->create();
-        $player->games()->attach($game);
         $player->positions()->attach($position);
+
+        /** @var Team $homeTeam */
+        $homeTeam = $player->team;
+        $sportID = $homeTeam->sport->id;
+
+        /** @var Team $awayTeam */
+        $awayTeam = Team::query()->whereHas('sport', function(Builder $builder) use ($sportID) {
+            return $builder->where('id', '=', $sportID);
+        })->inRandomOrder()->first();
+
+        $game = factory(Game::class)->create([
+            'week_id' => $week,
+            'home_team_id' => $homeTeam->id,
+            'away_team_id' => $awayTeam->id,
+            'starts_at' => $week->everything_locks_at->addHours(3)
+        ]);
 
         /** @var PlayerWeek $playerWeek */
         $playerWeek = factory(PlayerWeek::class)->create([
@@ -204,6 +246,7 @@ class HeroPlayerWeekTest extends TestCase
         } finally {
 
             Carbon::setTestNow(); // clear testing mock
+            Week::setTestCurrent(); // clear test week
         }
 
         $this->fail("PlayerWeek with a game that is already started was added to Hero");
