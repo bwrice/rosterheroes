@@ -37,11 +37,12 @@ use Ramsey\Uuid\Uuid;
  * @property SlotCollection $slots
  * @property HeroCollection $heroes
  */
-class Squad extends Model implements HasSlots
+class Squad extends EventSourcedModel implements HasSlots
 {
     const STARTING_GOLD = 500;
     const STARTING_FAVOR = 100;
     const STARTING_SALARY = 30000;
+    const STARTING_HERO_POSTS = 4;
 
     protected $guarded = [];
 
@@ -110,14 +111,6 @@ class Squad extends Model implements HasSlots
         event(new SquadCreationRequested($attributes));
 
         return self::uuid($uuid);
-    }
-
-    /*
-     * A helper method to quickly retrieve an account by uuid.
-     */
-    public static function uuid(string $uuid): ?Squad
-    {
-        return static::where('uuid', $uuid)->first();
     }
 
     public function mobileStorageRank()

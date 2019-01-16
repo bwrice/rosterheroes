@@ -35,6 +35,8 @@ abstract class EventSourcedModel extends Model
      */
     public static function uuidOrFail(string $uuid)
     {
-        return static::query()->where('uuid', $uuid)->firstOrFail();
+        /** @var static $model */
+        $model = static::query()->where('uuid', $uuid)->firstOrFail();
+        return $model;
     }
 }

@@ -13,4 +13,9 @@ class GameStartedException extends Exception
         $message = $message ?: "Game started before: " . Carbon::now()->format('Y-m-d H:i:s');
         parent::__construct($message, $code, $previous);
     }
+
+    public function render()
+    {
+        return "Game has started";
+    }
 }

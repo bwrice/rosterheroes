@@ -24,6 +24,39 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class HeroTest extends TestCase
 {
 
+    /**
+     * @test
+     */
+    public function a_hero_can_be_created()
+    {
+        $this->withoutExceptionHandling();
+
+        /** @var Squad $squad */
+        $squad = factory(Squad::class)->create();
+        $user = Passport::actingAs($squad->user);
+
+        $heroName = 'TestHero-' . uniqid();
+        $heroRace = HeroRace::HUMAN;
+        $heroClass = HeroClass::WARRIOR;
+
+        $response = $this->json('POST','api/squad/' . $squad->uuid . '/heroes', [
+            'name' => $heroName,
+            'race' => $heroRace,
+            'class' => $heroClass
+        ]);
+
+        $squad = $squad->fresh();
+
+        $response->assertStatus(201);
+        $this->assertEquals(1, $squad->heroes->count());
+
+        /** @var Hero $hero */
+        $hero = $squad->heroes->first();
+
+        $this->assertEquals($heroName, $hero->name);
+        $this->assertEquals($heroRace, $hero->heroRace->name);
+        $this->assertEquals($heroClass, $hero->heroClass->name);
+    }
 
 //    /**
 //     * @test
