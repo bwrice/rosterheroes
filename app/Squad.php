@@ -6,8 +6,11 @@ use App\Events\SquadFavorIncreased;
 use App\Events\SquadCreated;
 use App\Events\SquadCreationRequested;
 use App\Events\SquadGoldIncreased;
+use App\Events\SquadHeroPostAdded;
 use App\Events\SquadSalaryIncreased;
 use App\Heroes\HeroCollection;
+use App\Heroes\HeroPosts\HeroPost;
+use App\Heroes\HeroPosts\HeroPostCollection;
 use App\Slots\HasSlots;
 use App\Slots\Slot;
 use App\Slots\SlotCollection;
@@ -30,19 +33,27 @@ use Ramsey\Uuid\Uuid;
  * @property int $experience
  * @property int $gold
  * @property int $favor
+ * @property int $hero_posts
  *
  * @property User $user
  * @property Province $province
  * @property MobileStorageRank $mobileStorageRank
  * @property SlotCollection $slots
- * @property HeroCollection $heroes
+ *
+ * @property HeroPostCollection $heroPosts
  */
 class Squad extends EventSourcedModel implements HasSlots
 {
     const STARTING_GOLD = 500;
     const STARTING_FAVOR = 100;
     const STARTING_SALARY = 30000;
-    const STARTING_HERO_POSTS = 4;
+
+    const STARTING_HERO_POSTS = [
+        HeroRace::HUMAN => 1,
+        HeroRace::DWARF => 1,
+        HeroRace::ELF => 1,
+        HeroRace::ORC => 1
+    ];
 
     protected $guarded = [];
 
@@ -98,6 +109,33 @@ class Squad extends EventSourcedModel implements HasSlots
     }
 
     /**
+     * @return Collection
+     */
+    public function getStartingHeroPostRaces()
+    {
+        return HeroRace::query()->whereIn('name', array_keys(self::STARTING_HERO_POSTS))->get();
+    }
+
+    public function addStartingHeroPosts()
+    {
+        $this->getStartingHeroPostRaces()->each(function(HeroRace $heroRace) {
+            $this->addHeroPost($heroRace);
+        });
+    }
+
+    public function addHeroPost(HeroRace $heroRace)
+    {
+        $this->heroPosts()->create([
+            'hero_race_id' => $heroRace->id
+        ]);
+    }
+
+    public function addStartingPosts()
+    {
+
+    }
+
+    /**
      * @param array $attributes
      * @return Squad|null
      * @throws \Exception
@@ -123,9 +161,23 @@ class Squad extends EventSourcedModel implements HasSlots
         return $this->belongsTo(Province::class);
     }
 
-    public function heroes()
+    public function heroPosts()
     {
-        return $this->hasMany(Hero::class);
+        return $this->hasMany(HeroPost::class);
+    }
+
+    /**
+     * @return HeroCollection
+     */
+    public function getHeroes()
+    {
+        $heroes = new HeroCollection();
+        $this->heroPosts->each(function (HeroPost $heroPost) use ($heroes) {
+            if ($heroPost->hero) {
+                $heroes->push($heroPost->hero);
+            }
+        });
+        return $heroes;
     }
 
     public function slots()

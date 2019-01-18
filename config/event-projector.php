@@ -13,6 +13,7 @@ return [
         \App\Projectors\SquadGoldProjector::class,
         \App\Projectors\SquadExperienceProjector::class,
         \App\Projectors\SquadFavorProjector::class,
+//        \App\Projectors\SquadHeroPostsProjector::class,
         \App\Projectors\HeroProjector::class,
         \App\Projectors\ItemProjector::class
     ],

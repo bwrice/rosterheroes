@@ -11,6 +11,7 @@ use App\HeroRank;
 use App\Province;
 use App\Squad;
 use App\SquadRank;
+use App\Squads\MobileStorage\MobileStorageRank;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,58 +20,24 @@ class SquadController extends Controller
 {
     public function store(Request $request)
     {
+        /** @var Squad $squad */
+        $squad = Squad::createWithAttributes([
+            'user_id' => Auth::user()->id,
+            'name' => $request->name,
+            'squad_rank_id' => SquadRank::getStarting()->id,
+            'mobile_storage_rank_id' => MobileStorageRank::getStarting()->id,
+            'province_id' => Province::getStarting()->id
+        ]);
 
-//        /** @var User $user */
-//        $user = Auth::user();
-//        $squad = $squad->build( $user, $request->name, $request->heroes );
-//
-//        return response($squad->toJson(), 201);
+        // Hooked into for adding wagon
+        event(new SquadCreated($squad));
 
-        /*
-         * TODO: Refactor to:
-         * 1) Create squad here, Squad::create()
-         * 2) Trigger SquadCreated event
-         *      2a) Hook into and create Wagon
-         *      3a) Trigger Wagon Created event
-         *          3a1) Hook into and create Wagon Slots
-         * 3) Cycle through $request->heroes and create Hero, Hero::create
-         *      3a) Hook into and create Slots
-         * 4) Trigger HeroCreated event
-         */
+        // Give starting salary, gold and favor to new squad
+        $squad->increaseSalary(Squad::STARTING_SALARY);
+        $squad->increaseGold(Squad::STARTING_GOLD);
+        $squad->increaseFavor(Squad::STARTING_FAVOR);
+        $squad->addStartingHeroPosts();
 
-
-        /** @var User $user */
-        $user = Auth::user();
-
-        $squad = Squad::generate($user->id, $request->name, $request->heroes);
-
-        return response($squad->toJson(), 201);
-
-//        /** @var Squad $squad */
-//        $squad = Squad::create([
-//            'user_id' => $user->id,
-//            'name' => $request->name,
-//            'squad_rank_id' => SquadRank::getStarting()->id,
-//            'province_id' => Province::getStarting()->id,
-//        ]);
-//
-//        event(new SquadCreated($squad));
-//
-//        $heroClasses = HeroClass::all();
-//        $heroRaces = HeroRace::all();
-//        $startingRank = HeroRank::getStarting();
-//
-//        foreach($request->heroes as $hero) {
-//            /** @var Hero $hero */
-//            $hero = Hero::create([
-//                'squad_id' => $squad->id,
-//                'name' => $hero['name'],
-//                'hero_class_id' => $heroClasses->where('name', '=', $hero['class'])->first()->id,
-//                'hero_race_id' => $heroRaces->where('name', '=', $hero['race'])->first()->id,
-//                'hero_rank_id' => $startingRank->id
-//            ]);
-//
-//            event(new HeroCreated($hero));
-//        }
+        return response()->json($squad, 201);
     }
 }

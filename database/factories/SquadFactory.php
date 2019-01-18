@@ -16,3 +16,7 @@ $factory->define(\App\Squad::class, function (Faker $faker) {
         'name' => $faker->company,
     ];
 });
+
+$factory->afterCreatingState(\App\Squad::class, 'starting-posts', function (\App\Squad $squad, $faker) {
+    $squad->addStartingHeroPosts();
+});

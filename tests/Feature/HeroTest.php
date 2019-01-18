@@ -32,7 +32,7 @@ class HeroTest extends TestCase
         $this->withoutExceptionHandling();
 
         /** @var Squad $squad */
-        $squad = factory(Squad::class)->create();
+        $squad = factory(Squad::class)->states('starting-posts')->create();
         $user = Passport::actingAs($squad->user);
 
         $heroName = 'TestHero-' . uniqid();
@@ -48,57 +48,36 @@ class HeroTest extends TestCase
         $squad = $squad->fresh();
 
         $response->assertStatus(201);
-        $this->assertEquals(1, $squad->heroes->count());
+        $this->assertEquals(1, $squad->getHeroes()->count());
 
         /** @var Hero $hero */
-        $hero = $squad->heroes->first();
+        $hero = $squad->getHeroes()->first();
 
         $this->assertEquals($heroName, $hero->name);
-        $this->assertEquals($heroRace, $hero->heroRace->name);
         $this->assertEquals($heroClass, $hero->heroClass->name);
-    }
+        $this->assertEquals($heroRace, $hero->getHeroRace()->name);
 
-//    /**
-//     * @test
-//     */
-//    public function it_can_build_a_human_warrior()
-//    {
-//        $squad = factory(Squad::class)->create();
-//
-//        $name = 'HumanWarrior_' . str_random(6);
-//        $race = HeroRace::HUMAN;
-//        $class = HeroClass::WARRIOR;
-//
-//        $heroData = [
-//            'name' => $name,
-//            'race' => $race,
-//            'class' => $class,
-//        ];
-//
-//        $hero = (new Hero())->build($squad, $heroData);
-//
-//        $this->assertEquals($squad->id, $hero->squad_id, 'Squad ID matches');
-//        $this->assertEquals(HeroRace::where('name', '=', $race )->first()->id, $hero->hero_race_id, 'Hero Race matches');
-//        $this->assertEquals(HeroClass::where('name', '=', $class )->first()->id, $hero->hero_class_id, 'Hero Class Matches');
-//
-//        $slotTypes = SlotType::heroTypes()->get();
-//        $slotTypes->each(function (SlotType $slotType) use ($hero) {
-//            $slotsOfSlotType = $hero->slots->filter( function (Slot $heroSlot) use ($slotType) {
-//                return $heroSlot->slot_type_id == $slotType->id;
-//            });
-//            $this->assertEquals(1, $slotsOfSlotType->count(), 'Correct amount of hero slots of slot type: ' . $slotType->name);
-//        } );
-//
-//        $measurableTypes = MeasurableType::heroTypes()->get();
-//        $measurableTypes->each(function(MeasurableType $measurableType) use ($hero) {
-//            $measurablesOfType = $hero->measurables->filter(function(Measurable $heroMeasurable) use ($measurableType){
-//                return $heroMeasurable->measurable_type_id == $measurableType->id;
-//            });
-//            $this->assertEquals(1, $measurablesOfType->count(), 'Correct amount of hero measurables of measurable type: ' . $measurableType->name);
-//        });
-//
-//        $startingBlueprints = $hero->getClassBehavior()->getStartItemBlueprints();
-//
-//        $this->assertEquals($startingBlueprints->count(), $hero->getItems()->count());
-//    }
+        $heroSlotTypes = SlotType::heroTypes();
+        $heroSlots = $hero->slots;
+        $this->assertEquals($heroSlotTypes->count(), $heroSlots->count());
+        $heroSlotTypes->each(function(SlotType $slotType) use ($heroSlots) {
+            $filtered = $heroSlots->filter(function(Slot $slot) use ($slotType) {
+                return $slot->slot_type_id == $slotType->id;
+            });
+
+            $this->assertEquals(1, $filtered->count());
+        });
+
+        $measurableTypes = MeasurableType::heroTypes();
+        $measurables = $hero->measurables;
+        $this->assertEquals($measurableTypes->count(), $measurables->count());
+        $measurableTypes->each(function(MeasurableType $measurableType) use ($measurables) {
+            $filtered = $measurables->filter(function(Measurable $measurable) use ($measurableType) {
+                return $measurable->measurable_type_id == $measurableType->id;
+            });
+
+            $this->assertEquals(1, $filtered->count());
+        });
+
+    }
 }

@@ -8,6 +8,7 @@ use App\Exceptions\GameStartedException;
 use App\Exceptions\NonMatchingPositionException;
 use App\Exceptions\NotEnoughSalaryException;
 use App\Heroes\HeroCollection;
+use App\Heroes\HeroPosts\HeroPost;
 use App\Slots\Slotter;
 use App\Slots\HasSlots;
 use App\Slots\Slot;
@@ -33,7 +34,7 @@ use Ramsey\Uuid\Uuid;
  * @property string $name
  *
  * @property HeroClass $heroClass
- * @property HeroRace $heroRace
+ * @property HeroPost $heroPost
  * @property Squad $squad
  * @property PlayerWeek $playerWeek
  *
@@ -71,9 +72,14 @@ class Hero extends EventSourcedModel implements HasSlots
         return $this->belongsTo(HeroClass::class);
     }
 
-    public function heroRace()
+    public function getHeroRace()
     {
-        return $this->belongsTo(HeroRace::class);
+        return $this->heroPost->heroRace;
+    }
+
+    public function heroPost()
+    {
+        return $this->hasOne(HeroPost::class);
     }
 
     public function squad()
@@ -86,21 +92,23 @@ class Hero extends EventSourcedModel implements HasSlots
         return $this->belongsTo(PlayerWeek::class);
     }
 
-
-    public static function generate(Squad $squad, $name, $heroClass, $heroRace)
+    public function addStartingSlots()
     {
-        $hero = self::createWithAttributes([
-            'squad_id' => $squad->id,
-            'name' => $name,
-            'hero_class_id' => HeroClass::where('name', '=', $heroClass)->first()->id,
-            'hero_race_id' => HeroRace::where('name', '=', $heroRace)->first()->id,
-            'hero_rank_id' => HeroRank::getStarting()->id
-        ]);
+        SlotType::heroTypes()->each(function (SlotType $slotType) {
+            $this->slots()->create([
+                'slot_type_id' => $slotType->id
+            ]);
+        });
+    }
 
-        // Hooked into for adding slots, measurables...
-        event(new HeroCreated($hero));
-
-        return $hero;
+    public function addStartingMeasurables()
+    {
+        MeasurableType::heroTypes()->each(function (MeasurableType $measurableType) {
+            $this->measurables()->create([
+                'measurable_type_id' => $measurableType->id,
+                'amount_raised' => 0
+            ]);
+        });
     }
 
     /**

@@ -15,6 +15,7 @@ class CreateMeasurablesTable extends Migration
     {
         Schema::create('measurables', function (Blueprint $table) {
             $table->increments('id');
+            $table->uuid('uuid');
             $table->integer('measurable_type_id')->unsigned();
             $table->morphs('has_measurables');
             $table->integer('amount_raised')->unsigned();

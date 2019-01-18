@@ -6,6 +6,7 @@ use App\Events\HeroCreated;
 use App\Exceptions\GameStartedException;
 use App\Hero;
 use App\HeroClass;
+use App\Heroes\HeroPosts\HeroPost;
 use App\HeroRace;
 use App\HeroRank;
 use App\Http\Requests\StoreSquadHero;
@@ -18,13 +19,20 @@ class SquadHeroController extends Controller
     {
         $squad = Squad::uuidOrFail($squadUuid);
 
+        /** @var HeroRace $heroRace */
+        $heroRace = HeroRace::query()->where('name', '=', $request->race)->first();
+
+        /** @var HeroPost $heroPost */
+        $heroPost = $squad->heroPosts->postFilled(false)->heroRace($heroRace)->first();
+
         $hero = Hero::createWithAttributes([
-            'squad_id' => $squad->id,
             'name' => $request->name,
             'hero_class_id' => HeroClass::query()->where('name', '=', $request->class)->first()->id,
-            'hero_race_id' => HeroRace::query()->where('name', '=', $request->race)->first()->id,
             'hero_rank_id' => HeroRank::getStarting()->id
         ]);
+
+        $heroPost->hero_id = $hero->id;
+        $heroPost->save();
 
         // Hooked into for adding slots, measurables...
         event(new HeroCreated($hero));

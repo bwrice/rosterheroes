@@ -30,9 +30,6 @@ class EventServiceProvider extends ServiceProvider
         SquadCreated::class => [
             AddSquadSlots::class
         ],
-//        WagonCreated::class => [
-//            AddWagonSlots::class
-//        ],
         HeroCreated::class => [
             AddHeroSlots::class,
             AddHeroMeasurables::class

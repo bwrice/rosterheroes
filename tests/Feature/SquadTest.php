@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Hero;
 use App\HeroClass;
+use App\Heroes\HeroPosts\HeroPost;
 use App\HeroRace;
 use App\Measurable;
 use App\MeasurableType;
@@ -28,37 +29,13 @@ class SquadTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $heroesData = [
-            [
-                'name' => 'HeroOne-' . uniqid(),
-                'class' => HeroClass::WARRIOR,
-                'race' => HeroRace::DWARF
-            ],
-            [
-                'name' => 'HeroTwo-' . uniqid(),
-                'class' => HeroClass::WARRIOR,
-                'race' => HeroRace::ORC,
-            ],
-            [
-                'name' => 'HeroThree-' . uniqid(),
-                'class' => HeroClass::RANGER,
-                'race' => HeroRace::HUMAN
-            ],
-            [
-                'name' => 'HeroFour-' . uniqid(),
-                'class' => HeroClass::SORCERER,
-                'race' => HeroRace::ELF
-            ],
-        ];
-
         /** @var User $user */
         $user = Passport::actingAs(factory(User::class)->create());
 
         $name = 'MyAwesomeSquad-' . uniqid();
 
         $response = $this->post('api/squads', [
-           'name' => $name,
-           'heroes' => $heroesData
+           'name' => $name
         ]);
 
         $response->assertStatus(201);
@@ -72,6 +49,12 @@ class SquadTest extends TestCase
         $this->assertEquals(Squad::STARTING_FAVOR, $squad->favor, "Squad has starting favor");
 
         $this->assertEquals($squad->mobileStorageRank->getBehavior()->getSlotsCount(), $squad->slots()->count(), "Squad has it's slots");
-        $this->assertEquals(count($heroesData), $squad->heroes->count(), "The Squad has Heroes");
+
+        $this->assertEquals( count(Squad::STARTING_HERO_POSTS), $squad->heroPosts->count(), 'Squad has correct number of hero posts');
+
+       foreach( Squad::STARTING_HERO_POSTS as $heroRaceName => $count ) {
+           $heroRace = HeroRace::where('name', '=', $heroRaceName)->first();
+           $this->assertEquals($count, $squad->heroPosts->where('hero_race_id', '=', $heroRace->id)->count(), "Correct amount of hero posts by hero race");
+       }
     }
 }
