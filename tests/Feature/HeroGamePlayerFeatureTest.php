@@ -9,6 +9,7 @@ use App\HeroRace;
 use App\Player;
 use App\GamePlayer;
 use App\Positions\Position;
+use App\Slots\Slotter;
 use App\Squad;
 use App\Team;
 use App\Weeks\Week;
@@ -20,17 +21,17 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class HeroPlayerWeekTest extends TestCase
+class HeroGamePlayerFeatureTest extends TestCase
 {
     use DatabaseTransactions;
 
     /**
      * @test
-     * @dataProvider provides_a_hero_can_add_a_player_week
+     * @dataProvider provides_a_hero_can_add_a_game_player
      *
      * @param $heroRaceName
      */
-    public function a_hero_can_add_a_player_week($heroRaceName)
+    public function a_hero_can_add_a_game_player_for_the_current_week($heroRaceName)
     {
 
         /** @var HeroRace $heroRace */
@@ -71,7 +72,7 @@ class HeroPlayerWeekTest extends TestCase
         Week::setTestCurrent(); // clear test week
     }
 
-    public function provides_a_hero_can_add_a_player_week()
+    public function provides_a_hero_can_add_a_game_player()
     {
         return [
            HeroRace::HUMAN =>  [
@@ -91,64 +92,43 @@ class HeroPlayerWeekTest extends TestCase
 
     /**
      * @test
-     * @dataProvider provides_a_hero_can_add_a_player_week
+     * @dataProvider provides_a_hero_can_add_a_game_player
      *
      * @param $heroRaceName
      */
-    public function a_hero_cannot_add_a_player_week_of_the_wrong_position($heroRaceName)
+    public function a_hero_cannot_add_a_game_player_of_the_wrong_position($heroRaceName)
     {
         /** @var HeroRace $heroRace */
         $heroRace = HeroRace::where('name', '=', $heroRaceName)->first();
-        $heroRacePositionIDs = $heroRace->positions()->pluck('id')->toArray();
-        $playerPosition = Position::query()->whereNotIn('id', $heroRacePositionIDs)->inRandomOrder()->first();
-
-        /** @var \App\Weeks\Week $week */
-        $week = factory(Week::class)->create();
-
-        Week::setTestCurrent($week);
-
-        /** @var Player $player */
-        $player = factory(Player::class)->create();
-        $player->positions()->attach($playerPosition);
-
-        /** @var GamePlayer $playerWeek */
-        $playerWeek = factory(GamePlayer::class)->create([
-            'player_id' => $player->id
-        ]);
-
-        /** @var Team $homeTeam */
-        $homeTeam = $player->team;
-        $sportID = $homeTeam->sport->id;
-
-        /** @var Team $awayTeam */
-        $awayTeam = Team::query()->whereHas('sport', function(Builder $builder) use ($sportID) {
-            return $builder->where('id', '=', $sportID);
-        })->inRandomOrder()->first();
-
-        $game = factory(Game::class)->create([
-            'week_id' => $week,
-            'home_team_id' => $homeTeam->id,
-            'away_team_id' => $awayTeam->id,
-            'starts_at' => $week->everything_locks_at->copy()->addHours(3)
-        ]);
 
         /** @var HeroPost $heroPost */
         $heroPost = factory(HeroPost::class)->create([
             'hero_race_id' => $heroRace->id
         ]);
+
         /** @var Hero $hero */
         $hero = factory(Hero::class)->create();
 
         $heroPost->hero_id = $hero->id;
         $heroPost->save();
 
+        /** @var GamePlayer $gamePlayer */
+        $gamePlayer = factory(GamePlayer::class)->create();
+        $positionIDs = $heroRace->positions()->pluck('id')->toArray();
+        $position = Position::query()->whereNotIn('id', $positionIDs)->inRandomOrder()->first();
+
+        $gamePlayer->player->positions()->attach($position);
+
+        Week::setTestCurrent($gamePlayer->game->week);
+
         Passport::actingAs($heroPost->squad->user);
 
         // Mock 6 hours before everything locks
-        Carbon::setTestNow($week->everything_locks_at->copy()->subHours(6));
+        Carbon::setTestNow(Week::current()->everything_locks_at->copy()->subHours(6));
 
-        $response = $this->json('POST', 'api/hero/'. $hero->uuid . '/player-week/' . $playerWeek->uuid);
+        $response = $this->json('POST', 'api/hero/'. $hero->uuid . '/player-week/' . $gamePlayer->uuid);
         $this->assertEquals(422, $response->getStatusCode());
+        $this->assertArrayHasKey('position', $response->json()['errors']);
 
         $hero = $hero->fresh();
         $this->assertNull($hero->gamePlayer);
@@ -167,62 +147,42 @@ class HeroPlayerWeekTest extends TestCase
         $heroRace = HeroRace::query()->inRandomOrder()->first();
         $position = $heroRace->positions()->inRandomOrder()->first();
 
-        /** @var \App\Weeks\Week $week */
-        $week = factory(Week::class)->create();
-
-        Week::setTestCurrent($week);
-
-        /** @var Player $player */
-        $player = factory(Player::class)->create();
-
-        $player->positions()->attach($position);
-
-        $playerSalary = 8000;
-        /** @var GamePlayer $playerWeek */
-        $playerWeek = factory(GamePlayer::class)->create([
-            'player_id' => $player->id,
-            'initial_salary' => $playerSalary,
-            'salary' => $playerSalary
-        ]);
-
-        /** @var Team $homeTeam */
-        $homeTeam = $player->team;
-        $sportID = $homeTeam->sport->id;
-
-        /** @var Team $awayTeam */
-        $awayTeam = Team::query()->whereHas('sport', function(Builder $builder) use ($sportID) {
-            return $builder->where('id', '=', $sportID);
-        })->inRandomOrder()->first();
-
-        $game = factory(Game::class)->create([
-            'week_id' => $week,
-            'home_team_id' => $homeTeam->id,
-            'away_team_id' => $awayTeam->id,
-            'starts_at' => $week->everything_locks_at->copy()->addHours(3)
-        ]);
-
+        $squadSalary = 5000;
+        /** @var Squad $squad */
         $squad = factory(Squad::class)->create([
-            'salary' => $playerSalary - 1000
+            'salary' => $squadSalary
         ]);
 
         /** @var HeroPost $heroPost */
         $heroPost = factory(HeroPost::class)->create([
             'hero_race_id' => $heroRace->id,
-            'squad_id' => $squad->id,
+            'squad_id' => $squad->id
         ]);
+
         /** @var Hero $hero */
         $hero = factory(Hero::class)->create();
 
         $heroPost->hero_id = $hero->id;
         $heroPost->save();
 
+        /** @var GamePlayer $gamePlayer */
+        $gamePlayer = factory(GamePlayer::class)->create([
+            'initial_salary' => $squadSalary - 1000,
+            'salary' => $squadSalary + 2000
+        ]);
+
+        $gamePlayer->player->positions()->attach($position);
+
+        Week::setTestCurrent($gamePlayer->game->week);
+
         Passport::actingAs($heroPost->squad->user);
 
         // Mock 6 hours before everything locks
-        Carbon::setTestNow($week->everything_locks_at->copy()->subHours(6));
+        Carbon::setTestNow(Week::current()->everything_locks_at->copy()->subHours(6));
 
-        $response = $this->json('POST', 'api/hero/'. $hero->uuid . '/player-week/' . $playerWeek->uuid);
+        $response = $this->json('POST', 'api/hero/'. $hero->uuid . '/player-week/' . $gamePlayer->uuid);
         $this->assertEquals(422, $response->getStatusCode());
+        $this->assertArrayHasKey('salary', $response->json()['errors']);
 
         $hero = $hero->fresh();
         $this->assertNull($hero->gamePlayer);

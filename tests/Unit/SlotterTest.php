@@ -269,8 +269,14 @@ class SlotterTest extends TestCase
      */
     public function it_can_slot_single_slot_items_with_multi_slot_options_and_only_move_one_to_the_squad_if_possible($firstItemBaseName, $secondItemBaseName, $thirdItemBaseName)
     {
+        /** @var HeroPost $heroPost */
+        $heroPost = factory(HeroPost::class)->create();
+        $heroPost->squad->addSlots();
+
         /** @var Hero $hero */
-        $hero = $this->squad->heroes->random();
+        $hero = factory(Hero::class)->states('with-slots', 'with-measurables')->create();
+        $heroPost->hero_id = $hero->id;
+        $heroPost->save();
 
         /** @var ItemBase $itemBase */
         $itemBase = ItemBase::where('name', $firstItemBaseName)->first();
@@ -283,7 +289,10 @@ class SlotterTest extends TestCase
 
         $itemOne = $itemBlueprint->generate();
 
-        $this->slotter->slot($hero, $itemOne);
+        /** @var Slotter $slotter */
+        $slotter = app()->make(Slotter::class);
+        $slotter->slot($hero, $itemOne);
+
         /** @var ItemBase $firstItemBase */
         $itemBase = ItemBase::where('name', $secondItemBaseName)->first();
 
@@ -295,7 +304,7 @@ class SlotterTest extends TestCase
 
         $itemTwo = $itemBlueprint->generate();
 
-        $this->slotter->slot($hero, $itemTwo);
+        $slotter->slot($hero, $itemTwo);
 
         /** @var ItemBase $firstItemBase */
         $itemBase = ItemBase::where('name', $thirdItemBaseName)->first();
@@ -308,7 +317,7 @@ class SlotterTest extends TestCase
 
         $itemThree = $itemBlueprint->generate();
 
-        $this->slotter->slot($hero, $itemThree);
+        $slotter->slot($hero, $itemThree);
 
         $this->assertEquals(1, $itemOne->slots->count(), "Single slot item only taking up one slot");
         $this->assertEquals(1, $itemTwo->slots->count(), "Single slot item only taking up one slot");
@@ -319,7 +328,7 @@ class SlotterTest extends TestCase
         $slotThree = $itemThree->slots->first();
 
 
-        $this->assertEquals($this->squad->id, $slotOne->has_slots_id, "First item now slotted in squad");
+        $this->assertEquals($heroPost->squad->id, $slotOne->has_slots_id, "First item now slotted in squad");
         $this->assertEquals($hero->id, $slotTwo->has_slots_id, "Second item is still slotted in hero");
         $this->assertEquals($hero->id, $slotThree->has_slots_id, "Third item now slotted in hero");
     }
@@ -351,9 +360,20 @@ class SlotterTest extends TestCase
      */
     public function slotting_to_a_full_squad_will_stash_the_item_if_no_store_house_is_available($slotsToKeepCount, $firstItemBaseName, $secondItemBaseName)
     {
-        $squadSlotCount = $this->squad->slots()->count();
+        /** @var HeroPost $heroPost */
+        $heroPost = factory(HeroPost::class)->create();
+        $squad = $heroPost->squad;
+        $squad->addSlots();
+
+        /** @var Hero $hero */
+        $hero = factory(Hero::class)->states('with-slots', 'with-measurables')->create();
+        $heroPost->hero_id = $hero->id;
+        $heroPost->save();
+
         // delete all slots but the slots to keep
-        $this->squad->slots()->take($squadSlotCount - $slotsToKeepCount)->delete();
+        $squadSlotCount = $squad->slots()->count();
+        $squad->slots()->take($squadSlotCount - $slotsToKeepCount)->delete();
+        $this->assertGreaterThan(0, $squad->slots()->count());
 
         $itemBase = ItemBase::where('name', '=', $firstItemBaseName)->first();
 
@@ -366,18 +386,20 @@ class SlotterTest extends TestCase
         $firstItem = $itemBlueprint->generate();
 
         // delete local storehouse if it exists
-        if($this->squad->getLocalStoreHouse()) {
-            $this->squad->getLocalStoreHouse()->delete();
+        if($squad->getLocalStoreHouse()) {
+            $squad->getLocalStoreHouse()->delete();
         }
-        $squad = $this->squad->fresh();
+        $squad = $squad->fresh();
 
-        $this->slotter->slot($squad, $firstItem);
+        /** @var Slotter $slotter */
+        $slotter = app()->make(Slotter::class);
+        $slotter->slot($squad, $firstItem);
 
         $firstItemSlots = $firstItem->slots()->get();
         $this->assertEquals($firstItem->getSlotsCount(), $firstItemSlots->count(), "First item is slotted");
 
-        $firstItemSlots->each(function (Slot $slot) {
-            $this->assertEquals($this->squad->id, $slot->has_slots_id, "item slots belong to squad");
+        $firstItemSlots->each(function (Slot $slot) use ($squad) {
+            $this->assertEquals($squad->id, $slot->has_slots_id, "item slots belong to squad");
         });
 
         $itemBase = ItemBase::where('name', '=', $secondItemBaseName)->first();
@@ -389,21 +411,21 @@ class SlotterTest extends TestCase
         ]);
 
         $secondItem = $itemBlueprint->generate();
-        $this->slotter->slot($squad, $secondItem);
+        $slotter->slot($squad, $secondItem);
 
         $secondItemSlots = $secondItem->slots()->get();
         $this->assertEquals($secondItem->getSlotsCount(), $secondItemSlots->count(), "Second item is slotted");
 
-        $secondItemSlots->each(function (Slot $slot) {
-            $this->assertEquals($this->squad->id, $slot->has_slots_id, "item slots belong to squad");
+        $secondItemSlots->each(function (Slot $slot) use ($squad) {
+            $this->assertEquals($squad->id, $slot->has_slots_id, "item slots belong to squad");
         });
 
         // Now verify first item is still slotted, but slotted in stash
         $firstItemSlots = $firstItem->slots()->get();
         $this->assertEquals($firstItem->getSlotsCount(), $firstItemSlots->count(), "First item is STILL slotted");
 
-        $firstItemSlots->each(function (Slot $slot) {
-            $this->assertEquals($this->squad->getLocalStash()->id, $slot->has_slots_id, "item slots belong to squad's STASH");
+        $firstItemSlots->each(function (Slot $slot) use ($squad) {
+            $this->assertEquals($squad->getLocalStash()->id, $slot->has_slots_id, "item slots belong to squad's STASH");
         });
     }
 

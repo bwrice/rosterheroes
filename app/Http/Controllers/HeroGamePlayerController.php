@@ -7,7 +7,6 @@ use App\Exceptions\InvalidPositionsException;
 use App\Exceptions\InvalidWeekException;
 use App\Exceptions\NotEnoughSalaryException;
 use App\Hero;
-use App\Http\Requests\StoreHeroPlayerWeek;
 use App\GamePlayer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -43,19 +42,19 @@ class HeroGamePlayerController extends Controller
             ]);
 
             throw ValidationException::withMessages([
-                "Can't do that this week"
+                'week' =>  "Can't do that this week"
             ]);
         } catch(InvalidPositionsException $exception) {
             throw ValidationException::withMessages([
-                "Player does not have valid position for hero"
+                'position' => "Player does not have valid position for hero"
             ]);
         } catch (NotEnoughSalaryException $exception) {
             throw ValidationException::withMessages([
-                "Not enough available salary for " . $gamePlayer->player->name
+                'salary' => "Not enough available salary for " . $gamePlayer->player->name
             ]);
         } catch (GameStartedException $exception) {
             throw ValidationException::withMessages([
-                "Game for " . $gamePlayer->player->name . " has already started"
+                'game' => "Game for " . $gamePlayer->player->name . " has already started"
             ]);
         }
     }
