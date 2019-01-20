@@ -13,6 +13,9 @@ use Laravel\Passport\HasApiTokens;
  * @package App
  *
  * @property int $id
+ * @property string $uuid
+ * @property string $email
+ * @property string $name
  *
  * @property EloquentCollection $squads
  */
@@ -41,5 +44,14 @@ class User extends Authenticatable
     public function squads()
     {
         return $this->hasMany(Squad::class);
+    }
+
+    public function toArray()
+    {
+        return [
+            'name' => $this->name,
+            'email' => $this->email,
+            'uuid' => $this->uuid
+        ];
     }
 }
