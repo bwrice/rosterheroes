@@ -5,7 +5,8 @@ namespace App;
 use App\Events\HeroCreated;
 use App\Events\HeroCreationRequested;
 use App\Exceptions\GameStartedException;
-use App\Exceptions\NonMatchingPositionException;
+use App\Exceptions\InvalidWeekException;
+use App\Exceptions\InvalidPositionsException;
 use App\Exceptions\NotEnoughSalaryException;
 use App\Heroes\HeroCollection;
 use App\Heroes\HeroPosts\HeroPost;
@@ -15,9 +16,12 @@ use App\Slots\Slot;
 use App\Slots\SlotCollection;
 use App\Slots\Slottable;
 use App\Slots\SlottableCollection;
+use App\Weeks\Week;
+use App\Weeks\WeekCollection;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Ramsey\Uuid\Uuid;
 
 /**
@@ -29,14 +33,13 @@ use Ramsey\Uuid\Uuid;
  * @property int $hero_race_id
  * @property int $hero_class_id
  * @property int $hero_rank_id
- * @property int $player_week_id
+ * @property int $game_player_id
  * @property int $salary
  * @property string $name
  *
  * @property HeroClass $heroClass
  * @property HeroPost $heroPost
- * @property Squad $squad
- * @property PlayerWeek $playerWeek
+ * @property GamePlayer $gamePlayer
  *
  * @property SlotCollection $slots
  * @property Collection $measurables
@@ -82,14 +85,17 @@ class Hero extends EventSourcedModel implements HasSlots
         return $this->hasOne(HeroPost::class);
     }
 
-    public function squad()
+    public function gamePlayer()
     {
-        return $this->belongsTo(Squad::class);
+        return $this->belongsTo(GamePlayer::class);
     }
 
-    public function playerWeek()
+    /**
+     * @return Squad|null
+     */
+    public function getSquad()
     {
-        return $this->belongsTo(PlayerWeek::class);
+        return $this->heroPost ? $this->heroPost->squad : null;
     }
 
     public function addStartingSlots()
@@ -104,7 +110,9 @@ class Hero extends EventSourcedModel implements HasSlots
     public function addStartingMeasurables()
     {
         MeasurableType::heroTypes()->each(function (MeasurableType $measurableType) {
-            $this->measurables()->create([
+            Measurable::createWithAttributes([
+                'has_measurables_type' => self::RELATION_MORPH_MAP_KEY,
+                'has_measurables_id' => $this->id,
                 'measurable_type_id' => $measurableType->id,
                 'amount_raised' => 0
             ]);
@@ -229,7 +237,7 @@ class Hero extends EventSourcedModel implements HasSlots
      */
     public function getBackupHasSlots(): ?HasSlots
     {
-        return $this->squad;
+        return $this->getSquad();
     }
 
     /**
@@ -267,29 +275,47 @@ class Hero extends EventSourcedModel implements HasSlots
     public function availableSalary()
     {
         $heroSalary = $this->salary ?: 0;
-        return $this->squad->availableSalary() - $heroSalary;
+        return $this->heroPost->squad->availableSalary() - $heroSalary;
     }
 
     /**
-     * @param PlayerWeek $playerWeek
-     * @throws GameStartedException
+     * @param GamePlayer $gamePlayer
      */
-    public function addPlayerWeek(PlayerWeek $playerWeek)
+    public function addGamePlayer(GamePlayer $gamePlayer)
     {
-        if (! $this->heroRace->positions->intersect($playerWeek->player->positions)->count() > 0 ) {
-            throw new NonMatchingPositionException("Hero's race doesn't support player week's position");
+        if(! Week::isCurrent($gamePlayer->game->week)) {
+            $exception = new InvalidWeekException();
+            $exception->setWeeks($gamePlayer->game->week, new WeekCollection([
+                Week::current()
+            ]));
+            throw $exception;
         }
 
-        if ($playerWeek->salary > $this->availableSalary()) {
-            throw new NotEnoughSalaryException( $this->availableSalary(), $playerWeek->salary);
+        if (! $this->heroPost->getPositions()->intersect($gamePlayer->getPositions())->count() > 0 ) {
+            $exception = new InvalidPositionsException();
+            $exception->setPositions($this->heroPost->getPositions(), $gamePlayer->getPositions());
+            throw $exception;
         }
 
-        if ($playerWeek->player->getThisWeeksGame()->starts_at->isPast()) {
-            throw new GameStartedException();
+        if(! $this->canAfford($gamePlayer->salary)) {
+            $exception = new NotEnoughSalaryException();
+            $exception->setSalaries($this->availableSalary(), $gamePlayer->salary);
+            throw $exception;
         }
 
-        $this->player_week_id = $playerWeek->id;
-        $this->salary = $playerWeek->salary;
+        if($gamePlayer->game->hasStarted()) {
+            $exception = new GameStartedException();
+            $exception->setGame($gamePlayer->game);
+            throw $exception;
+        }
+
+        $this->game_player_id = $gamePlayer->id;
+        $this->salary = $gamePlayer->salary;
         $this->save();
+    }
+
+    public function canAfford($salary)
+    {
+        return $this->availableSalary() >= (int) $salary;
     }
 }

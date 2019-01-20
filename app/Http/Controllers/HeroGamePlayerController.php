@@ -1,0 +1,62 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Exceptions\GameStartedException;
+use App\Exceptions\InvalidPositionsException;
+use App\Exceptions\InvalidWeekException;
+use App\Exceptions\NotEnoughSalaryException;
+use App\Hero;
+use App\Http\Requests\StoreHeroPlayerWeek;
+use App\GamePlayer;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
+
+class HeroGamePlayerController extends Controller
+{
+    public function store($heroUuid, $gamePlayerUuid)
+    {
+        $hero = Hero::uuid($heroUuid);
+        if (! $hero) {
+            throw ValidationException::withMessages(["Hero could not be found"]);
+        }
+
+        $gamePlayer = GamePlayer::uuid($gamePlayerUuid);
+        if (! $gamePlayer) {
+            throw ValidationException::withMessages(['Player could not be found']);
+        }
+
+        try {
+
+            $hero->addGamePlayer($gamePlayer);
+            return response($hero->load('gamePlayer')->toJson(), 201);
+
+        } catch (InvalidWeekException $exception) {
+            Log::error("User attempted to add player-game from a different week to hero", [
+                'user' => Auth::user()->toArray(),
+                'hero' => $hero->toArray(),
+                'game_player' => $gamePlayer->toArray(),
+                'invalid_week' => $exception->getInvalidWeek()->toArray(),
+                'valid_weeks' => $exception->getValidWeeks()->toArray()
+            ]);
+
+            throw ValidationException::withMessages([
+                "Can't do that this week"
+            ]);
+        } catch(InvalidPositionsException $exception) {
+            throw ValidationException::withMessages([
+                "Player does not have valid position for hero"
+            ]);
+        } catch (NotEnoughSalaryException $exception) {
+            throw ValidationException::withMessages([
+                "Not enough available salary for " . $gamePlayer->player->name
+            ]);
+        } catch (GameStartedException $exception) {
+            throw ValidationException::withMessages([
+                "Game for " . $gamePlayer->player->name . " has already started"
+            ]);
+        }
+    }
+}

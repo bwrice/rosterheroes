@@ -34,8 +34,8 @@ class SquadHeroController extends Controller
         $heroPost->hero_id = $hero->id;
         $heroPost->save();
 
-        // Hooked into for adding slots, measurables...
-        event(new HeroCreated($hero));
+        $hero->addStartingSlots();
+        $hero->addStartingMeasurables();
 
         return response()->json($hero, 201);
     }

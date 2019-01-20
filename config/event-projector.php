@@ -15,7 +15,8 @@ return [
         \App\Projectors\SquadFavorProjector::class,
 //        \App\Projectors\SquadHeroPostsProjector::class,
         \App\Projectors\HeroProjector::class,
-        \App\Projectors\ItemProjector::class
+        \App\Projectors\ItemProjector::class,
+        \App\Projectors\MeasurableProjector::class
     ],
 
     /*

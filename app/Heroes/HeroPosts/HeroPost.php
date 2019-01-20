@@ -4,6 +4,7 @@ namespace App\Heroes\HeroPosts;
 
 use App\Hero;
 use App\HeroRace;
+use App\Player;
 use App\Squad;
 use Illuminate\Database\Eloquent\Model;
 
@@ -41,5 +42,15 @@ class HeroPost extends Model
     public function heroRace()
     {
         return $this->belongsTo(HeroRace::class);
+    }
+
+//    public function hasPosition(Player $player)
+//    {
+//        return $this->heroRace->positions->intersect($player->positions)->count() > 0;
+//    }
+
+    public function getPositions()
+    {
+        return $this->heroRace->positions;
     }
 }

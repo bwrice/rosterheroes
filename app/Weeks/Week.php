@@ -1,7 +1,8 @@
 <?php
 
-namespace App;
+namespace App\Weeks;
 
+use App\Game;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @package App
  *
  * @property int $id
+ * @property string $name
  * @property Carbon $proposals_scheduled_to_lock_at
  * @property Carbon $diplomacy_scheduled_to_lock_at
  * @property Carbon $everything_locks_at
@@ -38,6 +40,11 @@ class Week extends Model
         'finalized_at'
     ];
 
+    public function newCollection(array $models = [])
+    {
+        return new WeekCollection($models);
+    }
+
     /**
      * @return Week
      */
@@ -54,6 +61,11 @@ class Week extends Model
     public static function setTestCurrent(Week $week = null)
     {
         self::$testCurrent = $week;
+    }
+
+    public static function isCurrent(Week $week)
+    {
+        return self::current()->id == $week->id;
     }
 
     public function games()

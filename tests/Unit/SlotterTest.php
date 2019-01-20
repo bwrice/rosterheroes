@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\Hero;
 use App\HeroClass;
+use App\Heroes\HeroPosts\HeroPost;
 use App\HeroRace;
 use App\Item;
 use App\ItemBlueprint;
@@ -32,48 +33,17 @@ class SlotterTest extends TestCase
     /** @var Slotter $slotter */
     protected $slotter;
 
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->user = factory(User::class)->create();
-        $this->squadName = 'TestingSquad_' . uniqid();
-        $this->squad = Squad::generate($this->user->id, $this->squadName, [
-            [
-                'name' => 'TestHero1',
-                'race' => HeroRace::HUMAN,
-                'class' => HeroClass::RANGER
-            ],
-            [
-                'name' => 'TestHero2',
-                'race' => HeroRace::ELF,
-                'class' => HeroClass::SORCERER
-            ],
-            [
-                'name' => 'TestHero3',
-                'race' => HeroRace::ORC,
-                'class' => HeroClass::WARRIOR
-            ],
-            [
-                'name' => 'TestHero4',
-                'race' => HeroRace::DWARF,
-                'class' => HeroClass::WARRIOR
-            ]
-        ]);
-
-        $this->slotter = app()->make(Slotter::class);
-    }
-
     /**
      * @test
      * @dataProvider provides_it_can_slot_items_on_empty_heroes
      *
      * @param $itemBase
+     * @throws \Exception
      */
     public function it_can_slot_items_on_empty_heroes($itemBase)
     {
         /** @var Hero $hero */
-        $hero = $this->squad->heroes->random();
+        $hero = factory(Hero::class)->states('with-slots', 'with-measurables')->create();
 
         /** @var ItemBase $itemBase */
         $itemBase = ItemBase::where('name', $itemBase)->first();
@@ -86,7 +56,9 @@ class SlotterTest extends TestCase
 
         $item = $blueprint->generate();
 
-        $this->slotter->slot($hero, $item);
+        /** @var Slotter $slotter */
+        $slotter = app()->make(Slotter::class);
+        $slotter->slot($hero, $item);
 
         $this->assertEquals($itemBase->getSlotsCount(), $item->slots->count(), "Item takes up the correct amount of slots");
         $item->slots->each(function (Slot $slot) use ($item) {
@@ -206,11 +178,19 @@ class SlotterTest extends TestCase
      *
      * @param $firstItemBaseName
      * @param $secondItemBaseName
+     * @throws \Exception
      */
     public function it_can_slot_and_replace_items_on_heroes_and_move_them_to_squad($firstItemBaseName, $secondItemBaseName)
     {
+
+        /** @var HeroPost $heroPost */
+        $heroPost = factory(HeroPost::class)->create();
+        $heroPost->squad->addSlots();
+
         /** @var Hero $hero */
-        $hero = $this->squad->heroes->random();
+        $hero = factory(Hero::class)->states('with-slots', 'with-measurables')->create();
+        $heroPost->hero_id = $hero->id;
+        $heroPost->save();
 
         /** @var ItemBase $firstItemBase */
         $firstItemBase = ItemBase::where('name', $firstItemBaseName)->first();
@@ -223,7 +203,9 @@ class SlotterTest extends TestCase
 
         $itemOne = $firstBlueprint->generate();
 
-        $this->slotter->slot($hero, $itemOne);
+        /** @var Slotter $slotter */
+        $slotter = app()->make(Slotter::class);
+        $slotter->slot($hero, $itemOne);
 
         /** @var ItemBase $firstItemBase */
         $secondItemBase = ItemBase::where('name', $secondItemBaseName)->first();
@@ -236,10 +218,10 @@ class SlotterTest extends TestCase
 
         $itemTwo = $secondBlueprint->generate();
 
-        $this->slotter->slot($hero, $itemTwo);
+        $slotter->slot($hero, $itemTwo);
 
-        $itemOne->slots->each(function (Slot $slot) {
-            $this->assertEquals($this->squad->id, $slot->has_slots_id, "First item now slotted in squad");
+        $itemOne->slots->each(function (Slot $slot) use ($heroPost) {
+            $this->assertEquals($heroPost->squad->id, $slot->has_slots_id, "First item now slotted in squad");
         });
 
         $itemTwo->slots->each(function (Slot $slot) use ($hero) {
@@ -280,6 +262,10 @@ class SlotterTest extends TestCase
     /**
      * @test
      * @dataProvider provides_it_can_slot_single_slot_items_with_multi_slot_options_and_only_move_one_to_the_squad_if_possible
+     * @param $firstItemBaseName
+     * @param $secondItemBaseName
+     * @param $thirdItemBaseName
+     * @throws \Exception
      */
     public function it_can_slot_single_slot_items_with_multi_slot_options_and_only_move_one_to_the_squad_if_possible($firstItemBaseName, $secondItemBaseName, $thirdItemBaseName)
     {

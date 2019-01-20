@@ -4,7 +4,7 @@ namespace Tests\Unit;
 
 use App\Game;
 use App\Player;
-use App\Week;
+use App\Weeks\Week;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;

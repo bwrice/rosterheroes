@@ -9,12 +9,12 @@ use App\HeroRace;
 use App\Measurable;
 use App\MeasurableType;
 use App\Player;
-use App\PlayerWeek;
+use App\GamePlayer;
 use App\Slots\Slot;
 use App\SlotType;
 use App\Squad;
 use App\User;
-use App\Week;
+use App\Weeks\Week;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
@@ -39,7 +39,7 @@ class HeroTest extends TestCase
         $heroRace = HeroRace::HUMAN;
         $heroClass = HeroClass::WARRIOR;
 
-        $response = $this->json('POST','api/squad/' . $squad->uuid . '/heroes', [
+        $response = $this->json('POST','api/squad/' . $squad->uuid .  '/heroes', [
             'name' => $heroName,
             'race' => $heroRace,
             'class' => $heroClass

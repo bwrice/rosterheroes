@@ -65,7 +65,7 @@ class SeedPositions extends Migration
 
         foreach ($sports as $sport) {
             foreach ($sport['positions'] as $position) {
-                \App\Position::create([
+                \App\Positions\Position::create([
                     'sport_id' => $sport['sport']->id,
                     'name' => $position[0],
                     'abbreviation' => $position[1]
@@ -81,6 +81,6 @@ class SeedPositions extends Migration
      */
     public function down()
     {
-        \App\Position::query()->delete();
+        \App\Positions\Position::query()->delete();
     }
 }

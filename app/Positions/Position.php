@@ -1,7 +1,8 @@
 <?php
 
-namespace App;
+namespace App\Positions;
 
+use App\Sport;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -16,6 +17,11 @@ use Illuminate\Database\Eloquent\Model;
 class Position extends Model
 {
     protected $guarded = [];
+
+    public function newCollection(array $models = [])
+    {
+        return new PositionCollection($models);
+    }
 
     public function sport()
     {

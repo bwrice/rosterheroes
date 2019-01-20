@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Weeks\Week;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property Team $homeTeam
  * @property Team $awayTeam
+ * @property Week $week
  */
 class Game extends Model
 {
@@ -33,5 +35,15 @@ class Game extends Model
     public function awayTeam()
     {
         return $this->belongsTo(Team::class, 'away_team_id');
+    }
+
+    public function hasStarted()
+    {
+        return $this->starts_at->isPast();
+    }
+
+    public function week()
+    {
+        return $this->belongsTo(Week::class);
     }
 }

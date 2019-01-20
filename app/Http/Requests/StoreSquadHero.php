@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Squad;
 use App\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\ValidationException;
 
 class StoreSquadHero extends FormRequest
 {
@@ -15,8 +16,13 @@ class StoreSquadHero extends FormRequest
      */
     public function authorize()
     {
-        $squad = Squad::uuidOrFail($this->route('squadUuid'));
-        return $this->user()->can('addHero', $squad);
+        $squad = Squad::uuid($this->route('squadUuid'));
+        if (! $squad) {
+            throw ValidationException::withMessages([
+                'Squad could not be found'
+            ]);
+        }
+        return $this->user()->can('adjustSquad', $squad);
     }
 
     /**

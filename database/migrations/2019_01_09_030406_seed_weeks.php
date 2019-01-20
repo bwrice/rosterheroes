@@ -63,7 +63,7 @@ class SeedWeeks extends Migration
             $offset = $monday->getOffset();
             $monday = $monday->addHours(9)->subSeconds($offset)->setTimezone('UTC');
 
-            \App\Week::create([
+            \App\Weeks\Week::create([
                 'name' => $week['name'],
                 'proposals_scheduled_to_lock_at' => $wednesday,
                 'diplomacy_scheduled_to_lock_at' => $friday,
@@ -82,6 +82,6 @@ class SeedWeeks extends Migration
      */
     public function down()
     {
-        \App\Week::query()->truncate();
+        \App\Weeks\Week::query()->truncate();
     }
 }

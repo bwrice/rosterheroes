@@ -29,14 +29,14 @@ class SquadController extends Controller
             'province_id' => Province::getStarting()->id
         ]);
 
-        // Hooked into for adding wagon
-        event(new SquadCreated($squad));
-
         // Give starting salary, gold and favor to new squad
         $squad->increaseSalary(Squad::STARTING_SALARY);
         $squad->increaseGold(Squad::STARTING_GOLD);
         $squad->increaseFavor(Squad::STARTING_FAVOR);
         $squad->addStartingHeroPosts();
+        $squad->addSlots();
+
+        event(new SquadCreated($squad));
 
         return response()->json($squad, 201);
     }

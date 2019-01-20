@@ -13,24 +13,25 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $initial_salary
  * @property int $salary
  *
- * @property Week $week
  * @property Player $player
+ * @property Game $game
  */
-class PlayerWeek extends EventSourcedModel
+class GamePlayer extends EventSourcedModel
 {
     const MIN_SALARY = 3000;
-
-    public function week()
-    {
-        return $this->belongsTo(Week::class);
-    }
 
     public function player()
     {
         return $this->belongsTo(Player::class);
     }
 
-    public function gameHasStarted()
+    public function game()
     {
+        return $this->belongsTo(Game::class);
+    }
+
+    public function getPositions()
+    {
+        return $this->player->positions;
     }
 }

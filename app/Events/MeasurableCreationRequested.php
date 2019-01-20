@@ -9,8 +9,9 @@ use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Spatie\EventProjector\ShouldBeStored;
 
-class MeasurableCreationRequested
+class MeasurableCreationRequested implements ShouldBeStored
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 

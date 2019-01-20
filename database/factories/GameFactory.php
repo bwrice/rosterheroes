@@ -4,7 +4,7 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Game::class, function (Faker $faker) {
 
-    $week = \App\Week::current();
+    $week = factory(\App\Weeks\Week::class)->create();
     /** @var \App\Team $homeTeam */
     $homeTeam = \App\Team::query()->inRandomOrder()->first();
     /** @var \App\Team $awayTeam */

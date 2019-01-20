@@ -13,7 +13,7 @@ class SeedHeroRanksPositionsRelations extends Migration
      */
     public function up()
     {
-        $positions = \App\Position::with('sport')->get();
+        $positions = \App\Positions\Position::with('sport')->get();
         $heroRaces = \App\HeroRace::all();
 
         $heroRacesArray = [
@@ -134,7 +134,7 @@ class SeedHeroRanksPositionsRelations extends Migration
 
             foreach ($heroRaceArray['positions'] as $heroRacePosition) {
 
-                $position = $positions->first(function(\App\Position $position) use($heroRacePosition) {
+                $position = $positions->first(function(\App\Positions\Position $position) use($heroRacePosition) {
                     if ($position->name == $heroRacePosition['name']) {
                         return $position->sport->name == $heroRacePosition['sport'];
                     }

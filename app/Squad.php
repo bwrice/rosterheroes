@@ -108,6 +108,23 @@ class Squad extends EventSourcedModel implements HasSlots
         event(new SquadFavorIncreased($this->uuid, $amount));
     }
 
+    public function addSlots()
+    {
+        $slotsNeededCount = $this->mobileStorageRank->getBehavior()->getSlotsCount();
+        $currentSlotsCount = $this->slots()->count();
+        $diff = $slotsNeededCount - $currentSlotsCount;
+
+        if($diff > 0) {
+            /** @var SlotType $slotType */
+            $slotType = SlotType::where('name', '=', SlotType::UNIVERSAL)->first();
+            for($i = 1; $i <= $diff; $i++) {
+                $this->slots()->create([
+                    'slot_type_id' => $slotType->id
+                ]);
+            }
+        }
+    }
+
     /**
      * @return Collection
      */
@@ -128,11 +145,6 @@ class Squad extends EventSourcedModel implements HasSlots
         $this->heroPosts()->create([
             'hero_race_id' => $heroRace->id
         ]);
-    }
-
-    public function addStartingPosts()
-    {
-
     }
 
     /**
@@ -256,6 +268,6 @@ class Squad extends EventSourcedModel implements HasSlots
      */
     public function availableSalary()
     {
-        return $this->salary - $this->heroes->totalSalary();
+        return $this->salary - $this->getHeroes()->totalSalary();
     }
 }

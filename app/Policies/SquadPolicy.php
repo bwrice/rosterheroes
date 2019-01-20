@@ -11,7 +11,7 @@ class SquadPolicy
     use HandlesAuthorization;
 
 
-    public function addHero(User $user, Squad $squad)
+    public function adjustSquad(User $user, Squad $squad)
     {
         return $user->id === $squad->user_id;
     }

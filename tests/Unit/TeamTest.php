@@ -4,7 +4,7 @@ namespace Tests\Unit;
 
 use App\Game;
 use App\Team;
-use App\Week;
+use App\Weeks\Week;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;

@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Positions\Position;
+use App\Positions\PositionCollection;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -15,7 +17,7 @@ use Illuminate\Support\Carbon;
  * @property string $name
  *
  * @property Team $team
- * @property Collection $positions
+ * @property PositionCollection $positions
  */
 class Player extends Model
 {

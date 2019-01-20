@@ -7,10 +7,10 @@ use App\Game;
 use App\Hero;
 use App\HeroRace;
 use App\Player;
-use App\PlayerWeek;
-use App\Position;
+use App\GamePlayer;
+use App\Positions\Position;
 use App\Team;
-use App\Week;
+use App\Weeks\Week;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Carbon;
@@ -48,8 +48,8 @@ class HeroPlayerWeekTest extends TestCase
         $player = factory(Player::class)->create();
         $player->positions()->attach($playerPosition);
 
-        /** @var PlayerWeek $playerWeek */
-        $playerWeek = factory(PlayerWeek::class)->create([
+        /** @var GamePlayer $playerWeek */
+        $playerWeek = factory(GamePlayer::class)->create([
             'player_id' => $player->id
         ]);
 
@@ -79,7 +79,7 @@ class HeroPlayerWeekTest extends TestCase
 
         try {
 
-            $hero->addPlayerWeek($playerWeek);
+            $hero->addGamePlayer($playerWeek);
 
         } catch ( \Exception $exception ) {
 
@@ -119,7 +119,7 @@ class HeroPlayerWeekTest extends TestCase
      */
     public function a_hero_will_fail_to_add_a_player_week_with_a_salary_too_high()
     {
-        /** @var Week $week */
+        /** @var \App\Weeks\Week $week */
         $week = factory(Week::class)->create();
 
         Week::setTestCurrent($week);
@@ -148,8 +148,8 @@ class HeroPlayerWeekTest extends TestCase
             'starts_at' => $week->everything_locks_at->addHours(3)
         ]);
 
-        /** @var PlayerWeek $playerWeek */
-        $playerWeek = factory(PlayerWeek::class)->create([
+        /** @var GamePlayer $playerWeek */
+        $playerWeek = factory(GamePlayer::class)->create([
             'player_id' => $player->id,
             'initial_salary' => 11000,
             'salary' => 11000
@@ -169,7 +169,7 @@ class HeroPlayerWeekTest extends TestCase
 
         try {
 
-            $hero->addPlayerWeek($playerWeek);
+            $hero->addGamePlayer($playerWeek);
 
         } catch ( \Exception $exception ) {
 
@@ -220,8 +220,8 @@ class HeroPlayerWeekTest extends TestCase
             'starts_at' => $week->everything_locks_at->addHours(3)
         ]);
 
-        /** @var PlayerWeek $playerWeek */
-        $playerWeek = factory(PlayerWeek::class)->create([
+        /** @var GamePlayer $playerWeek */
+        $playerWeek = factory(GamePlayer::class)->create([
             'player_id' => $player->id
         ]);
 
@@ -235,7 +235,7 @@ class HeroPlayerWeekTest extends TestCase
 
         try {
 
-            $hero->addPlayerWeek($playerWeek);
+            $hero->addGamePlayer($playerWeek);
 
         } catch ( \Exception $exception ) {
 

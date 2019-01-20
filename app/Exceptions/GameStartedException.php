@@ -2,20 +2,24 @@
 
 namespace App\Exceptions;
 
-use Carbon\Carbon;
-use Exception;
+use App\Game;
 use Throwable;
 
-class GameStartedException extends Exception
+class GameStartedException extends \RuntimeException
 {
-    public function __construct($message = "", int $code = 0, Throwable $previous = null)
+    protected $game;
+
+    public function setGame(Game $game)
     {
-        $message = $message ?: "Game started before: " . Carbon::now()->format('Y-m-d H:i:s');
-        parent::__construct($message, $code, $previous);
+        $this->message = "Game already started at: " . $game->starts_at->format('Y-m-d H:i:s');
+        $this->game = $game;
     }
 
-    public function render()
+    /**
+     * @return Game
+     */
+    public function getGame()
     {
-        return "Game has started";
+        return $this->game;
     }
 }

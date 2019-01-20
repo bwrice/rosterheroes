@@ -7,10 +7,30 @@ use Throwable;
 
 class NotEnoughSalaryException extends \RuntimeException
 {
-    public function __construct($salaryAvailable, $salaryNeeded, int $code = 0, Throwable $previous = null)
+    protected $salaryAvailable;
+
+    protected $salaryNeeded;
+
+    public function setSalaries($salaryAvailable, $salaryNeeded)
     {
-        $message = $salaryNeeded . " salary needed, but only " . $salaryAvailable . " salary available";
-        parent::__construct($message, $code, $previous);
+        $this->message = $salaryAvailable . " salary available, but " . $salaryNeeded . " salary is needed";
+        $this->salaryAvailable = $salaryAvailable;
+        $this->salaryNeeded = $salaryNeeded;
     }
 
+    /**
+     * @return int
+     */
+    public function getSalaryAvailable()
+    {
+        return $this->salaryAvailable;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSalaryNeeded()
+    {
+        return $this->salaryNeeded;
+    }
 }

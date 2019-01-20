@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Weeks\Week;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,6 +11,9 @@ use Illuminate\Database\Eloquent\Model;
  * @package App
  *
  * @property int $id
+ * @property string $name
+ * @property string $location
+ * @property string $abbreviation
  *
  * @property Sport $sport
  */

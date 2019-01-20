@@ -28,12 +28,12 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
         SquadCreated::class => [
-            AddSquadSlots::class
+//            AddSquadSlots::class
         ],
-        HeroCreated::class => [
-            AddHeroSlots::class,
-            AddHeroMeasurables::class
-        ]
+//        HeroCreated::class => [
+//            AddHeroSlots::class,
+//            AddHeroMeasurables::class
+//        ]
     ];
 
     /**

@@ -52,7 +52,7 @@ class ItemBlueprint extends Model
 
     public function enchantments()
     {
-        return $this->belongsToMany(Enchantment::class, 'enchantment_item_blueprint', 'blueprint_id', 'ench_id');
+        return $this->belongsToMany(Enchantment::class, 'enchantment_item_blueprint', 'blueprint_id', 'ench_id')->withTimestamps();
     }
 
     /**
