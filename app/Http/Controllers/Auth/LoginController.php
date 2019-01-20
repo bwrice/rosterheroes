@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
+use Ramsey\Uuid\Uuid;
 
 class LoginController extends Controller
 {
@@ -62,11 +63,11 @@ class LoginController extends Controller
 
         if ( $user ) {
 
-
             /** @var User $newUser */
             $newUser = User::updateOrCreate( [
                 'email' => $user->email
             ], [
+                'uuid' => (string) Uuid::uuid4(),
                 'name' => $user->name,
                 'email_verified_at' => Carbon::now()->format('Y-m-d H:i:s')
             ] );
