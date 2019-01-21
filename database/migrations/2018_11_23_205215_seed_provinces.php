@@ -7781,6 +7781,7 @@ class SeedProvinces extends Migration
                 /** @var \App\Province $provinceCreated */
                 $provinceCreated = \App\Province::create([
                     'name' => $province['name'],
+                    'uuid' => (string) \Ramsey\Uuid\Uuid::uuid4(),
                     'continent_id' => $continent->id,
                     'territory_id' => $territoryModel->id,
                     'color' => $province['realm_color'],

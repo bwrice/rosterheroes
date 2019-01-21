@@ -28,7 +28,7 @@ class HeroGamePlayerController extends Controller
         }
 
         try {
-
+            //TODO middleware
             $hero->addGamePlayer($gamePlayer);
             return response($hero->load('gamePlayer')->toJson(), 201);
 

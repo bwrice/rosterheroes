@@ -8,6 +8,7 @@ use App\Events\SquadCreationRequested;
 use App\Events\SquadGoldIncreased;
 use App\Events\SquadHeroPostAdded;
 use App\Events\SquadSalaryIncreased;
+use App\Exceptions\NotBorderedByException;
 use App\Heroes\HeroCollection;
 use App\Heroes\HeroPosts\HeroPost;
 use App\Heroes\HeroPosts\HeroPostCollection;
@@ -269,5 +270,14 @@ class Squad extends EventSourcedModel implements HasSlots
     public function availableSalary()
     {
         return $this->salary - $this->getHeroes()->totalSalary();
+    }
+
+    public function borderTravel(Province $border)
+    {
+        if(! $this->province->isBorderedBy($border)) {
+            throw (new NotBorderedByException())->setProvinces($this->province, $border);
+        }
+        $this->province_id = $border->id;
+        $this->save();
     }
 }

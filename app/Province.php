@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Map\Provinces\ProvinceCollection;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -12,14 +13,15 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property string $name
+ * @property string uuid
  *
- * @property Collection $borders
- * @property Collection $borderedBy
+ * @property ProvinceCollection $borders
+ * @property ProvinceCollection $borderedBy
  *
  * @method static Builder bordersCount(int $count)
  * @method static Builder starting
  */
-class Province extends Model
+class Province extends EventSourcedModel
 {
     const STARTING_PROVINCES = [
         'Prasynein',
@@ -31,6 +33,11 @@ class Province extends Model
     ];
 
     protected $guarded = [];
+
+    public function newCollection(array $models = [])
+    {
+        return new ProvinceCollection($models);
+    }
 
     public function vectorPaths()
     {
@@ -57,6 +64,11 @@ class Province extends Model
     {
         return $this->belongsToMany(self::class, 'borders', 'border_id', 'province_id')
             ->withTimestamps();
+    }
+
+    public function isBorderedBy(Province $province)
+    {
+        return in_array($province->id, $this->borderedBy()->pluck('id')->toArray());
     }
 
     /**
