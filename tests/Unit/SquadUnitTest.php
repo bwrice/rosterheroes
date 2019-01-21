@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Exceptions\NotBorderedByException;
 use App\Province;
 use App\Squad;
 use App\Stash;
@@ -11,7 +12,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class SquadTest extends TestCase
+class SquadUnitTest extends TestCase
 {
 
     use DatabaseTransactions;
@@ -119,5 +120,29 @@ class SquadTest extends TestCase
 
         $this->assertEquals(2, $squad->stashes()->count(), "Squad still has 2 stashes");
         $this->assertEquals($firstStash->id, $sameAsFirstStash->id, "Didn't create a new stash");
+    }
+
+    /**
+     * @test
+     */
+    public function border_traveling_to_a_province_that_is_not_its_current_provinces_border_will_throw_an_exception()
+    {
+        /** @var Squad $squad */
+        $squad = factory(Squad::class)->create();
+        $originalProvince = $squad->province;
+        $borderIDs = $originalProvince->borders()->pluck('id')->toArray();
+        /** @var Province $invalidProvince */
+        $invalidProvince = Province::query()->whereNotIn('id', $borderIDs)->inRandomOrder()->first();
+
+        try {
+            $squad->borderTravel($invalidProvince);
+
+        } catch (NotBorderedByException $exception) {
+
+            $this->assertEquals($originalProvince, $squad->province);
+            return;
+        }
+
+        $this->fail("Exception was not thrown");
     }
 }
