@@ -8,6 +8,7 @@ use App\Events\SquadCreationRequested;
 use App\Events\SquadGoldIncreased;
 use App\Events\SquadHeroPostAdded;
 use App\Events\SquadSalaryIncreased;
+use App\Exceptions\CampaignFoundForOtherContinentException;
 use App\Exceptions\NotBorderedByException;
 use App\Heroes\HeroCollection;
 use App\Heroes\HeroPosts\HeroPost;
@@ -16,6 +17,7 @@ use App\Slots\HasSlots;
 use App\Slots\Slot;
 use App\Slots\SlotCollection;
 use App\Squads\MobileStorage\MobileStorageRank;
+use App\Weeks\Week;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Ramsey\Uuid\Uuid;
@@ -221,6 +223,11 @@ class Squad extends EventSourcedModel implements HasSlots
         return $this->hasMany(StoreHouse::class);
     }
 
+    public function campaigns()
+    {
+        return $this->hasMany(Campaign::class);
+    }
+
     /**
      * @return StoreHouse|null
      */
@@ -279,5 +286,29 @@ class Squad extends EventSourcedModel implements HasSlots
         }
         $this->province_id = $border->id;
         $this->save();
+    }
+
+    /**
+     * @param Continent $continent
+     *
+     * @return Campaign
+     */
+    public function getContinentsCampaign(Continent $continent)
+    {
+        $campaign = Campaign::squadThisWeek($this->id)->first();
+
+        if ($campaign) {
+            /** @var Campaign $campaign */
+            if ($campaign->continent_id != $continent->id) {
+                throw new CampaignFoundForOtherContinentException($campaign->continent, $continent);
+            } else {
+                return $campaign;
+            }
+        } else {
+            return $this->campaigns()->create([
+                'week_id' => Week::current()->id,
+                'continent_id' => $continent->id
+            ]);
+        }
     }
 }
