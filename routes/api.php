@@ -21,6 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::middleware('auth:api')->post('/squads', 'SquadController@store');
 
 Route::middleware('auth:api')->post('/squad/{squadUuid}/border/{borderUuid}', 'SquadBorderTravelController@store');
+Route::middleware('auth:api')->post('/squad/{squadUuid}/quest/{questUuid}', 'SquadQuestController@store');
 
 Route::middleware('auth:api')->post('/squad/{squadUuid}/heroes', 'SquadHeroController@store');
 

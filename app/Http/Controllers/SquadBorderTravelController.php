@@ -21,7 +21,6 @@ class SquadBorderTravelController extends Controller
             $squad->borderTravel($border);
             return response()->json($squad->load('province'), 201);
         } catch (NotBorderedByException $exception) {
-            throw $exception;
             throw ValidationException::withMessages([
                 'border' => $border->name . ' does not border the location of ' . $squad->name
             ]);

@@ -9,7 +9,9 @@ use App\Events\SquadGoldIncreased;
 use App\Events\SquadHeroPostAdded;
 use App\Events\SquadSalaryIncreased;
 use App\Exceptions\CampaignFoundForOtherContinentException;
+use App\Exceptions\MaxQuestsException;
 use App\Exceptions\NotBorderedByException;
+use App\Exceptions\WeekLockedException;
 use App\Heroes\HeroCollection;
 use App\Heroes\HeroPosts\HeroPost;
 use App\Heroes\HeroPosts\HeroPostCollection;
@@ -50,6 +52,7 @@ class Squad extends EventSourcedModel implements HasSlots
     const STARTING_GOLD = 500;
     const STARTING_FAVOR = 100;
     const STARTING_SALARY = 30000;
+    const QUESTS_PER_WEEK = 3;
 
     const STARTING_HERO_POSTS = [
         HeroRace::HUMAN => 1,
@@ -310,5 +313,26 @@ class Squad extends EventSourcedModel implements HasSlots
                 'continent_id' => $continent->id
             ]);
         }
+    }
+
+    /**
+     * @param Quest $quest
+     * @throws MaxQuestsException
+     * @throws WeekLockedException
+     */
+    public function joinQuest(Quest $quest)
+    {
+        $campaign = $this->getContinentsCampaign($quest->province->continent);
+        if ($campaign->quests()->count() >= $this->getQuestsPerWeekAllowed() ) {
+            throw new MaxQuestsException($this->getQuestsPerWeekAllowed());
+        } elseif(Week::current()->everything_locks_at->isPast()) {
+            throw new WeekLockedException(Week::current(), Week::current()->everything_locks_at);
+        }
+        $campaign->quests()->attach($quest->id);
+    }
+
+    protected function getQuestsPerWeekAllowed(): int
+    {
+        return self::QUESTS_PER_WEEK;
     }
 }

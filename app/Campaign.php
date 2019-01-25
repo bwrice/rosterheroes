@@ -35,6 +35,11 @@ class Campaign extends Model
         return $this->belongsTo(Squad::class);
     }
 
+    public function quests()
+    {
+        return $this->belongsToMany(Quest::class);
+    }
+
     public function continent()
     {
         return $this->belongsTo(Continent::class);
