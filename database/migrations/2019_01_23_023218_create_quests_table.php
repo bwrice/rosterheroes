@@ -18,6 +18,7 @@ class CreateQuestsTable extends Migration
             $table->uuid('uuid');
             $table->string('name');
             $table->integer('province_id')->unsigned();
+            $table->dateTime('completed_at')->nullable();
             $table->timestamps();
         });
 

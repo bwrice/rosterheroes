@@ -23,4 +23,9 @@ class Continent extends Model
     const DEMAUXOR = 'Demauxor';
 
     protected $guarded = [];
+
+    public function provinces()
+    {
+        return $this->hasMany(Province::class);
+    }
 }

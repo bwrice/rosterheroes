@@ -13,16 +13,11 @@ class WeekLockedException extends Exception
      * @var Week
      */
     private $week;
-    /**
-     * @var Carbon
-     */
-    private $lockedAt;
 
-    public function __construct(Week $week, Carbon $lockedAt, $message = "", int $code = 0, Throwable $previous = null)
+    public function __construct(Week $week, $message = "", int $code = 0, Throwable $previous = null)
     {
-        $message = $message ?: "That action locked at " . $lockedAt->diffForHumans() . " for week: " . $week->name;
+        $message = $message ?: "That action is locked for week: " . $week->name;
         $this->week = $week;
-        $this->lockedAt = $lockedAt;
         parent::__construct($message, $code, $previous);
     }
 
@@ -34,11 +29,4 @@ class WeekLockedException extends Exception
         return $this->week;
     }
 
-    /**
-     * @return Carbon
-     */
-    public function getLockedAt(): Carbon
-    {
-        return $this->lockedAt;
-    }
 }
