@@ -38,6 +38,6 @@ class Player extends Model
      */
     public function getThisWeeksGame()
     {
-        return $this->team->getThisWeeksGame();
+        return $this->team->thisWeeksGame();
     }
 }

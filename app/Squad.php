@@ -2,13 +2,21 @@
 
 namespace App;
 
+use App\Campaigns\Quests\Quest;
 use App\Events\SquadFavorIncreased;
 use App\Events\SquadCreated;
 use App\Events\SquadCreationRequested;
 use App\Events\SquadGoldIncreased;
 use App\Events\SquadHeroPostAdded;
 use App\Events\SquadSalaryIncreased;
+use App\Exceptions\CampaignExistsException;
+use App\Exceptions\InvalidContinentException;
+use App\Exceptions\InvalidProvinceException;
+use App\Exceptions\MaxQuestsException;
 use App\Exceptions\NotBorderedByException;
+use App\Exceptions\QuestCompletedException;
+use App\Exceptions\QuestRequiredException;
+use App\Exceptions\WeekLockedException;
 use App\Heroes\HeroCollection;
 use App\Heroes\HeroPosts\HeroPost;
 use App\Heroes\HeroPosts\HeroPostCollection;
@@ -16,6 +24,7 @@ use App\Slots\HasSlots;
 use App\Slots\Slot;
 use App\Slots\SlotCollection;
 use App\Squads\MobileStorage\MobileStorageRank;
+use App\Weeks\Week;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Ramsey\Uuid\Uuid;
@@ -40,14 +49,19 @@ use Ramsey\Uuid\Uuid;
  * @property Province $province
  * @property MobileStorageRank $mobileStorageRank
  * @property SlotCollection $slots
+ * @property Campaign|null $currentCampaign
  *
  * @property HeroPostCollection $heroPosts
  */
 class Squad extends EventSourcedModel implements HasSlots
 {
+    const MANAGE_AUTHORIZATION = 'manage-squad';
+
     const STARTING_GOLD = 500;
     const STARTING_FAVOR = 100;
     const STARTING_SALARY = 30000;
+    const QUESTS_PER_WEEK = 3;
+    const SKIRMISHES_PER_QUEST = 5;
 
     const STARTING_HERO_POSTS = [
         HeroRace::HUMAN => 1,
@@ -221,6 +235,16 @@ class Squad extends EventSourcedModel implements HasSlots
         return $this->hasMany(StoreHouse::class);
     }
 
+    public function campaigns()
+    {
+        return $this->hasMany(Campaign::class);
+    }
+
+    public function currentCampaign()
+    {
+        return $this->hasOne(Campaign::class)->where('week_id', '=', Week::current()->id);
+    }
+
     /**
      * @return StoreHouse|null
      */
@@ -279,5 +303,59 @@ class Squad extends EventSourcedModel implements HasSlots
         }
         $this->province_id = $border->id;
         $this->save();
+    }
+
+    /**
+     * @return Campaign|null
+     */
+    public function getThisWeeksCampaign()
+    {
+        /** @var Campaign $campaign */
+        $campaign = Campaign::squadThisWeek($this->id)->first();
+        return $campaign;
+    }
+
+
+    public function getQuestsPerWeekAllowed(): int
+    {
+        return self::QUESTS_PER_WEEK;
+    }
+
+    public function addSkirmish(Skirmish $skirmish)
+    {
+        if(! $this->joinedQuestForCurrentWeek($skirmish->quest)) {
+            throw new QuestRequiredException($skirmish->quest);
+        }
+    }
+
+    /**
+     * @param Quest $quest
+     * @return bool
+     */
+    public function joinedQuestForCurrentWeek(Quest $quest)
+    {
+        $campaign = $this->getThisWeeksCampaign();
+        return $campaign ? in_array($quest->id, $campaign->quests->pluck('id')->toArray()) : false;
+    }
+
+    /**
+     * @return Campaign|null
+     * @throws CampaignExistsException
+     * @throws WeekLockedException
+     */
+    public function createCampaign()
+    {
+        $currentCampaign = $this->getThisWeeksCampaign();
+        if ($currentCampaign) {
+            throw new CampaignExistsException($currentCampaign);
+        } elseif (! Week::current()->adventuringOpen()) {
+            throw new WeekLockedException(Week::current());
+        }
+
+        return Campaign::createWithAttributes([
+            'squad_id' => $this->id,
+            'week_id' => Week::current()->id,
+            'continent_id' => $this->province->continent_id
+        ]);
     }
 }

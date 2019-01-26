@@ -14,7 +14,11 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property string $name
  * @property string uuid
+ * @property int $continent_id
+ * @property int $territory_id
  *
+ * @property Continent $continent
+ * @property Territory $territory
  * @property ProvinceCollection $borders
  * @property ProvinceCollection $borderedBy
  *

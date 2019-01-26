@@ -22,7 +22,7 @@ class StoreSquadHero extends FormRequest
                 'Squad could not be found'
             ]);
         }
-        return $this->user()->can('adjustSquad', $squad);
+        return $this->user()->can(Squad::MANAGE_AUTHORIZATION, $squad);
     }
 
     /**
