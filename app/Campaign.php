@@ -80,7 +80,7 @@ class Campaign extends EventSourcedModel
         } elseif (! Week::current()->adventuringOpen()) {
             throw new WeekLockedException(Week::current());
         }
-        //TODO: continent check
+
         $this->quests()->attach($quest->id);
     }
 }

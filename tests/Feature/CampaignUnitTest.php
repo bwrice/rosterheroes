@@ -4,6 +4,11 @@ namespace Tests\Feature;
 
 use App\Campaign;
 use App\Continent;
+use App\Exceptions\InvalidContinentException;
+use App\Exceptions\InvalidProvinceException;
+use App\Exceptions\MaxQuestsException;
+use App\Exceptions\QuestCompletedException;
+use App\Exceptions\WeekLockedException;
 use App\Province;
 use App\Campaigns\Quests\Quest;
 use App\Squad;
@@ -14,7 +19,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class SquadQuestUnitTest extends TestCase
+class CampaignUnitTest extends TestCase
 {
     /**
      * @test
@@ -24,10 +29,6 @@ class SquadQuestUnitTest extends TestCase
         /** @var \App\Campaigns\Quests\Quest $quest */
         $quest = factory(Quest::class)->create();
         $provinceID = $quest->province->id;
-        /** @var Squad $squad */
-        $squad = factory(Squad::class)->create([
-            'province_id' => $provinceID
-        ]);
 
         /** @var Week $week */
         $week = factory(Week::class)->create();
@@ -42,16 +43,18 @@ class SquadQuestUnitTest extends TestCase
 
         /** @var Campaign $campaign */
         $campaign = factory(Campaign::class)->create([
-            'squad_id' => $squad->id,
             'week_id' => $week->id,
             'continent_id' => $diffContinent->id
         ]);
 
-        try {
-            $squad->joinQuest($quest);
-        } catch ( \Exception $exception ) {
+        $campaign->squad->province_id = $provinceID;
+        $campaign->squad->save();
 
-            $this->assertEquals(0, $campaign->quests->count());
+        try {
+            $campaign->addQuest($quest);
+        } catch ( InvalidContinentException $exception ) {
+
+            $this->assertEquals(0, $campaign->fresh()->quests->count());
             return;
         }
 
@@ -102,10 +105,10 @@ class SquadQuestUnitTest extends TestCase
         $squad->save();
 
         try {
-            $squad->joinQuest($questToJoin);
-        } catch ( \Exception $exception ) {
+            $campaign->addQuest($questToJoin);
+        } catch ( MaxQuestsException $exception ) {
 
-            $this->assertEquals($squad->getQuestsPerWeekAllowed(), $campaign->quests->count());
+            $this->assertEquals($squad->getQuestsPerWeekAllowed(), $campaign->fresh()->quests->count());
             return;
         }
 
@@ -124,18 +127,26 @@ class SquadQuestUnitTest extends TestCase
         //Set time to after the week locks
         Carbon::setTestNow($week->everything_locks_at->copy()->addMinutes(10));
 
-        /** @var Squad $squad */
-        $squad = factory(Squad::class)->create();
+
+        /** @var Campaign $campaign */
+        $campaign = factory(Campaign::class)->create([
+            'week_id' => $week->id
+        ]);
+
+        $provinceID = $campaign->continent->provinces()->inRandomOrder()->first()->id;
+
+        $campaign->squad->province_id = $provinceID;
+        $campaign->squad->save();
 
         $quest = factory(Quest::class)->create([
-            'province_id' => $squad->province->id
+            'province_id' => $provinceID
         ]);
 
         try {
-            $squad->joinQuest($quest);
-        } catch ( \Exception $exception ) {
+            $campaign->addQuest($quest);
+        } catch ( WeekLockedException $exception ) {
 
-            $this->assertEquals(0, $squad->campaigns()->first()->quests->count());
+            $this->assertEquals(0, $campaign->fresh()->quests->count());
             return;
         }
 
@@ -153,19 +164,24 @@ class SquadQuestUnitTest extends TestCase
         Week::setTestCurrent($week);
         Carbon::setTestNow($week->everything_locks_at->copy()->subDays(1));
 
-        /** @var Squad $squad */
-        $squad = factory(Squad::class)->create();
+
+        /** @var Campaign $campaign */
+        $campaign = factory(Campaign::class)->create([
+            'week_id' => $week->id
+        ]);
+
+        $provinceID = $campaign->continent->provinces()->inRandomOrder()->first()->id;
 
         $quest = factory(Quest::class)->create([
-            'province_id' => $squad->province->id,
+            'province_id' => $provinceID,
             'completed_at' => $week->everything_locks_at->copy()->subWeeks(1)
         ]);
         
         try {
-            $squad->joinQuest($quest);
-        } catch ( \Exception $exception ) {
+            $campaign->addQuest($quest);
+        } catch ( QuestCompletedException $exception ) {
 
-            $this->assertEquals(0, $squad->campaigns()->first()->quests->count());
+            $this->assertEquals(0, $campaign->fresh()->quests->count());
             return;
         }
 
@@ -177,26 +193,33 @@ class SquadQuestUnitTest extends TestCase
      */
     public function joining_a_quest_not_at_the_squads_current_province_will_throw_an_exception()
     {
-
         /** @var Week $week */
         $week = factory(Week::class)->create();
         Week::setTestCurrent($week);
         Carbon::setTestNow($week->everything_locks_at->copy()->subDays(1));
 
-        /** @var Squad $squad */
-        $squad = factory(Squad::class)->create();
 
-        $questProvince = Province::query()->where('id', '!=', $squad->province->id)->inRandomOrder()->first();
-
-        $quest = factory(Quest::class)->create([
-            'province_id' => $questProvince->id
+        /** @var Campaign $campaign */
+        $campaign = factory(Campaign::class)->create([
+            'week_id' => $week->id
         ]);
 
-        try {
-            $squad->joinQuest($quest);
-        } catch ( \Exception $exception ) {
+        $provinceID = $campaign->continent->provinces()->inRandomOrder()->first()->id;
 
-            $this->assertEquals(0, $squad->campaigns()->first()->quests->count());
+        $quest = factory(Quest::class)->create([
+            'province_id' => $provinceID
+        ]);
+
+        $diffProvinceID = Province::query()->where('id', '!=', $provinceID)->inRandomOrder()->first()->id;
+
+        $campaign->squad->province_id = $diffProvinceID;
+        $campaign->squad->save();
+
+        try {
+            $campaign->addQuest($quest);
+        } catch ( InvalidProvinceException $exception ) {
+
+            $this->assertEquals(0, $campaign->fresh()->quests->count());
             return;
         }
 
