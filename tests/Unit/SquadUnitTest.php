@@ -2,11 +2,16 @@
 
 namespace Tests\Unit;
 
+use App\Campaign;
+use App\Exceptions\CampaignExistsException;
 use App\Exceptions\NotBorderedByException;
+use App\Exceptions\WeekLockedException;
 use App\Province;
 use App\Squad;
 use App\Stash;
 use App\StoreHouse;
+use App\Weeks\Week;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -144,5 +149,59 @@ class SquadUnitTest extends TestCase
         }
 
         $this->fail("Exception was not thrown");
+    }
+
+    /**
+     * @test
+     */
+    public function creating_a_campaign_when_one_exists_for_the_week_will_throw_an_exception()
+    {
+        /** @var Week $week */
+        $week = factory(Week::class)->create();
+        Week::setTestCurrent($week);
+        Carbon::setTestNow($week->everything_locks_at->copy()->subDays(1));
+
+        /** @var Campaign $campaign */
+        $campaign = factory(Campaign::class)->create([
+            'week_id' => $week->id
+        ]);
+
+        $squad = $campaign->squad;
+
+        try {
+
+            $squad->createCampaign();
+
+        } catch (CampaignExistsException $exception) {
+
+            $this->assertEquals(1, $squad->campaigns()->count());
+            return;
+        }
+        $this->fail("Exception not thrown");
+    }
+
+    /**
+     * @test
+     */
+    public function creating_a_campaign_when_the_week_is_locked_will_throw_an_exception()
+    {
+        /** @var Week $week */
+        $week = factory(Week::class)->create();
+        Week::setTestCurrent($week);
+        Carbon::setTestNow($week->everything_locks_at->copy()->addMinutes(15));
+
+        /** @var Squad $squad */
+        $squad = factory(Squad::class)->create();
+
+        try {
+
+            $squad->createCampaign();
+
+        } catch (WeekLockedException $exception) {
+
+            $this->assertEquals(0, $squad->campaigns()->count());
+            return;
+        }
+        $this->fail("Exception not thrown");
     }
 }

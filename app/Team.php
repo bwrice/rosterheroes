@@ -36,12 +36,14 @@ class Team extends Model
         return $this->belongsToMany(Game::class, 'game_team', 'away_team_id')->withTimestamps();
     }
 
-    public function getThisWeeksGame()
+    public function thisWeeksGame()
     {
-        return Week::current()->games()->whereHas('homeTeam', function (Builder $builder) {
-            return $builder->where('id', '=', $this->id);
-        })->orWhereHas('awayTeam', function (Builder $builder) {
-            return $builder->where('id', '=', $this->id);
+        return Week::current()->games()->where(function (Builder $builder) {
+            $builder->whereHas('homeTeam', function (Builder $builder) {
+                return $builder->where('id', '=', $this->id);
+            })->orWhereHas('awayTeam', function (Builder $builder) {
+                return $builder->where('id', '=', $this->id);
+            });
         })->first();
     }
 }

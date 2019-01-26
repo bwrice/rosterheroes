@@ -4,14 +4,17 @@ namespace App;
 
 use App\Campaigns\Quests\Quest;
 use App\Campaigns\Quests\QuestCollection;
+use App\Events\CampaignCreationRequested;
 use App\Exceptions\InvalidContinentException;
 use App\Exceptions\InvalidProvinceException;
 use App\Exceptions\MaxQuestsException;
 use App\Exceptions\QuestCompletedException;
+use App\Exceptions\QuestExistsException;
 use App\Exceptions\WeekLockedException;
 use App\Weeks\Week;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Ramsey\Uuid\Uuid;
 
 /**
  * Class Campaign
@@ -34,6 +37,22 @@ use Illuminate\Database\Eloquent\Model;
 class Campaign extends EventSourcedModel
 {
     protected $guarded = [];
+
+    /**
+     * @param array $attributes
+     * @return Campaign|null
+     * @throws \Exception
+     */
+    public static function createWithAttributes(array $attributes)
+    {
+        $uuid = (string) Uuid::uuid4();
+
+        $attributes['uuid'] = $uuid;
+
+        event(new CampaignCreationRequested($attributes));
+
+        return self::uuid($uuid);
+    }
 
     public function week()
     {
@@ -66,11 +85,14 @@ class Campaign extends EventSourcedModel
      * @throws WeekLockedException
      * @throws QuestCompletedException
      * @throws InvalidProvinceException
+     * @throws QuestExistsException
      */
     public function addQuest(Quest $quest)
     {
         if ($quest->isCompleted()) {
             throw new QuestCompletedException($quest);
+        } elseif ($this->hasQuest($quest)) {
+            throw new QuestExistsException($quest);
         } elseif ($this->continent->id != $quest->province->continent->id){
             throw new InvalidContinentException($this->continent);
         } elseif ( $quest->province->id != $this->squad->province_id ) {
@@ -82,5 +104,10 @@ class Campaign extends EventSourcedModel
         }
 
         $this->quests()->attach($quest->id);
+    }
+
+    public function hasQuest(Quest $quest)
+    {
+        return in_array($quest->id, $this->quests->pluck('id')->toArray());
     }
 }

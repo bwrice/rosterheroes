@@ -15,7 +15,7 @@ class SquadBorderTravelController extends Controller
     public function store($squadUuid, $borderUuid)
     {
         $squad = Squad::uuidOrFail($squadUuid);
-        $this->authorize('adjust-squad', $squad);
+        $this->authorize(Squad::MANAGE_AUTHORIZATION, $squad);
         $border = Province::uuidOrFail($borderUuid);
         try {
             $squad->borderTravel($border);

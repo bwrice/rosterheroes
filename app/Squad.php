@@ -9,6 +9,7 @@ use App\Events\SquadCreationRequested;
 use App\Events\SquadGoldIncreased;
 use App\Events\SquadHeroPostAdded;
 use App\Events\SquadSalaryIncreased;
+use App\Exceptions\CampaignExistsException;
 use App\Exceptions\InvalidContinentException;
 use App\Exceptions\InvalidProvinceException;
 use App\Exceptions\MaxQuestsException;
@@ -54,6 +55,8 @@ use Ramsey\Uuid\Uuid;
  */
 class Squad extends EventSourcedModel implements HasSlots
 {
+    const MANAGE_AUTHORIZATION = 'manage-squad';
+
     const STARTING_GOLD = 500;
     const STARTING_FAVOR = 100;
     const STARTING_SALARY = 30000;
@@ -303,27 +306,6 @@ class Squad extends EventSourcedModel implements HasSlots
     }
 
     /**
-     * @param Continent $continent
-     *
-     * @return Campaign
-     */
-    public function getContinentsCampaign(Continent $continent)
-    {
-        if ($this->currentCampaign) {
-            if ($this->currentCampaign != $continent->id) {
-                throw new InvalidContinentException($this->currentCampaign->continent, $continent);
-            } else {
-                $this->currentCampaign;
-            }
-        } else {
-            return $this->campaigns()->create([
-                'week_id' => Week::current()->id,
-                'continent_id' => $continent->id
-            ]);
-        }
-    }
-
-    /**
      * @return Campaign|null
      */
     public function getThisWeeksCampaign()
@@ -354,5 +336,26 @@ class Squad extends EventSourcedModel implements HasSlots
     {
         $campaign = $this->getThisWeeksCampaign();
         return $campaign ? in_array($quest->id, $campaign->quests->pluck('id')->toArray()) : false;
+    }
+
+    /**
+     * @return Campaign|null
+     * @throws CampaignExistsException
+     * @throws WeekLockedException
+     */
+    public function createCampaign()
+    {
+        $currentCampaign = $this->getThisWeeksCampaign();
+        if ($currentCampaign) {
+            throw new CampaignExistsException($currentCampaign);
+        } elseif (! Week::current()->adventuringOpen()) {
+            throw new WeekLockedException(Week::current());
+        }
+
+        return Campaign::createWithAttributes([
+            'squad_id' => $this->id,
+            'week_id' => Week::current()->id,
+            'continent_id' => $this->province->continent_id
+        ]);
     }
 }

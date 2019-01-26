@@ -18,6 +18,7 @@ class SquadHeroController extends Controller
     public function store(StoreSquadHero $request, $squadUuid)
     {
         $squad = Squad::uuidOrFail($squadUuid);
+        $this->authorize(Squad::MANAGE_AUTHORIZATION, $squad);
 
         /** @var HeroRace $heroRace */
         $heroRace = HeroRace::query()->where('name', '=', $request->race)->first();
