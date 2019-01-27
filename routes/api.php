@@ -28,3 +28,5 @@ Route::middleware('auth:api')->post('/squad/{squadUuid}/campaigns', 'SquadCampai
 Route::middleware('auth:api')->post('/hero/{heroUuid}/player-week/{gamePlayerUuid}', 'HeroGamePlayerController@store');
 
 Route::middleware('auth:api')->post('/campaign/{campaign}/quest/{questUuid}', 'CampaignQuestController@store');
+
+Route::get('/teams', 'TeamController@index');

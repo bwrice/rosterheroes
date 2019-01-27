@@ -9,7 +9,7 @@
     <link rel=stylesheet href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
     <link rel=stylesheet href="https://fonts.googleapis.com/css?family=Material+Icons">
     <link href=/css/chunk-vendors.897ec1c2.css rel=preload as=style>
-    <link href=/js/app.68c36830.js rel=preload as=script>
+    <link href=/js/app.25ffc181.js rel=preload as=script>
     <link href=/js/chunk-vendors.94f04626.js rel=preload as=script>
     <link href=/css/chunk-vendors.897ec1c2.css rel=stylesheet>
 </head>
@@ -18,6 +18,6 @@
         continue.</strong></noscript>
 <div id=app></div>
 <script src=/js/chunk-vendors.94f04626.js></script>
-<script src=/js/app.68c36830.js></script>
+<script src=/js/app.25ffc181.js></script>
 </body>
 </html>
