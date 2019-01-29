@@ -40,14 +40,9 @@ class SquadController extends Controller
 
         return response()->json($squad, 201);
     }
-//
-//    public function create()
-//    {
-//        return view('squad-creation', [
-//            'squad' => json_encode([
-//                'name' => "Blah squad",
-//                'id' => 4
-//            ])
-//        ]);
-//    }
+
+    public function create()
+    {
+        return view('create-squad');
+    }
 }
