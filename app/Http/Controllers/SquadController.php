@@ -20,6 +20,15 @@ class SquadController extends Controller
 {
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required|unique:squads|between:4,24|alpha_num'
+        ]);
+
+        return response()->json([
+            'name' => $request->name
+        ], 201);
+
+
         /** @var Squad $squad */
         $squad = Squad::createWithAttributes([
             'user_id' => Auth::user()->id,

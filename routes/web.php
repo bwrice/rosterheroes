@@ -19,6 +19,6 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-Route::get('/squads/create', 'SquadController@create')->name('create-squad');
+Route::middleware('auth')->get('/squads/create', 'SquadController@create')->name('create-squad');
 
 Route::get('/{any}', 'SpaController@index')->where('any', '.*');

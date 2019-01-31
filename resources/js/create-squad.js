@@ -6,7 +6,7 @@ import Vuetify from 'vuetify';
 
 Vue.use(Vuetify, {
     theme: {
-        primary: '#BFAC73'
+        primary: '#419183'
     }
 });
 

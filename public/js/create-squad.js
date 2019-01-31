@@ -1824,6 +1824,91 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/squadCreation/SquadCreationStepper.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/squadCreation/SquadCreationStepper.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "SquadCreationStepper",
+  props: {
+    squad: {
+      type: Object,
+      required: true
+    }
+  },
+  data: function data() {
+    return {
+      name: '',
+      snackbar: false,
+      snackbarColor: 'error',
+      snackbarMessage: '',
+      error: false,
+      errorMessages: [],
+      buttonDisabled: false
+    };
+  },
+  methods: {
+    createSquad: function createSquad() {
+      this.buttonDisabled = true;
+      var self = this;
+      axios.post('/api/squads', {
+        name: this.name
+      }).then(function (response) {
+        self.snackbarColor = 'primary';
+        self.snackbarMessage = 'Success!';
+        self.snackbar = true;
+      }).catch(function (error) {
+        self.snackbarColor = 'error';
+        var data = error.response.data;
+        var errorMessages = data.errors[Object.keys(data.errors)[0]];
+        self.snackbarMessage = errorMessages[0];
+        self.errorMessages = errorMessages;
+        self.snackbar = true;
+        self.error = true;
+      });
+    },
+    updateName: function updateName(input) {
+      this.name = input;
+      this.error = false;
+      this.errorMessages = [];
+      this.buttonDisabled = false;
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/CreateSquad.vue?vue&type=script&lang=js&":
 /*!*****************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/CreateSquad.vue?vue&type=script&lang=js& ***!
@@ -1836,6 +1921,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_icons_AxeIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/icons/AxeIcon */ "./resources/js/components/icons/AxeIcon.vue");
 /* harmony import */ var _components_icons_BowIcon__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/icons/BowIcon */ "./resources/js/components/icons/BowIcon.vue");
 /* harmony import */ var _components_icons_WandIcon__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/icons/WandIcon */ "./resources/js/components/icons/WandIcon.vue");
+/* harmony import */ var _components_squadCreation_SquadCreationStepper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/squadCreation/SquadCreationStepper */ "./resources/js/components/squadCreation/SquadCreationStepper.vue");
 //
 //
 //
@@ -1942,12 +2028,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    squad: {
+      type: Object,
+      default: function _default() {
+        return {};
+      }
+    }
+  },
   data: function data() {
     return {
       e1: 0
@@ -1956,7 +2049,13 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     AxeIcon: _components_icons_AxeIcon__WEBPACK_IMPORTED_MODULE_0__["default"],
     BowIcon: _components_icons_BowIcon__WEBPACK_IMPORTED_MODULE_1__["default"],
-    WandIcon: _components_icons_WandIcon__WEBPACK_IMPORTED_MODULE_2__["default"]
+    WandIcon: _components_icons_WandIcon__WEBPACK_IMPORTED_MODULE_2__["default"],
+    SquadCreationStepper: _components_squadCreation_SquadCreationStepper__WEBPACK_IMPORTED_MODULE_3__["default"]
+  },
+  methods: {
+    squadCreated: function squadCreated() {
+      return this.squad.name !== undefined;
+    }
   }
 });
 
@@ -32844,6 +32943,83 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/squadCreation/SquadCreationStepper.vue?vue&type=template&id=752781ce&scoped=true&":
+/*!*************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/squadCreation/SquadCreationStepper.vue?vue&type=template&id=752781ce&scoped=true& ***!
+  \*************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "v-stepper-content",
+        { attrs: { step: "1" } },
+        [
+          _c(
+            "v-flex",
+            { attrs: { xs12: "" } },
+            [
+              _c("v-text-field", {
+                attrs: {
+                  label: "Squad Name",
+                  outline: "",
+                  error: _vm.error,
+                  "error-count": "3",
+                  messages: _vm.errorMessages
+                },
+                on: { input: _vm.updateName }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-btn",
+            {
+              attrs: { color: "primary", disabled: _vm.buttonDisabled },
+              on: { click: _vm.createSquad }
+            },
+            [_vm._v("\n            Continue\n        ")]
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-snackbar",
+        {
+          attrs: { color: _vm.snackbarColor },
+          model: {
+            value: _vm.snackbar,
+            callback: function($$v) {
+              _vm.snackbar = $$v
+            },
+            expression: "snackbar"
+          }
+        },
+        [_vm._v(_vm._s(_vm.snackbarMessage))]
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/CreateSquad.vue?vue&type=template&id=d9280562&":
 /*!*********************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/CreateSquad.vue?vue&type=template&id=d9280562& ***!
@@ -32863,191 +33039,226 @@ var render = function() {
     "v-app",
     { attrs: { dark: "" } },
     [
-      _c("h2", { staticClass: "text-xs-center mt-2" }, [
-        _vm._v("Create Your Squad")
-      ]),
+      _c(
+        "v-toolbar",
+        [_c("v-toolbar-title", [_vm._v("Create Your Squad")])],
+        1
+      ),
       _vm._v(" "),
       _c(
-        "v-stepper",
+        "v-container",
         {
-          model: {
-            value: _vm.e1,
-            callback: function($$v) {
-              _vm.e1 = $$v
-            },
-            expression: "e1"
+          class: {
+            "pa-0": _vm.$vuetify.breakpoint.smAndDown,
+            "pa-5": _vm.$vuetify.breakpoint.mdAndUp
           }
         },
         [
           _c(
-            "v-stepper-header",
+            "v-layout",
+            { attrs: { row: "" } },
             [
               _c(
-                "v-stepper-step",
-                { attrs: { complete: _vm.e1 > 1, step: "1" } },
-                [_vm._v("Squad Name")]
-              ),
-              _vm._v(" "),
-              _c("v-divider"),
-              _vm._v(" "),
-              _c(
-                "v-stepper-step",
-                { attrs: { complete: _vm.e1 > 2, step: "2" } },
-                [_vm._v("Hero One")]
-              ),
-              _vm._v(" "),
-              _c("v-divider"),
-              _vm._v(" "),
-              _c(
-                "v-stepper-step",
-                { attrs: { complete: _vm.e1 > 3, step: "3" } },
-                [_vm._v("Hero Two")]
-              ),
-              _vm._v(" "),
-              _c("v-divider"),
-              _vm._v(" "),
-              _c(
-                "v-stepper-step",
-                { attrs: { complete: _vm.e1 > 4, step: "4" } },
-                [_vm._v("Hero Three")]
-              ),
-              _vm._v(" "),
-              _c("v-divider"),
-              _vm._v(" "),
-              _c("v-stepper-step", { attrs: { step: "5" } }, [
-                _vm._v("Hero Four")
-              ])
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-stepper-items",
-            [
-              _c(
-                "v-stepper-content",
-                { attrs: { step: "1" } },
+                "v-flex",
+                { attrs: { "offset-md-1": "", "offset-lg-2": "" } },
                 [
-                  _c(
-                    "v-card",
-                    {
-                      staticClass: "mb-5",
-                      attrs: { color: "grey lighten-1", height: "200px" }
-                    },
-                    [_c("div", [_c("WandIcon")], 1)]
-                  ),
+                  _c("v-card", { attrs: { height: "150px" } }),
                   _vm._v(" "),
                   _c(
-                    "v-btn",
+                    "v-stepper",
                     {
-                      attrs: { color: "primary" },
-                      on: {
-                        click: function($event) {
-                          _vm.e1 = 2
-                        }
+                      model: {
+                        value: _vm.e1,
+                        callback: function($$v) {
+                          _vm.e1 = $$v
+                        },
+                        expression: "e1"
                       }
                     },
-                    [_vm._v("\n                    Continue\n                ")]
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-stepper-content",
-                { attrs: { step: "2" } },
-                [
-                  _c("v-card", {
-                    staticClass: "mb-5",
-                    attrs: { color: "grey lighten-1", height: "200px" }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "v-btn",
-                    {
-                      attrs: { color: "primary" },
-                      on: {
-                        click: function($event) {
-                          _vm.e1 = 3
-                        }
-                      }
-                    },
-                    [_vm._v("\n                    Continue\n                ")]
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-stepper-content",
-                { attrs: { step: "3" } },
-                [
-                  _c("v-card", {
-                    staticClass: "mb-5",
-                    attrs: { color: "grey lighten-1", height: "200px" }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "v-btn",
-                    {
-                      attrs: { color: "primary" },
-                      on: {
-                        click: function($event) {
-                          _vm.e1 = 4
-                        }
-                      }
-                    },
-                    [_vm._v("\n                    Continue\n                ")]
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-stepper-content",
-                { attrs: { step: "4" } },
-                [
-                  _c("v-card", {
-                    staticClass: "mb-5",
-                    attrs: { color: "grey lighten-1", height: "200px" }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "v-btn",
-                    {
-                      attrs: { color: "primary" },
-                      on: {
-                        click: function($event) {
-                          _vm.e1 = 5
-                        }
-                      }
-                    },
-                    [_vm._v("\n                    Continue\n                ")]
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-stepper-content",
-                { attrs: { step: "5" } },
-                [
-                  _c("v-card", {
-                    staticClass: "mb-5",
-                    attrs: { color: "grey lighten-1", height: "200px" }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "v-btn",
-                    {
-                      attrs: { color: "primary" },
-                      on: {
-                        click: function($event) {
-                          _vm.e1 = 1
-                        }
-                      }
-                    },
-                    [_vm._v("\n                    Finish\n                ")]
+                    [
+                      _c(
+                        "v-stepper-header",
+                        [
+                          _c(
+                            "v-stepper-step",
+                            {
+                              attrs: { complete: _vm.squadCreated(), step: "1" }
+                            },
+                            [_vm._v("Squad Name")]
+                          ),
+                          _vm._v(" "),
+                          _c("v-divider"),
+                          _vm._v(" "),
+                          _c(
+                            "v-stepper-step",
+                            { attrs: { complete: _vm.e1 > 2, step: "2" } },
+                            [_vm._v("Hero One")]
+                          ),
+                          _vm._v(" "),
+                          _c("v-divider"),
+                          _vm._v(" "),
+                          _c(
+                            "v-stepper-step",
+                            { attrs: { complete: _vm.e1 > 3, step: "3" } },
+                            [_vm._v("Hero Two")]
+                          ),
+                          _vm._v(" "),
+                          _c("v-divider"),
+                          _vm._v(" "),
+                          _c(
+                            "v-stepper-step",
+                            { attrs: { complete: _vm.e1 > 4, step: "4" } },
+                            [_vm._v("Hero Three")]
+                          ),
+                          _vm._v(" "),
+                          _c("v-divider"),
+                          _vm._v(" "),
+                          _c("v-stepper-step", { attrs: { step: "5" } }, [
+                            _vm._v("Hero Four")
+                          ])
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-stepper-items",
+                        [
+                          _c("SquadCreationStepper", {
+                            attrs: { squad: _vm.squad }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "v-stepper-content",
+                            { attrs: { step: "2" } },
+                            [
+                              _c("v-card", {
+                                staticClass: "mb-5",
+                                attrs: {
+                                  color: "grey lighten-1",
+                                  height: "200px"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: { color: "primary" },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.e1 = 3
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                Continue\n                            "
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-stepper-content",
+                            { attrs: { step: "3" } },
+                            [
+                              _c("v-card", {
+                                staticClass: "mb-5",
+                                attrs: {
+                                  color: "grey lighten-1",
+                                  height: "200px"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: { color: "primary" },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.e1 = 4
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                Continue\n                            "
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-stepper-content",
+                            { attrs: { step: "4" } },
+                            [
+                              _c("v-card", {
+                                staticClass: "mb-5",
+                                attrs: {
+                                  color: "grey lighten-1",
+                                  height: "200px"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: { color: "primary" },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.e1 = 5
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                Continue\n                            "
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-stepper-content",
+                            { attrs: { step: "5" } },
+                            [
+                              _c("v-card", {
+                                staticClass: "mb-5",
+                                attrs: {
+                                  color: "grey lighten-1",
+                                  height: "200px"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: { color: "primary" },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.e1 = 1
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                Finish\n                            "
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
                   )
                 ],
                 1
@@ -68476,6 +68687,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/squadCreation/SquadCreationStepper.vue":
+/*!************************************************************************!*\
+  !*** ./resources/js/components/squadCreation/SquadCreationStepper.vue ***!
+  \************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _SquadCreationStepper_vue_vue_type_template_id_752781ce_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SquadCreationStepper.vue?vue&type=template&id=752781ce&scoped=true& */ "./resources/js/components/squadCreation/SquadCreationStepper.vue?vue&type=template&id=752781ce&scoped=true&");
+/* harmony import */ var _SquadCreationStepper_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SquadCreationStepper.vue?vue&type=script&lang=js& */ "./resources/js/components/squadCreation/SquadCreationStepper.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _SquadCreationStepper_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _SquadCreationStepper_vue_vue_type_template_id_752781ce_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _SquadCreationStepper_vue_vue_type_template_id_752781ce_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "752781ce",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/squadCreation/SquadCreationStepper.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/squadCreation/SquadCreationStepper.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/squadCreation/SquadCreationStepper.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SquadCreationStepper_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./SquadCreationStepper.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/squadCreation/SquadCreationStepper.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SquadCreationStepper_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/squadCreation/SquadCreationStepper.vue?vue&type=template&id=752781ce&scoped=true&":
+/*!*******************************************************************************************************************!*\
+  !*** ./resources/js/components/squadCreation/SquadCreationStepper.vue?vue&type=template&id=752781ce&scoped=true& ***!
+  \*******************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SquadCreationStepper_vue_vue_type_template_id_752781ce_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./SquadCreationStepper.vue?vue&type=template&id=752781ce&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/squadCreation/SquadCreationStepper.vue?vue&type=template&id=752781ce&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SquadCreationStepper_vue_vue_type_template_id_752781ce_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SquadCreationStepper_vue_vue_type_template_id_752781ce_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/create-squad.js":
 /*!**************************************!*\
   !*** ./resources/js/create-squad.js ***!
@@ -68496,7 +68776,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuetify__WEBPACK_IMPORTED_MODULE_1___default.a, {
   theme: {
-    primary: '#BFAC73'
+    primary: '#419183'
   }
 });
 
