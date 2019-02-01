@@ -8,6 +8,7 @@ use App\Hero;
 use App\HeroClass;
 use App\HeroRace;
 use App\HeroRank;
+use App\Http\Resources\SquadResource;
 use App\Province;
 use App\Squad;
 use App\SquadRank;
@@ -21,13 +22,8 @@ class SquadController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|unique:squads|between:4,24|alpha_num'
+            'name' => 'required|unique:squads|between:4,24|regex:/^[\w\-\s]+$/'
         ]);
-
-        return response()->json([
-            'name' => $request->name
-        ], 201);
-
 
         /** @var Squad $squad */
         $squad = Squad::createWithAttributes([
@@ -47,11 +43,16 @@ class SquadController extends Controller
 
         event(new SquadCreated($squad));
 
-        return response()->json($squad, 201);
+        return response()->json(new SquadResource($squad), 201);
     }
 
     public function create()
     {
         return view('create-squad');
+    }
+
+    public function show($squadUuid)
+    {
+        $squad = Squad::uuidOrFail($squadUuid);
     }
 }

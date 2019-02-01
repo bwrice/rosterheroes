@@ -1875,7 +1875,8 @@ __webpack_require__.r(__webpack_exports__);
       snackbarMessage: '',
       error: false,
       errorMessages: [],
-      buttonDisabled: false
+      buttonDisabled: false,
+      response: false
     };
   },
   methods: {
@@ -1885,9 +1886,11 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('/api/squads', {
         name: this.name
       }).then(function (response) {
+        self.response = response;
         self.snackbarColor = 'primary';
         self.snackbarMessage = 'Success!';
         self.snackbar = true;
+        self.$emit('squad-created', response.data);
       }).catch(function (error) {
         self.snackbarColor = 'error';
         var data = error.response.data;
@@ -2041,9 +2044,18 @@ __webpack_require__.r(__webpack_exports__);
       }
     }
   },
+  mounted: function mounted() {
+    this.squadClone = _.cloneDeep(this.squad);
+
+    if (this.squadClone.name !== undefined) {
+      this.squadCreated = true;
+    }
+  },
   data: function data() {
     return {
-      e1: 0
+      e1: 0,
+      squadClone: {},
+      squadCreated: false
     };
   },
   components: {
@@ -2053,8 +2065,10 @@ __webpack_require__.r(__webpack_exports__);
     SquadCreationStepper: _components_squadCreation_SquadCreationStepper__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   methods: {
-    squadCreated: function squadCreated() {
-      return this.squad.name !== undefined;
+    handleSquadNameCreated: function handleSquadNameCreated(squad) {
+      this.squadClone = squad;
+      this.squadCreated = true;
+      this.e1++;
     }
   }
 });
@@ -32974,8 +32988,8 @@ var render = function() {
                   label: "Squad Name",
                   outline: "",
                   error: _vm.error,
-                  "error-count": "3",
-                  messages: _vm.errorMessages
+                  "error-messages": _vm.errorMessages,
+                  messages: "Letters, numbers and spaces allowed"
                 },
                 on: { input: _vm.updateName }
               })
@@ -33082,7 +33096,7 @@ var render = function() {
                           _c(
                             "v-stepper-step",
                             {
-                              attrs: { complete: _vm.squadCreated(), step: "1" }
+                              attrs: { complete: _vm.squadCreated, step: "1" }
                             },
                             [_vm._v("Squad Name")]
                           ),
@@ -33124,7 +33138,8 @@ var render = function() {
                         "v-stepper-items",
                         [
                           _c("SquadCreationStepper", {
-                            attrs: { squad: _vm.squad }
+                            attrs: { squad: _vm.squadClone },
+                            on: { "squad-created": _vm.handleSquadNameCreated }
                           }),
                           _vm._v(" "),
                           _c(

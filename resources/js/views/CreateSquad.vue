@@ -14,7 +14,7 @@
                     <v-card height="150px"></v-card>
                     <v-stepper v-model="e1">
                         <v-stepper-header>
-                            <v-stepper-step :complete="squadCreated()" step="1">Squad Name</v-stepper-step>
+                            <v-stepper-step :complete="squadCreated" step="1">Squad Name</v-stepper-step>
 
                             <v-divider></v-divider>
 
@@ -35,7 +35,7 @@
 
                         <v-stepper-items>
 
-                            <SquadCreationStepper :squad="squad"></SquadCreationStepper>
+                            <SquadCreationStepper :squad="squadClone" @squad-created="handleSquadNameCreated"></SquadCreationStepper>
 
                             <v-stepper-content step="2">
                                 <v-card
@@ -117,14 +117,24 @@
             squad: {
                 type: Object,
                 default: function() {
-                    return {}
+                    return {
+                    }
                 }
+            }
+        },
+
+        mounted: function() {
+            this.squadClone = _.cloneDeep(this.squad);
+            if( this.squadClone.name !== undefined ) {
+                this.squadCreated = true;
             }
         },
 
         data () {
             return {
-                e1: 0
+                e1: 0,
+                squadClone: {},
+                squadCreated: false
             }
         },
 
@@ -136,8 +146,10 @@
         },
 
         methods: {
-            squadCreated: function() {
-                return this.squad.name !== undefined;
+            handleSquadNameCreated: function(squad) {
+                this.squadClone = squad;
+                this.squadCreated = true;
+                this.e1++;
             }
         }
     }

@@ -7,8 +7,8 @@
                         outline
                         @input="updateName"
                         :error="error"
-                        error-count="3"
-                        :messages="errorMessages"
+                        :error-messages="errorMessages"
+                        messages="Letters, numbers and spaces allowed"
                 ></v-text-field>
             </v-flex>
 
@@ -44,7 +44,8 @@
                 snackbarMessage: '',
                 error: false,
                 errorMessages: [],
-                buttonDisabled: false
+                buttonDisabled: false,
+                response: false
             }
         },
 
@@ -55,9 +56,11 @@
                 axios.post('/api/squads', {
                     name: this.name
                 }).then(function (response) {
+                    self.response = response;
                     self.snackbarColor = 'primary';
                     self.snackbarMessage = 'Success!';
                     self.snackbar = true;
+                    self.$emit('squad-created', response.data)
                 }).catch(function (error) {
                     self.snackbarColor = 'error';
                     let data = error.response.data;
