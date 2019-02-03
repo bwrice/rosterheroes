@@ -204,4 +204,20 @@ class SquadUnitTest extends TestCase
         }
         $this->fail("Exception not thrown");
     }
+
+    /**
+     * @test
+     */
+    public function adding_a_hero_without_a_hero_post_will_throw_an_exception()
+    {
+
+    }
+
+    /**
+     * @test
+     */
+    public function adding_a_hero_without_a_matching_hero_post_will_throw_an_exception()
+    {
+
+    }
 }

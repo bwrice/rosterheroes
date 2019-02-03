@@ -10,6 +10,7 @@ use App\Events\SquadGoldIncreased;
 use App\Events\SquadHeroPostAdded;
 use App\Events\SquadSalaryIncreased;
 use App\Exceptions\CampaignExistsException;
+use App\Exceptions\HeroPostNotFoundException;
 use App\Exceptions\InvalidContinentException;
 use App\Exceptions\InvalidProvinceException;
 use App\Exceptions\MaxQuestsException;
@@ -24,10 +25,12 @@ use App\Slots\HasSlots;
 use App\Slots\Slot;
 use App\Slots\SlotCollection;
 use App\Squads\MobileStorage\MobileStorageRank;
+use App\Traits\HasSlug;
 use App\Weeks\Week;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Ramsey\Uuid\Uuid;
+use Spatie\Sluggable\SlugOptions;
 
 /**
  * Class Squad
@@ -55,6 +58,8 @@ use Ramsey\Uuid\Uuid;
  */
 class Squad extends EventSourcedModel implements HasSlots
 {
+    use HasSlug;
+
     const MANAGE_AUTHORIZATION = 'manage-squad';
 
     const STARTING_GOLD = 500;
@@ -71,6 +76,21 @@ class Squad extends EventSourcedModel implements HasSlots
     ];
 
     protected $guarded = [];
+
+    /**
+     * Get the options for generating the slug.
+     */
+    public function getSlugOptions() : SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug');
+    }
+
+    public static function getStartingHeroesCount()
+    {
+        return collect(self::STARTING_HERO_POSTS)->sum();
+    }
 
     /**
      * @param int $userID
@@ -357,5 +377,33 @@ class Squad extends EventSourcedModel implements HasSlots
             'week_id' => Week::current()->id,
             'continent_id' => $this->province->continent_id
         ]);
+    }
+
+    /**
+     * @param HeroRace $heroRace
+     * @param HeroClass $heroClass
+     * @param $name
+     * @return Hero
+     * @throws HeroPostNotFoundException
+     */
+    public function addHero(HeroRace $heroRace, HeroClass $heroClass, $name)
+    {
+        /** @var HeroPost $heroPost */
+        $heroPost = $this->heroPosts->postFilled(false)->heroRace($heroRace)->first();
+        if(! $heroPost) {
+            throw new HeroPostNotFoundException($heroRace);
+        }
+        $hero = Hero::createWithAttributes([
+            'name' => $name,
+            'hero_class_id' => $heroClass->id,
+            'hero_rank_id' => HeroRank::getStarting()->id
+        ]);
+
+        $heroPost->hero_id = $hero->id;
+        $heroPost->save();
+
+        $hero->addStartingSlots();
+        $hero->addStartingMeasurables();
+        return $hero->fresh();
     }
 }

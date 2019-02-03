@@ -16,6 +16,7 @@ class CreateSquadsTable extends Migration
         Schema::create('squads', function (Blueprint $table) {
             $table->increments('id');
             $table->uuid('uuid');
+            $table->string('slug');
             $table->string('name')->unique();
             $table->integer('user_id')->unsigned();
             $table->integer('squad_rank_id')->unsigned();

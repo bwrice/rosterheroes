@@ -5,9 +5,10 @@
                 <v-text-field
                         label="Squad Name"
                         outline
-                        @input="updateName"
-                        :error="error"
-                        :error-messages="errorMessages"
+                        v-model="name"
+                        @blur="$v.name.$touch()"
+                        @input="serverErrors.flush()"
+                        :error-messages="nameErrors"
                         messages="Letters, numbers and spaces allowed"
                 ></v-text-field>
             </v-flex>
@@ -20,11 +21,13 @@
                 Continue
             </v-btn>
         </v-stepper-content>
-        <v-snackbar v-model="snackbar" :color="snackbarColor">{{snackbarMessage}}</v-snackbar>
     </div>
 </template>
 
 <script>
+
+    import { required, minLength, maxLength, helpers } from 'vuelidate/lib/validators'
+    import Errors from '../../classes/errors'
 
     export default {
         name: "SquadCreationStepper",
@@ -36,46 +39,54 @@
             }
         },
 
+        validations: {
+            name: {
+                required,
+                minLength: minLength(4),
+                maxLength: maxLength(20),
+                format: helpers.regex('format', /^[\w\-\s]+$/)
+            },
+        },
+
         data: function() {
             return {
                 name: '',
-                snackbar: false,
-                snackbarColor: 'error',
-                snackbarMessage: '',
-                error: false,
-                errorMessages: [],
-                buttonDisabled: false,
-                response: false
+                serverErrors: new Errors()
             }
         },
 
         methods: {
             createSquad: function() {
-                this.buttonDisabled = true;
                 let self = this;
                 axios.post('/api/squads', {
                     name: this.name
                 }).then(function (response) {
-                    self.response = response;
-                    self.snackbarColor = 'primary';
-                    self.snackbarMessage = 'Success!';
-                    self.snackbar = true;
                     self.$emit('squad-created', response.data)
                 }).catch(function (error) {
-                    self.snackbarColor = 'error';
-                    let data = error.response.data;
-                    let errorMessages = data.errors[Object.keys(data.errors)[0]];
-                    self.snackbarMessage = errorMessages[0];
-                    self.errorMessages = errorMessages;
-                    self.snackbar = true;
-                    self.error = true;
+                    self.serverErrors.fill(error.response.data.errors);
                 });
+            }
+        },
+
+        computed: {
+            nameErrors: function() {
+                const errors = [];
+                if (!this.$v.name.$dirty) return errors;
+
+                !this.$v.name.required && errors.push('Name is required');
+                !this.$v.name.minLength && errors.push('Must be at least 4 characters');
+                !this.$v.name.maxLength && errors.push('Cannot be more than 20 characters');
+                !this.$v.name.format && errors.push('Only letters, number and spaces allowed');
+
+                if (this.serverErrors.has('name')) {
+                    this.serverErrors.get('name').forEach(function(error) {
+                        errors.push(error);
+                    })
+                }
+                return errors;
             },
-            updateName: function(input) {
-                this.name = input;
-                this.error = false;
-                this.errorMessages = [];
-                this.buttonDisabled = false;
+            buttonDisabled: function() {
+                return Object.keys(this.serverErrors.errors).length !== 0 || this.$v.$invalid;
             }
         }
     }

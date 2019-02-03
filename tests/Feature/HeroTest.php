@@ -35,7 +35,7 @@ class HeroTest extends TestCase
         $squad = factory(Squad::class)->states('starting-posts')->create();
         $user = Passport::actingAs($squad->user);
 
-        $heroName = 'TestHero-' . uniqid();
+        $heroName = 'TestHero' . rand(1,999999);
         $heroRace = HeroRace::HUMAN;
         $heroClass = HeroClass::WARRIOR;
 

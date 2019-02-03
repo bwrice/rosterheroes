@@ -7,6 +7,11 @@ use App\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 
+/**
+ * Class StoreSquadHero
+ * @package App\Http\Requests
+ * @deprecated
+ */
 class StoreSquadHero extends FormRequest
 {
     /**

@@ -33,7 +33,7 @@ class SquadFeatureTest extends TestCase
         /** @var User $user */
         $user = Passport::actingAs(factory(User::class)->create());
 
-        $name = 'MyAwesomeSquad-' . uniqid();
+        $name = 'TestSquad' . rand(1,999999);
 
         $response = $this->json('POST','api/squads', [
            'name' => $name

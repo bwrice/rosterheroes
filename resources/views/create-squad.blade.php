@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    <create-squad></create-squad>
+    @if($squad)
+        <create-squad :squad="{{$squad}}"></create-squad>
+    @else
+        <create-squad></create-squad>
+    @endif
 @endsection

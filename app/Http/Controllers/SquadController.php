@@ -22,7 +22,7 @@ class SquadController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|unique:squads|between:4,24|regex:/^[\w\-\s]+$/'
+            'name' => 'required|unique:squads|between:4,20|regex:/^[\w\-\s]+$/'
         ]);
 
         /** @var Squad $squad */
@@ -48,11 +48,19 @@ class SquadController extends Controller
 
     public function create()
     {
-        return view('create-squad');
+        return view('create-squad', [
+            'squad' => null
+        ]);
     }
 
-    public function show($squadUuid)
+    public function show(Request $request, $squadSlug)
     {
-        $squad = Squad::uuidOrFail($squadUuid);
+        $squad = Squad::slugOrFail($squadSlug);
+        if($squad->getHeroes()->count() < Squad::getStartingHeroesCount()) {
+            return view('create-squad', [
+                'squad' => $squad->toJson()
+            ]);
+        }
+        return "TODO SPA";
     }
 }

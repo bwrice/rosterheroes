@@ -10,6 +10,9 @@ Vue.use(Vuetify, {
     }
 });
 
+import Vuelidate from 'vuelidate';
+Vue.use(Vuelidate);
+
 import CreateSquad from './views/CreateSquad';
 
 const app = new Vue({

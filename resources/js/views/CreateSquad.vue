@@ -1,6 +1,6 @@
 <template>
     <v-app dark>
-        <v-toolbar>
+        <v-toolbar :fixed="true">
             <v-toolbar-title>Create Your Squad</v-toolbar-title>
         </v-toolbar>
         <v-container
@@ -8,10 +8,10 @@
                 'pa-0': $vuetify.breakpoint.smAndDown,
                 'pa-5': $vuetify.breakpoint.mdAndUp
                 }"
+                class="mt-5"
         >
-            <v-layout row>
+            <v-layout fill-height align-center justify-center>
                 <v-flex offset-md-1 offset-lg-2>
-                    <v-card height="150px"></v-card>
                     <v-stepper v-model="e1">
                         <v-stepper-header>
                             <v-stepper-step :complete="squadCreated" step="1">Squad Name</v-stepper-step>
@@ -37,20 +37,9 @@
 
                             <SquadCreationStepper :squad="squadClone" @squad-created="handleSquadNameCreated"></SquadCreationStepper>
 
-                            <v-stepper-content step="2">
-                                <v-card
-                                        class="mb-5"
-                                        color="grey lighten-1"
-                                        height="200px"
-                                ></v-card>
-
-                                <v-btn
-                                        color="primary"
-                                        @click="e1 = 3"
-                                >
-                                    Continue
-                                </v-btn>
-                            </v-stepper-content>
+                            <HeroCreationStepper :heroes="heroesClone">
+                                Create Your First Hero
+                            </HeroCreationStepper>
 
                             <v-stepper-content step="3">
                                 <v-card
@@ -106,10 +95,8 @@
 
 <script>
 
-    import AxeIcon from '../components/icons/AxeIcon'
-    import BowIcon from '../components/icons/BowIcon'
-    import WandIcon from '../components/icons/WandIcon'
     import SquadCreationStepper from '../components/squadCreation/SquadCreationStepper'
+    import HeroCreationStepper from '../components/squadCreation/HeroCreationStepper'
 
     export default {
 
@@ -120,11 +107,17 @@
                     return {
                     }
                 }
+            },
+            heroes: {
+                default: function() {
+                    return [];
+                }
             }
         },
 
-        mounted: function() {
+        created: function() {
             this.squadClone = _.cloneDeep(this.squad);
+            this.heroesClone = _.cloneDeep(this.heroes);
             if( this.squadClone.name !== undefined ) {
                 this.squadCreated = true;
             }
@@ -132,17 +125,16 @@
 
         data () {
             return {
-                e1: 0,
+                e1: this.getProgress(),
                 squadClone: {},
+                heroesClone: [],
                 squadCreated: false
             }
         },
 
         components: {
-            AxeIcon,
-            BowIcon,
-            WandIcon,
-            SquadCreationStepper
+            SquadCreationStepper,
+            HeroCreationStepper
         },
 
         methods: {
@@ -150,6 +142,9 @@
                 this.squadClone = squad;
                 this.squadCreated = true;
                 this.e1++;
+            },
+            getProgress: function() {
+                return this.squad.name !== undefined ? 2 : 1
             }
         }
     }
