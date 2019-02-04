@@ -6,6 +6,7 @@ use App\Heroes\Classes\HeroClassBehavior;
 use App\Heroes\Classes\RangerBehavior;
 use App\Heroes\Classes\SorcererBehavior;
 use App\Heroes\Classes\WarriorBehavior;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -14,6 +15,8 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property string $name
+ *
+ * @method static Builder requiredStarting();
  */
 class HeroClass extends Model
 {
@@ -21,7 +24,20 @@ class HeroClass extends Model
     const SORCERER = 'sorcerer';
     const RANGER = 'ranger';
 
+    const REQUIRED_STARTING_CLASSES = [
+        self::WARRIOR,
+        self::SORCERER,
+        self::RANGER
+    ];
+
     protected $guarded = [];
+
+    public function toArray()
+    {
+        return [
+            'name' => $this->name
+        ];
+    }
 
     /**
      * @return HeroClassBehavior
@@ -62,5 +78,10 @@ class HeroClass extends Model
     public static function sorcerer()
     {
         return self::where('name', '=', self::SORCERER)->first();
+    }
+
+    public function scopeRequiredStarting(Builder $builder)
+    {
+        return $builder->whereIn('name', self::REQUIRED_STARTING_CLASSES);
     }
 }

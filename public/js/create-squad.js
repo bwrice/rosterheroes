@@ -1845,7 +1845,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "HeroCreationStepper",
   props: {
+    step: {
+      required: true
+    },
+    squadUuid: {
+      required: true
+    },
     heroes: {
+      required: true
+    },
+    allowedHeroClasses: {
+      type: Array,
+      required: true
+    },
+    allowedHeroRaces: {
+      type: Array,
       required: true
     }
   },
@@ -1873,9 +1887,38 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    createHero: function createHero() {},
-    clearNameErrors: function clearNameErrors() {
-      this.nameErrors = [];
+    createHero: function createHero() {
+      var self = this;
+      self.buttonDisabled = true;
+      axios.post('/api/squad/' + this.squadUuid + '/heroes', {
+        name: this.name,
+        race: this.heroRace,
+        class: this.heroClass
+      }).then(function (response) {
+        self.buttonDisabled = false;
+        self.$emit('hero-created', response.data);
+      }).catch(function (error) {
+        self.buttonDisabled = false;
+        self.serverErrors.fill(error.response.data.errors);
+      });
+    },
+    validClass: function validClass(heroClass) {
+      var allowed = false;
+      this.allowedHeroClasses.forEach(function (allowedClass) {
+        if (allowedClass.name === heroClass) {
+          allowed = true;
+        }
+      });
+      return allowed;
+    },
+    validRace: function validRace(heroRace) {
+      var allowed = false;
+      this.allowedHeroRaces.forEach(function (allowedRace) {
+        if (allowedRace.name === heroRace) {
+          allowed = true;
+        }
+      });
+      return allowed;
     }
   },
   computed: {
@@ -1886,6 +1929,13 @@ __webpack_require__.r(__webpack_exports__);
       !this.$v.name.minLength && errors.push('Must be at least 4 characters');
       !this.$v.name.maxLength && errors.push('Cannot be more than 20 characters');
       !this.$v.name.format && errors.push('Only letters, number and spaces allowed');
+
+      if (this.serverErrors.has('name')) {
+        this.serverErrors.get('name').forEach(function (error) {
+          errors.push(error);
+        });
+      }
+
       return errors;
     },
     raceErrors: function raceErrors() {
@@ -2146,10 +2196,25 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      e1: this.getProgress(),
       squadClone: {},
       heroesClone: [],
-      squadCreated: false
+      allowedHeroClasses: [],
+      allowedHeroRaces: [],
+      squadCreated: false,
+      progress: 1,
+      heroSteps: [{
+        title: "Create Your First Hero",
+        step: 2
+      }, {
+        title: "Create Your Second Hero",
+        step: 3
+      }, {
+        title: "Create Your Third Hero",
+        step: 4
+      }, {
+        title: "Create Your Last Hero",
+        step: 5
+      }]
     };
   },
   components: {
@@ -2160,10 +2225,39 @@ __webpack_require__.r(__webpack_exports__);
     handleSquadNameCreated: function handleSquadNameCreated(squad) {
       this.squadClone = squad;
       this.squadCreated = true;
-      this.e1++;
+      this.updateDependencies();
     },
-    getProgress: function getProgress() {
-      return this.squad.name !== undefined ? 2 : 1;
+    updateHeroClasses: function updateHeroClasses() {
+      var self = this;
+      axios.get('/api/squad/' + this.squadClone.uuid + '/hero-classes').then(function (response) {
+        self.allowedHeroClasses = response.data;
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
+    updateHeroRaces: function updateHeroRaces() {
+      var self = this;
+      axios.get('/api/squad/' + this.squadClone.uuid + '/hero-races').then(function (response) {
+        self.allowedHeroRaces = response.data;
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
+    handleHeroCreated: function handleHeroCreated(hero) {
+      this.heroesClone.push(hero);
+      this.updateDependencies();
+    },
+    updateProgress: function updateProgress() {
+      if (this.squadClone.name === undefined) {
+        this.progress = 1;
+      } else {
+        this.progress = 2 + this.heroesClone.length;
+      }
+    },
+    updateDependencies: function updateDependencies() {
+      this.updateHeroClasses();
+      this.updateHeroRaces();
+      this.updateProgress();
     }
   }
 });
@@ -32725,7 +32819,7 @@ var render = function() {
     [
       _c(
         "v-stepper-content",
-        { attrs: { step: "2" } },
+        { attrs: { step: _vm.step } },
         [
           _c(
             "v-container",
@@ -32787,7 +32881,7 @@ var render = function() {
                                     blur: function($event) {
                                       _vm.$v.heroClass.$touch()
                                     },
-                                    input: function($event) {
+                                    click: function($event) {
                                       _vm.serverErrors.flush()
                                     }
                                   },
@@ -32802,17 +32896,23 @@ var render = function() {
                                 [
                                   _c("v-radio", {
                                     attrs: {
+                                      disabled: !_vm.validClass("warrior"),
                                       label: "Warrior",
                                       value: "warrior"
                                     }
                                   }),
                                   _vm._v(" "),
                                   _c("v-radio", {
-                                    attrs: { label: "Ranger", value: "ranger" }
+                                    attrs: {
+                                      disabled: !_vm.validClass("ranger"),
+                                      label: "Ranger",
+                                      value: "ranger"
+                                    }
                                   }),
                                   _vm._v(" "),
                                   _c("v-radio", {
                                     attrs: {
+                                      disabled: !_vm.validClass("sorcerer"),
                                       label: "Sorcerer",
                                       value: "sorcerer"
                                     }
@@ -32840,7 +32940,7 @@ var render = function() {
                                     blur: function($event) {
                                       _vm.$v.heroRace.$touch()
                                     },
-                                    input: function($event) {
+                                    click: function($event) {
                                       _vm.serverErrors.flush()
                                     }
                                   },
@@ -32854,19 +32954,35 @@ var render = function() {
                                 },
                                 [
                                   _c("v-radio", {
-                                    attrs: { label: "Human", value: "human" }
+                                    attrs: {
+                                      disabled: !_vm.validRace("human"),
+                                      label: "Human",
+                                      value: "human"
+                                    }
                                   }),
                                   _vm._v(" "),
                                   _c("v-radio", {
-                                    attrs: { label: "Elf", value: "elf" }
+                                    attrs: {
+                                      disabled: !_vm.validRace("elf"),
+                                      label: "Elf",
+                                      value: "elf"
+                                    }
                                   }),
                                   _vm._v(" "),
                                   _c("v-radio", {
-                                    attrs: { label: "Dwarf", value: "dwarf" }
+                                    attrs: {
+                                      disabled: !_vm.validRace("dwarf"),
+                                      label: "Dwarf",
+                                      value: "dwarf"
+                                    }
                                   }),
                                   _vm._v(" "),
                                   _c("v-radio", {
-                                    attrs: { label: "Orc", value: "orc" }
+                                    attrs: {
+                                      disabled: !_vm.validRace("orc"),
+                                      label: "Orc",
+                                      value: "orc"
+                                    }
                                   })
                                 ],
                                 1
@@ -32914,7 +33030,7 @@ var render = function() {
                         {
                           attrs: {
                             color: "primary",
-                            disabled: _vm.$v.$invalid
+                            disabled: _vm.$v.$invalid || _vm.buttonDisabled
                           },
                           on: { click: _vm.createHero }
                         },
@@ -33076,11 +33192,11 @@ var render = function() {
                     "v-stepper",
                     {
                       model: {
-                        value: _vm.e1,
+                        value: _vm.progress,
                         callback: function($$v) {
-                          _vm.e1 = $$v
+                          _vm.progress = $$v
                         },
-                        expression: "e1"
+                        expression: "progress"
                       }
                     },
                     [
@@ -33090,7 +33206,7 @@ var render = function() {
                           _c(
                             "v-stepper-step",
                             {
-                              attrs: { complete: _vm.squadCreated, step: "1" }
+                              attrs: { complete: _vm.progress > 1, step: "1" }
                             },
                             [_vm._v("Squad Name")]
                           ),
@@ -33099,7 +33215,9 @@ var render = function() {
                           _vm._v(" "),
                           _c(
                             "v-stepper-step",
-                            { attrs: { complete: _vm.e1 > 2, step: "2" } },
+                            {
+                              attrs: { complete: _vm.progress > 2, step: "2" }
+                            },
                             [_vm._v("Hero One")]
                           ),
                           _vm._v(" "),
@@ -33107,7 +33225,9 @@ var render = function() {
                           _vm._v(" "),
                           _c(
                             "v-stepper-step",
-                            { attrs: { complete: _vm.e1 > 3, step: "3" } },
+                            {
+                              attrs: { complete: _vm.progress > 3, step: "3" }
+                            },
                             [_vm._v("Hero Two")]
                           ),
                           _vm._v(" "),
@@ -33115,15 +33235,21 @@ var render = function() {
                           _vm._v(" "),
                           _c(
                             "v-stepper-step",
-                            { attrs: { complete: _vm.e1 > 4, step: "4" } },
+                            {
+                              attrs: { complete: _vm.progress > 4, step: "4" }
+                            },
                             [_vm._v("Hero Three")]
                           ),
                           _vm._v(" "),
                           _c("v-divider"),
                           _vm._v(" "),
-                          _c("v-stepper-step", { attrs: { step: "5" } }, [
-                            _vm._v("Hero Four")
-                          ])
+                          _c(
+                            "v-stepper-step",
+                            {
+                              attrs: { complete: _vm.progress > 5, step: "5" }
+                            },
+                            [_vm._v("Hero Four")]
+                          )
                         ],
                         1
                       ),
@@ -33138,7 +33264,16 @@ var render = function() {
                           _vm._v(" "),
                           _c(
                             "HeroCreationStepper",
-                            { attrs: { heroes: _vm.heroesClone } },
+                            {
+                              attrs: {
+                                heroes: _vm.heroesClone,
+                                "squad-uuid": _vm.squadClone.uuid,
+                                "allowed-hero-classes": _vm.allowedHeroClasses,
+                                "allowed-hero-races": _vm.allowedHeroRaces,
+                                step: 2
+                              },
+                              on: { "hero-created": _vm.handleHeroCreated }
+                            },
                             [
                               _vm._v(
                                 "\n                            Create Your First Hero\n                        "
@@ -33147,100 +33282,67 @@ var render = function() {
                           ),
                           _vm._v(" "),
                           _c(
-                            "v-stepper-content",
-                            { attrs: { step: "3" } },
+                            "HeroCreationStepper",
+                            {
+                              attrs: {
+                                heroes: _vm.heroesClone,
+                                "squad-uuid": _vm.squadClone.uuid,
+                                "allowed-hero-classes": _vm.allowedHeroClasses,
+                                "allowed-hero-races": _vm.allowedHeroRaces,
+                                step: 3
+                              },
+                              on: { "hero-created": _vm.handleHeroCreated }
+                            },
                             [
-                              _c("v-card", {
-                                staticClass: "mb-5",
-                                attrs: {
-                                  color: "grey lighten-1",
-                                  height: "200px"
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "v-btn",
-                                {
-                                  attrs: { color: "primary" },
-                                  on: {
-                                    click: function($event) {
-                                      _vm.e1 = 4
-                                    }
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                                Continue\n                            "
-                                  )
-                                ]
+                              _vm._v(
+                                "\n                            Create Your Second Hero\n                        "
                               )
-                            ],
-                            1
+                            ]
                           ),
                           _vm._v(" "),
                           _c(
-                            "v-stepper-content",
-                            { attrs: { step: "4" } },
+                            "HeroCreationStepper",
+                            {
+                              attrs: {
+                                heroes: _vm.heroesClone,
+                                "squad-uuid": _vm.squadClone.uuid,
+                                "allowed-hero-classes": _vm.allowedHeroClasses,
+                                "allowed-hero-races": _vm.allowedHeroRaces,
+                                step: 4
+                              },
+                              on: { "hero-created": _vm.handleHeroCreated }
+                            },
                             [
-                              _c("v-card", {
-                                staticClass: "mb-5",
-                                attrs: {
-                                  color: "grey lighten-1",
-                                  height: "200px"
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "v-btn",
-                                {
-                                  attrs: { color: "primary" },
-                                  on: {
-                                    click: function($event) {
-                                      _vm.e1 = 5
-                                    }
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                                Continue\n                            "
-                                  )
-                                ]
+                              _vm._v(
+                                "\n                            Create Your Third Hero\n                        "
                               )
-                            ],
-                            1
+                            ]
                           ),
                           _vm._v(" "),
                           _c(
-                            "v-stepper-content",
-                            { attrs: { step: "5" } },
+                            "HeroCreationStepper",
+                            {
+                              attrs: {
+                                heroes: _vm.heroesClone,
+                                "squad-uuid": _vm.squadClone.uuid,
+                                "allowed-hero-classes": _vm.allowedHeroClasses,
+                                "allowed-hero-races": _vm.allowedHeroRaces,
+                                step: 5
+                              },
+                              on: { "hero-created": _vm.handleHeroCreated }
+                            },
                             [
-                              _c("v-card", {
-                                staticClass: "mb-5",
-                                attrs: {
-                                  color: "grey lighten-1",
-                                  height: "200px"
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "v-btn",
-                                {
-                                  attrs: { color: "primary" },
-                                  on: {
-                                    click: function($event) {
-                                      _vm.e1 = 1
-                                    }
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                                Finish\n                            "
-                                  )
-                                ]
+                              _vm._v(
+                                "\n                            Create Your Last Hero\n                        "
                               )
-                            ],
-                            1
-                          )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c("v-stepper-content", { attrs: { step: 6 } }, [
+                            _vm._v(
+                              "\n                            Success!!!\n                        "
+                            )
+                          ])
                         ],
                         1
                       )

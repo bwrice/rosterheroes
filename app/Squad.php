@@ -406,4 +406,12 @@ class Squad extends EventSourcedModel implements HasSlots
         $hero->addStartingMeasurables();
         return $hero->fresh();
     }
+
+    /**
+     * @return bool
+     */
+    public function inCreationState()
+    {
+        return $this->getHeroes()->count() < self::getStartingHeroesCount();
+    }
 }

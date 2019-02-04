@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-stepper-content step="2">
+        <v-stepper-content :step="step">
             <v-container>
                 <v-layout row wrap justify-center>
                     <v-flex xs12 md8>
@@ -23,12 +23,12 @@
                                         v-model="heroClass"
                                         label="Hero Class"
                                         @blur="$v.heroClass.$touch()"
-                                        @input="serverErrors.flush()"
+                                        @click="serverErrors.flush()"
                                         :error-messages="classErrors"
                                         column>
-                                    <v-radio label="Warrior" value="warrior"></v-radio>
-                                    <v-radio label="Ranger" value="ranger"></v-radio>
-                                    <v-radio label="Sorcerer" value="sorcerer"></v-radio>
+                                    <v-radio :disabled="! validClass('warrior')" label="Warrior" value="warrior"></v-radio>
+                                    <v-radio :disabled="! validClass('ranger')" label="Ranger" value="ranger"></v-radio>
+                                    <v-radio :disabled="! validClass('sorcerer')" label="Sorcerer" value="sorcerer"></v-radio>
                                 </v-radio-group>
                             </v-flex>
                             <v-flex xs6>
@@ -36,13 +36,13 @@
                                         v-model="heroRace"
                                         label="Hero Race"
                                         @blur="$v.heroRace.$touch()"
-                                        @input="serverErrors.flush()"
+                                        @click="serverErrors.flush()"
                                         :error-messages="raceErrors"
                                         column>
-                                    <v-radio label="Human" value="human"></v-radio>
-                                    <v-radio label="Elf" value="elf"></v-radio>
-                                    <v-radio label="Dwarf" value="dwarf"></v-radio>
-                                    <v-radio label="Orc" value="orc"></v-radio>
+                                    <v-radio :disabled="! validRace('human')" label="Human" value="human"></v-radio>
+                                    <v-radio :disabled="! validRace('elf')" label="Elf" value="elf"></v-radio>
+                                    <v-radio :disabled="! validRace('dwarf')" label="Dwarf" value="dwarf"></v-radio>
+                                    <v-radio :disabled="! validRace('orc')" label="Orc" value="orc"></v-radio>
                                 </v-radio-group>
                             </v-flex>
                         </v-layout>
@@ -60,7 +60,7 @@
                         <v-btn
                                 color="primary"
                                 @click="createHero"
-                                :disabled="$v.$invalid"
+                                :disabled="$v.$invalid || buttonDisabled"
                         >
                             Continue
                         </v-btn>
@@ -81,7 +81,21 @@
         name: "HeroCreationStepper",
 
         props: {
+            step: {
+                required: true
+            },
+            squadUuid: {
+                required: true
+            },
             heroes: {
+                required: true
+            },
+            allowedHeroClasses: {
+                type: Array,
+                required: true
+            },
+            allowedHeroRaces: {
+                type: Array,
                 required: true
             }
         },
@@ -109,10 +123,37 @@
 
         methods: {
             createHero: function() {
-
+                let self = this;
+                self.buttonDisabled = true;
+                axios.post('/api/squad/' + this.squadUuid + '/heroes', {
+                    name: this.name,
+                    race: this.heroRace,
+                    class: this.heroClass
+                }).then(function (response) {
+                    self.buttonDisabled = false;
+                    self.$emit('hero-created', response.data)
+                }).catch(function (error) {
+                    self.buttonDisabled = false;
+                    self.serverErrors.fill(error.response.data.errors);
+                });
             },
-            clearNameErrors: function() {
-                this.nameErrors = [];
+            validClass: function(heroClass) {
+                let allowed = false;
+                this.allowedHeroClasses.forEach(function(allowedClass) {
+                    if(allowedClass.name === heroClass) {
+                        allowed = true;
+                    }
+                });
+                return allowed;
+            },
+            validRace: function(heroRace) {
+                let allowed = false;
+                this.allowedHeroRaces.forEach(function(allowedRace) {
+                    if(allowedRace.name === heroRace) {
+                        allowed = true;
+                    }
+                });
+                return allowed;
             }
         },
 
@@ -124,6 +165,11 @@
                 !this.$v.name.minLength && errors.push('Must be at least 4 characters');
                 !this.$v.name.maxLength && errors.push('Cannot be more than 20 characters');
                 !this.$v.name.format && errors.push('Only letters, number and spaces allowed');
+                if (this.serverErrors.has('name')) {
+                    this.serverErrors.get('name').forEach(function(error) {
+                        errors.push(error);
+                    })
+                }
                 return errors
             },
             raceErrors: function() {

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SquadHeroClassController;
 use Illuminate\Http\Request;
 
 /*
@@ -19,6 +20,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::middleware('auth:api')->post('/squads', 'SquadController@store');
+
+Route::middleware('auth:api')->get('/squad/{squadUuid}/hero-classes', 'SquadHeroClassController');
+Route::middleware('auth:api')->get('/squad/{squadUuid}/hero-races', 'SquadHeroRaceController');
 
 Route::middleware('auth:api')->post('/squad/{squadUuid}/border/{borderUuid}', 'SquadBorderTravelController@store');
 
