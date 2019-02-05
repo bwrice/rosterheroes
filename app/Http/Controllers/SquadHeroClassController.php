@@ -7,10 +7,10 @@ use App\Squads\HeroClassAvailability;
 
 class SquadHeroClassController extends Controller
 {
-    public function __invoke($squadUuid, HeroClassAvailability $availability)
+    public function __invoke($squadUuid)
     {
         $squad = Squad::uuidOrFail($squadUuid);
         $this->authorize(Squad::MANAGE_AUTHORIZATION, $squad);
-        return response($availability->get($squad)->values(), 200);
+        return response($squad->getHeroClassAvailability()->values(), 200);
     }
 }

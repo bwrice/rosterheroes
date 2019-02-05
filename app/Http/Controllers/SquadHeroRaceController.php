@@ -9,14 +9,13 @@ class SquadHeroRaceController extends Controller
 {
     /**
      * @param $squadUuid
-     * @param HeroRaceAvailability $heroRaceAvailability
      * @return \Illuminate\Http\JsonResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function __invoke($squadUuid, HeroRaceAvailability $heroRaceAvailability)
+    public function __invoke($squadUuid)
     {
         $squad = Squad::uuidOrFail($squadUuid);
         $this->authorize(Squad::MANAGE_AUTHORIZATION, $squad);
-        return response()->json($heroRaceAvailability->get($squad)->values(), 200);
+        return response()->json($squad->getHeroRaceAvailability()->values(), 200);
     }
 }

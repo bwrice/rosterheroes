@@ -21,12 +21,14 @@ use Illuminate\Validation\ValidationException;
 
 class SquadHeroController extends Controller
 {
-    public function store(
-        Request $request,
-        $squadUuid,
-        HeroClassAvailability $heroClassAvailability,
-        HeroPostAvailability $heroPostAvailability
-    )
+    /**
+     * @param Request $request
+     * @param $squadUuid
+     * @return \Illuminate\Http\JsonResponse
+     * @throws ValidationException
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function store(Request $request, $squadUuid)
     {
         $squad = Squad::uuidOrFail($squadUuid);
         $this->authorize(Squad::MANAGE_AUTHORIZATION, $squad);
@@ -42,7 +44,7 @@ class SquadHeroController extends Controller
         /** @var HeroClass $heroClass */
         $heroClass = HeroClass::query()->where('name', '=', $request->class)->first();
 
-        $action = new AddHeroToSquad($heroClassAvailability, $heroPostAvailability, $squad, $heroRace, $heroClass, $request->name);
+        $action = new AddHeroToSquad($squad, $heroRace, $heroClass, $request->name);
 
         try {
             $hero = $action->execute();

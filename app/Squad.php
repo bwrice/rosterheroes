@@ -24,6 +24,9 @@ use App\Heroes\HeroPosts\HeroPostCollection;
 use App\Slots\HasSlots;
 use App\Slots\Slot;
 use App\Slots\SlotCollection;
+use App\Squads\HeroClassAvailability;
+use App\Squads\HeroPostAvailability;
+use App\Squads\HeroRaceAvailability;
 use App\Squads\MobileStorage\MobileStorageRank;
 use App\Traits\HasSlug;
 use App\Weeks\Week;
@@ -413,5 +416,26 @@ class Squad extends EventSourcedModel implements HasSlots
     public function inCreationState()
     {
         return $this->getHeroes()->count() < self::getStartingHeroesCount();
+    }
+
+    public function getHeroRaceAvailability()
+    {
+        /** @var HeroRaceAvailability $availability */
+        $availability = app(HeroRaceAvailability::class);
+        return $availability->get($this);
+    }
+
+    public function getHeroPostAvailability()
+    {
+        /** @var HeroPostAvailability $availability */
+        $availability = app(HeroPostAvailability::class);
+        return $availability->get($this);
+    }
+
+    public function getHeroClassAvailability()
+    {
+        /** @var HeroClassAvailability $availability */
+        $availability = app(HeroClassAvailability::class);
+        return $availability->get($this);
     }
 }

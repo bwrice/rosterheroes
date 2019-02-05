@@ -24,10 +24,6 @@ use App\Squads\HeroPostAvailability;
 class AddHeroToSquad
 {
     /**
-     * @var HeroClassAvailability
-     */
-    private $heroClassAvailability;
-    /**
      * @var Squad
      */
     private $squad;
@@ -41,26 +37,18 @@ class AddHeroToSquad
     private $heroClass;
 
     private $heroName;
-    /**
-     * @var HeroPostAvailability
-     */
-    private $heroPostAvailability;
 
     public function __construct(
-        HeroClassAvailability $heroClassAvailability,
-        HeroPostAvailability $heroPostAvailability,
         Squad $squad,
         HeroRace $heroRace,
         HeroClass $heroClass,
         $heroName
     )
     {
-        $this->heroClassAvailability = $heroClassAvailability;
         $this->squad = $squad;
         $this->heroRace = $heroRace;
         $this->heroClass = $heroClass;
         $this->heroName = $heroName;
-        $this->heroPostAvailability = $heroPostAvailability;
     }
 
     /**
@@ -70,12 +58,12 @@ class AddHeroToSquad
      */
     public function execute()
     {
-        $heroPost = $this->heroPostAvailability->get($this->squad)->heroRace($this->heroRace)->first();
+        $heroPost = $this->squad->getHeroPostAvailability()->heroRace($this->heroRace)->first();
         if (! $heroPost) {
             throw new HeroPostNotFoundException($this->heroRace);
         }
 
-        if (! $this->heroClassAvailability->get($this->squad)->contains($this->heroClass)) {
+        if (! $this->squad->getHeroClassAvailability()->contains($this->heroClass)) {
             throw new InvalidHeroClassException($this->heroClass);
         }
 

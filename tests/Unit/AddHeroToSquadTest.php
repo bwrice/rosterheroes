@@ -33,9 +33,7 @@ class AddHeroToSquadTest extends TestCase
         $heroClass = HeroClass::query()->inRandomOrder()->first();
 
         try {
-            $heroClassAvailability = app(HeroClassAvailability::class);
-            $heroPostAvailability = app(HeroPostAvailability::class);
-            $action = new AddHeroToSquad($heroClassAvailability, $heroPostAvailability, $squad, $heroRace, $heroClass, 'TestHero' . rand(1,999999));
+            $action = new AddHeroToSquad($squad, $heroRace, $heroClass, 'TestHero' . rand(1,999999));
             $action->execute();
         } catch (HeroPostNotFoundException $exception) {
             $this->assertEquals(0, $squad->getHeroes()->count());
@@ -58,9 +56,7 @@ class AddHeroToSquadTest extends TestCase
         $heroClass = HeroClass::query()->inRandomOrder()->first();
 
         try {
-            $heroClassAvailability = app(HeroClassAvailability::class);
-            $heroPostAvailability = app(HeroPostAvailability::class);
-            $action = new AddHeroToSquad($heroClassAvailability, $heroPostAvailability, $heroPost->squad, $heroRace, $heroClass, 'TestHero' . rand(1,999999));
+            $action = new AddHeroToSquad($heroPost->squad, $heroRace, $heroClass, 'TestHero' . rand(1,999999));
             $action->execute();
         } catch (HeroPostNotFoundException $exception) {
             $this->assertEquals(0, $heroPost->squad->getHeroes()->count());
@@ -112,9 +108,7 @@ class AddHeroToSquadTest extends TestCase
 
         try {
             $emptyHeroRace = $heroPosts->postFilled(false)->first()->heroRace;
-            $heroClassAvailability = app(HeroClassAvailability::class);
-            $heroPostAvailability = app(HeroPostAvailability::class);
-            $action = new AddHeroToSquad($heroClassAvailability, $heroPostAvailability, $squad, $emptyHeroRace, $heroClass, 'TestHero' . rand(1,999999));
+            $action = new AddHeroToSquad($squad, $emptyHeroRace, $heroClass, 'TestHero' . rand(1,999999));
             $action->execute();
         } catch (InvalidHeroClassException $exception) {
             $this->assertEquals($heroClass, $exception->getHeroClass());
