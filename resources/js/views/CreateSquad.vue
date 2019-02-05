@@ -38,47 +38,15 @@
                             <SquadCreationStepper :squad="squadClone" @squad-created="handleSquadNameCreated"></SquadCreationStepper>
 
                             <HeroCreationStepper
-                                    :heroes="heroesClone"
+                                    v-for="heroStep in heroSteps"
+                                    :heroStep="heroStep"
+                                    :key="heroStep.id"
                                     :squad-uuid="squadClone.uuid"
                                     :allowed-hero-classes="allowedHeroClasses"
                                     :allowed-hero-races="allowedHeroRaces"
-                                    :step="2"
                                     @hero-created="handleHeroCreated"
                             >
                                 Create Your First Hero
-                            </HeroCreationStepper>
-
-                            <HeroCreationStepper
-                                    :heroes="heroesClone"
-                                    :squad-uuid="squadClone.uuid"
-                                    :allowed-hero-classes="allowedHeroClasses"
-                                    :allowed-hero-races="allowedHeroRaces"
-                                    :step="3"
-                                    @hero-created="handleHeroCreated"
-                            >
-                                Create Your Second Hero
-                            </HeroCreationStepper>
-
-                            <HeroCreationStepper
-                                    :heroes="heroesClone"
-                                    :squad-uuid="squadClone.uuid"
-                                    :allowed-hero-classes="allowedHeroClasses"
-                                    :allowed-hero-races="allowedHeroRaces"
-                                    :step="4"
-                                    @hero-created="handleHeroCreated"
-                            >
-                                Create Your Third Hero
-                            </HeroCreationStepper>
-
-                            <HeroCreationStepper
-                                    :heroes="heroesClone"
-                                    :squad-uuid="squadClone.uuid"
-                                    :allowed-hero-classes="allowedHeroClasses"
-                                    :allowed-hero-races="allowedHeroRaces"
-                                    :step="5"
-                                    @hero-created="handleHeroCreated"
-                            >
-                                Create Your Last Hero
                             </HeroCreationStepper>
 
                             <v-stepper-content :step="6">
@@ -132,10 +100,10 @@
                 squadCreated: false,
                 progress: 1,
                 heroSteps: [
-                    { title: "Create Your First Hero", step: 2 },
-                    { title: "Create Your Second Hero", step: 3 },
-                    { title: "Create Your Third Hero", step: 4 },
-                    { title: "Create Your Last Hero", step: 5 }
+                    { hero: 1, title: "Create Your First Hero", step: 2 },
+                    { hero: 2, title: "Create Your Second Hero", step: 3 },
+                    { hero: 3, title: "Create Your Third Hero", step: 4 },
+                    { hero: 4, title: "Create Your Last Hero", step: 5 }
                 ]
             }
         },

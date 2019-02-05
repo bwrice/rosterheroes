@@ -1,11 +1,11 @@
 <template>
     <div>
-        <v-stepper-content :step="step">
+        <v-stepper-content :step="heroStep.step">
             <v-container>
                 <v-layout row wrap justify-center>
                     <v-flex xs12 md8>
                         <p class="text-xs-center title">
-                            <slot></slot>
+                            {{heroStep.title}}
                         </p>
                         <p class="body-1">
                             Choose a hero class and a hero race. Then give you hero a name.
@@ -81,13 +81,11 @@
         name: "HeroCreationStepper",
 
         props: {
-            step: {
+            heroStep: {
+                type: Object,
                 required: true
             },
             squadUuid: {
-                required: true
-            },
-            heroes: {
                 required: true
             },
             allowedHeroClasses: {

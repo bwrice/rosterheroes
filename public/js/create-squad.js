@@ -1845,13 +1845,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "HeroCreationStepper",
   props: {
-    step: {
+    heroStep: {
+      type: Object,
       required: true
     },
     squadUuid: {
-      required: true
-    },
-    heroes: {
       required: true
     },
     allowedHeroClasses: {
@@ -2138,38 +2136,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2203,15 +2169,19 @@ __webpack_require__.r(__webpack_exports__);
       squadCreated: false,
       progress: 1,
       heroSteps: [{
+        hero: 1,
         title: "Create Your First Hero",
         step: 2
       }, {
+        hero: 2,
         title: "Create Your Second Hero",
         step: 3
       }, {
+        hero: 3,
         title: "Create Your Third Hero",
         step: 4
       }, {
+        hero: 4,
         title: "Create Your Last Hero",
         step: 5
       }]
@@ -32819,7 +32789,7 @@ var render = function() {
     [
       _c(
         "v-stepper-content",
-        { attrs: { step: _vm.step } },
+        { attrs: { step: _vm.heroStep.step } },
         [
           _c(
             "v-container",
@@ -32829,12 +32799,13 @@ var render = function() {
                 { attrs: { row: "", wrap: "", "justify-center": "" } },
                 [
                   _c("v-flex", { attrs: { xs12: "", md8: "" } }, [
-                    _c(
-                      "p",
-                      { staticClass: "text-xs-center title" },
-                      [_vm._t("default")],
-                      2
-                    ),
+                    _c("p", { staticClass: "text-xs-center title" }, [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(_vm.heroStep.title) +
+                          "\n                    "
+                      )
+                    ]),
                     _vm._v(" "),
                     _c("p", { staticClass: "body-1" }, [
                       _vm._v(
@@ -33262,81 +33233,27 @@ var render = function() {
                             on: { "squad-created": _vm.handleSquadNameCreated }
                           }),
                           _vm._v(" "),
-                          _c(
-                            "HeroCreationStepper",
-                            {
-                              attrs: {
-                                heroes: _vm.heroesClone,
-                                "squad-uuid": _vm.squadClone.uuid,
-                                "allowed-hero-classes": _vm.allowedHeroClasses,
-                                "allowed-hero-races": _vm.allowedHeroRaces,
-                                step: 2
+                          _vm._l(_vm.heroSteps, function(heroStep) {
+                            return _c(
+                              "HeroCreationStepper",
+                              {
+                                key: heroStep.id,
+                                attrs: {
+                                  heroStep: heroStep,
+                                  "squad-uuid": _vm.squadClone.uuid,
+                                  "allowed-hero-classes":
+                                    _vm.allowedHeroClasses,
+                                  "allowed-hero-races": _vm.allowedHeroRaces
+                                },
+                                on: { "hero-created": _vm.handleHeroCreated }
                               },
-                              on: { "hero-created": _vm.handleHeroCreated }
-                            },
-                            [
-                              _vm._v(
-                                "\n                            Create Your First Hero\n                        "
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "HeroCreationStepper",
-                            {
-                              attrs: {
-                                heroes: _vm.heroesClone,
-                                "squad-uuid": _vm.squadClone.uuid,
-                                "allowed-hero-classes": _vm.allowedHeroClasses,
-                                "allowed-hero-races": _vm.allowedHeroRaces,
-                                step: 3
-                              },
-                              on: { "hero-created": _vm.handleHeroCreated }
-                            },
-                            [
-                              _vm._v(
-                                "\n                            Create Your Second Hero\n                        "
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "HeroCreationStepper",
-                            {
-                              attrs: {
-                                heroes: _vm.heroesClone,
-                                "squad-uuid": _vm.squadClone.uuid,
-                                "allowed-hero-classes": _vm.allowedHeroClasses,
-                                "allowed-hero-races": _vm.allowedHeroRaces,
-                                step: 4
-                              },
-                              on: { "hero-created": _vm.handleHeroCreated }
-                            },
-                            [
-                              _vm._v(
-                                "\n                            Create Your Third Hero\n                        "
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "HeroCreationStepper",
-                            {
-                              attrs: {
-                                heroes: _vm.heroesClone,
-                                "squad-uuid": _vm.squadClone.uuid,
-                                "allowed-hero-classes": _vm.allowedHeroClasses,
-                                "allowed-hero-races": _vm.allowedHeroRaces,
-                                step: 5
-                              },
-                              on: { "hero-created": _vm.handleHeroCreated }
-                            },
-                            [
-                              _vm._v(
-                                "\n                            Create Your Last Hero\n                        "
-                              )
-                            ]
-                          ),
+                              [
+                                _vm._v(
+                                  "\n                            Create Your First Hero\n                        "
+                                )
+                              ]
+                            )
+                          }),
                           _vm._v(" "),
                           _c("v-stepper-content", { attrs: { step: 6 } }, [
                             _vm._v(
@@ -33344,7 +33261,7 @@ var render = function() {
                             )
                           ])
                         ],
-                        1
+                        2
                       )
                     ],
                     1

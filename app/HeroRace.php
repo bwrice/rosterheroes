@@ -60,4 +60,11 @@ class HeroRace extends Model
     {
         return self::where('name', '=', self::ORC)->first();
     }
+
+    public function toArray()
+    {
+        return [
+            'name' => $this->name
+        ];
+    }
 }
