@@ -17,6 +17,7 @@ class CreateHeroesTable extends Migration
             $table->increments('id');
             $table->uuid('uuid');
             $table->string('name');
+            $table->string('slug');
             $table->integer('hero_class_id')->unsigned();
             $table->integer('hero_rank_id')->unsigned();
             $table->integer('game_player_id')->unsigned()->nullable();

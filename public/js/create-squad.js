@@ -1839,7 +1839,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1894,7 +1893,7 @@ __webpack_require__.r(__webpack_exports__);
         class: this.heroClass
       }).then(function (response) {
         self.buttonDisabled = false;
-        self.$emit('hero-created', response.data);
+        self.$emit('hero-created', response.data, self.heroStep.step);
       }).catch(function (error) {
         self.buttonDisabled = false;
         self.serverErrors.fill(error.response.data.errors);
@@ -2022,18 +2021,22 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       name: '',
-      serverErrors: new _classes_errors__WEBPACK_IMPORTED_MODULE_1__["default"]()
+      serverErrors: new _classes_errors__WEBPACK_IMPORTED_MODULE_1__["default"](),
+      pendingResponse: false
     };
   },
   methods: {
     createSquad: function createSquad() {
       var self = this;
+      self.pendingResponse = true;
       axios.post('/api/squads', {
         name: this.name
       }).then(function (response) {
         self.$emit('squad-created', response.data);
+        self.pendingResponse = false;
       }).catch(function (error) {
         self.serverErrors.fill(error.response.data.errors);
+        self.pendingResponse = false;
       });
     }
   },
@@ -2055,7 +2058,7 @@ __webpack_require__.r(__webpack_exports__);
       return errors;
     },
     buttonDisabled: function buttonDisabled() {
-      return Object.keys(this.serverErrors.errors).length !== 0 || this.$v.$invalid;
+      return Object.keys(this.serverErrors.errors).length !== 0 || this.$v.$invalid || this.pendingResponse;
     }
   }
 });
@@ -2073,6 +2076,13 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_squadCreation_SquadCreationStepper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/squadCreation/SquadCreationStepper */ "./resources/js/components/squadCreation/SquadCreationStepper.vue");
 /* harmony import */ var _components_squadCreation_HeroCreationStepper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/squadCreation/HeroCreationStepper */ "./resources/js/components/squadCreation/HeroCreationStepper.vue");
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2163,7 +2173,6 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       squadClone: {},
-      heroesClone: [],
       allowedHeroClasses: [],
       allowedHeroRaces: [],
       squadCreated: false,
@@ -2196,6 +2205,7 @@ __webpack_require__.r(__webpack_exports__);
       this.squadClone = squad;
       this.squadCreated = true;
       this.updateDependencies();
+      this.updateProgress();
     },
     updateHeroClasses: function updateHeroClasses() {
       var self = this;
@@ -2213,9 +2223,14 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       });
     },
-    handleHeroCreated: function handleHeroCreated(hero) {
+    handleHeroCreated: function handleHeroCreated(hero, step) {
       this.heroesClone.push(hero);
-      this.updateDependencies();
+
+      if (step < 5) {
+        this.updateDependencies();
+      }
+
+      this.updateProgress();
     },
     updateProgress: function updateProgress() {
       if (this.squadClone.name === undefined) {
@@ -2227,7 +2242,6 @@ __webpack_require__.r(__webpack_exports__);
     updateDependencies: function updateDependencies() {
       this.updateHeroClasses();
       this.updateHeroRaces();
-      this.updateProgress();
     }
   }
 });
@@ -33255,11 +33269,47 @@ var render = function() {
                             )
                           }),
                           _vm._v(" "),
-                          _c("v-stepper-content", { attrs: { step: 6 } }, [
-                            _vm._v(
-                              "\n                            Success!!!\n                        "
-                            )
-                          ])
+                          _c(
+                            "v-stepper-content",
+                            { attrs: { step: 6 } },
+                            [
+                              _c("p", [
+                                _vm._v("Congrats!!! Your squad,"),
+                                _c("br"),
+                                _vm._v(" "),
+                                _c(
+                                  "span",
+                                  { staticClass: "headline text-xs-center" },
+                                  [_vm._v(_vm._s(_vm.squadClone.name))]
+                                )
+                              ]),
+                              _c("p", [
+                                _vm._v(
+                                  "is all set up. You can now head over to the "
+                                ),
+                                _c("br"),
+                                _vm._v(
+                                  "\n                                command center to begin your journey\n                            "
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: {
+                                    href: "/cc/" + this.squadClone.slug,
+                                    color: "primary"
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                Go to Command Center\n                            "
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          )
                         ],
                         2
                       )
@@ -70359,9 +70409,17 @@ module.exports = function(module) {
 /*!***********************************!*\
   !*** ./resources/js/bootstrap.js ***!
   \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuetify__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuetify */ "./node_modules/vuetify/dist/vuetify.js");
+/* harmony import */ var vuetify__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuetify__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vuelidate__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuelidate */ "./node_modules/vuelidate/lib/index.js");
+/* harmony import */ var vuelidate__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vuelidate__WEBPACK_IMPORTED_MODULE_2__);
 window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -70395,6 +70453,18 @@ if (token) {
 } else {
   console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
+
+
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuetify__WEBPACK_IMPORTED_MODULE_1___default.a, {
+  theme: {
+    primary: '#419183',
+    info: '#6a6099',
+    success: '#52b266'
+  }
+});
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuelidate__WEBPACK_IMPORTED_MODULE_2___default.a);
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
@@ -70628,27 +70698,15 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vuetify__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuetify */ "./node_modules/vuetify/dist/vuetify.js");
-/* harmony import */ var vuetify__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuetify__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var vuelidate__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuelidate */ "./node_modules/vuelidate/lib/index.js");
-/* harmony import */ var vuelidate__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vuelidate__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _views_CreateSquad__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./views/CreateSquad */ "./resources/js/views/CreateSquad.vue");
+/* harmony import */ var _views_CreateSquad__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./views/CreateSquad */ "./resources/js/views/CreateSquad.vue");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuetify__WEBPACK_IMPORTED_MODULE_1___default.a, {
-  theme: {
-    primary: '#419183'
-  }
-});
-
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuelidate__WEBPACK_IMPORTED_MODULE_2___default.a);
-
 var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: '#app',
   components: {
-    CreateSquad: _views_CreateSquad__WEBPACK_IMPORTED_MODULE_3__["default"]
+    CreateSquad: _views_CreateSquad__WEBPACK_IMPORTED_MODULE_1__["default"]
   }
 });
 

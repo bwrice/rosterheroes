@@ -68,7 +68,6 @@
                 </v-layout>
             </v-container>
         </v-stepper-content>
-        <!--<v-snackbar v-model="snackbar" :color="snackbarColor">{{snackbarMessage}}</v-snackbar>-->
     </div>
 </template>
 
@@ -129,7 +128,7 @@
                     class: this.heroClass
                 }).then(function (response) {
                     self.buttonDisabled = false;
-                    self.$emit('hero-created', response.data)
+                    self.$emit('hero-created', response.data, self.heroStep.step)
                 }).catch(function (error) {
                     self.buttonDisabled = false;
                     self.serverErrors.fill(error.response.data.errors);

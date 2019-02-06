@@ -29,7 +29,7 @@ Route::middleware('auth:api')->post('/squad/{squadUuid}/border/{borderUuid}', 'S
 Route::middleware('auth:api')->post('/squad/{squadUuid}/heroes', 'SquadHeroController@store');
 Route::middleware('auth:api')->post('/squad/{squadUuid}/campaigns', 'SquadCampaignController@store');
 
-Route::middleware('auth:api')->post('/hero/{heroUuid}/player-week/{gamePlayerUuid}', 'HeroGamePlayerController@store');
+Route::middleware('auth:api')->post('/hero/{heroUuid}/game-player/{gamePlayerUuid}', 'HeroGamePlayerController@store');
 
 Route::middleware('auth:api')->post('/campaign/{campaign}/quest/{questUuid}', 'CampaignQuestController@store');
 

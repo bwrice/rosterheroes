@@ -50,7 +50,14 @@
                             </HeroCreationStepper>
 
                             <v-stepper-content :step="6">
-                                Success!!!
+                                <p>Congrats!!! Your squad,<br>
+                                <span class="headline text-xs-center">{{ squadClone.name }}</span>
+                                <p>is all set up. You can now head over to the <br>
+                                    command center to begin your journey
+                                </p>
+                                <v-btn :href="'/cc/' + this.squadClone.slug" color="primary">
+                                    Go to Command Center
+                                </v-btn>
                             </v-stepper-content>
 
                         </v-stepper-items>
@@ -94,7 +101,6 @@
         data () {
             return {
                 squadClone: {},
-                heroesClone: [],
                 allowedHeroClasses: [],
                 allowedHeroRaces: [],
                 squadCreated: false,
@@ -118,6 +124,7 @@
                 this.squadClone = squad;
                 this.squadCreated = true;
                 this.updateDependencies();
+                this.updateProgress();
             },
             updateHeroClasses: function() {
                 let self = this;
@@ -137,9 +144,12 @@
                     console.log(error);
                 });
             },
-            handleHeroCreated: function(hero) {
+            handleHeroCreated: function(hero, step) {
                 this.heroesClone.push(hero);
-                this.updateDependencies();
+                if (step < 5) {
+                    this.updateDependencies();
+                }
+                this.updateProgress();
             },
             updateProgress: function() {
                 if(this.squadClone.name === undefined) {
@@ -151,7 +161,6 @@
             updateDependencies: function() {
                 this.updateHeroClasses();
                 this.updateHeroRaces();
-                this.updateProgress();
             }
         }
     }

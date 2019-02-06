@@ -61,7 +61,7 @@ class HeroGamePlayerFeatureTest extends TestCase
         // Mock 6 hours before everything locks
         Carbon::setTestNow(Week::current()->everything_locks_at->copy()->subHours(6));
 
-        $response = $this->json('POST', 'api/hero/'. $hero->uuid . '/player-week/' . $gamePlayer->uuid);
+        $response = $this->json('POST', 'api/hero/'. $hero->uuid . '/game-player/' . $gamePlayer->uuid);
         $this->assertEquals(201, $response->getStatusCode());
 
         $hero = $hero->fresh();
@@ -126,7 +126,7 @@ class HeroGamePlayerFeatureTest extends TestCase
         // Mock 6 hours before everything locks
         Carbon::setTestNow(Week::current()->everything_locks_at->copy()->subHours(6));
 
-        $response = $this->json('POST', 'api/hero/'. $hero->uuid . '/player-week/' . $gamePlayer->uuid);
+        $response = $this->json('POST', 'api/hero/'. $hero->uuid . '/game-player/' . $gamePlayer->uuid);
         $this->assertEquals(422, $response->getStatusCode());
         $this->assertArrayHasKey('position', $response->json()['errors']);
 
@@ -180,7 +180,7 @@ class HeroGamePlayerFeatureTest extends TestCase
         // Mock 6 hours before everything locks
         Carbon::setTestNow(Week::current()->everything_locks_at->copy()->subHours(6));
 
-        $response = $this->json('POST', 'api/hero/'. $hero->uuid . '/player-week/' . $gamePlayer->uuid);
+        $response = $this->json('POST', 'api/hero/'. $hero->uuid . '/game-player/' . $gamePlayer->uuid);
         $this->assertEquals(422, $response->getStatusCode());
         $this->assertArrayHasKey('salary', $response->json()['errors']);
 

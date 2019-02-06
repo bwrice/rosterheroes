@@ -51,19 +51,23 @@
         data: function() {
             return {
                 name: '',
-                serverErrors: new Errors()
+                serverErrors: new Errors(),
+                pendingResponse: false
             }
         },
 
         methods: {
             createSquad: function() {
                 let self = this;
+                self.pendingResponse = true;
                 axios.post('/api/squads', {
                     name: this.name
                 }).then(function (response) {
-                    self.$emit('squad-created', response.data)
+                    self.$emit('squad-created', response.data);
+                    self.pendingResponse = false;
                 }).catch(function (error) {
                     self.serverErrors.fill(error.response.data.errors);
+                    self.pendingResponse = false;
                 });
             }
         },
@@ -86,7 +90,9 @@
                 return errors;
             },
             buttonDisabled: function() {
-                return Object.keys(this.serverErrors.errors).length !== 0 || this.$v.$invalid;
+                return Object.keys(this.serverErrors.errors).length !== 0
+                    || this.$v.$invalid
+                    || this.pendingResponse;
             }
         }
     }
