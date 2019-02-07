@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Squad;
 use App\Squads\HeroClassAvailability;
+use App\Http\Resources\HeroClass as HeroClassResource;
 
 class SquadHeroClassController extends Controller
 {
@@ -11,6 +12,6 @@ class SquadHeroClassController extends Controller
     {
         $squad = Squad::uuidOrFail($squadUuid);
         $this->authorize(Squad::MANAGE_AUTHORIZATION, $squad);
-        return response($squad->getHeroClassAvailability()->values(), 200);
+        return response(HeroClassResource::collection($squad->getHeroClassAvailability()), 200);
     }
 }

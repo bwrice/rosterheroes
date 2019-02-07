@@ -8,7 +8,7 @@ use App\Hero;
 use App\HeroClass;
 use App\HeroRace;
 use App\HeroRank;
-use App\Http\Resources\SquadResource;
+use App\Http\Resources\Squad as SquadResource;
 use App\Province;
 use App\Squad;
 use App\SquadRank;
@@ -56,9 +56,9 @@ class SquadController extends Controller
     public function show(Request $request, $squadSlug)
     {
         $squad = Squad::slugOrFail($squadSlug);
-        if($squad->getHeroes()->count() < Squad::getStartingHeroesCount()) {
+        if($squad->inCreationState()) {
             return view('create-squad', [
-                'squad' => $squad->toJson()
+                'squad' => json_encode(new SquadResource($squad))
             ]);
         }
         return "TODO SPA";

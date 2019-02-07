@@ -93,18 +93,16 @@
         created: function() {
             this.squadClone = _.cloneDeep(this.squad);
             this.heroesClone = _.cloneDeep(this.heroes);
-            if( this.squadClone.name !== undefined ) {
-                this.squadCreated = true;
-            }
         },
 
         data () {
             return {
                 squadClone: {},
+                heroesClone: [],
                 allowedHeroClasses: [],
                 allowedHeroRaces: [],
                 squadCreated: false,
-                progress: 1,
+                // progress: 1,
                 heroSteps: [
                     { hero: 1, title: "Create Your First Hero", step: 2 },
                     { hero: 2, title: "Create Your Second Hero", step: 3 },
@@ -124,7 +122,7 @@
                 this.squadClone = squad;
                 this.squadCreated = true;
                 this.updateDependencies();
-                this.updateProgress();
+                // this.updateProgress();
             },
             updateHeroClasses: function() {
                 let self = this;
@@ -149,18 +147,24 @@
                 if (step < 5) {
                     this.updateDependencies();
                 }
-                this.updateProgress();
-            },
-            updateProgress: function() {
-                if(this.squadClone.name === undefined) {
-                    this.progress = 1;
-                } else {
-                    this.progress = 2 + this.heroesClone.length;
-                }
             },
             updateDependencies: function() {
                 this.updateHeroClasses();
                 this.updateHeroRaces();
+            }
+        },
+        computed: {
+            progress: {
+                get () {
+                    if(this.squadClone.name === undefined) {
+                        return 1;
+                    } else {
+                        return 2 + this.heroesClone.length;
+                    }
+                },
+                set (value) {
+                    //
+                }
             }
         }
     }

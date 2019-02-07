@@ -41,6 +41,7 @@ use Spatie\Sluggable\SlugOptions;
  *
  * @property int $id
  * @property string $uuid
+ * @property string $slug
  * @property int $user_id
  * @property string $name
  * @property int $squad_rank_id

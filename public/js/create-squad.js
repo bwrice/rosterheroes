@@ -2165,18 +2165,15 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     this.squadClone = _.cloneDeep(this.squad);
     this.heroesClone = _.cloneDeep(this.heroes);
-
-    if (this.squadClone.name !== undefined) {
-      this.squadCreated = true;
-    }
   },
   data: function data() {
     return {
       squadClone: {},
+      heroesClone: [],
       allowedHeroClasses: [],
       allowedHeroRaces: [],
       squadCreated: false,
-      progress: 1,
+      // progress: 1,
       heroSteps: [{
         hero: 1,
         title: "Create Your First Hero",
@@ -2204,8 +2201,7 @@ __webpack_require__.r(__webpack_exports__);
     handleSquadNameCreated: function handleSquadNameCreated(squad) {
       this.squadClone = squad;
       this.squadCreated = true;
-      this.updateDependencies();
-      this.updateProgress();
+      this.updateDependencies(); // this.updateProgress();
     },
     updateHeroClasses: function updateHeroClasses() {
       var self = this;
@@ -2229,19 +2225,23 @@ __webpack_require__.r(__webpack_exports__);
       if (step < 5) {
         this.updateDependencies();
       }
-
-      this.updateProgress();
-    },
-    updateProgress: function updateProgress() {
-      if (this.squadClone.name === undefined) {
-        this.progress = 1;
-      } else {
-        this.progress = 2 + this.heroesClone.length;
-      }
     },
     updateDependencies: function updateDependencies() {
       this.updateHeroClasses();
       this.updateHeroRaces();
+    }
+  },
+  computed: {
+    progress: {
+      get: function get() {
+        if (this.squadClone.name === undefined) {
+          return 1;
+        } else {
+          return 2 + this.heroesClone.length;
+        }
+      },
+      set: function set(value) {//
+      }
     }
   }
 });

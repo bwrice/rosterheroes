@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\HeroRace as HeroRaceResource;
 use App\Squad;
 use App\Squads\HeroRaceAvailability;
 
@@ -16,6 +17,6 @@ class SquadHeroRaceController extends Controller
     {
         $squad = Squad::uuidOrFail($squadUuid);
         $this->authorize(Squad::MANAGE_AUTHORIZATION, $squad);
-        return response()->json($squad->getHeroRaceAvailability()->values(), 200);
+        return response()->json(HeroRaceResource::collection($squad->getHeroRaceAvailability()), 200);
     }
 }

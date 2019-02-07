@@ -12,7 +12,8 @@
         "laravel/socialite": "^4.0",
         "laravel/tinker": "^1.0",
         "spatie/laravel-event-projector": "^1.0.0",
-        "spatie/laravel-sluggable": "^2.1"
+        "spatie/laravel-sluggable": "^2.1",
+        "ext-json": "*"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

@@ -18,6 +18,7 @@ use App\Squads\HeroClassAvailability;
 use App\Squads\HeroPostAvailability;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use App\Http\Resources\Hero as HeroResource;
 
 class SquadHeroController extends Controller
 {
@@ -48,7 +49,7 @@ class SquadHeroController extends Controller
 
         try {
             $hero = $action->execute();
-            return response()->json($hero->fresh(), 201);
+            return response()->json(new HeroResource($hero->fresh()), 201);
         } catch (HeroPostNotFoundException $exception) {
             throw ValidationException::withMessages([
                 'race' => $squad->name . ' does not have a hero post available for hero race: ' . $exception->getHeroRace()->name
