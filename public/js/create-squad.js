@@ -2160,11 +2160,23 @@ __webpack_require__.r(__webpack_exports__);
       default: function _default() {
         return [];
       }
+    },
+    heroClasses: {
+      default: function _default() {
+        return [];
+      }
+    },
+    heroRaces: {
+      default: function _default() {
+        return [];
+      }
     }
   },
   created: function created() {
     this.squadClone = _.cloneDeep(this.squad);
     this.heroesClone = _.cloneDeep(this.heroes);
+    this.allowedHeroClasses = _.cloneDeep(this.heroClasses);
+    this.allowedHeroRaces = _.cloneDeep(this.heroRaces);
   },
   data: function data() {
     return {
@@ -2240,8 +2252,7 @@ __webpack_require__.r(__webpack_exports__);
           return 2 + this.heroesClone.length;
         }
       },
-      set: function set(value) {//
-      }
+      set: function set(value) {}
     }
   }
 });

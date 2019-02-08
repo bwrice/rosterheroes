@@ -87,12 +87,24 @@
                 default: function() {
                     return [];
                 }
+            },
+            heroClasses: {
+                default: function() {
+                    return [];
+                }
+            },
+            heroRaces: {
+                default: function() {
+                    return [];
+                }
             }
         },
 
         created: function() {
             this.squadClone = _.cloneDeep(this.squad);
             this.heroesClone = _.cloneDeep(this.heroes);
+            this.allowedHeroClasses = _.cloneDeep(this.heroClasses);
+            this.allowedHeroRaces = _.cloneDeep(this.heroRaces);
         },
 
         data () {
@@ -163,7 +175,7 @@
                     }
                 },
                 set (value) {
-                    //
+
                 }
             }
         }

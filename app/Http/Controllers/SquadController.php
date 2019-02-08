@@ -16,6 +16,9 @@ use App\Squads\MobileStorage\MobileStorageRank;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\Hero as HeroResource;
+use App\Http\Resources\HeroClass as HeroClassResource;
+use App\Http\Resources\HeroRace as HeroRaceResource;
 
 class SquadController extends Controller
 {
@@ -58,7 +61,10 @@ class SquadController extends Controller
         $squad = Squad::slugOrFail($squadSlug);
         if($squad->inCreationState()) {
             return view('create-squad', [
-                'squad' => json_encode(new SquadResource($squad))
+                'squad' => json_encode(new SquadResource($squad)),
+                'heroes' => json_encode((HeroResource::collection($squad->getHeroes()))),
+                'heroClasses' => json_encode(HeroClassResource::collection($squad->getHeroClassAvailability())),
+                'heroRaces' => json_encode(HeroRaceResource::collection($squad->getHeroRaceAvailability()))
             ]);
         }
         return "TODO SPA";
