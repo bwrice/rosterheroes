@@ -1,9 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-    <div id="app"></div>
+    <div id="app">
+        <command-center></command-center>
+    </div>
 @endsection
 
 @section('scripts')
-    <script src="{{ mix('/js/create-squad.js') }}"></script>
+    <script src="{{ mix('/js/command-center.js') }}"></script>
 @endsection

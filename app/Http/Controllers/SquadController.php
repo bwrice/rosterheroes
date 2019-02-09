@@ -67,6 +67,6 @@ class SquadController extends Controller
                 'heroRaces' => json_encode(HeroRaceResource::collection($squad->getHeroRaceAvailability()))
             ]);
         }
-        return "TODO SPA";
+        return view('command-center');
     }
 }
