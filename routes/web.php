@@ -20,6 +20,6 @@ Route::get('/', function () {
 
 Auth::routes();
 Route::middleware('auth')->get('/squads/create', 'SquadController@create')->name('create-squad');
-Route::middleware('auth')->get('/cc/{squadSlug}', 'SquadController@show')->name('command-center');
+Route::middleware('auth')->get('/cc/{squadSlug}/{any?}', 'SquadController@show')->where('any', '.*')->name('command-center');
 
 Route::get('/{any}', 'SpaController@index')->where('any', '.*');

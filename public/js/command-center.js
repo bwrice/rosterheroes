@@ -1754,10 +1754,157 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/CommandCenter.vue?vue&type=script&lang=js&":
-/*!*******************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/CommandCenter.vue?vue&type=script&lang=js& ***!
-  \*******************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/footer/BarracksFooterButton.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/commandCenter/footer/BarracksFooterButton.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _mixins_ccNavButtonMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../mixins/ccNavButtonMixin */ "./resources/js/mixins/ccNavButtonMixin.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "BarracksFooterButton",
+  mixins: [_mixins_ccNavButtonMixin__WEBPACK_IMPORTED_MODULE_0__["navButtonMixin"]],
+  data: function data() {
+    return {
+      'name': 'barracks'
+    };
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/footer/CampaignFooterButton.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/commandCenter/footer/CampaignFooterButton.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _FooterIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FooterIcon */ "./resources/js/components/commandCenter/footer/FooterIcon.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "CampaignFooterIcon",
+  props: ['activeNavButton'],
+  components: {
+    FooterIcon: _FooterIcon__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      'value': 'campaign'
+    };
+  },
+  computed: {
+    outlineColor: function outlineColor() {
+      return this.isActive ? '#ffffff' : '#ffc747';
+    },
+    fillColor: function fillColor() {
+      return this.isActive ? '#ffc747' : 'none';
+    },
+    isActive: function isActive() {
+      return 'campaign' === this.activeNavButton;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/footer/FooterIcon.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/commandCenter/footer/FooterIcon.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1782,6 +1929,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "FooterIcon",
+  props: ['value', 'to']
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/footer/MapFooterButton.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/commandCenter/footer/MapFooterButton.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _FooterIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FooterIcon */ "./resources/js/components/commandCenter/footer/FooterIcon.vue");
 //
 //
 //
@@ -1804,6 +1968,43 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "MapFooterIcon",
+  props: ['activeNavButton'],
+  components: {
+    FooterIcon: _FooterIcon__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      'value': 'map'
+    };
+  },
+  computed: {
+    outlineColor: function outlineColor() {
+      return this.isActive ? '#ffffff' : '#ffc747';
+    },
+    fillColor: function fillColor() {
+      return this.isActive ? '#ffc747' : 'none';
+    },
+    isActive: function isActive() {
+      return 'map' === this.activeNavButton;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/footer/NationFooterButton.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/commandCenter/footer/NationFooterButton.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _FooterIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FooterIcon */ "./resources/js/components/commandCenter/footer/FooterIcon.vue");
 //
 //
 //
@@ -1841,6 +2042,43 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "NationFooterButton",
+  props: ['activeNavButton'],
+  components: {
+    FooterIcon: _FooterIcon__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      'value': 'nation'
+    };
+  },
+  computed: {
+    outlineColor: function outlineColor() {
+      return this.isActive ? '#ffffff' : '#ffc747';
+    },
+    fillColor: function fillColor() {
+      return this.isActive ? '#ffc747' : 'none';
+    },
+    isActive: function isActive() {
+      return 'nation' === this.activeNavButton;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/footer/RosterFooterButton.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/commandCenter/footer/RosterFooterButton.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _FooterIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FooterIcon */ "./resources/js/components/commandCenter/footer/FooterIcon.vue");
 //
 //
 //
@@ -1850,6 +2088,76 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "RosterFooterButton",
+  props: ['activeNavButton'],
+  components: {
+    FooterIcon: _FooterIcon__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      'value': 'roster'
+    };
+  },
+  computed: {
+    outlineColor: function outlineColor() {
+      return this.isActive ? '#ffffff' : '#ffc747';
+    },
+    fillColor: function fillColor() {
+      return this.isActive ? '#ffc747' : 'none';
+    },
+    isActive: function isActive() {
+      return 'roster' === this.activeNavButton;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/views/barracks/BarracksMain.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/commandCenter/views/barracks/BarracksMain.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
 //
 //
 //
@@ -1857,12 +2165,186 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  name: "BarracksMain"
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/views/campaign/CampaignMain.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/commandCenter/views/campaign/CampaignMain.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "CampaignMain"
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/views/map/MapMain.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/commandCenter/views/map/MapMain.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "MapMain"
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/views/nation/NationMain.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/commandCenter/views/nation/NationMain.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "NationMain"
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/views/roster/RosterMain.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/commandCenter/views/roster/RosterMain.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "RosterMain"
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/CommandCenter.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/CommandCenter.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _components_commandCenter_footer_BarracksFooterButton__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/commandCenter/footer/BarracksFooterButton */ "./resources/js/components/commandCenter/footer/BarracksFooterButton.vue");
+/* harmony import */ var _components_commandCenter_footer_RosterFooterButton__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/commandCenter/footer/RosterFooterButton */ "./resources/js/components/commandCenter/footer/RosterFooterButton.vue");
+/* harmony import */ var _components_commandCenter_footer_MapFooterButton__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/commandCenter/footer/MapFooterButton */ "./resources/js/components/commandCenter/footer/MapFooterButton.vue");
+/* harmony import */ var _components_commandCenter_footer_CampaignFooterButton__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/commandCenter/footer/CampaignFooterButton */ "./resources/js/components/commandCenter/footer/CampaignFooterButton.vue");
+/* harmony import */ var _components_commandCenter_footer_NationFooterButton__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/commandCenter/footer/NationFooterButton */ "./resources/js/components/commandCenter/footer/NationFooterButton.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
   name: "CommandCenter",
+  components: {
+    BarracksFooterButton: _components_commandCenter_footer_BarracksFooterButton__WEBPACK_IMPORTED_MODULE_0__["default"],
+    RosterFooterButton: _components_commandCenter_footer_RosterFooterButton__WEBPACK_IMPORTED_MODULE_1__["default"],
+    MapFooterButton: _components_commandCenter_footer_MapFooterButton__WEBPACK_IMPORTED_MODULE_2__["default"],
+    CampaignFooterButton: _components_commandCenter_footer_CampaignFooterButton__WEBPACK_IMPORTED_MODULE_3__["default"],
+    NationFooterButton: _components_commandCenter_footer_NationFooterButton__WEBPACK_IMPORTED_MODULE_4__["default"]
+  },
+  created: function created() {
+    this.setInitialActiveNav();
+  },
   data: function data() {
     return {
-      bottomNav: '',
+      activeNavButton: '',
       drawer: false
     };
+  },
+  methods: {
+    setInitialActiveNav: function setInitialActiveNav() {
+      this.activeNavButton = this.$route.name;
+    }
   }
 });
 
@@ -32403,6 +32885,1185 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/footer/BarracksFooterButton.vue?vue&type=template&id=7ce7fe60&scoped=true&":
+/*!********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/commandCenter/footer/BarracksFooterButton.vue?vue&type=template&id=7ce7fe60&scoped=true& ***!
+  \********************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("FooterIcon", { attrs: { value: _vm.name, to: _vm.to } }, [
+    _c(
+      "svg",
+      {
+        attrs: {
+          viewBox: "0 2 48 43",
+          version: "1.1",
+          xmlns: "http://www.w3.org/2000/svg",
+          "xmlns:xlink": "http://www.w3.org/1999/xlink"
+        }
+      },
+      [
+        _c("g", { attrs: { id: "Canvas" } }, [
+          _c("g", { attrs: { id: "Vector" } }, [
+            _c("use", {
+              attrs: {
+                "xlink:href": "#rh_barracks_button0_fill",
+                fill: _vm.fillColor
+              }
+            }),
+            _vm._v(" "),
+            _c("use", {
+              attrs: {
+                "xlink:href": "#rh_barracks_button1_fill",
+                fill: _vm.fillColor
+              }
+            }),
+            _vm._v(" "),
+            _c("use", {
+              attrs: {
+                "xlink:href": "#rh_barracks_button2_fill",
+                fill: _vm.fillColor
+              }
+            }),
+            _vm._v(" "),
+            _c("use", {
+              attrs: {
+                "xlink:href": "#rh_barracks_button3_fill",
+                fill: _vm.fillColor
+              }
+            }),
+            _vm._v(" "),
+            _c("use", {
+              attrs: {
+                "xlink:href": "#rh_barracks_button4_fill",
+                fill: _vm.fillColor
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "mask",
+              { attrs: { id: "rh_barracks_button_mask0_outline_ins" } },
+              [
+                _c("use", {
+                  attrs: {
+                    "xlink:href": "#rh_barracks_button0_fill",
+                    fill: "white"
+                  }
+                }),
+                _vm._v(" "),
+                _c("use", {
+                  attrs: {
+                    "xlink:href": "#rh_barracks_button1_fill",
+                    fill: "white"
+                  }
+                }),
+                _vm._v(" "),
+                _c("use", {
+                  attrs: {
+                    "xlink:href": "#rh_barracks_button2_fill",
+                    fill: "white"
+                  }
+                }),
+                _vm._v(" "),
+                _c("use", {
+                  attrs: {
+                    "xlink:href": "#rh_barracks_button3_fill",
+                    fill: "white"
+                  }
+                }),
+                _vm._v(" "),
+                _c("use", {
+                  attrs: {
+                    "xlink:href": "#rh_barracks_button4_fill",
+                    fill: "white"
+                  }
+                })
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "g",
+              { attrs: { mask: "url(#rh_barracks_button_mask0_outline_ins)" } },
+              [
+                _c("use", {
+                  attrs: {
+                    "xlink:href": "#rh_barracks_button5_stroke_2x",
+                    fill: _vm.outlineColor
+                  }
+                })
+              ]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("defs", [
+          _c("path", {
+            attrs: {
+              id: "rh_barracks_button0_fill",
+              d:
+                "M 22.0059 42.8936L 17.0642 42.8321L 21.6274 25.7867L 26.3867 25.8459L 30.5735 43.0001L 26.0693 42.944C 26.3608 42.5378 26.5322 42.0399 26.5322 41.5018L 26.5322 36.8647C 26.5322 35.4967 25.4233 34.3877 24.0552 34.3877C 22.6873 34.3877 21.5781 35.4967 21.5781 36.8647L 21.5781 41.5018C 21.5781 42.0178 21.7358 42.4969 22.0059 42.8936Z"
+            }
+          }),
+          _vm._v(" "),
+          _c("path", {
+            attrs: {
+              id: "rh_barracks_button1_fill",
+              d:
+                "M 15.0825 42.9261L 20.8586 24.9135L 27.1414 24.9135L 32.9175 42.9261L 37 42.9261L 37 43L 48 43L 37.4312 21.9032L 37.4312 21.4006L 37.387 21.4006C 37.3831 21.3629 37.3792 21.3252 37.3748 21.2876L 10.6252 21.2876C 10.6208 21.3252 10.6169 21.3629 10.613 21.4006L 10.5688 21.4006L 10.5688 21.317L 0 42.9261L 15.0825 42.9261Z"
+            }
+          }),
+          _vm._v(" "),
+          _c("path", {
+            attrs: {
+              id: "rh_barracks_button2_fill",
+              d:
+                "M 10.8127 20.2349C 12.0088 15.3038 17.4583 11.5795 24 11.5795C 30.542 11.5795 35.9915 15.3038 37.1873 20.2349L 10.8127 20.2349Z"
+            }
+          }),
+          _vm._v(" "),
+          _c("path", {
+            attrs: {
+              id: "rh_barracks_button3_fill",
+              d:
+                "M 23.5596 0L 24.5504 0L 24.5504 11.2286L 23.5596 11.2286L 23.5596 0Z"
+            }
+          }),
+          _vm._v(" "),
+          _c("path", {
+            attrs: {
+              id: "rh_barracks_button4_fill",
+              d:
+                "M 34.7891 2.92408L 25.2936 5.25386L 25.2936 0.594304L 34.7891 2.92408Z"
+            }
+          }),
+          _vm._v(" "),
+          _c("path", {
+            attrs: {
+              id: "rh_barracks_button5_stroke_2x",
+              d:
+                "M 22.0059 42.8936L 21.9934 43.8935L 23.9125 43.9173L 22.8325 42.3308L 22.0059 42.8936ZM 17.0642 42.8321L 16.0982 42.5735L 15.7656 43.816L 17.0518 43.832L 17.0642 42.8321ZM 21.6274 25.7867L 21.6399 24.7868L 20.8625 24.7771L 20.6615 25.5281L 21.6274 25.7867ZM 26.3867 25.8459L 27.3582 25.6088L 27.1744 24.8556L 26.3992 24.846L 26.3867 25.8459ZM 30.5735 43.0001L 30.561 44L 31.8508 44.016L 31.545 42.763L 30.5735 43.0001ZM 26.0693 42.944L 25.2569 42.361L 24.138 43.9201L 26.0569 43.944L 26.0693 42.944ZM 15.0825 42.9261L 15.0825 43.9261L 15.812 43.9261L 16.0348 43.2314L 15.0825 42.9261ZM 20.8586 24.9135L 20.8586 23.9135L 20.1292 23.9135L 19.9064 24.6082L 20.8586 24.9135ZM 27.1414 24.9135L 28.0936 24.6082L 27.8708 23.9135L 27.1414 23.9135L 27.1414 24.9135ZM 32.9175 42.9261L 31.9652 43.2314L 32.188 43.9261L 32.9175 43.9261L 32.9175 42.9261ZM 37 42.9261L 38 42.9261L 38 41.9262L 37 41.9261L 37 42.9261ZM 37 43L 36 43L 36 44L 37 44L 37 43ZM 48 43L 48 44L 49.6194 44L 48.8941 42.5521L 48 43ZM 37.4312 21.9032L 36.4312 21.9032L 36.4312 22.1397L 36.5371 22.3511L 37.4312 21.9032ZM 37.4312 21.4006L 38.4312 21.4006L 38.4312 20.4006L 37.4312 20.4006L 37.4312 21.4006ZM 37.387 21.4006L 36.3923 21.5036L 36.4852 22.4006L 37.387 22.4006L 37.387 21.4006ZM 37.3748 21.2876L 38.368 21.1715L 38.2647 20.2876L 37.3748 20.2876L 37.3748 21.2876ZM 10.6252 21.2876L 10.6252 20.2876L 9.73532 20.2876L 9.63201 21.1715L 10.6252 21.2876ZM 10.613 21.4006L 10.613 22.4006L 11.5148 22.4006L 11.6077 21.5036L 10.613 21.4006ZM 10.5688 21.4006L 9.56885 21.4006L 9.56885 22.4006L 10.5688 22.4006L 10.5688 21.4006ZM 10.5688 21.317L 11.5688 21.317L 9.67054 20.8776L 10.5688 21.317ZM 0 42.9261L -0.898312 42.4867L -1.60229 43.9261L 0 43.9261L 0 42.9261ZM 10.8127 20.2349L 9.84092 19.9992L 9.5412 21.2349L 10.8127 21.2349L 10.8127 20.2349ZM 37.1873 20.2349L 37.1873 21.2349L 38.4587 21.2349L 38.1591 19.9993L 37.1873 20.2349ZM 23.5596 0L 23.5596 -1L 22.5596 -1L 22.5596 0L 23.5596 0ZM 24.5504 0L 25.5504 0L 25.5504 -1L 24.5504 -1L 24.5504 0ZM 24.5504 11.2286L 24.5504 12.2286L 25.5504 12.2286L 25.5504 11.2286L 24.5504 11.2286ZM 23.5596 11.2286L 22.5596 11.2286L 22.5596 12.2286L 23.5596 12.2286L 23.5596 11.2286ZM 34.7891 2.92408L 35.0274 3.89527L 35.0274 1.95289L 34.7891 2.92408ZM 25.2936 5.25386L 24.2936 5.25386L 24.2937 6.52887L 25.5319 6.22505L 25.2936 5.25386ZM 25.2936 0.594304L 25.5319 -0.37689L 24.2936 -0.680714L 24.2936 0.594305L 25.2936 0.594304ZM 22.0183 41.8936L 17.0766 41.8322L 17.0518 43.832L 21.9934 43.8935L 22.0183 41.8936ZM 18.0302 43.0907L 22.5934 26.0453L 20.6615 25.5281L 16.0982 42.5735L 18.0302 43.0907ZM 25.4152 26.083L 29.602 43.2372L 31.545 42.763L 27.3582 25.6088L 25.4152 26.083ZM 30.5859 42.0001L 26.0818 41.9441L 26.0569 43.944L 30.561 44L 30.5859 42.0001ZM 26.8818 43.5271C 27.2914 42.9563 27.5322 42.2556 27.5322 41.5018L 25.5322 41.5018C 25.5322 41.8241 25.4303 42.1193 25.2569 42.361L 26.8818 43.5271ZM 27.5322 41.5018L 27.5322 36.8647L 25.5322 36.8647L 25.5322 41.5018L 27.5322 41.5018ZM 27.5322 36.8647C 27.5322 34.9445 25.9757 33.3877 24.0552 33.3877L 24.0552 35.3877C 24.871 35.3877 25.5322 36.049 25.5322 36.8647L 27.5322 36.8647ZM 24.0552 33.3877C 22.135 33.3877 20.5781 34.9444 20.5781 36.8647L 22.5781 36.8647C 22.5781 36.049 23.2395 35.3877 24.0552 35.3877L 24.0552 33.3877ZM 20.5781 36.8647L 20.5781 41.5018L 22.5781 41.5018L 22.5781 36.8647L 20.5781 36.8647ZM 20.5781 41.5018C 20.5781 42.2246 20.7997 42.8988 21.1792 43.4563L 22.8325 42.3308C 22.6719 42.0949 22.5781 41.8109 22.5781 41.5018L 20.5781 41.5018ZM 16.0348 43.2314L 21.8109 25.2189L 19.9064 24.6082L 14.1303 42.6207L 16.0348 43.2314ZM 26.1891 25.2189L 31.9652 43.2314L 33.8697 42.6207L 28.0936 24.6082L 26.1891 25.2189ZM 32.9175 43.9261L 37 43.9261L 37 41.9261L 32.9175 41.9261L 32.9175 43.9261ZM 36 42.9261L 36 43L 38 43L 38 42.9261L 36 42.9261ZM 37 44L 48 44L 48 42L 37 42L 37 44ZM 48.8941 42.5521L 38.3252 21.4553L 36.5371 22.3511L 47.1059 43.4479L 48.8941 42.5521ZM 38.4312 21.9032L 38.4312 21.4006L 36.4312 21.4006L 36.4312 21.9032L 38.4312 21.9032ZM 37.4312 20.4006L 37.387 20.4006L 37.387 22.4006L 37.4312 22.4006L 37.4312 20.4006ZM 38.3816 21.2976C 38.3778 21.2608 38.3733 21.2167 38.368 21.1715L 36.3815 21.4037C 36.385 21.4337 36.3883 21.4649 36.3923 21.5036L 38.3816 21.2976ZM 37.3748 20.2876L 10.6252 20.2876L 10.6252 22.2876L 37.3748 22.2876L 37.3748 20.2876ZM 9.63201 21.1715C 9.62673 21.2167 9.62217 21.2608 9.61836 21.2976L 11.6077 21.5036C 11.6117 21.4649 11.615 21.4337 11.6185 21.4037L 9.63201 21.1715ZM 10.613 20.4006L 10.5688 20.4006L 10.5688 22.4006L 10.613 22.4006L 10.613 20.4006ZM 11.5688 21.4006L 11.5688 21.317L 9.56885 21.317L 9.56885 21.4006L 11.5688 21.4006ZM 9.67054 20.8776L -0.898312 42.4867L 0.898312 43.3654L 11.4672 21.7563L 9.67054 20.8776ZM 11.7846 20.4706C 12.8415 16.1131 17.7771 12.5795 24 12.5795L 24 10.5795C 17.1394 10.5795 11.1761 14.4944 9.84092 19.9992L 11.7846 20.4706ZM 24 12.5795C 30.2231 12.5795 35.1587 16.1131 36.2154 20.4706L 38.1591 19.9993C 36.8242 14.4944 30.8608 10.5795 24 10.5795L 24 12.5795ZM 37.1873 19.2349L 10.8127 19.2349L 10.8127 21.2349L 37.1873 21.2349L 37.1873 19.2349ZM 23.5596 1L 24.5504 1L 24.5504 -1L 23.5596 -1L 23.5596 1ZM 23.5504 0L 23.5504 11.2286L 25.5504 11.2286L 25.5504 0L 23.5504 0ZM 24.5504 10.2286L 23.5596 10.2286L 23.5596 12.2286L 24.5504 12.2286L 24.5504 10.2286ZM 24.5596 11.2286L 24.5596 0L 22.5596 0L 22.5596 11.2286L 24.5596 11.2286ZM 34.5508 1.95289L 25.0554 4.28266L 25.5319 6.22505L 35.0274 3.89527L 34.5508 1.95289ZM 26.2936 5.25385L 26.2936 0.594304L 24.2936 0.594305L 24.2936 5.25386L 26.2936 5.25385ZM 25.0554 1.5655L 34.5508 3.89527L 35.0274 1.95289L 25.5319 -0.37689L 25.0554 1.5655ZM 21.615 26.7866L 26.3743 26.8458L 26.3992 24.846L 21.6399 24.7868L 21.615 26.7866ZM 0 43.9261L 15.0825 43.9261L 15.0825 41.9261L 0 41.9261L 0 43.9261ZM 20.8586 25.9135L 27.1414 25.9135L 27.1414 23.9135L 20.8586 23.9135L 20.8586 25.9135Z"
+            }
+          })
+        ])
+      ]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/footer/CampaignFooterButton.vue?vue&type=template&id=28ff2db2&scoped=true&":
+/*!********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/commandCenter/footer/CampaignFooterButton.vue?vue&type=template&id=28ff2db2&scoped=true& ***!
+  \********************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("FooterIcon", { attrs: { value: _vm.value } }, [
+    _c(
+      "svg",
+      {
+        attrs: {
+          viewBox: "0 0 52 48",
+          version: "1.1",
+          xmlns: "http://www.w3.org/2000/svg",
+          "xmlns:xlink": "http://www.w3.org/1999/xlink"
+        }
+      },
+      [
+        _c("g", { attrs: { id: "Canvas" } }, [
+          _c("g", { attrs: { id: "Vector" } }, [
+            _c("use", {
+              attrs: {
+                "xlink:href": "#rh_campaign_button0_fill",
+                fill: _vm.fillColor
+              }
+            }),
+            _vm._v(" "),
+            _c("use", {
+              attrs: {
+                "xlink:href": "#rh_campaign_button3_fill",
+                fill: _vm.fillColor
+              }
+            }),
+            _vm._v(" "),
+            _c("use", {
+              attrs: {
+                "xlink:href": "#rh_campaign_button1_fill",
+                fill: _vm.fillColor
+              }
+            }),
+            _vm._v(" "),
+            _c("use", {
+              attrs: {
+                "xlink:href": "#rh_campaign_button2_fill",
+                fill: _vm.fillColor
+              }
+            }),
+            _vm._v(" "),
+            _c("use", {
+              attrs: {
+                "xlink:href": "#rh_campaign_button4_fill",
+                fill: _vm.fillColor
+              }
+            }),
+            _vm._v(" "),
+            _c("use", {
+              attrs: {
+                "xlink:href": "#rh_campaign_button5_fill",
+                fill: _vm.fillColor
+              }
+            }),
+            _vm._v(" "),
+            _c("use", {
+              attrs: {
+                "xlink:href": "#rh_campaign_button6_fill",
+                fill: _vm.fillColor
+              }
+            }),
+            _vm._v(" "),
+            _c("use", {
+              attrs: {
+                "xlink:href": "#rh_campaign_button7_fill",
+                fill: _vm.fillColor
+              }
+            }),
+            _vm._v(" "),
+            _c("use", {
+              attrs: {
+                "xlink:href": "#rh_campaign_button8_fill",
+                fill: _vm.fillColor
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "mask",
+              { attrs: { id: "rh_campaign_button_mask0_outline_ins" } },
+              [
+                _c("use", {
+                  attrs: {
+                    "xlink:href": "#rh_campaign_button0_fill",
+                    fill: "white"
+                  }
+                }),
+                _vm._v(" "),
+                _c("use", {
+                  attrs: {
+                    "xlink:href": "#rh_campaign_button1_fill",
+                    fill: "white"
+                  }
+                }),
+                _vm._v(" "),
+                _c("use", {
+                  attrs: {
+                    "xlink:href": "#rh_campaign_button2_fill",
+                    fill: "white"
+                  }
+                }),
+                _vm._v(" "),
+                _c("use", {
+                  attrs: {
+                    "xlink:href": "#rh_campaign_button3_fill",
+                    fill: "white"
+                  }
+                }),
+                _vm._v(" "),
+                _c("use", {
+                  attrs: {
+                    "xlink:href": "#rh_campaign_button4_fill",
+                    fill: "white"
+                  }
+                }),
+                _vm._v(" "),
+                _c("use", {
+                  attrs: {
+                    "xlink:href": "#rh_campaign_button5_fill",
+                    fill: "white"
+                  }
+                }),
+                _vm._v(" "),
+                _c("use", {
+                  attrs: {
+                    "xlink:href": "#rh_campaign_button6_fill",
+                    fill: "white"
+                  }
+                }),
+                _vm._v(" "),
+                _c("use", {
+                  attrs: {
+                    "xlink:href": "#rh_campaign_button7_fill",
+                    fill: "white"
+                  }
+                }),
+                _vm._v(" "),
+                _c("use", {
+                  attrs: {
+                    "xlink:href": "#rh_campaign_button8_fill",
+                    fill: "white"
+                  }
+                })
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "g",
+              { attrs: { mask: "url(#rh_campaign_button_mask0_outline_ins)" } },
+              [
+                _c("use", {
+                  attrs: {
+                    "xlink:href": "#rh_campaign_button9_stroke_2x",
+                    fill: _vm.outlineColor
+                  }
+                })
+              ]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("defs", [
+          _c("path", {
+            attrs: {
+              id: "rh_campaign_button0_fill",
+              d:
+                "M 27.5 24.9073C 27.0178 25.5572 25.9041 26.3328 24.2556 27.5C 24.4436 28.2255 24.4911 28.4309 24.2575 27.7141C 25.5034 26.5123 28 24.5 28 24.5C 28.6877 24.8572 27.0557 24.4106 27.5 24.9073Z"
+            }
+          }),
+          _vm._v(" "),
+          _c("path", {
+            attrs: {
+              id: "rh_campaign_button1_fill",
+              d:
+                "M 25.1133 6.01025C 25.5969 6.40851 26.0557 6.82593 26.4153 7.22906C 25.6538 7.35754 25.2185 7.48553 25.2185 7.48553C 25.1433 7.05579 24.7693 6.54144 24.2556 6.01483C 24.5305 6.00745 24.8169 6.00549 25.1133 6.01025Z"
+            }
+          }),
+          _vm._v(" "),
+          _c("path", {
+            attrs: {
+              id: "rh_campaign_button2_fill",
+              d:
+                "M 23.8918 5.07214C 23.405 5.04718 22.9407 5.04132 22.5034 5.04926C 22.47 4.88049 22.4329 4.71667 22.3921 4.56586C 22.8047 4.65985 23.2246 4.77008 23.6494 4.89868C 23.7288 4.95502 23.8098 5.01282 23.8918 5.07214Z"
+            }
+          }),
+          _vm._v(" "),
+          _c("path", {
+            attrs: {
+              id: "rh_campaign_button3_fill",
+              d:
+                "M 24.5139 45.4749C 24.0385 43.2725 23.5856 39.2082 25.7709 36.367C 28.2114 33.1867 30.9902 29 28 24.5C 28 24.5 25.5034 26.5123 24.2575 27.7141C 25.4638 31.4139 22.7534 33.0709 20.9621 35.4053C 17.8264 39.4819 20.1225 46.0766 20.1225 46.0766C 20.1225 46.0766 21.9323 46.0013 24.5139 45.4749Z"
+            }
+          }),
+          _vm._v(" "),
+          _c("path", {
+            attrs: {
+              id: "rh_campaign_button4_fill",
+              d:
+                "M 30.9902 7.01776C 28.4736 6.15961 26.1086 5.96527 24.2556 6.01483C 24.7693 6.54144 25.1433 7.05579 25.2185 7.48553C 25.2185 7.48553 27.612 6.78192 30.9902 7.01776Z"
+            }
+          }),
+          _vm._v(" "),
+          _c("path", {
+            attrs: {
+              id: "rh_campaign_button5_fill",
+              d:
+                "M 18.883 4.51666C 19.5912 6.65875 18.7846 10.7114 18.7846 10.7114C 16.2504 13.2582 13.4245 22.0688 13.4245 22.0688L 12.3493 23.6345C 11.2255 25.2483 11.3666 27.6224 12.2062 28.8192C 11.384 29.4012 10.0825 29.5594 8.02924 28.4464C 6.67694 27.7153 6.17523 24.6331 7.54047 22.6727L 8.61566 21.1071C 8.61566 21.1071 11.4416 12.2965 13.9758 9.74969C 13.9758 9.74969 14.8525 5.34601 13.9758 3.29315C 13.9758 3.29315 15.538 4.17383 16.0256 5.05603C 16.0256 5.05603 15.8286 2.40955 15.3395 1.92346C 15.3395 1.92346 17.3867 3.18091 18.883 4.51666Z"
+            }
+          }),
+          _vm._v(" "),
+          _c("path", {
+            attrs: {
+              id: "rh_campaign_button6_fill",
+              d:
+                "M 24.2575 5.0943C 21.7409 4.23615 19.3759 4.04181 17.5229 4.09137C 18.0366 4.61798 18.4106 5.13232 18.4858 5.56207C 18.4858 5.56207 20.8793 4.85846 24.2575 5.0943Z"
+            }
+          }),
+          _vm._v(" "),
+          _c("path", {
+            attrs: {
+              id: "rh_campaign_button7_fill",
+              d:
+                "M 12.1503 2.5932C 12.8586 4.73529 12.0519 8.78796 12.0519 8.78796C 9.51776 11.3348 6.69183 20.1454 6.69183 20.1454L 5.61664 21.711C 4.49286 23.3248 4.63397 25.6989 5.47357 26.8957C 4.65131 27.4777 3.34979 27.6359 1.29657 26.5229C -0.0557244 25.7919 -0.557433 22.7097 0.807801 20.7493L 1.883 19.1837C 1.883 19.1837 4.70892 10.373 7.2431 7.82623C 7.2431 7.82623 8.11981 3.42255 7.2431 1.36969C 7.2431 1.36969 8.80536 2.25037 9.29291 3.13257C 9.29291 3.13257 9.09589 0.486084 8.60687 0C 8.60687 0 10.654 1.25745 12.1503 2.5932Z"
+            }
+          }),
+          _vm._v(" "),
+          _c("path", {
+            attrs: {
+              id: "rh_campaign_button8_fill",
+              d:
+                "M 46.1547 38.73C 52.1033 29.9149 47.9051 23.0303 47.9051 23.0303C 48.8805 22.7404 52 24.7932 52 24.7932C 50.2455 18.3369 40.5952 12.8516 40.5952 12.8516C 41.6664 12.4579 44.6887 13.2398 44.6887 13.2398C 36.7936 5.60997 27.1421 8.44719 27.1421 8.44719C 26.8509 6.78193 22.0721 3.84686 22.0721 3.84686C 22.5609 4.33297 22.7581 6.97943 22.7581 6.97943C 22.2706 6.0972 20.7083 5.21655 20.7083 5.21655C 21.5849 7.26939 20.7083 11.6731 20.7083 11.6731C 18.1742 14.2199 15.3482 23.0305 15.3482 23.0305L 14.2729 24.5961C 12.9077 26.5565 13.4095 29.6387 14.7617 30.3698C 19.829 33.1168 20.3192 28.1201 20.3192 28.1201C 24.5112 27.6306 27.6309 22.9307 27.6309 22.9307C 33.2829 25.8664 30.135 34.1484 27.6945 37.3286C 24.5589 41.4053 26.8549 48 26.8549 48C 26.8549 48 40.2809 47.4417 46.1547 38.73Z"
+            }
+          }),
+          _vm._v(" "),
+          _c("path", {
+            attrs: {
+              id: "rh_campaign_button9_stroke_2x",
+              d:
+                "M 17 43.5L 17.0707 43.995L 17.5505 43.9264L 17.4969 43.4448L 17 43.5ZM 28 24.5C 27.6862 24.1107 27.6862 24.1107 27.6862 24.1107C 27.6862 24.1108 27.6861 24.1108 27.6861 24.1108C 27.686 24.1109 27.6859 24.111 27.6857 24.1111C 27.6854 24.1114 27.6849 24.1118 27.6843 24.1123C 27.683 24.1133 27.6812 24.1148 27.6787 24.1168C 27.6739 24.1207 27.6667 24.1265 27.6573 24.1341C 27.6385 24.1493 27.6108 24.1717 27.5752 24.2006C 27.5041 24.2583 27.4012 24.342 27.2738 24.4462C 27.0192 24.6545 26.6666 24.9449 26.2749 25.2731C 25.4947 25.9266 24.5471 26.74 23.9104 27.3542L 24.6046 28.0739C 25.2137 27.4864 26.1374 26.6927 26.917 26.0396C 27.3051 25.7145 27.6546 25.4267 27.907 25.2202C 28.0332 25.1169 28.1351 25.0341 28.2053 24.9771C 28.2405 24.9486 28.2677 24.9266 28.286 24.9117C 28.2952 24.9043 28.3022 24.8986 28.3069 24.8949C 28.3092 24.893 28.3109 24.8916 28.3121 24.8906C 28.3127 24.8902 28.3131 24.8898 28.3134 24.8896C 28.3135 24.8895 28.3136 24.8894 28.3137 24.8894C 28.3137 24.8893 28.3137 24.8893 28.3138 24.8893C 28.3138 24.8893 28.3138 24.8893 28 24.5ZM 23.8977 6.36396C 24.1419 6.61431 24.342 6.85089 24.4868 7.06581C 24.6348 7.28555 24.7054 7.45426 24.726 7.57171L 25.711 7.39936C 25.6564 7.08706 25.5024 6.78372 25.3162 6.5072C 25.1267 6.22586 24.883 5.94197 24.6135 5.6657L 23.8977 6.36396ZM 17 43.5C 17.4969 43.4448 17.4969 43.4448 17.4969 43.4448C 17.4969 43.4448 17.4969 43.4448 17.4969 43.4447C 17.4969 43.4446 17.4969 43.4445 17.4969 43.4442C 17.4968 43.4438 17.4968 43.4431 17.4966 43.4421C 17.4964 43.4401 17.4961 43.4371 17.4957 43.433C 17.4948 43.4248 17.4934 43.4125 17.4917 43.3963C 17.4883 43.3638 17.4832 43.3156 17.477 43.2536C 17.4645 43.1295 17.4471 42.95 17.4278 42.7297C 17.3891 42.2889 17.3428 41.6864 17.3119 41.0387C 17.281 40.3897 17.266 39.7021 17.2887 39.0888C 17.3119 38.4623 17.3734 37.9609 17.4743 37.6581L 16.5257 37.3419C 16.3766 37.7891 16.3131 38.4127 16.2894 39.0518C 16.2652 39.7042 16.2815 40.4228 16.3131 41.0863C 16.3447 41.7511 16.3921 42.3674 16.4316 42.8171C 16.4513 43.0422 16.4691 43.226 16.482 43.3538C 16.4885 43.4178 16.4937 43.4677 16.4973 43.5019C 16.4991 43.519 16.5005 43.5321 16.5015 43.5411C 16.502 43.5456 16.5024 43.549 16.5026 43.5514C 16.5028 43.5526 16.5029 43.5535 16.5029 43.5541C 16.503 43.5544 16.503 43.5547 16.503 43.5549C 16.503 43.555 16.503 43.555 16.503 43.5551C 16.5031 43.5552 16.5031 43.5552 17 43.5ZM 17.4743 37.6581C 17.7204 36.92 17.9537 36.3459 18.291 35.8399C 18.624 35.3404 19.0735 34.8852 19.7774 34.416L 19.2226 33.584C 18.4265 34.1148 17.876 34.6596 17.459 35.2851C 17.0463 35.9041 16.7796 36.58 16.5257 37.3419L 17.4743 37.6581ZM 19.7774 34.416C 20.5554 33.8973 21.2778 33.2235 21.5967 32.6963C 21.6772 32.5631 21.756 32.4011 21.7835 32.2278C 21.8127 32.0439 21.7891 31.7777 21.5642 31.583C 21.3708 31.4155 21.1297 31.395 20.9627 31.4018C 20.7805 31.4091 20.5747 31.4535 20.3523 31.5223L 20.6477 32.4777C 20.8295 32.4215 20.9425 32.4034 21.0029 32.401C 21.0785 32.3979 21.0037 32.4204 20.9095 32.3389C 20.7839 32.2301 20.7924 32.0928 20.7959 32.0711C 20.7977 32.0599 20.7928 32.0931 20.741 32.1787C 20.5307 32.5265 19.9446 33.1027 19.2226 33.584L 19.7774 34.416ZM 20.3523 31.5223C 19.5473 31.7712 18.8261 32.0348 18.2824 32.2121C 17.7047 32.4005 17.3031 32.5 17 32.5L 17 33.5C 17.4803 33.5 18.0201 33.3495 18.5924 33.1629C 19.1986 32.9652 19.8357 32.7288 20.6477 32.4777L 20.3523 31.5223ZM 17 32.5C 16.9985 32.5 16.9969 32.5 16.9954 32.5C 16.9939 32.5 16.9924 32.5 16.9908 32.5C 16.9893 32.5 16.9878 32.5 16.9862 32.5C 16.9847 32.5 16.9832 32.5 16.9817 32.5C 16.9801 32.5 16.9786 32.5 16.9771 32.5C 16.9755 32.5 16.974 32.5 16.9725 32.5C 16.971 32.5 16.9694 32.5 16.9679 32.5C 16.9664 32.5 16.9649 32.5 16.9633 32.5C 16.9618 32.5 16.9603 32.5 16.9588 32.5C 16.9572 32.5 16.9557 32.5 16.9542 32.5C 16.9527 32.5 16.9511 32.5 16.9496 32.5C 16.9481 32.5 16.9466 32.5 16.945 32.5C 16.9435 32.5 16.942 32.5 16.9405 32.5C 16.9389 32.5 16.9374 32.5 16.9359 32.5C 16.9344 32.5 16.9328 32.5 16.9313 32.5C 16.9298 32.5 16.9283 32.5 16.9268 32.5C 16.9252 32.5 16.9237 32.5 16.9222 32.5C 16.9207 32.5 16.9192 32.5 16.9176 32.5C 16.9161 32.5 16.9146 32.5 16.9131 32.5C 16.9116 32.5 16.91 32.5 16.9085 32.5C 16.907 32.5 16.9055 32.5 16.904 32.5C 16.9024 32.5 16.9009 32.5 16.8994 32.5C 16.8979 32.5 16.8964 32.5 16.8948 32.5C 16.8933 32.5 16.8918 32.5 16.8903 32.5C 16.8888 32.5 16.8873 32.5 16.8857 32.5C 16.8842 32.5 16.8827 32.5 16.8812 32.5C 16.8797 32.5 16.8782 32.5 16.8766 32.5C 16.8751 32.5 16.8736 32.5 16.8721 32.5C 16.8706 32.5 16.8691 32.5 16.8676 32.5C 16.866 32.5 16.8645 32.5 16.863 32.5C 16.8615 32.5 16.86 32.5 16.8585 32.5C 16.857 32.5 16.8554 32.5 16.8539 32.5C 16.8524 32.5 16.8509 32.5 16.8494 32.5C 16.8479 32.5 16.8464 32.5 16.8449 32.5C 16.8434 32.5 16.8418 32.5 16.8403 32.5C 16.8388 32.5 16.8373 32.5 16.8358 32.5C 16.8343 32.5 16.8328 32.5 16.8313 32.5C 16.8298 32.5 16.8282 32.5 16.8267 32.5C 16.8252 32.5 16.8237 32.5 16.8222 32.5C 16.8207 32.5 16.8192 32.5 16.8177 32.5C 16.8162 32.5 16.8147 32.5 16.8132 32.5C 16.8117 32.5 16.8102 32.5 16.8086 32.5C 16.8071 32.5 16.8056 32.5 16.8041 32.5C 16.8026 32.5 16.8011 32.5 16.7996 32.5C 16.7981 32.5 16.7966 32.5 16.7951 32.5C 16.7936 32.5 16.7921 32.5 16.7906 32.5C 16.7891 32.5 16.7876 32.5 16.7861 32.5C 16.7846 32.5 16.7831 32.5 16.7816 32.5C 16.7801 32.5 16.7786 32.5 16.7771 32.5C 16.7755 32.5 16.774 32.5 16.7725 32.5C 16.771 32.5 16.7695 32.5 16.768 32.5C 16.7665 32.5 16.765 32.5 16.7635 32.5C 16.762 32.5 16.7605 32.5 16.759 32.5C 16.7575 32.5 16.756 32.5 16.7545 32.5C 16.753 32.5 16.7515 32.5 16.75 32.5C 16.7485 32.5 16.747 32.5 16.7455 32.5C 16.744 32.5 16.7426 32.5 16.7411 32.5C 16.7396 32.5 16.7381 32.5 16.7366 32.5C 16.7351 32.5 16.7336 32.5 16.7321 32.5C 16.7306 32.5 16.7291 32.5 16.7276 32.5C 16.7261 32.5 16.7246 32.5 16.7231 32.5C 16.7216 32.5 16.7201 32.5 16.7186 32.5C 16.7171 32.5 16.7156 32.5 16.7141 32.5C 16.7126 32.5 16.7111 32.5 16.7097 32.5C 16.7082 32.5 16.7067 32.5 16.7052 32.5C 16.7037 32.5 16.7022 32.5 16.7007 32.5C 16.6992 32.5 16.6977 32.5 16.6962 32.5C 16.6947 32.5 16.6932 32.5 16.6918 32.5C 16.6903 32.5 16.6888 32.5 16.6873 32.5C 16.6858 32.5 16.6843 32.5 16.6828 32.5C 16.6813 32.5 16.6798 32.5 16.6784 32.5C 16.6769 32.5 16.6754 32.5 16.6739 32.5C 16.6724 32.5 16.6709 32.5 16.6694 32.5C 16.6679 32.5 16.6665 32.5 16.665 32.5C 16.6635 32.5 16.662 32.5 16.6605 32.5C 16.659 32.5 16.6575 32.5 16.6561 32.5C 16.6546 32.5 16.6531 32.5 16.6516 32.5C 16.6501 32.5 16.6486 32.5 16.6472 32.5C 16.6457 32.5 16.6442 32.5 16.6427 32.5C 16.6412 32.5 16.6397 32.5 16.6383 32.5C 16.6368 32.5 16.6353 32.5 16.6338 32.5C 16.6323 32.5 16.6308 32.5 16.6294 32.5C 16.6279 32.5 16.6264 32.5 16.6249 32.5C 16.6234 32.5 16.622 32.5 16.6205 32.5C 16.619 32.5 16.6175 32.5 16.616 32.5C 16.6146 32.5 16.6131 32.5 16.6116 32.5C 16.6101 32.5 16.6087 32.5 16.6072 32.5C 16.6057 32.5 16.6042 32.5 16.6027 32.5C 16.6013 32.5 16.5998 32.5 16.5983 32.5C 16.5968 32.5 16.5954 32.5 16.5939 32.5C 16.5924 32.5 16.5909 32.5 16.5895 32.5C 16.588 32.5 16.5865 32.5 16.585 32.5C 16.5836 32.5 16.5821 32.5 16.5806 32.5C 16.5792 32.5 16.5777 32.5 16.5762 32.5C 16.5747 32.5 16.5733 32.5 16.5718 32.5C 16.5703 32.5 16.5688 32.5 16.5674 32.5C 16.5659 32.5 16.5644 32.5 16.563 32.5C 16.5615 32.5 16.56 32.5 16.5586 32.5C 16.5571 32.5 16.5556 32.5 16.5542 32.5C 16.5527 32.5 16.5512 32.5 16.5497 32.5C 16.5483 32.5 16.5468 32.5 16.5453 32.5C 16.5439 32.5 16.5424 32.5 16.5409 32.5C 16.5395 32.5 16.538 32.5 16.5365 32.5C 16.5351 32.5 16.5336 32.5 16.5321 32.5C 16.5307 32.5 16.5292 32.5 16.5278 32.5C 16.5263 32.5 16.5248 32.5 16.5234 32.5C 16.5219 32.5 16.5204 32.5 16.519 32.5C 16.5175 32.5 16.516 32.5 16.5146 32.5C 16.5131 32.5 16.5117 32.5 16.5102 32.5C 16.5087 32.5 16.5073 32.5 16.5058 32.5C 16.5044 32.5 16.5029 32.5 16.5014 32.5C 16.5 32.5 16.4985 32.5 16.4971 32.5C 16.4956 32.5 16.4941 32.5 16.4927 32.5C 16.4912 32.5 16.4898 32.5 16.4883 32.5C 16.4869 32.5 16.4854 32.5 16.4839 32.5C 16.4825 32.5 16.481 32.5 16.4796 32.5C 16.4781 32.5 16.4767 32.5 16.4752 32.5C 16.4737 32.5 16.4723 32.5 16.4708 32.5C 16.4694 32.5 16.4679 32.5 16.4665 32.5C 16.465 32.5 16.4636 32.5 16.4621 32.5C 16.4607 32.5 16.4592 32.5 16.4578 32.5C 16.4563 32.5 16.4549 32.5 16.4534 32.5C 16.452 32.5 16.4505 32.5 16.4491 32.5C 16.4476 32.5 16.4462 32.5 16.4447 32.5C 16.4433 32.5 16.4418 32.5 16.4404 32.5C 16.4389 32.5 16.4375 32.5 16.436 32.5C 16.4346 32.5 16.4331 32.5 16.4317 32.5C 16.4302 32.5 16.4288 32.5 16.4273 32.5C 16.4259 32.5 16.4244 32.5 16.423 32.5C 16.4215 32.5 16.4201 32.5 16.4187 32.5C 16.4172 32.5 16.4158 32.5 16.4143 32.5C 16.4129 32.5 16.4114 32.5 16.41 32.5C 16.4085 32.5 16.4071 32.5 16.4057 32.5C 16.4042 32.5 16.4028 32.5 16.4013 32.5C 16.3999 32.5 16.3984 32.5 16.397 32.5C 16.3956 32.5 16.3941 32.5 16.3927 32.5C 16.3912 32.5 16.3898 32.5 16.3884 32.5C 16.3869 32.5 16.3855 32.5 16.384 32.5C 16.3826 32.5 16.3812 32.5 16.3797 32.5C 16.3783 32.5 16.3769 32.5 16.3754 32.5C 16.374 32.5 16.3726 32.5 16.3711 32.5C 16.3697 32.5 16.3682 32.5 16.3668 32.5C 16.3654 32.5 16.3639 32.5 16.3625 32.5C 16.3611 32.5 16.3596 32.5 16.3582 32.5C 16.3568 32.5 16.3553 32.5 16.3539 32.5C 16.3525 32.5 16.351 32.5 16.3496 32.5C 16.3482 32.5 16.3467 32.5 16.3453 32.5C 16.3439 32.5 16.3424 32.5 16.341 32.5C 16.3396 32.5 16.3382 32.5 16.3367 32.5C 16.3353 32.5 16.3339 32.5 16.3324 32.5C 16.331 32.5 16.3296 32.5 16.3282 32.5C 16.3267 32.5 16.3253 32.5 16.3239 32.5C 16.3224 32.5 16.321 32.5 16.3196 32.5C 16.3182 32.5 16.3167 32.5 16.3153 32.5C 16.3139 32.5 16.3125 32.5 16.311 32.5C 16.3096 32.5 16.3082 32.5 16.3068 32.5C 16.3054 32.5 16.3039 32.5 16.3025 32.5C 16.3011 32.5 16.2997 32.5 16.2982 32.5C 16.2968 32.5 16.2954 32.5 16.294 32.5C 16.2926 32.5 16.2911 32.5 16.2897 32.5C 16.2883 32.5 16.2869 32.5 16.2855 32.5C 16.284 32.5 16.2826 32.5 16.2812 32.5C 16.2798 32.5 16.2784 32.5 16.2769 32.5C 16.2755 32.5 16.2741 32.5 16.2727 32.5C 16.2713 32.5 16.2699 32.5 16.2684 32.5C 16.267 32.5 16.2656 32.5 16.2642 32.5C 16.2628 32.5 16.2614 32.5 16.26 32.5C 16.2585 32.5 16.2571 32.5 16.2557 32.5C 16.2543 32.5 16.2529 32.5 16.2515 32.5C 16.2501 32.5 16.2487 32.5 16.2472 32.5C 16.2458 32.5 16.2444 32.5 16.243 32.5C 16.2416 32.5 16.2402 32.5 16.2388 32.5C 16.2374 32.5 16.236 32.5 16.2346 32.5C 16.2332 32.5 16.2317 32.5 16.2303 32.5C 16.2289 32.5 16.2275 32.5 16.2261 32.5C 16.2247 32.5 16.2233 32.5 16.2219 32.5C 16.2205 32.5 16.2191 32.5 16.2177 32.5C 16.2163 32.5 16.2149 32.5 16.2135 32.5C 16.2121 32.5 16.2107 32.5 16.2093 32.5C 16.2079 32.5 16.2064 32.5 16.205 32.5C 16.2036 32.5 16.2022 32.5 16.2008 32.5C 16.1994 32.5 16.198 32.5 16.1966 32.5C 16.1952 32.5 16.1938 32.5 16.1924 32.5C 16.191 32.5 16.1896 32.5 16.1882 32.5C 16.1868 32.5 16.1854 32.5 16.184 32.5C 16.1827 32.5 16.1813 32.5 16.1799 32.5C 16.1785 32.5 16.1771 32.5 16.1757 32.5C 16.1743 32.5 16.1729 32.5 16.1715 32.5C 16.1701 32.5 16.1687 32.5 16.1673 32.5C 16.1659 32.5 16.1645 32.5 16.1631 32.5C 16.1617 32.5 16.1603 32.5 16.1589 32.5C 16.1575 32.5 16.1562 32.5 16.1548 32.5C 16.1534 32.5 16.152 32.5 16.1506 32.5C 16.1492 32.5 16.1478 32.5 16.1464 32.5C 16.145 32.5 16.1436 32.5 16.1423 32.5C 16.1409 32.5 16.1395 32.5 16.1381 32.5C 16.1367 32.5 16.1353 32.5 16.1339 32.5C 16.1325 32.5 16.1312 32.5 16.1298 32.5C 16.1284 32.5 16.127 32.5 16.1256 32.5C 16.1242 32.5 16.1229 32.5 16.1215 32.5C 16.1201 32.5 16.1187 32.5 16.1173 32.5C 16.1159 32.5 16.1146 32.5 16.1132 32.5C 16.1118 32.5 16.1104 32.5 16.109 32.5C 16.1077 32.5 16.1063 32.5 16.1049 32.5C 16.1035 32.5 16.1021 32.5 16.1008 32.5C 16.0994 32.5 16.098 32.5 16.0966 32.5C 16.0952 32.5 16.0939 32.5 16.0925 32.5C 16.0911 32.5 16.0897 32.5 16.0884 32.5C 16.087 32.5 16.0856 32.5 16.0842 32.5C 16.0829 32.5 16.0815 32.5 16.0801 32.5C 16.0787 32.5 16.0774 32.5 16.076 32.5C 16.0746 32.5 16.0732 32.5 16.0719 32.5C 16.0705 32.5 16.0691 32.5 16.0678 32.5C 16.0664 32.5 16.065 32.5 16.0636 32.5C 16.0623 32.5 16.0609 32.5 16.0595 32.5C 16.0582 32.5 16.0568 32.5 16.0554 32.5C 16.0541 32.5 16.0527 32.5 16.0513 32.5C 16.05 32.5 16.0486 32.5 16.0472 32.5C 16.0459 32.5 16.0445 32.5 16.0431 32.5C 16.0418 32.5 16.0404 32.5 16.039 32.5C 16.0377 32.5 16.0363 32.5 16.035 32.5C 16.0336 32.5 16.0322 32.5 16.0309 32.5C 16.0295 32.5 16.0281 32.5 16.0268 32.5C 16.0254 32.5 16.0241 32.5 16.0227 32.5C 16.0213 32.5 16.02 32.5 16.0186 32.5C 16.0173 32.5 16.0159 32.5 16.0145 32.5C 16.0132 32.5 16.0118 32.5 16.0105 32.5C 16.0091 32.5 16.0078 32.5 16.0064 32.5C 16.005 32.5 16.0037 32.5 16.0023 32.5C 16.001 32.5 15.9996 32.5 15.9983 32.5C 15.9969 32.5 15.9956 32.5 15.9942 32.5C 15.9929 32.5 15.9915 32.5 15.9902 32.5C 15.9888 32.5 15.9875 32.5 15.9861 32.5C 15.9848 32.5 15.9834 32.5 15.9821 32.5C 15.9807 32.5 15.9794 32.5 15.978 32.5C 15.9767 32.5 15.9753 32.5 15.974 32.5C 15.9726 32.5 15.9713 32.5 15.9699 32.5C 15.9686 32.5 15.9672 32.5 15.9659 32.5C 15.9645 32.5 15.9632 32.5 15.9618 32.5C 15.9605 32.5 15.9592 32.5 15.9578 32.5C 15.9565 32.5 15.9551 32.5 15.9538 32.5C 15.9524 32.5 15.9511 32.5 15.9498 32.5C 15.9484 32.5 15.9471 32.5 15.9457 32.5C 15.9444 32.5 15.9431 32.5 15.9417 32.5C 15.9404 32.5 15.939 32.5 15.9377 32.5C 15.9364 32.5 15.935 32.5 15.9337 32.5C 15.9324 32.5 15.931 32.5 15.9297 32.5C 15.9283 32.5 15.927 32.5 15.9257 32.5C 15.9243 32.5 15.923 32.5 15.9217 32.5C 15.9203 32.5 15.919 32.5 15.9177 32.5C 15.9163 32.5 15.915 32.5 15.9137 32.5C 15.9123 32.5 15.911 32.5 15.9097 32.5C 15.9083 32.5 15.907 32.5 15.9057 32.5C 15.9044 32.5 15.903 32.5 15.9017 32.5C 15.9004 32.5 15.899 32.5 15.8977 32.5C 15.8964 32.5 15.8951 32.5 15.8937 32.5C 15.8924 32.5 15.8911 32.5 15.8898 32.5C 15.8884 32.5 15.8871 32.5 15.8858 32.5C 15.8845 32.5 15.8831 32.5 15.8818 32.5C 15.8805 32.5 15.8792 32.5 15.8778 32.5C 15.8765 32.5 15.8752 32.5 15.8739 32.5C 15.8726 32.5 15.8712 32.5 15.8699 32.5C 15.8686 32.5 15.8673 32.5 15.866 32.5C 15.8646 32.5 15.8633 32.5 15.862 32.5C 15.8607 32.5 15.8594 32.5 15.8581 32.5C 15.8567 32.5 15.8554 32.5 15.8541 32.5C 15.8528 32.5 15.8515 32.5 15.8502 32.5C 15.8488 32.5 15.8475 32.5 15.8462 32.5C 15.8449 32.5 15.8436 32.5 15.8423 32.5C 15.841 32.5 15.8397 32.5 15.8383 32.5C 15.837 32.5 15.8357 32.5 15.8344 32.5C 15.8331 32.5 15.8318 32.5 15.8305 32.5C 15.8292 32.5 15.8279 32.5 15.8266 32.5C 15.8252 32.5 15.8239 32.5 15.8226 32.5C 15.8213 32.5 15.82 32.5 15.8187 32.5C 15.8174 32.5 15.8161 32.5 15.8148 32.5C 15.8135 32.5 15.8122 32.5 15.8109 32.5C 15.8096 32.5 15.8083 32.5 15.807 32.5C 15.8057 32.5 15.8044 32.5 15.8031 32.5C 15.8018 32.5 15.8005 32.5 15.7992 32.5C 15.7979 32.5 15.7966 32.5 15.7953 32.5C 15.794 32.5 15.7927 32.5 15.7914 32.5C 15.7901 32.5 15.7888 32.5 15.7875 32.5C 15.7862 32.5 15.7849 32.5 15.7836 32.5C 15.7823 32.5 15.781 32.5 15.7797 32.5C 15.7784 32.5 15.7771 32.5 15.7758 32.5C 15.7745 32.5 15.7733 32.5 15.772 32.5C 15.7707 32.5 15.7694 32.5 15.7681 32.5C 15.7668 32.5 15.7655 32.5 15.7642 32.5C 15.7629 32.5 15.7616 32.5 15.7604 32.5C 15.7591 32.5 15.7578 32.5 15.7565 32.5C 15.7552 32.5 15.7539 32.5 15.7526 32.5C 15.7513 32.5 15.7501 32.5 15.7488 32.5C 15.7475 32.5 15.7462 32.5 15.7449 32.5C 15.7436 32.5 15.7424 32.5 15.7411 32.5C 15.7398 32.5 15.7385 32.5 15.7372 32.5C 15.7359 32.5 15.7347 32.5 15.7334 32.5C 15.7321 32.5 15.7308 32.5 15.7295 32.5C 15.7283 32.5 15.727 32.5 15.7257 32.5C 15.7244 32.5 15.7232 32.5 15.7219 32.5C 15.7206 32.5 15.7193 32.5 15.718 32.5C 15.7168 32.5 15.7155 32.5 15.7142 32.5C 15.7129 32.5 15.7117 32.5 15.7104 32.5C 15.7091 32.5 15.7079 32.5 15.7066 32.5C 15.7053 32.5 15.704 32.5 15.7028 32.5C 15.7015 32.5 15.7002 32.5 15.699 32.5C 15.6977 32.5 15.6964 32.5 15.6951 32.5C 15.6939 32.5 15.6926 32.5 15.6913 32.5C 15.6901 32.5 15.6888 32.5 15.6875 32.5C 15.6863 32.5 15.685 32.5 15.6837 32.5C 15.6825 32.5 15.6812 32.5 15.68 32.5C 15.6787 32.5 15.6774 32.5 15.6762 32.5C 15.6749 32.5 15.6736 32.5 15.6724 32.5C 15.6711 32.5 15.6699 32.5 15.6686 32.5C 15.6673 32.5 15.6661 32.5 15.6648 32.5C 15.6636 32.5 15.6623 32.5 15.661 32.5C 15.6598 32.5 15.6585 32.5 15.6573 32.5C 15.656 32.5 15.6548 32.5 15.6535 32.5C 15.6523 32.5 15.651 32.5 15.6497 32.5C 15.6485 32.5 15.6472 32.5 15.646 32.5C 15.6447 32.5 15.6435 32.5 15.6422 32.5C 15.641 32.5 15.6397 32.5 15.6385 32.5C 15.6372 32.5 15.636 32.5 15.6347 32.5C 15.6335 32.5 15.6322 32.5 15.631 32.5C 15.6297 32.5 15.6285 32.5 15.6272 32.5C 15.626 32.5 15.6247 32.5 15.6235 32.5C 15.6223 32.5 15.621 32.5 15.6198 32.5C 15.6185 32.5 15.6173 32.5 15.616 32.5C 15.6148 32.5 15.6136 32.5 15.6123 32.5C 15.6111 32.5 15.6098 32.5 15.6086 32.5C 15.6073 32.5 15.6061 32.5 15.6049 32.5C 15.6036 32.5 15.6024 32.5 15.6012 32.5C 15.5999 32.5 15.5987 32.5 15.5974 32.5C 15.5962 32.5 15.595 32.5 15.5937 32.5C 15.5925 32.5 15.5913 32.5 15.59 32.5C 15.5888 32.5 15.5876 32.5 15.5863 32.5C 15.5851 32.5 15.5839 32.5 15.5826 32.5C 15.5814 32.5 15.5802 32.5 15.5789 32.5C 15.5777 32.5 15.5765 32.5 15.5753 32.5C 15.574 32.5 15.5728 32.5 15.5716 32.5C 15.5703 32.5 15.5691 32.5 15.5679 32.5C 15.5667 32.5 15.5654 32.5 15.5642 32.5C 15.563 32.5 15.5618 32.5 15.5605 32.5C 15.5593 32.5 15.5581 32.5 15.5569 32.5C 15.5556 32.5 15.5544 32.5 15.5532 32.5C 15.552 32.5 15.5508 32.5 15.5495 32.5C 15.5483 32.5 15.5471 32.5 15.5459 32.5C 15.5447 32.5 15.5434 32.5 15.5422 32.5C 15.541 32.5 15.5398 32.5 15.5386 32.5C 15.5374 32.5 15.5361 32.5 15.5349 32.5C 15.5337 32.5 15.5325 32.5 15.5313 32.5C 15.5301 32.5 15.5289 32.5 15.5276 32.5C 15.5264 32.5 15.5252 32.5 15.524 32.5C 15.5228 32.5 15.5216 32.5 15.5204 32.5C 15.5192 32.5 15.518 32.5 15.5167 32.5C 15.5155 32.5 15.5143 32.5 15.5131 32.5C 15.5119 32.5 15.5107 32.5 15.5095 32.5C 15.5083 32.5 15.5071 32.5 15.5059 32.5C 15.5047 32.5 15.5035 32.5 15.5023 32.5C 15.5011 32.5 15.4999 32.5 15.4987 32.5C 15.4975 32.5 15.4963 32.5 15.4951 32.5C 15.4939 32.5 15.4927 32.5 15.4915 32.5C 15.4903 32.5 15.4891 32.5 15.4879 32.5C 15.4867 32.5 15.4855 32.5 15.4843 32.5C 15.4831 32.5 15.4819 32.5 15.4807 32.5C 15.4795 32.5 15.4783 32.5 15.4771 32.5C 15.4759 32.5 15.4747 32.5 15.4735 32.5C 15.4723 32.5 15.4711 32.5 15.4699 32.5C 15.4688 32.5 15.4676 32.5 15.4664 32.5C 15.4652 32.5 15.464 32.5 15.4628 32.5C 15.4616 32.5 15.4604 32.5 15.4592 32.5C 15.4581 32.5 15.4569 32.5 15.4557 32.5C 15.4545 32.5 15.4533 32.5 15.4521 32.5C 15.4509 32.5 15.4498 32.5 15.4486 32.5C 15.4474 32.5 15.4462 32.5 15.445 32.5C 15.4438 32.5 15.4427 32.5 15.4415 32.5C 15.4403 32.5 15.4391 32.5 15.4379 32.5C 15.4368 32.5 15.4356 32.5 15.4344 32.5C 15.4332 32.5 15.4321 32.5 15.4309 32.5C 15.4297 32.5 15.4285 32.5 15.4273 32.5C 15.4262 32.5 15.425 32.5 15.4238 32.5C 15.4226 32.5 15.4215 32.5 15.4203 32.5C 15.4191 32.5 15.418 32.5 15.4168 32.5C 15.4156 32.5 15.4144 32.5 15.4133 32.5C 15.4121 32.5 15.4109 32.5 15.4098 32.5C 15.4086 32.5 15.4074 32.5 15.4063 32.5C 15.4051 32.5 15.4039 32.5 15.4028 32.5C 15.4016 32.5 15.4004 32.5 15.3993 32.5C 15.3981 32.5 15.3969 32.5 15.3958 32.5C 15.3946 32.5 15.3935 32.5 15.3923 32.5C 15.3911 32.5 15.39 32.5 15.3888 32.5C 15.3876 32.5 15.3865 32.5 15.3853 32.5C 15.3842 32.5 15.383 32.5 15.3819 32.5C 15.3807 32.5 15.3795 32.5 15.3784 32.5C 15.3772 32.5 15.3761 32.5 15.3749 32.5C 15.3738 32.5 15.3726 32.5 15.3715 32.5C 15.3703 32.5 15.3692 32.5 15.368 32.5C 15.3668 32.5 15.3657 32.5 15.3645 32.5C 15.3634 32.5 15.3622 32.5 15.3611 32.5C 15.3599 32.5 15.3588 32.5 15.3577 32.5C 15.3565 32.5 15.3554 32.5 15.3542 32.5C 15.3531 32.5 15.3519 32.5 15.3508 32.5C 15.3496 32.5 15.3485 32.5 15.3473 32.5C 15.3462 32.5 15.3451 32.5 15.3439 32.5C 15.3428 32.5 15.3416 32.5 15.3405 32.5C 15.3394 32.5 15.3382 32.5 15.3371 32.5C 15.3359 32.5 15.3348 32.5 15.3337 32.5C 15.3325 32.5 15.3314 32.5 15.3302 32.5C 15.3291 32.5 15.328 32.5 15.3268 32.5C 15.3257 32.5 15.3246 32.5 15.3234 32.5C 15.3223 32.5 15.3212 32.5 15.32 32.5C 15.3189 32.5 15.3178 32.5 15.3166 32.5C 15.3155 32.5 15.3144 32.5 15.3133 32.5C 15.3121 32.5 15.311 32.5 15.3099 32.5C 15.3087 32.5 15.3076 32.5 15.3065 32.5C 15.3054 32.5 15.3042 32.5 15.3031 32.5C 15.302 32.5 15.3009 32.5 15.2997 32.5C 15.2986 32.5 15.2975 32.5 15.2964 32.5C 15.2952 32.5 15.2941 32.5 15.293 32.5C 15.2919 32.5 15.2908 32.5 15.2896 32.5C 15.2885 32.5 15.2874 32.5 15.2863 32.5C 15.2852 32.5 15.2841 32.5 15.2829 32.5C 15.2818 32.5 15.2807 32.5 15.2796 32.5C 15.2785 32.5 15.2774 32.5 15.2762 32.5C 15.2751 32.5 15.274 32.5 15.2729 32.5C 15.2718 32.5 15.2707 32.5 15.2696 32.5C 15.2685 32.5 15.2674 32.5 15.2662 32.5C 15.2651 32.5 15.264 32.5 15.2629 32.5C 15.2618 32.5 15.2607 32.5 15.2596 32.5C 15.2585 32.5 15.2574 32.5 15.2563 32.5C 15.2552 32.5 15.2541 32.5 15.253 32.5C 15.2519 32.5 15.2508 32.5 15.2497 32.5C 15.2486 32.5 15.2475 32.5 15.2464 32.5C 15.2453 32.5 15.2442 32.5 15.2431 32.5C 15.242 32.5 15.2409 32.5 15.2398 32.5C 15.2387 32.5 15.2376 32.5 15.2365 32.5C 15.2354 32.5 15.2343 32.5 15.2332 32.5C 15.2321 32.5 15.231 32.5 15.2299 32.5C 15.2288 32.5 15.2277 32.5 15.2266 32.5C 15.2256 32.5 15.2245 32.5 15.2234 32.5C 15.2223 32.5 15.2212 32.5 15.2201 32.5C 15.219 32.5 15.2179 32.5 15.2168 32.5C 15.2158 32.5 15.2147 32.5 15.2136 32.5C 15.2125 32.5 15.2114 32.5 15.2103 32.5C 15.2092 32.5 15.2082 32.5 15.2071 32.5C 15.206 32.5 15.2049 32.5 15.2038 32.5C 15.2028 32.5 15.2017 32.5 15.2006 32.5C 15.1995 32.5 15.1984 32.5 15.1974 32.5C 15.1963 32.5 15.1952 32.5 15.1941 32.5C 15.1931 32.5 15.192 32.5 15.1909 32.5C 15.1898 32.5 15.1888 32.5 15.1877 32.5C 15.1866 32.5 15.1855 32.5 15.1845 32.5C 15.1834 32.5 15.1823 32.5 15.1813 32.5C 15.1802 32.5 15.1791 32.5 15.178 32.5C 15.177 32.5 15.1759 32.5 15.1748 32.5C 15.1738 32.5 15.1727 32.5 15.1716 32.5C 15.1706 32.5 15.1695 32.5 15.1684 32.5C 15.1674 32.5 15.1663 32.5 15.1653 32.5C 15.1642 32.5 15.1631 32.5 15.1621 32.5C 15.161 32.5 15.1599 32.5 15.1589 32.5C 15.1578 32.5 15.1568 32.5 15.1557 32.5C 15.1547 32.5 15.1536 32.5 15.1525 32.5C 15.1515 32.5 15.1504 32.5 15.1494 32.5C 15.1483 32.5 15.1473 32.5 15.1462 32.5C 15.1452 32.5 15.1441 32.5 15.1431 32.5C 15.142 32.5 15.141 32.5 15.1399 32.5C 15.1389 32.5 15.1378 32.5 15.1368 32.5C 15.1357 32.5 15.1347 32.5 15.1336 32.5C 15.1326 32.5 15.1315 32.5 15.1305 32.5C 15.1294 32.5 15.1284 32.5 15.1273 32.5C 15.1263 32.5 15.1252 32.5 15.1242 32.5C 15.1232 32.5 15.1221 32.5 15.1211 32.5C 15.12 32.5 15.119 32.5 15.118 32.5C 15.1169 32.5 15.1159 32.5 15.1148 32.5C 15.1138 32.5 15.1128 32.5 15.1117 32.5C 15.1107 32.5 15.1097 32.5 15.1086 32.5C 15.1076 32.5 15.1066 32.5 15.1055 32.5C 15.1045 32.5 15.1035 32.5 15.1024 32.5C 15.1014 32.5 15.1004 32.5 15.0993 32.5C 15.0983 32.5 15.0973 32.5 15.0963 32.5C 15.0952 32.5 15.0942 32.5 15.0932 32.5C 15.0921 32.5 15.0911 32.5 15.0901 32.5C 15.0891 32.5 15.088 32.5 15.087 32.5C 15.086 32.5 15.085 32.5 15.084 32.5C 15.0829 32.5 15.0819 32.5 15.0809 32.5C 15.0799 32.5 15.0788 32.5 15.0778 32.5C 15.0768 32.5 15.0758 32.5 15.0748 32.5C 15.0738 32.5 15.0727 32.5 15.0717 32.5C 15.0707 32.5 15.0697 32.5 15.0687 32.5C 15.0677 32.5 15.0667 32.5 15.0656 32.5C 15.0646 32.5 15.0636 32.5 15.0626 32.5C 15.0616 32.5 15.0606 32.5 15.0596 32.5C 15.0586 32.5 15.0576 32.5 15.0566 32.5C 15.0555 32.5 15.0545 32.5 15.0535 32.5C 15.0525 32.5 15.0515 32.5 15.0505 32.5C 15.0495 32.5 15.0485 32.5 15.0475 32.5C 15.0465 32.5 15.0455 32.5 15.0445 32.5C 15.0435 32.5 15.0425 32.5 15.0415 32.5C 15.0405 32.5 15.0395 32.5 15.0385 32.5C 15.0375 32.5 15.0365 32.5 15.0355 32.5C 15.0345 32.5 15.0335 32.5 15.0325 32.5C 15.0315 32.5 15.0305 32.5 15.0295 32.5C 15.0286 32.5 15.0276 32.5 15.0266 32.5C 15.0256 32.5 15.0246 32.5 15.0236 32.5C 15.0226 32.5 15.0216 32.5 15.0206 32.5C 15.0196 32.5 15.0187 32.5 15.0177 32.5C 15.0167 32.5 15.0157 32.5 15.0147 32.5C 15.0137 32.5 15.0127 32.5 15.0118 32.5C 15.0108 32.5 15.0098 32.5 15.0088 32.5C 15.0078 32.5 15.0068 32.5 15.0059 32.5C 15.0049 32.5 15.0039 32.5 15.0029 32.5C 15.002 32.5 15.001 32.5 15 32.5L 15 33.5C 15.001 33.5 15.002 33.5 15.0029 33.5C 15.0039 33.5 15.0049 33.5 15.0059 33.5C 15.0068 33.5 15.0078 33.5 15.0088 33.5C 15.0098 33.5 15.0108 33.5 15.0118 33.5C 15.0127 33.5 15.0137 33.5 15.0147 33.5C 15.0157 33.5 15.0167 33.5 15.0177 33.5C 15.0187 33.5 15.0196 33.5 15.0206 33.5C 15.0216 33.5 15.0226 33.5 15.0236 33.5C 15.0246 33.5 15.0256 33.5 15.0266 33.5C 15.0276 33.5 15.0286 33.5 15.0295 33.5C 15.0305 33.5 15.0315 33.5 15.0325 33.5C 15.0335 33.5 15.0345 33.5 15.0355 33.5C 15.0365 33.5 15.0375 33.5 15.0385 33.5C 15.0395 33.5 15.0405 33.5 15.0415 33.5C 15.0425 33.5 15.0435 33.5 15.0445 33.5C 15.0455 33.5 15.0465 33.5 15.0475 33.5C 15.0485 33.5 15.0495 33.5 15.0505 33.5C 15.0515 33.5 15.0525 33.5 15.0535 33.5C 15.0545 33.5 15.0555 33.5 15.0566 33.5C 15.0576 33.5 15.0586 33.5 15.0596 33.5C 15.0606 33.5 15.0616 33.5 15.0626 33.5C 15.0636 33.5 15.0646 33.5 15.0656 33.5C 15.0667 33.5 15.0677 33.5 15.0687 33.5C 15.0697 33.5 15.0707 33.5 15.0717 33.5C 15.0727 33.5 15.0738 33.5 15.0748 33.5C 15.0758 33.5 15.0768 33.5 15.0778 33.5C 15.0788 33.5 15.0799 33.5 15.0809 33.5C 15.0819 33.5 15.0829 33.5 15.084 33.5C 15.085 33.5 15.086 33.5 15.087 33.5C 15.088 33.5 15.0891 33.5 15.0901 33.5C 15.0911 33.5 15.0921 33.5 15.0932 33.5C 15.0942 33.5 15.0952 33.5 15.0963 33.5C 15.0973 33.5 15.0983 33.5 15.0993 33.5C 15.1004 33.5 15.1014 33.5 15.1024 33.5C 15.1035 33.5 15.1045 33.5 15.1055 33.5C 15.1066 33.5 15.1076 33.5 15.1086 33.5C 15.1097 33.5 15.1107 33.5 15.1117 33.5C 15.1128 33.5 15.1138 33.5 15.1148 33.5C 15.1159 33.5 15.1169 33.5 15.118 33.5C 15.119 33.5 15.12 33.5 15.1211 33.5C 15.1221 33.5 15.1232 33.5 15.1242 33.5C 15.1252 33.5 15.1263 33.5 15.1273 33.5C 15.1284 33.5 15.1294 33.5 15.1305 33.5C 15.1315 33.5 15.1326 33.5 15.1336 33.5C 15.1347 33.5 15.1357 33.5 15.1368 33.5C 15.1378 33.5 15.1389 33.5 15.1399 33.5C 15.141 33.5 15.142 33.5 15.1431 33.5C 15.1441 33.5 15.1452 33.5 15.1462 33.5C 15.1473 33.5 15.1483 33.5 15.1494 33.5C 15.1504 33.5 15.1515 33.5 15.1525 33.5C 15.1536 33.5 15.1547 33.5 15.1557 33.5C 15.1568 33.5 15.1578 33.5 15.1589 33.5C 15.1599 33.5 15.161 33.5 15.1621 33.5C 15.1631 33.5 15.1642 33.5 15.1653 33.5C 15.1663 33.5 15.1674 33.5 15.1684 33.5C 15.1695 33.5 15.1706 33.5 15.1716 33.5C 15.1727 33.5 15.1738 33.5 15.1748 33.5C 15.1759 33.5 15.177 33.5 15.178 33.5C 15.1791 33.5 15.1802 33.5 15.1813 33.5C 15.1823 33.5 15.1834 33.5 15.1845 33.5C 15.1855 33.5 15.1866 33.5 15.1877 33.5C 15.1888 33.5 15.1898 33.5 15.1909 33.5C 15.192 33.5 15.1931 33.5 15.1941 33.5C 15.1952 33.5 15.1963 33.5 15.1974 33.5C 15.1984 33.5 15.1995 33.5 15.2006 33.5C 15.2017 33.5 15.2028 33.5 15.2038 33.5C 15.2049 33.5 15.206 33.5 15.2071 33.5C 15.2082 33.5 15.2092 33.5 15.2103 33.5C 15.2114 33.5 15.2125 33.5 15.2136 33.5C 15.2147 33.5 15.2158 33.5 15.2168 33.5C 15.2179 33.5 15.219 33.5 15.2201 33.5C 15.2212 33.5 15.2223 33.5 15.2234 33.5C 15.2245 33.5 15.2256 33.5 15.2266 33.5C 15.2277 33.5 15.2288 33.5 15.2299 33.5C 15.231 33.5 15.2321 33.5 15.2332 33.5C 15.2343 33.5 15.2354 33.5 15.2365 33.5C 15.2376 33.5 15.2387 33.5 15.2398 33.5C 15.2409 33.5 15.242 33.5 15.2431 33.5C 15.2442 33.5 15.2453 33.5 15.2464 33.5C 15.2475 33.5 15.2486 33.5 15.2497 33.5C 15.2508 33.5 15.2519 33.5 15.253 33.5C 15.2541 33.5 15.2552 33.5 15.2563 33.5C 15.2574 33.5 15.2585 33.5 15.2596 33.5C 15.2607 33.5 15.2618 33.5 15.2629 33.5C 15.264 33.5 15.2651 33.5 15.2662 33.5C 15.2674 33.5 15.2685 33.5 15.2696 33.5C 15.2707 33.5 15.2718 33.5 15.2729 33.5C 15.274 33.5 15.2751 33.5 15.2762 33.5C 15.2774 33.5 15.2785 33.5 15.2796 33.5C 15.2807 33.5 15.2818 33.5 15.2829 33.5C 15.2841 33.5 15.2852 33.5 15.2863 33.5C 15.2874 33.5 15.2885 33.5 15.2896 33.5C 15.2908 33.5 15.2919 33.5 15.293 33.5C 15.2941 33.5 15.2952 33.5 15.2964 33.5C 15.2975 33.5 15.2986 33.5 15.2997 33.5C 15.3009 33.5 15.302 33.5 15.3031 33.5C 15.3042 33.5 15.3054 33.5 15.3065 33.5C 15.3076 33.5 15.3087 33.5 15.3099 33.5C 15.311 33.5 15.3121 33.5 15.3133 33.5C 15.3144 33.5 15.3155 33.5 15.3166 33.5C 15.3178 33.5 15.3189 33.5 15.32 33.5C 15.3212 33.5 15.3223 33.5 15.3234 33.5C 15.3246 33.5 15.3257 33.5 15.3268 33.5C 15.328 33.5 15.3291 33.5 15.3302 33.5C 15.3314 33.5 15.3325 33.5 15.3337 33.5C 15.3348 33.5 15.3359 33.5 15.3371 33.5C 15.3382 33.5 15.3394 33.5 15.3405 33.5C 15.3416 33.5 15.3428 33.5 15.3439 33.5C 15.3451 33.5 15.3462 33.5 15.3473 33.5C 15.3485 33.5 15.3496 33.5 15.3508 33.5C 15.3519 33.5 15.3531 33.5 15.3542 33.5C 15.3554 33.5 15.3565 33.5 15.3577 33.5C 15.3588 33.5 15.3599 33.5 15.3611 33.5C 15.3622 33.5 15.3634 33.5 15.3645 33.5C 15.3657 33.5 15.3668 33.5 15.368 33.5C 15.3692 33.5 15.3703 33.5 15.3715 33.5C 15.3726 33.5 15.3738 33.5 15.3749 33.5C 15.3761 33.5 15.3772 33.5 15.3784 33.5C 15.3795 33.5 15.3807 33.5 15.3819 33.5C 15.383 33.5 15.3842 33.5 15.3853 33.5C 15.3865 33.5 15.3876 33.5 15.3888 33.5C 15.39 33.5 15.3911 33.5 15.3923 33.5C 15.3935 33.5 15.3946 33.5 15.3958 33.5C 15.3969 33.5 15.3981 33.5 15.3993 33.5C 15.4004 33.5 15.4016 33.5 15.4028 33.5C 15.4039 33.5 15.4051 33.5 15.4063 33.5C 15.4074 33.5 15.4086 33.5 15.4098 33.5C 15.4109 33.5 15.4121 33.5 15.4133 33.5C 15.4144 33.5 15.4156 33.5 15.4168 33.5C 15.418 33.5 15.4191 33.5 15.4203 33.5C 15.4215 33.5 15.4226 33.5 15.4238 33.5C 15.425 33.5 15.4262 33.5 15.4273 33.5C 15.4285 33.5 15.4297 33.5 15.4309 33.5C 15.4321 33.5 15.4332 33.5 15.4344 33.5C 15.4356 33.5 15.4368 33.5 15.4379 33.5C 15.4391 33.5 15.4403 33.5 15.4415 33.5C 15.4427 33.5 15.4438 33.5 15.445 33.5C 15.4462 33.5 15.4474 33.5 15.4486 33.5C 15.4498 33.5 15.4509 33.5 15.4521 33.5C 15.4533 33.5 15.4545 33.5 15.4557 33.5C 15.4569 33.5 15.4581 33.5 15.4592 33.5C 15.4604 33.5 15.4616 33.5 15.4628 33.5C 15.464 33.5 15.4652 33.5 15.4664 33.5C 15.4676 33.5 15.4688 33.5 15.4699 33.5C 15.4711 33.5 15.4723 33.5 15.4735 33.5C 15.4747 33.5 15.4759 33.5 15.4771 33.5C 15.4783 33.5 15.4795 33.5 15.4807 33.5C 15.4819 33.5 15.4831 33.5 15.4843 33.5C 15.4855 33.5 15.4867 33.5 15.4879 33.5C 15.4891 33.5 15.4903 33.5 15.4915 33.5C 15.4927 33.5 15.4939 33.5 15.4951 33.5C 15.4963 33.5 15.4975 33.5 15.4987 33.5C 15.4999 33.5 15.5011 33.5 15.5023 33.5C 15.5035 33.5 15.5047 33.5 15.5059 33.5C 15.5071 33.5 15.5083 33.5 15.5095 33.5C 15.5107 33.5 15.5119 33.5 15.5131 33.5C 15.5143 33.5 15.5155 33.5 15.5167 33.5C 15.518 33.5 15.5192 33.5 15.5204 33.5C 15.5216 33.5 15.5228 33.5 15.524 33.5C 15.5252 33.5 15.5264 33.5 15.5276 33.5C 15.5289 33.5 15.5301 33.5 15.5313 33.5C 15.5325 33.5 15.5337 33.5 15.5349 33.5C 15.5361 33.5 15.5374 33.5 15.5386 33.5C 15.5398 33.5 15.541 33.5 15.5422 33.5C 15.5434 33.5 15.5447 33.5 15.5459 33.5C 15.5471 33.5 15.5483 33.5 15.5495 33.5C 15.5508 33.5 15.552 33.5 15.5532 33.5C 15.5544 33.5 15.5556 33.5 15.5569 33.5C 15.5581 33.5 15.5593 33.5 15.5605 33.5C 15.5618 33.5 15.563 33.5 15.5642 33.5C 15.5654 33.5 15.5667 33.5 15.5679 33.5C 15.5691 33.5 15.5703 33.5 15.5716 33.5C 15.5728 33.5 15.574 33.5 15.5753 33.5C 15.5765 33.5 15.5777 33.5 15.5789 33.5C 15.5802 33.5 15.5814 33.5 15.5826 33.5C 15.5839 33.5 15.5851 33.5 15.5863 33.5C 15.5876 33.5 15.5888 33.5 15.59 33.5C 15.5913 33.5 15.5925 33.5 15.5937 33.5C 15.595 33.5 15.5962 33.5 15.5974 33.5C 15.5987 33.5 15.5999 33.5 15.6012 33.5C 15.6024 33.5 15.6036 33.5 15.6049 33.5C 15.6061 33.5 15.6073 33.5 15.6086 33.5C 15.6098 33.5 15.6111 33.5 15.6123 33.5C 15.6136 33.5 15.6148 33.5 15.616 33.5C 15.6173 33.5 15.6185 33.5 15.6198 33.5C 15.621 33.5 15.6223 33.5 15.6235 33.5C 15.6247 33.5 15.626 33.5 15.6272 33.5C 15.6285 33.5 15.6297 33.5 15.631 33.5C 15.6322 33.5 15.6335 33.5 15.6347 33.5C 15.636 33.5 15.6372 33.5 15.6385 33.5C 15.6397 33.5 15.641 33.5 15.6422 33.5C 15.6435 33.5 15.6447 33.5 15.646 33.5C 15.6472 33.5 15.6485 33.5 15.6497 33.5C 15.651 33.5 15.6523 33.5 15.6535 33.5C 15.6548 33.5 15.656 33.5 15.6573 33.5C 15.6585 33.5 15.6598 33.5 15.661 33.5C 15.6623 33.5 15.6636 33.5 15.6648 33.5C 15.6661 33.5 15.6673 33.5 15.6686 33.5C 15.6699 33.5 15.6711 33.5 15.6724 33.5C 15.6736 33.5 15.6749 33.5 15.6762 33.5C 15.6774 33.5 15.6787 33.5 15.68 33.5C 15.6812 33.5 15.6825 33.5 15.6837 33.5C 15.685 33.5 15.6863 33.5 15.6875 33.5C 15.6888 33.5 15.6901 33.5 15.6913 33.5C 15.6926 33.5 15.6939 33.5 15.6951 33.5C 15.6964 33.5 15.6977 33.5 15.699 33.5C 15.7002 33.5 15.7015 33.5 15.7028 33.5C 15.704 33.5 15.7053 33.5 15.7066 33.5C 15.7079 33.5 15.7091 33.5 15.7104 33.5C 15.7117 33.5 15.7129 33.5 15.7142 33.5C 15.7155 33.5 15.7168 33.5 15.718 33.5C 15.7193 33.5 15.7206 33.5 15.7219 33.5C 15.7232 33.5 15.7244 33.5 15.7257 33.5C 15.727 33.5 15.7283 33.5 15.7295 33.5C 15.7308 33.5 15.7321 33.5 15.7334 33.5C 15.7347 33.5 15.7359 33.5 15.7372 33.5C 15.7385 33.5 15.7398 33.5 15.7411 33.5C 15.7424 33.5 15.7436 33.5 15.7449 33.5C 15.7462 33.5 15.7475 33.5 15.7488 33.5C 15.7501 33.5 15.7513 33.5 15.7526 33.5C 15.7539 33.5 15.7552 33.5 15.7565 33.5C 15.7578 33.5 15.7591 33.5 15.7604 33.5C 15.7616 33.5 15.7629 33.5 15.7642 33.5C 15.7655 33.5 15.7668 33.5 15.7681 33.5C 15.7694 33.5 15.7707 33.5 15.772 33.5C 15.7733 33.5 15.7745 33.5 15.7758 33.5C 15.7771 33.5 15.7784 33.5 15.7797 33.5C 15.781 33.5 15.7823 33.5 15.7836 33.5C 15.7849 33.5 15.7862 33.5 15.7875 33.5C 15.7888 33.5 15.7901 33.5 15.7914 33.5C 15.7927 33.5 15.794 33.5 15.7953 33.5C 15.7966 33.5 15.7979 33.5 15.7992 33.5C 15.8005 33.5 15.8018 33.5 15.8031 33.5C 15.8044 33.5 15.8057 33.5 15.807 33.5C 15.8083 33.5 15.8096 33.5 15.8109 33.5C 15.8122 33.5 15.8135 33.5 15.8148 33.5C 15.8161 33.5 15.8174 33.5 15.8187 33.5C 15.82 33.5 15.8213 33.5 15.8226 33.5C 15.8239 33.5 15.8252 33.5 15.8266 33.5C 15.8279 33.5 15.8292 33.5 15.8305 33.5C 15.8318 33.5 15.8331 33.5 15.8344 33.5C 15.8357 33.5 15.837 33.5 15.8383 33.5C 15.8397 33.5 15.841 33.5 15.8423 33.5C 15.8436 33.5 15.8449 33.5 15.8462 33.5C 15.8475 33.5 15.8488 33.5 15.8502 33.5C 15.8515 33.5 15.8528 33.5 15.8541 33.5C 15.8554 33.5 15.8567 33.5 15.8581 33.5C 15.8594 33.5 15.8607 33.5 15.862 33.5C 15.8633 33.5 15.8646 33.5 15.866 33.5C 15.8673 33.5 15.8686 33.5 15.8699 33.5C 15.8712 33.5 15.8726 33.5 15.8739 33.5C 15.8752 33.5 15.8765 33.5 15.8778 33.5C 15.8792 33.5 15.8805 33.5 15.8818 33.5C 15.8831 33.5 15.8845 33.5 15.8858 33.5C 15.8871 33.5 15.8884 33.5 15.8898 33.5C 15.8911 33.5 15.8924 33.5 15.8937 33.5C 15.8951 33.5 15.8964 33.5 15.8977 33.5C 15.899 33.5 15.9004 33.5 15.9017 33.5C 15.903 33.5 15.9044 33.5 15.9057 33.5C 15.907 33.5 15.9083 33.5 15.9097 33.5C 15.911 33.5 15.9123 33.5 15.9137 33.5C 15.915 33.5 15.9163 33.5 15.9177 33.5C 15.919 33.5 15.9203 33.5 15.9217 33.5C 15.923 33.5 15.9243 33.5 15.9257 33.5C 15.927 33.5 15.9283 33.5 15.9297 33.5C 15.931 33.5 15.9324 33.5 15.9337 33.5C 15.935 33.5 15.9364 33.5 15.9377 33.5C 15.939 33.5 15.9404 33.5 15.9417 33.5C 15.9431 33.5 15.9444 33.5 15.9457 33.5C 15.9471 33.5 15.9484 33.5 15.9498 33.5C 15.9511 33.5 15.9524 33.5 15.9538 33.5C 15.9551 33.5 15.9565 33.5 15.9578 33.5C 15.9592 33.5 15.9605 33.5 15.9618 33.5C 15.9632 33.5 15.9645 33.5 15.9659 33.5C 15.9672 33.5 15.9686 33.5 15.9699 33.5C 15.9713 33.5 15.9726 33.5 15.974 33.5C 15.9753 33.5 15.9767 33.5 15.978 33.5C 15.9794 33.5 15.9807 33.5 15.9821 33.5C 15.9834 33.5 15.9848 33.5 15.9861 33.5C 15.9875 33.5 15.9888 33.5 15.9902 33.5C 15.9915 33.5 15.9929 33.5 15.9942 33.5C 15.9956 33.5 15.9969 33.5 15.9983 33.5C 15.9996 33.5 16.001 33.5 16.0023 33.5C 16.0037 33.5 16.005 33.5 16.0064 33.5C 16.0078 33.5 16.0091 33.5 16.0105 33.5C 16.0118 33.5 16.0132 33.5 16.0145 33.5C 16.0159 33.5 16.0173 33.5 16.0186 33.5C 16.02 33.5 16.0213 33.5 16.0227 33.5C 16.0241 33.5 16.0254 33.5 16.0268 33.5C 16.0281 33.5 16.0295 33.5 16.0309 33.5C 16.0322 33.5 16.0336 33.5 16.035 33.5C 16.0363 33.5 16.0377 33.5 16.039 33.5C 16.0404 33.5 16.0418 33.5 16.0431 33.5C 16.0445 33.5 16.0459 33.5 16.0472 33.5C 16.0486 33.5 16.05 33.5 16.0513 33.5C 16.0527 33.5 16.0541 33.5 16.0554 33.5C 16.0568 33.5 16.0582 33.5 16.0595 33.5C 16.0609 33.5 16.0623 33.5 16.0636 33.5C 16.065 33.5 16.0664 33.5 16.0678 33.5C 16.0691 33.5 16.0705 33.5 16.0719 33.5C 16.0732 33.5 16.0746 33.5 16.076 33.5C 16.0774 33.5 16.0787 33.5 16.0801 33.5C 16.0815 33.5 16.0829 33.5 16.0842 33.5C 16.0856 33.5 16.087 33.5 16.0884 33.5C 16.0897 33.5 16.0911 33.5 16.0925 33.5C 16.0939 33.5 16.0952 33.5 16.0966 33.5C 16.098 33.5 16.0994 33.5 16.1008 33.5C 16.1021 33.5 16.1035 33.5 16.1049 33.5C 16.1063 33.5 16.1077 33.5 16.109 33.5C 16.1104 33.5 16.1118 33.5 16.1132 33.5C 16.1146 33.5 16.1159 33.5 16.1173 33.5C 16.1187 33.5 16.1201 33.5 16.1215 33.5C 16.1229 33.5 16.1242 33.5 16.1256 33.5C 16.127 33.5 16.1284 33.5 16.1298 33.5C 16.1312 33.5 16.1325 33.5 16.1339 33.5C 16.1353 33.5 16.1367 33.5 16.1381 33.5C 16.1395 33.5 16.1409 33.5 16.1423 33.5C 16.1436 33.5 16.145 33.5 16.1464 33.5C 16.1478 33.5 16.1492 33.5 16.1506 33.5C 16.152 33.5 16.1534 33.5 16.1548 33.5C 16.1562 33.5 16.1575 33.5 16.1589 33.5C 16.1603 33.5 16.1617 33.5 16.1631 33.5C 16.1645 33.5 16.1659 33.5 16.1673 33.5C 16.1687 33.5 16.1701 33.5 16.1715 33.5C 16.1729 33.5 16.1743 33.5 16.1757 33.5C 16.1771 33.5 16.1785 33.5 16.1799 33.5C 16.1813 33.5 16.1827 33.5 16.184 33.5C 16.1854 33.5 16.1868 33.5 16.1882 33.5C 16.1896 33.5 16.191 33.5 16.1924 33.5C 16.1938 33.5 16.1952 33.5 16.1966 33.5C 16.198 33.5 16.1994 33.5 16.2008 33.5C 16.2022 33.5 16.2036 33.5 16.205 33.5C 16.2064 33.5 16.2079 33.5 16.2093 33.5C 16.2107 33.5 16.2121 33.5 16.2135 33.5C 16.2149 33.5 16.2163 33.5 16.2177 33.5C 16.2191 33.5 16.2205 33.5 16.2219 33.5C 16.2233 33.5 16.2247 33.5 16.2261 33.5C 16.2275 33.5 16.2289 33.5 16.2303 33.5C 16.2317 33.5 16.2332 33.5 16.2346 33.5C 16.236 33.5 16.2374 33.5 16.2388 33.5C 16.2402 33.5 16.2416 33.5 16.243 33.5C 16.2444 33.5 16.2458 33.5 16.2472 33.5C 16.2487 33.5 16.2501 33.5 16.2515 33.5C 16.2529 33.5 16.2543 33.5 16.2557 33.5C 16.2571 33.5 16.2585 33.5 16.26 33.5C 16.2614 33.5 16.2628 33.5 16.2642 33.5C 16.2656 33.5 16.267 33.5 16.2684 33.5C 16.2699 33.5 16.2713 33.5 16.2727 33.5C 16.2741 33.5 16.2755 33.5 16.2769 33.5C 16.2784 33.5 16.2798 33.5 16.2812 33.5C 16.2826 33.5 16.284 33.5 16.2855 33.5C 16.2869 33.5 16.2883 33.5 16.2897 33.5C 16.2911 33.5 16.2926 33.5 16.294 33.5C 16.2954 33.5 16.2968 33.5 16.2982 33.5C 16.2997 33.5 16.3011 33.5 16.3025 33.5C 16.3039 33.5 16.3054 33.5 16.3068 33.5C 16.3082 33.5 16.3096 33.5 16.311 33.5C 16.3125 33.5 16.3139 33.5 16.3153 33.5C 16.3167 33.5 16.3182 33.5 16.3196 33.5C 16.321 33.5 16.3224 33.5 16.3239 33.5C 16.3253 33.5 16.3267 33.5 16.3282 33.5C 16.3296 33.5 16.331 33.5 16.3324 33.5C 16.3339 33.5 16.3353 33.5 16.3367 33.5C 16.3382 33.5 16.3396 33.5 16.341 33.5C 16.3424 33.5 16.3439 33.5 16.3453 33.5C 16.3467 33.5 16.3482 33.5 16.3496 33.5C 16.351 33.5 16.3525 33.5 16.3539 33.5C 16.3553 33.5 16.3568 33.5 16.3582 33.5C 16.3596 33.5 16.3611 33.5 16.3625 33.5C 16.3639 33.5 16.3654 33.5 16.3668 33.5C 16.3682 33.5 16.3697 33.5 16.3711 33.5C 16.3726 33.5 16.374 33.5 16.3754 33.5C 16.3769 33.5 16.3783 33.5 16.3797 33.5C 16.3812 33.5 16.3826 33.5 16.384 33.5C 16.3855 33.5 16.3869 33.5 16.3884 33.5C 16.3898 33.5 16.3912 33.5 16.3927 33.5C 16.3941 33.5 16.3956 33.5 16.397 33.5C 16.3984 33.5 16.3999 33.5 16.4013 33.5C 16.4028 33.5 16.4042 33.5 16.4057 33.5C 16.4071 33.5 16.4085 33.5 16.41 33.5C 16.4114 33.5 16.4129 33.5 16.4143 33.5C 16.4158 33.5 16.4172 33.5 16.4187 33.5C 16.4201 33.5 16.4215 33.5 16.423 33.5C 16.4244 33.5 16.4259 33.5 16.4273 33.5C 16.4288 33.5 16.4302 33.5 16.4317 33.5C 16.4331 33.5 16.4346 33.5 16.436 33.5C 16.4375 33.5 16.4389 33.5 16.4404 33.5C 16.4418 33.5 16.4433 33.5 16.4447 33.5C 16.4462 33.5 16.4476 33.5 16.4491 33.5C 16.4505 33.5 16.452 33.5 16.4534 33.5C 16.4549 33.5 16.4563 33.5 16.4578 33.5C 16.4592 33.5 16.4607 33.5 16.4621 33.5C 16.4636 33.5 16.465 33.5 16.4665 33.5C 16.4679 33.5 16.4694 33.5 16.4708 33.5C 16.4723 33.5 16.4737 33.5 16.4752 33.5C 16.4767 33.5 16.4781 33.5 16.4796 33.5C 16.481 33.5 16.4825 33.5 16.4839 33.5C 16.4854 33.5 16.4869 33.5 16.4883 33.5C 16.4898 33.5 16.4912 33.5 16.4927 33.5C 16.4941 33.5 16.4956 33.5 16.4971 33.5C 16.4985 33.5 16.5 33.5 16.5014 33.5C 16.5029 33.5 16.5044 33.5 16.5058 33.5C 16.5073 33.5 16.5087 33.5 16.5102 33.5C 16.5117 33.5 16.5131 33.5 16.5146 33.5C 16.516 33.5 16.5175 33.5 16.519 33.5C 16.5204 33.5 16.5219 33.5 16.5234 33.5C 16.5248 33.5 16.5263 33.5 16.5278 33.5C 16.5292 33.5 16.5307 33.5 16.5321 33.5C 16.5336 33.5 16.5351 33.5 16.5365 33.5C 16.538 33.5 16.5395 33.5 16.5409 33.5C 16.5424 33.5 16.5439 33.5 16.5453 33.5C 16.5468 33.5 16.5483 33.5 16.5497 33.5C 16.5512 33.5 16.5527 33.5 16.5542 33.5C 16.5556 33.5 16.5571 33.5 16.5586 33.5C 16.56 33.5 16.5615 33.5 16.563 33.5C 16.5644 33.5 16.5659 33.5 16.5674 33.5C 16.5688 33.5 16.5703 33.5 16.5718 33.5C 16.5733 33.5 16.5747 33.5 16.5762 33.5C 16.5777 33.5 16.5792 33.5 16.5806 33.5C 16.5821 33.5 16.5836 33.5 16.585 33.5C 16.5865 33.5 16.588 33.5 16.5895 33.5C 16.5909 33.5 16.5924 33.5 16.5939 33.5C 16.5954 33.5 16.5968 33.5 16.5983 33.5C 16.5998 33.5 16.6013 33.5 16.6027 33.5C 16.6042 33.5 16.6057 33.5 16.6072 33.5C 16.6087 33.5 16.6101 33.5 16.6116 33.5C 16.6131 33.5 16.6146 33.5 16.616 33.5C 16.6175 33.5 16.619 33.5 16.6205 33.5C 16.622 33.5 16.6234 33.5 16.6249 33.5C 16.6264 33.5 16.6279 33.5 16.6294 33.5C 16.6308 33.5 16.6323 33.5 16.6338 33.5C 16.6353 33.5 16.6368 33.5 16.6383 33.5C 16.6397 33.5 16.6412 33.5 16.6427 33.5C 16.6442 33.5 16.6457 33.5 16.6472 33.5C 16.6486 33.5 16.6501 33.5 16.6516 33.5C 16.6531 33.5 16.6546 33.5 16.6561 33.5C 16.6575 33.5 16.659 33.5 16.6605 33.5C 16.662 33.5 16.6635 33.5 16.665 33.5C 16.6665 33.5 16.6679 33.5 16.6694 33.5C 16.6709 33.5 16.6724 33.5 16.6739 33.5C 16.6754 33.5 16.6769 33.5 16.6784 33.5C 16.6798 33.5 16.6813 33.5 16.6828 33.5C 16.6843 33.5 16.6858 33.5 16.6873 33.5C 16.6888 33.5 16.6903 33.5 16.6918 33.5C 16.6932 33.5 16.6947 33.5 16.6962 33.5C 16.6977 33.5 16.6992 33.5 16.7007 33.5C 16.7022 33.5 16.7037 33.5 16.7052 33.5C 16.7067 33.5 16.7082 33.5 16.7097 33.5C 16.7111 33.5 16.7126 33.5 16.7141 33.5C 16.7156 33.5 16.7171 33.5 16.7186 33.5C 16.7201 33.5 16.7216 33.5 16.7231 33.5C 16.7246 33.5 16.7261 33.5 16.7276 33.5C 16.7291 33.5 16.7306 33.5 16.7321 33.5C 16.7336 33.5 16.7351 33.5 16.7366 33.5C 16.7381 33.5 16.7396 33.5 16.7411 33.5C 16.7426 33.5 16.744 33.5 16.7455 33.5C 16.747 33.5 16.7485 33.5 16.75 33.5C 16.7515 33.5 16.753 33.5 16.7545 33.5C 16.756 33.5 16.7575 33.5 16.759 33.5C 16.7605 33.5 16.762 33.5 16.7635 33.5C 16.765 33.5 16.7665 33.5 16.768 33.5C 16.7695 33.5 16.771 33.5 16.7725 33.5C 16.774 33.5 16.7755 33.5 16.7771 33.5C 16.7786 33.5 16.7801 33.5 16.7816 33.5C 16.7831 33.5 16.7846 33.5 16.7861 33.5C 16.7876 33.5 16.7891 33.5 16.7906 33.5C 16.7921 33.5 16.7936 33.5 16.7951 33.5C 16.7966 33.5 16.7981 33.5 16.7996 33.5C 16.8011 33.5 16.8026 33.5 16.8041 33.5C 16.8056 33.5 16.8071 33.5 16.8086 33.5C 16.8102 33.5 16.8117 33.5 16.8132 33.5C 16.8147 33.5 16.8162 33.5 16.8177 33.5C 16.8192 33.5 16.8207 33.5 16.8222 33.5C 16.8237 33.5 16.8252 33.5 16.8267 33.5C 16.8282 33.5 16.8298 33.5 16.8313 33.5C 16.8328 33.5 16.8343 33.5 16.8358 33.5C 16.8373 33.5 16.8388 33.5 16.8403 33.5C 16.8418 33.5 16.8434 33.5 16.8449 33.5C 16.8464 33.5 16.8479 33.5 16.8494 33.5C 16.8509 33.5 16.8524 33.5 16.8539 33.5C 16.8554 33.5 16.857 33.5 16.8585 33.5C 16.86 33.5 16.8615 33.5 16.863 33.5C 16.8645 33.5 16.866 33.5 16.8676 33.5C 16.8691 33.5 16.8706 33.5 16.8721 33.5C 16.8736 33.5 16.8751 33.5 16.8766 33.5C 16.8782 33.5 16.8797 33.5 16.8812 33.5C 16.8827 33.5 16.8842 33.5 16.8857 33.5C 16.8873 33.5 16.8888 33.5 16.8903 33.5C 16.8918 33.5 16.8933 33.5 16.8948 33.5C 16.8964 33.5 16.8979 33.5 16.8994 33.5C 16.9009 33.5 16.9024 33.5 16.904 33.5C 16.9055 33.5 16.907 33.5 16.9085 33.5C 16.91 33.5 16.9116 33.5 16.9131 33.5C 16.9146 33.5 16.9161 33.5 16.9176 33.5C 16.9192 33.5 16.9207 33.5 16.9222 33.5C 16.9237 33.5 16.9252 33.5 16.9268 33.5C 16.9283 33.5 16.9298 33.5 16.9313 33.5C 16.9328 33.5 16.9344 33.5 16.9359 33.5C 16.9374 33.5 16.9389 33.5 16.9405 33.5C 16.942 33.5 16.9435 33.5 16.945 33.5C 16.9466 33.5 16.9481 33.5 16.9496 33.5C 16.9511 33.5 16.9527 33.5 16.9542 33.5C 16.9557 33.5 16.9572 33.5 16.9588 33.5C 16.9603 33.5 16.9618 33.5 16.9633 33.5C 16.9649 33.5 16.9664 33.5 16.9679 33.5C 16.9694 33.5 16.971 33.5 16.9725 33.5C 16.974 33.5 16.9755 33.5 16.9771 33.5C 16.9786 33.5 16.9801 33.5 16.9817 33.5C 16.9832 33.5 16.9847 33.5 16.9862 33.5C 16.9878 33.5 16.9893 33.5 16.9908 33.5C 16.9924 33.5 16.9939 33.5 16.9954 33.5C 16.9969 33.5 16.9985 33.5 17 33.5L 17 32.5ZM 15 32.5C 14.7639 32.5 14.5857 32.618 14.4744 32.7196C 14.361 32.8231 14.2687 32.9527 14.1931 33.0782C 14.0411 33.3309 13.9008 33.6639 13.7717 34.0148C 13.5136 34.7161 13.2542 35.621 13.0234 36.3488L 13.9766 36.6512C 14.2215 35.879 14.4622 35.0339 14.7101 34.3602C 14.834 34.0236 14.9483 33.7629 15.05 33.5937C 15.1014 33.5083 15.1358 33.4698 15.1486 33.4581C 15.1635 33.4445 15.1111 33.5 15 33.5L 15 32.5ZM 13.0234 36.3488C 12.8861 36.7817 12.7923 37.4555 12.7307 38.1927C 12.668 38.9428 12.6356 39.8003 12.6341 40.6241C 12.6326 41.4465 12.6618 42.2458 12.7246 42.8776C 12.7559 43.1922 12.7967 43.4773 12.8496 43.7078C 12.8761 43.8227 12.908 43.9349 12.948 44.0351C 12.9843 44.1262 13.044 44.2511 13.1464 44.3536L 13.8536 43.6464C 13.8935 43.6864 13.8948 43.7097 13.8768 43.6646C 13.8624 43.6286 13.844 43.5699 13.8242 43.4837C 13.7847 43.3117 13.749 43.0734 13.7197 42.7786C 13.6613 42.1917 13.6326 41.4285 13.6341 40.6259C 13.6356 39.8247 13.6672 38.9947 13.7272 38.276C 13.7884 37.5445 13.876 36.9683 13.9766 36.6512L 13.0234 36.3488ZM 13.1464 44.3536C 13.4203 44.6274 13.7932 44.6697 14.0823 44.66C 14.3842 44.6499 14.7219 44.5782 15.0481 44.4953C 15.7438 44.3185 16.4214 44.0877 17.0707 43.995L 16.9293 43.005C 16.2118 43.1075 15.3893 43.3768 14.8018 43.5261C 14.4864 43.6063 14.2366 43.6543 14.0489 43.6606C 13.8485 43.6673 13.8297 43.6226 13.8536 43.6464L 13.1464 44.3536ZM 24.2556 27.5L 23.6777 26.6839L 23.1145 27.0827L 23.2876 27.7508L 24.2556 27.5ZM 27.5 24.9073L 28.3031 25.5031L 28.789 24.8482L 28.2453 24.2405L 27.5 24.9073ZM 24.2575 27.7141L 25.2083 27.4041L 23.3067 28.0239L 24.2575 27.7141ZM 28 24.5L 28.4609 23.6125L 27.1671 25.0534L 28 24.5ZM 26.4153 7.22906L 26.5817 8.21513L 28.3663 7.91401L 27.1615 6.56338L 26.4153 7.22906ZM 25.1133 6.01025L 25.749 5.23829L 25.479 5.016L 25.1293 5.01038L 25.1133 6.01025ZM 25.2185 7.48553L 24.9364 6.52615L 25.5005 8.44494L 25.2185 7.48553ZM 24.2556 6.01483L 24.2288 5.01519L 24.2824 7.01447L 24.2556 6.01483ZM 23.8918 5.07214L 23.8406 6.07083L 27.2187 6.24405L 24.4779 4.26185L 23.8918 5.07214ZM 22.5034 5.04926L 21.5225 5.24367L 21.6851 6.06427L 22.5216 6.04909L 22.5034 5.04926ZM 22.3921 4.56586L 22.6142 3.59084L 20.9928 3.22145L 21.4267 4.82682L 22.3921 4.56586ZM 23.6494 4.89868L 24.2283 4.0833L 24.0953 3.98885L 23.9392 3.94158L 23.6494 4.89868ZM 25.7709 36.367L 26.5636 36.9767L 26.5643 36.9758L 25.7709 36.367ZM 24.5139 45.4749L 24.7137 46.4547L 25.7047 46.2527L 25.4913 45.2639L 24.5139 45.4749ZM 20.9621 35.4053L 21.7547 36.015L 21.7554 36.014L 20.9621 35.4053ZM 20.1225 46.0766L 19.1781 46.4054L 19.4222 47.1066L 20.164 47.0757L 20.1225 46.0766ZM 30.9902 7.01776L 30.9205 8.01533L 31.3129 6.07128L 30.9902 7.01776ZM 18.883 4.51666L 19.8324 4.20274L 19.7485 3.94878L 19.5489 3.77066L 18.883 4.51666ZM 18.7846 10.7114L 19.4935 11.4168L 19.7064 11.2028L 19.7654 10.9066L 18.7846 10.7114ZM 13.4245 22.0688L 14.2488 22.635L 14.3319 22.514L 14.3767 22.3743L 13.4245 22.0688ZM 12.3493 23.6345L 13.17 24.2059L 13.1736 24.2006L 12.3493 23.6345ZM 12.2062 28.8192L 12.784 29.6354L 13.5968 29.06L 13.0249 28.2448L 12.2062 28.8192ZM 8.02924 28.4464L 8.50581 27.5672L 8.50478 27.5667L 8.02924 28.4464ZM 7.54047 22.6727L 8.3611 23.2442L 8.3648 23.2388L 7.54047 22.6727ZM 8.61566 21.1071L 9.43999 21.6732L 9.52306 21.5523L 9.56788 21.4125L 8.61566 21.1071ZM 13.9758 9.74969L 14.6846 10.455L 14.8976 10.241L 14.9565 9.94495L 13.9758 9.74969ZM 13.9758 3.29315L 14.4668 2.42203L 11.8979 0.973867L 13.0561 3.6859L 13.9758 3.29315ZM 16.0256 5.05603L 15.1503 5.53973L 17.0228 4.98179L 16.0256 5.05603ZM 15.3395 1.92346L 15.8629 1.07137L 14.6346 2.63269L 15.3395 1.92346ZM 24.2575 5.0943L 24.1879 6.09187L 24.5803 4.14781L 24.2575 5.0943ZM 17.5229 4.09137L 17.4962 3.09173L 15.2105 3.15286L 16.807 4.78963L 17.5229 4.09137ZM 18.4858 5.56207L 17.5007 5.73443L 17.6937 6.83722L 18.7678 6.52148L 18.4858 5.56207ZM 12.1503 2.5932L 13.0998 2.27928L 13.0158 2.02532L 12.8163 1.8472L 12.1503 2.5932ZM 12.0519 8.78796L 12.7608 9.49331L 12.9738 9.27929L 13.0327 8.98317L 12.0519 8.78796ZM 6.69183 20.1454L 7.51616 20.7115L 7.59924 20.5905L 7.64405 20.4508L 6.69183 20.1454ZM 5.61664 21.711L 6.4373 22.2825L 6.44097 22.2771L 5.61664 21.711ZM 5.47357 26.8957L 6.05132 27.7119L 6.86411 27.1366L 6.29221 26.3214L 5.47357 26.8957ZM 1.29657 26.5229L 1.77314 25.6438L 1.77211 25.6432L 1.29657 26.5229ZM 0.807801 20.7493L 1.62843 21.3208L 1.63213 21.3154L 0.807801 20.7493ZM 1.883 19.1837L 2.70732 19.7498L 2.7904 19.6288L 2.83522 19.4891L 1.883 19.1837ZM 7.2431 7.82623L 7.95197 8.53158L 8.16491 8.31757L 8.22386 8.02149L 7.2431 7.82623ZM 7.2431 1.36969L 7.73417 0.498569L 5.16524 -0.949594L 6.32346 1.76244L 7.2431 1.36969ZM 9.29291 3.13257L 8.41767 3.61627L 10.2901 3.05833L 9.29291 3.13257ZM 8.60687 0L 9.13027 -0.852089L 7.90189 0.709228L 8.60687 0ZM 46.1547 38.73L 45.3257 38.1707L 45.3255 38.171L 46.1547 38.73ZM 47.9051 23.0303L 47.6202 22.0718L 46.3751 22.4419L 47.0514 23.5509L 47.9051 23.0303ZM 52 24.7932L 51.4503 25.6285L 53.6581 27.0815L 52.965 24.531L 52 24.7932ZM 40.5952 12.8516L 40.2502 11.913L 38.2277 12.6562L 40.101 13.721L 40.5952 12.8516ZM 44.6887 13.2398L 44.4382 14.208L 48.1133 15.1588L 45.3836 12.5208L 44.6887 13.2398ZM 27.1421 8.44719L 26.1571 8.61946L 26.3499 9.72238L 27.4242 9.4066L 27.1421 8.44719ZM 22.0721 3.84686L 22.5955 2.99475L 21.367 4.55593L 22.0721 3.84686ZM 22.7581 6.97943L 21.8828 7.46306L 23.7553 6.90515L 22.7581 6.97943ZM 20.7083 5.21655L 21.1993 4.34541L 18.6307 2.89749L 19.7886 5.60925L 20.7083 5.21655ZM 20.7083 11.6731L 21.4171 12.3784L 21.6301 12.1644L 21.689 11.8683L 20.7083 11.6731ZM 15.3482 23.0305L 16.1725 23.5967L 16.2556 23.4757L 16.3004 23.336L 15.3482 23.0305ZM 14.2729 24.5961L 15.0935 25.1676L 15.0972 25.1623L 14.2729 24.5961ZM 14.7617 30.3698L 15.2383 29.4906L 15.2373 29.4901L 14.7617 30.3698ZM 20.3192 28.1201L 20.2032 27.1269L 19.4026 27.2203L 19.3239 28.0225L 20.3192 28.1201ZM 27.6309 22.9307L 28.0919 22.0432L 27.2946 21.6291L 26.7978 22.3776L 27.6309 22.9307ZM 27.6945 37.3286L 28.4872 37.9383L 28.4879 37.9374L 27.6945 37.3286ZM 26.8549 48L 25.9105 48.3288L 26.1546 49.03L 26.8965 48.9991L 26.8549 48ZM 24.8335 28.3161C 25.6488 27.7388 26.361 27.238 26.9267 26.8009C 27.4798 26.3734 27.9741 25.9465 28.3031 25.5031L 26.6969 24.3114C 26.5437 24.5179 26.2401 24.8038 25.7036 25.2184C 25.1797 25.6233 24.5109 26.0939 23.6777 26.6839L 24.8335 28.3161ZM 23.3067 28.0239C 23.3649 28.2023 23.4104 28.3384 23.4421 28.4259C 23.45 28.4477 23.4807 28.5349 23.5222 28.6144C 23.5294 28.6283 23.5715 28.7115 23.6461 28.8004C 23.6731 28.8327 23.7849 28.9667 23.9815 29.0609C 24.0924 29.114 24.2714 29.1741 24.4951 29.1559C 24.7343 29.1365 24.9373 29.0345 25.0851 28.9008C 25.3298 28.6796 25.3832 28.4128 25.3932 28.3653C 25.4122 28.2758 25.4146 28.2033 25.4151 28.1717C 25.4162 28.1035 25.41 28.0495 25.4078 28.0309C 25.3955 27.9262 25.3582 27.7786 25.3388 27.7001C 25.3101 27.5841 25.2706 27.4305 25.2236 27.2492L 23.2876 27.7508C 23.3346 27.9323 23.3716 28.0764 23.3974 28.1806C 23.4324 28.3222 23.4277 28.3172 23.4215 28.265C 23.4201 28.2529 23.4143 28.204 23.4153 28.1396C 23.4158 28.1098 23.418 28.0388 23.4368 27.9504C 23.4466 27.904 23.4996 27.6381 23.7438 27.4172C 23.8915 27.2838 24.0942 27.1819 24.3331 27.1625C 24.5565 27.1443 24.7352 27.2043 24.8458 27.2573C 25.0417 27.3511 25.1527 27.4845 25.1789 27.5157C 25.2517 27.6025 25.2916 27.6821 25.2961 27.6908C 25.3269 27.75 25.3399 27.7927 25.3223 27.7442C 25.3031 27.6913 25.267 27.5842 25.2083 27.4042L 23.3067 28.0239ZM 28.2453 24.2405C 28.2516 24.2475 28.2878 24.2883 28.3258 24.3608C 28.3626 24.4311 28.4262 24.5794 28.4219 24.7829C 28.4171 25.0107 28.3287 25.2197 28.1909 25.3763C 28.0694 25.5145 27.9395 25.579 27.8751 25.6061C 27.8068 25.6348 27.7551 25.6451 27.7379 25.6483C 27.7176 25.652 27.7082 25.6523 27.7147 25.6519C 27.7301 25.6508 27.762 25.65 27.8229 25.6512C 27.8621 25.6519 27.9622 25.6549 28.027 25.6549C 28.0648 25.6549 28.1181 25.6542 28.1755 25.6498C 28.2192 25.6465 28.332 25.6369 28.4601 25.595C 28.525 25.5738 28.6453 25.5282 28.771 25.4323C 28.9055 25.3296 29.077 25.1435 29.1445 24.8572C 29.2113 24.5737 29.1425 24.3345 29.0737 24.1886C 29.0083 24.0501 28.9261 23.956 28.8786 23.9066C 28.7846 23.8088 28.6871 23.7444 28.639 23.7138C 28.5797 23.6762 28.5182 23.6423 28.4609 23.6125L 27.5391 25.3875C 27.5678 25.4023 27.5741 25.4068 27.5667 25.4021C 27.5625 25.3995 27.5491 25.3908 27.5302 25.3764C 27.5129 25.3633 27.4779 25.3354 27.4369 25.2928C 27.4005 25.2549 27.3258 25.171 27.2648 25.0419C 27.2004 24.9052 27.1327 24.6743 27.1979 24.3981C 27.2636 24.1192 27.4304 23.9394 27.5577 23.8423C 27.6761 23.752 27.7864 23.7111 27.839 23.6939C 27.9424 23.6601 28.021 23.6558 28.0231 23.6556C 28.0389 23.6544 28.0431 23.6549 28.0268 23.6549C 27.9831 23.6549 27.9537 23.6532 27.8597 23.6515C 27.7873 23.6502 27.6821 23.6492 27.5739 23.6568C 27.4857 23.663 27.2959 23.68 27.0997 23.7626C 26.9954 23.8064 26.8332 23.8917 26.6892 24.0554C 26.5289 24.2376 26.4279 24.4769 26.4223 24.7407C 26.4173 24.9803 26.492 25.1702 26.5541 25.2888C 26.6173 25.4094 26.6929 25.5049 26.7547 25.574L 28.2453 24.2405ZM 27.1615 6.56338C 26.7544 6.10705 26.2528 5.65318 25.749 5.23829L 24.4776 6.78222C 24.9411 7.16384 25.3569 7.5448 25.669 7.89475L 27.1615 6.56338ZM 25.2185 7.48553C 25.5006 8.44492 25.5005 8.44495 25.5004 8.44498C 25.5004 8.44499 25.5003 8.44501 25.5002 8.44503C 25.5001 8.44506 25.5 8.44509 25.4999 8.44512C 25.4997 8.44518 25.4995 8.44523 25.4994 8.44527C 25.4991 8.44536 25.4989 8.44542 25.4988 8.44544C 25.4987 8.44549 25.4989 8.44542 25.4996 8.44523C 25.5009 8.44485 25.5038 8.44401 25.5084 8.44272C 25.5176 8.44015 25.5333 8.43582 25.5552 8.42999C 25.5992 8.41831 25.6682 8.40061 25.7606 8.37884C 25.9456 8.33528 26.2237 8.27552 26.5817 8.21513L 26.2489 6.243C 25.8454 6.31109 25.5251 6.37957 25.3021 6.43212C 25.1905 6.45841 25.1031 6.48073 25.0416 6.49707C 25.0108 6.50524 24.9866 6.51192 24.969 6.51685C 24.9602 6.51931 24.953 6.52134 24.9476 6.5229C 24.9449 6.52368 24.9426 6.52434 24.9407 6.52489C 24.9398 6.52516 24.939 6.5254 24.9383 6.52561C 24.9379 6.52571 24.9376 6.52581 24.9373 6.5259C 24.9371 6.52594 24.937 6.52599 24.9368 6.52603C 24.9367 6.52605 24.9366 6.52608 24.9366 6.52609C 24.9365 6.52612 24.9364 6.52615 25.2185 7.48553ZM 25.1293 5.01038C 24.8182 5.00539 24.5175 5.00743 24.2288 5.01519L 24.2825 7.01447C 24.5435 7.00746 24.8155 7.0056 25.0972 7.01012L 25.1293 5.01038ZM 23.9431 4.07346C 23.4318 4.04724 22.9443 4.04109 22.4853 4.04942L 22.5216 6.04909C 22.9371 6.04155 23.3783 6.04712 23.8406 6.07083L 23.9431 4.07346ZM 21.4267 4.82682C 21.4601 4.95035 21.4923 5.09114 21.5225 5.24367L 23.4843 4.85485C 23.4477 4.66984 23.4056 4.483 23.3574 4.30489L 21.4267 4.82682ZM 22.17 5.54088C 22.5608 5.6299 22.9581 5.73422 23.3597 5.85579L 23.9392 3.94158C 23.4911 3.80594 23.0486 3.6898 22.6142 3.59084L 22.17 5.54088ZM 24.4779 4.26185C 24.3924 4.20006 24.3087 4.14035 24.2283 4.0833L 23.0705 5.71406C 23.1488 5.76968 23.2272 5.82558 23.3058 5.88244L 24.4779 4.26185ZM 24.9783 35.7573C 23.7232 37.3891 23.2544 39.3328 23.1465 41.0995C 23.0385 42.8689 23.2875 44.533 23.5364 45.6859L 25.4913 45.2639C 25.2648 44.2144 25.0498 42.7451 25.1428 41.2214C 25.236 39.6951 25.6334 38.1861 26.5636 36.9767L 24.9783 35.7573ZM 27.1671 25.0534C 28.4723 27.0177 28.5168 28.8691 27.9673 30.6306C 27.3992 32.4517 26.1961 34.1704 24.9776 35.7582L 26.5643 36.9758C 27.7862 35.3834 29.1927 33.4185 29.8766 31.2262C 30.579 28.9743 30.5178 26.4823 28.8329 23.9466L 27.1671 25.0534ZM 23.3068 28.024C 23.8041 29.5494 23.5045 30.5787 22.8926 31.5312C 22.5649 32.0412 22.1444 32.5306 21.6589 33.0701C 21.1895 33.5919 20.6472 34.173 20.1688 34.7965L 21.7554 36.014C 22.1726 35.4704 22.6408 34.969 23.1457 34.4079C 23.6346 33.8646 24.1521 33.2708 24.5752 32.6123C 25.4647 31.2277 25.9172 29.5786 25.2083 27.4041L 23.3068 28.024ZM 20.1695 34.7956C 18.3746 37.129 18.1802 40.105 18.3699 42.3537C 18.4664 43.4969 18.666 44.5011 18.8412 45.2194C 18.929 45.5795 19.0112 45.8702 19.0724 46.0734C 19.103 46.1751 19.1284 46.2551 19.1466 46.3112C 19.1557 46.3392 19.1631 46.3612 19.1684 46.377C 19.1711 46.3849 19.1732 46.3913 19.1749 46.396C 19.1757 46.3984 19.1764 46.4004 19.1769 46.4019C 19.1772 46.4027 19.1774 46.4034 19.1776 46.404C 19.1777 46.4043 19.1778 46.4046 19.1779 46.4048C 19.178 46.4051 19.1781 46.4054 20.1225 46.0766C 21.0669 45.7478 21.067 45.748 21.0671 45.7483C 21.0671 45.7483 21.0672 45.7485 21.0672 45.7486C 21.0672 45.7488 21.0673 45.7489 21.0673 45.7489C 21.0673 45.7488 21.0671 45.7484 21.0668 45.7476C 21.0663 45.746 21.0652 45.7428 21.0636 45.7381C 21.0604 45.7287 21.0553 45.7132 21.0483 45.6919C 21.0345 45.6494 21.0136 45.5837 20.9875 45.4971C 20.9354 45.3238 20.8627 45.0675 20.7843 44.7456C 20.6269 44.1 20.4485 43.2008 20.3629 42.1856C 20.1884 40.1179 20.4138 37.7582 21.7547 36.015L 20.1695 34.7956ZM 20.1225 46.0766C 20.164 47.0757 20.1642 47.0757 20.1643 47.0757C 20.1643 47.0757 20.1645 47.0757 20.1646 47.0757C 20.1648 47.0757 20.165 47.0757 20.1653 47.0757C 20.1658 47.0757 20.1664 47.0756 20.1672 47.0756C 20.1687 47.0755 20.1706 47.0755 20.173 47.0753C 20.1777 47.0751 20.1842 47.0748 20.1923 47.0744C 20.2087 47.0736 20.232 47.0724 20.2618 47.0707C 20.3215 47.0674 20.4076 47.062 20.5182 47.054C 20.7393 47.0379 21.0582 47.011 21.4586 46.9673C 22.259 46.8799 23.3878 46.7251 24.7137 46.4547L 24.314 44.4951C 23.0583 44.7511 21.9915 44.8972 21.2416 44.9791C 20.8669 45.02 20.572 45.0448 20.373 45.0593C 20.2736 45.0665 20.1982 45.0711 20.1488 45.0739C 20.1241 45.0753 20.106 45.0763 20.0946 45.0768C 20.0889 45.0771 20.0849 45.0773 20.0826 45.0774C 20.0814 45.0774 20.0807 45.0775 20.0805 45.0775C 20.0803 45.0775 20.0803 45.0775 20.0804 45.0775C 20.0804 45.0775 20.0805 45.0775 20.0806 45.0775C 20.0806 45.0775 20.0807 45.0775 20.0807 45.0775C 20.0808 45.0775 20.081 45.0775 20.1225 46.0766ZM 31.3129 6.07128C 28.6596 5.16648 26.1719 4.96322 24.2289 5.01519L 24.2824 7.01447C 26.0454 6.96732 28.2876 7.15273 30.6674 7.96425L 31.3129 6.07128ZM 31.0598 6.02019C 29.2868 5.89641 27.7717 6.01896 26.6955 6.17334C 26.1568 6.25062 25.7262 6.33616 25.426 6.40361C 25.2759 6.43734 25.1582 6.4666 25.0757 6.48809C 25.0345 6.49884 25.002 6.50766 24.9787 6.51413C 24.967 6.51737 24.9577 6.52002 24.9506 6.52204C 24.9471 6.52305 24.9441 6.5239 24.9418 6.52458C 24.9406 6.52492 24.9396 6.52522 24.9387 6.52548C 24.9382 6.52561 24.9378 6.52573 24.9375 6.52584C 24.9373 6.52589 24.937 6.52597 24.9369 6.52599C 24.9367 6.52606 24.9365 6.52613 25.2185 7.48553C 25.5005 8.44494 25.5003 8.445 25.5001 8.44506C 25.5001 8.44508 25.4999 8.44513 25.4998 8.44517C 25.4995 8.44523 25.4994 8.44529 25.4992 8.44533C 25.4989 8.44542 25.4987 8.44547 25.4987 8.44547C 25.4987 8.44548 25.4992 8.44532 25.5003 8.44501C 25.5025 8.44438 25.507 8.44311 25.5137 8.44125C 25.5271 8.43753 25.5494 8.43146 25.5802 8.42343C 25.6418 8.40737 25.7375 8.3835 25.8645 8.35495C 26.1187 8.29784 26.4976 8.22221 26.9795 8.15307C 27.9447 8.01461 29.3154 7.90327 30.9205 8.01533L 31.0598 6.02019ZM 17.9335 4.83058C 18.2172 5.68861 18.2159 7.05398 18.1033 8.32935C 18.0491 8.94219 17.9736 9.49289 17.9116 9.89044C 17.8806 10.0888 17.8531 10.2479 17.8337 10.3562C 17.8239 10.4103 17.8162 10.4517 17.811 10.4789C 17.8085 10.4924 17.8065 10.5025 17.8053 10.5088C 17.8047 10.5119 17.8043 10.5141 17.804 10.5154C 17.8039 10.516 17.8038 10.5164 17.8038 10.5165C 17.8038 10.5166 17.8038 10.5166 17.8038 10.5165C 17.8038 10.5165 17.8038 10.5164 17.8038 10.5164C 17.8038 10.5163 17.8038 10.5162 18.7846 10.7114C 19.7654 10.9066 19.7654 10.9065 19.7654 10.9063C 19.7654 10.9063 19.7655 10.9061 19.7655 10.9059C 19.7656 10.9056 19.7656 10.9053 19.7657 10.9049C 19.7659 10.904 19.7661 10.9029 19.7664 10.9016C 19.7669 10.8989 19.7676 10.8953 19.7685 10.8907C 19.7703 10.8815 19.7728 10.8685 19.7759 10.8519C 19.7823 10.8187 19.7912 10.7709 19.8021 10.71C 19.824 10.5884 19.854 10.4141 19.8876 10.199C 19.9546 9.76975 20.0365 9.17339 20.0955 8.5053C 20.2091 7.21882 20.257 5.4868 19.8324 4.20274L 17.9335 4.83058ZM 18.0757 10.0061C 17.3321 10.7535 16.624 11.8923 15.9925 13.0958C 15.3504 14.3196 14.7459 15.6923 14.2277 16.9691C 13.7085 18.2483 13.2704 19.4447 12.9623 20.3206C 12.8081 20.7589 12.6861 21.118 12.6025 21.3682C 12.5607 21.4933 12.5284 21.5912 12.5064 21.6583C 12.4955 21.6919 12.4871 21.7177 12.4813 21.7354C 12.4785 21.7442 12.4763 21.751 12.4748 21.7557C 12.474 21.7581 12.4734 21.7599 12.473 21.7612C 12.4728 21.7618 12.4726 21.7623 12.4725 21.7627C 12.4725 21.7629 12.4724 21.7631 12.4724 21.7632C 12.4723 21.7633 12.4723 21.7634 13.4245 22.0688C 14.3767 22.3743 14.3767 22.3743 14.3767 22.3743C 14.3767 22.3743 14.3767 22.3743 14.3767 22.3742C 14.3768 22.374 14.3769 22.3737 14.377 22.3733C 14.3773 22.3725 14.3777 22.3711 14.3783 22.3692C 14.3796 22.3654 14.3815 22.3595 14.384 22.3516C 14.3892 22.3358 14.3969 22.3118 14.4073 22.2802C 14.428 22.217 14.4589 22.1232 14.4993 22.0024C 14.58 21.7608 14.6987 21.4116 14.849 20.9842C 15.15 20.1285 15.5768 18.9631 16.0808 17.7213C 16.5858 16.477 17.163 15.1696 17.7635 14.0251C 18.3746 12.8603 18.9701 11.9428 19.4935 11.4168L 18.0757 10.0061ZM 12.6002 21.5027L 11.525 23.0683L 13.1736 24.2006L 14.2488 22.635L 12.6002 21.5027ZM 11.5287 23.063C 10.8272 24.0704 10.5418 25.2779 10.5415 26.3829C 10.5412 27.4757 10.8204 28.585 11.3876 29.3935L 13.0249 28.2448C 12.7525 27.8566 12.5413 27.1804 12.5415 26.3835C 12.5417 25.5988 12.7476 24.8124 13.1699 24.2059L 11.5287 23.063ZM 7.55266 29.3255C 9.79373 30.5403 11.5346 30.5197 12.784 29.6354L 11.6285 28.0029C 11.2333 28.2826 10.3712 28.5784 8.50581 27.5672L 7.55266 29.3255ZM 6.71985 22.1012C 5.87019 23.3213 5.62731 24.8383 5.77198 26.1317C 5.90971 27.3632 6.44822 28.7284 7.5537 29.326L 8.50478 27.5667C 8.25796 27.4332 7.86947 26.8919 7.75958 25.9094C 7.65663 24.9889 7.84551 23.9845 8.36108 23.2442L 6.71985 22.1012ZM 7.79133 20.541L 6.71614 22.1066L 8.3648 23.2388L 9.43999 21.6732L 7.79133 20.541ZM 13.2669 9.04435C 12.5232 9.79173 11.8151 10.9306 11.1836 12.1341C 10.5416 13.3578 9.93705 14.7306 9.41882 16.0074C 8.89962 17.2865 8.46155 18.4829 8.15346 19.3589C 7.99928 19.7972 7.87731 20.1563 7.79365 20.4064C 7.75182 20.5315 7.71955 20.6295 7.69759 20.6966C 7.68662 20.7301 7.67822 20.756 7.6725 20.7737C 7.66964 20.7825 7.66744 20.7893 7.66593 20.794C 7.66517 20.7963 7.66459 20.7981 7.66417 20.7994C 7.66396 20.8001 7.6638 20.8006 7.66368 20.801C 7.66362 20.8012 7.66356 20.8013 7.66353 20.8014C 7.66348 20.8016 7.66344 20.8017 8.61566 21.1071C 9.56788 21.4125 9.56787 21.4126 9.56786 21.4126C 9.56787 21.4126 9.56788 21.4125 9.5679 21.4125C 9.56796 21.4123 9.56805 21.412 9.56819 21.4116C 9.56846 21.4107 9.5689 21.4094 9.56951 21.4075C 9.57073 21.4037 9.57263 21.3978 9.5752 21.3899C 9.58032 21.3741 9.5881 21.3501 9.59844 21.3185C 9.61912 21.2553 9.65004 21.1615 9.69042 21.0407C 9.77121 20.7991 9.88981 20.4499 10.0402 20.0225C 10.3411 19.1668 10.7679 18.0014 11.272 16.7596C 11.777 15.5153 12.3541 14.2079 12.9547 13.0633C 13.5658 11.8986 14.1612 10.9811 14.6846 10.455L 13.2669 9.04435ZM 13.0561 3.6859C 13.2095 4.04509 13.3091 4.57293 13.3473 5.22652C 13.3848 5.86616 13.3604 6.5595 13.3078 7.21078C 13.2554 7.85936 13.1766 8.44919 13.1107 8.87739C 13.0778 9.09095 13.0484 9.26295 13.0274 9.38035C 13.0169 9.43902 13.0085 9.48397 13.0029 9.51355C 13.0001 9.52833 12.998 9.53927 12.9966 9.54616C 12.996 9.5496 12.9955 9.55203 12.9952 9.55342C 12.9951 9.55412 12.995 9.55455 12.995 9.55472C 12.9949 9.55481 12.9949 9.55483 12.9949 9.55478C 12.995 9.55476 12.995 9.55467 12.995 9.55466C 12.995 9.55456 12.995 9.55444 13.9758 9.74969C 14.9565 9.94495 14.9566 9.9448 14.9566 9.94463C 14.9566 9.94455 14.9566 9.94436 14.9567 9.94421C 14.9567 9.94389 14.9568 9.94351 14.9569 9.94306C 14.9571 9.94217 14.9573 9.941 14.9576 9.93957C 14.9581 9.93671 14.9589 9.93279 14.9599 9.92784C 14.9618 9.91794 14.9645 9.9039 14.9679 9.88593C 14.9747 9.85 14.9843 9.79833 14.9961 9.73258C 15.0196 9.60113 15.0518 9.41306 15.0874 9.18169C 15.1585 8.72005 15.2441 8.08066 15.3013 7.37171C 15.3583 6.66546 15.3886 5.87297 15.3439 5.10956C 15.3 4.36008 15.1804 3.56764 14.8954 2.9004L 13.0561 3.6859ZM 16.9008 4.57233C 16.5422 3.92338 15.8681 3.37318 15.4084 3.0368C 15.1583 2.85371 14.9267 2.70233 14.7577 2.59666C 14.6728 2.54357 14.6026 2.50136 14.5526 2.47178C 14.5275 2.45697 14.5074 2.44529 14.4929 2.43693C 14.4857 2.43275 14.4798 2.4294 14.4754 2.42691C 14.4733 2.42567 14.4714 2.42464 14.47 2.42382C 14.4693 2.42341 14.4687 2.42306 14.4681 2.42276C 14.4679 2.42261 14.4676 2.42248 14.4674 2.42236C 14.4673 2.42229 14.4672 2.42221 14.4671 2.42218C 14.467 2.42211 14.4668 2.42203 13.9758 3.29315C 13.4847 4.16427 13.4846 4.1642 13.4845 4.16414C 13.4844 4.16412 13.4843 4.16406 13.4843 4.16403C 13.4841 4.16396 13.4841 4.16391 13.484 4.16386C 13.4838 4.16378 13.4838 4.16375 13.4838 4.16377C 13.4839 4.1638 13.4843 4.16405 13.4851 4.1645C 13.4867 4.16539 13.4896 4.1671 13.494 4.16958C 13.5026 4.17456 13.5165 4.18265 13.5351 4.19365C 13.5724 4.21568 13.6281 4.24916 13.6973 4.29242C 13.8365 4.37945 14.0259 4.50338 14.2272 4.65073C 14.6706 4.97524 15.0214 5.30648 15.1503 5.53973L 16.9008 4.57233ZM 14.6346 2.63269C 14.5649 2.56346 14.5609 2.52475 14.5938 2.59958C 14.6198 2.6589 14.6528 2.75239 14.689 2.88375C 14.7613 3.1459 14.8248 3.47868 14.8774 3.82308C 14.9293 4.16275 14.9673 4.49128 14.9923 4.73651C 15.0048 4.85856 15.0139 4.95866 15.0199 5.02755C 15.0229 5.06197 15.025 5.08853 15.0264 5.10605C 15.0271 5.11481 15.0276 5.12131 15.028 5.12539C 15.0281 5.12744 15.0282 5.12888 15.0283 5.1297C 15.0283 5.13011 15.0283 5.13036 15.0283 5.13046C 15.0284 5.1305 15.0284 5.13051 15.0283 5.13048C 15.0283 5.13047 15.0283 5.13041 15.0283 5.13041C 15.0283 5.13034 15.0283 5.13027 16.0256 5.05603C 17.0228 4.98179 17.0228 4.9817 17.0228 4.98159C 17.0228 4.98155 17.0228 4.98143 17.0228 4.98134C 17.0228 4.98114 17.0227 4.98091 17.0227 4.98064C 17.0227 4.98009 17.0226 4.97939 17.0226 4.97852C 17.0224 4.9768 17.0223 4.97443 17.022 4.97145C 17.0216 4.9655 17.0209 4.95707 17.02 4.94633C 17.0183 4.92485 17.0158 4.89407 17.0124 4.85518C 17.0057 4.77744 16.9956 4.66699 16.982 4.53333C 16.9548 4.26716 16.9129 3.90369 16.8545 3.52098C 16.7967 3.143 16.7193 2.72302 16.6171 2.35224C 16.566 2.16713 16.5034 1.97411 16.4251 1.79567C 16.3535 1.63272 16.2364 1.40499 16.0445 1.21423L 14.6346 2.63269ZM 19.5489 3.77066C 18.7555 3.06236 17.8306 2.38687 17.1174 1.8956C 16.758 1.6481 16.4467 1.44346 16.2245 1.30025C 16.1133 1.22859 16.0242 1.17216 15.9623 1.13327C 15.9313 1.11382 15.9071 1.09875 15.8904 1.08834C 15.882 1.08313 15.8755 1.07909 15.8709 1.07625C 15.8686 1.07483 15.8667 1.07372 15.8654 1.0729C 15.8648 1.07249 15.8642 1.07216 15.8638 1.07191C 15.8636 1.07178 15.8634 1.07167 15.8633 1.07158C 15.8632 1.07154 15.8631 1.07149 15.8631 1.07146C 15.863 1.07142 15.8629 1.07137 15.3395 1.92346C 14.8161 2.77555 14.8161 2.77552 14.816 2.77549C 14.816 2.77549 14.816 2.77546 14.816 2.77546C 14.816 2.77544 14.816 2.77545 14.816 2.77548C 14.8161 2.77553 14.8163 2.77565 14.8166 2.77586C 14.8173 2.77626 14.8184 2.77697 14.8201 2.77797C 14.8233 2.77997 14.8284 2.78315 14.8354 2.78748C 14.8494 2.79614 14.8706 2.80939 14.8986 2.82693C 14.9544 2.86203 15.0369 2.91427 15.1411 2.98136C 15.3495 3.11567 15.6434 3.30888 15.9829 3.54271C 16.6673 4.01411 17.5142 4.63521 18.2171 5.26267L 19.5489 3.77066ZM 24.5803 4.14781C 21.9269 3.24302 19.4391 3.03976 17.4962 3.09173L 17.5496 5.09101C 19.3127 5.04386 21.5549 5.22927 23.9348 6.04078L 24.5803 4.14781ZM 19.4708 5.38972C 19.3991 4.97999 19.2035 4.60934 18.9982 4.30443C 18.7863 3.98989 18.5208 3.68233 18.2387 3.39311L 16.807 4.78963C 17.0386 5.02702 17.2169 5.23994 17.3393 5.42166C 17.4682 5.61301 17.4972 5.71441 17.5007 5.73443L 19.4708 5.38972ZM 24.3272 4.09673C 22.5541 3.97295 21.039 4.09549 19.9628 4.24988C 19.4241 4.32716 18.9935 4.4127 18.6933 4.48014C 18.5432 4.51388 18.4255 4.54313 18.343 4.56463C 18.3018 4.57538 18.2693 4.5842 18.246 4.59067C 18.2343 4.59391 18.2249 4.59656 18.2179 4.59858C 18.2144 4.59958 18.2114 4.60043 18.2091 4.60112C 18.2079 4.60146 18.2069 4.60176 18.206 4.60202C 18.2055 4.60215 18.2051 4.60227 18.2047 4.60237C 18.2046 4.60243 18.2043 4.6025 18.2042 4.60253C 18.204 4.6026 18.2038 4.60267 18.4858 5.56207C 18.7678 6.52148 18.7676 6.52154 18.7674 6.5216C 18.7673 6.52162 18.7671 6.52167 18.767 6.52171C 18.7668 6.52177 18.7666 6.52183 18.7665 6.52187C 18.7662 6.52196 18.766 6.52201 18.766 6.52201C 18.766 6.52202 18.7665 6.52186 18.7676 6.52155C 18.7698 6.52092 18.7743 6.51965 18.781 6.51779C 18.7944 6.51407 18.8166 6.508 18.8474 6.49997C 18.9091 6.48391 19.0047 6.46004 19.1318 6.43149C 19.386 6.37438 19.7649 6.29875 20.2468 6.22961C 21.212 6.09115 22.5827 5.97981 24.1879 6.09187L 24.3272 4.09673ZM 11.2009 2.90712C 11.4846 3.76515 11.4832 5.13052 11.3706 6.40589C 11.3165 7.01873 11.241 7.56943 11.1789 7.96698C 11.1479 8.16531 11.1205 8.32439 11.101 8.43271C 11.0913 8.48684 11.0835 8.52822 11.0784 8.55539C 11.0758 8.56898 11.0739 8.579 11.0726 8.58529C 11.072 8.58844 11.0716 8.59065 11.0713 8.5919C 11.0712 8.59252 11.0711 8.59291 11.0711 8.59305C 11.0711 8.59312 11.0711 8.59314 11.0711 8.59309C 11.0711 8.59306 11.0711 8.59298 11.0711 8.59297C 11.0712 8.59287 11.0712 8.59275 12.0519 8.78796C 13.0327 8.98317 13.0327 8.98303 13.0328 8.98287C 13.0328 8.9828 13.0328 8.98262 13.0328 8.98247C 13.0329 8.98217 13.033 8.98182 13.0331 8.9814C 13.0332 8.98056 13.0334 8.97947 13.0337 8.97814C 13.0342 8.97548 13.0349 8.97184 13.0358 8.96725C 13.0376 8.95808 13.0401 8.94508 13.0433 8.92846C 13.0496 8.89523 13.0585 8.84744 13.0694 8.78657C 13.0913 8.6649 13.1214 8.49063 13.1549 8.27555C 13.222 7.84628 13.3038 7.24993 13.3629 6.58184C 13.4765 5.29536 13.5243 3.56334 13.0998 2.27928L 11.2009 2.90712ZM 11.3431 8.08262C 10.5994 8.83 9.89129 9.96883 9.25981 11.1724C 8.61773 12.3961 8.01322 13.7689 7.49499 15.0456C 6.97579 16.3248 6.53773 17.5212 6.22964 18.3971C 6.07545 18.8355 5.95348 19.1945 5.86983 19.4447C 5.82799 19.5698 5.79572 19.6678 5.77377 19.7349C 5.76279 19.7684 5.75439 19.7942 5.74867 19.8119C 5.74581 19.8208 5.74361 19.8275 5.7421 19.8322C 5.74135 19.8346 5.74076 19.8364 5.74034 19.8377C 5.74014 19.8383 5.73997 19.8389 5.73985 19.8392C 5.73979 19.8394 5.73973 19.8396 5.7397 19.8397C 5.73965 19.8399 5.73962 19.84 6.69183 20.1454C 7.64405 20.4508 7.64404 20.4509 7.64403 20.4509C 7.64405 20.4508 7.64405 20.4508 7.64408 20.4507C 7.64413 20.4506 7.64422 20.4503 7.64436 20.4499C 7.64463 20.449 7.64507 20.4476 7.64568 20.4457C 7.64691 20.4419 7.64881 20.4361 7.65137 20.4281C 7.65649 20.4123 7.66427 20.3884 7.67461 20.3568C 7.6953 20.2936 7.72621 20.1997 7.7666 20.079C 7.84738 19.8374 7.96599 19.4882 8.11633 19.0607C 8.41729 18.2051 8.8441 17.0397 9.34815 15.7978C 9.85318 14.5536 10.4303 13.2462 11.0308 12.1016C 11.6419 10.9369 12.2374 10.0193 12.7608 9.49331L 11.3431 8.08262ZM 5.86751 19.5793L 4.79231 21.1449L 6.44097 22.2771L 7.51616 20.7115L 5.86751 19.5793ZM 4.796 21.1396C 4.09452 22.1469 3.80912 23.3545 3.80884 24.4595C 3.80856 25.5522 4.08773 26.6615 4.65494 27.47L 6.29221 26.3214C 6.01982 25.9331 5.80863 25.257 5.80884 24.46C 5.80904 23.6753 6.01498 22.8889 6.43728 22.2824L 4.796 21.1396ZM 0.819998 27.402C 3.06106 28.6169 4.80194 28.5963 6.05132 27.7119L 4.89582 26.0795C 4.50068 26.3592 3.63853 26.655 1.77314 25.6438L 0.819998 27.402ZM -0.0128124 20.1778C -0.862471 21.3978 -1.10536 22.9148 -0.960691 24.2082C -0.822955 25.4397 -0.28445 26.805 0.821029 27.4026L 1.77211 25.6432C 1.5253 25.5098 1.1368 24.9684 1.02692 23.9859C 0.923962 23.0654 1.11284 22.0611 1.62841 21.3208L -0.0128124 20.1778ZM 1.05867 18.6175L -0.0165268 20.1832L 1.63213 21.3154L 2.70732 19.7498L 1.05867 18.6175ZM 6.53424 7.12089C 5.79057 7.86826 5.08245 9.0071 4.45097 10.2107C 3.80889 11.4344 3.20438 12.8071 2.68615 14.0839C 2.16695 15.3631 1.72889 16.5595 1.4208 17.4354C 1.26661 17.8737 1.14464 18.2328 1.06099 18.483C 1.01915 18.6081 0.986879 18.706 0.964927 18.7731C 0.953951 18.8067 0.945554 18.8325 0.939831 18.8502C 0.936969 18.859 0.934776 18.8658 0.933263 18.8705C 0.932507 18.8729 0.931921 18.8747 0.931506 18.876C 0.931298 18.8766 0.931134 18.8771 0.931012 18.8775C 0.930952 18.8777 0.930893 18.8779 0.930862 18.878C 0.930815 18.8781 0.930777 18.8782 1.883 19.1837C 2.83522 19.4891 2.8352 19.4891 2.83519 19.4891C 2.83521 19.4891 2.83521 19.4891 2.83524 19.489C 2.83529 19.4888 2.83538 19.4885 2.83552 19.4881C 2.83579 19.4873 2.83623 19.4859 2.83685 19.484C 2.83807 19.4802 2.83997 19.4743 2.84253 19.4664C 2.84766 19.4506 2.85544 19.4266 2.86578 19.395C 2.88646 19.3318 2.91737 19.238 2.95776 19.1172C 3.03854 18.8756 3.15715 18.5264 3.30749 18.099C 3.60845 17.2434 4.03526 16.0779 4.53932 14.8361C 5.04434 13.5919 5.62147 12.2844 6.22199 11.1399C 6.83311 9.97515 7.42855 9.05761 7.95197 8.53158L 6.53424 7.12089ZM 6.32346 1.76244C 6.47686 2.12163 6.57639 2.64947 6.61468 3.30305C 6.65215 3.9427 6.62769 4.63604 6.57511 5.28732C 6.52276 5.93589 6.44395 6.52573 6.37803 6.95393C 6.34516 7.16749 6.3157 7.33949 6.29469 7.45689C 6.2842 7.51556 6.27583 7.56051 6.27022 7.59009C 6.26742 7.60487 6.26531 7.61581 6.26397 7.6227C 6.2633 7.62614 6.26283 7.62857 6.26255 7.62996C 6.26242 7.63065 6.26233 7.63109 6.2623 7.63126C 6.26228 7.63134 6.26227 7.63136 6.26228 7.63132C 6.26229 7.63129 6.26231 7.63121 6.26231 7.6312C 6.26233 7.6311 6.26235 7.63098 7.2431 7.82623C 8.22386 8.02149 8.22389 8.02133 8.22392 8.02117C 8.22394 8.02109 8.22397 8.0209 8.224 8.02075C 8.22407 8.02043 8.22414 8.02005 8.22423 8.0196C 8.22441 8.0187 8.22464 8.01754 8.22492 8.01611C 8.22548 8.01325 8.22625 8.00933 8.22721 8.00438C 8.22914 7.99447 8.23184 7.98043 8.23525 7.96247C 8.24206 7.92654 8.25167 7.87487 8.26343 7.80911C 8.28695 7.67767 8.31913 7.4896 8.35475 7.25823C 8.42582 6.79659 8.5114 6.1572 8.56863 5.44825C 8.62564 4.74199 8.65598 3.94951 8.61125 3.18609C 8.56735 2.43662 8.44771 1.64418 8.16275 0.976939L 6.32346 1.76244ZM 10.1681 2.64887C 9.8095 1.99992 9.1354 1.44972 8.67577 1.11334C 8.4256 0.930247 8.194 0.778868 8.02501 0.673201C 7.94011 0.620109 7.86997 0.577903 7.8199 0.548319C 7.79484 0.533512 7.77474 0.521823 7.76025 0.513469C 7.753 0.509291 7.74715 0.505942 7.74278 0.503451C 7.74059 0.502205 7.73877 0.501173 7.73734 0.500359C 7.73662 0.499951 7.736 0.499598 7.73547 0.4993C 7.7352 0.499151 7.73496 0.499015 7.73475 0.498893C 7.73464 0.498833 7.7345 0.498751 7.73444 0.498721C 7.7343 0.498643 7.73417 0.498569 7.2431 1.36969C 6.75204 2.24081 6.75192 2.24074 6.7518 2.24068C 6.75177 2.24066 6.75166 2.2406 6.7516 2.24057C 6.75148 2.2405 6.75138 2.24044 6.75131 2.2404C 6.75116 2.24032 6.7511 2.24029 6.75114 2.2403C 6.75121 2.24034 6.75164 2.24059 6.75242 2.24104C 6.75399 2.24193 6.75698 2.24364 6.76129 2.24612C 6.76992 2.2511 6.78386 2.25919 6.80247 2.27019C 6.83974 2.29221 6.89546 2.3257 6.96463 2.36896C 7.10381 2.45599 7.29324 2.57992 7.49458 2.72727C 7.93797 3.05178 8.28877 3.38302 8.41767 3.61627L 10.1681 2.64887ZM 7.90189 0.709228C 7.83224 0.639994 7.82825 0.601292 7.86109 0.676115C 7.88713 0.735442 7.92012 0.828925 7.95633 0.960284C 8.02859 1.22243 8.09212 1.55521 8.14475 1.89962C 8.19665 2.23929 8.23461 2.56782 8.25966 2.81305C 8.27212 2.9351 8.28125 3.03519 8.28721 3.10409C 8.29019 3.13851 8.29237 3.16506 8.29377 3.18259C 8.29447 3.19135 8.29498 3.19784 8.2953 3.20193C 8.29545 3.20397 8.29556 3.20541 8.29562 3.20623C 8.29566 3.20664 8.29567 3.2069 8.29568 3.20699C 8.29569 3.20704 8.29569 3.20705 8.29568 3.20702C 8.29568 3.20701 8.29568 3.20695 8.29568 3.20695C 8.29567 3.20688 8.29567 3.20681 9.29291 3.13257C 10.2901 3.05833 10.2901 3.05823 10.2901 3.05813C 10.2901 3.05808 10.2901 3.05797 10.2901 3.05787C 10.2901 3.05768 10.2901 3.05745 10.2901 3.05718C 10.29 3.05663 10.29 3.05593 10.2899 3.05506C 10.2898 3.05333 10.2896 3.05097 10.2894 3.04799C 10.2889 3.04204 10.2882 3.03361 10.2874 3.02287C 10.2857 3.00139 10.2831 2.97061 10.2798 2.93171C 10.273 2.85398 10.263 2.74352 10.2493 2.60987C 10.2221 2.3437 10.1803 1.98023 10.1218 1.59752C 10.064 1.21954 9.98662 0.799554 9.88441 0.428777C 9.83338 0.243672 9.77074 0.0506512 9.69241 -0.127791C 9.62088 -0.290737 9.50376 -0.518473 9.31185 -0.709228L 7.90189 0.709228ZM 12.8163 1.8472C 12.0228 1.1389 11.098 0.463403 10.3847 -0.0278591C 10.0254 -0.275361 9.71404 -0.480003 9.49184 -0.623207C 9.38065 -0.694867 9.29154 -0.751299 9.22962 -0.790189C 9.19866 -0.809638 9.17447 -0.824712 9.1577 -0.835122C 9.14932 -0.840327 9.14279 -0.844368 9.13819 -0.847208C 9.13589 -0.848627 9.13408 -0.849747 9.13275 -0.850562C 9.13209 -0.85097 9.13155 -0.851301 9.13114 -0.851556C 9.13093 -0.851683 9.13076 -0.851791 9.13061 -0.85188C 9.13054 -0.851924 9.13045 -0.851977 9.13042 -0.851999C 9.13034 -0.852046 9.13027 -0.852089 8.60687 0C 8.08348 0.852089 8.08342 0.852056 8.08338 0.852028C 8.08337 0.852025 8.08333 0.852001 8.08332 0.851995C 8.0833 0.851983 8.08331 0.851989 8.08336 0.852015C 8.08344 0.852066 8.08365 0.852193 8.08397 0.852395C 8.08463 0.852799 8.08577 0.853503 8.08739 0.854503C 8.09063 0.856504 8.09578 0.859687 8.10275 0.864018C 8.1167 0.87268 8.13796 0.885925 8.16589 0.903469C 8.22177 0.938563 8.30428 0.990805 8.40839 1.0579C 8.61679 1.19221 8.91075 1.38541 9.25023 1.61924C 9.93464 2.09064 10.7815 2.71175 11.4844 3.3392L 12.8163 1.8472ZM 46.9836 39.2894C 50.0995 34.6721 50.5844 30.5074 50.2548 27.4668C 50.091 25.9556 49.7279 24.735 49.4017 23.8854C 49.2386 23.4603 49.0841 23.1268 48.9676 22.8946C 48.9093 22.7785 48.8603 22.6876 48.8244 22.623C 48.8064 22.5908 48.7917 22.5651 48.7806 22.5462C 48.7751 22.5367 48.7705 22.5289 48.7668 22.5228C 48.765 22.5198 48.7635 22.5172 48.7621 22.515C 48.7615 22.5139 48.7609 22.5129 48.7603 22.512C 48.7601 22.5116 48.7597 22.511 48.7596 22.5108C 48.7593 22.5102 48.7589 22.5097 47.9051 23.0303C 47.0514 23.5509 47.0511 23.5505 47.0508 23.55C 47.0507 23.5499 47.0505 23.5495 47.0503 23.5492C 47.0501 23.5488 47.0498 23.5484 47.0497 23.5482C 47.0494 23.5476 47.0493 23.5475 47.0495 23.5478C 47.0498 23.5484 47.0512 23.5507 47.0534 23.5545C 47.0579 23.5621 47.066 23.5762 47.0773 23.5965C 47.0999 23.6372 47.1354 23.7027 47.1803 23.7921C 47.27 23.9709 47.3971 24.2441 47.5346 24.6021C 47.8097 25.3189 48.1243 26.3704 48.2665 27.6823C 48.5488 30.2877 48.1585 33.9729 45.3257 38.1707L 46.9836 39.2894ZM 48.1901 23.9889C 48.1064 24.0137 48.0916 23.9925 48.2042 24.0104C 48.3022 24.026 48.442 24.0623 48.6235 24.1264C 48.9863 24.2545 49.4184 24.4583 49.8508 24.687C 50.2778 24.9128 50.6795 25.1492 50.9761 25.3304C 51.1238 25.4206 51.2441 25.4963 51.3267 25.5489C 51.368 25.5752 51.3997 25.5957 51.4208 25.6093C 51.4313 25.6162 51.4391 25.6213 51.4441 25.6245C 51.4466 25.6261 51.4484 25.6273 51.4494 25.628C 51.4499 25.6283 51.4502 25.6285 51.4504 25.6286C 51.4505 25.6287 51.4505 25.6287 51.4505 25.6287C 51.4505 25.6287 51.4504 25.6286 51.4504 25.6286C 51.4504 25.6286 51.4503 25.6285 52 24.7932C 52.5497 23.9578 52.5496 23.9578 52.5495 23.9577C 52.5495 23.9577 52.5493 23.9576 52.5492 23.9575C 52.549 23.9574 52.5488 23.9572 52.5485 23.957C 52.5479 23.9566 52.5471 23.9561 52.5461 23.9555C 52.5441 23.9542 52.5414 23.9524 52.5379 23.9501C 52.531 23.9456 52.5212 23.9392 52.5087 23.9311C 52.4835 23.9148 52.4474 23.8915 52.4014 23.8622C 52.3096 23.8037 52.1785 23.7213 52.0186 23.6236C 51.6998 23.4289 51.2607 23.1702 50.7859 22.919C 50.3165 22.6708 49.7858 22.4158 49.2894 22.2405C 49.0413 22.1529 48.7773 22.0764 48.5181 22.0352C 48.2734 21.9963 47.9477 21.9744 47.6202 22.0718L 48.1901 23.9889ZM 52.965 24.531C 52.0008 20.9828 48.9318 17.828 46.2772 15.6309C 44.9266 14.513 43.6349 13.6042 42.6812 12.9749C 42.2038 12.6598 41.8095 12.4138 41.5329 12.2455C 41.3946 12.1614 41.2856 12.0967 41.2103 12.0524C 41.1726 12.0303 41.1433 12.0133 41.123 12.0016C 41.1128 11.9957 41.1049 11.9911 41.0993 11.9879C 41.0964 11.9863 41.0942 11.985 41.0925 11.9841C 41.0917 11.9836 41.091 11.9832 41.0905 11.9829C 41.0902 11.9827 41.0899 11.9826 41.0898 11.9825C 41.0895 11.9823 41.0893 11.9822 40.5952 12.8516C 40.101 13.721 40.1009 13.7209 40.1008 13.7208C 40.1008 13.7208 40.1007 13.7208 40.1007 13.7208C 40.1008 13.7208 40.101 13.7209 40.1013 13.7211C 40.102 13.7215 40.1032 13.7222 40.1051 13.7233C 40.1087 13.7254 40.1147 13.7288 40.1228 13.7335C 40.1391 13.7429 40.1642 13.7575 40.1976 13.7771C 40.2645 13.8164 40.3646 13.8758 40.4936 13.9543C 40.7516 14.1112 41.125 14.3441 41.5797 14.6442C 42.4903 15.2451 43.7208 16.1112 45.002 17.1716C 47.6113 19.3312 50.2447 22.1472 51.035 25.0554L 52.965 24.531ZM 40.9401 13.7902C 41.0128 13.7635 41.2355 13.7284 41.6454 13.7453C 42.0231 13.761 42.4573 13.8151 42.8814 13.8848C 43.302 13.954 43.6937 14.0353 43.9813 14.0997C 44.1246 14.1318 44.2408 14.1593 44.3204 14.1787C 44.3601 14.1884 44.3906 14.1959 44.4107 14.201C 44.4207 14.2035 44.4281 14.2054 44.4327 14.2066C 44.4351 14.2072 44.4367 14.2076 44.4376 14.2078C 44.4381 14.2079 44.4383 14.208 44.4384 14.208C 44.4385 14.208 44.4385 14.208 44.4385 14.208C 44.4384 14.208 44.4384 14.208 44.4384 14.208C 44.4383 14.208 44.4382 14.208 44.6887 13.2398C 44.9391 12.2717 44.939 12.2717 44.9389 12.2717C 44.9389 12.2716 44.9387 12.2716 44.9386 12.2716C 44.9384 12.2715 44.9381 12.2715 44.9378 12.2714C 44.9372 12.2712 44.9364 12.271 44.9354 12.2707C 44.9334 12.2702 44.9306 12.2695 44.9272 12.2687C 44.9204 12.2669 44.9107 12.2645 44.8983 12.2613C 44.8736 12.2551 44.8381 12.2463 44.7931 12.2354C 44.7031 12.2135 44.5749 12.183 44.4181 12.148C 44.1056 12.078 43.6748 11.9885 43.2059 11.9114C 42.7405 11.8348 42.2183 11.7673 41.728 11.747C 41.27 11.7281 40.7132 11.7428 40.2502 11.913L 40.9401 13.7902ZM 45.3836 12.5208C 41.2296 8.50634 36.6018 7.24195 33.0264 6.98489C 31.242 6.8566 29.7162 6.97839 28.6322 7.13313C 28.0896 7.21059 27.6557 7.29658 27.3533 7.36445C 27.202 7.39839 27.0834 7.42784 27.0003 7.44949C 26.9588 7.46032 26.9261 7.46919 26.9026 7.47571C 26.8909 7.47897 26.8814 7.48164 26.8743 7.48367C 26.8708 7.48469 26.8678 7.48554 26.8654 7.48623C 26.8642 7.48657 26.8632 7.48688 26.8623 7.48714C 26.8619 7.48727 26.8613 7.48743 26.8611 7.48749C 26.8606 7.48765 26.8601 7.48779 27.1421 8.44719C 27.4242 9.4066 27.4237 9.40672 27.4234 9.40683C 27.4233 9.40685 27.423 9.40695 27.4228 9.40699C 27.4225 9.40708 27.4223 9.40712 27.4223 9.40713C 27.4223 9.40714 27.4229 9.40698 27.424 9.40666C 27.4262 9.40602 27.4307 9.40473 27.4375 9.40286C 27.451 9.39911 27.4735 9.39299 27.5045 9.38489C 27.5667 9.3687 27.6631 9.34465 27.7912 9.31592C 28.0474 9.25843 28.4293 9.18237 28.9148 9.11306C 29.8872 8.97425 31.2677 8.8636 32.883 8.97974C 36.1072 9.21155 40.2526 10.3435 43.9938 13.9589L 45.3836 12.5208ZM 28.1272 8.27492C 28.0576 7.87714 27.8715 7.5171 27.6746 7.21963C 27.472 6.9134 27.2184 6.61448 26.9485 6.33333C 26.409 5.77143 25.7393 5.21322 25.1056 4.72835C 24.4672 4.23994 23.8416 3.80792 23.3774 3.49899C 23.1447 3.34412 22.9511 3.21922 22.8149 3.13255C 22.7467 3.0892 22.6929 3.05535 22.6556 3.03206C 22.6369 3.0204 22.6224 3.01139 22.6123 3.00513C 22.6072 3.002 22.6033 2.99956 22.6005 2.99782C 22.599 2.99695 22.5979 2.99626 22.5971 2.99575C 22.5967 2.99549 22.5963 2.99528 22.5961 2.99512C 22.5959 2.99503 22.5958 2.99494 22.5957 2.9949C 22.5956 2.99482 22.5955 2.99475 22.0721 3.84686C 21.5487 4.69898 21.5487 4.69893 21.5486 4.69889C 21.5486 4.6989 21.5486 4.69887 21.5486 4.69888C 21.5486 4.69889 21.5487 4.69895 21.5489 4.69905C 21.5492 4.69925 21.5498 4.69962 21.5507 4.70017C 21.5525 4.70127 21.5554 4.70307 21.5594 4.70554C 21.5674 4.71049 21.5797 4.71815 21.5961 4.72841C 21.629 4.74892 21.6781 4.77976 21.7412 4.81991C 21.8674 4.90026 22.0495 5.01767 22.2693 5.16398C 22.7102 5.45742 23.2975 5.86325 23.8902 6.31676C 24.4876 6.77381 25.0672 7.26161 25.5057 7.71839C 25.7247 7.94658 25.8922 8.15017 26.0067 8.32319C 26.1269 8.50497 26.1538 8.60093 26.1571 8.61946L 28.1272 8.27492ZM 21.367 4.55593C 21.2973 4.4867 21.2934 4.44802 21.3262 4.52287C 21.3523 4.58223 21.3852 4.67573 21.4214 4.8071C 21.4937 5.06928 21.5572 5.40208 21.6099 5.74649C 21.6618 6.08617 21.6997 6.41471 21.7248 6.65995C 21.7373 6.782 21.7464 6.8821 21.7524 6.95099C 21.7553 6.98541 21.7575 7.01197 21.7589 7.02949C 21.7596 7.03825 21.7601 7.04475 21.7604 7.04884C 21.7606 7.05088 21.7607 7.05232 21.7608 7.05314C 21.7608 7.05355 21.7608 7.0538 21.7608 7.0539C 21.7608 7.05395 21.7608 7.05396 21.7608 7.05393C 21.7608 7.05391 21.7608 7.05386 21.7608 7.05385C 21.7608 7.05379 21.7608 7.05372 22.7581 6.97943C 23.7553 6.90515 23.7553 6.90505 23.7553 6.90495C 23.7553 6.9049 23.7553 6.90479 23.7553 6.90469C 23.7552 6.9045 23.7552 6.90427 23.7552 6.904C 23.7552 6.90345 23.7551 6.90275 23.755 6.90188C 23.7549 6.90016 23.7547 6.89779 23.7545 6.89481C 23.754 6.88886 23.7534 6.88043 23.7525 6.86969C 23.7508 6.84821 23.7483 6.81743 23.7449 6.77854C 23.7382 6.70081 23.7281 6.59036 23.7144 6.45671C 23.6872 6.19054 23.6454 5.82708 23.5869 5.44438C 23.5292 5.06641 23.4517 4.64645 23.3496 4.2757C 23.2985 4.09061 23.2359 3.89761 23.1576 3.71919C 23.0861 3.55627 22.9691 3.32855 22.7772 3.1378L 21.367 4.55593ZM 23.6333 6.49581C 23.2747 5.84678 22.6006 5.29656 22.141 4.96018C 21.8908 4.77709 21.6592 4.62571 21.4902 4.52004C 21.4053 4.46695 21.3351 4.42475 21.2851 4.39516C 21.26 4.38036 21.2399 4.36867 21.2254 4.36031C 21.2181 4.35613 21.2123 4.35279 21.2079 4.3503C 21.2057 4.34905 21.2039 4.34802 21.2025 4.3472C 21.2018 4.3468 21.2011 4.34644 21.2006 4.34614C 21.2004 4.34599 21.2001 4.34586 21.1999 4.34574C 21.1998 4.34568 21.1996 4.3456 21.1996 4.34557C 21.1995 4.34549 21.1993 4.34541 20.7083 5.21655C 20.2172 6.08768 20.2171 6.08761 20.217 6.08755C 20.217 6.08753 20.2169 6.08747 20.2168 6.08744C 20.2167 6.08737 20.2166 6.08731 20.2165 6.08727C 20.2164 6.08719 20.2163 6.08715 20.2163 6.08717C 20.2164 6.08721 20.2168 6.08746 20.2176 6.0879C 20.2192 6.0888 20.2222 6.0905 20.2265 6.09299C 20.2351 6.09797 20.2491 6.10606 20.2677 6.11706C 20.3049 6.13908 20.3607 6.17257 20.4298 6.21582C 20.569 6.30285 20.7584 6.42677 20.9598 6.57412C 21.4032 6.89863 21.7539 7.22985 21.8828 7.46306L 23.6333 6.49581ZM 19.7886 5.60925C 19.942 5.96845 20.0415 6.49631 20.0798 7.1499C 20.1173 7.78955 20.0928 8.48291 20.0402 9.13419C 19.9879 9.78277 19.9091 10.3726 19.8432 10.8008C 19.8103 11.0144 19.7809 11.1864 19.7599 11.3038C 19.7494 11.3625 19.741 11.4074 19.7354 11.437C 19.7326 11.4518 19.7305 11.4627 19.7291 11.4696C 19.7285 11.473 19.728 11.4755 19.7277 11.4769C 19.7276 11.4776 19.7275 11.478 19.7275 11.4782C 19.7274 11.4783 19.7274 11.4783 19.7274 11.4782C 19.7275 11.4782 19.7275 11.4781 19.7275 11.4781C 19.7275 11.478 19.7275 11.4779 20.7083 11.6731C 21.689 11.8683 21.6891 11.8682 21.6891 11.868C 21.6891 11.8679 21.6891 11.8678 21.6892 11.8676C 21.6892 11.8673 21.6893 11.8669 21.6894 11.8665C 21.6896 11.8656 21.6898 11.8644 21.6901 11.863C 21.6907 11.8601 21.6914 11.8562 21.6924 11.8512C 21.6943 11.8413 21.697 11.8273 21.7004 11.8093C 21.7072 11.7734 21.7168 11.7217 21.7286 11.656C 21.7521 11.5245 21.7843 11.3364 21.8199 11.1051C 21.891 10.6434 21.9765 10.0041 22.0338 9.2951C 22.0908 8.58884 22.1211 7.79636 22.0764 7.03295C 22.0325 6.28349 21.9129 5.49106 21.6279 4.82384L 19.7886 5.60925ZM 19.9994 10.9678C 19.2558 11.7152 18.5476 12.854 17.9162 14.0575C 17.2741 15.2813 16.6696 16.654 16.1513 17.9308C 15.6321 19.2099 15.1941 20.4063 14.886 21.2823C 14.7318 21.7206 14.6098 22.0797 14.5262 22.3298C 14.4843 22.455 14.452 22.5529 14.4301 22.62C 14.4191 22.6535 14.4107 22.6794 14.405 22.6971C 14.4021 22.7059 14.3999 22.7127 14.3984 22.7174C 14.3977 22.7197 14.3971 22.7216 14.3967 22.7228C 14.3965 22.7235 14.3963 22.724 14.3962 22.7244C 14.3961 22.7246 14.3961 22.7247 14.396 22.7248C 14.396 22.725 14.3959 22.7251 15.3482 23.0305C 16.3004 23.336 16.3004 23.336 16.3004 23.336C 16.3004 23.336 16.3004 23.336 16.3004 23.3359C 16.3004 23.3357 16.3005 23.3354 16.3007 23.335C 16.301 23.3342 16.3014 23.3328 16.302 23.3309C 16.3032 23.3271 16.3051 23.3212 16.3077 23.3133C 16.3128 23.2975 16.3206 23.2735 16.3309 23.2419C 16.3516 23.1787 16.3825 23.0849 16.4229 22.9641C 16.5037 22.7225 16.6223 22.3733 16.7727 21.9459C 17.0736 21.0902 17.5004 19.9248 18.0045 18.683C 18.5095 17.4387 19.0867 16.1313 19.6872 14.9868C 20.2983 13.822 20.8937 12.9045 21.4171 12.3784L 19.9994 10.9678ZM 14.5239 22.4644L 13.4486 24.03L 15.0972 25.1623L 16.1725 23.5967L 14.5239 22.4644ZM 13.4522 24.0247C 12.6026 25.2447 12.3598 26.7617 12.5045 28.0551C 12.6422 29.2866 13.1807 30.6518 14.2861 31.2494L 15.2373 29.4901C 14.9905 29.3567 14.602 28.8153 14.4921 27.8328C 14.3891 26.9123 14.5779 25.9079 15.0935 25.1676L 13.4522 24.0247ZM 14.2851 31.2489C 15.6589 31.9936 16.8469 32.2827 17.8755 32.1714C 18.9326 32.0569 19.693 31.5334 20.2084 30.9158C 20.7069 30.3185 20.9766 29.6369 21.1228 29.14C 21.1975 28.8858 21.2443 28.6647 21.2728 28.5042C 21.2871 28.4236 21.297 28.3574 21.3035 28.3087C 21.3068 28.2844 21.3092 28.2644 21.311 28.2491C 21.3119 28.2414 21.3126 28.235 21.3131 28.2297C 21.3134 28.2271 21.3137 28.2248 21.3139 28.2228C 21.314 28.2218 21.3141 28.2209 21.3141 28.22C 21.3142 28.2196 21.3142 28.219 21.3143 28.2188C 21.3143 28.2183 21.3144 28.2177 20.3192 28.1201C 19.3239 28.0225 19.324 28.022 19.324 28.0215C 19.324 28.0214 19.3241 28.0209 19.3241 28.0206C 19.3242 28.0201 19.3242 28.0196 19.3243 28.0192C 19.3243 28.0185 19.3244 28.0179 19.3244 28.0177C 19.3245 28.0173 19.3244 28.0179 19.3242 28.0196C 19.3238 28.0231 19.3229 28.0308 19.3213 28.0424C 19.3182 28.0656 19.3126 28.104 19.3036 28.1547C 19.2855 28.2567 19.2544 28.4045 19.204 28.5758C 19.0999 28.9299 18.9304 29.3258 18.6729 29.6343C 18.4324 29.9225 18.1201 30.1332 17.6601 30.183C 17.1716 30.2359 16.3981 30.1194 15.2383 29.4906L 14.2851 31.2489ZM 20.4351 29.1134C 22.8505 28.8313 24.8737 27.3582 26.2351 26.0675C 26.9282 25.4105 27.4801 24.7716 27.8594 24.2967C 28.0495 24.0586 28.1975 23.8601 28.2994 23.719C 28.3504 23.6484 28.3899 23.592 28.4175 23.5521C 28.4313 23.5321 28.4421 23.5163 28.4499 23.5048C 28.4538 23.499 28.4569 23.4944 28.4593 23.4909C 28.4605 23.4891 28.4615 23.4876 28.4623 23.4864C 28.4627 23.4858 28.463 23.4853 28.4633 23.4848C 28.4635 23.4846 28.4637 23.4843 28.4637 23.4842C 28.4639 23.4839 28.4641 23.4837 27.6309 22.9307C 26.7978 22.3776 26.7979 22.3774 26.798 22.3772C 26.7981 22.3772 26.7982 22.377 26.7982 22.3769C 26.7984 22.3767 26.7984 22.3766 26.7984 22.3766C 26.7985 22.3766 26.7983 22.3768 26.798 22.3773C 26.7973 22.3783 26.7959 22.3804 26.7938 22.3835C 26.7895 22.3899 26.7823 22.4004 26.7722 22.415C 26.7521 22.4442 26.7205 22.4893 26.678 22.5481C 26.5929 22.666 26.4644 22.8385 26.2966 23.0487C 25.9599 23.4703 25.4699 24.037 24.8591 24.6161C 23.6126 25.7978 21.9799 26.9194 20.2032 27.1269L 20.4351 29.1134ZM 27.17 23.8181C 29.4608 25.008 30.0642 27.2736 29.7065 29.9032C 29.347 32.5471 28.0275 35.2522 26.9012 36.7199L 28.4879 37.9374C 29.8021 36.2249 31.2768 33.1988 31.6883 30.1727C 32.1018 27.1324 31.4531 23.7891 28.0919 22.0432L 27.17 23.8181ZM 26.9019 36.719C 25.1071 39.0524 24.9127 42.0283 25.1024 44.2771C 25.1988 45.4202 25.3985 46.4244 25.5736 47.1427C 25.6614 47.5028 25.7436 47.7935 25.8048 47.9968C 25.8354 48.0985 25.8608 48.1785 25.879 48.2345C 25.8882 48.2626 25.8955 48.2846 25.9008 48.3004C 25.9035 48.3083 25.9057 48.3146 25.9073 48.3194C 25.9081 48.3218 25.9088 48.3237 25.9093 48.3253C 25.9096 48.3261 25.9098 48.3268 25.91 48.3273C 25.9101 48.3276 25.9103 48.328 25.9103 48.3281C 25.9104 48.3285 25.9105 48.3288 26.8549 48C 27.7993 47.6712 27.7994 47.6714 27.7995 47.6717C 27.7995 47.6717 27.7996 47.6719 27.7996 47.672C 27.7997 47.6722 27.7997 47.6723 27.7997 47.6723C 27.7997 47.6722 27.7995 47.6718 27.7993 47.671C 27.7987 47.6694 27.7976 47.6662 27.796 47.6615C 27.7929 47.6521 27.7877 47.6366 27.7808 47.6153C 27.7669 47.5728 27.746 47.5071 27.72 47.4205C 27.6678 47.2472 27.5952 46.9909 27.5167 46.669C 27.3593 46.0234 27.181 45.1242 27.0953 44.109C 26.9209 42.0413 27.1464 39.6816 28.4872 37.9383L 26.9019 36.719ZM 26.8549 48C 26.8965 48.9991 26.8968 48.9991 26.8972 48.9991C 26.8974 48.9991 26.8979 48.9991 26.8983 48.999C 26.8991 48.999 26.9002 48.999 26.9014 48.9989C 26.9039 48.9988 26.9071 48.9987 26.9112 48.9985C 26.9194 48.9981 26.9307 48.9975 26.9452 48.9968C 26.9743 48.9953 27.0158 48.993 27.0693 48.9897C 27.1763 48.983 27.331 48.9722 27.5283 48.9554C 27.9227 48.9217 28.4879 48.864 29.1827 48.767C 30.5706 48.5733 32.4843 48.2219 34.5897 47.5896C 38.7729 46.3333 43.8587 43.924 46.9838 39.2891L 45.3255 38.171C 42.5768 42.2477 38.0128 44.4734 34.0145 45.6741C 32.0293 46.2703 30.2193 46.603 28.9063 46.7862C 28.2506 46.8777 27.7211 46.9317 27.3583 46.9626C 27.177 46.9781 27.0375 46.9878 26.945 46.9935C 26.8987 46.9964 26.8641 46.9983 26.842 46.9995C 26.8309 47 26.823 47.0004 26.8182 47.0006C 26.8158 47.0007 26.8142 47.0008 26.8134 47.0009C 26.813 47.0009 26.8128 47.0009 26.8128 47.0009C 26.8128 47.0009 26.8129 47.0009 26.8129 47.0009C 26.8131 47.0009 26.8134 47.0009 26.8549 48Z"
+            }
+          })
+        ])
+      ]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/footer/FooterIcon.vue?vue&type=template&id=2d4dd204&scoped=true&":
+/*!**********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/commandCenter/footer/FooterIcon.vue?vue&type=template&id=2d4dd204&scoped=true& ***!
+  \**********************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-btn",
+    {
+      staticStyle: { "min-width": "52px" },
+      attrs: { color: "#ffc747", flat: "", value: _vm.value, to: _vm.to }
+    },
+    [
+      _c(
+        "v-sheet",
+        {
+          staticClass: "d-flex pa-1",
+          attrs: { color: "transparent", height: "60", width: "60" }
+        },
+        [_vm._t("default")],
+        2
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/footer/MapFooterButton.vue?vue&type=template&id=4b2ba062&scoped=true&":
+/*!***************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/commandCenter/footer/MapFooterButton.vue?vue&type=template&id=4b2ba062&scoped=true& ***!
+  \***************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("FooterIcon", { attrs: { value: _vm.value } }, [
+    _c(
+      "svg",
+      {
+        attrs: {
+          viewBox: "0 0 46 46",
+          version: "1.1",
+          xmlns: "http://www.w3.org/2000/svg",
+          "xmlns:xlink": "http://www.w3.org/1999/xlink"
+        }
+      },
+      [
+        _c("g", { attrs: { id: "Canvas" } }, [
+          _c("g", { attrs: { id: "Subtract" } }, [
+            _c("use", {
+              attrs: {
+                "xlink:href": "#rh_map_button0_fill",
+                fill: _vm.fillColor
+              }
+            }),
+            _vm._v(" "),
+            _c("mask", { attrs: { id: "rh_map_button_mask0_outline_ins" } }, [
+              _c("use", {
+                attrs: { "xlink:href": "#rh_map_button0_fill", fill: "white" }
+              })
+            ]),
+            _vm._v(" "),
+            _c(
+              "g",
+              { attrs: { mask: "url(#rh_map_button_mask0_outline_ins)" } },
+              [
+                _c("use", {
+                  attrs: {
+                    "xlink:href": "#rh_map_button1_stroke_2x",
+                    fill: _vm.outlineColor
+                  }
+                })
+              ]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("defs", [
+          _c("path", {
+            attrs: {
+              id: "rh_map_button0_fill",
+              "fill-rule": "evenodd",
+              d:
+                "M 21.4516 8.99017L 21.4516 22.0858L 11.7288 22.0858C 11.7869 17.6481 12.4797 13.5576 13.6094 10.1257C 16.0239 9.47861 18.6648 9.07944 21.4516 8.99017ZM 23.4516 8.97969L 23.4516 22.0858L 33.5659 22.0858C 33.5078 17.6481 32.815 13.5576 31.6853 10.1257C 29.158 9.44836 26.3826 9.04266 23.4516 8.97969ZM 33.5489 24.0858L 23.4516 24.0858L 23.4516 36.4057C 26.3826 36.3427 29.158 35.937 31.6853 35.2597C 32.748 32.0314 33.424 28.2203 33.5489 24.0858ZM 21.4516 36.3952L 21.4516 24.0858L 11.7458 24.0858C 11.8706 28.2203 12.5467 32.0314 13.6094 35.2597C 16.0239 35.9068 18.6648 36.306 21.4516 36.3952ZM 9.72866 22.0858C 9.7797 18.0202 10.3421 14.1975 11.2974 10.8447C 9.43709 11.5075 7.7488 12.325 6.27772 13.2625C 2.40101 15.733 0.241968 18.8732 0 22.0858L 9.72866 22.0858ZM 0.0976677 24.0858L 9.74496 24.0858C 9.85413 27.8579 10.4039 31.4049 11.2974 34.5408C 9.43708 33.8779 7.7488 33.0604 6.27772 32.123C 2.71793 29.8544 0.606447 27.0212 0.0976677 24.0858ZM 21.4516 38.3962L 21.4516 45.3028C 19.3437 44.7721 17.1394 42.834 15.2828 39.2765C 14.9942 38.7234 14.7192 38.1397 14.4594 37.5277C 16.6636 38.0218 19.0111 38.322 21.4516 38.3962ZM 23.4516 45.3855L 23.4516 38.4061C 26.0326 38.3535 28.5135 38.0481 30.8353 37.5277C 30.5755 38.1397 30.3005 38.7234 30.0119 39.2765C 28.0399 43.055 25.6758 45.0067 23.4516 45.3855ZM 35.5497 24.0858L 45.197 24.0858C 44.6882 27.0212 42.5768 29.8544 39.017 32.123C 37.5459 33.0604 35.8576 33.8779 33.9973 34.5408C 34.8908 31.4049 35.4406 27.8579 35.5497 24.0858ZM 45.2947 22.0858L 35.566 22.0858C 35.515 18.0202 34.9526 14.1975 33.9973 10.8447C 35.8576 11.5075 37.5459 12.325 39.017 13.2625C 42.8937 15.733 45.0527 18.8732 45.2947 22.0858ZM 23.4516 6.97926L 23.4516 0C 25.6758 0.378769 28.0399 2.33041 30.0119 6.10896C 30.3005 6.66202 30.5755 7.24571 30.8353 7.8577C 28.5134 7.33727 26.0326 7.03194 23.4516 6.97926ZM 21.4516 0.0826416L 21.4516 6.98921C 19.0111 7.06343 16.6636 7.36365 14.4594 7.85771C 14.7192 7.24573 14.9942 6.66202 15.2828 6.10896C 17.1394 2.55141 19.3437 0.613297 21.4516 0.0826416ZM 28.6209 44.6556C 30.4643 42.811 32.0465 40.1393 33.2334 36.8974C 37.6689 35.5526 41.375 33.3889 43.8704 30.713C 41.3272 37.494 35.653 42.7318 28.6209 44.6556ZM 1.42432 30.713C 3.96746 37.494 9.6417 42.7318 16.6738 44.6556C 14.8304 42.811 13.2482 40.1393 12.0613 36.8974C 7.62575 35.5526 3.91969 33.3889 1.42432 30.713ZM 12.0613 8.48799C 13.2482 5.24614 14.8304 2.57439 16.6738 0.729767C 9.64172 2.65356 3.96745 7.89143 1.42431 14.6724C 3.91969 11.9965 7.62575 9.83282 12.0613 8.48799ZM 33.2334 8.48799C 32.0465 5.24614 30.4642 2.57439 28.6209 0.729767C 35.653 2.65356 41.3272 7.89142 43.8704 14.6724C 41.375 11.9965 37.6689 9.83282 33.2334 8.48799Z"
+            }
+          }),
+          _vm._v(" "),
+          _c("path", {
+            attrs: {
+              id: "rh_map_button1_stroke_2x",
+              d:
+                "M 21.4516 22.0858L 21.4516 23.0858L 22.4516 23.0858L 22.4516 22.0858L 21.4516 22.0858ZM 21.4516 8.99017L 22.4516 8.99017L 22.4516 7.95763L 21.4195 7.99069L 21.4516 8.99017ZM 11.7288 22.0858L 10.7289 22.0727L 10.7156 23.0858L 11.7288 23.0858L 11.7288 22.0858ZM 13.6094 10.1257L 13.3505 9.15982L 12.8285 9.29973L 12.6595 9.81305L 13.6094 10.1257ZM 23.4516 8.97969L 23.473 7.97992L 22.4516 7.95797L 22.4516 8.97969L 23.4516 8.97969ZM 23.4516 22.0858L 22.4516 22.0858L 22.4516 23.0858L 23.4516 23.0858L 23.4516 22.0858ZM 33.5659 22.0858L 33.5659 23.0858L 34.579 23.0858L 34.5658 22.0727L 33.5659 22.0858ZM 31.6853 10.1257L 32.6352 9.81305L 32.4662 9.29973L 31.9442 9.15982L 31.6853 10.1257ZM 33.5489 24.0858L 34.5484 24.1159L 34.5795 23.0858L 33.5489 23.0858L 33.5489 24.0858ZM 23.4516 24.0858L 23.4516 23.0858L 22.4516 23.0858L 22.4516 24.0858L 23.4516 24.0858ZM 23.4516 36.4057L 22.4516 36.4057L 22.4516 37.4274L 23.473 37.4055L 23.4516 36.4057ZM 31.6853 35.2597L 31.9442 36.2256L 32.4662 36.0857L 32.6352 35.5724L 31.6853 35.2597ZM 21.4516 36.3952L 21.4195 37.3947L 22.4516 37.4278L 22.4516 36.3952L 21.4516 36.3952ZM 21.4516 24.0858L 22.4516 24.0858L 22.4516 23.0858L 21.4516 23.0858L 21.4516 24.0858ZM 11.7458 24.0858L 11.7458 23.0858L 10.7152 23.0858L 10.7463 24.1159L 11.7458 24.0858ZM 13.6094 35.2597L 12.6595 35.5724L 12.8285 36.0857L 13.3505 36.2256L 13.6094 35.2597ZM 11.2974 10.8447L 12.2591 11.1187L 12.7913 9.25079L 10.9618 9.90266L 11.2974 10.8447ZM 9.72866 22.0858L 9.72866 23.0858L 10.7162 23.0858L 10.7286 22.0983L 9.72866 22.0858ZM 6.27772 13.2625L 5.7403 12.4191L 5.7403 12.4191L 6.27772 13.2625ZM 0 22.0858L -0.997176 22.0106L -1.07815 23.0858L 0 23.0858L 0 22.0858ZM 9.74496 24.0858L 10.7445 24.0568L 10.7164 23.0858L 9.74496 23.0858L 9.74496 24.0858ZM 0.0976677 24.0858L 0.0976677 23.0858L -1.09057 23.0858L -0.887642 24.2565L 0.0976677 24.0858ZM 11.2974 34.5408L 10.9617 35.4827L 12.7913 36.1346L 12.2591 34.2668L 11.2974 34.5408ZM 6.27772 32.123L 6.81515 31.2796L 6.81514 31.2796L 6.27772 32.123ZM 21.4516 45.3028L 21.2074 46.2725L 22.4516 46.5858L 22.4516 45.3028L 21.4516 45.3028ZM 21.4516 38.3962L 22.4516 38.3962L 22.4516 37.4261L 21.4819 37.3967L 21.4516 38.3962ZM 15.2828 39.2765L 14.3963 39.7391L 14.3963 39.7391L 15.2828 39.2765ZM 14.4594 37.5277L 14.6781 36.5519L 12.7778 36.126L 13.5389 37.9185L 14.4594 37.5277ZM 23.4516 38.4061L 23.4311 37.4064L 22.4516 37.4263L 22.4516 38.4061L 23.4516 38.4061ZM 23.4516 45.3855L 22.4516 45.3855L 22.4516 46.5701L 23.6194 46.3713L 23.4516 45.3855ZM 30.8353 37.5277L 31.7558 37.9185L 32.5169 36.126L 30.6166 36.5519L 30.8353 37.5277ZM 30.0119 39.2765L 30.8984 39.7391L 30.8984 39.7391L 30.0119 39.2765ZM 45.197 24.0858L 46.1823 24.2565L 46.3853 23.0858L 45.197 23.0858L 45.197 24.0858ZM 35.5497 24.0858L 35.5497 23.0858L 34.5782 23.0858L 34.5501 24.0568L 35.5497 24.0858ZM 39.017 32.123L 38.4795 31.2796L 38.4795 31.2796L 39.017 32.123ZM 33.9973 34.5408L 33.0356 34.2668L 32.5034 36.1346L 34.3329 35.4827L 33.9973 34.5408ZM 35.566 22.0858L 34.5661 22.0983L 34.5785 23.0858L 35.566 23.0858L 35.566 22.0858ZM 45.2947 22.0858L 45.2947 23.0858L 46.3728 23.0858L 46.2919 22.0106L 45.2947 22.0858ZM 33.9973 10.8447L 34.3329 9.90266L 32.5034 9.25079L 33.0356 11.1187L 33.9973 10.8447ZM 39.017 13.2625L 39.5544 12.4191L 39.5544 12.4191L 39.017 13.2625ZM 23.4516 0L 23.6194 -0.985808L 22.4516 -1.18469L 22.4516 0L 23.4516 0ZM 23.4516 6.97926L 22.4516 6.97926L 22.4516 7.95906L 23.4311 7.97905L 23.4516 6.97926ZM 30.0119 6.10896L 29.1253 6.57162L 29.1253 6.57163L 30.0119 6.10896ZM 30.8353 7.8577L 30.6166 8.83348L 32.5169 9.25942L 31.7558 7.46687L 30.8353 7.8577ZM 21.4516 6.98921L 21.4819 7.98875L 22.4516 7.95926L 22.4516 6.98921L 21.4516 6.98921ZM 21.4516 0.0826416L 22.4516 0.0826416L 22.4516 -1.20032L 21.2074 -0.887099L 21.4516 0.0826416ZM 14.4594 7.85771L 13.5389 7.46688L 12.7778 9.25944L 14.6781 8.8335L 14.4594 7.85771ZM 15.2828 6.10896L 16.1694 6.57163L 16.1694 6.57162L 15.2828 6.10896ZM 33.2334 36.8974L 32.9433 35.9404L 32.4659 36.0852L 32.2944 36.5536L 33.2334 36.8974ZM 28.6209 44.6556L 27.9136 43.9488L 25.2494 46.6147L 28.8848 45.6202L 28.6209 44.6556ZM 43.8704 30.713L 44.8067 31.0642L 43.139 30.031L 43.8704 30.713ZM 16.6738 44.6556L 16.4099 45.6202L 20.0453 46.6147L 17.3811 43.9488L 16.6738 44.6556ZM 1.42432 30.713L 2.15566 30.031L 0.488002 31.0642L 1.42432 30.713ZM 12.0613 36.8974L 13.0003 36.5536L 12.8288 36.0852L 12.3514 35.9404L 12.0613 36.8974ZM 16.6738 0.729767L 17.3812 1.43664L 20.0453 -1.22934L 16.4099 -0.234789L 16.6738 0.729767ZM 12.0613 8.48799L 12.3514 9.44497L 12.8288 9.30023L 13.0003 8.8318L 12.0613 8.48799ZM 1.42431 14.6724L 0.487996 14.3213L 2.15566 15.3544L 1.42431 14.6724ZM 28.6209 0.729767L 28.8847 -0.234789L 25.2493 -1.22934L 27.9135 1.43664L 28.6209 0.729767ZM 33.2334 8.48799L 32.2944 8.8318L 32.4659 9.30023L 32.9433 9.44497L 33.2334 8.48799ZM 43.8704 14.6724L 43.139 15.3544L 44.8067 14.3213L 43.8704 14.6724ZM 22.4516 22.0858L 22.4516 8.99017L 20.4516 8.99017L 20.4516 22.0858L 22.4516 22.0858ZM 11.7288 23.0858L 21.4516 23.0858L 21.4516 21.0858L 11.7288 21.0858L 11.7288 23.0858ZM 12.6595 9.81305C 11.4952 13.3499 10.7882 17.5423 10.7289 22.0727L 12.7287 22.0988C 12.7856 17.754 13.4641 13.7653 14.5592 10.4384L 12.6595 9.81305ZM 21.4195 7.99069C 18.5583 8.08234 15.8411 8.4923 13.3505 9.15982L 13.8682 11.0916C 16.2066 10.4649 18.7714 10.0765 21.4836 9.98966L 21.4195 7.99069ZM 22.4516 8.97969L 22.4516 22.0858L 24.4516 22.0858L 24.4516 8.97969L 22.4516 8.97969ZM 23.4516 23.0858L 33.5659 23.0858L 33.5659 21.0858L 23.4516 21.0858L 23.4516 23.0858ZM 34.5658 22.0727C 34.5065 17.5423 33.7994 13.3499 32.6352 9.81305L 30.7355 10.4384C 31.8306 13.7653 32.5091 17.754 32.5659 22.0988L 34.5658 22.0727ZM 31.9442 9.15982C 29.3373 8.46112 26.482 8.04457 23.473 7.97992L 23.4301 9.97946C 26.2831 10.0408 28.9787 10.4356 31.4264 11.0916L 31.9442 9.15982ZM 33.5489 23.0858L 23.4516 23.0858L 23.4516 25.0858L 33.5489 25.0858L 33.5489 23.0858ZM 22.4516 24.0858L 22.4516 36.4057L 24.4516 36.4057L 24.4516 24.0858L 22.4516 24.0858ZM 23.473 37.4055C 26.482 37.3408 29.3373 36.9243 31.9442 36.2256L 31.4264 34.2938C 28.9787 34.9498 26.2831 35.3447 23.4301 35.4059L 23.473 37.4055ZM 32.6352 35.5724C 33.7305 32.2451 34.4209 28.338 34.5484 24.1159L 32.5493 24.0556C 32.4271 28.1026 31.7655 31.8178 30.7355 34.947L 32.6352 35.5724ZM 22.4516 36.3952L 22.4516 24.0858L 20.4516 24.0858L 20.4516 36.3952L 22.4516 36.3952ZM 21.4516 23.0858L 11.7458 23.0858L 11.7458 25.0858L 21.4516 25.0858L 21.4516 23.0858ZM 10.7463 24.1159C 10.8737 28.338 11.5642 32.2451 12.6595 35.5724L 14.5592 34.947C 13.5292 31.8178 12.8675 28.1026 12.7454 24.0556L 10.7463 24.1159ZM 13.3505 36.2256C 15.8411 36.8931 18.5583 37.3031 21.4195 37.3947L 21.4836 35.3957C 18.7714 35.3089 16.2066 34.9205 13.8682 34.2938L 13.3505 36.2256ZM 10.3357 10.5706C 9.35452 14.0143 8.78082 17.9254 8.72874 22.0732L 10.7286 22.0983C 10.7786 18.1151 11.3297 14.3807 12.2591 11.1187L 10.3357 10.5706ZM 6.81514 14.1058C 8.21688 13.2125 9.83645 12.4268 11.633 11.7866L 10.9618 9.90266C 9.03773 10.5882 7.28072 11.4375 5.7403 12.4191L 6.81514 14.1058ZM 0.997176 22.1609C 1.20772 19.3654 3.103 16.4714 6.81514 14.1058L 5.7403 12.4191C 1.69903 14.9945 -0.723788 18.3809 -0.997176 22.0106L 0.997176 22.1609ZM 0 23.0858L 9.72866 23.0858L 9.72866 21.0858L 0 21.0858L 0 23.0858ZM 9.74496 23.0858L 0.0976677 23.0858L 0.0976677 25.0858L 9.74496 25.0858L 9.74496 23.0858ZM 8.74538 24.1147C 8.85678 27.964 9.41794 31.5937 10.3356 34.8148L 12.2591 34.2668C 11.3899 31.216 10.8515 27.7518 10.7445 24.0568L 8.74538 24.1147ZM 11.633 33.5988C 9.83644 32.9586 8.21687 32.1729 6.81515 31.2796L 5.7403 32.9663C 7.28072 33.9479 9.03773 34.7972 10.9617 35.4827L 11.633 33.5988ZM 6.81514 31.2796C 3.40816 29.1085 1.52892 26.4879 1.08298 23.915L -0.887642 24.2565C -0.316029 27.5545 2.02771 30.6003 5.7403 32.9663L 6.81514 31.2796ZM 22.4516 45.3028L 22.4516 38.3962L 20.4516 38.3962L 20.4516 45.3028L 22.4516 45.3028ZM 21.6957 44.3331C 19.9816 43.9015 17.9626 42.25 16.1694 38.8138L 14.3963 39.7391C 16.3163 43.4181 18.7059 45.6428 21.2074 46.2725L 21.6957 44.3331ZM 16.1694 38.8138C 15.8937 38.2855 15.6299 37.7259 15.3798 37.1369L 13.5389 37.9185C 13.8085 38.5535 14.0947 39.1613 14.3963 39.7391L 16.1694 38.8138ZM 14.2406 38.5035C 16.508 39.0117 18.9186 39.3196 21.4212 39.3957L 21.4819 37.3967C 19.1036 37.3243 16.8192 37.0318 14.6781 36.5519L 14.2406 38.5035ZM 22.4516 38.4061L 22.4516 45.3855L 24.4516 45.3855L 24.4516 38.4061L 22.4516 38.4061ZM 23.472 39.4059C 26.1183 39.3519 28.6657 39.0388 31.054 38.5035L 30.6166 36.5519C 28.3612 37.0575 25.9468 37.355 23.4311 37.4064L 23.472 39.4059ZM 29.9149 37.1369C 29.6648 37.7259 29.401 38.2855 29.1253 38.8138L 30.8984 39.7391C 31.2 39.1613 31.4862 38.5535 31.7558 37.9185L 29.9149 37.1369ZM 29.1253 38.8138C 27.2179 42.4687 25.0618 44.0968 23.2837 44.3996L 23.6194 46.3713C 26.2897 45.9165 28.8619 43.6413 30.8984 39.7391L 29.1253 38.8138ZM 45.197 23.0858L 35.5497 23.0858L 35.5497 25.0858L 45.197 25.0858L 45.197 23.0858ZM 44.2117 23.915C 43.7658 26.4879 41.8865 29.1085 38.4795 31.2796L 39.5544 32.9663C 43.267 30.6003 45.6107 27.5545 46.1823 24.2565L 44.2117 23.915ZM 38.4795 31.2796C 37.0778 32.1729 35.4582 32.9586 33.6617 33.5988L 34.3329 35.4827C 36.257 34.7972 38.014 33.9479 39.5544 32.9663L 38.4795 31.2796ZM 34.959 34.8148C 35.8767 31.5937 36.4379 27.964 36.5493 24.1147L 34.5501 24.0568C 34.4432 27.7518 33.9048 31.216 33.0356 34.2668L 34.959 34.8148ZM 35.566 23.0858L 45.2947 23.0858L 45.2947 21.0858L 35.566 21.0858L 35.566 23.0858ZM 36.5659 22.0732C 36.5139 17.9254 35.9402 14.0143 34.959 10.5706L 33.0356 11.1187C 33.965 14.3807 34.5161 18.1151 34.5661 22.0983L 36.5659 22.0732ZM 33.6617 11.7866C 35.4582 12.4268 37.0778 13.2125 38.4796 14.1058L 39.5544 12.4191C 38.014 11.4375 36.257 10.5882 34.3329 9.90266L 33.6617 11.7866ZM 38.4795 14.1058C 42.1917 16.4714 44.087 19.3654 44.2975 22.1609L 46.2919 22.0106C 46.0185 18.3809 43.5957 14.9945 39.5544 12.4191L 38.4795 14.1058ZM 22.4516 0L 22.4516 6.97926L 24.4516 6.97926L 24.4516 0L 22.4516 0ZM 30.8984 5.6463C 28.8619 1.74412 26.2897 -0.531081 23.6194 -0.985808L 23.2837 0.985808C 25.0618 1.28862 27.2179 2.9167 29.1253 6.57162L 30.8984 5.6463ZM 31.7558 7.46687C 31.4862 6.8319 31.2 6.22415 30.8984 5.6463L 29.1253 6.57163C 29.401 7.09988 29.6648 7.65952 29.9149 8.24853L 31.7558 7.46687ZM 23.4311 7.97905C 25.9468 8.03039 28.3612 8.32795 30.6166 8.83348L 31.054 6.88191C 28.6657 6.34658 26.1183 6.03348 23.472 5.97947L 23.4311 7.97905ZM 22.4516 6.98921L 22.4516 0.0826416L 20.4516 0.0826416L 20.4516 6.98921L 22.4516 6.98921ZM 14.6781 8.8335C 16.8192 8.35359 19.1036 8.06108 21.4819 7.98875L 21.4212 5.98967C 18.9186 6.06578 16.508 6.37371 14.2406 6.88192L 14.6781 8.8335ZM 14.3963 5.6463C 14.0947 6.22416 13.8085 6.83192 13.5389 7.46688L 15.3798 8.24854C 15.6299 7.65953 15.8937 7.09988 16.1694 6.57163L 14.3963 5.6463ZM 21.2074 -0.887099C 18.7059 -0.257331 16.3163 1.96733 14.3963 5.6463L 16.1694 6.57162C 17.9626 3.13548 19.9816 1.48392 21.6957 1.05238L 21.2074 -0.887099ZM 32.2944 36.5536C 31.1412 39.7031 29.6256 42.2356 27.9136 43.9488L 29.3283 45.3625C 31.303 43.3864 32.9517 40.5754 34.1725 37.2412L 32.2944 36.5536ZM 43.139 30.031C 40.7908 32.5491 37.2522 34.634 32.9433 35.9404L 33.5236 37.8544C 38.0856 36.4712 41.9592 34.2287 44.6017 31.395L 43.139 30.031ZM 28.8848 45.6202C 36.23 43.6107 42.1521 38.1423 44.8067 31.0642L 42.9341 30.3619C 40.5023 36.8457 35.076 41.8529 28.357 43.6911L 28.8848 45.6202ZM 16.9377 43.6911C 10.2187 41.8529 4.79235 36.8457 2.36063 30.3619L 0.488002 31.0642C 3.14257 38.1422 9.0647 43.6107 16.4099 45.6202L 16.9377 43.6911ZM 11.1222 37.2412C 12.343 40.5754 13.9917 43.3864 15.9664 45.3625L 17.3811 43.9488C 15.6691 42.2356 14.1534 39.7031 13.0003 36.5536L 11.1222 37.2412ZM 0.692975 31.395C 3.33547 34.2287 7.20905 36.4712 11.7711 37.8544L 12.3514 35.9404C 8.04245 34.634 4.50391 32.5491 2.15566 30.031L 0.692975 31.395ZM 15.9665 0.0228981C 13.9917 1.99898 12.343 4.81001 11.1222 8.14418L 13.0003 8.8318C 14.1535 5.68227 15.6692 3.14979 17.3812 1.43664L 15.9665 0.0228981ZM 2.36063 15.0236C 4.79235 8.53969 10.2187 3.53246 16.9377 1.69432L 16.4099 -0.234789C 9.06472 1.77467 3.14256 7.24317 0.487996 14.3213L 2.36063 15.0236ZM 11.7711 7.53101C 7.20905 8.91421 3.33546 11.1568 0.69297 13.9904L 2.15566 15.3544C 4.50391 12.8363 8.04245 10.7514 12.3514 9.44497L 11.7711 7.53101ZM 27.9135 1.43664C 29.6255 3.14979 31.1412 5.68227 32.2944 8.8318L 34.1725 8.14418C 32.9517 4.81001 31.303 1.99898 29.3282 0.022898L 27.9135 1.43664ZM 44.8067 14.3213C 42.1521 7.24316 36.23 1.77467 28.8847 -0.234789L 28.357 1.69432C 35.076 3.53246 40.5023 8.53968 42.9341 15.0236L 44.8067 14.3213ZM 32.9433 9.44497C 37.2522 10.7514 40.7908 12.8363 43.139 15.3544L 44.6017 13.9904C 41.9592 11.1568 38.0856 8.91421 33.5236 7.53101L 32.9433 9.44497Z"
+            }
+          })
+        ])
+      ]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/footer/NationFooterButton.vue?vue&type=template&id=00488dde&scoped=true&":
+/*!******************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/commandCenter/footer/NationFooterButton.vue?vue&type=template&id=00488dde&scoped=true& ***!
+  \******************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("FooterIcon", { attrs: { value: _vm.value } }, [
+    _c(
+      "svg",
+      {
+        attrs: {
+          viewBox: "0 -1 42 45",
+          version: "1.1",
+          xmlns: "http://www.w3.org/2000/svg",
+          "xmlns:xlink": "http://www.w3.org/1999/xlink"
+        }
+      },
+      [
+        _c("g", { attrs: { id: "Canvas" } }, [
+          _c("g", { attrs: { id: "Vector" } }, [
+            _c("use", {
+              attrs: {
+                "xlink:href": "#rh_nation_button0_fill",
+                fill: _vm.fillColor
+              }
+            }),
+            _vm._v(" "),
+            _c("use", {
+              attrs: {
+                "xlink:href": "#rh_nation_button1_fill",
+                fill: _vm.fillColor
+              }
+            }),
+            _vm._v(" "),
+            _c("use", {
+              attrs: {
+                "xlink:href": "#rh_nation_button2_fill",
+                fill: _vm.fillColor
+              }
+            }),
+            _vm._v(" "),
+            _c("use", {
+              attrs: {
+                "xlink:href": "#rh_nation_button3_fill",
+                fill: _vm.fillColor
+              }
+            }),
+            _vm._v(" "),
+            _c("use", {
+              attrs: {
+                "xlink:href": "#rh_nation_button4_fill",
+                fill: _vm.fillColor
+              }
+            }),
+            _vm._v(" "),
+            _c("use", {
+              attrs: {
+                "xlink:href": "#rh_nation_button5_fill",
+                fill: _vm.fillColor
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "mask",
+              { attrs: { id: "rh_nation_button_mask0_outline_ins" } },
+              [
+                _c("use", {
+                  attrs: {
+                    "xlink:href": "#rh_nation_button0_fill",
+                    fill: "white"
+                  }
+                }),
+                _vm._v(" "),
+                _c("use", {
+                  attrs: {
+                    "xlink:href": "#rh_nation_button1_fill",
+                    fill: "white"
+                  }
+                }),
+                _vm._v(" "),
+                _c("use", {
+                  attrs: {
+                    "xlink:href": "#rh_nation_button2_fill",
+                    fill: "white"
+                  }
+                }),
+                _vm._v(" "),
+                _c("use", {
+                  attrs: {
+                    "xlink:href": "#rh_nation_button3_fill",
+                    fill: "white"
+                  }
+                }),
+                _vm._v(" "),
+                _c("use", {
+                  attrs: {
+                    "xlink:href": "#rh_nation_button4_fill",
+                    fill: "white"
+                  }
+                }),
+                _vm._v(" "),
+                _c("use", {
+                  attrs: {
+                    "xlink:href": "#rh_nation_button5_fill",
+                    fill: "white"
+                  }
+                })
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "g",
+              { attrs: { mask: "url(#rh_nation_button_mask0_outline_ins)" } },
+              [
+                _c("use", {
+                  attrs: {
+                    "xlink:href": "#rh_nation_button6_stroke_2x",
+                    fill: _vm.outlineColor
+                  }
+                })
+              ]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("defs", [
+          _c("path", {
+            attrs: {
+              id: "rh_nation_button0_fill",
+              d:
+                "M 0.919678 6.33282L 4.13891 6.33282L 4.13891 44L 0.919678 44L 0.919678 6.33282Z"
+            }
+          }),
+          _vm._v(" "),
+          _c("path", {
+            attrs: {
+              id: "rh_nation_button1_fill",
+              d:
+                "M 21.8768 17.6902C 16.6495 16.4471 10.9487 16.5936 6.39136 19.8305L 6.39136 30.8599C 10.9487 27.623 16.6495 27.4764 21.8768 28.7196L 21.8768 17.6902Z"
+            }
+          }),
+          _vm._v(" "),
+          _c("path", {
+            attrs: {
+              id: "rh_nation_button2_fill",
+              d:
+                "M 24.5495 29.4842L 24.5495 18.4549C 25.7563 18.8579 26.9195 19.3244 28.0165 19.8305C 32.5058 21.9019 36.9057 23.3729 42 19.8305L 42 30.8599C 36.9057 34.4022 32.5058 32.9313 28.0165 30.8599C 26.9195 30.3538 25.7563 29.8873 24.5495 29.4842Z"
+            }
+          }),
+          _vm._v(" "),
+          _c("path", {
+            attrs: {
+              id: "rh_nation_button3_fill",
+              d:
+                "M 22.034 4.42764C 16.764 3.14404 10.9945 3.26074 6.39136 6.53013L 6.39136 17.5595C 10.9945 14.2901 16.764 14.1734 22.034 15.457L 22.034 4.42764Z"
+            }
+          }),
+          _vm._v(" "),
+          _c("path", {
+            attrs: {
+              id: "rh_nation_button4_fill",
+              d:
+                "M 24.3922 16.1317L 24.3922 5.10238C 25.6553 5.51714 26.872 6.00204 28.0165 6.53013C 32.5058 8.60153 36.9057 10.0725 42 6.53013L 42 17.5595C 36.9057 21.1018 32.5058 19.6309 28.0165 17.5595C 26.872 17.0314 25.6553 16.5465 24.3922 16.1317Z"
+            }
+          }),
+          _vm._v(" "),
+          _c("path", {
+            attrs: {
+              id: "rh_nation_button5_fill",
+              d:
+                "M 5.0588 2.53973C 5.0588 3.94238 3.92635 5.07946 2.5294 5.07946C 1.13245 5.07946 0 3.94238 0 2.53973C 0 1.13708 1.13245 0 2.5294 0C 3.92635 0 5.0588 1.13708 5.0588 2.53973Z"
+            }
+          }),
+          _vm._v(" "),
+          _c("path", {
+            attrs: {
+              id: "rh_nation_button6_stroke_2x",
+              d:
+                "M 0.919678 6.33282L 0.919678 5.33282L -0.0803223 5.33282L -0.0803223 6.33282L 0.919678 6.33282ZM 4.13891 6.33282L 5.13891 6.33282L 5.13891 5.33282L 4.13891 5.33282L 4.13891 6.33282ZM 4.13891 44L 4.13891 45L 5.13891 45L 5.13891 44L 4.13891 44ZM 0.919678 44L -0.0803223 44L -0.0803223 45L 0.919678 45L 0.919678 44ZM 21.8768 17.6902L 22.8768 17.6902L 22.8768 16.9001L 22.1082 16.7174L 21.8768 17.6902ZM 6.39136 19.8305L 5.8123 19.0153L 5.39136 19.3142L 5.39136 19.8305L 6.39136 19.8305ZM 6.39136 30.8599L 5.39136 30.8599L 5.39136 32.7967L 6.97042 31.6752L 6.39136 30.8599ZM 21.8768 28.7196L 21.6455 29.6924L 22.8768 29.9853L 22.8768 28.7196L 21.8768 28.7196ZM 24.5495 29.4842L 23.5495 29.4842L 23.5495 30.2046L 24.2327 30.4327L 24.5495 29.4842ZM 24.5495 18.4549L 24.8662 17.5064L 23.5495 17.0666L 23.5495 18.4549L 24.5495 18.4549ZM 28.0165 19.8305L 28.4355 18.9225L 28.4354 18.9225L 28.0165 19.8305ZM 42 19.8305L 43 19.8305L 43 17.9172L 41.4292 19.0095L 42 19.8305ZM 42 30.8599L 42.5709 31.6809L 43 31.3825L 43 30.8599L 42 30.8599ZM 28.0165 30.8599L 28.4355 29.9519L 28.4354 29.9519L 28.0165 30.8599ZM 22.034 4.42764L 23.034 4.42764L 23.034 3.64197L 22.2707 3.45604L 22.034 4.42764ZM 6.39136 6.53013L 5.8123 5.71485L 5.39136 6.01382L 5.39136 6.53013L 6.39136 6.53013ZM 6.39136 17.5595L 5.39136 17.5595L 5.39136 19.4963L 6.97042 18.3748L 6.39136 17.5595ZM 22.034 15.457L 21.7974 16.4286L 23.034 16.7298L 23.034 15.457L 22.034 15.457ZM 24.3922 16.1317L 23.3922 16.1317L 23.3922 16.8559L 24.0803 17.0818L 24.3922 16.1317ZM 24.3922 5.10238L 24.7042 4.15229L 23.3922 3.72148L 23.3922 5.10238L 24.3922 5.10238ZM 28.0165 6.53013L 27.5975 7.43813L 27.5975 7.43813L 28.0165 6.53013ZM 42 6.53013L 43 6.53013L 43 4.6168L 41.4292 5.7091L 42 6.53013ZM 42 17.5595L 42.5709 18.3805L 43 18.0821L 43 17.5595L 42 17.5595ZM 28.0165 17.5595L 27.5975 18.4675L 27.5975 18.4675L 28.0165 17.5595ZM 0.919678 7.33282L 4.13891 7.33282L 4.13891 5.33282L 0.919678 5.33282L 0.919678 7.33282ZM 3.13891 6.33282L 3.13891 44L 5.13891 44L 5.13891 6.33282L 3.13891 6.33282ZM 4.13891 43L 0.919678 43L 0.919678 45L 4.13891 45L 4.13891 43ZM 1.91968 44L 1.91968 6.33282L -0.0803223 6.33282L -0.0803223 44L 1.91968 44ZM 22.1082 16.7174C 16.7321 15.4388 10.6959 15.5466 5.8123 19.0153L 6.97042 20.6458C 11.2016 17.6406 16.5669 17.4553 21.6455 18.6631L 22.1082 16.7174ZM 5.39136 19.8305L 5.39136 30.8599L 7.39136 30.8599L 7.39136 19.8305L 5.39136 19.8305ZM 6.97042 31.6752C 11.2016 28.6699 16.5669 28.4847 21.6455 29.6924L 22.1082 27.7467C 16.7321 26.4682 10.6959 26.576 5.8123 30.0446L 6.97042 31.6752ZM 22.8768 28.7196L 22.8768 17.6902L 20.8768 17.6902L 20.8768 28.7196L 22.8768 28.7196ZM 25.5495 29.4842L 25.5495 18.4549L 23.5495 18.4549L 23.5495 29.4842L 25.5495 29.4842ZM 24.2327 19.4034C 25.4031 19.7943 26.5322 20.247 27.5975 20.7385L 28.4354 18.9225C 27.3069 18.4018 26.1096 17.9216 24.8662 17.5064L 24.2327 19.4034ZM 27.5975 20.7385C 29.8544 21.7799 32.2144 22.7335 34.7016 22.9325C 37.2345 23.1352 39.8373 22.5524 42.5709 20.6516L 41.4292 19.0095C 39.0684 20.651 36.9241 21.1039 34.8611 20.9389C 32.7524 20.7701 30.6679 19.9526 28.4355 18.9225L 27.5975 20.7385ZM 41 19.8305L 41 30.8599L 43 30.8599L 43 19.8305L 41 19.8305ZM 41.4292 30.0389C 39.0684 31.6804 36.9241 32.1333 34.8611 31.9682C 32.7524 31.7995 30.6679 30.982 28.4355 29.9519L 27.5975 31.7679C 29.8544 32.8092 32.2144 33.7628 34.7016 33.9619C 37.2345 34.1645 39.8373 33.5817 42.5709 31.6809L 41.4292 30.0389ZM 28.4354 29.9519C 27.3069 29.4312 26.1096 28.951 24.8662 28.5357L 24.2327 30.4327C 25.4031 30.8236 26.5322 31.2764 27.5975 31.7679L 28.4354 29.9519ZM 22.2707 3.45604C 16.8529 2.13645 10.7448 2.21149 5.8123 5.71485L 6.97042 7.34541C 11.2441 4.30998 16.6751 4.15162 21.7974 5.39923L 22.2707 3.45604ZM 5.39136 6.53013L 5.39136 17.5595L 7.39136 17.5595L 7.39136 6.53013L 5.39136 6.53013ZM 6.97042 18.3748C 11.2441 15.3393 16.6751 15.181 21.7974 16.4286L 22.2707 14.4854C 16.8529 13.1658 10.7448 13.2408 5.81229 16.7442L 6.97042 18.3748ZM 23.034 15.457L 23.034 4.42764L 21.034 4.42764L 21.034 15.457L 23.034 15.457ZM 25.3922 16.1317L 25.3922 5.10238L 23.3922 5.10238L 23.3922 16.1317L 25.3922 16.1317ZM 24.0803 6.05247C 25.3051 6.45466 26.486 6.92527 27.5975 7.43813L 28.4355 5.62213C 27.2579 5.07881 26.0056 4.57963 24.7042 4.15229L 24.0803 6.05247ZM 27.5975 7.43813C 29.8544 8.47946 32.2144 9.43308 34.7016 9.63209C 37.2345 9.83476 39.8373 9.25196 42.5709 7.35115L 41.4292 5.7091C 39.0684 7.35062 36.9241 7.80353 34.8611 7.63846C 32.7524 7.46974 30.6679 6.6522 28.4355 5.62213L 27.5975 7.43813ZM 41 6.53013L 41 17.5595L 43 17.5595L 43 6.53013L 41 6.53013ZM 41.4292 16.7385C 39.0684 18.38 36.9241 18.8329 34.8611 18.6678C 32.7524 18.4991 30.6679 17.6815 28.4355 16.6515L 27.5975 18.4675C 29.8544 19.5088 32.2144 20.4624 34.7016 20.6614C 37.2345 20.8641 39.8373 20.2813 42.5709 18.3805L 41.4292 16.7385ZM 28.4355 16.6515C 27.2579 16.1082 26.0056 15.609 24.7042 15.1816L 24.0803 17.0818C 25.3051 17.484 26.486 17.9546 27.5975 18.4675L 28.4355 16.6515ZM 4.0588 2.53973C 4.0588 3.39395 3.37023 4.07946 2.5294 4.07946L 2.5294 6.07946C 4.48247 6.07946 6.0588 4.49082 6.0588 2.53973L 4.0588 2.53973ZM 2.5294 4.07946C 1.68857 4.07946 1 3.39395 1 2.53973L -1 2.53973C -1 4.49082 0.576328 6.07946 2.5294 6.07946L 2.5294 4.07946ZM 1 2.53973C 1 1.68551 1.68857 1 2.5294 1L 2.5294 -1C 0.576328 -1 -1 0.588638 -1 2.53973L 1 2.53973ZM 2.5294 1C 3.37023 1 4.0588 1.68551 4.0588 2.53973L 6.0588 2.53973C 6.0588 0.588638 4.48247 -1 2.5294 -1L 2.5294 1Z"
+            }
+          })
+        ])
+      ]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/footer/RosterFooterButton.vue?vue&type=template&id=4e61e522&scoped=true&":
+/*!******************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/commandCenter/footer/RosterFooterButton.vue?vue&type=template&id=4e61e522&scoped=true& ***!
+  \******************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "FooterIcon",
+    { attrs: { value: _vm.value, to: "/cc/easy-name/roster" } },
+    [
+      _c(
+        "svg",
+        {
+          attrs: {
+            viewBox: "0 0 50 44",
+            version: "1.1",
+            xmlns: "http://www.w3.org/2000/svg",
+            "xmlns:xlink": "http://www.w3.org/1999/xlink"
+          }
+        },
+        [
+          _c("g", { attrs: { id: "Canvas" } }, [
+            _c("g", { attrs: { id: "Vector" } }, [
+              _c("use", {
+                attrs: {
+                  "xlink:href": "#rh_roster_button0_fill",
+                  fill: _vm.fillColor
+                }
+              }),
+              _vm._v(" "),
+              _c("use", {
+                attrs: {
+                  "xlink:href": "#rh_roster_button1_fill",
+                  fill: _vm.fillColor
+                }
+              }),
+              _vm._v(" "),
+              _c("use", {
+                attrs: {
+                  "xlink:href": "#rh_roster_button2_fill",
+                  fill: _vm.fillColor
+                }
+              }),
+              _vm._v(" "),
+              _c("use", {
+                attrs: {
+                  "xlink:href": "#rh_roster_button3_fill",
+                  fill: _vm.fillColor
+                }
+              }),
+              _vm._v(" "),
+              _c("use", {
+                attrs: {
+                  "xlink:href": "#rh_roster_button4_fill",
+                  fill: _vm.fillColor
+                }
+              }),
+              _vm._v(" "),
+              _c("use", {
+                attrs: {
+                  "xlink:href": "#rh_roster_button5_fill",
+                  fill: _vm.fillColor
+                }
+              }),
+              _vm._v(" "),
+              _c("use", {
+                attrs: {
+                  "xlink:href": "#rh_roster_button6_fill",
+                  fill: _vm.fillColor
+                }
+              }),
+              _vm._v(" "),
+              _c("use", {
+                attrs: {
+                  "xlink:href": "#rh_roster_button7_fill",
+                  fill: _vm.fillColor
+                }
+              }),
+              _vm._v(" "),
+              _c("mask", { attrs: { id: "rh_roster_mask0_outline_ins" } }, [
+                _c("use", {
+                  attrs: {
+                    "xlink:href": "#rh_roster_button0_fill",
+                    fill: "white"
+                  }
+                }),
+                _vm._v(" "),
+                _c("use", {
+                  attrs: {
+                    "xlink:href": "#rh_roster_button1_fill",
+                    fill: "white"
+                  }
+                }),
+                _vm._v(" "),
+                _c("use", {
+                  attrs: {
+                    "xlink:href": "#rh_roster_button2_fill",
+                    fill: "white"
+                  }
+                }),
+                _vm._v(" "),
+                _c("use", {
+                  attrs: {
+                    "xlink:href": "#rh_roster_button3_fill",
+                    fill: "white"
+                  }
+                }),
+                _vm._v(" "),
+                _c("use", {
+                  attrs: {
+                    "xlink:href": "#rh_roster_button4_fill",
+                    fill: "white"
+                  }
+                }),
+                _vm._v(" "),
+                _c("use", {
+                  attrs: {
+                    "xlink:href": "#rh_roster_button5_fill",
+                    fill: "white"
+                  }
+                }),
+                _vm._v(" "),
+                _c("use", {
+                  attrs: {
+                    "xlink:href": "#rh_roster_button6_fill",
+                    fill: "white"
+                  }
+                }),
+                _vm._v(" "),
+                _c("use", {
+                  attrs: {
+                    "xlink:href": "#rh_roster_button7_fill",
+                    fill: "white"
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c(
+                "g",
+                { attrs: { mask: "url(#rh_roster_mask0_outline_ins)" } },
+                [
+                  _c("use", {
+                    attrs: {
+                      "xlink:href": "#rh_roster_button8_stroke_2x",
+                      fill: _vm.outlineColor
+                    }
+                  })
+                ]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("defs", [
+            _c("path", {
+              attrs: {
+                id: "rh_roster_button0_fill",
+                d:
+                  "M 11.4458 38.8767C 11.4458 37.3787 12.6602 36.1644 14.1581 36.1644L 47.2877 36.1644C 48.7857 36.1644 50 37.3787 50 38.8767C 50 40.3747 48.7857 41.589 47.2877 41.589L 14.1581 41.589C 12.6602 41.589 11.4458 40.3747 11.4458 38.8767Z"
+              }
+            }),
+            _vm._v(" "),
+            _c("path", {
+              attrs: {
+                id: "rh_roster_button1_fill",
+                d:
+                  "M 4.81928 39.1781C 6.1506 39.1781 7.22892 38.0992 7.22892 36.7672C 7.22892 35.4351 6.1506 34.3562 4.81928 34.3562C 3.48795 34.3562 2.40964 35.4351 2.40964 36.7672C 2.40964 38.0992 3.48795 39.1781 4.81928 39.1781ZM 4.81928 40.3836C 3.21084 40.3836 0 41.1913 0 42.7946L 0 44L 9.63855 44L 9.63855 42.7946C 9.63855 41.1913 6.42771 40.3836 4.81928 40.3836Z"
+              }
+            }),
+            _vm._v(" "),
+            _c("path", {
+              attrs: {
+                id: "rh_roster_button2_fill",
+                d:
+                  "M 11.4458 27.4247C 11.4458 25.9267 12.6602 24.7123 14.1581 24.7123L 47.2877 24.7123C 48.7857 24.7123 50 25.9267 50 27.4247C 50 28.9226 48.7857 30.137 47.2877 30.137L 14.1581 30.137C 12.6602 30.137 11.4458 28.9226 11.4458 27.4247Z"
+              }
+            }),
+            _vm._v(" "),
+            _c("path", {
+              attrs: {
+                id: "rh_roster_button3_fill",
+                d:
+                  "M 4.81928 27.726C 6.1506 27.726 7.22892 26.6471 7.22892 25.3151C 7.22892 23.983 6.1506 22.9041 4.81928 22.9041C 3.48795 22.9041 2.40964 23.983 2.40964 25.3151C 2.40964 26.6471 3.48795 27.726 4.81928 27.726ZM 4.81928 28.9315C 3.21084 28.9315 0 29.7392 0 31.3425L 0 32.548L 9.63855 32.548L 9.63855 31.3425C 9.63855 29.7392 6.42771 28.9315 4.81928 28.9315Z"
+              }
+            }),
+            _vm._v(" "),
+            _c("path", {
+              attrs: {
+                id: "rh_roster_button4_fill",
+                d:
+                  "M 11.4458 15.9726C 11.4458 14.4747 12.6602 13.2603 14.1581 13.2603L 47.2877 13.2603C 48.7857 13.2603 50 14.4747 50 15.9726C 50 17.4706 48.7857 18.685 47.2877 18.685L 14.1581 18.685C 12.6602 18.685 11.4458 17.4706 11.4458 15.9726Z"
+              }
+            }),
+            _vm._v(" "),
+            _c("path", {
+              attrs: {
+                id: "rh_roster_button5_fill",
+                d:
+                  "M 4.81928 16.2739C 6.1506 16.2739 7.22892 15.195 7.22892 13.863C 7.22892 12.5309 6.1506 11.452 4.81928 11.452C 3.48795 11.452 2.40964 12.5309 2.40964 13.863C 2.40964 15.195 3.48795 16.2739 4.81928 16.2739ZM 4.81928 17.4794C 3.21084 17.4794 0 18.2871 0 19.8904L 0 21.0959L 9.63855 21.0959L 9.63855 19.8904C 9.63855 18.2871 6.42771 17.4794 4.81928 17.4794Z"
+              }
+            }),
+            _vm._v(" "),
+            _c("path", {
+              attrs: {
+                id: "rh_roster_button6_fill",
+                d:
+                  "M 11.4458 4.52056C 11.4458 3.02258 12.6602 1.80823 14.1581 1.80823L 47.2877 1.80823C 48.7857 1.80823 50 3.02258 50 4.52056C 50 6.01853 48.7857 7.23288 47.2877 7.23288L 14.1581 7.23288C 12.6602 7.23288 11.4458 6.01853 11.4458 4.52056Z"
+              }
+            }),
+            _vm._v(" "),
+            _c("path", {
+              attrs: {
+                id: "rh_roster_button7_fill",
+                d:
+                  "M 4.81928 4.82192C 6.1506 4.82192 7.22892 3.74301 7.22892 2.41096C 7.22892 1.0789 6.1506 0 4.81928 0C 3.48795 0 2.40964 1.0789 2.40964 2.41096C 2.40964 3.74301 3.48795 4.82192 4.81928 4.82192ZM 4.81928 6.0274C 3.21084 6.0274 0 6.83507 0 8.43836L 0 9.64384L 9.63855 9.64384L 9.63855 8.43836C 9.63855 6.83507 6.42771 6.0274 4.81928 6.0274Z"
+              }
+            }),
+            _vm._v(" "),
+            _c("path", {
+              attrs: {
+                id: "rh_roster_button8_stroke_2x",
+                d:
+                  "M 0 44L -1 44L -1 45L 0 45L 0 44ZM 9.63855 44L 9.63855 45L 10.6386 45L 10.6386 44L 9.63855 44ZM 0 32.548L -1 32.548L -1 33.548L 0 33.548L 0 32.548ZM 9.63855 32.548L 9.63855 33.548L 10.6386 33.548L 10.6386 32.548L 9.63855 32.548ZM 0 21.0959L -1 21.0959L -1 22.0959L 0 22.0959L 0 21.0959ZM 9.63855 21.0959L 9.63855 22.0959L 10.6386 22.0959L 10.6386 21.0959L 9.63855 21.0959ZM 0 9.64384L -1 9.64384L -1 10.6438L 0 10.6438L 0 9.64384ZM 9.63855 9.64384L 9.63855 10.6438L 10.6386 10.6438L 10.6386 9.64384L 9.63855 9.64384ZM 12.4458 38.8767C 12.4458 37.931 13.2124 37.1644 14.1581 37.1644L 14.1581 35.1644C 12.1079 35.1644 10.4458 36.8264 10.4458 38.8767L 12.4458 38.8767ZM 14.1581 37.1644L 47.2877 37.1644L 47.2877 35.1644L 14.1581 35.1644L 14.1581 37.1644ZM 47.2877 37.1644C 48.2334 37.1644 49 37.931 49 38.8767L 51 38.8767C 51 36.8264 49.338 35.1644 47.2877 35.1644L 47.2877 37.1644ZM 49 38.8767C 49 39.8224 48.2334 40.589 47.2877 40.589L 47.2877 42.589C 49.338 42.589 51 40.927 51 38.8767L 49 38.8767ZM 47.2877 40.589L 14.1581 40.589L 14.1581 42.589L 47.2877 42.589L 47.2877 40.589ZM 14.1581 40.589C 13.2124 40.589 12.4458 39.8224 12.4458 38.8767L 10.4458 38.8767C 10.4458 40.927 12.1079 42.589 14.1581 42.589L 14.1581 40.589ZM 4.81928 40.1781C 6.70341 40.1781 8.22892 38.651 8.22892 36.7672L 6.22892 36.7672C 6.22892 37.5474 5.5978 38.1781 4.81928 38.1781L 4.81928 40.1781ZM 8.22892 36.7672C 8.22892 34.8833 6.7034 33.3562 4.81928 33.3562L 4.81928 35.3562C 5.5978 35.3562 6.22892 35.9869 6.22892 36.7672L 8.22892 36.7672ZM 4.81928 33.3562C 2.93515 33.3562 1.40964 34.8833 1.40964 36.7672L 3.40964 36.7672C 3.40964 35.9869 4.04075 35.3562 4.81928 35.3562L 4.81928 33.3562ZM 1.40964 36.7672C 1.40964 38.651 2.93515 40.1781 4.81928 40.1781L 4.81928 38.1781C 4.04075 38.1781 3.40964 37.5474 3.40964 36.7672L 1.40964 36.7672ZM 4.81928 39.3836C 3.88998 39.3836 2.55869 39.609 1.43443 40.0596C 0.871485 40.2853 0.297585 40.592 -0.151602 41.0068C -0.607603 41.4279 -1 42.0267 -1 42.7946L 1 42.7946C 1 42.7608 1.00896 42.6574 1.20525 42.4761C 1.40836 42.2886 1.7377 42.0927 2.17852 41.9161C 3.06179 41.562 4.14014 41.3836 4.81928 41.3836L 4.81928 39.3836ZM -1 42.7946L -1 44L 1 44L 1 42.7946L -1 42.7946ZM 0 45L 9.63855 45L 9.63855 43L 0 43L 0 45ZM 10.6386 44L 10.6386 42.7946L 8.63855 42.7946L 8.63855 44L 10.6386 44ZM 10.6386 42.7946C 10.6386 42.0267 10.2462 41.4279 9.79016 41.0068C 9.34097 40.592 8.76707 40.2853 8.20412 40.0596C 7.07987 39.609 5.74857 39.3836 4.81928 39.3836L 4.81928 41.3836C 5.49841 41.3836 6.57676 41.562 7.46003 41.9161C 7.90085 42.0927 8.23019 42.2886 8.4333 42.4761C 8.6296 42.6574 8.63855 42.7608 8.63855 42.7946L 10.6386 42.7946ZM 12.4458 27.4247C 12.4458 26.479 13.2124 25.7123 14.1581 25.7123L 14.1581 23.7123C 12.1079 23.7123 10.4458 25.3744 10.4458 27.4247L 12.4458 27.4247ZM 14.1581 25.7123L 47.2877 25.7123L 47.2877 23.7123L 14.1581 23.7123L 14.1581 25.7123ZM 47.2877 25.7123C 48.2334 25.7123 49 26.479 49 27.4247L 51 27.4247C 51 25.3744 49.338 23.7123 47.2877 23.7123L 47.2877 25.7123ZM 49 27.4247C 49 28.3704 48.2334 29.137 47.2877 29.137L 47.2877 31.137C 49.338 31.137 51 29.4749 51 27.4247L 49 27.4247ZM 47.2877 29.137L 14.1581 29.137L 14.1581 31.137L 47.2877 31.137L 47.2877 29.137ZM 14.1581 29.137C 13.2124 29.137 12.4458 28.3704 12.4458 27.4247L 10.4458 27.4247C 10.4458 29.4749 12.1079 31.137 14.1581 31.137L 14.1581 29.137ZM 4.81928 28.726C 6.7034 28.726 8.22892 27.1989 8.22892 25.3151L 6.22892 25.3151C 6.22892 26.0954 5.5978 26.726 4.81928 26.726L 4.81928 28.726ZM 8.22892 25.3151C 8.22892 23.4312 6.7034 21.9041 4.81928 21.9041L 4.81928 23.9041C 5.5978 23.9041 6.22892 24.5348 6.22892 25.3151L 8.22892 25.3151ZM 4.81928 21.9041C 2.93515 21.9041 1.40964 23.4313 1.40964 25.3151L 3.40964 25.3151C 3.40964 24.5348 4.04075 23.9041 4.81928 23.9041L 4.81928 21.9041ZM 1.40964 25.3151C 1.40964 27.1989 2.93515 28.726 4.81928 28.726L 4.81928 26.726C 4.04075 26.726 3.40964 26.0954 3.40964 25.3151L 1.40964 25.3151ZM 4.81928 27.9315C 3.88998 27.9315 2.55869 28.1569 1.43443 28.6075C 0.871484 28.8332 0.297585 29.1399 -0.151602 29.5547C -0.607603 29.9758 -1 30.5746 -1 31.3425L 1 31.3425C 1 31.3087 1.00896 31.2053 1.20525 31.024C 1.40836 30.8365 1.7377 30.6407 2.17852 30.464C 3.06179 30.1099 4.14014 29.9315 4.81928 29.9315L 4.81928 27.9315ZM -1 31.3425L -1 32.548L 1 32.548L 1 31.3425L -1 31.3425ZM 0 33.548L 9.63855 33.548L 9.63855 31.548L 0 31.548L 0 33.548ZM 10.6386 32.548L 10.6386 31.3425L 8.63855 31.3425L 8.63855 32.548L 10.6386 32.548ZM 10.6386 31.3425C 10.6386 30.5746 10.2462 29.9758 9.79016 29.5547C 9.34097 29.1399 8.76707 28.8332 8.20413 28.6075C 7.07987 28.1569 5.74857 27.9315 4.81928 27.9315L 4.81928 29.9315C 5.49841 29.9315 6.57676 30.1099 7.46003 30.464C 7.90085 30.6407 8.23019 30.8365 8.4333 31.024C 8.6296 31.2053 8.63855 31.3087 8.63855 31.3425L 10.6386 31.3425ZM 12.4458 15.9726C 12.4458 15.027 13.2124 14.2603 14.1581 14.2603L 14.1581 12.2603C 12.1079 12.2603 10.4458 13.9224 10.4458 15.9726L 12.4458 15.9726ZM 14.1581 14.2603L 47.2877 14.2603L 47.2877 12.2603L 14.1581 12.2603L 14.1581 14.2603ZM 47.2877 14.2603C 48.2334 14.2603 49 15.027 49 15.9726L 51 15.9726C 51 13.9224 49.338 12.2603 47.2877 12.2603L 47.2877 14.2603ZM 49 15.9726C 49 16.9183 48.2334 17.685 47.2877 17.685L 47.2877 19.685C 49.338 19.685 51 18.0229 51 15.9726L 49 15.9726ZM 47.2877 17.685L 14.1581 17.685L 14.1581 19.685L 47.2877 19.685L 47.2877 17.685ZM 14.1581 17.685C 13.2124 17.685 12.4458 16.9183 12.4458 15.9726L 10.4458 15.9726C 10.4458 18.0229 12.1079 19.685 14.1581 19.685L 14.1581 17.685ZM 4.81928 17.2739C 6.7034 17.2739 8.22892 15.7468 8.22892 13.863L 6.22892 13.863C 6.22892 14.6433 5.5978 15.2739 4.81928 15.2739L 4.81928 17.2739ZM 8.22892 13.863C 8.22892 11.9792 6.7034 10.452 4.81928 10.452L 4.81928 12.452C 5.5978 12.452 6.22892 13.0827 6.22892 13.863L 8.22892 13.863ZM 4.81928 10.452C 2.93515 10.452 1.40964 11.9792 1.40964 13.863L 3.40964 13.863C 3.40964 13.0827 4.04075 12.452 4.81928 12.452L 4.81928 10.452ZM 1.40964 13.863C 1.40964 15.7468 2.93515 17.2739 4.81928 17.2739L 4.81928 15.2739C 4.04075 15.2739 3.40964 14.6433 3.40964 13.863L 1.40964 13.863ZM 4.81928 16.4794C 3.88998 16.4794 2.55869 16.7048 1.43443 17.1555C 0.871484 17.3811 0.297585 17.6878 -0.151602 18.1026C -0.607603 18.5237 -1 19.1225 -1 19.8904L 1 19.8904C 1 19.8566 1.00896 19.7532 1.20525 19.572C 1.40836 19.3844 1.7377 19.1886 2.17852 19.0119C 3.06179 18.6579 4.14014 18.4794 4.81928 18.4794L 4.81928 16.4794ZM -1 19.8904L -1 21.0959L 1 21.0959L 1 19.8904L -1 19.8904ZM 0 22.0959L 9.63855 22.0959L 9.63855 20.0959L 0 20.0959L 0 22.0959ZM 10.6386 21.0959L 10.6386 19.8904L 8.63855 19.8904L 8.63855 21.0959L 10.6386 21.0959ZM 10.6386 19.8904C 10.6386 19.1225 10.2462 18.5237 9.79016 18.1026C 9.34097 17.6878 8.76707 17.3811 8.20413 17.1555C 7.07987 16.7048 5.74857 16.4794 4.81928 16.4794L 4.81928 18.4794C 5.49841 18.4794 6.57676 18.6579 7.46003 19.0119C 7.90085 19.1886 8.23019 19.3844 8.4333 19.572C 8.6296 19.7532 8.63855 19.8566 8.63855 19.8904L 10.6386 19.8904ZM 12.4458 4.52056C 12.4458 3.57486 13.2124 2.80823 14.1581 2.80823L 14.1581 0.808228C 12.1079 0.808228 10.4458 2.47029 10.4458 4.52056L 12.4458 4.52056ZM 14.1581 2.80823L 47.2877 2.80823L 47.2877 0.808228L 14.1581 0.808228L 14.1581 2.80823ZM 47.2877 2.80823C 48.2334 2.80823 49 3.57486 49 4.52056L 51 4.52056C 51 2.47029 49.338 0.808228 47.2877 0.808228L 47.2877 2.80823ZM 49 4.52056C 49 5.46625 48.2334 6.23288 47.2877 6.23288L 47.2877 8.23288C 49.338 8.23288 51 6.57082 51 4.52056L 49 4.52056ZM 47.2877 6.23288L 14.1581 6.23288L 14.1581 8.23288L 47.2877 8.23288L 47.2877 6.23288ZM 14.1581 6.23288C 13.2124 6.23288 12.4458 5.46625 12.4458 4.52056L 10.4458 4.52056C 10.4458 6.57082 12.1079 8.23288 14.1581 8.23288L 14.1581 6.23288ZM 4.81928 5.82192C 6.7034 5.82192 8.22892 4.29478 8.22892 2.41096L 6.22892 2.41096C 6.22892 3.19125 5.5978 3.82192 4.81928 3.82192L 4.81928 5.82192ZM 8.22892 2.41096C 8.22892 0.527136 6.7034 -1 4.81928 -1L 4.81928 1C 5.5978 1 6.22892 1.63067 6.22892 2.41096L 8.22892 2.41096ZM 4.81928 -1C 2.93515 -1 1.40964 0.527136 1.40964 2.41096L 3.40964 2.41096C 3.40964 1.63067 4.04075 1 4.81928 1L 4.81928 -1ZM 1.40964 2.41096C 1.40964 4.29478 2.93515 5.82192 4.81928 5.82192L 4.81928 3.82192C 4.04075 3.82192 3.40964 3.19125 3.40964 2.41096L 1.40964 2.41096ZM 4.81928 5.0274C 3.88998 5.0274 2.55869 5.2528 1.43443 5.70343C 0.871484 5.92907 0.297585 6.23579 -0.151602 6.65059C -0.607603 7.07168 -1 7.67046 -1 8.43836L 1 8.43836C 1 8.40461 1.00896 8.30119 1.20525 8.11992C 1.40836 7.93236 1.7377 7.73655 2.17852 7.55986C 3.06179 7.20583 4.14014 7.0274 4.81928 7.0274L 4.81928 5.0274ZM -1 8.43836L -1 9.64384L 1 9.64384L 1 8.43836L -1 8.43836ZM 0 10.6438L 9.63855 10.6438L 9.63855 8.64384L 0 8.64384L 0 10.6438ZM 10.6386 9.64384L 10.6386 8.43836L 8.63855 8.43836L 8.63855 9.64384L 10.6386 9.64384ZM 10.6386 8.43836C 10.6386 7.67046 10.2462 7.07168 9.79016 6.65059C 9.34097 6.23579 8.76707 5.92907 8.20412 5.70343C 7.07987 5.2528 5.74857 5.0274 4.81928 5.0274L 4.81928 7.0274C 5.49841 7.0274 6.57676 7.20583 7.46003 7.55986C 7.90085 7.73655 8.23019 7.93236 8.4333 8.11992C 8.6296 8.30119 8.63855 8.40461 8.63855 8.43836L 10.6386 8.43836Z"
+              }
+            })
+          ])
+        ]
+      )
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/views/barracks/BarracksMain.vue?vue&type=template&id=34fc111d&scoped=true&":
+/*!********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/commandCenter/views/barracks/BarracksMain.vue?vue&type=template&id=34fc111d&scoped=true& ***!
+  \********************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("h1", [_vm._v("BARRACKS MAIN!")])])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/views/campaign/CampaignMain.vue?vue&type=template&id=08efbe06&scoped=true&":
+/*!********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/commandCenter/views/campaign/CampaignMain.vue?vue&type=template&id=08efbe06&scoped=true& ***!
+  \********************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("h1", [_vm._v("CAMPAIGN MAIN!")])])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/views/map/MapMain.vue?vue&type=template&id=04df49f7&scoped=true&":
+/*!**********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/commandCenter/views/map/MapMain.vue?vue&type=template&id=04df49f7&scoped=true& ***!
+  \**********************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("h1", [_vm._v("MAP MAIN!")])])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/views/nation/NationMain.vue?vue&type=template&id=5364e146&scoped=true&":
+/*!****************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/commandCenter/views/nation/NationMain.vue?vue&type=template&id=5364e146&scoped=true& ***!
+  \****************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("h1", [_vm._v("NATION MAIN!")])])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/views/roster/RosterMain.vue?vue&type=template&id=6ec11add&scoped=true&":
+/*!****************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/commandCenter/views/roster/RosterMain.vue?vue&type=template&id=6ec11add&scoped=true& ***!
+  \****************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("h1", [_vm._v("ROSTER MAIN!")])])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/CommandCenter.vue?vue&type=template&id=667e30f1&scoped=true&":
 /*!***********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/CommandCenter.vue?vue&type=template&id=667e30f1&scoped=true& ***!
@@ -32435,7 +34096,11 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _c("v-toolbar-title", [_vm._v("Squad Name")])
+          _c("v-toolbar-title", [
+            _c("span", { staticStyle: { color: "#ffc747" } }, [
+              _vm._v("Squad Name")
+            ])
+          ])
         ],
         1
       ),
@@ -32497,117 +34162,45 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c(
-        "v-content",
-        [
-          _c("v-card", [
-            _c("div", { staticClass: "headline text-xs-center pa-5" }, [
-              _vm._v(
-                "\n                Active: " +
-                  _vm._s(_vm.bottomNav) +
-                  "\n            "
-              )
-            ])
-          ])
-        ],
-        1
-      ),
+      _c("v-content", [_c("router-view")], 1),
       _vm._v(" "),
       _c(
         "v-bottom-nav",
         {
           attrs: {
-            active: _vm.bottomNav,
+            active: _vm.activeNavButton,
             value: true,
             height: 76,
-            absolute: "",
+            fixed: "",
             color: "#332b38",
             app: ""
           },
           on: {
             "update:active": function($event) {
-              _vm.bottomNav = $event
+              _vm.activeNavButton = $event
             }
           }
         },
         [
-          _c(
-            "v-btn",
-            { attrs: { color: "teal", flat: "", value: "recent" } },
-            [
-              _c("span", [_vm._v("Recent")]),
-              _vm._v(" "),
-              _c("v-icon", [_vm._v("history")])
-            ],
-            1
-          ),
+          _c("BarracksFooterButton", {
+            attrs: { "active-nav-button": _vm.activeNavButton }
+          }),
           _vm._v(" "),
-          _c(
-            "v-btn",
-            { attrs: { color: "teal", flat: "", value: "favorites" } },
-            [
-              _c("span", [_vm._v("Favorites")]),
-              _vm._v(" "),
-              _c("v-icon", [_vm._v("favorite")])
-            ],
-            1
-          ),
+          _c("RosterFooterButton", {
+            attrs: { "active-nav-button": _vm.activeNavButton }
+          }),
           _vm._v(" "),
-          _c(
-            "v-btn",
-            { attrs: { color: "teal", flat: "", value: "nearby" } },
-            [
-              _c("span", [_vm._v("Nearby")]),
-              _vm._v(" "),
-              _c("v-icon", [_vm._v("place")])
-            ],
-            1
-          ),
+          _c("MapFooterButton", {
+            attrs: { "active-nav-button": _vm.activeNavButton }
+          }),
           _vm._v(" "),
-          _c(
-            "v-btn",
-            { attrs: { color: "teal", flat: "", value: "axe" } },
-            [
-              _c(
-                "v-sheet",
-                {
-                  staticClass: "d-flex pa-2",
-                  attrs: { color: "transparent", height: "60", width: "60" }
-                },
-                [
-                  _c(
-                    "svg",
-                    {
-                      attrs: {
-                        viewBox: "0 0 60 60",
-                        width: "100%",
-                        height: "100%",
-                        xmlns: "http://www.w3.org/2000/svg"
-                      }
-                    },
-                    [
-                      _c("title"),
-                      _vm._v(" "),
-                      _c(
-                        "g",
-                        { attrs: { "data-name": "Layer 1", id: "Layer_1" } },
-                        [
-                          _c("path", {
-                            attrs: {
-                              fill: "#fff",
-                              d:
-                                "M59.707.293A.99838.99838,0,0,0,58.34766.24219L22.85126,30.80853a2.89313,2.89313,0,0,0-3.30145.46783,43.85169,43.85169,0,0,0-4.2168,5.22412c-2.417,3.27393-5.42383,7.34814-8.7627,10.12012A7.47171,7.47171,0,0,1,3.86523,48.1543C1.22852,48.89355,0,52.07959,0,54a1.00013,1.00013,0,0,0,.293.707l5,5a.99964.99964,0,0,0,1.41406,0l2.40723-2.40771A6.07771,6.07771,0,0,0,10.2627,55.6792c4.32129-8.77393,9.60645-11.18506,13.85352-13.12207a21.656,21.656,0,0,0,3.94238-2.11328,2.93881,2.93881,0,0,0,1.1748-2.14795,2.99788,2.99788,0,0,0-.12524-1.05042L59.75781,1.65234A.99942.99942,0,0,0,59.707.293ZM33.82257,24h4.05206L27.94507,35.53137l-3.476-3.47681ZM8.46777,54.79541a4.0665,4.0665,0,0,1-.76758,1.08984L6,57.58594l-3.97461-3.9751c.14648-1.22705.94141-3.12793,2.37988-3.53076a9.40824,9.40824,0,0,0,3.44238-1.92041A36.38617,36.38617,0,0,0,12,44.00323v5.08051A32.88182,32.88182,0,0,0,8.46777,54.79541Zm18.39746-15.957a20.36262,20.36262,0,0,1-3.5791,1.89893A28.5745,28.5745,0,0,0,14,46.79218V41.582c1.05463-1.3399,2.03925-2.67157,2.94141-3.894a43.13051,43.13051,0,0,1,3.98535-4.96045c.6416-.6084,1.498.11133,1.83594.44873l4.18066,4.18213a1.014,1.014,0,0,1,.29492.792A.93142.93142,0,0,1,26.86523,38.83838ZM39.5968,22H36.14508L49.498,10.50146Z"
-                            }
-                          })
-                        ]
-                      )
-                    ]
-                  )
-                ]
-              )
-            ],
-            1
-          )
+          _c("CampaignFooterButton", {
+            attrs: { "active-nav-button": _vm.activeNavButton }
+          }),
+          _vm._v(" "),
+          _c("NationFooterButton", {
+            attrs: { "active-nav-button": _vm.activeNavButton }
+          })
         ],
         1
       )
@@ -72460,22 +74053,877 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var _views_CommandCenter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./views/CommandCenter */ "./resources/js/views/CommandCenter.vue");
+/* harmony import */ var _routes_cc_routes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./routes/cc-routes */ "./resources/js/routes/cc-routes.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _views_CommandCenter__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./views/CommandCenter */ "./resources/js/views/CommandCenter.vue");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
+var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
+  mode: 'history',
+  routes: _routes_cc_routes__WEBPACK_IMPORTED_MODULE_2__["routes"]
+});
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_3__["default"]);
 
 var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: '#app',
+  router: router,
   components: {
-    CommandCenter: _views_CommandCenter__WEBPACK_IMPORTED_MODULE_3__["default"]
+    CommandCenter: _views_CommandCenter__WEBPACK_IMPORTED_MODULE_4__["default"]
   }
 });
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/footer/BarracksFooterButton.vue":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/footer/BarracksFooterButton.vue ***!
+  \*******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _BarracksFooterButton_vue_vue_type_template_id_7ce7fe60_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BarracksFooterButton.vue?vue&type=template&id=7ce7fe60&scoped=true& */ "./resources/js/components/commandCenter/footer/BarracksFooterButton.vue?vue&type=template&id=7ce7fe60&scoped=true&");
+/* harmony import */ var _BarracksFooterButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BarracksFooterButton.vue?vue&type=script&lang=js& */ "./resources/js/components/commandCenter/footer/BarracksFooterButton.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _BarracksFooterButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _BarracksFooterButton_vue_vue_type_template_id_7ce7fe60_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _BarracksFooterButton_vue_vue_type_template_id_7ce7fe60_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "7ce7fe60",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/commandCenter/footer/BarracksFooterButton.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/footer/BarracksFooterButton.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/footer/BarracksFooterButton.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BarracksFooterButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./BarracksFooterButton.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/footer/BarracksFooterButton.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BarracksFooterButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/footer/BarracksFooterButton.vue?vue&type=template&id=7ce7fe60&scoped=true&":
+/*!**************************************************************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/footer/BarracksFooterButton.vue?vue&type=template&id=7ce7fe60&scoped=true& ***!
+  \**************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BarracksFooterButton_vue_vue_type_template_id_7ce7fe60_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./BarracksFooterButton.vue?vue&type=template&id=7ce7fe60&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/footer/BarracksFooterButton.vue?vue&type=template&id=7ce7fe60&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BarracksFooterButton_vue_vue_type_template_id_7ce7fe60_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BarracksFooterButton_vue_vue_type_template_id_7ce7fe60_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/footer/CampaignFooterButton.vue":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/footer/CampaignFooterButton.vue ***!
+  \*******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _CampaignFooterButton_vue_vue_type_template_id_28ff2db2_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CampaignFooterButton.vue?vue&type=template&id=28ff2db2&scoped=true& */ "./resources/js/components/commandCenter/footer/CampaignFooterButton.vue?vue&type=template&id=28ff2db2&scoped=true&");
+/* harmony import */ var _CampaignFooterButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CampaignFooterButton.vue?vue&type=script&lang=js& */ "./resources/js/components/commandCenter/footer/CampaignFooterButton.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _CampaignFooterButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CampaignFooterButton_vue_vue_type_template_id_28ff2db2_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _CampaignFooterButton_vue_vue_type_template_id_28ff2db2_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "28ff2db2",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/commandCenter/footer/CampaignFooterButton.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/footer/CampaignFooterButton.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/footer/CampaignFooterButton.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CampaignFooterButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./CampaignFooterButton.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/footer/CampaignFooterButton.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CampaignFooterButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/footer/CampaignFooterButton.vue?vue&type=template&id=28ff2db2&scoped=true&":
+/*!**************************************************************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/footer/CampaignFooterButton.vue?vue&type=template&id=28ff2db2&scoped=true& ***!
+  \**************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CampaignFooterButton_vue_vue_type_template_id_28ff2db2_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./CampaignFooterButton.vue?vue&type=template&id=28ff2db2&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/footer/CampaignFooterButton.vue?vue&type=template&id=28ff2db2&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CampaignFooterButton_vue_vue_type_template_id_28ff2db2_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CampaignFooterButton_vue_vue_type_template_id_28ff2db2_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/footer/FooterIcon.vue":
+/*!*********************************************************************!*\
+  !*** ./resources/js/components/commandCenter/footer/FooterIcon.vue ***!
+  \*********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _FooterIcon_vue_vue_type_template_id_2d4dd204_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FooterIcon.vue?vue&type=template&id=2d4dd204&scoped=true& */ "./resources/js/components/commandCenter/footer/FooterIcon.vue?vue&type=template&id=2d4dd204&scoped=true&");
+/* harmony import */ var _FooterIcon_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FooterIcon.vue?vue&type=script&lang=js& */ "./resources/js/components/commandCenter/footer/FooterIcon.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _FooterIcon_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _FooterIcon_vue_vue_type_template_id_2d4dd204_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _FooterIcon_vue_vue_type_template_id_2d4dd204_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "2d4dd204",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/commandCenter/footer/FooterIcon.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/footer/FooterIcon.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/footer/FooterIcon.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FooterIcon_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./FooterIcon.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/footer/FooterIcon.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FooterIcon_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/footer/FooterIcon.vue?vue&type=template&id=2d4dd204&scoped=true&":
+/*!****************************************************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/footer/FooterIcon.vue?vue&type=template&id=2d4dd204&scoped=true& ***!
+  \****************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FooterIcon_vue_vue_type_template_id_2d4dd204_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./FooterIcon.vue?vue&type=template&id=2d4dd204&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/footer/FooterIcon.vue?vue&type=template&id=2d4dd204&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FooterIcon_vue_vue_type_template_id_2d4dd204_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FooterIcon_vue_vue_type_template_id_2d4dd204_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/footer/MapFooterButton.vue":
+/*!**************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/footer/MapFooterButton.vue ***!
+  \**************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _MapFooterButton_vue_vue_type_template_id_4b2ba062_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MapFooterButton.vue?vue&type=template&id=4b2ba062&scoped=true& */ "./resources/js/components/commandCenter/footer/MapFooterButton.vue?vue&type=template&id=4b2ba062&scoped=true&");
+/* harmony import */ var _MapFooterButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MapFooterButton.vue?vue&type=script&lang=js& */ "./resources/js/components/commandCenter/footer/MapFooterButton.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _MapFooterButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _MapFooterButton_vue_vue_type_template_id_4b2ba062_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _MapFooterButton_vue_vue_type_template_id_4b2ba062_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "4b2ba062",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/commandCenter/footer/MapFooterButton.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/footer/MapFooterButton.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/footer/MapFooterButton.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MapFooterButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./MapFooterButton.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/footer/MapFooterButton.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MapFooterButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/footer/MapFooterButton.vue?vue&type=template&id=4b2ba062&scoped=true&":
+/*!*********************************************************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/footer/MapFooterButton.vue?vue&type=template&id=4b2ba062&scoped=true& ***!
+  \*********************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MapFooterButton_vue_vue_type_template_id_4b2ba062_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./MapFooterButton.vue?vue&type=template&id=4b2ba062&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/footer/MapFooterButton.vue?vue&type=template&id=4b2ba062&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MapFooterButton_vue_vue_type_template_id_4b2ba062_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MapFooterButton_vue_vue_type_template_id_4b2ba062_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/footer/NationFooterButton.vue":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/footer/NationFooterButton.vue ***!
+  \*****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _NationFooterButton_vue_vue_type_template_id_00488dde_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NationFooterButton.vue?vue&type=template&id=00488dde&scoped=true& */ "./resources/js/components/commandCenter/footer/NationFooterButton.vue?vue&type=template&id=00488dde&scoped=true&");
+/* harmony import */ var _NationFooterButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NationFooterButton.vue?vue&type=script&lang=js& */ "./resources/js/components/commandCenter/footer/NationFooterButton.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _NationFooterButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _NationFooterButton_vue_vue_type_template_id_00488dde_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _NationFooterButton_vue_vue_type_template_id_00488dde_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "00488dde",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/commandCenter/footer/NationFooterButton.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/footer/NationFooterButton.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/footer/NationFooterButton.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NationFooterButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./NationFooterButton.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/footer/NationFooterButton.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NationFooterButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/footer/NationFooterButton.vue?vue&type=template&id=00488dde&scoped=true&":
+/*!************************************************************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/footer/NationFooterButton.vue?vue&type=template&id=00488dde&scoped=true& ***!
+  \************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NationFooterButton_vue_vue_type_template_id_00488dde_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./NationFooterButton.vue?vue&type=template&id=00488dde&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/footer/NationFooterButton.vue?vue&type=template&id=00488dde&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NationFooterButton_vue_vue_type_template_id_00488dde_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NationFooterButton_vue_vue_type_template_id_00488dde_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/footer/RosterFooterButton.vue":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/footer/RosterFooterButton.vue ***!
+  \*****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _RosterFooterButton_vue_vue_type_template_id_4e61e522_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RosterFooterButton.vue?vue&type=template&id=4e61e522&scoped=true& */ "./resources/js/components/commandCenter/footer/RosterFooterButton.vue?vue&type=template&id=4e61e522&scoped=true&");
+/* harmony import */ var _RosterFooterButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RosterFooterButton.vue?vue&type=script&lang=js& */ "./resources/js/components/commandCenter/footer/RosterFooterButton.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _RosterFooterButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _RosterFooterButton_vue_vue_type_template_id_4e61e522_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _RosterFooterButton_vue_vue_type_template_id_4e61e522_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "4e61e522",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/commandCenter/footer/RosterFooterButton.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/footer/RosterFooterButton.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/footer/RosterFooterButton.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RosterFooterButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./RosterFooterButton.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/footer/RosterFooterButton.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RosterFooterButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/footer/RosterFooterButton.vue?vue&type=template&id=4e61e522&scoped=true&":
+/*!************************************************************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/footer/RosterFooterButton.vue?vue&type=template&id=4e61e522&scoped=true& ***!
+  \************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RosterFooterButton_vue_vue_type_template_id_4e61e522_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./RosterFooterButton.vue?vue&type=template&id=4e61e522&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/footer/RosterFooterButton.vue?vue&type=template&id=4e61e522&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RosterFooterButton_vue_vue_type_template_id_4e61e522_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RosterFooterButton_vue_vue_type_template_id_4e61e522_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/views/barracks/BarracksMain.vue":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/views/barracks/BarracksMain.vue ***!
+  \*******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _BarracksMain_vue_vue_type_template_id_34fc111d_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BarracksMain.vue?vue&type=template&id=34fc111d&scoped=true& */ "./resources/js/components/commandCenter/views/barracks/BarracksMain.vue?vue&type=template&id=34fc111d&scoped=true&");
+/* harmony import */ var _BarracksMain_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BarracksMain.vue?vue&type=script&lang=js& */ "./resources/js/components/commandCenter/views/barracks/BarracksMain.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _BarracksMain_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _BarracksMain_vue_vue_type_template_id_34fc111d_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _BarracksMain_vue_vue_type_template_id_34fc111d_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "34fc111d",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/commandCenter/views/barracks/BarracksMain.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/views/barracks/BarracksMain.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/views/barracks/BarracksMain.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BarracksMain_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./BarracksMain.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/views/barracks/BarracksMain.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BarracksMain_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/views/barracks/BarracksMain.vue?vue&type=template&id=34fc111d&scoped=true&":
+/*!**************************************************************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/views/barracks/BarracksMain.vue?vue&type=template&id=34fc111d&scoped=true& ***!
+  \**************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BarracksMain_vue_vue_type_template_id_34fc111d_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./BarracksMain.vue?vue&type=template&id=34fc111d&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/views/barracks/BarracksMain.vue?vue&type=template&id=34fc111d&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BarracksMain_vue_vue_type_template_id_34fc111d_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BarracksMain_vue_vue_type_template_id_34fc111d_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/views/campaign/CampaignMain.vue":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/views/campaign/CampaignMain.vue ***!
+  \*******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _CampaignMain_vue_vue_type_template_id_08efbe06_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CampaignMain.vue?vue&type=template&id=08efbe06&scoped=true& */ "./resources/js/components/commandCenter/views/campaign/CampaignMain.vue?vue&type=template&id=08efbe06&scoped=true&");
+/* harmony import */ var _CampaignMain_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CampaignMain.vue?vue&type=script&lang=js& */ "./resources/js/components/commandCenter/views/campaign/CampaignMain.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _CampaignMain_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CampaignMain_vue_vue_type_template_id_08efbe06_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _CampaignMain_vue_vue_type_template_id_08efbe06_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "08efbe06",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/commandCenter/views/campaign/CampaignMain.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/views/campaign/CampaignMain.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/views/campaign/CampaignMain.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CampaignMain_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./CampaignMain.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/views/campaign/CampaignMain.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CampaignMain_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/views/campaign/CampaignMain.vue?vue&type=template&id=08efbe06&scoped=true&":
+/*!**************************************************************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/views/campaign/CampaignMain.vue?vue&type=template&id=08efbe06&scoped=true& ***!
+  \**************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CampaignMain_vue_vue_type_template_id_08efbe06_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./CampaignMain.vue?vue&type=template&id=08efbe06&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/views/campaign/CampaignMain.vue?vue&type=template&id=08efbe06&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CampaignMain_vue_vue_type_template_id_08efbe06_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CampaignMain_vue_vue_type_template_id_08efbe06_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/views/map/MapMain.vue":
+/*!*********************************************************************!*\
+  !*** ./resources/js/components/commandCenter/views/map/MapMain.vue ***!
+  \*********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _MapMain_vue_vue_type_template_id_04df49f7_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MapMain.vue?vue&type=template&id=04df49f7&scoped=true& */ "./resources/js/components/commandCenter/views/map/MapMain.vue?vue&type=template&id=04df49f7&scoped=true&");
+/* harmony import */ var _MapMain_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MapMain.vue?vue&type=script&lang=js& */ "./resources/js/components/commandCenter/views/map/MapMain.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _MapMain_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _MapMain_vue_vue_type_template_id_04df49f7_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _MapMain_vue_vue_type_template_id_04df49f7_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "04df49f7",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/commandCenter/views/map/MapMain.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/views/map/MapMain.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/views/map/MapMain.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MapMain_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./MapMain.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/views/map/MapMain.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MapMain_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/views/map/MapMain.vue?vue&type=template&id=04df49f7&scoped=true&":
+/*!****************************************************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/views/map/MapMain.vue?vue&type=template&id=04df49f7&scoped=true& ***!
+  \****************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MapMain_vue_vue_type_template_id_04df49f7_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./MapMain.vue?vue&type=template&id=04df49f7&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/views/map/MapMain.vue?vue&type=template&id=04df49f7&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MapMain_vue_vue_type_template_id_04df49f7_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MapMain_vue_vue_type_template_id_04df49f7_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/views/nation/NationMain.vue":
+/*!***************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/views/nation/NationMain.vue ***!
+  \***************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _NationMain_vue_vue_type_template_id_5364e146_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NationMain.vue?vue&type=template&id=5364e146&scoped=true& */ "./resources/js/components/commandCenter/views/nation/NationMain.vue?vue&type=template&id=5364e146&scoped=true&");
+/* harmony import */ var _NationMain_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NationMain.vue?vue&type=script&lang=js& */ "./resources/js/components/commandCenter/views/nation/NationMain.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _NationMain_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _NationMain_vue_vue_type_template_id_5364e146_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _NationMain_vue_vue_type_template_id_5364e146_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "5364e146",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/commandCenter/views/nation/NationMain.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/views/nation/NationMain.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/views/nation/NationMain.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NationMain_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./NationMain.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/views/nation/NationMain.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NationMain_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/views/nation/NationMain.vue?vue&type=template&id=5364e146&scoped=true&":
+/*!**********************************************************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/views/nation/NationMain.vue?vue&type=template&id=5364e146&scoped=true& ***!
+  \**********************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NationMain_vue_vue_type_template_id_5364e146_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./NationMain.vue?vue&type=template&id=5364e146&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/views/nation/NationMain.vue?vue&type=template&id=5364e146&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NationMain_vue_vue_type_template_id_5364e146_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NationMain_vue_vue_type_template_id_5364e146_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/views/roster/RosterMain.vue":
+/*!***************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/views/roster/RosterMain.vue ***!
+  \***************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _RosterMain_vue_vue_type_template_id_6ec11add_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RosterMain.vue?vue&type=template&id=6ec11add&scoped=true& */ "./resources/js/components/commandCenter/views/roster/RosterMain.vue?vue&type=template&id=6ec11add&scoped=true&");
+/* harmony import */ var _RosterMain_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RosterMain.vue?vue&type=script&lang=js& */ "./resources/js/components/commandCenter/views/roster/RosterMain.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _RosterMain_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _RosterMain_vue_vue_type_template_id_6ec11add_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _RosterMain_vue_vue_type_template_id_6ec11add_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "6ec11add",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/commandCenter/views/roster/RosterMain.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/views/roster/RosterMain.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/views/roster/RosterMain.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RosterMain_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./RosterMain.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/views/roster/RosterMain.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RosterMain_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/views/roster/RosterMain.vue?vue&type=template&id=6ec11add&scoped=true&":
+/*!**********************************************************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/views/roster/RosterMain.vue?vue&type=template&id=6ec11add&scoped=true& ***!
+  \**********************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RosterMain_vue_vue_type_template_id_6ec11add_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./RosterMain.vue?vue&type=template&id=6ec11add&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/views/roster/RosterMain.vue?vue&type=template&id=6ec11add&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RosterMain_vue_vue_type_template_id_6ec11add_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RosterMain_vue_vue_type_template_id_6ec11add_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/mixins/ccNavButtonMixin.js":
+/*!*************************************************!*\
+  !*** ./resources/js/mixins/ccNavButtonMixin.js ***!
+  \*************************************************/
+/*! exports provided: navButtonMixin */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "navButtonMixin", function() { return navButtonMixin; });
+/* harmony import */ var _components_commandCenter_footer_FooterIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/commandCenter/footer/FooterIcon */ "./resources/js/components/commandCenter/footer/FooterIcon.vue");
+
+var navButtonMixin = {
+  props: ['value', 'activeNavButton'],
+  components: {
+    FooterIcon: _components_commandCenter_footer_FooterIcon__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  computed: {
+    outlineColor: function outlineColor() {
+      return this.isActive ? '#ffffff' : '#ffc747';
+    },
+    fillColor: function fillColor() {
+      return this.isActive ? '#ffc747' : 'none';
+    },
+    isActive: function isActive() {
+      return this.name === this.activeNavButton;
+    },
+    to: function to() {
+      return '/cc/' + this.$route.params.squadSlug + '/' + this.name;
+    }
+  }
+};
+
+/***/ }),
+
+/***/ "./resources/js/routes/cc-routes.js":
+/*!******************************************!*\
+  !*** ./resources/js/routes/cc-routes.js ***!
+  \******************************************/
+/*! exports provided: routes */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "routes", function() { return routes; });
+/* harmony import */ var _components_commandCenter_views_barracks_BarracksMain__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/commandCenter/views/barracks/BarracksMain */ "./resources/js/components/commandCenter/views/barracks/BarracksMain.vue");
+/* harmony import */ var _components_commandCenter_views_roster_RosterMain__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/commandCenter/views/roster/RosterMain */ "./resources/js/components/commandCenter/views/roster/RosterMain.vue");
+/* harmony import */ var _components_commandCenter_views_map_MapMain__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/commandCenter/views/map/MapMain */ "./resources/js/components/commandCenter/views/map/MapMain.vue");
+/* harmony import */ var _components_commandCenter_views_campaign_CampaignMain__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/commandCenter/views/campaign/CampaignMain */ "./resources/js/components/commandCenter/views/campaign/CampaignMain.vue");
+/* harmony import */ var _components_commandCenter_views_nation_NationMain__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/commandCenter/views/nation/NationMain */ "./resources/js/components/commandCenter/views/nation/NationMain.vue");
+
+
+
+
+
+var routes = [{
+  path: '/cc/:squadSlug/barracks',
+  name: 'barracks',
+  components: {
+    default: _components_commandCenter_views_barracks_BarracksMain__WEBPACK_IMPORTED_MODULE_0__["default"]
+  }
+}, {
+  path: '/cc/:squadSlug/roster',
+  name: 'roster',
+  components: {
+    default: _components_commandCenter_views_roster_RosterMain__WEBPACK_IMPORTED_MODULE_1__["default"]
+  }
+}, {
+  path: '/cc/:squadSlug/map',
+  name: 'map',
+  components: {
+    default: _components_commandCenter_views_map_MapMain__WEBPACK_IMPORTED_MODULE_2__["default"]
+  }
+}, {
+  path: '/cc/:squadSlug/campaign',
+  name: 'campaign',
+  components: {
+    default: _components_commandCenter_views_campaign_CampaignMain__WEBPACK_IMPORTED_MODULE_3__["default"]
+  }
+}, {
+  path: '/cc/:squadSlug/nation',
+  name: 'nation',
+  components: {
+    default: _components_commandCenter_views_nation_NationMain__WEBPACK_IMPORTED_MODULE_4__["default"]
+  }
+}];
 
 /***/ }),
 
