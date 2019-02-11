@@ -9,24 +9,7 @@
                 v-model="drawer"
                 app
         >
-            <v-list dense>
-                <v-list-tile @click="">
-                    <v-list-tile-action>
-                        <v-icon>home</v-icon>
-                    </v-list-tile-action>
-                    <v-list-tile-content>
-                        <v-list-tile-title>Home</v-list-tile-title>
-                    </v-list-tile-content>
-                </v-list-tile>
-                <v-list-tile @click="">
-                    <v-list-tile-action>
-                        <v-icon>contact_mail</v-icon>
-                    </v-list-tile-action>
-                    <v-list-tile-content>
-                        <v-list-tile-title>Contact</v-list-tile-title>
-                    </v-list-tile-content>
-                </v-list-tile>
-            </v-list>
+            <router-view name="drawer"></router-view>
         </v-navigation-drawer>
         <v-content>
             <router-view></router-view>

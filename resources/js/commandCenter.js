@@ -2,7 +2,7 @@ require('./bootstrap');
 
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import { routes } from './routes/cc-routes';
+import { routes } from './routes/ccRoutes';
 
 Vue.use(VueRouter);
 

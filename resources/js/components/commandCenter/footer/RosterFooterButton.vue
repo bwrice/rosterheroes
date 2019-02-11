@@ -1,5 +1,5 @@
 <template>
-    <FooterIcon :value="value" :to="'/cc/easy-name/roster'">
+    <FooterIcon :value="name" :to="to">
         <svg viewBox="0 0 50 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <g id="Canvas">
                 <g id="Vector">
@@ -43,30 +43,19 @@
 
 <script>
 
-    import FooterIcon from './FooterIcon';
+
+    import { navButtonMixin } from '../../../mixins/ccNavButtonMixin'
 
     export default {
-        name: "RosterFooterButton",
-        props: ['activeNavButton'],
-        components: {
-            FooterIcon
-        },
+        name: "BarracksFooterButton",
+        mixins: [
+            navButtonMixin
+        ],
         data: function() {
             return {
-                'value': 'roster'
+                'name': 'roster'
             }
         },
-        computed: {
-            outlineColor: function() {
-                return this.isActive ? '#ffffff' : '#ffc747';
-            },
-            fillColor: function() {
-                return this.isActive ? '#ffc747' : 'none';
-            },
-            isActive: function() {
-                return 'roster' === this.activeNavButton;
-            }
-        }
     }
 </script>
 

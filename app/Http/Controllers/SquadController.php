@@ -56,8 +56,11 @@ class SquadController extends Controller
         ]);
     }
 
-    public function show(Request $request, $squadSlug)
+    public function show(Request $request, $squadSlug, $any = null )
     {
+        if(! $any) {
+            return redirect('/cc/' . $squadSlug . '/barracks');
+        }
         $squad = Squad::slugOrFail($squadSlug);
         if($squad->inCreationState()) {
             return view('create-squad', [

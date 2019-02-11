@@ -1,5 +1,5 @@
 <template>
-    <FooterIcon :value="value">
+    <FooterIcon :value="name" :to="to">
         <svg viewBox="0 0 46 46" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <g id="Canvas">
                 <g id="Subtract">
@@ -22,30 +22,19 @@
 
 <script>
 
-    import FooterIcon from './FooterIcon';
+
+    import { navButtonMixin } from '../../../mixins/ccNavButtonMixin'
 
     export default {
-        name: "MapFooterIcon",
-        props: ['activeNavButton'],
-        components: {
-            FooterIcon
-        },
+        name: "BarracksFooterButton",
+        mixins: [
+            navButtonMixin
+        ],
         data: function() {
             return {
-                'value': 'map'
+                'name': 'map'
             }
         },
-        computed: {
-            outlineColor: function() {
-                return this.isActive ? '#ffffff' : '#ffc747';
-            },
-            fillColor: function() {
-                return this.isActive ? '#ffc747' : 'none';
-            },
-            isActive: function() {
-                return 'map' === this.activeNavButton;
-            }
-        }
     }
 </script>
 

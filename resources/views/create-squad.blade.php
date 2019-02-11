@@ -11,5 +11,5 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ mix('/js/create-squad.js') }}"></script>
+    <script src="{{ mix('/js/createSquad.js') }}"></script>
 @endsection

@@ -7,5 +7,5 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ mix('/js/command-center.js') }}"></script>
+    <script src="{{ mix('/js/commandCenter.js') }}"></script>
 @endsection
