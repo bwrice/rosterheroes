@@ -24,6 +24,7 @@ class SquadController extends Controller
 {
     public function store(Request $request)
     {
+        //TODO authorize
         $request->validate([
             'name' => 'required|unique:squads|between:4,20|regex:/^[\w\-\s]+$/'
         ]);
@@ -58,18 +59,22 @@ class SquadController extends Controller
 
     public function show(Request $request, $squadSlug, $any = null )
     {
-        if(! $any) {
-            return redirect('/cc/' . $squadSlug . '/barracks');
-        }
         $squad = Squad::slugOrFail($squadSlug);
-        if($squad->inCreationState()) {
-            return view('create-squad', [
-                'squad' => json_encode(new SquadResource($squad)),
-                'heroes' => json_encode((HeroResource::collection($squad->getHeroes()))),
-                'heroClasses' => json_encode(HeroClassResource::collection($squad->getHeroClassAvailability())),
-                'heroRaces' => json_encode(HeroRaceResource::collection($squad->getHeroRaceAvailability()))
-            ]);
+        //TODO: authorize
+        if ($request->expectsJson()) {
+            return new SquadResource($squad);
+        } elseif (! $any) {
+            return redirect('/command-center/' . $squadSlug . '/barracks');
+        } else {
+            if($squad->inCreationState()) {
+                return view('create-squad', [
+                    'squad' => json_encode(new SquadResource($squad)),
+                    'heroes' => json_encode((HeroResource::collection($squad->getHeroes()))),
+                    'heroClasses' => json_encode(HeroClassResource::collection($squad->getHeroClassAvailability())),
+                    'heroRaces' => json_encode(HeroRaceResource::collection($squad->getHeroRaceAvailability()))
+                ]);
+            }
+            return view('command-center');
         }
-        return view('command-center');
     }
 }

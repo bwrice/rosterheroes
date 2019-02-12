@@ -6,7 +6,10 @@
 
 <script>
     export default {
-        name: "CampaignMain"
+        name: "CampaignMain",
+        created: () => {
+            console.log("Campaign Created!");
+        }
     }
 </script>
 

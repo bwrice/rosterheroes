@@ -6,7 +6,10 @@
 
 <script>
     export default {
-        name: "MapMain"
+        name: "MapMain",
+        created: () => {
+            console.log("Map Created!");
+        }
     }
 </script>
 

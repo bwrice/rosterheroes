@@ -55,7 +55,7 @@
                                 <p>is all set up. You can now head over to the <br>
                                     command center to begin your journey
                                 </p>
-                                <v-btn :href="'/cc/' + this.squadClone.slug" color="primary">
+                                <v-btn :href="'/command-center/' + this.squadClone.slug" color="primary">
                                     Go to Command Center
                                 </v-btn>
                             </v-stepper-content>

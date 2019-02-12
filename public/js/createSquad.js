@@ -33308,7 +33308,8 @@ var render = function() {
                                 "v-btn",
                                 {
                                   attrs: {
-                                    href: "/cc/" + this.squadClone.slug,
+                                    href:
+                                      "/command-center/" + this.squadClone.slug,
                                     color: "primary"
                                   }
                                 },

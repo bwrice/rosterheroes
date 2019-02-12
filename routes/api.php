@@ -20,6 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::middleware('auth:api')->post('/squads', 'SquadController@store');
+Route::middleware('auth:api')->get('/squad/{squadUuid}', 'SquadController@show');
 
 Route::middleware('auth:api')->get('/squad/{squadUuid}/hero-classes', 'SquadHeroClassController');
 Route::middleware('auth:api')->get('/squad/{squadUuid}/hero-races', 'SquadHeroRaceController');

@@ -11,7 +11,7 @@ import NationNavigationDrawer from '../components/commandCenter/views/nation/Nat
 
 export const routes = [
     {
-        path: '/cc/:squadSlug/barracks',
+        path: '/command-center/:squadSlug/barracks',
         name: 'barracks',
         components: {
             default: BarracksMain,
@@ -19,7 +19,7 @@ export const routes = [
         }
     },
     {
-        path: '/cc/:squadSlug/roster',
+        path: '/command-center/:squadSlug/roster',
         name: 'roster',
         components: {
             default: RosterMain,
@@ -27,7 +27,7 @@ export const routes = [
         }
     },
     {
-        path: '/cc/:squadSlug/map',
+        path: '/command-center/:squadSlug/map',
         name: 'map',
         components: {
             default: MapMain,
@@ -35,7 +35,7 @@ export const routes = [
         }
     },
     {
-        path: '/cc/:squadSlug/campaign',
+        path: '/command-center/:squadSlug/campaign',
         name: 'campaign',
         components: {
             default: CampaignMain,
@@ -43,7 +43,7 @@ export const routes = [
         }
     },
     {
-        path: '/cc/:squadSlug/nation',
+        path: '/command-center/:squadSlug/nation',
         name: 'nation',
         components: {
             default: NationMain,

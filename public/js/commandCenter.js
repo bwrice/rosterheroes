@@ -2109,7 +2109,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "BarracksMain"
+  name: "BarracksMain",
+  created: function created() {
+    console.log("Barracks Created!");
+  }
 });
 
 /***/ }),
@@ -2166,7 +2169,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "CampaignMain"
+  name: "CampaignMain",
+  created: function created() {
+    console.log("Campaign Created!");
+  }
 });
 
 /***/ }),
@@ -2224,7 +2230,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "MapMain"
+  name: "MapMain",
+  created: function created() {
+    console.log("Map Created!");
+  }
 });
 
 /***/ }),
@@ -2281,7 +2290,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "NationMain"
+  name: "NationMain",
+  created: function created() {
+    console.log("Nation Created!");
+  }
 });
 
 /***/ }),
@@ -2393,6 +2405,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_commandCenter_footer_MapFooterButton__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/commandCenter/footer/MapFooterButton */ "./resources/js/components/commandCenter/footer/MapFooterButton.vue");
 /* harmony import */ var _components_commandCenter_footer_CampaignFooterButton__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/commandCenter/footer/CampaignFooterButton */ "./resources/js/components/commandCenter/footer/CampaignFooterButton.vue");
 /* harmony import */ var _components_commandCenter_footer_NationFooterButton__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/commandCenter/footer/NationFooterButton */ "./resources/js/components/commandCenter/footer/NationFooterButton.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2425,7 +2442,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
+
+
 
 
 
@@ -2440,20 +2458,26 @@ __webpack_require__.r(__webpack_exports__);
     CampaignFooterButton: _components_commandCenter_footer_CampaignFooterButton__WEBPACK_IMPORTED_MODULE_3__["default"],
     NationFooterButton: _components_commandCenter_footer_NationFooterButton__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
-  created: function created() {
-    this.setInitialActiveNav();
+  mounted: function mounted() {
+    this.setInitialSquad();
   },
   data: function data() {
     return {
-      activeNavButton: '',
       drawer: false
     };
   },
-  methods: {
-    setInitialActiveNav: function setInitialActiveNav() {
-      this.activeNavButton = this.$route.name;
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_5__["mapActions"])(['setSquad']), {
+    setInitialSquad: function setInitialSquad() {
+      var self = this;
+      axios.get('/api/squad/' + this.$route.params.squadSlug).then(function (response) {
+        self.setSquad(response.data.data);
+      }).catch(function (error) {
+        console.log("ERROR!");
+        console.log(error);
+      });
     }
-  }
+  }),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_5__["mapGetters"])(['_squad']))
 });
 
 /***/ }),
@@ -34493,7 +34517,7 @@ var render = function() {
           _vm._v(" "),
           _c("v-toolbar-title", [
             _c("span", { staticStyle: { color: "#ffc747" } }, [
-              _vm._v("Squad Name")
+              _vm._v(_vm._s(_vm._squad.name))
             ])
           ])
         ],
@@ -34522,39 +34546,23 @@ var render = function() {
         "v-bottom-nav",
         {
           attrs: {
-            active: _vm.activeNavButton,
             value: true,
             height: 76,
             fixed: "",
             color: "#332b38",
             app: ""
-          },
-          on: {
-            "update:active": function($event) {
-              _vm.activeNavButton = $event
-            }
           }
         },
         [
-          _c("BarracksFooterButton", {
-            attrs: { "active-nav-button": _vm.activeNavButton }
-          }),
+          _c("BarracksFooterButton"),
           _vm._v(" "),
-          _c("RosterFooterButton", {
-            attrs: { "active-nav-button": _vm.activeNavButton }
-          }),
+          _c("RosterFooterButton"),
           _vm._v(" "),
-          _c("MapFooterButton", {
-            attrs: { "active-nav-button": _vm.activeNavButton }
-          }),
+          _c("MapFooterButton"),
           _vm._v(" "),
-          _c("CampaignFooterButton", {
-            attrs: { "active-nav-button": _vm.activeNavButton }
-          }),
+          _c("CampaignFooterButton"),
           _vm._v(" "),
-          _c("NationFooterButton", {
-            attrs: { "active-nav-button": _vm.activeNavButton }
-          })
+          _c("NationFooterButton")
         ],
         1
       )
@@ -74410,6 +74418,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _routes_ccRoutes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./routes/ccRoutes */ "./resources/js/routes/ccRoutes.js");
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _views_CommandCenter__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./views/CommandCenter */ "./resources/js/views/CommandCenter.vue");
+/* harmony import */ var _store_commandCenter_ccStore__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./store/commandCenter/ccStore */ "./resources/js/store/commandCenter/ccStore.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
@@ -74423,8 +74432,10 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_3__["default"]);
 
+
 var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: '#app',
+  store: _store_commandCenter_ccStore__WEBPACK_IMPORTED_MODULE_5__["store"],
   router: router,
   components: {
     CommandCenter: _views_CommandCenter__WEBPACK_IMPORTED_MODULE_4__["default"]
@@ -75550,7 +75561,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_commandCenter_footer_FooterIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/commandCenter/footer/FooterIcon */ "./resources/js/components/commandCenter/footer/FooterIcon.vue");
 
 var navButtonMixin = {
-  props: ['value', 'activeNavButton'],
+  props: ['value'],
   components: {
     FooterIcon: _components_commandCenter_footer_FooterIcon__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -75562,10 +75573,10 @@ var navButtonMixin = {
       return this.isActive ? '#ffc747' : 'none';
     },
     isActive: function isActive() {
-      return this.name === this.activeNavButton;
+      return this.name === this.$route.name;
     },
     to: function to() {
-      return '/cc/' + this.$route.params.squadSlug + '/' + this.name;
+      return '/command-center/' + this.$route.params.squadSlug + '/' + this.name;
     }
   }
 };
@@ -75603,41 +75614,102 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var routes = [{
-  path: '/cc/:squadSlug/barracks',
+  path: '/command-center/:squadSlug/barracks',
   name: 'barracks',
   components: {
     default: _components_commandCenter_views_barracks_BarracksMain__WEBPACK_IMPORTED_MODULE_0__["default"],
     drawer: _components_commandCenter_views_barracks_BarracksNavigationDrawer__WEBPACK_IMPORTED_MODULE_1__["default"]
   }
 }, {
-  path: '/cc/:squadSlug/roster',
+  path: '/command-center/:squadSlug/roster',
   name: 'roster',
   components: {
     default: _components_commandCenter_views_roster_RosterMain__WEBPACK_IMPORTED_MODULE_2__["default"],
     drawer: _components_commandCenter_views_roster_RosterNavigationDrawer__WEBPACK_IMPORTED_MODULE_3__["default"]
   }
 }, {
-  path: '/cc/:squadSlug/map',
+  path: '/command-center/:squadSlug/map',
   name: 'map',
   components: {
     default: _components_commandCenter_views_map_MapMain__WEBPACK_IMPORTED_MODULE_4__["default"],
     drawer: _components_commandCenter_views_map_MapNavigationDrawer__WEBPACK_IMPORTED_MODULE_5__["default"]
   }
 }, {
-  path: '/cc/:squadSlug/campaign',
+  path: '/command-center/:squadSlug/campaign',
   name: 'campaign',
   components: {
     default: _components_commandCenter_views_campaign_CampaignMain__WEBPACK_IMPORTED_MODULE_6__["default"],
     drawer: _components_commandCenter_views_campaign_CampaignNavigationDrawer__WEBPACK_IMPORTED_MODULE_7__["default"]
   }
 }, {
-  path: '/cc/:squadSlug/nation',
+  path: '/command-center/:squadSlug/nation',
   name: 'nation',
   components: {
     default: _components_commandCenter_views_nation_NationMain__WEBPACK_IMPORTED_MODULE_8__["default"],
     drawer: _components_commandCenter_views_nation_NationNavigationDrawer__WEBPACK_IMPORTED_MODULE_9__["default"]
   }
 }];
+
+/***/ }),
+
+/***/ "./resources/js/store/commandCenter/ccStore.js":
+/*!*****************************************************!*\
+  !*** ./resources/js/store/commandCenter/ccStore.js ***!
+  \*****************************************************/
+/*! exports provided: store */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "store", function() { return store; });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _squad__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./squad */ "./resources/js/store/commandCenter/squad.js");
+
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
+
+var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
+  modules: {
+    squadModule: _squad__WEBPACK_IMPORTED_MODULE_2__["default"]
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/commandCenter/squad.js":
+/*!***************************************************!*\
+  !*** ./resources/js/store/commandCenter/squad.js ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  state: {
+    squad: {
+      name: ''
+    }
+  },
+  getters: {
+    _squad: function _squad(state) {
+      return state.squad;
+    }
+  },
+  mutations: {
+    SET_SQUAD: function SET_SQUAD(state, payload) {
+      state.squad = payload;
+    }
+  },
+  actions: {
+    setSquad: function setSquad(_ref, payload) {
+      var commit = _ref.commit;
+      commit('SET_SQUAD', payload);
+    }
+  }
+});
 
 /***/ }),
 

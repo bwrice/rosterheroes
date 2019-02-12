@@ -2,7 +2,7 @@ import FooterIcon from '../components/commandCenter/footer/FooterIcon';
 
 export const navButtonMixin = {
 
-    props: ['value','activeNavButton'],
+    props: ['value'],
     components: {
         FooterIcon
     },
@@ -14,10 +14,10 @@ export const navButtonMixin = {
             return this.isActive ? '#ffc747' : 'none';
         },
         isActive: function() {
-            return this.name === this.activeNavButton;
+            return this.name === this.$route.name;
         },
         to: function() {
-            return '/cc/' + this.$route.params.squadSlug + '/' + this.name;
+            return '/command-center/' + this.$route.params.squadSlug + '/' + this.name;
         }
     }
 };

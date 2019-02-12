@@ -6,7 +6,10 @@
 
 <script>
     export default {
-        name: "BarracksMain"
+        name: "BarracksMain",
+        created: () => {
+            console.log("Barracks Created!");
+        }
     }
 </script>
 

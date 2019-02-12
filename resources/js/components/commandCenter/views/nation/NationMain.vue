@@ -6,7 +6,10 @@
 
 <script>
     export default {
-        name: "NationMain"
+        name: "NationMain",
+        created: () => {
+            console.log("Nation Created!");
+        }
     }
 </script>
 
