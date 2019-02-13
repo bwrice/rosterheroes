@@ -8,6 +8,7 @@ import CampaignMain from '../components/commandCenter/views/campaign/CampaignMai
 import CampaignNavigationDrawer from '../components/commandCenter/views/campaign/CampaignNavigationDrawer'
 import NationMain from '../components/commandCenter/views/nation/NationMain'
 import NationNavigationDrawer from '../components/commandCenter/views/nation/NationNavigationDrawer'
+import HeroView from '../components/commandCenter/views/barracks/HeroView'
 
 export const routes = [
     {
@@ -16,7 +17,13 @@ export const routes = [
         components: {
             default: BarracksMain,
             drawer: BarracksNavigationDrawer
-        }
+        },
+        children: [
+            {
+                path: 'hero/:heroSlug',
+                component: HeroView
+            }
+        ]
     },
     {
         path: '/command-center/:squadSlug/roster',

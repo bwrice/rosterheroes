@@ -1,7 +1,5 @@
 <template>
-    <div>
-        <h1>BARRACKS MAIN!</h1>
-    </div>
+    <router-view></router-view>
 </template>
 
 <script>

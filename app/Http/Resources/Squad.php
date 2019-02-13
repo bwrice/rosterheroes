@@ -24,6 +24,7 @@ class Squad extends JsonResource
             'uuid' => $this->uuid,
             'slug' => $this->slug,
             'name' => $this->name,
+            'heroes' => Hero::collection($this->getHeroes())
         ];
     }
 }

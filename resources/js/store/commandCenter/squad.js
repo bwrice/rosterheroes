@@ -2,7 +2,8 @@ export default {
 
     state: {
         squad: {
-            name: ''
+            name: '',
+            heroes: []
         }
     },
 

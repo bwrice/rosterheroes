@@ -38,6 +38,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $game_player_id
  * @property int $salary
  * @property string $name
+ * @property string $slug
  *
  * @property HeroClass $heroClass
  * @property HeroPost $heroPost

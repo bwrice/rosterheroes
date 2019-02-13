@@ -23,7 +23,8 @@ class Hero extends JsonResource
     {
         return [
             'name' => $this->name,
-            'uuid' => $this->uuid
+            'uuid' => $this->uuid,
+            'slug' => $this->slug
         ];
     }
 }
