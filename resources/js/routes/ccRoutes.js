@@ -14,6 +14,9 @@ export const routes = [
     {
         path: '/command-center/:squadSlug/barracks',
         name: 'barracks',
+        meta: {
+            footerButton: 'barracks'
+        },
         components: {
             default: BarracksMain,
             drawer: BarracksNavigationDrawer
@@ -21,13 +24,20 @@ export const routes = [
         children: [
             {
                 path: 'hero/:heroSlug',
-                component: HeroView
+                component: HeroView,
+                name: 'hero',
+                meta: {
+                    footerButton: 'barracks'
+                }
             }
         ]
     },
     {
         path: '/command-center/:squadSlug/roster',
         name: 'roster',
+        meta: {
+            footerButton: 'roster'
+        },
         components: {
             default: RosterMain,
             drawer: RosterNavigationDrawer
@@ -36,6 +46,9 @@ export const routes = [
     {
         path: '/command-center/:squadSlug/map',
         name: 'map',
+        meta: {
+            footerButton: 'map'
+        },
         components: {
             default: MapMain,
             drawer: MapNavigationDrawer
@@ -44,6 +57,9 @@ export const routes = [
     {
         path: '/command-center/:squadSlug/campaign',
         name: 'campaign',
+        meta: {
+            footerButton: 'campaign'
+        },
         components: {
             default: CampaignMain,
             drawer: CampaignNavigationDrawer
@@ -52,6 +68,9 @@ export const routes = [
     {
         path: '/command-center/:squadSlug/nation',
         name: 'nation',
+        meta: {
+            footerButton: 'nation'
+        },
         components: {
             default: NationMain,
             drawer: NationNavigationDrawer

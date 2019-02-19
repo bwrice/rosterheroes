@@ -1,8 +1,10 @@
 <template>
     <v-app dark>
         <v-toolbar fixed app>
-            <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-            <v-toolbar-title><span style="color: #ffc747">{{ _squad.name }}</span></v-toolbar-title>
+            <v-toolbar-side-icon
+                    class="accent--text"
+                    @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+            <v-toolbar-title>{{ _squad.name }}</v-toolbar-title>
         </v-toolbar>
         <v-navigation-drawer
                 fixed

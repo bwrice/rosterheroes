@@ -2149,13 +2149,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "BarracksNavigationDrawer",
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['_squad'])),
   methods: {
     heroRoute: function heroRoute(hero) {
-      return 'hero/' + hero.slug;
+      return '/command-center/' + this._squad.slug + '/barracks/hero/' + hero.slug;
     }
   }
 });
@@ -2438,6 +2441,8 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
 //
 //
 //
@@ -34119,7 +34124,14 @@ var render = function() {
           _vm._l(_vm._squad.heroes, function(hero) {
             return _c(
               "v-list-tile",
-              { key: hero.uuid, attrs: { to: _vm.heroRoute(hero) } },
+              {
+                key: hero.uuid,
+                attrs: {
+                  to: _vm.heroRoute(hero),
+                  ripple: "",
+                  "active-class": "accent--text"
+                }
+              },
               [
                 _c("v-list-tile-title", {
                   domProps: { textContent: _vm._s(hero.name) }
@@ -34550,6 +34562,7 @@ var render = function() {
         { attrs: { fixed: "", app: "" } },
         [
           _c("v-toolbar-side-icon", {
+            staticClass: "accent--text",
             on: {
               click: function($event) {
                 $event.stopPropagation()
@@ -34558,11 +34571,7 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _c("v-toolbar-title", [
-            _c("span", { staticStyle: { color: "#ffc747" } }, [
-              _vm._v(_vm._s(_vm._squad.name))
-            ])
-          ])
+          _c("v-toolbar-title", [_vm._v(_vm._s(_vm._squad.name))])
         ],
         1
       ),
@@ -74423,7 +74432,9 @@ if (token) {
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuetify__WEBPACK_IMPORTED_MODULE_1___default.a, {
   theme: {
-    primary: '#419183',
+    // primary: '#419183',
+    primary: '#3fa391',
+    accent: '#ffc747',
     info: '#6a6099',
     success: '#52b266'
   }
@@ -75685,7 +75696,7 @@ var navButtonMixin = {
       return this.isActive ? '#ffc747' : 'none';
     },
     isActive: function isActive() {
-      return this.name === this.$route.name;
+      return this.name === this.$route.meta.footerButton;
     },
     to: function to() {
       return '/command-center/' + this.$route.params.squadSlug + '/' + this.name;
@@ -75730,17 +75741,27 @@ __webpack_require__.r(__webpack_exports__);
 var routes = [{
   path: '/command-center/:squadSlug/barracks',
   name: 'barracks',
+  meta: {
+    footerButton: 'barracks'
+  },
   components: {
     default: _components_commandCenter_views_barracks_BarracksMain__WEBPACK_IMPORTED_MODULE_0__["default"],
     drawer: _components_commandCenter_views_barracks_BarracksNavigationDrawer__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   children: [{
     path: 'hero/:heroSlug',
-    component: _components_commandCenter_views_barracks_HeroView__WEBPACK_IMPORTED_MODULE_10__["default"]
+    component: _components_commandCenter_views_barracks_HeroView__WEBPACK_IMPORTED_MODULE_10__["default"],
+    name: 'hero',
+    meta: {
+      footerButton: 'barracks'
+    }
   }]
 }, {
   path: '/command-center/:squadSlug/roster',
   name: 'roster',
+  meta: {
+    footerButton: 'roster'
+  },
   components: {
     default: _components_commandCenter_views_roster_RosterMain__WEBPACK_IMPORTED_MODULE_2__["default"],
     drawer: _components_commandCenter_views_roster_RosterNavigationDrawer__WEBPACK_IMPORTED_MODULE_3__["default"]
@@ -75748,6 +75769,9 @@ var routes = [{
 }, {
   path: '/command-center/:squadSlug/map',
   name: 'map',
+  meta: {
+    footerButton: 'map'
+  },
   components: {
     default: _components_commandCenter_views_map_MapMain__WEBPACK_IMPORTED_MODULE_4__["default"],
     drawer: _components_commandCenter_views_map_MapNavigationDrawer__WEBPACK_IMPORTED_MODULE_5__["default"]
@@ -75755,6 +75779,9 @@ var routes = [{
 }, {
   path: '/command-center/:squadSlug/campaign',
   name: 'campaign',
+  meta: {
+    footerButton: 'campaign'
+  },
   components: {
     default: _components_commandCenter_views_campaign_CampaignMain__WEBPACK_IMPORTED_MODULE_6__["default"],
     drawer: _components_commandCenter_views_campaign_CampaignNavigationDrawer__WEBPACK_IMPORTED_MODULE_7__["default"]
@@ -75762,6 +75789,9 @@ var routes = [{
 }, {
   path: '/command-center/:squadSlug/nation',
   name: 'nation',
+  meta: {
+    footerButton: 'nation'
+  },
   components: {
     default: _components_commandCenter_views_nation_NationMain__WEBPACK_IMPORTED_MODULE_8__["default"],
     drawer: _components_commandCenter_views_nation_NationNavigationDrawer__WEBPACK_IMPORTED_MODULE_9__["default"]

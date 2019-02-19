@@ -41,7 +41,9 @@ import Vuetify from 'vuetify';
 
 Vue.use(Vuetify, {
     theme: {
-        primary: '#419183',
+        // primary: '#419183',
+        primary: '#3fa391',
+        accent: '#ffc747',
         info: '#6a6099',
         success: '#52b266'
     }

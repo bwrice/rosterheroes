@@ -9,8 +9,11 @@
             <v-divider></v-divider>
 
             <v-list-tile
-                    v-for="hero in _squad.heroes" :key="hero.uuid"
+                    v-for="hero in _squad.heroes"
+                    :key="hero.uuid"
                     :to="heroRoute(hero)"
+                    ripple
+                    active-class="accent--text"
             >
                 <v-list-tile-title v-text="hero.name"></v-list-tile-title>
             </v-list-tile>
@@ -30,8 +33,8 @@
             ])
         },
         methods: {
-            heroRoute: (hero) => {
-                return 'hero/' + hero.slug;
+            heroRoute: function(hero) {
+                return '/command-center/' + this._squad.slug + '/barracks/hero/' + hero.slug;
             }
         }
     }

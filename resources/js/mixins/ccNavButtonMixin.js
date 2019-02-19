@@ -14,7 +14,7 @@ export const navButtonMixin = {
             return this.isActive ? '#ffc747' : 'none';
         },
         isActive: function() {
-            return this.name === this.$route.name;
+            return this.name === this.$route.meta.footerButton;
         },
         to: function() {
             return '/command-center/' + this.$route.params.squadSlug + '/' + this.name;

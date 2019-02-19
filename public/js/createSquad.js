@@ -70470,7 +70470,9 @@ if (token) {
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuetify__WEBPACK_IMPORTED_MODULE_1___default.a, {
   theme: {
-    primary: '#419183',
+    // primary: '#419183',
+    primary: '#3fa391',
+    accent: '#ffc747',
     info: '#6a6099',
     success: '#52b266'
   }
