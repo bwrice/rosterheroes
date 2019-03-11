@@ -1,12 +1,16 @@
 <template>
-    <div>
-        <h1>ROSTER MAIN!</h1>
-    </div>
+    <RhSquadRoster></RhSquadRoster>
 </template>
 
 <script>
+
+    import SquadRoster from '../../roster/SquadRoster';
+
     export default {
-        name: "RosterMain"
+        name: "RosterMain",
+        components: {
+           RhSquadRoster: SquadRoster
+        }
     }
 </script>
 

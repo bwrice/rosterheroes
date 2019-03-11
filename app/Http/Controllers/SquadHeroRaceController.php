@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\HeroRace as HeroRaceResource;
+use App\Http\Resources\HeroRaceResource as HeroRaceResource;
 use App\Squad;
 use App\Squads\HeroRaceAvailability;
 

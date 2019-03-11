@@ -10,7 +10,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  *
  * @mixin \App\Squad
  */
-class Squad extends JsonResource
+class SquadResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -24,7 +24,10 @@ class Squad extends JsonResource
             'uuid' => $this->uuid,
             'slug' => $this->slug,
             'name' => $this->name,
-            'heroes' => Hero::collection($this->getHeroes())
+            'salary' => $this->salary,
+            'heroes' => HeroResource::collection($this->getHeroes([
+                'hero.gamePlayer'
+            ]))
         ];
     }
 }

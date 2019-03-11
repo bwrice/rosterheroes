@@ -218,12 +218,13 @@ class Squad extends EventSourcedModel implements HasSlots
     }
 
     /**
+     * @param array $relations
      * @return HeroCollection
      */
-    public function getHeroes()
+    public function getHeroes($relations = ['hero'])
     {
         $heroes = new HeroCollection();
-        $this->heroPosts->each(function (HeroPost $heroPost) use ($heroes) {
+        $this->heroPosts->load($relations)->each(function (HeroPost $heroPost) use ($heroes) {
             if ($heroPost->hero) {
                 $heroes->push($heroPost->hero);
             }

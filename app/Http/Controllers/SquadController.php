@@ -8,7 +8,7 @@ use App\Hero;
 use App\HeroClass;
 use App\HeroRace;
 use App\HeroRank;
-use App\Http\Resources\Squad as SquadResource;
+use App\Http\Resources\SquadResource;
 use App\Province;
 use App\Squad;
 use App\SquadRank;
@@ -16,9 +16,9 @@ use App\Squads\MobileStorage\MobileStorageRank;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Resources\Hero as HeroResource;
-use App\Http\Resources\HeroClass as HeroClassResource;
-use App\Http\Resources\HeroRace as HeroRaceResource;
+use App\Http\Resources\HeroResource;
+use App\Http\Resources\HeroClassResource;
+use App\Http\Resources\HeroRaceResource;
 
 class SquadController extends Controller
 {

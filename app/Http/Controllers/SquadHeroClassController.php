@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Squad;
 use App\Squads\HeroClassAvailability;
-use App\Http\Resources\HeroClass as HeroClassResource;
+use App\Http\Resources\HeroClassResource as HeroClassResource;
 
 class SquadHeroClassController extends Controller
 {

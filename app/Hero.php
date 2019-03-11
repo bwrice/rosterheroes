@@ -42,7 +42,7 @@ use Spatie\Sluggable\SlugOptions;
  *
  * @property HeroClass $heroClass
  * @property HeroPost $heroPost
- * @property GamePlayer $gamePlayer
+ * @property GamePlayer|null $gamePlayer
  *
  * @property SlotCollection $slots
  * @property Collection $measurables

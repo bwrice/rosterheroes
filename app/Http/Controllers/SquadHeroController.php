@@ -18,7 +18,7 @@ use App\Squads\HeroClassAvailability;
 use App\Squads\HeroPostAvailability;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
-use App\Http\Resources\Hero as HeroResource;
+use App\Http\Resources\HeroResource as HeroResource;
 
 class SquadHeroController extends Controller
 {

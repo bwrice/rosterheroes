@@ -1,0 +1,9 @@
+Log opened at 2019-02-24 22:24:33
+I: Checking remote connect back address.
+I: Checking header 'HTTP_X_FORWARDED_FOR'.
+I: Checking header 'REMOTE_ADDR'.
+W: Remote address not found, connecting to configured address/port: 127.0.0.1:9001. :-|
+W: Creating socket for '127.0.0.1:9001', poll success, but error: Operation now in progress (19).
+E: Could not connect to client. :-(
+Log closed at 2019-02-24 22:24:33
+
