@@ -14,7 +14,8 @@ use Illuminate\Support\Carbon;
  * @package App
  *
  * @property int $id
- * @property string $name
+ * @property string $first_name
+ * @property string $last_name
  *
  * @property Team $team
  * @property PositionCollection $positions
@@ -39,5 +40,10 @@ class Player extends Model
     public function getThisWeeksGame()
     {
         return $this->team->thisWeeksGame();
+    }
+
+    public function fullName()
+    {
+        return $this->first_name . ' ' . $this->last_name;
     }
 }

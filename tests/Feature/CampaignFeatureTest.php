@@ -7,6 +7,7 @@ use App\Campaigns\Quests\Quest;
 use App\Squad;
 use App\Weeks\Week;
 use Carbon\Carbon;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -14,6 +15,8 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class CampaignFeatureTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /**
      * @test
      */

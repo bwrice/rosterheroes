@@ -9,12 +9,15 @@ use App\ItemClass;
 use App\ItemGroup;
 use App\Items\ItemBases\ItemBase;
 use App\ItemType;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ItemBlueprintTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /**
      * @test
      */

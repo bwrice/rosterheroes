@@ -12,12 +12,15 @@ use App\HeroRace;
 use App\Squad;
 use App\Squads\HeroClassAvailability;
 use App\Squads\HeroPostAvailability;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AddHeroToSquadTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /**
      * @test
      */

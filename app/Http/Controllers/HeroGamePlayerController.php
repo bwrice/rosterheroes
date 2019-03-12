@@ -50,11 +50,11 @@ class HeroGamePlayerController extends Controller
             ]);
         } catch (NotEnoughSalaryException $exception) {
             throw ValidationException::withMessages([
-                'salary' => "Not enough available salary for " . $gamePlayer->player->name
+                'salary' => "Not enough available salary for " . $gamePlayer->player->fullName()
             ]);
         } catch (GameStartedException $exception) {
             throw ValidationException::withMessages([
-                'game' => "Game for " . $gamePlayer->player->name . " has already started"
+                'game' => "Game for " . $gamePlayer->player->fullName() . " has already started"
             ]);
         }
     }

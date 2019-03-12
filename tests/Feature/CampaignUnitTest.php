@@ -16,12 +16,15 @@ use App\Squad;
 use App\Weeks\Week;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class CampaignUnitTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /**
      * @test
      */

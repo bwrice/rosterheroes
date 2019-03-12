@@ -5,12 +5,15 @@ namespace Tests\Unit;
 use App\Items\ItemBases\Behaviors\ItemBaseBehavior;
 use App\Items\ItemBases\ItemBase;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ItemBaseTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /**
      * @test
      */

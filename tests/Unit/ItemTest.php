@@ -7,12 +7,15 @@ use App\ItemBlueprint;
 use App\ItemClass;
 use App\ItemType;
 use App\MaterialType;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ItemTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /**
      * @test
      */

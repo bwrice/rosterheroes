@@ -1,5 +1,7 @@
 <template>
-    <RhSquadRoster></RhSquadRoster>
+    <v-container class="pa-2">
+        <RhSquadRoster></RhSquadRoster>
+    </v-container>
 </template>
 
 <script>

@@ -23,6 +23,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class HeroTest extends TestCase
 {
+    use DatabaseTransactions;
 
     /**
      * @test

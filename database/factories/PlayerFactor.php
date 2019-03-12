@@ -11,6 +11,7 @@ $factory->define(\App\Player::class, function (Faker $faker) {
         'team_id' => function () {
             return \App\Team::inRandomOrder()->first()->id;
         },
-        'name' => $faker->name
+        'first_name' => $faker->firstName,
+        'last_name' => $faker->lastName
     ];
 });

@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Province;
 use App\Squad;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -11,6 +12,8 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class SquadProvinceFeatureTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /**
      * @test
      */

@@ -15,10 +15,13 @@ use App\Positions\Position;
 use App\Squad;
 use App\Weeks\Week;
 use Carbon\Carbon;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
 class HeroGamePlayerUnitTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /**
      * @test
      */

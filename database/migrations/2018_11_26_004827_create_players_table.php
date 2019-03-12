@@ -17,7 +17,8 @@ class CreatePlayersTable extends Migration
             $table->increments('id');
             $table->uuid('uuid');
             $table->integer('team_id')->unsigned();
-            $table->string('name');
+            $table->string('first_name');
+            $table->string('last_name');
             $table->timestamps();
         });
 

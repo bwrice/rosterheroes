@@ -5,12 +5,15 @@ namespace Tests\Unit;
 use App\Slots\Slot;
 use App\SlotType;
 use App\Stash;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class StashTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /**
      * @test
      */
