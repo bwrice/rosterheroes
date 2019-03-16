@@ -44,4 +44,7 @@ return [
         'client_secret' => 'IdSBr2_dMTfSyMCqy6gF9tG9',
         'redirect' => 'https://rosterheroestwo.dev/login/google/callback',
     ],
+    'mysportsfeed' => [
+        'key' => env('MY_SPORTS_FEED_KEY')
+    ]
 ];
