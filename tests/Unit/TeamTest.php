@@ -3,7 +3,7 @@
 namespace Tests\Unit;
 
 use App\Game;
-use App\Team;
+use App\Domain\Teams\Team;
 use App\Weeks\Week;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -25,12 +25,12 @@ class TeamTest extends TestCase
 
         Week::setTestCurrent($week);
 
-        /** @var Team $homeTeam */
+        /** @var \App\Domain\Teams\Team $homeTeam */
         $homeTeam = Team::query()->inRandomOrder()->first();
-        $sportID = $homeTeam->sport->id;
+        $sportID = $homeTeam->league->id;
 
         /** @var Team $awayTeam */
-        $awayTeam = Team::query()->whereHas('sport', function(Builder $builder) use ($sportID) {
+        $awayTeam = Team::query()->whereHas('league', function(Builder $builder) use ($sportID) {
             return $builder->where('id', '=', $sportID);
         })->where('id', '!=', $homeTeam->id)->inRandomOrder()->first();
 

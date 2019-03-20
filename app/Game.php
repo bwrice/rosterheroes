@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Domain\Teams\Team;
 use App\Weeks\Week;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;

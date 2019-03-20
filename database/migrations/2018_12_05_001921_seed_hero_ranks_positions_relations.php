@@ -1,5 +1,6 @@
 <?php
 
+use App\Sport;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -22,19 +23,23 @@ class SeedHeroRanksPositionsRelations extends Migration
                 'positions' => [
                     [
                         'name' => 'Quarterback',
-                        'sport' => 'Football'
+                        'sport' => Sport::FOOTBALL
                     ],
                     [
-                        'name' => 'Starting Pitcher',
-                        'sport' => 'Baseball'
+                        'name' => 'Third Base',
+                        'sport' => Sport::BASEBALL
+                    ],
+                    [
+                        'name' => 'Shortstop',
+                        'sport' => Sport::BASEBALL
                     ],
                     [
                         'name' => 'Center',
-                        'sport' => 'Basketball'
+                        'sport' => Sport::BASKETBALL
                     ],
                     [
                         'name' => 'Goalie',
-                        'sport' => 'Hockey'
+                        'sport' => Sport::HOCKEY
                     ]
                 ]
             ],
@@ -43,31 +48,23 @@ class SeedHeroRanksPositionsRelations extends Migration
                 'positions' => [
                     [
                         'name' => 'Running Back',
-                        'sport' => 'Football'
+                        'sport' => Sport::FOOTBALL
                     ],
                     [
                         'name' => 'First Base',
-                        'sport' => 'Baseball'
+                        'sport' => Sport::BASEBALL
                     ],
                     [
                         'name' => 'Second Base',
-                        'sport' => 'Baseball'
-                    ],
-                    [
-                        'name' => 'Third Base',
-                        'sport' => 'Baseball'
-                    ],
-                    [
-                        'name' => 'Shortstop',
-                        'sport' => 'Baseball'
+                        'sport' => Sport::BASEBALL
                     ],
                     [
                         'name' => 'Small Forward',
-                        'sport' => 'Basketball'
+                        'sport' => Sport::BASKETBALL
                     ],
                     [
                         'name' => 'Center',
-                        'sport' => 'Hockey'
+                        'sport' => Sport::HOCKEY
                     ]
                 ]
             ],
@@ -76,27 +73,27 @@ class SeedHeroRanksPositionsRelations extends Migration
                 'positions' => [
                     [
                         'name' => 'Wide Receiver',
-                        'sport' => 'Football'
+                        'sport' => Sport::FOOTBALL
                     ],
                     [
                         'name' => 'Outfield',
-                        'sport' => 'Baseball'
+                        'sport' => Sport::BASEBALL
                     ],
                     [
                         'name' => 'Point Guard',
-                        'sport' => 'Basketball'
+                        'sport' => Sport::BASKETBALL
                     ],
                     [
                         'name' => 'Shooting Guard',
-                        'sport' => 'Basketball'
+                        'sport' => Sport::BASKETBALL
                     ],
                     [
                         'name' => 'Left Wing',
-                        'sport' => 'Hockey'
+                        'sport' => Sport::HOCKEY
                     ],
                     [
                         'name' => 'Right Wing',
-                        'sport' => 'Hockey'
+                        'sport' => Sport::HOCKEY
                     ]
                 ]
             ],
@@ -105,23 +102,23 @@ class SeedHeroRanksPositionsRelations extends Migration
                 'positions' => [
                     [
                         'name' => 'Tight End',
-                        'sport' => 'Football'
+                        'sport' => Sport::FOOTBALL
                     ],
                     [
                         'name' => 'Catcher',
-                        'sport' => 'Baseball'
+                        'sport' => Sport::BASEBALL
                     ],
                     [
-                        'name' => 'Relief Pitcher',
-                        'sport' => 'Baseball'
+                        'name' => 'Pitcher',
+                        'sport' => Sport::BASEBALL
                     ],
                     [
                         'name' => 'Power Forward',
-                        'sport' => 'Basketball'
+                        'sport' => Sport::BASKETBALL
                     ],
                     [
                         'name' => 'Defenseman',
-                        'sport' => 'Hockey'
+                        'sport' => Sport::HOCKEY
                     ]
                 ]
             ]
@@ -136,6 +133,7 @@ class SeedHeroRanksPositionsRelations extends Migration
 
                 $position = $positions->first(function(\App\Positions\Position $position) use($heroRacePosition) {
                     if ($position->name == $heroRacePosition['name']) {
+                        // This conditional is needed because of multiple positions with the same name from different sports, ie Center
                         return $position->sport->name == $heroRacePosition['sport'];
                     }
                     return false;

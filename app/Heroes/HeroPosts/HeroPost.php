@@ -4,7 +4,7 @@ namespace App\Heroes\HeroPosts;
 
 use App\Hero;
 use App\HeroRace;
-use App\Player;
+use App\Domain\Players\Player;
 use App\Squad;
 use Illuminate\Database\Eloquent\Model;
 

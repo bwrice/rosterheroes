@@ -3,7 +3,7 @@
 namespace Tests\Unit;
 
 use App\Game;
-use App\Player;
+use App\Domain\Players\Player;
 use App\Weeks\Week;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;

@@ -2,14 +2,17 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(\App\Team::class, function (Faker $faker) {
+$factory->define(\App\Domain\Teams\Team::class, function (Faker $faker) {
 
-    $sport = \App\Sport::query()->inRandomOrder()->first();
+    $league = \App\League::query()->inRandomOrder()->first();
 
     $location = $faker->city;
 
 
     return [
-        'sport_id' => $sport->id
+        'league_id' => $league->id,
+        'location' => $location,
+        'name' => $faker->colorName,
+        'integration_id' => $faker->randomNumber()
     ];
 });

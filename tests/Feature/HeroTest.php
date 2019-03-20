@@ -8,7 +8,7 @@ use App\HeroClass;
 use App\HeroRace;
 use App\Measurable;
 use App\MeasurableType;
-use App\Player;
+use App\Domain\Players\Player;
 use App\GamePlayer;
 use App\Slots\Slot;
 use App\SlotType;

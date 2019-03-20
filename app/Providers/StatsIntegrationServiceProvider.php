@@ -2,7 +2,8 @@
 
 namespace App\Providers;
 
-use App\External\Stats\MySportsFeedIntegration;
+use App\External\Stats\MySportsFeed\MySportsFeed;
+use App\External\Stats\MySportsFeed\LeagueURL;
 use App\External\Stats\StatsIntegration;
 use GuzzleHttp\Client;
 use Illuminate\Support\ServiceProvider;
@@ -16,7 +17,7 @@ class StatsIntegrationServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(StatsIntegration::class, function ($app) {
-            return new MySportsFeedIntegration(new Client());
+            return new MySportsFeed(new Client(), new LeagueURL());
         });
     }
 

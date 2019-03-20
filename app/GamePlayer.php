@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Domain\Players\Player;
 use Illuminate\Database\Eloquent\Model;
 
 /**

@@ -1,9 +1,11 @@
 <?php
 
-namespace App;
+namespace App\Domain\Players;
 
+use App\Game;
 use App\Positions\Position;
 use App\Positions\PositionCollection;
+use App\Domain\Teams\Team;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -16,6 +18,7 @@ use Illuminate\Support\Carbon;
  * @property int $id
  * @property string $first_name
  * @property string $last_name
+ * @property string $external_id
  *
  * @property Team $team
  * @property PositionCollection $positions

@@ -13,14 +13,14 @@ class SeedTeams extends Migration
      */
     public function up()
     {
-        $football = \App\Sport::where('name','Football')->first();
-        $baseball = \App\Sport::where('name', 'Baseball')->first();
-        $basketball = \App\Sport::where('name', 'Basketball')->first();
-        $hockey = \App\Sport::where('name', 'Hockey')->first();
+        $nfl = \App\League::where('abbreviation', \App\League::NFL)->first();
+        $mlb = \App\League::where('abbreviation', \App\League::MLB)->first();
+        $nba = \App\League::where('abbreviation', \App\League::NBA)->first();
+        $nhl = \App\League::where('abbreviation', \App\League::NHL)->first();
 
-        $sports = [
+        $leagues = [
             [
-                'sport' => $football,
+                'league' => $nfl,
                 'teams' => [
                     [
                         'name' => 'Giants',
@@ -185,7 +185,7 @@ class SeedTeams extends Migration
                 ]
             ],
             [
-                'sport' => $baseball,
+                'league' => $mlb,
                 'teams' => [
                     [
                         'name' => 'Orioles',
@@ -340,7 +340,7 @@ class SeedTeams extends Migration
                 ]
             ],
             [
-                'sport' => $basketball,
+                'league' => $nba,
                 'teams' => [
                     [
                         'name' => 'Celtics',
@@ -495,7 +495,7 @@ class SeedTeams extends Migration
                 ]
             ],
             [
-                'sport' => $hockey,
+                'league' => $nhl,
                 'teams' => [
                     [
                         'name' => 'Bruins',
@@ -651,16 +651,18 @@ class SeedTeams extends Migration
             ]
         ];
 
-        foreach ($sports as $sport) {
-            foreach ($sport['teams'] as $team) {
-                \App\Team::create([
-                    'sport_id' => $sport['sport']->id,
-                    'name' => $team['name'],
-                    'location' => $team['location'],
-                    'abbreviation' => $team['abbreviation']
-                ]);
-            }
-        }
+//        foreach ($leagues as $league) {
+//            foreach ($league['teams'] as $team) {
+//                \App\Domain\Teams\Team::create([
+//                    'league_id' => $league['league']->id,
+//                    'name' => $team['name'],
+//                    'location' => $team['location'],
+//                    'abbreviation' => $team['abbreviation']
+//                ]);
+//            }
+//        }
+
+        \App\Jobs\UpdateTeams::dispatch()->onQueue('stats-integration');
     }
 
     /**
@@ -670,6 +672,6 @@ class SeedTeams extends Migration
      */
     public function down()
     {
-        \App\Team::query()->delete();
+        \App\Domain\Teams\Team::query()->delete();
     }
 }

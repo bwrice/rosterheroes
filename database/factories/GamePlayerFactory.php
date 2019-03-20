@@ -7,13 +7,13 @@ $factory->define(\App\GamePlayer::class, function (Faker $faker) {
     //How to make sure player and game relation makes sense
     $uuid = (string) \Ramsey\Uuid\Uuid::uuid4();
 
-    /** @var \App\Player $player */
-    $player = factory(\App\Player::class)->create();
-    /** @var \App\Team $homeTeam */
+    /** @var \App\Domain\Players\Player $player */
+    $player = factory(\App\Domain\Players\Player::class)->create();
+    /** @var \App\Domain\Teams\Team $homeTeam */
     $homeTeam = $player->team;
-    /** @var \App\Team $awayTeam */
-    $awayTeam = \App\Team::query()->whereHas('sport', function(\Illuminate\Database\Eloquent\Builder $query) use ($homeTeam) {
-        $query->where('id', '=', $homeTeam->sport->id);
+    /** @var \App\Domain\Teams\Team $awayTeam */
+    $awayTeam = \App\Domain\Teams\Team::query()->whereHas('league', function(\Illuminate\Database\Eloquent\Builder $query) use ($homeTeam) {
+        $query->where('id', '=', $homeTeam->league->id);
     })->where('id', '!=', $homeTeam->id)->first();
 
     $game = factory(\App\Game::class)->create([

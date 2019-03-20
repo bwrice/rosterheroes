@@ -96,41 +96,41 @@ class Squad extends EventSourcedModel implements HasSlots
         return collect(self::STARTING_HERO_POSTS)->sum();
     }
 
-    /**
-     * @param int $userID
-     * @param string $name
-     * @param array $heroesData
-     * @return Squad
-     * @throws \Exception
-     *
-     * Creates a new Squad with Heroes and triggers associated events
-     */
-    public static function generate(int $userID, string $name, array $heroesData)
-    {
-        /** @var Squad $squad */
-        $squad = self::createWithAttributes([
-            'user_id' => $userID,
-            'name' => $name,
-            'squad_rank_id' => SquadRank::getStarting()->id,
-            'mobile_storage_rank_id' => MobileStorageRank::getStarting()->id,
-            'province_id' => Province::getStarting()->id
-        ]);
-
-        // Hooked into for adding wagon
-        event(new SquadCreated($squad));
-
-        // Give starting salary, gold and favor to new squad
-        $squad->increaseSalary(self::STARTING_SALARY);
-        $squad->increaseGold(self::STARTING_GOLD);
-        $squad->increaseFavor(self::STARTING_FAVOR);
-
-        foreach($heroesData as $hero) {
-
-            Hero::generate($squad, $hero['name'], $hero['class'], $hero['race']);
-        }
-
-        return $squad->load('heroes', 'province');
-    }
+//    /**
+//     * @param int $userID
+//     * @param string $name
+//     * @param array $heroesData
+//     * @return Squad
+//     * @throws \Exception
+//     *
+//     * Creates a new Squad with Heroes and triggers associated events
+//     */
+//    public static function generate(int $userID, string $name, array $heroesData)
+//    {
+//        /** @var Squad $squad */
+//        $squad = self::createWithAttributes([
+//            'user_id' => $userID,
+//            'name' => $name,
+//            'squad_rank_id' => SquadRank::getStarting()->id,
+//            'mobile_storage_rank_id' => MobileStorageRank::getStarting()->id,
+//            'province_id' => Province::getStarting()->id
+//        ]);
+//
+//        // Hooked into for adding wagon
+//        event(new SquadCreated($squad));
+//
+//        // Give starting salary, gold and favor to new squad
+//        $squad->increaseSalary(self::STARTING_SALARY);
+//        $squad->increaseGold(self::STARTING_GOLD);
+//        $squad->increaseFavor(self::STARTING_FAVOR);
+//
+//        foreach($heroesData as $hero) {
+//
+//            Hero::generate($squad, $hero['name'], $hero['class'], $hero['race']);
+//        }
+//
+//        return $squad->load('heroes', 'province');
+//    }
 
     public function increaseSalary(int $amount)
     {

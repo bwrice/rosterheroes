@@ -1,7 +1,9 @@
 <?php
 
-namespace App;
+namespace App\Domain\Teams;
 
+use App\Game;
+use App\League;
 use App\Weeks\Week;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -15,15 +17,15 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $location
  * @property string $abbreviation
  *
- * @property Sport $sport
+ * @property League $league
  */
 class Team extends Model
 {
     protected $guarded = [];
 
-    public function sport()
+    public function league()
     {
-        return $this->belongsTo(Sport::class);
+        return $this->belongsTo(League::class);
     }
 
     public function homeGames()

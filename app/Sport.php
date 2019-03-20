@@ -2,21 +2,31 @@
 
 namespace App;
 
+use App\Positions\Position;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Sport
  * @package App
  *
- * @property int $id
  * @property string $name
  */
 class Sport extends Model
 {
     protected $guarded = [];
 
-    public function teams()
+    const FOOTBALL = 'football';
+    const BASKETBALL = 'basketball';
+    const HOCKEY = 'hockey';
+    const BASEBALL = 'baseball';
+
+    public function leagues()
     {
-        return $this->hasMany(Team::class);
+        return $this->hasMany(League::class);
+    }
+
+    public function positions()
+    {
+        return $this->hasMany(Position::class);
     }
 }

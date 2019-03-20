@@ -8,8 +8,11 @@
 
 namespace App\External\Stats;
 
+use Illuminate\Support\Collection;
 
 interface StatsIntegration
 {
-    public function getPlayerDTOs(): PlayerDTOCollection;
+    public function getPlayerDTOs(): Collection;
+
+    public function getTeamDTOs(): Collection;
 }

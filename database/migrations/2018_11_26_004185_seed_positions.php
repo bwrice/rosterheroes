@@ -31,13 +31,12 @@ class SeedPositions extends Migration
             [
                 'sport' => $baseball,
                 'positions' => [
-                    ['Catcher', 'C (MLB)'],
+                    ['Catcher', 'C'],
                     ['First Base', '1B'],
                     ['Second Base', '2B'],
                     ['Third Base', '3B'],
                     ['Shortstop', 'SS'],
-                    ['Starting Pitcher', 'SP'],
-                    ['Relief Pitcher', 'RP'],
+                    ['Pitcher', 'P'],
                     ['Outfield', 'OF']
                 ],
             ],
@@ -48,13 +47,13 @@ class SeedPositions extends Migration
                     ['Shooting Guard', 'SG'],
                     ['Small Forward', 'SF'],
                     ['Power Forward', 'PF'],
-                    ['Center', 'C (NBA)']
+                    ['Center', 'C']
                 ],
             ],
             [
                 'sport' => $hockey,
                 'positions' => [
-                    ['Center', 'C (NHL)'],
+                    ['Center', 'C'],
                     ['Left Wing', 'LW'],
                     ['Right Wing', 'RW'],
                     ['Defenseman', 'D'],
