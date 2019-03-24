@@ -22,21 +22,19 @@ use Illuminate\Support\Collection;
 
 class MySportsFeed implements StatsIntegration
 {
-    const PASSWORD = 'MYSPORTSFEEDS';
-    const BASE_URL = 'https://api.mysportsfeeds.com/v2.0/pull/';
     /**
-     * @var Client
+     * @var PlayerAPI
      */
-    private $guzzleClient;
+    private $playerAPI;
     /**
-     * @var LeagueURL
+     * @var TeamAPI
      */
-    private $leagueURL;
+    private $teamAPI;
 
-    public function __construct(Client $guzzleClient, LeagueURL $leagueURL)
+    public function __construct(PlayerAPI $playerAPI, TeamAPI $teamAPI)
     {
-        $this->guzzleClient = $guzzleClient;
-        $this->leagueURL = $leagueURL;
+        $this->playerAPI = $playerAPI;
+        $this->teamAPI = $teamAPI;
     }
 
     protected function getAPIKey()
@@ -44,124 +42,36 @@ class MySportsFeed implements StatsIntegration
         return config('services.mysportsfeed')['key'];
     }
 
-
     public function getPlayerDTOs(): Collection
     {
         $playerDTOs = collect();
-        League::with('sport')->get()->each(function (League $league) use (&$playerDTOs) {
-           $playerDTOs = $playerDTOs->merge($this->getPlayerDTOsForLeague($league));
-        });
-        return $playerDTOs;
-    }
-
-    /**
-     * @param string $url
-     * @return \Psr\Http\Message\ResponseInterface
-     */
-    protected function getResponse(string $url)
-    {
-        return $this->guzzleClient->get($url, [
-            'auth' => $this->getAuthorization()
-        ]);
-    }
-
-    protected function getAuthorization()
-    {
-        return [
-            $this->getAPIKey(),
-            self::PASSWORD
-        ];
-    }
-
-    /**
-     * @return Collection
-     */
-    public function getTeamDTOs(): Collection
-    {
-        $teamDTOs = collect();
-        League::all()->each(function (League $league) use (&$teamDTOs){
-            $teamDTOs = $teamDTOs->merge($this->getTeamDTOsForLeague($league));
-        });
-        return $teamDTOs;
-    }
-
-    protected function getTeamDTOsForLeague(League $league)
-    {
-        $fullURL = self::BASE_URL . $this->leagueURL->getTeamsURL($league);
-        $response = $this->getResponse($fullURL);
-        $data = json_decode($response->getBody(), true);
-        $teamDTOs = collect();
-
-        collect($data['teamStatsTotals'])->each(function ($dataArray) use ($league, &$teamDTOs) {
-            $teamDTOs = $teamDTOs->push($this->buildTeamDTO($league, $dataArray['team']));
-        });
-
-        return $teamDTOs;
-    }
-
-    protected function getPlayerDTOsForLeague(League $league)
-    {
-        $fullURL = self::BASE_URL . $this->leagueURL->getPlayersURL($league);
-        $response = $this->getResponse($fullURL);
-        $data = json_decode($response->getBody(), true);
-        $teams = Team::all();
+        $data = $this->playerAPI->getData();
+        $teams = Team::with('league')->get();
         /** @var PositionCollection $positions */
         $positions = Position::all();
-        $playerDTOs = collect();
 
-        collect($data['players'])->each(function ($dataArray) use ($league, $teams, $positions, &$playerDTOs) {
-
-            if ($dataArray['teamAsOfDate']) {
-                $team = $teams->where('external_id', '=', $dataArray['teamAsOfDate']['id'])->first();
-            } else {
-                $team = null;
-            }
-
-            $positionsAbbreviations = $dataArray['player']['alternatePositions'];
-            $positionsAbbreviations[] = $dataArray['player']['primaryPosition'];
-
-            $playerPositions = $this->filterPositions($league, $positions, $positionsAbbreviations);
+        foreach($data as $playerArray) {
+            /** @var Team $team */
+            $team = $playerArray['teamAsOfDate'] ? $teams->where('external_id', '=', $playerArray['teamAsOfDate']['id'])->first() : null;
 
             if ($team) {
-                $playerDTOs = $playerDTOs->push($this->buildPlayerDTO($team, $playerPositions, $dataArray['player']));
-            }
-        });
+                $player = $playerArray['player'];
+                $positionsAbbreviations = $player['alternatePositions'];
+                $positionsAbbreviations[] = $player['primaryPosition'];
+                $playerPositions = $this->filterPositions($team->league, $positions, $positionsAbbreviations);
 
+                if ($playerPositions->isNotEmpty()) {
+                    $playerDTOs->push(new PlayerDTO(
+                        $team,
+                        $playerPositions,
+                        $player['firstName'],
+                        $player['lastName'],
+                        $player['id']
+                    ));
+                }
+            }
+        }
         return $playerDTOs;
-    }
-
-    protected function filterPositions(League $league, PositionCollection $positions, array $posAbbreviations)
-    {
-        $abbreviations = collect($posAbbreviations)->map(function ($abbreviation) {
-            switch($abbreviation) {
-                case 'LF':
-                case 'RF':
-                case 'CF':
-                    $abbreviation = 'OF';
-            }
-
-            return $abbreviation;
-        });
-
-        return $positions->whereIn('abbreviation', $abbreviations)->where('sport_id', '=', $league->sport_id);
-    }
-
-
-    /**
-     * @param League $league
-     * @param array $teamDataArray
-     * @return TeamDTO
-     */
-    protected function buildTeamDTO(League $league, array $teamDataArray)
-    {
-        $teamDTO = new TeamDTO(
-            $league,
-            $teamDataArray['name'],
-            $teamDataArray['city'],
-            $teamDataArray['abbreviation'],
-            $teamDataArray['id']
-        );
-        return $teamDTO;
     }
 
     protected function buildPlayerDTO(Team $team, PositionCollection $positions, array $playerDataArray)
@@ -175,4 +85,122 @@ class MySportsFeed implements StatsIntegration
         );
         return $playerDTO;
     }
+
+    protected function filterPositions(League $league, PositionCollection $positions, array $posAbbreviations)
+    {
+        $abbreviations = collect($posAbbreviations)->map(function ($abbreviation) {
+            // We only use outfield (OF) for all outfield positions
+            switch($abbreviation) {
+                case 'LF':
+                case 'RF':
+                case 'CF':
+                    $abbreviation = 'OF';
+            }
+
+            return $abbreviation;
+        });
+
+        return $positions->whereIn('abbreviation', $abbreviations)->where('sport_id', '=', $league->sport_id);
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getTeamDTOs(): Collection
+    {
+        $teamDTOs = collect();
+        $data = $this->teamAPI->getData();
+        $leagues = League::all();
+
+        foreach($data as $leagueAbv => $teamsData) {
+
+            $league = $leagues->where('abbreviation', '=', $leagueAbv)->first();
+            if (! $league) {
+                throw new \RuntimeException("Couldn't create team DTOs because league with abbreviation: " . $leagueAbv . " not found");
+            }
+            /** @var League $league */
+            foreach($teamsData as $teamArray) {
+                $teamData = $teamArray['team'];
+                $teamDTOs->push(new TeamDTO(
+                    $league,
+                    $teamData['name'],
+                    $teamData['city'],
+                    $teamData['abbreviation'],
+                    $teamData['id']
+                ));
+            }
+        }
+        return $teamDTOs;
+    }
+//
+//    protected function getTeamDTOsForLeague(League $league)
+//    {
+//        $fullURL = self::BASE_URL . $this->leagueURL->getTeamsURL($league);
+//        $response = $this->getResponse($fullURL);
+//        $data = json_decode($response->getBody(), true);
+//        $teamDTOs = collect();
+//
+//        collect($data['teamStatsTotals'])->each(function ($dataArray) use ($league, &$teamDTOs) {
+//            $teamDTOs = $teamDTOs->push($this->buildTeamDTO($league, $dataArray['team']));
+//        });
+//
+//        return $teamDTOs;
+//    }
+//
+//    protected function getPlayerDTOsForLeague(League $league)
+//    {
+//        $fullURL = self::BASE_URL . $this->leagueURL->getPlayersURL($league);
+//        $response = $this->getResponse($fullURL);
+//        $data = json_decode($response->getBody(), true);
+//        $teams = Team::all();
+//        /** @var PositionCollection $positions */
+//        $positions = Position::all();
+//        return $this->convertPlayerDataIntoDTOs($league, $data, $teams, $positions);
+//    }
+//
+//
+//    /**
+//     * @param League $league
+//     * @param array $teamDataArray
+//     * @return TeamDTO
+//     */
+//    protected function buildTeamDTO(League $league, array $teamDataArray)
+//    {
+//        $teamDTO = new TeamDTO(
+//            $league,
+//            $teamDataArray['name'],
+//            $teamDataArray['city'],
+//            $teamDataArray['abbreviation'],
+//            $teamDataArray['id']
+//        );
+//        return $teamDTO;
+//    }
+//
+//    /**
+//     * @param League $league
+//     * @param $data
+//     * @param $teams
+//     * @param $positions
+//     * @return Collection
+//     */
+//    protected function convertPlayerDataIntoDTOs(League $league, $data, $teams, $positions): Collection
+//    {
+//        $playerDTOs = collect();
+//
+//        collect($data['players'])->each(function ($dataArray) use ($league, $teams, $positions, &$playerDTOs) {
+//
+//            $team = $dataArray['teamAsOfDate'] ? $teams->where('external_id', '=', $dataArray['teamAsOfDate']['id'])->first() : null;
+//
+//            $positionsAbbreviations = $dataArray['player']['alternatePositions'];
+//            $positionsAbbreviations[] = $dataArray['player']['primaryPosition'];
+//
+//            $playerPositions = $this->filterPositions($league, $positions, $positionsAbbreviations);
+//
+//            if ($team && $playerPositions) {
+//                $playerDTOs = $playerDTOs->push($this->buildPlayerDTO($team, $playerPositions, $dataArray['player']));
+//            }
+//        });
+//
+//        return $playerDTOs;
+//    }
 }

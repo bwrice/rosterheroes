@@ -2,8 +2,12 @@
 
 namespace App\Providers;
 
+use App\External\Stats\MySportsFeed\Authorization;
+use App\External\Stats\MySportsFeed\MSFClient;
 use App\External\Stats\MySportsFeed\MySportsFeed;
 use App\External\Stats\MySportsFeed\LeagueURL;
+use App\External\Stats\MySportsFeed\PlayerAPI;
+use App\External\Stats\MySportsFeed\TeamAPI;
 use App\External\Stats\StatsIntegration;
 use GuzzleHttp\Client;
 use Illuminate\Support\ServiceProvider;
@@ -17,7 +21,10 @@ class StatsIntegrationServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(StatsIntegration::class, function ($app) {
-            return new MySportsFeed(new Client(), new LeagueURL());
+            return new MySportsFeed(
+                new PlayerAPI(new MSFClient(new Client(), new Authorization())),
+                new TeamAPI(new MSFClient(new Client(), new Authorization()))
+            );
         });
     }
 
