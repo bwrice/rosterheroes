@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\External\Stats\MySportsFeed\Authorization;
+use App\External\Stats\MySportsFeed\GameAPI;
+use App\External\Stats\MySportsFeed\LeagueYearURL;
 use App\External\Stats\MySportsFeed\MSFClient;
 use App\External\Stats\MySportsFeed\MySportsFeed;
 use App\External\Stats\MySportsFeed\LeagueURL;
@@ -23,7 +25,8 @@ class StatsIntegrationServiceProvider extends ServiceProvider
         $this->app->bind(StatsIntegration::class, function ($app) {
             return new MySportsFeed(
                 new PlayerAPI(new MSFClient(new Client(), new Authorization())),
-                new TeamAPI(new MSFClient(new Client(), new Authorization()))
+                new TeamAPI(new MSFClient(new Client(), new Authorization()), new LeagueYearURL()),
+                new GameAPI(New MSFClient(new Client(), new Authorization()), new LeagueYearURL())
             );
         });
     }

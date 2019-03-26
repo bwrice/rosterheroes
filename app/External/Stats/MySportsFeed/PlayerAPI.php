@@ -23,7 +23,7 @@ class PlayerAPI
     public function getData()
     {
         $data = [];
-        foreach($this->getURLs() as $league) {
+        foreach ($this->getLeagues() as $league) {
             $url = $league . '/players.json';
             $leagueData = $this->client->getData($url);
             $data = array_merge($data, $leagueData['players']);
@@ -31,7 +31,7 @@ class PlayerAPI
         return $data;
     }
 
-    protected function getURLs()
+    protected function getLeagues()
     {
         return [
             'nfl',

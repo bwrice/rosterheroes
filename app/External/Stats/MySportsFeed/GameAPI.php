@@ -2,15 +2,14 @@
 /**
  * Created by PhpStorm.
  * User: bwrice
- * Date: 3/20/19
- * Time: 10:07 PM
+ * Date: 3/24/19
+ * Time: 9:58 PM
  */
 
 namespace App\External\Stats\MySportsFeed;
 
-use App\League;
 
-class TeamAPI
+class GameAPI
 {
     /**
      * @var MSFClient
@@ -31,9 +30,9 @@ class TeamAPI
     {
         $data = [];
         foreach($this->leagueYearURL->getSubURLs() as $league => $subURL) {
-            $url = $subURL . '/team_stats_totals.json';
+            $url = $subURL . '/games.json';
             $leagueData = $this->client->getData($url);
-            $data[$league] = $leagueData['teamStatsTotals'];
+            $data[$league] = $leagueData['games'];
         }
         return $data;
     }

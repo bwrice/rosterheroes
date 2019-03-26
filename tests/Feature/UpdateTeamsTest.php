@@ -13,7 +13,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class UpdateSquadsTest extends TestCase
+class UpdateTeamsTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -32,9 +32,8 @@ class UpdateSquadsTest extends TestCase
         $integration = new MockIntegration($teamDTOs);
         app()->instance(StatsIntegration::class, $integration);
 
-        /** @var UpdateTeams $job */
-        $job = app(UpdateTeams::class);
-        $job->handle();
+        UpdateTeams::dispatchNow();
+
 
         $team = Team::where('external_id', '=', $externalID1)->first();
         $this->assertNotNull($team);

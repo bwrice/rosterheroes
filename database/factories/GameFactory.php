@@ -16,6 +16,7 @@ $factory->define(App\Game::class, function (Faker $faker) {
         'week_id' => $week->id,
         'home_team_id' => $homeTeam->id,
         'away_team_id' => $awayTeam->id,
-        'starts_at' => $week->everything_locks_at->copy()->addHours(6)
+        'starts_at' => $week->everything_locks_at->copy()->addHours(6),
+        'external_id' => $faker->randomNumber()
     ];
 });

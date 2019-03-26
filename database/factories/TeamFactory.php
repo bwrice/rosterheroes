@@ -13,6 +13,7 @@ $factory->define(\App\Domain\Teams\Team::class, function (Faker $faker) {
         'league_id' => $league->id,
         'location' => $location,
         'name' => $faker->colorName,
-        'integration_id' => $faker->randomNumber()
+        'abbreviation' => strtoupper($faker->randomLetter . $faker->randomLetter . $faker->randomLetter),
+        'external_id' => $faker->randomNumber()
     ];
 });

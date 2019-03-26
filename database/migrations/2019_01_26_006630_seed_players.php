@@ -13,7 +13,7 @@ class SeedPlayers extends Migration
      */
     public function up()
     {
-//        \App\Jobs\UpdatePlayers::dispatch();
+        \App\Jobs\UpdatePlayers::dispatch();
     }
 
     /**
