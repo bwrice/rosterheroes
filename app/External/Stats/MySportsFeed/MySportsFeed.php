@@ -134,4 +134,9 @@ class MySportsFeed implements StatsIntegration
         }
         return $teamDTOs;
     }
+
+    public function getGameDTOs(): Collection
+    {
+        // TODO: Implement getGameDTOs() method.
+    }
 }

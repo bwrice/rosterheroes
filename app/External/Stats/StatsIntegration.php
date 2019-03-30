@@ -15,4 +15,6 @@ interface StatsIntegration
     public function getPlayerDTOs(): Collection;
 
     public function getTeamDTOs(): Collection;
+
+    public function getGameDTOs(): Collection;
 }

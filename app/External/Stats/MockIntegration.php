@@ -20,11 +20,16 @@ class MockIntegration implements StatsIntegration
      * @var Collection
      */
     private $playerDTOs;
+    /**
+     * @var Collection
+     */
+    private $gameDTOs;
 
-    public function __construct(Collection $teamDTOs = null, Collection $playerDTOs = null)
+    public function __construct(Collection $teamDTOs = null, Collection $playerDTOs = null, Collection $gameDTOs = null)
     {
         $this->teamDTOs = $teamDTOs;
         $this->playerDTOs = $playerDTOs;
+        $this->gameDTOs = $gameDTOs;
     }
 
 
@@ -36,6 +41,11 @@ class MockIntegration implements StatsIntegration
     public function getTeamDTOs(): Collection
     {
         return $this->teamDTOs ?: collect();
+    }
+
+    public function getGameDTOs(): Collection
+    {
+        return $this->gameDTOs;
     }
 
     /**
@@ -55,6 +65,16 @@ class MockIntegration implements StatsIntegration
     public function setPlayerDTOs(Collection $playerDTOs): MockIntegration
     {
         $this->playerDTOs = $playerDTOs;
+        return $this;
+    }
+
+    /**
+     * @param Collection $gameDTOs
+     * @return MockIntegration
+     */
+    public function setGameDTOs(Collection $gameDTOs): MockIntegration
+    {
+        $this->gameDTOs = $gameDTOs;
         return $this;
     }
 }

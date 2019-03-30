@@ -24,6 +24,7 @@ class UpdatePlayers implements ShouldQueue
      */
     public function handle(StatsIntegration $integration)
     {
+        ini_set('memory_limit','512M');
         $teamDTOs = $integration->getPlayerDTOs();
         $teamDTOs->each(function (PlayerDTO $playerDTO) {
             /** @var Player $player */
