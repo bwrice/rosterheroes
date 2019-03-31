@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Squad;
+use App\Domain\Models\Squad;
 use App\Squads\HeroClassAvailability;
 use App\Http\Resources\HeroClassResource as HeroClassResource;
 

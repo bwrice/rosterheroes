@@ -15,11 +15,11 @@ class SeedProvinces extends Migration
     {
         $territories = [
             [
-                'name' => \App\Territory::GARDENS_OF_REDEMPTION,
+                'name' => \App\Domain\Models\Territory::GARDENS_OF_REDEMPTION,
                 'provinces' => [
                     [
                         'name' => 'Keplyos',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [2,4,6,8,9,10],
                         'realm_color' => '#cea622',
                         'realm_x' => 271.10385,
@@ -35,7 +35,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Prasynein',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [1,3,4],
                         'realm_color' => '#faef0b',
                         'realm_x' => 272.77869,
@@ -51,7 +51,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Shael Obela',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [2,4,5],
                         'realm_color' => '#edaa1c',
                         'realm_x' => 280.9136,
@@ -67,7 +67,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Thona',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [1,2,3,5,6],
                         'realm_color' => '#f0cd09',
                         'realm_x' => 284.30093,
@@ -83,7 +83,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Icros',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [3,4,6,23],
                         'realm_color' => '#dee619',
                         'realm_x' => 285.67919,
@@ -99,7 +99,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Joichela',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [1,4,5,7,8],
                         'realm_color' => '#edaa1c',
                         'realm_x' => 283.29019,
@@ -115,7 +115,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Usinor',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [6,8,13,23],
                         'realm_color' => '#faef0b',
                         'realm_x' => 278.23785,
@@ -131,7 +131,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Mogrin',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [1,6,7,9,13,17],
                         'realm_color' => '#eab90a',
                         'realm_x' => 258.76353,
@@ -147,7 +147,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Baoca',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [1,8,10,11,17],
                         'realm_color' => '#ba8c00',
                         'realm_x' => 259.81515,
@@ -163,7 +163,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Zynden',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [1,9,11,12],
                         'realm_color' => '#cad121',
                         'realm_x' => 252.16393,
@@ -179,7 +179,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Abravein',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [9,10,12,17,20],
                         'realm_color' => '#edaa1c',
                         'realm_x' => 253.18661,
@@ -195,7 +195,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Everium',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [10,11,21],
                         'realm_color' => '#eade0b',
                         'realm_x' => 252.16393,
@@ -212,11 +212,11 @@ class SeedProvinces extends Migration
                 ]
             ],
             [
-                'name' => \App\Territory::WOODS_OF_THE_WILD,
+                'name' => \App\Domain\Models\Territory::WOODS_OF_THE_WILD,
                 'provinces' => [
                     [
                         'name' => 'Yufri',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [7,8,14,15,17,38],
                         'realm_color' => '#cf9625',
                         'realm_x' => 268.29731,
@@ -232,7 +232,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Goshala',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [13,15,16,17,18,53,54],
                         'realm_color' => '#f2e30f',
                         'realm_x' => 252.04301,
@@ -248,7 +248,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Trovubar',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [13,14,37,38,54,55,56],
                         'realm_color' => '#f2b515',
                         'realm_x' => 262.36641,
@@ -264,7 +264,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Obren',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [14,18,52,53],
                         'realm_color' => '#ce9334',
                         'realm_x' => 248.62771,
@@ -280,7 +280,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Shaji Kroy',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [8,9,11,13,14,18,19,20],
                         'realm_color' => '#d0cb22',
                         'realm_x' => 250.2209,
@@ -296,7 +296,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Vyspen',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [14,16,17,19,21,39,40,50,52],
                         'realm_color' => '#f2bd12',
                         'realm_x' => 231.23446,
@@ -312,7 +312,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Jaefron',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [17,18,20,21],
                         'realm_color' => '#f0cd09',
                         'realm_x' => 243.8709,
@@ -328,7 +328,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Zotras',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [11,17,19,21],
                         'realm_color' => '#faef0b',
                         'realm_x' => 240.02153,
@@ -344,7 +344,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Bokril',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [12,18,19,20,22],
                         'realm_color' => '#ce9334',
                         'realm_x' => 226.47103,
@@ -360,7 +360,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Rusceron',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [21,40,41,42],
                         'realm_color' => '#e8e51b',
                         'realm_x' => 220.75396,
@@ -377,11 +377,11 @@ class SeedProvinces extends Migration
                 ]
             ],
             [
-                'name' => \App\Territory::TWISTING_ISLES_OF_ILLUSIONS,
+                'name' => \App\Domain\Models\Territory::TWISTING_ISLES_OF_ILLUSIONS,
                 'provinces' => [
                     [
                         'name' => 'Vextrya',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [5,7,24,26],
                         'realm_color' => '#ba8c00',
                         'realm_x' => 287.56488,
@@ -397,7 +397,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Baepros',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [23,25,38],
                         'realm_color' => '#cad121',
                         'realm_x' => 288.32143,
@@ -413,7 +413,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Navuji',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [24,26,31,32],
                         'realm_color' => '#ce9334',
                         'realm_x' => 289.07589,
@@ -429,7 +429,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Paclauo',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [23,25,27],
                         'realm_color' => '#eab90a',
                         'realm_x' => 292.70023,
@@ -445,7 +445,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Dodrurg',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [26,28,29],
                         'realm_color' => '#cad121',
                         'realm_x' => 298.68667,
@@ -461,7 +461,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Tykria',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [27,29,31],
                         'realm_color' => '#c0a73c',
                         'realm_x' => 300.40439,
@@ -477,7 +477,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Kleyrus',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [27,28,30,31],
                         'realm_color' => '#ce9334',
                         'realm_x' => 302.30143,
@@ -493,7 +493,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Fascor Ubela',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [29,31,33],
                         'realm_color' => '#cad121',
                         'realm_x' => 291.59226,
@@ -512,7 +512,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Xagre',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [25,28,29,30,32,33],
                         'realm_color' => '#faef0b',
                         'realm_x' => 296.16124,
@@ -528,7 +528,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Vaunce',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [25,31,33,34,35],
                         'realm_color' => '#f5cb09',
                         'realm_x' => 289.3446,
@@ -544,7 +544,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Moskia',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [30,31,32,34],
                         'realm_color' => '#edaa1c',
                         'realm_x' => 289.22731,
@@ -560,7 +560,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Streylor',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [32,33,35,36],
                         'realm_color' => '#eade0b',
                         'realm_x' => 289.12963,
@@ -576,7 +576,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Nobulem',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [32,34,36,37],
                         'realm_color' => '#dee619',
                         'realm_x' => 286.11224,
@@ -592,7 +592,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Arclus',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [34,35,69,71,72],
                         'realm_color' => '#d4a127',
                         'realm_x' => 282.39,
@@ -608,7 +608,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Skodal',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [15,35,38,56],
                         'realm_color' => '#faef0b',
                         'realm_x' => 280.96321,
@@ -624,7 +624,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Febrijan',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [13,15,24,37],
                         'realm_color' => '#d2ac23',
                         'realm_x' => 280.03613,
@@ -641,11 +641,11 @@ class SeedProvinces extends Migration
                 ]
             ],
             [
-                'name' => \App\Territory::GRASSLANDS_OF_GIANTS,
+                'name' => \App\Domain\Models\Territory::GRASSLANDS_OF_GIANTS,
                 'provinces' => [
                     [
                         'name' => 'Padrana',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [18,40,50,51],
                         'realm_color' => '#d0cb22',
                         'realm_x' => 226.30453,
@@ -661,7 +661,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Uplemas',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [18,22,39,41],
                         'realm_color' => '#ba8c00',
                         'realm_x' => 220.14832,
@@ -677,7 +677,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Cleotyn',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [22,40,42,43],
                         'realm_color' => '#faef0b',
                         'realm_x' => 206.06804,
@@ -693,7 +693,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Mesnil',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [22,41,43,44],
                         'realm_color' => '#f2bd12',
                         'realm_x' => 213.11877,
@@ -709,7 +709,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Loglia',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [41,42,44,45,46,47],
                         'realm_color' => '#d2ac23',
                         'realm_x' => 207.31034,
@@ -725,7 +725,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Esparax',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [42,43,45],
                         'realm_color' => '#ba8c00',
                         'realm_x' => 193.62539,
@@ -741,7 +741,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Gruze',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [43,44,48,49],
                         'realm_color' => '#faef0b',
                         'realm_x' => 193.62539,
@@ -757,7 +757,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Velbis',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [43,47,96,99],
                         'realm_color' => '#679e3f',
                         'realm_x' => 191.00229,
@@ -773,7 +773,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Huskano',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [43,46,48,99,100],
                         'realm_color' => '#96b646',
                         'realm_x' => 181.13985,
@@ -789,7 +789,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Xonis Gola',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [45,47,49,100,101],
                         'realm_color' => '#708743',
                         'realm_x' => 179.04849,
@@ -805,7 +805,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Qadros',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [45,48,101,141,142],
                         'realm_color' => '#5fa441',
                         'realm_x' => 168.14529,
@@ -822,11 +822,11 @@ class SeedProvinces extends Migration
                 ]
             ],
             [
-                'name' => \App\Territory::MENACING_MARCHES,
+                'name' => \App\Domain\Models\Territory::MENACING_MARCHES,
                 'provinces' => [
                     [
                         'name' => 'Grunia',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [18,39,51],
                         'realm_color' => '#ce9334',
                         'realm_x' => 228.52145,
@@ -842,7 +842,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Wesnurg',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [39,50,61],
                         'realm_color' => '#faef0b',
                         'realm_x' => 228.52145,
@@ -858,7 +858,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Yoscal',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [16,18,53,60,61,62],
                         'realm_color' => '#d2ac23',
                         'realm_x' => 245.25169,
@@ -874,7 +874,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Punobrus',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [14,16,52,54,59],
                         'realm_color' => '#e9bd11',
                         'realm_x' => 251.12627,
@@ -890,7 +890,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Luskana',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [14,15,53,55],
                         'realm_color' => '#c0a73c',
                         'realm_x' => 251.12627,
@@ -906,7 +906,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Brashus',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [15,54,56,57],
                         'realm_color' => '#fdca05',
                         'realm_x' => 259.81205,
@@ -922,7 +922,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Vuskora',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [15,37,55,57,69],
                         'realm_color' => '#cea622',
                         'realm_x' => 267.03072,
@@ -938,7 +938,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Troysea',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [55,56,58,68],
                         'realm_color' => '#ff8c00',
                         'realm_x' => 266.10625,
@@ -954,7 +954,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Duescor',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [57,59,66,67],
                         'realm_color' => '#d9a32e',
                         'realm_x' => 256.43241,
@@ -970,7 +970,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Ceplya',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [53,58,65],
                         'realm_color' => '#d25c25',
                         'realm_x' => 242.07153,
@@ -986,7 +986,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Freador',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [52,63,65],
                         'realm_color' => '#ff8c00',
                         'realm_x' => 239.35231,
@@ -1002,7 +1002,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Caskain',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [51,52,62,88,94],
                         'realm_color' => '#935c34',
                         'realm_x' => 219.77625,
@@ -1018,7 +1018,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Atharo',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [52,61,63,85,88],
                         'realm_color' => '#d1751c',
                         'realm_x' => 228.50336,
@@ -1034,7 +1034,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Maclusal',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [60,62,64,85],
                         'realm_color' => '#ffb800',
                         'realm_x' => 225.68441,
@@ -1053,7 +1053,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Oprul',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [63,65,84,85],
                         'realm_color' => '#ab4613',
                         'realm_x' => 224.81263,
@@ -1069,7 +1069,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Nayla',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [59,60,64,66,84,129],
                         'realm_color' => '#da8221',
                         'realm_x' => 242.07153,
@@ -1085,7 +1085,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Bruglad',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [58,65,67,115,129,130,131],
                         'realm_color' => '#a96b14',
                         'realm_x' => 246.89087,
@@ -1101,7 +1101,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Taluvia',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [58,66,68,114,115],
                         'realm_color' => '#c36e39',
                         'realm_x' => 256.43241,
@@ -1117,7 +1117,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Zaquia',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [57,67,114,117],
                         'realm_color' => '#cb8424',
                         'realm_x' => 262.89403,
@@ -1134,11 +1134,11 @@ class SeedProvinces extends Migration
                 ]
             ],
             [
-                'name' => \App\Territory::TROPICS_OF_TREPIDATION,
+                'name' => \App\Domain\Models\Territory::TROPICS_OF_TREPIDATION,
                 'provinces' => [
                     [
                         'name' => 'Kucrea',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [36,56,70,71,73],
                         'realm_color' => '#eab90a',
                         'realm_x' => 284.83533,
@@ -1154,7 +1154,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Eoflor',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [69,73,74],
                         'realm_color' => '#faef0b',
                         'realm_x' => 286.76285,
@@ -1170,7 +1170,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Jhoudor',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [36,69,72,73],
                         'realm_color' => '#cad121',
                         'realm_x' => 282.49438,
@@ -1186,7 +1186,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Clythil',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [36,71,73,74],
                         'realm_color' => '#faef0b',
                         'realm_x' => 287.27656,
@@ -1202,7 +1202,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Baygua',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [69,70,71,72,74],
                         'realm_color' => '#ba8c00',
                         'realm_x' => 287.7194,
@@ -1218,7 +1218,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Thoestan',
-                        'continent' => \App\Continent::FETROYA,
+                        'continent' => \App\Domain\Models\Continent::FETROYA,
                         'borders' => [70,72,73,75,76],
                         'realm_color' => '#e2bf14',
                         'realm_x' => 288.83612,
@@ -1234,7 +1234,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Feloriz',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [74,77,78],
                         'realm_color' => '#ec6f0f',
                         'realm_x' => 293.29062,
@@ -1259,7 +1259,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Dobyras',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [74,77,82,117,118],
                         'realm_color' => '#dd5f25',
                         'realm_x' => 288.31262,
@@ -1275,7 +1275,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Ukroyla',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [75,76,78,81,82],
                         'realm_color' => '#c56832',
                         'realm_x' => 297.07334,
@@ -1291,7 +1291,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Wicauji',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [75,77,79,81],
                         'realm_color' => '#ff8c00',
                         'realm_x' => 298.29498,
@@ -1307,7 +1307,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Trealcos',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [78,80,81],
                         'realm_color' => '#dd5f25',
                         'realm_x' => 301.11909,
@@ -1323,7 +1323,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Quzomir',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [79,81,82,83],
                         'realm_color' => '#a96b14',
                         'realm_x' => 304.18868,
@@ -1339,7 +1339,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Hathuri',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [77,78,79,80,82],
                         'realm_color' => '#e3ae18',
                         'realm_x' => 298.87219,
@@ -1355,7 +1355,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Vubleodor',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [76,77,80,81,83,118,119,121],
                         'realm_color' => '#ff8c00',
                         'realm_x' => 298.63034,
@@ -1371,7 +1371,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Muwhari',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [80,82,121],
                         'realm_color' => '#c56832',
                         'realm_x' => 294.68744,
@@ -1388,11 +1388,11 @@ class SeedProvinces extends Migration
                 ]
             ],
             [
-                'name' => \App\Territory::PERILOUS_PLANS,
+                'name' => \App\Domain\Models\Territory::PERILOUS_PLANS,
                 'provinces' => [
                     [
                         'name' => 'Nyspia',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [64,65,85,86,129,135],
                         'realm_color' => '#ec6f0f',
                         'realm_x' => 224.81263,
@@ -1408,7 +1408,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Preburo',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [62,63,64,84,86,87],
                         'realm_color' => '#db9123',
                         'realm_x' => 211.61034,
@@ -1424,7 +1424,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Gustein',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [84,85,87,135],
                         'realm_color' => '#d96127',
                         'realm_x' => 224.81263,
@@ -1440,7 +1440,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Riaya',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [85,86,88,89,90,135],
                         'realm_color' => '#ab4613',
                         'realm_x' => 203.77361,
@@ -1456,7 +1456,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Saibor',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [61,62,87,89,93,94],
                         'realm_color' => '#e96c1d',
                         'realm_x' => 210.16133,
@@ -1472,7 +1472,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Wogros',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [87,88,90,93],
                         'realm_color' => '#de7f29',
                         'realm_x' => 203.32144,
@@ -1488,7 +1488,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Iujan',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [87,89,91,135,136],
                         'realm_color' => '#bf4d76',
                         'realm_x' => 198.6161,
@@ -1504,7 +1504,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Rashijan',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [90,92,93,136],
                         'realm_color' => '#8a314e',
                         'realm_x' => 193.46334,
@@ -1520,7 +1520,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Heblon',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [91,93,136,158,159,160],
                         'realm_color' => '#9d2433',
                         'realm_x' => 184.66098,
@@ -1536,7 +1536,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Abli',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [88,89,91,92,94,95],
                         'realm_color' => '#c76a37',
                         'realm_x' => 206.07889,
@@ -1552,7 +1552,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Mebriaso',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [61,88,93,95],
                         'realm_color' => '#eb9d1f',
                         'realm_x' => 207.67518,
@@ -1568,7 +1568,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Lunaji',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [93,94,96,97],
                         'realm_color' => '#516f36',
                         'realm_x' => 188.6492,
@@ -1596,7 +1596,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Baestein',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [46,95,97,99],
                         'realm_color' => '#a4ab3c',
                         'realm_x' => 185.28585,
@@ -1612,7 +1612,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Yeklistan',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [95,96,98,99],
                         'realm_color' => '#95983c',
                         'realm_x' => 189.39309,
@@ -1628,7 +1628,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Zuskon',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [97,99,102,111,112],
                         'realm_color' => '#babe48',
                         'realm_x' => 175.50091,
@@ -1645,11 +1645,11 @@ class SeedProvinces extends Migration
                 ]
             ],
             [
-                'name' => \App\Territory::TREACHEROUS_FOREST,
+                'name' => \App\Domain\Models\Territory::TREACHEROUS_FOREST,
                 'provinces' => [
                     [
                         'name' => 'Kascyer',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [46,47,96,97,98,100,102],
                         'realm_color' => '#7b9842',
                         'realm_x' => 185.21143,
@@ -1665,7 +1665,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Glava Skon',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [47,48,99,101,102,103],
                         'realm_color' => '#66c74b',
                         'realm_x' => 162.90427,
@@ -1681,7 +1681,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Ciaka',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [48,49,100,103,104,142,145],
                         'realm_color' => '#72b43a',
                         'realm_x' => 162.90427,
@@ -1697,7 +1697,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Zablor',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [98,99,100,103,111],
                         'realm_color' => '#60a942',
                         'realm_x' => 167.46988,
@@ -1713,7 +1713,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Uspeza',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [100,101,102,104,110,111],
                         'realm_color' => '#516f36',
                         'realm_x' => 160.44499,
@@ -1729,7 +1729,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Flyskar',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [101,103,105,110,145,146,149],
                         'realm_color' => '#95983c',
                         'realm_x' => 160.44499,
@@ -1745,7 +1745,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Veothum',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [104,106,109,110,149],
                         'realm_color' => '#a4be4b',
                         'realm_x' => 141.22652,
@@ -1761,7 +1761,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Schoglas',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [105,107,149,150,154,156],
                         'realm_color' => '#679e3f',
                         'realm_x' => 129.88066,
@@ -1777,7 +1777,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Latrua',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [106,156,203],
                         'realm_color' => '#516f36',
                         'realm_x' => 129.88066,
@@ -1793,7 +1793,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Xobria',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [109,113,202,203],
                         'realm_color' => '#6d9538',
                         'realm_x' => 139.99817,
@@ -1809,7 +1809,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Dachleon',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [105,108,110,113],
                         'realm_color' => '#3cb441',
                         'realm_x' => 139.99817,
@@ -1825,7 +1825,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Vathis',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [103,104,105,109,111,113],
                         'realm_color' => '#bfbe40',
                         'realm_x' => 161.37878,
@@ -1841,7 +1841,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Drithyland',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [98,102,103,110,112,113],
                         'realm_color' => '#7f9c4e',
                         'realm_x' => 161.37878,
@@ -1857,7 +1857,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Bluchos',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [98,111,113,193],
                         'realm_color' => '#516f36',
                         'realm_x' => 165.76869,
@@ -1873,7 +1873,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Shabrea',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [108,109,110,111,112,197,202],
                         'realm_color' => '#65b447',
                         'realm_x' => 158.05909,
@@ -1890,11 +1890,11 @@ class SeedProvinces extends Migration
                 ]
             ],
             [
-                'name' => \App\Territory::SAVAGE_SWAMPS,
+                'name' => \App\Domain\Models\Territory::SAVAGE_SWAMPS,
                 'provinces' => [
                     [
                         'name' => 'Skalrus',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [67,68,115,119,127],
                         'realm_color' => '#f27309',
                         'realm_x' => 265.45511,
@@ -1910,7 +1910,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Glabresh',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [66,67,114,116,128,131],
                         'realm_color' => '#e3ae18',
                         'realm_x' => 251.17381,
@@ -1926,7 +1926,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Naflya',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [115,128,131],
                         'realm_color' => '#c48043',
                         'realm_x' => 253.36593,
@@ -1942,7 +1942,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Trebraylia',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [68,76,118,119],
                         'realm_color' => '#f39c05',
                         'realm_x' => 277.227,
@@ -1958,7 +1958,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Eschyre',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [76,82,117,119],
                         'realm_color' => '#ab4613',
                         'realm_x' => 282.3719,
@@ -1974,7 +1974,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Lybreau',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [82,114,117,118,120,121,126,127],
                         'realm_color' => '#d99524',
                         'realm_x' => 280.61285,
@@ -1990,7 +1990,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Hestijan',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [119,121,126],
                         'realm_color' => '#f2a008',
                         'realm_x' => 279.45529,
@@ -2006,7 +2006,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Monutra',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [82,83,119,120,122,126],
                         'realm_color' => '#a96b14',
                         'realm_x' => 279.45529,
@@ -2022,7 +2022,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Clojan',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [121,123,125,126],
                         'realm_color' => '#ffb800',
                         'realm_x' => 277.65486,
@@ -2038,7 +2038,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Eskul',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [122,124,125,182],
                         'realm_color' => '#d96127',
                         'realm_x' => 272.91823,
@@ -2054,7 +2054,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Jyroeca',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [123,125,127,128,131,181],
                         'realm_color' => '#d9a32e',
                         'realm_x' => 260.97787,
@@ -2070,7 +2070,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Vofros',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [122,123,124,126],
                         'realm_color' => '#a96b14',
                         'realm_x' => 268.99288,
@@ -2086,7 +2086,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Xoscoula',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [119,120,121,122,125,127],
                         'realm_color' => '#cc733f',
                         'realm_x' => 277.00943,
@@ -2102,7 +2102,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Feshwala',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [114,119,124,126,128],
                         'realm_color' => '#ff8c00',
                         'realm_x' => 274.28507,
@@ -2118,7 +2118,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Thoyaflen',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [115,116,124,127],
                         'realm_color' => '#ffb800',
                         'realm_x' => 265.00756,
@@ -2135,11 +2135,11 @@ class SeedProvinces extends Migration
                 ]
             ],
             [
-                'name' => \App\Territory::DESERT_OF_DESPAIR,
+                'name' => \App\Domain\Models\Territory::DESERT_OF_DESPAIR,
                 'provinces' => [
                     [
                         'name' => 'Zugrax',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [65,66,84,130,134,135],
                         'realm_color' => '#935c34',
                         'realm_x' => 226.97891,
@@ -2155,7 +2155,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Kiretryl',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [66,129,131,132,134],
                         'realm_color' => '#dc7f19',
                         'realm_x' => 241.62659,
@@ -2171,7 +2171,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Nuspos',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [66,115,116,124,130,132],
                         'realm_color' => '#dd5f25',
                         'realm_x' => 251.17381,
@@ -2187,7 +2187,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Joltys Vulk',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [130,131,133,134,140,177,178,181],
                         'realm_color' => '#ab4613',
                         'realm_x' => 249.98474,
@@ -2203,7 +2203,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Igliana',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [132,134,139,140],
                         'realm_color' => '#eda620',
                         'realm_x' => 232.38426,
@@ -2219,7 +2219,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Fulorax',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [129,130,132,133,135,137,139],
                         'realm_color' => '#ff8c00',
                         'realm_x' => 234.80324,
@@ -2235,7 +2235,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Blyskium',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [84,86,87,90,129,134,136,137],
                         'realm_color' => '#cd9029',
                         'realm_x' => 215.55428,
@@ -2251,7 +2251,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Luatho',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [90,91,92,135,137,160,161,162],
                         'realm_color' => '#cc3649',
                         'realm_x' => 195.58001,
@@ -2267,7 +2267,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Mivasqua',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [134,135,136,138,139,162],
                         'realm_color' => '#af1778',
                         'realm_x' => 210.95009,
@@ -2283,7 +2283,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Vethar',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [137,139,162,165,174],
                         'realm_color' => '#a30d37',
                         'realm_x' => 208.31253,
@@ -2299,7 +2299,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Palcha',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [133,134,137,138,140,174],
                         'realm_color' => '#bf4058',
                         'realm_x' => 224.70126,
@@ -2315,7 +2315,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Wraycia',
-                        'continent' => \App\Continent::EAST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::EAST_WOZUL,
                         'borders' => [132,133,139],
                         'realm_color' => '#935c34',
                         'realm_x' => 232.38426,
@@ -2332,11 +2332,11 @@ class SeedProvinces extends Migration
                 ]
             ],
             [
-                'name' => \App\Territory::HUMBLING_HILLS,
+                'name' => \App\Domain\Models\Territory::HUMBLING_HILLS,
                 'provinces' => [
                     [
                         'name' => 'Craunyor',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [49,142,143,220,275],
                         'realm_color' => '#708743',
                         'realm_x' => 158.41927,
@@ -2352,7 +2352,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Hadrus',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [49,101,141,143,144,145],
                         'realm_color' => '#95983c',
                         'realm_x' => 154.27999,
@@ -2368,7 +2368,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Rufraiti',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [141,142,144],
                         'realm_color' => '#228b22',
                         'realm_x' => 152.42399,
@@ -2390,7 +2390,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Drayhke',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [142,143,145,146],
                         'realm_color' => '#516f36',
                         'realm_x' => 147.89691,
@@ -2406,7 +2406,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Azunela',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [101,104,142,144,146],
                         'realm_color' => '#93b347',
                         'realm_x' => 154.27999,
@@ -2422,7 +2422,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Shyar',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [104,144,145,147,149,223],
                         'realm_color' => '#41b23a',
                         'realm_x' => 148.50101,
@@ -2438,7 +2438,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Roychen',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [146,148,149,150,223,224],
                         'realm_color' => '#88b53d',
                         'realm_x' => 141.18673,
@@ -2454,7 +2454,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Maglieka',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [147,150,151,152,224,225],
                         'realm_color' => '#24b199',
                         'realm_x' => 129.82057,
@@ -2470,7 +2470,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Kilnax',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [104,105,106,146,147,150],
                         'realm_color' => '#60c347',
                         'realm_x' => 130.96668,
@@ -2486,7 +2486,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Droklia',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [106,147,148,149,151,154],
                         'realm_color' => '#1891aa',
                         'realm_x' => 140.90606,
@@ -2502,7 +2502,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Qidrana',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [148,150,152,153,154,239],
                         'realm_color' => '#008080',
                         'realm_x' => 115.39692,
@@ -2518,7 +2518,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Yegror',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [148,151,153,225,226,227],
                         'realm_color' => '#3e96bc',
                         'realm_x' => 115.50496,
@@ -2534,7 +2534,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Oedrysk',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [151,152,227,228,229,238,239],
                         'realm_color' => '#23bfc3',
                         'realm_x' => 109.10921,
@@ -2550,7 +2550,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Jeskijan',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [106,150,151,155,156,239],
                         'realm_color' => '#1485ab',
                         'realm_x' => 117.64037,
@@ -2566,7 +2566,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Zirobia',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [154,156,157,203,239],
                         'realm_color' => '#42c3bf',
                         'realm_x' => 117.64037,
@@ -2582,7 +2582,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Brathau',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [106,107,154,155],
                         'realm_color' => '#178695',
                         'realm_x' => 129.89278,
@@ -2598,7 +2598,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Krogrus',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [155,203,207,239,241,244],
                         'realm_color' => '#008080',
                         'realm_x' => 113.49909,
@@ -2615,11 +2615,11 @@ class SeedProvinces extends Migration
                 ]
             ],
             [
-               'name' => \App\Territory::GULF_OF_SERPENTS,
+               'name' => \App\Domain\Models\Territory::GULF_OF_SERPENTS,
                 'provinces' => [
                     [
                         'name' => 'Iwhein',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [92,159,172,173],
                         'realm_color' => '#cc4a46',
                         'realm_x' => 176.34149,
@@ -2635,7 +2635,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Pothos',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [92,158,160,170,171,172],
                         'realm_color' => '#a51773',
                         'realm_x' => 188.568,
@@ -2651,7 +2651,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Zyae',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [92,136,159,161,171],
                         'realm_color' => '#ef506f',
                         'realm_x' => 188.02285,
@@ -2667,7 +2667,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Vaskur',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [136,160,162,163,171],
                         'realm_color' => '#8e0038',
                         'realm_x' => 190.64663,
@@ -2683,7 +2683,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Cueblyor',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [136,137,138,161,163,164,165],
                         'realm_color' => '#bb386a',
                         'realm_x' => 203.96675,
@@ -2699,7 +2699,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Dyskon',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [161,162,164,171],
                         'realm_color' => '#b2204b',
                         'realm_x' => 200.69969,
@@ -2715,7 +2715,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Brachijan',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [162,163,165,166,167,168],
                         'realm_color' => '#ef506f',
                         'realm_x' => 192.4458,
@@ -2731,7 +2731,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Clovance',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [138,162,164,166,174,175],
                         'realm_color' => '#8e0038',
                         'realm_x' => 206.59604,
@@ -2747,7 +2747,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Fezoshos',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [164,165,167,175,258],
                         'realm_color' => '#b10c11',
                         'realm_x' => 202.31586,
@@ -2763,7 +2763,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Relidyl',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [164,166,168,169,259],
                         'realm_color' => '#c5476e',
                         'realm_x' => 186.75725,
@@ -2779,7 +2779,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Morosci',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [164,167,169],
                         'realm_color' => '#a20b62',
                         'realm_x' => 182.99576,
@@ -2795,7 +2795,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Paflikan',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [167,168,170,274],
                         'realm_color' => '#802a1e',
                         'realm_x' => 180.55333,
@@ -2811,7 +2811,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Nuzil',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [159,169,172,274],
                         'realm_color' => '#cc4a46',
                         'realm_x' => 179.67193,
@@ -2827,7 +2827,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Shawchus',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [159,160,161,163],
                         'realm_color' => '#bb4d6a',
                         'realm_x' => 190.64663,
@@ -2843,7 +2843,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Hynarice',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [158,159,170,173,194],
                         'realm_color' => '#b72d65',
                         'realm_x' => 175.11945,
@@ -2859,7 +2859,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Iphorus',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [158,172,193],
                         'realm_color' => '#8a314e',
                         'realm_x' => 175.11945,
@@ -2876,11 +2876,11 @@ class SeedProvinces extends Migration
                 ]
             ],
             [
-                'name' => \App\Territory::CANNIBAL_CANYONS,
+                'name' => \App\Domain\Models\Territory::CANNIBAL_CANYONS,
                 'provinces' => [
                     [
                         'name' => 'Kystrela',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [138,139,165,175,176],
                         'realm_color' => '#a91a7c',
                         'realm_x' => 216.82329,
@@ -2896,7 +2896,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Oclya',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [165,166,174,188],
                         'realm_color' => '#bb1c40',
                         'realm_x' => 208.06448,
@@ -2912,7 +2912,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Voydor',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [174,177,187,188],
                         'realm_color' => '#bf4d76',
                         'realm_x' => 226.83628,
@@ -2928,7 +2928,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Whagrix',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [132,176,178,187],
                         'realm_color' => '#8e0038',
                         'realm_x' => 231.7228,
@@ -2944,7 +2944,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Muglos',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [132,177,179,186,187],
                         'realm_color' => '#ef506f',
                         'realm_x' => 240.70158,
@@ -2960,7 +2960,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Savulym',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [178,180,183,184],
                         'realm_color' => '#d65c48',
                         'realm_x' => 241.51032,
@@ -2976,7 +2976,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Entiaka',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [179,181,182,183],
                         'realm_color' => '#8e0038',
                         'realm_x' => 253.53284,
@@ -2992,7 +2992,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Zuspyr',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [124,132,180,182],
                         'realm_color' => '#ba4692',
                         'realm_x' => 255.37717,
@@ -3008,7 +3008,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Lachisor',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [123,180,181],
                         'realm_color' => '#ef506f',
                         'realm_x' => 256.14715,
@@ -3024,7 +3024,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Yebriz',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [179,180,184],
                         'realm_color' => '#ba4692',
                         'realm_x' => 247.32185,
@@ -3040,7 +3040,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Zagleon',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [179,183,185],
                         'realm_color' => '#b2204b',
                         'realm_x' => 247.56266,
@@ -3056,7 +3056,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Rhydor',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [184,186,190],
                         'realm_color' => '#ba4692',
                         'realm_x' => 232.29021,
@@ -3072,7 +3072,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Jodaen',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [178,185,187,188,190],
                         'realm_color' => '#ad233a',
                         'realm_x' => 221.68569,
@@ -3088,7 +3088,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Physhkiron',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [176,177,178,186,188],
                         'realm_color' => '#d65c48',
                         'realm_x' => 221.68569,
@@ -3104,7 +3104,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Izur Taj',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [175,176,186,187,189,190],
                         'realm_color' => '#c36741',
                         'realm_x' => 213.2889,
@@ -3120,7 +3120,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Cheldor',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [188,190,191,192,258],
                         'realm_color' => '#8b0039',
                         'realm_x' => 202.99605,
@@ -3136,7 +3136,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Veya',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [185,186,188,189,191],
                         'realm_color' => '#cf2976',
                         'realm_x' => 211.24334,
@@ -3152,7 +3152,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Briadyn',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [189,190,192],
                         'realm_color' => '#9d2622',
                         'realm_x' => 208.55837,
@@ -3168,7 +3168,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Troyenir',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [189,191,264,265],
                         'realm_color' => '#ca2b3f',
                         'realm_x' => 202.99605,
@@ -3185,11 +3185,11 @@ class SeedProvinces extends Migration
                 ]
             ],
             [
-                'name' => \App\Territory::INFERNAL_ISLANDS,
+                'name' => \App\Domain\Models\Territory::INFERNAL_ISLANDS,
                 'provinces' => [
                     [
                         'name' => 'Frughand',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [112,173,194],
                         'realm_color' => '#cc4a46',
                         'realm_x' => 168.0471,
@@ -3205,7 +3205,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Ezubis',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [172,193,195,196],
                         'realm_color' => '#aa0037',
                         'realm_x' => 167.26679,
@@ -3221,7 +3221,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Tassunyl',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [194,196,197,201],
                         'realm_color' => '#2ca385',
                         'realm_x' => 158.158,
@@ -3237,7 +3237,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Lydrofor',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [194,195,197],
                         'realm_color' => '#3784b5',
                         'realm_x' => 158.158,
@@ -3253,7 +3253,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Vaeson',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [113,195,196,198,199,201,202,204],
                         'realm_color' => '#39beab',
                         'realm_x' => 147.66065,
@@ -3269,7 +3269,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Jushai',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [197,199,204,210],
                         'realm_color' => '#3b97bc',
                         'realm_x' => 137.7013,
@@ -3285,7 +3285,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Pazux',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [197,198,200,210,211],
                         'realm_color' => '#008080',
                         'realm_x' => 147.66065,
@@ -3301,7 +3301,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Gaplyn',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [199,201,211,214],
                         'realm_color' => '#6e3fb7',
                         'realm_x' => 145.40198,
@@ -3317,7 +3317,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Valkydor',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [195,197,200,217],
                         'realm_color' => '#403d8b',
                         'realm_x' => 145.40198,
@@ -3334,11 +3334,11 @@ class SeedProvinces extends Migration
                 ]
             ],
             [
-                'name' => \App\Territory::JADE_JUNGLE,
+                'name' => \App\Domain\Models\Territory::JADE_JUNGLE,
                 'provinces' => [
                     [
                         'name' => 'Azabath',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [108,113,197,203,204,205],
                         'realm_color' => '#61cb40',
                         'realm_x' => 141.69596,
@@ -3354,7 +3354,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Pleolys',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [107,108,155,157,202,205],
                         'realm_color' => '#96b643',
                         'realm_x' => 125.55151,
@@ -3370,7 +3370,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Ugweon',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [197,198,202,205],
                         'realm_color' => '#516f36',
                         'realm_x' => 131.51135,
@@ -3386,7 +3386,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Eayix',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [202,203,204,206],
                         'realm_color' => '#bfbe40',
                         'realm_x' => 128.973,
@@ -3402,7 +3402,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Lukreonis',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [205,207,208,209],
                         'realm_color' => '#40e0d0',
                         'realm_x' => 124.60356,
@@ -3424,7 +3424,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Mohadras',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [157,206,208,244,245],
                         'realm_color' => '#2f616f',
                         'realm_x' => 116.06169,
@@ -3440,7 +3440,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Gegliadyl',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [206,207,209,212,245,295],
                         'realm_color' => '#16b2af',
                         'realm_x' => 117.60895,
@@ -3456,7 +3456,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Skorsci',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [206,208,210,211,212],
                         'realm_color' => '#008080',
                         'realm_x' => 122.99322,
@@ -3472,7 +3472,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Drophis',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [198,199,209,211],
                         'realm_color' => '#41b8c2',
                         'realm_x' => 129.90325,
@@ -3488,7 +3488,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Shuland',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [199,200,209,210,212,214],
                         'realm_color' => '#549595',
                         'realm_x' => 129.90325,
@@ -3504,7 +3504,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Braskesh',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [208,209,211,213,214,295],
                         'realm_color' => '#066694',
                         'realm_x' => 119.73333,
@@ -3520,7 +3520,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Phedron',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [212,214,215,295,298,300],
                         'realm_color' => '#6e3fb7',
                         'realm_x' => 114.76767,
@@ -3536,7 +3536,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Ucraytan',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [200,211,212,213,215,216],
                         'realm_color' => '#352ab3',
                         'realm_x' => 128.1312,
@@ -3552,7 +3552,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Qaskuecor',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [213,214,216,300,348],
                         'realm_color' => '#403d8b',
                         'realm_x' => 120.35286,
@@ -3568,7 +3568,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Davlus',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [214,215,217,219,346,347,348],
                         'realm_color' => '#3d52a5',
                         'realm_x' => 134.73389,
@@ -3584,7 +3584,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Creurus',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [201,216,218,219],
                         'realm_color' => '#4443ba',
                         'realm_x' => 139.95993,
@@ -3600,7 +3600,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Jasperys',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [217,219,273],
                         'realm_color' => '#4f7ce7',
                         'realm_x' => 151.73751,
@@ -3616,7 +3616,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Kaostriana',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [216,217,218,272,273,346,347],
                         'realm_color' => '#4a3ead',
                         'realm_x' => 154.64637,
@@ -3633,11 +3633,11 @@ class SeedProvinces extends Migration
                 ]
             ],
             [
-                'name' => \App\Territory::SHORES_OF_THE_SHADOWS,
+                'name' => \App\Domain\Models\Territory::SHORES_OF_THE_SHADOWS,
                 'provinces' => [
                     [
                         'name' => 'Bryur Garz',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [141,221,232,233,275,278,279,286],
                         'realm_color' => '#509b3b',
                         'realm_x' => 154.7859,
@@ -3653,7 +3653,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Pavlynor',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [220,222,223],
                         'realm_color' => '#66b842',
                         'realm_x' => 130.4277,
@@ -3669,7 +3669,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Uzmodan',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [221,223,232],
                         'realm_color' => '#6d9538',
                         'realm_x' => 130.4277,
@@ -3685,7 +3685,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Duskela',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [146,147,221,222],
                         'realm_color' => '#516f36',
                         'realm_x' => 134.96592,
@@ -3701,7 +3701,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Ediroz',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [147,148,225],
                         'realm_color' => '#128b96',
                         'realm_x' => 124.63308,
@@ -3717,7 +3717,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Jeyathro',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [148,152,224,226],
                         'realm_color' => '#3fcab1',
                         'realm_x' => 117.55548,
@@ -3733,7 +3733,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Gachyland',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [152,225,227],
                         'realm_color' => '#38acac',
                         'realm_x' => 112.18009,
@@ -3749,7 +3749,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Tyrunga',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [152,153,226,228],
                         'realm_color' => '#0c7797',
                         'realm_x' => 108.06741,
@@ -3765,7 +3765,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Sujari',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [153,227,229,234],
                         'realm_color' => '#349fb5',
                         'realm_x' => 94.520193,
@@ -3781,7 +3781,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Vascylo',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [153,228,231],
                         'realm_color' => '#008080',
                         'realm_x' => 106.69433,
@@ -3797,7 +3797,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Lazeron',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [231,238,256,257],
                         'realm_color' => '#4a92a9',
                         'realm_x' => 98.915034,
@@ -3813,7 +3813,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Whuglaris',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [229,230,257,304],
                         'realm_color' => '#47b9cd',
                         'realm_x' => 85.351278,
@@ -3829,7 +3829,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Nachyia',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [220,222,233,234],
                         'realm_color' => '#74c24d',
                         'realm_x' => 126.07344,
@@ -3845,7 +3845,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Fareglos',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [220,232,234,235,236,287],
                         'realm_color' => '#708743',
                         'realm_x' => 116.00325,
@@ -3861,7 +3861,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Nairb',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [228,232,233,235],
                         'realm_color' => '#48b846',
                         'realm_x' => 102.10695,
@@ -3877,7 +3877,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Higryleon',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [233,234,237,320],
                         'realm_color' => '#3e5e7d',
                         'realm_x' => 76.092386,
@@ -3893,7 +3893,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Ionyre',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [233,237,288],
                         'realm_color' => '#63a0cc',
                         'realm_x' => 87.170389,
@@ -3909,7 +3909,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Kyziren',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [235,236,288,320,321,322,363],
                         'realm_color' => '#606e7e',
                         'realm_x' => 78.520786,
@@ -3926,11 +3926,11 @@ class SeedProvinces extends Migration
                 ]
             ],
             [
-                'name' => \App\Territory::VALLEY_OF_VANISHINGS,
+                'name' => \App\Domain\Models\Territory::VALLEY_OF_VANISHINGS,
                 'provinces' => [
                     [
                         'name' => 'Oribyr',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [153,239,230,255,256],
                         'realm_color' => '#23a4a0',
                         'realm_x' => 110.85822,
@@ -3946,7 +3946,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Xatheos',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [151,153,154,155,157,238,240,241,255],
                         'realm_color' => '#0c7797',
                         'realm_x' => 108.54421,
@@ -3962,7 +3962,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Wylland',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [239,241,242,255],
                         'realm_color' => '#119ea3',
                         'realm_x' => 108.54428,
@@ -3978,7 +3978,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Rezaji',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [157,239,240,243,244],
                         'realm_color' => '#205962',
                         'realm_x' => 112.78433,
@@ -3994,7 +3994,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Pykor',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [240,243,250],
                         'realm_color' => '#34b99a',
                         'realm_x' => 96.62804,
@@ -4010,7 +4010,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Nefidyl',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [241,242,244],
                         'realm_color' => '#35778c',
                         'realm_x' => 102.83513,
@@ -4035,7 +4035,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Detheros',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [157,207,241,243,245],
                         'realm_color' => '#4fb6b5',
                         'realm_x' => 110.18628,
@@ -4051,7 +4051,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Fosharyn',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [207,208,244,246,295],
                         'realm_color' => '#218aab',
                         'realm_x' => 110.11022,
@@ -4067,7 +4067,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Hylpherus',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [245,247,294,295],
                         'realm_color' => '#066694',
                         'realm_x' => 101.25439,
@@ -4083,7 +4083,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Aeonivas',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [246,248,249,250,294],
                         'realm_color' => '#3095a6',
                         'realm_x' => 99.733038,
@@ -4099,7 +4099,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Gibryvus',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [247,249,294,312,313,316,317],
                         'realm_color' => '#2f616f',
                         'realm_x' => 85.145123,
@@ -4115,7 +4115,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Izlidyl',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [247,248,250,251,312],
                         'realm_color' => '#1ea7a4',
                         'realm_x' => 88.7633,
@@ -4131,7 +4131,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Oekenjul',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [242,247,249,251],
                         'realm_color' => '#008080',
                         'realm_x' => 92.747484,
@@ -4147,7 +4147,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Spiradyl',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [249,250,252,308,312],
                         'realm_color' => '#4f9197',
                         'realm_x' => 88.7633,
@@ -4163,7 +4163,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Xendinor',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [251,253,254,308],
                         'realm_color' => '#008080',
                         'realm_x' => 93.082073,
@@ -4179,7 +4179,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Uleyritan',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [252,254,255],
                         'realm_color' => '#41c2be',
                         'realm_x' => 93.082073,
@@ -4195,7 +4195,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Waphyri',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [252,253,255,256,257,308],
                         'realm_color' => '#18a79e',
                         'realm_x' => 86.164321,
@@ -4211,7 +4211,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Pelirundym',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [238,239,240,253,254,256],
                         'realm_color' => '#15a0ae',
                         'realm_x' => 105.60017,
@@ -4227,7 +4227,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Forzebror',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [230,238,254,255,257],
                         'realm_color' => '#047c87',
                         'realm_x' => 101.67056,
@@ -4243,7 +4243,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Jilaskor',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [230,231,254,256,304,308],
                         'realm_color' => '#27c4a0',
                         'realm_x' => 96.825376,
@@ -4260,11 +4260,11 @@ class SeedProvinces extends Migration
                 ]
             ],
             [
-                'name' => \App\Territory::PRIMAL_PASSAGE,
+                'name' => \App\Domain\Models\Territory::PRIMAL_PASSAGE,
                 'provinces' => [
                     [
                         'name' => 'Luthyn',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [166,189,259,260],
                         'realm_color' => '#ba4692',
                         'realm_x' => 198.7517,
@@ -4280,7 +4280,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Yathorus',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [167,258,260,261],
                         'realm_color' => '#d65c48',
                         'realm_x' => 190.77176,
@@ -4296,7 +4296,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Kudlia',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [258,259,261,263,264],
                         'realm_color' => '#ad223a',
                         'realm_x' => 198.55767,
@@ -4312,7 +4312,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Avredyl',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [259,260,262,263],
                         'realm_color' => '#bd1791',
                         'realm_x' => 190.77176,
@@ -4328,7 +4328,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Drothitan',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [261,263,266,268],
                         'realm_color' => '#ba533c',
                         'realm_x' => 184.8054,
@@ -4344,7 +4344,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Hunthaland',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [260,261,262,264,265,266],
                         'realm_color' => '#8a023e',
                         'realm_x' => 193.2434,
@@ -4360,7 +4360,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Priosken',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [192,260,263,265],
                         'realm_color' => '#bf4d76',
                         'realm_x' => 194.93564,
@@ -4376,7 +4376,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Zijan Kana',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [192,263,264,266],
                         'realm_color' => '#ad223a',
                         'realm_x' => 183.62552,
@@ -4401,7 +4401,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Spurglios',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [262,263,265,267,378,379],
                         'realm_color' => '#403d8b',
                         'realm_x' => 163.12389,
@@ -4417,7 +4417,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Mitreysia',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [266,268,269,270,271,378],
                         'realm_color' => '#4374d8',
                         'realm_x' => 163.12389,
@@ -4433,7 +4433,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Fabreyu',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [262,267,269],
                         'realm_color' => '#6e3fb7',
                         'realm_x' => 178.60925,
@@ -4449,7 +4449,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Wilvidor',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [267,268,270],
                         'realm_color' => '#352ab3',
                         'realm_x' => 177.22639,
@@ -4465,7 +4465,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Gyradyl',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [267,269,271,272,273],
                         'realm_color' => '#6a69dd',
                         'realm_x' => 165.82709,
@@ -4481,7 +4481,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Ashietan',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [267,270,272],
                         'realm_color' => '#413d8e',
                         'realm_x' => 160.87338,
@@ -4497,7 +4497,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Heliobrana',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [219,270,271,273,346,376,377],
                         'realm_color' => '#5e45b2',
                         'realm_x' => 160.87338,
@@ -4513,7 +4513,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Ghrax',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [218,219,270,272,274],
                         'realm_color' => '#2549af',
                         'realm_x' => 151.73751,
@@ -4529,7 +4529,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Javlifidyl',
-                        'continent' => \App\Continent::WEST_WOZUL,
+                        'continent' => \App\Domain\Models\Continent::WEST_WOZUL,
                         'borders' => [169,170,273],
                         'realm_color' => '#a4311c',
                         'realm_x' => 169.27363,
@@ -4552,11 +4552,11 @@ class SeedProvinces extends Migration
                 ]
             ],
             [
-                'name' => \App\Territory::ARCTIC_ARCHIPELAGO,
+                'name' => \App\Domain\Models\Territory::ARCTIC_ARCHIPELAGO,
                 'provinces' => [
                     [
                         'name' => 'Ryshordan',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [141,220,276,277],
                         'realm_color' => '#88b53d',
                         'realm_x' => 146.92281,
@@ -4572,7 +4572,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Kraole',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [275,277,278],
                         'realm_color' => '#516f36',
                         'realm_x' => 147.04787,
@@ -4588,7 +4588,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Talyseo',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [275,276,280,281,282],
                         'realm_color' => '#41b23a',
                         'realm_x' => 134.56336,
@@ -4604,7 +4604,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Nesbyre',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [220,276,279],
                         'realm_color' => '#66b842',
                         'realm_x' => 133.58131,
@@ -4620,7 +4620,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Iwuskan',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [220,278,280],
                         'realm_color' => '#708743',
                         'realm_x' => 128.00976,
@@ -4636,7 +4636,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Seovurg',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [277,279,285,286],
                         'realm_color' => '#88b53d',
                         'realm_x' => 128.88722,
@@ -4652,7 +4652,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Orouka',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [277,282,283,284],
                         'realm_color' => '#516f36',
                         'realm_x' => 133.82387,
@@ -4668,7 +4668,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Seyzoran',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [277,281,283],
                         'realm_color' => '#95983c',
                         'realm_x' => 135.5478,
@@ -4684,7 +4684,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Nichoran',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [281,282,284],
                         'realm_color' => '#88b53d',
                         'realm_x' => 125.3076,
@@ -4700,7 +4700,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Illykni',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [281,283,285,286],
                         'realm_color' => '#66b842',
                         'realm_x' => 125.3076,
@@ -4716,7 +4716,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Beogrivus',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [280,284,286],
                         'realm_color' => '#bfbe40',
                         'realm_x' => 116.64042,
@@ -4732,7 +4732,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Fyndorax',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [220,280,284,285,287],
                         'realm_color' => '#228b22',
                         'realm_x' => 102.49462,
@@ -4748,7 +4748,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Koscera',
-                        'continent' => \App\Continent::NORTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::NORTH_JAGONETH,
                         'borders' => [233,286,288,290],
                         'realm_color' => '#516f36',
                         'realm_x' => 92.680787,
@@ -4764,7 +4764,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Mezadym',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [236,237,287,363],
                         'realm_color' => '#415f8f',
                         'realm_x' => 71.262832,
@@ -4780,7 +4780,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Qualifor',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [290,291,292],
                         'realm_color' => '#606e7e',
                         'realm_x' => 87.798258,
@@ -4796,7 +4796,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Tengridyl',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [287,289,291],
                         'realm_color' => '#3a4c62',
                         'realm_x' => 84.702839,
@@ -4812,7 +4812,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Valerivyn',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [289,290,292],
                         'realm_color' => '#6a7ca0',
                         'realm_x' => 66.354605,
@@ -4828,7 +4828,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Wryzix',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [289,291,293,364],
                         'realm_color' => '#63a1cc',
                         'realm_x' => 66.396464,
@@ -4844,7 +4844,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Veskyren',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [292,366,373],
                         'realm_color' => '#3a4c62',
                         'realm_x' => 37.698367,
@@ -4861,11 +4861,11 @@ class SeedProvinces extends Migration
                 ]
             ],
             [
-                'name' => \App\Territory::BADLANDS_OF_THE_LEVIATHAN,
+                'name' => \App\Domain\Models\Territory::BADLANDS_OF_THE_LEVIATHAN,
                 'provinces' => [
                     [
                         'name' => 'Reklenia',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [246,247,248,295,296,317],
                         'realm_color' => '#32b89d',
                         'realm_x' => 106.78363,
@@ -4881,7 +4881,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Veberos',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [208,212,213,245,246,294,296,298],
                         'realm_color' => '#008080',
                         'realm_x' => 111.81457,
@@ -4897,7 +4897,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Stimperan',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [294,295,297,298,302,317,344],
                         'realm_color' => '#6a69dd',
                         'realm_x' => 92.159748,
@@ -4913,7 +4913,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Foyaburg',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [296,298,299,302],
                         'realm_color' => '#352ab3',
                         'realm_x' => 93.271826,
@@ -4929,7 +4929,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Chaulles',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [213,295,296,297,299,300,301],
                         'realm_color' => '#3b3b96',
                         'realm_x' => 105.29331,
@@ -4945,7 +4945,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Jruhali',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [297,298,301,302],
                         'realm_color' => '#6e3fb7',
                         'realm_x' => 98.871814,
@@ -4967,7 +4967,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Nevaros',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [213,215,298,301,348,349],
                         'realm_color' => '#6a69dd',
                         'realm_x' => 114.4633,
@@ -4983,7 +4983,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Zelon Gor',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [298,299,300,302,303,349,356],
                         'realm_color' => '#5541bb',
                         'realm_x' => 107.41722,
@@ -4999,7 +4999,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Ramchyreon',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [296,297,299,301,303,344],
                         'realm_color' => '#51439d',
                         'realm_x' => 91.161877,
@@ -5015,7 +5015,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Xupleos',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [301,302,341,342,344,356,357,358],
                         'realm_color' => '#4374d8',
                         'realm_x' => 82.949459,
@@ -5032,11 +5032,11 @@ class SeedProvinces extends Migration
                 ]
             ],
             [
-                'name' => \App\Territory::PEAKS_OF_PANDORA,
+                'name' => \App\Domain\Models\Territory::PEAKS_OF_PANDORA,
                 'provinces' => [
                     [
                         'name' => 'Gazvican',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [231,257,305,306],
                         'realm_color' => '#35cada',
                         'realm_x' => 85.351278,
@@ -5052,7 +5052,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Maeskar',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [304,306,307,318,319],
                         'realm_color' => '#10a3a6',
                         'realm_x' => 74.106486,
@@ -5068,7 +5068,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Cyndorlieka',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [304,305,307,308,309],
                         'realm_color' => '#3ebeb0',
                         'realm_x' => 81.424421,
@@ -5084,7 +5084,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Pugalos',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [305,306,309,318,333],
                         'realm_color' => '#008080',
                         'realm_x' => 76.681214,
@@ -5100,7 +5100,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Levyndus',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [251,252,254,257,306,309,310,311,312],
                         'realm_color' => '#28a3ba',
                         'realm_x' => 86.164321,
@@ -5116,7 +5116,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Vuqor',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [306,307,308,310,311],
                         'realm_color' => '#34b99a',
                         'realm_x' => 72.663405,
@@ -5132,7 +5132,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Anedrias',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [308,309,311,313,314,335],
                         'realm_color' => '#418cb9',
                         'realm_x' => 72.663405,
@@ -5148,7 +5148,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Haschgua',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [308,309,310,312,313],
                         'realm_color' => '#205962',
                         'realm_x' => 72.663405,
@@ -5164,7 +5164,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Blarogdon',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [248,249,251,308,311,313],
                         'realm_color' => '#29b9bf',
                         'realm_x' => 88.950715,
@@ -5180,7 +5180,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Empleonus',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [248,310,311,312,314,315,316],
                         'realm_color' => '#3f76b6',
                         'realm_x' => 77.3559,
@@ -5196,7 +5196,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Dencidyl',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [310,313,315,335],
                         'realm_color' => '#5493b6',
                         'realm_x' => 77.3559,
@@ -5212,7 +5212,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Indivonia',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [313,314,316,343],
                         'realm_color' => '#3cb1b8',
                         'realm_x' => 80.906278,
@@ -5228,7 +5228,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Yuosnos',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [248,313,315,317],
                         'realm_color' => '#34b99a',
                         'realm_x' => 86.444335,
@@ -5244,7 +5244,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Naswari',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [248,294,296,316,344],
                         'realm_color' => '#3cb1b8',
                         'realm_x' => 87.444785,
@@ -5261,11 +5261,11 @@ class SeedProvinces extends Migration
                 ]
             ],
             [
-                'name' => \App\Territory::CRYPTIC_COAST,
+                'name' => \App\Domain\Models\Territory::CRYPTIC_COAST,
                 'provinces' => [
                     [
                         'name' => 'Tuecrines',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [305,307,319,321,332],
                         'realm_color' => '#29b9bf',
                         'realm_x' => 68.935962,
@@ -5281,7 +5281,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Fliyeski',
-                        'continent' => \App\Continent::CENTRAL_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
                         'borders' => [305,318,320,321],
                         'realm_color' => '#3fcab1',
                         'realm_x' => 72.355441,
@@ -5303,7 +5303,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Inciberon',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [235,237,319,321],
                         'realm_color' => '#6a7ca0',
                         'realm_x' => 69.507384,
@@ -5319,7 +5319,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Heazor',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [237,318,319,320,322],
                         'realm_color' => '#3a4c62',
                         'realm_x' => 69.507384,
@@ -5335,7 +5335,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Vingridush',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [237,321,323,363],
                         'realm_color' => '#3f758c',
                         'realm_x' => 66.108626,
@@ -5351,7 +5351,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Ozzyl',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [322,324,365],
                         'realm_color' => '#3c526d',
                         'realm_x' => 58.390233,
@@ -5367,7 +5367,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Anjeron',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [323,325,365,368],
                         'realm_color' => '#6a7ca0',
                         'realm_x' => 53.496991,
@@ -5383,7 +5383,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Fushorea',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [324,326,327],
                         'realm_color' => '#606e7e',
                         'realm_x' => 47.089114,
@@ -5399,7 +5399,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Snequeos',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [325,327,368],
                         'realm_color' => '#3d597c',
                         'realm_x' => 45.821329,
@@ -5415,7 +5415,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Ucheyros',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [325,326,328],
                         'realm_color' => '#3a4c62',
                         'realm_x' => 46.856569,
@@ -5431,7 +5431,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Ryufodyl',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [327,329,395,396],
                         'realm_color' => '#44628a',
                         'realm_x' => 32.155658,
@@ -5447,7 +5447,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Pileyaz',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [328,330,331,396,403],
                         'realm_color' => '#6a7ca0',
                         'realm_x' => 46.420422,
@@ -5463,7 +5463,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Hondjestan',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [329,331,334,337],
                         'realm_color' => '#533c91',
                         'realm_x' => 53.558486,
@@ -5479,7 +5479,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Bevundi',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [329,330,332,334],
                         'realm_color' => '#352ab3',
                         'realm_x' => 41.664121,
@@ -5495,7 +5495,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Meklyor',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [318,331,333,334],
                         'realm_color' => '#7474e1',
                         'realm_x' => 58.079657,
@@ -5512,11 +5512,11 @@ class SeedProvinces extends Migration
                 ]
             ],
             [
-                'name' => \App\Territory::WETLANDS_OF_WANDERING_TORMENT,
+                'name' => \App\Domain\Models\Territory::WETLANDS_OF_WANDERING_TORMENT,
                 'provinces' => [
                     [
                         'name' => 'Psylioca',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [307,332,334,335],
                         'realm_color' => '#403d8b',
                         'realm_x' => 59.936391,
@@ -5532,7 +5532,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Yeghorus',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [330,331,332,333,335,336,337],
                         'realm_color' => '#483bbb',
                         'realm_x' => 53.705763,
@@ -5548,7 +5548,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Fathuca',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [310,314,333,334,336],
                         'realm_color' => '#6e3fb7',
                         'realm_x' => 67.490452,
@@ -5564,7 +5564,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Dorux Fyras',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [334,335,337,338,339],
                         'realm_color' => '#403d8b',
                         'realm_x' => 64.684421,
@@ -5583,7 +5583,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Galydon',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [330,334,336,338,407],
                         'realm_color' => '#3e5fbe',
                         'realm_x' => 53.558486,
@@ -5599,7 +5599,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Kenudras',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [336,337,339,407,408],
                         'realm_color' => '#6e3fb7',
                         'realm_x' => 58.549395,
@@ -5615,7 +5615,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Chaozur',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [336,338,340,358,408,409],
                         'realm_color' => '#3f50a6',
                         'realm_x' => 62.635969,
@@ -5631,7 +5631,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Vuexitan',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [339,341,342,358],
                         'realm_color' => '#6a69dd',
                         'realm_x' => 74.105551,
@@ -5647,7 +5647,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Jongil',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [303,340,342,358],
                         'realm_color' => '#6e3fb7',
                         'realm_x' => 77.053176,
@@ -5663,7 +5663,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Pevontius',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [303,340,341,343,344],
                         'realm_color' => '#3f3b94',
                         'realm_x' => 77.053176,
@@ -5679,7 +5679,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Enjhal',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [315,342,344],
                         'realm_color' => '#6e3fb7',
                         'realm_x' => 79.159012,
@@ -5701,7 +5701,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Argousk',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [296,302,303,317,342,343],
                         'realm_color' => '#352ab3',
                         'realm_x' => 81.833763,
@@ -5718,11 +5718,11 @@ class SeedProvinces extends Migration
                 ]
             ],
             [
-                'name' => \App\Territory::BLOODSTONE_BEACHES,
+                'name' => \App\Domain\Models\Territory::BLOODSTONE_BEACHES,
                 'provinces' => [
                     [
                         'name' => 'Calycidor',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [346,376,377],
                         'realm_color' => '#3e5fbe',
                         'realm_x' => 140.5278,
@@ -5738,7 +5738,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Ruashen',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [216,219,272,376,345,347,350],
                         'realm_color' => '#3c3aa3',
                         'realm_x' => 131.05401,
@@ -5754,7 +5754,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Lynaesk',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [216,219,346,348],
                         'realm_color' => '#6e3fb7',
                         'realm_x' => 131.05402,
@@ -5770,7 +5770,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Trofulegua',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [215,216,300,347,349],
                         'realm_color' => '#513da2',
                         'realm_x' => 129.2288,
@@ -5786,7 +5786,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Dangeton',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [300,301,348],
                         'realm_color' => '#352ab3',
                         'realm_x' => 116.20428,
@@ -5802,7 +5802,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Euwharo',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [346,351,386,387],
                         'realm_color' => '#651369',
                         'realm_x' => 126.13287,
@@ -5818,7 +5818,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Xilydor',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [350,352,387],
                         'realm_color' => '#ae1797',
                         'realm_x' => 117.99228,
@@ -5834,7 +5834,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Sasyneus',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [351,353,387,393,426],
                         'realm_color' => '#911cad',
                         'realm_x' => 111.1529,
@@ -5850,7 +5850,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Mundeonis',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [352,354,426,427,428],
                         'realm_color' => '#742656',
                         'realm_x' => 89.267418,
@@ -5866,7 +5866,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Pruskari',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [353,355,428,429,432],
                         'realm_color' => '#911cad',
                         'realm_x' => 87.236018,
@@ -5882,7 +5882,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Eyridomas',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [354,362,432,433],
                         'realm_color' => '#651369',
                         'realm_x' => 77.536867,
@@ -5898,7 +5898,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Trajestland',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [301,303,357,359],
                         'realm_color' => '#3e5fbe',
                         'realm_x' => 91.162393,
@@ -5914,7 +5914,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Nihleosar',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [303,356,358,359],
                         'realm_color' => '#5542a2',
                         'realm_x' => 84.366424,
@@ -5930,7 +5930,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Qeytiolo',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [303,339,340,341,357,409],
                         'realm_color' => '#352ab3',
                         'realm_x' => 77.053177,
@@ -5946,7 +5946,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Yafron',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [356,357,360,362],
                         'realm_color' => '#4f7ce7',
                         'realm_x' => 78.781535,
@@ -5962,7 +5962,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Sharigro',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [359,361,362],
                         'realm_color' => '#651369',
                         'realm_x' => 69.999603,
@@ -5978,7 +5978,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Jerobia',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [360,362,411],
                         'realm_color' => '#a51da1',
                         'realm_x' => 58.312719,
@@ -5994,7 +5994,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Yinzu',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [359,360,361,355,433],
                         'realm_color' => '#b11988',
                         'realm_x' => 74.181001,
@@ -6011,11 +6011,11 @@ class SeedProvinces extends Migration
                 ]
             ],
             [
-                'name' => \App\Territory::TURBULENT_TUNDRA,
+                'name' => \App\Domain\Models\Territory::TURBULENT_TUNDRA,
                 'provinces' => [
                     [
                         'name' => 'Koghorland',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [237,288,322,364],
                         'realm_color' => '#6a7ca0',
                         'realm_x' => 71.262832,
@@ -6031,7 +6031,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Fileshwana',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [292,363,366],
                         'realm_color' => '#606e7e',
                         'realm_x' => 58.574391,
@@ -6053,7 +6053,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Ukrasten',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [323,324,366,367,368],
                         'realm_color' => '#406083',
                         'realm_x' => 56.606363,
@@ -6069,7 +6069,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Kanjhir',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [293,364,365,367,372,373],
                         'realm_color' => '#647997',
                         'realm_x' => 32.957161,
@@ -6085,7 +6085,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Devolizar',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [365,366,368,369,370,372],
                         'realm_color' => '#3d5778',
                         'realm_x' => 33.832043,
@@ -6101,7 +6101,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Zireok',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [324,326,365,367,369],
                         'realm_color' => '#3e7d93',
                         'realm_x' => 50.517845,
@@ -6117,7 +6117,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Aglidym',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [367,368,370,394,395],
                         'realm_color' => '#3f6381',
                         'realm_x' => 28.834416,
@@ -6133,7 +6133,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Namberyn',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [367,369,371,372,394],
                         'realm_color' => '#6a7ca0',
                         'realm_x' => 29.28245,
@@ -6149,7 +6149,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Scroyetan',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [370,372,375,394],
                         'realm_color' => '#606e7e',
                         'realm_x' => 29.28245,
@@ -6165,7 +6165,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Luspyros',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [366,367,370,371,373,374,375],
                         'realm_color' => '#3a4c62',
                         'realm_x' => 26.436629,
@@ -6181,7 +6181,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Marnobia',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [293,366,372,374],
                         'realm_color' => '#6a7ca0',
                         'realm_x' => 31.393173,
@@ -6197,7 +6197,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Eklorox',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [372,373,375],
                         'realm_color' => '#63a0cc',
                         'realm_x' => 22.336621,
@@ -6213,7 +6213,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Stormorus',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [371,372,374],
                         'realm_color' => '#3b516b',
                         'realm_x' => 22.336621,
@@ -6230,11 +6230,11 @@ class SeedProvinces extends Migration
                 ]
             ],
             [
-                'name' => \App\Territory::COVES_OF_CORRUPTION,
+                'name' => \App\Domain\Models\Territory::COVES_OF_CORRUPTION,
                 'provinces' => [
                     [
                         'name' => 'Maskoules',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [272,345,346,377],
                         'realm_color' => '#6a69dd',
                         'realm_x' => 145.73219,
@@ -6250,7 +6250,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Grenaudor',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [272,345,376,378],
                         'realm_color' => '#3b4692',
                         'realm_x' => 145.73219,
@@ -6266,7 +6266,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Loturela',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [266,267,377,379,380],
                         'realm_color' => '#3f4ab1',
                         'realm_x' => 163.12389,
@@ -6282,7 +6282,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Varscille',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [266,378,380,381,384,385],
                         'realm_color' => '#352ab3',
                         'realm_x' => 163.12389,
@@ -6298,7 +6298,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Rethaysal',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [378,379,386],
                         'realm_color' => '#3e5fbe',
                         'realm_x' => 151.4259,
@@ -6314,7 +6314,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Imeavo',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [379,382,384],
                         'realm_color' => '#8f1170',
                         'realm_x' => 141.00793,
@@ -6330,7 +6330,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Pnosku',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [381,383,384,389,390],
                         'realm_color' => '#742656',
                         'realm_x' => 141.78669,
@@ -6346,7 +6346,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Chlaruto',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [382,384,385,389],
                         'realm_color' => '#991875',
                         'realm_x' => 127.46715,
@@ -6362,7 +6362,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Kudjar',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [379,381,382,383,385],
                         'realm_color' => '#a51798',
                         'realm_x' => 138.6327,
@@ -6378,7 +6378,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Gemblan',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [379,383,384,386,387,388],
                         'realm_color' => '#651369',
                         'realm_x' => 136.7102,
@@ -6394,7 +6394,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Venjonia',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [350,380,385,387],
                         'realm_color' => '#9a0f83',
                         'realm_x' => 130.24683,
@@ -6410,7 +6410,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Zarklenyua',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [350,351,352,385,386,388,389,393],
                         'realm_color' => '#742656',
                         'realm_x' => 121.85664,
@@ -6426,7 +6426,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Sneriuyze',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [385,387,389],
                         'realm_color' => '#b117a8',
                         'realm_x' => 124.88333,
@@ -6442,7 +6442,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Nehoprus',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [382,383,387,388,390,391],
                         'realm_color' => '#7e2381',
                         'realm_x' => 126.95297,
@@ -6458,7 +6458,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Juraglos',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [382,389,391],
                         'realm_color' => '#911cad',
                         'realm_x' => 124.50041,
@@ -6474,7 +6474,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Wurnatrus',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [389,390,392],
                         'realm_color' => '#9b0f7b',
                         'realm_x' => 122.84573,
@@ -6490,7 +6490,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Xurfrysk',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [391,393,423,426],
                         'realm_color' => '#912678',
                         'realm_x' => 109.20893,
@@ -6506,7 +6506,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Onderyz',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [352,387,392,426],
                         'realm_color' => '#651369',
                         'realm_x' => 117.64656,
@@ -6523,11 +6523,11 @@ class SeedProvinces extends Migration
                 ]
             ],
             [
-                'name' => \App\Territory::MOUNTAINS_OF_MISERY,
+                'name' => \App\Domain\Models\Territory::MOUNTAINS_OF_MISERY,
                 'provinces' => [
                     [
                         'name' => 'Ovelchor',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [369,370,371,395,396,397,398],
                         'realm_color' => '#406083',
                         'realm_x' => 16.992761,
@@ -6543,7 +6543,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Theissau',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [328,369,394,396],
                         'realm_color' => '#606e7e',
                         'realm_x' => 28.834416,
@@ -6559,7 +6559,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Bleyze',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [328,329,394,395,397,402,403],
                         'realm_color' => '#48759d',
                         'realm_x' => 28.834416,
@@ -6575,7 +6575,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Druplaol',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [394,396,398,399,400,402],
                         'realm_color' => '#3a4c62',
                         'realm_x' => 19.636527,
@@ -6591,7 +6591,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Fyrhodras',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [394,397,399,438],
                         'realm_color' => '#3e6c99',
                         'realm_x' => 14.288533,
@@ -6607,7 +6607,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Smunthar',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [397,398,400,401,438],
                         'realm_color' => '#606e7e',
                         'realm_x' => 16.385563,
@@ -6623,7 +6623,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Harfendor',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [397,399,401,402],
                         'realm_color' => '#6a7ca0',
                         'realm_x' => 14.381551,
@@ -6639,7 +6639,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Rhouland',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [399,400,402,441],
                         'realm_color' => '#435883',
                         'realm_x' => 14.381551,
@@ -6655,7 +6655,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Pyleakor',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [396,397,400,401,403,404,405,441],
                         'realm_color' => '#63a0cc',
                         'realm_x' => 27.025224,
@@ -6671,7 +6671,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Vyndaesk',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [329,396,402,405],
                         'realm_color' => '#606e7e',
                         'realm_x' => 33.373673,
@@ -6687,7 +6687,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Wubraiya',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [402,405,441,444,445],
                         'realm_color' => '#406083',
                         'realm_x' => 36.323881,
@@ -6703,7 +6703,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Ludreyton',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [402,403,404,406,445],
                         'realm_color' => '#3a4c62',
                         'realm_x' => 36.323881,
@@ -6719,7 +6719,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Plaorus',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [405,413,414,445],
                         'realm_color' => '#415d8c',
                         'realm_x' => 38.547518,
@@ -6736,11 +6736,11 @@ class SeedProvinces extends Migration
                 ]
             ],
             [
-                'name' => \App\Territory::ENCHANTED_ENCLAVE_OF_VISIONS,
+                'name' => \App\Domain\Models\Territory::ENCHANTED_ENCLAVE_OF_VISIONS,
                 'provinces' => [
                     [
                         'name' => 'Gravysk',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [337,338,408],
                         'realm_color' => '#473a8c',
                         'realm_x' => 58.549396,
@@ -6756,7 +6756,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Ebular',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [338,339,407,409,410],
                         'realm_color' => '#4374d8',
                         'realm_x' => 61.248456,
@@ -6772,7 +6772,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Lyrington',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [339,358,408,410],
                         'realm_color' => '#4443ba',
                         'realm_x' => 62.23496,
@@ -6788,7 +6788,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Newtrobia',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [408,409,411,412],
                         'realm_color' => '#3e5fbe',
                         'realm_x' => 51.554679,
@@ -6813,7 +6813,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Kinoyla',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [361,410,412],
                         'realm_color' => '#742656',
                         'realm_x' => 48.339863,
@@ -6829,7 +6829,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Tengaroon',
-                        'continent' => \App\Continent::SOUTH_JAGONETH,
+                        'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
                         'borders' => [410,411,413,418],
                         'realm_color' => '#352ab3',
                         'realm_x' => 45.663362,
@@ -6845,7 +6845,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Mueyachal',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [406,412,414,418],
                         'realm_color' => '#606e7e',
                         'realm_x' => 41.694095,
@@ -6861,7 +6861,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Rezoblya',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [406,413,415,445,446],
                         'realm_color' => '#63a0cc',
                         'realm_x' => 37.145018,
@@ -6877,7 +6877,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Fauswea',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [414,416,446,449],
                         'realm_color' => '#6a7ca0',
                         'realm_x' => 26.342061,
@@ -6893,7 +6893,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Sivarxi',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [415,417,418,449],
                         'realm_color' => '#911cad',
                         'realm_x' => 23.894665,
@@ -6909,7 +6909,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Welkorus',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [416,418,419,421],
                         'realm_color' => '#9b0f82',
                         'realm_x' => 35.593176,
@@ -6925,7 +6925,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Ounfidyl',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [412,413,416,417,419],
                         'realm_color' => '#912678',
                         'realm_x' => 39.228096,
@@ -6941,7 +6941,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Genjhari',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [417,418,420],
                         'realm_color' => '#651369',
                         'realm_x' => 33.719389,
@@ -6957,7 +6957,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Dyetrobia',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [419,421,422],
                         'realm_color' => '#911cad',
                         'realm_x' => 33.719389,
@@ -6973,7 +6973,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Ethobryar',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [417,420,422],
                         'realm_color' => '#9f128d',
                         'realm_x' => 31.711497,
@@ -6989,7 +6989,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Porlantica',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [420,421,434,449,450,462,463],
                         'realm_color' => '#9a1484',
                         'realm_x' => 22.571232,
@@ -7006,11 +7006,11 @@ class SeedProvinces extends Migration
                 ]
             ],
             [
-                'name' => \App\Territory::SCREAMING_HIGHLANDS_OF_NIGHTMARES,
+                'name' => \App\Domain\Models\Territory::SCREAMING_HIGHLANDS_OF_NIGHTMARES,
                 'provinces' => [
                     [
                         'name' => 'Yusbyre',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [392,424,425],
                         'realm_color' => '#9d1687',
                         'realm_x' => 97.010096,
@@ -7026,7 +7026,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Jyvotren',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [423,425,451],
                         'realm_color' => '#742656',
                         'realm_x' => 94.384418,
@@ -7042,7 +7042,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Spheojan',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [423,424,426,427,428,429,430,451],
                         'realm_color' => '#911cad',
                         'realm_x' => 95.129075,
@@ -7058,7 +7058,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Ismiyan',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [352,353,392,393,425,427],
                         'realm_color' => '#a31982',
                         'realm_x' => 110.61753,
@@ -7074,7 +7074,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Cluroab',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [353,425,426,428],
                         'realm_color' => '#651369',
                         'realm_x' => 103.23349,
@@ -7090,7 +7090,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Bleyrhiel',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [353,354,425,427,429],
                         'realm_color' => '#9d1079',
                         'realm_x' => 87.951218,
@@ -7106,7 +7106,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Gruphedyl',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [354,425,428,430,431,432],
                         'realm_color' => '#912678',
                         'realm_x' => 85.566351,
@@ -7122,7 +7122,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Lancheskor',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [425,429,431,437,451],
                         'realm_color' => '#ae1a7e',
                         'realm_x' => 80.280886,
@@ -7138,7 +7138,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Hescilla',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [429,430,432,436,437],
                         'realm_color' => '#911cad',
                         'realm_x' => 80.280886,
@@ -7154,7 +7154,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Rohagrius',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [354,355,429,431,433,435,436],
                         'realm_color' => '#a81e95',
                         'realm_x' => 83.483792,
@@ -7170,7 +7170,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Sinthorz',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [355,362,432,434,435],
                         'realm_color' => '#742656',
                         'realm_x' => 54.626122,
@@ -7186,7 +7186,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Horschk',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [422,433,435,457,460,462],
                         'realm_color' => '#7e2381',
                         'realm_x' => 54.626123,
@@ -7202,7 +7202,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Kuglerica',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [432,433,434,436,457],
                         'realm_color' => '#a11a8b',
                         'realm_x' => 66.348921,
@@ -7218,7 +7218,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Perseosk',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [431,432,435,437,456,457],
                         'realm_color' => '#ab1aa8',
                         'realm_x' => 46.087625,
@@ -7234,7 +7234,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Qambro',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [430,431,436,451,452,456],
                         'realm_color' => '#651369',
                         'realm_x' => 75.032112,
@@ -7251,11 +7251,11 @@ class SeedProvinces extends Migration
                 ]
             ],
             [
-                'name' => \App\Territory::CLOUD_PIERCING_CLIFFS,
+                'name' => \App\Domain\Models\Territory::CLOUD_PIERCING_CLIFFS,
                 'provinces' => [
                     [
                         'name' => 'Reychor',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [398,399,439],
                         'realm_color' => '#3f637c',
                         'realm_x' => 7.1654539,
@@ -7271,7 +7271,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Wharzo',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [438,440,441],
                         'realm_color' => '#3a4c62',
                         'realm_x' => 12.139827,
@@ -7287,7 +7287,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Stuglon',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [439,441,442],
                         'realm_color' => '#606e7e',
                         'realm_x' => 18.01027,
@@ -7303,7 +7303,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Zandynjhir',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [401,402,404,439,440,442,443,444],
                         'realm_color' => '#6a7ca0',
                         'realm_x' => 18.506364,
@@ -7319,7 +7319,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Okacia',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [440,441,443],
                         'realm_color' => '#3d5685',
                         'realm_x' => 15.929777,
@@ -7335,7 +7335,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Frahuji',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [441,442,444,448],
                         'realm_color' => '#3a4c62',
                         'realm_x' => 18.719271,
@@ -7351,7 +7351,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Varesburg',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [404,441,443,445],
                         'realm_color' => '#425d8f',
                         'realm_x' => 29.246793,
@@ -7367,7 +7367,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Xinfidyl',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [404,405,406,414,444,446],
                         'realm_color' => '#606e7e',
                         'realm_x' => 32.912719,
@@ -7383,7 +7383,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Leochorus',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [414,415,445,447],
                         'realm_color' => '#3e5780',
                         'realm_x' => 34.02893,
@@ -7399,7 +7399,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Deleonas',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [446,448,449],
                         'realm_color' => '#3c4e6f',
                         'realm_x' => 24.077083,
@@ -7415,7 +7415,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Brooniska',
-                        'continent' => \App\Continent::VINDOBERON,
+                        'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [443,447,449],
                         'realm_color' => '#63a0cc',
                         'realm_x' => 22.258589,
@@ -7431,7 +7431,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Gloshyn',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [415,416,422,447,448,450],
                         'realm_color' => '#742656',
                         'realm_x' => 13.93455,
@@ -7447,7 +7447,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Spharys',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [422,449,463,464],
                         'realm_color' => '#651369',
                         'realm_x' => 13.93455,
@@ -7464,11 +7464,11 @@ class SeedProvinces extends Migration
                 ]
             ],
             [
-                'name' => \App\Territory::OUTER_RIM_OF_THE_DEMONIC,
+                'name' => \App\Domain\Models\Territory::OUTER_RIM_OF_THE_DEMONIC,
                 'provinces' => [
                     [
                         'name' => 'Rathovak',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [424,425,430,437,452,453,454],
                         'realm_color' => '#912678',
                         'realm_x' => 72.941801,
@@ -7484,7 +7484,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Jambrys',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [437,451,453,455],
                         'realm_color' => '#620051',
                         'realm_x' => 67.726099,
@@ -7500,7 +7500,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Archordan',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [451,452,454],
                         'realm_color' => '#911cad',
                         'realm_x' => 61.027799,
@@ -7516,7 +7516,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Haprieka',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [451,453,455],
                         'realm_color' => '#651369',
                         'realm_x' => 65.702449,
@@ -7532,7 +7532,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Yathance',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [452,454,456],
                         'realm_color' => '#9a0f83',
                         'realm_x' => 57.681354,
@@ -7554,7 +7554,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Foragana',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [436,437,455,457],
                         'realm_color' => '#990f84',
                         'realm_x' => 55.926301,
@@ -7570,7 +7570,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Dalnuri',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [434,435,436,456,458,460],
                         'realm_color' => '#742656',
                         'realm_x' => 45.866452,
@@ -7586,7 +7586,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Oekyland',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [457,459,460],
                         'realm_color' => '#620051',
                         'realm_x' => 38.761458,
@@ -7602,7 +7602,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Zykrostan',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [458,466,467],
                         'realm_color' => '#a1117e',
                         'realm_x' => 25.022245,
@@ -7618,7 +7618,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Gallavor',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [434,457,458,462,466],
                         'realm_color' => '#912678',
                         'realm_x' => 33.245515,
@@ -7634,7 +7634,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Wexryos',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [462,464,466],
                         'realm_color' => '#ad1999',
                         'realm_x' => 28.81943,
@@ -7650,7 +7650,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Urgreoca',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [422,434,460,461,463],
                         'realm_color' => '#742656',
                         'realm_x' => 26.345162,
@@ -7666,7 +7666,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Kalveroz',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [422,450,462],
                         'realm_color' => '#911cad',
                         'realm_x' => 25.426355,
@@ -7682,7 +7682,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Joyensko',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [450,461,465],
                         'realm_color' => '#9b1087',
                         'realm_x' => 10.324434,
@@ -7701,7 +7701,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Tayneross',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [464,466,467],
                         'realm_color' => '#742656',
                         'realm_x' => 10.324434,
@@ -7717,7 +7717,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Selemia',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [459,460,461,465,467],
                         'realm_color' => '#742656',
                         'realm_x' => 13.730945,
@@ -7733,7 +7733,7 @@ class SeedProvinces extends Migration
                     ],
                     [
                         'name' => 'Praelkysh',
-                        'continent' => \App\Continent::DEMAUXOR,
+                        'continent' => \App\Domain\Models\Continent::DEMAUXOR,
                         'borders' => [459,465,466],
                         'realm_color' => '#7e2381',
                         'realm_x' => 7.7075397,
@@ -7751,20 +7751,20 @@ class SeedProvinces extends Migration
             ]
         ];
 
-        $territoriesCollection = \App\Territory::all();
-        $continents = \App\Continent::all();
+        $territoriesCollection = \App\Domain\Models\Territory::all();
+        $continents = \App\Domain\Models\Continent::all();
 
         foreach ($territories as $territory) {
 
-            /** @var \App\Territory $territoryModel */
-            $territoryModel = $territoriesCollection->first(function (\App\Territory $model) use ($territory) {
+            /** @var \App\Domain\Models\Territory $territoryModel */
+            $territoryModel = $territoriesCollection->first(function (\App\Domain\Models\Territory $model) use ($territory) {
                 return $model->name == $territory['name'];
             });
 
             foreach ($territory['provinces'] as $province) {
 
-                /** @var \App\Continent $continent */
-                $continent = $continents->first(function(\App\Continent $continent) use ($province) {
+                /** @var \App\Domain\Models\Continent $continent */
+                $continent = $continents->first(function(\App\Domain\Models\Continent $continent) use ($province) {
                     return $continent->name == $province['continent'];
                 });
 
@@ -7778,8 +7778,8 @@ class SeedProvinces extends Migration
                     $province['focus_y'] = 0;
                 }
 
-                /** @var \App\Province $provinceCreated */
-                $provinceCreated = \App\Province::create([
+                /** @var \App\Domain\Models\Province $provinceCreated */
+                $provinceCreated = \App\Domain\Models\Province::create([
                     'name' => $province['name'],
                     'uuid' => (string) \Ramsey\Uuid\Uuid::uuid4(),
                     'continent_id' => $continent->id,
@@ -7802,14 +7802,14 @@ class SeedProvinces extends Migration
             }
         }
 
-        $provinces = \App\Province::all();
+        $provinces = \App\Domain\Models\Province::all();
 
         foreach ($territories as $territory) {
 
             foreach ($territory['provinces'] as $provinceArray) {
 
-                /** @var \App\Province $province */
-                $province = $provinces->first(function(\App\Province $province) use ($provinceArray) {
+                /** @var \App\Domain\Models\Province $province */
+                $province = $provinces->first(function(\App\Domain\Models\Province $province) use ($provinceArray) {
                     return $province->name == $provinceArray['name'];
                 });
 
@@ -7825,10 +7825,10 @@ class SeedProvinces extends Migration
     public function down()
     {
         \Illuminate\Support\Facades\DB::table('borders')->truncate();
-        $provinces = \App\Province::all();
-        $provinces->each(function(\App\Province $province){
+        $provinces = \App\Domain\Models\Province::all();
+        $provinces->each(function(\App\Domain\Models\Province $province){
            $province->vectorPaths()->delete();
         });
-        \App\Province::query()->delete();
+        \App\Domain\Models\Province::query()->delete();
     }
 }

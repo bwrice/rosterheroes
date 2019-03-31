@@ -4,7 +4,7 @@ namespace App\Listeners;
 
 use App\Events\SquadCreated;
 use App\Events\WagonCreated;
-use App\Squad;
+use App\Domain\Models\Squad;
 use App\Wagons\Wagon;
 use App\Wagons\WagonSizes\WagonSize;
 use Illuminate\Queue\InteractsWithQueue;

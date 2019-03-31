@@ -6,15 +6,15 @@ class SeedHeroRanks extends ModelNameSeederMigration
 {
     protected function getModelClass(): string
     {
-        return \App\HeroRank::class;
+        return \App\Domain\Models\HeroRank::class;
     }
 
     public function getSeedNames(): array
     {
         return [
-            \App\HeroRank::PRIVATE,
-            \App\HeroRank::CORPORAL,
-            \App\HeroRank::SERGEANT
+            \App\Domain\Models\HeroRank::PRIVATE,
+            \App\Domain\Models\HeroRank::CORPORAL,
+            \App\Domain\Models\HeroRank::SERGEANT
         ];
     }
 }

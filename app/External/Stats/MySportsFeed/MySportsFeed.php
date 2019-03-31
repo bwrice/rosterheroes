@@ -8,14 +8,18 @@
 
 namespace App\External\Stats\MySportsFeed;
 
-use App\Domain\Players\PlayerDTO;
-use App\Domain\Teams\Team;
-use App\Domain\Teams\TeamDTO;
+use App\Domain\DataTransferObjects\GameDTO;
+use App\Domain\DataTransferObjects\PlayerDTO;
+use App\Domain\Models\Team;
+use App\Domain\DataTransferObjects\TeamDTO;
 use App\External\Stats\StatsIntegration;
-use App\League;
-use App\Positions\Position;
-use App\Positions\PositionCollection;
+use App\Domain\Models\League;
+use App\Domain\Models\Position;
+use App\Domain\Collections\PositionCollection;
+use App\Domain\Models\Week;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 
 class MySportsFeed implements StatsIntegration
 {
@@ -49,7 +53,7 @@ class MySportsFeed implements StatsIntegration
         $playerDTOs = collect();
         $data = $this->playerAPI->getData();
         $teams = Team::with('league')->get();
-        /** @var PositionCollection $positions */
+        /** @var \App\Domain\Collections\PositionCollection $positions */
         $positions = Position::all();
 
         foreach($data as $playerArray) {
@@ -135,8 +139,25 @@ class MySportsFeed implements StatsIntegration
         return $teamDTOs;
     }
 
-    public function getGameDTOs(): Collection
+    public function getGameDTOs(Week $week): Collection
     {
-        // TODO: Implement getGameDTOs() method.
+        $teams = Team::all();
+        $gameDTOs = collect();
+        $data = $this->gameAPI->getData();
+        foreach($data as $gameArray) {
+            $scheduleData = $gameArray['schedule'];
+            $awayTeam = $teams->where('external_id', '=', $scheduleData['awayTeam']['id'])->first();
+            $homeTeam = $teams->where('external_id', '=', $scheduleData['awayTeam']['id'])->first();
+            if (! ($awayTeam && $homeTeam)) {
+                Log::warning("Couldn't find team when getting game DTOs", [
+                    'game_data' => $gameArray
+                ]);
+                continue;
+            }
+            $startsAt = Carbon::parse($scheduleData['startTime']);
+            $dto = new GameDTO($startsAt, $homeTeam, $awayTeam, $scheduleData['external_id']);
+            $gameDTOs->push($dto);
+        }
+        return $gameDTOs;
     }
 }

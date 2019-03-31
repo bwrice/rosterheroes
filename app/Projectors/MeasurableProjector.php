@@ -3,7 +3,7 @@
 namespace App\Projectors;
 
 use App\Events\MeasurableCreationRequested;
-use App\Measurable;
+use App\Domain\Models\Measurable;
 use Spatie\EventProjector\Projectors\Projector;
 use Spatie\EventProjector\Projectors\ProjectsEvents;
 

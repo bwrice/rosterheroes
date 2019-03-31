@@ -3,7 +3,7 @@
 namespace App\Projectors;
 
 use App\Events\HeroCreationRequested;
-use App\Hero;
+use App\Domain\Models\Hero;
 use Spatie\EventProjector\Projectors\Projector;
 use Spatie\EventProjector\Projectors\ProjectsEvents;
 

@@ -2,15 +2,15 @@
 
 namespace Tests\Unit;
 
-use App\Campaign;
+use App\Domain\Models\Campaign;
 use App\Exceptions\CampaignExistsException;
 use App\Exceptions\NotBorderedByException;
 use App\Exceptions\WeekLockedException;
-use App\Province;
-use App\Squad;
-use App\Stash;
-use App\StoreHouse;
-use App\Weeks\Week;
+use App\Domain\Models\Province;
+use App\Domain\Models\Squad;
+use App\Domain\Models\Stash;
+use App\Domain\Models\StoreHouse;
+use App\Domain\Models\Week;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
@@ -30,7 +30,7 @@ class SquadUnitTest extends TestCase
         /** @var Squad $squad */
         $squad = factory(Squad::class)->create();
 
-        /** @var StoreHouse $storeHouse */
+        /** @var \App\Domain\Models\StoreHouse $storeHouse */
         $storeHouse = factory(StoreHouse::class)->create([
             'squad_id' => $squad->id,
             'province_id' => $squad->province_id
@@ -47,7 +47,7 @@ class SquadUnitTest extends TestCase
      */
     public function it_will_not_retrieve_a_local_store_house_if_not_at_the_same_province()
     {
-        /** @var Squad $squad */
+        /** @var \App\Domain\Models\Squad $squad */
         $squad = factory(Squad::class)->create();
 
         /** @var StoreHouse $storeHouse */
@@ -136,7 +136,7 @@ class SquadUnitTest extends TestCase
         $squad = factory(Squad::class)->create();
         $originalProvince = $squad->province;
         $borderIDs = $originalProvince->borders()->pluck('id')->toArray();
-        /** @var Province $invalidProvince */
+        /** @var \App\Domain\Models\Province $invalidProvince */
         $invalidProvince = Province::query()->whereNotIn('id', $borderIDs)->inRandomOrder()->first();
 
         try {
@@ -161,7 +161,7 @@ class SquadUnitTest extends TestCase
         Week::setTestCurrent($week);
         Carbon::setTestNow($week->everything_locks_at->copy()->subDays(1));
 
-        /** @var Campaign $campaign */
+        /** @var \App\Domain\Models\Campaign $campaign */
         $campaign = factory(Campaign::class)->create([
             'week_id' => $week->id
         ]);
@@ -190,7 +190,7 @@ class SquadUnitTest extends TestCase
         Week::setTestCurrent($week);
         Carbon::setTestNow($week->everything_locks_at->copy()->addMinutes(15));
 
-        /** @var Squad $squad */
+        /** @var \App\Domain\Models\Squad $squad */
         $squad = factory(Squad::class)->create();
 
         try {

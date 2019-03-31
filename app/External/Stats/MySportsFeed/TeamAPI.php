@@ -8,7 +8,7 @@
 
 namespace App\External\Stats\MySportsFeed;
 
-use App\League;
+use App\Domain\Models\League;
 
 class TeamAPI
 {

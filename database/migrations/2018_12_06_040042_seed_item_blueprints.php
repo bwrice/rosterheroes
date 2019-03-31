@@ -13,10 +13,10 @@ class SeedItemBlueprints extends Migration
      */
     public function up()
     {
-        $itemTypes = \App\ItemType::all();
-        $itemClasses = \App\ItemClass::all();
-        $materialTypes = \App\MaterialType::all();
-        $enchantments = \App\Enchantment::all();
+        $itemTypes = \App\Domain\Models\ItemType::all();
+        $itemClasses = \App\Domain\Models\ItemClass::all();
+        $materialTypes = \App\Domain\Models\MaterialType::all();
+        $enchantments = \App\Domain\Models\Enchantment::all();
 
         $blueprints = [
 
@@ -25,8 +25,8 @@ class SeedItemBlueprints extends Migration
              */
             [
                 'create_array' => [
-                    'name' => \App\Heroes\Classes\WarriorBehavior::STARTER_SWORD,
-                    'item_class_id' => $itemClasses->where('name', '=', \App\ItemClass::ENCHANTED )->first()->id,
+                    'name' => \App\Domain\Behaviors\HeroClass\WarriorBehavior::STARTER_SWORD,
+                    'item_class_id' => $itemClasses->where('name', '=', \App\Domain\Models\ItemClass::ENCHANTED )->first()->id,
                     'item_type_id' => $itemTypes->where( 'name', '=', 'Short Sword' )->first()->id,
                     'material_type_id' => $materialTypes->where( 'name', '=', 'Copper' )->first()->id,
                 ],
@@ -36,8 +36,8 @@ class SeedItemBlueprints extends Migration
             ],
             [
                 'create_array' => [
-                    'name' => \App\Heroes\Classes\WarriorBehavior::STARTER_SHIELD,
-                    'item_class_id' => $itemClasses->where('name', '=', \App\ItemClass::ENCHANTED )->first()->id,
+                    'name' => \App\Domain\Behaviors\HeroClass\WarriorBehavior::STARTER_SHIELD,
+                    'item_class_id' => $itemClasses->where('name', '=', \App\Domain\Models\ItemClass::ENCHANTED )->first()->id,
                     'item_type_id' => $itemTypes->where( 'name', '=', 'Buckler' )->first()->id,
                     'material_type_id' => $materialTypes->where( 'name', '=', 'Copper' )->first()->id,
                 ],
@@ -47,8 +47,8 @@ class SeedItemBlueprints extends Migration
             ],
             [
                 'create_array' => [
-                    'name' => \App\Heroes\Classes\RangerBehavior::STARTER_BOW,
-                    'item_class_id' => $itemClasses->where('name', '=', \App\ItemClass::ENCHANTED )->first()->id,
+                    'name' => \App\Domain\Behaviors\HeroClass\RangerBehavior::STARTER_BOW,
+                    'item_class_id' => $itemClasses->where('name', '=', \App\Domain\Models\ItemClass::ENCHANTED )->first()->id,
                     'item_type_id' => $itemTypes->where( 'name', '=', 'Straight Bow' )->first()->id,
                     'material_type_id' => $materialTypes->where( 'name', '=', 'Yew' )->first()->id,
                 ],
@@ -59,8 +59,8 @@ class SeedItemBlueprints extends Migration
             ],
             [
                 'create_array' => [
-                    'name' => \App\Heroes\Classes\SorcererBehavior::STARTER_STAFF,
-                    'item_class_id' => $itemClasses->where('name', '=', \App\ItemClass::ENCHANTED )->first()->id,
+                    'name' => \App\Domain\Behaviors\HeroClass\SorcererBehavior::STARTER_STAFF,
+                    'item_class_id' => $itemClasses->where('name', '=', \App\Domain\Models\ItemClass::ENCHANTED )->first()->id,
                     'item_type_id' => $itemTypes->where( 'name', '=', 'Lesser Staff' )->first()->id,
                     'material_type_id' => $materialTypes->where( 'name', '=', 'Yew' )->first()->id,
                 ],
@@ -73,8 +73,8 @@ class SeedItemBlueprints extends Migration
 
         foreach( $blueprints as $blueprint ) {
 
-            /** @var \App\ItemBlueprint $blueprintCreated */
-            $blueprintCreated = \App\ItemBlueprint::create([
+            /** @var \App\Domain\Models\ItemBlueprint $blueprintCreated */
+            $blueprintCreated = \App\Domain\Models\ItemBlueprint::create([
                 'item_name' => $blueprint['create_array']['name'],
                 'item_class_id' => $blueprint['create_array']['item_class_id'],
                 'item_type_id' => $blueprint['create_array']['item_type_id'],
@@ -95,7 +95,7 @@ class SeedItemBlueprints extends Migration
     public function down()
     {
         \Illuminate\Support\Facades\DB::table('enchantment_item_blueprint')->truncate();
-        \App\Item::query()->whereHas('itemBlueprint')->delete();
-        \App\ItemBlueprint::query()->delete();
+        \App\Domain\Models\Item::query()->whereHas('itemBlueprint')->delete();
+        \App\Domain\Models\ItemBlueprint::query()->delete();
     }
 }

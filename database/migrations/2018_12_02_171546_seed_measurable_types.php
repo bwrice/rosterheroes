@@ -14,69 +14,69 @@ class SeedMeasurableTypes extends Migration
     public function up()
     {
 
-        $measurableGroups = \App\MeasurableGroup::all();
+        $measurableGroups = \App\Domain\Models\MeasurableGroup::all();
         $measurableTypes = [
             [
-                'name' => \App\MeasurableType::STRENGTH,
-                'group' => \App\MeasurableGroup::ATTRIBUTE
+                'name' => \App\Domain\Models\MeasurableType::STRENGTH,
+                'group' => \App\Domain\Models\MeasurableGroup::ATTRIBUTE
             ],
             [
-                'name' => \App\MeasurableType::VALOR,
-                'group' => \App\MeasurableGroup::ATTRIBUTE
+                'name' => \App\Domain\Models\MeasurableType::VALOR,
+                'group' => \App\Domain\Models\MeasurableGroup::ATTRIBUTE
             ],
             [
-                'name' => \App\MeasurableType::AGILITY,
-                'group' => \App\MeasurableGroup::ATTRIBUTE
+                'name' => \App\Domain\Models\MeasurableType::AGILITY,
+                'group' => \App\Domain\Models\MeasurableGroup::ATTRIBUTE
             ],
             [
-                'name' => \App\MeasurableType::FOCUS,
-                'group' => \App\MeasurableGroup::ATTRIBUTE
+                'name' => \App\Domain\Models\MeasurableType::FOCUS,
+                'group' => \App\Domain\Models\MeasurableGroup::ATTRIBUTE
             ],
             [
-                'name' => \App\MeasurableType::APTITUDE,
-                'group' => \App\MeasurableGroup::ATTRIBUTE
+                'name' => \App\Domain\Models\MeasurableType::APTITUDE,
+                'group' => \App\Domain\Models\MeasurableGroup::ATTRIBUTE
             ],
             [
-                'name' => \App\MeasurableType::INTELLIGENCE,
-                'group' => \App\MeasurableGroup::ATTRIBUTE
+                'name' => \App\Domain\Models\MeasurableType::INTELLIGENCE,
+                'group' => \App\Domain\Models\MeasurableGroup::ATTRIBUTE
             ],
             [
-                'name' => \App\MeasurableType::HEALTH,
-                'group' => \App\MeasurableGroup::RESOURCE
+                'name' => \App\Domain\Models\MeasurableType::HEALTH,
+                'group' => \App\Domain\Models\MeasurableGroup::RESOURCE
             ],
             [
-                'name' => \App\MeasurableType::STAMINA,
-                'group' => \App\MeasurableGroup::RESOURCE
+                'name' => \App\Domain\Models\MeasurableType::STAMINA,
+                'group' => \App\Domain\Models\MeasurableGroup::RESOURCE
             ],
             [
-                'name' => \App\MeasurableType::MANA,
-                'group' => \App\MeasurableGroup::RESOURCE
+                'name' => \App\Domain\Models\MeasurableType::MANA,
+                'group' => \App\Domain\Models\MeasurableGroup::RESOURCE
             ],
             [
-                'name' => \App\MeasurableType::PASSION,
-                'group' => \App\MeasurableGroup::QUALITY
+                'name' => \App\Domain\Models\MeasurableType::PASSION,
+                'group' => \App\Domain\Models\MeasurableGroup::QUALITY
             ],
             [
-                'name' => \App\MeasurableType::BALANCE,
-                'group' => \App\MeasurableGroup::QUALITY
+                'name' => \App\Domain\Models\MeasurableType::BALANCE,
+                'group' => \App\Domain\Models\MeasurableGroup::QUALITY
             ],
             [
-                'name' => \App\MeasurableType::HONOR,
-                'group' => \App\MeasurableGroup::QUALITY
+                'name' => \App\Domain\Models\MeasurableType::HONOR,
+                'group' => \App\Domain\Models\MeasurableGroup::QUALITY
             ],
             [
-                'name' => \App\MeasurableType::PRESTIGE,
-                'group' => \App\MeasurableGroup::QUALITY
+                'name' => \App\Domain\Models\MeasurableType::PRESTIGE,
+                'group' => \App\Domain\Models\MeasurableGroup::QUALITY
             ],
             [
-                'name' => \App\MeasurableType::WRATH,
-                'group' => \App\MeasurableGroup::QUALITY
+                'name' => \App\Domain\Models\MeasurableType::WRATH,
+                'group' => \App\Domain\Models\MeasurableGroup::QUALITY
             ]
         ];
 
         foreach ($measurableTypes as $measurableType)
         {
-            \App\MeasurableType::create([
+            \App\Domain\Models\MeasurableType::create([
                 'name' => $measurableType['name'],
                 'measurable_group_id' => $measurableGroups->where('name', $measurableType['group'])->first()->id
             ]);
@@ -90,6 +90,6 @@ class SeedMeasurableTypes extends Migration
      */
     public function down()
     {
-        \App\MeasurableType::query()->delete();
+        \App\Domain\Models\MeasurableType::query()->delete();
     }
 }

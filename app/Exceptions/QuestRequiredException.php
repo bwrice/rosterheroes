@@ -2,7 +2,7 @@
 
 namespace App\Exceptions;
 
-use App\Campaigns\Quests\Quest;
+use App\Domain\Models\Quest;
 use Exception;
 use Throwable;
 

@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
-use App\Skirmish;
-use App\Squad;
-use App\Weeks\Week;
+use App\Domain\Models\Skirmish;
+use App\Domain\Models\Squad;
+use App\Domain\Models\Week;
 use Carbon\Carbon;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;

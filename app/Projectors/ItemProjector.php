@@ -3,7 +3,7 @@
 namespace App\Projectors;
 
 use App\Events\ItemCreationRequested;
-use App\Item;
+use App\Domain\Models\Item;
 use Spatie\EventProjector\Projectors\Projector;
 use Spatie\EventProjector\Projectors\ProjectsEvents;
 

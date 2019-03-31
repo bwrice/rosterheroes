@@ -1,14 +1,14 @@
 <?php
 
-use App\ItemBlueprint;
+use App\Domain\Models\ItemBlueprint;
 use Faker\Generator as Faker;
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 $factory->define( ItemBlueprint::class, function( Faker $faker ) {
 
-    $itemType = \App\ItemType::where('name', 'Short Sword')->first();
-    $genericClass = \App\ItemClass::where('name', \App\ItemClass::GENERIC )->first();
+    $itemType = \App\Domain\Models\ItemType::where('name', 'Short Sword')->first();
+    $genericClass = \App\Domain\Models\ItemClass::where('name', \App\Domain\Models\ItemClass::GENERIC )->first();
 
     return [
         'item_type_id' => $itemType->id,

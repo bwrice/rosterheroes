@@ -2,7 +2,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(\App\Weeks\Week::class, function (Faker $faker) {
+$factory->define(\App\Domain\Models\Week::class, function (Faker $faker) {
 
     $name = ucwords($faker->domainWord)  . ' Week of ' . ucwords($faker->safeColorName);
 

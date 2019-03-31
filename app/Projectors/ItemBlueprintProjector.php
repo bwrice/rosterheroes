@@ -3,7 +3,7 @@
 namespace App\Projectors;
 
 use App\Events\ItemBlueprintCreated;
-use App\ItemBlueprint;
+use App\Domain\Models\ItemBlueprint;
 use Spatie\EventProjector\Projectors\Projector;
 use Spatie\EventProjector\Projectors\ProjectsEvents;
 use Spatie\EventProjector\Projectors\QueuedProjector;

@@ -7,13 +7,13 @@ use App\Events\HeroCreated;
 use App\Exceptions\GameStartedException;
 use App\Exceptions\HeroPostNotFoundException;
 use App\Exceptions\InvalidHeroClassException;
-use App\Hero;
-use App\HeroClass;
-use App\Heroes\HeroPosts\HeroPost;
-use App\HeroRace;
-use App\HeroRank;
+use App\Domain\Models\Hero;
+use App\Domain\Models\HeroClass;
+use App\Domain\Models\HeroPost;
+use App\Domain\Models\HeroRace;
+use App\Domain\Models\HeroRank;
 use App\Http\Requests\StoreSquadHero;
-use App\Squad;
+use App\Domain\Models\Squad;
 use App\Squads\HeroClassAvailability;
 use App\Squads\HeroPostAvailability;
 use Illuminate\Http\Request;
@@ -40,9 +40,9 @@ class SquadHeroController extends Controller
             'class' => 'required|exists:hero_classes,name'
         ]);
 
-        /** @var HeroRace $heroRace */
+        /** @var \App\Domain\Models\HeroRace $heroRace */
         $heroRace = HeroRace::query()->where('name', '=', $request->race)->first();
-        /** @var HeroClass $heroClass */
+        /** @var \App\Domain\Models\HeroClass $heroClass */
         $heroClass = HeroClass::query()->where('name', '=', $request->class)->first();
 
         $action = new AddHeroToSquad($squad, $heroRace, $heroClass, $request->name);

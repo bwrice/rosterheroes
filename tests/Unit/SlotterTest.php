@@ -2,19 +2,19 @@
 
 namespace Tests\Unit;
 
-use App\Hero;
-use App\HeroClass;
-use App\Heroes\HeroPosts\HeroPost;
-use App\HeroRace;
-use App\Item;
-use App\ItemBlueprint;
-use App\Items\ItemBases\ItemBase;
-use App\ItemType;
-use App\Slots\Slot;
-use App\Slots\SlotCollection;
-use App\Slots\Slotter;
-use App\Squad;
-use App\User;
+use App\Domain\Models\Hero;
+use App\Domain\Models\HeroClass;
+use App\Domain\Models\HeroPost;
+use App\Domain\Models\HeroRace;
+use App\Domain\Models\Item;
+use App\Domain\Models\ItemBlueprint;
+use App\Domain\Models\ItemBase;
+use App\Domain\Models\ItemType;
+use App\Domain\Slot;
+use App\Domain\Collections\SlotCollection;
+use App\Actions\Slotter;
+use App\Domain\Models\Squad;
+use App\Domain\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -45,10 +45,10 @@ class SlotterTest extends TestCase
         /** @var Hero $hero */
         $hero = factory(Hero::class)->states('with-slots', 'with-measurables')->create();
 
-        /** @var ItemBase $itemBase */
+        /** @var \App\Domain\Models\ItemBase $itemBase */
         $itemBase = ItemBase::where('name', $itemBase)->first();
 
-        /** @var ItemBlueprint $blueprint */
+        /** @var \App\Domain\Models\ItemBlueprint $blueprint */
         $blueprint = factory(ItemBlueprint::class)->create([
             'item_type_id' => null, //Override default set by factory
             'item_base_id' => $itemBase->id
@@ -203,11 +203,11 @@ class SlotterTest extends TestCase
 
         $itemOne = $firstBlueprint->generate();
 
-        /** @var Slotter $slotter */
+        /** @var \App\Actions\Slotter $slotter */
         $slotter = app()->make(Slotter::class);
         $slotter->slot($hero, $itemOne);
 
-        /** @var ItemBase $firstItemBase */
+        /** @var \App\Domain\Models\ItemBase $firstItemBase */
         $secondItemBase = ItemBase::where('name', $secondItemBaseName)->first();
 
         $secondBlueprint = factory(ItemBlueprint::class)->create([
@@ -273,7 +273,7 @@ class SlotterTest extends TestCase
         $heroPost = factory(HeroPost::class)->create();
         $heroPost->squad->addSlots();
 
-        /** @var Hero $hero */
+        /** @var \App\Domain\Models\Hero $hero */
         $hero = factory(Hero::class)->states('with-slots', 'with-measurables')->create();
         $heroPost->hero_id = $hero->id;
         $heroPost->save();
@@ -281,7 +281,7 @@ class SlotterTest extends TestCase
         /** @var ItemBase $itemBase */
         $itemBase = ItemBase::where('name', $firstItemBaseName)->first();
 
-        /** @var ItemBlueprint $itemBlueprint */
+        /** @var \App\Domain\Models\ItemBlueprint $itemBlueprint */
         $itemBlueprint = factory(ItemBlueprint::class)->create([
             'item_type_id' => null, //Override default set by factory
             'item_base_id' => $itemBase->id
@@ -289,14 +289,14 @@ class SlotterTest extends TestCase
 
         $itemOne = $itemBlueprint->generate();
 
-        /** @var Slotter $slotter */
+        /** @var \App\Actions\Slotter $slotter */
         $slotter = app()->make(Slotter::class);
         $slotter->slot($hero, $itemOne);
 
-        /** @var ItemBase $firstItemBase */
+        /** @var \App\Domain\Models\ItemBase $firstItemBase */
         $itemBase = ItemBase::where('name', $secondItemBaseName)->first();
 
-        /** @var ItemBlueprint $firstBlueprint */
+        /** @var \App\Domain\Models\ItemBlueprint $firstBlueprint */
         $itemBlueprint = factory(ItemBlueprint::class)->create([
             'item_type_id' => null, //Override default set by factory
             'item_base_id' => $itemBase->id
@@ -309,7 +309,7 @@ class SlotterTest extends TestCase
         /** @var ItemBase $firstItemBase */
         $itemBase = ItemBase::where('name', $thirdItemBaseName)->first();
 
-        /** @var ItemBlueprint $firstBlueprint */
+        /** @var \App\Domain\Models\ItemBlueprint $firstBlueprint */
         $itemBlueprint = factory(ItemBlueprint::class)->create([
             'item_type_id' => null, //Override default set by factory
             'item_base_id' => $itemBase->id
@@ -377,7 +377,7 @@ class SlotterTest extends TestCase
 
         $itemBase = ItemBase::where('name', '=', $firstItemBaseName)->first();
 
-        /** @var ItemBlueprint $itemBlueprint */
+        /** @var \App\Domain\Models\ItemBlueprint $itemBlueprint */
         $itemBlueprint = factory(ItemBlueprint::class)->create([
             'item_type_id' => null, //Override default set by factory
             'item_base_id' => $itemBase->id
@@ -391,7 +391,7 @@ class SlotterTest extends TestCase
         }
         $squad = $squad->fresh();
 
-        /** @var Slotter $slotter */
+        /** @var \App\Actions\Slotter $slotter */
         $slotter = app()->make(Slotter::class);
         $slotter->slot($squad, $firstItem);
 
@@ -404,7 +404,7 @@ class SlotterTest extends TestCase
 
         $itemBase = ItemBase::where('name', '=', $secondItemBaseName)->first();
 
-        /** @var ItemBlueprint $itemBlueprint */
+        /** @var \App\Domain\Models\ItemBlueprint $itemBlueprint */
         $itemBlueprint = factory(ItemBlueprint::class)->create([
             'item_type_id' => null, //Override default set by factory
             'item_base_id' => $itemBase->id

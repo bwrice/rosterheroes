@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\Province;
-use App\Squad;
+use App\Domain\Models\Province;
+use App\Domain\Models\Squad;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Laravel\Passport\Passport;
 use Tests\TestCase;

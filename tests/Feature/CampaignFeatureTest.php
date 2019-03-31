@@ -2,10 +2,10 @@
 
 namespace Tests\Feature;
 
-use App\Campaign;
-use App\Campaigns\Quests\Quest;
-use App\Squad;
-use App\Weeks\Week;
+use App\Domain\Models\Campaign;
+use App\Domain\Models\Quest;
+use App\Domain\Models\Squad;
+use App\Domain\Models\Week;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Laravel\Passport\Passport;
@@ -23,7 +23,7 @@ class CampaignFeatureTest extends TestCase
     public function a_campaign_can_add_a_quest()
     {
 
-        /** @var Week $week */
+        /** @var \App\Domain\Models\Week $week */
         $week = factory(Week::class)->create();
 
         Week::setTestCurrent($week);
@@ -32,7 +32,7 @@ class CampaignFeatureTest extends TestCase
         /** @var Squad $squad */
         $squad = factory(Squad::class)->create();
 
-        /** @var Campaign $campaign */
+        /** @var \App\Domain\Models\Campaign $campaign */
         $campaign = factory(Campaign::class)->create([
             'week_id' => $week->id,
             'squad_id' => $squad->id,
@@ -41,7 +41,7 @@ class CampaignFeatureTest extends TestCase
 
         Passport::actingAs($squad->user);
 
-        /** @var Quest $quest */
+        /** @var \App\Domain\Models\Quest $quest */
         $quest = factory(Quest::class)->create([
             'province_id' => $squad->province_id
         ]);

@@ -2,15 +2,15 @@
 
 namespace Tests\Unit;
 
-use App\Hero;
-use App\Item;
-use App\ItemBlueprint;
-use App\Items\ItemBases\ItemBase;
-use App\ItemType;
-use App\Slots\Slot;
-use App\Slots\SlotCollection;
-use App\Slots\Slottable;
-use App\SlotType;
+use App\Domain\Models\Hero;
+use App\Domain\Models\Item;
+use App\Domain\Models\ItemBlueprint;
+use App\Domain\Models\ItemBase;
+use App\Domain\Models\ItemType;
+use App\Domain\Slot;
+use App\Domain\Collections\SlotCollection;
+use App\Domain\Interfaces\Slottable;
+use App\Domain\Models\SlotType;
 use App\Wagons\Wagon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -26,7 +26,7 @@ class SlotCollectionTest extends TestCase
     /** @var SlotCollection $slotCollection */
     protected $slotCollection;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->slotCollection = new SlotCollection();
         parent::setUp();

@@ -3,8 +3,8 @@
 namespace App\Projectors;
 
 use App\Events\SquadHeroPostAdded;
-use App\HeroRace;
-use App\Squad;
+use App\Domain\Models\HeroRace;
+use App\Domain\Models\Squad;
 use Spatie\EventProjector\Projectors\Projector;
 use Spatie\EventProjector\Projectors\ProjectsEvents;
 

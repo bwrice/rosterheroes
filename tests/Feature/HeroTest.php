@@ -2,19 +2,19 @@
 
 namespace Tests\Feature;
 
-use App\Game;
-use App\Hero;
-use App\HeroClass;
-use App\HeroRace;
-use App\Measurable;
-use App\MeasurableType;
-use App\Domain\Players\Player;
-use App\GamePlayer;
-use App\Slots\Slot;
-use App\SlotType;
-use App\Squad;
-use App\User;
-use App\Weeks\Week;
+use App\Domain\Models\Game;
+use App\Domain\Models\Hero;
+use App\Domain\Models\HeroClass;
+use App\Domain\Models\HeroRace;
+use App\Domain\Models\Measurable;
+use App\Domain\Models\MeasurableType;
+use App\Domain\Models\Player;
+use App\Domain\Models\GamePlayer;
+use App\Domain\Slot;
+use App\Domain\Models\SlotType;
+use App\Domain\Models\Squad;
+use App\Domain\Models\User;
+use App\Domain\Models\Week;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
@@ -51,7 +51,7 @@ class HeroTest extends TestCase
         $response->assertStatus(201);
         $this->assertEquals(1, $squad->getHeroes()->count());
 
-        /** @var Hero $hero */
+        /** @var \App\Domain\Models\Hero $hero */
         $hero = $squad->getHeroes()->first();
 
         $this->assertEquals($heroName, $hero->name);

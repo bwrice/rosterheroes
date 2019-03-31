@@ -9,10 +9,10 @@
 namespace App\Squads;
 
 
-use App\Heroes\HeroPosts\HeroPost;
-use App\Heroes\HeroPosts\HeroPostCollection;
-use App\HeroRace;
-use App\Squad;
+use App\Domain\Models\HeroPost;
+use App\Domain\Collections\HeroPostCollection;
+use App\Domain\Models\HeroRace;
+use App\Domain\Models\Squad;
 use Illuminate\Support\Collection;
 
 class HeroRaceAvailability
@@ -28,8 +28,8 @@ class HeroRaceAvailability
     }
 
     /**
-     * @param Squad $squad
-     * @return Collection|HeroRace[]
+     * @param \App\Domain\Models\Squad $squad
+     * @return Collection|\App\Domain\Models\HeroRace[]
      */
     public function get(Squad $squad)
     {

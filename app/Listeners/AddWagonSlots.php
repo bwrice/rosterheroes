@@ -3,7 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\WagonEvent;
-use App\SlotType;
+use App\Domain\Models\SlotType;
 use App\Wagons\Wagon;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -34,7 +34,7 @@ class AddWagonSlots
         $diff = $slotsNeededCount - $currentSlotsCount;
 
         if($diff > 0) {
-            /** @var SlotType $slotType */
+            /** @var \App\Domain\Models\SlotType $slotType */
             $slotType = SlotType::where('name', '=', SlotType::UNIVERSAL)->first();
             for($i = 1; $i <= $diff; $i++) {
                 $wagon->slots()->create([

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\User;
+use App\Domain\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -63,7 +63,7 @@ class LoginController extends Controller
 
         if ( $user ) {
 
-            /** @var User $newUser */
+            /** @var \App\Domain\Models\User $newUser */
             $newUser = User::updateOrCreate( [
                 'email' => $user->email
             ], [

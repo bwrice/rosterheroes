@@ -2,14 +2,14 @@
 
 namespace App\Exceptions;
 
-use App\HeroClass;
+use App\Domain\Models\HeroClass;
 use Exception;
 use Throwable;
 
 class InvalidHeroClassException extends Exception
 {
     /**
-     * @var HeroClass
+     * @var \App\Domain\Models\HeroClass
      */
     private $heroClass;
 

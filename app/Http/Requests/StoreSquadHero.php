@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use App\Squad;
-use App\User;
+use App\Domain\Models\Squad;
+use App\Domain\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 

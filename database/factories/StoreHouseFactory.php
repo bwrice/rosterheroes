@@ -2,12 +2,12 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(\App\StoreHouse::class, function (Faker $faker) {
+$factory->define(\App\Domain\Models\StoreHouse::class, function (Faker $faker) {
 
-    /** @var \App\Squad $squad */
-    $squad = factory(\App\Squad::class)->create();
-    /** @var \App\StoreHouseType $storeHouseType */
-    $storeHouseType = \App\StoreHouseType::where('name', '=', \App\StoreHouseType::DEPOT)->first();
+    /** @var \App\Domain\Models\Squad $squad */
+    $squad = factory(\App\Domain\Models\Squad::class)->create();
+    /** @var \App\Domain\Models\StoreHouseType $storeHouseType */
+    $storeHouseType = \App\Domain\Models\StoreHouseType::where('name', '=', \App\Domain\Models\StoreHouseType::DEPOT)->first();
 
     return [
         'squad_id' => $squad->id,

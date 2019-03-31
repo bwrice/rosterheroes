@@ -2,13 +2,13 @@
 
 namespace Tests\Unit;
 
-use App\Enchantment;
-use App\Item;
-use App\ItemBlueprint;
-use App\ItemClass;
-use App\ItemGroup;
-use App\Items\ItemBases\ItemBase;
-use App\ItemType;
+use App\Domain\Models\Enchantment;
+use App\Domain\Models\Item;
+use App\Domain\Models\ItemBlueprint;
+use App\Domain\Models\ItemClass;
+use App\Domain\Models\ItemGroup;
+use App\Domain\Models\ItemBase;
+use App\Domain\Models\ItemType;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -52,7 +52,7 @@ class ItemBlueprintTest extends TestCase
         /** @var ItemBlueprint $blueprint */
         $blueprint->enchantments()->attach( $enchantmentIDs );
 
-        /** @var Item $item */
+        /** @var \App\Domain\Models\Item $item */
         $item = $blueprint->generate();
 
         $this->assertDatabaseHas( 'items', [

@@ -6,15 +6,15 @@ class SeedMeasurableGroups extends ModelNameSeederMigration
 {
     protected function getModelClass(): string
     {
-        return \App\MeasurableGroup::class;
+        return \App\Domain\Models\MeasurableGroup::class;
     }
 
     public function getSeedNames(): array
     {
         return [
-            \App\MeasurableGroup::ATTRIBUTE,
-            \App\MeasurableGroup::RESOURCE,
-            \App\MeasurableGroup::QUALITY
+            \App\Domain\Models\MeasurableGroup::ATTRIBUTE,
+            \App\Domain\Models\MeasurableGroup::RESOURCE,
+            \App\Domain\Models\MeasurableGroup::QUALITY
         ];
     }
 }

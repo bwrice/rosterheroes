@@ -2,7 +2,7 @@
 
 namespace App\Exceptions;
 
-use App\Weeks\Week;
+use App\Domain\Models\Week;
 use Carbon\Carbon;
 use Exception;
 use Throwable;
@@ -10,7 +10,7 @@ use Throwable;
 class WeekLockedException extends Exception
 {
     /**
-     * @var Week
+     * @var \App\Domain\Models\Week
      */
     private $week;
 
@@ -22,7 +22,7 @@ class WeekLockedException extends Exception
     }
 
     /**
-     * @return Week
+     * @return \App\Domain\Models\Week
      */
     public function getWeek(): Week
     {

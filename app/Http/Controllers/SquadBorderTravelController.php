@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\NotBorderedByException;
-use App\Province;
-use App\Squad;
-use App\User;
+use App\Domain\Models\Province;
+use App\Domain\Models\Squad;
+use App\Domain\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;

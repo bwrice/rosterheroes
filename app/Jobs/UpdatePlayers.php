@@ -2,8 +2,8 @@
 
 namespace App\Jobs;
 
-use App\Domain\Players\Player;
-use App\Domain\Players\PlayerDTO;
+use App\Domain\Models\Player;
+use App\Domain\DataTransferObjects\PlayerDTO;
 use App\External\Stats\StatsIntegration;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;

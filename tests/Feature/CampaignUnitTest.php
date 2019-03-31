@@ -2,18 +2,18 @@
 
 namespace Tests\Feature;
 
-use App\Campaign;
-use App\Continent;
+use App\Domain\Models\Campaign;
+use App\Domain\Models\Continent;
 use App\Exceptions\InvalidContinentException;
 use App\Exceptions\InvalidProvinceException;
 use App\Exceptions\MaxQuestsException;
 use App\Exceptions\QuestCompletedException;
 use App\Exceptions\QuestExistsException;
 use App\Exceptions\WeekLockedException;
-use App\Province;
-use App\Campaigns\Quests\Quest;
-use App\Squad;
-use App\Weeks\Week;
+use App\Domain\Models\Province;
+use App\Domain\Models\Quest;
+use App\Domain\Models\Squad;
+use App\Domain\Models\Week;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -30,7 +30,7 @@ class CampaignUnitTest extends TestCase
      */
     public function adding_a_quest_on_a_continent_not_of_the_current_campaign_will_throw_an_exception()
     {
-        /** @var \App\Campaigns\Quests\Quest $quest */
+        /** @var \App\Domain\Models\Quest $quest */
         $quest = factory(Quest::class)->create();
         $provinceID = $quest->province->id;
 
@@ -101,7 +101,7 @@ class CampaignUnitTest extends TestCase
 
         $provinceForQuestToJoin = $provinces->random();
 
-        /** @var \App\Campaigns\Quests\Quest $questToJoin */
+        /** @var \App\Domain\Models\Quest $questToJoin */
         $questToJoin = factory(Quest::class)->create([
             'province_id' => $provinceForQuestToJoin->id
         ]);
@@ -124,7 +124,7 @@ class CampaignUnitTest extends TestCase
      */
     public function adding_a_quest_after_the_week_has_locked_will_throw_an_exception()
     {
-        /** @var Week $week */
+        /** @var \App\Domain\Models\Week $week */
         $week = factory(Week::class)->create();
         Week::setTestCurrent($week);
 
@@ -197,7 +197,7 @@ class CampaignUnitTest extends TestCase
      */
     public function adding_a_quest_not_at_the_squads_current_province_will_throw_an_exception()
     {
-        /** @var Week $week */
+        /** @var \App\Domain\Models\Week $week */
         $week = factory(Week::class)->create();
         Week::setTestCurrent($week);
         Carbon::setTestNow($week->everything_locks_at->copy()->subDays(1));

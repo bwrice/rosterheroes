@@ -2,9 +2,9 @@
 
 namespace Tests\Unit;
 
-use App\Game;
-use App\Domain\Teams\Team;
-use App\Weeks\Week;
+use App\Domain\Models\Game;
+use App\Domain\Models\Team;
+use App\Domain\Models\Week;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
@@ -20,12 +20,12 @@ class TeamTest extends TestCase
      */
     public function it_will_return_this_weeks_game()
     {
-        /** @var Week $week */
+        /** @var \App\Domain\Models\Week $week */
         $week = factory(Week::class)->create();
 
         Week::setTestCurrent($week);
 
-        /** @var \App\Domain\Teams\Team $homeTeam */
+        /** @var \App\Domain\Models\Team $homeTeam */
         $homeTeam = Team::query()->inRandomOrder()->first();
         $sportID = $homeTeam->league->id;
 

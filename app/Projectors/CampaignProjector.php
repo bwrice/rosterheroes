@@ -2,7 +2,7 @@
 
 namespace App\Projectors;
 
-use App\Campaign;
+use App\Domain\Models\Campaign;
 use App\Events\CampaignCreationRequested;
 use Spatie\EventProjector\Projectors\Projector;
 use Spatie\EventProjector\Projectors\ProjectsEvents;

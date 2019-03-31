@@ -13,23 +13,23 @@ class SeedEnchantments extends Migration
      */
     public function up()
     {
-        $measurableTypes = \App\MeasurableType::all();
+        $measurableTypes = \App\Domain\Models\MeasurableType::all();
 
         $measurableTypesArray = [
-            \App\MeasurableType::STRENGTH,
-            \App\MeasurableType::VALOR,
-            \App\MeasurableType::AGILITY,
-            \App\MeasurableType::FOCUS,
-            \App\MeasurableType::APTITUDE,
-            \App\MeasurableType::INTELLIGENCE,
-            \App\MeasurableType::HEALTH,
-            \App\MeasurableType::STAMINA,
-            \App\MeasurableType::MANA,
-            \App\MeasurableType::PASSION,
-            \App\MeasurableType::BALANCE,
-            \App\MeasurableType::HONOR,
-            \App\MeasurableType::PRESTIGE,
-            \App\MeasurableType::WRATH
+            \App\Domain\Models\MeasurableType::STRENGTH,
+            \App\Domain\Models\MeasurableType::VALOR,
+            \App\Domain\Models\MeasurableType::AGILITY,
+            \App\Domain\Models\MeasurableType::FOCUS,
+            \App\Domain\Models\MeasurableType::APTITUDE,
+            \App\Domain\Models\MeasurableType::INTELLIGENCE,
+            \App\Domain\Models\MeasurableType::HEALTH,
+            \App\Domain\Models\MeasurableType::STAMINA,
+            \App\Domain\Models\MeasurableType::MANA,
+            \App\Domain\Models\MeasurableType::PASSION,
+            \App\Domain\Models\MeasurableType::BALANCE,
+            \App\Domain\Models\MeasurableType::HONOR,
+            \App\Domain\Models\MeasurableType::PRESTIGE,
+            \App\Domain\Models\MeasurableType::WRATH
         ];
 
         foreach ( $measurableTypesArray as $type ) {
@@ -37,8 +37,8 @@ class SeedEnchantments extends Migration
 
                 $name = 'Level ' . $boostLevel . ' ' . ucfirst( $type );
 
-                /** @var \App\Enchantment $enchantment */
-                $enchantment = \App\Enchantment::create( [
+                /** @var \App\Domain\Models\Enchantment $enchantment */
+                $enchantment = \App\Domain\Models\Enchantment::create( [
                     'name' => $name
                 ] );
 
@@ -58,7 +58,7 @@ class SeedEnchantments extends Migration
     public function down()
     {
 
-        \App\Enchantment::all()->each(function(\App\Enchantment $enchantment) {
+        \App\Domain\Models\Enchantment::all()->each(function(\App\Domain\Models\Enchantment $enchantment) {
             $enchantment->measurableBoosts()->delete();
             $enchantment->delete();
         });

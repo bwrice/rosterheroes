@@ -13,14 +13,14 @@ class SeedSpells extends Migration
      */
     public function up()
     {
-        $measurableTypes = \App\MeasurableType::all();
+        $measurableTypes = \App\Domain\Models\MeasurableType::all();
 
         $measurableGroups = [
             [
-                'name' => \App\MeasurableGroup::ATTRIBUTE,
+                'name' => \App\Domain\Models\MeasurableGroup::ATTRIBUTE,
                 'types' => [
                     [
-                        'name' => \App\MeasurableType::STRENGTH,
+                        'name' => \App\Domain\Models\MeasurableType::STRENGTH,
                         'spells' => [
                             [
                                 'name' => 'Muscle',
@@ -65,7 +65,7 @@ class SeedSpells extends Migration
                         ]
                     ],
                     [
-                        'name' => \App\MeasurableType::VALOR,
+                        'name' => \App\Domain\Models\MeasurableType::VALOR,
                         'spells' => [
                             [
                                 'name' => 'Boldness',
@@ -110,7 +110,7 @@ class SeedSpells extends Migration
                         ]
                     ],
                     [
-                        'name' => \App\MeasurableType::AGILITY,
+                        'name' => \App\Domain\Models\MeasurableType::AGILITY,
                         'spells' => [
                             [
                                 'name' => 'Quickness',
@@ -155,7 +155,7 @@ class SeedSpells extends Migration
                         ]
                     ],
                     [
-                        'name' => \App\MeasurableType::FOCUS,
+                        'name' => \App\Domain\Models\MeasurableType::FOCUS,
                         'spells' => [
                             [
                                 'name' => 'Alertness',
@@ -200,7 +200,7 @@ class SeedSpells extends Migration
                         ]
                     ],
                     [
-                        'name' => \App\MeasurableType::APTITUDE,
+                        'name' => \App\Domain\Models\MeasurableType::APTITUDE,
                         'spells' => [
                             [
                                 'name' => 'Competence',
@@ -245,7 +245,7 @@ class SeedSpells extends Migration
                         ]
                     ],
                     [
-                        'name' => \App\MeasurableType::INTELLIGENCE,
+                        'name' => \App\Domain\Models\MeasurableType::INTELLIGENCE,
                         'spells' => [
                             [
                                 'name' => 'Sense',
@@ -292,10 +292,10 @@ class SeedSpells extends Migration
                 ]
             ],
             [
-                'name' => \App\MeasurableGroup::RESOURCE,
+                'name' => \App\Domain\Models\MeasurableGroup::RESOURCE,
                 'types' => [
                     [
-                        'name' => \App\MeasurableType::HEALTH,
+                        'name' => \App\Domain\Models\MeasurableType::HEALTH,
                         'spells' => [
                             [
                                 'name' => 'Well-Being',
@@ -340,7 +340,7 @@ class SeedSpells extends Migration
                         ]
                     ],
                     [
-                        'name' => \App\MeasurableType::STAMINA,
+                        'name' => \App\Domain\Models\MeasurableType::STAMINA,
                         'spells' => [
                             [
                                 'name' => 'Resolve',
@@ -387,10 +387,10 @@ class SeedSpells extends Migration
                 ]
             ],
             [
-                'name' => \App\MeasurableGroup::QUALITY,
+                'name' => \App\Domain\Models\MeasurableGroup::QUALITY,
                 'types' => [
                     [
-                        'name' => \App\MeasurableType::PASSION,
+                        'name' => \App\Domain\Models\MeasurableType::PASSION,
                         'spells' => [
                             [
                                 'name' => 'Push',
@@ -475,7 +475,7 @@ class SeedSpells extends Migration
                         ]
                     ],
                     [
-                        'name' => \App\MeasurableType::BALANCE,
+                        'name' => \App\Domain\Models\MeasurableType::BALANCE,
                         'spells' => [
                             [
                                 'name' => 'Calm',
@@ -560,7 +560,7 @@ class SeedSpells extends Migration
                         ]
                     ],
                     [
-                        'name' => \App\MeasurableType::HONOR,
+                        'name' => \App\Domain\Models\MeasurableType::HONOR,
                         'spells' => [
                             [
                                 'name' => 'Decency',
@@ -645,7 +645,7 @@ class SeedSpells extends Migration
                         ]
                     ],
                     [
-                        'name' => \App\MeasurableType::PRESTIGE,
+                        'name' => \App\Domain\Models\MeasurableType::PRESTIGE,
                         'spells' => [
                             [
                                 'name' => 'Leverage',
@@ -730,7 +730,7 @@ class SeedSpells extends Migration
                         ]
                     ],
                     [
-                        'name' => \App\MeasurableType::WRATH,
+                        'name' => \App\Domain\Models\MeasurableType::WRATH,
                         'spells' => [
                             [
                                 'name' => 'Aggression',
@@ -823,11 +823,11 @@ class SeedSpells extends Migration
             foreach ( $group['types'] as $type ) {
                 foreach ( $type['spells'] as $spellArray ) {
 
-                    $spell = \App\Spell::create( [
+                    $spell = \App\Domain\Models\Spell::create( [
                         'name' => $spellArray['name']
                     ] );
 
-                    /** @var \App\Spell $spell */
+                    /** @var \App\Domain\Models\Spell $spell */
                     $spell->measurableBoosts()->create([
                         'measurable_type_id' => $measurableTypes->where( 'name', $type['name'] )->first()->id,
                         'boost_level' => $spellArray['level']
@@ -844,7 +844,7 @@ class SeedSpells extends Migration
      */
     public function down()
     {
-        \App\Spell::all()->each(function(\App\Spell $spell) {
+        \App\Domain\Models\Spell::all()->each(function(\App\Domain\Models\Spell $spell) {
             $spell->measurableBoosts()->delete();
             $spell->delete();
         });

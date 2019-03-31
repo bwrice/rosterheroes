@@ -2,21 +2,21 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(\App\Squad::class, function (Faker $faker) {
+$factory->define(\App\Domain\Models\Squad::class, function (Faker $faker) {
 
     return [
-        'user_id' => factory(\App\User::class)->create()->id,
+        'user_id' => factory(\App\Domain\Models\User::class)->create()->id,
         'uuid' => (string) \Ramsey\Uuid\Uuid::uuid4(),
-        'province_id' => \App\Province::getStarting()->id,
-        'squad_rank_id' => \App\SquadRank::getStarting()->id,
-        'mobile_storage_rank_id' => \App\Squads\MobileStorage\MobileStorageRank::getStarting()->id,
-        'salary' => \App\Squad::STARTING_SALARY,
-        'gold' => \App\Squad::STARTING_GOLD,
-        'favor' => \App\Squad::STARTING_FAVOR,
+        'province_id' => \App\Domain\Models\Province::getStarting()->id,
+        'squad_rank_id' => \App\Domain\Models\SquadRank::getStarting()->id,
+        'mobile_storage_rank_id' => \App\Domain\Models\MobileStorageRank::getStarting()->id,
+        'salary' => \App\Domain\Models\Squad::STARTING_SALARY,
+        'gold' => \App\Domain\Models\Squad::STARTING_GOLD,
+        'favor' => \App\Domain\Models\Squad::STARTING_FAVOR,
         'name' => $faker->company,
     ];
 });
 
-$factory->afterCreatingState(\App\Squad::class, 'starting-posts', function (\App\Squad $squad, $faker) {
+$factory->afterCreatingState(\App\Domain\Models\Squad::class, 'starting-posts', function (\App\Domain\Models\Squad $squad, $faker) {
     $squad->addStartingHeroPosts();
 });

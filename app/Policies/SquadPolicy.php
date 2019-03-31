@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\User;
-use App\Squad;
+use App\Domain\Models\User;
+use App\Domain\Models\Squad;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class SquadPolicy

@@ -2,14 +2,14 @@
 
 namespace App\Exceptions;
 
-use App\Province;
+use App\Domain\Models\Province;
 use Exception;
 use Throwable;
 
 class InvalidProvinceException extends Exception
 {
     /**
-     * @var Province
+     * @var \App\Domain\Models\Province
      */
     private $invalidProvince;
 
@@ -21,7 +21,7 @@ class InvalidProvinceException extends Exception
     }
 
     /**
-     * @return Province
+     * @return \App\Domain\Models\Province
      */
     public function getInvalidProvince(): Province
     {

@@ -13,10 +13,10 @@ class SeedPositions extends Migration
      */
     public function up()
     {
-        $football = \App\Sport::where('name','Football')->first();
-        $baseball = \App\Sport::where('name', 'Baseball')->first();
-        $basketball = \App\Sport::where('name', 'Basketball')->first();
-        $hockey = \App\Sport::where('name', 'Hockey')->first();
+        $football = \App\Domain\Models\Sport::where('name','Football')->first();
+        $baseball = \App\Domain\Models\Sport::where('name', 'Baseball')->first();
+        $basketball = \App\Domain\Models\Sport::where('name', 'Basketball')->first();
+        $hockey = \App\Domain\Models\Sport::where('name', 'Hockey')->first();
 
         $sports = [
             [
@@ -64,7 +64,7 @@ class SeedPositions extends Migration
 
         foreach ($sports as $sport) {
             foreach ($sport['positions'] as $position) {
-                \App\Positions\Position::create([
+                \App\Domain\Models\Position::create([
                     'sport_id' => $sport['sport']->id,
                     'name' => $position[0],
                     'abbreviation' => $position[1]
@@ -80,6 +80,6 @@ class SeedPositions extends Migration
      */
     public function down()
     {
-        \App\Positions\Position::query()->delete();
+        \App\Domain\Models\Position::query()->delete();
     }
 }

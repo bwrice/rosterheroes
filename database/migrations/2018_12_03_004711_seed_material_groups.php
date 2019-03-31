@@ -6,20 +6,20 @@ class SeedMaterialGroups extends ModelNameSeederMigration
 {
     protected function getModelClass(): string
     {
-        return \App\MaterialGroup::class;
+        return \App\Domain\Models\MaterialGroup::class;
     }
 
     public function getSeedNames(): array
     {
         return [
-            \App\MaterialGroup::HIDE,
-            \App\MaterialGroup::METAL,
-            \App\MaterialGroup::CLOTH,
-            \App\MaterialGroup::WOOD,
-            \App\MaterialGroup::GEMSTONE,
-            \App\MaterialGroup::BONE,
-            \App\MaterialGroup::PRECIOUS_METAL,
-            \App\MaterialGroup::PSIONIC
+            \App\Domain\Models\MaterialGroup::HIDE,
+            \App\Domain\Models\MaterialGroup::METAL,
+            \App\Domain\Models\MaterialGroup::CLOTH,
+            \App\Domain\Models\MaterialGroup::WOOD,
+            \App\Domain\Models\MaterialGroup::GEMSTONE,
+            \App\Domain\Models\MaterialGroup::BONE,
+            \App\Domain\Models\MaterialGroup::PRECIOUS_METAL,
+            \App\Domain\Models\MaterialGroup::PSIONIC
         ];
     }
 }

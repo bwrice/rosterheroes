@@ -13,227 +13,227 @@ class SeedTerritories extends Migration
      */
     public function up()
     {
-        $continents = \App\Continent::all();
+        $continents = \App\Domain\Models\Continent::all();
 
         $territories = [
         [
-            'name' => \App\Territory::GARDENS_OF_REDEMPTION,
+            'name' => \App\Domain\Models\Territory::GARDENS_OF_REDEMPTION,
             'continents' => [
-                \App\Continent::FETROYA
+                \App\Domain\Models\Continent::FETROYA
             ]
         ],
         [
-            'name' => \App\Territory::WOODS_OF_THE_WILD,
+            'name' => \App\Domain\Models\Territory::WOODS_OF_THE_WILD,
             'continents' => [
-                \App\Continent::FETROYA
+                \App\Domain\Models\Continent::FETROYA
             ]
         ],
         [
-            'name' => \App\Territory::TWISTING_ISLES_OF_ILLUSIONS,
+            'name' => \App\Domain\Models\Territory::TWISTING_ISLES_OF_ILLUSIONS,
             'continents' => [
-                \App\Continent::FETROYA
+                \App\Domain\Models\Continent::FETROYA
             ]
         ],
         [
-            'name' => \App\Territory::GRASSLANDS_OF_GIANTS,
+            'name' => \App\Domain\Models\Territory::GRASSLANDS_OF_GIANTS,
             'continents' => [
-                \App\Continent::FETROYA,
-                \App\Continent::NORTH_JAGONETH
+                \App\Domain\Models\Continent::FETROYA,
+                \App\Domain\Models\Continent::NORTH_JAGONETH
             ]
         ],
         [
-            'name' => \App\Territory::MENACING_MARCHES,
+            'name' => \App\Domain\Models\Territory::MENACING_MARCHES,
             'continents' => [
-                \App\Continent::FETROYA,
-                \App\Continent::EAST_WOZUL
+                \App\Domain\Models\Continent::FETROYA,
+                \App\Domain\Models\Continent::EAST_WOZUL
             ]
         ],
         [
-            'name' => \App\Territory::TROPICS_OF_TREPIDATION,
+            'name' => \App\Domain\Models\Territory::TROPICS_OF_TREPIDATION,
             'continents' => [
-                \App\Continent::FETROYA,
-                \App\Continent::EAST_WOZUL
+                \App\Domain\Models\Continent::FETROYA,
+                \App\Domain\Models\Continent::EAST_WOZUL
             ]
         ],
         [
-            'name' => \App\Territory::PERILOUS_PLANS,
+            'name' => \App\Domain\Models\Territory::PERILOUS_PLANS,
             'continents' => [
-                \App\Continent::EAST_WOZUL,
-                \App\Continent::WEST_WOZUL,
-                \App\Continent::NORTH_JAGONETH
+                \App\Domain\Models\Continent::EAST_WOZUL,
+                \App\Domain\Models\Continent::WEST_WOZUL,
+                \App\Domain\Models\Continent::NORTH_JAGONETH
             ]
         ],
         [
-            'name' => \App\Territory::TREACHEROUS_FOREST,
+            'name' => \App\Domain\Models\Territory::TREACHEROUS_FOREST,
             'continents' => [
-                \App\Continent::NORTH_JAGONETH
+                \App\Domain\Models\Continent::NORTH_JAGONETH
             ]
         ],
         [
-            'name' => \App\Territory::SAVAGE_SWAMPS,
+            'name' => \App\Domain\Models\Territory::SAVAGE_SWAMPS,
             'continents' => [
-                \App\Continent::EAST_WOZUL
+                \App\Domain\Models\Continent::EAST_WOZUL
             ]
         ],
         [
-            'name' => \App\Territory::DESERT_OF_DESPAIR,
+            'name' => \App\Domain\Models\Territory::DESERT_OF_DESPAIR,
             'continents' => [
-                \App\Continent::EAST_WOZUL,
-                \App\Continent::WEST_WOZUL
+                \App\Domain\Models\Continent::EAST_WOZUL,
+                \App\Domain\Models\Continent::WEST_WOZUL
             ]
         ],
         [
-            'name' => \App\Territory::HUMBLING_HILLS,
+            'name' => \App\Domain\Models\Territory::HUMBLING_HILLS,
             'continents' => [
-                \App\Continent::NORTH_JAGONETH,
-                \App\Continent::CENTRAL_JAGONETH
+                \App\Domain\Models\Continent::NORTH_JAGONETH,
+                \App\Domain\Models\Continent::CENTRAL_JAGONETH
             ]
         ],
         [
-            'name' => \App\Territory::GULF_OF_SERPENTS,
+            'name' => \App\Domain\Models\Territory::GULF_OF_SERPENTS,
             'continents' => [
-                \App\Continent::WEST_WOZUL
+                \App\Domain\Models\Continent::WEST_WOZUL
             ]
         ],
         [
-            'name' => \App\Territory::CANNIBAL_CANYONS,
+            'name' => \App\Domain\Models\Territory::CANNIBAL_CANYONS,
             'continents' => [
-                \App\Continent::WEST_WOZUL
+                \App\Domain\Models\Continent::WEST_WOZUL
             ]
         ],
         [
-            'name' => \App\Territory::INFERNAL_ISLANDS,
+            'name' => \App\Domain\Models\Territory::INFERNAL_ISLANDS,
             'continents' => [
-                \App\Continent::WEST_WOZUL,
-                \App\Continent::CENTRAL_JAGONETH,
-                \App\Continent::SOUTH_JAGONETH
+                \App\Domain\Models\Continent::WEST_WOZUL,
+                \App\Domain\Models\Continent::CENTRAL_JAGONETH,
+                \App\Domain\Models\Continent::SOUTH_JAGONETH
             ]
         ],
         [
-            'name' => \App\Territory::JADE_JUNGLE,
+            'name' => \App\Domain\Models\Territory::JADE_JUNGLE,
             'continents' => [
-                \App\Continent::NORTH_JAGONETH,
-                \App\Continent::CENTRAL_JAGONETH,
-                \App\Continent::SOUTH_JAGONETH
+                \App\Domain\Models\Continent::NORTH_JAGONETH,
+                \App\Domain\Models\Continent::CENTRAL_JAGONETH,
+                \App\Domain\Models\Continent::SOUTH_JAGONETH
             ]
         ],
         [
-            'name' => \App\Territory::SHORES_OF_THE_SHADOWS,
+            'name' => \App\Domain\Models\Territory::SHORES_OF_THE_SHADOWS,
             'continents' => [
-                \App\Continent::NORTH_JAGONETH,
-                \App\Continent::CENTRAL_JAGONETH,
-                \App\Continent::VINDOBERON
+                \App\Domain\Models\Continent::NORTH_JAGONETH,
+                \App\Domain\Models\Continent::CENTRAL_JAGONETH,
+                \App\Domain\Models\Continent::VINDOBERON
             ]
         ],
         [
-            'name' => \App\Territory::VALLEY_OF_VANISHINGS,
+            'name' => \App\Domain\Models\Territory::VALLEY_OF_VANISHINGS,
             'continents' => [
-                \App\Continent::CENTRAL_JAGONETH
+                \App\Domain\Models\Continent::CENTRAL_JAGONETH
             ]
         ],
         [
-            'name' => \App\Territory::PRIMAL_PASSAGE,
+            'name' => \App\Domain\Models\Territory::PRIMAL_PASSAGE,
             'continents' => [
-                \App\Continent::WEST_WOZUL,
-                \App\Continent::SOUTH_JAGONETH
+                \App\Domain\Models\Continent::WEST_WOZUL,
+                \App\Domain\Models\Continent::SOUTH_JAGONETH
             ]
         ],
         [
-            'name' => \App\Territory::ARCTIC_ARCHIPELAGO,
+            'name' => \App\Domain\Models\Territory::ARCTIC_ARCHIPELAGO,
             'continents' => [
-                \App\Continent::NORTH_JAGONETH,
-                \App\Continent::VINDOBERON
+                \App\Domain\Models\Continent::NORTH_JAGONETH,
+                \App\Domain\Models\Continent::VINDOBERON
             ]
         ],
         [
-            'name' => \App\Territory::BADLANDS_OF_THE_LEVIATHAN,
+            'name' => \App\Domain\Models\Territory::BADLANDS_OF_THE_LEVIATHAN,
             'continents' => [
-                \App\Continent::CENTRAL_JAGONETH,
-                \App\Continent::SOUTH_JAGONETH
+                \App\Domain\Models\Continent::CENTRAL_JAGONETH,
+                \App\Domain\Models\Continent::SOUTH_JAGONETH
             ]
         ],
         [
-            'name' => \App\Territory::PEAKS_OF_PANDORA,
+            'name' => \App\Domain\Models\Territory::PEAKS_OF_PANDORA,
             'continents' => [
-                \App\Continent::CENTRAL_JAGONETH
+                \App\Domain\Models\Continent::CENTRAL_JAGONETH
             ]
         ],
         [
-            'name' => \App\Territory::CRYPTIC_COAST,
+            'name' => \App\Domain\Models\Territory::CRYPTIC_COAST,
             'continents' => [
-                \App\Continent::CENTRAL_JAGONETH,
-                \App\Continent::SOUTH_JAGONETH,
-                \App\Continent::VINDOBERON
+                \App\Domain\Models\Continent::CENTRAL_JAGONETH,
+                \App\Domain\Models\Continent::SOUTH_JAGONETH,
+                \App\Domain\Models\Continent::VINDOBERON
             ]
         ],
         [
-            'name' => \App\Territory::WETLANDS_OF_WANDERING_TORMENT,
+            'name' => \App\Domain\Models\Territory::WETLANDS_OF_WANDERING_TORMENT,
             'continents' => [
-                \App\Continent::SOUTH_JAGONETH
+                \App\Domain\Models\Continent::SOUTH_JAGONETH
             ]
         ],
         [
-            'name' => \App\Territory::BLOODSTONE_BEACHES,
+            'name' => \App\Domain\Models\Territory::BLOODSTONE_BEACHES,
             'continents' => [
-                \App\Continent::SOUTH_JAGONETH,
-                \App\Continent::DEMAUXOR
+                \App\Domain\Models\Continent::SOUTH_JAGONETH,
+                \App\Domain\Models\Continent::DEMAUXOR
             ]
         ],
         [
-            'name' => \App\Territory::TURBULENT_TUNDRA,
+            'name' => \App\Domain\Models\Territory::TURBULENT_TUNDRA,
             'continents' => [
-                \App\Continent::VINDOBERON
+                \App\Domain\Models\Continent::VINDOBERON
             ]
         ],
         [
-            'name' => \App\Territory::COVES_OF_CORRUPTION,
+            'name' => \App\Domain\Models\Territory::COVES_OF_CORRUPTION,
             'continents' => [
-                \App\Continent::SOUTH_JAGONETH,
-                \App\Continent::DEMAUXOR
+                \App\Domain\Models\Continent::SOUTH_JAGONETH,
+                \App\Domain\Models\Continent::DEMAUXOR
             ]
         ],
         [
-            'name' => \App\Territory::MOUNTAINS_OF_MISERY,
+            'name' => \App\Domain\Models\Territory::MOUNTAINS_OF_MISERY,
             'continents' => [
-                \App\Continent::VINDOBERON
+                \App\Domain\Models\Continent::VINDOBERON
             ]
         ],
         [
-            'name' => \App\Territory::ENCHANTED_ENCLAVE_OF_VISIONS,
+            'name' => \App\Domain\Models\Territory::ENCHANTED_ENCLAVE_OF_VISIONS,
             'continents' => [
-                \App\Continent::SOUTH_JAGONETH,
-                \App\Continent::VINDOBERON,
-                \App\Continent::DEMAUXOR
+                \App\Domain\Models\Continent::SOUTH_JAGONETH,
+                \App\Domain\Models\Continent::VINDOBERON,
+                \App\Domain\Models\Continent::DEMAUXOR
             ]
         ],
         [
-            'name' => \App\Territory::SCREAMING_HIGHLANDS_OF_NIGHTMARES,
+            'name' => \App\Domain\Models\Territory::SCREAMING_HIGHLANDS_OF_NIGHTMARES,
             'continents' => [
-                \App\Continent::DEMAUXOR
+                \App\Domain\Models\Continent::DEMAUXOR
             ]
         ],
         [
-            'name' => \App\Territory::CLOUD_PIERCING_CLIFFS,
+            'name' => \App\Domain\Models\Territory::CLOUD_PIERCING_CLIFFS,
             'continents' => [
-                \App\Continent::VINDOBERON,
-                \App\Continent::DEMAUXOR
+                \App\Domain\Models\Continent::VINDOBERON,
+                \App\Domain\Models\Continent::DEMAUXOR
             ]
         ],
         [
-            'name' => \App\Territory::OUTER_RIM_OF_THE_DEMONIC,
+            'name' => \App\Domain\Models\Territory::OUTER_RIM_OF_THE_DEMONIC,
             'continents' => [
-                \App\Continent::DEMAUXOR
+                \App\Domain\Models\Continent::DEMAUXOR
             ]
         ]
     ];
 
         foreach ($territories as $territory) {
-            /** @var \App\Territory $territoryCreated */
-            $territoryCreated = \App\Territory::create([
+            /** @var \App\Domain\Models\Territory $territoryCreated */
+            $territoryCreated = \App\Domain\Models\Territory::create([
                 'name' => $territory['name'],
             ]);
 
-            $continentIDs = $continents->filter( function(\App\Continent $continent) use ($territory) {
+            $continentIDs = $continents->filter( function(\App\Domain\Models\Continent $continent) use ($territory) {
                return in_array($continent->name, $territory['continents']);
             })->pluck('id')->toArray();
 
@@ -248,6 +248,6 @@ class SeedTerritories extends Migration
      */
     public function down()
     {
-        \App\Territory::truncate();
+        \App\Domain\Models\Territory::truncate();
     }
 }

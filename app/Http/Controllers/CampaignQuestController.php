@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Campaign;
+use App\Domain\Models\Campaign;
 use App\Exceptions\InvalidContinentException;
 use App\Exceptions\InvalidProvinceException;
 use App\Exceptions\MaxQuestsException;
 use App\Exceptions\QuestCompletedException;
 use App\Exceptions\WeekLockedException;
-use App\Campaigns\Quests\Quest;
-use App\Squad;
+use App\Domain\Models\Quest;
+use App\Domain\Models\Squad;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 

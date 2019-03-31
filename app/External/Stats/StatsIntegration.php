@@ -8,6 +8,7 @@
 
 namespace App\External\Stats;
 
+use App\Domain\Models\Week;
 use Illuminate\Support\Collection;
 
 interface StatsIntegration
@@ -16,5 +17,5 @@ interface StatsIntegration
 
     public function getTeamDTOs(): Collection;
 
-    public function getGameDTOs(): Collection;
+    public function getGameDTOs(Week $week): Collection;
 }

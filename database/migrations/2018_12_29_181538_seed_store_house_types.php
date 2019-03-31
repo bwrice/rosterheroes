@@ -6,13 +6,13 @@ class SeedStoreHouseTypes extends ModelNameSeederMigration
 {
     protected function getModelClass(): string
     {
-        return \App\StoreHouseType::class;
+        return \App\Domain\Models\StoreHouseType::class;
     }
 
     public function getSeedNames(): array
     {
         return [
-            \App\StoreHouseType::DEPOT
+            \App\Domain\Models\StoreHouseType::DEPOT
         ];
     }
 }

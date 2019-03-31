@@ -6,14 +6,14 @@ use App\Exceptions\GameStartedException;
 use App\Exceptions\InvalidWeekException;
 use App\Exceptions\InvalidPositionsException;
 use App\Exceptions\NotEnoughSalaryException;
-use App\Game;
-use App\Hero;
-use App\HeroClass;
-use App\Heroes\HeroPosts\HeroPost;
-use App\GamePlayer;
-use App\Positions\Position;
-use App\Squad;
-use App\Weeks\Week;
+use App\Domain\Models\Game;
+use App\Domain\Models\Hero;
+use App\Domain\Models\HeroClass;
+use App\Domain\Models\HeroPost;
+use App\Domain\Models\GamePlayer;
+use App\Domain\Models\Position;
+use App\Domain\Models\Squad;
+use App\Domain\Models\Week;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
@@ -35,7 +35,7 @@ class HeroGamePlayerUnitTest extends TestCase
             'hero_id' => $hero->id
         ]);
 
-        /** @var GamePlayer $gamePlayer */
+        /** @var \App\Domain\Models\GamePlayer $gamePlayer */
         $gamePlayer = factory(GamePlayer::class)->create();
         Week::setTestCurrent($gamePlayer->game->week);
 
@@ -67,7 +67,7 @@ class HeroGamePlayerUnitTest extends TestCase
      */
     public function adding_a_game_player_with_too_high_a_salary_will_throw_an_exception()
     {
-        /** @var Hero $hero */
+        /** @var \App\Domain\Models\Hero $hero */
         $hero = factory(Hero::class)->create();
 
         $squadSalary = 5000;
@@ -75,14 +75,14 @@ class HeroGamePlayerUnitTest extends TestCase
             'salary' => $squadSalary
         ]);
 
-        /** @var HeroPost $heroPost */
+        /** @var \App\Domain\Models\HeroPost $heroPost */
         $heroPost = factory(HeroPost::class)->create([
             'hero_id' => $hero->id,
             'squad_id' => $squad->id
         ]);
 
         $playerWeekSalary = $squadSalary + 3000;
-        /** @var GamePlayer $gamePlayer */
+        /** @var \App\Domain\Models\GamePlayer $gamePlayer */
         $gamePlayer = factory(GamePlayer::class)->create([
             'initial_salary' => $playerWeekSalary,
             'salary' => $playerWeekSalary
@@ -122,12 +122,12 @@ class HeroGamePlayerUnitTest extends TestCase
         /** @var Hero $hero */
         $hero = factory(Hero::class)->create();
 
-        /** @var HeroPost $heroPost */
+        /** @var \App\Domain\Models\HeroPost $heroPost */
         $heroPost = factory(HeroPost::class)->create([
             'hero_id' => $hero->id,
         ]);
 
-        /** @var GamePlayer $gamePlayer */
+        /** @var \App\Domain\Models\GamePlayer $gamePlayer */
         $gamePlayer = factory(GamePlayer::class)->create();
 
         Week::setTestCurrent($gamePlayer->game->week);
@@ -168,10 +168,10 @@ class HeroGamePlayerUnitTest extends TestCase
             'hero_id' => $hero->id,
         ]);
 
-        /** @var GamePlayer $gamePlayer */
+        /** @var \App\Domain\Models\GamePlayer $gamePlayer */
         $gamePlayer = factory(GamePlayer::class)->create();
 
-        /** @var Week $differentWeek */
+        /** @var \App\Domain\Models\Week $differentWeek */
         $differentWeek = factory(Week::class)->create();
 
         Week::setTestCurrent($differentWeek);

@@ -13,10 +13,10 @@ class SeedTeams extends Migration
      */
     public function up()
     {
-        $nfl = \App\League::where('abbreviation', \App\League::NFL)->first();
-        $mlb = \App\League::where('abbreviation', \App\League::MLB)->first();
-        $nba = \App\League::where('abbreviation', \App\League::NBA)->first();
-        $nhl = \App\League::where('abbreviation', \App\League::NHL)->first();
+        $nfl = \App\Domain\Models\League::where('abbreviation', \App\Domain\Models\League::NFL)->first();
+        $mlb = \App\Domain\Models\League::where('abbreviation', \App\Domain\Models\League::MLB)->first();
+        $nba = \App\Domain\Models\League::where('abbreviation', \App\Domain\Models\League::NBA)->first();
+        $nhl = \App\Domain\Models\League::where('abbreviation', \App\Domain\Models\League::NHL)->first();
 
         $leagues = [
             [
@@ -653,7 +653,7 @@ class SeedTeams extends Migration
 
 //        foreach ($leagues as $league) {
 //            foreach ($league['teams'] as $team) {
-//                \App\Domain\Teams\Team::create([
+//                \App\Domain\Models\Team::create([
 //                    'league_id' => $league['league']->id,
 //                    'name' => $team['name'],
 //                    'location' => $team['location'],
@@ -672,6 +672,6 @@ class SeedTeams extends Migration
      */
     public function down()
     {
-        \App\Domain\Teams\Team::query()->delete();
+        \App\Domain\Models\Team::query()->delete();
     }
 }

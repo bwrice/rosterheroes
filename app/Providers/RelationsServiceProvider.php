@@ -2,11 +2,11 @@
 
 namespace App\Providers;
 
-use App\Enchantment;
-use App\Hero;
-use App\Item;
-use App\ItemBlueprint;
-use App\Spell;
+use App\Domain\Models\Enchantment;
+use App\Domain\Models\Hero;
+use App\Domain\Models\Item;
+use App\Domain\Models\ItemBlueprint;
+use App\Domain\Models\Spell;
 use App\Wagons\Wagon;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;

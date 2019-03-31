@@ -1,6 +1,6 @@
 <?php
 
-use App\Sport;
+use App\Domain\Models\Sport;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -14,12 +14,12 @@ class SeedHeroRanksPositionsRelations extends Migration
      */
     public function up()
     {
-        $positions = \App\Positions\Position::with('sport')->get();
-        $heroRaces = \App\HeroRace::all();
+        $positions = \App\Domain\Models\Position::with('sport')->get();
+        $heroRaces = \App\Domain\Models\HeroRace::all();
 
         $heroRacesArray = [
             [
-                'name' => \App\HeroRace::ELF,
+                'name' => \App\Domain\Models\HeroRace::ELF,
                 'positions' => [
                     [
                         'name' => 'Quarterback',
@@ -44,7 +44,7 @@ class SeedHeroRanksPositionsRelations extends Migration
                 ]
             ],
             [
-                'name' => \App\HeroRace::DWARF,
+                'name' => \App\Domain\Models\HeroRace::DWARF,
                 'positions' => [
                     [
                         'name' => 'Running Back',
@@ -69,7 +69,7 @@ class SeedHeroRanksPositionsRelations extends Migration
                 ]
             ],
             [
-                'name' => \App\HeroRace::HUMAN,
+                'name' => \App\Domain\Models\HeroRace::HUMAN,
                 'positions' => [
                     [
                         'name' => 'Wide Receiver',
@@ -98,7 +98,7 @@ class SeedHeroRanksPositionsRelations extends Migration
                 ]
             ],
             [
-                'name' => \App\HeroRace::ORC,
+                'name' => \App\Domain\Models\HeroRace::ORC,
                 'positions' => [
                     [
                         'name' => 'Tight End',
@@ -126,12 +126,12 @@ class SeedHeroRanksPositionsRelations extends Migration
 
         foreach ($heroRacesArray as $heroRaceArray) {
 
-            /** @var \App\HeroRace $heroRace */
+            /** @var \App\Domain\Models\HeroRace $heroRace */
             $heroRace = $heroRaces->where('name', '=', $heroRaceArray['name'])->first();
 
             foreach ($heroRaceArray['positions'] as $heroRacePosition) {
 
-                $position = $positions->first(function(\App\Positions\Position $position) use($heroRacePosition) {
+                $position = $positions->first(function(\App\Domain\Models\Position $position) use($heroRacePosition) {
                     if ($position->name == $heroRacePosition['name']) {
                         // This conditional is needed because of multiple positions with the same name from different sports, ie Center
                         return $position->sport->name == $heroRacePosition['sport'];

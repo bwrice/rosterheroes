@@ -9,8 +9,8 @@
 namespace App\Squads;
 
 
-use App\HeroClass;
-use App\Squad;
+use App\Domain\Models\HeroClass;
+use App\Domain\Models\Squad;
 
 class HeroClassAvailability
 {

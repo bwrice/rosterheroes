@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Item;
+use App\Domain\Models\Item;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -16,13 +16,13 @@ class ItemCreated
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
-     * @var Item
+     * @var \App\Domain\Models\Item
      */
     public $item;
 
     /**
      * ItemCreated constructor.
-     * @param Item $item
+     * @param \App\Domain\Models\Item $item
      */
     public function __construct(Item $item)
     {

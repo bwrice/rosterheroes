@@ -2,13 +2,13 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(\App\Stash::class, function (Faker $faker) {
+$factory->define(\App\Domain\Models\Stash::class, function (Faker $faker) {
     return [
         'squad_id' => function () {
-            return factory(\App\Squad::class)->create()->id;
+            return factory(\App\Domain\Models\Squad::class)->create()->id;
         },
         'province_id' => function () {
-            return \App\Province::inRandomOrder()->first()->id;
+            return \App\Domain\Models\Province::inRandomOrder()->first()->id;
         }
     ];
 });

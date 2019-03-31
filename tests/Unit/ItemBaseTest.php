@@ -2,8 +2,8 @@
 
 namespace Tests\Unit;
 
-use App\Items\ItemBases\Behaviors\ItemBaseBehavior;
-use App\Items\ItemBases\ItemBase;
+use App\Domain\Behaviors\ItemBase\ItemBaseBehavior;
+use App\Domain\Models\ItemBase;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;

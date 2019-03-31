@@ -2,9 +2,9 @@
 
 namespace Tests\Unit;
 
-use App\Game;
-use App\Domain\Players\Player;
-use App\Weeks\Week;
+use App\Domain\Models\Game;
+use App\Domain\Models\Player;
+use App\Domain\Models\Week;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;

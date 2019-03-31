@@ -9,16 +9,11 @@
 namespace App\Domain\DataTransferObjects;
 
 
-use App\Domain\Teams\Team;
-use App\Weeks\Week;
+use App\Domain\Models\Team;
 use Carbon\Carbon;
 
 class GameDTO
 {
-    /**
-     * @var Week
-     */
-    private $week;
     /**
      * @var Team
      */
@@ -36,25 +31,16 @@ class GameDTO
      */
     private $externalID;
 
-    public function __construct(Week $week, Team $homeTeam, Team $awayTeam, Carbon $startsAt, string $externalID)
+    public function __construct(Carbon $startsAt, Team $homeTeam, Team $awayTeam, string $externalID)
     {
-        $this->week = $week;
+        $this->startsAt = $startsAt;
         $this->homeTeam = $homeTeam;
         $this->awayTeam = $awayTeam;
-        $this->startsAt = $startsAt;
         $this->externalID = $externalID;
     }
 
     /**
-     * @return Week
-     */
-    public function getWeek(): Week
-    {
-        return $this->week;
-    }
-
-    /**
-     * @return Team
+     * @return \App\Domain\Models\Team
      */
     public function getHomeTeam(): Team
     {
@@ -62,7 +48,7 @@ class GameDTO
     }
 
     /**
-     * @return Team
+     * @return \App\Domain\Models\Team
      */
     public function getAwayTeam(): Team
     {

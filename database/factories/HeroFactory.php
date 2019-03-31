@@ -3,11 +3,11 @@
 use Faker\Generator as Faker;
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(\App\Hero::class, function (Faker $faker) {
+$factory->define(\App\Domain\Models\Hero::class, function (Faker $faker) {
 
     $name = 'TestHero' . str_random(8);
-    $class = \App\HeroClass::query()->inRandomOrder()->first();
-    $rank = \App\HeroRank::private();
+    $class = \App\Domain\Models\HeroClass::query()->inRandomOrder()->first();
+    $rank = \App\Domain\Models\HeroRank::private();
     $uuid = (string) \Ramsey\Uuid\Uuid::uuid4();
 
     return [
@@ -18,17 +18,17 @@ $factory->define(\App\Hero::class, function (Faker $faker) {
     ];
 });
 
-$factory->afterCreatingState(\App\Hero::class, 'with-slots', function(\App\Hero $hero, Faker $faker) {
-    $heroSlotTypes = \App\SlotType::heroTypes()->get();
-    $heroSlotTypes->each(function (\App\SlotType $slotType) use ($hero) {
+$factory->afterCreatingState(\App\Domain\Models\Hero::class, 'with-slots', function(\App\Domain\Models\Hero $hero, Faker $faker) {
+    $heroSlotTypes = \App\Domain\Models\SlotType::heroTypes()->get();
+    $heroSlotTypes->each(function (\App\Domain\Models\SlotType $slotType) use ($hero) {
         $hero->slots()->create([
             'slot_type_id' => $slotType->id,
         ]);
     });
 });
-$factory->afterCreatingState(\App\Hero::class, 'with-measurables', function(\App\Hero $hero, Faker $faker) {
-    $measurableTypes = \App\MeasurableType::heroTypes()->get();
-    $measurableTypes->each(function (\App\MeasurableType $measurableType) use($hero) {
+$factory->afterCreatingState(\App\Domain\Models\Hero::class, 'with-measurables', function(\App\Domain\Models\Hero $hero, Faker $faker) {
+    $measurableTypes = \App\Domain\Models\MeasurableType::heroTypes()->get();
+    $measurableTypes->each(function (\App\Domain\Models\MeasurableType $measurableType) use($hero) {
        $hero->measurables()->create([
            'uuid' => (string) \Ramsey\Uuid\Uuid::uuid4(),
            'measurable_type_id' => $measurableType->id,

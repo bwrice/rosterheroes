@@ -11,24 +11,24 @@ namespace App\Domain\Actions;
 
 use App\Exceptions\HeroPostNotFoundException;
 use App\Exceptions\InvalidHeroClassException;
-use App\Hero;
-use App\HeroClass;
-use App\Heroes\HeroPosts\HeroPost;
-use App\Heroes\HeroPosts\HeroPostCollection;
-use App\HeroRace;
-use App\HeroRank;
-use App\Squad;
+use App\Domain\Models\Hero;
+use App\Domain\Models\HeroClass;
+use App\Domain\Models\HeroPost;
+use App\Domain\Collections\HeroPostCollection;
+use App\Domain\Models\HeroRace;
+use App\Domain\Models\HeroRank;
+use App\Domain\Models\Squad;
 use App\Squads\HeroClassAvailability;
 use App\Squads\HeroPostAvailability;
 
 class AddHeroToSquad
 {
     /**
-     * @var Squad
+     * @var \App\Domain\Models\Squad
      */
     private $squad;
     /**
-     * @var HeroRace
+     * @var \App\Domain\Models\HeroRace
      */
     private $heroRace;
     /**

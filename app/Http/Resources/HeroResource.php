@@ -8,7 +8,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * Class Hero
  * @package App\Http\Resources
  *
- * @mixin \App\Hero
+ * @mixin \App\Domain\Models\Hero
  */
 class HeroResource extends JsonResource
 {

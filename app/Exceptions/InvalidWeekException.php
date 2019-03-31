@@ -2,8 +2,8 @@
 
 namespace App\Exceptions;
 
-use App\Weeks\Week;
-use App\Weeks\WeekCollection;
+use App\Domain\Models\Week;
+use App\Domain\Collections\WeekCollection;
 use Exception;
 
 class InvalidWeekException extends \RuntimeException
@@ -20,7 +20,7 @@ class InvalidWeekException extends \RuntimeException
     }
 
     /**
-     * @return Week
+     * @return \App\Domain\Models\Week
      */
     public function getInvalidWeek()
     {
@@ -28,7 +28,7 @@ class InvalidWeekException extends \RuntimeException
     }
 
     /**
-     * @return WeekCollection
+     * @return \App\Domain\Collections\WeekCollection
      */
     public function getValidWeeks()
     {

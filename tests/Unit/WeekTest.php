@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Weeks\Week;
+use App\Domain\Models\Week;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;

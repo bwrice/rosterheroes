@@ -8,6 +8,7 @@
 
 namespace App\External\Stats;
 
+use App\Domain\Models\Week;
 use Illuminate\Support\Collection;
 
 class MockIntegration implements StatsIntegration
@@ -43,7 +44,7 @@ class MockIntegration implements StatsIntegration
         return $this->teamDTOs ?: collect();
     }
 
-    public function getGameDTOs(): Collection
+    public function getGameDTOs(Week $week): Collection
     {
         return $this->gameDTOs;
     }

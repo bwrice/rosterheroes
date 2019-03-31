@@ -6,13 +6,13 @@ class SeedMobileStorageRanks extends ModelNameSeederMigration
 {
     protected function getModelClass(): string
     {
-        return \App\Squads\MobileStorage\MobileStorageRank::class;
+        return \App\Domain\Models\MobileStorageRank::class;
     }
 
     public function getSeedNames(): array
     {
         return [
-            \App\Squads\MobileStorage\MobileStorageRank::WAGON
+            \App\Domain\Models\MobileStorageRank::WAGON
         ];
     }
 }

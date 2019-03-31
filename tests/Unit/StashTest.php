@@ -2,9 +2,9 @@
 
 namespace Tests\Unit;
 
-use App\Slots\Slot;
-use App\SlotType;
-use App\Stash;
+use App\Domain\Slot;
+use App\Domain\Models\SlotType;
+use App\Domain\Models\Stash;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -26,7 +26,7 @@ class StashTest extends TestCase
 
         $this->assertEquals(3, count($slotTypeIDs));
 
-        /** @var Stash $stash */
+        /** @var \App\Domain\Models\Stash $stash */
         $stash = factory(Stash::class)->create();
 
         $this->assertEquals($universalSlotTypeID, $stash->getPreferredSlotTypeID($slotTypeIDs));
@@ -54,7 +54,7 @@ class StashTest extends TestCase
      */
     public function it_will_create_slots()
     {
-        /** @var Stash $stash */
+        /** @var \App\Domain\Models\Stash $stash */
         $stash = factory(Stash::class)->create();
         $slotTypeID = SlotType::where('name', '=', SlotType::UNIVERSAL)->first()->id;
 
@@ -72,7 +72,7 @@ class StashTest extends TestCase
      */
     public function it_will_create_empty_slots_if_needed_when_getting_empty_slots()
     {
-        /** @var Stash $stash */
+        /** @var \App\Domain\Models\Stash $stash */
         $stash = factory(Stash::class)->create();
 
         $this->assertEquals(0, $stash->slots()->count(), "Stash starts with NO slots");

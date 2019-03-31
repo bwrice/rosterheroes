@@ -5,11 +5,11 @@ namespace Tests\Unit;
 use App\Domain\Actions\AddHeroToSquad;
 use App\Exceptions\HeroPostNotFoundException;
 use App\Exceptions\InvalidHeroClassException;
-use App\Hero;
-use App\HeroClass;
-use App\Heroes\HeroPosts\HeroPost;
-use App\HeroRace;
-use App\Squad;
+use App\Domain\Models\Hero;
+use App\Domain\Models\HeroClass;
+use App\Domain\Models\HeroPost;
+use App\Domain\Models\HeroRace;
+use App\Domain\Models\Squad;
 use App\Squads\HeroClassAvailability;
 use App\Squads\HeroPostAvailability;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -26,13 +26,13 @@ class AddHeroToSquadTest extends TestCase
      */
     public function adding_a_hero_without_a_hero_post_will_throw_an_exception()
     {
-        /** @var Squad $squad */
+        /** @var \App\Domain\Models\Squad $squad */
         $squad = factory(Squad::class)->create();
 
         $this->assertEquals(0, $squad->heroPosts->count());
         /** @var HeroRace $heroRace */
         $heroRace = HeroRace::query()->inRandomOrder()->first();
-        /** @var HeroClass $heroClass */
+        /** @var \App\Domain\Models\HeroClass $heroClass */
         $heroClass = HeroClass::query()->inRandomOrder()->first();
 
         try {
@@ -51,11 +51,11 @@ class AddHeroToSquadTest extends TestCase
      */
     public function adding_a_hero_without_a_matching_hero_post_will_throw_an_exception()
     {
-        /** @var HeroPost $heroPost */
+        /** @var \App\Domain\Models\HeroPost $heroPost */
         $heroPost = factory(HeroPost::class)->create();
-        /** @var HeroRace $heroRace */
+        /** @var \App\Domain\Models\HeroRace $heroRace */
         $heroRace = HeroRace::query()->where('id', '!=', $heroPost->hero_race_id)->inRandomOrder()->first();
-        /** @var HeroClass $heroClass */
+        /** @var \App\Domain\Models\HeroClass $heroClass */
         $heroClass = HeroClass::query()->inRandomOrder()->first();
 
         try {
@@ -74,7 +74,7 @@ class AddHeroToSquadTest extends TestCase
      */
     public function adding_a_hero_of_a_non_needed_hero_class_while_squad_is_in_creation_state_will_throw_an_exception()
     {
-        /** @var Squad $squad */
+        /** @var \App\Domain\Models\Squad $squad */
         $squad = factory(Squad::class)->create();
 
         foreach (Squad::STARTING_HERO_POSTS as $heroRaceName => $count) {
@@ -101,7 +101,7 @@ class AddHeroToSquadTest extends TestCase
             $hero = factory(Hero::class)->create([
                 'hero_class_id' => $heroClass->id
             ]);
-            /** @var HeroPost $emptyPost */
+            /** @var \App\Domain\Models\HeroPost $emptyPost */
             $emptyPost = $heroPosts->postFilled(false)->first();
             $emptyPost->hero_id = $hero->id;
         }

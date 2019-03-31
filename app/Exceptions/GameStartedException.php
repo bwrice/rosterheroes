@@ -2,7 +2,7 @@
 
 namespace App\Exceptions;
 
-use App\Game;
+use App\Domain\Models\Game;
 use Throwable;
 
 class GameStartedException extends \RuntimeException

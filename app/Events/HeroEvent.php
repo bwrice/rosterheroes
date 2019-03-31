@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Hero;
+use App\Domain\Models\Hero;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;

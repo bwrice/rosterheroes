@@ -9,13 +9,13 @@
 namespace App\Squads;
 
 
-use App\Squad;
+use App\Domain\Models\Squad;
 
 class HeroPostAvailability
 {
     /**
      * @param Squad $squad
-     * @return \App\Heroes\HeroPosts\HeroPostCollection
+     * @return \App\Domain\Collections\HeroPostCollection
      */
     public function get(Squad $squad)
     {

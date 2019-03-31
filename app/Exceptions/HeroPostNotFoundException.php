@@ -2,14 +2,14 @@
 
 namespace App\Exceptions;
 
-use App\HeroRace;
+use App\Domain\Models\HeroRace;
 use Exception;
 use Throwable;
 
 class HeroPostNotFoundException extends Exception
 {
     /**
-     * @var HeroRace
+     * @var \App\Domain\Models\HeroRace
      */
     private $heroRace;
 
@@ -21,7 +21,7 @@ class HeroPostNotFoundException extends Exception
     }
 
     /**
-     * @return HeroRace
+     * @return \App\Domain\Models\HeroRace
      */
     public function getHeroRace(): HeroRace
     {

@@ -2,13 +2,13 @@
 
 namespace Tests\Feature;
 
-use App\Domain\Players\Player;
-use App\Domain\Players\PlayerDTO;
-use App\Domain\Teams\Team;
+use App\Domain\Models\Player;
+use App\Domain\DataTransferObjects\PlayerDTO;
+use App\Domain\Models\Team;
 use App\External\Stats\MockIntegration;
 use App\External\Stats\StatsIntegration;
 use App\Jobs\UpdatePlayers;
-use App\Positions\Position;
+use App\Domain\Models\Position;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;

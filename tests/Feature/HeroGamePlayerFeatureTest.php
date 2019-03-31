@@ -2,17 +2,17 @@
 
 namespace Tests\Feature;
 
-use App\Game;
-use App\Hero;
-use App\Heroes\HeroPosts\HeroPost;
-use App\HeroRace;
-use App\Domain\Players\Player;
-use App\GamePlayer;
-use App\Positions\Position;
-use App\Slots\Slotter;
-use App\Squad;
-use App\Domain\Teams\Team;
-use App\Weeks\Week;
+use App\Domain\Models\Game;
+use App\Domain\Models\Hero;
+use App\Domain\Models\HeroPost;
+use App\Domain\Models\HeroRace;
+use App\Domain\Models\Player;
+use App\Domain\Models\GamePlayer;
+use App\Domain\Models\Position;
+use App\Actions\Slotter;
+use App\Domain\Models\Squad;
+use App\Domain\Models\Team;
+use App\Domain\Models\Week;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Carbon;
@@ -34,7 +34,7 @@ class HeroGamePlayerFeatureTest extends TestCase
     public function a_hero_can_add_a_game_player_for_the_current_week($heroRaceName)
     {
 
-        /** @var HeroRace $heroRace */
+        /** @var \App\Domain\Models\HeroRace $heroRace */
         $heroRace = HeroRace::where('name', '=', $heroRaceName)->first();
         $position = $heroRace->positions()->inRandomOrder()->first();
 
@@ -43,7 +43,7 @@ class HeroGamePlayerFeatureTest extends TestCase
             'hero_race_id' => $heroRace->id
         ]);
 
-        /** @var Hero $hero */
+        /** @var \App\Domain\Models\Hero $hero */
         $hero = factory(Hero::class)->create();
 
         $heroPost->hero_id = $hero->id;
@@ -98,7 +98,7 @@ class HeroGamePlayerFeatureTest extends TestCase
      */
     public function a_hero_cannot_add_a_game_player_of_the_wrong_position($heroRaceName)
     {
-        /** @var HeroRace $heroRace */
+        /** @var \App\Domain\Models\HeroRace $heroRace */
         $heroRace = HeroRace::where('name', '=', $heroRaceName)->first();
 
         /** @var HeroPost $heroPost */
@@ -143,12 +143,12 @@ class HeroGamePlayerFeatureTest extends TestCase
     public function a_hero_cannot_add_a_player_with_too_high_a_salary()
     {
 
-        /** @var HeroRace $heroRace */
+        /** @var \App\Domain\Models\HeroRace $heroRace */
         $heroRace = HeroRace::query()->inRandomOrder()->first();
         $position = $heroRace->positions()->inRandomOrder()->first();
 
         $squadSalary = 5000;
-        /** @var Squad $squad */
+        /** @var \App\Domain\Models\Squad $squad */
         $squad = factory(Squad::class)->create([
             'salary' => $squadSalary
         ]);
@@ -159,7 +159,7 @@ class HeroGamePlayerFeatureTest extends TestCase
             'squad_id' => $squad->id
         ]);
 
-        /** @var Hero $hero */
+        /** @var \App\Domain\Models\Hero $hero */
         $hero = factory(Hero::class)->create();
 
         $heroPost->hero_id = $hero->id;

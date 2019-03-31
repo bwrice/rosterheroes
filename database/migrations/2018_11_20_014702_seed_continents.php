@@ -6,20 +6,20 @@ class SeedContinents extends ModelNameSeederMigration
 {
     protected function getModelClass(): string
     {
-        return \App\Continent::class;
+        return \App\Domain\Models\Continent::class;
     }
 
     public function getSeedNames(): array
     {
         return [
-            \App\Continent::FETROYA,
-            \App\Continent::EAST_WOZUL,
-            \App\Continent::WEST_WOZUL,
-            \App\Continent::NORTH_JAGONETH,
-            \App\Continent::CENTRAL_JAGONETH,
-            \App\Continent::SOUTH_JAGONETH,
-            \App\Continent::VINDOBERON,
-            \App\Continent::DEMAUXOR
+            \App\Domain\Models\Continent::FETROYA,
+            \App\Domain\Models\Continent::EAST_WOZUL,
+            \App\Domain\Models\Continent::WEST_WOZUL,
+            \App\Domain\Models\Continent::NORTH_JAGONETH,
+            \App\Domain\Models\Continent::CENTRAL_JAGONETH,
+            \App\Domain\Models\Continent::SOUTH_JAGONETH,
+            \App\Domain\Models\Continent::VINDOBERON,
+            \App\Domain\Models\Continent::DEMAUXOR
         ];
     }
 }

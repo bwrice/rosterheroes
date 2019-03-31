@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Squad;
+use App\Domain\Models\Squad;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -18,7 +18,7 @@ class SquadCreated
     public $squad;
     /**
      * Create a new event instance.
-     * @param Squad $squad
+     * @param \App\Domain\Models\Squad $squad
      *
      * @return void
      */

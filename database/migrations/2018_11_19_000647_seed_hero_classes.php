@@ -6,15 +6,15 @@ class SeedHeroClasses extends ModelNameSeederMigration
 {
     protected function getModelClass(): string
     {
-        return \App\HeroClass::class;
+        return \App\Domain\Models\HeroClass::class;
     }
 
     public function getSeedNames(): array
     {
         return [
-            \App\HeroClass::WARRIOR,
-            \App\HeroClass::RANGER,
-            \App\HeroClass::SORCERER
+            \App\Domain\Models\HeroClass::WARRIOR,
+            \App\Domain\Models\HeroClass::RANGER,
+            \App\Domain\Models\HeroClass::SORCERER
         ];
     }
 }

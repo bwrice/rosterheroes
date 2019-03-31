@@ -2,14 +2,14 @@
 
 namespace App\Exceptions;
 
-use App\Campaign;
+use App\Domain\Models\Campaign;
 use Exception;
 use Throwable;
 
 class CampaignExistsException extends Exception
 {
     /**
-     * @var Campaign
+     * @var \App\Domain\Models\Campaign
      */
     private $campaign;
 
@@ -21,7 +21,7 @@ class CampaignExistsException extends Exception
     }
 
     /**
-     * @return Campaign
+     * @return \App\Domain\Models\Campaign
      */
     public function getCampaign(): Campaign
     {

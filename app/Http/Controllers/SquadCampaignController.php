@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\CampaignExistsException;
 use App\Exceptions\WeekLockedException;
-use App\Squad;
+use App\Domain\Models\Squad;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 

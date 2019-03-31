@@ -2,14 +2,14 @@
 
 namespace App\Exceptions;
 
-use App\Continent;
+use App\Domain\Models\Continent;
 use Exception;
 use Throwable;
 
 class InvalidContinentException extends \RuntimeException
 {
     /**
-     * @var Continent
+     * @var \App\Domain\Models\Continent
      */
     private $invalidContinent;
 
@@ -22,7 +22,7 @@ class InvalidContinentException extends \RuntimeException
     }
 
     /**
-     * @return Continent
+     * @return \App\Domain\Models\Continent
      */
     public function getInvalidContinent(): Continent
     {

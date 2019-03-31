@@ -2,7 +2,7 @@
 
 namespace App\Exceptions;
 
-use App\Campaigns\Quests\Quest;
+use App\Domain\Models\Quest;
 use Carbon\Carbon;
 use Exception;
 use Throwable;
@@ -10,7 +10,7 @@ use Throwable;
 class QuestCompletedException extends Exception
 {
     /**
-     * @var Quest
+     * @var \App\Domain\Models\Quest
      */
     private $quest;
 
@@ -22,7 +22,7 @@ class QuestCompletedException extends Exception
     }
 
     /**
-     * @return \App\Campaigns\Quests\Quest
+     * @return \App\Domain\Models\Quest
      */
     public function getQuest(): Quest
     {

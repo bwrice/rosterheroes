@@ -2,7 +2,7 @@
 
 namespace App\Exceptions;
 
-use App\Province;
+use App\Domain\Models\Province;
 
 class NotBorderedByException extends \RuntimeException
 {
@@ -19,7 +19,7 @@ class NotBorderedByException extends \RuntimeException
     }
 
     /**
-     * @return Province
+     * @return \App\Domain\Models\Province
      */
     public function getProvince()
     {

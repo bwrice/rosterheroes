@@ -6,19 +6,19 @@ class SeedSquadRanks extends ModelNameSeederMigration
 {
     protected function getModelClass(): string
     {
-        return \App\SquadRank::class;
+        return \App\Domain\Models\SquadRank::class;
     }
 
     public function getSeedNames(): array
     {
         return [
-            \App\SquadRank::CREW,
-            \App\SquadRank::TROUPE,
-            \App\SquadRank::GANG,
-            \App\SquadRank::POSSE,
-            \App\SquadRank::CLAN,
-            \App\SquadRank::BATTALION,
-            \App\SquadRank::LEGION
+            \App\Domain\Models\SquadRank::CREW,
+            \App\Domain\Models\SquadRank::TROUPE,
+            \App\Domain\Models\SquadRank::GANG,
+            \App\Domain\Models\SquadRank::POSSE,
+            \App\Domain\Models\SquadRank::CLAN,
+            \App\Domain\Models\SquadRank::BATTALION,
+            \App\Domain\Models\SquadRank::LEGION
         ];
     }
 }

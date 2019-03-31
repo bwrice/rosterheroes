@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use App\Policies\SquadPolicy;
-use App\Squad;
+use App\Domain\Models\Squad;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Laravel\Passport\Passport;

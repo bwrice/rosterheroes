@@ -4,8 +4,8 @@ namespace App\Listeners;
 
 use App\Events\HeroCreated;
 use App\Events\HeroEvent;
-use App\Hero;
-use App\SlotType;
+use App\Domain\Models\Hero;
+use App\Domain\Models\SlotType;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 

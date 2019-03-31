@@ -2,13 +2,13 @@
 
 namespace App\Wagons;
 
-use App\Slots\HasSlots;
-use App\Slots\Slot;
-use App\Slots\SlotCollection;
-use App\Slots\Slottable;
-use App\Slots\SlottableCollection;
-use App\SlotType;
-use App\Squad;
+use App\Domain\Interfaces\HasSlots;
+use App\Domain\Slot;
+use App\Domain\Collections\SlotCollection;
+use App\Domain\Interfaces\Slottable;
+use App\Domain\Collections\SlottableCollection;
+use App\Domain\Models\SlotType;
+use App\Domain\Models\Squad;
 use App\Wagons\WagonSizes\WagonSize;
 use Illuminate\Database\Eloquent\Model;
 
@@ -74,7 +74,7 @@ class Wagon extends Model implements HasSlots
     /**
      * @param int $count
      * @param array $slotTypeIDs
-     * @return SlotCollection
+     * @return \App\Domain\Collections\SlotCollection
      */
     public function getEmptySlots(int $count, array $slotTypeIDs = []): SlotCollection
     {
@@ -82,7 +82,7 @@ class Wagon extends Model implements HasSlots
     }
 
     /**
-     * @return HasSlots
+     * @return \App\Domain\Interfaces\HasSlots
      */
     public function getBackupHasSlots(): ?HasSlots
     {
@@ -93,7 +93,7 @@ class Wagon extends Model implements HasSlots
 
     /**
      * @param array $with
-     * @return HasSlots
+     * @return \App\Domain\Interfaces\HasSlots
      */
     public function getFresh($with = []): HasSlots
     {
@@ -103,7 +103,7 @@ class Wagon extends Model implements HasSlots
     /**
      * @param int $count
      * @param array $slotTypeIDs
-     * @return SlottableCollection
+     * @return \App\Domain\Collections\SlottableCollection
      */
     public function emptySlots(int $count, array $slotTypeIDs = []): SlottableCollection
     {
@@ -111,7 +111,7 @@ class Wagon extends Model implements HasSlots
     }
 
     /**
-     * @return SlotCollection
+     * @return \App\Domain\Collections\SlotCollection
      */
     public function getSlots(): SlotCollection
     {

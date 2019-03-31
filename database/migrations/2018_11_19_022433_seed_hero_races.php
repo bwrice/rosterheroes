@@ -6,16 +6,16 @@ class SeedHeroRaces extends ModelNameSeederMigration
 {
     protected function getModelClass(): string
     {
-        return \App\HeroRace::class;
+        return \App\Domain\Models\HeroRace::class;
     }
 
     public function getSeedNames(): array
     {
         return [
-            \App\HeroRace::HUMAN,
-            \App\HeroRace::ELF,
-            \App\HeroRace::DWARF,
-            \App\HeroRace::ORC
+            \App\Domain\Models\HeroRace::HUMAN,
+            \App\Domain\Models\HeroRace::ELF,
+            \App\Domain\Models\HeroRace::DWARF,
+            \App\Domain\Models\HeroRace::ORC
         ];
     }
 }

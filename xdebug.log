@@ -3729,3 +3729,84 @@ W: Creating socket for '127.0.0.1:9001', poll success, but error: Operation now 
 E: Could not connect to client. :-(
 Log closed at 2019-03-30 02:25:23
 
+Log opened at 2019-03-30 16:33:56
+I: Checking remote connect back address.
+I: Checking header 'HTTP_X_FORWARDED_FOR'.
+I: Checking header 'REMOTE_ADDR'.
+W: Remote address not found, connecting to configured address/port: 127.0.0.1:9001. :-|
+W: Creating socket for '127.0.0.1:9001', poll success, but error: Operation now in progress (19).
+E: Could not connect to client. :-(
+Log closed at 2019-03-30 16:33:56
+
+Log opened at 2019-03-30 16:34:54
+I: Checking remote connect back address.
+I: Checking header 'HTTP_X_FORWARDED_FOR'.
+I: Checking header 'REMOTE_ADDR'.
+W: Remote address not found, connecting to configured address/port: 127.0.0.1:9001. :-|
+W: Creating socket for '127.0.0.1:9001', poll success, but error: Operation now in progress (19).
+E: Could not connect to client. :-(
+Log closed at 2019-03-30 16:34:54
+
+Log opened at 2019-03-30 16:37:54
+I: Checking remote connect back address.
+I: Checking header 'HTTP_X_FORWARDED_FOR'.
+I: Checking header 'REMOTE_ADDR'.
+W: Remote address not found, connecting to configured address/port: 127.0.0.1:9001. :-|
+W: Creating socket for '127.0.0.1:9001', poll success, but error: Operation now in progress (19).
+E: Could not connect to client. :-(
+Log closed at 2019-03-30 16:37:54
+
+Log opened at 2019-03-30 16:38:08
+I: Checking remote connect back address.
+I: Checking header 'HTTP_X_FORWARDED_FOR'.
+I: Checking header 'REMOTE_ADDR'.
+W: Remote address not found, connecting to configured address/port: 127.0.0.1:9001. :-|
+W: Creating socket for '127.0.0.1:9001', poll success, but error: Operation now in progress (19).
+E: Could not connect to client. :-(
+Log closed at 2019-03-30 16:38:08
+
+Log opened at 2019-03-30 16:39:03
+I: Checking remote connect back address.
+I: Checking header 'HTTP_X_FORWARDED_FOR'.
+I: Checking header 'REMOTE_ADDR'.
+W: Remote address not found, connecting to configured address/port: 127.0.0.1:9001. :-|
+W: Creating socket for '127.0.0.1:9001', poll success, but error: Operation now in progress (19).
+E: Could not connect to client. :-(
+Log closed at 2019-03-30 16:39:03
+
+Log opened at 2019-03-31 02:04:52
+I: Checking remote connect back address.
+I: Checking header 'HTTP_X_FORWARDED_FOR'.
+I: Checking header 'REMOTE_ADDR'.
+W: Remote address not found, connecting to configured address/port: 127.0.0.1:9001. :-|
+W: Creating socket for '127.0.0.1:9001', poll success, but error: Operation now in progress (19).
+E: Could not connect to client. :-(
+Log closed at 2019-03-31 02:04:52
+
+Log opened at 2019-03-31 02:51:11
+I: Checking remote connect back address.
+I: Checking header 'HTTP_X_FORWARDED_FOR'.
+I: Checking header 'REMOTE_ADDR'.
+W: Remote address not found, connecting to configured address/port: 127.0.0.1:9001. :-|
+W: Creating socket for '127.0.0.1:9001', poll success, but error: Operation now in progress (19).
+E: Could not connect to client. :-(
+Log closed at 2019-03-31 02:51:11
+
+Log opened at 2019-03-31 18:47:10
+I: Checking remote connect back address.
+I: Checking header 'HTTP_X_FORWARDED_FOR'.
+I: Checking header 'REMOTE_ADDR'.
+W: Remote address not found, connecting to configured address/port: 127.0.0.1:9001. :-|
+W: Creating socket for '127.0.0.1:9001', poll success, but error: Operation now in progress (19).
+E: Could not connect to client. :-(
+Log closed at 2019-03-31 18:47:10
+
+Log opened at 2019-03-31 18:49:37
+I: Checking remote connect back address.
+I: Checking header 'HTTP_X_FORWARDED_FOR'.
+I: Checking header 'REMOTE_ADDR'.
+W: Remote address not found, connecting to configured address/port: 127.0.0.1:9001. :-|
+W: Creating socket for '127.0.0.1:9001', poll success, but error: Operation now in progress (19).
+E: Could not connect to client. :-(
+Log closed at 2019-03-31 18:49:37
+

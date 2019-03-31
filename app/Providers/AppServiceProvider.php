@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use App\Exceptions\NoCurrentWeekException;
 use App\Projectors\ItemBlueprintProjector;
-use App\Weeks\Week;
+use App\Domain\Models\Week;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;

@@ -3,7 +3,7 @@
 namespace App\Exceptions;
 
 
-use App\Positions\PositionCollection;
+use App\Domain\Collections\PositionCollection;
 use Illuminate\Support\Collection;
 
 class InvalidPositionsException extends \RuntimeException
@@ -21,7 +21,7 @@ class InvalidPositionsException extends \RuntimeException
     }
 
     /**
-     * @return PositionCollection
+     * @return \App\Domain\Collections\PositionCollection
      */
     public function getValidPositions()
     {
@@ -29,7 +29,7 @@ class InvalidPositionsException extends \RuntimeException
     }
 
     /**
-     * @return PositionCollection
+     * @return \App\Domain\Collections\PositionCollection
      */
     public function getGivenPositions()
     {

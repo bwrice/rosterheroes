@@ -2,18 +2,18 @@
 
 namespace Tests\Feature;
 
-use App\Campaign;
-use App\Hero;
-use App\HeroClass;
-use App\Heroes\HeroPosts\HeroPost;
-use App\HeroRace;
-use App\Measurable;
-use App\MeasurableType;
-use App\Slots\Slot;
-use App\SlotType;
-use App\Squad;
-use App\User;
-use App\Weeks\Week;
+use App\Domain\Models\Campaign;
+use App\Domain\Models\Hero;
+use App\Domain\Models\HeroClass;
+use App\Domain\Models\HeroPost;
+use App\Domain\Models\HeroRace;
+use App\Domain\Models\Measurable;
+use App\Domain\Models\MeasurableType;
+use App\Domain\Slot;
+use App\Domain\Models\SlotType;
+use App\Domain\Models\Squad;
+use App\Domain\Models\User;
+use App\Domain\Models\Week;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Laravel\Passport\Passport;
@@ -66,7 +66,7 @@ class SquadFeatureTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        /** @var Week $week */
+        /** @var \App\Domain\Models\Week $week */
         $week = factory(Week::class)->create();
         Week::setTestCurrent($week);
         Carbon::setTestNow($week->everything_locks_at->copy()->subDays(1));
@@ -79,7 +79,7 @@ class SquadFeatureTest extends TestCase
         $response = $this->json('POST','api/squad/' . $squad->uuid . '/campaigns');
         $response->assertStatus(201);
 
-        /** @var Campaign $campaign */
+        /** @var \App\Domain\Models\Campaign $campaign */
         $campaign = $squad->campaigns()->first();
         $this->assertEquals($squad->id, $campaign->squad_id);
         $this->assertEquals($week->id, $campaign->week_id);

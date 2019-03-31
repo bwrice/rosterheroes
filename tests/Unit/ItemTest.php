@@ -2,11 +2,11 @@
 
 namespace Tests\Unit;
 
-use App\Item;
-use App\ItemBlueprint;
-use App\ItemClass;
-use App\ItemType;
-use App\MaterialType;
+use App\Domain\Models\Item;
+use App\Domain\Models\ItemBlueprint;
+use App\Domain\Models\ItemClass;
+use App\Domain\Models\ItemType;
+use App\Domain\Models\MaterialType;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -21,7 +21,7 @@ class ItemTest extends TestCase
      */
     public function an_item_can_be_generated()
     {
-        /** @var ItemBlueprint $blueprint */
+        /** @var \App\Domain\Models\ItemBlueprint $blueprint */
         $blueprint = factory(ItemBlueprint::class)->create();
         /** @var ItemClass $itemClass */
         $itemClass = ItemClass::inRandomOrder()->first();
@@ -30,7 +30,7 @@ class ItemTest extends TestCase
         /** @var MaterialType $materialType */
         $materialType = $itemType->materialTypes()->inRandomOrder()->first();
 
-        /** @var Item $item */
+        /** @var \App\Domain\Models\Item $item */
         $item = Item::generate($itemClass, $itemType, $materialType, $blueprint);
 
         $this->assertEquals($itemClass->id, $item->itemClass->id);

@@ -13,7 +13,7 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(App\User::class, function (Faker $faker) {
+$factory->define(\App\Domain\Models\User::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'uuid' => \Ramsey\Uuid\Uuid::uuid4(),

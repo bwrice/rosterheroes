@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Province;
+use App\Domain\Models\Province;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;

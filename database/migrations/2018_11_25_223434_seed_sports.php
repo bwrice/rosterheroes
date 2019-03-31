@@ -7,16 +7,16 @@ class SeedSports extends ModelNameSeederMigration
 
     protected function getModelClass(): string
     {
-        return \App\Sport::class;
+        return \App\Domain\Models\Sport::class;
     }
 
     public function getSeedNames(): array
     {
         return [
-            \App\Sport::FOOTBALL,
-            \App\Sport::BASKETBALL,
-            \App\Sport::BASEBALL,
-            \App\Sport::HOCKEY
+            \App\Domain\Models\Sport::FOOTBALL,
+            \App\Domain\Models\Sport::BASKETBALL,
+            \App\Domain\Models\Sport::BASEBALL,
+            \App\Domain\Models\Sport::HOCKEY
         ];
     }
 }

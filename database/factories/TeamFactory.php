@@ -2,9 +2,9 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(\App\Domain\Teams\Team::class, function (Faker $faker) {
+$factory->define(\App\Domain\Models\Team::class, function (Faker $faker) {
 
-    $league = \App\League::query()->inRandomOrder()->first();
+    $league = \App\Domain\Models\League::query()->inRandomOrder()->first();
 
     $location = $faker->city;
 
