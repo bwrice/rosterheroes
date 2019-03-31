@@ -433,22 +433,38 @@ class Squad extends EventSourcedModel implements HasSlots
 
     public function getHeroRaceAvailability()
     {
-        /** @var HeroRaceAvailability $availability */
-        $availability = app(HeroRaceAvailability::class);
-        return $availability->get($this);
+        $availableHeroPosts = $this->getHeroPostAvailability();
+        $heroRaces = collect();
+        $availableHeroPosts->each(function(HeroPost $heroPost) use ($heroRaces) {
+            return $heroRaces->push($heroPost->heroRace);
+        });
+
+        return $heroRaces->unique();
     }
 
     public function getHeroPostAvailability()
     {
-        /** @var HeroPostAvailability $availability */
-        $availability = app(HeroPostAvailability::class);
-        return $availability->get($this);
+        return $this->heroPosts->postFilled(false);
     }
 
     public function getHeroClassAvailability()
     {
-        /** @var HeroClassAvailability $availability */
-        $availability = app(HeroClassAvailability::class);
-        return $availability->get($this);
+        if ($this->inCreationState()) {
+
+            $emptyHeroPosts = $this->heroPosts->postFilled(false);
+            $requiredClasses = HeroClass::requiredStarting()->get();
+            $heroes = $this->getHeroes();
+
+            $missingClasses = $requiredClasses->filter(function (HeroClass $heroClass) use ($heroes) {
+                $heroWithClass = $heroes->filterByClass($heroClass)->first();
+                return $heroWithClass == null;
+            });
+
+            if ($missingClasses->count() >= $emptyHeroPosts->count()) {
+                return $missingClasses;
+            }
+        }
+
+        return HeroClass::all();
     }
 }
