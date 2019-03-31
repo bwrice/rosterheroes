@@ -2,8 +2,8 @@
 
 namespace App\Domain\Models;
 
-use App\Behaviors\MobileStorageRank\MobileStorageRankBehavior;
-use App\Behaviors\MobileStorageRank\WagonBehavior;
+use App\Domain\Behaviors\MobileStorageRank\MobileStorageRankBehavior;
+use App\Domain\Behaviors\MobileStorageRank\WagonBehavior;
 use Illuminate\Database\Eloquent\Model;
 
 /**

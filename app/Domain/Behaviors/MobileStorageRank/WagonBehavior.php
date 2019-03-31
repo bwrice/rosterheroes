@@ -6,7 +6,7 @@
  * Time: 10:09 PM
  */
 
-namespace App\Behaviors\MobileStorageRank;
+namespace App\Domain\Behaviors\MobileStorageRank;
 
 
 class WagonBehavior extends MobileStorageRankBehavior

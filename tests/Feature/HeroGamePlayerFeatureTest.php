@@ -9,7 +9,7 @@ use App\Domain\Models\HeroRace;
 use App\Domain\Models\Player;
 use App\Domain\Models\GamePlayer;
 use App\Domain\Models\Position;
-use App\Actions\Slotter;
+use App\Domain\Actions\FillSlot;
 use App\Domain\Models\Squad;
 use App\Domain\Models\Team;
 use App\Domain\Models\Week;

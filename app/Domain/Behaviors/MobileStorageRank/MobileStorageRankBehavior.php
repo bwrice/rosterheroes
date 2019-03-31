@@ -6,7 +6,7 @@
  * Time: 10:07 PM
  */
 
-namespace App\Behaviors\MobileStorageRank;
+namespace App\Domain\Behaviors\MobileStorageRank;
 
 
 abstract class MobileStorageRankBehavior
