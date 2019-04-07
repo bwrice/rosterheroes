@@ -26,7 +26,7 @@ class SquadSkirmishUnitTest extends TestCase
 //        /** @var Week $week */
 //        $week = factory(Week::class)->create();
 //        Week::setTestCurrent($week);
-//        Carbon::setTestNow($week->everything_locks_at->copy()->subDays(1));
+//        CarbonImmutable::setTestNow($week->everything_locks_at->copy()->subDays(1));
 //
 //        try {
 //

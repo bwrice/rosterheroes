@@ -5,6 +5,8 @@ namespace App\Providers;
 use App\Exceptions\NoCurrentWeekException;
 use App\Projectors\ItemBlueprintProjector;
 use App\Domain\Models\Week;
+use Carbon\CarbonImmutable;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
@@ -28,6 +30,8 @@ class AppServiceProvider extends ServiceProvider
                 Log::critical("There is no current week");
             }
         }
+
+        Date::use(CarbonImmutable::class);
     }
 
     /**

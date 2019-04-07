@@ -15,6 +15,7 @@ use App\Domain\Models\Position;
 use App\Domain\Models\Squad;
 use App\Domain\Models\Week;
 use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
@@ -131,7 +132,7 @@ class HeroGamePlayerUnitTest extends TestCase
         $gamePlayer = factory(GamePlayer::class)->create();
 
         Week::setTestCurrent($gamePlayer->game->week);
-        Carbon::setTestNow($gamePlayer->game->starts_at->copy()->addMinutes(5));
+        CarbonImmutable::setTestNow($gamePlayer->game->starts_at->copy()->addMinutes(5));
 
         // where IN
         $playerPosition = Position::query()
@@ -175,7 +176,7 @@ class HeroGamePlayerUnitTest extends TestCase
         $differentWeek = factory(Week::class)->create();
 
         Week::setTestCurrent($differentWeek);
-        Carbon::setTestNow($differentWeek->ends_at->copy()->subDays(2));
+        CarbonImmutable::setTestNow($differentWeek->ends_at->copy()->subDays(2));
 
         // where IN
         $playerPosition = Position::query()

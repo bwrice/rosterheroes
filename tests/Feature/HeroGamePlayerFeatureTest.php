@@ -13,6 +13,7 @@ use App\Domain\Actions\FillSlot;
 use App\Domain\Models\Squad;
 use App\Domain\Models\Team;
 use App\Domain\Models\Week;
+use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Carbon;
@@ -59,7 +60,7 @@ class HeroGamePlayerFeatureTest extends TestCase
         Passport::actingAs($heroPost->squad->user);
 
         // Mock 6 hours before everything locks
-        Carbon::setTestNow(Week::current()->everything_locks_at->copy()->subHours(6));
+        CarbonImmutable::setTestNow(Week::current()->everything_locks_at->copy()->subHours(6));
 
         $response = $this->json('POST', 'api/hero/'. $hero->uuid . '/game-player/' . $gamePlayer->uuid);
         $this->assertEquals(201, $response->getStatusCode());
@@ -68,7 +69,7 @@ class HeroGamePlayerFeatureTest extends TestCase
         $this->assertEquals($gamePlayer->id, $hero->gamePlayer->id);
         $this->assertEquals($hero->salary, $gamePlayer->salary);
 
-        Carbon::setTestNow(); // clear testing mock
+        CarbonImmutable::setTestNow(); // clear testing mock
         Week::setTestCurrent(); // clear test week
     }
 
@@ -124,7 +125,7 @@ class HeroGamePlayerFeatureTest extends TestCase
         Passport::actingAs($heroPost->squad->user);
 
         // Mock 6 hours before everything locks
-        Carbon::setTestNow(Week::current()->everything_locks_at->copy()->subHours(6));
+        CarbonImmutable::setTestNow(Week::current()->everything_locks_at->copy()->subHours(6));
 
         $response = $this->json('POST', 'api/hero/'. $hero->uuid . '/game-player/' . $gamePlayer->uuid);
         $this->assertEquals(422, $response->getStatusCode());
@@ -133,7 +134,7 @@ class HeroGamePlayerFeatureTest extends TestCase
         $hero = $hero->fresh();
         $this->assertNull($hero->gamePlayer);
 
-        Carbon::setTestNow(); // clear testing mock
+        CarbonImmutable::setTestNow(); // clear testing mock
         Week::setTestCurrent(); // clear test week
     }
 
@@ -178,7 +179,7 @@ class HeroGamePlayerFeatureTest extends TestCase
         Passport::actingAs($heroPost->squad->user);
 
         // Mock 6 hours before everything locks
-        Carbon::setTestNow(Week::current()->everything_locks_at->copy()->subHours(6));
+        CarbonImmutable::setTestNow(Week::current()->everything_locks_at->copy()->subHours(6));
 
         $response = $this->json('POST', 'api/hero/'. $hero->uuid . '/game-player/' . $gamePlayer->uuid);
         $this->assertEquals(422, $response->getStatusCode());
@@ -187,7 +188,7 @@ class HeroGamePlayerFeatureTest extends TestCase
         $hero = $hero->fresh();
         $this->assertNull($hero->gamePlayer);
 
-        Carbon::setTestNow(); // clear testing mock
+        CarbonImmutable::setTestNow(); // clear testing mock
         Week::setTestCurrent(); // clear test week
     }
 

@@ -15,6 +15,7 @@ use App\Domain\Models\Quest;
 use App\Domain\Models\Squad;
 use App\Domain\Models\Week;
 use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
@@ -37,7 +38,7 @@ class CampaignUnitTest extends TestCase
         /** @var Week $week */
         $week = factory(Week::class)->create();
         Week::setTestCurrent($week);
-        Carbon::setTestNow($week->everything_locks_at->copy()->subDays(1));
+        CarbonImmutable::setTestNow($week->everything_locks_at->copy()->subDays(1));
 
         $diffContinent = Continent::query()->whereDoesntHave('provinces', function (Builder $builder) use ($provinceID) {
             return $builder->where('id', '=', $provinceID);
@@ -73,7 +74,7 @@ class CampaignUnitTest extends TestCase
         /** @var Week $week */
         $week = factory(Week::class)->create();
         Week::setTestCurrent($week);
-        Carbon::setTestNow($week->everything_locks_at->copy()->subDays(1));
+        CarbonImmutable::setTestNow($week->everything_locks_at->copy()->subDays(1));
 
         /** @var Squad $squad */
         $squad = factory(Squad::class)->create();
@@ -129,7 +130,7 @@ class CampaignUnitTest extends TestCase
         Week::setTestCurrent($week);
 
         //Set time to after the week locks
-        Carbon::setTestNow($week->everything_locks_at->copy()->addMinutes(10));
+        CarbonImmutable::setTestNow($week->everything_locks_at->copy()->addMinutes(10));
 
 
         /** @var Campaign $campaign */
@@ -166,7 +167,7 @@ class CampaignUnitTest extends TestCase
         /** @var Week $week */
         $week = factory(Week::class)->create();
         Week::setTestCurrent($week);
-        Carbon::setTestNow($week->everything_locks_at->copy()->subDays(1));
+        CarbonImmutable::setTestNow($week->everything_locks_at->copy()->subDays(1));
 
 
         /** @var Campaign $campaign */
@@ -200,7 +201,7 @@ class CampaignUnitTest extends TestCase
         /** @var \App\Domain\Models\Week $week */
         $week = factory(Week::class)->create();
         Week::setTestCurrent($week);
-        Carbon::setTestNow($week->everything_locks_at->copy()->subDays(1));
+        CarbonImmutable::setTestNow($week->everything_locks_at->copy()->subDays(1));
 
 
         /** @var Campaign $campaign */
@@ -239,7 +240,7 @@ class CampaignUnitTest extends TestCase
         /** @var Week $week */
         $week = factory(Week::class)->create();
         Week::setTestCurrent($week);
-        Carbon::setTestNow($week->everything_locks_at->copy()->subDays(1));
+        CarbonImmutable::setTestNow($week->everything_locks_at->copy()->subDays(1));
 
 
         /** @var Campaign $campaign */

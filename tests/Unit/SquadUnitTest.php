@@ -12,6 +12,7 @@ use App\Domain\Models\Stash;
 use App\Domain\Models\StoreHouse;
 use App\Domain\Models\Week;
 use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -159,7 +160,7 @@ class SquadUnitTest extends TestCase
         /** @var Week $week */
         $week = factory(Week::class)->create();
         Week::setTestCurrent($week);
-        Carbon::setTestNow($week->everything_locks_at->copy()->subDays(1));
+        CarbonImmutable::setTestNow($week->everything_locks_at->copy()->subDays(1));
 
         /** @var \App\Domain\Models\Campaign $campaign */
         $campaign = factory(Campaign::class)->create([
@@ -188,7 +189,7 @@ class SquadUnitTest extends TestCase
         /** @var Week $week */
         $week = factory(Week::class)->create();
         Week::setTestCurrent($week);
-        Carbon::setTestNow($week->everything_locks_at->copy()->addMinutes(15));
+        CarbonImmutable::setTestNow($week->everything_locks_at->copy()->addMinutes(15));
 
         /** @var \App\Domain\Models\Squad $squad */
         $squad = factory(Squad::class)->create();

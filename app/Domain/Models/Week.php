@@ -5,7 +5,7 @@ namespace App\Domain\Models;
 use App\Domain\Models\Game;
 use App\Domain\Collections\WeekCollection;
 use App\Domain\QueryBuilders\WeekQueryBuilder;
-use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -14,13 +14,13 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property string $name
- * @property Carbon $proposals_scheduled_to_lock_at
- * @property Carbon $diplomacy_scheduled_to_lock_at
- * @property Carbon $everything_locks_at
- * @property Carbon $ends_at
- * @property Carbon|null $proposals_processed_at
- * @property Carbon|null $diplomacy_processed_at
- * @property Carbon|null $finalized_at
+ * @property CarbonImmutable $proposals_scheduled_to_lock_at
+ * @property CarbonImmutable $diplomacy_scheduled_to_lock_at
+ * @property CarbonImmutable $everything_locks_at
+ * @property CarbonImmutable $ends_at
+ * @property CarbonImmutable|null $proposals_processed_at
+ * @property CarbonImmutable|null $diplomacy_processed_at
+ * @property CarbonImmutable|null $finalized_at
  *
  * @method static WeekQueryBuilder query()
  */
