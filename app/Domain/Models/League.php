@@ -2,6 +2,11 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Behaviors\Leagues\LeagueBehavior;
+use App\Domain\Behaviors\Leagues\MLBBehavior;
+use App\Domain\Behaviors\Leagues\NBABehavior;
+use App\Domain\Behaviors\Leagues\NFLBehavior;
+use App\Domain\Behaviors\Leagues\NHLBehavior;
 use App\Domain\Models\Team;
 use App\Domain\Models\Sport;
 use Illuminate\Database\Eloquent\Model;
@@ -32,5 +37,66 @@ class League extends Model
     public function sport()
     {
         return $this->belongsTo(Sport::class);
+    }
+
+    public function getBehavior(): LeagueBehavior
+    {
+        switch ( $this->abbreviation ) {
+            case self::NFL:
+                return app(NFLBehavior::class);
+            case self::MLB:
+                return app(MLBBehavior::class);
+            case self::NBA:
+                return app(NBABehavior::class);
+            case self::NHL:
+                return app(NHLBehavior::class);
+        }
+        throw new \RuntimeException("Couldn't convert league abbreviation into behavior: " . $this->abbreviation );
+    }
+
+    public function isLive()
+    {
+        return $this->getBehavior()->isLive();
+    }
+
+
+    /**
+     * @return League
+     */
+    public static function nfl()
+    {
+        /** @var League $league */
+        $league = self::query()->where('abbreviation', '=', self::NFL)->first();
+        return $league;
+    }
+
+    /**
+     * @return League
+     */
+    public static function mlb()
+    {
+        /** @var League $league */
+        $league = self::query()->where('abbreviation', '=', self::MLB)->first();
+        return $league;
+    }
+
+    /**
+     * @return League
+     */
+    public static function nba()
+    {
+        /** @var League $league */
+        $league = self::query()->where('abbreviation', '=', self::NBA)->first();
+        return $league;
+    }
+
+    /**
+     * @return League
+     */
+    public static function nhl()
+    {
+        /** @var League $league */
+        $league = self::query()->where('abbreviation', '=', self::NHL)->first();
+        return $league;
     }
 }

@@ -10,7 +10,7 @@ namespace App\Domain\DataTransferObjects;
 
 
 use App\Domain\Models\Team;
-use Carbon\Carbon;
+use Carbon\CarbonInterface;
 
 class GameDTO
 {
@@ -23,7 +23,7 @@ class GameDTO
      */
     private $awayTeam;
     /**
-     * @var Carbon
+     * @var CarbonInterface
      */
     private $startsAt;
     /**
@@ -31,7 +31,7 @@ class GameDTO
      */
     private $externalID;
 
-    public function __construct(Carbon $startsAt, Team $homeTeam, Team $awayTeam, string $externalID)
+    public function __construct(CarbonInterface $startsAt, Team $homeTeam, Team $awayTeam, string $externalID)
     {
         $this->startsAt = $startsAt;
         $this->homeTeam = $homeTeam;
@@ -56,9 +56,9 @@ class GameDTO
     }
 
     /**
-     * @return Carbon
+     * @return CarbonInterface
      */
-    public function getStartsAt(): Carbon
+    public function getStartsAt(): CarbonInterface
     {
         return $this->startsAt;
     }

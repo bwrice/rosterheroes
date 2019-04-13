@@ -19,6 +19,6 @@ class UpdateGames implements ShouldQueue
      */
     public function handle(StatsIntegration $statsIntegration)
     {
-        $gameDTOs = $statsIntegration;
+        $gameDTOs = $statsIntegration->getGameDTOs();
     }
 }
