@@ -9,6 +9,8 @@
 namespace App\External\Stats\MySportsFeed;
 
 
+use App\Domain\Models\League;
+
 class GameAPI
 {
     /**
@@ -16,24 +18,21 @@ class GameAPI
      */
     private $client;
     /**
-     * @var LeagueYearURL
+     * @var LeagueSeasonConverter
      */
-    private $leagueYearURL;
+    private $leagueSeasonConverter;
 
-    public function __construct(MSFClient $client, LeagueYearURL $leagueYearURL)
+    public function __construct(MSFClient $client, LeagueSeasonConverter $leagueSeasonConverter)
     {
         $this->client = $client;
-        $this->leagueYearURL = $leagueYearURL;
+        $this->leagueSeasonConverter = $leagueSeasonConverter;
     }
 
-    public function getData()
+    public function getData(League $league)
     {
-        $data = [];
-        foreach($this->leagueYearURL->getSubURLs() as $league => $subURL) {
-            $url = $subURL . '/games.json';
-            $leagueData = $this->client->getData($url);
-            $data[$league] = $leagueData['games'];
-        }
-        return $data;
+        $season = $this->leagueSeasonConverter->getSeason($league);
+        $subURL = $season . '/games.json';
+        $responseData = $this->client->getData($subURL);
+        return $responseData['games'];
     }
 }

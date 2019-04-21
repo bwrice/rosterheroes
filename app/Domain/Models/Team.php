@@ -2,6 +2,7 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Collections\TeamCollection;
 use App\Domain\Models\Game;
 use App\Domain\Models\League;
 use App\Domain\Models\Week;
@@ -16,12 +17,18 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $name
  * @property string $location
  * @property string $abbreviation
+ * @property string $external_id
  *
  * @property League $league
  */
 class Team extends Model
 {
     protected $guarded = [];
+
+    public function newCollection(array $models = [])
+    {
+        return new TeamCollection($models);
+    }
 
     public function league()
     {

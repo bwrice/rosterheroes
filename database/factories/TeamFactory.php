@@ -8,7 +8,6 @@ $factory->define(\App\Domain\Models\Team::class, function (Faker $faker) {
 
     $location = $faker->city;
 
-
     return [
         'league_id' => $league->id,
         'location' => $location,

@@ -2,6 +2,7 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Collections\PositionCollection;
 use App\Domain\Models\League;
 use App\Domain\Models\Position;
 use Illuminate\Database\Eloquent\Model;
@@ -11,6 +12,8 @@ use Illuminate\Database\Eloquent\Model;
  * @package App
  *
  * @property string $name
+ *
+ * @property PositionCollection $positions
  */
 class Sport extends Model
 {

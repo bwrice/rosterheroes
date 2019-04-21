@@ -8,6 +8,8 @@
 
 namespace App\External\Stats\MySportsFeed;
 
+use App\Domain\Models\League;
+
 class PlayerAPI
 {
     /**
@@ -20,24 +22,10 @@ class PlayerAPI
         $this->client = $client;
     }
 
-    public function getData()
+    public function getData(League $league)
     {
-        $data = [];
-        foreach ($this->getLeagues() as $league) {
-            $url = $league . '/players.json';
-            $leagueData = $this->client->getData($url);
-            $data = array_merge($data, $leagueData['players']);
-        }
-        return $data;
-    }
-
-    protected function getLeagues()
-    {
-        return [
-            'nfl',
-            'mlb',
-            'nba',
-            'nhl'
-        ];
+        $subURL = $league->abbreviation . '/players.json';
+        $responseData = $this->client->getData($subURL);
+        return $responseData['players'];
     }
 }

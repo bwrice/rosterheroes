@@ -7,6 +7,7 @@ use App\Domain\Behaviors\Leagues\MLBBehavior;
 use App\Domain\Behaviors\Leagues\NBABehavior;
 use App\Domain\Behaviors\Leagues\NFLBehavior;
 use App\Domain\Behaviors\Leagues\NHLBehavior;
+use App\Domain\Collections\TeamCollection;
 use App\Domain\Models\Team;
 use App\Domain\Models\Sport;
 use Illuminate\Database\Eloquent\Model;
@@ -17,8 +18,10 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property int $sport_id
- * @property string $sport
  * @property string $abbreviation
+ *
+ * @property TeamCollection $teams
+ * @property Sport $sport
  */
 class League extends Model
 {
@@ -58,7 +61,6 @@ class League extends Model
     {
         return $this->getBehavior()->isLive();
     }
-
 
     /**
      * @return League

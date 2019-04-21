@@ -8,6 +8,7 @@
 
 namespace App\External\Stats\MySportsFeed;
 
+use App\Domain\Collections\TeamCollection;
 use App\Domain\DataTransferObjects\GameDTO;
 use App\Domain\DataTransferObjects\PlayerDTO;
 use App\Domain\Models\Team;
@@ -48,65 +49,72 @@ class MySportsFeed implements StatsIntegration
         return config('services.mysportsfeed')['key'];
     }
 
-    public function getPlayerDTOs(): Collection
+    public function getPlayerDTOs(League $league): Collection
     {
-        $playerDTOs = collect();
-        $data = $this->playerAPI->getData();
-        $teams = Team::with('league')->get();
-        /** @var \App\Domain\Collections\PositionCollection $positions */
-        $positions = Position::all();
+        $teams = $league->teams;
+        $positions = $league->sport->positions;
+        $data = $this->playerAPI->getData($league);
+        return collect($data)->map(function ($playerData) use ($teams, $positions) {
 
-        foreach($data as $playerArray) {
-            /** @var Team $team */
-            $team = $playerArray['teamAsOfDate'] ? $teams->where('external_id', '=', $playerArray['teamAsOfDate']['id'])->first() : null;
+            $team = $this->getTeamForPlayerDTO($teams, $playerData);
+            $playerPositions = $this->getPositionsForPlayerDTO($positions, $playerData);
 
+            if ($team && $playerPositions->isNotEmpty()) {
+                return new PlayerDTO(
+                    $team,
+                    $playerPositions,
+                    $playerData['firstName'],
+                    $playerData['lastName'],
+                    $playerData['id']
+                );
+            }
+            return null;
+        })->filter(); // filter nulls
+    }
+
+    public function getTeamForPlayerDTO(Collection $teams, array $playerData): ?Team
+    {
+        if (! empty($playerData['teamAsOfDate']['id'])) {
+            $team = $teams->where('external_id', '=', $playerData['teamAsOfDate']['id'])->first();
             if ($team) {
-                $player = $playerArray['player'];
-                $positionsAbbreviations = $player['alternatePositions'];
-                $positionsAbbreviations[] = $player['primaryPosition'];
-                $playerPositions = $this->filterPositions($team->league, $positions, $positionsAbbreviations);
-
-                if ($playerPositions->isNotEmpty()) {
-                    $playerDTOs->push(new PlayerDTO(
-                        $team,
-                        $playerPositions,
-                        $player['firstName'],
-                        $player['lastName'],
-                        $player['id']
-                    ));
-                }
+                return $team;
+            } else {
+                Log::warning("MySportsFeed player has team ID set but team wasn't found", [
+                    'playerData' => $playerData,
+                    'teams' => $teams->toArray()
+                ]);
             }
         }
-        return $playerDTOs;
+        return null;
     }
 
-    protected function buildPlayerDTO(Team $team, PositionCollection $positions, array $playerDataArray)
+    protected function getPositionsForPlayerDTO(PositionCollection $positions, $playerData)
     {
-        $playerDTO = new PlayerDTO(
-            $team,
-            $positions,
-            $playerDataArray['firstName'],
-            $playerDataArray['lastName'],
-            $playerDataArray['id']
-        );
-        return $playerDTO;
-    }
+        $totalPositions = $playerData['alternatePositions'][] = $playerData['primaryPosition'];
 
-    protected function filterPositions(League $league, PositionCollection $positions, array $posAbbreviations)
-    {
-        $abbreviations = collect($posAbbreviations)->map(function ($abbreviation) {
+        $abbreviations = collect($totalPositions)->map(function ($positionAbbreviation) {
             // We only use outfield (OF) for all outfield positions
-            switch($abbreviation) {
+            switch($positionAbbreviation) {
                 case 'LF':
                 case 'RF':
                 case 'CF':
-                    $abbreviation = 'OF';
+                $positionAbbreviation = 'OF';
             }
 
-            return $abbreviation;
+            return $positionAbbreviation;
         });
 
-        return $positions->whereIn('abbreviation', $abbreviations)->where('sport_id', '=', $league->sport_id);
+        $filteredPositions = $positions->whereIn('abbreviation', $abbreviations);
+
+        if ($filteredPositions->isEmpty()) {
+            Log::warning("MySportsFeed player couldn't find valid positions", [
+                'playerData' => $playerData,
+                'positions' => $positions->toArray(),
+                '$filteredPositions' => $filteredPositions->toArray()
+            ]);
+        }
+
+        return $filteredPositions;
     }
 
     /**
@@ -128,25 +136,46 @@ class MySportsFeed implements StatsIntegration
         });
     }
 
-    public function getGameDTOs(Week $week): Collection
+    public function getGameDTOs(League $league): Collection
     {
-        $teams = Team::all();
-        $gameDTOs = collect();
-        $data = $this->gameAPI->getData();
-        foreach($data as $gameArray) {
-            $scheduleData = $gameArray['schedule'];
-            $awayTeam = $teams->where('external_id', '=', $scheduleData['awayTeam']['id'])->first();
-            $homeTeam = $teams->where('external_id', '=', $scheduleData['awayTeam']['id'])->first();
-            if (! ($awayTeam && $homeTeam)) {
-                Log::warning("Couldn't find team when getting game DTOs", [
-                    'game_data' => $gameArray
+        $teams = $league->teams;
+        $data = $this->gameAPI->getData($league);
+        return collect($data)->map(function ($gameData) use ($teams) {
+            try {
+                $scheduleData = $gameData['schedule'];
+                $homeAndAwayTeams = $this->getTeamsFromSchedule($scheduleData, $teams);
+                $startsAt = Carbon::parse($scheduleData['startTime']);
+                return new GameDTO(
+                    $startsAt,
+                    $homeAndAwayTeams['home_team'],
+                    $homeAndAwayTeams['away_team'],
+                    $scheduleData['id']
+                );
+
+            } catch (\Exception $exception) {
+                Log::warning("Failed to convert MySportsFeed game data into Game DTO", [
+                    'exceptionMessage' => $exception->getMessage(),
+                    'gameData' => $gameData,
+                    'teams' => $teams->toArray()
                 ]);
-                continue;
+                return null;
             }
-            $startsAt = Carbon::parse($scheduleData['startTime']);
-            $dto = new GameDTO($startsAt, $homeTeam, $awayTeam, $scheduleData['external_id']);
-            $gameDTOs->push($dto);
+        })->filter(); // filter nulls
+    }
+
+    protected function getTeamsFromSchedule(array $scheduleData, TeamCollection $teams)
+    {
+        $awayTeam = $teams->where('external_id', '=', $scheduleData['awayTeam']['id'])->first();
+        if (! $awayTeam) {
+            throw new \RuntimeException("Couldn't find Away Team");
         }
-        return $gameDTOs;
+        $homeTeam = $teams->where('external_id', '=', $scheduleData['homeTeam']['id'])->first();
+        if (! $homeTeam) {
+            throw new \RuntimeException("Couldn't find Home Team");
+        }
+        return [
+            'away_team' => $awayTeam,
+            'home_team' => $homeTeam
+        ];
     }
 }

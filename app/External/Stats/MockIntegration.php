@@ -34,7 +34,7 @@ class MockIntegration implements StatsIntegration
     }
 
 
-    public function getPlayerDTOs(): Collection
+    public function getPlayerDTOs(League $league): Collection
     {
         return $this->playerDTOs ?: collect();
     }
@@ -44,7 +44,7 @@ class MockIntegration implements StatsIntegration
         return $this->teamDTOs ?: collect();
     }
 
-    public function getGameDTOs(Week $week): Collection
+    public function getGameDTOs(League $league): Collection
     {
         return $this->gameDTOs;
     }
