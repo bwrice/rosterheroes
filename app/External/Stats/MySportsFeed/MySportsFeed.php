@@ -110,33 +110,22 @@ class MySportsFeed implements StatsIntegration
     }
 
     /**
+     * @param League $league
+     *
      * @return Collection
      */
-    public function getTeamDTOs(): Collection
+    public function getTeamDTOs(League $league): Collection
     {
-        $teamDTOs = collect();
-        $data = $this->teamAPI->getData();
-        $leagues = League::all();
-
-        foreach($data as $leagueAbv => $teamsData) {
-
-            $league = $leagues->where('abbreviation', '=', $leagueAbv)->first();
-            if (! $league) {
-                throw new \RuntimeException("Couldn't create team DTOs because league with abbreviation: " . $leagueAbv . " not found");
-            }
-            /** @var League $league */
-            foreach($teamsData as $teamArray) {
-                $teamData = $teamArray['team'];
-                $teamDTOs->push(new TeamDTO(
-                    $league,
-                    $teamData['name'],
-                    $teamData['city'],
-                    $teamData['abbreviation'],
-                    $teamData['id']
-                ));
-            }
-        }
-        return $teamDTOs;
+        $data = $this->teamAPI->getData($league);
+        return collect($data)->map(function ($team) use ($league) {
+            return new TeamDTO(
+                $league,
+                $team['name'],
+                $team['city'],
+                $team['abbreviation'],
+                $team['id']
+            );
+        });
     }
 
     public function getGameDTOs(Week $week): Collection

@@ -17,15 +17,31 @@ abstract class LeagueBehavior
 
     abstract public function getDayOfYearEnd(): int;
 
-    public function isLive()
+    public function isLive(): bool
     {
         $currentDayOfYear = CarbonImmutable::now()->dayOfYear;
-        $yearStartDay = $this->getDayOfYearStart();
-        $yearEndDate = $this->getDayOfYearEnd();
-        if ( $yearEndDate < $yearStartDay ) {
-            return $currentDayOfYear >= $yearStartDay || $currentDayOfYear <= $yearEndDate;
+        if ( $this->spansOverYearChange() ) {
+            return $currentDayOfYear >= $this->getDayOfYearStart() || $currentDayOfYear <= $this->getDayOfYearEnd();
         } else {
-            return $currentDayOfYear >= $yearStartDay && $currentDayOfYear <= $yearEndDate;
+            return $currentDayOfYear >= $this->getDayOfYearStart() && $currentDayOfYear <= $this->getDayOfYearEnd();
         }
+    }
+
+    public function getSeason(): int
+    {
+        $now = CarbonImmutable::now();
+        if (! $this->isLive()) {
+            return $now->year;
+        }
+
+        if ($this->spansOverYearChange() && ($now->dayOfYear <= $this->getDayOfYearEnd())) {
+            return $now->year - 1;
+        }
+        return $now->year;
+    }
+
+    public function spansOverYearChange(): bool
+    {
+        return $this->getDayOfYearEnd() < $this->getDayOfYearStart();
     }
 }

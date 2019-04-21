@@ -153,4 +153,40 @@ class LeagueTest extends TestCase
         $nhl = League::nhl();
         $this->assertFalse($nhl->isLive());
     }
+
+    /**
+     * @test
+     */
+    public function a_league_that_spans_over_year_change_will_return_the_correct_season()
+    {
+        $year = CarbonImmutable::now()->year;
+        $januaryDate = CarbonImmutable::parse($year . '-01-15');
+        CarbonImmutable::setTestNow($januaryDate);
+        $nfl = League::nfl();
+        $this->assertEquals($year - 1, $nfl->getBehavior()->getSeason());
+    }
+
+    /**
+     * @test
+     */
+    public function a_league_that_doesnt_span_over_year_will_return_the_correct_season()
+    {
+        $year = CarbonImmutable::now()->year;
+        $june = CarbonImmutable::parse($year . '-06-15');
+        CarbonImmutable::setTestNow($june);
+        $mlb = League::mlb();
+        $this->assertEquals($year, $mlb->getBehavior()->getSeason());
+    }
+
+    /**
+     * @test
+     */
+    public function a_league_thats_ended_will_return_the_correct_season()
+    {
+        $year = CarbonImmutable::now()->year;
+        $april = CarbonImmutable::parse($year . '-04-15');
+        CarbonImmutable::setTestNow($april);
+        $nfl = League::nfl();
+        $this->assertEquals($year, $nfl->getBehavior()->getSeason());
+    }
 }
