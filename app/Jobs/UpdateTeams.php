@@ -46,6 +46,8 @@ class UpdateTeams implements ShouldQueue
             });
         });
 
-        Log::notice("Finished updating teams", $liveLeagues->toArray());
+        Log::notice("Finished updating teams", [
+            'live_leagues' => $liveLeagues->pluck('name')->toArray()
+        ]);
     }
 }

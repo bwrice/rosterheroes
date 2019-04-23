@@ -25,24 +25,14 @@ class TeamTest extends TestCase
 
         Week::setTestCurrent($week);
 
-        /** @var \App\Domain\Models\Team $homeTeam */
-        $homeTeam = Team::query()->inRandomOrder()->first();
-        $sportID = $homeTeam->league->id;
-
-        /** @var Team $awayTeam */
-        $awayTeam = Team::query()->whereHas('league', function(Builder $builder) use ($sportID) {
-            return $builder->where('id', '=', $sportID);
-        })->where('id', '!=', $homeTeam->id)->inRandomOrder()->first();
-
+        /** @var Game $game */
         $game = factory(Game::class)->create([
             'week_id' => $week,
-            'home_team_id' => $homeTeam->id,
-            'away_team_id' => $awayTeam->id,
             'starts_at' => $week->everything_locks_at->copy()->addHours(3)
         ]);
 
-        $this->assertEquals($game->id, $homeTeam->thisWeeksGame()->id);
-        $this->assertEquals($game->id, $awayTeam->thisWeeksGame()->id);
+        $this->assertEquals($game->id, $game->homeTeam->thisWeeksGame()->id);
+        $this->assertEquals($game->id, $game->awayTeam->thisWeeksGame()->id);
 
         Week::setTestCurrent(); // clear test week
     }

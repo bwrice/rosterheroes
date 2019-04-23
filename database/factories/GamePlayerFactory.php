@@ -12,9 +12,9 @@ $factory->define(\App\Domain\Models\GamePlayer::class, function (Faker $faker) {
     /** @var \App\Domain\Models\Team $homeTeam */
     $homeTeam = $player->team;
     /** @var \App\Domain\Models\Team $awayTeam */
-    $awayTeam = \App\Domain\Models\Team::query()->whereHas('league', function(\Illuminate\Database\Eloquent\Builder $query) use ($homeTeam) {
-        $query->where('id', '=', $homeTeam->league->id);
-    })->where('id', '!=', $homeTeam->id)->first();
+    $awayTeam = factory(\App\Domain\Models\Team::class)->create([
+        'league_id' => $homeTeam->league->id
+    ]);
 
     $game = factory(\App\Domain\Models\Game::class)->create([
         'home_team_id' => $homeTeam->id,

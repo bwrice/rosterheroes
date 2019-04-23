@@ -6,7 +6,7 @@ $factory->define(\App\Domain\Models\Player::class, function (Faker $faker) {
 
     return [
         'team_id' => function () {
-            return \App\Domain\Models\Team::inRandomOrder()->first()->id;
+            return factory(\App\Domain\Models\Team::class)->create()->id;
         },
         'first_name' => $faker->firstName,
         'last_name' => $faker->lastName,

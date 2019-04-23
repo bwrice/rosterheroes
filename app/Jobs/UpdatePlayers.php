@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Domain\Models\League;
 use App\Domain\Models\Player;
 use App\Domain\DataTransferObjects\PlayerDTO;
 use App\External\Stats\StatsIntegration;
@@ -25,17 +26,19 @@ class UpdatePlayers implements ShouldQueue
     public function handle(StatsIntegration $integration)
     {
         ini_set('memory_limit','512M');
-        $teamDTOs = $integration->getPlayerDTOs();
-        $teamDTOs->each(function (PlayerDTO $playerDTO) {
-            /** @var Player $player */
-            $player = Player::updateOrCreate([
-                'external_id' => $playerDTO->getExternalID()
-            ], [
-                'team_id' => $playerDTO->getTeam()->id,
-                'first_name' => $playerDTO->getFirstName(),
-                'last_name' => $playerDTO->getLastName()
-            ]);
-            $player->positions()->syncWithoutDetaching($playerDTO->getPositions()->pluck('id')->toArray());
+        League::all()->each(function (League $league) use ($integration) {
+            $playerDTOs = $integration->getPlayerDTOs($league);
+            $playerDTOs->each(function (PlayerDTO $playerDTO) {
+                /** @var Player $player */
+                $player = Player::updateOrCreate([
+                    'external_id' => $playerDTO->getExternalID()
+                ], [
+                    'team_id' => $playerDTO->getTeam()->id,
+                    'first_name' => $playerDTO->getFirstName(),
+                    'last_name' => $playerDTO->getLastName()
+                ]);
+                $player->positions()->syncWithoutDetaching($playerDTO->getPositions()->pluck('id')->toArray());
+            });
         });
     }
 }
