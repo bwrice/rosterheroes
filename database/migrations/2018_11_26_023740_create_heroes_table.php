@@ -20,7 +20,7 @@ class CreateHeroesTable extends Migration
             $table->string('slug');
             $table->integer('hero_class_id')->unsigned();
             $table->integer('hero_rank_id')->unsigned();
-            $table->integer('game_player_id')->unsigned()->nullable();
+            $table->integer('weekly_game_player_id')->unsigned()->nullable();
             $table->smallInteger('salary')->nullable();
             $table->timestamps();
         });
@@ -28,7 +28,7 @@ class CreateHeroesTable extends Migration
         Schema::table('heroes', function (Blueprint $table) {
             $table->foreign('hero_class_id')->references('id')->on('hero_classes');
             $table->foreign('hero_rank_id')->references('id')->on('hero_ranks');
-            $table->foreign('game_player_id')->references('id')->on('game_players');
+            $table->foreign('weekly_game_player_id')->references('id')->on('game_players');
         });
     }
 

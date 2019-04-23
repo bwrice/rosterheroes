@@ -10,7 +10,7 @@ use App\Exceptions\GameStartedException;
 use App\Exceptions\InvalidWeekException;
 use App\Exceptions\InvalidPositionsException;
 use App\Exceptions\NotEnoughSalaryException;
-use App\Domain\Models\GamePlayer;
+use App\Domain\Models\WeeklyGamePlayer;
 use App\Domain\Models\HeroClass;
 use App\Domain\Collections\HeroCollection;
 use App\Domain\Models\HeroPost;
@@ -50,7 +50,7 @@ use Spatie\Sluggable\SlugOptions;
  *
  * @property HeroClass $heroClass
  * @property HeroPost $heroPost
- * @property GamePlayer|null $gamePlayer
+ * @property WeeklyGamePlayer|null $weeklyGamePlayer
  *
  * @property \App\Domain\Collections\SlotCollection $slots
  * @property Collection $measurables
@@ -105,9 +105,9 @@ class Hero extends EventSourcedModel implements HasSlots
         return $this->hasOne(HeroPost::class);
     }
 
-    public function gamePlayer()
+    public function weeklyGamePlayer()
     {
-        return $this->belongsTo(GamePlayer::class);
+        return $this->belongsTo(WeeklyGamePlayer::class);
     }
 
     /**
@@ -263,38 +263,38 @@ class Hero extends EventSourcedModel implements HasSlots
     }
 
     /**
-     * @param GamePlayer $gamePlayer
+     * @param WeeklyGamePlayer $weeklyGamePlayer
      */
-    public function addGamePlayer(GamePlayer $gamePlayer)
+    public function addWeeklyGamePlayer(WeeklyGamePlayer $weeklyGamePlayer)
     {
-        if(! Week::isCurrent($gamePlayer->game->week)) {
+        if(! Week::isCurrent($weeklyGamePlayer->week)) {
             $exception = new InvalidWeekException();
-            $exception->setWeeks($gamePlayer->game->week, new WeekCollection([
+            $exception->setWeeks($weeklyGamePlayer->week, new WeekCollection([
                 Week::current()
             ]));
             throw $exception;
         }
 
-        if (! $this->heroPost->getPositions()->intersect($gamePlayer->getPositions())->count() > 0 ) {
+        if (! $this->heroPost->getPositions()->intersect($weeklyGamePlayer->getPositions())->count() > 0 ) {
             $exception = new InvalidPositionsException();
-            $exception->setPositions($this->heroPost->getPositions(), $gamePlayer->getPositions());
+            $exception->setPositions($this->heroPost->getPositions(), $weeklyGamePlayer->getPositions());
             throw $exception;
         }
 
-        if(! $this->canAfford($gamePlayer->salary)) {
+        if(! $this->canAfford($weeklyGamePlayer->salary)) {
             $exception = new NotEnoughSalaryException();
-            $exception->setSalaries($this->availableSalary(), $gamePlayer->salary);
+            $exception->setSalaries($this->availableSalary(), $weeklyGamePlayer->salary);
             throw $exception;
         }
 
-        if($gamePlayer->game->hasStarted()) {
+        if($weeklyGamePlayer->gamePlayer->game->hasStarted()) {
             $exception = new GameStartedException();
-            $exception->setGame($gamePlayer->game);
+            $exception->setGame($weeklyGamePlayer->gamePlayer->game);
             throw $exception;
         }
 
-        $this->game_player_id = $gamePlayer->id;
-        $this->salary = $gamePlayer->salary;
+        $this->game_player_id = $weeklyGamePlayer->id;
+        $this->salary = $weeklyGamePlayer->salary;
         $this->save();
     }
 

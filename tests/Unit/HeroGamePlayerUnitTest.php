@@ -10,7 +10,7 @@ use App\Domain\Models\Game;
 use App\Domain\Models\Hero;
 use App\Domain\Models\HeroClass;
 use App\Domain\Models\HeroPost;
-use App\Domain\Models\GamePlayer;
+use App\Domain\Models\WeeklyGamePlayer;
 use App\Domain\Models\Position;
 use App\Domain\Models\Squad;
 use App\Domain\Models\Week;
@@ -36,25 +36,25 @@ class HeroGamePlayerUnitTest extends TestCase
             'hero_id' => $hero->id
         ]);
 
-        /** @var \App\Domain\Models\GamePlayer $gamePlayer */
-        $gamePlayer = factory(GamePlayer::class)->create();
-        Week::setTestCurrent($gamePlayer->game->week);
+        /** @var \App\Domain\Models\WeeklyGamePlayer $gamePlayer */
+        $gamePlayer = factory(WeeklyGamePlayer::class)->create();
+        Week::setTestCurrent($gamePlayer->gamePlayer->game->week);
 
         // where NOT IN
         $playerPosition = Position::query()
             ->whereNotIn('id', $heroPost->heroRace->positions->pluck('id')->toArray())
             ->inRandomOrder()->first();
 
-        $gamePlayer->player->positions()->attach($playerPosition);
+        $gamePlayer->gamePlayer->player->positions()->attach($playerPosition);
 
         try {
 
-            $hero->addGamePlayer($gamePlayer);
+            $hero->addWeeklyGamePlayer($gamePlayer);
 
         } catch (InvalidPositionsException $e) {
 
             $hero = $hero->fresh();
-            $this->assertNull($hero->gamePlayer);
+            $this->assertNull($hero->weeklyGamePlayer);
 
             Week::setTestCurrent(); //clear testing week
             return;
@@ -83,31 +83,30 @@ class HeroGamePlayerUnitTest extends TestCase
         ]);
 
         $playerWeekSalary = $squadSalary + 3000;
-        /** @var \App\Domain\Models\GamePlayer $gamePlayer */
-        $gamePlayer = factory(GamePlayer::class)->create([
-            'initial_salary' => $playerWeekSalary,
+        /** @var \App\Domain\Models\WeeklyGamePlayer $gamePlayer */
+        $gamePlayer = factory(WeeklyGamePlayer::class)->create([
             'salary' => $playerWeekSalary
         ]);
 
-        Week::setTestCurrent($gamePlayer->game->week);
+        Week::setTestCurrent($gamePlayer->week);
 
         // where IN
         $playerPosition = Position::query()
             ->whereIn('id', $heroPost->heroRace->positions->pluck('id')->toArray())
             ->inRandomOrder()->first();
 
-        $gamePlayer->player->positions()->attach($playerPosition);
+        $gamePlayer->gamePlayer->player->positions()->attach($playerPosition);
 
         $this->assertEquals($squadSalary, $hero->availableSalary());
 
         try {
 
-            $hero->addGamePlayer($gamePlayer);
+            $hero->addWeeklyGamePlayer($gamePlayer);
 
         } catch (NotEnoughSalaryException $e) {
 
             $hero = $hero->fresh();
-            $this->assertNull($hero->gamePlayer);
+            $this->assertNull($hero->weeklyGamePlayer);
 
             return;
         }
@@ -128,27 +127,27 @@ class HeroGamePlayerUnitTest extends TestCase
             'hero_id' => $hero->id,
         ]);
 
-        /** @var \App\Domain\Models\GamePlayer $gamePlayer */
-        $gamePlayer = factory(GamePlayer::class)->create();
+        /** @var \App\Domain\Models\WeeklyGamePlayer $gamePlayer */
+        $gamePlayer = factory(WeeklyGamePlayer::class)->create();
 
-        Week::setTestCurrent($gamePlayer->game->week);
-        CarbonImmutable::setTestNow($gamePlayer->game->starts_at->copy()->addMinutes(5));
+        Week::setTestCurrent($gamePlayer->gamePlayer->game->week);
+        CarbonImmutable::setTestNow($gamePlayer->gamePlayer->game->starts_at->copy()->addMinutes(5));
 
         // where IN
         $playerPosition = Position::query()
             ->whereIn('id', $heroPost->heroRace->positions->pluck('id')->toArray())
             ->inRandomOrder()->first();
 
-        $gamePlayer->player->positions()->attach($playerPosition);
+        $gamePlayer->gamePlayer->player->positions()->attach($playerPosition);
 
         try {
 
-            $hero->addGamePlayer($gamePlayer);
+            $hero->addWeeklyGamePlayer($gamePlayer);
 
         } catch (GameStartedException $e) {
 
             $hero = $hero->fresh();
-            $this->assertNull($hero->gamePlayer);
+            $this->assertNull($hero->weeklyGamePlayer);
 
             return;
         }
@@ -169,8 +168,8 @@ class HeroGamePlayerUnitTest extends TestCase
             'hero_id' => $hero->id,
         ]);
 
-        /** @var \App\Domain\Models\GamePlayer $gamePlayer */
-        $gamePlayer = factory(GamePlayer::class)->create();
+        /** @var \App\Domain\Models\WeeklyGamePlayer $gamePlayer */
+        $gamePlayer = factory(WeeklyGamePlayer::class)->create();
 
         /** @var \App\Domain\Models\Week $differentWeek */
         $differentWeek = factory(Week::class)->create();
@@ -183,17 +182,17 @@ class HeroGamePlayerUnitTest extends TestCase
             ->whereIn('id', $heroPost->heroRace->positions->pluck('id')->toArray())
             ->inRandomOrder()->first();
 
-        $gamePlayer->player->positions()->attach($playerPosition);
+        $gamePlayer->gamePlayer->player->positions()->attach($playerPosition);
 
         try {
 
-            $hero->addGamePlayer($gamePlayer);
+            $hero->addWeeklyGamePlayer($gamePlayer);
 
         } catch (InvalidWeekException $e) {
 
             $hero = $hero->fresh();
-            $this->assertNull($hero->gamePlayer);
-            $this->assertEquals($e->getInvalidWeek(), $gamePlayer->game->week);
+            $this->assertNull($hero->weeklyGamePlayer);
+            $this->assertEquals($e->getInvalidWeek(), $gamePlayer->gamePlayer->game->week);
 
             return;
         }

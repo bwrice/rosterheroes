@@ -2,39 +2,26 @@
 
 namespace App\Domain\Models;
 
-use App\Domain\Models\EventSourcedModel;
-use App\Domain\Models\Game;
-use App\Domain\Models\Player;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class PlayerWeek
- * @package App
+ * Class GamePlayer
+ * @package App\Domain\Models
  *
  * @property int $id
- * @property string $uuid
- * @property int $initial_salary
- * @property int $salary
  *
- * @property Player $player
  * @property Game $game
+ * @property Player $player
  */
-class GamePlayer extends EventSourcedModel
+class GamePlayer extends Model
 {
-    const MIN_SALARY = 3000;
-
-    public function player()
-    {
-        return $this->belongsTo(Player::class);
-    }
-
     public function game()
     {
         return $this->belongsTo(Game::class);
     }
 
-    public function getPositions()
+    public function player()
     {
-        return $this->player->positions;
+        return $this->belongsTo(Player::class);
     }
 }

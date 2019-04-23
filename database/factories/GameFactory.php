@@ -15,7 +15,6 @@ $factory->define(\App\Domain\Models\Game::class, function (Faker $faker) {
     ]);
 
     return [
-        'week_id' => $week->id,
         'home_team_id' => $homeTeam->id,
         'away_team_id' => $awayTeam->id,
         'starts_at' => $week->everything_locks_at->copy()->addHours(6),

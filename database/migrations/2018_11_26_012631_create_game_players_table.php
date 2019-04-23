@@ -15,11 +15,8 @@ class CreateGamePlayersTable extends Migration
     {
         Schema::create('game_players', function (Blueprint $table) {
             $table->increments('id');
-            $table->uuid('uuid');
             $table->integer('player_id')->unsigned();
             $table->integer('game_id')->unsigned();
-            $table->smallInteger('initial_salary');
-            $table->smallInteger('salary');
             $table->timestamps();
         });
 

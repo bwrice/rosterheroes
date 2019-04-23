@@ -15,7 +15,6 @@ class CreateGamesTable extends Migration
     {
         Schema::create('games', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('week_id')->unsigned();
             $table->integer('home_team_id')->unsigned();
             $table->integer('away_team_id')->unsigned();
             $table->dateTime('starts_at');
@@ -24,7 +23,6 @@ class CreateGamesTable extends Migration
         });
 
         Schema::table('games', function (Blueprint $table) {
-            $table->foreign('week_id')->references('id')->on('weeks');
             $table->foreign('home_team_id')->references('id')->on('teams');
             $table->foreign('away_team_id')->references('id')->on('teams');
         });
