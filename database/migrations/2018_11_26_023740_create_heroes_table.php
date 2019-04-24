@@ -21,7 +21,6 @@ class CreateHeroesTable extends Migration
             $table->integer('hero_class_id')->unsigned();
             $table->integer('hero_rank_id')->unsigned();
             $table->integer('weekly_game_player_id')->unsigned()->nullable();
-            $table->smallInteger('salary')->nullable();
             $table->timestamps();
         });
 

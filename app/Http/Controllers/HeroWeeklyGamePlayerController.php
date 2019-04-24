@@ -30,7 +30,7 @@ class HeroWeeklyGamePlayerController extends Controller
         try {
             //TODO middleware
             $hero->addWeeklyGamePlayer($weeklyGamePlayer);
-            return response($hero->load('gamePlayer')->toJson(), 201);
+            return response($hero->load('weeklyGamePlayer')->toJson(), 201);
 
         } catch (InvalidWeekException $exception) {
             Log::error("User attempted to add weekly-game-player from a different week to hero", [

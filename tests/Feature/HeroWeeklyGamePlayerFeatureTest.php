@@ -68,7 +68,6 @@ class HeroWeeklyGamePlayerFeatureTest extends TestCase
 
         $hero = $hero->fresh();
         $this->assertEquals($weeklyGamePlayer->id, $hero->weeklyGamePlayer->id);
-        $this->assertEquals($hero->salary, $weeklyGamePlayer->salary);
 
         CarbonImmutable::setTestNow(); // clear testing mock
         Week::setTestCurrent(); // clear test week

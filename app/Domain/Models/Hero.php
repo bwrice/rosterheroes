@@ -43,7 +43,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $hero_race_id
  * @property int $hero_class_id
  * @property int $hero_rank_id
- * @property int $game_player_id
+ * @property int $weekly_game_player_id
  * @property int $salary
  * @property string $name
  * @property string $slug
@@ -293,8 +293,7 @@ class Hero extends EventSourcedModel implements HasSlots
             throw $exception;
         }
 
-        $this->game_player_id = $weeklyGamePlayer->id;
-        $this->salary = $weeklyGamePlayer->salary;
+        $this->weekly_game_player_id = $weeklyGamePlayer->id;
         $this->save();
     }
 

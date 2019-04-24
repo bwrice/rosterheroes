@@ -134,6 +134,8 @@ class MySportsFeedTest extends TestCase
         $msfIntegration = app(MySportsFeed::class);
         $playerDTOs = $msfIntegration->getPlayerDTOs($mlb);
 
+
+
         $this->assertEquals(3, $playerDTOs->count(), "Correct amount of DTOs");
 
         /** @var PlayerDTO $outfieldPlayer */

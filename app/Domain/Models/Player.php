@@ -37,13 +37,6 @@ class Player extends Model
         return $this->belongsTo(Team::class);
     }
 
-    /**
-     * @return Game|null
-     */
-    public function getThisWeeksGame()
-    {
-        return $this->team->thisWeeksGame();
-    }
 
     public function fullName()
     {

@@ -16,7 +16,6 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property \App\Domain\Models\Team $homeTeam
  * @property \App\Domain\Models\Team $awayTeam
- * @property Week $week
  */
 class Game extends Model
 {
@@ -41,10 +40,5 @@ class Game extends Model
     public function hasStarted()
     {
         return $this->starts_at->isPast();
-    }
-
-    public function week()
-    {
-        return $this->belongsTo(Week::class);
     }
 }

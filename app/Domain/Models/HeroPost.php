@@ -40,6 +40,7 @@ class HeroPost extends Model
         return $this->belongsTo(Hero::class);
     }
 
+    // TODO make this belongs to many
     public function heroRace()
     {
         return $this->belongsTo(HeroRace::class);
