@@ -56,7 +56,7 @@ class AddHeroToSquad
      * @throws HeroPostNotFoundException
      * @throws InvalidHeroClassException
      */
-    public function execute()
+    public function __invoke()
     {
         $heroPost = $this->squad->getHeroPostAvailability()->heroRace($this->heroRace)->first();
         if (! $heroPost) {

@@ -37,7 +37,7 @@ class AddHeroToSquadTest extends TestCase
 
         try {
             $action = new AddHeroToSquad($squad, $heroRace, $heroClass, 'TestHero' . rand(1,999999));
-            $action->execute();
+            $action();
         } catch (HeroPostNotFoundException $exception) {
             $this->assertEquals(0, $squad->getHeroes()->count());
             return;
@@ -60,7 +60,7 @@ class AddHeroToSquadTest extends TestCase
 
         try {
             $action = new AddHeroToSquad($heroPost->squad, $heroRace, $heroClass, 'TestHero' . rand(1,999999));
-            $action->execute();
+            $action();
         } catch (HeroPostNotFoundException $exception) {
             $this->assertEquals(0, $heroPost->squad->getHeroes()->count());
             return;
@@ -112,7 +112,7 @@ class AddHeroToSquadTest extends TestCase
         try {
             $emptyHeroRace = $heroPosts->postFilled(false)->first()->heroRace;
             $action = new AddHeroToSquad($squad, $emptyHeroRace, $heroClass, 'TestHero' . rand(1,999999));
-            $action->execute();
+            $action();
         } catch (InvalidHeroClassException $exception) {
             $this->assertEquals($heroClass, $exception->getHeroClass());
             $this->assertEquals($sameHeroClassCountToAdd, $squad->getHeroes()->count());

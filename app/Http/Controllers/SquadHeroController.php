@@ -48,7 +48,7 @@ class SquadHeroController extends Controller
         $action = new AddHeroToSquad($squad, $heroRace, $heroClass, $request->name);
 
         try {
-            $hero = $action->execute();
+            $hero = $action();
             return response()->json(new HeroResource($hero->fresh()), 201);
         } catch (HeroPostNotFoundException $exception) {
             throw ValidationException::withMessages([
