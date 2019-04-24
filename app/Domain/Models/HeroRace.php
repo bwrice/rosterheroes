@@ -4,6 +4,7 @@ namespace App\Domain\Models;
 
 use App\Domain\Models\Position;
 use App\Domain\Collections\PositionCollection;
+use App\HeroPostType;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,7 +14,9 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property string $name
+ *
  * @property PositionCollection $positions
+ * @property Collection $heroPostTypes
  */
 class HeroRace extends Model
 {
@@ -27,6 +30,11 @@ class HeroRace extends Model
     public function positions()
     {
         return $this->belongsToMany(Position::class)->withTimestamps();
+    }
+
+    public function heroPostTypes()
+    {
+        return $this->belongsToMany(HeroPostType::class)->withTimestamps();
     }
 
     /**
