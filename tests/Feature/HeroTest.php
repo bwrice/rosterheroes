@@ -56,7 +56,7 @@ class HeroTest extends TestCase
 
         $this->assertEquals($heroName, $hero->name);
         $this->assertEquals($heroClass, $hero->heroClass->name);
-        $this->assertEquals($heroRace, $hero->getHeroRace()->name);
+        $this->assertEquals($heroRace, $hero->heroRace->name);
 
         $heroSlotTypes = SlotType::heroTypes();
         $heroSlots = $hero->slots;

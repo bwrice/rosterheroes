@@ -10,6 +10,7 @@ use App\Domain\Models\HeroClass;
 use App\Domain\Models\HeroPost;
 use App\Domain\Models\HeroRace;
 use App\Domain\Models\Squad;
+use App\HeroPostType;
 use App\Squads\HeroClassAvailability;
 use App\Squads\HeroPostAvailability;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -54,7 +55,9 @@ class AddHeroToSquadTest extends TestCase
         /** @var \App\Domain\Models\HeroPost $heroPost */
         $heroPost = factory(HeroPost::class)->create();
         /** @var \App\Domain\Models\HeroRace $heroRace */
-        $heroRace = HeroRace::query()->where('id', '!=', $heroPost->hero_race_id)->inRandomOrder()->first();
+        $validHeroRaceIDs = $heroPost->heroPostType->heroRaces->pluck('id')->toArray();
+        // get Hero Race with ID NOT equal to a valid hero race ID
+        $heroRace = HeroRace::query()->whereNotIn('id', $validHeroRaceIDs)->inRandomOrder()->first();
         /** @var \App\Domain\Models\HeroClass $heroClass */
         $heroClass = HeroClass::query()->inRandomOrder()->first();
 
@@ -77,11 +80,11 @@ class AddHeroToSquadTest extends TestCase
         /** @var \App\Domain\Models\Squad $squad */
         $squad = factory(Squad::class)->create();
 
-        foreach (Squad::STARTING_HERO_POSTS as $heroRaceName => $count) {
+        foreach (Squad::STARTING_HERO_POST_TYPES as $heroPostType => $count) {
             foreach(range(1, $count) as $heroPostNumber) {
                 factory(HeroPost::class)->create([
                     'squad_id' => $squad->id,
-                    'hero_race_id' => HeroRace::where('name', '=', $heroRaceName)->first()->id
+                    'hero_post_type_id' => HeroPostType::query()->where('name', '=', $heroPostType)->first()->id
                 ]);
             }
         }
@@ -110,8 +113,11 @@ class AddHeroToSquadTest extends TestCase
         $this->assertTrue($squad->inCreationState());
 
         try {
-            $emptyHeroRace = $heroPosts->postFilled(false)->first()->heroRace;
-            $action = new AddHeroToSquad($squad, $emptyHeroRace, $heroClass, 'TestHero' . rand(1,999999));
+            /** @var HeroPost $availableHeroPost */
+            $availableHeroPost = $heroPosts->postFilled(false)->first();
+            $this->assertNotNull($availableHeroPost);
+            $heroRace = $availableHeroPost->heroPostType->heroRaces->first();
+            $action = new AddHeroToSquad($squad, $heroRace, $heroClass, 'TestHero' . rand(1,999999));
             $action();
         } catch (InvalidHeroClassException $exception) {
             $this->assertEquals($heroClass, $exception->getHeroClass());

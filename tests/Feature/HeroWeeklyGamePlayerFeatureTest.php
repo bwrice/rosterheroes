@@ -40,16 +40,15 @@ class HeroWeeklyGamePlayerFeatureTest extends TestCase
         $heroRace = HeroRace::where('name', '=', $heroRaceName)->first();
         $position = $heroRace->positions()->inRandomOrder()->first();
 
-        /** @var HeroPost $heroPost */
-        $heroPost = factory(HeroPost::class)->create([
+        /** @var \App\Domain\Models\Hero $hero */
+        $hero = factory(Hero::class)->create([
             'hero_race_id' => $heroRace->id
         ]);
 
-        /** @var \App\Domain\Models\Hero $hero */
-        $hero = factory(Hero::class)->create();
-
-        $heroPost->hero_id = $hero->id;
-        $heroPost->save();
+        /** @var HeroPost $heroPost */
+        $heroPost = factory(HeroPost::class)->create([
+            'hero_id' => $hero->id
+        ]);
 
         /** @var WeeklyGamePlayer $weeklyGamePlayer */
         $weeklyGamePlayer = factory(WeeklyGamePlayer::class)->create();
@@ -102,16 +101,15 @@ class HeroWeeklyGamePlayerFeatureTest extends TestCase
         /** @var \App\Domain\Models\HeroRace $heroRace */
         $heroRace = HeroRace::where('name', '=', $heroRaceName)->first();
 
-        /** @var HeroPost $heroPost */
-        $heroPost = factory(HeroPost::class)->create([
+        /** @var \App\Domain\Models\Hero $hero */
+        $hero = factory(Hero::class)->create([
             'hero_race_id' => $heroRace->id
         ]);
 
-        /** @var Hero $hero */
-        $hero = factory(Hero::class)->create();
-
-        $heroPost->hero_id = $hero->id;
-        $heroPost->save();
+        /** @var HeroPost $heroPost */
+        $heroPost = factory(HeroPost::class)->create([
+            'hero_id' => $hero->id
+        ]);
 
         /** @var WeeklyGamePlayer $weeklyGamePlayer */
         $weeklyGamePlayer = factory(WeeklyGamePlayer::class)->create();
@@ -148,6 +146,12 @@ class HeroWeeklyGamePlayerFeatureTest extends TestCase
         $heroRace = HeroRace::query()->inRandomOrder()->first();
         $position = $heroRace->positions()->inRandomOrder()->first();
 
+
+        /** @var \App\Domain\Models\Hero $hero */
+        $hero = factory(Hero::class)->create([
+            'hero_race_id' => $heroRace->id
+        ]);
+
         $squadSalary = 5000;
         /** @var \App\Domain\Models\Squad $squad */
         $squad = factory(Squad::class)->create([
@@ -156,15 +160,9 @@ class HeroWeeklyGamePlayerFeatureTest extends TestCase
 
         /** @var HeroPost $heroPost */
         $heroPost = factory(HeroPost::class)->create([
-            'hero_race_id' => $heroRace->id,
+            'hero_id' => $hero->id,
             'squad_id' => $squad->id
         ]);
-
-        /** @var \App\Domain\Models\Hero $hero */
-        $hero = factory(Hero::class)->create();
-
-        $heroPost->hero_id = $hero->id;
-        $heroPost->save();
 
         /** @var WeeklyGamePlayer $weeklyGamePlayer */
         $weeklyGamePlayer = factory(WeeklyGamePlayer::class)->create([

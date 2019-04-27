@@ -14,6 +14,7 @@ use App\Domain\Models\SlotType;
 use App\Domain\Models\Squad;
 use App\Domain\Models\User;
 use App\Domain\Models\Week;
+use App\HeroPostType;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -54,9 +55,9 @@ class SquadFeatureTest extends TestCase
 
         $this->assertEquals( count(Squad::STARTING_HERO_POSTS), $squad->heroPosts->count(), 'Squad has correct number of hero posts');
 
-       foreach( Squad::STARTING_HERO_POSTS as $heroRaceName => $count ) {
-           $heroRace = HeroRace::where('name', '=', $heroRaceName)->first();
-           $this->assertEquals($count, $squad->heroPosts->where('hero_race_id', '=', $heroRace->id)->count(), "Correct amount of hero posts by hero race");
+       foreach( Squad::STARTING_HERO_POST_TYPES as $heroPostTypeName => $count ) {
+           $heroPostTypeName = HeroPostType::where('name', '=', $heroPostTypeName)->first();
+           $this->assertEquals($count, $squad->heroPosts->where('hero_post_type_id', '=', $heroPostTypeName->id)->count(), "Correct amount of hero posts by hero post type");
        }
     }
 

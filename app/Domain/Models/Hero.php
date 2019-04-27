@@ -50,6 +50,7 @@ use Spatie\Sluggable\SlugOptions;
  *
  * @property HeroClass $heroClass
  * @property HeroPost $heroPost
+ * @property HeroRace $heroRace
  * @property WeeklyGamePlayer|null $weeklyGamePlayer
  *
  * @property \App\Domain\Collections\SlotCollection $slots
@@ -95,10 +96,15 @@ class Hero extends EventSourcedModel implements HasSlots
         return $this->belongsTo(HeroClass::class);
     }
 
-    public function getHeroRace()
+    public function heroRace()
     {
-        return $this->heroPost->heroRace;
+        return $this->belongsTo(HeroRace::class);
     }
+
+//    public function getHeroRace()
+//    {
+//        return $this->heroPost->heroRace;
+//    }
 
     public function heroPost()
     {
@@ -275,9 +281,9 @@ class Hero extends EventSourcedModel implements HasSlots
             throw $exception;
         }
 
-        if (! $this->heroPost->getPositions()->intersect($weeklyGamePlayer->getPositions())->count() > 0 ) {
+        if (! $this->heroRace->positions->intersect($weeklyGamePlayer->getPositions())->count() > 0 ) {
             $exception = new InvalidPositionsException();
-            $exception->setPositions($this->heroPost->getPositions(), $weeklyGamePlayer->getPositions());
+            $exception->setPositions($this->heroRace->positions, $weeklyGamePlayer->getPositions());
             throw $exception;
         }
 

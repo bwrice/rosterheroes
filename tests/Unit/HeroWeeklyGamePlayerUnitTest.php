@@ -14,6 +14,7 @@ use App\Domain\Models\WeeklyGamePlayer;
 use App\Domain\Models\Position;
 use App\Domain\Models\Squad;
 use App\Domain\Models\Week;
+use App\HeroPostType;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -40,9 +41,11 @@ class HeroWeeklyGamePlayerUnitTest extends TestCase
         $weeklyGamePlayer = factory(WeeklyGamePlayer::class)->create();
         Week::setTestCurrent($weeklyGamePlayer->week);
 
+        $validPositions = $hero->heroRace->positions;
+
         // where NOT IN
         $playerPosition = Position::query()
-            ->whereNotIn('id', $heroPost->heroRace->positions->pluck('id')->toArray())
+            ->whereNotIn('id', $validPositions->pluck('id')->toArray())
             ->inRandomOrder()->first();
 
         $weeklyGamePlayer->gamePlayer->player->positions()->attach($playerPosition);
@@ -68,6 +71,7 @@ class HeroWeeklyGamePlayerUnitTest extends TestCase
      */
     public function adding_a_game_player_with_too_high_a_salary_will_throw_an_exception()
     {
+
         /** @var \App\Domain\Models\Hero $hero */
         $hero = factory(Hero::class)->create();
 
@@ -79,7 +83,7 @@ class HeroWeeklyGamePlayerUnitTest extends TestCase
         /** @var \App\Domain\Models\HeroPost $heroPost */
         $heroPost = factory(HeroPost::class)->create([
             'hero_id' => $hero->id,
-            'squad_id' => $squad->id
+            'squad_id' => $squad->id,
         ]);
 
         $playerWeekSalary = $squadSalary + 3000;
@@ -90,11 +94,19 @@ class HeroWeeklyGamePlayerUnitTest extends TestCase
 
         Week::setTestCurrent($weeklyGamePlayer->week);
 
+        /*
+         * We don't get positions from the hero post type, but instead, get them from the
+         * HeroRace directly. It's not this test's responsibility to check the hero's race is valid for the hero post
+         */
+
+        $validPositions = $hero->heroRace->positions;
+        $validPositionIDs = $validPositions->pluck('id')->toArray();
         // where IN
         $playerPosition = Position::query()
-            ->whereIn('id', $heroPost->heroRace->positions->pluck('id')->toArray())
+            ->whereIn('id', $validPositionIDs)
             ->inRandomOrder()->first();
 
+        $this->assertTrue(in_array($playerPosition->id, $validPositionIDs), 'Position ID');
         $weeklyGamePlayer->gamePlayer->player->positions()->attach($playerPosition);
 
         $this->assertEquals($squadSalary, $hero->availableSalary());
@@ -133,9 +145,11 @@ class HeroWeeklyGamePlayerUnitTest extends TestCase
         Week::setTestCurrent($weeklyGamePlayer->week);
         CarbonImmutable::setTestNow($weeklyGamePlayer->gamePlayer->game->starts_at->copy()->addMinutes(5));
 
+        $validPositions = $hero->heroRace->positions;
+
         // where IN
         $playerPosition = Position::query()
-            ->whereIn('id', $heroPost->heroRace->positions->pluck('id')->toArray())
+            ->whereIn('id', $validPositions->pluck('id')->toArray())
             ->inRandomOrder()->first();
 
         $weeklyGamePlayer->gamePlayer->player->positions()->attach($playerPosition);
@@ -177,9 +191,11 @@ class HeroWeeklyGamePlayerUnitTest extends TestCase
         Week::setTestCurrent($differentWeek);
         CarbonImmutable::setTestNow($differentWeek->ends_at->copy()->subDays(2));
 
+        $validPositions = $hero->heroRace->positions;
+
         // where IN
         $playerPosition = Position::query()
-            ->whereIn('id', $heroPost->heroRace->positions->pluck('id')->toArray())
+            ->whereIn('id', $validPositions->pluck('id')->toArray())
             ->inRandomOrder()->first();
 
         $weeklyGamePlayer->gamePlayer->player->positions()->attach($playerPosition);

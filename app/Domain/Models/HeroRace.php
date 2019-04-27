@@ -2,6 +2,7 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Collections\HeroRaceCollection;
 use App\Domain\Models\Position;
 use App\Domain\Collections\PositionCollection;
 use App\HeroPostType;
@@ -26,6 +27,11 @@ class HeroRace extends Model
     const ORC = 'orc';
 
     protected $guarded = [];
+
+    public function newCollection(array $models = [])
+    {
+        return new HeroRaceCollection($models);
+    }
 
     public function positions()
     {

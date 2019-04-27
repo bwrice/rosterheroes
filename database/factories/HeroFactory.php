@@ -7,6 +7,7 @@ $factory->define(\App\Domain\Models\Hero::class, function (Faker $faker) {
 
     $name = 'TestHero' . str_random(8);
     $class = \App\Domain\Models\HeroClass::query()->inRandomOrder()->first();
+    $heroRace = \App\Domain\Models\HeroRace::query()->inRandomOrder()->first();
     $rank = \App\Domain\Models\HeroRank::private();
     $uuid = (string) \Ramsey\Uuid\Uuid::uuid4();
 
@@ -15,6 +16,7 @@ $factory->define(\App\Domain\Models\Hero::class, function (Faker $faker) {
         'uuid' => $uuid,
         'hero_class_id' => $class->id,
         'hero_rank_id' => $rank->id,
+        'hero_race_id' => $heroRace->id
     ];
 });
 

@@ -7,6 +7,8 @@ use App\Domain\Models\HeroRace;
 use App\Domain\Models\Player;
 use App\Domain\Collections\HeroPostCollection;
 use App\Domain\Models\Squad;
+use App\HeroPostType;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -14,12 +16,11 @@ use Illuminate\Database\Eloquent\Model;
  * @package App\Heroes\HeroPosts
  *
  * @property int $squad_id
- * @property int $hero_race_id
  * @property int|null $hero_id
  *
  * @property Squad $squad
  * @property \App\Domain\Models\Hero|null $hero
- * @property HeroRace $heroRace
+ * @property HeroPostType $heroPostType
  */
 class HeroPost extends Model
 {
@@ -40,19 +41,13 @@ class HeroPost extends Model
         return $this->belongsTo(Hero::class);
     }
 
-    // TODO make this belongs to many
-    public function heroRace()
+    public function heroPostType()
     {
-        return $this->belongsTo(HeroRace::class);
+        return $this->belongsTo(HeroPostType::class);
     }
 
-//    public function hasPosition(Player $player)
-//    {
-//        return $this->heroRace->positions->intersect($player->positions)->count() > 0;
-//    }
-
-    public function getPositions()
+    public function getHeroRaces()
     {
-        return $this->heroRace->positions;
+        return $this->heroPostType->heroRaces;
     }
 }

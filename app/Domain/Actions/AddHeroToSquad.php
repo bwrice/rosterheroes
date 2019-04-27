@@ -70,7 +70,8 @@ class AddHeroToSquad
         $hero = Hero::createWithAttributes([
             'name' => $this->heroName,
             'hero_class_id' => $this->heroClass->id,
-            'hero_rank_id' => HeroRank::getStarting()->id
+            'hero_rank_id' => HeroRank::getStarting()->id,
+            'hero_race_id' => $this->heroRace->id
         ]);
 
         $heroPost->hero_id = $hero->id;

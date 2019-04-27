@@ -33,6 +33,7 @@ use App\Domain\Collections\HeroPostCollection;
 use App\Domain\Interfaces\HasSlots;
 use App\Domain\Slot;
 use App\Domain\Collections\SlotCollection;
+use App\HeroPostType;
 use App\Squads\HeroClassAvailability;
 use App\Squads\HeroPostAvailability;
 use App\Squads\HeroRaceAvailability;
@@ -90,6 +91,13 @@ class Squad extends EventSourcedModel implements HasSlots
         HeroRace::ORC => 1
     ];
 
+    public const STARTING_HERO_POST_TYPES = [
+        HeroPostType::HUMAN => 1,
+        HeroPostType::ELF => 1,
+        HeroPostType::DWARF => 1,
+        HeroPostType::ORC => 1
+    ];
+
     protected $guarded = [];
 
     /**
@@ -104,44 +112,8 @@ class Squad extends EventSourcedModel implements HasSlots
 
     public static function getStartingHeroesCount()
     {
-        return collect(self::STARTING_HERO_POSTS)->sum();
+        return collect(self::STARTING_HERO_POST_TYPES)->sum();
     }
-
-//    /**
-//     * @param int $userID
-//     * @param string $name
-//     * @param array $heroesData
-//     * @return Squad
-//     * @throws \Exception
-//     *
-//     * Creates a new Squad with Heroes and triggers associated events
-//     */
-//    public static function generate(int $userID, string $name, array $heroesData)
-//    {
-//        /** @var Squad $squad */
-//        $squad = self::createWithAttributes([
-//            'user_id' => $userID,
-//            'name' => $name,
-//            'squad_rank_id' => SquadRank::getStarting()->id,
-//            'mobile_storage_rank_id' => MobileStorageRank::getStarting()->id,
-//            'province_id' => Province::getStarting()->id
-//        ]);
-//
-//        // Hooked into for adding wagon
-//        event(new SquadCreated($squad));
-//
-//        // Give starting salary, gold and favor to new squad
-//        $squad->increaseSalary(self::STARTING_SALARY);
-//        $squad->increaseGold(self::STARTING_GOLD);
-//        $squad->increaseFavor(self::STARTING_FAVOR);
-//
-//        foreach($heroesData as $hero) {
-//
-//            Hero::generate($squad, $hero['name'], $hero['class'], $hero['race']);
-//        }
-//
-//        return $squad->load('heroes', 'province');
-//    }
 
     public function increaseSalary(int $amount)
     {
@@ -175,25 +147,22 @@ class Squad extends EventSourcedModel implements HasSlots
         }
     }
 
-    /**
-     * @return Collection
-     */
-    public function getStartingHeroPostRaces()
-    {
-        return HeroRace::query()->whereIn('name', array_keys(self::STARTING_HERO_POSTS))->get();
-    }
-
     public function addStartingHeroPosts()
     {
-        $this->getStartingHeroPostRaces()->each(function(HeroRace $heroRace) {
-            $this->addHeroPost($heroRace);
+        collect(self::STARTING_HERO_POST_TYPES)->each(function ($count, $postTypeName) {
+
+            $heroPostType = HeroPostType::where('name', '=', $postTypeName)->first();
+
+            foreach(range(1, $count) as $heroPostTypeCount) {
+                $this->addHeroPost($heroPostType);
+            }
         });
     }
 
-    public function addHeroPost(HeroRace $heroRace)
+    public function addHeroPost(HeroPostType $heroPostType)
     {
         $this->heroPosts()->create([
-            'hero_race_id' => $heroRace->id
+            'hero_post_type_id' => $heroPostType->id
         ]);
     }
 
@@ -396,34 +365,6 @@ class Squad extends EventSourcedModel implements HasSlots
     }
 
     /**
-     * @param HeroRace $heroRace
-     * @param HeroClass $heroClass
-     * @param $name
-     * @return Hero
-     * @throws HeroPostNotFoundException
-     */
-    public function addHero(HeroRace $heroRace, HeroClass $heroClass, $name)
-    {
-        /** @var HeroPost $heroPost */
-        $heroPost = $this->heroPosts->postFilled(false)->heroRace($heroRace)->first();
-        if(! $heroPost) {
-            throw new HeroPostNotFoundException($heroRace);
-        }
-        $hero = Hero::createWithAttributes([
-            'name' => $name,
-            'hero_class_id' => $heroClass->id,
-            'hero_rank_id' => HeroRank::getStarting()->id
-        ]);
-
-        $heroPost->hero_id = $hero->id;
-        $heroPost->save();
-
-        $hero->addStartingSlots();
-        $hero->addStartingMeasurables();
-        return $hero->fresh();
-    }
-
-    /**
      * @return bool
      */
     public function inCreationState()
@@ -436,7 +377,7 @@ class Squad extends EventSourcedModel implements HasSlots
         $availableHeroPosts = $this->getHeroPostAvailability();
         $heroRaces = collect();
         $availableHeroPosts->each(function(HeroPost $heroPost) use ($heroRaces) {
-            return $heroRaces->push($heroPost->heroRace);
+            return $heroRaces->push($heroPost->heroRaces);
         });
 
         return $heroRaces->unique();
