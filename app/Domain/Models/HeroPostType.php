@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Domain\Models;
 
 use App\Domain\Collections\HeroRaceCollection;
 use App\Domain\Models\HeroRace;

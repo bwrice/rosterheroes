@@ -17,30 +17,30 @@ class SeedHeroPostTypes extends Migration
 
         $heroPostTypes = [
             [
-                'name' => \App\HeroPostType::HUMAN,
+                'name' => \App\Domain\Models\HeroPostType::HUMAN,
                 'races' => $heroRaces->where('name', '=', \App\Domain\Models\HeroRace::HUMAN)
 
             ],
             [
-                'name' => \App\HeroPostType::ELF,
+                'name' => \App\Domain\Models\HeroPostType::ELF,
                 'races' => $heroRaces->where('name', '=', \App\Domain\Models\HeroRace::ELF)
 
             ],
             [
-                'name' => \App\HeroPostType::DWARF,
+                'name' => \App\Domain\Models\HeroPostType::DWARF,
                 'races' => $heroRaces->where('name', '=', \App\Domain\Models\HeroRace::DWARF)
 
             ],
             [
-                'name' => \App\HeroPostType::ORC,
+                'name' => \App\Domain\Models\HeroPostType::ORC,
                 'races' => $heroRaces->where('name', '=', \App\Domain\Models\HeroRace::ORC)
 
             ]
         ];
 
         foreach ($heroPostTypes as $postType) {
-            /** @var \App\HeroPostType $createdHeroPostType */
-            $createdHeroPostType = \App\HeroPostType::create([
+            /** @var \App\Domain\Models\HeroPostType $createdHeroPostType */
+            $createdHeroPostType = \App\Domain\Models\HeroPostType::create([
                 'name' => $postType['name']
             ]);
 

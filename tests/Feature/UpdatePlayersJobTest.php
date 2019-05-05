@@ -9,7 +9,7 @@ use App\Domain\DataTransferObjects\PlayerDTO;
 use App\Domain\Models\Team;
 use App\External\Stats\MockIntegration;
 use App\External\Stats\StatsIntegration;
-use App\Jobs\UpdatePlayers;
+use App\Jobs\UpdatePlayersJob;
 use App\Domain\Models\Position;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Collection;
@@ -17,28 +17,38 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class UpdatePlayersTest extends TestCase
+class UpdatePlayersJobTest extends TestCase
 {
     use DatabaseTransactions;
 
     /**
      * @test
      */
-    public function it_will_update_players()
+    public function it_will_update_players_for_a_league()
     {
+        $league = League::nfl();
+
         $externalID1 = uniqid();
         $positions1 = Position::inRandomOrder()->take(3)->get();
-        $DTO1 = new PlayerDTO(factory(Team::class)->create(), $positions1, 'Bob', 'Johnson', $externalID1);
+        $teamForDTO1 = factory(Team::class)->create([
+            'league_id' => $league->id
+        ]);
+        $DTO1 = new PlayerDTO($teamForDTO1, $positions1, 'Bob', 'Johnson', $externalID1);
         $externalID2 = uniqid();
         $positions2 = Position::inRandomOrder()->take(2)->get();
-        $DTO2 = new PlayerDTO(factory(Team::class)->create(), $positions2, 'David', 'Smith', $externalID2);
+
+
+        $teamForDTO2 = factory(Team::class)->create([
+            'league_id' => $league->id
+        ]);
+        $DTO2 = new PlayerDTO($teamForDTO2, $positions2, 'David', 'Smith', $externalID2);
 
         $playerDTOs = collect([$DTO1, $DTO2]);
 
         $integration = new MockIntegration(null, $playerDTOs);
         app()->instance(StatsIntegration::class, $integration);
 
-        UpdatePlayers::dispatchNow();
+        UpdatePlayersJob::dispatchNow($league);
 
         $playerOne = Player::where('external_id', '=', $externalID1)->first();
         $this->assertNotNull($playerOne);
@@ -55,20 +65,24 @@ class UpdatePlayersTest extends TestCase
      */
     public function it_will_update_a_player_if_their_team_has_changed()
     {
-        /** @var Team $team */
-        $team = factory(Team::class)->create();
-        $positions = $team->league->sport->positions;
+        $nbaLeague = League::nba();
+
+        /** @var Team $originalTeam */
+        $originalTeam = factory(Team::class)->create([
+            'league_id' => $nbaLeague->id
+        ]);
+        $positions = $originalTeam->league->sport->positions;
         $playerPositions = $positions->take(2);
         $externalID = uniqid();
-        $playerDTO = new PlayerDTO($team, $playerPositions, 'Traded', 'Guy', $externalID);
+        $playerDTO = new PlayerDTO($originalTeam, $playerPositions, 'Traded', 'Guy', $externalID);
 
         $integration = new MockIntegration(null, collect([$playerDTO]));
         app()->instance(StatsIntegration::class, $integration);
 
-        UpdatePlayers::dispatchNow();
+        UpdatePlayersJob::dispatchNow($nbaLeague);
 
         $player = Player::where('external_id', '=', $externalID)->first();
-        $this->assertEquals($team->id, $player->team->id, "Original team matches");
+        $this->assertEquals($originalTeam->id, $player->team->id, "Original team matches");
 
         /** @var Team $newTeam */
         $newTeam = factory(Team::class)->create();
@@ -76,7 +90,7 @@ class UpdatePlayersTest extends TestCase
         $integration = new MockIntegration(null, collect([$playerDTO]));
         app()->instance(StatsIntegration::class, $integration);
 
-        UpdatePlayers::dispatchNow();
+        UpdatePlayersJob::dispatchNow($nbaLeague);
 
         $player = Player::where('external_id', '=', $externalID)->first();
         $this->assertEquals($newTeam->id, $player->team->id, "New team matches");
@@ -102,7 +116,7 @@ class UpdatePlayersTest extends TestCase
         $integration = new MockIntegration(null, collect([$playerDTO]));
         app()->instance(StatsIntegration::class, $integration);
 
-        UpdatePlayers::dispatchNow();
+        UpdatePlayersJob::dispatchNow($league);
 
         /** @var Player $player */
         $player = Player::where('external_id', '=', $externalID)->first();
@@ -117,7 +131,7 @@ class UpdatePlayersTest extends TestCase
         $integration = new MockIntegration(null, collect([$updatedPlayerDTO]));
         app()->instance(StatsIntegration::class, $integration);
 
-        UpdatePlayers::dispatchNow();
+        UpdatePlayersJob::dispatchNow($league);
 
         /** @var Collection $players */
         $players = Player::where('external_id', '=', $externalID)->get();

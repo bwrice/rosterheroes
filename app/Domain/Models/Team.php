@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $location
  * @property string $abbreviation
  * @property string $external_id
+ * @property int $league_id
  *
  * @property League $league
  */

@@ -33,7 +33,7 @@ use App\Domain\Collections\HeroPostCollection;
 use App\Domain\Interfaces\HasSlots;
 use App\Domain\Slot;
 use App\Domain\Collections\SlotCollection;
-use App\HeroPostType;
+use App\Domain\Models\HeroPostType;
 use App\Squads\HeroClassAvailability;
 use App\Squads\HeroPostAvailability;
 use App\Squads\HeroRaceAvailability;

@@ -10,7 +10,7 @@ use App\Domain\Models\HeroClass;
 use App\Domain\Models\HeroPost;
 use App\Domain\Models\HeroRace;
 use App\Domain\Models\Squad;
-use App\HeroPostType;
+use App\Domain\Models\HeroPostType;
 use App\Squads\HeroClassAvailability;
 use App\Squads\HeroPostAvailability;
 use Illuminate\Foundation\Testing\DatabaseTransactions;

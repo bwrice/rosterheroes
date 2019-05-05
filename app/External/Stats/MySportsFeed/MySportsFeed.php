@@ -19,6 +19,7 @@ use App\Domain\Models\Position;
 use App\Domain\Collections\PositionCollection;
 use App\Domain\Models\Week;
 use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 
@@ -144,7 +145,7 @@ class MySportsFeed implements StatsIntegration
             try {
                 $scheduleData = $gameData['schedule'];
                 $homeAndAwayTeams = $this->getTeamsFromSchedule($scheduleData, $teams);
-                $startsAt = Carbon::parse($scheduleData['startTime']);
+                $startsAt = CarbonImmutable::parse($scheduleData['startTime']);
                 return new GameDTO(
                     $startsAt,
                     $homeAndAwayTeams['home_team'],

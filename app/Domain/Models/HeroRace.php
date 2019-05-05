@@ -5,7 +5,7 @@ namespace App\Domain\Models;
 use App\Domain\Collections\HeroRaceCollection;
 use App\Domain\Models\Position;
 use App\Domain\Collections\PositionCollection;
-use App\HeroPostType;
+use App\Domain\Models\HeroPostType;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 

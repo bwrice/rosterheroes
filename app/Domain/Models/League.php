@@ -7,9 +7,11 @@ use App\Domain\Behaviors\Leagues\MLBBehavior;
 use App\Domain\Behaviors\Leagues\NBABehavior;
 use App\Domain\Behaviors\Leagues\NFLBehavior;
 use App\Domain\Behaviors\Leagues\NHLBehavior;
+use App\Domain\Collections\LeagueCollection;
 use App\Domain\Collections\TeamCollection;
 use App\Domain\Models\Team;
 use App\Domain\Models\Sport;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -22,6 +24,8 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property TeamCollection $teams
  * @property Sport $sport
+ *
+ * @method static Builder abbreviation(array $abbreviations)
  */
 class League extends Model
 {
@@ -31,6 +35,11 @@ class League extends Model
     const NHL = 'NHL';
 
     protected $guarded = [];
+
+    public function newCollection(array $models = [])
+    {
+        return new LeagueCollection($models);
+    }
 
     public function teams()
     {
@@ -100,5 +109,10 @@ class League extends Model
         /** @var League $league */
         $league = self::query()->where('abbreviation', '=', self::NHL)->first();
         return $league;
+    }
+
+    public function scopeAbbreviation(Builder $builder, array $abbreviations)
+    {
+        return $builder->whereIn('abbreviation', $abbreviations);
     }
 }

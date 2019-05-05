@@ -10,6 +10,7 @@ namespace App\Domain\DataTransferObjects;
 
 
 use App\Domain\Models\Team;
+use Carbon\CarbonImmutable;
 use Carbon\CarbonInterface;
 
 class GameDTO
@@ -31,7 +32,7 @@ class GameDTO
      */
     private $externalID;
 
-    public function __construct(CarbonInterface $startsAt, Team $homeTeam, Team $awayTeam, string $externalID)
+    public function __construct(CarbonImmutable $startsAt, Team $homeTeam, Team $awayTeam, string $externalID)
     {
         $this->startsAt = $startsAt;
         $this->homeTeam = $homeTeam;

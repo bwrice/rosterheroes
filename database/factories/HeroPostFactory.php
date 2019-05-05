@@ -4,7 +4,7 @@ use Faker\Generator as Faker;
 
 $factory->define(\App\Domain\Models\HeroPost::class, function (Faker $faker) {
 
-    $heroPostType = \App\HeroPostType::query()->inRandomOrder()->first();
+    $heroPostType = \App\Domain\Models\HeroPostType::query()->inRandomOrder()->first();
     return [
         'hero_post_type_id' => $heroPostType->id,
         'squad_id' => function() {

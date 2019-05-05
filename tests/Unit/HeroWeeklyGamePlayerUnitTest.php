@@ -14,7 +14,7 @@ use App\Domain\Models\WeeklyGamePlayer;
 use App\Domain\Models\Position;
 use App\Domain\Models\Squad;
 use App\Domain\Models\Week;
-use App\HeroPostType;
+use App\Domain\Models\HeroPostType;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Illuminate\Foundation\Testing\DatabaseTransactions;

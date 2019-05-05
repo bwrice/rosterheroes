@@ -7,7 +7,7 @@ use App\Domain\Models\HeroRace;
 use App\Domain\Models\Player;
 use App\Domain\Collections\HeroPostCollection;
 use App\Domain\Models\Squad;
-use App\HeroPostType;
+use App\Domain\Models\HeroPostType;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 

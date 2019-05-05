@@ -14,7 +14,7 @@ use App\Domain\Models\SlotType;
 use App\Domain\Models\Squad;
 use App\Domain\Models\User;
 use App\Domain\Models\Week;
-use App\HeroPostType;
+use App\Domain\Models\HeroPostType;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
