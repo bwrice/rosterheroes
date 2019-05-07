@@ -29,7 +29,7 @@ class CreateHeroesTable extends Migration
             $table->foreign('hero_class_id')->references('id')->on('hero_classes');
             $table->foreign('hero_rank_id')->references('id')->on('hero_ranks');
             $table->foreign('hero_race_id')->references('id')->on('hero_races');
-            $table->foreign('weekly_game_player_id')->references('id')->on('game_players');
+            $table->foreign('weekly_game_player_id')->references('id')->on('weekly_game_players');
         });
     }
 

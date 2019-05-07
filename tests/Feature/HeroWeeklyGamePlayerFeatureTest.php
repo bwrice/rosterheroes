@@ -53,7 +53,7 @@ class HeroWeeklyGamePlayerFeatureTest extends TestCase
         /** @var WeeklyGamePlayer $weeklyGamePlayer */
         $weeklyGamePlayer = factory(WeeklyGamePlayer::class)->create();
 
-        $weeklyGamePlayer->gamePlayer->player->positions()->attach($position);
+        $weeklyGamePlayer->player->positions()->attach($position);
 
         Week::setTestCurrent($weeklyGamePlayer->week);
 
@@ -116,7 +116,7 @@ class HeroWeeklyGamePlayerFeatureTest extends TestCase
         $positionIDs = $heroRace->positions()->pluck('id')->toArray();
         $position = Position::query()->whereNotIn('id', $positionIDs)->inRandomOrder()->first();
 
-        $weeklyGamePlayer->gamePlayer->player->positions()->attach($position);
+        $weeklyGamePlayer->player->positions()->attach($position);
 
         Week::setTestCurrent($weeklyGamePlayer->week);
 
@@ -169,7 +169,7 @@ class HeroWeeklyGamePlayerFeatureTest extends TestCase
             'salary' => $squadSalary + 2000
         ]);
 
-        $weeklyGamePlayer->gamePlayer->player->positions()->attach($position);
+        $weeklyGamePlayer->player->positions()->attach($position);
 
         Week::setTestCurrent($weeklyGamePlayer->week);
 

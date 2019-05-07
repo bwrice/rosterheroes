@@ -12,8 +12,9 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property Game $game
  * @property Player $player
+ * @property Team $team
  */
-class GamePlayer extends Model
+class PlayerGameLog extends Model
 {
     public function game()
     {
@@ -23,5 +24,10 @@ class GamePlayer extends Model
     public function player()
     {
         return $this->belongsTo(Player::class);
+    }
+
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
     }
 }

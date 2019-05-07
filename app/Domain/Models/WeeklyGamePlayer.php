@@ -16,7 +16,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $initial_salary
  * @property int $salary
  *
- * @property GamePlayer $gamePlayer
  * @property Week $week
  * @property Player $player
  * @property Game $game
@@ -27,7 +26,7 @@ class WeeklyGamePlayer extends EventSourcedModel
 
     public function gamePlayer()
     {
-        return $this->belongsTo(GamePlayer::class);
+        return $this->belongsTo(PlayerGameLog::class);
     }
 
     public function week()
@@ -35,8 +34,18 @@ class WeeklyGamePlayer extends EventSourcedModel
         return $this->belongsTo(Week::class);
     }
 
+    public function game()
+    {
+        return $this->belongsTo(Game::class);
+    }
+
+    public function player()
+    {
+        return $this->belongsTo(Player::class);
+    }
+
     public function getPositions()
     {
-        return $this->gamePlayer->player->positions;
+        return $this->player->positions;
     }
 }

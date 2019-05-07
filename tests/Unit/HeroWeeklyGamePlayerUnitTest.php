@@ -48,7 +48,7 @@ class HeroWeeklyGamePlayerUnitTest extends TestCase
             ->whereNotIn('id', $validPositions->pluck('id')->toArray())
             ->inRandomOrder()->first();
 
-        $weeklyGamePlayer->gamePlayer->player->positions()->attach($playerPosition);
+        $weeklyGamePlayer->player->positions()->attach($playerPosition);
 
         try {
 
@@ -107,7 +107,7 @@ class HeroWeeklyGamePlayerUnitTest extends TestCase
             ->inRandomOrder()->first();
 
         $this->assertTrue(in_array($playerPosition->id, $validPositionIDs), 'Position ID');
-        $weeklyGamePlayer->gamePlayer->player->positions()->attach($playerPosition);
+        $weeklyGamePlayer->player->positions()->attach($playerPosition);
 
         $this->assertEquals($squadSalary, $hero->availableSalary());
 
@@ -143,7 +143,7 @@ class HeroWeeklyGamePlayerUnitTest extends TestCase
         $weeklyGamePlayer = factory(WeeklyGamePlayer::class)->create();
 
         Week::setTestCurrent($weeklyGamePlayer->week);
-        CarbonImmutable::setTestNow($weeklyGamePlayer->gamePlayer->game->starts_at->copy()->addMinutes(5));
+        CarbonImmutable::setTestNow($weeklyGamePlayer->game->starts_at->copy()->addMinutes(5));
 
         $validPositions = $hero->heroRace->positions;
 
@@ -152,7 +152,7 @@ class HeroWeeklyGamePlayerUnitTest extends TestCase
             ->whereIn('id', $validPositions->pluck('id')->toArray())
             ->inRandomOrder()->first();
 
-        $weeklyGamePlayer->gamePlayer->player->positions()->attach($playerPosition);
+        $weeklyGamePlayer->player->positions()->attach($playerPosition);
 
         try {
 
@@ -198,7 +198,7 @@ class HeroWeeklyGamePlayerUnitTest extends TestCase
             ->whereIn('id', $validPositions->pluck('id')->toArray())
             ->inRandomOrder()->first();
 
-        $weeklyGamePlayer->gamePlayer->player->positions()->attach($playerPosition);
+        $weeklyGamePlayer->player->positions()->attach($playerPosition);
 
         try {
 

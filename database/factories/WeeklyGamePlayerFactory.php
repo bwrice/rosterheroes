@@ -12,8 +12,11 @@ $factory->define(\App\Domain\Models\WeeklyGamePlayer::class, function (Faker $fa
         'week_id' => function () {
             return factory(\App\Domain\Models\Week::class)->create()->id;
         },
-        'game_player_id' => function () {
-            return factory(\App\Domain\Models\GamePlayer::class)->create()->id;
+        'player_id' => function () {
+            return factory(\App\Domain\Models\Player::class)->create()->id;
+        },
+        'game_id' => function () {
+            return factory(\App\Domain\Models\Game::class)->create()->id;
         },
         'salary' => \App\Domain\Models\WeeklyGamePlayer::MIN_SALARY
     ];

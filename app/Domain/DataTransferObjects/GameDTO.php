@@ -11,7 +11,6 @@ namespace App\Domain\DataTransferObjects;
 
 use App\Domain\Models\Team;
 use Carbon\CarbonImmutable;
-use Carbon\CarbonInterface;
 
 class GameDTO
 {
@@ -24,7 +23,7 @@ class GameDTO
      */
     private $awayTeam;
     /**
-     * @var CarbonInterface
+     * @var CarbonImmutable
      */
     private $startsAt;
     /**
@@ -57,9 +56,9 @@ class GameDTO
     }
 
     /**
-     * @return CarbonInterface
+     * @return CarbonImmutable
      */
-    public function getStartsAt(): CarbonInterface
+    public function getStartsAt(): CarbonImmutable
     {
         return $this->startsAt;
     }

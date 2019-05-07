@@ -53,7 +53,7 @@ class League extends Model
 
     public function getBehavior(): LeagueBehavior
     {
-        switch ( $this->abbreviation ) {
+        switch ($this->abbreviation) {
             case self::NFL:
                 return app(NFLBehavior::class);
             case self::MLB:

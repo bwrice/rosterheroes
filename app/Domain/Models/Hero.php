@@ -293,9 +293,9 @@ class Hero extends EventSourcedModel implements HasSlots
             throw $exception;
         }
 
-        if($weeklyGamePlayer->gamePlayer->game->hasStarted()) {
+        if($weeklyGamePlayer->game->hasStarted()) {
             $exception = new GameStartedException();
-            $exception->setGame($weeklyGamePlayer->gamePlayer->game);
+            $exception->setGame($weeklyGamePlayer->game);
             throw $exception;
         }
 
