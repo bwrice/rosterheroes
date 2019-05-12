@@ -2,6 +2,7 @@
 
 namespace App\Domain\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -13,6 +14,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property Game $game
  * @property Player $player
  * @property Team $team
+ *
+ * @property Collection $stats
  */
 class PlayerGameLog extends Model
 {
@@ -29,5 +32,10 @@ class PlayerGameLog extends Model
     public function team()
     {
         return $this->belongsTo(Team::class);
+    }
+
+    public function stats()
+    {
+        return $this->hasMany(PlayerStat::class);
     }
 }

@@ -179,4 +179,9 @@ class MySportsFeed implements StatsIntegration
             'home_team' => $homeTeam
         ];
     }
+
+    public function getPlayerGameLogDTOs(Team $league): Collection
+    {
+        // TODO: Implement getPlayerGameLogDTOs() method.
+    }
 }

@@ -181,6 +181,7 @@ return [
          */
         \App\Providers\RelationsServiceProvider::class,
         \App\Providers\StatsIntegrationServiceProvider::class,
+        \App\Providers\EnumServiceProvider::class,
 //        \App\Providers\ProjectorServiceProvider::class
     ],
 
@@ -230,6 +231,11 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+
+        /*
+         * Custom
+         */
+        'Enum' => \App\Facades\Enum::class,
 
     ],
 

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateStatsTable extends Migration
+class CreateStatTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateStatsTable extends Migration
      */
     public function up()
     {
-        Schema::create('stats', function (Blueprint $table) {
+        Schema::create('stat_types', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('sport_id')->unsigned();
             $table->string('name');
             $table->timestamps();
         });
 
-        Schema::table('stats', function (Blueprint $table) {
+        Schema::table('stat_types', function (Blueprint $table) {
             $table->foreign('sport_id')->references('id')->on('sports');
         });
     }

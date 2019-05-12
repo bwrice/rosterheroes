@@ -9,6 +9,7 @@
 namespace App\External\Stats;
 
 use App\Domain\Models\League;
+use App\Domain\Models\Team;
 use Illuminate\Support\Collection;
 
 class MockIntegration implements StatsIntegration
@@ -25,12 +26,21 @@ class MockIntegration implements StatsIntegration
      * @var Collection
      */
     private $gameDTOs;
+    /**
+     * @var Collection
+     */
+    private $playerGameLogDTOs;
 
-    public function __construct(Collection $teamDTOs = null, Collection $playerDTOs = null, Collection $gameDTOs = null)
+    public function __construct(
+        Collection $teamDTOs = null,
+        Collection $playerDTOs = null,
+        Collection $gameDTOs = null,
+        Collection $playerGameLogDTOs = null)
     {
         $this->teamDTOs = $teamDTOs;
         $this->playerDTOs = $playerDTOs;
         $this->gameDTOs = $gameDTOs;
+        $this->playerGameLogDTOs = $playerGameLogDTOs;
     }
 
 
@@ -46,36 +56,11 @@ class MockIntegration implements StatsIntegration
 
     public function getGameDTOs(League $league): Collection
     {
-        return $this->gameDTOs;
+        return $this->gameDTOs ?: collect();
     }
 
-    /**
-     * @param Collection $teamDTOs
-     * @return MockIntegration
-     */
-    public function setTeamDTOs(Collection $teamDTOs): MockIntegration
+    public function getPlayerGameLogDTOs(Team $league): Collection
     {
-        $this->teamDTOs = $teamDTOs;
-        return $this;
-    }
-
-    /**
-     * @param Collection $playerDTOs
-     * @return MockIntegration
-     */
-    public function setPlayerDTOs(Collection $playerDTOs): MockIntegration
-    {
-        $this->playerDTOs = $playerDTOs;
-        return $this;
-    }
-
-    /**
-     * @param Collection $gameDTOs
-     * @return MockIntegration
-     */
-    public function setGameDTOs(Collection $gameDTOs): MockIntegration
-    {
-        $this->gameDTOs = $gameDTOs;
-        return $this;
+        return $this->playerGameLogDTOs ?: collect();
     }
 }

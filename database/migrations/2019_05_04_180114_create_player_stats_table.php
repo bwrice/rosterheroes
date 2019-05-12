@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGamePlayerStatsTable extends Migration
+class CreatePlayerStatsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,17 @@ class CreateGamePlayerStatsTable extends Migration
      */
     public function up()
     {
-        Schema::create('player_game_log_stats', function (Blueprint $table) {
+        Schema::create('player_stats', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->integer('player_game_log_id')->unsigned();
-            $table->integer('stat_id')->unsigned();
+            $table->integer('stat_type_id')->unsigned();
             $table->float('amount');
             $table->timestamps();
-            $table->primary(['player_game_log_id', 'stat_id']);
         });
 
-        Schema::table('player_game_log_stats', function (Blueprint $table) {
+        Schema::table('player_stats', function (Blueprint $table) {
             $table->foreign('player_game_log_id')->references('id')->on('player_game_logs');
-            $table->foreign('stat_id')->references('id')->on('stats');
+            $table->foreign('stat_type_id')->references('id')->on('stat_types');
         });
     }
 

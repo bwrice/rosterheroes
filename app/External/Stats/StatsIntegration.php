@@ -9,6 +9,7 @@
 namespace App\External\Stats;
 
 use App\Domain\Models\League;
+use App\Domain\Models\Team;
 use Illuminate\Support\Collection;
 
 interface StatsIntegration
@@ -18,4 +19,6 @@ interface StatsIntegration
     public function getTeamDTOs(League $league): Collection;
 
     public function getGameDTOs(League $league): Collection;
+
+    public function getPlayerGameLogDTOs(Team $league): Collection;
 }

@@ -22,4 +22,3 @@ Route::middleware('auth')->get('/squads/create', 'SquadController@create')->name
 Route::middleware('auth')->get('/command-center/{squadSlug}/{any?}', 'SquadController@show')->where('any', '.*')->name('command-center');
 
 Route::get('/{any}', 'SpaController@index')->where('any', '.*');
-\App\Domain\Models\Team::query();
