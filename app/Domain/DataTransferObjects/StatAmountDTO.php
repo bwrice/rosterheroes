@@ -16,15 +16,31 @@ class StatAmountDTO
     /**
      * @var StatType
      */
-    private $stat;
+    private $statType;
     /**
      * @var float
      */
     private $amount;
 
-    public function __construct(StatType $stat, float $amount)
+    public function __construct(StatType $statType, float $amount)
     {
-        $this->stat = $stat;
+        $this->statType = $statType;
         $this->amount = $amount;
+    }
+
+    /**
+     * @return StatType
+     */
+    public function getStatType(): StatType
+    {
+        return $this->statType;
+    }
+
+    /**
+     * @return float
+     */
+    public function getAmount(): float
+    {
+        return $this->amount;
     }
 }

@@ -4,6 +4,13 @@ namespace App\Domain\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+
+/**
+ * Class StatType
+ * @package App\Domain\Models
+ *
+ * @property int $id
+ */
 class StatType extends Model
 {
     public const PASS_TD = 'passing-touchdown';
@@ -41,6 +48,7 @@ class StatType extends Model
     public const GOALIE_WIN = 'goalie-win';
     public const SAVE = 'save';
     public const GOAL_AGAINST = 'goal-against';
+    public const HAT_TRICK = 'hat-trick';
 
     public const POINT = 'point';
     public const THREE_POINTER = 'three-pointer';

@@ -6,6 +6,7 @@ use App\Domain\Behaviors\HeroClass\HeroClassBehavior;
 use App\Domain\Behaviors\HeroClass\RangerBehavior;
 use App\Domain\Behaviors\HeroClass\SorcererBehavior;
 use App\Domain\Behaviors\HeroClass\WarriorBehavior;
+use App\Exceptions\UnknownBehaviorException;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -41,19 +42,27 @@ class HeroClass extends Model
 
     /**
      * @return HeroClassBehavior
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
-    public function getBehavior()
+    public function getBehavior(): HeroClassBehavior
     {
-        switch( $this->name ) {
+        switch($this->name) {
             case self::WARRIOR:
-                return app()->make(WarriorBehavior::class);
+                return new HeroClassBehavior([
+                    ItemBlueprint::STARTER_SHIELD,
+                    ItemBlueprint::STARTER_SWORD
+                ]);
             case self::RANGER:
-                return app()->make(RangerBehavior::class);
+                return new HeroClassBehavior([
+                    ItemBlueprint::STARTER_BOW
+                ]);
             case self::SORCERER:
-                return app()->make(SorcererBehavior::class);
+                return new HeroClassBehavior([
+                    ItemBlueprint::STARTER_STAFF
+                ]);
         }
 
-        throw new \RuntimeException("Unable to determine Hero Class Behavior");
+        throw new UnknownBehaviorException($this->name, HeroClassBehavior::class);
     }
 
     /**

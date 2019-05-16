@@ -41,4 +41,14 @@ class Game extends Model
     {
         return $this->starts_at->isPast();
     }
+
+    public function getSimpleDescription()
+    {
+        return $this->awayTeam->name . ' at ' . $this->homeTeam->name;
+    }
+
+    public function hasTeam(Team $team)
+    {
+        return $this->homeTeam->id === $team->id || $this->awayTeam->id === $team->id;
+    }
 }

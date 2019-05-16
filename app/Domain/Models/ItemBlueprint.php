@@ -29,6 +29,11 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ItemBlueprint extends Model
 {
+    public const STARTER_SWORD = 'Starter Sword';
+    public const STARTER_SHIELD = 'Starter Shield';
+    public const STARTER_BOW = 'Starter Bow';
+    public const STARTER_STAFF = 'Starter Staff';
+
     protected $guarded = [];
 
     public function itemClass()

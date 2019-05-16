@@ -14,11 +14,11 @@ class WarriorBehavior extends HeroClassBehavior
     const STARTER_SWORD = 'Starter Sword';
     const STARTER_SHIELD = 'Starter Shield';
 
-    protected function getStarterItemBlueprintNames(): array
-    {
-        return [
-            self::STARTER_SWORD,
-            self::STARTER_SHIELD
-        ];
-    }
+//    protected function getStarterItemBlueprintNames(): array
+//    {
+//        return [
+//            self::STARTER_SWORD,
+//            self::STARTER_SHIELD
+//        ];
+//    }
 }

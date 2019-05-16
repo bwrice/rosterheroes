@@ -37,9 +37,13 @@ class Player extends Model
         return $this->belongsTo(Team::class);
     }
 
-
     public function fullName()
     {
         return $this->first_name . ' ' . $this->last_name;
+    }
+
+    public function isOnTeam(Team $team)
+    {
+        return $this->team->id === $team->id;
     }
 }

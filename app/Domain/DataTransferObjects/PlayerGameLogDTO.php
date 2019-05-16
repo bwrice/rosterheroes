@@ -12,7 +12,7 @@ namespace App\Domain\DataTransferObjects;
 use App\Domain\Models\Game;
 use App\Domain\Models\Player;
 use App\Domain\Models\Team;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 
 class PlayerGameLogDTO
 {

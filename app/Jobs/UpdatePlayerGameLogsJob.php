@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Domain\DataTransferObjects\PlayerGameLogDTO;
+use App\Domain\DataTransferObjects\StatAmountDTO;
 use App\Domain\Models\PlayerGameLog;
 use App\Domain\Models\Team;
 use App\External\Stats\StatsIntegration;
@@ -46,7 +47,7 @@ class UpdatePlayerGameLogsJob implements ShouldQueue
 
             if ($playerGameLogs->isNotEmpty()) {
                 Log::warning("Player, Game, Team combination already exists when attempting to create PlayerGameLog",
-                    $playerGameLogs->loadMissing('playerGameStats')->toArray());
+                    $playerGameLogs->loadMissing('stats')->toArray());
             } else {
                 /** @var PlayerGameLog $playerGameLog */
                 $playerGameLog = PlayerGameLog::query()->create([
@@ -55,7 +56,12 @@ class UpdatePlayerGameLogsJob implements ShouldQueue
                     'team_id' => $dto->getTeam()->id
                 ]);
 
-                $playerGameLog->stats()->saveMany($dto->getStatAmountDTOs());
+                $dto->getStatAmountDTOs()->each(function (StatAmountDTO $statAmountDTO) use ($playerGameLog) {
+                    $playerGameLog->stats()->create([
+                        'stat_type_id' => $statAmountDTO->getStatType()->id,
+                        'amount' => $statAmountDTO->getAmount()
+                    ]);
+                });
             }
         });
     }

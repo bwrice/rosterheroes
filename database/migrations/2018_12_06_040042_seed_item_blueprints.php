@@ -25,7 +25,7 @@ class SeedItemBlueprints extends Migration
              */
             [
                 'create_array' => [
-                    'name' => \App\Domain\Behaviors\HeroClass\WarriorBehavior::STARTER_SWORD,
+                    'name' => \App\Domain\Models\ItemBlueprint::STARTER_SWORD,
                     'item_class_id' => $itemClasses->where('name', '=', \App\Domain\Models\ItemClass::ENCHANTED )->first()->id,
                     'item_type_id' => $itemTypes->where( 'name', '=', 'Short Sword' )->first()->id,
                     'material_type_id' => $materialTypes->where( 'name', '=', 'Copper' )->first()->id,
@@ -36,7 +36,7 @@ class SeedItemBlueprints extends Migration
             ],
             [
                 'create_array' => [
-                    'name' => \App\Domain\Behaviors\HeroClass\WarriorBehavior::STARTER_SHIELD,
+                    'name' => \App\Domain\Models\ItemBlueprint::STARTER_SHIELD,
                     'item_class_id' => $itemClasses->where('name', '=', \App\Domain\Models\ItemClass::ENCHANTED )->first()->id,
                     'item_type_id' => $itemTypes->where( 'name', '=', 'Buckler' )->first()->id,
                     'material_type_id' => $materialTypes->where( 'name', '=', 'Copper' )->first()->id,
@@ -47,7 +47,7 @@ class SeedItemBlueprints extends Migration
             ],
             [
                 'create_array' => [
-                    'name' => \App\Domain\Behaviors\HeroClass\RangerBehavior::STARTER_BOW,
+                    'name' => \App\Domain\Models\ItemBlueprint::STARTER_BOW,
                     'item_class_id' => $itemClasses->where('name', '=', \App\Domain\Models\ItemClass::ENCHANTED )->first()->id,
                     'item_type_id' => $itemTypes->where( 'name', '=', 'Straight Bow' )->first()->id,
                     'material_type_id' => $materialTypes->where( 'name', '=', 'Yew' )->first()->id,
@@ -59,7 +59,7 @@ class SeedItemBlueprints extends Migration
             ],
             [
                 'create_array' => [
-                    'name' => \App\Domain\Behaviors\HeroClass\SorcererBehavior::STARTER_STAFF,
+                    'name' => \App\Domain\Models\ItemBlueprint::STARTER_STAFF,
                     'item_class_id' => $itemClasses->where('name', '=', \App\Domain\Models\ItemClass::ENCHANTED )->first()->id,
                     'item_type_id' => $itemTypes->where( 'name', '=', 'Lesser Staff' )->first()->id,
                     'material_type_id' => $materialTypes->where( 'name', '=', 'Yew' )->first()->id,

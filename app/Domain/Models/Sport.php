@@ -5,6 +5,7 @@ namespace App\Domain\Models;
 use App\Domain\Collections\PositionCollection;
 use App\Domain\Models\League;
 use App\Domain\Models\Position;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -14,6 +15,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $name
  *
  * @property PositionCollection $positions
+ * @property Collection $statTypes
+ * @property Collection $leagues
  */
 class Sport extends Model
 {
@@ -32,5 +35,10 @@ class Sport extends Model
     public function positions()
     {
         return $this->hasMany(Position::class);
+    }
+
+    public function statTypes()
+    {
+        return $this->hasMany(StatType::class);
     }
 }

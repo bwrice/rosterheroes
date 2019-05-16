@@ -11,11 +11,27 @@ namespace App\Domain\Behaviors\Leagues;
 
 use Carbon\CarbonImmutable;
 
-abstract class LeagueBehavior
+class LeagueBehavior
 {
-    abstract public function getDayOfYearStart(): int;
+    /**
+     * @var string
+     */
+    private $key;
+    /**
+     * @var int
+     */
+    private $dayOfYearStart;
+    /**
+     * @var int
+     */
+    private $dayOfYearEnd;
 
-    abstract public function getDayOfYearEnd(): int;
+    public function __construct(string $key, int $dayOfYearStart, int $dayOfYearEnd)
+    {
+        $this->key = $key;
+        $this->dayOfYearStart = $dayOfYearStart;
+        $this->dayOfYearEnd = $dayOfYearEnd;
+    }
 
     public function isLive(): bool
     {
@@ -43,5 +59,29 @@ abstract class LeagueBehavior
     public function spansOverYearChange(): bool
     {
         return $this->getDayOfYearEnd() < $this->getDayOfYearStart();
+    }
+
+    /**
+     * @return string
+     */
+    public function getKey(): string
+    {
+        return $this->key;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDayOfYearStart(): int
+    {
+        return $this->dayOfYearStart;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDayOfYearEnd(): int
+    {
+        return $this->dayOfYearEnd;
     }
 }

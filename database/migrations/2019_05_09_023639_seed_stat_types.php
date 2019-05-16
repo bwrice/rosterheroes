@@ -46,7 +46,7 @@ class SeedStatTypes extends Migration
                 ]
             ],
             [
-                'sport' => \App\Domain\Models\Sport::FOOTBALL,
+                'sport' => \App\Domain\Models\Sport::HOCKEY,
                 'stat_types' => [
                     \App\Domain\Models\StatType::GOAL,
                     \App\Domain\Models\StatType::HOCKEY_ASSIST,
@@ -54,11 +54,12 @@ class SeedStatTypes extends Migration
                     \App\Domain\Models\StatType::BLOCKED_SHOT,
                     \App\Domain\Models\StatType::GOALIE_WIN,
                     \App\Domain\Models\StatType::SAVE,
-                    \App\Domain\Models\StatType::GOAL_AGAINST
+                    \App\Domain\Models\StatType::GOAL_AGAINST,
+                    \App\Domain\Models\StatType::HAT_TRICK
                 ]
             ],
             [
-                'sport' => \App\Domain\Models\Sport::FOOTBALL,
+                'sport' => \App\Domain\Models\Sport::BASKETBALL,
                 'stat_types' => [
                     \App\Domain\Models\StatType::POINT,
                     \App\Domain\Models\StatType::THREE_POINTER,

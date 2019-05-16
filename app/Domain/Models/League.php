@@ -11,6 +11,7 @@ use App\Domain\Collections\LeagueCollection;
 use App\Domain\Collections\TeamCollection;
 use App\Domain\Models\Team;
 use App\Domain\Models\Sport;
+use App\Exceptions\UnknownBehaviorException;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -55,15 +56,15 @@ class League extends Model
     {
         switch ($this->abbreviation) {
             case self::NFL:
-                return app(NFLBehavior::class);
+                return new LeagueBehavior(self::NFL, 240, 50);
             case self::MLB:
-                return app(MLBBehavior::class);
+                return new LeagueBehavior(self::MLB, 80, 290);
             case self::NBA:
-                return app(NBABehavior::class);
+                return new LeagueBehavior(self::NBA, 275, 180);
             case self::NHL:
-                return app(NHLBehavior::class);
+                return new LeagueBehavior(self::NHL, 265, 170);
         }
-        throw new \RuntimeException("Couldn't convert league abbreviation into behavior: " . $this->abbreviation );
+        throw new UnknownBehaviorException($this->abbreviation, LeagueBehavior::class);
     }
 
     public function isLive()
