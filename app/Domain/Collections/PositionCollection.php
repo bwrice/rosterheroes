@@ -15,8 +15,23 @@ class PositionCollection extends Collection
 {
     public function names()
     {
-        return $this->map(function (\App\Domain\Models\Position $position) {
+        return $this->map(function (Position $position) {
             return $position->name;
         });
+    }
+
+    /**
+     * @return Position|null
+     */
+    public function withHighestDefaultSalary()
+    {
+        return $this->sortDefaultSalary(true)->first();
+    }
+
+    public function sortDefaultSalary($descending = false, $options = SORT_REGULAR)
+    {
+        return $this->sortBy(function (Position $position) {
+            return $position->getBehavior()->getDefaultSalary();
+        }, $options, $descending);
     }
 }

@@ -16,8 +16,7 @@ class CreatePositionsTable extends Migration
         Schema::create('positions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('sport_id')->unsigned();
-            $table->string('name');
-            $table->string('abbreviation');
+            $table->string('name')->unique();
             $table->timestamps();
         });
 

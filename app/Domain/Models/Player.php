@@ -2,6 +2,7 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Collections\PlayerGameLogCollection;
 use App\Domain\Models\Game;
 use App\Domain\Models\Position;
 use App\Domain\Collections\PositionCollection;
@@ -20,8 +21,9 @@ use Illuminate\Support\Carbon;
  * @property string $last_name
  * @property string $external_id
  *
- * @property \App\Domain\Models\Team $team
- * @property \App\Domain\Collections\PositionCollection $positions
+ * @property Team $team
+ * @property PositionCollection $positions
+ * @property PlayerGameLogCollection $playerGameLogs
  */
 class Player extends Model
 {
@@ -30,6 +32,11 @@ class Player extends Model
     public function positions()
     {
         return $this->belongsToMany(Position::class)->withTimestamps();
+    }
+
+    public function playerGameLogs()
+    {
+        return $this->hasMany(PlayerGameLog::class);
     }
 
     public function team()

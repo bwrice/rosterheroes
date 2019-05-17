@@ -20,7 +20,7 @@ class HeroProjector implements Projector
 
     public function onHeroCreationRequested(HeroCreationRequested $event)
     {
-        Hero::create($event->attributes);
+        Hero::query()->create($event->attributes);
     }
 
     public function streamEventsBy()

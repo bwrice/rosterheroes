@@ -147,7 +147,7 @@ class Hero extends EventSourcedModel implements HasSlots
 
     /**
      * @param array $attributes
-     * @return Hero|null
+     * @return self|null
      * @throws \Exception
      */
     public static function createWithAttributes(array $attributes)
@@ -161,10 +161,7 @@ class Hero extends EventSourcedModel implements HasSlots
         return self::uuid($uuid);
     }
 
-    /*
-     * A helper method to quickly retrieve an account by uuid.
-     */
-    public static function uuid(string $uuid): ?Hero
+    public static function uuid(string $uuid): ?self
     {
         return static::where('uuid', $uuid)->first();
     }

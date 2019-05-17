@@ -107,7 +107,7 @@ class UpdatePlayersJobTest extends TestCase
             'league_id' => $league->id
         ]);
         /** @var PositionCollection $originalPositions */
-        $originalPositions = Position::query()->where('name', '=', 'Wide Receiver')->orWhere('name', '=', 'Tight End')->get();
+        $originalPositions = Position::query()->where('name', '=', Position::WIDE_RECEIVER)->orWhere('name', '=', Position::TIGHT_END)->get();
         $this->assertEquals(2, $originalPositions->count());
 
         $externalID = uniqid();
@@ -123,7 +123,7 @@ class UpdatePlayersJobTest extends TestCase
         $this->assertEquals(2, $player->positions->count());
 
         /** @var PositionCollection $newPositions */
-        $newPositions = Position::query()->where('name', '=', 'Running Back')->get();
+        $newPositions = Position::query()->where('name', '=', Position::RUNNING_BACK)->get();
         $this->assertEquals(1, $newPositions->count());
 
         $updatedPlayerDTO = new PlayerDTO($team, $newPositions, 'Traded', 'Guy', $externalID);

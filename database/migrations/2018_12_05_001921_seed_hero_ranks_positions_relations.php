@@ -1,6 +1,7 @@
 <?php
 
 use App\Domain\Models\Sport;
+use App\Domain\Models\Position;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -22,23 +23,23 @@ class SeedHeroRanksPositionsRelations extends Migration
                 'name' => \App\Domain\Models\HeroRace::ELF,
                 'positions' => [
                     [
-                        'name' => 'Quarterback',
+                        'name' => Position::QUARTERBACK,
                         'sport' => Sport::FOOTBALL
                     ],
                     [
-                        'name' => 'Third Base',
+                        'name' => Position::THIRD_BASE,
                         'sport' => Sport::BASEBALL
                     ],
                     [
-                        'name' => 'Shortstop',
+                        'name' => Position::SHORTSTOP,
                         'sport' => Sport::BASEBALL
                     ],
                     [
-                        'name' => 'Center',
+                        'name' => Position::BASKETBALL_CENTER,
                         'sport' => Sport::BASKETBALL
                     ],
                     [
-                        'name' => 'Goalie',
+                        'name' => Position::GOALIE,
                         'sport' => Sport::HOCKEY
                     ]
                 ]
@@ -47,23 +48,23 @@ class SeedHeroRanksPositionsRelations extends Migration
                 'name' => \App\Domain\Models\HeroRace::DWARF,
                 'positions' => [
                     [
-                        'name' => 'Running Back',
+                        'name' => Position::RUNNING_BACK,
                         'sport' => Sport::FOOTBALL
                     ],
                     [
-                        'name' => 'First Base',
+                        'name' => Position::FIRST_BASE,
                         'sport' => Sport::BASEBALL
                     ],
                     [
-                        'name' => 'Second Base',
+                        'name' => Position::SECOND_BASE,
                         'sport' => Sport::BASEBALL
                     ],
                     [
-                        'name' => 'Small Forward',
+                        'name' => Position::SMALL_FORWARD,
                         'sport' => Sport::BASKETBALL
                     ],
                     [
-                        'name' => 'Center',
+                        'name' => Position::HOCKEY_CENTER,
                         'sport' => Sport::HOCKEY
                     ]
                 ]
@@ -72,27 +73,27 @@ class SeedHeroRanksPositionsRelations extends Migration
                 'name' => \App\Domain\Models\HeroRace::HUMAN,
                 'positions' => [
                     [
-                        'name' => 'Wide Receiver',
+                        'name' => Position::WIDE_RECEIVER,
                         'sport' => Sport::FOOTBALL
                     ],
                     [
-                        'name' => 'Outfield',
+                        'name' => Position::OUTFIELD,
                         'sport' => Sport::BASEBALL
                     ],
                     [
-                        'name' => 'Point Guard',
+                        'name' => Position::POINT_GUARD,
                         'sport' => Sport::BASKETBALL
                     ],
                     [
-                        'name' => 'Shooting Guard',
+                        'name' => Position::SHOOTING_GUARD,
                         'sport' => Sport::BASKETBALL
                     ],
                     [
-                        'name' => 'Left Wing',
+                        'name' => Position::LEFT_WING,
                         'sport' => Sport::HOCKEY
                     ],
                     [
-                        'name' => 'Right Wing',
+                        'name' => Position::RIGHT_WING,
                         'sport' => Sport::HOCKEY
                     ]
                 ]
@@ -101,23 +102,23 @@ class SeedHeroRanksPositionsRelations extends Migration
                 'name' => \App\Domain\Models\HeroRace::ORC,
                 'positions' => [
                     [
-                        'name' => 'Tight End',
+                        'name' => Position::TIGHT_END,
                         'sport' => Sport::FOOTBALL
                     ],
                     [
-                        'name' => 'Catcher',
+                        'name' => Position::CATCHER,
                         'sport' => Sport::BASEBALL
                     ],
                     [
-                        'name' => 'Pitcher',
+                        'name' => Position::PITCHER,
                         'sport' => Sport::BASEBALL
                     ],
                     [
-                        'name' => 'Power Forward',
+                        'name' => Position::POWER_FORWARD,
                         'sport' => Sport::BASKETBALL
                     ],
                     [
-                        'name' => 'Defenseman',
+                        'name' => Position::DEFENSEMAN,
                         'sport' => Sport::HOCKEY
                     ]
                 ]

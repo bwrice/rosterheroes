@@ -15,22 +15,18 @@ class SeedLeagues extends Migration
     {
         $leagues = [
             [
-                'name' => 'National Football League',
                 'abbreviation' => \App\Domain\Models\League::NFL,
                 'sport' => \App\Domain\Models\Sport::where('name', '=', \App\Domain\Models\Sport::FOOTBALL)->first()
             ],
             [
-                'name' => 'Major League Baseball',
                 'abbreviation' => \App\Domain\Models\League::MLB,
                 'sport' => \App\Domain\Models\Sport::where('name', '=', \App\Domain\Models\Sport::BASEBALL)->first()
             ],
             [
-                'name' => 'National Basketball Association',
                 'abbreviation' => \App\Domain\Models\League::NBA,
                 'sport' => \App\Domain\Models\Sport::where('name', '=', \App\Domain\Models\Sport::BASKETBALL)->first()
             ],
             [
-                'name' => 'National Hockey League',
                 'abbreviation' => \App\Domain\Models\League::NHL,
                 'sport' => \App\Domain\Models\Sport::where('name', '=', \App\Domain\Models\Sport::HOCKEY)->first()
             ],
@@ -39,7 +35,6 @@ class SeedLeagues extends Migration
         foreach ($leagues as $league)
         {
             \App\Domain\Models\League::create([
-                'name' => $league['name'],
                 'sport_id' => $league['sport']->id,
                 'abbreviation' => $league['abbreviation']
             ]);

@@ -12,6 +12,7 @@ namespace App\Domain\Actions;
 use App\Domain\Models\Game;
 use App\Domain\Models\Player;
 use App\Domain\Models\Week;
+use App\Domain\Models\WeeklyGamePlayer;
 use App\Exceptions\InvalidGameException;
 use App\Exceptions\InvalidPlayerException;
 use Carbon\CarbonImmutable;
@@ -45,7 +46,11 @@ class CreateWeeklyGamePlayer
         $this->playerGameLogs = $playerGameLogs;
     }
 
-    public function __invoke()
+    /**
+     * @return WeeklyGamePlayer
+     * @throws \Exception
+     */
+    public function __invoke(): WeeklyGamePlayer
     {
         if ( ! $this->game->starts_at->isBetween($this->week->everything_locks_at, $this->week->ends_at)) {
             throw new InvalidGameException($this->game);
@@ -55,9 +60,32 @@ class CreateWeeklyGamePlayer
             throw new InvalidPlayerException($this->player);
         }
 
-        if ( $this->player->positions->isEmpty() ) {
-            throw new InvalidPlayerException($this->player);
+        $salary = $this->getSalary();
+
+        return WeeklyGamePlayer::createWithAttributes([
+            'player_id' => $this->player->id,
+            'game_id' => $this->game->id,
+            'week_id' => $this->week->id,
+            'salary' => $salary
+        ]);
+    }
+
+    protected function getSalary()
+    {
+        if ($this->playerGameLogs->isEmpty()) {
+            return $this->getDefaultSalary();
         }
 
+        //TODO use playerGameLogs
+    }
+
+    protected function getDefaultSalary()
+    {
+        $highestSalaryPosition = $this->player->positions->withHighestDefaultSalary();
+        if ( ! $highestSalaryPosition ) {
+            throw new InvalidPlayerException($this->player, $this->player->fullName() . " has zero positions");
+        }
+
+        return $highestSalaryPosition->getBehavior()->getDefaultSalary();
     }
 }

@@ -55,10 +55,10 @@ class MySportsFeed implements StatsIntegration
         $teams = $league->teams;
         $positions = $league->sport->positions;
         $data = $this->playerAPI->getData($league);
-        return collect($data)->map(function ($playerData) use ($teams, $positions) {
+        return collect($data)->map(function ($playerData) use ($teams, $positions, $league) {
 
             $team = $this->getTeamForPlayerDTO($teams, $playerData);
-            $playerPositions = $this->getPositionsForPlayerDTO($positions, $playerData);
+            $playerPositions = $this->getPositionsForPlayerDTO($positions, $league, $playerData);
 
             if ($team && $playerPositions->isNotEmpty()) {
                 return new PlayerDTO(
@@ -89,23 +89,16 @@ class MySportsFeed implements StatsIntegration
         return null;
     }
 
-    protected function getPositionsForPlayerDTO(PositionCollection $positions, $playerData)
+    protected function getPositionsForPlayerDTO(PositionCollection $positions, League $league, $playerData)
     {
         $totalPositions = $playerData['alternatePositions'][] = $playerData['primaryPosition'];
 
-        $abbreviations = collect($totalPositions)->map(function ($positionAbbreviation) {
+        $positionNames = collect($totalPositions)->map(function ($positionAbbreviation) use ($league) {
             // We only use outfield (OF) for all outfield positions
-            switch($positionAbbreviation) {
-                case 'LF':
-                case 'RF':
-                case 'CF':
-                $positionAbbreviation = 'OF';
-            }
-
-            return $positionAbbreviation;
+            return $this->convertAbbreviateToPositionName($positionAbbreviation, $league);
         });
 
-        $filteredPositions = $positions->whereIn('abbreviation', $abbreviations);
+        $filteredPositions = $positions->whereIn('name', $positionNames);
 
         if ($filteredPositions->isEmpty()) {
             Log::warning("MySportsFeed player couldn't find valid positions", [
@@ -116,6 +109,59 @@ class MySportsFeed implements StatsIntegration
         }
 
         return $filteredPositions;
+    }
+
+    protected function convertAbbreviateToPositionName(string $abbreviation, League $league)
+    {
+        switch ($abbreviation) {
+            case 'QB':
+                return Position::QUARTERBACK;
+            case 'RB':
+                return Position::RUNNING_BACK;
+            case 'WR':
+                return Position::WIDE_RECEIVER;
+            case 'TE':
+                return Position::TIGHT_END;
+            case 'P':
+                return Position::PITCHER;
+            case '1B':
+                return Position::FIRST_BASE;
+            case '2B':
+                return Position::SECOND_BASE;
+            case '3B':
+                return Position::THIRD_BASE;
+            case 'SS':
+                return Position::SHORTSTOP;
+            case 'LF':
+            case 'RF':
+            case 'CF':
+                return Position::OUTFIELD;
+            case 'SF':
+                return Position::SMALL_FORWARD;
+            case 'PF':
+                return Position::POWER_FORWARD;
+            case 'SG':
+                return Position::SHOOTING_GUARD;
+            case 'PG':
+                return Position::POINT_GUARD;
+            case 'LW':
+                return Position::LEFT_WING;
+            case 'RW':
+                return Position::RIGHT_WING;
+            case 'D':
+                return Position::DEFENSEMAN;
+            case 'G':
+                return Position::GOALIE;
+            case 'C':
+                if ($league->abbreviation === League::MLB) {
+                    return Position::CATCHER;
+                } elseif ($league->abbreviation === League::NHL) {
+                    return Position::HOCKEY_CENTER;
+                } else {
+                    return Position::BASKETBALL_CENTER;
+                }
+        }
+        return '';
     }
 
     /**

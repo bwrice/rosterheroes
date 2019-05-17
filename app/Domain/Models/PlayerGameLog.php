@@ -2,6 +2,7 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Collections\PlayerGameLogCollection;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,6 +21,11 @@ use Illuminate\Database\Eloquent\Model;
 class PlayerGameLog extends Model
 {
     protected $guarded = [];
+
+    public function newCollection(array $models = [])
+    {
+        return new PlayerGameLogCollection($models);
+    }
 
     public function game()
     {
