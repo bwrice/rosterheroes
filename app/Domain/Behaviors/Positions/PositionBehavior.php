@@ -14,18 +14,28 @@ class PositionBehavior
     /**
      * @var int
      */
-    private $defaultSalary;
+    private $positionValue;
 
-    public function __construct(int $defaultSalary)
+    public function __construct(int $positionValue)
     {
-        $this->defaultSalary = $defaultSalary;
+        $this->positionValue = $positionValue;
     }
 
     /**
      * @return int
      */
-    public function getDefaultSalary(): int
+    public function getPositionValue(): int
     {
-        return $this->defaultSalary;
+        return $this->positionValue;
+    }
+
+    public function getDefaultSalary()
+    {
+        return (int) $this->getPositionValue() * 100;
+    }
+
+    public function getMinimumSalary()
+    {
+        return (int) $this->getPositionValue() * 60;
     }
 }

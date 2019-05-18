@@ -9,6 +9,8 @@
 namespace App\Domain\Actions;
 
 
+use App\Domain\Collections\PlayerGameLogCollection;
+use App\Domain\Math\WeightedValue;
 use App\Domain\Models\Game;
 use App\Domain\Models\Player;
 use App\Domain\Models\Week;
@@ -21,6 +23,11 @@ use Illuminate\Support\Facades\Date;
 
 class CreateWeeklyGamePlayer
 {
+    public const SALARY_PER_POINT = 500;
+
+    // TODO: make this dynamic based on sport?
+    public const GAMES_TO_CONSIDER = 15;
+
     /**
      * @var Week
      */
@@ -33,17 +40,12 @@ class CreateWeeklyGamePlayer
      * @var Player
      */
     private $player;
-    /**
-     * @var Collection
-     */
-    private $playerGameLogs;
 
-    public function __construct(Week $week, Game $game, Player $player, Collection $playerGameLogs)
+    public function __construct(Week $week, Game $game, Player $player)
     {
         $this->week = $week;
         $this->game = $game;
         $this->player = $player;
-        $this->playerGameLogs = $playerGameLogs;
     }
 
     /**
@@ -70,22 +72,68 @@ class CreateWeeklyGamePlayer
         ]);
     }
 
-    protected function getSalary()
+    /**
+     * @return PlayerGameLogCollection
+     */
+    protected function getPlayerGameLogs()
     {
-        if ($this->playerGameLogs->isEmpty()) {
-            return $this->getDefaultSalary();
+        if ($this->player->relationLoaded('playerGameLogs')) {
+            return $this->player->playerGameLogs->take(self::GAMES_TO_CONSIDER);
         }
 
-        //TODO use playerGameLogs
+        /** @var PlayerGameLogCollection $playerGameLogs */
+        $playerGameLogs = $this->player->playerGameLogs()->take(self::GAMES_TO_CONSIDER)->get();
+        return $playerGameLogs;
+    }
+
+    /**
+     * @return int
+     * @throws \MathPHP\Exception\BadDataException
+     */
+    protected function getSalary()
+    {
+        $weightedValues = $this->getPlayerGameLogs()->toWeightedValues();
+        $weightedValues->push($this->getDefaultWeightedValue());
+
+        $weightedPoints = $weightedValues->getWeightedMean();
+        $weightedSalary = $this->convertPointsToSalary($weightedPoints);
+
+        return (int) max($weightedSalary, $this->getMinimumSalary());
+    }
+
+    protected function convertPointsToSalary($points)
+    {
+        return (int) round($points * self::SALARY_PER_POINT);
     }
 
     protected function getDefaultSalary()
     {
-        $highestSalaryPosition = $this->player->positions->withHighestDefaultSalary();
-        if ( ! $highestSalaryPosition ) {
+        $highestValuedPosition = $this->getHighestValuedPosition();
+
+        return $highestValuedPosition->getBehavior()->getDefaultSalary();
+    }
+
+    protected function getMinimumSalary()
+    {
+        $highestValuedPosition = $this->getHighestValuedPosition();
+
+        return $highestValuedPosition->getBehavior()->getMinimumSalary();
+    }
+
+    protected function getDefaultWeightedValue()
+    {
+        return new WeightedValue(10, $this->getDefaultSalary() / self::SALARY_PER_POINT);
+    }
+
+    /**
+     * @return \App\Domain\Models\Position|null
+     */
+    protected function getHighestValuedPosition()
+    {
+        $highestValuePosition = $this->player->positions->withHighestPositionValue();
+        if (!$highestValuePosition) {
             throw new InvalidPlayerException($this->player, $this->player->fullName() . " has zero positions");
         }
-
-        return $highestSalaryPosition->getBehavior()->getDefaultSalary();
+        return $highestValuePosition;
     }
 }

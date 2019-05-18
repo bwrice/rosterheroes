@@ -23,15 +23,15 @@ class PositionCollection extends Collection
     /**
      * @return Position|null
      */
-    public function withHighestDefaultSalary()
+    public function withHighestPositionValue()
     {
-        return $this->sortDefaultSalary(true)->first();
+        return $this->sortByPositionValue(true)->first();
     }
 
-    public function sortDefaultSalary($descending = false, $options = SORT_REGULAR)
+    public function sortByPositionValue($descending = false, $options = SORT_REGULAR)
     {
         return $this->sortBy(function (Position $position) {
-            return $position->getBehavior()->getDefaultSalary();
+            return $position->getBehavior()->getPositionValue();
         }, $options, $descending);
     }
 }

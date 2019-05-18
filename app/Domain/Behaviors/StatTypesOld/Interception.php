@@ -6,7 +6,7 @@
  * Time: 2:25 PM
  */
 
-namespace App\Domain\Behaviors\StatTypes;
+namespace App\Domain\Behaviors\StatTypesOld;
 
 
 use App\Domain\Enums\StatTypes\StatType;

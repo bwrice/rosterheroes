@@ -8,6 +8,7 @@ use App\Domain\Models\HeroRace;
 use App\Domain\Models\League;
 use App\Domain\Collections\PositionCollection;
 use App\Domain\Models\Sport;
+use App\Domain\Models\Traits\HasUniqueNames;
 use App\Exceptions\UnknownBehaviorException;
 use Illuminate\Database\Eloquent\Model;
 
@@ -22,6 +23,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Position extends Model
 {
+    use HasUniqueNames;
+
     // Football
     public const QUARTERBACK = 'quarterback';
     public const RUNNING_BACK = 'running-back';
@@ -77,50 +80,50 @@ class Position extends Model
     {
         switch ($this->name) {
             case self::QUARTERBACK;
-                return new PositionBehavior(7500);
+                return new PositionBehavior(75);
             case self::RUNNING_BACK;
-                return new PositionBehavior(5000);
+                return new PositionBehavior(50);
             case self::WIDE_RECEIVER;
-                return new PositionBehavior(5000);
+                return new PositionBehavior(50);
             case self::TIGHT_END;
-                return new PositionBehavior(3500);
+                return new PositionBehavior(35);
 
             case self::PITCHER;
-                return new PositionBehavior(7000);
+                return new PositionBehavior(70);
             case self::CATCHER;
-                return new PositionBehavior(4000);
+                return new PositionBehavior(40);
             case self::SHORTSTOP;
-                return new PositionBehavior(5000);
+                return new PositionBehavior(50);
             case self::FIRST_BASE;
-                return new PositionBehavior(5000);
+                return new PositionBehavior(50);
             case self::SECOND_BASE;
-                return new PositionBehavior(5000);
+                return new PositionBehavior(50);
             case self::THIRD_BASE;
-                return new PositionBehavior(5000);
+                return new PositionBehavior(50);
             case self::OUTFIELD;
-                return new PositionBehavior(6000);
+                return new PositionBehavior(60);
 
             case self::SMALL_FORWARD;
-                return new PositionBehavior(8000);
+                return new PositionBehavior(90);
             case self::SHOOTING_GUARD;
-                return new PositionBehavior(8000);
+                return new PositionBehavior(90);
             case self::POINT_GUARD;
-                return new PositionBehavior(8000);
+                return new PositionBehavior(90);
             case self::POWER_FORWARD;
-                return new PositionBehavior(8000);
+                return new PositionBehavior(80);
             case self::BASKETBALL_CENTER;
-                return new PositionBehavior(7000);
+                return new PositionBehavior(80);
 
             case self::GOALIE;
-                return new PositionBehavior(7000);
+                return new PositionBehavior(50);
             case self::RIGHT_WING;
-                return new PositionBehavior(6000);
+                return new PositionBehavior(40);
             case self::LEFT_WING;
-                return new PositionBehavior(6000);
+                return new PositionBehavior(40);
             case self::DEFENSEMAN;
-                return new PositionBehavior(4000);
+                return new PositionBehavior(30);
             case self::HOCKEY_CENTER;
-                return new PositionBehavior(6000);
+                return new PositionBehavior(40);
         }
 
         throw new UnknownBehaviorException($this->name, PositionBehavior::class);

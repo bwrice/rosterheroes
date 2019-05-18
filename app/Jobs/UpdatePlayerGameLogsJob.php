@@ -57,7 +57,7 @@ class UpdatePlayerGameLogsJob implements ShouldQueue
                 ]);
 
                 $dto->getStatAmountDTOs()->each(function (StatAmountDTO $statAmountDTO) use ($playerGameLog) {
-                    $playerGameLog->stats()->create([
+                    $playerGameLog->playerStats()->create([
                         'stat_type_id' => $statAmountDTO->getStatType()->id,
                         'amount' => $statAmountDTO->getAmount()
                     ]);

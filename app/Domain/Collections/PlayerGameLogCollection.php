@@ -9,9 +9,41 @@
 namespace App\Domain\Collections;
 
 
+use App\Domain\Interfaces\ConvertsToWeightedValues;
+use App\Domain\Math\WeightedValue;
+use App\Domain\Models\PlayerGameLog;
 use Illuminate\Database\Eloquent\Collection;
 
-class PlayerGameLogCollection extends Collection
+class PlayerGameLogCollection extends Collection implements ConvertsToWeightedValues
 {
+
+    public function toWeightedValues(): WeightedValueCollection
+    {
+        /*
+         * Sort by game-time, older games being first, and reset the indexes
+         * so the oldest game starts with a 0 index and they increase with recency
+         */
+        $sorted = $this->sortByGameTime()->values();
+
+        $weightedCollection = $sorted->loadMissing('playerStats')->map(function (PlayerGameLog $playerGameLog, $index) {
+            $totalPoints = $playerGameLog->playerStats->totalPoints();
+            if ($totalPoints < 1) {
+                // ignore games with less than 1 fantasy points scored
+                return new WeightedValue(0, $totalPoints);
+            }
+            // The higher the index, ie more recent the game, the larger the weight
+            $weight = 2 ^ $index;
+            return new WeightedValue($weight, $totalPoints);
+        });
+
+        return new WeightedValueCollection($weightedCollection->values());
+    }
+
+    public function sortByGameTime($descending = false)
+    {
+        return $this->loadMissing('game')->sortBy(function (PlayerGameLog $playerGameLog) {
+            return $playerGameLog->game->starts_at->timestamp;
+        }, SORT_REGULAR, $descending);
+    }
 
 }

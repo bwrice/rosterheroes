@@ -6,12 +6,12 @@
  * Time: 11:14 AM
  */
 
-namespace App\Domain\Behaviors\StatTypes;
+namespace App\Domain\Behaviors\StatTypesOld;
 
 
 use App\Domain\Enums\StatTypes\StatType;
 
-class RushingTouchdown extends StatType
+class PassingTouchdown extends StatType
 {
-    public const NAME = 'rushing-touchdown';
+    public const NAME = 'passing-touchdown';
 }

@@ -6,10 +6,10 @@
  * Time: 2:31 PM
  */
 
-namespace App\Domain\Behaviors\StatTypes\BaseBall;
+namespace App\Domain\Behaviors\StatTypesOld\BaseBall;
 
 
-class StolenBase
+class HitByPitch
 {
 
 }

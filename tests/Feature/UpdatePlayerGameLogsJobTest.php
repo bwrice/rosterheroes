@@ -73,11 +73,11 @@ class UpdatePlayerGameLogsJobTest extends TestCase
 
         UpdatePlayerGameLogsJob::dispatch($homeTeam);
 
-        $playerGameLogs = PlayerGameLog::query()->with('stats')->where('game_id', '=', $game->id)->get();
+        $playerGameLogs = PlayerGameLog::query()->with('playerStats')->where('game_id', '=', $game->id)->get();
         $this->assertEquals(3, $playerGameLogs->count());
         $playerGameLogs->each(function (PlayerGameLog $playerGameLog) use ($homeTeam) {
             $this->assertEquals($homeTeam->id, $playerGameLog->team->id);
-            $this->assertGreaterThan(0, $playerGameLog->stats->count());
+            $this->assertGreaterThan(0, $playerGameLog->playerStats->count());
         });
     }
 }

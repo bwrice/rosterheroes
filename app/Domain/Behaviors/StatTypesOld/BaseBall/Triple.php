@@ -6,10 +6,10 @@
  * Time: 2:30 PM
  */
 
-namespace App\Domain\Behaviors\StatTypes\BaseBall;
+namespace App\Domain\Behaviors\StatTypesOld\BaseBall;
 
 
-class Double
+class Triple
 {
 
 }
