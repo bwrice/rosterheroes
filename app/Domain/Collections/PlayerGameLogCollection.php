@@ -32,7 +32,7 @@ class PlayerGameLogCollection extends Collection implements ConvertsToWeightedVa
                 return new WeightedValue(0, $totalPoints);
             }
             // The higher the index, ie more recent the game, the larger the weight
-            $weight = 2 ^ $index;
+            $weight = 1.2 ** $index;
             return new WeightedValue($weight, $totalPoints);
         });
 

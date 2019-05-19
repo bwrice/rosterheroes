@@ -80,50 +80,50 @@ class Position extends Model
     {
         switch ($this->name) {
             case self::QUARTERBACK;
-                return new PositionBehavior(75);
+                return new PositionBehavior(75, 16);
             case self::RUNNING_BACK;
-                return new PositionBehavior(50);
+                return new PositionBehavior(50, 14);
             case self::WIDE_RECEIVER;
-                return new PositionBehavior(50);
+                return new PositionBehavior(50, 14);
             case self::TIGHT_END;
-                return new PositionBehavior(35);
+                return new PositionBehavior(35, 16);
 
             case self::PITCHER;
-                return new PositionBehavior(70);
+                return new PositionBehavior(70, 30);
             case self::CATCHER;
-                return new PositionBehavior(40);
+                return new PositionBehavior(40, 150);
             case self::SHORTSTOP;
-                return new PositionBehavior(50);
+                return new PositionBehavior(50, 150);
             case self::FIRST_BASE;
-                return new PositionBehavior(50);
+                return new PositionBehavior(50, 150);
             case self::SECOND_BASE;
-                return new PositionBehavior(50);
+                return new PositionBehavior(50, 150);
             case self::THIRD_BASE;
-                return new PositionBehavior(50);
+                return new PositionBehavior(50, 150);
             case self::OUTFIELD;
-                return new PositionBehavior(60);
+                return new PositionBehavior(60, 150);
 
             case self::SMALL_FORWARD;
-                return new PositionBehavior(90);
+                return new PositionBehavior(90, 80);
             case self::SHOOTING_GUARD;
-                return new PositionBehavior(90);
+                return new PositionBehavior(90, 80);
             case self::POINT_GUARD;
-                return new PositionBehavior(90);
+                return new PositionBehavior(90, 80);
             case self::POWER_FORWARD;
-                return new PositionBehavior(80);
+                return new PositionBehavior(80, 80);
             case self::BASKETBALL_CENTER;
-                return new PositionBehavior(80);
+                return new PositionBehavior(80, 80);
 
             case self::GOALIE;
-                return new PositionBehavior(50);
+                return new PositionBehavior(50, 80);
             case self::RIGHT_WING;
-                return new PositionBehavior(40);
+                return new PositionBehavior(40, 80);
             case self::LEFT_WING;
-                return new PositionBehavior(40);
+                return new PositionBehavior(40, 80);
             case self::DEFENSEMAN;
-                return new PositionBehavior(30);
+                return new PositionBehavior(30, 80);
             case self::HOCKEY_CENTER;
-                return new PositionBehavior(40);
+                return new PositionBehavior(40, 80);
         }
 
         throw new UnknownBehaviorException($this->name, PositionBehavior::class);

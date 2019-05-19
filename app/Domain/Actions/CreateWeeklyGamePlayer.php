@@ -23,10 +23,7 @@ use Illuminate\Support\Facades\Date;
 
 class CreateWeeklyGamePlayer
 {
-    public const SALARY_PER_POINT = 500;
-
-    // TODO: make this dynamic based on sport?
-    public const GAMES_TO_CONSIDER = 15;
+    public const SALARY_PER_POINT = 400;
 
     /**
      * @var Week
@@ -78,11 +75,11 @@ class CreateWeeklyGamePlayer
     protected function getPlayerGameLogs()
     {
         if ($this->player->relationLoaded('playerGameLogs')) {
-            return $this->player->playerGameLogs->take(self::GAMES_TO_CONSIDER);
+            return $this->player->playerGameLogs->take($this->getGamesToConsider());
         }
 
         /** @var PlayerGameLogCollection $playerGameLogs */
-        $playerGameLogs = $this->player->playerGameLogs()->take(self::GAMES_TO_CONSIDER)->get();
+        $playerGameLogs = $this->player->playerGameLogs()->take($this->getGamesToConsider())->get();
         return $playerGameLogs;
     }
 
@@ -93,6 +90,8 @@ class CreateWeeklyGamePlayer
     protected function getSalary()
     {
         $weightedValues = $this->getPlayerGameLogs()->toWeightedValues();
+
+        // Add at least one weighted value to the collection based off default values for the position
         $weightedValues->push($this->getDefaultWeightedValue());
 
         $weightedPoints = $weightedValues->getWeightedMean();
@@ -122,7 +121,30 @@ class CreateWeeklyGamePlayer
 
     protected function getDefaultWeightedValue()
     {
-        return new WeightedValue(10, $this->getDefaultSalary() / self::SALARY_PER_POINT);
+        return new WeightedValue($this->getDefaultWeight(), $this->getDefaultTotalPoints());
+    }
+
+    protected function getDefaultTotalPoints()
+    {
+        return $this->getDefaultSalary() / self::SALARY_PER_POINT;
+    }
+
+    /**
+     * @return int
+     */
+    protected function getGamesToConsider()
+    {
+        $gamesPerSeason = $this->getHighestValuedPosition()->getBehavior()->getGamesPerSeason();
+        return $gamesPerSeason > 0 ? (int) ceil($gamesPerSeason/2) : 1;
+    }
+
+    /**
+     * @return float|int
+     */
+    protected function getDefaultWeight()
+    {
+        $gamesPerYear = $this->getHighestValuedPosition()->getBehavior()->getGamesPerSeason();
+        return $gamesPerYear > 0 ? $gamesPerYear / 4 : 1;
     }
 
     /**

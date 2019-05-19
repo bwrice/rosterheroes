@@ -18,19 +18,19 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class SlotCollectionTest extends TestCase
+class SlotCollectionTest
 {
-
-    use DatabaseTransactions;
-
-    /** @var SlotCollection $slotCollection */
-    protected $slotCollection;
-
-    public function setUp(): void
-    {
-        $this->slotCollection = new SlotCollection();
-        parent::setUp();
-    }
+//
+//    use DatabaseTransactions;
+//
+//    /** @var SlotCollection $slotCollection */
+//    protected $slotCollection;
+//
+//    public function setUp(): void
+//    {
+//        $this->slotCollection = new SlotCollection();
+//        parent::setUp();
+//    }
 
 //    /**
 //     * @test
