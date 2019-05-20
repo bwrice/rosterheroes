@@ -38,7 +38,10 @@ class MySportsFeed implements StatsIntegration
      */
     private $gameAPI;
 
-    public function __construct(PlayerAPI $playerAPI, TeamAPI $teamAPI, GameAPI $gameAPI)
+    public function __construct(
+        PlayerAPI $playerAPI,
+        TeamAPI $teamAPI,
+        GameAPI $gameAPI)
     {
         $this->playerAPI = $playerAPI;
         $this->teamAPI = $teamAPI;

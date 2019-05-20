@@ -5,7 +5,9 @@ namespace Tests\Feature;
 use App\Domain\DataTransferObjects\GameDTO;
 use App\Domain\DataTransferObjects\PlayerDTO;
 use App\Domain\DataTransferObjects\TeamDTO;
+use App\Domain\Models\Game;
 use App\Domain\Models\League;
+use App\Domain\Models\Player;
 use App\Domain\Models\Position;
 use App\Domain\Models\Team;
 use App\External\Stats\MySportsFeed\MSFClient;
@@ -227,5 +229,151 @@ class MySportsFeedTest extends TestCase
         $this->assertEquals($homeTeamTwo->id, $gameTwo->getHomeTeam()->id);
         $this->assertEquals($awayTeamTwo->id, $gameTwo->getAwayTeam()->id);
 
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_return_game_log_DTOs_for_NFL()
+    {
+        $league = League::nfl();
+        $team = uniqid();
+        $teamWeCareAbout = factory(Team::class)->create([
+            'league_id' => $league->id,
+            'external_id' => $team
+        ]);
+
+        $playerOneExternalID = uniqid();
+        /** @var Player $playerOne */
+        $playerOne = factory(Player::class)->create([
+            'team_id' => $teamWeCareAbout->id,
+            'external_id' => $playerOneExternalID
+        ]);
+
+        $playerTwoExternalID = uniqid();
+        // Note: not setting team ID, as it shouldn't matter if a player switches teams
+        /** @var Player $playerTwo */
+        $playerTwo = factory(Player::class)->create([
+            'external_id' => $playerTwoExternalID
+        ]);
+
+        $gameOneExternalID = uniqid();
+        /** @var Game $gameOne */
+        $gameOne = factory(Game::class)->create([
+            'home_team_id' => $teamWeCareAbout->id,
+            'external_id' => $gameOneExternalID
+        ]);
+
+        $gameTwoExternalID = uniqid();
+        /** @var Game $gameTwo */
+        $gameTwo = factory(Game::class)->create([
+            'away_team_id' => $teamWeCareAbout->id,
+            'external_id' => $gameTwoExternalID
+        ]);
+
+//        $gameThreeExternalID = uniqid();
+//        $gameThree = factory(Game::class)->create([
+//            'home_team_id' => $teamWeCareAbout->id,
+//            'external_id' => $gameThreeExternalID
+//        ]);
+
+        $clientMock = \Mockery::mock(MSFClient::class);
+        $clientMock->shouldReceive('getData')->andReturn([
+            'gamelogs' => [
+                [
+                    'game' => [
+                        'id' => $gameOneExternalID
+                    ],
+                    'player' => [
+                        'id' => $playerOneExternalID
+                    ],
+                    'stats' => [
+                        'passing' => [
+                            'passYards' => 335,
+                            'passTD' => 4,
+                            'passInt' => 1
+                        ],
+                        'rushing' => [
+                            'rushYards' => 12,
+                            'rushTD' => 0,
+                        ],
+                        'receiving' => [
+                            'receptions' => 0,
+                            'recYards' => 0,
+                            'recTD' => 0
+
+                        ],
+                        'fumbles' => [
+                            'fumLost' => 1
+                        ]
+                    ]
+                ],
+                [
+                    'game' => [
+                        'id' => $gameOneExternalID
+                    ],
+                    'player' => [
+                        'id' => $playerTwoExternalID
+                    ],
+                    'stats' => [
+                        'passing' => [
+                            'passYards' => 0,
+                            'passTD' => 0,
+                            'passInt' => 0
+                        ],
+                        'rushing' => [
+                            'rushYards' => 85,
+                            'rushTD' => 1,
+                        ],
+                        'receiving' => [
+                            'receptions' => 3,
+                            'recYards' => 37,
+                            'recTD' => 0
+
+                        ],
+                        'fumbles' => [
+                            'fumLost' => 1
+                        ]
+                    ]
+                ],
+                [
+                    'game' => [
+                        'id' => $gameTwoExternalID
+                    ],
+                    'player' => [
+                        'id' => $playerTwoExternalID
+                    ],
+                    'stats' => [
+                        'passing' => [
+                            'passYards' => 0,
+                            'passTD' => 0,
+                            'passInt' => 0
+                        ],
+                        'rushing' => [
+                            'rushYards' => 43,
+                            'rushTD' => 0,
+                        ],
+                        'receiving' => [
+                            'receptions' => 5,
+                            'recYards' => 77,
+                            'recTD' => 2
+
+                        ],
+                        'fumbles' => [
+                            'fumLost' => 0
+                        ]
+                    ]
+                ],
+            ]
+        ]);
+
+        /** @var MySportsFeed $msfIntegration */
+        $msfIntegration = app(MySportsFeed::class);
+        $playerGameLogDTOs = $msfIntegration->getPlayerGameLogDTOs($teamWeCareAbout);
+
+        $this->assertEquals(3, $playerGameLogDTOs->count());
+        $this->assertEquals(1, $playerOne);
+
+        //TODO other assertions
     }
 }
