@@ -9,6 +9,9 @@
 namespace App\External\Stats\MySportsFeed;
 
 
+use App\Domain\Models\League;
+use App\Domain\Models\Team;
+
 class GameLogAPI
 {
     /**
@@ -26,11 +29,11 @@ class GameLogAPI
         $this->leagueSeasonConverter = $leagueSeasonConverter;
     }
 
-    public function getData(League $league)
+    public function getData(Team $team)
     {
-        $season = $this->leagueSeasonConverter->getSeason($league);
-        $subURL = $season . '/games.json';
+        $season = $this->leagueSeasonConverter->getSeason($team->league);
+        $subURL = $season . '/player_gamelogs.json?team=' . strtolower($team->abbreviation);
         $responseData = $this->client->getData($subURL);
-        return $responseData['games'];
+        return $responseData['gamelogs'];
     }
 }

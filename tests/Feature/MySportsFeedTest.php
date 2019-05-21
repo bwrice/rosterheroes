@@ -4,10 +4,12 @@ namespace Tests\Feature;
 
 use App\Domain\DataTransferObjects\GameDTO;
 use App\Domain\DataTransferObjects\PlayerDTO;
+use App\Domain\DataTransferObjects\PlayerGameLogDTO;
 use App\Domain\DataTransferObjects\TeamDTO;
 use App\Domain\Models\Game;
 use App\Domain\Models\League;
 use App\Domain\Models\Player;
+use App\Domain\Models\PlayerGameLog;
 use App\Domain\Models\Position;
 use App\Domain\Models\Team;
 use App\External\Stats\MySportsFeed\MSFClient;
@@ -277,95 +279,100 @@ class MySportsFeedTest extends TestCase
 //            'external_id' => $gameThreeExternalID
 //        ]);
 
+        $gameLogsResponseArray = [
+            [
+                'game' => [
+                    'id' => $gameOneExternalID
+                ],
+                'player' => [
+                    'id' => $playerOneExternalID
+                ],
+                'stats' => [
+                    'passing' => [
+                        'passYards' => 335,
+                        'passTD' => 4,
+                        'passInt' => 1
+                    ],
+                    'rushing' => [
+                        'rushYards' => 12,
+                        'rushTD' => 0,
+                    ],
+                    'receiving' => [
+                        'receptions' => 0,
+                        'recYards' => 0,
+                        'recTD' => 0
+
+                    ],
+                    'fumbles' => [
+                        'fumLost' => 1
+                    ]
+                ]
+            ],
+            [
+                'game' => [
+                    'id' => $gameOneExternalID
+                ],
+                'player' => [
+                    'id' => $playerTwoExternalID
+                ],
+                'stats' => [
+                    'passing' => [
+                        'passYards' => 0,
+                        'passTD' => 0,
+                        'passInt' => 0
+                    ],
+                    'rushing' => [
+                        'rushYards' => 85,
+                        'rushTD' => 1,
+                    ],
+                    'receiving' => [
+                        'receptions' => 3,
+                        'recYards' => 37,
+                        'recTD' => 0
+
+                    ],
+                    'fumbles' => [
+                        'fumLost' => 1
+                    ]
+                ]
+            ],
+            [
+                'game' => [
+                    'id' => $gameTwoExternalID
+                ],
+                'player' => [
+                    'id' => $playerTwoExternalID
+                ],
+                'stats' => [
+                    'passing' => [
+                        'passYards' => 0,
+                        'passTD' => 0,
+                        'passInt' => 0
+                    ],
+                    'rushing' => [
+                        'rushYards' => 43,
+                        'rushTD' => 0,
+                    ],
+                    'receiving' => [
+                        'receptions' => 5,
+                        'recYards' => 77,
+                        'recTD' => 2
+
+                    ],
+                    'fumbles' => [
+                        'fumLost' => 0
+                    ]
+                ]
+            ],
+        ];
+
         $clientMock = \Mockery::mock(MSFClient::class);
         $clientMock->shouldReceive('getData')->andReturn([
-            'gamelogs' => [
-                [
-                    'game' => [
-                        'id' => $gameOneExternalID
-                    ],
-                    'player' => [
-                        'id' => $playerOneExternalID
-                    ],
-                    'stats' => [
-                        'passing' => [
-                            'passYards' => 335,
-                            'passTD' => 4,
-                            'passInt' => 1
-                        ],
-                        'rushing' => [
-                            'rushYards' => 12,
-                            'rushTD' => 0,
-                        ],
-                        'receiving' => [
-                            'receptions' => 0,
-                            'recYards' => 0,
-                            'recTD' => 0
-
-                        ],
-                        'fumbles' => [
-                            'fumLost' => 1
-                        ]
-                    ]
-                ],
-                [
-                    'game' => [
-                        'id' => $gameOneExternalID
-                    ],
-                    'player' => [
-                        'id' => $playerTwoExternalID
-                    ],
-                    'stats' => [
-                        'passing' => [
-                            'passYards' => 0,
-                            'passTD' => 0,
-                            'passInt' => 0
-                        ],
-                        'rushing' => [
-                            'rushYards' => 85,
-                            'rushTD' => 1,
-                        ],
-                        'receiving' => [
-                            'receptions' => 3,
-                            'recYards' => 37,
-                            'recTD' => 0
-
-                        ],
-                        'fumbles' => [
-                            'fumLost' => 1
-                        ]
-                    ]
-                ],
-                [
-                    'game' => [
-                        'id' => $gameTwoExternalID
-                    ],
-                    'player' => [
-                        'id' => $playerTwoExternalID
-                    ],
-                    'stats' => [
-                        'passing' => [
-                            'passYards' => 0,
-                            'passTD' => 0,
-                            'passInt' => 0
-                        ],
-                        'rushing' => [
-                            'rushYards' => 43,
-                            'rushTD' => 0,
-                        ],
-                        'receiving' => [
-                            'receptions' => 5,
-                            'recYards' => 77,
-                            'recTD' => 2
-
-                        ],
-                        'fumbles' => [
-                            'fumLost' => 0
-                        ]
-                    ]
-                ],
-            ]
+            'gamelogs' => $gameLogsResponseArray
         ]);
+
+        // put the mock into the container
+        app()->instance(MSFClient::class, $clientMock);
 
         /** @var MySportsFeed $msfIntegration */
         $msfIntegration = app(MySportsFeed::class);
@@ -373,6 +380,22 @@ class MySportsFeedTest extends TestCase
 
         $this->assertEquals(3, $playerGameLogDTOs->count());
         $this->assertEquals(1, $playerOne);
+
+        collect($gameLogsResponseArray)->each(function ($gameLogArray) use ($playerGameLogDTOs) {
+
+            /** @var PlayerGameLogDTO $dto */
+            $dto = $playerGameLogDTOs->first(function (PlayerGameLogDTO $playerGameLogDTO) use ($gameLogArray) {
+                return $playerGameLogDTO->getGame()->external_id === $gameLogArray['game']['id'] &&
+                    $playerGameLogDTO->getPlayer()->external_id === $gameLogArray['player']['id'];
+            });
+
+            $this->assertNotNull($dto);
+
+            collect($gameLogArray['stats'])->each(function ($statArray) use ($dto) {
+
+            });
+        });
+
 
         //TODO other assertions
     }

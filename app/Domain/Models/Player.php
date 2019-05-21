@@ -7,6 +7,7 @@ use App\Domain\Models\Game;
 use App\Domain\Models\Position;
 use App\Domain\Collections\PositionCollection;
 use App\Domain\Models\Team;
+use App\Domain\QueryBuilders\PlayerQueryBuilder;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -24,10 +25,17 @@ use Illuminate\Support\Carbon;
  * @property Team $team
  * @property PositionCollection $positions
  * @property PlayerGameLogCollection $playerGameLogs
+ *
+ * @method static PlayerQueryBuilder query()
  */
 class Player extends Model
 {
     protected $guarded = [];
+
+    public function newEloquentBuilder($query)
+    {
+        return new PlayerQueryBuilder($query);
+    }
 
     public function positions()
     {

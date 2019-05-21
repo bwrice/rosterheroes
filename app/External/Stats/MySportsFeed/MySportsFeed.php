@@ -11,8 +11,11 @@ namespace App\External\Stats\MySportsFeed;
 use App\Domain\Collections\TeamCollection;
 use App\Domain\DataTransferObjects\GameDTO;
 use App\Domain\DataTransferObjects\PlayerDTO;
+use App\Domain\Models\Game;
+use App\Domain\Models\Player;
 use App\Domain\Models\Team;
 use App\Domain\DataTransferObjects\TeamDTO;
+use App\External\Stats\MySportsFeed\StatConverters\StatConverterFactory;
 use App\External\Stats\StatsIntegration;
 use App\Domain\Models\League;
 use App\Domain\Models\Position;
@@ -37,15 +40,27 @@ class MySportsFeed implements StatsIntegration
      * @var GameAPI
      */
     private $gameAPI;
+    /**
+     * @var GameLogAPI
+     */
+    private $gameLogAPI;
+    /**
+     * @var StatConverterFactory
+     */
+    private $statConverterFactory;
 
     public function __construct(
         PlayerAPI $playerAPI,
         TeamAPI $teamAPI,
-        GameAPI $gameAPI)
+        GameAPI $gameAPI,
+        GameLogAPI $gameLogAPI,
+        StatConverterFactory $statConverterFactory)
     {
         $this->playerAPI = $playerAPI;
         $this->teamAPI = $teamAPI;
         $this->gameAPI = $gameAPI;
+        $this->gameLogAPI = $gameLogAPI;
+        $this->statConverterFactory = $statConverterFactory;
     }
 
     protected function getAPIKey()
@@ -229,8 +244,46 @@ class MySportsFeed implements StatsIntegration
         ];
     }
 
-    public function getPlayerGameLogDTOs(Team $league): Collection
+    public function getPlayerGameLogDTOs(Team $team): Collection
     {
-        // TODO: Implement getPlayerGameLogDTOs() method.
+        $data = $this->gameLogAPI->getData($team);
+        return collect($data)->map(function ($gameLogData) use ($team) {
+
+            try {
+                return $this->buildPlayerGameDTO($team, $gameLogData);
+            } catch (MySportsFeedsException $exception) {
+
+            } catch (\Throwable $error) {
+                Log::error("Error while getting game log DTOs", [
+                    'error' => $error->getMessage(),
+                    'game_log_data' => $gameLogData,
+                    'team' => $team->toArray()
+                ]);
+            }
+
+            return null;
+        })->filter(); // filter nulls
+    }
+
+    protected function buildPlayerGameDTO(Team $team, array $gameLogData)
+    {
+        $game = Game::query()->externalID($gameLogData['game']['id'])->first();
+        if (! $game) {
+            Log::warning("Couldn't find game when building game log DTO", [
+                'game_log_data' => $gameLogData,
+                'team' => $team->toArray()
+            ]);
+        }
+        $player = Player::query()->externalID($gameLogData['player']['id'])->first();
+        if (! $player) {
+            Log::warning("Couldn't find player when building game log DTO", [
+                'game_log_data' => $gameLogData,
+                'team' => $team->toArray()
+            ]);
+        }
+        if ($game && $player) {
+            $statConvert = $this->statConverterFactory->getStatConverter($team->league);
+
+        }
     }
 }

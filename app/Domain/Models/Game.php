@@ -4,7 +4,9 @@ namespace App\Domain\Models;
 
 use App\Domain\Models\Team;
 use App\Domain\Models\Week;
+use App\Domain\QueryBuilders\GameQueryBuilder;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -12,10 +14,13 @@ use Illuminate\Database\Eloquent\Model;
  * @package App
  *
  * @property int $id
+ * @property string $external_id
  * @property Carbon $starts_at
  *
  * @property \App\Domain\Models\Team $homeTeam
  * @property \App\Domain\Models\Team $awayTeam
+ *
+ * @method static GameQueryBuilder query()
  */
 class Game extends Model
 {
@@ -26,6 +31,11 @@ class Game extends Model
         'created_at',
         'updated_at'
     ];
+
+    public function newEloquentBuilder($query)
+    {
+        return new GameQueryBuilder($query);
+    }
 
     public function homeTeam()
     {
