@@ -6,7 +6,7 @@
  * Time: 11:37 PM
  */
 
-namespace App\External\Stats\MySportsFeed\StatConverters;
+namespace App\External\Stats\MySportsFeed\StatAmountDTOs;
 
 
 use App\Domain\Models\League;
@@ -15,19 +15,19 @@ class StatConverterFactory
 {
     /**
      * @param League $league
-     * @return StatConverter
+     * @return StatAmountDTOBuilder
      */
-    public function getStatConverter(League $league): StatConverter
+    public function getStatConverter(League $league): StatAmountDTOBuilder
     {
         switch($league->abbreviation) {
             case League::NFL:
-                return new NFLStatConverter();
+                return app(NFLStatAmountDTOBuilder::class);
             case League::MLB:
-                return new MLBStatConverter();
+                return app(MLBStatAmountDTOBuilder::class);
             case League::NBA:
-                return new NBAStatConverter();
+                return app(NBAStatAmountDTOBuilder::class);
             case League::NHL:
-                return new NHLStatConverter();
+                return app(NHLStatAmountDTOBuilder::class);
         }
         throw new \InvalidArgumentException("Unknown League: " . $league->abbreviation);
     }

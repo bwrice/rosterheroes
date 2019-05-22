@@ -3,6 +3,7 @@
 namespace App\Domain\Models;
 
 use App\Domain\Behaviors\StatTypes\StatTypeBehavior;
+use App\Domain\Collections\StatTypeCollection;
 use App\Domain\Models\Traits\HasUniqueNames;
 use App\Exceptions\UnknownBehaviorException;
 use Illuminate\Database\Eloquent\Model;
@@ -14,6 +15,8 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property string $name
+ *
+ * @method static StatTypeCollection all($columns = ['*'])
  */
 class StatType extends Model
 {
@@ -67,6 +70,11 @@ class StatType extends Model
     public const TURNOVER = 'turnover';
 
     protected $guarded = [];
+
+    public function newCollection(array $models = [])
+    {
+        return new StatTypeCollection($models);
+    }
 
     public function getBehavior(): StatTypeBehavior
     {

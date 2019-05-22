@@ -5,15 +5,18 @@ namespace Tests\Feature;
 use App\Domain\DataTransferObjects\GameDTO;
 use App\Domain\DataTransferObjects\PlayerDTO;
 use App\Domain\DataTransferObjects\PlayerGameLogDTO;
+use App\Domain\DataTransferObjects\StatAmountDTO;
 use App\Domain\DataTransferObjects\TeamDTO;
 use App\Domain\Models\Game;
 use App\Domain\Models\League;
 use App\Domain\Models\Player;
 use App\Domain\Models\PlayerGameLog;
 use App\Domain\Models\Position;
+use App\Domain\Models\StatType;
 use App\Domain\Models\Team;
 use App\External\Stats\MySportsFeed\MSFClient;
 use App\External\Stats\MySportsFeed\MySportsFeed;
+use App\External\Stats\MySportsFeed\StatAmountDTOs\StatNameConverters\NFLStatNameConverter;
 use Carbon\CarbonImmutable;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Carbon;
@@ -273,12 +276,6 @@ class MySportsFeedTest extends TestCase
             'external_id' => $gameTwoExternalID
         ]);
 
-//        $gameThreeExternalID = uniqid();
-//        $gameThree = factory(Game::class)->create([
-//            'home_team_id' => $teamWeCareAbout->id,
-//            'external_id' => $gameThreeExternalID
-//        ]);
-
         $gameLogsResponseArray = [
             [
                 'game' => [
@@ -326,8 +323,8 @@ class MySportsFeedTest extends TestCase
                         'rushTD' => 1,
                     ],
                     'receiving' => [
-                        'receptions' => 3,
-                        'recYards' => 37,
+                        'receptions' => 2,
+                        'recYards' => -7,
                         'recTD' => 0
 
                     ],
@@ -379,24 +376,82 @@ class MySportsFeedTest extends TestCase
         $playerGameLogDTOs = $msfIntegration->getPlayerGameLogDTOs($teamWeCareAbout);
 
         $this->assertEquals(3, $playerGameLogDTOs->count());
-        $this->assertEquals(1, $playerOne);
 
-        collect($gameLogsResponseArray)->each(function ($gameLogArray) use ($playerGameLogDTOs) {
+        /** @var NFLStatNameConverter $nflStatNameConverter */
+        $nflStatNameConverter = app(NFLStatNameConverter::class);
+        $statTypes = StatType::all();
 
-            /** @var PlayerGameLogDTO $dto */
-            $dto = $playerGameLogDTOs->first(function (PlayerGameLogDTO $playerGameLogDTO) use ($gameLogArray) {
+        collect($gameLogsResponseArray)->each(function ($gameLogArray) use ($playerGameLogDTOs, $nflStatNameConverter, $statTypes) {
+
+            /** @var PlayerGameLogDTO $playerGameLogDTO */
+            $playerGameLogDTO = $playerGameLogDTOs->first(function (PlayerGameLogDTO $playerGameLogDTO) use ($gameLogArray) {
                 return $playerGameLogDTO->getGame()->external_id === $gameLogArray['game']['id'] &&
                     $playerGameLogDTO->getPlayer()->external_id === $gameLogArray['player']['id'];
             });
 
-            $this->assertNotNull($dto);
+            $this->assertNotNull($playerGameLogDTO);
 
-            collect($gameLogArray['stats'])->each(function ($statArray) use ($dto) {
+            $combinedStats = $gameLogArray['stats']['passing'];
+            $combinedStats = array_merge($gameLogArray['stats']['rushing'], $combinedStats);
+            $combinedStats = array_merge($gameLogArray['stats']['receiving'], $combinedStats);
+            $combinedStats = array_merge($gameLogArray['stats']['fumbles'], $combinedStats);
 
+            collect($combinedStats)->each(function ($amount, $name) use ($playerGameLogDTO, $nflStatNameConverter) {
+
+                $convertedName = $nflStatNameConverter->convert($name);
+                /** @var StatAmountDTO $statAmountDTO */
+                $statAmountDTO = $playerGameLogDTO->getStatAmountDTOs()->first(function (StatAmountDTO $statAmountDTO) use ($convertedName) {
+                    return $statAmountDTO->getStatType()->name === $convertedName;
+                });
+
+                if ((int) round(abs($amount),2) > 0) {
+                    $this->assertEquals($amount, $statAmountDTO->getAmount());
+                } else {
+                    $this->assertNull($statAmountDTO);
+                }
             });
         });
 
+        $playerOneFirstGameDTO = $playerGameLogDTOs->first(function (PlayerGameLogDTO $playerGameLogDTO) use ($playerOneExternalID, $gameOneExternalID) {
+            return $playerGameLogDTO->getPlayer()->external_id === $playerOneExternalID
+                && $playerGameLogDTO->getGame()->external_id === $gameOneExternalID;
+        });
+        $this->assertNotNull($playerOneFirstGameDTO);
 
-        //TODO other assertions
+        $playerTwoFirstGameDTO = $playerGameLogDTOs->first(function (PlayerGameLogDTO $playerGameLogDTO) use ($playerTwoExternalID, $gameOneExternalID) {
+            return $playerGameLogDTO->getPlayer()->external_id === $playerTwoExternalID
+                && $playerGameLogDTO->getGame()->external_id === $gameOneExternalID;
+        });
+        $this->assertNotNull($playerTwoFirstGameDTO);
+
+        $playerTwoFirstSecondGame = $playerGameLogDTOs->first(function (PlayerGameLogDTO $playerGameLogDTO) use ($playerTwoExternalID, $gameTwoExternalID) {
+            return $playerGameLogDTO->getPlayer()->external_id === $playerTwoExternalID
+                && $playerGameLogDTO->getGame()->external_id === $gameTwoExternalID;
+        });
+        $this->assertNotNull($playerTwoFirstSecondGame);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_return_game_log_DTOs_for_NBA()
+    {
+
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_return_game_log_DTOs_for_NHL()
+    {
+
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_return_game_log_DTOs_for_MLB()
+    {
+
     }
 }

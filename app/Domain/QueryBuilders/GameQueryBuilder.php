@@ -9,8 +9,15 @@
 namespace App\Domain\QueryBuilders;
 
 
+use App\Domain\Models\Game;
 use Illuminate\Database\Eloquent\Builder;
 
+/**
+ * Class GameQueryBuilder
+ * @package App\Domain\QueryBuilders
+ *
+ * @method  Game|object|static|null first($columns = ['*'])
+ */
 class GameQueryBuilder extends Builder
 {
 
