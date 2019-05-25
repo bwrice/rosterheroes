@@ -37,6 +37,6 @@ class PlayerStat extends Model
      */
     public function totalPoints()
     {
-        return $this->amount * $this->statType->getBehavior()->getPointsPer();
+        return $this->statType->getBehavior()->getTotalPoints($this->amount);
     }
 }

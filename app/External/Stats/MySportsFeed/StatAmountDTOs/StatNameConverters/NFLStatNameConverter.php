@@ -11,9 +11,9 @@ namespace App\External\Stats\MySportsFeed\StatAmountDTOs\StatNameConverters;
 
 use App\Domain\Models\StatType;
 
-class NFLStatNameConverter
+class NFLStatNameConverter implements StatNameConverter
 {
-    public function convert(string $msfStatName)
+    public function convert(string $msfStatName): string
     {
         switch($msfStatName) {
             case 'passYards':

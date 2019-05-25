@@ -16,6 +16,7 @@ use App\Domain\Models\Game;
 use App\Domain\Models\Player;
 use App\Domain\Models\Team;
 use App\Domain\DataTransferObjects\TeamDTO;
+use App\External\Stats\MySportsFeed\StatAmountDTOs\StatAmountDTOBuilderFactory;
 use App\External\Stats\MySportsFeed\StatAmountDTOs\StatConverterFactory;
 use App\External\Stats\StatsIntegration;
 use App\Domain\Models\League;
@@ -46,22 +47,22 @@ class MySportsFeed implements StatsIntegration
      */
     private $gameLogAPI;
     /**
-     * @var StatConverterFactory
+     * @var StatAmountDTOBuilderFactory
      */
-    private $statConverterFactory;
+    private $statAmountDTOBuilderFactory;
 
     public function __construct(
         PlayerAPI $playerAPI,
         TeamAPI $teamAPI,
         GameAPI $gameAPI,
         GameLogAPI $gameLogAPI,
-        StatConverterFactory $statConverterFactory)
+        StatAmountDTOBuilderFactory $statAmountDTOBuilderFactory)
     {
         $this->playerAPI = $playerAPI;
         $this->teamAPI = $teamAPI;
         $this->gameAPI = $gameAPI;
         $this->gameLogAPI = $gameLogAPI;
-        $this->statConverterFactory = $statConverterFactory;
+        $this->statAmountDTOBuilderFactory = $statAmountDTOBuilderFactory;
     }
 
     protected function getAPIKey()
@@ -186,11 +187,12 @@ class MySportsFeed implements StatsIntegration
     /**
      * @param League $league
      *
+     * @param int $yearDelta
      * @return Collection
      */
-    public function getTeamDTOs(League $league): Collection
+    public function getTeamDTOs(League $league, int $yearDelta = 0): Collection
     {
-        $data = $this->teamAPI->getData($league);
+        $data = $this->teamAPI->getData($league, $yearDelta);
         return collect($data)->map(function ($team) use ($league) {
             return new TeamDTO(
                 $league,
@@ -202,10 +204,10 @@ class MySportsFeed implements StatsIntegration
         });
     }
 
-    public function getGameDTOs(League $league): Collection
+    public function getGameDTOs(League $league, int $yearDelta = 0): Collection
     {
         $teams = $league->teams;
-        $data = $this->gameAPI->getData($league);
+        $data = $this->gameAPI->getData($league, $yearDelta);
         return collect($data)->map(function ($gameData) use ($teams) {
             try {
                 $scheduleData = $gameData['schedule'];
@@ -245,9 +247,9 @@ class MySportsFeed implements StatsIntegration
         ];
     }
 
-    public function getPlayerGameLogDTOs(Team $team): Collection
+    public function getPlayerGameLogDTOs(Team $team, int $yearDelta = 0): Collection
     {
-        $data = $this->gameLogAPI->getData($team);
+        $data = $this->gameLogAPI->getData($team, $yearDelta);
         return collect($data)->map(function ($gameLogData) use ($team) {
 
             try {
@@ -286,8 +288,8 @@ class MySportsFeed implements StatsIntegration
         if (! $player) {
             throw new MySportsFeedsException("Couldn't find player when building game log DTO");
         }
-        $statConverter = $this->statConverterFactory->getStatConverter($team->league);
-        $statAmountDTOs = $statConverter->getStatAmountDTOs($gameLogData['stats']);
+        $statAmountDTOBuilder = $this->statAmountDTOBuilderFactory->getStatAmountDTOBuilder($team->league);
+        $statAmountDTOs = $statAmountDTOBuilder->getStatAmountDTOs($gameLogData['stats']);
         return new PlayerGameLogDTO($player, $game, $team, $statAmountDTOs);
     }
 }

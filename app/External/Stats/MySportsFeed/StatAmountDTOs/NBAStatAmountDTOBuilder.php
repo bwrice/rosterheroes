@@ -10,9 +10,20 @@ namespace App\External\Stats\MySportsFeed\StatAmountDTOs;
 
 
 use App\Domain\Collections\PlayerStatCollection;
+use App\External\Stats\MySportsFeed\StatAmountDTOs\StatNameConverters\NBAStatNameConverter;
 
-class NBAStatAmountDTOBuilder implements StatAmountDTOBuilder
+class NBAStatAmountDTOBuilder implements StatAmountDTOBuilderInterface
 {
+
+    /**
+     * @var NBAStatNameConverter
+     */
+    private $statNameConverter;
+
+    public function __construct(NBAStatNameConverter $statNameConverter)
+    {
+        $this->statNameConverter = $statNameConverter;
+    }
 
     public function getStatAmountDTOs(array $statsData): \Illuminate\Support\Collection
     {

@@ -29,9 +29,9 @@ class GameLogAPI
         $this->leagueSeasonConverter = $leagueSeasonConverter;
     }
 
-    public function getData(Team $team)
+    public function getData(Team $team, int $yearDelta = 0)
     {
-        $season = $this->leagueSeasonConverter->getSeason($team->league);
+        $season = $this->leagueSeasonConverter->getSeason($team->league, $yearDelta);
         $subURL = $season . '/player_gamelogs.json?team=' . strtolower($team->abbreviation);
         $responseData = $this->client->getData($subURL);
         return $responseData['gamelogs'];

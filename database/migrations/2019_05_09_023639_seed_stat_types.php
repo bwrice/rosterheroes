@@ -26,7 +26,7 @@ class SeedStatTypes extends Migration
                 'sport' => \App\Domain\Models\Sport::BASEBALL,
                 'stat_types' => [
 
-                    \App\Domain\Models\StatType::SINGLE,
+                    \App\Domain\Models\StatType::HIT,
                     \App\Domain\Models\StatType::DOUBLE,
                     \App\Domain\Models\StatType::TRIPLE,
                     \App\Domain\Models\StatType::HOME_RUN,
@@ -43,8 +43,7 @@ class SeedStatTypes extends Migration
                     \App\Domain\Models\StatType::BASE_ON_BALLS_AGAINST,
                     \App\Domain\Models\StatType::HIT_BATSMAN,
                     \App\Domain\Models\StatType::COMPLETE_GAME,
-                    \App\Domain\Models\StatType::COMPLETE_GAME_SHUTOUT,
-                    \App\Domain\Models\StatType::NO_HITTER
+                    \App\Domain\Models\StatType::COMPLETE_GAME_SHUTOUT
                 ]
             ],
             [
@@ -53,7 +52,7 @@ class SeedStatTypes extends Migration
                     \App\Domain\Models\StatType::GOAL,
                     \App\Domain\Models\StatType::HOCKEY_ASSIST,
                     \App\Domain\Models\StatType::SHOT_ON_GOAL,
-                    \App\Domain\Models\StatType::BLOCKED_SHOT,
+                    \App\Domain\Models\StatType::HOCKEY_BLOCKED_SHOT,
                     \App\Domain\Models\StatType::GOALIE_WIN,
                     \App\Domain\Models\StatType::SAVE,
                     \App\Domain\Models\StatType::GOAL_AGAINST,
@@ -68,7 +67,7 @@ class SeedStatTypes extends Migration
                     \App\Domain\Models\StatType::REBOUND,
                     \App\Domain\Models\StatType::BASKETBALL_ASSIST,
                     \App\Domain\Models\StatType::STEAL,
-                    \App\Domain\Models\StatType::BLOCK,
+                    \App\Domain\Models\StatType::BASKETBALL_BLOCK,
                     \App\Domain\Models\StatType::TURNOVER
                 ]
             ],

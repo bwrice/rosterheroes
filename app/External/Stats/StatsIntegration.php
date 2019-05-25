@@ -16,9 +16,9 @@ interface StatsIntegration
 {
     public function getPlayerDTOs(League $league): Collection;
 
-    public function getTeamDTOs(League $league): Collection;
+    public function getTeamDTOs(League $league, int $yearDelta): Collection;
 
-    public function getGameDTOs(League $league): Collection;
+    public function getGameDTOs(League $league, int $yearDelta): Collection;
 
-    public function getPlayerGameLogDTOs(Team $team): Collection;
+    public function getPlayerGameLogDTOs(Team $team, int $yearDelta): Collection;
 }

@@ -11,21 +11,23 @@ namespace App\Domain\Behaviors\StatTypes;
 
 class StatTypeBehavior
 {
-    /**
-     * @var float
-     */
-    private $pointsPer;
 
-    public function __construct(float $pointsPer)
+    /**
+     * @var PointsCalculator
+     */
+    private $pointsCalculator;
+
+    public function __construct(PointsCalculator $pointsCalculator)
     {
-        $this->pointsPer = $pointsPer;
+        $this->pointsCalculator = $pointsCalculator;
     }
 
     /**
+     * @param $statAmount
      * @return float
      */
-    public function getPointsPer(): float
+    public function getTotalPoints($statAmount): float
     {
-        return $this->pointsPer;
+        return $this->pointsCalculator->total($statAmount);
     }
 }

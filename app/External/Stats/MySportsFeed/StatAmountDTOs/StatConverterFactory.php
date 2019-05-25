@@ -15,9 +15,9 @@ class StatConverterFactory
 {
     /**
      * @param League $league
-     * @return StatAmountDTOBuilder
+     * @return StatAmountDTOBuilderInterface
      */
-    public function getStatConverter(League $league): StatAmountDTOBuilder
+    public function getStatConverter(League $league): StatAmountDTOBuilderInterface
     {
         switch($league->abbreviation) {
             case League::NFL:

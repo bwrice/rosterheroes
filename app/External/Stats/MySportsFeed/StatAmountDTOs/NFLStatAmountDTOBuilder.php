@@ -14,7 +14,7 @@ use App\Domain\Models\StatType;
 use App\External\Stats\MySportsFeed\StatAmountDTOs\StatNameConverters\NFLStatNameConverter;
 use Illuminate\Support\Collection;
 
-class NFLStatAmountDTOBuilder implements StatAmountDTOBuilder
+class NFLStatAmountDTOBuilder implements StatAmountDTOBuilderInterface
 {
     /**
      * @var NFLStatNameConverter

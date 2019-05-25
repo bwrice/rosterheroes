@@ -21,10 +21,18 @@ class UpdateGamesJob implements ShouldQueue
      * @var League
      */
     private $league;
+    /**
+     * @var int
+     */
+    private $yearDelta;
 
-    public function __construct(League $league)
+    public function __construct(League $league, int $yearDelta = 0)
     {
+        if ( $yearDelta > 0 ) {
+            throw new \RuntimeException("Year delta must be negative, " . $yearDelta . " was passed");
+        }
         $this->league = $league;
+        $this->yearDelta = $yearDelta;
     }
 
 
@@ -35,7 +43,7 @@ class UpdateGamesJob implements ShouldQueue
     {
         Log::notice("Beginning games update for League: " . $this->league->abbreviation);
 
-        $gameDTOs = $integration->getGameDTOs($this->league);
+        $gameDTOs = $integration->getGameDTOs($this->league, $this->yearDelta);
         $gameDTOs->each(function (GameDTO $gameDTO) {
             Game::updateOrCreate([
                 'external_id' => $gameDTO->getExternalID()

@@ -11,7 +11,7 @@ namespace App\External\Stats\MySportsFeed\StatAmountDTOs;
 
 use App\Domain\Collections\PlayerStatCollection;
 
-class MLBStatAmountDTOBuilder implements StatAmountDTOBuilder
+class MLBStatAmountDTOBuilder implements StatAmountDTOBuilderInterface
 {
 
     public function getStatAmountDTOs(array $statsData): \Illuminate\Support\Collection

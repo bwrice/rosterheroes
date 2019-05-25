@@ -22,10 +22,18 @@ class UpdatePlayerGameLogsJob implements ShouldQueue
      * @var Team
      */
     private $team;
+    /**
+     * @var int
+     */
+    private $yearDelta;
 
-    public function __construct(Team $team)
+    public function __construct(Team $team, int $yearDelta = 0)
     {
+        if ( $yearDelta > 0 ) {
+            throw new \RuntimeException("Year delta must be negative, " . $yearDelta . " was passed");
+        }
         $this->team = $team;
+        $this->yearDelta = $yearDelta;
     }
 
     /**
@@ -33,7 +41,7 @@ class UpdatePlayerGameLogsJob implements ShouldQueue
      */
     public function handle(StatsIntegration $statsIntegration)
     {
-        $playerGameLogDTOs = $statsIntegration->getPlayerGameLogDTOs($this->team);
+        $playerGameLogDTOs = $statsIntegration->getPlayerGameLogDTOs($this->team, $this->yearDelta);
 
         $playerGameLogDTOs->each(function (PlayerGameLogDTO $dto) {
 
