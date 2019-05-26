@@ -10,18 +10,22 @@ namespace App\Console\Commands;
 
 
 use App\Domain\Models\League;
+use App\Jobs\UpdateGamesJob;
 use App\Jobs\UpdatePlayersJob;
 use Carbon\CarbonImmutable;
+use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\Log;
 
-class UpdateGamesCommand extends IntegrationLeagueCommand
+class UpdateGamesCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'integration:update-games {leagues}';
+    protected $signature = 'integration:update-games {leagues?} {yearsAgo=0}';
 
     /**
      * The console command description.
@@ -30,21 +34,44 @@ class UpdateGamesCommand extends IntegrationLeagueCommand
      */
     protected $description = 'Updates games for the given league or leagues that are live';
 
-
-    protected function dispatchJobs(Collection $leagues)
+    public function handle()
     {
-        $delayMinutes = 0;
+        $this->info('Update Games command triggered');
 
-        $leagues->each(function (League $league) use (&$delayMinutes) {
-
-            $delay = CarbonImmutable::now()->addMinutes($delayMinutes);
-            UpdatePlayersJob::dispatch($league)->delay($delay->toDateTime());
-            $delayMinutes += 5;
-        });
+        foreach($this->arguments() as $key => $argument) {
+            $this->info($key . ': ' . $argument );
+        }
+        $count = $this->dispatchJobs();
+        $this->info($count . " jobs dispatched");
     }
 
-    public function getHandleMessage(): string
+    /**
+     * @return int
+     */
+    protected function dispatchJobs()
     {
-        return "Update Games command triggered";
+        $count = 0;
+        // convert positive years-ago to negative
+        $yearDelta = - (int) $this->argument('yearsAgo');
+        $this->getLeagues()->each(function (League $league) use (&$count, $yearDelta) {
+            $delay = Date::now()->addMinutes(5 * $count);
+            UpdateGamesJob::dispatch($league, $yearDelta)->delay($delay->toDateTime());
+            $count++;
+        });
+
+        return $count;
+    }
+
+    protected function getLeagues()
+    {
+        $leaguesArgument = $this->argument('leagues');
+
+        if ($leaguesArgument) {
+
+            $leagueAbbreviations = explode(',', $leaguesArgument);
+            return League::abbreviation($leagueAbbreviations)->get();
+
+        }
+        return League::live();
     }
 }

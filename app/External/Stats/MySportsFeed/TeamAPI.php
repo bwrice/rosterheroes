@@ -30,8 +30,8 @@ class TeamAPI
     public function getData(League $league, int $yearDelta = 0)
     {
         $season = $this->leagueSeasonConverter->getSeason($league, $yearDelta);
-        $subURL = $season . '/team_stats_totals.json';
+        $subURL = strtolower($league->abbreviation) . '/'. $season . '-regular/team_stats_totals.json';
         $responseData = $this->client->getData($subURL);
-        return $responseData['teamStatsTotal'];
+        return $responseData['teamStatsTotals'];
     }
 }

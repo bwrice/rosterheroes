@@ -38,25 +38,32 @@ class MySportsFeedTest extends TestCase
     {
         $clientMock = \Mockery::mock(MSFClient::class);
         $clientMock->shouldReceive('getData')->andReturn([
-            'teamStatsTotal' => [
+            'teamStatsTotals' => [
                 [
-                    'name' => 'Some Team',
-                    'city' => 'Some City',
-                    'abbreviation' => 'SCT',
-                    'id' => '123abc'
+                    'team' => [
+                            'name' => 'Some Team',
+                            'city' => 'Some City',
+                            'abbreviation' => 'SCT',
+                            'id' => '123abc'
+                        ]
                 ],
                 [
-                    'name' => 'Another Team',
-                    'city' => 'Another City',
-                    'abbreviation' => 'ANT',
-                    'id' => '987zyx'
+                    'team' =>
+                        [
+                            'name' => 'Another Team',
+                            'city' => 'Another City',
+                            'abbreviation' => 'ANT',
+                            'id' => '987zyx'
+                        ]
                 ],
                 [
-                    'name' => 'Last Team',
-                    'city' => 'Last City',
-                    'abbreviation' => 'LCC',
-                    'id' => 'def456'
-                ]
+                    'team' => [
+                            'name' => 'Last Team',
+                            'city' => 'Last City',
+                            'abbreviation' => 'LCC',
+                            'id' => 'def456'
+                        ]
+                ],
             ]
         ]);
 
@@ -98,40 +105,47 @@ class MySportsFeedTest extends TestCase
         $clientMock->shouldReceive('getData')->andReturn([
             'players' => [
                 [
-                    'firstName' => 'Outfield',
-                    'lastName' => 'Man',
                     'teamAsOfDate' => [
                         'id' => $teamOne->external_id,
                     ],
-                    'id' => '123abc',
-                    'primaryPosition' => 'RF',
-                    'alternatePositions' => [
-                        'LF',
-                        'CF'
+                    'player' => [
+                        'firstName' => 'Outfield',
+                        'lastName' => 'Man',
+                        'id' => '123abc',
+                        'primaryPosition' => 'RF',
+                        'alternatePositions' => [
+                            'LF',
+                            'CF'
+                        ],
                     ]
                 ],
                 [
-                    'firstName' => 'Catcher',
-                    'lastName' => 'Bro',
                     'teamAsOfDate' => [
                         'id' => $teamOne->external_id,
                     ],
-                    'id' => '987zyx',
-                    'primaryPosition' => 'C',
-                    'alternatePositions' => [
+                    'player' => [
+                        'firstName' => 'Catcher',
+                        'lastName' => 'Bro',
+                        'id' => '987zyx',
+                        'primaryPosition' => 'C',
+                        'alternatePositions' => [
 
+                        ],
                     ]
+
                 ],
                 [
-                    'firstName' => 'Pitcher',
-                    'lastName' => 'Dude',
                     'teamAsOfDate' => [
                         'id' => $teamTwo->external_id,
                     ],
-                    'id' => 'def456',
-                    'primaryPosition' => 'P',
-                    'alternatePositions' => [
+                    'player' => [
+                        'firstName' => 'Pitcher',
+                        'lastName' => 'Dude',
+                        'id' => 'def456',
+                        'primaryPosition' => 'P',
+                        'alternatePositions' => [
 
+                        ],
                     ]
                 ]
             ]

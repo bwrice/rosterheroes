@@ -32,7 +32,7 @@ class GameLogAPI
     public function getData(Team $team, int $yearDelta = 0)
     {
         $season = $this->leagueSeasonConverter->getSeason($team->league, $yearDelta);
-        $subURL = $season . '/player_gamelogs.json?team=' . strtolower($team->abbreviation);
+        $subURL = strtolower($team->league->abbreviation) . '/'. $season . '-regular/player_gamelogs.json?team=' . strtolower($team->abbreviation);
         $responseData = $this->client->getData($subURL);
         return $responseData['gamelogs'];
     }

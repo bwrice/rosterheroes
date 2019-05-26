@@ -31,7 +31,7 @@ class GameAPI
     public function getData(League $league, int $yearDelta = 0)
     {
         $season = $this->leagueSeasonConverter->getSeason($league, $yearDelta);
-        $subURL = $season . '/games.json';
+        $subURL = strtolower($league->abbreviation) . '/'. $season . '-regular/games.json';
         $responseData = $this->client->getData($subURL);
         return $responseData['games'];
     }

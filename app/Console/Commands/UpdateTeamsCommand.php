@@ -8,14 +8,14 @@ use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Log;
 
-class UpdateTeamsCommand extends IntegrationLeagueCommand
+class UpdateTeamsCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'integration:update-teams {leagues}';
+    protected $signature = 'integration:update-teams {leagues?} {yearsAgo=0}';
 
     /**
      * The console command description.
@@ -24,16 +24,38 @@ class UpdateTeamsCommand extends IntegrationLeagueCommand
      */
     protected $description = 'Updates teams for leagues input or live leagues from the stats integration API';
 
-
-    protected function dispatchJobs(Collection $leagues)
+    public function handle()
     {
-        $leagues->each(function (League $league) {
-            UpdateTeamsJob::dispatch($league);
-        });
+        $this->info('Update Teams command triggered');
+        foreach($this->arguments() as $key => $argument) {
+            $this->info($key . ': ' . $argument );
+        }
+        $count = $this->dispatchJobs();
+        $this->info($count . " jobs dispatched");
     }
 
-    public function getHandleMessage(): string
+    protected function dispatchJobs()
     {
-        return "Update Teams command triggered";
+        $count = 0;
+        // convert positive years-ago to negative
+        $yearDelta = - (int) $this->argument('yearsAgo');
+        $this->getLeagues()->each(function (League $league) use (&$count, $yearDelta) {
+            UpdateTeamsJob::dispatch($league, $yearDelta);
+            $count++;
+        });
+        return $count;
+    }
+
+    protected function getLeagues()
+    {
+        $leaguesArgument = $this->argument('leagues');
+
+        if ($leaguesArgument) {
+
+            $leagueAbbreviations = explode(',', $leaguesArgument);
+            return League::abbreviation($leagueAbbreviations)->get();
+
+        }
+        return League::live();
     }
 }

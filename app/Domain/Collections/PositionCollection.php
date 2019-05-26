@@ -20,6 +20,13 @@ class PositionCollection extends Collection
         });
     }
 
+    public function abbreviations()
+    {
+        return $this->map(function (Position $position) {
+            return $position->getBehavior()->getAbbreviation();
+        });
+    }
+
     /**
      * @return Position|null
      */

@@ -19,11 +19,19 @@ class PositionBehavior
      * @var int
      */
     private $gamesPerSeason;
+    /**
+     * @var string
+     */
+    private $abbreviation;
 
-    public function __construct(int $positionValue, int $gamesPerSeason)
+    public function __construct(
+        int $positionValue,
+        int $gamesPerSeason,
+        string $abbreviation)
     {
         $this->positionValue = $positionValue;
         $this->gamesPerSeason = $gamesPerSeason;
+        $this->abbreviation = $abbreviation;
     }
 
     /**
@@ -50,5 +58,13 @@ class PositionBehavior
     public function getGamesPerSeason(): int
     {
         return $this->gamesPerSeason;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAbbreviation(): string
+    {
+        return $this->abbreviation;
     }
 }

@@ -21,4 +21,5 @@ Auth::routes();
 Route::middleware('auth')->get('/squads/create', 'SquadController@create')->name('create-squad');
 Route::middleware('auth')->get('/command-center/{squadSlug}/{any?}', 'SquadController@show')->where('any', '.*')->name('command-center');
 
-Route::get('/{any}', 'SpaController@index')->where('any', '.*');
+Route::get('/{any}', 'SpaController@index')->where('any', '^(?!nova).*$');
+//Route::get('/{any}', 'SpaController@index')->where('any', '.*');

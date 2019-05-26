@@ -75,9 +75,10 @@ class MySportsFeed implements StatsIntegration
         $teams = $league->teams;
         $positions = $league->sport->positions;
         $data = $this->playerAPI->getData($league);
-        return collect($data)->map(function ($playerData) use ($teams, $positions, $league) {
+        return collect($data)->map(function ($playerArray) use ($teams, $positions, $league) {
 
-            $team = $this->getTeamForPlayerDTO($teams, $playerData);
+            $team = $this->getTeamForPlayerDTO($teams, $playerArray);
+            $playerData = $playerArray['player'];
             $playerPositions = $this->getPositionsForPlayerDTO($positions, $league, $playerData);
 
             if ($team && $playerPositions->isNotEmpty()) {
@@ -196,10 +197,10 @@ class MySportsFeed implements StatsIntegration
         return collect($data)->map(function ($team) use ($league) {
             return new TeamDTO(
                 $league,
-                $team['name'],
-                $team['city'],
-                $team['abbreviation'],
-                $team['id']
+                $team['team']['name'],
+                $team['team']['city'],
+                $team['team']['abbreviation'],
+                $team['team']['id']
             );
         });
     }
@@ -254,7 +255,7 @@ class MySportsFeed implements StatsIntegration
 
             try {
 
-                return $this->buildPlayerGameDTO($team, $gameLogData);
+                return $this->buildPlayerGameLogDTO($team, $gameLogData);
 
             } catch (MySportsFeedsException $exception) {
 
@@ -275,7 +276,7 @@ class MySportsFeed implements StatsIntegration
         })->filter(); // filter nulls
     }
 
-    protected function buildPlayerGameDTO(Team $team, array $gameLogData)
+    protected function buildPlayerGameLogDTO(Team $team, array $gameLogData)
     {
         $game = Game::query()->externalID($gameLogData['game']['id'])->first();
         if (! $game) {

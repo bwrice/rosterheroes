@@ -5,17 +5,19 @@ namespace App\Console\Commands;
 use App\Domain\Models\League;
 use App\Jobs\UpdatePlayersJob;
 use Carbon\CarbonImmutable;
+use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Log;
 
-class UpdatePlayersCommand extends IntegrationLeagueCommand
+class UpdatePlayersCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'integration:update-players {leagues}';
+    protected $signature = 'integration:update-players {leagues?}';
 
     /**
      * The console command description.
@@ -24,21 +26,39 @@ class UpdatePlayersCommand extends IntegrationLeagueCommand
      */
     protected $description = 'Updates player for the given league or leagues that are live';
 
-
-    protected function dispatchJobs(Collection $leagues)
+    public function handle()
     {
-        $delayMinutes = 0;
-
-        $leagues->each(function (League $league) use (&$delayMinutes) {
-
-            $delay = CarbonImmutable::now()->addMinutes($delayMinutes);
-            UpdatePlayersJob::dispatch($league)->delay($delay->toDateTime());
-            $delayMinutes += 5;
-        });
+        $this->info('Update Teams command triggered');
+        foreach($this->arguments() as $key => $argument) {
+            $this->info($key . ': ' . $argument );
+        }
+        $count = $this->dispatchJobs();
+        $this->info($count . ' jobs dispatched');
     }
 
-    public function getHandleMessage(): string
+    protected function dispatchJobs()
     {
-        return "Update Teams command triggered";
+        $count = 0;
+
+        $this->getLeagues()->each(function (League $league) use (&$count) {
+
+            $delay = CarbonImmutable::now()->addMinutes(5 * $count);
+            UpdatePlayersJob::dispatch($league)->delay($delay->toDateTime());
+            $count++;
+        });
+        return $count;
+    }
+
+    protected function getLeagues()
+    {
+        $leaguesArgument = $this->argument('leagues');
+
+        if ($leaguesArgument) {
+
+            $leagueAbbreviations = explode(',', $leaguesArgument);
+            return League::abbreviation($leagueAbbreviations)->get();
+
+        }
+        return League::live();
     }
 }

@@ -12,6 +12,7 @@ use App\Domain\Collections\TeamCollection;
 use App\Domain\Models\Team;
 use App\Domain\Models\Sport;
 use App\Exceptions\UnknownBehaviorException;
+use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -115,5 +116,18 @@ class League extends Model
     public function scopeAbbreviation(Builder $builder, array $abbreviations)
     {
         return $builder->whereIn('abbreviation', $abbreviations);
+    }
+
+    /**
+     * @param bool $live
+     * @return LeagueCollection
+     */
+    public static function live(bool $live = true): LeagueCollection
+    {
+        /** @var LeagueCollection $leagues */
+        $leagues = self::all()->filter(function (League $league) use ($live) {
+            return $live ? $league->isLive() : ! $league->isLive();
+        });
+        return $leagues;
     }
 }
