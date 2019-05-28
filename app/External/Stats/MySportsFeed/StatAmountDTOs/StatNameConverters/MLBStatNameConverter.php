@@ -38,11 +38,15 @@ class MLBStatNameConverter implements StatNameConverter
             case 'wins':
                 return StatType::PITCHING_WIN;
             case 'saves':
-                return StatType::SAVE;
+                return StatType::GOALIE_SAVE;
             case 'inningsPitched':
                 return StatType::INNING_PITCHED;
             case 'pitcherStrikeouts':
                 return StatType::STRIKEOUT;
+            case 'hitsAllowed':
+                return StatType::HIT_AGAINST;
+            case 'earnedRunsAllowed':
+                return StatType::EARNED_RUN_ALLOWED;
             case 'completedGames':
                 return StatType::COMPLETE_GAME;
             case 'shutouts':

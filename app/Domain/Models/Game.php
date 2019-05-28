@@ -54,7 +54,7 @@ class Game extends Model
 
     public function getSimpleDescription()
     {
-        return $this->awayTeam->name . ' at ' . $this->homeTeam->name;
+        return $this->awayTeam->name . ' @ ' . $this->homeTeam->name;
     }
 
     public function hasTeam(Team $team)

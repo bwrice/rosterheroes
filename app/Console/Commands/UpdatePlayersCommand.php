@@ -28,7 +28,7 @@ class UpdatePlayersCommand extends Command
 
     public function handle()
     {
-        $this->info('Update Teams command triggered');
+        $this->info('Update Players command triggered');
         foreach($this->arguments() as $key => $argument) {
             $this->info($key . ': ' . $argument );
         }
@@ -42,9 +42,19 @@ class UpdatePlayersCommand extends Command
 
         $this->getLeagues()->each(function (League $league) use (&$count) {
 
-            $delay = CarbonImmutable::now()->addMinutes(5 * $count);
-            UpdatePlayersJob::dispatch($league)->delay($delay->toDateTime());
-            $count++;
+            if ($league->teams()->count() === $league->getBehavior()->getTotalTeams()) {
+
+                UpdatePlayersJob::dispatch($league)->onQueue('my_sports_feeds');
+                $count++;
+
+            } else {
+                $message = "League: " . $league->abbreviation . " has teams count mismatch.";
+                $message .= " Skipping update of games";
+                Log::critical($message, [
+                    'league' => $league->toArray(),
+                    'teams_count' => $league->teams()->count(),
+                ]);
+            }
         });
         return $count;
     }

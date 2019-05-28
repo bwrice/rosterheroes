@@ -51,13 +51,13 @@ class CreateWeeklyGamePlayer
      */
     public function __invoke(): WeeklyGamePlayer
     {
-        if ( ! $this->game->starts_at->isBetween($this->week->everything_locks_at, $this->week->ends_at)) {
-            throw new InvalidGameException($this->game);
-        }
-
-        if ( ! $this->game->hasTeam($this->player->team) ) {
-            throw new InvalidPlayerException($this->player);
-        }
+//        if ( ! $this->game->starts_at->isBetween($this->week->everything_locks_at, $this->week->ends_at)) {
+//            throw new InvalidGameException($this->game);
+//        }
+//
+//        if ( ! $this->game->hasTeam($this->player->team) ) {
+//            throw new InvalidPlayerException($this->player);
+//        }
 
         $salary = $this->getSalary();
 

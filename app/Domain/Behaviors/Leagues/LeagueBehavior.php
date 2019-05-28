@@ -25,12 +25,17 @@ class LeagueBehavior
      * @var int
      */
     private $dayOfYearEnd;
+    /**
+     * @var int
+     */
+    private $totalTeams;
 
-    public function __construct(string $key, int $dayOfYearStart, int $dayOfYearEnd)
+    public function __construct(string $key, int $dayOfYearStart, int $dayOfYearEnd, int $totalTeams)
     {
         $this->key = $key;
         $this->dayOfYearStart = $dayOfYearStart;
         $this->dayOfYearEnd = $dayOfYearEnd;
+        $this->totalTeams = $totalTeams;
     }
 
     public function isLive(): bool
@@ -83,5 +88,13 @@ class LeagueBehavior
     public function getDayOfYearEnd(): int
     {
         return $this->dayOfYearEnd;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotalTeams(): int
+    {
+        return $this->totalTeams;
     }
 }

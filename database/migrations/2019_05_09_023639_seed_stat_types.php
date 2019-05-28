@@ -38,6 +38,7 @@ class SeedStatTypes extends Migration
                     \App\Domain\Models\StatType::INNING_PITCHED,
                     \App\Domain\Models\StatType::STRIKEOUT,
                     \App\Domain\Models\StatType::PITCHING_WIN,
+                    \App\Domain\Models\StatType::PITCHING_SAVE,
                     \App\Domain\Models\StatType::EARNED_RUN_ALLOWED,
                     \App\Domain\Models\StatType::HIT_AGAINST,
                     \App\Domain\Models\StatType::BASE_ON_BALLS_AGAINST,
@@ -54,7 +55,7 @@ class SeedStatTypes extends Migration
                     \App\Domain\Models\StatType::SHOT_ON_GOAL,
                     \App\Domain\Models\StatType::HOCKEY_BLOCKED_SHOT,
                     \App\Domain\Models\StatType::GOALIE_WIN,
-                    \App\Domain\Models\StatType::SAVE,
+                    \App\Domain\Models\StatType::GOALIE_SAVE,
                     \App\Domain\Models\StatType::GOAL_AGAINST,
                     \App\Domain\Models\StatType::HAT_TRICK
                 ]

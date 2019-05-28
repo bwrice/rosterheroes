@@ -43,4 +43,12 @@ class InningsPitchedCalculator implements PointsCalculator
         $partialInnings = $fraction * (10/3);
         return $fullInnings + $partialInnings;
     }
+
+    /**
+     * @return float
+     */
+    public function pointsPer(): float
+    {
+        return $this->multiplierCalculator->pointsPer();
+    }
 }

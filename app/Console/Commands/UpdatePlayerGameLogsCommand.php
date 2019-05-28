@@ -1,39 +1,28 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: bwrice
- * Date: 4/30/19
- * Time: 10:43 PM
- */
 
 namespace App\Console\Commands;
 
-
 use App\Domain\Models\League;
 use App\Domain\Models\Team;
-use App\Jobs\UpdateGamesJob;
-use App\Jobs\UpdatePlayersJob;
-use Carbon\CarbonImmutable;
+use App\Jobs\UpdatePlayerGameLogsJob;
 use Illuminate\Console\Command;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Log;
 
-class UpdateGamesCommand extends Command
+class UpdatePlayerGameLogsCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'integration:update-games {leagues?} {yearsAgo=0}';
+    protected $signature = 'integration:update-game-logs {leagues?} {yearsAgo=0}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Updates games for the given league or leagues that are live';
+    protected $description = 'Updates Player Game Logs for live or given leagues';
 
     public function handle()
     {
@@ -46,19 +35,29 @@ class UpdateGamesCommand extends Command
         $this->info($count . " jobs dispatched");
     }
 
-    /**
-     * @return int
-     */
     protected function dispatchJobs()
     {
         $count = 0;
         // convert positive years-ago to negative
         $yearDelta = - (int) $this->argument('yearsAgo');
+        // loop through leagues
         $this->getLeagues()->each(function (League $league) use (&$count, $yearDelta) {
-
+            // loop through teams
             if ($league->teams()->count() === $league->getBehavior()->getTotalTeams()) {
-                UpdateGamesJob::dispatch($league, $yearDelta)->onQueue('my_sports_feeds');
-                $count++;
+
+                $league->teams->each(function(Team $team) use ($yearDelta, &$count) {
+                    if ($team->players()->count() > 0) {
+                        UpdatePlayerGameLogsJob::dispatch($team, $yearDelta)->onQueue('my_sports_feeds');
+                        $count++;
+                    } else {
+                        $message = "Team: " . $team->name . " has zero players.";
+                        $message .= " Skipping update of player game logs";
+                        Log::critical($message, [
+                            'league' => $team->toArray(),
+                            'teams_count' => $team->players()->count(),
+                        ]);
+                    }
+                });
             } else {
                 $message = "League: " . $league->abbreviation . " has teams count mismatch.";
                 $message .= " Skipping update of games";
@@ -71,6 +70,7 @@ class UpdateGamesCommand extends Command
 
         return $count;
     }
+
 
     protected function getLeagues()
     {

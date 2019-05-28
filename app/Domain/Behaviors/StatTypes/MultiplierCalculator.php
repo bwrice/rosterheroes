@@ -27,4 +27,12 @@ class MultiplierCalculator implements PointsCalculator
     {
         return round($this->pointsPer * $amount, 2);
     }
+
+    /**
+     * @return float
+     */
+    public function pointsPer(): float
+    {
+        return $this->pointsPer;
+    }
 }

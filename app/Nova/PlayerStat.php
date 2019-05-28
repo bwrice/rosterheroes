@@ -3,39 +3,36 @@
 namespace App\Nova;
 
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 /**
- * Class Player
+ * Class PlayerStat
  * @package App\Nova
  *
- * @mixin \App\Domain\Models\Player
+ * @mixin \App\Domain\Models\PlayerStat
  */
-class Player extends Resource
+class PlayerStat extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Domain\Models\Player::class;
+    public static $model = \App\Domain\Models\PlayerStat::class;
 
     /**
-     * The relationships that should be eager loaded on index queries.
+     * The single value that should be used to represent the resource when being displayed.
      *
-     * @var array
+     * @var string
      */
-    public static $with = ['team.league', 'positions'];
+    public static $title = 'id';
 
     public function title()
     {
-        $fullName = $this->fullName();
-        $abbreviation = $this->team ? $this->team->abbreviation : 'FA';
-        return $fullName . ' (' . $abbreviation . ')';
+        return $this->playerGameLog->player->first_name;
     }
 
     /**
@@ -45,8 +42,6 @@ class Player extends Resource
      */
     public static $search = [
         'id',
-        'first_name',
-        'last_name'
     ];
 
     /**
@@ -59,15 +54,9 @@ class Player extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make('Name', function () {
-                return $this->first_name.' '.$this->last_name;
-            }),
-            BelongsTo::make('Team'),
-            Text::make('Positions', function () {
-                return $this->positions->abbreviations()->implode(', ');
-            }),
-            Text::make('External ID')->onlyOnDetail(),
-            HasMany::make('PlayerGameLogs')
+            BelongsTo::make('PlayerGameLog'),
+            BelongsTo::make('StatType'),
+            Number::make('amount')
         ];
     }
 

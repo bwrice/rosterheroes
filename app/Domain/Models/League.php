@@ -57,13 +57,13 @@ class League extends Model
     {
         switch ($this->abbreviation) {
             case self::NFL:
-                return new LeagueBehavior(self::NFL, 240, 50);
+                return new LeagueBehavior(self::NFL, 240, 50, 32);
             case self::MLB:
-                return new LeagueBehavior(self::MLB, 80, 290);
+                return new LeagueBehavior(self::MLB, 80, 290, 30);
             case self::NBA:
-                return new LeagueBehavior(self::NBA, 275, 180);
+                return new LeagueBehavior(self::NBA, 275, 180, 30);
             case self::NHL:
-                return new LeagueBehavior(self::NHL, 265, 170);
+                return new LeagueBehavior(self::NHL, 265, 170, 31);
         }
         throw new UnknownBehaviorException($this->abbreviation, LeagueBehavior::class);
     }

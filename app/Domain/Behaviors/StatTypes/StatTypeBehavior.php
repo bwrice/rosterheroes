@@ -30,4 +30,12 @@ class StatTypeBehavior
     {
         return $this->pointsCalculator->total($statAmount);
     }
+
+    /**
+     * @return float
+     */
+    public function getPointsPer()
+    {
+        return $this->pointsCalculator->pointsPer();
+    }
 }

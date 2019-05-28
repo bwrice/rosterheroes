@@ -16,4 +16,9 @@ interface PointsCalculator
      * @return int|float
      */
     public function total($amount): float;
+
+    /**
+     * @return float
+     */
+    public function pointsPer(): float;
 }

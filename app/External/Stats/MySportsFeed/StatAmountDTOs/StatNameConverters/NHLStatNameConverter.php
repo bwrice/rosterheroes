@@ -30,7 +30,7 @@ class NHLStatNameConverter implements StatNameConverter
             case 'wins':
                 return StatType::GOALIE_WIN;
             case 'saves':
-                return StatType::SAVE;
+                return StatType::GOALIE_SAVE;
             case 'goalsAgainst':
                 return StatType::GOAL_AGAINST;
             default:

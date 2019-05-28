@@ -64,7 +64,20 @@ return [
             'retry_after' => 90,
             'block_for' => null,
         ],
-
+        'redis-medium' => [
+            'driver' => 'redis',
+            'connection' => 'default',
+            'queue' => env('REDIS_QUEUE', 'default'),
+            'retry_after' => 60 * 12,
+            'block_for' => null,
+        ],
+        'redis-long' => [
+            'driver' => 'redis',
+            'connection' => 'default',
+            'queue' => env('REDIS_QUEUE', 'default'),
+            'retry_after' => 60 * 35,
+            'block_for' => null,
+        ]
     ],
 
     /*

@@ -47,4 +47,12 @@ class PlayerGameLog extends Model
     {
         return $this->hasMany(PlayerStat::class);
     }
+
+    public function getDescription()
+    {
+        $playerName = $this->player->fullName();
+        $teamAbbreviation = $this->team->abbreviation;
+        $gameDesc = $this->game->getSimpleDescription();
+        return $playerName . ' (' . $teamAbbreviation . ') ' . $gameDesc;
+    }
 }

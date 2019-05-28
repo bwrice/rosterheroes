@@ -11,10 +11,13 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Support\Facades\Redis;
 
 class UpdatePlayersJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    public const REDIS_THROTTLE_KEY = 'msf_update_players';
 
     /**
      * @var League
@@ -26,6 +29,20 @@ class UpdatePlayersJob implements ShouldQueue
         $this->league = $league;
     }
 
+    public function handle(StatsIntegration $statsIntegration)
+    {
+
+        // Game log API has rate limit of 1 request per 10 seconds, we add another 5 seconds for buffer
+        Redis::throttle(self::REDIS_THROTTLE_KEY)->allow(10)->every(60)->then(function () use ($statsIntegration) {
+            // Job logic...
+            $this->performJob($statsIntegration);
+        }, function () {
+            // Could not obtain lock...
+
+            return $this->release(10);
+        });
+    }
+
     /**
      * Execute the job.
      *
@@ -33,10 +50,8 @@ class UpdatePlayersJob implements ShouldQueue
      *
      * @return void
      */
-    public function handle(StatsIntegration $integration)
+    public function performJob(StatsIntegration $integration)
     {
-        ini_set('memory_limit','512M');
-
         $playerDTOs = $integration->getPlayerDTOs($this->league);
         $playerDTOs->each(function (PlayerDTO $playerDTO) {
             /** @var Player $player */

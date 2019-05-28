@@ -36,6 +36,11 @@ class Team extends Model
         return $this->belongsTo(League::class);
     }
 
+    public function players()
+    {
+        return $this->hasMany(Player::class);
+    }
+
     public function homeGames()
     {
         return $this->belongsToMany(Game::class, 'game_team', 'home_team_id')->withTimestamps();

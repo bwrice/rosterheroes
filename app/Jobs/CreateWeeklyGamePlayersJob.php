@@ -2,7 +2,10 @@
 
 namespace App\Jobs;
 
+use App\Domain\Actions\CreateWeeklyGamePlayer;
+use App\Domain\Models\Game;
 use App\Domain\Models\League;
+use App\Domain\Models\Player;
 use App\Domain\Models\Week;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
@@ -23,20 +26,28 @@ class CreateWeeklyGamePlayersJob implements ShouldQueue
      * @var League
      */
     private $league;
+    /**
+     * @var Game
+     */
+    private $game;
+    /**
+     * @var Player
+     */
+    private $player;
 
-    public function __construct(Week $week, League $league)
+    public function __construct(Week $week, Game $game, Player $player)
     {
         $this->week = $week;
-        $this->league = $league;
+        $this->game = $game;
+        $this->player = $player;
     }
 
     /**
-     * Execute the job.
-     *
-     * @return void
+     * @throws \Exception
      */
     public function handle()
     {
-        //
+        $action = new CreateWeeklyGamePlayer($this->week, $this->game, $this->player);
+        $action();
     }
 }

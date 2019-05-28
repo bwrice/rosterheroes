@@ -2,40 +2,28 @@
 
 namespace App\Nova;
 
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 /**
- * Class Player
+ * Class StatType
  * @package App\Nova
  *
- * @mixin \App\Domain\Models\Player
+ * @mixin \App\Domain\Models\StatType
  */
-class Player extends Resource
+class StatType extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Domain\Models\Player::class;
-
-    /**
-     * The relationships that should be eager loaded on index queries.
-     *
-     * @var array
-     */
-    public static $with = ['team.league', 'positions'];
+    public static $model = \App\Domain\Models\StatType::class;
 
     public function title()
     {
-        $fullName = $this->fullName();
-        $abbreviation = $this->team ? $this->team->abbreviation : 'FA';
-        return $fullName . ' (' . $abbreviation . ')';
+        return $this->getDescription();
     }
 
     /**
@@ -45,8 +33,6 @@ class Player extends Resource
      */
     public static $search = [
         'id',
-        'first_name',
-        'last_name'
     ];
 
     /**
@@ -59,15 +45,6 @@ class Player extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make('Name', function () {
-                return $this->first_name.' '.$this->last_name;
-            }),
-            BelongsTo::make('Team'),
-            Text::make('Positions', function () {
-                return $this->positions->abbreviations()->implode(', ');
-            }),
-            Text::make('External ID')->onlyOnDetail(),
-            HasMany::make('PlayerGameLogs')
         ];
     }
 

@@ -10,6 +10,7 @@ namespace App\Domain\QueryBuilders;
 
 
 use App\Domain\Models\Game;
+use App\Domain\Models\Week;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
@@ -28,5 +29,14 @@ class GameQueryBuilder extends Builder
     public function externalID(string $externalID)
     {
         return $this->where('external_id', '=', $externalID);
+    }
+
+    /**
+     * @param Week $week
+     * @return GameQueryBuilder
+     */
+    public function validForWeek(Week $week)
+    {
+        return $this->whereBetween('starts_at', [$week->everything_locks_at, $week->ends_at]);
     }
 }

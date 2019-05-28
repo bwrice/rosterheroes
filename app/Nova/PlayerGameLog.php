@@ -6,37 +6,35 @@ use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Http\Requests\NovaRequest;
 
 /**
- * Class Player
+ * Class NovaPlayerGameLog
  * @package App\Nova
  *
- * @mixin \App\Domain\Models\Player
+ * @mixin \App\Domain\Models\PlayerGameLog
  */
-class Player extends Resource
+class PlayerGameLog extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Domain\Models\Player::class;
-
-    /**
-     * The relationships that should be eager loaded on index queries.
-     *
-     * @var array
-     */
-    public static $with = ['team.league', 'positions'];
+    public static $model = \App\Domain\Models\PlayerGameLog::class;
 
     public function title()
     {
-        $fullName = $this->fullName();
-        $abbreviation = $this->team ? $this->team->abbreviation : 'FA';
-        return $fullName . ' (' . $abbreviation . ')';
+        return $this->getDescription();
     }
+
+    public static $with = [
+        'game.homeTeam',
+        'game.awayTeam',
+        'player',
+        'playerStats.statType'
+    ];
 
     /**
      * The columns that should be searched.
@@ -45,8 +43,6 @@ class Player extends Resource
      */
     public static $search = [
         'id',
-        'first_name',
-        'last_name'
     ];
 
     /**
@@ -59,15 +55,12 @@ class Player extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make('Name', function () {
-                return $this->first_name.' '.$this->last_name;
+            BelongsTo::make('Player'),
+            BelongsTo::make('Game'),
+            Number::make('Fantasy Pts', function() {
+                return round($this->playerStats->totalPoints(),2);
             }),
-            BelongsTo::make('Team'),
-            Text::make('Positions', function () {
-                return $this->positions->abbreviations()->implode(', ');
-            }),
-            Text::make('External ID')->onlyOnDetail(),
-            HasMany::make('PlayerGameLogs')
+            HasMany::make('PlayerStats')
         ];
     }
 

@@ -45,7 +45,8 @@ class StatType extends Model
     public const STOLEN_BASE = 'stolen-base';
     public const INNING_PITCHED = 'inning-pitched';
     public const STRIKEOUT = 'strikeout';
-    public const PITCHING_WIN = 'pitching-win';
+    public const PITCHING_WIN = 'pitcher-win';
+    public const PITCHING_SAVE = 'pitcher-save';
     public const EARNED_RUN_ALLOWED = 'earned-run-allowed';
     public const HIT_AGAINST = 'hit-against';
     public const BASE_ON_BALLS_AGAINST = 'base-on-balls-against';
@@ -58,7 +59,7 @@ class StatType extends Model
     public const SHOT_ON_GOAL = 'shot-on-goal';
     public const HOCKEY_BLOCKED_SHOT = 'blocked-shot';
     public const GOALIE_WIN = 'goalie-win';
-    public const SAVE = 'save';
+    public const GOALIE_SAVE = 'goalie-save';
     public const GOAL_AGAINST = 'goal-against';
     public const HAT_TRICK = 'hat-trick';
 
@@ -102,29 +103,31 @@ class StatType extends Model
 
             // Baseball
             case self::HIT:
-                return new StatTypeBehavior(new MultiplierCalculator(3));
+                return new StatTypeBehavior(new MultiplierCalculator(5));
             case self::DOUBLE:
-                return new StatTypeBehavior(new MultiplierCalculator(2));
+                return new StatTypeBehavior(new MultiplierCalculator(3));
             case self::TRIPLE:
                 return new StatTypeBehavior(new MultiplierCalculator(5));
             case self::HOME_RUN:
-                return new StatTypeBehavior(new MultiplierCalculator(7));
+                return new StatTypeBehavior(new MultiplierCalculator(8));
             case self::RUN_BATTED_IN:
-                return new StatTypeBehavior(new MultiplierCalculator(2));
+                return new StatTypeBehavior(new MultiplierCalculator(3));
             case self::RUN_SCORED:
-                return new StatTypeBehavior(new MultiplierCalculator(2));
+                return new StatTypeBehavior(new MultiplierCalculator(3));
             case self::BASE_ON_BALLS:
                 return new StatTypeBehavior(new MultiplierCalculator(2));
             case self::HIT_BY_PITCH:
                 return new StatTypeBehavior(new MultiplierCalculator(2));
             case self::STOLEN_BASE:
-                return new StatTypeBehavior(new MultiplierCalculator(4));
+                return new StatTypeBehavior(new MultiplierCalculator(5));
             case self::INNING_PITCHED:
                 return new StatTypeBehavior(new InningsPitchedCalculator(new MultiplierCalculator(3)));
             case self::STRIKEOUT:
                 return new StatTypeBehavior(new MultiplierCalculator(2.5));
             case self::PITCHING_WIN:
-                return new StatTypeBehavior(new MultiplierCalculator(4));
+                return new StatTypeBehavior(new MultiplierCalculator(5));
+            case self::PITCHING_SAVE:
+                return new StatTypeBehavior(new MultiplierCalculator(3.5));
             case self::EARNED_RUN_ALLOWED:
                 return new StatTypeBehavior(new MultiplierCalculator(-2));
             case self::HIT_AGAINST:
@@ -149,7 +152,7 @@ class StatType extends Model
                 return new StatTypeBehavior(new MultiplierCalculator(1.5));
             case self::GOALIE_WIN:
                 return new StatTypeBehavior(new MultiplierCalculator(7));
-            case self::SAVE:
+            case self::GOALIE_SAVE:
                 return new StatTypeBehavior(new MultiplierCalculator(.75));
             case self::GOAL_AGAINST:
                 return new StatTypeBehavior(new MultiplierCalculator(-1.5));
@@ -158,21 +161,26 @@ class StatType extends Model
 
             // Basketball
             case self::POINT_MADE:
-                return new StatTypeBehavior(new MultiplierCalculator(.75));
+                return new StatTypeBehavior(new MultiplierCalculator(.6));
             case self::THREE_POINTER:
-                return new StatTypeBehavior(new MultiplierCalculator(.3));
+                return new StatTypeBehavior(new MultiplierCalculator(.25));
             case self::REBOUND:
-                return new StatTypeBehavior(new MultiplierCalculator(1));
+                return new StatTypeBehavior(new MultiplierCalculator(.8));
             case self::BASKETBALL_ASSIST:
-                return new StatTypeBehavior(new MultiplierCalculator(1));
+                return new StatTypeBehavior(new MultiplierCalculator(.8));
             case self::STEAL:
-                return new StatTypeBehavior(new MultiplierCalculator(1.25));
+                return new StatTypeBehavior(new MultiplierCalculator(1));
             case self::BASKETBALL_BLOCK:
-                return new StatTypeBehavior(new MultiplierCalculator(1.25));
+                return new StatTypeBehavior(new MultiplierCalculator(1));
             case self::TURNOVER:
-                return new StatTypeBehavior(new MultiplierCalculator(-.25));
+                return new StatTypeBehavior(new MultiplierCalculator(-.2));
         }
 
         throw new UnknownBehaviorException($this->name, StatTypeBehavior::class);
+    }
+
+    public function getDescription()
+    {
+        return ucwords(str_replace('-',' ', $this->name)) . ' [' . $this->getBehavior()->getPointsPer() . ']';
     }
 }

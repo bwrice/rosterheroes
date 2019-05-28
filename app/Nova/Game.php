@@ -24,12 +24,11 @@ class Game extends Resource
      */
     public static $model = \App\Domain\Models\Game::class;
 
-    /**
-     * The single value that should be used to represent the resource when being displayed.
-     *
-     * @var string
-     */
-    public static $title = 'id';
+
+    public function title()
+    {
+        return $this->getSimpleDescription();
+    }
 
     /**
      * The columns that should be searched.
@@ -39,6 +38,11 @@ class Game extends Resource
     public static $search = [
         'id',
         'external_id'
+    ];
+
+    public static $with = [
+        'homeTeam',
+        'awayTeam'
     ];
 
     /**

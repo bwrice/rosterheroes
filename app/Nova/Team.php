@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
+/**
+ * Class Team
+ * @package App\Nova
+ *
+ * @mixin \App\Domain\Models\Team
+ */
 class Team extends Resource
 {
     /**
@@ -16,12 +22,10 @@ class Team extends Resource
      */
     public static $model = \App\Domain\Models\Team::class;
 
-    /**
-     * The single value that should be used to represent the resource when being displayed.
-     *
-     * @var string
-     */
-    public static $title = 'name';
+    public function title()
+    {
+        return $this->location . ' ' . $this->name;
+    }
 
     /**
      * The columns that should be searched.
