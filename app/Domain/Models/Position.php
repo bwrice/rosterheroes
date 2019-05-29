@@ -128,4 +128,28 @@ class Position extends Model
 
         throw new UnknownBehaviorException($this->name, PositionBehavior::class);
     }
+
+    /**
+     * @return float|int
+     */
+    public function getDefaultSalary()
+    {
+        return $this->getBehavior()->getDefaultSalary();
+    }
+
+    /**
+     * @return float|int
+     */
+    public function getMinimumSalary()
+    {
+        return $this->getBehavior()->getMinimumSalary();
+    }
+
+    /**
+     * @return int
+     */
+    public function getGamesPerSeason()
+    {
+        return $this->getBehavior()->getGamesPerSeason();
+    }
 }

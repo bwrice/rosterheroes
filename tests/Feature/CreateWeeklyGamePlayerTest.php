@@ -16,6 +16,7 @@ use App\Domain\Models\Week;
 use App\Domain\Models\WeeklyGamePlayer;
 use App\Exceptions\InvalidGameException;
 use App\Exceptions\InvalidPlayerException;
+use App\Jobs\CreateWeeklyGamePlayerJob;
 use Carbon\Exceptions\InvalidDateException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Date;
@@ -30,7 +31,7 @@ class CreateWeeklyGamePlayerTest extends TestCase
     /**
      * @test
      */
-    public function it_will_throw_an_exception_if_the_game_starts_before_the_week_locks()
+    public function the_job_will_throw_an_exception_if_the_game_starts_before_the_week_locks()
     {
         /** @var Week $week */
         $week = factory(Week::class)->create();
@@ -41,10 +42,10 @@ class CreateWeeklyGamePlayerTest extends TestCase
         $player = factory(Player::class)->create([
             'team_id' => $game->homeTeam->id
         ]);
-        $action = new CreateWeeklyGamePlayer($week, $game, $player);
+
         try {
 
-            $action(); //invoke
+            CreateWeeklyGamePlayerJob::dispatchNow($week, $game, $player);
 
         } catch (InvalidGameException $exception) {
 
@@ -62,7 +63,7 @@ class CreateWeeklyGamePlayerTest extends TestCase
     /**
      * @test
      */
-    public function it_will_throw_an_exception_if_the_player_isnt_a_part_of_the_game()
+    public function the_job_will_throw_an_exception_if_the_player_isnt_a_part_of_the_game()
     {
         /** @var Week $week */
         $week = factory(Week::class)->create();
@@ -72,10 +73,9 @@ class CreateWeeklyGamePlayerTest extends TestCase
         ]);
         $player = factory(Player::class)->create(); //random team should be created in factory
 
-        $action = new CreateWeeklyGamePlayer($week, $game, $player);
         try {
 
-            $action(); //invoke
+            CreateWeeklyGamePlayerJob::dispatchNow($week, $game, $player);
 
         } catch (InvalidPlayerException $exception) {
 
@@ -109,10 +109,9 @@ class CreateWeeklyGamePlayerTest extends TestCase
         $this->assertTrue($player->positions->isEmpty());
         $this->assertTrue($player->playerGameLogs->isEmpty());
 
-        $action = new CreateWeeklyGamePlayer($week, $game, $player);
         try {
 
-            $action(); //invoke
+            CreateWeeklyGamePlayerJob::dispatchNow($week, $game, $player);
 
         } catch (InvalidPlayerException $exception) {
 
@@ -130,28 +129,14 @@ class CreateWeeklyGamePlayerTest extends TestCase
     /**
      * @test
      */
-    public function it_will_set_the_salary_the_highest_default_of_the_players_positions()
+    public function the_action_will_set_the_salary_to_the_position_default_if_no_game_logs()
     {
-        $homeTeam = factory(Team::class)->create([
-            'league_id' => League::nfl()->id
-        ]);
-
-        $awayTeam = factory(Team::class)->create([
-            'league_id' => League::nfl()->id
-        ]);
-
         /** @var Week $week */
         $week = factory(Week::class)->create();
         /** @var Game $game */
-        $game = factory(Game::class)->create([
-            'starts_at' => $week->everything_locks_at->addMinutes(30),
-            'home_team_id' => $homeTeam->id,
-            'away_team_id' => $awayTeam->id
-        ]);
+        $game = factory(Game::class)->create();
         /** @var Player $player */
-        $player = factory(Player::class)->create([
-            'team_id' => $homeTeam->id
-        ]);
+        $player = factory(Player::class)->create();
 
         /** @var PositionCollection $positions */
         $positions = Position::query()->whereIn('name', [
@@ -159,54 +144,33 @@ class CreateWeeklyGamePlayerTest extends TestCase
             Position::TIGHT_END
         ])->get();
 
-        $highestDefaultSalary = $positions->withHighestPositionValue()->getBehavior()->getDefaultSalary();
+        $position = $positions->withHighestPositionValue();
 
         $player->positions()->saveMany($positions);
 
         $this->assertEquals(2, $player->positions->count());
         $this->assertTrue($player->playerGameLogs->isEmpty());
 
-        $action = new CreateWeeklyGamePlayer($week, $game, $player);
+        $action = new CreateWeeklyGamePlayer($week, $game, $player, $position);
 
         $weeklyGamePlayer = $action(); //invoke
 
-        $this->assertEquals($game->id, $weeklyGamePlayer->game->id);
-        $this->assertEquals($player->id, $weeklyGamePlayer->player->id);
-        $this->assertEquals($week->id, $weeklyGamePlayer->week->id);
-        $this->assertEquals($highestDefaultSalary, $weeklyGamePlayer->salary);
+        $this->assertEquals($position->getDefaultSalary(), $weeklyGamePlayer->salary);
     }
 
     /**
      * @test
      */
-    public function it_will_raise_the_salary_if_player_game_logs_have_high_total_points()
+    public function the_action_will_raise_the_salary_if_player_game_logs_have_high_total_points()
     {
-        $league = League::mlb();
-
-        $homeTeam = factory(Team::class)->create([
-            'league_id' => $league->id
-        ]);
-
-        $awayTeam = factory(Team::class)->create([
-            'league_id' => $league->id
-        ]);
-
         /** @var Week $week */
         $week = factory(Week::class)->create();
         /** @var Game $game */
-        $game = factory(Game::class)->create([
-            'starts_at' => $week->everything_locks_at->addMinutes(30),
-            'home_team_id' => $homeTeam->id,
-            'away_team_id' => $awayTeam->id
-        ]);
+        $game = factory(Game::class)->create();
         /** @var Player $player */
-        $player = factory(Player::class)->create([
-            'team_id' => $awayTeam->id
-        ]);
+        $player = factory(Player::class)->create();
 
         $shortStop = Position::forName(Position::SHORTSTOP);
-
-        $player->positions()->save($shortStop);
 
         $homeRuns = factory(PlayerStat::class)->make([
             'amount' => 4,
@@ -226,10 +190,9 @@ class CreateWeeklyGamePlayerTest extends TestCase
         $playerGameLog->playerStats()->saveMany([$homeRuns, $runsBattedIn]);
 
         $this->assertEquals(2, $playerGameLog->playerStats->count());
-        $this->assertEquals(1, $player->positions->count());
         $this->assertEquals(1, $player->playerGameLogs->count());
 
-        $action = new CreateWeeklyGamePlayer($week, $game, $player);
+        $action = new CreateWeeklyGamePlayer($week, $game, $player, $shortStop);
 
         $weeklyGamePlayer = $action(); //invoke
 
@@ -239,34 +202,16 @@ class CreateWeeklyGamePlayerTest extends TestCase
     /**
      * @test
      */
-    public function it_will_lower_the_salary_if_player_game_logs_have_low_total_points()
+    public function the_action_will_lower_the_salary_if_player_game_logs_have_low_total_points()
     {
-        $league = League::nba();
-
-        $homeTeam = factory(Team::class)->create([
-            'league_id' => $league->id
-        ]);
-
-        $awayTeam = factory(Team::class)->create([
-            'league_id' => $league->id
-        ]);
-
         /** @var Week $week */
         $week = factory(Week::class)->create();
         /** @var Game $game */
-        $game = factory(Game::class)->create([
-            'starts_at' => $week->everything_locks_at->addMinutes(30),
-            'home_team_id' => $homeTeam->id,
-            'away_team_id' => $awayTeam->id
-        ]);
+        $game = factory(Game::class)->create();
         /** @var Player $player */
-        $player = factory(Player::class)->create([
-            'team_id' => $awayTeam->id
-        ]);
+        $player = factory(Player::class)->create();
 
         $pointGuard = Position::forName(Position::POINT_GUARD);
-
-        $player->positions()->save($pointGuard);
 
         $pointsMade = factory(PlayerStat::class)->make([
             'amount' => 5,
@@ -281,10 +226,9 @@ class CreateWeeklyGamePlayerTest extends TestCase
         $playerGameLog->playerStats()->save($pointsMade);
 
         $this->assertEquals(1, $playerGameLog->playerStats->count());
-        $this->assertEquals(1, $player->positions->count());
         $this->assertEquals(1, $player->playerGameLogs->count());
 
-        $action = new CreateWeeklyGamePlayer($week, $game, $player);
+        $action = new CreateWeeklyGamePlayer($week, $game, $player, $pointGuard);
 
         $weeklyGamePlayer = $action(); //invoke
 
@@ -294,34 +238,17 @@ class CreateWeeklyGamePlayerTest extends TestCase
     /**
      * @test
      */
-    public function it_will_raise_the_salary_even_more_with_more_high_total_game_logs()
+    public function the_action_will_raise_the_salary_even_more_with_more_high_total_game_logs()
     {
-        $league = League::nhl();
-
-        $homeTeam = factory(Team::class)->create([
-            'league_id' => $league->id
-        ]);
-
-        $awayTeam = factory(Team::class)->create([
-            'league_id' => $league->id
-        ]);
-
         /** @var Week $week */
         $week = factory(Week::class)->create();
         /** @var Game $game */
-        $game = factory(Game::class)->create([
-            'starts_at' => $week->everything_locks_at->addMinutes(30),
-            'home_team_id' => $homeTeam->id,
-            'away_team_id' => $awayTeam->id
-        ]);
+        $game = factory(Game::class)->create();
+
         /** @var Player $player */
-        $player = factory(Player::class)->create([
-            'team_id' => $awayTeam->id
-        ]);
+        $player = factory(Player::class)->create();
 
         $leftWing = Position::forName(Position::LEFT_WING);
-
-        $player->positions()->save($leftWing);
 
         $goals = factory(PlayerStat::class)->make([
             'amount' => 3,
@@ -341,10 +268,9 @@ class CreateWeeklyGamePlayerTest extends TestCase
         $playerGameLog->playerStats()->saveMany([$goals, $shotsOnGoal]);
 
         $this->assertEquals(2, $playerGameLog->playerStats->count());
-        $this->assertEquals(1, $player->positions->count());
         $this->assertEquals(1, $player->playerGameLogs->count());
 
-        $action = new CreateWeeklyGamePlayer($week, $game, $player);
+        $action = new CreateWeeklyGamePlayer($week, $game, $player, $leftWing);
 
         $firstWeeklyGamePlayer = $action(); //invoke
 
@@ -370,7 +296,7 @@ class CreateWeeklyGamePlayerTest extends TestCase
         $newPlayerGameLog->playerStats()->saveMany([$moreGoals, $evenMoreShotsOnGoal]);
         $this->assertEquals(2, $newPlayerGameLog->playerStats->count());
 
-        $action = new CreateWeeklyGamePlayer($week, $game, $player->fresh());
+        $action = new CreateWeeklyGamePlayer($week, $game, $player->fresh(), $leftWing);
 
         $secondWeeklyGamePlayer = $action(); //invoke
         $this->assertGreaterThan($firstWeeklyGamePlayer->salary, $secondWeeklyGamePlayer->salary);
@@ -379,34 +305,16 @@ class CreateWeeklyGamePlayerTest extends TestCase
     /**
      * @test
      */
-    public function it_will_lower_the_salary_even_more_with_more_low_total_game_logs()
+    public function the_action_will_lower_the_salary_even_more_with_more_low_total_game_logs()
     {
-        $league = League::nfl();
-
-        $homeTeam = factory(Team::class)->create([
-            'league_id' => $league->id
-        ]);
-
-        $awayTeam = factory(Team::class)->create([
-            'league_id' => $league->id
-        ]);
-
         /** @var Week $week */
         $week = factory(Week::class)->create();
         /** @var Game $game */
-        $game = factory(Game::class)->create([
-            'starts_at' => $week->everything_locks_at->addMinutes(30),
-            'home_team_id' => $homeTeam->id,
-            'away_team_id' => $awayTeam->id
-        ]);
+        $game = factory(Game::class)->create();
         /** @var Player $player */
-        $player = factory(Player::class)->create([
-            'team_id' => $awayTeam->id
-        ]);
+        $player = factory(Player::class)->create();
 
         $runningBack = Position::forName(Position::RUNNING_BACK);
-
-        $player->positions()->save($runningBack);
 
         $rushingYards = factory(PlayerStat::class)->make([
             'amount' => 20,
@@ -421,10 +329,9 @@ class CreateWeeklyGamePlayerTest extends TestCase
         $playerGameLog->playerStats()->save($rushingYards);
 
         $this->assertEquals(1, $playerGameLog->playerStats->count());
-        $this->assertEquals(1, $player->positions->count());
         $this->assertEquals(1, $player->playerGameLogs->count());
 
-        $action = new CreateWeeklyGamePlayer($week, $game, $player);
+        $action = new CreateWeeklyGamePlayer($week, $game, $player, $runningBack);
 
         $firstWeeklyGamePlayer = $action(); //invoke
 
@@ -444,7 +351,7 @@ class CreateWeeklyGamePlayerTest extends TestCase
         $newPlayerGameLog->playerStats()->save($moreBadRushingYards);
         $this->assertEquals(1, $newPlayerGameLog->playerStats->count());
 
-        $action = new CreateWeeklyGamePlayer($week, $game, $player->fresh());
+        $action = new CreateWeeklyGamePlayer($week, $game, $player->fresh(), $runningBack);
 
         $secondWeeklyGamePlayer = $action(); //invoke
         $this->assertLessThan($firstWeeklyGamePlayer->salary, $secondWeeklyGamePlayer->salary);
@@ -453,34 +360,16 @@ class CreateWeeklyGamePlayerTest extends TestCase
     /**
      * @test
      */
-    public function more_recent_game_logs_are_weighted_heavier_towards_the_salary_calculation()
+    public function the_action_will_weigh_more_recent_game_logs_heavier_towards_salary_calculation()
     {
-        $league = League::nfl();
-
-        $homeTeam = factory(Team::class)->create([
-            'league_id' => $league->id
-        ]);
-
-        $awayTeam = factory(Team::class)->create([
-            'league_id' => $league->id
-        ]);
-
         /** @var Week $week */
         $week = factory(Week::class)->create();
         /** @var Game $game */
-        $game = factory(Game::class)->create([
-            'starts_at' => $week->everything_locks_at->addMinutes(30),
-            'home_team_id' => $homeTeam->id,
-            'away_team_id' => $awayTeam->id
-        ]);
+        $game = factory(Game::class)->create();
         /** @var Player $playerWithBadRecentGame */
-        $playerWithBadRecentGame = factory(Player::class)->create([
-            'team_id' => $homeTeam->id
-        ]);
+        $playerWithBadRecentGame = factory(Player::class)->create();
 
         $runningBack = Position::forName(Position::RUNNING_BACK);
-
-        $playerWithBadRecentGame->positions()->save($runningBack);
 
         $goodRushingYards = factory(PlayerStat::class)->make([
             'amount' => 250,
@@ -511,22 +400,14 @@ class CreateWeeklyGamePlayerTest extends TestCase
         ]);
 
         $badAndRecentGameLog->playerStats()->save($badRushingYards);
-
-        $this->assertEquals(1, $playerWithBadRecentGame->positions->count());
         $this->assertEquals(2, $playerWithBadRecentGame->playerGameLogs->count());
 
-        $action = new CreateWeeklyGamePlayer($week, $game, $playerWithBadRecentGame);
+        $action = new CreateWeeklyGamePlayer($week, $game, $playerWithBadRecentGame, $runningBack);
 
         $badRecentWeeklyGamePlayer = $action(); //invoke
 
         /** @var Player $player */
-        $playerWithGoodRecentGame = factory(Player::class)->create([
-            'team_id' => $homeTeam->id
-        ]);
-
-        $runningBack = Position::forName(Position::RUNNING_BACK);
-
-        $playerWithGoodRecentGame->positions()->save($runningBack);
+        $playerWithGoodRecentGame = factory(Player::class)->create();
 
         /** @var PlayerGameLog $goodAndOldGameLog */
         $badAndOldGameLog = factory(PlayerGameLog::class)->create([
@@ -558,10 +439,9 @@ class CreateWeeklyGamePlayerTest extends TestCase
 
         $goodAndRecentGameLog->playerStats()->save($goodRushingYards);
 
-        $this->assertEquals(1, $playerWithGoodRecentGame->positions->count());
         $this->assertEquals(2, $playerWithGoodRecentGame->playerGameLogs->count());
 
-        $action = new CreateWeeklyGamePlayer($week, $game, $playerWithGoodRecentGame);
+        $action = new CreateWeeklyGamePlayer($week, $game, $playerWithGoodRecentGame, $runningBack);
 
         $goodRecentWeeklyGamePlayer = $action(); //invoke
         $this->assertGreaterThan($badRecentWeeklyGamePlayer->salary, $goodRecentWeeklyGamePlayer->salary);

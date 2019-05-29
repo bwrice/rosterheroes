@@ -7,13 +7,15 @@ use App\Domain\Models\Game;
 use App\Domain\Models\League;
 use App\Domain\Models\Player;
 use App\Domain\Models\Week;
+use App\Exceptions\InvalidGameException;
+use App\Exceptions\InvalidPlayerException;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
-class CreateWeeklyGamePlayersJob implements ShouldQueue
+class CreateWeeklyGamePlayerJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -47,6 +49,19 @@ class CreateWeeklyGamePlayersJob implements ShouldQueue
      */
     public function handle()
     {
+        if ( ! $this->game->starts_at->isBetween($this->week->everything_locks_at, $this->week->ends_at)) {
+            throw new InvalidGameException($this->game);
+        }
+
+        if ( ! $this->game->hasTeam($this->player->team) ) {
+            throw new InvalidPlayerException($this->player);
+        }
+
+        $position = $this->player->positions->withHighestPositionValue();
+        if (!$position) {
+            throw new InvalidPlayerException($this->player, $this->player->fullName() . " has zero positions");
+        }
+
         $action = new CreateWeeklyGamePlayer($this->week, $this->game, $this->player);
         $action();
     }

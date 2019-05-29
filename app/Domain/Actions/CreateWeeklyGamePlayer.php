@@ -13,6 +13,7 @@ use App\Domain\Collections\PlayerGameLogCollection;
 use App\Domain\Math\WeightedValue;
 use App\Domain\Models\Game;
 use App\Domain\Models\Player;
+use App\Domain\Models\Position;
 use App\Domain\Models\Week;
 use App\Domain\Models\WeeklyGamePlayer;
 use App\Exceptions\InvalidGameException;
@@ -37,12 +38,21 @@ class CreateWeeklyGamePlayer
      * @var Player
      */
     private $player;
+    /**
+     * @var Position
+     */
+    private $position;
 
-    public function __construct(Week $week, Game $game, Player $player)
+    public function __construct(
+        Week $week,
+        Game $game,
+        Player $player,
+        Position $position)
     {
         $this->week = $week;
         $this->game = $game;
         $this->player = $player;
+        $this->position = $position;
     }
 
     /**
@@ -51,14 +61,6 @@ class CreateWeeklyGamePlayer
      */
     public function __invoke(): WeeklyGamePlayer
     {
-//        if ( ! $this->game->starts_at->isBetween($this->week->everything_locks_at, $this->week->ends_at)) {
-//            throw new InvalidGameException($this->game);
-//        }
-//
-//        if ( ! $this->game->hasTeam($this->player->team) ) {
-//            throw new InvalidPlayerException($this->player);
-//        }
-
         $salary = $this->getSalary();
 
         return WeeklyGamePlayer::createWithAttributes([
@@ -97,26 +99,12 @@ class CreateWeeklyGamePlayer
         $weightedPoints = $weightedValues->getWeightedMean();
         $weightedSalary = $this->convertPointsToSalary($weightedPoints);
 
-        return (int) max($weightedSalary, $this->getMinimumSalary());
+        return (int) max($weightedSalary, $this->position->getMinimumSalary());
     }
 
     protected function convertPointsToSalary($points)
     {
         return (int) round($points * self::SALARY_PER_POINT);
-    }
-
-    protected function getDefaultSalary()
-    {
-        $highestValuedPosition = $this->getHighestValuedPosition();
-
-        return $highestValuedPosition->getBehavior()->getDefaultSalary();
-    }
-
-    protected function getMinimumSalary()
-    {
-        $highestValuedPosition = $this->getHighestValuedPosition();
-
-        return $highestValuedPosition->getBehavior()->getMinimumSalary();
     }
 
     protected function getDefaultWeightedValue()
@@ -126,7 +114,7 @@ class CreateWeeklyGamePlayer
 
     protected function getDefaultTotalPoints()
     {
-        return $this->getDefaultSalary() / self::SALARY_PER_POINT;
+        return $this->position->getDefaultSalary() / self::SALARY_PER_POINT;
     }
 
     /**
@@ -134,7 +122,7 @@ class CreateWeeklyGamePlayer
      */
     protected function getGamesToConsider()
     {
-        $gamesPerSeason = $this->getHighestValuedPosition()->getBehavior()->getGamesPerSeason();
+        $gamesPerSeason = $this->position->getGamesPerSeason();
         return $gamesPerSeason > 0 ? (int) ceil($gamesPerSeason/2) : 1;
     }
 
@@ -143,19 +131,7 @@ class CreateWeeklyGamePlayer
      */
     protected function getDefaultWeight()
     {
-        $gamesPerYear = $this->getHighestValuedPosition()->getBehavior()->getGamesPerSeason();
-        return $gamesPerYear > 0 ? $gamesPerYear / 4 : 1;
-    }
-
-    /**
-     * @return \App\Domain\Models\Position|null
-     */
-    protected function getHighestValuedPosition()
-    {
-        $highestValuePosition = $this->player->positions->withHighestPositionValue();
-        if (!$highestValuePosition) {
-            throw new InvalidPlayerException($this->player, $this->player->fullName() . " has zero positions");
-        }
-        return $highestValuePosition;
+        $gamesPerSeason = $this->position->getGamesPerSeason();
+        return $gamesPerSeason > 0 ? $gamesPerSeason / 4 : 1;
     }
 }
