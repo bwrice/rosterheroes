@@ -2,11 +2,14 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Collections\GameCollection;
 use App\Domain\Models\Game;
 use App\Domain\Collections\WeekCollection;
 use App\Domain\QueryBuilders\WeekQueryBuilder;
 use Carbon\CarbonImmutable;
+use Carbon\CarbonPeriod;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Date;
 
 /**
  * Class Week
@@ -18,6 +21,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property CarbonImmutable $diplomacy_scheduled_to_lock_at
  * @property CarbonImmutable $everything_locks_at
  * @property CarbonImmutable $ends_at
+ * @property CarbonImmutable|null $weekly_game_players_queued_at
  * @property CarbonImmutable|null $proposals_processed_at
  * @property CarbonImmutable|null $diplomacy_processed_at
  * @property CarbonImmutable|null $finalized_at
@@ -35,6 +39,7 @@ class Week extends Model
     protected $dates = [
         'created_at',
         'updated_at',
+        'weekly_game_players_queued_at',
         'proposals_scheduled_to_lock_at',
         'proposals_processed_at',
         'diplomacy_scheduled_to_lock_at',
@@ -124,5 +129,22 @@ class Week extends Model
     public function adventuringOpen()
     {
         return $this->everything_locks_at->isFuture();
+    }
+
+    public function gamePlayersQueued()
+    {
+        return $this->weekly_game_players_queued_at !== null;
+    }
+
+    public function getGamesPeriod()
+    {
+        return CarbonPeriod::create($this->everything_locks_at, $this->ends_at);
+    }
+
+    public function getValidGames()
+    {
+        /** @var GameCollection $games */
+        $games = Game::query()->withinPeriod($this->getGamesPeriod())->get();
+        return $games;
     }
 }

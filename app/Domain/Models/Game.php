@@ -2,6 +2,7 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Collections\GameCollection;
 use App\Domain\Models\Team;
 use App\Domain\Models\Week;
 use App\Domain\QueryBuilders\GameQueryBuilder;
@@ -31,6 +32,11 @@ class Game extends Model
         'created_at',
         'updated_at'
     ];
+
+    public function newCollection(array $models = [])
+    {
+        return new GameCollection($models);
+    }
 
     public function newEloquentBuilder($query)
     {

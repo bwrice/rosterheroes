@@ -5,33 +5,27 @@ namespace App\Exceptions;
 use App\Domain\Models\Week;
 use App\Domain\Collections\WeekCollection;
 use Exception;
+use Throwable;
 
 class InvalidWeekException extends \RuntimeException
 {
-    protected $invalidWeek;
+    /**
+     * @var Week
+     */
+    private $week;
 
-    protected $validWeeks;
-
-    public function setWeeks(Week $invalidWeek, WeekCollection $validWeeks)
+    public function __construct(Week $week, string $message = "", int $code = 0, Throwable $previous = null)
     {
-        $this->message = "Invalid week: " . $invalidWeek->name;
-        $this->invalidWeek = $invalidWeek;
-        $this->validWeeks = $validWeeks;
+        $this->week = $week;
+        $message = $message ?: "Invalid Week with ID: " . $week->id;
+        parent::__construct($message, $code, $previous);
     }
 
     /**
      * @return \App\Domain\Models\Week
      */
-    public function getInvalidWeek()
+    public function getWeek()
     {
-        return $this->invalidWeek;
-    }
-
-    /**
-     * @return \App\Domain\Collections\WeekCollection
-     */
-    public function getValidWeeks()
-    {
-        return $this->validWeeks;
+        return $this->week;
     }
 }

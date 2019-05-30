@@ -446,4 +446,12 @@ class CreateWeeklyGamePlayerTest extends TestCase
         $goodRecentWeeklyGamePlayer = $action(); //invoke
         $this->assertGreaterThan($badRecentWeeklyGamePlayer->salary, $goodRecentWeeklyGamePlayer->salary);
     }
+
+    /**
+     * @test
+     */
+    public function the_build_command_will_dispatch_jobs()
+    {
+
+    }
 }

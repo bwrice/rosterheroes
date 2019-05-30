@@ -271,11 +271,7 @@ class Hero extends EventSourcedModel implements HasSlots
     public function addWeeklyGamePlayer(WeeklyGamePlayer $weeklyGamePlayer)
     {
         if(! Week::isCurrent($weeklyGamePlayer->week)) {
-            $exception = new InvalidWeekException();
-            $exception->setWeeks($weeklyGamePlayer->week, new WeekCollection([
-                Week::current()
-            ]));
-            throw $exception;
+            throw new InvalidWeekException($weeklyGamePlayer->week);
         }
 
         if (! $this->heroRace->positions->intersect($weeklyGamePlayer->getPositions())->count() > 0 ) {

@@ -2,7 +2,11 @@
 
 namespace App\Console\Commands;
 
+use App\Domain\Models\Game;
+use App\Domain\Models\Player;
 use App\Domain\Models\Week;
+use App\Exceptions\InvalidWeekException;
+use App\Jobs\CreateWeeklyGamePlayerJob;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Date;
 
@@ -13,38 +17,53 @@ class BuildWeeklyGamePlayers extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'week:build-game-players {week?}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Build weekly game players';
 
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public function handle()
     {
-        parent::__construct();
+        $week = $this->getWeek();
+        $games = $week->getValidGames();
+
+        if ($games->isEmpty()) {
+            throw new InvalidWeekException($week, "Week ID: " . $week->id . " has zero games");
+        }
+
+        $games->loadMissing([
+            'homeTeam.players',
+            'awayTeam.players'
+        ])->each(function (Game $game) use ($week) {
+            $game->homeTeam->players->each(function (Player $player) use ($week, $game) {
+                CreateWeeklyGamePlayerJob::dispatch($week, $game, $player);
+            });
+            $game->awayTeam->players->each(function (Player $player) use ($week, $game) {
+                CreateWeeklyGamePlayerJob::dispatch($week, $game, $player);
+            });
+        });
     }
 
     /**
-     * Execute the console command.
-     *
-     * @return mixed
+     * @return Week
      */
-    public function handle()
+    protected function getWeek()
     {
-        //Determine week to create weekly game players
-        //find games within correct range
-        //log if no games found
-        //loop through games
-        //find players of both teams
-        //find highest value position
-        //create weekly game player
+        $weekID = $this->argument('week');
+        if ($weekID) {
+            $week = Week::query()->findOrFail($weekID);
+        } else {
+            $week = Week::current();
+        }
+
+        if ($week->gamePlayersQueued()) {
+            $message = "Weekly Game Players already queued for week with ID: " . $week->id;
+            throw new InvalidWeekException($week, $message);
+        }
+        return $week;
     }
 }

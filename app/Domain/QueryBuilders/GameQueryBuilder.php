@@ -11,6 +11,7 @@ namespace App\Domain\QueryBuilders;
 
 use App\Domain\Models\Game;
 use App\Domain\Models\Week;
+use Carbon\CarbonPeriod;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
@@ -32,11 +33,14 @@ class GameQueryBuilder extends Builder
     }
 
     /**
-     * @param Week $week
+     * @param CarbonPeriod $period
      * @return GameQueryBuilder
      */
-    public function validForWeek(Week $week)
+    public function withinPeriod(CarbonPeriod $period)
     {
-        return $this->whereBetween('starts_at', [$week->everything_locks_at, $week->ends_at]);
+        return $this->whereBetween('starts_at',[
+            $period->getStartDate(),
+            $period->getEndDate()
+        ]);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Collections\PlayerCollection;
 use App\Domain\Collections\PlayerGameLogCollection;
 use App\Domain\Models\Game;
 use App\Domain\Models\Position;
@@ -31,6 +32,11 @@ use Illuminate\Support\Carbon;
 class Player extends Model
 {
     protected $guarded = [];
+
+    public function newCollection(array $models = [])
+    {
+        return new PlayerCollection($models);
+    }
 
     public function newEloquentBuilder($query)
     {

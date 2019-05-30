@@ -2,6 +2,7 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Collections\PlayerCollection;
 use App\Domain\Collections\TeamCollection;
 use App\Domain\Models\Game;
 use App\Domain\Models\League;
@@ -21,6 +22,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $league_id
  *
  * @property League $league
+ *
+ * @property PlayerCollection $players
  */
 class Team extends Model
 {

@@ -37,8 +37,7 @@ class HeroWeeklyGamePlayerController extends Controller
                 'user' => Auth::user()->toArray(),
                 'hero' => $hero->toArray(),
                 'weekly_game_player' => $weeklyGamePlayer->toArray(),
-                'invalid_week' => $exception->getInvalidWeek()->toArray(),
-                'valid_weeks' => $exception->getValidWeeks()->toArray()
+                'invalid_week' => $exception->getWeek()->toArray()
             ]);
 
             throw ValidationException::withMessages([

@@ -208,7 +208,7 @@ class HeroWeeklyGamePlayerUnitTest extends TestCase
 
             $hero = $hero->fresh();
             $this->assertNull($hero->weeklyGamePlayer);
-            $this->assertEquals($e->getInvalidWeek(), $weeklyGamePlayer->week);
+            $this->assertEquals($e->getWeek(), $weeklyGamePlayer->week);
 
             return;
         }
