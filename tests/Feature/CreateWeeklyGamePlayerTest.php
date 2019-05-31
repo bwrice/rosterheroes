@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Console\Commands\BuildWeeklyGamePlayers;
 use App\Domain\Actions\CreateWeeklyGamePlayer;
 use App\Domain\Collections\PositionCollection;
 use App\Domain\Models\Game;
@@ -19,7 +20,9 @@ use App\Exceptions\InvalidPlayerException;
 use App\Jobs\CreateWeeklyGamePlayerJob;
 use Carbon\Exceptions\InvalidDateException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -452,6 +455,51 @@ class CreateWeeklyGamePlayerTest extends TestCase
      */
     public function the_build_command_will_dispatch_jobs()
     {
+        // set test now to year in future to prevent overlap with real games
+        Date::setTestNow(now()->addYear());
 
+        /** @var Week $week */
+        $week = factory(Week::class)->create();
+
+        Week::setTestCurrent($week);
+
+        $gameOneHomeTeam = factory(Team::class)->create();
+        $gameOneAwayTeam = factory(Team::class)->create();
+        $gameTwoHomeTeam = factory(Team::class)->create();
+        $gameTwoAwayTeam = factory(Team::class)->create();
+
+        $gameOne = factory(Game::class)->create([
+            'home_team_id' => $gameOneHomeTeam->id,
+            'away_team_id' => $gameOneAwayTeam->id,
+            'starts_at' => $week->getGamesPeriod()->getStartDate()->addMinutes(15)
+        ]);
+
+        $gameTwo = factory(Game::class)->create([
+            'home_team_id' => $gameTwoHomeTeam->id,
+            'away_team_id' => $gameTwoAwayTeam->id,
+            'starts_at' => $week->getGamesPeriod()->getStartDate()->addMinutes(15)
+        ]);
+
+        $playerOne = factory(Player::class)->create([
+            'team_id' => $gameOneHomeTeam->id
+        ]);
+        $playerTwo = factory(Player::class)->create([
+            'team_id' => $gameOneAwayTeam->id
+        ]);
+        $playerThree = factory(Player::class)->create([
+            'team_id' => $gameTwoHomeTeam->id
+        ]);
+        $playerFour = factory(Player::class)->create([
+            'team_id' => $gameTwoAwayTeam->id
+        ]);
+
+        Queue::fake();
+
+        Queue::assertNothingPushed();
+
+        Artisan::call('week:build-game-players');
+
+
+        Queue::assertPushed(CreateWeeklyGamePlayerJob::class, 4);
     }
 }
