@@ -10,6 +10,7 @@ use Carbon\CarbonImmutable;
 use Carbon\CarbonPeriod;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Date;
+use phpDocumentor\Reflection\Types\Self_;
 
 /**
  * Class Week
@@ -33,6 +34,10 @@ class Week extends Model
     protected static $current = null;
 
     protected static $testCurrent = null;
+
+    protected static $testLatest = null;
+
+    protected static $useNullTestLatest = false;
 
     protected $guarded = [];
 
@@ -75,6 +80,16 @@ class Week extends Model
     public static function setTestCurrent(Week $week = null)
     {
         self::$testCurrent = $week;
+    }
+
+    public static function setTestLatest(Week $week = null)
+    {
+        self::$testLatest = $week;
+    }
+
+    public static function useNullTestLatest()
+    {
+        self::$useNullTestLatest = true;
     }
 
     public static function isCurrent(Week $week)
@@ -151,9 +166,14 @@ class Week extends Model
         return $games;
     }
 
-    public static function getLatest()
+    public static function getLatest(): ?Week
     {
-        return self::query()->orderByDesc('end_at')->first();
+        if (self::$useNullTestLatest) {
+            return null;
+        } elseif (self::$testLatest) {
+            return self::$testLatest;
+        }
+        return self::query()->orderByDesc('ends_at')->first();
     }
 
     /**

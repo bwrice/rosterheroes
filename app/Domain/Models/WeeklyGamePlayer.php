@@ -24,7 +24,9 @@ use Ramsey\Uuid\Uuid;
  */
 class WeeklyGamePlayer extends EventSourcedModel
 {
-    const MIN_SALARY = 3000;
+    public const MIN_SALARY = 3000;
+    public const SALARY_PER_POINT = 400;
+    public const STARTING_EFFECTIVENESS = 10000;
 
     /**
      * @param array $attributes

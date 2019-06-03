@@ -24,8 +24,6 @@ use Illuminate\Support\Facades\Date;
 
 class CreateWeeklyGamePlayer
 {
-    public const SALARY_PER_POINT = 400;
-
     /**
      * @var Week
      */
@@ -104,7 +102,7 @@ class CreateWeeklyGamePlayer
 
     protected function convertPointsToSalary($points)
     {
-        return (int) round($points * self::SALARY_PER_POINT);
+        return (int) round($points * WeeklyGamePlayer::SALARY_PER_POINT);
     }
 
     protected function getDefaultWeightedValue()
@@ -114,7 +112,7 @@ class CreateWeeklyGamePlayer
 
     protected function getDefaultTotalPoints()
     {
-        return $this->position->getDefaultSalary() / self::SALARY_PER_POINT;
+        return $this->position->getDefaultSalary() / WeeklyGamePlayer::SALARY_PER_POINT;
     }
 
     /**
