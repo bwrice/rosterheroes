@@ -8,12 +8,16 @@
 
 namespace App\External\Stats\MySportsFeed;
 
+use App\Domain\Collections\GameCollection;
+use App\Domain\Collections\PlayerCollection;
+use App\Domain\Collections\StatTypeCollection;
 use App\Domain\Collections\TeamCollection;
 use App\Domain\DataTransferObjects\GameDTO;
 use App\Domain\DataTransferObjects\PlayerDTO;
 use App\Domain\DataTransferObjects\PlayerGameLogDTO;
 use App\Domain\Models\Game;
 use App\Domain\Models\Player;
+use App\Domain\Models\StatType;
 use App\Domain\Models\Team;
 use App\Domain\DataTransferObjects\TeamDTO;
 use App\External\Stats\MySportsFeed\StatAmountDTOs\StatAmountDTOBuilderFactory;
@@ -26,6 +30,7 @@ use App\Domain\Models\Week;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Log;
 
 class MySportsFeed implements StatsIntegration
@@ -213,7 +218,7 @@ class MySportsFeed implements StatsIntegration
             try {
                 $scheduleData = $gameData['schedule'];
                 $homeAndAwayTeams = $this->getTeamsFromSchedule($scheduleData, $teams);
-                $startsAt = CarbonImmutable::parse($scheduleData['startTime']);
+                $startsAt = Date::parse($scheduleData['startTime']);
                 return new GameDTO(
                     $startsAt,
                     $homeAndAwayTeams['home_team'],
@@ -251,11 +256,14 @@ class MySportsFeed implements StatsIntegration
     public function getPlayerGameLogDTOs(Team $team, int $yearDelta = 0): Collection
     {
         $data = $this->gameLogAPI->getData($team, $yearDelta);
-        return collect($data)->map(function ($gameLogData) use ($team) {
+        $games = $team->allGames();
+        $players = $team->players;
+        $statTypes = StatType::all();
+        return collect($data)->map(function ($gameLogData) use ($team, $games, $players, $statTypes) {
 
             try {
 
-                return $this->buildPlayerGameLogDTO($team, $gameLogData);
+                return $this->buildPlayerGameLogDTO($team, $games, $players, $statTypes, $gameLogData);
 
             } catch (MySportsFeedsException $exception) {
 
@@ -276,21 +284,21 @@ class MySportsFeed implements StatsIntegration
         })->filter(); // filter nulls
     }
 
-    protected function buildPlayerGameLogDTO(Team $team, array $gameLogData)
+    protected function buildPlayerGameLogDTO(Team $team, GameCollection $games, PlayerCollection $players, StatTypeCollection $statTypes, array $gameLogData)
     {
-        $game = Game::query()->externalID($gameLogData['game']['id'])->first();
+        $game = $games->where('external_id', '=', $gameLogData['game']['id'])->first();
         if (! $game) {
             throw new MySportsFeedsException("Couldn't find game when building game log DTO");
         }
         if (! ($game->homeTeam->id === $team->id || $game->awayTeam->id === $team->id ) ) {
             throw new MySportsFeedsException("Team doesn't belong to game");
         }
-        $player = Player::query()->externalID($gameLogData['player']['id'])->first();
+        $player = $players->where('external_id' ,$gameLogData['player']['id'])->first();
         if (! $player) {
             throw new MySportsFeedsException("Couldn't find player when building game log DTO");
         }
         $statAmountDTOBuilder = $this->statAmountDTOBuilderFactory->getStatAmountDTOBuilder($team->league);
-        $statAmountDTOs = $statAmountDTOBuilder->getStatAmountDTOs($gameLogData['stats']);
+        $statAmountDTOs = $statAmountDTOBuilder->getStatAmountDTOs($statTypes, $gameLogData['stats']);
         return new PlayerGameLogDTO($player, $game, $team, $statAmountDTOs);
     }
 }

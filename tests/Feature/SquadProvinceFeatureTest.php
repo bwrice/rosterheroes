@@ -19,8 +19,6 @@ class SquadProvinceFeatureTest extends TestCase
      */
     public function a_squad_can_move_to_province_that_borders_its_own()
     {
-        $this->withoutExceptionHandling();
-
         /** @var Squad $squad */
         $squad = factory(Squad::class)->create();
         /** @var Province $border */

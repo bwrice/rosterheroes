@@ -62,6 +62,11 @@ class Province extends EventSourcedModel
         return $this->belongsTo(Territory::class);
     }
 
+    public function squads()
+    {
+        return $this->hasMany(Squad::class);
+    }
+
     public function borders()
     {
         return $this->belongsToMany(self::class, 'borders', 'province_id', 'border_id')

@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\HeroRaceResource as HeroRaceResource;
+use App\Http\Resources\HeroRaceResource;
 use App\Domain\Models\Squad;
-use App\Squads\HeroRaceAvailability;
 
 class SquadHeroRaceController extends Controller
 {

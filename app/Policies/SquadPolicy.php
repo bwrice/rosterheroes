@@ -15,4 +15,9 @@ class SquadPolicy
     {
         return $user->id === $squad->user_id;
     }
+
+    public function view(User $user, Squad $squad)
+    {
+        return $user->id === $squad->user_id;
+    }
 }

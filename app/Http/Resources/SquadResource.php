@@ -26,7 +26,7 @@ class SquadResource extends JsonResource
             'name' => $this->name,
             'salary' => $this->salary,
             'heroes' => HeroResource::collection($this->getHeroes([
-                'hero.gamePlayer'
+                'hero.weeklyGamePlayer'
             ]))
         ];
     }

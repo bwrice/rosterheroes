@@ -39,7 +39,8 @@
                                         @click="serverErrors.flush()"
                                         :error-messages="raceErrors"
                                         column>
-                                    <v-radio :disabled="! validRace('human')" label="Human" value="human"></v-radio>
+                                    <v-radio :disabled="! validRace('human')" label="Human" value="human">
+                                    </v-radio>
                                     <v-radio :disabled="! validRace('elf')" label="Elf" value="elf"></v-radio>
                                     <v-radio :disabled="! validRace('dwarf')" label="Dwarf" value="dwarf"></v-radio>
                                     <v-radio :disabled="! validRace('orc')" label="Orc" value="orc"></v-radio>

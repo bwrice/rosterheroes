@@ -19,6 +19,6 @@ $factory->define(\App\Domain\Models\WeeklyGamePlayer::class, function (Faker $fa
             return factory(\App\Domain\Models\Game::class)->create()->id;
         },
         'salary' => \App\Domain\Models\WeeklyGamePlayer::MIN_SALARY,
-        'effectiveness' => ''
+        'effectiveness' => 10000
     ];
 });

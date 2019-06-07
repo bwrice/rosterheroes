@@ -377,10 +377,10 @@ class Squad extends EventSourcedModel implements HasSlots
         $availableHeroPosts = $this->getHeroPostAvailability();
         $heroRaces = collect();
         $availableHeroPosts->each(function(HeroPost $heroPost) use ($heroRaces) {
-            return $heroRaces->push($heroPost->heroRaces);
+            return $heroRaces->push($heroPost->getHeroRaces());
         });
 
-        return $heroRaces->unique();
+        return $heroRaces->flatten()->unique();
     }
 
     public function getHeroPostAvailability()

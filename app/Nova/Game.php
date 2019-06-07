@@ -2,12 +2,11 @@
 
 namespace App\Nova;
 
-use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Http\Requests\NovaRequest;
 
 /**
  * Class Game
@@ -17,6 +16,8 @@ use Laravel\Nova\Http\Requests\NovaRequest;
  */
 class Game extends Resource
 {
+    public static $group = 'Sports';
+
     /**
      * The model the resource corresponds to.
      *
@@ -55,12 +56,9 @@ class Game extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make('Home', function() {
-                return $this->homeTeam->name;
-            }),
-            Text::make('Away', function() {
-                return $this->awayTeam->name;
-            }),
+            BelongsTo::make('Home Team', 'homeTeam', Team::class),
+            BelongsTo::make('Away Team', 'awayTeam', Team::class),
+            HasMany::make('playerGameLogs'),
             DateTime::make('Starts At')->sortable()
         ];
     }

@@ -2,8 +2,16 @@
 
 namespace App\Http\Resources;
 
+use App\Domain\Models\HeroRace;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+
+/**
+ * Class HeroRaceResource
+ * @package App\Http\Resources
+ *
+ * @mixin HeroRace
+ */
 class HeroRaceResource extends JsonResource
 {
     /**
@@ -14,6 +22,9 @@ class HeroRaceResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'name' => $this->name,
+            'icon_path' => $this->getBehavior()->getIconPath()
+        ];
     }
 }

@@ -62,7 +62,7 @@ class UpdateGamesJob implements ShouldQueue
 
         $gameDTOs = $integration->getGameDTOs($this->league, $this->yearDelta);
         $gameDTOs->each(function (GameDTO $gameDTO) {
-            Game::updateOrCreate([
+            Game::query()->updateOrCreate([
                 'external_id' => $gameDTO->getExternalID()
             ], [
                 'starts_at' => $gameDTO->getStartsAt(),

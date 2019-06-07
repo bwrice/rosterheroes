@@ -143,7 +143,8 @@ return [
             'supervisor-fast' => [
                 'connection' => 'redis',
                 'queue' => [
-                    'default'
+                    'default',
+                    'event-projector'
                 ],
                 'balance' => 'simple',
                 'processes' => 10,
@@ -176,7 +177,8 @@ return [
             'supervisor-fast' => [
                 'connection' => 'redis',
                 'queue' => [
-                    'default'
+                    'default',
+                    'event-projector'
                 ],
                 'balance' => 'simple',
                 'processes' => 10,

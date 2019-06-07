@@ -64,8 +64,13 @@ class UpdatePlayerGameLogsJob implements ShouldQueue
 
     public function performJob(StatsIntegration $statsIntegration)
     {
+        $start = microtime(true);
         $playerGameLogDTOs = $statsIntegration->getPlayerGameLogDTOs($this->team, $this->yearDelta);
+        $end = microtime(true);
+        Log::debug("Get player DTOs elapsed time: " . ($start - $end) . " seconds for team: " . $this->team->name);
 
+
+        $start = microtime(true);
         $playerGameLogDTOs->each(function (PlayerGameLogDTO $dto) {
 
             $playerID = $dto->getPlayer()->id;
@@ -97,5 +102,7 @@ class UpdatePlayerGameLogsJob implements ShouldQueue
                 });
             }
         });
+        $end = microtime(true);
+        Log::debug("Convert player DTOs elapsed time: " . ($start - $end) . " seconds for team: " . $this->team->name);
     }
 }

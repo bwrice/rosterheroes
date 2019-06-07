@@ -2,6 +2,7 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Collections\GameCollection;
 use App\Domain\Collections\PlayerCollection;
 use App\Domain\Collections\TeamCollection;
 use App\Domain\Models\Game;
@@ -24,6 +25,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property League $league
  *
  * @property PlayerCollection $players
+ * @property GameCollection $homeGames
+ * @property GameCollection $awayGames
  */
 class Team extends Model
 {
@@ -46,12 +49,20 @@ class Team extends Model
 
     public function homeGames()
     {
-        return $this->belongsToMany(Game::class, 'game_team', 'home_team_id')->withTimestamps();
+        return $this->hasMany(Game::class, 'home_team_id');
     }
 
     public function awayGames()
     {
-        return $this->belongsToMany(Game::class, 'game_team', 'away_team_id')->withTimestamps();
+        return $this->hasMany(Game::class, 'away_team_id');
+    }
+
+    /**
+     * @return GameCollection
+     */
+    public function allGames()
+    {
+        return $this->homeGames->merge($this->awayGames);
     }
 
 }

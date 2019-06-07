@@ -17,6 +17,8 @@ use Laravel\Nova\Http\Requests\NovaRequest;
  */
 class Player extends Resource
 {
+    public static $group = 'Sports';
+
     /**
      * The model the resource corresponds to.
      *
@@ -35,7 +37,8 @@ class Player extends Resource
     {
         $fullName = $this->fullName();
         $abbreviation = $this->team ? $this->team->abbreviation : 'FA';
-        return $fullName . ' (' . $abbreviation . ')';
+        $positionsOutput = $this->positions->abbreviations()->implode(',');
+        return $fullName . ' (' . $abbreviation . ') [' . $positionsOutput . ']';
     }
 
     /**

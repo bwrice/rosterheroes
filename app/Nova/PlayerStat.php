@@ -16,6 +16,8 @@ use Laravel\Nova\Http\Requests\NovaRequest;
  */
 class PlayerStat extends Resource
 {
+    public static $group = 'Sports';
+
     /**
      * The model the resource corresponds to.
      *
@@ -29,6 +31,8 @@ class PlayerStat extends Resource
      * @var string
      */
     public static $title = 'id';
+
+    public static $with = ['statType', 'playerGameLog.player'];
 
     public function title()
     {
@@ -56,7 +60,10 @@ class PlayerStat extends Resource
             ID::make()->sortable(),
             BelongsTo::make('PlayerGameLog'),
             BelongsTo::make('StatType'),
-            Number::make('amount')
+            Number::make('amount'),
+            Number::make('points', function () {
+                return $this->statType->getBehavior()->getTotalPoints($this->amount);
+            })
         ];
     }
 

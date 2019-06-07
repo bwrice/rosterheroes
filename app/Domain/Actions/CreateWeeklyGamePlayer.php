@@ -65,7 +65,8 @@ class CreateWeeklyGamePlayer
             'player_id' => $this->player->id,
             'game_id' => $this->game->id,
             'week_id' => $this->week->id,
-            'salary' => $salary
+            'salary' => $salary,
+            'effectiveness' => WeeklyGamePlayer::STARTING_EFFECTIVENESS
         ]);
     }
 

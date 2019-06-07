@@ -62,7 +62,7 @@ class CreateWeeklyGamePlayerJob implements ShouldQueue
             throw new InvalidPlayerException($this->player, $this->player->fullName() . " has zero positions");
         }
 
-        $action = new CreateWeeklyGamePlayer($this->week, $this->game, $this->player);
+        $action = new CreateWeeklyGamePlayer($this->week, $this->game, $this->player, $position);
         $action();
     }
 }

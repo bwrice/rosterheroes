@@ -21,6 +21,7 @@ use Ramsey\Uuid\Uuid;
  * @property Week $week
  * @property Player $player
  * @property Game $game
+ * @property PlayerGameLog $playerGameLog
  */
 class WeeklyGamePlayer extends EventSourcedModel
 {
@@ -50,7 +51,7 @@ class WeeklyGamePlayer extends EventSourcedModel
     }
 
 
-    public function gamePlayer()
+    public function playerGameLog()
     {
         return $this->belongsTo(PlayerGameLog::class);
     }

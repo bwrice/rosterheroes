@@ -19,19 +19,15 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->setTheCurrentWeek();
+
+        Date::use(CarbonImmutable::class);
     }
 
     protected function setTheCurrentWeek()
     {
         if (Schema::hasTable('weeks')) {
             Week::setCurrent(Week::query()->orderBy('ends_at')->whereNull('finalized_at')->first());
-
-            if (Week::current() == null) {
-                Log::critical("There is no current week");
-            }
         }
-
-        Date::use(CarbonImmutable::class);
     }
 
     /**

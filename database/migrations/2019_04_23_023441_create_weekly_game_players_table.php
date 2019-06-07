@@ -20,8 +20,8 @@ class CreateWeeklyGamePlayersTable extends Migration
             $table->integer('player_id')->unsigned();
             $table->integer('game_id')->unsigned();
             $table->integer('player_game_log_id')->unsigned()->nullable();
-            $table->smallInteger('salary');
-            $table->float('effectiveness');
+            $table->integer('salary');
+            $table->integer('effectiveness');
             $table->timestamps();
         });
 

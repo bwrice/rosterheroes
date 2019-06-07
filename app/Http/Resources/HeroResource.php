@@ -25,7 +25,8 @@ class HeroResource extends JsonResource
             'name' => $this->name,
             'uuid' => $this->uuid,
             'slug' => $this->slug,
-            'gamePlayer' => $this->whenLoaded('gamePlayer')
+            'weeklyGamePlayer' => $this->whenLoaded('weeklyGamePlayer'),
+            'heroPost' => $this->whenLoaded('heroPost')
         ];
     }
 }

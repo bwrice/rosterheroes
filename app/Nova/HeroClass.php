@@ -2,33 +2,31 @@
 
 namespace App\Nova;
 
-use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 /**
- * Class Team
+ * Class HeroClass
  * @package App\Nova
  *
- * @mixin \App\Domain\Models\Team
+ * @mixin \App\Domain\Models\HeroClass
  */
-class Team extends Resource
+class HeroClass extends Resource
 {
-    public static $group = 'Sports';
-
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Domain\Models\Team::class;
+    public static $model = \App\Domain\Models\HeroClass::class;
 
-    public function title()
-    {
-        return $this->location . ' ' . $this->name;
-    }
+    /**
+     * The single value that should be used to represent the resource when being displayed.
+     *
+     * @var string
+     */
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.
@@ -37,9 +35,6 @@ class Team extends Resource
      */
     public static $search = [
         'id',
-        'name',
-        'location',
-        'abbreviation'
     ];
 
     /**
@@ -52,11 +47,6 @@ class Team extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make('Name'),
-            Text::make('Location'),
-            Text::make('Abbreviation'),
-            Text::make('External ID'),
-            HasMany::make('Players')
         ];
     }
 

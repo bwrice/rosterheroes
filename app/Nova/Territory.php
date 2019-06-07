@@ -8,27 +8,30 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
+
 /**
- * Class Team
+ * Class Territory
  * @package App\Nova
  *
- * @mixin \App\Domain\Models\Team
+ * @mixin \App\Domain\Models\Territory
  */
-class Team extends Resource
+class Territory extends Resource
 {
-    public static $group = 'Sports';
+    public static $group = 'Map';
 
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Domain\Models\Team::class;
+    public static $model = \App\Domain\Models\Territory::class;
 
-    public function title()
-    {
-        return $this->location . ' ' . $this->name;
-    }
+    /**
+     * The single value that should be used to represent the resource when being displayed.
+     *
+     * @var string
+     */
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.
@@ -37,9 +40,6 @@ class Team extends Resource
      */
     public static $search = [
         'id',
-        'name',
-        'location',
-        'abbreviation'
     ];
 
     /**
@@ -52,11 +52,8 @@ class Team extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make('Name'),
-            Text::make('Location'),
-            Text::make('Abbreviation'),
-            Text::make('External ID'),
-            HasMany::make('Players')
+            Text::make('name'),
+            HasMany::make('Provinces')
         ];
     }
 

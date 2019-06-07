@@ -2,32 +2,35 @@
 
 namespace App\Nova;
 
-use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 /**
- * Class Team
+ * Class HeroPost
  * @package App\Nova
  *
- * @mixin \App\Domain\Models\Team
+ * @mixin \App\Domain\Models\HeroPost
  */
-class Team extends Resource
+class HeroPost extends Resource
 {
-    public static $group = 'Sports';
-
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Domain\Models\Team::class;
+    public static $model = \App\Domain\Models\HeroPost::class;
+
+    public static $with = [
+        'squad',
+        'heroPostType'
+    ];
 
     public function title()
     {
-        return $this->location . ' ' . $this->name;
+        return $this->squad->name . ' [' . $this->heroPostType->name . ']';
     }
 
     /**
@@ -37,9 +40,6 @@ class Team extends Resource
      */
     public static $search = [
         'id',
-        'name',
-        'location',
-        'abbreviation'
     ];
 
     /**
@@ -52,11 +52,8 @@ class Team extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make('Name'),
-            Text::make('Location'),
-            Text::make('Abbreviation'),
-            Text::make('External ID'),
-            HasMany::make('Players')
+            BelongsTo::make('Squad'),
+            BelongsTo::make('Hero')
         ];
     }
 

@@ -4,6 +4,8 @@ namespace App\Nova;
 
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 /**
@@ -45,6 +47,10 @@ class StatType extends Resource
     {
         return [
             ID::make()->sortable(),
+            Text::make('name'),
+            Number::make('Points Per', function() {
+                return $this->getBehavior()->getPointsPer();
+            })
         ];
     }
 

@@ -27,8 +27,8 @@ class PlayerGameLogCollection extends Collection implements ConvertsToWeightedVa
 
         $weightedCollection = $sorted->loadMissing('playerStats')->map(function (PlayerGameLog $playerGameLog, $index) {
             $totalPoints = $playerGameLog->playerStats->totalPoints();
-            if ($totalPoints < 1) {
-                // ignore games with less than 1 fantasy points scored
+            // Games with absolute value of total points less than 1 will be ignored
+            if (abs($totalPoints) < 1) {
                 return new WeightedValue(0, $totalPoints);
             }
             // The higher the index, ie more recent the game, the larger the weight

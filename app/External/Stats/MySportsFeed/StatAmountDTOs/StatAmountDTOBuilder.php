@@ -9,6 +9,7 @@
 namespace App\External\Stats\MySportsFeed\StatAmountDTOs;
 
 
+use App\Domain\Collections\StatTypeCollection;
 use App\Domain\DataTransferObjects\StatAmountDTO;
 use App\Domain\Models\StatType;
 use App\External\Stats\MySportsFeed\StatAmountDTOs\StatNameConverters\StatNameConverter;
@@ -31,7 +32,7 @@ class StatAmountDTOBuilder
         $this->subArrayKeys = $subArrayKeys;
     }
 
-    public function getStatAmountDTOs(array $statsData): Collection
+    public function getStatAmountDTOs(StatTypeCollection $statTypes, array $statsData): Collection
     {
         $stats = [];
         foreach($this->subArrayKeys as $subArrayKey) {
@@ -44,7 +45,6 @@ class StatAmountDTOBuilder
             return $statName === 'NONE' || ((int) round(abs($amount), 2)) === 0;
         });
 
-        $statTypes = StatType::all();
         return $convertedStats->map(function ($amount, $convertedStatName) use ($statTypes) {
             $statType = $statTypes->firstWithName($convertedStatName);
             return new StatAmountDTO($statType, $amount);
