@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Domain\Models\HeroPost;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
@@ -25,8 +26,11 @@ class SquadResource extends JsonResource
             'slug' => $this->slug,
             'name' => $this->name,
             'salary' => $this->salary,
-            'heroes' => HeroResource::collection($this->getHeroes([
-                'hero.weeklyGamePlayer'
+            'heroPosts' => HeroPostResource::collection($this->heroPosts->loadMissing([
+                'hero.weeklyGamePlayer.game.homeTeam',
+                'hero.weeklyGamePlayer.game.awayTeam',
+                'hero.weeklyGamePlayer.player.team',
+                'hero.weeklyGamePlayer.player.positions',
             ]))
         ];
     }

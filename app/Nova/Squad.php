@@ -6,6 +6,7 @@ use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -46,6 +47,10 @@ class Squad extends Resource
             ID::make()->sortable(),
             Text::make('name'),
             BelongsTo::make('Province'),
+            Number::make('salary')->sortable(),
+            Number::make('experience')->sortable(),
+            Number::make('gold')->sortable(),
+            Number::make('favor')->sortable(),
             HasMany::make('HeroPosts')
         ];
     }

@@ -2,31 +2,28 @@
 
 namespace App\Http\Resources;
 
+use App\Domain\Models\Position;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * Class Hero
+ * Class PositionResource
  * @package App\Http\Resources
  *
- * @mixin \App\Domain\Models\Hero
+ * @mixin Position
  */
-class HeroResource extends JsonResource
+class PositionResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return array
-     *
      */
     public function toArray($request)
     {
         return [
             'name' => $this->name,
-            'uuid' => $this->uuid,
-            'slug' => $this->slug,
-            'weeklyGamePlayer' => new WeeklyGamePlayerResource($this->whenLoaded('weeklyGamePlayer')),
-            'heroPost' => new HeroPostResource($this->whenLoaded('heroPost'))
+            'abbreviation' => $this->getBehavior()->getAbbreviation()
         ];
     }
 }

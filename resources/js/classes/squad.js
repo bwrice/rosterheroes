@@ -1,19 +1,12 @@
-import Hero from './hero';
+import HeroPost from './heroPost';
 
 export default class Squad {
 
     constructor(squad) {
         this._salary = squad.salary ? squad.salary : 0;
         this._name = squad.name ? squad.name : '';
+        this._heroPosts = squad.heroPosts ? squad.heroPosts : [];
         this._heroes = [];
-        this.setHeroes(squad.heroes ? squad.heroes : []);
-    }
-
-    setHeroes(heroes) {
-        let _heroes = this._heroes;
-        heroes.forEach(function (hero) {
-           _heroes.push(new Hero(hero));
-        });
     }
 
     get salary() {
@@ -22,7 +15,7 @@ export default class Squad {
 
     get availableSalary() {
         let available = this._salary;
-        this._heroes.forEach(function(hero) {
+        this.heroes.forEach(function(hero) {
             available -= hero.salaryUsed;
         });
         return available;
@@ -32,7 +25,21 @@ export default class Squad {
         return this._name;
     }
 
+    get heroPosts() {
+        let _heroPosts = [];
+        this._heroPosts.forEach(function (heroPost) {
+            _heroPosts.push(new HeroPost(heroPost))
+        });
+        return _heroPosts;
+    }
+
     get heroes() {
-        return this._heroes
+        let _heroes = [];
+        this.heroPosts.forEach(function (heroPost) {
+            if (heroPost.hero) {
+                _heroes.push(heroPost.hero);
+            }
+        });
+        return _heroes;
     }
 }

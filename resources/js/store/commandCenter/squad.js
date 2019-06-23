@@ -7,11 +7,9 @@ export default {
         original: null
     },
 
-
-
     getters: {
         _isDirty(state) {
-            return state.current != state.original
+            return ! _.isEqual(state.current, state.original);
         },
         _squad(state) {
             return state.current;

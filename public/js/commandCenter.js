@@ -34323,7 +34323,7 @@ var render = function() {
         return _c(
           "div",
           [
-            hero.gamePlayer
+            hero.weeklyGamePlayer
               ? _c("FilledHeroRosterCard", { attrs: { hero: hero } })
               : _c("EmptyHeroRosterCard", { attrs: { hero: hero } })
           ],
@@ -74837,7 +74837,7 @@ function () {
 
     this._uuid = hero.uuid;
     this._name = hero.name;
-    this._gamePlayer = hero.gamePlayer ? new _gamePlayer__WEBPACK_IMPORTED_MODULE_0__["default"](hero.gamePlayer) : null;
+    this._weeklyGamePlayer = hero.weeklyGamePlayer ? new _gamePlayer__WEBPACK_IMPORTED_MODULE_0__["default"](hero.weeklyGamePlayer) : null;
   }
 
   _createClass(Hero, [{
@@ -74851,15 +74851,15 @@ function () {
       return this._name;
     }
   }, {
-    key: "gamePlayer",
+    key: "weeklyGamePlayer",
     get: function get() {
-      return this._gamePlayer;
+      return this._weeklyGamePlayer;
     }
   }, {
     key: "salaryUsed",
     get: function get() {
-      if (this._gamePlayer) {
-        return this._gamePlayer.salary;
+      if (this._weeklyGamePlayer) {
+        return this._weeklyGamePlayer.salary;
       } else {
         return 0;
       }
@@ -74867,6 +74867,52 @@ function () {
   }]);
 
   return Hero;
+}();
+
+
+
+/***/ }),
+
+/***/ "./resources/js/classes/heroPost.js":
+/*!******************************************!*\
+  !*** ./resources/js/classes/heroPost.js ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return HeroPost; });
+/* harmony import */ var _hero__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./hero */ "./resources/js/classes/hero.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+var HeroPost =
+/*#__PURE__*/
+function () {
+  function HeroPost(heroPost) {
+    _classCallCheck(this, HeroPost);
+
+    this._hero = heroPost.hero;
+  }
+
+  _createClass(HeroPost, [{
+    key: "hero",
+    get: function get() {
+      if (this._hero) {
+        return new _hero__WEBPACK_IMPORTED_MODULE_0__["default"](this._hero);
+      }
+
+      return null;
+    }
+  }]);
+
+  return HeroPost;
 }();
 
 
@@ -74883,7 +74929,7 @@ function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Squad; });
-/* harmony import */ var _hero__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./hero */ "./resources/js/classes/hero.js");
+/* harmony import */ var _heroPost__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./heroPost */ "./resources/js/classes/heroPost.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -74900,19 +74946,11 @@ function () {
 
     this._salary = squad.salary ? squad.salary : 0;
     this._name = squad.name ? squad.name : '';
+    this._heroPosts = squad.heroPosts ? squad.heroPosts : [];
     this._heroes = [];
-    this.setHeroes(squad.heroes ? squad.heroes : []);
   }
 
   _createClass(Squad, [{
-    key: "setHeroes",
-    value: function setHeroes(heroes) {
-      var _heroes = this._heroes;
-      heroes.forEach(function (hero) {
-        _heroes.push(new _hero__WEBPACK_IMPORTED_MODULE_0__["default"](hero));
-      });
-    }
-  }, {
     key: "salary",
     get: function get() {
       return this._salary;
@@ -74921,11 +74959,9 @@ function () {
     key: "availableSalary",
     get: function get() {
       var available = this._salary;
-
-      this._heroes.forEach(function (hero) {
+      this.heroes.forEach(function (hero) {
         available -= hero.salaryUsed;
       });
-
       return available;
     }
   }, {
@@ -74934,9 +74970,26 @@ function () {
       return this._name;
     }
   }, {
+    key: "heroPosts",
+    get: function get() {
+      var _heroPosts = [];
+
+      this._heroPosts.forEach(function (heroPost) {
+        _heroPosts.push(new _heroPost__WEBPACK_IMPORTED_MODULE_0__["default"](heroPost));
+      });
+
+      return _heroPosts;
+    }
+  }, {
     key: "heroes",
     get: function get() {
-      return this._heroes;
+      var _heroes = [];
+      this.heroPosts.forEach(function (heroPost) {
+        if (heroPost.hero) {
+          _heroes.push(heroPost.hero);
+        }
+      });
+      return _heroes;
     }
   }]);
 
@@ -76679,7 +76732,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   getters: {
     _isDirty: function _isDirty(state) {
-      return state.current != state.original;
+      return !_.isEqual(state.current, state.original);
     },
     _squad: function _squad(state) {
       return state.current;

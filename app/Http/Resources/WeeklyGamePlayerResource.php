@@ -2,31 +2,31 @@
 
 namespace App\Http\Resources;
 
+use App\Domain\Models\WeeklyGamePlayer;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * Class Hero
+ * Class WeeklyGamePlayerResource
  * @package App\Http\Resources
  *
- * @mixin \App\Domain\Models\Hero
+ * @mixin WeeklyGamePlayer
  */
-class HeroResource extends JsonResource
+class WeeklyGamePlayerResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return array
-     *
      */
     public function toArray($request)
     {
         return [
-            'name' => $this->name,
             'uuid' => $this->uuid,
-            'slug' => $this->slug,
-            'weeklyGamePlayer' => new WeeklyGamePlayerResource($this->whenLoaded('weeklyGamePlayer')),
-            'heroPost' => new HeroPostResource($this->whenLoaded('heroPost'))
+            'salary' => $this->salary,
+            'effectiveness' => $this->effectiveness,
+            'player' => new PlayerResource($this->whenLoaded('player')),
+            'game' => new GameResource($this->whenLoaded('game'))
         ];
     }
 }

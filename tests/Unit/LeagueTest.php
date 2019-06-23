@@ -145,10 +145,10 @@ class LeagueTest extends TestCase
     /**
      * @test
      */
-    public function nhl_is_not_live_in_september()
+    public function nhl_is_not_live_in_august()
     {
         $year = CarbonImmutable::now()->year;
-        $novemberDate = CarbonImmutable::parse($year . '-09-15');
+        $novemberDate = CarbonImmutable::parse($year . '-08-15');
         CarbonImmutable::setTestNow($novemberDate);
         $nhl = League::nhl();
         $this->assertFalse($nhl->isLive());

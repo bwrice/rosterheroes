@@ -2,7 +2,7 @@
     <v-card>
         <span class="display-3">{{this._availableSalary}}</span>
         <div v-for="(hero, uuid) in this._squad.heroes">
-            <FilledHeroRosterCard v-if="hero.gamePlayer" :hero="hero"></FilledHeroRosterCard>
+            <FilledHeroRosterCard v-if="hero.weeklyGamePlayer" :hero="hero"></FilledHeroRosterCard>
             <EmptyHeroRosterCard v-else :hero="hero"></EmptyHeroRosterCard>
         </div>
     </v-card>

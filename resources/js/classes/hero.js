@@ -5,7 +5,7 @@ export default class Hero {
     constructor(hero) {
         this._uuid = hero.uuid;
         this._name = hero.name;
-        this._gamePlayer = hero.gamePlayer ? new GamePlayer(hero.gamePlayer) : null;
+        this._weeklyGamePlayer = hero.weeklyGamePlayer ? new GamePlayer(hero.weeklyGamePlayer) : null;
     }
 
     get uuid() {
@@ -16,13 +16,13 @@ export default class Hero {
         return this._name;
     }
 
-    get gamePlayer() {
-        return this._gamePlayer;
+    get weeklyGamePlayer() {
+        return this._weeklyGamePlayer;
     }
 
     get salaryUsed() {
-        if (this._gamePlayer) {
-            return this._gamePlayer.salary;
+        if (this._weeklyGamePlayer) {
+            return this._weeklyGamePlayer.salary;
         } else  {
             return 0;
         }

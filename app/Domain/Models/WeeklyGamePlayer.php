@@ -2,6 +2,7 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Collections\WeeklyGamePlayerCollection;
 use App\Domain\Models\EventSourcedModel;
 use App\Domain\Models\Game;
 use App\Domain\Models\Player;
@@ -15,8 +16,8 @@ use Ramsey\Uuid\Uuid;
  *
  * @property int $id
  * @property string $uuid
- * @property int $initial_salary
  * @property int $salary
+ * @property int $effectiveness
  *
  * @property Week $week
  * @property Player $player
@@ -50,6 +51,10 @@ class WeeklyGamePlayer extends EventSourcedModel
         return static::where('uuid', $uuid)->first();
     }
 
+    public function newCollection(array $models = [])
+    {
+        return new WeeklyGamePlayerCollection($models);
+    }
 
     public function playerGameLog()
     {

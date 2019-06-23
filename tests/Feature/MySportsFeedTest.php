@@ -276,6 +276,7 @@ class MySportsFeedTest extends TestCase
         // Note: not setting team ID, as it shouldn't matter if a player switches teams
         /** @var Player $playerTwo */
         $playerTwo = factory(Player::class)->create([
+            'team_id' => $teamWeCareAbout->id,
             'external_id' => $playerTwoExternalID
         ]);
 
@@ -469,6 +470,7 @@ class MySportsFeedTest extends TestCase
         // Note: not setting team ID, as it shouldn't matter if a player switches teams
         /** @var Player $playerTwo */
         $playerTwo = factory(Player::class)->create([
+            'team_id' => $teamWeCareAbout->id,
             'external_id' => $playerTwoExternalID
         ]);
 
@@ -659,6 +661,7 @@ class MySportsFeedTest extends TestCase
         // Note: not setting team ID, as it shouldn't matter if a player switches teams
         /** @var Player $playerTwo */
         $playerTwo = factory(Player::class)->create([
+            'team_id' => $teamWeCareAbout->id,
             'external_id' => $playerTwoExternalID
         ]);
 
@@ -835,6 +838,7 @@ class MySportsFeedTest extends TestCase
         // Note: not setting team ID, as it shouldn't matter if a player switches teams
         /** @var Player $playerTwo */
         $playerTwo = factory(Player::class)->create([
+            'team_id' => $teamWeCareAbout->id,
             'external_id' => $playerTwoExternalID
         ]);
 

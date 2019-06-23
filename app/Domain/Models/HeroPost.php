@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $squad_id
  * @property int|null $hero_id
+ * @property int $hero_post_type_id
  *
  * @property Squad $squad
  * @property \App\Domain\Models\Hero|null $hero

@@ -52,4 +52,9 @@ class Territory extends Model
     {
         return $this->belongsToMany(Continent::class)->withTimestamps();
     }
+
+    public function provinces()
+    {
+        return $this->hasMany(Province::class);
+    }
 }

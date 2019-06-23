@@ -3,6 +3,7 @@
 namespace App\Domain\Models;
 
 use App\Domain\Collections\GameCollection;
+use App\Domain\Collections\WeeklyGamePlayerCollection;
 use App\Domain\Models\Game;
 use App\Domain\Collections\WeekCollection;
 use App\Domain\QueryBuilders\WeekQueryBuilder;
@@ -26,6 +27,9 @@ use phpDocumentor\Reflection\Types\Self_;
  * @property CarbonImmutable|null $proposals_processed_at
  * @property CarbonImmutable|null $diplomacy_processed_at
  * @property CarbonImmutable|null $finalized_at
+ *
+ * @property WeeklyGamePlayerCollection $weeklyGamePlayers
+ * @property GameCollection $games
  *
  * @method static WeekQueryBuilder query()
  */
@@ -100,6 +104,11 @@ class Week extends Model
     public function games()
     {
         return $this->hasMany(Game::class);
+    }
+
+    public function weeklyGamePlayers()
+    {
+        return $this->hasMany(WeeklyGamePlayer::class);
     }
 
     /**

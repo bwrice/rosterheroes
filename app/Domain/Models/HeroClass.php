@@ -42,7 +42,6 @@ class HeroClass extends Model
 
     /**
      * @return HeroClassBehavior
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function getBehavior(): HeroClassBehavior
     {
