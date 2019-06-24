@@ -9,6 +9,7 @@ use App\Domain\Models\League;
 use App\Domain\Collections\PositionCollection;
 use App\Domain\Models\Sport;
 use App\Domain\Models\Traits\HasUniqueNames;
+use App\Domain\QueryBuilders\PositionQueryBuilder;
 use App\Exceptions\UnknownBehaviorException;
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,6 +21,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $sport_id
  *
  * @property Sport $sport
+ *
+ * @method static PositionQueryBuilder query()
  */
 class Position extends Model
 {
@@ -59,6 +62,11 @@ class Position extends Model
     public function newCollection(array $models = [])
     {
         return new PositionCollection($models);
+    }
+
+    public function newEloquentBuilder($query)
+    {
+        return new PositionQueryBuilder($query);
     }
 
     public function sport()

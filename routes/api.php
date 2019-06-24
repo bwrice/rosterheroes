@@ -1,6 +1,14 @@
 <?php
 
+use App\Http\Controllers\SquadBorderTravelController;
+use App\Http\Controllers\SquadController;
+use App\Http\Controllers\SquadHeroRaceController;
 use App\Http\Controllers\SquadHeroClassController;
+use App\Http\Controllers\SquadHeroController;
+use App\Http\Controllers\SquadCampaignController;
+use App\Http\Controllers\HeroWeeklyGamePlayerController;
+use App\Http\Controllers\CampaignQuestController;
+use App\Http\Controllers\WeeklyGamePlayerController;
 use Illuminate\Http\Request;
 
 /*
@@ -19,19 +27,24 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware('auth:api')->post('/squads', 'SquadController@store');
-Route::middleware('auth:api')->get('/squad/{squadUuid}', 'SquadController@show');
+Route::middleware(['auth:api'])->group(function () {
 
-Route::middleware('auth:api')->get('/squad/{squadUuid}/hero-classes', 'SquadHeroClassController');
-Route::middleware('auth:api')->get('/squad/{squadUuid}/hero-races', 'SquadHeroRaceController');
+    Route::post('/squads', [SquadController::class, 'store']);
+    Route::get('/squad/{squadUuid}', [SquadController::class, 'show']);
 
-Route::middleware('auth:api')->post('/squad/{squadUuid}/border/{borderUuid}', 'SquadBorderTravelController@store');
+    Route::get('/squad/{squadUuid}/hero-classes', SquadHeroClassController::class);
+    Route::get('/squad/{squadUuid}/hero-races', SquadHeroRaceController::class);
 
-Route::middleware('auth:api')->post('/squad/{squadUuid}/heroes', 'SquadHeroController@store');
-Route::middleware('auth:api')->post('/squad/{squadUuid}/campaigns', 'SquadCampaignController@store');
+    Route::post('/squad/{squadUuid}/border/{borderUuid}', [SquadBorderTravelController::class, 'store'])->middleware('auth:api');
 
-Route::middleware('auth:api')->post('/hero/{heroUuid}/weekly-game-player/{weeklyGamePlayerUid}', 'HeroWeeklyGamePlayerController@store');
+    Route::post('/squad/{squadUuid}/heroes', [SquadHeroController::class, 'store']);
+    Route::post('/squad/{squadUuid}/campaigns', [SquadCampaignController::class, 'store']);
 
-Route::middleware('auth:api')->post('/campaign/{campaign}/quest/{questUuid}', 'CampaignQuestController@store');
+    Route::post('/hero/{heroUuid}/weekly-game-player/{weeklyGamePlayerUid}', [HeroWeeklyGamePlayerController::class, 'store']);
 
-Route::get('/teams', 'TeamController@index');
+    Route::post('/campaign/{campaign}/quest/{questUuid}', [CampaignQuestController::class, 'store']);
+
+    Route::get('/weekly-game-players', [WeeklyGamePlayerController::class, 'index']);
+});
+
+//Route::get('/teams', 'TeamController@index');

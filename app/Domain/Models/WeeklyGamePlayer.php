@@ -6,6 +6,7 @@ use App\Domain\Collections\WeeklyGamePlayerCollection;
 use App\Domain\Models\EventSourcedModel;
 use App\Domain\Models\Game;
 use App\Domain\Models\Player;
+use App\Domain\QueryBuilders\WeeklyGamePlayerQueryBuilder;
 use App\Events\WeeklyGamePlayerCreationRequested;
 use Illuminate\Database\Eloquent\Model;
 use Ramsey\Uuid\Uuid;
@@ -23,6 +24,8 @@ use Ramsey\Uuid\Uuid;
  * @property Player $player
  * @property Game $game
  * @property PlayerGameLog $playerGameLog
+ *
+ * @method static WeeklyGamePlayerQueryBuilder query()
  */
 class WeeklyGamePlayer extends EventSourcedModel
 {
@@ -54,6 +57,11 @@ class WeeklyGamePlayer extends EventSourcedModel
     public function newCollection(array $models = [])
     {
         return new WeeklyGamePlayerCollection($models);
+    }
+
+    public function newEloquentBuilder($query)
+    {
+        return new WeeklyGamePlayerQueryBuilder($query);
     }
 
     public function playerGameLog()
