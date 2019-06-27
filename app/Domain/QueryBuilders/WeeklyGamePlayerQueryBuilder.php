@@ -9,6 +9,8 @@
 namespace App\Domain\QueryBuilders;
 
 
+use App\Domain\Interfaces\PositionQueryable;
+use App\Domain\Interfaces\SalaryQueryable;
 use App\Domain\Models\Week;
 use App\Domain\Models\WeeklyGamePlayer;
 use Illuminate\Database\Eloquent\Builder;
@@ -19,7 +21,7 @@ use Illuminate\Database\Eloquent\Builder;
  *
  * @method  WeeklyGamePlayer|object|static|null first($columns = ['*'])
  */
-class WeeklyGamePlayerQueryBuilder extends Builder
+class WeeklyGamePlayerQueryBuilder extends Builder implements PositionQueryable, SalaryQueryable
 {
     /**
      * @param Week|null $week
@@ -29,5 +31,22 @@ class WeeklyGamePlayerQueryBuilder extends Builder
     {
         $week = $week ?? Week::current();
         return $this->where('week_id', '=', $week->id);
+    }
+
+    public function withPosition(string $position): Builder
+    {
+        return $this->whereHas('player', function (PlayerQueryBuilder $builder) use ($position) {
+            return $builder->withPosition($position);
+        });
+    }
+
+    public function minSalary(int $amount): Builder
+    {
+        return $this->where('salary', '>=', $amount);
+    }
+
+    public function maxSalary(int $amount): Builder
+    {
+        return $this->where('salary', '<=', $amount);
     }
 }

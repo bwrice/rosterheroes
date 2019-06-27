@@ -26,6 +26,7 @@ use Ramsey\Uuid\Uuid;
  * @property PlayerGameLog $playerGameLog
  *
  * @method static WeeklyGamePlayerQueryBuilder query()
+ * @method static WeeklyGamePlayerQueryBuilder withPosition(string $position)
  */
 class WeeklyGamePlayer extends EventSourcedModel
 {
@@ -87,5 +88,10 @@ class WeeklyGamePlayer extends EventSourcedModel
     public function getPositions()
     {
         return $this->player->positions;
+    }
+
+    public function scopeWithPosition(WeeklyGamePlayerQueryBuilder $builder, string $position)
+    {
+        return $builder->withPosition($position);
     }
 }

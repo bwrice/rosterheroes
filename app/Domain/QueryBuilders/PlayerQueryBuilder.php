@@ -9,6 +9,7 @@
 namespace App\Domain\QueryBuilders;
 
 
+use App\Domain\Interfaces\PositionQueryable;
 use App\Domain\Models\Player;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -18,7 +19,7 @@ use Illuminate\Database\Eloquent\Builder;
  *
  * @method Player|object|static|null first($columns = ['*'])
  */
-class PlayerQueryBuilder extends Builder
+class PlayerQueryBuilder extends Builder implements PositionQueryable
 {
     /**
      * @param string $externalID
@@ -27,5 +28,12 @@ class PlayerQueryBuilder extends Builder
     public function externalID(string $externalID)
     {
         return $this->where('external_id', '=', $externalID);
+    }
+
+    public function withPosition(string $position): Builder
+    {
+        return $this->whereHas('positions', function (Builder $builder) use ($position) {
+            return $builder->where('name', '=', $position);
+        });
     }
 }
