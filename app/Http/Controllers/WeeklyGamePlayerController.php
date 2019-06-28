@@ -15,9 +15,10 @@ class WeeklyGamePlayerController extends Controller
 {
     public function index()
     {
-        $query = WeeklyGamePlayer::query()->forWeek();
+        $query = WeeklyGamePlayer::query();
         $weeklyGamePlayers = QueryBuilder::for($query)
             ->allowedFilters([
+                Filter::exact('week', 'week_id'),
                 Filter::custom('position', PositionFilter::class),
                 Filter::custom('min-salary', MinSalaryFilter::class),
                 Filter::custom('max-salary', MaxSalaryFilter::class)

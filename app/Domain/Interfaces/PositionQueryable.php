@@ -13,5 +13,5 @@ use Illuminate\Database\Eloquent\Builder;
 
 interface PositionQueryable
 {
-    public function withPosition(string $position): Builder;
+    public function withPositions(array $positions): Builder;
 }

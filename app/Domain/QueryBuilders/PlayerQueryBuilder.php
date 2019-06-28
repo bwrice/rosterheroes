@@ -30,10 +30,10 @@ class PlayerQueryBuilder extends Builder implements PositionQueryable
         return $this->where('external_id', '=', $externalID);
     }
 
-    public function withPosition(string $position): Builder
+    public function withPositions(array $positions): Builder
     {
-        return $this->whereHas('positions', function (Builder $builder) use ($position) {
-            return $builder->where('name', '=', $position);
+        return $this->whereHas('positions', function (Builder $builder) use ($positions) {
+            return $builder->whereIn('name', $positions);
         });
     }
 }

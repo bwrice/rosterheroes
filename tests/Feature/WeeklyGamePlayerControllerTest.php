@@ -34,7 +34,9 @@ class WeeklyGamePlayerControllerTest extends TestCase
         // will have different week
         $wrongWeeklyGamePlayer = factory(WeeklyGamePlayer::class)->create();
 
-        $response = $this->get('/api/weekly-game-players');
+        $baseURI = '/api/weekly-game-players?filter[week]=' . $week->id;
+
+        $response = $this->get($baseURI);
         $response
             ->assertStatus(200)
             ->assertJson([
@@ -93,7 +95,10 @@ class WeeklyGamePlayerControllerTest extends TestCase
             'player_id' => $player->id
         ]);
 
-        $response = $this->get('/api/weekly-game-players?filter[position]=outfield');
+        $uri = '/api/weekly-game-players?filter[week]=' . $week->id;
+        $uri .= '&filter[position]=outfield,running-back';
+
+        $response = $this->get($uri);
         $response
             ->assertStatus(200)
             ->assertJson([
@@ -140,7 +145,10 @@ class WeeklyGamePlayerControllerTest extends TestCase
             'salary' => 4999
         ]);
 
-        $response = $this->get('/api/weekly-game-players?filter[min-salary]=5000');
+        $uri = '/api/weekly-game-players?filter[week]=' . $week->id;
+        $uri .= '&filter[min-salary]=5000';
+
+        $response = $this->get($uri);
         $response
             ->assertStatus(200)
             ->assertJson([
@@ -187,7 +195,10 @@ class WeeklyGamePlayerControllerTest extends TestCase
             'salary' => 5001
         ]);
 
-        $response = $this->get('/api/weekly-game-players?filter[max-salary]=5000');
+        $uri = '/api/weekly-game-players?filter[week]=' . $week->id;
+        $uri .= '&filter[max-salary]=5000';
+
+        $response = $this->get($uri);
         $response
             ->assertStatus(200)
             ->assertJson([

@@ -33,10 +33,10 @@ class WeeklyGamePlayerQueryBuilder extends Builder implements PositionQueryable,
         return $this->where('week_id', '=', $week->id);
     }
 
-    public function withPosition(string $position): Builder
+    public function withPositions(array $positions): Builder
     {
-        return $this->whereHas('player', function (PlayerQueryBuilder $builder) use ($position) {
-            return $builder->withPosition($position);
+        return $this->whereHas('player', function (PlayerQueryBuilder $builder) use ($positions) {
+            return $builder->withPositions($positions);
         });
     }
 

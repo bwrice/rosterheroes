@@ -24,6 +24,6 @@ class PositionFilter implements Filter
         if (! ($subQuery instanceof PositionQueryable)) {
             throw new InvalidFilterBuilderException(static::class, PositionQueryable::class, $subQuery);
         }
-        return $subQuery->withPosition($value);
+        return $subQuery->withPositions((array) $value);
     }
 }

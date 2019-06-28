@@ -92,6 +92,6 @@ class WeeklyGamePlayer extends EventSourcedModel
 
     public function scopeWithPosition(WeeklyGamePlayerQueryBuilder $builder, string $position)
     {
-        return $builder->withPosition($position);
+        return $builder->withPositions($position);
     }
 }
