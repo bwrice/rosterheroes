@@ -26,7 +26,9 @@ abstract class EventSourcedModel extends Model
      */
     public static function uuid(string $uuid)
     {
-        return static::where('uuid', $uuid)->first();
+        /** @var static $model */
+        $model = static::query()->where('uuid', $uuid)->first();
+        return $model;
     }
 
     /**

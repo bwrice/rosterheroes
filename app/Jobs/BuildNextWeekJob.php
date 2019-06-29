@@ -14,15 +14,15 @@ class BuildNextWeekJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * Execute the job.
-     *
      * @return Week
+     * @throws \Exception
      */
     public function handle()
     {
         $week = Week::getLatest();
         if ($week) {
             $nextWeek = Week::query()->create([
+                'uuid' => (string) \Ramsey\Uuid\Uuid::uuid4(),
                 'proposals_scheduled_to_lock_at' => $week->proposals_scheduled_to_lock_at->addWeek(),
                 'diplomacy_scheduled_to_lock_at' => $week->diplomacy_scheduled_to_lock_at->addWeek(),
                 'everything_locks_at' => $week->everything_locks_at->addWeek(),

@@ -23,6 +23,7 @@ class WeeklyGamePlayerControllerTest extends TestCase
         $user = factory(User::class)->create();
         Passport::actingAs($user);
 
+        /** @var Week $week */
         $week = factory(Week::class)->create();
         Week::setTestCurrent($week);
 
@@ -34,7 +35,7 @@ class WeeklyGamePlayerControllerTest extends TestCase
         // will have different week
         $wrongWeeklyGamePlayer = factory(WeeklyGamePlayer::class)->create();
 
-        $baseURI = '/api/weekly-game-players?filter[week]=' . $week->id;
+        $baseURI = '/api/week/' . $week->uuid . '/weekly-game-players';
 
         $response = $this->get($baseURI);
         $response
@@ -95,8 +96,8 @@ class WeeklyGamePlayerControllerTest extends TestCase
             'player_id' => $player->id
         ]);
 
-        $uri = '/api/weekly-game-players?filter[week]=' . $week->id;
-        $uri .= '&filter[position]=outfield,running-back';
+        $uri = '/api/week/' . $week->uuid . '/weekly-game-players';
+        $uri .= '?filter[position]=outfield,running-back';
 
         $response = $this->get($uri);
         $response
@@ -145,8 +146,8 @@ class WeeklyGamePlayerControllerTest extends TestCase
             'salary' => 4999
         ]);
 
-        $uri = '/api/weekly-game-players?filter[week]=' . $week->id;
-        $uri .= '&filter[min-salary]=5000';
+        $uri = '/api/week/' . $week->uuid . '/weekly-game-players';
+        $uri .= '?filter[min-salary]=5000';
 
         $response = $this->get($uri);
         $response
@@ -195,8 +196,8 @@ class WeeklyGamePlayerControllerTest extends TestCase
             'salary' => 5001
         ]);
 
-        $uri = '/api/weekly-game-players?filter[week]=' . $week->id;
-        $uri .= '&filter[max-salary]=5000';
+        $uri = '/api/week/' . $week->uuid . '/weekly-game-players';
+        $uri .= '?filter[max-salary]=5000';
 
         $response = $this->get($uri);
         $response

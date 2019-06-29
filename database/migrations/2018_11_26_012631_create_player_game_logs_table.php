@@ -25,6 +25,7 @@ class CreatePlayerGameLogsTable extends Migration
             $table->foreign('player_id')->references('id')->on('players');
             $table->foreign('game_id')->references('id')->on('games');
             $table->foreign('team_id')->references('id')->on('teams');
+            $table->index(['player_id', 'game_id', 'team_id']);
         });
     }
 

@@ -18,6 +18,7 @@ use phpDocumentor\Reflection\Types\Self_;
  * @package App
  *
  * @property int $id
+ * @property string $uuid
  * @property string $name
  * @property CarbonImmutable $proposals_scheduled_to_lock_at
  * @property CarbonImmutable $diplomacy_scheduled_to_lock_at
@@ -33,7 +34,7 @@ use phpDocumentor\Reflection\Types\Self_;
  *
  * @method static WeekQueryBuilder query()
  */
-class Week extends Model
+class Week extends EventSourcedModel
 {
     protected static $current = null;
 
@@ -209,6 +210,7 @@ class Week extends Model
         $monday = $monday->addHours(9)->subSeconds($offset)->setTimezone('UTC');
 
         return self::make([
+            'uuid' => (string) \Ramsey\Uuid\Uuid::uuid4(),
             'proposals_scheduled_to_lock_at' => $wednesday,
             'diplomacy_scheduled_to_lock_at' => $friday,
             'everything_locks_at' => $sunday,

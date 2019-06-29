@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Domain\Models\Week;
 use App\Domain\Models\WeeklyGamePlayer;
 use App\Domain\QueryBuilders\Filters\MaxSalaryFilter;
 use App\Domain\QueryBuilders\Filters\MinSalaryFilter;
@@ -11,14 +12,14 @@ use Illuminate\Http\Request;
 use Spatie\QueryBuilder\Filter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class WeeklyGamePlayerController extends Controller
+class WeekWeeklyGamePlayerController extends Controller
 {
-    public function index()
+    public function index($weekUuid)
     {
-        $query = WeeklyGamePlayer::query();
+        $week = Week::uuidOrFail($weekUuid);
+        $query = WeeklyGamePlayer::query()->forWeek($week);
         $weeklyGamePlayers = QueryBuilder::for($query)
             ->allowedFilters([
-                Filter::exact('week', 'week_id'),
                 Filter::custom('position', PositionFilter::class),
                 Filter::custom('min-salary', MinSalaryFilter::class),
                 Filter::custom('max-salary', MaxSalaryFilter::class)

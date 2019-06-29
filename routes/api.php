@@ -8,7 +8,7 @@ use App\Http\Controllers\SquadHeroController;
 use App\Http\Controllers\SquadCampaignController;
 use App\Http\Controllers\HeroWeeklyGamePlayerController;
 use App\Http\Controllers\CampaignQuestController;
-use App\Http\Controllers\WeeklyGamePlayerController;
+use App\Http\Controllers\WeekWeeklyGamePlayerController;
 use Illuminate\Http\Request;
 
 /*
@@ -44,7 +44,7 @@ Route::middleware(['auth:api'])->group(function () {
 
     Route::post('/campaign/{campaign}/quest/{questUuid}', [CampaignQuestController::class, 'store']);
 
-    Route::get('/weekly-game-players', [WeeklyGamePlayerController::class, 'index']);
+    Route::get('week/{weekUuid}/weekly-game-players', [WeekWeeklyGamePlayerController::class, 'index']);
 });
 
 //Route::get('/teams', 'TeamController@index');
