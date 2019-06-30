@@ -6,9 +6,9 @@ use App\Http\Controllers\SquadHeroRaceController;
 use App\Http\Controllers\SquadHeroClassController;
 use App\Http\Controllers\SquadHeroController;
 use App\Http\Controllers\SquadCampaignController;
-use App\Http\Controllers\HeroWeeklyGamePlayerController;
+use App\Http\Controllers\HeroPlayerSpiritController;
 use App\Http\Controllers\CampaignQuestController;
-use App\Http\Controllers\WeekWeeklyGamePlayerController;
+use App\Http\Controllers\WeekPlayerSpiritController;
 use Illuminate\Http\Request;
 
 /*
@@ -40,11 +40,11 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('/squad/{squadUuid}/heroes', [SquadHeroController::class, 'store']);
     Route::post('/squad/{squadUuid}/campaigns', [SquadCampaignController::class, 'store']);
 
-    Route::post('/hero/{heroUuid}/weekly-game-player/{weeklyGamePlayerUid}', [HeroWeeklyGamePlayerController::class, 'store']);
+    Route::post('/hero/{heroUuid}/player-spirit/{playerSpiritUuid}', [HeroPlayerSpiritController::class, 'store']);
 
     Route::post('/campaign/{campaign}/quest/{questUuid}', [CampaignQuestController::class, 'store']);
 
-    Route::get('week/{weekUuid}/weekly-game-players', [WeekWeeklyGamePlayerController::class, 'index']);
+    Route::get('week/{weekUuid}/player-spirits', [WeekPlayerSpiritController::class, 'index']);
 });
 
 //Route::get('/teams', 'TeamController@index');

@@ -16,7 +16,7 @@ class CreateWeeksTable extends Migration
         Schema::create('weeks', function (Blueprint $table) {
             $table->increments('id');
             $table->uuid('uuid');
-            $table->dateTime('weekly_game_players_queued_at')->nullable();
+            $table->dateTime('player_spirits_queued_at')->nullable();
             $table->dateTime('proposals_scheduled_to_lock_at');
             $table->dateTime('proposals_processed_at')->nullable();
             $table->dateTime('diplomacy_scheduled_to_lock_at');

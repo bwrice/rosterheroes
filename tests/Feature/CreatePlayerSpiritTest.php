@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\Console\Commands\BuildWeeklyGamePlayers;
-use App\Domain\Actions\CreateWeeklyGamePlayer;
+use App\Console\Commands\BuildPlayerSpirits;
+use App\Domain\Actions\CreatePlayerSpirit;
 use App\Domain\Collections\PositionCollection;
 use App\Domain\Models\Game;
 use App\Domain\Models\League;
@@ -14,10 +14,10 @@ use App\Domain\Models\Position;
 use App\Domain\Models\StatType;
 use App\Domain\Models\Team;
 use App\Domain\Models\Week;
-use App\Domain\Models\WeeklyGamePlayer;
+use App\Domain\Models\PlayerSpirit;
 use App\Exceptions\InvalidGameException;
 use App\Exceptions\InvalidPlayerException;
-use App\Jobs\CreateWeeklyGamePlayerJob;
+use App\Jobs\CreatePlayerSpiritJob;
 use Carbon\Exceptions\InvalidDateException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Artisan;
@@ -27,7 +27,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class CreateWeeklyGamePlayerTest extends TestCase
+class CreatePlayerSpiritTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -48,16 +48,16 @@ class CreateWeeklyGamePlayerTest extends TestCase
 
         try {
 
-            CreateWeeklyGamePlayerJob::dispatchNow($week, $game, $player);
+            CreatePlayerSpiritJob::dispatchNow($week, $game, $player);
 
         } catch (InvalidGameException $exception) {
 
-            $weeklyGamePlayer = WeeklyGamePlayer::query()
+            $playerSpirit = PlayerSpirit::query()
                 ->where('game_id', '=', $game->id)
                 ->where('player_id', '=', $player->id)
                 ->where('week_id', '=', $week->id)->first();
 
-            $this->assertNull($weeklyGamePlayer);
+            $this->assertNull($playerSpirit);
             return;
         }
         $this->fail("Exception not thrown");
@@ -78,16 +78,16 @@ class CreateWeeklyGamePlayerTest extends TestCase
 
         try {
 
-            CreateWeeklyGamePlayerJob::dispatchNow($week, $game, $player);
+            CreatePlayerSpiritJob::dispatchNow($week, $game, $player);
 
         } catch (InvalidPlayerException $exception) {
 
-            $weeklyGamePlayer = WeeklyGamePlayer::query()
+            $playerSpirit = PlayerSpirit::query()
                 ->where('game_id', '=', $game->id)
                 ->where('player_id', '=', $player->id)
                 ->where('week_id', '=', $week->id)->first();
 
-            $this->assertNull($weeklyGamePlayer);
+            $this->assertNull($playerSpirit);
             return;
         }
         $this->fail("Exception not thrown");
@@ -114,16 +114,16 @@ class CreateWeeklyGamePlayerTest extends TestCase
 
         try {
 
-            CreateWeeklyGamePlayerJob::dispatchNow($week, $game, $player);
+            CreatePlayerSpiritJob::dispatchNow($week, $game, $player);
 
         } catch (InvalidPlayerException $exception) {
 
-            $weeklyGamePlayer = WeeklyGamePlayer::query()
+            $playerSpirit = PlayerSpirit::query()
                 ->where('game_id', '=', $game->id)
                 ->where('player_id', '=', $player->id)
                 ->where('week_id', '=', $week->id)->first();
 
-            $this->assertNull($weeklyGamePlayer);
+            $this->assertNull($playerSpirit);
             return;
         }
         $this->fail("Exception not thrown");
@@ -154,11 +154,11 @@ class CreateWeeklyGamePlayerTest extends TestCase
         $this->assertEquals(2, $player->positions->count());
         $this->assertTrue($player->playerGameLogs->isEmpty());
 
-        $action = new CreateWeeklyGamePlayer($week, $game, $player, $position);
+        $action = new CreatePlayerSpirit($week, $game, $player, $position);
 
-        $weeklyGamePlayer = $action(); //invoke
+        $playerSpirit = $action(); //invoke
 
-        $this->assertEquals($position->getDefaultSalary(), $weeklyGamePlayer->salary);
+        $this->assertEquals($position->getDefaultSalary(), $playerSpirit->salary);
     }
 
     /**
@@ -195,11 +195,11 @@ class CreateWeeklyGamePlayerTest extends TestCase
         $this->assertEquals(2, $playerGameLog->playerStats->count());
         $this->assertEquals(1, $player->playerGameLogs->count());
 
-        $action = new CreateWeeklyGamePlayer($week, $game, $player, $shortStop);
+        $action = new CreatePlayerSpirit($week, $game, $player, $shortStop);
 
-        $weeklyGamePlayer = $action(); //invoke
+        $playerSpirit = $action(); //invoke
 
-        $this->assertGreaterThan($shortStop->getBehavior()->getDefaultSalary(), $weeklyGamePlayer->salary);
+        $this->assertGreaterThan($shortStop->getBehavior()->getDefaultSalary(), $playerSpirit->salary);
     }
 
     /**
@@ -231,11 +231,11 @@ class CreateWeeklyGamePlayerTest extends TestCase
         $this->assertEquals(1, $playerGameLog->playerStats->count());
         $this->assertEquals(1, $player->playerGameLogs->count());
 
-        $action = new CreateWeeklyGamePlayer($week, $game, $player, $pointGuard);
+        $action = new CreatePlayerSpirit($week, $game, $player, $pointGuard);
 
-        $weeklyGamePlayer = $action(); //invoke
+        $playerSpirit = $action(); //invoke
 
-        $this->assertLessThan($pointGuard->getBehavior()->getDefaultSalary(), $weeklyGamePlayer->salary);
+        $this->assertLessThan($pointGuard->getBehavior()->getDefaultSalary(), $playerSpirit->salary);
     }
 
     /**
@@ -273,13 +273,13 @@ class CreateWeeklyGamePlayerTest extends TestCase
         $this->assertEquals(2, $playerGameLog->playerStats->count());
         $this->assertEquals(1, $player->playerGameLogs->count());
 
-        $action = new CreateWeeklyGamePlayer($week, $game, $player, $leftWing);
+        $action = new CreatePlayerSpirit($week, $game, $player, $leftWing);
 
-        $firstWeeklyGamePlayer = $action(); //invoke
+        $firstPlayerSpirit = $action(); //invoke
 
-        $this->assertGreaterThan($leftWing->getBehavior()->getDefaultSalary(), $firstWeeklyGamePlayer->salary);
+        $this->assertGreaterThan($leftWing->getBehavior()->getDefaultSalary(), $firstPlayerSpirit->salary);
 
-        // Add another player game log with loaded stats and create a new weekly game player
+        // Add another player game log with loaded stats and create a new player spirit
         /** @var PlayerGameLog $playerGameLog */
         $newPlayerGameLog = factory(PlayerGameLog::class)->create([
             'player_id' => $player->id
@@ -299,10 +299,10 @@ class CreateWeeklyGamePlayerTest extends TestCase
         $newPlayerGameLog->playerStats()->saveMany([$moreGoals, $evenMoreShotsOnGoal]);
         $this->assertEquals(2, $newPlayerGameLog->playerStats->count());
 
-        $action = new CreateWeeklyGamePlayer($week, $game, $player->fresh(), $leftWing);
+        $action = new CreatePlayerSpirit($week, $game, $player->fresh(), $leftWing);
 
-        $secondWeeklyGamePlayer = $action(); //invoke
-        $this->assertGreaterThan($firstWeeklyGamePlayer->salary, $secondWeeklyGamePlayer->salary);
+        $secondPlayerSpirit = $action(); //invoke
+        $this->assertGreaterThan($firstPlayerSpirit->salary, $secondPlayerSpirit->salary);
     }
 
     /**
@@ -334,13 +334,13 @@ class CreateWeeklyGamePlayerTest extends TestCase
         $this->assertEquals(1, $playerGameLog->playerStats->count());
         $this->assertEquals(1, $player->playerGameLogs->count());
 
-        $action = new CreateWeeklyGamePlayer($week, $game, $player, $runningBack);
+        $action = new CreatePlayerSpirit($week, $game, $player, $runningBack);
 
-        $firstWeeklyGamePlayer = $action(); //invoke
+        $firstPlayerSpirit = $action(); //invoke
 
-        $this->assertLessThan($runningBack->getBehavior()->getDefaultSalary(), $firstWeeklyGamePlayer->salary);
+        $this->assertLessThan($runningBack->getBehavior()->getDefaultSalary(), $firstPlayerSpirit->salary);
 
-        // Add another player game log with terrible stats and create a new weekly game player
+        // Add another player game log with terrible stats and create a new player spirit
         /** @var PlayerGameLog $playerGameLog */
         $newPlayerGameLog = factory(PlayerGameLog::class)->create([
             'player_id' => $player->id
@@ -354,10 +354,10 @@ class CreateWeeklyGamePlayerTest extends TestCase
         $newPlayerGameLog->playerStats()->save($moreBadRushingYards);
         $this->assertEquals(1, $newPlayerGameLog->playerStats->count());
 
-        $action = new CreateWeeklyGamePlayer($week, $game, $player->fresh(), $runningBack);
+        $action = new CreatePlayerSpirit($week, $game, $player->fresh(), $runningBack);
 
-        $secondWeeklyGamePlayer = $action(); //invoke
-        $this->assertLessThan($firstWeeklyGamePlayer->salary, $secondWeeklyGamePlayer->salary);
+        $secondPlayerSpirit = $action(); //invoke
+        $this->assertLessThan($firstPlayerSpirit->salary, $secondPlayerSpirit->salary);
     }
 
     /**
@@ -405,9 +405,9 @@ class CreateWeeklyGamePlayerTest extends TestCase
         $badAndRecentGameLog->playerStats()->save($badRushingYards);
         $this->assertEquals(2, $playerWithBadRecentGame->playerGameLogs->count());
 
-        $action = new CreateWeeklyGamePlayer($week, $game, $playerWithBadRecentGame, $runningBack);
+        $action = new CreatePlayerSpirit($week, $game, $playerWithBadRecentGame, $runningBack);
 
-        $badRecentWeeklyGamePlayer = $action(); //invoke
+        $badRecentPlayerSpirit = $action(); //invoke
 
         /** @var Player $player */
         $playerWithGoodRecentGame = factory(Player::class)->create();
@@ -444,10 +444,10 @@ class CreateWeeklyGamePlayerTest extends TestCase
 
         $this->assertEquals(2, $playerWithGoodRecentGame->playerGameLogs->count());
 
-        $action = new CreateWeeklyGamePlayer($week, $game, $playerWithGoodRecentGame, $runningBack);
+        $action = new CreatePlayerSpirit($week, $game, $playerWithGoodRecentGame, $runningBack);
 
-        $goodRecentWeeklyGamePlayer = $action(); //invoke
-        $this->assertGreaterThan($badRecentWeeklyGamePlayer->salary, $goodRecentWeeklyGamePlayer->salary);
+        $goodRecentPlayerSpirit = $action(); //invoke
+        $this->assertGreaterThan($badRecentPlayerSpirit->salary, $goodRecentPlayerSpirit->salary);
     }
 
     /**
@@ -497,9 +497,9 @@ class CreateWeeklyGamePlayerTest extends TestCase
 
         Queue::assertNothingPushed();
 
-        Artisan::call('week:build-game-players');
+        Artisan::call('week:build-player-spirits');
 
 
-        Queue::assertPushed(CreateWeeklyGamePlayerJob::class, 4);
+        Queue::assertPushed(CreatePlayerSpiritJob::class, 4);
     }
 }

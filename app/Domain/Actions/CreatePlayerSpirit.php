@@ -15,14 +15,14 @@ use App\Domain\Models\Game;
 use App\Domain\Models\Player;
 use App\Domain\Models\Position;
 use App\Domain\Models\Week;
-use App\Domain\Models\WeeklyGamePlayer;
+use App\Domain\Models\PlayerSpirit;
 use App\Exceptions\InvalidGameException;
 use App\Exceptions\InvalidPlayerException;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Date;
 
-class CreateWeeklyGamePlayer
+class CreatePlayerSpirit
 {
     /**
      * @var Week
@@ -54,19 +54,19 @@ class CreateWeeklyGamePlayer
     }
 
     /**
-     * @return WeeklyGamePlayer
+     * @return PlayerSpirit
      * @throws \Exception
      */
-    public function __invoke(): WeeklyGamePlayer
+    public function __invoke(): PlayerSpirit
     {
         $salary = $this->getSalary();
 
-        return WeeklyGamePlayer::createWithAttributes([
+        return PlayerSpirit::createWithAttributes([
             'player_id' => $this->player->id,
             'game_id' => $this->game->id,
             'week_id' => $this->week->id,
             'salary' => $salary,
-            'effectiveness' => WeeklyGamePlayer::STARTING_EFFECTIVENESS
+            'energy' => PlayerSpirit::STARTING_ENERGY
         ]);
     }
 
@@ -103,7 +103,7 @@ class CreateWeeklyGamePlayer
 
     protected function convertPointsToSalary($points)
     {
-        return (int) round($points * WeeklyGamePlayer::SALARY_PER_POINT);
+        return (int) round($points * PlayerSpirit::SALARY_PER_POINT);
     }
 
     protected function getDefaultWeightedValue()
@@ -113,7 +113,7 @@ class CreateWeeklyGamePlayer
 
     protected function getDefaultTotalPoints()
     {
-        return $this->position->getDefaultSalary() / WeeklyGamePlayer::SALARY_PER_POINT;
+        return $this->position->getDefaultSalary() / PlayerSpirit::SALARY_PER_POINT;
     }
 
     /**

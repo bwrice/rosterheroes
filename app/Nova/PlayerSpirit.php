@@ -8,14 +8,14 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class WeeklyGamePlayer extends Resource
+class PlayerSpirit extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Domain\Models\WeeklyGamePlayer::class;
+    public static $model = \App\Domain\Models\PlayerSpirit::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -50,7 +50,7 @@ class WeeklyGamePlayer extends Resource
         return [
             ID::make()->sortable(),
             Number::make('salary')->sortable(),
-            Number::make('effectiveness')->sortable(),
+            Number::make('energy')->sortable(),
             BelongsTo::make('Player'),
             BelongsTo::make('Game'),
             BelongsTo::make('Week'),

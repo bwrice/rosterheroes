@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateWeeklyGamePlayersTable extends Migration
+class CreatePlayerSpiritsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateWeeklyGamePlayersTable extends Migration
      */
     public function up()
     {
-        Schema::create('weekly_game_players', function (Blueprint $table) {
+        Schema::create('player_spirits', function (Blueprint $table) {
             $table->increments('id');
             $table->uuid('uuid');
             $table->integer('week_id')->unsigned();
@@ -21,11 +21,11 @@ class CreateWeeklyGamePlayersTable extends Migration
             $table->integer('game_id')->unsigned();
             $table->integer('player_game_log_id')->unsigned()->nullable();
             $table->integer('salary');
-            $table->integer('effectiveness');
+            $table->integer('energy');
             $table->timestamps();
         });
 
-        Schema::table('weekly_game_players', function (Blueprint $table) {
+        Schema::table('player_spirits', function (Blueprint $table) {
             $table->foreign('week_id')->references('id')->on('weeks');
             $table->foreign('player_id')->references('id')->on('players');
             $table->foreign('game_id')->references('id')->on('games');

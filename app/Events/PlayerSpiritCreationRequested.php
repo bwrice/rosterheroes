@@ -17,13 +17,13 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Spatie\EventProjector\ShouldBeStored;
 
-class WeeklyGamePlayerCreationRequested implements ShouldBeStored
+class PlayerSpiritCreationRequested implements ShouldBeStored
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
     /**
      * @var string
      */
-    public $weeklyGamePlayerUuid;
+    public $playerSpiritUuid;
 
     /**
      * @var array
@@ -40,7 +40,7 @@ class WeeklyGamePlayerCreationRequested implements ShouldBeStored
     public function __construct(array $attributes)
     {
         $this->attributes = $attributes;
-        $this->weeklyGamePlayerUuid = $attributes['uuid'];
+        $this->playerSpiritUuid = $attributes['uuid'];
     }
 
     /**

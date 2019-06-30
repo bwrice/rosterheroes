@@ -2,7 +2,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(\App\Domain\Models\WeeklyGamePlayer::class, function (Faker $faker) {
+$factory->define(\App\Domain\Models\PlayerSpirit::class, function (Faker $faker) {
 
 
     $uuid = (string) \Ramsey\Uuid\Uuid::uuid4();
@@ -18,7 +18,7 @@ $factory->define(\App\Domain\Models\WeeklyGamePlayer::class, function (Faker $fa
         'game_id' => function () {
             return factory(\App\Domain\Models\Game::class)->create()->id;
         },
-        'salary' => \App\Domain\Models\WeeklyGamePlayer::MIN_SALARY,
-        'effectiveness' => 10000
+        'salary' => \App\Domain\Models\PlayerSpirit::MIN_SALARY,
+        'energy' => \App\Domain\Models\PlayerSpirit::STARTING_ENERGY
     ];
 });

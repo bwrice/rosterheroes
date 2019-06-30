@@ -25,7 +25,7 @@ class HeroResource extends JsonResource
             'name' => $this->name,
             'uuid' => $this->uuid,
             'slug' => $this->slug,
-            'weeklyGamePlayer' => new WeeklyGamePlayerResource($this->whenLoaded('weeklyGamePlayer')),
+            'playerSpirit' => new PlayerSpiritResource($this->whenLoaded('playerSpirit')),
             'heroPost' => new HeroPostResource($this->whenLoaded('heroPost'))
         ];
     }

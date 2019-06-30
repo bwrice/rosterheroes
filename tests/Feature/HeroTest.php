@@ -9,7 +9,7 @@ use App\Domain\Models\HeroRace;
 use App\Domain\Models\Measurable;
 use App\Domain\Models\MeasurableType;
 use App\Domain\Models\Player;
-use App\Domain\Models\WeeklyGamePlayer;
+use App\Domain\Models\PlayerSpirit;
 use App\Domain\Slot;
 use App\Domain\Models\SlotType;
 use App\Domain\Models\Squad;

@@ -3,22 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Domain\Models\Week;
-use App\Domain\Models\WeeklyGamePlayer;
+use App\Domain\Models\PlayerSpirit;
 use App\Domain\QueryBuilders\Filters\MaxSalaryFilter;
 use App\Domain\QueryBuilders\Filters\MinSalaryFilter;
 use App\Domain\QueryBuilders\Filters\PositionFilter;
-use App\Http\Resources\WeeklyGamePlayerResource;
+use App\Http\Resources\PlayerSpiritResource;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\Filter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class WeekWeeklyGamePlayerController extends Controller
+class WeekPlayerSpiritController extends Controller
 {
     public function index($weekUuid)
     {
         $week = Week::uuidOrFail($weekUuid);
-        $query = WeeklyGamePlayer::query()->forWeek($week);
-        $weeklyGamePlayers = QueryBuilder::for($query)
+        $query = PlayerSpirit::query()->forWeek($week);
+        $playerSpirits = QueryBuilder::for($query)
             ->allowedFilters([
                 Filter::custom('position', PositionFilter::class),
                 Filter::custom('min-salary', MinSalaryFilter::class),
@@ -27,6 +27,6 @@ class WeekWeeklyGamePlayerController extends Controller
             ->with([
                 'player.positions', 'player.team', 'game.homeTeam', 'game.awayTeam'
             ])->get();
-        return WeeklyGamePlayerResource::collection($weeklyGamePlayers);
+        return PlayerSpiritResource::collection($playerSpirits);
     }
 }

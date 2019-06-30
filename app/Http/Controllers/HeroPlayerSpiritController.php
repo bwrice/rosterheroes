@@ -7,36 +7,36 @@ use App\Exceptions\InvalidPositionsException;
 use App\Exceptions\InvalidWeekException;
 use App\Exceptions\NotEnoughSalaryException;
 use App\Domain\Models\Hero;
-use App\Domain\Models\WeeklyGamePlayer;
+use App\Domain\Models\PlayerSpirit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
-class HeroWeeklyGamePlayerController extends Controller
+class HeroPlayerSpiritController extends Controller
 {
-    public function store($heroUuid, $weeklyGamePlayerUid)
+    public function store($heroUuid, $playerSpiritUuid)
     {
         $hero = Hero::uuid($heroUuid);
         if (! $hero) {
             throw ValidationException::withMessages(["Hero could not be found"]);
         }
 
-        $weeklyGamePlayer = WeeklyGamePlayer::uuid($weeklyGamePlayerUid);
-        if (! $weeklyGamePlayer) {
+        $playerSpirit = PlayerSpirit::uuid($playerSpiritUuid);
+        if (! $playerSpirit) {
             throw ValidationException::withMessages(['Player could not be found']);
         }
 
         try {
             //TODO middleware
-            $hero->addWeeklyGamePlayer($weeklyGamePlayer);
-            return response($hero->load('weeklyGamePlayer')->toJson(), 201);
+            $hero->addPlayerSpirit($playerSpirit);
+            return response($hero->load('playerSpirit')->toJson(), 201);
 
         } catch (InvalidWeekException $exception) {
-            Log::error("User attempted to add weekly-game-player from a different week to hero", [
+            Log::error("User attempted to add player spirit from a different week to hero", [
                 'user' => Auth::user()->toArray(),
                 'hero' => $hero->toArray(),
-                'weekly_game_player' => $weeklyGamePlayer->toArray(),
+                'player_spirit' => $playerSpirit->toArray(),
                 'invalid_week' => $exception->getWeek()->toArray()
             ]);
 
@@ -49,11 +49,11 @@ class HeroWeeklyGamePlayerController extends Controller
             ]);
         } catch (NotEnoughSalaryException $exception) {
             throw ValidationException::withMessages([
-                'salary' => "Not enough available salary for " . $weeklyGamePlayer->player->fullName()
+                'salary' => "Not enough available salary for " . $playerSpirit->player->fullName()
             ]);
         } catch (GameStartedException $exception) {
             throw ValidationException::withMessages([
-                'game' => "Game for " . $weeklyGamePlayer->player->fullName() . " has already started"
+                'game' => "Game for " . $playerSpirit->player->fullName() . " has already started"
             ]);
         }
     }

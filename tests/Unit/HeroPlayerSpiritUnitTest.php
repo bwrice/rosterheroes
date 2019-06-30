@@ -10,7 +10,7 @@ use App\Domain\Models\Game;
 use App\Domain\Models\Hero;
 use App\Domain\Models\HeroClass;
 use App\Domain\Models\HeroPost;
-use App\Domain\Models\WeeklyGamePlayer;
+use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\Position;
 use App\Domain\Models\Squad;
 use App\Domain\Models\Week;
@@ -20,7 +20,7 @@ use Carbon\CarbonImmutable;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
-class HeroWeeklyGamePlayerUnitTest extends TestCase
+class HeroPlayerSpiritUnitTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -37,9 +37,9 @@ class HeroWeeklyGamePlayerUnitTest extends TestCase
             'hero_id' => $hero->id
         ]);
 
-        /** @var \App\Domain\Models\WeeklyGamePlayer $weeklyGamePlayer */
-        $weeklyGamePlayer = factory(WeeklyGamePlayer::class)->create();
-        Week::setTestCurrent($weeklyGamePlayer->week);
+        /** @var \App\Domain\Models\PlayerSpirit $playerSpirit */
+        $playerSpirit = factory(PlayerSpirit::class)->create();
+        Week::setTestCurrent($playerSpirit->week);
 
         $validPositions = $hero->heroRace->positions;
 
@@ -48,16 +48,16 @@ class HeroWeeklyGamePlayerUnitTest extends TestCase
             ->whereNotIn('id', $validPositions->pluck('id')->toArray())
             ->inRandomOrder()->first();
 
-        $weeklyGamePlayer->player->positions()->attach($playerPosition);
+        $playerSpirit->player->positions()->attach($playerPosition);
 
         try {
 
-            $hero->addWeeklyGamePlayer($weeklyGamePlayer);
+            $hero->addPlayerSpirit($playerSpirit);
 
         } catch (InvalidPositionsException $e) {
 
             $hero = $hero->fresh();
-            $this->assertNull($hero->weeklyGamePlayer);
+            $this->assertNull($hero->playerSpirit);
 
             Week::setTestCurrent(); //clear testing week
             return;
@@ -87,12 +87,12 @@ class HeroWeeklyGamePlayerUnitTest extends TestCase
         ]);
 
         $playerWeekSalary = $squadSalary + 3000;
-        /** @var \App\Domain\Models\WeeklyGamePlayer $weeklyGamePlayer */
-        $weeklyGamePlayer = factory(WeeklyGamePlayer::class)->create([
+        /** @var \App\Domain\Models\PlayerSpirit $playerSpirit */
+        $playerSpirit = factory(PlayerSpirit::class)->create([
             'salary' => $playerWeekSalary
         ]);
 
-        Week::setTestCurrent($weeklyGamePlayer->week);
+        Week::setTestCurrent($playerSpirit->week);
 
         /*
          * We don't get positions from the hero post type, but instead, get them from the
@@ -107,18 +107,18 @@ class HeroWeeklyGamePlayerUnitTest extends TestCase
             ->inRandomOrder()->first();
 
         $this->assertTrue(in_array($playerPosition->id, $validPositionIDs), 'Position ID');
-        $weeklyGamePlayer->player->positions()->attach($playerPosition);
+        $playerSpirit->player->positions()->attach($playerPosition);
 
         $this->assertEquals($squadSalary, $hero->availableSalary());
 
         try {
 
-            $hero->addWeeklyGamePlayer($weeklyGamePlayer);
+            $hero->addPlayerSpirit($playerSpirit);
 
         } catch (NotEnoughSalaryException $e) {
 
             $hero = $hero->fresh();
-            $this->assertNull($hero->weeklyGamePlayer);
+            $this->assertNull($hero->playerSpirit);
 
             return;
         }
@@ -139,11 +139,11 @@ class HeroWeeklyGamePlayerUnitTest extends TestCase
             'hero_id' => $hero->id,
         ]);
 
-        /** @var \App\Domain\Models\WeeklyGamePlayer $weeklyGamePlayer */
-        $weeklyGamePlayer = factory(WeeklyGamePlayer::class)->create();
+        /** @var \App\Domain\Models\PlayerSpirit $playerSpirit */
+        $playerSpirit = factory(PlayerSpirit::class)->create();
 
-        Week::setTestCurrent($weeklyGamePlayer->week);
-        CarbonImmutable::setTestNow($weeklyGamePlayer->game->starts_at->copy()->addMinutes(5));
+        Week::setTestCurrent($playerSpirit->week);
+        CarbonImmutable::setTestNow($playerSpirit->game->starts_at->copy()->addMinutes(5));
 
         $validPositions = $hero->heroRace->positions;
 
@@ -152,16 +152,16 @@ class HeroWeeklyGamePlayerUnitTest extends TestCase
             ->whereIn('id', $validPositions->pluck('id')->toArray())
             ->inRandomOrder()->first();
 
-        $weeklyGamePlayer->player->positions()->attach($playerPosition);
+        $playerSpirit->player->positions()->attach($playerPosition);
 
         try {
 
-            $hero->addWeeklyGamePlayer($weeklyGamePlayer);
+            $hero->addPlayerSpirit($playerSpirit);
 
         } catch (GameStartedException $e) {
 
             $hero = $hero->fresh();
-            $this->assertNull($hero->weeklyGamePlayer);
+            $this->assertNull($hero->playerSpirit);
 
             return;
         }
@@ -182,8 +182,8 @@ class HeroWeeklyGamePlayerUnitTest extends TestCase
             'hero_id' => $hero->id,
         ]);
 
-        /** @var \App\Domain\Models\WeeklyGamePlayer $weeklyGamePlayer */
-        $weeklyGamePlayer = factory(WeeklyGamePlayer::class)->create();
+        /** @var \App\Domain\Models\PlayerSpirit $playerSpirit */
+        $playerSpirit = factory(PlayerSpirit::class)->create();
 
         /** @var \App\Domain\Models\Week $differentWeek */
         $differentWeek = factory(Week::class)->create();
@@ -198,17 +198,17 @@ class HeroWeeklyGamePlayerUnitTest extends TestCase
             ->whereIn('id', $validPositions->pluck('id')->toArray())
             ->inRandomOrder()->first();
 
-        $weeklyGamePlayer->player->positions()->attach($playerPosition);
+        $playerSpirit->player->positions()->attach($playerPosition);
 
         try {
 
-            $hero->addWeeklyGamePlayer($weeklyGamePlayer);
+            $hero->addPlayerSpirit($playerSpirit);
 
         } catch (InvalidWeekException $e) {
 
             $hero = $hero->fresh();
-            $this->assertNull($hero->weeklyGamePlayer);
-            $this->assertEquals($e->getWeek(), $weeklyGamePlayer->week);
+            $this->assertNull($hero->playerSpirit);
+            $this->assertEquals($e->getWeek(), $playerSpirit->week);
 
             return;
         }

@@ -2,16 +2,16 @@
 
 namespace App\Http\Resources;
 
-use App\Domain\Models\WeeklyGamePlayer;
+use App\Domain\Models\PlayerSpirit;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * Class WeeklyGamePlayerResource
+ * Class PlayerSpiritResource
  * @package App\Http\Resources
  *
- * @mixin WeeklyGamePlayer
+ * @mixin PlayerSpirit
  */
-class WeeklyGamePlayerResource extends JsonResource
+class PlayerSpiritResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -24,7 +24,7 @@ class WeeklyGamePlayerResource extends JsonResource
         return [
             'uuid' => $this->uuid,
             'salary' => $this->salary,
-            'effectiveness' => $this->effectiveness,
+            'energy' => $this->energy,
             'player' => new PlayerResource($this->whenLoaded('player')),
             'game' => new GameResource($this->whenLoaded('game'))
         ];

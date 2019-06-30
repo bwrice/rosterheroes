@@ -10,7 +10,7 @@ use App\Exceptions\GameStartedException;
 use App\Exceptions\InvalidWeekException;
 use App\Exceptions\InvalidPositionsException;
 use App\Exceptions\NotEnoughSalaryException;
-use App\Domain\Models\WeeklyGamePlayer;
+use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\HeroClass;
 use App\Domain\Collections\HeroCollection;
 use App\Domain\Models\HeroPost;
@@ -43,7 +43,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $hero_race_id
  * @property int $hero_class_id
  * @property int $hero_rank_id
- * @property int $weekly_game_player_id
+ * @property int $player_spirit_id
  * @property int $salary
  * @property string $name
  * @property string $slug
@@ -51,7 +51,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property HeroClass $heroClass
  * @property HeroPost $heroPost
  * @property HeroRace $heroRace
- * @property WeeklyGamePlayer|null $weeklyGamePlayer
+ * @property PlayerSpirit|null $playerSpirit
  *
  * @property \App\Domain\Collections\SlotCollection $slots
  * @property Collection $measurables
@@ -111,9 +111,9 @@ class Hero extends EventSourcedModel implements HasSlots
         return $this->hasOne(HeroPost::class);
     }
 
-    public function weeklyGamePlayer()
+    public function playerSpirit()
     {
-        return $this->belongsTo(WeeklyGamePlayer::class);
+        return $this->belongsTo(PlayerSpirit::class);
     }
 
     /**
@@ -266,33 +266,33 @@ class Hero extends EventSourcedModel implements HasSlots
     }
 
     /**
-     * @param WeeklyGamePlayer $weeklyGamePlayer
+     * @param PlayerSpirit $playerSpirit
      */
-    public function addWeeklyGamePlayer(WeeklyGamePlayer $weeklyGamePlayer)
+    public function addPlayerSpirit(PlayerSpirit $playerSpirit)
     {
-        if(! Week::isCurrent($weeklyGamePlayer->week)) {
-            throw new InvalidWeekException($weeklyGamePlayer->week);
+        if(! Week::isCurrent($playerSpirit->week)) {
+            throw new InvalidWeekException($playerSpirit->week);
         }
 
-        if (! $this->heroRace->positions->intersect($weeklyGamePlayer->getPositions())->count() > 0 ) {
+        if (! $this->heroRace->positions->intersect($playerSpirit->getPositions())->count() > 0 ) {
             $exception = new InvalidPositionsException();
-            $exception->setPositions($this->heroRace->positions, $weeklyGamePlayer->getPositions());
+            $exception->setPositions($this->heroRace->positions, $playerSpirit->getPositions());
             throw $exception;
         }
 
-        if(! $this->canAfford($weeklyGamePlayer->salary)) {
+        if(! $this->canAfford($playerSpirit->salary)) {
             $exception = new NotEnoughSalaryException();
-            $exception->setSalaries($this->availableSalary(), $weeklyGamePlayer->salary);
+            $exception->setSalaries($this->availableSalary(), $playerSpirit->salary);
             throw $exception;
         }
 
-        if($weeklyGamePlayer->game->hasStarted()) {
+        if($playerSpirit->game->hasStarted()) {
             $exception = new GameStartedException();
-            $exception->setGame($weeklyGamePlayer->game);
+            $exception->setGame($playerSpirit->game);
             throw $exception;
         }
 
-        $this->weekly_game_player_id = $weeklyGamePlayer->id;
+        $this->player_spirit_id = $playerSpirit->id;
         $this->save();
     }
 

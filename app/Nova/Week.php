@@ -42,7 +42,7 @@ class Week extends Resource
     {
         return [
             ID::make()->sortable(),
-            DateTime::make('weekly_game_players_queued_at'),
+            DateTime::make('player_spirits_queued_at'),
             DateTime::make('proposals_scheduled_to_lock_at'),
             DateTime::make('proposals_processed_at'),
             DateTime::make('diplomacy_scheduled_to_lock_at'),

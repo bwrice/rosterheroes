@@ -2,12 +2,12 @@
 
 namespace App\Domain\Models;
 
-use App\Domain\Collections\WeeklyGamePlayerCollection;
+use App\Domain\Collections\PlayerSpiritCollection;
 use App\Domain\Models\EventSourcedModel;
 use App\Domain\Models\Game;
 use App\Domain\Models\Player;
-use App\Domain\QueryBuilders\WeeklyGamePlayerQueryBuilder;
-use App\Events\WeeklyGamePlayerCreationRequested;
+use App\Domain\QueryBuilders\PlayerSpiritQueryBuilder;
+use App\Events\PlayerSpiritCreationRequested;
 use Illuminate\Database\Eloquent\Model;
 use Ramsey\Uuid\Uuid;
 
@@ -18,21 +18,21 @@ use Ramsey\Uuid\Uuid;
  * @property int $id
  * @property string $uuid
  * @property int $salary
- * @property int $effectiveness
+ * @property int $energy
  *
  * @property Week $week
  * @property Player $player
  * @property Game $game
  * @property PlayerGameLog $playerGameLog
  *
- * @method static WeeklyGamePlayerQueryBuilder query()
- * @method static WeeklyGamePlayerQueryBuilder withPosition(string $position)
+ * @method static PlayerSpiritQueryBuilder query()
+ * @method static PlayerSpiritQueryBuilder withPosition(string $position)
  */
-class WeeklyGamePlayer extends EventSourcedModel
+class PlayerSpirit extends EventSourcedModel
 {
     public const MIN_SALARY = 3000;
     public const SALARY_PER_POINT = 400;
-    public const STARTING_EFFECTIVENESS = 10000;
+    public const STARTING_ENERGY = 10000;
 
     /**
      * @param array $attributes
@@ -45,7 +45,7 @@ class WeeklyGamePlayer extends EventSourcedModel
 
         $attributes['uuid'] = $uuid;
 
-        event(new WeeklyGamePlayerCreationRequested($attributes));
+        event(new PlayerSpiritCreationRequested($attributes));
 
         return self::uuid($uuid);
     }
@@ -57,12 +57,12 @@ class WeeklyGamePlayer extends EventSourcedModel
 
     public function newCollection(array $models = [])
     {
-        return new WeeklyGamePlayerCollection($models);
+        return new PlayerSpiritCollection($models);
     }
 
     public function newEloquentBuilder($query)
     {
-        return new WeeklyGamePlayerQueryBuilder($query);
+        return new PlayerSpiritQueryBuilder($query);
     }
 
     public function playerGameLog()
@@ -90,7 +90,7 @@ class WeeklyGamePlayer extends EventSourcedModel
         return $this->player->positions;
     }
 
-    public function scopeWithPosition(WeeklyGamePlayerQueryBuilder $builder, string $position)
+    public function scopeWithPosition(PlayerSpiritQueryBuilder $builder, string $position)
     {
         return $builder->withPositions($position);
     }

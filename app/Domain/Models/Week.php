@@ -3,7 +3,7 @@
 namespace App\Domain\Models;
 
 use App\Domain\Collections\GameCollection;
-use App\Domain\Collections\WeeklyGamePlayerCollection;
+use App\Domain\Collections\PlayerSpiritCollection;
 use App\Domain\Models\Game;
 use App\Domain\Collections\WeekCollection;
 use App\Domain\QueryBuilders\WeekQueryBuilder;
@@ -24,12 +24,12 @@ use phpDocumentor\Reflection\Types\Self_;
  * @property CarbonImmutable $diplomacy_scheduled_to_lock_at
  * @property CarbonImmutable $everything_locks_at
  * @property CarbonImmutable $ends_at
- * @property CarbonImmutable|null $weekly_game_players_queued_at
+ * @property CarbonImmutable|null $player_spirits_queued_at
  * @property CarbonImmutable|null $proposals_processed_at
  * @property CarbonImmutable|null $diplomacy_processed_at
  * @property CarbonImmutable|null $finalized_at
  *
- * @property WeeklyGamePlayerCollection $weeklyGamePlayers
+ * @property PlayerSpiritCollection $playerSpirits
  * @property GameCollection $games
  *
  * @method static WeekQueryBuilder query()
@@ -49,7 +49,7 @@ class Week extends EventSourcedModel
     protected $dates = [
         'created_at',
         'updated_at',
-        'weekly_game_players_queued_at',
+        'player_spirits_queued_at',
         'proposals_scheduled_to_lock_at',
         'proposals_processed_at',
         'diplomacy_scheduled_to_lock_at',
@@ -107,9 +107,9 @@ class Week extends EventSourcedModel
         return $this->hasMany(Game::class);
     }
 
-    public function weeklyGamePlayers()
+    public function playerSpirits()
     {
-        return $this->hasMany(WeeklyGamePlayer::class);
+        return $this->hasMany(PlayerSpirit::class);
     }
 
     /**
@@ -158,7 +158,7 @@ class Week extends EventSourcedModel
 
     public function gamePlayersQueued()
     {
-        return $this->weekly_game_players_queued_at !== null;
+        return $this->player_spirits_queued_at !== null;
     }
 
     /**

@@ -12,20 +12,20 @@ namespace App\Domain\QueryBuilders;
 use App\Domain\Interfaces\PositionQueryable;
 use App\Domain\Interfaces\SalaryQueryable;
 use App\Domain\Models\Week;
-use App\Domain\Models\WeeklyGamePlayer;
+use App\Domain\Models\PlayerSpirit;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
- * Class WeeklyGamePlayerQueryBuilder
+ * Class PlayerSpiritQueryBuilder
  * @package App\Domain\QueryBuilders
  *
- * @method  WeeklyGamePlayer|object|static|null first($columns = ['*'])
+ * @method  PlayerSpirit|object|static|null first($columns = ['*'])
  */
-class WeeklyGamePlayerQueryBuilder extends Builder implements PositionQueryable, SalaryQueryable
+class PlayerSpiritQueryBuilder extends Builder implements PositionQueryable, SalaryQueryable
 {
     /**
      * @param Week|null $week
-     * @return WeeklyGamePlayerQueryBuilder
+     * @return PlayerSpiritQueryBuilder
      */
     public function forWeek(Week $week = null)
     {

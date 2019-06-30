@@ -18,7 +18,7 @@ return [
         \App\Projectors\ItemProjector::class,
         \App\Projectors\MeasurableProjector::class,
         \App\Projectors\CampaignProjector::class,
-        \App\Projectors\WeeklyGamePlayerProjector::class
+        \App\Projectors\PlayerSpiritProjector::class
     ],
 
     /*

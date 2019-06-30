@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Domain\Actions\CreateWeeklyGamePlayer;
+use App\Domain\Actions\CreatePlayerSpirit;
 use App\Domain\Models\Game;
 use App\Domain\Models\League;
 use App\Domain\Models\Player;
@@ -15,7 +15,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
-class CreateWeeklyGamePlayerJob implements ShouldQueue
+class CreatePlayerSpiritJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -62,7 +62,7 @@ class CreateWeeklyGamePlayerJob implements ShouldQueue
             throw new InvalidPlayerException($this->player, $this->player->fullName() . " has zero positions");
         }
 
-        $action = new CreateWeeklyGamePlayer($this->week, $this->game, $this->player, $position);
+        $action = new CreatePlayerSpirit($this->week, $this->game, $this->player, $position);
         $action();
     }
 }

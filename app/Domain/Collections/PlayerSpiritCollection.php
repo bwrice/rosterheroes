@@ -11,7 +11,7 @@ namespace App\Domain\Collections;
 
 use Illuminate\Database\Eloquent\Collection;
 
-class WeeklyGamePlayerCollection extends Collection
+class PlayerSpiritCollection extends Collection
 {
 
 }

@@ -27,10 +27,10 @@ class SquadResource extends JsonResource
             'name' => $this->name,
             'salary' => $this->salary,
             'heroPosts' => HeroPostResource::collection($this->heroPosts->loadMissing([
-                'hero.weeklyGamePlayer.game.homeTeam',
-                'hero.weeklyGamePlayer.game.awayTeam',
-                'hero.weeklyGamePlayer.player.team',
-                'hero.weeklyGamePlayer.player.positions',
+                'hero.playerSpirit.game.homeTeam',
+                'hero.playerSpirit.game.awayTeam',
+                'hero.playerSpirit.player.team',
+                'hero.playerSpirit.player.positions',
             ]))
         ];
     }
