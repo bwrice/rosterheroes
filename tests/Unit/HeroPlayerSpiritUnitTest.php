@@ -5,7 +5,7 @@ namespace Tests\Unit;
 use App\Exceptions\GameStartedException;
 use App\Exceptions\InvalidWeekException;
 use App\Exceptions\InvalidPositionsException;
-use App\Exceptions\NotEnoughSalaryException;
+use App\Exceptions\NotEnoughEssenceException;
 use App\Domain\Models\Game;
 use App\Domain\Models\Hero;
 use App\Domain\Models\HeroClass;
@@ -69,15 +69,15 @@ class HeroPlayerSpiritUnitTest extends TestCase
     /**
      * @test
      */
-    public function adding_a_game_player_with_too_high_a_salary_will_throw_an_exception()
+    public function adding_a_game_player_with_too_high_an_essence_cost_will_throw_an_exception()
     {
 
         /** @var \App\Domain\Models\Hero $hero */
         $hero = factory(Hero::class)->create();
 
-        $squadSalary = 5000;
+        $squadSpiritEssence = 5000;
         $squad = factory(Squad::class)->create([
-            'salary' => $squadSalary
+            'spirit_essence' => $squadSpiritEssence
         ]);
 
         /** @var \App\Domain\Models\HeroPost $heroPost */
@@ -86,10 +86,10 @@ class HeroPlayerSpiritUnitTest extends TestCase
             'squad_id' => $squad->id,
         ]);
 
-        $playerWeekSalary = $squadSalary + 3000;
+        $essenceCost = $squadSpiritEssence + 3000;
         /** @var \App\Domain\Models\PlayerSpirit $playerSpirit */
         $playerSpirit = factory(PlayerSpirit::class)->create([
-            'salary' => $playerWeekSalary
+            'essence_cost' => $essenceCost
         ]);
 
         Week::setTestCurrent($playerSpirit->week);
@@ -109,13 +109,13 @@ class HeroPlayerSpiritUnitTest extends TestCase
         $this->assertTrue(in_array($playerPosition->id, $validPositionIDs), 'Position ID');
         $playerSpirit->player->positions()->attach($playerPosition);
 
-        $this->assertEquals($squadSalary, $hero->availableSalary());
+        $this->assertEquals($squadSpiritEssence, $hero->availableEssence());
 
         try {
 
             $hero->addPlayerSpirit($playerSpirit);
 
-        } catch (NotEnoughSalaryException $e) {
+        } catch (NotEnoughEssenceException $e) {
 
             $hero = $hero->fresh();
             $this->assertNull($hero->playerSpirit);

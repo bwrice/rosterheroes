@@ -132,7 +132,7 @@ class CreatePlayerSpiritTest extends TestCase
     /**
      * @test
      */
-    public function the_action_will_set_the_salary_to_the_position_default_if_no_game_logs()
+    public function the_action_will_set_the_essence_cost_to_the_position_default_if_no_game_logs()
     {
         /** @var Week $week */
         $week = factory(Week::class)->create();
@@ -158,13 +158,13 @@ class CreatePlayerSpiritTest extends TestCase
 
         $playerSpirit = $action(); //invoke
 
-        $this->assertEquals($position->getDefaultSalary(), $playerSpirit->salary);
+        $this->assertEquals($position->getDefaultEssenceCost(), $playerSpirit->essence_cost);
     }
 
     /**
      * @test
      */
-    public function the_action_will_raise_the_salary_if_player_game_logs_have_high_total_points()
+    public function the_action_will_raise_the_essence_cost_if_player_game_logs_have_high_total_points()
     {
         /** @var Week $week */
         $week = factory(Week::class)->create();
@@ -199,13 +199,13 @@ class CreatePlayerSpiritTest extends TestCase
 
         $playerSpirit = $action(); //invoke
 
-        $this->assertGreaterThan($shortStop->getBehavior()->getDefaultSalary(), $playerSpirit->salary);
+        $this->assertGreaterThan($shortStop->getBehavior()->getDefaultEssenceCost(), $playerSpirit->essence_cost);
     }
 
     /**
      * @test
      */
-    public function the_action_will_lower_the_salary_if_player_game_logs_have_low_total_points()
+    public function the_action_will_lower_the_essence_cost_if_player_game_logs_have_low_total_points()
     {
         /** @var Week $week */
         $week = factory(Week::class)->create();
@@ -235,13 +235,13 @@ class CreatePlayerSpiritTest extends TestCase
 
         $playerSpirit = $action(); //invoke
 
-        $this->assertLessThan($pointGuard->getBehavior()->getDefaultSalary(), $playerSpirit->salary);
+        $this->assertLessThan($pointGuard->getBehavior()->getDefaultEssenceCost(), $playerSpirit->essence_cost);
     }
 
     /**
      * @test
      */
-    public function the_action_will_raise_the_salary_even_more_with_more_high_total_game_logs()
+    public function the_action_will_raise_the_essence_cost_even_more_with_more_high_total_game_logs()
     {
         /** @var Week $week */
         $week = factory(Week::class)->create();
@@ -277,7 +277,7 @@ class CreatePlayerSpiritTest extends TestCase
 
         $firstPlayerSpirit = $action(); //invoke
 
-        $this->assertGreaterThan($leftWing->getBehavior()->getDefaultSalary(), $firstPlayerSpirit->salary);
+        $this->assertGreaterThan($leftWing->getBehavior()->getDefaultEssenceCost(), $firstPlayerSpirit->essence_cost);
 
         // Add another player game log with loaded stats and create a new player spirit
         /** @var PlayerGameLog $playerGameLog */
@@ -302,13 +302,13 @@ class CreatePlayerSpiritTest extends TestCase
         $action = new CreatePlayerSpirit($week, $game, $player->fresh(), $leftWing);
 
         $secondPlayerSpirit = $action(); //invoke
-        $this->assertGreaterThan($firstPlayerSpirit->salary, $secondPlayerSpirit->salary);
+        $this->assertGreaterThan($firstPlayerSpirit->essence_cost, $secondPlayerSpirit->essence_cost);
     }
 
     /**
      * @test
      */
-    public function the_action_will_lower_the_salary_even_more_with_more_low_total_game_logs()
+    public function the_action_will_lower_the_essence_cost_even_more_with_more_low_total_game_logs()
     {
         /** @var Week $week */
         $week = factory(Week::class)->create();
@@ -338,7 +338,7 @@ class CreatePlayerSpiritTest extends TestCase
 
         $firstPlayerSpirit = $action(); //invoke
 
-        $this->assertLessThan($runningBack->getBehavior()->getDefaultSalary(), $firstPlayerSpirit->salary);
+        $this->assertLessThan($runningBack->getBehavior()->getDefaultEssenceCost(), $firstPlayerSpirit->essence_cost);
 
         // Add another player game log with terrible stats and create a new player spirit
         /** @var PlayerGameLog $playerGameLog */
@@ -357,13 +357,13 @@ class CreatePlayerSpiritTest extends TestCase
         $action = new CreatePlayerSpirit($week, $game, $player->fresh(), $runningBack);
 
         $secondPlayerSpirit = $action(); //invoke
-        $this->assertLessThan($firstPlayerSpirit->salary, $secondPlayerSpirit->salary);
+        $this->assertLessThan($firstPlayerSpirit->essence_cost, $secondPlayerSpirit->essence_cost);
     }
 
     /**
      * @test
      */
-    public function the_action_will_weigh_more_recent_game_logs_heavier_towards_salary_calculation()
+    public function the_action_will_weigh_more_recent_game_logs_heavier_towards_essence_cost_calculation()
     {
         /** @var Week $week */
         $week = factory(Week::class)->create();
@@ -447,7 +447,7 @@ class CreatePlayerSpiritTest extends TestCase
         $action = new CreatePlayerSpirit($week, $game, $playerWithGoodRecentGame, $runningBack);
 
         $goodRecentPlayerSpirit = $action(); //invoke
-        $this->assertGreaterThan($badRecentPlayerSpirit->salary, $goodRecentPlayerSpirit->salary);
+        $this->assertGreaterThan($badRecentPlayerSpirit->essence_cost, $goodRecentPlayerSpirit->essence_cost);
     }
 
     /**

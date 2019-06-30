@@ -49,7 +49,7 @@ class PlayerSpirit extends Resource
     {
         return [
             ID::make()->sortable(),
-            Number::make('salary')->sortable(),
+            Number::make('essence_cost')->sortable(),
             Number::make('energy')->sortable(),
             BelongsTo::make('Player'),
             BelongsTo::make('Game'),

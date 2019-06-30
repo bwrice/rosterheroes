@@ -17,7 +17,7 @@ use App\Events\SquadCreated;
 use App\Events\SquadCreationRequested;
 use App\Events\SquadGoldIncreased;
 use App\Events\SquadHeroPostAdded;
-use App\Events\SquadSalaryIncreased;
+use App\Events\SquadEssenceIncreased;
 use App\Exceptions\CampaignExistsException;
 use App\Exceptions\HeroPostNotFoundException;
 use App\Exceptions\InvalidContinentException;
@@ -58,7 +58,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $name
  * @property int $squad_rank_id
  * @property int $province_id
- * @property int $salary
+ * @property int $spirit_essence
  * @property int $experience
  * @property int $gold
  * @property int $favor
@@ -80,7 +80,7 @@ class Squad extends EventSourcedModel implements HasSlots
 
     const STARTING_GOLD = 500;
     const STARTING_FAVOR = 100;
-    const STARTING_SALARY = 30000;
+    const STARTING_ESSENCE = 30000;
     const QUESTS_PER_WEEK = 3;
     const SKIRMISHES_PER_QUEST = 5;
 
@@ -115,9 +115,9 @@ class Squad extends EventSourcedModel implements HasSlots
         return collect(self::STARTING_HERO_POST_TYPES)->sum();
     }
 
-    public function increaseSalary(int $amount)
+    public function increaseEssence(int $amount)
     {
-        event(new SquadSalaryIncreased($this->uuid, $amount));
+        event(new SquadEssenceIncreased($this->uuid, $amount));
     }
 
     public function increaseGold(int $amount)
@@ -296,9 +296,9 @@ class Squad extends EventSourcedModel implements HasSlots
     /**
      * @return int
      */
-    public function availableSalary()
+    public function availableSpiritEssence()
     {
-        return $this->salary - $this->getHeroes()->totalSalary();
+        return $this->spirit_essence - $this->getHeroes()->totalEssenceCost();
     }
 
     public function borderTravel(Province $border)

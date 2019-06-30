@@ -23,7 +23,7 @@ class CreateSquadsTable extends Migration
             $table->tinyInteger('mobile_storage_rank_id')->unsigned();
             $table->integer('province_id')->unsigned();
             $table->integer('nation_id')->unsigned()->nullable();
-            $table->integer('salary')->unsigned()->default(0);
+            $table->integer('spirit_essence')->unsigned()->default(0);
             $table->bigInteger('experience')->unsigned()->default(0);
             $table->bigInteger('gold')->unsigned()->default(0);
             $table->bigInteger('favor')->unsigned()->default(0);

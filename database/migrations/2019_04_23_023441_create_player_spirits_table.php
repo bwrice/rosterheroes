@@ -20,7 +20,7 @@ class CreatePlayerSpiritsTable extends Migration
             $table->integer('player_id')->unsigned();
             $table->integer('game_id')->unsigned();
             $table->integer('player_game_log_id')->unsigned()->nullable();
-            $table->integer('salary');
+            $table->integer('essence_cost');
             $table->integer('energy');
             $table->timestamps();
         });

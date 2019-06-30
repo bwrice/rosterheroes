@@ -10,7 +10,7 @@ namespace App\Domain\QueryBuilders;
 
 
 use App\Domain\Interfaces\PositionQueryable;
-use App\Domain\Interfaces\SalaryQueryable;
+use App\Domain\Interfaces\EssenceCostQueryable;
 use App\Domain\Models\Week;
 use App\Domain\Models\PlayerSpirit;
 use Illuminate\Database\Eloquent\Builder;
@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\Builder;
  *
  * @method  PlayerSpirit|object|static|null first($columns = ['*'])
  */
-class PlayerSpiritQueryBuilder extends Builder implements PositionQueryable, SalaryQueryable
+class PlayerSpiritQueryBuilder extends Builder implements PositionQueryable, EssenceCostQueryable
 {
     /**
      * @param Week|null $week
@@ -40,13 +40,13 @@ class PlayerSpiritQueryBuilder extends Builder implements PositionQueryable, Sal
         });
     }
 
-    public function minSalary(int $amount): Builder
+    public function minEssenceCost(int $amount): Builder
     {
-        return $this->where('salary', '>=', $amount);
+        return $this->where('essence_cost', '>=', $amount);
     }
 
-    public function maxSalary(int $amount): Builder
+    public function maxEssenceCost(int $amount): Builder
     {
-        return $this->where('salary', '<=', $amount);
+        return $this->where('essence_cost', '<=', $amount);
     }
 }

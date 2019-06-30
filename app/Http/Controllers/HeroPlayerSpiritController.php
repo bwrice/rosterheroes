@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Exceptions\GameStartedException;
 use App\Exceptions\InvalidPositionsException;
 use App\Exceptions\InvalidWeekException;
-use App\Exceptions\NotEnoughSalaryException;
+use App\Exceptions\NotEnoughEssenceException;
 use App\Domain\Models\Hero;
 use App\Domain\Models\PlayerSpirit;
 use Illuminate\Http\Request;
@@ -47,9 +47,9 @@ class HeroPlayerSpiritController extends Controller
             throw ValidationException::withMessages([
                 'position' => "Player does not have valid position for hero"
             ]);
-        } catch (NotEnoughSalaryException $exception) {
+        } catch (NotEnoughEssenceException $exception) {
             throw ValidationException::withMessages([
-                'salary' => "Not enough available salary for " . $playerSpirit->player->fullName()
+                'essence' => "Not enough available essence for " . $playerSpirit->player->fullName()
             ]);
         } catch (GameStartedException $exception) {
             throw ValidationException::withMessages([

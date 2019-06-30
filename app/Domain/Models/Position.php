@@ -140,17 +140,17 @@ class Position extends Model
     /**
      * @return float|int
      */
-    public function getDefaultSalary()
+    public function getDefaultEssenceCost()
     {
-        return $this->getBehavior()->getDefaultSalary();
+        return $this->getBehavior()->getDefaultEssenceCost();
     }
 
     /**
      * @return float|int
      */
-    public function getMinimumSalary()
+    public function getMinimumEssenceCost()
     {
-        return $this->getBehavior()->getMinimumSalary();
+        return $this->getBehavior()->getMinimumEssenceCost();
     }
 
     /**

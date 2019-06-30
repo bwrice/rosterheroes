@@ -11,9 +11,9 @@ namespace App\Domain\Interfaces;
 
 use Illuminate\Database\Eloquent\Builder;
 
-interface SalaryQueryable
+interface EssenceCostQueryable
 {
-    public function minSalary(int $amount): Builder;
+    public function minEssenceCost(int $amount): Builder;
 
-    public function maxSalary(int $amount): Builder;
+    public function maxEssenceCost(int $amount): Builder;
 }

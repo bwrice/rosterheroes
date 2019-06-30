@@ -59,13 +59,13 @@ class CreatePlayerSpirit
      */
     public function __invoke(): PlayerSpirit
     {
-        $salary = $this->getSalary();
+        $essenceCost = $this->getEssenceCost();
 
         return PlayerSpirit::createWithAttributes([
             'player_id' => $this->player->id,
             'game_id' => $this->game->id,
             'week_id' => $this->week->id,
-            'salary' => $salary,
+            'essence_cost' => $essenceCost,
             'energy' => PlayerSpirit::STARTING_ENERGY
         ]);
     }
@@ -88,7 +88,7 @@ class CreatePlayerSpirit
      * @return int
      * @throws \MathPHP\Exception\BadDataException
      */
-    protected function getSalary()
+    protected function getEssenceCost()
     {
         $weightedValues = $this->getPlayerGameLogs()->toWeightedValues();
 
@@ -96,14 +96,14 @@ class CreatePlayerSpirit
         $weightedValues->push($this->getDefaultWeightedValue());
 
         $weightedPoints = $weightedValues->getWeightedMean();
-        $weightedSalary = $this->convertPointsToSalary($weightedPoints);
+        $weightedEssenceCost = $this->convertPointsToEssenceCost($weightedPoints);
 
-        return (int) max($weightedSalary, $this->position->getMinimumSalary());
+        return (int) max($weightedEssenceCost, $this->position->getMinimumEssenceCost());
     }
 
-    protected function convertPointsToSalary($points)
+    protected function convertPointsToEssenceCost($points)
     {
-        return (int) round($points * PlayerSpirit::SALARY_PER_POINT);
+        return (int) round($points * PlayerSpirit::ESSENCE_COST_PER_POINT);
     }
 
     protected function getDefaultWeightedValue()
@@ -113,7 +113,7 @@ class CreatePlayerSpirit
 
     protected function getDefaultTotalPoints()
     {
-        return $this->position->getDefaultSalary() / PlayerSpirit::SALARY_PER_POINT;
+        return $this->position->getDefaultEssenceCost() / PlayerSpirit::ESSENCE_COST_PER_POINT;
     }
 
     /**

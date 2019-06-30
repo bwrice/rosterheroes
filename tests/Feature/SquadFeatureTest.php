@@ -47,7 +47,7 @@ class SquadFeatureTest extends TestCase
         $squad = Squad::where('name', $name)->first();
 
         $this->assertEquals($user->squads->first()->id, $squad->id);
-        $this->assertEquals(Squad::STARTING_SALARY, $squad->salary, "Squad has starting salary");
+        $this->assertEquals(Squad::STARTING_ESSENCE, $squad->spirit_essence, "Squad has starting spirit essence");
         $this->assertEquals(Squad::STARTING_GOLD, $squad->gold, "Squad has starting gold");
         $this->assertEquals(Squad::STARTING_FAVOR, $squad->favor, "Squad has starting favor");
 

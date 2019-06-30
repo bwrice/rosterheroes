@@ -9,7 +9,7 @@ return [
      */
     'projectors' => [
         \App\Projectors\SquadProjector::class,
-        \App\Projectors\SquadSalaryProjector::class,
+        \App\Projectors\SquadEssenceProjector::class,
         \App\Projectors\SquadGoldProjector::class,
         \App\Projectors\SquadExperienceProjector::class,
         \App\Projectors\SquadFavorProjector::class,

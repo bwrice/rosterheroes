@@ -18,7 +18,7 @@ $factory->define(\App\Domain\Models\PlayerSpirit::class, function (Faker $faker)
         'game_id' => function () {
             return factory(\App\Domain\Models\Game::class)->create()->id;
         },
-        'salary' => \App\Domain\Models\PlayerSpirit::MIN_SALARY,
+        'essence_cost' => 5000,
         'energy' => \App\Domain\Models\PlayerSpirit::STARTING_ENERGY
     ];
 });

@@ -11,7 +11,7 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Spatie\EventProjector\ShouldBeStored;
 
-class SquadSalaryIncreased implements ShouldBeStored
+class SquadEssenceIncreased implements ShouldBeStored
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
     /**
@@ -24,7 +24,7 @@ class SquadSalaryIncreased implements ShouldBeStored
     public $amount;
 
     /**
-     * SquadSalaryIncreased constructor.
+     * SquadEssenceIncreased constructor.
      * @param string $squadUuid
      * @param int $amount
      */

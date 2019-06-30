@@ -26,7 +26,7 @@ class SquadHeroPostAdded implements ShouldBeStored
     public $heroRaceID;
 
     /**
-     * SquadSalaryIncreased constructor.
+     * SquadHeroPostAdded constructor.
      * @param string $squadUuid
      * @param int $heroRaceID
      */

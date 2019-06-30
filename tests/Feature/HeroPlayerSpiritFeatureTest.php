@@ -139,7 +139,7 @@ class HeroPlayerSpiritFeatureTest extends TestCase
     /**
      * @test
      */
-    public function a_hero_cannot_add_a_player_with_too_high_a_salary()
+    public function a_hero_cannot_add_a_player_with_too_much_essence_cost()
     {
 
         /** @var \App\Domain\Models\HeroRace $heroRace */
@@ -152,10 +152,10 @@ class HeroPlayerSpiritFeatureTest extends TestCase
             'hero_race_id' => $heroRace->id
         ]);
 
-        $squadSalary = 5000;
+        $squadSpiritEssence = 5000;
         /** @var \App\Domain\Models\Squad $squad */
         $squad = factory(Squad::class)->create([
-            'salary' => $squadSalary
+            'spirit_essence' => $squadSpiritEssence
         ]);
 
         /** @var HeroPost $heroPost */
@@ -166,7 +166,7 @@ class HeroPlayerSpiritFeatureTest extends TestCase
 
         /** @var PlayerSpirit $playerSpirit */
         $playerSpirit = factory(PlayerSpirit::class)->create([
-            'salary' => $squadSalary + 2000
+            'essence_cost' => $squadSpiritEssence + 2000
         ]);
 
         $playerSpirit->player->positions()->attach($position);
@@ -180,7 +180,7 @@ class HeroPlayerSpiritFeatureTest extends TestCase
 
         $response = $this->json('POST', 'api/hero/'. $hero->uuid . '/player-spirit/' . $playerSpirit->uuid);
         $this->assertEquals(422, $response->getStatusCode());
-        $this->assertArrayHasKey('salary', $response->json()['errors']);
+        $this->assertArrayHasKey('essence', $response->json()['errors']);
 
         $hero = $hero->fresh();
         $this->assertNull($hero->playerSpirit);

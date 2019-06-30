@@ -2,12 +2,12 @@
 
 namespace App\Projectors;
 
-use App\Events\SquadSalaryIncreased;
+use App\Events\SquadEssenceIncreased;
 use App\Domain\Models\Squad;
 use Spatie\EventProjector\Projectors\Projector;
 use Spatie\EventProjector\Projectors\ProjectsEvents;
 
-class SquadSalaryProjector implements Projector
+class SquadEssenceProjector implements Projector
 {
     use ProjectsEvents;
 
@@ -15,13 +15,13 @@ class SquadSalaryProjector implements Projector
      * Here you can specify which event should trigger which method.
      */
     protected $handlesEvents = [
-        SquadSalaryIncreased::class => 'onSquadSalaryIncreased'
+        SquadEssenceIncreased::class => 'onSquadEssenceIncreased'
     ];
 
-    public function onSquadSalaryIncreased(SquadSalaryIncreased $event)
+    public function onSquadEssenceIncreased(SquadEssenceIncreased $event)
     {
         $squad = Squad::uuid($event->squadUuid);
-        $squad->salary += $event->amount;
+        $squad->spirit_essence += $event->amount;
         $squad->save();
     }
 

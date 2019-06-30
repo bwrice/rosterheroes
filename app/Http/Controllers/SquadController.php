@@ -38,8 +38,8 @@ class SquadController extends Controller
             'province_id' => Province::getStarting()->id
         ]);
 
-        // Give starting salary, gold and favor to new squad
-        $squad->increaseSalary(Squad::STARTING_SALARY);
+        // Give starting essence, gold and favor to new squad
+        $squad->increaseEssence(Squad::STARTING_ESSENCE);
         $squad->increaseGold(Squad::STARTING_GOLD);
         $squad->increaseFavor(Squad::STARTING_FAVOR);
         $squad->addStartingHeroPosts();

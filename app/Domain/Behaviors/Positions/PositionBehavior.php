@@ -42,12 +42,12 @@ class PositionBehavior
         return $this->positionValue;
     }
 
-    public function getDefaultSalary()
+    public function getDefaultEssenceCost()
     {
         return (int) $this->getPositionValue() * 100;
     }
 
-    public function getMinimumSalary()
+    public function getMinimumEssenceCost()
     {
         return (int) $this->getPositionValue() * 60;
     }

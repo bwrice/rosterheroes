@@ -10,7 +10,7 @@ $factory->define(\App\Domain\Models\Squad::class, function (Faker $faker) {
         'province_id' => \App\Domain\Models\Province::getStarting()->id,
         'squad_rank_id' => \App\Domain\Models\SquadRank::getStarting()->id,
         'mobile_storage_rank_id' => \App\Domain\Models\MobileStorageRank::getStarting()->id,
-        'salary' => \App\Domain\Models\Squad::STARTING_SALARY,
+        'spirit_essence' => \App\Domain\Models\Squad::STARTING_ESSENCE,
         'gold' => \App\Domain\Models\Squad::STARTING_GOLD,
         'favor' => \App\Domain\Models\Squad::STARTING_FAVOR,
         'name' => $faker->company,

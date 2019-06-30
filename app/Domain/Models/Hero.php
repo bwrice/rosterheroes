@@ -9,7 +9,7 @@ use App\Domain\Models\EventSourcedModel;
 use App\Exceptions\GameStartedException;
 use App\Exceptions\InvalidWeekException;
 use App\Exceptions\InvalidPositionsException;
-use App\Exceptions\NotEnoughSalaryException;
+use App\Exceptions\NotEnoughEssenceException;
 use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\HeroClass;
 use App\Domain\Collections\HeroCollection;
@@ -44,7 +44,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $hero_class_id
  * @property int $hero_rank_id
  * @property int $player_spirit_id
- * @property int $salary
+ * @property int $essence
  * @property string $name
  * @property string $slug
  *
@@ -259,10 +259,11 @@ class Hero extends EventSourcedModel implements HasSlots
     /**
      * @return int
      */
-    public function availableSalary()
+    public function availableEssence()
     {
-        $heroSalary = $this->salary ?: 0;
-        return $this->heroPost->squad->availableSalary() - $heroSalary;
+        // TODO: does this work?
+        $heroEssence = $this->essence ?: 0;
+        return $this->heroPost->squad->availableSpiritEssence() - $heroEssence;
     }
 
     /**
@@ -280,9 +281,9 @@ class Hero extends EventSourcedModel implements HasSlots
             throw $exception;
         }
 
-        if(! $this->canAfford($playerSpirit->salary)) {
-            $exception = new NotEnoughSalaryException();
-            $exception->setSalaries($this->availableSalary(), $playerSpirit->salary);
+        if(! $this->canAfford($playerSpirit->essence_cost)) {
+            $exception = new NotEnoughEssenceException();
+            $exception->setAttributes($this->availableEssence(), $playerSpirit->essence_cost);
             throw $exception;
         }
 
@@ -296,8 +297,8 @@ class Hero extends EventSourcedModel implements HasSlots
         $this->save();
     }
 
-    public function canAfford($salary)
+    public function canAfford($essenceCost)
     {
-        return $this->availableSalary() >= (int) $salary;
+        return $this->availableEssence() >= (int) $essenceCost;
     }
 }

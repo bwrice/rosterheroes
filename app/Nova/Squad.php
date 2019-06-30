@@ -47,7 +47,7 @@ class Squad extends Resource
             ID::make()->sortable(),
             Text::make('name'),
             BelongsTo::make('Province'),
-            Number::make('salary')->sortable(),
+            Number::make('spirit_essence')->sortable(),
             Number::make('experience')->sortable(),
             Number::make('gold')->sortable(),
             Number::make('favor')->sortable(),

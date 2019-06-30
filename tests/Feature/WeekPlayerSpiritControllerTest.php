@@ -124,7 +124,7 @@ class WeekPlayerSpiritControllerTest extends TestCase
     /**
      * @test
      */
-    public function it_will_filter_by_minimum_salary()
+    public function it_will_filter_by_minimum_essence_cost()
     {
         $this->withoutExceptionHandling();
 
@@ -137,17 +137,17 @@ class WeekPlayerSpiritControllerTest extends TestCase
         /** @var PlayerSpirit $playerSpirit */
         $playerSpirit = factory(PlayerSpirit::class)->create([
             'week_id' => $week->id,
-            'salary' => 5000
+            'essence_cost' => 5000
         ]);
 
         /** @var PlayerSpirit $filteredOut */
         $filteredOut = factory(PlayerSpirit::class)->create([
             'week_id' => $week->id,
-            'salary' => 4999
+            'essence_cost' => 4999
         ]);
 
         $uri = '/api/week/' . $week->uuid . '/player-spirits';
-        $uri .= '?filter[min-salary]=5000';
+        $uri .= '?filter[min-essence-cost]=5000';
 
         $response = $this->get($uri);
         $response
@@ -174,7 +174,7 @@ class WeekPlayerSpiritControllerTest extends TestCase
     /**
      * @test
      */
-    public function it_will_filter_by_maximum_salary()
+    public function it_will_filter_by_maximum_essence_cost()
     {
         $this->withoutExceptionHandling();
 
@@ -187,17 +187,17 @@ class WeekPlayerSpiritControllerTest extends TestCase
         /** @var PlayerSpirit $playerSpirit */
         $playerSpirit = factory(PlayerSpirit::class)->create([
             'week_id' => $week->id,
-            'salary' => 5000
+            'essence_cost' => 5000
         ]);
 
         /** @var PlayerSpirit $filteredOut */
         $filteredOut = factory(PlayerSpirit::class)->create([
             'week_id' => $week->id,
-            'salary' => 5001
+            'essence_cost' => 5001
         ]);
 
         $uri = '/api/week/' . $week->uuid . '/player-spirits';
-        $uri .= '?filter[max-salary]=5000';
+        $uri .= '?filter[max-essence-cost]=5000';
 
         $response = $this->get($uri);
         $response

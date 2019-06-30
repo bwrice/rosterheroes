@@ -18,10 +18,11 @@ class HeroCollection extends Collection
     /**
      * @return int
      */
-    public function totalSalary()
+    public function totalEssenceCost()
     {
+        // TODO get essence from player spirit
         return $this->sum(function(Hero $hero) {
-            return $hero->salary ?: 0;
+            return $hero->essence ?: 0;
         });
     }
 

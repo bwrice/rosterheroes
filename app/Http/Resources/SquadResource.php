@@ -25,7 +25,7 @@ class SquadResource extends JsonResource
             'uuid' => $this->uuid,
             'slug' => $this->slug,
             'name' => $this->name,
-            'salary' => $this->salary,
+            'spirit_essence' => $this->spirit_essence,
             'heroPosts' => HeroPostResource::collection($this->heroPosts->loadMissing([
                 'hero.playerSpirit.game.homeTeam',
                 'hero.playerSpirit.game.awayTeam',

@@ -17,7 +17,7 @@ use Ramsey\Uuid\Uuid;
  *
  * @property int $id
  * @property string $uuid
- * @property int $salary
+ * @property int $essence_cost
  * @property int $energy
  *
  * @property Week $week
@@ -30,8 +30,7 @@ use Ramsey\Uuid\Uuid;
  */
 class PlayerSpirit extends EventSourcedModel
 {
-    public const MIN_SALARY = 3000;
-    public const SALARY_PER_POINT = 400;
+    public const ESSENCE_COST_PER_POINT = 400;
     public const STARTING_ENERGY = 10000;
 
     /**
