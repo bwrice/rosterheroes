@@ -29,6 +29,12 @@ class BuildPlayerSpirits extends Command
     public function handle()
     {
         $week = $this->getWeek();
+
+        if ($week->gamePlayersQueued()) {
+            $message = "PlayerSpirits already queued for week with ID: " . $week->id;
+            throw new InvalidWeekException($week, $message);
+        }
+
         $games = $week->getValidGames();
 
         if ($games->isEmpty()) {
@@ -55,15 +61,10 @@ class BuildPlayerSpirits extends Command
     {
         $weekID = $this->argument('week');
         if ($weekID) {
+            /** @var Week $week */
             $week = Week::query()->findOrFail($weekID);
-        } else {
-            $week = Week::current();
+            return $week;
         }
-
-        if ($week->gamePlayersQueued()) {
-            $message = "PlayerSpirits already queued for week with ID: " . $week->id;
-            throw new InvalidWeekException($week, $message);
-        }
-        return $week;
+        return Week::current();
     }
 }

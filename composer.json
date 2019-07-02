@@ -19,6 +19,7 @@
         "markrogoyski/math-php": "0.*",
         "spatie/enum": "^2.1",
         "spatie/laravel-event-projector": "^1.0.0",
+        "spatie/laravel-permission": "^2.37",
         "spatie/laravel-query-builder": "^1.17",
         "spatie/laravel-sluggable": "^2.1"
     },

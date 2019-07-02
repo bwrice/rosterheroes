@@ -8,6 +8,7 @@ use App\Domain\Models\Sport;
 use App\Domain\Models\User;
 use App\Domain\Models\Week;
 use App\Domain\Models\PlayerSpirit;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -15,6 +16,8 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class WeekPlayerSpiritControllerTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /**
      * @test
      */
