@@ -2,6 +2,7 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\QueryBuilders\HeroQueryBuilder;
 use App\Domain\Traits\HasSlug;
 use App\Events\HeroCreated;
 use App\Events\HeroCreationRequested;
@@ -55,6 +56,8 @@ use Spatie\Sluggable\SlugOptions;
  *
  * @property \App\Domain\Collections\SlotCollection $slots
  * @property Collection $measurables
+ *
+ * @method static HeroQueryBuilder query();
  */
 class Hero extends EventSourcedModel implements HasSlots
 {
@@ -79,6 +82,11 @@ class Hero extends EventSourcedModel implements HasSlots
     public function newCollection(array $models = [])
     {
         return new HeroCollection($models);
+    }
+
+    public function newEloquentBuilder($query)
+    {
+        return new HeroQueryBuilder($query);
     }
 
     public function slots()

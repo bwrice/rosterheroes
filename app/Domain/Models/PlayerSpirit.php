@@ -2,6 +2,7 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Collections\HeroCollection;
 use App\Domain\Collections\PlayerSpiritCollection;
 use App\Domain\Models\EventSourcedModel;
 use App\Domain\Models\Game;
@@ -24,6 +25,7 @@ use Ramsey\Uuid\Uuid;
  * @property Player $player
  * @property Game $game
  * @property PlayerGameLog $playerGameLog
+ * @property HeroCollection $heroes
  *
  * @method static PlayerSpiritQueryBuilder query()
  * @method static PlayerSpiritQueryBuilder withPosition(string $position)
@@ -32,6 +34,7 @@ class PlayerSpirit extends EventSourcedModel
 {
     public const ESSENCE_COST_PER_POINT = 400;
     public const STARTING_ENERGY = 10000;
+    public const MAX_USAGE_BEFORE_ENERGY_ADJUSTMENT = 10;
 
     /**
      * @param array $attributes
@@ -82,6 +85,11 @@ class PlayerSpirit extends EventSourcedModel
     public function player()
     {
         return $this->belongsTo(Player::class);
+    }
+
+    public function heroes()
+    {
+        return $this->hasMany(Hero::class);
     }
 
     public function getPositions()
