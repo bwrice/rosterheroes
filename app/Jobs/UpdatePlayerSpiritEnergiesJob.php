@@ -21,17 +21,8 @@ class UpdatePlayerSpiritEnergiesJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public const ENERGY_CALCULATION_CONSTANT = 35;
-
-    /**
-     * Create a new job instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
+    public const ENERGY_CALCULATION_CONSTANT = 2000;
+    public const ENERGY_CALCULATION_EXPONENT = .5;
 
     /**
      * Execute the job.
@@ -62,13 +53,16 @@ class UpdatePlayerSpiritEnergiesJob implements ShouldQueue
 
                 $playerSpirits->each(function (PlayerSpirit $playerSpirit) use ($globalSpiritEssenceCost, $globalEssencePaidFor, $spiritsInUseOverEnergyAdjustmentMin) {
 
-                    $adjustedEnergy = $this->getAdjustedEnergy($playerSpirit, $globalSpiritEssenceCost, $globalEssencePaidFor, $spiritsInUseOverEnergyAdjustmentMin);
-                    $playerSpirit->energy = $adjustedEnergy + PlayerSpirit::STARTING_ENERGY;
+                    $playerSpirit->energy = $this->getUpdatedEnergy($playerSpirit, $globalSpiritEssenceCost, $globalEssencePaidFor, $spiritsInUseOverEnergyAdjustmentMin);
                     $playerSpirit->save();
                 });
             });
         } else {
-            //TODO set energies to default
+            PlayerSpirit::query()->forWeek($week)
+                ->where('energy', '<>', PlayerSpirit::STARTING_ENERGY)
+                ->update([
+                'energy' => PlayerSpirit::STARTING_ENERGY
+            ]);
         }
     }
 
@@ -107,17 +101,30 @@ class UpdatePlayerSpiritEnergiesJob implements ShouldQueue
 
     /**
      * @param PlayerSpirit $playerSpirit
+     * @param int $globalSpiritEssenceCost
+     * @param int $globalEssencePaidFor
+     * @param int $spiritsInUseOverEnergyAdjustmentMin
+     * @return int
+     */
+    protected function getUpdatedEnergy(PlayerSpirit $playerSpirit, int $globalSpiritEssenceCost, int $globalEssencePaidFor, int $spiritsInUseOverEnergyAdjustmentMin): int
+    {
+        $energyDelta = $this->getEnergyDelta($playerSpirit, $globalSpiritEssenceCost, $globalEssencePaidFor, $spiritsInUseOverEnergyAdjustmentMin);
+        return max($energyDelta + PlayerSpirit::STARTING_ENERGY, PlayerSpirit::MIN_POSSIBLE_ENERGY);
+    }
+
+    /**
+     * @param PlayerSpirit $playerSpirit
      * @param $globalSpiritEssenceCost
      * @param $globalEssencePaidFor
      * @param $spiritsInUseOverEnergyAdjustmentMin
-     * @return float|int
+     * @return int
      */
-    protected function getAdjustedEnergy(PlayerSpirit $playerSpirit, $globalSpiritEssenceCost, $globalEssencePaidFor, $spiritsInUseOverEnergyAdjustmentMin)
+    protected function getEnergyDelta(PlayerSpirit $playerSpirit, int $globalSpiritEssenceCost, int $globalEssencePaidFor, int $spiritsInUseOverEnergyAdjustmentMin): int
     {
         // heroes_count comes from withCount() method
         $totalEssencePaidForSpirit = $playerSpirit->essence_cost * $playerSpirit->heroes_count;
         $essenceCostRatio = $playerSpirit->essence_cost / $globalSpiritEssenceCost;
         $essencePaidForRatio = $totalEssencePaidForSpirit / $globalEssencePaidFor;
-        return ($essenceCostRatio - $essencePaidForRatio) * self::ENERGY_CALCULATION_CONSTANT * Arithmetic::cubeRoot($spiritsInUseOverEnergyAdjustmentMin);
+        return (int) round(($essenceCostRatio - $essencePaidForRatio) * self::ENERGY_CALCULATION_CONSTANT * ($spiritsInUseOverEnergyAdjustmentMin ** self::ENERGY_CALCULATION_EXPONENT));
     }
 }
