@@ -35,8 +35,7 @@ class PlayerSpirit extends EventSourcedModel
     public const ESSENCE_COST_PER_POINT = 400;
     public const STARTING_ENERGY = 10000;
     public const MAX_USAGE_BEFORE_ENERGY_ADJUSTMENT = 10;
-    public const MIN_POSSIBLE_ENERGY = 2000;
-    public const MAX_POSSIBLE_ENERGY = 25000;
+    public const MIN_MAX_ENERGY_RATIO = 5;
 
     /**
      * @param array $attributes

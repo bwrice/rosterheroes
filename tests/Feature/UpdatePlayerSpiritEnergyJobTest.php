@@ -34,7 +34,7 @@ class UpdatePlayerSpiritEnergyJobTest extends TestCase
 
         $beforeAdjustmentEnergy = $playerSpirit->energy;
 
-        $heroesToAssignSpiritsTo = PlayerSpirit::MAX_USAGE_BEFORE_ENERGY_ADJUSTMENT + 5;
+        $heroesToAssignSpiritsTo = PlayerSpirit::MAX_USAGE_BEFORE_ENERGY_ADJUSTMENT - 1;
 
         factory(Hero::class, $heroesToAssignSpiritsTo)->create([
             'player_spirit_id' => $playerSpirit->id
@@ -219,7 +219,9 @@ class UpdatePlayerSpiritEnergyJobTest extends TestCase
 
         $playerSpirit = $playerSpirit->fresh();
 
-        $this->assertEquals(PlayerSpirit::MIN_POSSIBLE_ENERGY, $playerSpirit->energy);
+        $minimum = PlayerSpirit::STARTING_ENERGY/PlayerSpirit::MIN_MAX_ENERGY_RATIO;
+
+        $this->assertEquals($minimum, $playerSpirit->energy);
 
     }
 
@@ -259,7 +261,9 @@ class UpdatePlayerSpiritEnergyJobTest extends TestCase
 
         $notUsedPlayerSpirit = $notUsedPlayerSpirit->fresh();
 
-        $this->assertEquals(PlayerSpirit::MAX_POSSIBLE_ENERGY, $notUsedPlayerSpirit->energy);
+        $maximum = PlayerSpirit::STARTING_ENERGY * PlayerSpirit::MIN_MAX_ENERGY_RATIO;
+
+        $this->assertEquals($maximum, $notUsedPlayerSpirit->energy);
     }
 
     /**
@@ -293,5 +297,58 @@ class UpdatePlayerSpiritEnergyJobTest extends TestCase
         $playerSpirit = $playerSpirit->fresh();
 
         $this->assertEquals(PlayerSpirit::STARTING_ENERGY, $playerSpirit->energy);
+    }
+
+    /**
+     * @test
+     */
+    public function an_energy_increase_will_be_the_inverse_of_the_equivalent_energy_decrease()
+    {
+        // ie a 20% decrease in energy 4/5 will be a 25% increase in energy 5/4
+
+        $week = factory(Week::class)->create();
+        Week::setTestCurrent($week);
+
+        /** @var PlayerSpirit $playerSpiritOne */
+        $playerSpiritOne = factory(PlayerSpirit::class)->create([
+            'week_id' => $week->id,
+            'essence_cost' => 4000
+        ]);
+
+        $beforeAdjustmentEnergyOne = $playerSpiritOne->energy;
+
+        /** @var PlayerSpirit $playerSpiritTwo */
+        $playerSpiritTwo = factory(PlayerSpirit::class)->create([
+            'week_id' => $week->id,
+            'essence_cost' => 9000
+        ]);
+
+        $beforeAdjustmentEnergyTwo = $playerSpiritTwo->energy;
+
+        $heroesToAssignSpiritsTo = PlayerSpirit::MAX_USAGE_BEFORE_ENERGY_ADJUSTMENT + 5;
+
+        factory(Hero::class, $heroesToAssignSpiritsTo)->create([
+            'player_spirit_id' => $playerSpiritOne->id
+        ]);
+
+        $playerSpiritUsedForWeekCount = Hero::query()->whereHas('playerSpirit', function (PlayerSpiritQueryBuilder $builder) use ($week) {
+            return $builder->forWeek($week);
+        })->count();
+
+        $this->assertEquals($heroesToAssignSpiritsTo, $playerSpiritUsedForWeekCount);
+
+        UpdatePlayerSpiritEnergiesJob::dispatchNow();
+
+        $playerSpiritOne = $playerSpiritOne->fresh();
+        $playerSpiritTwo = $playerSpiritTwo->fresh();
+
+        /*
+         * $playerSpiritOne will be decreased in energy because it's the only one being used by heroes
+         * 2 significant figures should be enough to confirm
+         */
+        $ratioAsPercentOne = (int) (round($playerSpiritOne->energy/$beforeAdjustmentEnergyOne, 2) * 100);
+        $ratioAsPercentTwo = (int) (round($beforeAdjustmentEnergyTwo/$playerSpiritTwo->energy, 2) * 100);
+
+        $this->assertEquals($ratioAsPercentOne, $ratioAsPercentTwo);
     }
 }

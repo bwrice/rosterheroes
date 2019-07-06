@@ -21,8 +21,8 @@ class UpdatePlayerSpiritEnergiesJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public const ENERGY_CALCULATION_CONSTANT = 2000;
-    public const ENERGY_CALCULATION_EXPONENT = .5;
+    public const ENERGY_COEFFICIENT_CONSTANT = 2000;
+    public const ENERGY_COEFFICIENT_EXPONENT = .5;
 
     /**
      * Execute the job.
@@ -109,7 +109,7 @@ class UpdatePlayerSpiritEnergiesJob implements ShouldQueue
     protected function getUpdatedEnergy(PlayerSpirit $playerSpirit, int $globalSpiritEssenceCost, int $globalEssencePaidFor, int $spiritsInUseOverEnergyAdjustmentMin): int
     {
         $energyDelta = $this->getEnergyDelta($playerSpirit, $globalSpiritEssenceCost, $globalEssencePaidFor, $spiritsInUseOverEnergyAdjustmentMin);
-        return max($energyDelta + PlayerSpirit::STARTING_ENERGY, PlayerSpirit::MIN_POSSIBLE_ENERGY);
+        return $energyDelta + PlayerSpirit::STARTING_ENERGY;
     }
 
     /**
@@ -121,10 +121,43 @@ class UpdatePlayerSpiritEnergiesJob implements ShouldQueue
      */
     protected function getEnergyDelta(PlayerSpirit $playerSpirit, int $globalSpiritEssenceCost, int $globalEssencePaidFor, int $spiritsInUseOverEnergyAdjustmentMin): int
     {
+        $coefficient = self::ENERGY_COEFFICIENT_CONSTANT * ($spiritsInUseOverEnergyAdjustmentMin ** self::ENERGY_COEFFICIENT_EXPONENT);
+
+        $essenceCostRatio = $playerSpirit->essence_cost / $globalSpiritEssenceCost;
+
         // heroes_count comes from withCount() method
         $totalEssencePaidForSpirit = $playerSpirit->essence_cost * $playerSpirit->heroes_count;
-        $essenceCostRatio = $playerSpirit->essence_cost / $globalSpiritEssenceCost;
         $essencePaidForRatio = $totalEssencePaidForSpirit / $globalEssencePaidFor;
-        return (int) round(($essenceCostRatio - $essencePaidForRatio) * self::ENERGY_CALCULATION_CONSTANT * ($spiritsInUseOverEnergyAdjustmentMin ** self::ENERGY_CALCULATION_EXPONENT));
+
+        $deltaRatio = abs($essenceCostRatio - $essencePaidForRatio);
+        $energyDelta = $coefficient * $deltaRatio;
+
+        /*
+         * If delta is 9000 and PlayerSpirit::STARTING_ENERGY is 10000, but MIN_MAX_ENERGY_RATIO is 5
+         * The delta will be converted to 8000 because 1000 (the difference) is less than 10000/5
+         */
+        $absoluteMinEnergy = PlayerSpirit::STARTING_ENERGY / PlayerSpirit::MIN_MAX_ENERGY_RATIO;
+        if (PlayerSpirit::STARTING_ENERGY - $energyDelta < $absoluteMinEnergy) {
+            $energyDelta = PlayerSpirit::STARTING_ENERGY - $absoluteMinEnergy;
+        }
+
+        /*
+         * We want an 20% decrease in energy to be the equivalent of a 25% increase in energy
+         * so that one player spirit will be at 4/5(80%) the energy, and the other will be at 5/4 (1.25%) the energy
+         *
+         * ie if one player spirit has a decrease in 50% energy another would have a 200% increase
+         */
+        $positiveDelta = $essenceCostRatio - $essencePaidForRatio > 0;
+        if ($positiveDelta) {
+            /*
+             * Don't have to worry about division by zero because the $absoluteMinEnergy check
+             * prevents $energyDelta from equaling PlayerSpirit::STARTING_ENERGY
+             */
+            $inverse = PlayerSpirit::STARTING_ENERGY / ( PlayerSpirit::STARTING_ENERGY - $energyDelta );
+            $energyDelta = $inverse * $energyDelta;
+        }
+
+        $signMultiplier = $positiveDelta ? 1 : -1;
+        return (int) round($energyDelta * $signMultiplier);
     }
 }
