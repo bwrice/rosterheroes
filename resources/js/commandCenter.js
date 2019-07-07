@@ -11,6 +11,7 @@ const router = new VueRouter({
     routes
 });
 
+
 import Vuex from 'vuex';
 
 Vue.use(Vuex);

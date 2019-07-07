@@ -1,4 +1,5 @@
 import HeroPost from './heroPost';
+import SquadModel from '../models/SquadModel';
 
 export default class Squad {
 
@@ -7,10 +8,15 @@ export default class Squad {
         this._name = squad.name ? squad.name : '';
         this._heroPosts = squad.heroPosts ? squad.heroPosts : [];
         this._heroes = [];
+        this._squadModel = new SquadModel();
     }
 
     get salary() {
         return this._salary;
+    }
+
+    get squadModel() {
+        return this._squadModel;
     }
 
     get availableSalary() {

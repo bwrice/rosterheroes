@@ -26,6 +26,7 @@
     "vue-template-compiler": "^2.5.22",
     "vuelidate": "^0.7.4",
     "vuetify": "^1.4.3",
-    "vuex": "^3.1.0"
+    "vuex": "^3.1.0",
+    "vue-api-query": "^1.5.1"
   }
 }
