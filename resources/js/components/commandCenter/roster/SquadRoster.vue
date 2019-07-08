@@ -1,6 +1,6 @@
 <template>
     <v-card>
-        <span class="display-3">{{this._availableSalary}}</span>
+        <span class="display-3">{{this._availableSpiritEssence}}</span>
         <div v-for="(hero, uuid) in this._squad.heroes">
             <FilledHeroRosterCard v-if="hero.weeklyGamePlayer" :hero="hero"></FilledHeroRosterCard>
             <EmptyHeroRosterCard v-else :hero="hero"></EmptyHeroRosterCard>
@@ -23,7 +23,7 @@
         computed: {
             ...mapGetters([
                 '_squad',
-                '_availableSalary'
+                '_availableSpiritEssence'
             ])
         },
     }

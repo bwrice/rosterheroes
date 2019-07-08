@@ -1,19 +1,23 @@
-import HeroPost from './heroPost';
-export default class Squad {
+import Model from './Model'
+
+import HeroPost from './HeroPost';
+
+export default class Squad extends Model {
 
     constructor(squad) {
-        this._salary = squad.salary ? squad.salary : 0;
+        super();
+        this._spirit_essence = squad.spirit_essence ? squad.spirit_essence : 0;
         this._name = squad.name ? squad.name : '';
         this._heroPosts = squad.heroPosts ? squad.heroPosts : [];
         this._heroes = [];
     }
 
-    get salary() {
-        return this._salary;
+    get spiritEssence() {
+        return this._spirit_essence;
     }
 
-    get availableSalary() {
-        let available = this._salary;
+    get availableSpiritEssence() {
+        let available = this._spirit_essence;
         this.heroes.forEach(function(hero) {
             available -= hero.essenceUsed;
         });

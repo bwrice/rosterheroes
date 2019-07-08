@@ -30,7 +30,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::middleware(['auth:api'])->group(function () {
 
     Route::post('/squads', [SquadController::class, 'store']);
-    Route::get('/squad/{squadUuid}', [SquadController::class, 'show']);
+    Route::get('/squads/{squadSlug}', [SquadController::class, 'show']);
 
     Route::get('/squad/{squadUuid}/hero-classes', SquadHeroClassController::class);
     Route::get('/squad/{squadUuid}/hero-races', SquadHeroRaceController::class);

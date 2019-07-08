@@ -53,7 +53,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapWebRoutes()
     {
         Route::middleware('web')
-             ->namespace($this->namespace)
+//             ->namespace($this->namespace) //Comment out to allow tuple notation for controllers when defining routes
              ->group(base_path('routes/web.php'));
     }
 

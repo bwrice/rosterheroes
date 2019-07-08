@@ -2515,7 +2515,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     EmptyHeroRosterCard: _EmptyHeroRosterCard__WEBPACK_IMPORTED_MODULE_0__["default"],
     FilledHeroRosterCard: _FilledHeroRosterCard__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])(['_squad', '_availableSalary']))
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])(['_squad', '_availableSpiritEssence']))
 });
 
 /***/ }),
@@ -2956,7 +2956,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_5__["mapActions"])(['setSquad']), {
     setInitialSquad: function setInitialSquad() {
       var self = this;
-      axios.get('/api/squad/' + this.$route.params.squadSlug).then(function (response) {
+      axios.get('/api/squads/' + this.$route.params.squadSlug).then(function (response) {
         self.setSquad(response.data.data);
       }).catch(function (error) {
         console.log("ERROR!");
@@ -36346,7 +36346,7 @@ var render = function() {
     "v-card",
     [
       _c("span", { staticClass: "display-3" }, [
-        _vm._v(_vm._s(this._availableSalary))
+        _vm._v(_vm._s(this._availableSpiritEssence))
       ]),
       _vm._v(" "),
       _vm._l(this._squad.heroes, function(hero, uuid) {
@@ -76804,243 +76804,6 @@ $(document).ready(function () {
 
 /***/ }),
 
-/***/ "./resources/js/classes/gamePlayer.js":
-/*!********************************************!*\
-  !*** ./resources/js/classes/gamePlayer.js ***!
-  \********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return GamePlayer; });
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-var GamePlayer =
-/*#__PURE__*/
-function () {
-  function GamePlayer(gamePlayer) {
-    _classCallCheck(this, GamePlayer);
-
-    this._salary = gamePlayer.salary;
-  }
-
-  _createClass(GamePlayer, [{
-    key: "salary",
-    get: function get() {
-      return this._salary;
-    }
-  }]);
-
-  return GamePlayer;
-}();
-
-
-
-/***/ }),
-
-/***/ "./resources/js/classes/hero.js":
-/*!**************************************!*\
-  !*** ./resources/js/classes/hero.js ***!
-  \**************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Hero; });
-/* harmony import */ var _gamePlayer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./gamePlayer */ "./resources/js/classes/gamePlayer.js");
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-
-
-var Hero =
-/*#__PURE__*/
-function () {
-  function Hero(hero) {
-    _classCallCheck(this, Hero);
-
-    this._uuid = hero.uuid;
-    this._name = hero.name;
-    this._weeklyGamePlayer = hero.weeklyGamePlayer ? new _gamePlayer__WEBPACK_IMPORTED_MODULE_0__["default"](hero.weeklyGamePlayer) : null;
-  }
-
-  _createClass(Hero, [{
-    key: "uuid",
-    get: function get() {
-      return this._uuid;
-    }
-  }, {
-    key: "name",
-    get: function get() {
-      return this._name;
-    }
-  }, {
-    key: "weeklyGamePlayer",
-    get: function get() {
-      return this._weeklyGamePlayer;
-    }
-  }, {
-    key: "salaryUsed",
-    get: function get() {
-      if (this._weeklyGamePlayer) {
-        return this._weeklyGamePlayer.salary;
-      } else {
-        return 0;
-      }
-    }
-  }]);
-
-  return Hero;
-}();
-
-
-
-/***/ }),
-
-/***/ "./resources/js/classes/heroPost.js":
-/*!******************************************!*\
-  !*** ./resources/js/classes/heroPost.js ***!
-  \******************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return HeroPost; });
-/* harmony import */ var _hero__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./hero */ "./resources/js/classes/hero.js");
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-
-
-var HeroPost =
-/*#__PURE__*/
-function () {
-  function HeroPost(heroPost) {
-    _classCallCheck(this, HeroPost);
-
-    this._hero = heroPost.hero;
-  }
-
-  _createClass(HeroPost, [{
-    key: "hero",
-    get: function get() {
-      if (this._hero) {
-        return new _hero__WEBPACK_IMPORTED_MODULE_0__["default"](this._hero);
-      }
-
-      return null;
-    }
-  }]);
-
-  return HeroPost;
-}();
-
-
-
-/***/ }),
-
-/***/ "./resources/js/classes/squad.js":
-/*!***************************************!*\
-  !*** ./resources/js/classes/squad.js ***!
-  \***************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Squad; });
-/* harmony import */ var _heroPost__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./heroPost */ "./resources/js/classes/heroPost.js");
-/* harmony import */ var _models_SquadModel__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../models/SquadModel */ "./resources/js/models/SquadModel.js");
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-
-
-
-var Squad =
-/*#__PURE__*/
-function () {
-  function Squad(squad) {
-    _classCallCheck(this, Squad);
-
-    this._salary = squad.salary ? squad.salary : 0;
-    this._name = squad.name ? squad.name : '';
-    this._heroPosts = squad.heroPosts ? squad.heroPosts : [];
-    this._heroes = [];
-    this._squadModel = new _models_SquadModel__WEBPACK_IMPORTED_MODULE_1__["default"]();
-  }
-
-  _createClass(Squad, [{
-    key: "salary",
-    get: function get() {
-      return this._salary;
-    }
-  }, {
-    key: "squadModel",
-    get: function get() {
-      return this._squadModel;
-    }
-  }, {
-    key: "availableSalary",
-    get: function get() {
-      var available = this._salary;
-      this.heroes.forEach(function (hero) {
-        available -= hero.salaryUsed;
-      });
-      return available;
-    }
-  }, {
-    key: "name",
-    get: function get() {
-      return this._name;
-    }
-  }, {
-    key: "heroPosts",
-    get: function get() {
-      var _heroPosts = [];
-
-      this._heroPosts.forEach(function (heroPost) {
-        _heroPosts.push(new _heroPost__WEBPACK_IMPORTED_MODULE_0__["default"](heroPost));
-      });
-
-      return _heroPosts;
-    }
-  }, {
-    key: "heroes",
-    get: function get() {
-      var _heroes = [];
-      this.heroPosts.forEach(function (heroPost) {
-        if (heroPost.hero) {
-          _heroes.push(heroPost.hero);
-        }
-      });
-      return _heroes;
-    }
-  }]);
-
-  return Squad;
-}();
-
-
-
-/***/ }),
-
 /***/ "./resources/js/commandCenter.js":
 /*!***************************************!*\
   !*** ./resources/js/commandCenter.js ***!
@@ -78635,6 +78398,155 @@ var navButtonMixin = {
 
 /***/ }),
 
+/***/ "./resources/js/models/Hero.js":
+/*!*************************************!*\
+  !*** ./resources/js/models/Hero.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Hero; });
+/* harmony import */ var _Model__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Model */ "./resources/js/models/Model.js");
+/* harmony import */ var _PlayerSpirit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PlayerSpirit */ "./resources/js/models/PlayerSpirit.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+var Hero =
+/*#__PURE__*/
+function (_Model) {
+  _inherits(Hero, _Model);
+
+  function Hero(hero) {
+    var _this;
+
+    _classCallCheck(this, Hero);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Hero).call(this));
+    _this._uuid = hero.uuid;
+    _this._name = hero.name;
+    _this._playerSpirit = hero.playerSpirit ? new _PlayerSpirit__WEBPACK_IMPORTED_MODULE_1__["default"](hero.playerSpirit) : null;
+    return _this;
+  }
+
+  _createClass(Hero, [{
+    key: "uuid",
+    get: function get() {
+      return this._uuid;
+    }
+  }, {
+    key: "name",
+    get: function get() {
+      return this._name;
+    }
+  }, {
+    key: "playerSpirit",
+    get: function get() {
+      return this._playerSpirit;
+    }
+  }, {
+    key: "essenceUsed",
+    get: function get() {
+      if (this._playerSpirit) {
+        return this._playerSpirit.essence_cost;
+      } else {
+        return 0;
+      }
+    }
+  }]);
+
+  return Hero;
+}(_Model__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+
+/***/ }),
+
+/***/ "./resources/js/models/HeroPost.js":
+/*!*****************************************!*\
+  !*** ./resources/js/models/HeroPost.js ***!
+  \*****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return HeroPost; });
+/* harmony import */ var _Model__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Model */ "./resources/js/models/Model.js");
+/* harmony import */ var _Hero__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Hero */ "./resources/js/models/Hero.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+var HeroPost =
+/*#__PURE__*/
+function (_Model) {
+  _inherits(HeroPost, _Model);
+
+  function HeroPost(heroPost) {
+    var _this;
+
+    _classCallCheck(this, HeroPost);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(HeroPost).call(this));
+    _this._hero = heroPost.hero;
+    return _this;
+  }
+
+  _createClass(HeroPost, [{
+    key: "hero",
+    get: function get() {
+      if (this._hero) {
+        return new _Hero__WEBPACK_IMPORTED_MODULE_1__["default"](this._hero);
+      }
+
+      return null;
+    }
+  }]);
+
+  return HeroPost;
+}(_Model__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+
+/***/ }),
+
 /***/ "./resources/js/models/Model.js":
 /*!**************************************!*\
   !*** ./resources/js/models/Model.js ***!
@@ -78704,20 +78616,24 @@ function (_BaseModel) {
 
 /***/ }),
 
-/***/ "./resources/js/models/SquadModel.js":
-/*!*******************************************!*\
-  !*** ./resources/js/models/SquadModel.js ***!
-  \*******************************************/
+/***/ "./resources/js/models/PlayerSpirit.js":
+/*!*********************************************!*\
+  !*** ./resources/js/models/PlayerSpirit.js ***!
+  \*********************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return SquadModel; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return GamePlayer; });
 /* harmony import */ var _Model__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Model */ "./resources/js/models/Model.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
@@ -78731,18 +78647,130 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
-var SquadModel =
+var GamePlayer =
 /*#__PURE__*/
 function (_Model) {
-  _inherits(SquadModel, _Model);
+  _inherits(GamePlayer, _Model);
 
-  function SquadModel() {
-    _classCallCheck(this, SquadModel);
+  function GamePlayer(gamePlayer) {
+    var _this;
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(SquadModel).apply(this, arguments));
+    _classCallCheck(this, GamePlayer);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(GamePlayer).call(this));
+    _this._salary = gamePlayer.salary;
+    return _this;
   }
 
-  return SquadModel;
+  _createClass(GamePlayer, [{
+    key: "salary",
+    get: function get() {
+      return this._salary;
+    }
+  }]);
+
+  return GamePlayer;
+}(_Model__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+
+/***/ }),
+
+/***/ "./resources/js/models/Squad.js":
+/*!**************************************!*\
+  !*** ./resources/js/models/Squad.js ***!
+  \**************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Squad; });
+/* harmony import */ var _Model__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Model */ "./resources/js/models/Model.js");
+/* harmony import */ var _HeroPost__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HeroPost */ "./resources/js/models/HeroPost.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+var Squad =
+/*#__PURE__*/
+function (_Model) {
+  _inherits(Squad, _Model);
+
+  function Squad(squad) {
+    var _this;
+
+    _classCallCheck(this, Squad);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Squad).call(this));
+    _this._spirit_essence = squad.spirit_essence ? squad.spirit_essence : 0;
+    _this._name = squad.name ? squad.name : '';
+    _this._heroPosts = squad.heroPosts ? squad.heroPosts : [];
+    _this._heroes = [];
+    return _this;
+  }
+
+  _createClass(Squad, [{
+    key: "spiritEssence",
+    get: function get() {
+      return this._spirit_essence;
+    }
+  }, {
+    key: "availableSpiritEssence",
+    get: function get() {
+      var available = this._spirit_essence;
+      this.heroes.forEach(function (hero) {
+        available -= hero.essenceUsed;
+      });
+      return available;
+    }
+  }, {
+    key: "name",
+    get: function get() {
+      return this._name;
+    }
+  }, {
+    key: "heroPosts",
+    get: function get() {
+      var _heroPosts = [];
+
+      this._heroPosts.forEach(function (heroPost) {
+        _heroPosts.push(new _HeroPost__WEBPACK_IMPORTED_MODULE_1__["default"](heroPost));
+      });
+
+      return _heroPosts;
+    }
+  }, {
+    key: "heroes",
+    get: function get() {
+      var _heroes = [];
+      this.heroPosts.forEach(function (heroPost) {
+        if (heroPost.hero) {
+          _heroes.push(heroPost.hero);
+        }
+      });
+      return _heroes;
+    }
+  }]);
+
+  return Squad;
 }(_Model__WEBPACK_IMPORTED_MODULE_0__["default"]);
 
 
@@ -78878,11 +78906,11 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _classes_squad__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../classes/squad */ "./resources/js/classes/squad.js");
+/* harmony import */ var _models_Squad__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../models/Squad */ "./resources/js/models/Squad.js");
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   state: {
-    current: new _classes_squad__WEBPACK_IMPORTED_MODULE_0__["default"]({}),
+    current: new _models_Squad__WEBPACK_IMPORTED_MODULE_0__["default"]({}),
     original: null
   },
   getters: {
@@ -78892,14 +78920,14 @@ __webpack_require__.r(__webpack_exports__);
     _squad: function _squad(state) {
       return state.current;
     },
-    _availableSalary: function _availableSalary(state) {
-      return state.current.availableSalary;
+    _availableSpiritEssence: function _availableSpiritEssence(state) {
+      return state.current.availableSpiritEssence;
     }
   },
   mutations: {
     SET_SQUAD: function SET_SQUAD(state, payload) {
-      state.current = new _classes_squad__WEBPACK_IMPORTED_MODULE_0__["default"](payload);
-      state.original = new _classes_squad__WEBPACK_IMPORTED_MODULE_0__["default"](payload);
+      state.current = new _models_Squad__WEBPACK_IMPORTED_MODULE_0__["default"](payload);
+      state.original = new _models_Squad__WEBPACK_IMPORTED_MODULE_0__["default"](payload);
     }
   },
   actions: {

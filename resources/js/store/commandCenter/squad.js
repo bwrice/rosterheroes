@@ -1,4 +1,4 @@
-import Squad from '../../classes/squad';
+import Squad from '../../models/Squad'
 
 export default {
 
@@ -14,8 +14,8 @@ export default {
         _squad(state) {
             return state.current;
         },
-        _availableSalary(state) {
-            return state.current.availableSalary;
+        _availableSpiritEssence(state) {
+            return state.current.availableSpiritEssence;
         }
     },
     mutations: {

@@ -10,8 +10,12 @@
 |
 */
 
-Route::get('login/google', 'Auth\LoginController@redirectToProvider');
-Route::get('login/google/callback', 'Auth\LoginController@handleProviderCallback');
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\CommandCenterController;
+use App\Http\Controllers\SquadController;
+
+Route::get('login/google', [LoginController::class, 'redirectToProvider']);
+Route::get('login/google/callback', [LoginController::class, 'handleProviderCallback']);
 
 Route::get('/', function () {
     echo phpinfo();
@@ -19,8 +23,8 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-Route::middleware('auth')->get('/squads/create', 'SquadController@create')->name('create-squad');
-Route::middleware('auth')->get('/command-center/{squadSlug}/{any?}', 'SquadController@show')->where('any', '.*')->name('command-center');
+Route::get('/squads/create', [SquadController::class, 'create'])->name('create-squad')->middleware('auth');
+Route::get('/command-center/{squadSlug}/{any?}', [CommandCenterController::class, 'show'])->middleware('auth')->where('any', '.*')->name('command-center');
 
-Route::get('/{any}', 'SpaController@index')->where('any', '^(?!nova).*$');
+//Route::get('/{any}', 'SpaController@index')->where('any', '^(?!nova).*$');
 //Route::get('/{any}', 'SpaController@index')->where('any', '.*');

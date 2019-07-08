@@ -69,7 +69,7 @@
             ]),
             setInitialSquad: function() {
                 let self = this;
-                axios.get('/api/squad/' + this.$route.params.squadSlug)
+                axios.get('/api/squads/' + this.$route.params.squadSlug)
                     .then(function (response) {
                     self.setSquad(response.data.data);
                 }).catch(function (error) {

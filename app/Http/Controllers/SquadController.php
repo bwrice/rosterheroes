@@ -57,24 +57,14 @@ class SquadController extends Controller
         ]);
     }
 
-    public function show(Request $request, $squadSlug, $any = null )
+    public function show(Request $request, $squadSlug, $any = null)
     {
         $squad = Squad::slugOrFail($squadSlug);
-        //TODO: authorize
-        if ($request->expectsJson()) {
-            return new SquadResource($squad);
-        } elseif (! $any) {
-            return redirect('/command-center/' . $squadSlug . '/barracks');
-        } else {
-            if($squad->inCreationState()) {
-                return view('create-squad', [
-                    'squad' => json_encode(new SquadResource($squad)),
-                    'heroes' => json_encode((HeroResource::collection($squad->getHeroes()))),
-                    'heroClasses' => json_encode(HeroClassResource::collection($squad->getHeroClassAvailability())),
-                    'heroRaces' => json_encode(HeroRaceResource::collection($squad->getHeroRaceAvailability()))
-                ]);
-            }
-            return view('command-center');
-        }
+        return new SquadResource($squad->loadMissing([
+            'heroPosts.hero.playerSpirit.game.homeTeam',
+            'heroPosts.hero.playerSpirit.game.awayTeam',
+            'heroPosts.hero.playerSpirit.player.team',
+            'heroPosts.hero.playerSpirit.player.positions'
+        ]));
     }
 }

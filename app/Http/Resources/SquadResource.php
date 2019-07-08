@@ -26,12 +26,13 @@ class SquadResource extends JsonResource
             'slug' => $this->slug,
             'name' => $this->name,
             'spirit_essence' => $this->spirit_essence,
-            'heroPosts' => HeroPostResource::collection($this->heroPosts->loadMissing([
-                'hero.playerSpirit.game.homeTeam',
-                'hero.playerSpirit.game.awayTeam',
-                'hero.playerSpirit.player.team',
-                'hero.playerSpirit.player.positions',
-            ]))
+            'heroPosts' => HeroPostResource::collection($this->whenLoaded('heroPosts')),
+//            'heroPosts' => HeroPostResource::collection($this->heroPosts->loadMissing([
+//                'hero.playerSpirit.game.homeTeam',
+//                'hero.playerSpirit.game.awayTeam',
+//                'hero.playerSpirit.player.team',
+//                'hero.playerSpirit.player.positions',
+//            ]))
         ];
     }
 }
