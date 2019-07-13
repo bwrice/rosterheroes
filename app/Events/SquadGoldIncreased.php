@@ -13,31 +13,13 @@ use Spatie\EventProjector\ShouldBeStored;
 
 class SquadGoldIncreased implements ShouldBeStored
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
-
-
-    /**
-     * @var string
-     */
-    public $squadUuid;
     /**
      * @var int
      */
     public $amount;
 
-    public function __construct(string $squadUuid, int $amount)
+    public function __construct(int $amount)
     {
-        $this->squadUuid = $squadUuid;
         $this->amount = $amount;
-    }
-
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return \Illuminate\Broadcasting\Channel|array
-     */
-    public function broadcastOn()
-    {
-        return new PrivateChannel('channel-name');
     }
 }

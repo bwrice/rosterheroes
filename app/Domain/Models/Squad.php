@@ -2,48 +2,20 @@
 
 namespace App\Domain\Models;
 
-use App\Domain\Models\HeroClass;
-use App\Domain\Models\HeroRace;
-use App\Domain\Models\HeroRank;
-use App\Domain\Models\Province;
-use App\Domain\Models\Quest;
-use App\Domain\Models\Campaign;
-use App\Domain\Models\EventSourcedModel;
-use App\Domain\Models\Hero;
-use App\Domain\Models\Skirmish;
-use App\Domain\Models\SlotType;
 use App\Events\SquadFavorIncreased;
 use App\Events\SquadCreated;
-use App\Events\SquadCreationRequested;
 use App\Events\SquadGoldIncreased;
-use App\Events\SquadHeroPostAdded;
 use App\Events\SquadEssenceIncreased;
 use App\Exceptions\CampaignExistsException;
-use App\Exceptions\HeroPostNotFoundException;
-use App\Exceptions\InvalidContinentException;
-use App\Exceptions\InvalidProvinceException;
-use App\Exceptions\MaxQuestsException;
 use App\Exceptions\NotBorderedByException;
-use App\Exceptions\QuestCompletedException;
 use App\Exceptions\QuestRequiredException;
 use App\Exceptions\WeekLockedException;
 use App\Domain\Collections\HeroCollection;
-use App\Domain\Models\HeroPost;
 use App\Domain\Collections\HeroPostCollection;
 use App\Domain\Interfaces\HasSlots;
 use App\Domain\Slot;
 use App\Domain\Collections\SlotCollection;
-use App\Domain\Models\HeroPostType;
-use App\Squads\HeroClassAvailability;
-use App\Squads\HeroPostAvailability;
-use App\Squads\HeroRaceAvailability;
-use App\Domain\Models\MobileStorageRank;
 use App\Domain\Traits\HasSlug;
-use App\Domain\Models\Week;
-use App\Domain\Models\Stash;
-use App\Domain\Models\StoreHouse;
-use App\Domain\Models\User;
-use Illuminate\Database\Eloquent\Collection;
 use Ramsey\Uuid\Uuid;
 use Spatie\Sluggable\SlugOptions;
 
@@ -177,7 +149,7 @@ class Squad extends EventSourcedModel implements HasSlots
 
         $attributes['uuid'] = $uuid;
 
-        event(new SquadCreationRequested($attributes));
+        event(new SquadCreated($attributes));
 
         return self::uuid($uuid);
     }

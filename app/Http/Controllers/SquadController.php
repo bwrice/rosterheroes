@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Aggregates\SquadAggregate;
 use App\Events\HeroCreated;
 use App\Events\SquadCreated;
 use App\Domain\Models\Hero;
@@ -19,6 +20,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\HeroResource;
 use App\Http\Resources\HeroClassResource;
 use App\Http\Resources\HeroRaceResource;
+use Illuminate\Support\Str;
 
 class SquadController extends Controller
 {
@@ -28,6 +30,22 @@ class SquadController extends Controller
         $request->validate([
             'name' => 'required|unique:squads|between:4,20|regex:/^[\w\-\s]+$/'
         ]);
+
+        $uuid = Str::uuid();
+
+        /** @var SquadAggregate $aggregate */
+        $aggregate = SquadAggregate::retrieve($uuid);
+
+        $aggregate->createSquad(
+            auth()->user()->id,
+            $request->name,
+            SquadRank::getStarting()->id,
+            MobileStorageRank::getStarting()->id,
+            Province::getStarting()->id
+        )
+            ->increaseEssence(Squad::STARTING_ESSENCE)
+            ->increaseGold(Squad::STARTING_GOLD)
+            ->increaseFavor(Squad::STARTING_FAVOR);
 
         /** @var Squad $squad */
         $squad = Squad::createWithAttributes([

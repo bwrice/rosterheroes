@@ -1,6 +1,13 @@
 <?php
 
 return [
+    /*
+     * These directories will be scanned for projectors and reactors. They
+     * will be automatically registered to projectionist automatically.
+     */
+    'auto_discover_projectors_and_reactors' => [
+        // Empty to turn off auto-discovery
+    ],
 
     /*
      * Projectors are classes that build up projections. You can create them by
@@ -49,13 +56,6 @@ return [
      * it should extend \Spatie\EventProjector\Models\StoredEvent.
      */
     'stored_event_model' => \Spatie\EventProjector\Models\StoredEvent::class,
-
-    /*
-     * This class is responsible for projector statuses. To add extra behaviour you
-     * can change this to a class of your own. The only restriction is that
-     * it should extend \Spatie\EventProjector\Models\ProjectorStatus.
-     */
-    'projector_status_model' => \Spatie\EventProjector\Models\ProjectorStatus::class,
 
     /*
      * This class is responsible for handle stored events. To add extra behaviour you

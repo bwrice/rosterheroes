@@ -2,7 +2,6 @@
 
 namespace App\Events;
 
-use App\Domain\Models\Squad;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -10,30 +9,42 @@ use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Spatie\EventProjector\ShouldBeStored;
 
-class SquadCreated
+class SquadCreated implements ShouldBeStored
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $squad;
-    /**
-     * Create a new event instance.
-     * @param \App\Domain\Models\Squad $squad
-     *
-     * @return void
-     */
-    public function __construct(Squad $squad)
-    {
-        $this->squad = $squad;
-    }
+    /** @var int */
+    public $userID;
+
+    /** @var string */
+    public $name;
+
+    /** @var int */
+    public $squadRankID;
+
+    /** @var int */
+    public $mobileStorageRankID;
+
+    /** @var int */
+    public $provinceID;
 
     /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return \Illuminate\Broadcasting\Channel|array
+     * SquadCreated constructor.
+     * @param int $userID
+     * @param string $name
+     * @param int $squadRankID
+     * @param int $mobilStorageRankID
+     * @param int $provinceID
      */
-    public function broadcastOn()
+    public function __construct(int $userID, string $name, int $squadRankID, int $mobilStorageRankID, int $provinceID)
     {
-        return new PrivateChannel('channel-name');
+        $this->userID = $userID;
+        $this->name = $name;
+        $this->squadRankID = $squadRankID;
+        $this->mobileStorageRankID = $mobilStorageRankID;
+        $this->provinceID = $provinceID;
     }
+
 }
