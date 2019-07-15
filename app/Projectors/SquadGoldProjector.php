@@ -11,22 +11,10 @@ class SquadGoldProjector implements Projector
 {
     use ProjectsEvents;
 
-    /*
-     * Here you can specify which event should trigger which method.
-     */
-    protected $handlesEvents = [
-        SquadGoldIncreased::class => 'onSquadGoldIncreased'
-    ];
-
-    public function onSquadGoldIncreased(SquadGoldIncreased $event)
+    public function onSquadGoldIncreased(SquadGoldIncreased $event, string $uuid)
     {
-        $squad = Squad::uuid($event->squadUuid);
+        $squad = Squad::uuid($uuid);
         $squad->gold += $event->amount;
         $squad->save();
-    }
-
-    public function streamEventsBy()
-    {
-        return 'squadUuid';
     }
 }

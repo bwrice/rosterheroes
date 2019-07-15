@@ -32,6 +32,8 @@ class SquadFeatureTest extends TestCase
      */
     public function a_new_squad_can_be_created()
     {
+        $this->withoutExceptionHandling();
+
         /** @var User $user */
         $user = Passport::actingAs(factory(User::class)->create());
 
@@ -53,9 +55,9 @@ class SquadFeatureTest extends TestCase
 
         $this->assertEquals($squad->mobileStorageRank->getBehavior()->getSlotsCount(), $squad->slots()->count(), "Squad has it's slots");
 
-        $this->assertEquals( count(Squad::STARTING_HERO_POSTS), $squad->heroPosts->count(), 'Squad has correct number of hero posts');
+        $this->assertEquals(count(Squad::STARTING_HERO_POSTS), $squad->heroPosts->count(), 'Squad has correct number of hero posts');
 
-       foreach( Squad::STARTING_HERO_POST_TYPES as $heroPostTypeName => $count ) {
+       foreach(Squad::STARTING_HERO_POST_TYPES as $heroPostTypeName => $count) {
            $heroPostTypeName = HeroPostType::where('name', '=', $heroPostTypeName)->first();
            $this->assertEquals($count, $squad->heroPosts->where('hero_post_type_id', '=', $heroPostTypeName->id)->count(), "Correct amount of hero posts by hero post type");
        }

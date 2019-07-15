@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Events\SquadCreated;
+use App\StorableEvents\SquadCreated;
 use App\Domain\Models\SlotType;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;

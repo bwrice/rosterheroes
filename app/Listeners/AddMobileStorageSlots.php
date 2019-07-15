@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Events\SquadCreated;
+use App\StorableEvents\SquadCreated;
 use App\Domain\Models\SlotType;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -22,7 +22,7 @@ class AddMobileStorageSlots
     /**
      * Handle the event.
      *
-     * @param SquadCreated $event
+     * @param \App\StorableEvents\SquadCreated $event
      * @return void
      */
     public function handle(SquadCreated $event)

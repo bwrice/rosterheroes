@@ -2,10 +2,14 @@
 
 namespace App\Aggregates;
 
-use App\Events\SquadCreated;
+use App\Domain\Models\HeroPostType;
+use App\Domain\Models\SlotType;
+use App\StorableEvents\SquadCreated;
 use App\Events\SquadEssenceIncreased;
 use App\Events\SquadFavorIncreased;
 use App\Events\SquadGoldIncreased;
+use App\StorableEvents\SquadHeroPostAdded;
+use App\StorableEvents\SquadSlotsAdded;
 use Spatie\EventProjector\AggregateRoot;
 
 final class SquadAggregate extends AggregateRoot
@@ -42,6 +46,20 @@ final class SquadAggregate extends AggregateRoot
     public function increaseFavor(int $amount)
     {
         $this->recordThat(new SquadFavorIncreased($amount));
+
+        return $this;
+    }
+
+    public function addHeroPost(HeroPostType $heroPostType)
+    {
+        $this->recordThat(new SquadHeroPostAdded($heroPostType));
+
+        return $this;
+    }
+
+    public function addSlots(SlotType $slotType, int $count)
+    {
+        $this->recordThat(new SquadSlotsAdded($slotType, $count));
 
         return $this;
     }

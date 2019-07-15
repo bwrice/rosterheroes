@@ -2,7 +2,7 @@
 
 namespace App\Domain\Models;
 
-use App\Events\SquadCreated;
+use App\StorableEvents\SquadCreated;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Ramsey\Uuid\Uuid;

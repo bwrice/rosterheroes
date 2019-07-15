@@ -3,7 +3,7 @@
 namespace App\Domain\Models;
 
 use App\Events\SquadFavorIncreased;
-use App\Events\SquadCreated;
+use App\StorableEvents\SquadCreated;
 use App\Events\SquadGoldIncreased;
 use App\Events\SquadEssenceIncreased;
 use App\Exceptions\CampaignExistsException;
@@ -48,6 +48,7 @@ class Squad extends EventSourcedModel implements HasSlots
 {
     use HasSlug;
 
+    const RELATION_MORPH_MAP_KEY = 'squads';
     const MANAGE_AUTHORIZATION = 'manage-squad';
 
     const STARTING_GOLD = 500;
@@ -85,21 +86,6 @@ class Squad extends EventSourcedModel implements HasSlots
     public static function getStartingHeroesCount()
     {
         return collect(self::STARTING_HERO_POST_TYPES)->sum();
-    }
-
-    public function increaseEssence(int $amount)
-    {
-        event(new SquadEssenceIncreased($this->uuid, $amount));
-    }
-
-    public function increaseGold(int $amount)
-    {
-        event(new SquadGoldIncreased($this->uuid, $amount));
-    }
-
-    public function increaseFavor(int $amount)
-    {
-        event(new SquadFavorIncreased($this->uuid, $amount));
     }
 
     public function addSlots()

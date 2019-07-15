@@ -11,22 +11,10 @@ class SquadFavorProjector implements Projector
 {
     use ProjectsEvents;
 
-    /*
-     * Here you can specify which event should trigger which method.
-     */
-    protected $handlesEvents = [
-        SquadFavorIncreased::class => 'onSquadFavorIncreased'
-    ];
-
-    public function onSquadFavorIncreased(SquadFavorIncreased $event)
+    public function onSquadFavorIncreased(SquadFavorIncreased $event, string $uuid)
     {
-        $squad = Squad::uuid($event->squadUuid);
+        $squad = Squad::uuid($uuid);
         $squad->favor += $event->amount;
         $squad->save();
-    }
-
-    public function streamEventsBy()
-    {
-        return 'squadUuid';
     }
 }

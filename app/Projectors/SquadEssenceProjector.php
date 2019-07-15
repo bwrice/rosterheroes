@@ -11,22 +11,10 @@ class SquadEssenceProjector implements Projector
 {
     use ProjectsEvents;
 
-    /*
-     * Here you can specify which event should trigger which method.
-     */
-    protected $handlesEvents = [
-        SquadEssenceIncreased::class => 'onSquadEssenceIncreased'
-    ];
-
-    public function onSquadEssenceIncreased(SquadEssenceIncreased $event)
+    public function onSquadEssenceIncreased(SquadEssenceIncreased $event, string $aggregateUuid)
     {
-        $squad = Squad::uuid($event->squadUuid);
+        $squad = Squad::uuid($aggregateUuid);
         $squad->spirit_essence += $event->amount;
         $squad->save();
-    }
-
-    public function streamEventsBy()
-    {
-        return 'squadUuid';
     }
 }

@@ -37,6 +37,9 @@ class MobileStorageRank extends Model
      */
     public static function getStarting()
     {
-        return self::where('name', '=', self::WAGON)->first();
+        /** @var MobileStorageRank $mobileStorageRank */
+        $mobileStorageRank = self::query()->where('name', '=', self::WAGON)->first();
+
+        return $mobileStorageRank;
     }
 }

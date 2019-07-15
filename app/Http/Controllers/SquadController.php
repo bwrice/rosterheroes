@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Aggregates\SquadAggregate;
+use App\Domain\Models\HeroPostType;
+use App\Domain\Models\SlotType;
 use App\Events\HeroCreated;
-use App\Events\SquadCreated;
+use App\StorableEvents\SquadCreated;
 use App\Domain\Models\Hero;
 use App\Domain\Models\HeroClass;
 use App\Domain\Models\HeroRace;
@@ -42,30 +44,34 @@ class SquadController extends Controller
             SquadRank::getStarting()->id,
             MobileStorageRank::getStarting()->id,
             Province::getStarting()->id
-        )
-            ->increaseEssence(Squad::STARTING_ESSENCE)
+        );
+
+        $aggregate->persist();
+
+        $aggregate->increaseEssence(Squad::STARTING_ESSENCE)
             ->increaseGold(Squad::STARTING_GOLD)
             ->increaseFavor(Squad::STARTING_FAVOR);
 
-        /** @var Squad $squad */
-        $squad = Squad::createWithAttributes([
-            'user_id' => Auth::user()->id,
-            'name' => $request->name,
-            'squad_rank_id' => SquadRank::getStarting()->id,
-            'mobile_storage_rank_id' => MobileStorageRank::getStarting()->id,
-            'province_id' => Province::getStarting()->id
-        ]);
+//        $startingHeroPostTypes = HeroPostType::squadStarting();
+//        $startingHeroPostTypes->each(function (HeroPostType $heroPostType, $postTypeCount) use ($aggregate) {
+//            foreach (range(1, $postTypeCount) as $count) {
+//                $aggregate->addHeroPost($heroPostType);
+//            }
+//        });
 
-        // Give starting essence, gold and favor to new squad
-        $squad->increaseEssence(Squad::STARTING_ESSENCE);
-        $squad->increaseGold(Squad::STARTING_GOLD);
-        $squad->increaseFavor(Squad::STARTING_FAVOR);
-        $squad->addStartingHeroPosts();
-        $squad->addSlots();
+        $squad = Squad::uuid($uuid);
 
-        event(new SquadCreated($squad));
+//        $slotsNeededCount = $squad->mobileStorageRank->getBehavior()->getSlotsCount();
+//        $currentSlotsCount = $squad->slots()->count();
+//        $diff = $slotsNeededCount - $currentSlotsCount;
 
-        return response()->json(new SquadResource($squad), 201);
+
+        /** @var SlotType $slotType */
+//        $slotType = SlotType::query()->where('name', '=', SlotType::UNIVERSAL)->first();
+//        $aggregate->addSlots($slotType, $diff);
+        $aggregate->persist();
+
+        return response()->json(new SquadResource($squad->fresh()), 201);
     }
 
     public function create()

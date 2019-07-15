@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Events\SquadCreated;
+use App\StorableEvents\SquadCreated;
 use App\Events\WagonCreated;
 use App\Domain\Models\Squad;
 use App\Wagons\Wagon;

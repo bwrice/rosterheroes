@@ -1,13 +1,15 @@
 <?php
 
-namespace App\Events;
+namespace App\StorableEvents;
 
 use App\Domain\Models\HeroPostType;
 use Spatie\EventProjector\ShouldBeStored;
 
-class SquadHeroPostAdded implements ShouldBeStored
+final class SquadHeroPostAdded implements ShouldBeStored
 {
-    /** @var  HeroPostType */
+    /**
+     * @var HeroPostType
+     */
     public $heroPostType;
 
     public function __construct(HeroPostType $heroPostType)

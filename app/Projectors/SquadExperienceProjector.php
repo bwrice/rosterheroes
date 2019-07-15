@@ -11,23 +11,10 @@ class SquadExperienceProjector implements Projector
 {
     use ProjectsEvents;
 
-    /*
-     * Here you can specify which event should trigger which method.
-     */
-    protected $handlesEvents = [
-        SquadExperienceIncreased::class => 'onSquadExperienceIncreased'
-    ];
-
-    public function onSquadExperienceIncreased(SquadExperienceIncreased $event)
+    public function onSquadExperienceIncreased(SquadExperienceIncreased $event, string $uuid)
     {
-        $squad = Squad::uuid($event->squadUuid);
+        $squad = Squad::uuid($uuid);
         $squad->experience += $event->amount;
         $squad->save();
-    }
-
-
-    public function streamEventsBy()
-    {
-        return 'squadUuid';
     }
 }

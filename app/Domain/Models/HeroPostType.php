@@ -6,6 +6,7 @@ use App\Domain\Collections\HeroRaceCollection;
 use App\Domain\Models\HeroRace;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use phpDocumentor\Reflection\Types\Self_;
 
 
 /**
@@ -24,11 +25,23 @@ class HeroPostType extends Model
     public const DWARF = 'dwarf';
     public const ORC = 'orc';
 
-    protected const STARTING_SQUAD_POST_TYPES = [
-        self::HUMAN,
-        self::ELF,
-        self::DWARF,
-        self::ORC
+    public const SQUAD_STARTING_HERO_POST_TYPES = [
+        [
+            'name' => self::HUMAN,
+            'count' => 1
+        ],
+        [
+            'name' => self::ELF,
+            'count' => 1
+        ],
+        [
+            'name' => self::DWARF,
+            'count' => 1
+        ],
+        [
+            'name' => self::ORC,
+            'count' => 1
+        ]
     ];
 
     protected $guarded = [];
@@ -36,5 +49,28 @@ class HeroPostType extends Model
     public function heroRaces()
     {
         return $this->belongsToMany(HeroRace::class)->withTimestamps();
+    }
+
+    /**
+     * Returns a collection of HeroPostTypes with keys for how many
+     * should be created for a new Squad
+     *
+     * @return \Illuminate\Database\Eloquent\Builder[]|Collection
+     */
+    public static function squadStarting()
+    {
+        $starting = collect(self::SQUAD_STARTING_HERO_POST_TYPES);
+        $names = $starting->map(function ($postTypeArray) {
+            return $postTypeArray['name'];
+        });
+        return self::query()->whereIn('name', $names)->get()
+            ->mapWithKeys(function (HeroPostType $heroPostType) use ($starting) {
+                $postTypeArray = $starting->first(function ($postTypeArray) use ($heroPostType) {
+                    return $postTypeArray['name'] === $heroPostType->name;
+                });
+                return [
+                    $postTypeArray['count'] => $heroPostType
+                ];
+            });
     }
 }

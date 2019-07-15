@@ -12,24 +12,11 @@ class SquadHeroPostsProjector implements Projector
 {
     use ProjectsEvents;
 
-    /*
-     * Here you can specify which event should trigger which method.
-     */
-    protected $handlesEvents = [
-        SquadHeroPostAdded::class => 'onSquadHeroPostAdded'
-    ];
-
-    public function onSquadHeroPostAdded(SquadHeroPostAdded $event)
+    public function onSquadHeroPostAdded(SquadHeroPostAdded $event, string $uuid)
     {
-        $squad = Squad::uuid($event->squadUuid);
-        $heroRace = HeroRace::findOrFail($event->heroRaceID);
+        $squad = Squad::uuid($uuid);
         $squad->heroPosts()->create([
-           'hero_race_id' => $heroRace->id
+            'hero_post_type_id' => $event->heroPostType->id
         ]);
-    }
-
-    public function streamEventsBy()
-    {
-        return 'squadUuid';
     }
 }
