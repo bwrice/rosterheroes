@@ -52,23 +52,20 @@ class SquadController extends Controller
             ->increaseGold(Squad::STARTING_GOLD)
             ->increaseFavor(Squad::STARTING_FAVOR);
 
-//        $startingHeroPostTypes = HeroPostType::squadStarting();
-//        $startingHeroPostTypes->each(function (HeroPostType $heroPostType, $postTypeCount) use ($aggregate) {
-//            foreach (range(1, $postTypeCount) as $count) {
-//                $aggregate->addHeroPost($heroPostType);
-//            }
-//        });
+        $startingHeroPostTypes = HeroPostType::squadStarting();
+        $startingHeroPostTypes->each(function (array $startingHeroPostType) use ($aggregate) {
+            foreach (range(1, $startingHeroPostType['count']) as $count) {
+                $aggregate->addHeroPost($startingHeroPostType['name']);
+            }
+        });
 
         $squad = Squad::uuid($uuid);
 
-//        $slotsNeededCount = $squad->mobileStorageRank->getBehavior()->getSlotsCount();
-//        $currentSlotsCount = $squad->slots()->count();
-//        $diff = $slotsNeededCount - $currentSlotsCount;
+        $slotsNeededCount = $squad->mobileStorageRank->getBehavior()->getSlotsCount();
+        $currentSlotsCount = $squad->slots()->count();
+        $diff = $slotsNeededCount - $currentSlotsCount;
 
-
-        /** @var SlotType $slotType */
-//        $slotType = SlotType::query()->where('name', '=', SlotType::UNIVERSAL)->first();
-//        $aggregate->addSlots($slotType, $diff);
+        $aggregate->addSlots(SlotType::UNIVERSAL, $diff);
         $aggregate->persist();
 
         return response()->json(new SquadResource($squad->fresh()), 201);

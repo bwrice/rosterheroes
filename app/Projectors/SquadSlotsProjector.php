@@ -3,6 +3,7 @@
 namespace App\Projectors;
 
 use App\Domain\Collections\SlotCollection;
+use App\Domain\Models\SlotType;
 use App\Domain\Models\Squad;
 use App\Domain\Slot;
 use App\StorableEvents\SquadSlotsAdded;
@@ -13,14 +14,17 @@ final class SquadSlotsProjector implements Projector
 {
     use ProjectsEvents;
 
-    public function onSquadSlotsAdded(SquadSlotsAdded $event, string $uuid)
+    public function onSquadSlotsAdded(SquadSlotsAdded $event, string $aggregateUuid)
     {
-        $squad = Squad::uuid($uuid);
+        /** @var SlotType $slotType */
+        $slotType = SlotType::query()->where('name', '=', $event->slotTypeName)->first();
+
+        $squad = Squad::uuid($aggregateUuid);
         $slots = new SlotCollection();
 
         foreach(range(1, $event->count) as $slotCount) {
             $slots->push(Slot::query()->make([
-                'slot_type_id' => $event->slotType->id
+                'slot_type_id' => $slotType->id
             ]));
         }
 

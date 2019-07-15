@@ -30,34 +30,3 @@ Route::get('/command-center/{squadSlug}/{any?}', [CommandCenterController::class
 
 //Route::get('/{any}', 'SpaController@index')->where('any', '^(?!nova).*$');
 //Route::get('/{any}', 'SpaController@index')->where('any', '.*');
-function is_this_slower()
-{
-    $start = microtime(true);
-    $slotType = SlotType::where('name', '=', SlotType::UNIVERSAL)->first();
-    for($i = 1; $i <= 500; $i++) {
-        Slot::query()->create([
-            'slot_type_id' => $slotType->id,
-            'has_slots_type' => 'testing',
-            'has_slots_id' => 1
-        ]);
-    }
-    $end = microtime(true);
-    return $end - $start;
-}
-
-function is_this_faster()
-{
-    $start = microtime(true);
-    $slots = new \Illuminate\Database\Eloquent\Collection();
-    $slotType = SlotType::where('name', '=', SlotType::UNIVERSAL)->first();
-    for($i = 1; $i <= 500; $i++) {
-        $slots->push(Slot::query()->make([
-            'slot_type_id' => $slotType->id,
-            'has_slots_type' => 'testing-2',
-            'has_slots_id' => 1
-        ]));
-    }
-    Slot::query()->insert($slots->toArray());
-    $end = microtime(true);
-    return $end - $start;
-}

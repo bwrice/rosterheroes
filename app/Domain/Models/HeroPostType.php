@@ -59,18 +59,6 @@ class HeroPostType extends Model
      */
     public static function squadStarting()
     {
-        $starting = collect(self::SQUAD_STARTING_HERO_POST_TYPES);
-        $names = $starting->map(function ($postTypeArray) {
-            return $postTypeArray['name'];
-        });
-        return self::query()->whereIn('name', $names)->get()
-            ->mapWithKeys(function (HeroPostType $heroPostType) use ($starting) {
-                $postTypeArray = $starting->first(function ($postTypeArray) use ($heroPostType) {
-                    return $postTypeArray['name'] === $heroPostType->name;
-                });
-                return [
-                    $postTypeArray['count'] => $heroPostType
-                ];
-            });
+        return collect(self::SQUAD_STARTING_HERO_POST_TYPES);
     }
 }

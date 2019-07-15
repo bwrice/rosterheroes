@@ -8,17 +8,17 @@ use Spatie\EventProjector\ShouldBeStored;
 final class SquadSlotsAdded implements ShouldBeStored
 {
     /**
-     * @var SlotType
+     * @var string
      */
-    public $slotType;
+    public $slotTypeName;
     /**
      * @var int
      */
     public $count;
 
-    public function __construct(SlotType $slotType, int $count)
+    public function __construct(string $slotTypeName, int $count)
     {
-        $this->slotType = $slotType;
+        $this->slotTypeName = $slotTypeName;
         $this->count = $count;
     }
 }

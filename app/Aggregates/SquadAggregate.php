@@ -50,16 +50,16 @@ final class SquadAggregate extends AggregateRoot
         return $this;
     }
 
-    public function addHeroPost(HeroPostType $heroPostType)
+    public function addHeroPost(string $heroPostTypeName)
     {
-        $this->recordThat(new SquadHeroPostAdded($heroPostType));
+        $this->recordThat(new SquadHeroPostAdded($heroPostTypeName));
 
         return $this;
     }
 
-    public function addSlots(SlotType $slotType, int $count)
+    public function addSlots(string $slotTypeName, int $count)
     {
-        $this->recordThat(new SquadSlotsAdded($slotType, $count));
+        $this->recordThat(new SquadSlotsAdded($slotTypeName, $count));
 
         return $this;
     }

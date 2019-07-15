@@ -8,12 +8,12 @@ use Spatie\EventProjector\ShouldBeStored;
 final class SquadHeroPostAdded implements ShouldBeStored
 {
     /**
-     * @var HeroPostType
+     * @var string
      */
-    public $heroPostType;
+    public $heroPostTypeName;
 
-    public function __construct(HeroPostType $heroPostType)
+    public function __construct(string $heroPostTypeName)
     {
-        $this->heroPostType = $heroPostType;
+        $this->heroPostTypeName = $heroPostTypeName;
     }
 }
