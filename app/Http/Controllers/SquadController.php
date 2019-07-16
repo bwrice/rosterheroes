@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Aggregates\SquadAggregate;
+use App\Domain\Actions\CreateNewSquadAction;
+use App\Domain\Actions\UpdateSquadSlotsAction;
 use App\Domain\Models\HeroPostType;
 use App\Domain\Models\SlotType;
 use App\Events\HeroCreated;
@@ -28,47 +30,23 @@ class SquadController extends Controller
 {
     public function store(Request $request)
     {
-        //TODO authorize
+        //TODO authorize (limit squad creation to 1?)
         $request->validate([
             'name' => 'required|unique:squads|between:4,20|regex:/^[\w\-\s]+$/'
         ]);
 
         $uuid = Str::uuid();
 
-        /** @var SquadAggregate $aggregate */
-        $aggregate = SquadAggregate::retrieve($uuid);
-
-        $aggregate->createSquad(
+        $createAction = new CreateNewSquadAction(
+            $uuid,
             auth()->user()->id,
             $request->name,
-            SquadRank::getStarting()->id,
-            MobileStorageRank::getStarting()->id,
-            Province::getStarting()->id
+            new UpdateSquadSlotsAction($uuid)
         );
+        // invoke the action
+        $squad = $createAction();
 
-        $aggregate->persist();
-
-        $aggregate->increaseEssence(Squad::STARTING_ESSENCE)
-            ->increaseGold(Squad::STARTING_GOLD)
-            ->increaseFavor(Squad::STARTING_FAVOR);
-
-        $startingHeroPostTypes = HeroPostType::squadStarting();
-        $startingHeroPostTypes->each(function (array $startingHeroPostType) use ($aggregate) {
-            foreach (range(1, $startingHeroPostType['count']) as $count) {
-                $aggregate->addHeroPost($startingHeroPostType['name']);
-            }
-        });
-
-        $squad = Squad::uuid($uuid);
-
-        $slotsNeededCount = $squad->mobileStorageRank->getBehavior()->getSlotsCount();
-        $currentSlotsCount = $squad->slots()->count();
-        $diff = $slotsNeededCount - $currentSlotsCount;
-
-        $aggregate->addSlots(SlotType::UNIVERSAL, $diff);
-        $aggregate->persist();
-
-        return response()->json(new SquadResource($squad->fresh()), 201);
+        return response()->json(new SquadResource($squad), 201);
     }
 
     public function create()
