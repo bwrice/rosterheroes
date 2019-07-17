@@ -5,7 +5,7 @@ namespace App\Aggregates;
 use App\Domain\Models\Hero;
 use App\StorableEvents\HeroCreated;
 use App\StorableEvents\HeroSlotCreated;
-use App\StorableEvents\HeroMeasurableCreated;
+use App\StorableEvents\MeasurableCreated;
 use Spatie\EventProjector\AggregateRoot;
 
 final class HeroAggregate extends AggregateRoot
@@ -20,10 +20,7 @@ final class HeroAggregate extends AggregateRoot
     public function createHeroSlot(int $slotTypeID)
     {
         $this->recordThat(new HeroSlotCreated($slotTypeID));
-    }
 
-    public function createMeasurable(int $measurableTypeID)
-    {
-        $this->recordThat(new HeroMeasurableCreated($measurableTypeID));
+        return $this;
     }
 }
