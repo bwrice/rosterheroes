@@ -43,7 +43,7 @@ class AddNewHeroToSquadAction
      * @throws HeroPostNotFoundException
      * @throws InvalidHeroClassException
      */
-    public function __invoke()
+    public function __invoke(): Hero
     {
         $heroPost = $this->getHeroPost();
         if (! $heroPost) {
@@ -55,6 +55,7 @@ class AddNewHeroToSquadAction
             throw new InvalidHeroClassException($heroClass);
         }
 
+        // invoke the CreateNewHeroAction
         $hero = call_user_func($this->createNewHeroAction);
 
         $heroPost->hero_id = $hero->id;
