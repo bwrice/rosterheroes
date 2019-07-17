@@ -11,9 +11,8 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Spatie\EventProjector\ShouldBeStored;
 
-class HeroCreated implements ShouldBeStored
+final class HeroCreated implements ShouldBeStored
 {
-
     /**
      * @var string
      */
