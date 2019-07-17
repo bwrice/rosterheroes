@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Domain\Actions\AddHeroToSquad;
-use App\Events\HeroCreated;
+use App\Domain\Actions\AddNewHeroToSquadAction;
+use App\StorableEvents\HeroCreated;
 use App\Exceptions\GameStartedException;
 use App\Exceptions\HeroPostNotFoundException;
 use App\Exceptions\InvalidHeroClassException;
@@ -45,7 +45,7 @@ class SquadHeroController extends Controller
         /** @var \App\Domain\Models\HeroClass $heroClass */
         $heroClass = HeroClass::query()->where('name', '=', $request->class)->first();
 
-        $action = new AddHeroToSquad($squad, $heroRace, $heroClass, $request->name);
+        $action = new AddNewHeroToSquadAction($squad, $heroRace, $heroClass, $request->name);
 
         try {
             $hero = $action();

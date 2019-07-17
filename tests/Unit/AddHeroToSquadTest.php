@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Domain\Actions\AddHeroToSquad;
+use App\Domain\Actions\AddNewHeroToSquadAction;
 use App\Exceptions\HeroPostNotFoundException;
 use App\Exceptions\InvalidHeroClassException;
 use App\Domain\Models\Hero;
@@ -37,7 +37,7 @@ class AddHeroToSquadTest extends TestCase
         $heroClass = HeroClass::query()->inRandomOrder()->first();
 
         try {
-            $action = new AddHeroToSquad($squad, $heroRace, $heroClass, 'TestHero' . rand(1,999999));
+            $action = new AddNewHeroToSquadAction($squad, $heroRace, $heroClass, 'TestHero' . rand(1,999999));
             $action();
         } catch (HeroPostNotFoundException $exception) {
             $this->assertEquals(0, $squad->getHeroes()->count());
@@ -62,7 +62,7 @@ class AddHeroToSquadTest extends TestCase
         $heroClass = HeroClass::query()->inRandomOrder()->first();
 
         try {
-            $action = new AddHeroToSquad($heroPost->squad, $heroRace, $heroClass, 'TestHero' . rand(1,999999));
+            $action = new AddNewHeroToSquadAction($heroPost->squad, $heroRace, $heroClass, 'TestHero' . rand(1,999999));
             $action();
         } catch (HeroPostNotFoundException $exception) {
             $this->assertEquals(0, $heroPost->squad->getHeroes()->count());
@@ -117,7 +117,7 @@ class AddHeroToSquadTest extends TestCase
             $availableHeroPost = $heroPosts->postFilled(false)->first();
             $this->assertNotNull($availableHeroPost);
             $heroRace = $availableHeroPost->heroPostType->heroRaces->first();
-            $action = new AddHeroToSquad($squad, $heroRace, $heroClass, 'TestHero' . rand(1,999999));
+            $action = new AddNewHeroToSquadAction($squad, $heroRace, $heroClass, 'TestHero' . rand(1,999999));
             $action();
         } catch (InvalidHeroClassException $exception) {
             $this->assertEquals($heroClass, $exception->getHeroClass());

@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Events\HeroCreated;
+use App\StorableEvents\HeroCreated;
 use App\Events\HeroEvent;
 use App\Domain\Models\Hero;
 use App\Domain\Models\SlotType;

@@ -7,7 +7,7 @@ use App\Domain\Actions\CreateNewSquadAction;
 use App\Domain\Actions\UpdateSquadSlotsAction;
 use App\Domain\Models\HeroPostType;
 use App\Domain\Models\SlotType;
-use App\Events\HeroCreated;
+use App\StorableEvents\HeroCreated;
 use App\StorableEvents\SquadCreated;
 use App\Domain\Models\Hero;
 use App\Domain\Models\HeroClass;

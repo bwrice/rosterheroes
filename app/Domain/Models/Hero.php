@@ -4,8 +4,7 @@ namespace App\Domain\Models;
 
 use App\Domain\QueryBuilders\HeroQueryBuilder;
 use App\Domain\Traits\HasSlug;
-use App\Events\HeroCreated;
-use App\Events\HeroCreationRequested;
+use App\StorableEvents\HeroCreated;
 use App\Domain\Models\EventSourcedModel;
 use App\Exceptions\GameStartedException;
 use App\Exceptions\InvalidWeekException;
@@ -164,7 +163,7 @@ class Hero extends EventSourcedModel implements HasSlots
 
         $attributes['uuid'] = $uuid;
 
-        event(new HeroCreationRequested($attributes));
+        event(new HeroCreated($attributes));
 
         return self::uuid($uuid);
     }

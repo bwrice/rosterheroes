@@ -4,6 +4,7 @@ namespace App\Projectors;
 
 use App\Events\MeasurableCreationRequested;
 use App\Domain\Models\Measurable;
+use App\StorableEvents\HeroMeasurableCreated;
 use Spatie\EventProjector\Projectors\Projector;
 use Spatie\EventProjector\Projectors\ProjectsEvents;
 
@@ -11,21 +12,12 @@ class MeasurableProjector implements Projector
 {
     use ProjectsEvents;
 
-    /*
-     * Here you can specify which event should trigger which method.
-     */
-    protected $handlesEvents = [
-        MeasurableCreationRequested::class => 'onMeasurableCreationRequested'
-    ];
-
-    public function onMeasurableCreationRequested(MeasurableCreationRequested $event)
+    public function onMeasurableCreated(HeroMeasurableCreated $event)
     {
-        Measurable::create($event->attributes);
+        Measurable::query()->create([
+            'has_measurables_type' => $event->hasMeasurablesType,
+            'has_measurables_id' => $event->hasMeasurablesID,
+            'amount_raised' => $event->amountRaised
+        ]);
     }
-
-    public function streamEventsBy()
-    {
-        return 'measurableUuid';
-    }
-
 }

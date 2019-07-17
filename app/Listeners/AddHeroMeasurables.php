@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Events\HeroCreated;
+use App\StorableEvents\HeroCreated;
 use App\Domain\Models\MeasurableType;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
