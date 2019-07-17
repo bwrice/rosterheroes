@@ -5,7 +5,7 @@ namespace App\Projectors;
 use App\StorableEvents\HeroCreated;
 use App\Domain\Models\Hero;
 use App\StorableEvents\HeroSlotCreated;
-use App\StorableEvents\HeroMeasurableCreated;
+use App\StorableEvents\MeasurableCreated;
 use Spatie\EventProjector\Projectors\Projector;
 use Spatie\EventProjector\Projectors\ProjectsEvents;
 
@@ -13,9 +13,10 @@ class HeroProjector implements Projector
 {
     use ProjectsEvents;
 
-    public function onHeroCreated(HeroCreated $event)
+    public function onHeroCreated(HeroCreated $event, string $aggregateUuid)
     {
         Hero::query()->create([
+            'uuid' => $aggregateUuid,
             'name' => $event->name,
             'hero_class_id' => $event->heroClassID,
             'hero_race_id' => $event->heroRaceID,
@@ -33,14 +34,5 @@ class HeroProjector implements Projector
         ]);
 
         return $this;
-    }
-
-    public function onMeasurableCreated(HeroMeasurableCreated $event, string $aggregateUuid)
-    {
-        $hero = Hero::uuid($aggregateUuid);
-        $hero->measurables()->create([
-            'measurable_type_id' => $event->measurableTypeID,
-            'amount_raised' => $event->amountRaised
-        ]);
     }
 }
