@@ -5,7 +5,6 @@ namespace App\Projectors;
 use App\StorableEvents\HeroCreated;
 use App\Domain\Models\Hero;
 use App\StorableEvents\HeroSlotCreated;
-use App\StorableEvents\MeasurableCreated;
 use Spatie\EventProjector\Projectors\Projector;
 use Spatie\EventProjector\Projectors\ProjectsEvents;
 

@@ -45,9 +45,10 @@ class AddNewHeroToSquadAction
      */
     public function __invoke(): Hero
     {
-        $heroPost = $this->getHeroPost();
+        $heroRace = $this->createNewHeroAction->getHeroRace();
+        $heroPost= $this->squad->getHeroPostAvailability()->heroRace($heroRace)->first();
         if (! $heroPost) {
-            throw new HeroPostNotFoundException($heroPost);
+            throw new HeroPostNotFoundException($heroRace);
         }
 
         $heroClass = $this->createNewHeroAction->getHeroClass();
@@ -61,11 +62,5 @@ class AddNewHeroToSquadAction
         $heroPost->hero_id = $hero->id;
         $heroPost->save();
         return $hero->fresh();
-    }
-
-    protected function getHeroPost()
-    {
-        $heroRace = $this->createNewHeroAction->getHeroRace();
-        return $this->squad->getHeroPostAvailability()->heroRace($heroRace)->first();
     }
 }

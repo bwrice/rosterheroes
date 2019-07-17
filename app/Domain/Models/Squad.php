@@ -356,7 +356,7 @@ class Squad extends EventSourcedModel implements HasSlots
 
             $missingClasses = $requiredClasses->filter(function (HeroClass $heroClass) use ($heroes) {
                 $heroWithClass = $heroes->filterByClass($heroClass)->first();
-                return $heroWithClass == null;
+                return $heroWithClass === null;
             });
 
             if ($missingClasses->count() >= $emptyHeroPosts->count()) {
