@@ -3,7 +3,7 @@
 namespace App\Projectors;
 
 use App\Domain\Models\Campaign;
-use App\Events\CampaignCreationRequested;
+use App\StorableEvents\CampaignCreated;
 use Spatie\EventProjector\Projectors\Projector;
 use Spatie\EventProjector\Projectors\ProjectsEvents;
 
@@ -15,10 +15,10 @@ class CampaignProjector implements Projector
      * Here you can specify which event should trigger which method.
      */
     protected $handlesEvents = [
-         CampaignCreationRequested::class => 'onCampaignCreationRequested',
+         CampaignCreated::class => 'onCampaignCreationRequested',
     ];
 
-    public function onCampaignCreationRequested(CampaignCreationRequested $event)
+    public function onCampaignCreationRequested(CampaignCreated $event)
     {
         Campaign::create($event->attributes);
     }

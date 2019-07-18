@@ -5,7 +5,7 @@ namespace App\Domain\Models;
 use App\Domain\Models\Quest;
 use App\Domain\Collections\QuestCollection;
 use App\Domain\Models\Continent;
-use App\Events\CampaignCreationRequested;
+use App\StorableEvents\CampaignCreated;
 use App\Domain\Models\EventSourcedModel;
 use App\Exceptions\InvalidContinentException;
 use App\Exceptions\InvalidProvinceException;
@@ -52,7 +52,7 @@ class Campaign extends EventSourcedModel
 
         $attributes['uuid'] = $uuid;
 
-        event(new CampaignCreationRequested($attributes));
+        event(new CampaignCreated($attributes));
 
         return self::uuid($uuid);
     }

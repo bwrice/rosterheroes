@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Events;
+namespace App\StorableEvents;
 
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
@@ -11,19 +11,8 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Spatie\EventProjector\ShouldBeStored;
 
-class CampaignCreationRequested implements ShouldBeStored
+final class CampaignCreated implements ShouldBeStored
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
-    /**
-     * @var string
-     */
-    public $campaignUuid;
-
-    /**
-     * @var array
-     */
-    public $attributes;
-
     /**
      * Create a new event instance.
      *
@@ -32,16 +21,5 @@ class CampaignCreationRequested implements ShouldBeStored
     public function __construct(array $attributes)
     {
         $this->attributes = $attributes;
-        $this->campaignUuid = $attributes['uuid'];
-    }
-
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return \Illuminate\Broadcasting\Channel|array
-     */
-    public function broadcastOn()
-    {
-        return new PrivateChannel('channel-name');
     }
 }
