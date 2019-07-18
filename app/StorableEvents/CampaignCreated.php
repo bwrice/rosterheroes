@@ -14,12 +14,22 @@ use Spatie\EventProjector\ShouldBeStored;
 final class CampaignCreated implements ShouldBeStored
 {
     /**
-     * Create a new event instance.
-     *
-     * @return void
+     * @var int
      */
-    public function __construct(array $attributes)
+    public $squadID;
+    /**
+     * @var int
+     */
+    public $weekID;
+    /**
+     * @var int
+     */
+    public $continentID;
+
+    public function __construct(int $squadID, int $weekID, int $continentID)
     {
-        $this->attributes = $attributes;
+        $this->squadID = $squadID;
+        $this->weekID = $weekID;
+        $this->continentID = $continentID;
     }
 }

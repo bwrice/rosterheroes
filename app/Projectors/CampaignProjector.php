@@ -11,20 +11,13 @@ class CampaignProjector implements Projector
 {
     use ProjectsEvents;
 
-    /*
-     * Here you can specify which event should trigger which method.
-     */
-    protected $handlesEvents = [
-         CampaignCreated::class => 'onCampaignCreationRequested',
-    ];
-
-    public function onCampaignCreationRequested(CampaignCreated $event)
+    public function onCampaignCreated(CampaignCreated $event, string $aggregateUuid)
     {
-        Campaign::create($event->attributes);
-    }
-
-    public function streamEventsBy()
-    {
-        return 'campaignUuid';
+        Campaign::query()->create([
+            'uuid' => $aggregateUuid,
+            'squad_id' => $event->squadID,
+            'week_id' => $event->weekID,
+            'continent_id' => $event->continentID
+        ]);
     }
 }

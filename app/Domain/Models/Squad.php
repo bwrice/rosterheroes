@@ -2,6 +2,7 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Actions\CreateCampaignAction;
 use App\Events\SquadFavorIncreased;
 use App\StorableEvents\SquadCreated;
 use App\Events\SquadGoldIncreased;
@@ -124,21 +125,21 @@ class Squad extends EventSourcedModel implements HasSlots
         ]);
     }
 
-    /**
-     * @param array $attributes
-     * @return Squad|null
-     * @throws \Exception
-     */
-    public static function createWithAttributes(array $attributes)
-    {
-        $uuid = (string) Uuid::uuid4();
-
-        $attributes['uuid'] = $uuid;
-
-        event(new SquadCreated($attributes));
-
-        return self::uuid($uuid);
-    }
+//    /**
+//     * @param array $attributes
+//     * @return Squad|null
+//     * @throws \Exception
+//     */
+//    public static function createWithAttributes(array $attributes)
+//    {
+//        $uuid = (string) Uuid::uuid4();
+//
+//        $attributes['uuid'] = $uuid;
+//
+//        event(new SquadCreated($attributes));
+//
+//        return self::uuid($uuid);
+//    }
 
     public function mobileStorageRank()
     {
@@ -274,7 +275,7 @@ class Squad extends EventSourcedModel implements HasSlots
     public function getThisWeeksCampaign()
     {
         /** @var Campaign $campaign */
-        $campaign = Campaign::squadThisWeek($this->id)->first();
+        $campaign = Campaign::forSquadWeek($this, Week::current())->first();
         return $campaign;
     }
 
@@ -302,24 +303,15 @@ class Squad extends EventSourcedModel implements HasSlots
     }
 
     /**
-     * @return Campaign|null
+     * @return Campaign
      * @throws CampaignExistsException
      * @throws WeekLockedException
      */
-    public function createCampaign()
+    public function createCampaign(): Campaign
     {
-        $currentCampaign = $this->getThisWeeksCampaign();
-        if ($currentCampaign) {
-            throw new CampaignExistsException($currentCampaign);
-        } elseif (! Week::current()->adventuringOpen()) {
-            throw new WeekLockedException(Week::current());
-        }
-
-        return Campaign::createWithAttributes([
-            'squad_id' => $this->id,
-            'week_id' => Week::current()->id,
-            'continent_id' => $this->province->continent_id
-        ]);
+        $week = Week::current();
+        $createCampaignAction = new CreateCampaignAction($this, $week, $this->province->continent);
+        return $createCampaignAction();
     }
 
     /**

@@ -35,27 +35,27 @@ use Ramsey\Uuid\Uuid;
  *
  * @property \App\Domain\Collections\QuestCollection $quests
  *
- * @method static Builder squadThisWeek(int $squadID)
+ * @method static Builder forSquadWeek(Squad $squad, Week $week)
  */
 class Campaign extends EventSourcedModel
 {
     protected $guarded = [];
 
-    /**
-     * @param array $attributes
-     * @return Campaign|null
-     * @throws \Exception
-     */
-    public static function createWithAttributes(array $attributes)
-    {
-        $uuid = (string) Uuid::uuid4();
-
-        $attributes['uuid'] = $uuid;
-
-        event(new CampaignCreated($attributes));
-
-        return self::uuid($uuid);
-    }
+//    /**
+//     * @param array $attributes
+//     * @return Campaign|null
+//     * @throws \Exception
+//     */
+//    public static function createWithAttributes(array $attributes)
+//    {
+//        $uuid = (string) Uuid::uuid4();
+//
+//        $attributes['uuid'] = $uuid;
+//
+//        event(new CampaignCreated($attributes));
+//
+//        return self::uuid($uuid);
+//    }
 
     public function week()
     {
@@ -77,9 +77,9 @@ class Campaign extends EventSourcedModel
         return $this->belongsTo(Continent::class);
     }
 
-    public function scopeSquadThisWeek(Builder $builder, int $squadID)
+    public function scopeForSquadWeek(Builder $builder, Squad $squad, Week $week)
     {
-        return $builder->where('squad_id', '=', $squadID)->where('week_id', '=', Week::current()->id);
+        return $builder->where('squad_id', '=', $squad->id)->where('week_id', '=', $week->id);
     }
 
     /**
