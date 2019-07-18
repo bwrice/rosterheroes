@@ -131,43 +131,6 @@ class Hero extends EventSourcedModel implements HasSlots
         return $this->heroPost ? $this->heroPost->squad : null;
     }
 
-    public function addStartingSlots()
-    {
-        SlotType::heroTypes()->each(function (SlotType $slotType) {
-            $this->slots()->create([
-                'slot_type_id' => $slotType->id
-            ]);
-        });
-    }
-
-    public function addStartingMeasurables()
-    {
-        MeasurableType::heroTypes()->each(function (MeasurableType $measurableType) {
-            Measurable::createWithAttributes([
-                'has_measurables_type' => self::RELATION_MORPH_MAP_KEY,
-                'has_measurables_id' => $this->id,
-                'measurable_type_id' => $measurableType->id,
-                'amount_raised' => 0
-            ]);
-        });
-    }
-
-    /**
-     * @param array $attributes
-     * @return self|null
-     * @throws \Exception
-     */
-    public static function createWithAttributes(array $attributes)
-    {
-        $uuid = (string) Uuid::uuid4();
-
-        $attributes['uuid'] = $uuid;
-
-        event(new HeroCreated($attributes));
-
-        return self::uuid($uuid);
-    }
-
     public static function uuid(string $uuid): ?self
     {
         return static::where('uuid', $uuid)->first();

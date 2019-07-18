@@ -24,19 +24,8 @@ class Measurable extends EventSourcedModel
         return $this->belongsTo(MeasurableType::class);
     }
 
-    /**
-     * @param array $attributes
-     * @return Measurable|null
-     * @throws \Exception
-     */
-    public static function createWithAttributes(array $attributes)
+    public function hasMeasurables()
     {
-        $uuid = (string) Uuid::uuid4();
-
-        $attributes['uuid'] = $uuid;
-
-        event(new MeasurableCreationRequested($attributes));
-
-        return self::uuid($uuid);
+        return $this->morphTo();
     }
 }
