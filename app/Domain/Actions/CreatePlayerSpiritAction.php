@@ -22,7 +22,7 @@ use Carbon\CarbonImmutable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Date;
 
-class CreatePlayerSpirit
+class CreatePlayerSpiritAction
 {
     /**
      * @var Week

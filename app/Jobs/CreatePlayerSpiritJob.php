@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Domain\Actions\CreatePlayerSpirit;
+use App\Domain\Actions\CreatePlayerSpiritAction;
 use App\Domain\Models\Game;
 use App\Domain\Models\League;
 use App\Domain\Models\Player;
@@ -62,7 +62,7 @@ class CreatePlayerSpiritJob implements ShouldQueue
             throw new InvalidPlayerException($this->player, $this->player->fullName() . " has zero positions");
         }
 
-        $action = new CreatePlayerSpirit($this->week, $this->game, $this->player, $position);
+        $action = new CreatePlayerSpiritAction($this->week, $this->game, $this->player, $position);
         $action();
     }
 }

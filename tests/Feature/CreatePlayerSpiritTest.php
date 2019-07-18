@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use App\Console\Commands\BuildPlayerSpirits;
-use App\Domain\Actions\CreatePlayerSpirit;
+use App\Domain\Actions\CreatePlayerSpiritAction;
 use App\Domain\Collections\PositionCollection;
 use App\Domain\Models\Game;
 use App\Domain\Models\League;
@@ -154,7 +154,7 @@ class CreatePlayerSpiritTest extends TestCase
         $this->assertEquals(2, $player->positions->count());
         $this->assertTrue($player->playerGameLogs->isEmpty());
 
-        $action = new CreatePlayerSpirit($week, $game, $player, $position);
+        $action = new CreatePlayerSpiritAction($week, $game, $player, $position);
 
         $playerSpirit = $action(); //invoke
 
@@ -195,7 +195,7 @@ class CreatePlayerSpiritTest extends TestCase
         $this->assertEquals(2, $playerGameLog->playerStats->count());
         $this->assertEquals(1, $player->playerGameLogs->count());
 
-        $action = new CreatePlayerSpirit($week, $game, $player, $shortStop);
+        $action = new CreatePlayerSpiritAction($week, $game, $player, $shortStop);
 
         $playerSpirit = $action(); //invoke
 
@@ -231,7 +231,7 @@ class CreatePlayerSpiritTest extends TestCase
         $this->assertEquals(1, $playerGameLog->playerStats->count());
         $this->assertEquals(1, $player->playerGameLogs->count());
 
-        $action = new CreatePlayerSpirit($week, $game, $player, $pointGuard);
+        $action = new CreatePlayerSpiritAction($week, $game, $player, $pointGuard);
 
         $playerSpirit = $action(); //invoke
 
@@ -273,7 +273,7 @@ class CreatePlayerSpiritTest extends TestCase
         $this->assertEquals(2, $playerGameLog->playerStats->count());
         $this->assertEquals(1, $player->playerGameLogs->count());
 
-        $action = new CreatePlayerSpirit($week, $game, $player, $leftWing);
+        $action = new CreatePlayerSpiritAction($week, $game, $player, $leftWing);
 
         $firstPlayerSpirit = $action(); //invoke
 
@@ -299,7 +299,7 @@ class CreatePlayerSpiritTest extends TestCase
         $newPlayerGameLog->playerStats()->saveMany([$moreGoals, $evenMoreShotsOnGoal]);
         $this->assertEquals(2, $newPlayerGameLog->playerStats->count());
 
-        $action = new CreatePlayerSpirit($week, $game, $player->fresh(), $leftWing);
+        $action = new CreatePlayerSpiritAction($week, $game, $player->fresh(), $leftWing);
 
         $secondPlayerSpirit = $action(); //invoke
         $this->assertGreaterThan($firstPlayerSpirit->essence_cost, $secondPlayerSpirit->essence_cost);
@@ -334,7 +334,7 @@ class CreatePlayerSpiritTest extends TestCase
         $this->assertEquals(1, $playerGameLog->playerStats->count());
         $this->assertEquals(1, $player->playerGameLogs->count());
 
-        $action = new CreatePlayerSpirit($week, $game, $player, $runningBack);
+        $action = new CreatePlayerSpiritAction($week, $game, $player, $runningBack);
 
         $firstPlayerSpirit = $action(); //invoke
 
@@ -354,7 +354,7 @@ class CreatePlayerSpiritTest extends TestCase
         $newPlayerGameLog->playerStats()->save($moreBadRushingYards);
         $this->assertEquals(1, $newPlayerGameLog->playerStats->count());
 
-        $action = new CreatePlayerSpirit($week, $game, $player->fresh(), $runningBack);
+        $action = new CreatePlayerSpiritAction($week, $game, $player->fresh(), $runningBack);
 
         $secondPlayerSpirit = $action(); //invoke
         $this->assertLessThan($firstPlayerSpirit->essence_cost, $secondPlayerSpirit->essence_cost);
@@ -405,7 +405,7 @@ class CreatePlayerSpiritTest extends TestCase
         $badAndRecentGameLog->playerStats()->save($badRushingYards);
         $this->assertEquals(2, $playerWithBadRecentGame->playerGameLogs->count());
 
-        $action = new CreatePlayerSpirit($week, $game, $playerWithBadRecentGame, $runningBack);
+        $action = new CreatePlayerSpiritAction($week, $game, $playerWithBadRecentGame, $runningBack);
 
         $badRecentPlayerSpirit = $action(); //invoke
 
@@ -444,7 +444,7 @@ class CreatePlayerSpiritTest extends TestCase
 
         $this->assertEquals(2, $playerWithGoodRecentGame->playerGameLogs->count());
 
-        $action = new CreatePlayerSpirit($week, $game, $playerWithGoodRecentGame, $runningBack);
+        $action = new CreatePlayerSpiritAction($week, $game, $playerWithGoodRecentGame, $runningBack);
 
         $goodRecentPlayerSpirit = $action(); //invoke
         $this->assertGreaterThan($badRecentPlayerSpirit->essence_cost, $goodRecentPlayerSpirit->essence_cost);

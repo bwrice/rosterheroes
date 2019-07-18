@@ -12,7 +12,7 @@ use App\Domain\Models\ItemBase;
 use App\Domain\Models\ItemType;
 use App\Domain\Slot;
 use App\Domain\Collections\SlotCollection;
-use App\Domain\Actions\FillSlot;
+use App\Domain\Actions\FillSlotAction;
 use App\Domain\Models\Squad;
 use App\Domain\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -30,7 +30,7 @@ class SlotterTest extends TestCase
     protected $user;
     /** @var Squad */
     protected $squad;
-    /** @var \App\Domain\Actions\FillSlot $slotter */
+    /** @var \App\Domain\Actions\FillSlotAction $slotter */
     protected $slotter;
 
     /**
@@ -56,7 +56,7 @@ class SlotterTest extends TestCase
 
         $item = $blueprint->generate();
 
-        $action = new FillSlot($hero, $item);
+        $action = new FillSlotAction($hero, $item);
         $action();
 
         $this->assertEquals($itemBase->getSlotsCount(), $item->slots->count(), "Item takes up the correct amount of slots");
@@ -202,7 +202,7 @@ class SlotterTest extends TestCase
 
         $itemOne = $firstBlueprint->generate();
 
-        $action = new FillSlot($hero, $itemOne);
+        $action = new FillSlotAction($hero, $itemOne);
         $action();
 
         /** @var \App\Domain\Models\ItemBase $firstItemBase */
@@ -216,7 +216,7 @@ class SlotterTest extends TestCase
 
         $itemTwo = $secondBlueprint->generate();
 
-        $action = new FillSlot($hero, $itemTwo);
+        $action = new FillSlotAction($hero, $itemTwo);
         $action();
 
         $itemOne->slots->each(function (Slot $slot) use ($heroPost) {
@@ -288,7 +288,7 @@ class SlotterTest extends TestCase
 
         $itemOne = $itemBlueprint->generate();
 
-        $action = new FillSlot($hero, $itemOne);
+        $action = new FillSlotAction($hero, $itemOne);
         $action();
 
         /** @var \App\Domain\Models\ItemBase $firstItemBase */
@@ -302,7 +302,7 @@ class SlotterTest extends TestCase
 
         $itemTwo = $itemBlueprint->generate();
 
-        $action = new FillSlot($hero, $itemTwo);
+        $action = new FillSlotAction($hero, $itemTwo);
         $action();
 
         /** @var ItemBase $firstItemBase */
@@ -316,7 +316,7 @@ class SlotterTest extends TestCase
 
         $itemThree = $itemBlueprint->generate();
 
-        $action = new FillSlot($hero, $itemThree);
+        $action = new FillSlotAction($hero, $itemThree);
         $action();
 
         $this->assertEquals(1, $itemOne->slots->count(), "Single slot item only taking up one slot");
@@ -391,7 +391,7 @@ class SlotterTest extends TestCase
         }
         $squad = $squad->fresh();
 
-        $action = new FillSlot($squad, $firstItem);
+        $action = new FillSlotAction($squad, $firstItem);
         $action();
 
         $firstItemSlots = $firstItem->slots()->get();
@@ -411,7 +411,7 @@ class SlotterTest extends TestCase
 
         $secondItem = $itemBlueprint->generate();
 
-        $action = new FillSlot($squad, $secondItem);
+        $action = new FillSlotAction($squad, $secondItem);
         $action();
 
         $secondItemSlots = $secondItem->slots()->get();

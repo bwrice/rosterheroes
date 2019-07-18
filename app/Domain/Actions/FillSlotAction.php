@@ -12,7 +12,7 @@ namespace App\Domain\Actions;
 use App\Domain\Interfaces\HasSlots;
 use App\Domain\Interfaces\Slottable;
 
-class FillSlot
+class FillSlotAction
 {
     /**
      * @var HasSlots

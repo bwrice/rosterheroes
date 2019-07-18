@@ -17,7 +17,7 @@ use App\Domain\Models\HeroPost;
 use App\Domain\Models\Item;
 use App\Domain\Models\Measurable;
 use App\Domain\Models\MeasurableType;
-use App\Domain\Actions\FillSlot;
+use App\Domain\Actions\FillSlotAction;
 use App\Domain\Interfaces\HasSlots;
 use App\Domain\Slot;
 use App\Domain\Collections\SlotCollection;
@@ -164,11 +164,11 @@ class Hero extends EventSourcedModel implements HasSlots
     }
 
     /**
-     * @return FillSlot
+     * @return FillSlotAction
      */
     protected function getEquipper()
     {
-        return app()->make(FillSlot::class);
+        return app()->make(FillSlotAction::class);
     }
 
     /**
