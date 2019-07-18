@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Events;
+namespace App\StorableEvents;
 
 use Spatie\EventProjector\ShouldBeStored;
 
-class SquadEssenceIncreased implements ShouldBeStored
+final class SquadEssenceIncreased implements ShouldBeStored
 {
     /**
      * @var int

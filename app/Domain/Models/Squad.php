@@ -3,10 +3,10 @@
 namespace App\Domain\Models;
 
 use App\Domain\Actions\CreateCampaignAction;
-use App\Events\SquadFavorIncreased;
+use App\StorableEvents\SquadFavorIncreased;
 use App\StorableEvents\SquadCreated;
-use App\Events\SquadGoldIncreased;
-use App\Events\SquadEssenceIncreased;
+use App\StorableEvents\SquadGoldIncreased;
+use App\StorableEvents\SquadEssenceIncreased;
 use App\Exceptions\CampaignExistsException;
 use App\Exceptions\NotBorderedByException;
 use App\Exceptions\QuestRequiredException;

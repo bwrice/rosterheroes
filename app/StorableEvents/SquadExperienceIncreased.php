@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Events;
+namespace App\StorableEvents;
 
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
@@ -11,7 +11,7 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Spatie\EventProjector\ShouldBeStored;
 
-class SquadExperienceIncreased implements ShouldBeStored
+final class SquadExperienceIncreased implements ShouldBeStored
 {
     /**
      * @var int

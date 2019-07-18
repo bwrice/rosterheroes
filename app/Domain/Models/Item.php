@@ -6,7 +6,7 @@ use App\Domain\Collections\EnchantmentCollection;
 use App\Domain\Slot;
 use App\Domain\Collections\SlotCollection;
 use App\Domain\Interfaces\Slottable;
-use App\Events\ItemCreated;
+use App\StorableEvents\ItemCreated;
 use Illuminate\Database\Eloquent\Model;
 use Ramsey\Uuid\Uuid;
 

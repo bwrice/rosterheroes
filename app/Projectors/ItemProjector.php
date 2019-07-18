@@ -2,7 +2,7 @@
 
 namespace App\Projectors;
 
-use App\Events\ItemCreated;
+use App\StorableEvents\ItemCreated;
 use App\Domain\Models\Item;
 use App\StorableEvents\EnchantmentAttachedToItem;
 use Spatie\EventProjector\Projectors\Projector;

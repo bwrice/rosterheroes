@@ -2,7 +2,7 @@
 
 namespace App\Projectors;
 
-use App\Events\SquadEssenceIncreased;
+use App\StorableEvents\SquadEssenceIncreased;
 use App\Domain\Models\Squad;
 use Spatie\EventProjector\Projectors\Projector;
 use Spatie\EventProjector\Projectors\ProjectsEvents;

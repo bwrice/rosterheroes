@@ -2,7 +2,7 @@
 
 namespace App\Aggregates;
 
-use App\Events\ItemCreated;
+use App\StorableEvents\ItemCreated;
 use App\StorableEvents\EnchantmentAttachedToItem;
 use Spatie\EventProjector\AggregateRoot;
 
