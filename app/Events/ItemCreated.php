@@ -2,7 +2,6 @@
 
 namespace App\Events;
 
-use App\Domain\Models\Item;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -10,32 +9,22 @@ use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Spatie\EventProjector\ShouldBeStored;
 
-class ItemCreated
+final class ItemCreationRequested implements ShouldBeStored
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    /**
+     * @var array
+     */
+    public $attributes;
 
     /**
-     * @var \App\Domain\Models\Item
+     * ItemCreationRequested constructor.
+     * @param array $attributes
      */
-    public $item;
-
-    /**
-     * ItemCreated constructor.
-     * @param \App\Domain\Models\Item $item
-     */
-    public function __construct(Item $item)
+    public function __construct(array $attributes)
     {
-        $this->item = $item;
-    }
-
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return \Illuminate\Broadcasting\Channel|array
-     */
-    public function broadcastOn()
-    {
-        return new PrivateChannel('channel-name');
+        $this->attributes = $attributes;
+        $this->itemUuid = $attributes['uuid'];
     }
 }
