@@ -9,6 +9,7 @@
 namespace App\Domain\Actions;
 
 
+use App\Aggregates\PlayerSpiritAggregate;
 use App\Domain\Collections\PlayerGameLogCollection;
 use App\Domain\Math\WeightedValue;
 use App\Domain\Models\Game;
@@ -21,6 +22,7 @@ use App\Exceptions\InvalidPlayerException;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Str;
 
 class CreatePlayerSpiritAction
 {
@@ -61,13 +63,15 @@ class CreatePlayerSpiritAction
     {
         $essenceCost = $this->getEssenceCost();
 
-        return PlayerSpirit::createWithAttributes([
-            'player_id' => $this->player->id,
-            'game_id' => $this->game->id,
-            'week_id' => $this->week->id,
-            'essence_cost' => $essenceCost,
-            'energy' => PlayerSpirit::STARTING_ENERGY
-        ]);
+        $playerSpiritUuid = Str::uuid();
+
+        /** @var PlayerSpiritAggregate $aggregate */
+        $aggregate = PlayerSpiritAggregate::retrieve($playerSpiritUuid);
+
+        $aggregate->createPlayerSpirit($this->week->id, $this->player->id, $this->game->id, $essenceCost, PlayerSpirit::STARTING_ENERGY)
+            ->persist();
+
+        return PlayerSpirit::uuid($playerSpiritUuid);
     }
 
     /**
