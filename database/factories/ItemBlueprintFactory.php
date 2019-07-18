@@ -14,7 +14,7 @@ $factory->define( ItemBlueprint::class, function( Faker $faker ) {
         'item_type_id' => $itemType->id,
         'item_class_id' => $genericClass->id,
         'item_name' => 'Blueprint Test Item',
-        'enchantments_power' => 0,
-        'attacks_power' => 0
+        'enchantment_power' => 0,
+        'attack_power' => 0
     ];
 });
