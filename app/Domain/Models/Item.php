@@ -2,18 +2,12 @@
 
 namespace App\Domain\Models;
 
-use App\Domain\Models\Enchantment;
-use App\Events\ItemCreated;
-use App\Events\ItemCreationRequested;
-use App\Domain\Models\ItemBlueprint;
-use App\Domain\Models\ItemClass;
-use App\Domain\Models\ItemType;
-use App\Domain\Models\MaterialType;
+use App\Domain\Collections\EnchantmentCollection;
 use App\Domain\Slot;
 use App\Domain\Collections\SlotCollection;
 use App\Domain\Interfaces\Slottable;
+use App\Events\ItemCreated;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Schema\Blueprint;
 use Ramsey\Uuid\Uuid;
 
 /**
@@ -26,7 +20,9 @@ use Ramsey\Uuid\Uuid;
  * @property ItemClass $itemClass
  * @property ItemBlueprint $itemBlueprint
  * @property MaterialType $materialType
+ *
  * @property SlotCollection $slots
+ * @property EnchantmentCollection $enchantments
  */
 class Item extends Model implements Slottable
 {
@@ -78,46 +74,7 @@ class Item extends Model implements Slottable
     {
         return $this->slots;
     }
-
-    /**
-     * @param ItemClass $itemClass
-     * @param ItemType $itemType
-     * @param MaterialType $materialType
-     * @param ItemBlueprint $itemBlueprint
-     * @return Item|null
-     * @throws \Exception
-     */
-    public static function generate(ItemClass $itemClass, ItemType $itemType, MaterialType $materialType, ItemBlueprint $itemBlueprint)
-    {
-        $item = self::createWithAttributes([
-            'item_class_id' => $itemClass->id,
-            'item_type_id' => $itemType->id,
-            'material_type_id' => $materialType->id,
-            'item_blueprint_id' => $itemBlueprint->id,
-            'name' => $itemBlueprint->item_name
-        ]);
-
-        event(new ItemCreated($item));
-
-        return $item;
-    }
-
-    /**
-     * @param array $attributes
-     * @return Item|null
-     * @throws \Exception
-     */
-    public static function createWithAttributes(array $attributes)
-    {
-        $uuid = (string) Uuid::uuid4();
-
-        $attributes['uuid'] = $uuid;
-
-        event(new ItemCreationRequested($attributes));
-
-        return self::uuid($uuid);
-    }
-
+    
     /*
      * A helper method to quickly retrieve an account by uuid.
      */
