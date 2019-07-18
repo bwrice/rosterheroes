@@ -23,28 +23,32 @@ use Illuminate\Http\Request;
 */
 
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
+
+Route::prefix('v1')->group(function () {
+
+    Route::middleware(['auth:api'])->group(function () {
+
+        Route::post('/squads', [SquadController::class, 'store']);
+        Route::get('/squads/{squadSlug}', [SquadController::class, 'show']);
+
+        Route::get('/squad/{squadUuid}/hero-classes', SquadHeroClassController::class);
+        Route::get('/squad/{squadUuid}/hero-races', SquadHeroRaceController::class);
+
+        Route::post('/squad/{squadUuid}/border/{borderUuid}', [SquadBorderTravelController::class, 'store'])->middleware('auth:api');
+
+        Route::post('/squad/{squadUuid}/heroes', [SquadHeroController::class, 'store']);
+        Route::post('/squad/{squadUuid}/campaigns', [SquadCampaignController::class, 'store']);
+
+        Route::post('/hero/{heroUuid}/player-spirit/{playerSpiritUuid}', [HeroPlayerSpiritController::class, 'store']);
+
+        Route::post('/campaign/{campaign}/quest/{questUuid}', [CampaignQuestController::class, 'store']);
+
+        Route::get('week/{weekUuid}/player-spirits', [WeekPlayerSpiritController::class, 'index']);
+    });
 });
 
-Route::middleware(['auth:api'])->group(function () {
-
-    Route::post('/squads', [SquadController::class, 'store']);
-    Route::get('/squads/{squadSlug}', [SquadController::class, 'show']);
-
-    Route::get('/squad/{squadUuid}/hero-classes', SquadHeroClassController::class);
-    Route::get('/squad/{squadUuid}/hero-races', SquadHeroRaceController::class);
-
-    Route::post('/squad/{squadUuid}/border/{borderUuid}', [SquadBorderTravelController::class, 'store'])->middleware('auth:api');
-
-    Route::post('/squad/{squadUuid}/heroes', [SquadHeroController::class, 'store']);
-    Route::post('/squad/{squadUuid}/campaigns', [SquadCampaignController::class, 'store']);
-
-    Route::post('/hero/{heroUuid}/player-spirit/{playerSpiritUuid}', [HeroPlayerSpiritController::class, 'store']);
-
-    Route::post('/campaign/{campaign}/quest/{questUuid}', [CampaignQuestController::class, 'store']);
-
-    Route::get('week/{weekUuid}/player-spirits', [WeekPlayerSpiritController::class, 'index']);
-});
 
 //Route::get('/teams', 'TeamController@index');
