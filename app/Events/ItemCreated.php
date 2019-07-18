@@ -11,20 +11,37 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Spatie\EventProjector\ShouldBeStored;
 
-final class ItemCreationRequested implements ShouldBeStored
+final class ItemCreated implements ShouldBeStored
 {
-    /**
-     * @var array
-     */
-    public $attributes;
 
     /**
-     * ItemCreationRequested constructor.
-     * @param array $attributes
+     * @var int
      */
-    public function __construct(array $attributes)
+    public $itemClassID;
+    /**
+     * @var int
+     */
+    public $itemTypeID;
+    /**
+     * @var int
+     */
+    public $materialTypeID;
+    /**
+     * @var int
+     */
+    public $itemBlueprintID;
+    /**
+     * @var string
+     */
+    public $name;
+
+    public function __construct(int $itemClassID, int $itemTypeID, int $materialTypeID, int $itemBlueprintID, string $name = null)
     {
-        $this->attributes = $attributes;
-        $this->itemUuid = $attributes['uuid'];
+
+        $this->itemClassID = $itemClassID;
+        $this->itemTypeID = $itemTypeID;
+        $this->materialTypeID = $materialTypeID;
+        $this->itemBlueprintID = $itemBlueprintID;
+        $this->name = $name;
     }
 }
