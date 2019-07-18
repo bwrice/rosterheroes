@@ -2956,7 +2956,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_5__["mapActions"])(['setSquad']), {
     setInitialSquad: function setInitialSquad() {
       var self = this;
-      axios.get('/api/squads/' + this.$route.params.squadSlug).then(function (response) {
+      axios.get('/api/v1/squads/' + this.$route.params.squadSlug).then(function (response) {
         self.setSquad(response.data.data);
       }).catch(function (error) {
         console.log("ERROR!");

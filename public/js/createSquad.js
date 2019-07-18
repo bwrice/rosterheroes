@@ -1888,7 +1888,7 @@ __webpack_require__.r(__webpack_exports__);
     createHero: function createHero() {
       var self = this;
       self.buttonDisabled = true;
-      axios.post('/api/squad/' + this.squadUuid + '/heroes', {
+      axios.post('/api/v1/squad/' + this.squadUuid + '/heroes', {
         name: this.name,
         race: this.heroRace,
         class: this.heroClass
@@ -2030,7 +2030,7 @@ __webpack_require__.r(__webpack_exports__);
     createSquad: function createSquad() {
       var self = this;
       self.pendingResponse = true;
-      axios.post('/api/squads', {
+      axios.post('/api/v1/squads', {
         name: this.name
       }).then(function (response) {
         self.$emit('squad-created', response.data);
@@ -2218,7 +2218,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     updateHeroClasses: function updateHeroClasses() {
       var self = this;
-      axios.get('/api/squad/' + this.squadClone.uuid + '/hero-classes').then(function (response) {
+      axios.get('/api/v1/squad/' + this.squadClone.uuid + '/hero-classes').then(function (response) {
         self.allowedHeroClasses = response.data;
       }).catch(function (error) {
         console.log(error);
@@ -2226,7 +2226,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     updateHeroRaces: function updateHeroRaces() {
       var self = this;
-      axios.get('/api/squad/' + this.squadClone.uuid + '/hero-races').then(function (response) {
+      axios.get('/api/v1/squad/' + this.squadClone.uuid + '/hero-races').then(function (response) {
         self.allowedHeroRaces = response.data;
       }).catch(function (error) {
         console.log(error);

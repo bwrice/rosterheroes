@@ -60,7 +60,7 @@
             createSquad: function() {
                 let self = this;
                 self.pendingResponse = true;
-                axios.post('/api/squads', {
+                axios.post('/api/v1/squads', {
                     name: this.name
                 }).then(function (response) {
                     self.$emit('squad-created', response.data);

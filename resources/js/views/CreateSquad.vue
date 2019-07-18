@@ -138,7 +138,7 @@
             },
             updateHeroClasses: function() {
                 let self = this;
-                axios.get('/api/squad/' + this.squadClone.uuid + '/hero-classes').
+                axios.get('/api/v1/squad/' + this.squadClone.uuid + '/hero-classes').
                 then(function (response) {
                     self.allowedHeroClasses = response.data;
                 }).catch(function (error) {
@@ -147,7 +147,7 @@
             },
             updateHeroRaces: function() {
                 let self = this;
-                axios.get('/api/squad/' + this.squadClone.uuid + '/hero-races').
+                axios.get('/api/v1/squad/' + this.squadClone.uuid + '/hero-races').
                 then(function (response) {
                     self.allowedHeroRaces = response.data;
                 }).catch(function (error) {

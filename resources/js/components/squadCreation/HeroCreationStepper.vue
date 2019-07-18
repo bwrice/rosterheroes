@@ -123,7 +123,7 @@
             createHero: function() {
                 let self = this;
                 self.buttonDisabled = true;
-                axios.post('/api/squad/' + this.squadUuid + '/heroes', {
+                axios.post('/api/v1/squad/' + this.squadUuid + '/heroes', {
                     name: this.name,
                     race: this.heroRace,
                     class: this.heroClass
