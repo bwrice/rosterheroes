@@ -21,14 +21,14 @@ class ItemBlueprintTest extends TestCase
     /**
      * @test
      */
-    public function it_can_generate_an_item()
+    public function it_will_generate_an_item()
     {
         /** @var ItemBlueprint $blueprint */
         $blueprint = factory(ItemBlueprint::class)->create();
 
         $item = $blueprint->generate();
 
-        $this->assertTrue( $item instanceof Item );
+        $this->assertTrue($item instanceof Item);
         $this->assertDatabaseHas( 'items', [
             'id' => $item->id
         ]);
@@ -37,9 +37,8 @@ class ItemBlueprintTest extends TestCase
     /**
      * @test
      */
-    public function it_can_generate_an_item_with_enchantments()
+    public function it_will_attach_already_defined_enchantments()
     {
-
         $blueprint = factory( ItemBlueprint::class )->create([
             'item_class_id' => ItemClass::where('name', ItemClass::ENCHANTED )->first()->id
         ]);
@@ -47,15 +46,15 @@ class ItemBlueprintTest extends TestCase
         $enchantments = Enchantment::inRandomOrder()->take(3)->get();
         $enchantmentIDs = $enchantments->pluck('id')->toArray();
 
-        $this->assertEquals( 3, count( $enchantmentIDs ));
+        $this->assertEquals( 3, count($enchantmentIDs));
 
         /** @var ItemBlueprint $blueprint */
-        $blueprint->enchantments()->attach( $enchantmentIDs );
+        $blueprint->enchantments()->attach($enchantmentIDs);
 
         /** @var \App\Domain\Models\Item $item */
         $item = $blueprint->generate();
 
-        $this->assertDatabaseHas( 'items', [
+        $this->assertDatabaseHas('items', [
             'id' => $item->id
         ]);
 
@@ -63,6 +62,20 @@ class ItemBlueprintTest extends TestCase
         $actualEnchantments = $item->enchantments()->get();
 
         $this->assertEquals($enchantmentIDs, array_intersect($enchantmentIDs, $actualEnchantments->pluck('id')->toArray()));
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_attach_enchantments_when_generating_an_enchanted_class_item_when_note_defined()
+    {
+        /** @var ItemBlueprint $blueprint */
+        $blueprint = factory( ItemBlueprint::class )->create([
+            'item_class_id' => ItemClass::where('name', ItemClass::ENCHANTED )->first()->id
+        ]);
+        $this->assertEquals(0, $blueprint->enchantments->count());
+        $item = $blueprint->generate();
+        $this->assertGreaterThan(0, $item->enchantments->count());
     }
 
     /**
