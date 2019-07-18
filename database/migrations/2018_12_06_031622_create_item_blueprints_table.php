@@ -20,8 +20,8 @@ class CreateItemBlueprintsTable extends Migration
             $table->integer('item_base_id')->unsigned()->nullable();
             $table->integer('item_group_id')->unsigned()->nullable();
             $table->integer('item_class_id')->unsigned()->nullable();
-            $table->integer('enchantments_power')->nullable();
-            $table->integer('attacks_power')->nullable();
+            $table->integer('enchantment_power')->nullable();
+            $table->integer('attack_power')->nullable();
             $table->string('item_name')->nullable();
             $table->string('description')->nullable();
             $table->timestamps();
