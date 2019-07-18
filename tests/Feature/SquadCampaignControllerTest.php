@@ -14,7 +14,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class CampaignFeatureTest extends TestCase
+class SquadCampaignControllerTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -48,21 +48,11 @@ class CampaignFeatureTest extends TestCase
             'province_id' => $squad->province_id
         ]);
 
-        $response = $this->json('POST', 'api/campaign/' . $campaign->uuid . '/quest/' . $quest->uuid );
+        $response = $this->json('POST', 'api/v1/campaign/' . $campaign->uuid . '/quest/' . $quest->uuid );
 
         $response->assertStatus(201);
         $this->assertEquals($week->id, $campaign->week_id);
         $this->assertTrue(in_array($quest->id, $campaign->quests()->pluck('id')->toArray()));
         $this->assertEquals($campaign->continent_id, $quest->province->continent_id);
     }
-
-//    /**
-//     * @test
-//     */
-//    public function a_squad_can_join_a_skirmish()
-//    {
-//        $this->withoutExceptionHandling();
-//        $this->fail();
-//
-//    }
 }

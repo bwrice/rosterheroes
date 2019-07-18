@@ -39,7 +39,7 @@ class SquadFeatureTest extends TestCase
 
         $name = 'TestSquad' . rand(1,999999);
 
-        $response = $this->json('POST','api/squads', [
+        $response = $this->json('POST','api/v1/squads', [
            'name' => $name
         ]);
 
@@ -80,7 +80,7 @@ class SquadFeatureTest extends TestCase
         /** @var User $user */
         $user = Passport::actingAs($squad->user);
 
-        $response = $this->json('POST','api/squad/' . $squad->uuid . '/campaigns');
+        $response = $this->json('POST','api/v1/squad/' . $squad->uuid . '/campaigns');
         $response->assertStatus(201);
 
         /** @var \App\Domain\Models\Campaign $campaign */
