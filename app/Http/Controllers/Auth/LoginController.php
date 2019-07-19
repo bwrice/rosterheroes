@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Aggregates\UserAggregate;
 use App\Http\Controllers\Controller;
 use App\Domain\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
 use Ramsey\Uuid\Uuid;
 
@@ -59,20 +61,20 @@ class LoginController extends Controller
      */
     public function handleProviderCallback()
     {
-        $user = Socialite::driver('google')->user();
+        $googleUser = Socialite::driver('google')->user();
 
-        if ( $user ) {
+        if ( $googleUser ) {
 
-            /** @var \App\Domain\Models\User $newUser */
-            $newUser = User::updateOrCreate( [
-                'email' => $user->email
-            ], [
-                'uuid' => (string) Uuid::uuid4(),
-                'name' => $user->name,
-                'email_verified_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ] );
+            $user = User::where('email', '=', $googleUser->email)->first();
 
-            Auth::login($newUser);
+            if (! $user) {
+                $uuid = Str::uuid();
+                /** @var UserAggregate $userAggregate */
+                $userAggregate = UserAggregate::retrieve($uuid);
+                $userAggregate->createUser($googleUser->email, $googleUser->name)->persist();
+                $user = User::uuid($uuid);
+            }
+            Auth::login($user);
             return redirect('/');
         }
 
