@@ -17,7 +17,7 @@ final class UserCreated implements ShouldBeStored
     /**
      * @var string
      */
-    private $hashedPassword;
+    public $hashedPassword;
     /**
      * @var string
      */
