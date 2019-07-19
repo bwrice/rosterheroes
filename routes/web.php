@@ -12,8 +12,15 @@
 
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CommandCenterController;
 use App\Http\Controllers\SquadController;
+
+/*
+ * Register
+ */
+Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('register', [RegisterController::class, 'register']);
 
 /*
  * Login
