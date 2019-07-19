@@ -55,4 +55,19 @@ class User extends Authenticatable
             'uuid' => $this->uuid
         ];
     }
+
+    /**
+     *
+     * A helper method to quickly retrieve by uuid.
+     *
+     * @param string $uuid
+     * @return static|null
+     */
+    public static function uuid(string $uuid)
+    {
+        /** @var static $model */
+        $model = static::query()->where('uuid', $uuid)->first();
+        return $model;
+    }
+
 }

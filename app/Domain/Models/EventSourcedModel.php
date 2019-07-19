@@ -19,7 +19,7 @@ abstract class EventSourcedModel extends Model
 
     /**
      *
-     * A helper method to quickly retrieve an account by uuid.
+     * A helper method to quickly retrieve by uuid.
      *
      * @param string $uuid
      * @return static|null
