@@ -21,17 +21,17 @@ class CreateUserAction
     /**
      * @var string
      */
-    private $hashedPassword;
+    private $password;
     /**
      * @var string
      */
     private $emailVerifiedAt;
 
-    public function __construct(string $email, string $name, string $hashedPassword = null, string $emailVerifiedAt = null)
+    public function __construct(string $email, string $name, string $password = null, string $emailVerifiedAt = null)
     {
         $this->email = $email;
         $this->name = $name;
-        $this->hashedPassword = $hashedPassword;
+        $this->$password = $password;
         $this->emailVerifiedAt = $emailVerifiedAt;
     }
 
@@ -41,7 +41,7 @@ class CreateUserAction
         $uuid = Str::uuid();
         /** @var UserAggregate $userAggregate */
         $userAggregate = UserAggregate::retrieve($uuid);
-        $userAggregate->createUser($this->email, $this->name, $this->hashedPassword, $this->emailVerifiedAt)->persist();
+        $userAggregate->createUser($this->email, $this->name, $this->password, $this->emailVerifiedAt)->persist();
         $user = User::uuid($uuid);
         return $user;
     }

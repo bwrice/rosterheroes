@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Aggregates\UserAggregate;
+use App\Domain\Actions\CreateUserAction;
 use App\Http\Controllers\Controller;
 use App\Domain\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -32,7 +33,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -68,11 +69,8 @@ class LoginController extends Controller
             $user = User::where('email', '=', $googleUser->email)->first();
 
             if (! $user) {
-                $uuid = Str::uuid();
-                /** @var UserAggregate $userAggregate */
-                $userAggregate = UserAggregate::retrieve($uuid);
-                $userAggregate->createUser($googleUser->email, $googleUser->name)->persist();
-                $user = User::uuid($uuid);
+                $createAction = new CreateUserAction($googleUser->email, $googleUser->name);
+                $user = $createAction();
             }
             Auth::login($user);
             return redirect('/');
