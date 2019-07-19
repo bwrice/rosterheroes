@@ -10,12 +10,13 @@
 |
 */
 
-use App\Domain\Models\SlotType;
-use App\Domain\Slot;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CommandCenterController;
 use App\Http\Controllers\SquadController;
 
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('login/google', [LoginController::class, 'redirectToProvider']);
 Route::get('login/google/callback', [LoginController::class, 'handleProviderCallback']);
 
@@ -24,7 +25,7 @@ Route::get('/', function () {
 //    return view('welcome');
 });
 
-Auth::routes();
+//Auth::routes();
 Route::get('/squads/create', [SquadController::class, 'create'])->name('create-squad')->middleware('auth');
 Route::get('/command-center/{squadSlug}/{any?}', [CommandCenterController::class, 'show'])->middleware('auth')->where('any', '.*')->name('command-center');
 
