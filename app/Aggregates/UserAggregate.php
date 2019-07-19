@@ -3,13 +3,17 @@
 namespace App\Aggregates;
 
 use App\StorableEvents\UserCreated;
+use Illuminate\Support\Facades\Hash;
 use Spatie\EventProjector\AggregateRoot;
 
 final class UserAggregate extends AggregateRoot
 {
-    public function createUser(string $email, string $name, string $emailVerifiedAt = null)
+    public function createUser(string $email, string $name, string $password = null, string $emailVerifiedAt = null)
     {
-        $this->recordThat(new UserCreated($email, $name, $emailVerifiedAt));
+        if ($password) {
+            $password = Hash::make($password);
+        }
+        $this->recordThat(new UserCreated($email, $name, $password, $emailVerifiedAt));
 
         return $this;
     }
