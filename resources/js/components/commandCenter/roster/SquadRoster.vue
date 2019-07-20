@@ -1,5 +1,8 @@
 <template>
-    <v-card>
+    <v-card v-if="this._squad.rosterFocusedHero">
+        Hero Focused
+    </v-card>
+    <v-card v-else>
         <span class="display-3">{{this._availableSpiritEssence}}</span>
         <div v-for="(hero, uuid) in this._squad.heroes">
             <HeroRosterCard :hero="hero"></HeroRosterCard>

@@ -10,6 +10,7 @@ export default class Squad extends Model {
         this._name = squad.name ? squad.name : '';
         this._heroPosts = squad.heroPosts ? squad.heroPosts : [];
         this._heroes = [];
+        this._rosterFocusedHero = null;
     }
 
     get spiritEssence() {
@@ -44,5 +45,9 @@ export default class Squad extends Model {
             }
         });
         return _heroes;
+    }
+
+    get rosterFocusedHero() {
+        return this._rosterFocusedHero;
     }
 }

@@ -2393,6 +2393,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -36599,19 +36602,25 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "v-card",
-    [
-      _c("span", { staticClass: "display-3" }, [
-        _vm._v(_vm._s(this._availableSpiritEssence))
-      ]),
-      _vm._v(" "),
-      _vm._l(this._squad.heroes, function(hero, uuid) {
-        return _c("div", [_c("HeroRosterCard", { attrs: { hero: hero } })], 1)
-      })
-    ],
-    2
-  )
+  return this._squad.rosterFocusedHero
+    ? _c("v-card", [_vm._v("\n    Hero Focused\n")])
+    : _c(
+        "v-card",
+        [
+          _c("span", { staticClass: "display-3" }, [
+            _vm._v(_vm._s(this._availableSpiritEssence))
+          ]),
+          _vm._v(" "),
+          _vm._l(this._squad.heroes, function(hero, uuid) {
+            return _c(
+              "div",
+              [_c("HeroRosterCard", { attrs: { hero: hero } })],
+              1
+            )
+          })
+        ],
+        2
+      )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -81759,6 +81768,7 @@ function (_Model) {
     _this._name = squad.name ? squad.name : '';
     _this._heroPosts = squad.heroPosts ? squad.heroPosts : [];
     _this._heroes = [];
+    _this._rosterFocusedHero = null;
     return _this;
   }
 
@@ -81802,6 +81812,11 @@ function (_Model) {
         }
       });
       return _heroes;
+    }
+  }, {
+    key: "rosterFocusedHero",
+    get: function get() {
+      return this._rosterFocusedHero;
     }
   }]);
 
