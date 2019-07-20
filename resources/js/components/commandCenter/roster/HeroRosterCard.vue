@@ -3,9 +3,12 @@
         <v-card-title>
             <h3>{{hero.name}}</h3>
         </v-card-title>
-        <slot name="main">
-
-        </slot>
+        <div v-if="hero.playerSpirit">
+            Filled
+        </div>
+        <div v-else>
+            Empty
+        </div>
     </v-card>
 </template>
 
