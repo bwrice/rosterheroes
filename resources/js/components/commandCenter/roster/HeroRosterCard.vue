@@ -1,21 +1,18 @@
 <template>
     <v-card>
-        <v-layout row wrap>
-            <PositionIcon></PositionIcon>
+        <v-card-title>
             <h3>{{hero.name}}</h3>
-        </v-layout>
+        </v-card-title>
+        <slot name="main">
+
+        </slot>
     </v-card>
 </template>
 
 <script>
-    import PositionIcon from '../../icons/PositionIcon';
-
     export default {
         name: "HeroRosterCard",
         props: ['hero'],
-        components: {
-            PositionIcon
-        }
     }
 </script>
 
