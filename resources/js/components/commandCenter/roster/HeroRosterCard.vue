@@ -7,15 +7,26 @@
             Filled
         </div>
         <div v-else>
-            Empty
+            <v-btn v-on:click="focusHero">Edit</v-btn>
         </div>
     </v-card>
 </template>
 
 <script>
+
+    import { mapActions } from 'vuex'
+
     export default {
         name: "HeroRosterCard",
         props: ['hero'],
+        methods: {
+            ...mapActions([
+                'setRosterFocusedHero'
+            ]),
+            focusHero: function() {
+                this.setRosterFocusedHero(this.hero);
+            }
+        }
     }
 </script>
 

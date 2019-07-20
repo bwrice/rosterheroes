@@ -2346,6 +2346,13 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2360,9 +2367,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "HeroRosterCard",
-  props: ['hero']
+  props: ['hero'],
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['setRosterFocusedHero']), {
+    focusHero: function focusHero() {
+      this.setRosterFocusedHero(this.hero);
+    }
+  })
 });
 
 /***/ }),
@@ -2403,7 +2416,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   components: {
     HeroRosterCard: _HeroRosterCard__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(['_squad', '_availableSpiritEssence']))
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(['_squad', '_availableSpiritEssence', '_rosterFocusedHero']))
 });
 
 /***/ }),
@@ -36575,7 +36588,11 @@ var render = function() {
       _vm._v(" "),
       _vm.hero.playerSpirit
         ? _c("div", [_vm._v("\n        Filled\n    ")])
-        : _c("div", [_vm._v("\n        Empty\n    ")])
+        : _c(
+            "div",
+            [_c("v-btn", { on: { click: _vm.focusHero } }, [_vm._v("Edit")])],
+            1
+          )
     ],
     1
   )
@@ -36602,7 +36619,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return this._squad.rosterFocusedHero
+  return this._rosterFocusedHero
     ? _c("v-card", [_vm._v("\n    Hero Focused\n")])
     : _c(
         "v-card",
@@ -81935,13 +81952,49 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _squad__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./squad */ "./resources/js/store/commandCenter/squad.js");
+/* harmony import */ var _roster__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./roster */ "./resources/js/store/commandCenter/roster.js");
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
 
+
 var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   modules: {
-    squadModule: _squad__WEBPACK_IMPORTED_MODULE_2__["default"]
+    squadModule: _squad__WEBPACK_IMPORTED_MODULE_2__["default"],
+    rosterModule: _roster__WEBPACK_IMPORTED_MODULE_3__["default"]
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/commandCenter/roster.js":
+/*!****************************************************!*\
+  !*** ./resources/js/store/commandCenter/roster.js ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  state: {
+    rosterFocusedHero: null
+  },
+  getters: {
+    _rosterFocusedHero: function _rosterFocusedHero(state) {
+      return state.rosterFocusedHero;
+    }
+  },
+  mutations: {
+    SET_FOCUSED_HERO: function SET_FOCUSED_HERO(state, payload) {
+      state.rosterFocusedHero = payload;
+    }
+  },
+  actions: {
+    setRosterFocusedHero: function setRosterFocusedHero(_ref, payload) {
+      var commit = _ref.commit;
+      commit('SET_FOCUSED_HERO', payload);
+    }
   }
 });
 

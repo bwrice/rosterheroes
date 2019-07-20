@@ -1,5 +1,5 @@
 <template>
-    <v-card v-if="this._squad.rosterFocusedHero">
+    <v-card v-if="this._rosterFocusedHero">
         Hero Focused
     </v-card>
     <v-card v-else>
@@ -23,7 +23,8 @@
         computed: {
             ...mapGetters([
                 '_squad',
-                '_availableSpiritEssence'
+                '_availableSpiritEssence',
+                '_rosterFocusedHero'
             ])
         },
     }
