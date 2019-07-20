@@ -70817,8 +70817,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/bwrice/Code/rosterheroestwo/resources/js/createSquad.js */"./resources/js/createSquad.js");
-module.exports = __webpack_require__(/*! /Users/bwrice/Code/rosterheroestwo/resources/stylus/app.styl */"./resources/stylus/app.styl");
+__webpack_require__(/*! /Users/brianrice/Code/rosterheroestwo/resources/js/createSquad.js */"./resources/js/createSquad.js");
+module.exports = __webpack_require__(/*! /Users/brianrice/Code/rosterheroestwo/resources/stylus/app.styl */"./resources/stylus/app.styl");
 
 
 /***/ })
