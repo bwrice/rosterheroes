@@ -1,13 +1,13 @@
 import Model from './Model'
 
-export default class GamePlayer extends Model {
+export default class PlayerSpirit extends Model {
 
-    constructor(gamePlayer) {
+    constructor(playerSpirit) {
         super();
-        this._salary = gamePlayer.salary;
+        this._salary = playerSpirit.essence_cost;
     }
 
-    get salary() {
-        return this._salary;
+    get essenceCost() {
+        return this._essence_cost;
     }
 }
