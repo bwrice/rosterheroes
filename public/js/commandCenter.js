@@ -2455,7 +2455,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     HeroRosterCard: _HeroRosterCard__WEBPACK_IMPORTED_MODULE_0__["default"],
     PlayerSpiritSelection: _PlayerSpiritSelection__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])(['_squad', '_availableSpiritEssence', '_rosterFocusedHero']))
+  mounted: function mounted() {},
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])(['_squad', '_availableSpiritEssence', '_rosterFocusedHero'])),
+  methods: {
+    getPlayerSpirits: function getPlayerSpirits() {}
+  }
 });
 
 /***/ }),
@@ -82197,22 +82201,33 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   state: {
-    rosterFocusedHero: null
+    rosterFocusedHero: null,
+    playerSpiritsPool: []
   },
   getters: {
     _rosterFocusedHero: function _rosterFocusedHero(state) {
       return state.rosterFocusedHero;
+    },
+    _playerSpiritsPool: function _playerSpiritsPool(state) {
+      return state.playerSpiritsPool;
     }
   },
   mutations: {
-    SET_FOCUSED_HERO: function SET_FOCUSED_HERO(state, payload) {
+    SET_ROSTER_FOCUSED_HERO: function SET_ROSTER_FOCUSED_HERO(state, payload) {
       state.rosterFocusedHero = payload;
+    },
+    SET_PLAYER_SPIRITS_POOL: function SET_PLAYER_SPIRITS_POOL(state, payload) {
+      state.playerSpiritsPool = payload;
     }
   },
   actions: {
     setRosterFocusedHero: function setRosterFocusedHero(_ref, payload) {
       var commit = _ref.commit;
-      commit('SET_FOCUSED_HERO', payload);
+      commit('SET_ROSTER_FOCUSED_HERO', payload);
+    },
+    setPlayerSpiritsPool: function setPlayerSpiritsPool(_ref2, payload) {
+      var commit = _ref2.commit;
+      commit('SET_PLAYER_SPIRITS_POOL', payload);
     }
   }
 });
