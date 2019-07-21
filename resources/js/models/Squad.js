@@ -9,8 +9,18 @@ export default class Squad extends Model {
         this._spirit_essence = squad.spirit_essence ? squad.spirit_essence : 0;
         this._name = squad.name ? squad.name : '';
         this._heroPosts = squad.heroPosts ? squad.heroPosts : [];
-        this._heroes = [];
+        this._heroes = this.setHeroes();
         this._rosterFocusedHero = null;
+    }
+
+    setHeroes() {
+        let _heroes = [];
+        this.heroPosts.forEach(function (heroPost) {
+            if (heroPost.hero) {
+                _heroes.push(heroPost.hero);
+            }
+        });
+        return _heroes;
     }
 
     get spiritEssence() {
@@ -38,13 +48,7 @@ export default class Squad extends Model {
     }
 
     get heroes() {
-        let _heroes = [];
-        this.heroPosts.forEach(function (heroPost) {
-            if (heroPost.hero) {
-                _heroes.push(heroPost.hero);
-            }
-        });
-        return _heroes;
+        return this._heroes;
     }
 
     get rosterFocusedHero() {

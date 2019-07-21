@@ -56,6 +56,7 @@
 
         mounted() {
             this.getSquad();
+            this.getCurrentWeek();
         },
 
         data: function() {

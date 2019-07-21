@@ -2413,7 +2413,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.setRosterFocusedHero(null);
     }
   }),
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['_squad', '_week']))
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['_squad', '_currentWeek']))
 });
 
 /***/ }),
@@ -2868,18 +2868,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     NationFooterButton: _components_commandCenter_footer_NationFooterButton__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   mounted: function mounted() {
-    this.setInitialSquad();
+    this.getSquad();
+    this.getCurrentWeek();
   },
   data: function data() {
     return {
       drawer: false
     };
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_5__["mapActions"])(['setSquad']), {
-    setInitialSquad: function setInitialSquad() {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_5__["mapActions"])(['setSquad', 'setCurrentWeek']), {
+    getSquad: function getSquad() {
       var self = this;
       axios.get('/api/v1/squads/' + this.$route.params.squadSlug).then(function (response) {
         self.setSquad(response.data.data);
+      })["catch"](function (error) {
+        console.log("ERROR!");
+        console.log(error);
+      });
+    },
+    getCurrentWeek: function getCurrentWeek() {
+      var self = this;
+      axios.get('/api/v1/weeks/current').then(function (response) {
+        self.setCurrentWeek(response.data.data);
       })["catch"](function (error) {
         console.log("ERROR!");
         console.log(error);
@@ -81925,12 +81935,23 @@ function (_Model) {
     _this._spirit_essence = squad.spirit_essence ? squad.spirit_essence : 0;
     _this._name = squad.name ? squad.name : '';
     _this._heroPosts = squad.heroPosts ? squad.heroPosts : [];
-    _this._heroes = [];
+    _this._heroes = _this.setHeroes();
     _this._rosterFocusedHero = null;
     return _this;
   }
 
   _createClass(Squad, [{
+    key: "setHeroes",
+    value: function setHeroes() {
+      var _heroes = [];
+      this.heroPosts.forEach(function (heroPost) {
+        if (heroPost.hero) {
+          _heroes.push(heroPost.hero);
+        }
+      });
+      return _heroes;
+    }
+  }, {
     key: "spiritEssence",
     get: function get() {
       return this._spirit_essence;
@@ -81963,13 +81984,7 @@ function (_Model) {
   }, {
     key: "heroes",
     get: function get() {
-      var _heroes = [];
-      this.heroPosts.forEach(function (heroPost) {
-        if (heroPost.hero) {
-          _heroes.push(heroPost.hero);
-        }
-      });
-      return _heroes;
+      return this._heroes;
     }
   }, {
     key: "rosterFocusedHero",
@@ -82263,19 +82278,19 @@ __webpack_require__.r(__webpack_exports__);
     week: new _models_Week__WEBPACK_IMPORTED_MODULE_0__["default"]({})
   },
   getters: {
-    _week: function _week(state) {
+    _currentWeek: function _currentWeek(state) {
       return state.week;
     }
   },
   mutations: {
-    SET_WEEK: function SET_WEEK(state, payload) {
+    SET_CURRENT_WEEK: function SET_CURRENT_WEEK(state, payload) {
       state.week = new _models_Week__WEBPACK_IMPORTED_MODULE_0__["default"](payload);
     }
   },
   actions: {
-    setWeek: function setWeek(_ref, payload) {
+    setCurrentWeek: function setCurrentWeek(_ref, payload) {
       var commit = _ref.commit;
-      commit('SET_WEEK', payload);
+      commit('SET_CURRENT_WEEK', payload);
     }
   }
 });

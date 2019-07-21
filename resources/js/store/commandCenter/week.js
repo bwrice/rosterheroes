@@ -19,7 +19,7 @@ export default {
 
     actions: {
         setCurrentWeek({commit}, payload) {
-            commit('SET_WEEK', payload)
+            commit('SET_CURRENT_WEEK', payload)
         },
     }
 };
