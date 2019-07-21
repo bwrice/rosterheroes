@@ -11,6 +11,7 @@ use Carbon\CarbonImmutable;
 use Carbon\CarbonPeriod;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Str;
 use phpDocumentor\Reflection\Types\Self_;
 
 /**
@@ -210,7 +211,7 @@ class Week extends EventSourcedModel
         $monday = $monday->addHours(9)->subSeconds($offset)->setTimezone('UTC');
 
         return self::make([
-            'uuid' => (string) \Ramsey\Uuid\Uuid::uuid4(),
+            'uuid' => Str::uuid(),
             'proposals_scheduled_to_lock_at' => $wednesday,
             'diplomacy_scheduled_to_lock_at' => $friday,
             'everything_locks_at' => $sunday,
