@@ -7,18 +7,18 @@ export default {
     },
 
     getters: {
-        _week(state) {
+        _currentWeek(state) {
             return state.week;
         }
     },
     mutations: {
-        SET_WEEK(state, payload) {
+        SET_CURRENT_WEEK(state, payload) {
             state.week = new Week(payload);
         }
     },
 
     actions: {
-        setRosterFocusedHero({commit}, payload) {
+        setCurrentWeek({commit}, payload) {
             commit('SET_WEEK', payload)
         },
     }

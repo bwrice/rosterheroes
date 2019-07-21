@@ -55,7 +55,7 @@
         },
 
         mounted() {
-            this.setInitialSquad();
+            this.getSquad();
         },
 
         data: function() {
@@ -65,14 +65,25 @@
         },
         methods: {
             ...mapActions([
-                'setSquad'
+                'setSquad',
+                'setCurrentWeek'
             ]),
-            setInitialSquad: function() {
+            getSquad: function() {
                 let self = this;
                 axios.get('/api/v1/squads/' + this.$route.params.squadSlug)
                     .then(function (response) {
                     self.setSquad(response.data.data);
                 }).catch(function (error) {
+                    console.log("ERROR!");
+                    console.log(error);
+                });
+            },
+            getCurrentWeek: function() {
+                let self = this;
+                axios.get('/api/v1/weeks/current')
+                    .then(function (response) {
+                        self.setCurrentWeek(response.data.data);
+                    }).catch(function (error) {
                     console.log("ERROR!");
                     console.log(error);
                 });

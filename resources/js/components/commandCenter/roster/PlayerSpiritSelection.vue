@@ -24,7 +24,7 @@
         computed: {
             ...mapGetters([
                 '_squad',
-                '_week'
+                '_currentWeek'
             ])
         },
     }

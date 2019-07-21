@@ -24,7 +24,7 @@ export default class Hero extends Model {
 
     get essenceUsed() {
         if (this._playerSpirit) {
-            return this._playerSpirit.essence_cost;
+            return this._playerSpirit.essenceCost;
         } else  {
             return 0;
         }

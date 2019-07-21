@@ -81669,7 +81669,7 @@ function (_Model) {
     key: "essenceUsed",
     get: function get() {
       if (this._playerSpirit) {
-        return this._playerSpirit.essence_cost;
+        return this._playerSpirit.essenceCost;
       } else {
         return 0;
       }
@@ -81827,7 +81827,7 @@ function (_BaseModel) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return GamePlayer; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return PlayerSpirit; });
 /* harmony import */ var _Model__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Model */ "./resources/js/models/Model.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -81849,29 +81849,29 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
-var GamePlayer =
+var PlayerSpirit =
 /*#__PURE__*/
 function (_Model) {
-  _inherits(GamePlayer, _Model);
+  _inherits(PlayerSpirit, _Model);
 
-  function GamePlayer(gamePlayer) {
+  function PlayerSpirit(playerSpirit) {
     var _this;
 
-    _classCallCheck(this, GamePlayer);
+    _classCallCheck(this, PlayerSpirit);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(GamePlayer).call(this));
-    _this._salary = gamePlayer.salary;
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(PlayerSpirit).call(this));
+    _this._salary = playerSpirit.essence_cost;
     return _this;
   }
 
-  _createClass(GamePlayer, [{
-    key: "salary",
+  _createClass(PlayerSpirit, [{
+    key: "essenceCost",
     get: function get() {
-      return this._salary;
+      return this._essence_cost;
     }
   }]);
 
-  return GamePlayer;
+  return PlayerSpirit;
 }(_Model__WEBPACK_IMPORTED_MODULE_0__["default"]);
 
 
@@ -82273,7 +82273,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   actions: {
-    setRosterFocusedHero: function setRosterFocusedHero(_ref, payload) {
+    setWeek: function setWeek(_ref, payload) {
       var commit = _ref.commit;
       commit('SET_WEEK', payload);
     }
