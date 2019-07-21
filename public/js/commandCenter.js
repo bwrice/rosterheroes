@@ -2404,6 +2404,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "PlayerSpiritSelection",
   props: ['hero'],
@@ -2411,7 +2412,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     unFocus: function unFocus() {
       this.setRosterFocusedHero(null);
     }
-  })
+  }),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['_squad', '_week']))
 });
 
 /***/ }),

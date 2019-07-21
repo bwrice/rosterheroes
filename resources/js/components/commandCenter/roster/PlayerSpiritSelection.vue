@@ -6,7 +6,8 @@
 </template>
 
 <script>
-    import { mapActions } from 'vuex'
+    import { mapActions } from 'vuex';
+    import { mapGetters } from 'vuex';
 
     export default {
         name: "PlayerSpiritSelection",
@@ -19,7 +20,13 @@
             unFocus: function() {
                 this.setRosterFocusedHero(null);
             }
-        }
+        },
+        computed: {
+            ...mapGetters([
+                '_squad',
+                '_week'
+            ])
+        },
     }
 </script>
 
