@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Domain\Models\Week;
 use App\Domain\Models\PlayerSpirit;
+use App\Domain\QueryBuilders\Filters\HeroRaceFilter;
 use App\Domain\QueryBuilders\Filters\MaxEssenceCostFilter;
 use App\Domain\QueryBuilders\Filters\MinEssenceCostFilter;
 use App\Domain\QueryBuilders\Filters\PositionFilter;
@@ -21,6 +22,7 @@ class WeekPlayerSpiritController extends Controller
         $playerSpirits = QueryBuilder::for($query)
             ->allowedFilters([
                 Filter::custom('position', PositionFilter::class),
+                Filter::custom('hero-race', HeroRaceFilter::class),
                 Filter::custom('min-essence-cost', MinEssenceCostFilter::class),
                 Filter::custom('max-essence-cost', MaxEssenceCostFilter::class)
             ])
