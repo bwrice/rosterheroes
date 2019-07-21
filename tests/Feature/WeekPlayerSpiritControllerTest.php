@@ -2,12 +2,14 @@
 
 namespace Tests\Feature;
 
+use App\Domain\Models\HeroRace;
 use App\Domain\Models\Player;
 use App\Domain\Models\Position;
 use App\Domain\Models\Sport;
 use App\Domain\Models\User;
 use App\Domain\Models\Week;
 use App\Domain\Models\PlayerSpirit;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
@@ -209,6 +211,74 @@ class WeekPlayerSpiritControllerTest extends TestCase
                 'data' => [
                     [
                         'uuid' => $playerSpirit->uuid,
+                        'player' => [
+                            'team' => [],
+                            'positions' => []
+                        ],
+                        'game' => [
+                            'homeTeam' => [],
+                            'awayTeam' => []
+                        ]
+                    ]
+                ]
+            ]);
+
+        $this->assertEquals(1, count($response->json()['data']));
+    }
+
+    /** @test */
+    public function it_will_filter_by_hero_race()
+    {
+        $this->withoutExceptionHandling();
+
+        $heroRaceName = HeroRace::ELF;
+
+        /** @var HeroRace $heroRace */
+        $heroRace = HeroRace::query()->where('name', '=', $heroRaceName)->first();
+
+        $validPosition = $heroRace->positions()->inRandomOrder()->first();
+        $invalidPosition = Position::query()->whereDoesntHave('heroRaces', function (Builder $builder) use ($heroRaceName) {
+           return $builder->where('name', '=', $heroRaceName);
+        })->first();
+
+        $user = factory(User::class)->create();
+        Passport::actingAs($user);
+
+        $week = factory(Week::class)->create();
+        Week::setTestCurrent($week);
+
+        /** @var Player $validPlayer */
+        $validPlayer = factory(Player::class)->create();
+        // Give the valid player both positions
+        $validPlayer->positions()->attach($validPosition);
+        $validPlayer->positions()->attach($invalidPosition);
+
+        /** @var Player $invalidPlayer */
+        $invalidPlayer = factory(Player::class)->create();
+        $invalidPlayer->positions()->attach($invalidPosition);
+
+        /** @var PlayerSpirit $validSpirit */
+        $validSpirit = factory(PlayerSpirit::class)->create([
+            'week_id' => $week->id,
+            'player_id' => $validPlayer->id
+        ]);
+
+        /** @var PlayerSpirit $invalidSpirit */
+        $invalidSpirit = factory(PlayerSpirit::class)->create([
+            'week_id' => $week->id,
+            'player_id' => $invalidPlayer->id
+        ]);
+
+        $uri = 'api/v1/week/' . $week->uuid . '/player-spirits';
+        $uri .= '?filter[hero-race]=' . $heroRaceName;
+
+        $response = $this->get($uri);
+        $response
+            ->assertStatus(200)
+            ->assertJson([
+                'data' => [
+                    [
+                        'uuid' => $validSpirit->uuid,
                         'player' => [
                             'team' => [],
                             'positions' => []
