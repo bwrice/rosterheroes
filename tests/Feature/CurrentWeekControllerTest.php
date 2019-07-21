@@ -19,7 +19,7 @@ class CurrentWeekControllerTest extends TestCase
         $week->wasRecentlyCreated = false; // set to false otherwise response returns 201
         Week::setTestCurrent($week);
 
-        $response = $this->get('api/v1/week/current');
+        $response = $this->get('api/v1/weeks/current');
 
         $response
             ->assertStatus(200)
