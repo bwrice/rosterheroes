@@ -2,6 +2,7 @@
     <v-card>
         <h3>{{hero.name}}</h3>
         <v-btn v-on:click="unFocus">Cancel</v-btn>
+
     </v-card>
 </template>
 
@@ -13,12 +14,27 @@
         name: "PlayerSpiritSelection",
         props: ['hero'],
 
+        mounted() {
+            this.getPlayerSpirits();
+        },
+
         methods: {
             ...mapActions([
-                'setRosterFocusedHero'
+                'setRosterFocusedHero',
+                'setPlayerSpiritsPool'
             ]),
             unFocus: function() {
                 this.setRosterFocusedHero(null);
+            },
+            getPlayerSpirits() {
+                let self = this;
+                axios.get('/api/v1/week/' + self._currentWeek.uuid + '/player-spirits')
+                    .then(function (response) {
+                        self.setPlayerSpiritsPool(response.data.data);
+                    }).catch(function (error) {
+                    console.log("ERROR!");
+                    console.log(error);
+                });
             }
         },
         computed: {

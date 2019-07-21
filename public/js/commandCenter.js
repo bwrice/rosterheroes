@@ -2403,14 +2403,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "PlayerSpiritSelection",
   props: ['hero'],
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['setRosterFocusedHero']), {
+  mounted: function mounted() {
+    this.getPlayerSpirits();
+  },
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['setRosterFocusedHero', 'setPlayerSpiritsPool']), {
     unFocus: function unFocus() {
       this.setRosterFocusedHero(null);
+    },
+    getPlayerSpirits: function getPlayerSpirits() {
+      var self = this;
+      axios.get('/api/v1/week/' + self._currentWeek.uuid + '/player-spirits').then(function (response) {
+        self.setPlayerSpiritsPool(response.data.data);
+      })["catch"](function (error) {
+        console.log("ERROR!");
+        console.log(error);
+      });
     }
   }),
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['_squad', '_currentWeek']))
@@ -2455,11 +2468,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     HeroRosterCard: _HeroRosterCard__WEBPACK_IMPORTED_MODULE_0__["default"],
     PlayerSpiritSelection: _PlayerSpiritSelection__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
-  mounted: function mounted() {},
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])(['_squad', '_availableSpiritEssence', '_rosterFocusedHero'])),
-  methods: {
-    getPlayerSpirits: function getPlayerSpirits() {}
-  }
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])(['_squad', '_availableSpiritEssence', '_rosterFocusedHero']))
 });
 
 /***/ }),

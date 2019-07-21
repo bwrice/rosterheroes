@@ -20,20 +20,12 @@
             HeroRosterCard,
             PlayerSpiritSelection
         },
-        mounted() {
-
-        },
         computed: {
             ...mapGetters([
                 '_squad',
                 '_availableSpiritEssence',
                 '_rosterFocusedHero'
             ])
-        },
-        methods: {
-            getPlayerSpirits() {
-
-            }
         }
     }
 </script>
