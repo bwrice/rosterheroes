@@ -49,7 +49,7 @@ Route::prefix('v1')->group(function () {
 
         Route::post('/campaign/{campaign}/quest/{questUuid}', [CampaignQuestController::class, 'store']);
 
-        Route::get('/weeks/{weekUuid}/player-spirits', [WeekPlayerSpiritController::class, 'index']);
+        Route::get('/week/{weekUuid}/player-spirits', [WeekPlayerSpiritController::class, 'index']);
     });
 });
 
