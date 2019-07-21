@@ -11,6 +11,12 @@ namespace App\Domain\Collections;
 use App\Domain\Models\Position;
 use Illuminate\Database\Eloquent\Collection;
 
+/**
+ * Class PositionCollection
+ * @package App\Domain\Collections
+ *
+ * @method Position first(callable $callback = null, $default = null)
+ */
 class PositionCollection extends Collection
 {
     public function names()
