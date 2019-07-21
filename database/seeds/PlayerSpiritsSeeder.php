@@ -80,7 +80,7 @@ class PlayerSpiritsSeeder extends Seeder
 
         $mostValuablePosition = $positionsToAttach->sortByPositionValue()->first();
         $minEssenceCost = $mostValuablePosition->getMinimumEssenceCost();
-        $essenceCost = random_int($minEssenceCost, $minEssenceCost * 8);
+        $essenceCost = random_int($minEssenceCost, $minEssenceCost * 4);
 
         $player->positions()->attach($positionsToAttach->pluck('id')->toArray());
 
