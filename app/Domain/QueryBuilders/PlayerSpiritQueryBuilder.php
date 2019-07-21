@@ -9,8 +9,10 @@
 namespace App\Domain\QueryBuilders;
 
 
+use App\Domain\Interfaces\HeroRaceQueryable;
 use App\Domain\Interfaces\PositionQueryable;
 use App\Domain\Interfaces\EssenceCostQueryable;
+use App\Domain\Models\HeroRace;
 use App\Domain\Models\Week;
 use App\Domain\Models\PlayerSpirit;
 use Illuminate\Database\Eloquent\Builder;
@@ -21,7 +23,7 @@ use Illuminate\Database\Eloquent\Builder;
  *
  * @method  PlayerSpirit|object|static|null first($columns = ['*'])
  */
-class PlayerSpiritQueryBuilder extends Builder implements PositionQueryable, EssenceCostQueryable
+class PlayerSpiritQueryBuilder extends Builder implements PositionQueryable, EssenceCostQueryable, HeroRaceQueryable
 {
     /**
      * @param Week|null $week
@@ -38,6 +40,14 @@ class PlayerSpiritQueryBuilder extends Builder implements PositionQueryable, Ess
         return $this->whereHas('player', function (PlayerQueryBuilder $builder) use ($positions) {
             return $builder->withPositions($positions);
         });
+    }
+
+    public function forHeroRace(string $heroRaceName): Builder
+    {
+        /** @var HeroRace $heroRace */
+        $heroRace = HeroRace::query()->where('name','=', $heroRaceName)->first();
+        $positionNames = $heroRace->positions->pluck('name')->toArray();
+        return $this->withPositions($positionNames);
     }
 
     public function minEssenceCost(int $amount): Builder

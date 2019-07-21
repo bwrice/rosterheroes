@@ -10,6 +10,7 @@ use App\Domain\Models\HeroPostType;
 use App\Exceptions\UnknownBehaviorException;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * Class HeroRace
@@ -35,11 +36,13 @@ class HeroRace extends Model
         return new HeroRaceCollection($models);
     }
 
+    /** @return BelongsToMany */
     public function positions()
     {
         return $this->belongsToMany(Position::class)->withTimestamps();
     }
 
+    /** @return BelongsToMany */
     public function heroPostTypes()
     {
         return $this->belongsToMany(HeroPostType::class)->withTimestamps();
