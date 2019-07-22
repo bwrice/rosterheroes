@@ -40,7 +40,7 @@ class WeekPlayerSpiritControllerTest extends TestCase
         // will have different week
         $filteredOut = factory(PlayerSpirit::class)->create();
 
-        $baseURI = '/api/v1/week/' . $week->uuid . '/player-spirits';
+        $baseURI = '/api/v1/weeks/' . $week->uuid . '/player-spirits';
 
         $response = $this->get($baseURI);
         $response
@@ -101,7 +101,7 @@ class WeekPlayerSpiritControllerTest extends TestCase
             'player_id' => $player->id
         ]);
 
-        $uri = 'api/v1/week/' . $week->uuid . '/player-spirits';
+        $uri = 'api/v1/weeks/' . $week->uuid . '/player-spirits';
         $uri .= '?filter[position]=outfield,running-back';
 
         $response = $this->get($uri);
@@ -151,7 +151,7 @@ class WeekPlayerSpiritControllerTest extends TestCase
             'essence_cost' => 4999
         ]);
 
-        $uri = 'api/v1/week/' . $week->uuid . '/player-spirits';
+        $uri = 'api/v1/weeks/' . $week->uuid . '/player-spirits';
         $uri .= '?filter[min-essence-cost]=5000';
 
         $response = $this->get($uri);
@@ -201,7 +201,7 @@ class WeekPlayerSpiritControllerTest extends TestCase
             'essence_cost' => 5001
         ]);
 
-        $uri = 'api/v1/week/' . $week->uuid . '/player-spirits';
+        $uri = 'api/v1/weeks/' . $week->uuid . '/player-spirits';
         $uri .= '?filter[max-essence-cost]=5000';
 
         $response = $this->get($uri);
@@ -269,7 +269,7 @@ class WeekPlayerSpiritControllerTest extends TestCase
             'player_id' => $invalidPlayer->id
         ]);
 
-        $uri = 'api/v1/week/' . $week->uuid . '/player-spirits';
+        $uri = 'api/v1/weeks/' . $week->uuid . '/player-spirits';
         $uri .= '?filter[hero-race]=' . $heroRaceName;
 
         $response = $this->get($uri);
