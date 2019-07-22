@@ -1,10 +1,9 @@
-import Squad from '../../models/Squad'
 
 export default {
 
     state: {
-        current: new Squad({}),
-        original: null
+        current: {},
+        original: {}
     },
 
     getters: {
@@ -20,8 +19,8 @@ export default {
     },
     mutations: {
         SET_SQUAD(state, payload) {
-            state.current = new Squad(payload);
-            state.original = new Squad(payload);
+            state.current = payload;
+            state.original = payload;
         }
     },
 
