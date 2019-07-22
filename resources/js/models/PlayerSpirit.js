@@ -9,4 +9,8 @@ export default class PlayerSpirit extends Model {
     resource() {
         return 'player-spirits';
     }
+
+    get playerName() {
+        return this.player.first_name + ' ' + this.player.last_name;
+    }
 }

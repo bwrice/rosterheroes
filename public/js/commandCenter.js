@@ -2392,10 +2392,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/roster/PlayerSpiritSelection.vue?vue&type=script&lang=js&":
-/*!*****************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/commandCenter/roster/PlayerSpiritSelection.vue?vue&type=script&lang=js& ***!
-  \*****************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/roster/HeroSpiritSelection.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/commandCenter/roster/HeroSpiritSelection.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -2426,10 +2426,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "PlayerSpiritSelection",
+  name: "HeroSpiritSelection",
   props: ['hero'],
   mounted: function mounted() {
     this.updatePlayerSpiritsPool();
@@ -2487,7 +2491,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _HeroRosterCard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HeroRosterCard */ "./resources/js/components/commandCenter/roster/HeroRosterCard.vue");
-/* harmony import */ var _PlayerSpiritSelection__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PlayerSpiritSelection */ "./resources/js/components/commandCenter/roster/PlayerSpiritSelection.vue");
+/* harmony import */ var _HeroSpiritSelection__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HeroSpiritSelection */ "./resources/js/components/commandCenter/roster/HeroSpiritSelection.vue");
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -2512,7 +2516,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   name: "SquadRoster",
   components: {
     HeroRosterCard: _HeroRosterCard__WEBPACK_IMPORTED_MODULE_0__["default"],
-    PlayerSpiritSelection: _PlayerSpiritSelection__WEBPACK_IMPORTED_MODULE_1__["default"]
+    HeroSpiritSelection: _HeroSpiritSelection__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])(['_squad', '_availableSpiritEssence', '_rosterFocusedHero']))
 });
@@ -37474,10 +37478,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/roster/PlayerSpiritSelection.vue?vue&type=template&id=02f67510&scoped=true&":
-/*!*********************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/commandCenter/roster/PlayerSpiritSelection.vue?vue&type=template&id=02f67510&scoped=true& ***!
-  \*********************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/roster/HeroSpiritSelection.vue?vue&type=template&id=0fd2f6d7&scoped=true&":
+/*!*******************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/commandCenter/roster/HeroSpiritSelection.vue?vue&type=template&id=0fd2f6d7&scoped=true& ***!
+  \*******************************************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -37497,9 +37501,23 @@ var render = function() {
       _c("v-btn", { on: { click: _vm.unFocus } }, [_vm._v("Cancel")]),
       _vm._v(" "),
       _vm._l(this.playerSpirits, function(playerSpirit, uuid) {
-        return _c("div", [
-          _c("h3", [_vm._v(_vm._s(playerSpirit.player.first_name))])
-        ])
+        return [
+          _c(
+            "v-card",
+            [
+              _c("v-card-title", [
+                _vm._v(
+                  "\n                " +
+                    _vm._s(playerSpirit.playerName) +
+                    " (" +
+                    _vm._s(playerSpirit.essence_cost) +
+                    ")\n            "
+                )
+              ])
+            ],
+            1
+          )
+        ]
       })
     ],
     2
@@ -81505,17 +81523,17 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/commandCenter/roster/PlayerSpiritSelection.vue":
-/*!********************************************************************************!*\
-  !*** ./resources/js/components/commandCenter/roster/PlayerSpiritSelection.vue ***!
-  \********************************************************************************/
+/***/ "./resources/js/components/commandCenter/roster/HeroSpiritSelection.vue":
+/*!******************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/roster/HeroSpiritSelection.vue ***!
+  \******************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _PlayerSpiritSelection_vue_vue_type_template_id_02f67510_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PlayerSpiritSelection.vue?vue&type=template&id=02f67510&scoped=true& */ "./resources/js/components/commandCenter/roster/PlayerSpiritSelection.vue?vue&type=template&id=02f67510&scoped=true&");
-/* harmony import */ var _PlayerSpiritSelection_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PlayerSpiritSelection.vue?vue&type=script&lang=js& */ "./resources/js/components/commandCenter/roster/PlayerSpiritSelection.vue?vue&type=script&lang=js&");
+/* harmony import */ var _HeroSpiritSelection_vue_vue_type_template_id_0fd2f6d7_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HeroSpiritSelection.vue?vue&type=template&id=0fd2f6d7&scoped=true& */ "./resources/js/components/commandCenter/roster/HeroSpiritSelection.vue?vue&type=template&id=0fd2f6d7&scoped=true&");
+/* harmony import */ var _HeroSpiritSelection_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HeroSpiritSelection.vue?vue&type=script&lang=js& */ "./resources/js/components/commandCenter/roster/HeroSpiritSelection.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -81525,50 +81543,50 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _PlayerSpiritSelection_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _PlayerSpiritSelection_vue_vue_type_template_id_02f67510_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _PlayerSpiritSelection_vue_vue_type_template_id_02f67510_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _HeroSpiritSelection_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _HeroSpiritSelection_vue_vue_type_template_id_0fd2f6d7_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _HeroSpiritSelection_vue_vue_type_template_id_0fd2f6d7_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  "02f67510",
+  "0fd2f6d7",
   null
   
 )
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/commandCenter/roster/PlayerSpiritSelection.vue"
+component.options.__file = "resources/js/components/commandCenter/roster/HeroSpiritSelection.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/commandCenter/roster/PlayerSpiritSelection.vue?vue&type=script&lang=js&":
-/*!*********************************************************************************************************!*\
-  !*** ./resources/js/components/commandCenter/roster/PlayerSpiritSelection.vue?vue&type=script&lang=js& ***!
-  \*********************************************************************************************************/
+/***/ "./resources/js/components/commandCenter/roster/HeroSpiritSelection.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/roster/HeroSpiritSelection.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PlayerSpiritSelection_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./PlayerSpiritSelection.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/roster/PlayerSpiritSelection.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PlayerSpiritSelection_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_HeroSpiritSelection_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./HeroSpiritSelection.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/roster/HeroSpiritSelection.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_HeroSpiritSelection_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/commandCenter/roster/PlayerSpiritSelection.vue?vue&type=template&id=02f67510&scoped=true&":
-/*!***************************************************************************************************************************!*\
-  !*** ./resources/js/components/commandCenter/roster/PlayerSpiritSelection.vue?vue&type=template&id=02f67510&scoped=true& ***!
-  \***************************************************************************************************************************/
+/***/ "./resources/js/components/commandCenter/roster/HeroSpiritSelection.vue?vue&type=template&id=0fd2f6d7&scoped=true&":
+/*!*************************************************************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/roster/HeroSpiritSelection.vue?vue&type=template&id=0fd2f6d7&scoped=true& ***!
+  \*************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PlayerSpiritSelection_vue_vue_type_template_id_02f67510_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./PlayerSpiritSelection.vue?vue&type=template&id=02f67510&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/roster/PlayerSpiritSelection.vue?vue&type=template&id=02f67510&scoped=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PlayerSpiritSelection_vue_vue_type_template_id_02f67510_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_HeroSpiritSelection_vue_vue_type_template_id_0fd2f6d7_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./HeroSpiritSelection.vue?vue&type=template&id=0fd2f6d7&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/roster/HeroSpiritSelection.vue?vue&type=template&id=0fd2f6d7&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_HeroSpiritSelection_vue_vue_type_template_id_0fd2f6d7_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PlayerSpiritSelection_vue_vue_type_template_id_02f67510_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_HeroSpiritSelection_vue_vue_type_template_id_0fd2f6d7_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -82619,6 +82637,11 @@ function (_Model) {
     key: "resource",
     value: function resource() {
       return 'player-spirits';
+    }
+  }, {
+    key: "playerName",
+    get: function get() {
+      return this.player.first_name + ' ' + this.player.last_name;
     }
   }]);
 

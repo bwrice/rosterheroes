@@ -2,9 +2,13 @@
     <v-card>
         <h3>{{hero.name}}</h3>
         <v-btn v-on:click="unFocus">Cancel</v-btn>
-        <div v-for="(playerSpirit, uuid) in this.playerSpirits">
-            <h3>{{playerSpirit.player.first_name}}</h3>
-        </div>
+        <template v-for="(playerSpirit, uuid) in this.playerSpirits">
+            <v-card>
+                <v-card-title>
+                    {{playerSpirit.playerName}} ({{playerSpirit.essence_cost}})
+                </v-card-title>
+            </v-card>
+        </template>
     </v-card>
 </template>
 
@@ -13,7 +17,7 @@
     import { mapGetters } from 'vuex';
 
     export default {
-        name: "PlayerSpiritSelection",
+        name: "HeroSpiritSelection",
         props: ['hero'],
 
         mounted() {

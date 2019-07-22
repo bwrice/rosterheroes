@@ -11,14 +11,14 @@
 <script>
 
     import HeroRosterCard from './HeroRosterCard';
-    import PlayerSpiritSelection from './PlayerSpiritSelection';
+    import HeroSpiritSelection from './HeroSpiritSelection';
     import { mapGetters } from 'vuex'
 
     export default {
         name: "SquadRoster",
         components: {
             HeroRosterCard,
-            PlayerSpiritSelection
+            HeroSpiritSelection
         },
         computed: {
             ...mapGetters([
