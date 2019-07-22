@@ -5,7 +5,7 @@ namespace Tests\Feature;
 use App\Domain\Models\Week;
 use Tests\TestCase;
 
-class CurrentWeekControllerTest extends TestCase
+class WeekControllerTest extends TestCase
 {
     /**
      * @test
