@@ -12,7 +12,7 @@ class WeekController extends Controller
         if ($weekUuid === 'current') {
             $week = Week::current();
         } else {
-            $week = Week::uuid( $weekUuid );
+            $week = Week::uuid($weekUuid);
         }
         return new WeekResource($week);
     }

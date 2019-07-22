@@ -2401,12 +2401,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 //
 //
@@ -2421,10 +2429,31 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "PlayerSpiritSelection",
   props: ['hero'],
-  mounted: function mounted() {
-    this.getPlayerSpirits();
-  },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['setRosterFocusedHero', 'setPlayerSpiritsPool']), {
+  mounted: function () {
+    var _mounted = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              this.getPlayerSpirits();
+
+            case 1:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, this);
+    }));
+
+    function mounted() {
+      return _mounted.apply(this, arguments);
+    }
+
+    return mounted;
+  }(),
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['setRosterFocusedHero', 'setPlayerSpiritsPool']), {
     unFocus: function unFocus() {
       this.setRosterFocusedHero(null);
     },
@@ -2438,7 +2467,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     }
   }),
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['_squad', '_currentWeek']))
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(['_squad', '_currentWeek']))
 });
 
 /***/ }),
@@ -2839,6 +2868,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_commandCenter_footer_NationFooterButton__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/commandCenter/footer/NationFooterButton */ "./resources/js/components/commandCenter/footer/NationFooterButton.vue");
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _models_Squad__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../models/Squad */ "./resources/js/models/Squad.js");
+/* harmony import */ var _models_Week__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../models/Week */ "./resources/js/models/Week.js");
 
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
@@ -2893,6 +2923,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "CommandCenter",
   components: {
@@ -2906,7 +2937,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var _mounted = _asyncToGenerator(
     /*#__PURE__*/
     _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-      var squad;
+      var squad, currentWeek;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
@@ -2917,9 +2948,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             case 2:
               squad = _context.sent;
               this.setSquad(squad);
-              this.getCurrentWeek();
+              _context.next = 6;
+              return _models_Week__WEBPACK_IMPORTED_MODULE_8__["default"].$find('current');
 
-            case 5:
+            case 6:
+              currentWeek = _context.sent;
+              this.setCurrentWeek(currentWeek);
+
+            case 8:
             case "end":
               return _context.stop();
           }
@@ -2938,28 +2974,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       drawer: false
     };
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_6__["mapActions"])(['setSquad', 'setCurrentWeek']), {
-    // getSquad: function() {
-    //     let self = this;
-    //     axios.get('/api/v1/squads/' + this.$route.params.squadSlug)
-    //         .then(function (response) {
-    //         self.setSquad(response.data.data);
-    //     }).catch(function (error) {
-    //         console.log("ERROR!");
-    //         console.log(error);
-    //     });
-    // },
-    getCurrentWeek: function getCurrentWeek() {
-      var self = this;
-      axios.get('/api/v1/weeks/current').then(function (response) {
-        self.setCurrentWeek(response.data.data);
-      })["catch"](function (error) {
-        console.log("ERROR!");
-        console.log(error);
-      });
-    }
-  }),
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_6__["mapGetters"])(['_squad']))
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_6__["mapActions"])(['setSquad', 'setCurrentWeek'])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_6__["mapGetters"])(['_squad', '_currentWeek']))
 });
 
 /***/ }),
@@ -82556,10 +82572,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
@@ -82577,22 +82589,11 @@ var PlayerSpirit =
 function (_Model) {
   _inherits(PlayerSpirit, _Model);
 
-  function PlayerSpirit(playerSpirit) {
-    var _this;
-
+  function PlayerSpirit() {
     _classCallCheck(this, PlayerSpirit);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(PlayerSpirit).call(this));
-    _this._salary = playerSpirit.essence_cost;
-    return _this;
+    return _possibleConstructorReturn(this, _getPrototypeOf(PlayerSpirit).apply(this, arguments));
   }
-
-  _createClass(PlayerSpirit, [{
-    key: "essenceCost",
-    get: function get() {
-      return this._essence_cost;
-    }
-  }]);
 
   return PlayerSpirit;
 }(_Model__WEBPACK_IMPORTED_MODULE_0__["default"]);
@@ -82687,8 +82688,9 @@ function (_Model) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Hero; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Week; });
 /* harmony import */ var _Model__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Model */ "./resources/js/models/Model.js");
+/* harmony import */ var _PlayerSpirit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PlayerSpirit */ "./resources/js/models/PlayerSpirit.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -82709,29 +82711,31 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
-var Hero =
+
+var Week =
 /*#__PURE__*/
 function (_Model) {
-  _inherits(Hero, _Model);
+  _inherits(Week, _Model);
 
-  function Hero(week) {
-    var _this;
+  function Week() {
+    _classCallCheck(this, Week);
 
-    _classCallCheck(this, Hero);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(Hero).call(this));
-    _this._uuid = week.uuid;
-    return _this;
+    return _possibleConstructorReturn(this, _getPrototypeOf(Week).apply(this, arguments));
   }
 
-  _createClass(Hero, [{
-    key: "uuid",
-    get: function get() {
-      return this._uuid;
+  _createClass(Week, [{
+    key: "primaryKey",
+    value: function primaryKey() {
+      return 'uuid';
+    }
+  }, {
+    key: "playerSpirits",
+    value: function playerSpirits() {
+      return this.hasMany(_PlayerSpirit__WEBPACK_IMPORTED_MODULE_1__["default"]);
     }
   }]);
 
-  return Hero;
+  return Week;
 }(_Model__WEBPACK_IMPORTED_MODULE_0__["default"]);
 
 
@@ -82958,11 +82962,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _models_Week__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../models/Week */ "./resources/js/models/Week.js");
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   state: {
-    week: new _models_Week__WEBPACK_IMPORTED_MODULE_0__["default"]({})
+    week: {}
   },
   getters: {
     _currentWeek: function _currentWeek(state) {
@@ -82971,7 +82973,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   mutations: {
     SET_CURRENT_WEEK: function SET_CURRENT_WEEK(state, payload) {
-      state.week = new _models_Week__WEBPACK_IMPORTED_MODULE_0__["default"](payload);
+      state.week = payload;
     }
   },
   actions: {

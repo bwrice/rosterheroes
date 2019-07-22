@@ -14,7 +14,8 @@
         name: "PlayerSpiritSelection",
         props: ['hero'],
 
-        mounted() {
+        async mounted() {
+
             this.getPlayerSpirits();
         },
 
