@@ -28,7 +28,7 @@ class WeekPlayerSpiritController extends Controller
             ])
             ->with([
                 'player.positions', 'player.team', 'game.homeTeam', 'game.awayTeam'
-            ])->get();
+            ])->limit(5)->get();
         return PlayerSpiritResource::collection($playerSpirits);
     }
 }

@@ -1,4 +1,5 @@
 import Model from './Model'
+import moment from 'moment';
 
 export default class Game extends Model {
 
@@ -7,6 +8,10 @@ export default class Game extends Model {
     }
 
     get description() {
-        return this.startsAt;
+        return this.startsAtMoment.format('ddd, MMM Do h:mm:ss a')
+    }
+
+    get startsAtMoment() {
+        return moment(this.startsAt);
     }
 }
