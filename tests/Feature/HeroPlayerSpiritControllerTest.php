@@ -199,8 +199,6 @@ class HeroPlayerSpiritControllerTest extends TestCase
      */
     public function it_will_add_a_spirit_if_the_hero_essence_used_plus_squad_available_essence_is_enough()
     {
-        $this->withoutExceptionHandling();
-
         $squadSpiritEssence = 10000;
         /** @var \App\Domain\Models\Squad $squad */
         $squad = factory(Squad::class)->create([
@@ -257,5 +255,38 @@ class HeroPlayerSpiritControllerTest extends TestCase
 
         $hero = $hero->fresh();
         $this->assertEquals($hero->playerSpirit->id, $playerSpirit->id);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_remove_a_player_spirit()
+    {
+        $this->withoutExceptionHandling();
+        /** @var PlayerSpirit $playerSpirit */
+        $playerSpirit = factory(PlayerSpirit::class)->create();
+
+        /** @var \App\Domain\Models\Hero $hero */
+        $hero = factory(Hero::class)->create([
+            'player_spirit_id' => $playerSpirit->id
+        ]);
+
+        /** @var \App\Domain\Models\Hero $hero */
+        $heroPost = factory(HeroPost::class)->create([
+            'hero_id' => $hero->id
+        ]);
+
+        Week::setTestCurrent($playerSpirit->week);
+
+        Passport::actingAs($heroPost->squad->user);
+
+        // Mock 6 hours before everything locks
+        CarbonImmutable::setTestNow(Week::current()->everything_locks_at->copy()->subHours(6));
+
+        $response = $this->json('DELETE', 'api/v1/heroes/'. $hero->uuid . '/player-spirit');
+        $this->assertEquals(200, $response->getStatusCode());
+
+        $hero = $hero->fresh();
+        $this->assertNull($hero->playerSpirit);
     }
 }
