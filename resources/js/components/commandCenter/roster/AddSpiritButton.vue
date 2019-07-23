@@ -10,7 +10,15 @@
         props: ['playerSpirit', 'hero'],
         methods: {
             addSpirit: function() {
-                alert(this.playerSpirit.player.first_name);
+                let self = this;
+                axios.post('/api/v1/heroes/' + this.hero.uuid + '/player-spirit/' + this.playerSpirit.uuid)
+                    .then(function (response) {
+                    console.log("Response Data");
+                    console.log(response.data);
+                }).catch(function (error) {
+                    console.log("ERROR!");
+                    console.log(error);
+                });
             }
         }
     }
