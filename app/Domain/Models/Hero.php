@@ -225,11 +225,20 @@ class Hero extends EventSourcedModel implements HasSlots
     /**
      * @return int
      */
+    public function essenceUsed()
+    {
+        if ($this->playerSpirit) {
+            return $this->playerSpirit->essence_cost;
+        }
+        return 0;
+    }
+
+    /**
+     * @return int
+     */
     public function availableEssence()
     {
-        // TODO: does this work?
-        $heroEssence = $this->essence ?: 0;
-        return $this->heroPost->squad->availableSpiritEssence() - $heroEssence;
+        return $this->heroPost->squad->availableSpiritEssence() - $this->essenceUsed();
     }
 
     /**
@@ -242,8 +251,4 @@ class Hero extends EventSourcedModel implements HasSlots
         return $action(); //invoke and return
     }
 
-    public function canAfford($essenceCost)
-    {
-        return $this->availableEssence() >= (int) $essenceCost;
-    }
 }

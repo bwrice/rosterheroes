@@ -32,7 +32,7 @@ class AddSpiritToHeroAction
 
     public function __invoke(): Hero
     {
-        if(! Week::isCurrent($this->playerSpirit->week)) {
+        if (! Week::isCurrent($this->playerSpirit->week)) {
             throw new InvalidWeekException($this->playerSpirit->week);
         }
 
@@ -42,13 +42,13 @@ class AddSpiritToHeroAction
             throw $exception;
         }
 
-        if(! $this->hero->canAfford($this->playerSpirit->essence_cost)) {
+        if (! $this->heroCanAffordSpirit()) {
             $exception = new NotEnoughEssenceException();
             $exception->setAttributes($this->hero->availableEssence(), $this->playerSpirit->essence_cost);
             throw $exception;
         }
 
-        if($this->playerSpirit->game->hasStarted()) {
+        if ($this->playerSpirit->game->hasStarted()) {
             $exception = new GameStartedException();
             $exception->setGame($this->playerSpirit->game);
             throw $exception;
@@ -59,5 +59,13 @@ class AddSpiritToHeroAction
         $heroAggregate->addPlayerSpirit($this->playerSpirit->id)->persist();
 
         return $this->hero->fresh();
+    }
+
+    /**
+     * @return bool
+     */
+    protected function heroCanAffordSpirit(): bool
+    {
+        return ($this->hero->availableEssence() >= $this->playerSpirit->essence_cost);
     }
 }

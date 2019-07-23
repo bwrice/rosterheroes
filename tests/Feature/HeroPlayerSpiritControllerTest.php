@@ -142,20 +142,35 @@ class HeroPlayerSpiritControllerTest extends TestCase
     public function a_hero_cannot_add_a_player_with_too_much_essence_cost()
     {
 
+        $squadSpiritEssence = 10000;
+        /** @var \App\Domain\Models\Squad $squad */
+        $squad = factory(Squad::class)->create([
+            'spirit_essence' => $squadSpiritEssence
+        ]);
+
+        $alreadyFilledPlayerSpiritCost = 6000;
+        $alreadyFilledPlayerSpirit = factory(PlayerSpirit::class)->create([
+            'essence_cost' => $alreadyFilledPlayerSpiritCost
+        ]);
+
+        $alreadyFilledHero = factory(Hero::class)->create([
+            'player_spirit_id' => $alreadyFilledPlayerSpirit->id
+        ]);
+
+        $alreadyFilledHeroPost = factory(HeroPost::class)->create([
+            'hero_id' => $alreadyFilledHero->id,
+            'squad_id' => $squad->id
+        ]);
+
+        $this->assertEquals($squadSpiritEssence - $alreadyFilledPlayerSpiritCost, $squad->availableSpiritEssence());
+
         /** @var \App\Domain\Models\HeroRace $heroRace */
         $heroRace = HeroRace::query()->inRandomOrder()->first();
         $position = $heroRace->positions()->inRandomOrder()->first();
 
-
         /** @var \App\Domain\Models\Hero $hero */
         $hero = factory(Hero::class)->create([
             'hero_race_id' => $heroRace->id
-        ]);
-
-        $squadSpiritEssence = 5000;
-        /** @var \App\Domain\Models\Squad $squad */
-        $squad = factory(Squad::class)->create([
-            'spirit_essence' => $squadSpiritEssence
         ]);
 
         /** @var HeroPost $heroPost */
@@ -166,7 +181,7 @@ class HeroPlayerSpiritControllerTest extends TestCase
 
         /** @var PlayerSpirit $playerSpirit */
         $playerSpirit = factory(PlayerSpirit::class)->create([
-            'essence_cost' => $squadSpiritEssence + 2000
+            'essence_cost' => ($squadSpiritEssence - $alreadyFilledPlayerSpiritCost) + 2000
         ]);
 
         $playerSpirit->player->positions()->attach($position);
@@ -188,6 +203,4 @@ class HeroPlayerSpiritControllerTest extends TestCase
         CarbonImmutable::setTestNow(); // clear testing mock
         Week::setTestCurrent(); // clear test week
     }
-
-
 }

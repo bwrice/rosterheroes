@@ -20,9 +20,8 @@ class HeroCollection extends Collection
      */
     public function totalEssenceCost()
     {
-        // TODO get essence from player spirit
-        return $this->sum(function(Hero $hero) {
-            return $hero->essence ?: 0;
+        return $this->loadMissing('playerSpirit')->sum(function(Hero $hero) {
+            return $hero->essenceUsed();
         });
     }
 
