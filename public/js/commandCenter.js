@@ -81824,7 +81824,7 @@ function (_BaseModel) {
     key: "baseURL",
     // define a base url for a REST API
     value: function baseURL() {
-      return "https://rosterheroestwo.dev";
+      return "https://rosterheroestwo.test";
     } // implement a default request method
 
   }, {
