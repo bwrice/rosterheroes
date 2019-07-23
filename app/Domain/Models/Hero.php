@@ -2,6 +2,7 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Actions\AddSpiritToHeroAction;
 use App\Domain\QueryBuilders\HeroQueryBuilder;
 use App\Domain\Traits\HasSlug;
 use App\StorableEvents\HeroCreated;
@@ -232,34 +233,13 @@ class Hero extends EventSourcedModel implements HasSlots
     }
 
     /**
-     * @param PlayerSpirit $playerSpirit
+     * @param \App\Domain\Models\PlayerSpirit $playerSpirit
+     * @return Hero
      */
     public function addPlayerSpirit(PlayerSpirit $playerSpirit)
     {
-        if(! Week::isCurrent($playerSpirit->week)) {
-            throw new InvalidWeekException($playerSpirit->week);
-        }
-
-        if (! $this->heroRace->positions->intersect($playerSpirit->getPositions())->count() > 0 ) {
-            $exception = new InvalidPositionsException();
-            $exception->setPositions($this->heroRace->positions, $playerSpirit->getPositions());
-            throw $exception;
-        }
-
-        if(! $this->canAfford($playerSpirit->essence_cost)) {
-            $exception = new NotEnoughEssenceException();
-            $exception->setAttributes($this->availableEssence(), $playerSpirit->essence_cost);
-            throw $exception;
-        }
-
-        if($playerSpirit->game->hasStarted()) {
-            $exception = new GameStartedException();
-            $exception->setGame($playerSpirit->game);
-            throw $exception;
-        }
-
-        $this->player_spirit_id = $playerSpirit->id;
-        $this->save();
+        $action = new AddSpiritToHeroAction($this, $playerSpirit);
+        return $action(); //invoke and return
     }
 
     public function canAfford($essenceCost)
