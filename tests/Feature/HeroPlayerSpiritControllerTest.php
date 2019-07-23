@@ -62,7 +62,7 @@ class HeroPlayerSpiritControllerTest extends TestCase
         // Mock 6 hours before everything locks
         CarbonImmutable::setTestNow(Week::current()->everything_locks_at->copy()->subHours(6));
 
-        $response = $this->json('POST', 'api/v1/hero/'. $hero->uuid . '/player-spirit/' . $playerSpirit->uuid);
+        $response = $this->json('POST', 'api/v1/heroes/'. $hero->uuid . '/player-spirit/' . $playerSpirit->uuid);
         $this->assertEquals(201, $response->getStatusCode());
 
         $hero = $hero->fresh();
@@ -125,7 +125,7 @@ class HeroPlayerSpiritControllerTest extends TestCase
         // Mock 6 hours before everything locks
         CarbonImmutable::setTestNow(Week::current()->everything_locks_at->copy()->subHours(6));
 
-        $response = $this->json('POST', 'api/v1/hero/'. $hero->uuid . '/player-spirit/' . $playerSpirit->uuid);
+        $response = $this->json('POST', 'api/v1/heroes/'. $hero->uuid . '/player-spirit/' . $playerSpirit->uuid);
         $this->assertEquals(422, $response->getStatusCode());
         $this->assertArrayHasKey('position', $response->json()['errors']);
 
@@ -178,7 +178,7 @@ class HeroPlayerSpiritControllerTest extends TestCase
         // Mock 6 hours before everything locks
         CarbonImmutable::setTestNow(Week::current()->everything_locks_at->copy()->subHours(6));
 
-        $response = $this->json('POST', 'api/v1/hero/'. $hero->uuid . '/player-spirit/' . $playerSpirit->uuid);
+        $response = $this->json('POST', 'api/v1/heroes/'. $hero->uuid . '/player-spirit/' . $playerSpirit->uuid);
         $this->assertEquals(422, $response->getStatusCode());
         $this->assertArrayHasKey('essence', $response->json()['errors']);
 
