@@ -2522,7 +2522,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return this._currentWeek.playerSpirits().$get();
+                return this._currentWeek.playerSpirits().where('hero-race', this.hero.heroRace.name).$get();
 
               case 2:
                 this.playerSpirits = _context.sent;

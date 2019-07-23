@@ -71,7 +71,7 @@
                 this.setRosterFocusedHero(null);
             },
             async updatePlayerSpiritsPool() {
-                this.playerSpirits = await this._currentWeek.playerSpirits().$get();
+                this.playerSpirits = await this._currentWeek.playerSpirits().where('hero-race', this.hero.heroRace.name).$get();
             }
         },
         computed: {
