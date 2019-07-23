@@ -4,6 +4,7 @@
 namespace App\Domain\Actions;
 
 
+use App\Aggregates\HeroAggregate;
 use App\Domain\Models\Hero;
 use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\Week;
@@ -53,8 +54,10 @@ class AddSpiritToHeroAction
             throw $exception;
         }
 
-        $this->hero->player_spirit_id = $this->playerSpirit->id;
-        $this->hero->save();
-        return $this->hero;
+        /** @var HeroAggregate $heroAggregate */
+        $heroAggregate = HeroAggregate::retrieve($this->hero->uuid);
+        $heroAggregate->addPlayerSpirit($this->playerSpirit->id)->persist();
+
+        return $this->hero->fresh();
     }
 }

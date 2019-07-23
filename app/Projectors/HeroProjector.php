@@ -5,6 +5,7 @@ namespace App\Projectors;
 use App\StorableEvents\HeroCreated;
 use App\Domain\Models\Hero;
 use App\StorableEvents\HeroSlotCreated;
+use App\StorableEvents\PlayerSpiritAddedToHero;
 use Spatie\EventProjector\Projectors\Projector;
 use Spatie\EventProjector\Projectors\ProjectsEvents;
 
@@ -21,8 +22,6 @@ class HeroProjector implements Projector
             'hero_race_id' => $event->heroRaceID,
             'hero_rank_id' => $event->heroRankID
         ]);
-
-        return $this;
     }
 
     public function onHeroSlotCreated(HeroSlotCreated $event, string $aggregateUuid)
@@ -31,7 +30,12 @@ class HeroProjector implements Projector
         $hero->slots()->create([
             'slot_type_id' => $event->slotTypeID
         ]);
+    }
 
-        return $this;
+    public function onPlayerSpiritAddedToHero(PlayerSpiritAddedToHero $event, string $aggregateUuid)
+    {
+        $hero = Hero::uuid($aggregateUuid);
+        $hero->player_spirit_id = $event->playerSpiritID;
+        $hero->save();
     }
 }
