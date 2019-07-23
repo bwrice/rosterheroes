@@ -1,13 +1,13 @@
 import Model from './Model'
+import PlayerSpirit from "./PlayerSpirit";
 
-export default class Hero extends Model {
+export default class Week extends Model {
 
-    constructor(week) {
-        super();
-        this._uuid = week.uuid;
+    primaryKey() {
+        return 'uuid';
     }
 
-    get uuid() {
-        return this._uuid;
+    playerSpirits() {
+        return this.hasMany(PlayerSpirit);
     }
 }

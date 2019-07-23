@@ -43,6 +43,9 @@
     import { mapGetters } from 'vuex'
     import { mapActions } from 'vuex'
 
+    import Squad from "../models/Squad";
+    import Week from "../models/Week";
+
     export default {
         name: "CommandCenter",
 
@@ -54,9 +57,11 @@
             NationFooterButton
         },
 
-        mounted() {
-            this.getSquad();
-            this.getCurrentWeek();
+        async mounted() {
+            let squad = await Squad.$find(this.$route.params.squadSlug);
+            this.setSquad(squad);
+            let currentWeek = await Week.$find('current');
+            this.setCurrentWeek(currentWeek);
         },
 
         data: function() {
@@ -68,32 +73,13 @@
             ...mapActions([
                 'setSquad',
                 'setCurrentWeek'
-            ]),
-            getSquad: function() {
-                let self = this;
-                axios.get('/api/v1/squads/' + this.$route.params.squadSlug)
-                    .then(function (response) {
-                    self.setSquad(response.data.data);
-                }).catch(function (error) {
-                    console.log("ERROR!");
-                    console.log(error);
-                });
-            },
-            getCurrentWeek: function() {
-                let self = this;
-                axios.get('/api/v1/weeks/current')
-                    .then(function (response) {
-                        self.setCurrentWeek(response.data.data);
-                    }).catch(function (error) {
-                    console.log("ERROR!");
-                    console.log(error);
-                });
-            }
+            ])
         },
         computed: {
 
             ...mapGetters([
                 '_squad',
+                '_currentWeek'
             ])
         }
     }

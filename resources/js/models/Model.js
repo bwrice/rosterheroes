@@ -8,7 +8,7 @@ export default class Model extends BaseModel {
 
     // define a base url for a REST API
     baseURL () {
-        return process.env.MIX_VUE_API_QUERY_BASE_URL;
+        return process.env.MIX_VUE_API_QUERY_BASE_URL + '/api/v1';
     }
 
     // implement a default request method

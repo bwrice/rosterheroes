@@ -1,7 +1,7 @@
 <template>
-    <PlayerSpiritSelection v-if="this._rosterFocusedHero" :hero="this._rosterFocusedHero"></PlayerSpiritSelection>
+    <HeroSpiritSelection v-if="this._rosterFocusedHero" :hero="this._rosterFocusedHero"></HeroSpiritSelection>
     <v-card key=2 v-else>
-        <span class="display-3">{{this._availableSpiritEssence}}</span>
+        <span class="display-3">{{this._squad.availableSpiritEssence}}</span>
         <div v-for="(hero, uuid) in this._squad.heroes">
             <HeroRosterCard :hero="hero"></HeroRosterCard>
         </div>
@@ -11,14 +11,14 @@
 <script>
 
     import HeroRosterCard from './HeroRosterCard';
-    import PlayerSpiritSelection from './PlayerSpiritSelection';
+    import HeroSpiritSelection from './HeroSpiritSelection';
     import { mapGetters } from 'vuex'
 
     export default {
         name: "SquadRoster",
         components: {
             HeroRosterCard,
-            PlayerSpiritSelection
+            HeroSpiritSelection
         },
         computed: {
             ...mapGetters([

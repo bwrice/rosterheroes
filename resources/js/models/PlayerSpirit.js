@@ -1,13 +1,30 @@
 import Model from './Model'
+import Player from "./Player";
+import Game from "./Game";
 
 export default class PlayerSpirit extends Model {
 
-    constructor(playerSpirit) {
-        super();
-        this._salary = playerSpirit.essence_cost;
+    primaryKey() {
+        return 'uuid';
     }
 
-    get essenceCost() {
-        return this._essence_cost;
+    resource() {
+        return 'player-spirits';
+    }
+
+    get playerModel() {
+        return new Player(this.player);
+    }
+
+    get gameModel() {
+        return new Game(this.game);
+    }
+
+    get playerName() {
+        return this.playerModel.name;
+    }
+
+    get gameDescription() {
+        return this.gameModel.description;
     }
 }

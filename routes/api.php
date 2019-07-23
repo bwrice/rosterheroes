@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\CurrentWeekController;
+use App\Http\Controllers\WeekController;
 use App\Http\Controllers\SquadBorderTravelController;
 use App\Http\Controllers\SquadController;
 use App\Http\Controllers\SquadHeroRaceController;
@@ -30,7 +30,7 @@ use Illuminate\Http\Request;
 
 Route::prefix('v1')->group(function () {
 
-    Route::get('/weeks/current', CurrentWeekController::class);
+    Route::get('/weeks/{weekUuid}', [WeekController::class, 'show']);
 
     Route::middleware(['auth:api'])->group(function () {
 
@@ -40,7 +40,7 @@ Route::prefix('v1')->group(function () {
         Route::get('/squad/{squadUuid}/hero-classes', SquadHeroClassController::class);
         Route::get('/squad/{squadUuid}/hero-races', SquadHeroRaceController::class);
 
-        Route::post('/squad/{squadUuid}/border/{borderUuid}', [SquadBorderTravelController::class, 'store'])->middleware('auth:api');
+        Route::post('/squad/{squadUuid}/border/{borderUuid}', [SquadBorderTravelController::class, 'store']);
 
         Route::post('/squad/{squadUuid}/heroes', [SquadHeroController::class, 'store']);
         Route::post('/squad/{squadUuid}/campaigns', [SquadCampaignController::class, 'store']);
@@ -49,7 +49,7 @@ Route::prefix('v1')->group(function () {
 
         Route::post('/campaign/{campaign}/quest/{questUuid}', [CampaignQuestController::class, 'store']);
 
-        Route::get('/week/{weekUuid}/player-spirits', [WeekPlayerSpiritController::class, 'index']);
+        Route::get('/weeks/{weekUuid}/player-spirits', [WeekPlayerSpiritController::class, 'index']);
     });
 });
 

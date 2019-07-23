@@ -1,9 +1,8 @@
-import Week from '../../models/Week';
 
 export default {
 
     state: {
-        week: new Week({})
+        week: {}
     },
 
     getters: {
@@ -13,7 +12,7 @@ export default {
     },
     mutations: {
         SET_CURRENT_WEEK(state, payload) {
-            state.week = new Week(payload);
+            state.week = payload;
         }
     },
 
