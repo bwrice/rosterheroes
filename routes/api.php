@@ -45,7 +45,7 @@ Route::prefix('v1')->group(function () {
         Route::post('/squad/{squadUuid}/heroes', [SquadHeroController::class, 'store']);
         Route::post('/squad/{squadUuid}/campaigns', [SquadCampaignController::class, 'store']);
 
-        Route::post('/hero/{heroUuid}/player-spirit/{playerSpiritUuid}', [HeroPlayerSpiritController::class, 'store']);
+        Route::post('/heroes/{heroUuid}/player-spirit/{playerSpiritUuid}', [HeroPlayerSpiritController::class, 'store']);
 
         Route::post('/campaign/{campaign}/quest/{questUuid}', [CampaignQuestController::class, 'store']);
 
