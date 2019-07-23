@@ -5,7 +5,7 @@ namespace App\Projectors;
 use App\StorableEvents\HeroCreated;
 use App\Domain\Models\Hero;
 use App\StorableEvents\HeroSlotCreated;
-use App\StorableEvents\PlayerSpiritAddedToHero;
+use App\StorableEvents\UpdateHeroPlayerSpirit;
 use Spatie\EventProjector\Projectors\Projector;
 use Spatie\EventProjector\Projectors\ProjectsEvents;
 
@@ -32,7 +32,7 @@ class HeroProjector implements Projector
         ]);
     }
 
-    public function onPlayerSpiritAddedToHero(PlayerSpiritAddedToHero $event, string $aggregateUuid)
+    public function onUpdateHeroPlayerSpirit(UpdateHeroPlayerSpirit $event, string $aggregateUuid)
     {
         $hero = Hero::uuid($aggregateUuid);
         $hero->player_spirit_id = $event->playerSpiritID;

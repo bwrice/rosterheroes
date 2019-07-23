@@ -5,7 +5,7 @@ namespace App\Aggregates;
 use App\Domain\Models\Hero;
 use App\StorableEvents\HeroCreated;
 use App\StorableEvents\HeroSlotCreated;
-use App\StorableEvents\PlayerSpiritAddedToHero;
+use App\StorableEvents\UpdateHeroPlayerSpirit;
 use Spatie\EventProjector\AggregateRoot;
 
 final class HeroAggregate extends AggregateRoot
@@ -24,9 +24,9 @@ final class HeroAggregate extends AggregateRoot
         return $this;
     }
 
-    public function addPlayerSpirit(int $playerSpiritID)
+    public function updatePlayerSpirit(int $playerSpiritID = null)
     {
-        $this->recordThat(new PlayerSpiritAddedToHero($playerSpiritID));
+        $this->recordThat(new UpdateHeroPlayerSpirit($playerSpiritID));
 
         return $this;
     }
