@@ -60,6 +60,8 @@ class SquadController extends Controller
     {
         $squad = Squad::slugOrFail($squadSlug);
         return new SquadResource($squad->loadMissing([
+            'heroPosts.hero.heroRace',
+            'heroPosts.hero.heroClass',
             'heroPosts.hero.playerSpirit.game.homeTeam',
             'heroPosts.hero.playerSpirit.game.awayTeam',
             'heroPosts.hero.playerSpirit.player.team',

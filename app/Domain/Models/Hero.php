@@ -53,7 +53,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property HeroRace $heroRace
  * @property PlayerSpirit|null $playerSpirit
  *
- * @property \App\Domain\Collections\SlotCollection $slots
+ * @property SlotCollection $slots
  * @property Collection $measurables
  *
  * @method static HeroQueryBuilder query();
@@ -107,11 +107,6 @@ class Hero extends EventSourcedModel implements HasSlots
     {
         return $this->belongsTo(HeroRace::class);
     }
-
-//    public function getHeroRace()
-//    {
-//        return $this->heroPost->heroRace;
-//    }
 
     public function heroPost()
     {

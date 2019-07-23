@@ -26,7 +26,9 @@ class HeroResource extends JsonResource
             'uuid' => $this->uuid,
             'slug' => $this->slug,
             'playerSpirit' => new PlayerSpiritResource($this->whenLoaded('playerSpirit')),
-            'heroPost' => new HeroPostResource($this->whenLoaded('heroPost'))
+            'heroPost' => new HeroPostResource($this->whenLoaded('heroPost')),
+            'heroRace' => new HeroRaceResource($this->whenLoaded('heroRace')),
+            'heroClass' => new HeroClassResource($this->whenLoaded('heroClass'))
         ];
     }
 }
