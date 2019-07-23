@@ -2430,6 +2430,44 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2440,7 +2478,48 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return {
-      playerSpirits: []
+      playerSpirits: [],
+      rowsPerPageItems: [4, 8, 12],
+      pagination: {
+        rowsPerPage: 4
+      },
+      items: [{
+        name: 'Frozen Yogurt',
+        calories: 159,
+        fat: 6.0,
+        carbs: 24,
+        protein: 4.0,
+        sodium: 87,
+        calcium: '14%',
+        iron: '1%'
+      }, {
+        name: 'Ice cream sandwich',
+        calories: 237,
+        fat: 9.0,
+        carbs: 37,
+        protein: 4.3,
+        sodium: 129,
+        calcium: '8%',
+        iron: '1%'
+      }, {
+        name: 'Eclair',
+        calories: 262,
+        fat: 16.0,
+        carbs: 23,
+        protein: 6.0,
+        sodium: 337,
+        calcium: '6%',
+        iron: '7%'
+      }, {
+        name: 'Cupcake',
+        calories: 305,
+        fat: 3.7,
+        carbs: 67,
+        protein: 4.3,
+        sodium: 413,
+        calcium: '3%',
+        iron: '8%'
+      }]
     };
   },
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['setRosterFocusedHero', 'setPlayerSpiritsPool']), {
@@ -37500,27 +37579,109 @@ var render = function() {
       _vm._v(" "),
       _c("v-btn", { on: { click: _vm.unFocus } }, [_vm._v("Cancel")]),
       _vm._v(" "),
-      _vm._l(this.playerSpirits, function(playerSpirit, uuid) {
-        return [
-          _c(
-            "v-card",
-            [
-              _c("v-card-title", [
-                _vm._v(
-                  "\n                " +
-                    _vm._s(playerSpirit.playerName) +
-                    " (" +
-                    _vm._s(playerSpirit.essence_cost) +
-                    ")\n            "
+      _c("v-data-iterator", {
+        attrs: {
+          items: this.playerSpirits,
+          "content-tag": "v-layout",
+          "hide-actions": "",
+          row: "",
+          wrap: ""
+        },
+        scopedSlots: _vm._u([
+          {
+            key: "header",
+            fn: function() {
+              return [
+                _c(
+                  "v-toolbar",
+                  {
+                    staticClass: "mb-2",
+                    attrs: { color: "#FFC747", dark: "", flat: "" }
+                  },
+                  [_c("v-toolbar-title", [_vm._v("Select Player Spirit")])],
+                  1
                 )
-              ])
-            ],
-            1
-          )
-        ]
+              ]
+            },
+            proxy: true
+          },
+          {
+            key: "item",
+            fn: function(props) {
+              return [
+                _c(
+                  "v-flex",
+                  { attrs: { fluid: "", "py-1": "", xs12: "" } },
+                  [
+                    _c(
+                      "v-card",
+                      { attrs: { elevation: "5" } },
+                      [
+                        _c(
+                          "v-card-title",
+                          { staticClass: "subheading font-weight-bold" },
+                          [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(props.item.playerName) +
+                                " " +
+                                _vm._s(props.item.gameDescription) +
+                                "\n                    "
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("v-divider"),
+                        _vm._v(" "),
+                        _c(
+                          "v-list",
+                          { attrs: { dense: "" } },
+                          [
+                            _c(
+                              "v-list-tile",
+                              [
+                                _c("v-list-tile-content", [
+                                  _vm._v("Essence Cost:")
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "v-list-tile-content",
+                                  { staticClass: "align-end" },
+                                  [_vm._v(_vm._s(props.item.essence_cost))]
+                                )
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "v-list-tile",
+                              [
+                                _c("v-list-tile-content", [_vm._v("Energy:")]),
+                                _vm._v(" "),
+                                _c(
+                                  "v-list-tile-content",
+                                  { staticClass: "align-end" },
+                                  [_vm._v(_vm._s(props.item.energy))]
+                                )
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ]
+            }
+          }
+        ])
       })
     ],
-    2
+    1
   )
 }
 var staticRenderFns = []
@@ -37546,7 +37707,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return this._rosterFocusedHero
-    ? _c("PlayerSpiritSelection", { attrs: { hero: this._rosterFocusedHero } })
+    ? _c("HeroSpiritSelection", { attrs: { hero: this._rosterFocusedHero } })
     : _c(
         "v-card",
         { key: "2" },
@@ -82455,6 +82616,67 @@ var navButtonMixin = {
 
 /***/ }),
 
+/***/ "./resources/js/models/Game.js":
+/*!*************************************!*\
+  !*** ./resources/js/models/Game.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Game; });
+/* harmony import */ var _Model__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Model */ "./resources/js/models/Model.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+var Game =
+/*#__PURE__*/
+function (_Model) {
+  _inherits(Game, _Model);
+
+  function Game() {
+    _classCallCheck(this, Game);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(Game).apply(this, arguments));
+  }
+
+  _createClass(Game, [{
+    key: "primaryKey",
+    value: function primaryKey() {
+      return 'uuid';
+    }
+  }, {
+    key: "description",
+    get: function get() {
+      return this.startsAt;
+    }
+  }]);
+
+  return Game;
+}(_Model__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+
+/***/ }),
+
 /***/ "./resources/js/models/Hero.js":
 /*!*************************************!*\
   !*** ./resources/js/models/Hero.js ***!
@@ -82586,16 +82808,16 @@ function (_BaseModel) {
 
 /***/ }),
 
-/***/ "./resources/js/models/PlayerSpirit.js":
-/*!*********************************************!*\
-  !*** ./resources/js/models/PlayerSpirit.js ***!
-  \*********************************************/
+/***/ "./resources/js/models/Player.js":
+/*!***************************************!*\
+  !*** ./resources/js/models/Player.js ***!
+  \***************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return PlayerSpirit; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Player; });
 /* harmony import */ var _Model__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Model */ "./resources/js/models/Model.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -82614,6 +82836,71 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+var Player =
+/*#__PURE__*/
+function (_Model) {
+  _inherits(Player, _Model);
+
+  function Player() {
+    _classCallCheck(this, Player);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(Player).apply(this, arguments));
+  }
+
+  _createClass(Player, [{
+    key: "primaryKey",
+    value: function primaryKey() {
+      return 'uuid';
+    }
+  }, {
+    key: "name",
+    get: function get() {
+      return this.first_name + ' ' + this.last_name;
+    }
+  }]);
+
+  return Player;
+}(_Model__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+
+/***/ }),
+
+/***/ "./resources/js/models/PlayerSpirit.js":
+/*!*********************************************!*\
+  !*** ./resources/js/models/PlayerSpirit.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return PlayerSpirit; });
+/* harmony import */ var _Model__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Model */ "./resources/js/models/Model.js");
+/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Player */ "./resources/js/models/Player.js");
+/* harmony import */ var _Game__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Game */ "./resources/js/models/Game.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
 
 
 
@@ -82639,9 +82926,24 @@ function (_Model) {
       return 'player-spirits';
     }
   }, {
+    key: "playerModel",
+    get: function get() {
+      return new _Player__WEBPACK_IMPORTED_MODULE_1__["default"](this.player);
+    }
+  }, {
+    key: "gameModel",
+    get: function get() {
+      return new _Game__WEBPACK_IMPORTED_MODULE_2__["default"](this.game);
+    }
+  }, {
     key: "playerName",
     get: function get() {
-      return this.player.first_name + ' ' + this.player.last_name;
+      return this.playerModel.name;
+    }
+  }, {
+    key: "gameDescription",
+    get: function get() {
+      return this.gameModel.description;
     }
   }]);
 

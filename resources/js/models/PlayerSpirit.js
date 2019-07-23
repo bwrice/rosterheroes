@@ -1,4 +1,6 @@
 import Model from './Model'
+import Player from "./Player";
+import Game from "./Game";
 
 export default class PlayerSpirit extends Model {
 
@@ -10,7 +12,19 @@ export default class PlayerSpirit extends Model {
         return 'player-spirits';
     }
 
+    get playerModel() {
+        return new Player(this.player);
+    }
+
+    get gameModel() {
+        return new Game(this.game);
+    }
+
     get playerName() {
-        return this.player.first_name + ' ' + this.player.last_name;
+        return this.playerModel.name;
+    }
+
+    get gameDescription() {
+        return this.gameModel.description;
     }
 }
