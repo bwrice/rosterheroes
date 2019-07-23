@@ -3,6 +3,7 @@
 namespace App\Domain\Models;
 
 use App\Domain\Actions\AddSpiritToHeroAction;
+use App\Domain\Actions\RemoveSpiritFromHeroAction;
 use App\Domain\QueryBuilders\HeroQueryBuilder;
 use App\Domain\Traits\HasSlug;
 use App\StorableEvents\HeroCreated;
@@ -249,6 +250,15 @@ class Hero extends EventSourcedModel implements HasSlots
     {
         $action = new AddSpiritToHeroAction($this, $playerSpirit);
         return $action(); //invoke and return
+    }
+
+    /**
+     * @return Hero
+     */
+    public function removePlayerSpirit()
+    {
+        $action = new RemoveSpiritFromHeroAction($this);
+        return $action();
     }
 
 }

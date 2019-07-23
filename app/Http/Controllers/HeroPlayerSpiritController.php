@@ -8,6 +8,7 @@ use App\Exceptions\InvalidWeekException;
 use App\Exceptions\NotEnoughEssenceException;
 use App\Domain\Models\Hero;
 use App\Domain\Models\PlayerSpirit;
+use App\Http\Resources\HeroResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -56,5 +57,14 @@ class HeroPlayerSpiritController extends Controller
                 'game' => "Game for " . $playerSpirit->player->fullName() . " has already started"
             ]);
         }
+    }
+
+    public function delete($heroUuid)
+    {
+        $hero = Hero::uuid($heroUuid);
+        if (! $hero) {
+            throw ValidationException::withMessages(["Hero could not be found"]);
+        }
+        return new HeroResource($hero->removePlayerSpirit());
     }
 }
