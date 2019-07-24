@@ -242,25 +242,4 @@ class Hero extends EventSourcedModel implements HasSlots
         return $this->heroPost->squad->availableSpiritEssence() - $this->essenceUsed();
     }
 
-    /**
-     * @param \App\Domain\Models\PlayerSpirit $playerSpirit
-     * @return Hero
-     * @throws \App\Exceptions\HeroPlayerSpiritException
-     */
-    public function addPlayerSpirit(PlayerSpirit $playerSpirit)
-    {
-        $action = new AddSpiritToHeroAction($this, $playerSpirit);
-        return $action(); //invoke and return
-    }
-
-    /**
-     * @param \App\Domain\Models\PlayerSpirit $playerSpirit
-     * @return Hero
-     */
-    public function removePlayerSpirit(PlayerSpirit $playerSpirit)
-    {
-        $action = new RemoveSpiritFromHeroAction($this, $playerSpirit);
-        return $action();
-    }
-
 }
