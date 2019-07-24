@@ -17,6 +17,7 @@ class HeroPlayerSpiritException extends \Exception
     public const INVALID_PLAYER_POSITIONS = 2;
     public const NOT_ENOUGH_ESSENCE = 3;
     public const GAME_STARTED = 4;
+    public const SPIRIT_ALREADY_USED = 5;
 
     /**
      * @var Hero

@@ -33,6 +33,7 @@ class AddSpiritToHeroAction extends HeroSpiritAction
         $this->validatePositions($hero, $playerSpirit);
         $this->validateEssenceCost($hero, $playerSpirit);
         $this->validateGameTime($hero, $playerSpirit);
+        $this->validateSquadUse($hero, $playerSpirit);
 
         // If the hero already has a player spirit, we need to remove it first
         if ($hero->playerSpirit) {
@@ -89,6 +90,29 @@ class AddSpiritToHeroAction extends HeroSpiritAction
                 $playerSpirit,
                 $message,
                 HeroPlayerSpiritException::NOT_ENOUGH_ESSENCE
+            );
+        }
+    }
+
+    /**
+     * @param Hero $hero
+     * @param PlayerSpirit $playerSpirit
+     * @throws HeroPlayerSpiritException
+     */
+    protected function validateSquadUse(Hero $hero, PlayerSpirit $playerSpirit): void
+    {
+        $squadHeroUsingSpirit = $hero->heroPost->squad->getHeroes()->first(function (Hero $hero) use ($playerSpirit) {
+            return $hero->player_spirit_id === $playerSpirit->id;
+        });
+
+        /** @var Hero $squadHeroUsingSpirit */
+        if ($squadHeroUsingSpirit) {
+            $message = $playerSpirit->player->fullName() . ' already in use by ' . $squadHeroUsingSpirit->name;
+            throw new HeroPlayerSpiritException(
+                $hero,
+                $playerSpirit,
+                $message,
+                HeroPlayerSpiritException::SPIRIT_ALREADY_USED
             );
         }
     }
