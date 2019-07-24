@@ -239,8 +239,35 @@ class AddSpiritToHeroActionTest extends TestCase
      */
     public function adding_a_spirit_attached_to_another_squad_hero_will_throw_an_exception()
     {
-        // TODO
-        $this->assertTrue(true);
+        // Attach the player spirit to our other squad hero
+        /** @var Hero $otherSquadHero */
+        $otherSquadHero = factory(Hero::class)->create([
+            'player_spirit_id' => $this->playerSpirit->id
+        ]);
+
+        // attach hero to hero post and then the hero post to our squad
+        factory(HeroPost::class)->create([
+            'hero_id' => $otherSquadHero->id,
+            'squad_id' => $this->hero->heroPost->squad->id
+        ]);
+
+        try {
+
+            /** @var AddSpiritToHeroAction $action */
+            $action = app(AddSpiritToHeroAction::class);
+            $action->execute($this->hero, $this->playerSpirit);
+
+        } catch (HeroPlayerSpiritException $exception) {
+
+            $hero = $this->hero->fresh();
+            $this->assertNull($hero->playerSpirit);
+            $this->assertEquals($this->playerSpirit->id, $otherSquadHero->player_spirit_id);
+
+            $this->assertEquals(HeroPlayerSpiritException::SPIRIT_ALREADY_USED, $exception->getCode());
+            return;
+        }
+
+        $this->fail("Exception not thrown");
     }
 
 
