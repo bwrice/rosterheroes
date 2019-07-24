@@ -245,6 +245,7 @@ class Hero extends EventSourcedModel implements HasSlots
     /**
      * @param \App\Domain\Models\PlayerSpirit $playerSpirit
      * @return Hero
+     * @throws \App\Exceptions\HeroPlayerSpiritException
      */
     public function addPlayerSpirit(PlayerSpirit $playerSpirit)
     {

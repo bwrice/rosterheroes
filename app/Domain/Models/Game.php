@@ -7,6 +7,7 @@ use App\Domain\Models\Team;
 use App\Domain\Models\Week;
 use App\Domain\QueryBuilders\GameQueryBuilder;
 use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,7 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property string $external_id
- * @property Carbon $starts_at
+ * @property CarbonImmutable $starts_at
  *
  * @property \App\Domain\Models\Team $homeTeam
  * @property \App\Domain\Models\Team $awayTeam
