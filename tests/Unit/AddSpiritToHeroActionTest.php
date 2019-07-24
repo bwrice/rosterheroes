@@ -196,13 +196,22 @@ class AddSpiritToHeroActionTest extends TestCase
      */
     public function replacing_a_spirit_for_a_game_thats_started_will_throw_an_exception()
     {
-        /** @var PlayerSpirit $replacedSpirit */
-        $replacedSpirit = factory(PlayerSpirit::class)->create();
-        // Set game to before now
-        $replacedSpirit->game->starts_at = Date::now()->subHour();
+        $week = Week::current();
 
-        $this->hero->player_spirit_id = $replacedSpirit->id;
+        /** @var PlayerSpirit $spiritToBeReplaced */
+        $spiritToBeReplaced = factory(PlayerSpirit::class)->create([
+            'week_id' => $week->id // Make sure we're using the same week
+        ]);
+
+        // Set game to before now
+        $game = $spiritToBeReplaced->game;
+        $game->starts_at = Date::now()->subHour();
+        $game->save();
+
+        $this->hero->player_spirit_id = $spiritToBeReplaced->id;
         $this->hero->save();
+
+        $this->assertTrue($spiritToBeReplaced->game->hasStarted());
 
         try {
 
@@ -213,7 +222,7 @@ class AddSpiritToHeroActionTest extends TestCase
         } catch (HeroPlayerSpiritException $exception) {
 
             $hero = $this->hero->fresh();
-            $this->assertNull($hero->playerSpirit);
+            $this->assertEquals($hero->playerSpirit->id, $spiritToBeReplaced->id);
 
             $this->assertEquals(HeroPlayerSpiritException::GAME_STARTED, $exception->getCode());
             return;

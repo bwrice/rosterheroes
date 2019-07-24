@@ -12,6 +12,16 @@ use App\Exceptions\HeroPlayerSpiritException;
 class AddSpiritToHeroAction extends HeroSpiritAction
 {
     /**
+     * @var RemoveSpiritFromHeroAction
+     */
+    private $removeSpiritFromHeroAction;
+
+    public function __construct(RemoveSpiritFromHeroAction $removeSpiritFromHeroAction)
+    {
+        $this->removeSpiritFromHeroAction = $removeSpiritFromHeroAction;
+    }
+
+    /**
      * @param Hero $hero
      * @param PlayerSpirit $playerSpirit
      * @return Hero
@@ -23,6 +33,11 @@ class AddSpiritToHeroAction extends HeroSpiritAction
         $this->validatePositions($hero, $playerSpirit);
         $this->validateEssenceCost($hero, $playerSpirit);
         $this->validateGameTime($hero, $playerSpirit);
+
+        // If the hero already has a player spirit, we need to remove it first
+        if ($hero->playerSpirit) {
+            $this->removeSpiritFromHeroAction->execute($hero, $hero->playerSpirit);
+        }
 
         /** @var HeroAggregate $heroAggregate */
         $heroAggregate = HeroAggregate::retrieve($hero->uuid);
