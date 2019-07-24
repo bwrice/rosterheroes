@@ -13,57 +13,48 @@ use App\Exceptions\HeroPlayerSpiritException;
 class AddSpiritToHeroAction
 {
     /**
-     * @var Hero
-     */
-    private $hero;
-    /**
-     * @var PlayerSpirit
-     */
-    private $playerSpirit;
-
-    public function __construct(Hero $hero, PlayerSpirit $playerSpirit)
-    {
-        $this->hero = $hero;
-        $this->playerSpirit = $playerSpirit;
-    }
-
-    /**
+     * @param Hero $hero
+     * @param PlayerSpirit $playerSpirit
      * @return Hero
      * @throws HeroPlayerSpiritException
      */
-    public function __invoke(): Hero
+    public function execute(Hero $hero, PlayerSpirit $playerSpirit): Hero
     {
-        $this->validateWeek();
-        $this->validatePositions();
-        $this->validateEssenceCost();
-        $this->validateGameTime();
+        $this->validateWeek($hero, $playerSpirit);
+        $this->validatePositions($hero, $playerSpirit);
+        $this->validateEssenceCost($hero, $playerSpirit);
+        $this->validateGameTime($hero, $playerSpirit);
 
         /** @var HeroAggregate $heroAggregate */
-        $heroAggregate = HeroAggregate::retrieve($this->hero->uuid);
-        $heroAggregate->updatePlayerSpirit($this->playerSpirit->id)->persist();
+        $heroAggregate = HeroAggregate::retrieve($hero->uuid);
+        $heroAggregate->updatePlayerSpirit($playerSpirit->id)->persist();
 
-        return $this->hero->fresh();
+        return $hero->fresh();
     }
 
     /**
+     * @param Hero $hero
+     * @param PlayerSpirit $playerSpirit
      * @return bool
      */
-    protected function heroCanAffordSpirit(): bool
+    protected function heroCanAffordSpirit(Hero $hero, PlayerSpirit $playerSpirit): bool
     {
-        return ($this->hero->availableEssence() >= $this->playerSpirit->essence_cost);
+        return ($hero->availableEssence() >= $playerSpirit->essence_cost);
     }
 
     /**
+     * @param Hero $hero
+     * @param PlayerSpirit $playerSpirit
      * @throws HeroPlayerSpiritException
      */
-    protected function validateWeek(): void
+    protected function validateWeek(Hero $hero, PlayerSpirit $playerSpirit): void
     {
-        if (!Week::isCurrent($this->playerSpirit->week)) {
-            $gameDescription = $this->playerSpirit->game->getSimpleDescription();
+        if (!Week::isCurrent($playerSpirit->week)) {
+            $gameDescription = $playerSpirit->game->getSimpleDescription();
             $message = $gameDescription . ' is not for the current week';
             throw new HeroPlayerSpiritException(
-                $this->hero,
-                $this->playerSpirit,
+                $hero,
+                $playerSpirit,
                 $message,
                 HeroPlayerSpiritException::INVALID_WEEK
             );
@@ -71,32 +62,36 @@ class AddSpiritToHeroAction
     }
 
     /**
+     * @param Hero $hero
+     * @param PlayerSpirit $playerSpirit
      * @throws HeroPlayerSpiritException
      */
-    protected function validatePositions(): void
+    protected function validatePositions(Hero $hero, PlayerSpirit $playerSpirit): void
     {
-        if (!$this->hero->heroRace->positions->intersect($this->playerSpirit->getPositions())->count() > 0) {
-            $playerName = $this->playerSpirit->player->fullName();
-            $heroRaceName = ucwords(str_replace('-', ' ', $this->hero->heroRace->name));
+        if (!$hero->heroRace->positions->intersect($playerSpirit->getPositions())->count() > 0) {
+            $playerName = $playerSpirit->player->fullName();
+            $heroRaceName = ucwords(str_replace('-', ' ', $hero->heroRace->name));
             $message = $heroRaceName . " does not have valid positions for " . $playerName;
             throw new HeroPlayerSpiritException(
-                $this->hero,
-                $this->playerSpirit,
+                $hero,
+                $playerSpirit,
                 $message,
                 HeroPlayerSpiritException::INVALID_PLAYER_POSITIONS);
         }
     }
 
     /**
+     * @param Hero $hero
+     * @param PlayerSpirit $playerSpirit
      * @throws HeroPlayerSpiritException
      */
-    protected function validateEssenceCost(): void
+    protected function validateEssenceCost(Hero $hero, PlayerSpirit $playerSpirit): void
     {
-        if (!$this->heroCanAffordSpirit()) {
-            $message = $this->hero->availableEssence() . " essence available, but " . $this->playerSpirit->essence_cost . "needed";
+        if (! $this->heroCanAffordSpirit($hero, $playerSpirit)) {
+            $message = $hero->availableEssence() . " essence available, but " . $playerSpirit->essence_cost . "needed";
             throw new HeroPlayerSpiritException(
-                $this->hero,
-                $this->playerSpirit,
+                $hero,
+                $playerSpirit,
                 $message,
                 HeroPlayerSpiritException::NOT_ENOUGH_ESSENCE
             );
@@ -104,15 +99,17 @@ class AddSpiritToHeroAction
     }
 
     /**
+     * @param Hero $hero
+     * @param PlayerSpirit $playerSpirit
      * @throws HeroPlayerSpiritException
      */
-    protected function validateGameTime(): void
+    protected function validateGameTime(Hero $hero, PlayerSpirit $playerSpirit): void
     {
-        if ($this->playerSpirit->game->hasStarted()) {
-            $message = $this->playerSpirit->game->getSimpleDescription() . " has already started";
+        if ($playerSpirit->game->hasStarted()) {
+            $message = $playerSpirit->game->getSimpleDescription() . " has already started";
             throw new HeroPlayerSpiritException(
-                $this->hero,
-                $this->playerSpirit,
+                $hero,
+                $playerSpirit,
                 $message,
                 HeroPlayerSpiritException::GAME_STARTED
             );
