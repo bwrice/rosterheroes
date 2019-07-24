@@ -59,12 +59,18 @@ class HeroPlayerSpiritController extends Controller
         }
     }
 
-    public function delete($heroUuid)
+    public function delete($heroUuid, $playerSpiritUuid)
     {
         $hero = Hero::uuid($heroUuid);
         if (! $hero) {
             throw ValidationException::withMessages(["Hero could not be found"]);
         }
-        return new HeroResource($hero->removePlayerSpirit());
+
+        $playerSpirit = PlayerSpirit::uuid($playerSpiritUuid);
+        if (! $playerSpirit) {
+            throw ValidationException::withMessages(['Player could not be found']);
+        }
+
+        return new HeroResource($hero->removePlayerSpirit($playerSpirit));
     }
 }

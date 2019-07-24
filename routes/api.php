@@ -46,7 +46,7 @@ Route::prefix('v1')->group(function () {
         Route::post('/squad/{squadUuid}/campaigns', [SquadCampaignController::class, 'store']);
 
         Route::post('/heroes/{heroUuid}/player-spirit/{playerSpiritUuid}', [HeroPlayerSpiritController::class, 'store']);
-        Route::delete('/heroes/{heroUuid}/player-spirit', [HeroPlayerSpiritController::class, 'delete']);
+        Route::delete('/heroes/{heroUuid}/player-spirit/{playerSpiritUuid}', [HeroPlayerSpiritController::class, 'delete']);
 
         Route::post('/campaign/{campaign}/quest/{questUuid}', [CampaignQuestController::class, 'store']);
 

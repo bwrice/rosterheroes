@@ -253,11 +253,12 @@ class Hero extends EventSourcedModel implements HasSlots
     }
 
     /**
+     * @param \App\Domain\Models\PlayerSpirit $playerSpirit
      * @return Hero
      */
-    public function removePlayerSpirit()
+    public function removePlayerSpirit(PlayerSpirit $playerSpirit)
     {
-        $action = new RemoveSpiritFromHeroAction($this);
+        $action = new RemoveSpiritFromHeroAction($this, $playerSpirit);
         return $action();
     }
 

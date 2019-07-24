@@ -17,6 +17,7 @@ use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Date;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -60,7 +61,7 @@ class HeroPlayerSpiritControllerTest extends TestCase
         Passport::actingAs($heroPost->squad->user);
 
         // Mock 6 hours before everything locks
-        CarbonImmutable::setTestNow(Week::current()->everything_locks_at->copy()->subHours(6));
+        Date::setTestNow(Week::current()->everything_locks_at->copy()->subHours(6));
 
         $response = $this->json('POST', 'api/v1/heroes/'. $hero->uuid . '/player-spirit/' . $playerSpirit->uuid);
         $this->assertEquals(201, $response->getStatusCode());
@@ -128,6 +129,11 @@ class HeroPlayerSpiritControllerTest extends TestCase
 
         $hero = $hero->fresh();
         $this->assertNull($hero->playerSpirit);
+    }
+
+    public function it_will_not_add_a_player_spirit_whos_game_has_started()
+    {
+        // TODO
     }
 
     /**
@@ -283,10 +289,26 @@ class HeroPlayerSpiritControllerTest extends TestCase
         // Mock 6 hours before everything locks
         CarbonImmutable::setTestNow(Week::current()->everything_locks_at->copy()->subHours(6));
 
-        $response = $this->json('DELETE', 'api/v1/heroes/'. $hero->uuid . '/player-spirit');
+        $response = $this->json('DELETE', 'api/v1/heroes/'. $hero->uuid . '/player-spirit/' . $playerSpirit->uuid);
         $this->assertEquals(200, $response->getStatusCode());
 
         $hero = $hero->fresh();
         $this->assertNull($hero->playerSpirit);
     }
+
+    public function it_will_not_remove_a_player_spirit_whos_game_has_started()
+    {
+        // TODO
+    }
+
+    public function it_will_not_add_a_spirit_to_replace_a_spirit_whos_game_has_started()
+    {
+        // TODO
+    }
+
+    public function it_will_not_add_a_spirit_that_is_attached_not_another_hero_for_the_squad()
+    {
+        // TODO
+    }
+
 }
