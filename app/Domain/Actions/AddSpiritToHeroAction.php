@@ -7,10 +7,9 @@ namespace App\Domain\Actions;
 use App\Aggregates\HeroAggregate;
 use App\Domain\Models\Hero;
 use App\Domain\Models\PlayerSpirit;
-use App\Domain\Models\Week;
 use App\Exceptions\HeroPlayerSpiritException;
 
-class AddSpiritToHeroAction
+class AddSpiritToHeroAction extends HeroSpiritAction
 {
     /**
      * @param Hero $hero
@@ -47,25 +46,6 @@ class AddSpiritToHeroAction
      * @param PlayerSpirit $playerSpirit
      * @throws HeroPlayerSpiritException
      */
-    protected function validateWeek(Hero $hero, PlayerSpirit $playerSpirit): void
-    {
-        if (!Week::isCurrent($playerSpirit->week)) {
-            $gameDescription = $playerSpirit->game->getSimpleDescription();
-            $message = $gameDescription . ' is not for the current week';
-            throw new HeroPlayerSpiritException(
-                $hero,
-                $playerSpirit,
-                $message,
-                HeroPlayerSpiritException::INVALID_WEEK
-            );
-        }
-    }
-
-    /**
-     * @param Hero $hero
-     * @param PlayerSpirit $playerSpirit
-     * @throws HeroPlayerSpiritException
-     */
     protected function validatePositions(Hero $hero, PlayerSpirit $playerSpirit): void
     {
         if (!$hero->heroRace->positions->intersect($playerSpirit->getPositions())->count() > 0) {
@@ -94,24 +74,6 @@ class AddSpiritToHeroAction
                 $playerSpirit,
                 $message,
                 HeroPlayerSpiritException::NOT_ENOUGH_ESSENCE
-            );
-        }
-    }
-
-    /**
-     * @param Hero $hero
-     * @param PlayerSpirit $playerSpirit
-     * @throws HeroPlayerSpiritException
-     */
-    protected function validateGameTime(Hero $hero, PlayerSpirit $playerSpirit): void
-    {
-        if ($playerSpirit->game->hasStarted()) {
-            $message = $playerSpirit->game->getSimpleDescription() . " has already started";
-            throw new HeroPlayerSpiritException(
-                $hero,
-                $playerSpirit,
-                $message,
-                HeroPlayerSpiritException::GAME_STARTED
             );
         }
     }
