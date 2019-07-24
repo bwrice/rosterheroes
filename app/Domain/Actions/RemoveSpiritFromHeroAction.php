@@ -5,31 +5,43 @@ namespace App\Domain\Actions;
 
 
 use App\Aggregates\HeroAggregate;
+use App\Domain\Models\Game;
 use App\Domain\Models\Hero;
 use App\Domain\Models\PlayerSpirit;
+use App\Exceptions\HeroPlayerSpiritException;
 
 class RemoveSpiritFromHeroAction
 {
     /**
-     * @var Hero
+     * @param Hero $hero
+     * @param PlayerSpirit $playerSpirit
+     * @return Hero
+     * @throws HeroPlayerSpiritException
      */
-    private $hero;
-    /**
-     * @var PlayerSpirit
-     */
-    private $playerSpirit;
-
-    public function __construct(Hero $hero, PlayerSpirit $playerSpirit)
+    public function execute(Hero $hero, PlayerSpirit $playerSpirit): Hero
     {
-        $this->hero = $hero;
-        $this->playerSpirit = $playerSpirit;
+        $this->validateGameTime($hero, $playerSpirit);
+        /** @var HeroAggregate $heroAggregate */
+        $heroAggregate = HeroAggregate::retrieve($hero->uuid);
+        $heroAggregate->updatePlayerSpirit(null)->persist();
+        return $hero->fresh();
     }
 
-    public function __invoke(): Hero
+    /**
+     * @param Hero $hero
+     * @param PlayerSpirit $playerSpirit
+     * @throws HeroPlayerSpiritException
+     */
+    protected function validateGameTime(Hero $hero, PlayerSpirit $playerSpirit)
     {
-        /** @var HeroAggregate $heroAggregate */
-        $heroAggregate = HeroAggregate::retrieve($this->hero->uuid);
-        $heroAggregate->updatePlayerSpirit(null)->persist();
-        return $this->hero->fresh();
+        if ($playerSpirit->game->hasStarted()) {
+            $message = $playerSpirit->game->getSimpleDescription() . " has already started";
+            throw new HeroPlayerSpiritException(
+                $hero,
+                $playerSpirit,
+                $message,
+                HeroPlayerSpiritException::GAME_STARTED
+            );
+        }
     }
 }
