@@ -84,8 +84,9 @@ class AddSpiritToHeroActionTest extends TestCase
 
         try {
 
-            $action = new AddSpiritToHeroAction($this->hero, $this->playerSpirit);
-            $action();
+            /** @var AddSpiritToHeroAction $action */
+            $action = app(AddSpiritToHeroAction::class);
+            $action->execute($this->hero, $this->playerSpirit);
 
         } catch (HeroPlayerSpiritException $exception) {
 
@@ -114,8 +115,9 @@ class AddSpiritToHeroActionTest extends TestCase
 
         try {
 
-            $action = new AddSpiritToHeroAction($this->hero, $this->playerSpirit);
-            $action();
+            /** @var AddSpiritToHeroAction $action */
+            $action = app(AddSpiritToHeroAction::class);
+            $action->execute($this->hero, $this->playerSpirit);
 
         } catch (HeroPlayerSpiritException $exception) {
 
@@ -146,8 +148,9 @@ class AddSpiritToHeroActionTest extends TestCase
 
         try {
 
-            $action = new AddSpiritToHeroAction($this->hero, $this->playerSpirit);
-            $action();
+            /** @var AddSpiritToHeroAction $action */
+            $action = app(AddSpiritToHeroAction::class);
+            $action->execute($this->hero, $this->playerSpirit);
 
         } catch (HeroPlayerSpiritException $exception) {
 
@@ -172,8 +175,9 @@ class AddSpiritToHeroActionTest extends TestCase
 
         try {
 
-            $action = new AddSpiritToHeroAction($this->hero, $this->playerSpirit);
-            $action();
+            /** @var AddSpiritToHeroAction $action */
+            $action = app(AddSpiritToHeroAction::class);
+            $action->execute($this->hero, $this->playerSpirit);
 
         } catch (HeroPlayerSpiritException $exception) {
 
@@ -202,8 +206,9 @@ class AddSpiritToHeroActionTest extends TestCase
 
         try {
 
-            $action = new AddSpiritToHeroAction($this->hero, $this->playerSpirit);
-            $action();
+            /** @var AddSpiritToHeroAction $action */
+            $action = app(AddSpiritToHeroAction::class);
+            $action->execute($this->hero, $this->playerSpirit);
 
         } catch (HeroPlayerSpiritException $exception) {
 
@@ -223,6 +228,7 @@ class AddSpiritToHeroActionTest extends TestCase
     public function adding_a_spirit_attached_to_another_squad_hero_will_throw_an_exception()
     {
         // TODO
+        $this->assertTrue(true);
     }
 
 
