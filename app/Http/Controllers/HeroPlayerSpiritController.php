@@ -2,21 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Exceptions\GameStartedException;
-use App\Exceptions\InvalidPositionsException;
-use App\Exceptions\InvalidWeekException;
-use App\Exceptions\NotEnoughEssenceException;
+use App\Domain\Actions\AddSpiritToHeroAction;
+use App\Domain\Actions\RemoveSpiritFromHeroAction;
+use App\Exceptions\HeroPlayerSpiritException;
 use App\Domain\Models\Hero;
 use App\Domain\Models\PlayerSpirit;
 use App\Http\Resources\HeroResource;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
 class HeroPlayerSpiritController extends Controller
 {
-    public function store($heroUuid, $playerSpiritUuid)
+    public function store($heroUuid, $playerSpiritUuid, AddSpiritToHeroAction $action)
     {
         $hero = Hero::uuid($heroUuid);
         if (! $hero) {
@@ -29,37 +25,18 @@ class HeroPlayerSpiritController extends Controller
         }
 
         try {
-            //TODO middleware
-            $hero->addPlayerSpirit($playerSpirit);
-            return response($hero->load('playerSpirit')->toJson(), 201);
+            $hero = $action->execute($hero, $playerSpirit);
+            return new HeroResource($hero->with('playerSpirit'));
 
-        } catch (InvalidWeekException $exception) {
-            Log::error("User attempted to add player spirit from a different week to hero", [
-                'user' => Auth::user()->toArray(),
-                'hero' => $hero->toArray(),
-                'player_spirit' => $playerSpirit->toArray(),
-                'invalid_week' => $exception->getWeek()->toArray()
-            ]);
+        } catch (HeroPlayerSpiritException $exception) {
 
             throw ValidationException::withMessages([
-                'week' =>  "Can't do that this week"
-            ]);
-        } catch(InvalidPositionsException $exception) {
-            throw ValidationException::withMessages([
-                'position' => "Player does not have valid position for hero"
-            ]);
-        } catch (NotEnoughEssenceException $exception) {
-            throw ValidationException::withMessages([
-                'essence' => "Not enough available essence for " . $playerSpirit->player->fullName()
-            ]);
-        } catch (GameStartedException $exception) {
-            throw ValidationException::withMessages([
-                'game' => "Game for " . $playerSpirit->player->fullName() . " has already started"
+                'roster' =>  $exception->getMessage()
             ]);
         }
     }
 
-    public function delete($heroUuid, $playerSpiritUuid)
+    public function delete($heroUuid, $playerSpiritUuid, RemoveSpiritFromHeroAction $action)
     {
         $hero = Hero::uuid($heroUuid);
         if (! $hero) {
@@ -71,6 +48,15 @@ class HeroPlayerSpiritController extends Controller
             throw ValidationException::withMessages(['Player could not be found']);
         }
 
-        return new HeroResource($hero->removePlayerSpirit($playerSpirit));
+        try {
+            $hero = $action->execute($hero, $playerSpirit);
+            return new HeroResource($hero->with('playerSpirit'));
+
+        } catch (HeroPlayerSpiritException $exception) {
+
+            throw ValidationException::withMessages([
+                'roster' =>  $exception->getMessage()
+            ]);
+        }
     }
 }
