@@ -10,6 +10,14 @@ use Throwable;
 
 class HeroPlayerSpiritException extends \Exception
 {
+    /*
+     * Error Codes
+     */
+    public const WEEK_LOCKED = 1;
+    public const INVALID_PLAYER_POSITIONS = 2;
+    public const NOT_ENOUGH_ESSENCE = 3;
+    public const GAME_STARTED = 4;
+
     /**
      * @var Hero
      */
