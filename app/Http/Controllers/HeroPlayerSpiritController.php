@@ -26,7 +26,7 @@ class HeroPlayerSpiritController extends Controller
 
         try {
             $hero = $action->execute($hero, $playerSpirit);
-            return new HeroResource($hero->with('playerSpirit'));
+            return new HeroResource($hero->loadMissing('playerSpirit'));
 
         } catch (HeroPlayerSpiritException $exception) {
 
@@ -50,7 +50,7 @@ class HeroPlayerSpiritController extends Controller
 
         try {
             $hero = $action->execute($hero, $playerSpirit);
-            return new HeroResource($hero->with('playerSpirit'));
+            return new HeroResource($hero->loadMissing('playerSpirit'));
 
         } catch (HeroPlayerSpiritException $exception) {
 

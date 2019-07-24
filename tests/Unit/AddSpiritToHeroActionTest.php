@@ -13,12 +13,15 @@ use App\Domain\Models\Week;
 use App\Exceptions\HeroPlayerSpiritException;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Date;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
 
 class AddSpiritToHeroActionTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /** @var Hero */
     protected $hero;
     /** @var PlayerSpirit */

@@ -6,14 +6,18 @@ use App\Domain\Actions\RemoveSpiritFromHeroAction;
 use App\Domain\Models\Hero;
 use App\Domain\Models\HeroPost;
 use App\Domain\Models\PlayerSpirit;
+use App\Domain\Models\Week;
 use App\Exceptions\HeroPlayerSpiritException;
 use Cake\Chronos\Date;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class RemoveSpiritFromHeroActionTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /**
      * @test
      */
@@ -23,6 +27,11 @@ class RemoveSpiritFromHeroActionTest extends TestCase
         $playerSpirit = factory(PlayerSpirit::class)->create();
 
         $game = $playerSpirit->game;
+
+        // set current week to spirit's week
+        Week::setTestCurrent($playerSpirit->week);
+
+        // set game time start to past
         $game->starts_at = Date::now()->subHour();
         $game->save();
 

@@ -66,7 +66,7 @@ class HeroPlayerSpiritControllerTest extends TestCase
         Passport::actingAs($heroPost->squad->user);
 
         $response = $this->json('POST', 'api/v1/heroes/'. $hero->uuid . '/player-spirit/' . $playerSpirit->uuid);
-        $this->assertEquals(201, $response->getStatusCode());
+        $this->assertEquals(200, $response->getStatusCode());
 
         $hero = $hero->fresh();
         $this->assertEquals($playerSpirit->id, $hero->playerSpirit->id);
@@ -149,7 +149,7 @@ class HeroPlayerSpiritControllerTest extends TestCase
         Passport::actingAs($heroPost->squad->user);
 
         $response = $this->json('POST', 'api/v1/heroes/'. $hero->uuid . '/player-spirit/' . $playerSpirit->uuid);
-        $this->assertEquals(201, $response->getStatusCode());
+        $this->assertEquals(200, $response->getStatusCode());
 
         $hero = $hero->fresh();
         $this->assertEquals($hero->playerSpirit->id, $playerSpirit->id);
