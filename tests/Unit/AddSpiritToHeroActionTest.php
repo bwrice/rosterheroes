@@ -12,123 +12,146 @@ use App\Domain\Models\Squad;
 use App\Domain\Models\Week;
 use App\Exceptions\HeroPlayerSpiritException;
 use Carbon\CarbonImmutable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Date;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
 
 class AddSpiritToHeroActionTest extends TestCase
 {
-    public function a_hero_cannot_add_spirt_for_a_non_current_week()
+    /** @var Hero */
+    protected $hero;
+    /** @var PlayerSpirit */
+    protected $playerSpirit;
+
+    public function setUp(): void
     {
-        // TODO
+        parent::setUp();
+
+        /** @var HeroRace $heroRace */
+        $heroRace = HeroRace::query()->inRandomOrder()->first();
+
+        /*
+         * Create Hero
+         */
+        $this->hero = factory(Hero::class)->create([
+            'hero_race_id' => $heroRace->id
+        ]);
+
+        /*
+         * Attach Hero to Hero Post
+         */
+        factory(HeroPost::class)->create([
+            'hero_id' => $this->hero
+        ]);
+
+        /*
+         * Created Player Spirit
+         */
+        $this->playerSpirit = factory(PlayerSpirit::class)->create();
+
+        /*
+         * Attach matching position
+         */
+        $position = $heroRace->positions()->inRandomOrder()->first();
+        $this->playerSpirit->player->positions()->attach($position);
+
+        /*
+         * Set current week to Player Spirit's week
+         */
+        Week::setTestCurrent($this->playerSpirit->week);
+
+        /*
+         * Set current time to Before the week ends
+         */
+        Date::setTestNow(Week::current()->everything_locks_at->subHours(6));
+
+        /*
+         * Set game start time to AFTER the week ends
+         */
+        $this->playerSpirit->game->starts_at = Week::current()->everything_locks_at->addHours(2);
+        $this->playerSpirit->game->save();
+
     }
 
     /**
      * @test
      */
-    public function a_hero_cannot_add_a_player_spirit_of_the_wrong_position()
+    public function adding_a_spirit_for_a_non_current_week_will_throw_an_exception()
     {
-        /** @var HeroRace $heroRace */
-        $heroRace = HeroRace::query()->inRandomOrder()->first();
-
-        /** @var Hero $hero */
-        $hero = factory(Hero::class)->create([
-            'hero_race_id' => $heroRace->id
-        ]);
-
-        /** @var HeroPost $heroPost */
-        $heroPost = factory(HeroPost::class)->create([
-            'hero_id' => $hero->id
-        ]);
-
-        /** @var PlayerSpirit $playerSpirit */
-        $playerSpirit = factory(PlayerSpirit::class)->create();
-        $positionIDs = $heroRace->positions()->pluck('id')->toArray();
-        $position = Position::query()->whereNotIn('id', $positionIDs)->inRandomOrder()->first();
-
-        $playerSpirit->player->positions()->attach($position);
-
-        Week::setTestCurrent($playerSpirit->week);
-        // Mock 6 hours before everything locks
-        Date::setTestNow(Week::current()->everything_locks_at->copy()->subHours(6));
+        // set current week to different week
+        Week::setTestCurrent(factory(Week::class)->create());
 
         try {
 
-            $action = new AddSpiritToHeroAction($hero, $playerSpirit);
+            $action = new AddSpiritToHeroAction($this->hero, $this->playerSpirit);
+            $action();
+
+        } catch (HeroPlayerSpiritException $exception) {
+
+            $this->assertEquals(HeroPlayerSpiritException::INVALID_WEEK, $exception->getCode());
+
+            $hero = $this->hero->fresh();
+            $this->assertNull($hero->playerSpirit);
+
+            return;
+        }
+
+        $this->fail("Exception not thrown");
+    }
+
+    /**
+     * @test
+     */
+    public function adding_a_spirit_with_invalid_positions_will_throw_an_exception()
+    {
+
+        $invalidPosition = Position::query()->whereDoesntHave('heroRaces', function(Builder $query) {
+            $query->where('id', '=', $this->hero->heroRace->id);
+        })->first();
+
+        $this->playerSpirit->player->positions()->sync([$invalidPosition->id]);
+
+        try {
+
+            $action = new AddSpiritToHeroAction($this->hero, $this->playerSpirit);
             $action();
 
         } catch (HeroPlayerSpiritException $exception) {
 
             $this->assertEquals(HeroPlayerSpiritException::INVALID_PLAYER_POSITIONS, $exception->getCode());
 
-            $hero = $hero->fresh();
+            $hero = $this->hero->fresh();
             $this->assertNull($hero->playerSpirit);
 
             return;
         }
+
+        $this->fail("Exception not thrown");
     }
 
     /**
      * @test
      */
-    public function a_hero_cannot_add_a_player_with_too_much_essence_cost()
+    public function add_a_spirit_with_too_high_of_essence_cost_will_throw_an_exception()
     {
-        $squadSpiritEssence = 10000;
-        /** @var Squad $squad */
-        $squad = factory(Squad::class)->create([
-            'spirit_essence' => $squadSpiritEssence
-        ]);
 
-        $alreadyFilledPlayerSpiritCost = 6000;
-        $alreadyFilledPlayerSpirit = factory(PlayerSpirit::class)->create([
-            'essence_cost' => $alreadyFilledPlayerSpiritCost
-        ]);
+        $squadEssence = 9000;
+        $squad = $this->hero->heroPost->squad;
+        $squad->spirit_essence = $squadEssence;
+        $squad->save();
 
-        $alreadyFilledHero = factory(Hero::class)->create([
-            'player_spirit_id' => $alreadyFilledPlayerSpirit->id
-        ]);
-
-        $alreadyFilledHeroPost = factory(HeroPost::class)->create([
-            'hero_id' => $alreadyFilledHero->id,
-            'squad_id' => $squad->id
-        ]);
-
-        $this->assertEquals($squadSpiritEssence - $alreadyFilledPlayerSpiritCost, $squad->availableSpiritEssence());
-
-        /** @var HeroRace $heroRace */
-        $heroRace = HeroRace::query()->inRandomOrder()->first();
-        $position = $heroRace->positions()->inRandomOrder()->first();
-
-        /** @var Hero $hero */
-        $hero = factory(Hero::class)->create([
-            'hero_race_id' => $heroRace->id
-        ]);
-
-        /** @var HeroPost $heroPost */
-        $heroPost = factory(HeroPost::class)->create([
-            'hero_id' => $hero->id,
-            'squad_id' => $squad->id
-        ]);
-
-        /** @var PlayerSpirit $playerSpirit */
-        $playerSpirit = factory(PlayerSpirit::class)->create([
-            'essence_cost' => ($squadSpiritEssence - $alreadyFilledPlayerSpiritCost) + 2000 // essence cost too much
-        ]);
-
-        $playerSpirit->player->positions()->attach($position);
-
-        Week::setTestCurrent($playerSpirit->week);
-        // Mock 6 hours before everything locks
-        Date::setTestNow(Week::current()->everything_locks_at->copy()->subHours(6));
+        $this->playerSpirit->essence_cost = $squadEssence + 1;
+        $this->playerSpirit->save();
 
         try {
 
-            $action = new AddSpiritToHeroAction($hero, $playerSpirit);
+            $action = new AddSpiritToHeroAction($this->hero, $this->playerSpirit);
             $action();
 
         } catch (HeroPlayerSpiritException $exception) {
 
-            $hero = $hero->fresh();
+            $hero = $this->hero->fresh();
             $this->assertNull($hero->playerSpirit);
 
             $this->assertEquals(HeroPlayerSpiritException::NOT_ENOUGH_ESSENCE, $exception->getCode());
@@ -138,22 +161,66 @@ class AddSpiritToHeroActionTest extends TestCase
         $this->fail("Exception not thrown");
     }
 
-    public function a_hero_cannot_add_a_player_spirit_whos_game_has_started()
+    /** @test */
+    public function adding_a_spirit_for_a_game_thats_started_will_throw_an_exception()
     {
-        // TODO
+
+        $now = Date::now();
+        $game = $this->playerSpirit->game;
+        $game->starts_at = $now->subHour();
+        $game->save();
+
+        try {
+
+            $action = new AddSpiritToHeroAction($this->hero, $this->playerSpirit);
+            $action();
+
+        } catch (HeroPlayerSpiritException $exception) {
+
+            $hero = $this->hero->fresh();
+            $this->assertNull($hero->playerSpirit);
+
+            $this->assertEquals(HeroPlayerSpiritException::GAME_STARTED, $exception->getCode());
+            return;
+        }
+
+        $this->fail("Exception not thrown");
     }
 
-    public function a_hero_cannot_remove_a_player_spirit_whos_game_has_started()
+    /**
+     * @test
+     */
+    public function replacing_a_spirit_for_a_game_thats_started_will_throw_an_exception()
     {
-        // TODO
+        /** @var PlayerSpirit $replacedSpirit */
+        $replacedSpirit = factory(PlayerSpirit::class)->create();
+        // Set game to before now
+        $replacedSpirit->game->starts_at = Date::now()->subHour();
+
+        $this->hero->player_spirit_id = $replacedSpirit->id;
+        $this->hero->save();
+
+        try {
+
+            $action = new AddSpiritToHeroAction($this->hero, $this->playerSpirit);
+            $action();
+
+        } catch (HeroPlayerSpiritException $exception) {
+
+            $hero = $this->hero->fresh();
+            $this->assertNull($hero->playerSpirit);
+
+            $this->assertEquals(HeroPlayerSpiritException::GAME_STARTED, $exception->getCode());
+            return;
+        }
+
+        $this->fail("Exception not thrown");
     }
 
-    public function a_hero_cannot_add_a_spirit_to_replace_a_spirit_whos_game_has_started()
-    {
-        // TODO
-    }
-
-    public function a_hero_cannot_add_a_spirit_that_is_attached_not_another_hero_for_the_squad()
+    /**
+     * @test
+     */
+    public function adding_a_spirit_attached_to_another_squad_hero_will_throw_an_exception()
     {
         // TODO
     }
