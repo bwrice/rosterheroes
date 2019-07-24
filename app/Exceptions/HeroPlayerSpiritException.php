@@ -5,7 +5,7 @@ namespace App\Exceptions;
 
 
 use App\Domain\Models\Hero;
-use App\Nova\PlayerSpirit;
+use App\Domain\Models\PlayerSpirit;
 use Throwable;
 
 class HeroPlayerSpiritException extends \Exception
@@ -13,7 +13,7 @@ class HeroPlayerSpiritException extends \Exception
     /*
      * Error Codes
      */
-    public const WEEK_LOCKED = 1;
+    public const INVALID_WEEK = 1;
     public const INVALID_PLAYER_POSITIONS = 2;
     public const NOT_ENOUGH_ESSENCE = 3;
     public const GAME_STARTED = 4;

@@ -90,118 +90,6 @@ class HeroPlayerSpiritControllerTest extends TestCase
 
     /**
      * @test
-     * @dataProvider provides_a_hero_can_add_a_player_spirit
-     *
-     * @param $heroRaceName
-     */
-    public function a_hero_cannot_add_a_player_spirit_of_the_wrong_position($heroRaceName)
-    {
-        /** @var \App\Domain\Models\HeroRace $heroRace */
-        $heroRace = HeroRace::where('name', '=', $heroRaceName)->first();
-
-        /** @var \App\Domain\Models\Hero $hero */
-        $hero = factory(Hero::class)->create([
-            'hero_race_id' => $heroRace->id
-        ]);
-
-        /** @var HeroPost $heroPost */
-        $heroPost = factory(HeroPost::class)->create([
-            'hero_id' => $hero->id
-        ]);
-
-        /** @var PlayerSpirit $playerSpirit */
-        $playerSpirit = factory(PlayerSpirit::class)->create();
-        $positionIDs = $heroRace->positions()->pluck('id')->toArray();
-        $position = Position::query()->whereNotIn('id', $positionIDs)->inRandomOrder()->first();
-
-        $playerSpirit->player->positions()->attach($position);
-
-        Week::setTestCurrent($playerSpirit->week);
-
-        Passport::actingAs($heroPost->squad->user);
-
-        // Mock 6 hours before everything locks
-        CarbonImmutable::setTestNow(Week::current()->everything_locks_at->copy()->subHours(6));
-
-        $response = $this->json('POST', 'api/v1/heroes/'. $hero->uuid . '/player-spirit/' . $playerSpirit->uuid);
-        $this->assertEquals(422, $response->getStatusCode());
-        $this->assertArrayHasKey('position', $response->json()['errors']);
-
-        $hero = $hero->fresh();
-        $this->assertNull($hero->playerSpirit);
-    }
-
-    public function it_will_not_add_a_player_spirit_whos_game_has_started()
-    {
-        // TODO
-    }
-
-    /**
-     * @test
-     */
-    public function a_hero_cannot_add_a_player_with_too_much_essence_cost()
-    {
-        $squadSpiritEssence = 10000;
-        /** @var \App\Domain\Models\Squad $squad */
-        $squad = factory(Squad::class)->create([
-            'spirit_essence' => $squadSpiritEssence
-        ]);
-
-        $alreadyFilledPlayerSpiritCost = 6000;
-        $alreadyFilledPlayerSpirit = factory(PlayerSpirit::class)->create([
-            'essence_cost' => $alreadyFilledPlayerSpiritCost
-        ]);
-
-        $alreadyFilledHero = factory(Hero::class)->create([
-            'player_spirit_id' => $alreadyFilledPlayerSpirit->id
-        ]);
-
-        $alreadyFilledHeroPost = factory(HeroPost::class)->create([
-            'hero_id' => $alreadyFilledHero->id,
-            'squad_id' => $squad->id
-        ]);
-
-        $this->assertEquals($squadSpiritEssence - $alreadyFilledPlayerSpiritCost, $squad->availableSpiritEssence());
-
-        /** @var \App\Domain\Models\HeroRace $heroRace */
-        $heroRace = HeroRace::query()->inRandomOrder()->first();
-        $position = $heroRace->positions()->inRandomOrder()->first();
-
-        /** @var \App\Domain\Models\Hero $hero */
-        $hero = factory(Hero::class)->create([
-            'hero_race_id' => $heroRace->id
-        ]);
-
-        /** @var HeroPost $heroPost */
-        $heroPost = factory(HeroPost::class)->create([
-            'hero_id' => $hero->id,
-            'squad_id' => $squad->id
-        ]);
-
-        /** @var PlayerSpirit $playerSpirit */
-        $playerSpirit = factory(PlayerSpirit::class)->create([
-            'essence_cost' => ($squadSpiritEssence - $alreadyFilledPlayerSpiritCost) + 2000
-        ]);
-
-        $playerSpirit->player->positions()->attach($position);
-
-        Week::setTestCurrent($playerSpirit->week);
-
-        Passport::actingAs($heroPost->squad->user);
-
-        // Mock 6 hours before everything locks
-        CarbonImmutable::setTestNow(Week::current()->everything_locks_at->copy()->subHours(6));
-
-        $response = $this->json('POST', 'api/v1/heroes/'. $hero->uuid . '/player-spirit/' . $playerSpirit->uuid);
-        $this->assertEquals(422, $response->getStatusCode());
-        $this->assertArrayHasKey('essence', $response->json()['errors']);
-
-        $hero = $hero->fresh();
-        $this->assertNull($hero->playerSpirit);
-    }
-
-    /**
-     * @test
      */
     public function it_will_add_a_spirit_if_the_hero_essence_used_plus_squad_available_essence_is_enough()
     {
@@ -296,19 +184,8 @@ class HeroPlayerSpiritControllerTest extends TestCase
         $this->assertNull($hero->playerSpirit);
     }
 
-    public function it_will_not_remove_a_player_spirit_whos_game_has_started()
+    public function it_will_throw_a_validation_exception_if_a_hero_spirit_exception_is_thrown()
     {
         // TODO
     }
-
-    public function it_will_not_add_a_spirit_to_replace_a_spirit_whos_game_has_started()
-    {
-        // TODO
-    }
-
-    public function it_will_not_add_a_spirit_that_is_attached_not_another_hero_for_the_squad()
-    {
-        // TODO
-    }
-
 }
