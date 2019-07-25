@@ -1,8 +1,8 @@
 <template>
     <HeroSpiritSelection v-if="this._rosterFocusedHero" :hero="this._rosterFocusedHero"></HeroSpiritSelection>
-    <v-card key=2 v-else>
+    <v-card v-else>
         <span class="display-3">{{this._squad.availableSpiritEssence}}</span>
-        <div v-for="(hero, uuid) in this._squad.heroes">
+        <div v-for="(hero, uuid) in this.heroes">
             <HeroRosterCard :hero="hero"></HeroRosterCard>
         </div>
     </v-card>
@@ -25,7 +25,18 @@
                 '_squad',
                 '_availableSpiritEssence',
                 '_rosterFocusedHero'
-            ])
+            ]),
+            heroes: function() {
+                let _heroes = [];
+                if (this._squad.heroPosts) {
+                    this._squad.heroPosts.forEach(function (heroPost) {
+                        if (heroPost.hero) {
+                            _heroes.push(heroPost.hero);
+                        }
+                    });
+                }
+                return _heroes;
+            }
         }
     }
 </script>

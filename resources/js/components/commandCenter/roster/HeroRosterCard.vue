@@ -4,10 +4,10 @@
             <h3>{{hero.name}}</h3>
         </v-card-title>
         <div v-if="hero.playerSpirit">
-            <PlayerSpiritPanel :player-spirit="hero.playerSpiritObject">
+            <PlayerSpiritPanel :player-spirit="hero.playerSpirit">
                 <template v-slot:spirit-actions>
                     <EditSpiritButton :hero="hero"></EditSpiritButton>
-                    <RemoveSpiritButton :hero="hero" :player-spirit="hero.playerSpiritObject"></RemoveSpiritButton>
+                    <RemoveSpiritButton :hero="hero" :player-spirit="hero.playerSpirit"></RemoveSpiritButton>
                 </template>
             </PlayerSpiritPanel>
         </div>
@@ -25,7 +25,11 @@
 
     export default {
         name: "HeroRosterCard",
-        components: {EditSpiritButton, RemoveSpiritButton, PlayerSpiritPanel},
+        components: {
+            EditSpiritButton,
+            RemoveSpiritButton,
+            PlayerSpiritPanel
+        },
         props: ['hero']
     }
 </script>

@@ -22,5 +22,4 @@ export default class Squad extends Model {
         });
         return available;
     }
-
 }

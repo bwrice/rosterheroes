@@ -2372,6 +2372,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AddSpiritButton",
   props: ['playerSpirit', 'hero'],
@@ -2381,7 +2382,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['_squad'])),
-  methods: {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['updateHero']), {
     addSpirit: function addSpirit() {
       var _this = this;
 
@@ -2390,13 +2391,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         console.log("Response Data");
         console.log(response.data);
         _this.pending = false;
+
+        _this.updateHero(response.data.data);
       })["catch"](function (error) {
         console.log("ERROR!");
         console.log(error);
         _this.pending = false;
       });
     }
-  }
+  })
 });
 
 /***/ }),
@@ -2737,7 +2740,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     HeroRosterCard: _HeroRosterCard__WEBPACK_IMPORTED_MODULE_0__["default"],
     HeroSpiritSelection: _HeroSpiritSelection__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])(['_squad', '_availableSpiritEssence', '_rosterFocusedHero']))
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])(['_squad', '_availableSpiritEssence', '_rosterFocusedHero']), {
+    heroes: function heroes() {
+      var _heroes = [];
+
+      if (this._squad.heroPosts) {
+        this._squad.heroPosts.forEach(function (heroPost) {
+          if (heroPost.hero) {
+            _heroes.push(heroPost.hero);
+          }
+        });
+      }
+
+      return _heroes;
+    }
+  })
 });
 
 /***/ }),
@@ -55347,7 +55364,7 @@ var render = function() {
             "div",
             [
               _c("PlayerSpiritPanel", {
-                attrs: { "player-spirit": _vm.hero.playerSpiritObject },
+                attrs: { "player-spirit": _vm.hero.playerSpirit },
                 scopedSlots: _vm._u(
                   [
                     {
@@ -55359,7 +55376,7 @@ var render = function() {
                           _c("RemoveSpiritButton", {
                             attrs: {
                               hero: _vm.hero,
-                              "player-spirit": _vm.hero.playerSpiritObject
+                              "player-spirit": _vm.hero.playerSpirit
                             }
                           })
                         ]
@@ -55369,7 +55386,7 @@ var render = function() {
                   ],
                   null,
                   false,
-                  3853112402
+                  3015427335
                 )
               })
             ],
@@ -55658,13 +55675,12 @@ var render = function() {
     ? _c("HeroSpiritSelection", { attrs: { hero: this._rosterFocusedHero } })
     : _c(
         "v-card",
-        { key: "2" },
         [
           _c("span", { staticClass: "display-3" }, [
             _vm._v(_vm._s(this._squad.availableSpiritEssence))
           ]),
           _vm._v(" "),
-          _vm._l(this._squad.heroes, function(hero, uuid) {
+          _vm._l(this.heroes, function(hero, uuid) {
             return _c(
               "div",
               [_c("HeroRosterCard", { attrs: { hero: hero } })],
@@ -101253,15 +101269,6 @@ function (_Model) {
   }
 
   _createClass(Squad, [{
-    key: "updateHero",
-    value: function updateHero(hero) {
-      this.heroes.forEach(function (currentHero) {
-        if (currentHero.uuid === hero.uuid) {
-          currentHero = hero;
-        }
-      });
-    }
-  }, {
     key: "heroes",
     get: function get() {
       var _heroes = [];
@@ -101581,32 +101588,45 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _models_Squad__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../models/Squad */ "./resources/js/models/Squad.js");
+/* harmony import */ var _models_Hero__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../models/Hero */ "./resources/js/models/Hero.js");
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   state: {
-    current: {},
-    original: {}
+    squad: {}
   },
   getters: {
-    _isDirty: function _isDirty(state) {
-      return !_.isEqual(state.current, state.original);
-    },
     _squad: function _squad(state) {
-      return state.current;
+      return state.squad;
     },
     _availableSpiritEssence: function _availableSpiritEssence(state) {
-      return state.current.availableSpiritEssence;
+      return state.squad.availableSpiritEssence;
     }
   },
   mutations: {
     SET_SQUAD: function SET_SQUAD(state, payload) {
-      state.current = payload;
-      state.original = payload;
+      state.squad = payload;
+    },
+    UPDATE_HERO: function UPDATE_HERO(state, payload) {
+      // state.squad = new Squad();
+      var current = state.squad;
+      current.heroPosts.forEach(function (heroPost) {
+        if (heroPost.hero && heroPost.hero.uuid === payload.uuid) {
+          heroPost.hero = payload;
+        }
+      });
+      state.squad = current;
     }
   },
   actions: {
     setSquad: function setSquad(_ref, payload) {
       var commit = _ref.commit;
       commit('SET_SQUAD', payload);
+    },
+    updateHero: function updateHero(_ref2, payload) {
+      var commit = _ref2.commit;
+      commit('UPDATE_HERO', payload);
     }
   }
 });
