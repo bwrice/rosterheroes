@@ -2,6 +2,13 @@
     <v-card>
         <h3>{{hero.name}}</h3>
         <v-btn v-on:click="unFocus">Cancel</v-btn>
+        <template v-if="hero.playerSpiritObject">
+            <PlayerSpiritPanel :player-spirit="hero.playerSpiritObject">
+                <template v-slot:spirit-actions>
+                    <RemoveSpiritButton :hero="hero" :player-spirit="hero.playerSpiritObject"></RemoveSpiritButton>
+                </template>
+            </PlayerSpiritPanel>
+        </template>
         <v-data-iterator
                 :items="this.playerSpirits"
                 content-tag="v-layout"
@@ -42,12 +49,14 @@
 
     import PlayerSpiritPanel from './PlayerSpiritPanel';
     import AddSpiritButton from "./AddSpiritButton";
+    import RemoveSpiritButton from "./RemoveSpiritButton";
 
     export default {
         name: "HeroSpiritSelection",
         props: ['hero'],
 
         components: {
+            RemoveSpiritButton,
             AddSpiritButton,
             PlayerSpiritPanel
         },

@@ -6,6 +6,7 @@
         <div v-if="hero.playerSpirit">
             <PlayerSpiritPanel :player-spirit="hero.playerSpiritObject">
                 <template v-slot:spirit-actions>
+                    <v-btn v-on:click="focusHero">Edit</v-btn>
                     <RemoveSpiritButton :hero="hero" :player-spirit="hero.playerSpiritObject"></RemoveSpiritButton>
                 </template>
             </PlayerSpiritPanel>

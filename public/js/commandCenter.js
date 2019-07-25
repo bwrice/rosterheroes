@@ -2419,6 +2419,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 
@@ -2452,6 +2453,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _PlayerSpiritPanel__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PlayerSpiritPanel */ "./resources/js/components/commandCenter/roster/PlayerSpiritPanel.vue");
 /* harmony import */ var _AddSpiritButton__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./AddSpiritButton */ "./resources/js/components/commandCenter/roster/AddSpiritButton.vue");
+/* harmony import */ var _RemoveSpiritButton__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./RemoveSpiritButton */ "./resources/js/components/commandCenter/roster/RemoveSpiritButton.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2502,6 +2504,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -2510,6 +2520,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   name: "HeroSpiritSelection",
   props: ['hero'],
   components: {
+    RemoveSpiritButton: _RemoveSpiritButton__WEBPACK_IMPORTED_MODULE_4__["default"],
     AddSpiritButton: _AddSpiritButton__WEBPACK_IMPORTED_MODULE_3__["default"],
     PlayerSpiritPanel: _PlayerSpiritPanel__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
@@ -55259,6 +55270,10 @@ var render = function() {
                       key: "spirit-actions",
                       fn: function() {
                         return [
+                          _c("v-btn", { on: { click: _vm.focusHero } }, [
+                            _vm._v("Edit")
+                          ]),
+                          _vm._v(" "),
                           _c("RemoveSpiritButton", {
                             attrs: {
                               hero: _vm.hero,
@@ -55272,7 +55287,7 @@ var render = function() {
                   ],
                   null,
                   false,
-                  4276314244
+                  2602436595
                 )
               })
             ],
@@ -55315,6 +55330,35 @@ var render = function() {
       _c("h3", [_vm._v(_vm._s(_vm.hero.name))]),
       _vm._v(" "),
       _c("v-btn", { on: { click: _vm.unFocus } }, [_vm._v("Cancel")]),
+      _vm._v(" "),
+      _vm.hero.playerSpiritObject
+        ? [
+            _c("PlayerSpiritPanel", {
+              attrs: { "player-spirit": _vm.hero.playerSpiritObject },
+              scopedSlots: _vm._u(
+                [
+                  {
+                    key: "spirit-actions",
+                    fn: function() {
+                      return [
+                        _c("RemoveSpiritButton", {
+                          attrs: {
+                            hero: _vm.hero,
+                            "player-spirit": _vm.hero.playerSpiritObject
+                          }
+                        })
+                      ]
+                    },
+                    proxy: true
+                  }
+                ],
+                null,
+                false,
+                4276314244
+              )
+            })
+          ]
+        : _vm._e(),
       _vm._v(" "),
       _c("v-data-iterator", {
         attrs: {
@@ -55382,7 +55426,7 @@ var render = function() {
         ])
       })
     ],
-    1
+    2
   )
 }
 var staticRenderFns = []
