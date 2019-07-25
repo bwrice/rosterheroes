@@ -29,6 +29,7 @@
             <CampaignFooterButton></CampaignFooterButton>
             <NationFooterButton></NationFooterButton>
         </v-bottom-nav>
+        <RhSnackBarAlert></RhSnackBarAlert>
     </v-app>
 </template>
 
@@ -45,11 +46,13 @@
 
     import Squad from "../models/Squad";
     import Week from "../models/Week";
+    import RhSnackBarAlert from "../components/commandCenter/global/SnackBarAlert";
 
     export default {
         name: "CommandCenter",
 
         components: {
+            RhSnackBarAlert,
             BarracksFooterButton,
             RosterFooterButton,
             MapFooterButton,
