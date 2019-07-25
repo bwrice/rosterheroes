@@ -10,4 +10,11 @@ export default class Hero extends Model {
             return 0;
         }
     }
+
+    get playerSpiritObject() {
+        if (this.playerSpirit) {
+            return new PlayerSpirit(this.playerSpirit);
+        }
+        return null;
+    }
 }
