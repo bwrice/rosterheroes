@@ -4,7 +4,11 @@
             <h3>{{hero.name}}</h3>
         </v-card-title>
         <div v-if="hero.playerSpirit">
-            Filled
+            <PlayerSpiritPanel :player-spirit="hero.playerSpiritObject">
+                <template v-slot:spirit-actions>
+                    <RemoveSpiritButton :hero="hero" :player-spirit="hero.playerSpiritObject"></RemoveSpiritButton>
+                </template>
+            </PlayerSpiritPanel>
         </div>
         <div v-else>
             <v-btn v-on:click="focusHero">Edit</v-btn>
@@ -15,9 +19,12 @@
 <script>
 
     import { mapActions } from 'vuex'
+    import PlayerSpiritPanel from "./PlayerSpiritPanel";
+    import RemoveSpiritButton from "./RemoveSpiritButton";
 
     export default {
         name: "HeroRosterCard",
+        components: {RemoveSpiritButton, PlayerSpiritPanel},
         props: ['hero'],
         methods: {
             ...mapActions([
