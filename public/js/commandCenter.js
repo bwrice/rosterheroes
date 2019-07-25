@@ -2372,7 +2372,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AddSpiritButton",
   props: ['playerSpirit', 'hero'],
@@ -2701,6 +2700,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "RemoveSpiritButton",
   props: ['playerSpirit', 'hero'],
@@ -2709,6 +2709,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       pending: false
     };
   },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['_rosterFocusedHero'])),
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['updateHero', 'setRosterFocusedHero']), {
     removeSpirit: function removeSpirit() {
       var _this = this;
@@ -2722,7 +2723,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         _this.updateHero(heroResponse);
 
-        _this.setRosterFocusedHero(heroResponse);
+        if (_this._rosterFocusedHero) {
+          _this.setRosterFocusedHero(heroResponse);
+        }
       })["catch"](function (error) {
         console.log("ERROR!");
         console.log(error);

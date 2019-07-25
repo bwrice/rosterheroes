@@ -5,6 +5,8 @@
 </template>
 
 <script>
+
+    import { mapGetters } from 'vuex';
     import { mapActions } from 'vuex';
 
     export default {
@@ -15,6 +17,12 @@
             return {
                 pending: false
             }
+        },
+
+        computed: {
+            ...mapGetters([
+                '_rosterFocusedHero'
+            ])
         },
 
         methods: {
@@ -31,7 +39,9 @@
                         this.pending = false;
                         let heroResponse = response.data.data;
                         this.updateHero(heroResponse);
-                        this.setRosterFocusedHero(heroResponse);
+                        if (this._rosterFocusedHero) {
+                            this.setRosterFocusedHero(heroResponse);
+                        }
                     }).catch((error) => {
                     console.log("ERROR!");
                     console.log(error);

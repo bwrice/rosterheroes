@@ -6,7 +6,6 @@
 
 <script>
 
-    import { mapGetters } from 'vuex';
     import { mapActions } from 'vuex';
 
     export default {
@@ -18,6 +17,7 @@
                 pending: false
             }
         },
+
         methods: {
             ...mapActions([
                 'updateHero',
