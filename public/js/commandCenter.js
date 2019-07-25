@@ -2367,15 +2367,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AddSpiritButton",
   props: ['playerSpirit', 'hero'],
+  data: function data() {
+    return {
+      pending: false
+    };
+  },
   methods: {
     addSpirit: function addSpirit() {
       var self = this;
+      self.pending = true;
       axios.post('/api/v1/heroes/' + this.hero.uuid + '/player-spirit/' + this.playerSpirit.uuid).then(function (response) {
         console.log("Response Data");
         console.log(response.data);
+        self.pending = false;
       })["catch"](function (error) {
         console.log("ERROR!");
         console.log(error);
+        self.pending = false;
       });
     }
   }
@@ -2657,14 +2665,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "RemoveSpiritButton",
   props: ['playerSpirit', 'hero'],
+  data: function data() {
+    return {
+      pending: false
+    };
+  },
   methods: {
     removeSpirit: function removeSpirit() {
+      var self = this;
+      self.pending = true;
       axios["delete"]('/api/v1/heroes/' + this.hero.uuid + '/player-spirit/' + this.playerSpirit.uuid).then(function (response) {
         console.log("Response Data");
         console.log(response.data);
+        self.pending = false;
       })["catch"](function (error) {
         console.log("ERROR!");
         console.log(error);
+        self.pending = false;
       });
     }
   }
@@ -55251,9 +55268,15 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("v-btn", { staticClass: "success", on: { click: _vm.addSpirit } }, [
-    _vm._v("\n    Add\n")
-  ])
+  return _c(
+    "v-btn",
+    {
+      staticClass: "success",
+      attrs: { disabled: this.pending },
+      on: { click: _vm.addSpirit }
+    },
+    [_vm._v("\n    Add\n")]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -55590,7 +55613,11 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "v-btn",
-    { staticClass: "error", on: { click: _vm.removeSpirit } },
+    {
+      staticClass: "error",
+      attrs: { disabled: this.pending },
+      on: { click: _vm.removeSpirit }
+    },
     [_vm._v("\n    Remove\n")]
   )
 }
