@@ -26,7 +26,14 @@ class HeroPlayerSpiritController extends Controller
 
         try {
             $hero = $action->execute($hero, $playerSpirit);
-            return new HeroResource($hero->loadMissing('playerSpirit'));
+            return new HeroResource($hero->loadMissing([
+                'heroClass',
+                'heroRace',
+                'playerSpirit.game.homeTeam',
+                'playerSpirit.game.awayTeam',
+                'playerSpirit.player.positions',
+                'playerSpirit.player.team'
+            ]));
 
         } catch (HeroPlayerSpiritException $exception) {
 
