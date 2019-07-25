@@ -2636,7 +2636,6 @@ __webpack_require__.r(__webpack_exports__);
   props: ['playerSpirit', 'hero'],
   methods: {
     removeSpirit: function removeSpirit() {
-      var self = this;
       axios["delete"]('/api/v1/heroes/' + this.hero.uuid + '/player-spirit/' + this.playerSpirit.uuid).then(function (response) {
         console.log("Response Data");
         console.log(response.data);
@@ -55229,7 +55228,9 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("v-btn", { on: { click: _vm.addSpirit } }, [_vm._v("\n    Add\n")])
+  return _c("v-btn", { staticClass: "success", on: { click: _vm.addSpirit } }, [
+    _vm._v("\n    Add\n")
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -55270,9 +55271,14 @@ var render = function() {
                       key: "spirit-actions",
                       fn: function() {
                         return [
-                          _c("v-btn", { on: { click: _vm.focusHero } }, [
-                            _vm._v("Edit")
-                          ]),
+                          _c(
+                            "v-btn",
+                            {
+                              staticClass: "primary",
+                              on: { click: _vm.focusHero }
+                            },
+                            [_vm._v("Edit")]
+                          ),
                           _vm._v(" "),
                           _c("RemoveSpiritButton", {
                             attrs: {
@@ -55287,7 +55293,7 @@ var render = function() {
                   ],
                   null,
                   false,
-                  2602436595
+                  2583379775
                 )
               })
             ],
@@ -55295,7 +55301,13 @@ var render = function() {
           )
         : _c(
             "div",
-            [_c("v-btn", { on: { click: _vm.focusHero } }, [_vm._v("Edit")])],
+            [
+              _c(
+                "v-btn",
+                { staticClass: "primary", on: { click: _vm.focusHero } },
+                [_vm._v("Edit")]
+              )
+            ],
             1
           )
     ],
@@ -55544,9 +55556,11 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("v-btn", { on: { click: _vm.removeSpirit } }, [
-    _vm._v("\n    Remove\n")
-  ])
+  return _c(
+    "v-btn",
+    { staticClass: "error", on: { click: _vm.removeSpirit } },
+    [_vm._v("\n    Remove\n")]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

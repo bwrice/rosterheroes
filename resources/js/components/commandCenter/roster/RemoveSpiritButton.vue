@@ -1,5 +1,5 @@
 <template>
-    <v-btn v-on:click="removeSpirit">
+    <v-btn v-on:click="removeSpirit" class="error">
         Remove
     </v-btn>
 </template>
@@ -10,7 +10,6 @@
         props: ['playerSpirit', 'hero'],
         methods: {
             removeSpirit: function () {
-                let self = this;
                 axios.delete('/api/v1/heroes/' + this.hero.uuid + '/player-spirit/' + this.playerSpirit.uuid)
                     .then(function (response) {
                         console.log("Response Data");

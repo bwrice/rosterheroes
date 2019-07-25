@@ -1,5 +1,5 @@
 <template>
-    <v-btn v-on:click="addSpirit">
+    <v-btn v-on:click="addSpirit" class="success">
         Add
     </v-btn>
 </template>
