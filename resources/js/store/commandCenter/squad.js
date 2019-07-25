@@ -1,32 +1,43 @@
+import Squad from "../../models/Squad";
+import Hero from "../../models/Hero";
 
 export default {
 
     state: {
-        current: {},
-        original: {}
+        squad: {}
     },
 
     getters: {
-        _isDirty(state) {
-            return ! _.isEqual(state.current, state.original);
-        },
         _squad(state) {
-            return state.current;
+            return state.squad;
         },
         _availableSpiritEssence(state) {
-            return state.current.availableSpiritEssence;
+            return state.squad.availableSpiritEssence;
         }
     },
     mutations: {
         SET_SQUAD(state, payload) {
-            state.current = payload;
-            state.original = payload;
-        }
+            state.squad = payload;
+        },
+        UPDATE_HERO(state, payload) {
+            // state.squad = new Squad();
+            let current = state.squad;
+            current.heroPosts.forEach(function (heroPost) {
+                if (heroPost.hero && heroPost.hero.uuid === payload.uuid) {
+                    heroPost.hero = payload;
+                }
+            });
+            state.squad = current;
+        },
+
     },
 
     actions: {
         setSquad({commit}, payload) {
             commit('SET_SQUAD', payload)
+        },
+        updateHero({commit}, payload) {
+            commit('UPDATE_HERO', payload)
         },
     }
 };
