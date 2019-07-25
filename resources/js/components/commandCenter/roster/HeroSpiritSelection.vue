@@ -2,10 +2,10 @@
     <v-card>
         <h3>{{hero.name}}</h3>
         <v-btn v-on:click="unFocus">Cancel</v-btn>
-        <template v-if="hero.playerSpiritObject">
-            <PlayerSpiritPanel :player-spirit="hero.playerSpiritObject">
+        <template v-if="hero.playerSpirit">
+            <PlayerSpiritPanel :player-spirit="getFocusedPlayerSpirit(hero.playerSpirit)">
                 <template v-slot:spirit-actions>
-                    <RemoveSpiritButton :hero="hero" :player-spirit="hero.playerSpiritObject"></RemoveSpiritButton>
+                    <RemoveSpiritButton :hero="hero" :player-spirit="getFocusedPlayerSpirit(hero.playerSpirit)"></RemoveSpiritButton>
                 </template>
             </PlayerSpiritPanel>
         </template>
@@ -50,6 +50,7 @@
     import PlayerSpiritPanel from './PlayerSpiritPanel';
     import AddSpiritButton from "./AddSpiritButton";
     import RemoveSpiritButton from "./RemoveSpiritButton";
+    import PlayerSpirit from "../../../models/PlayerSpirit";
 
     export default {
         name: "HeroSpiritSelection",
@@ -73,15 +74,17 @@
 
         methods: {
             ...mapActions([
-                'setRosterFocusedHero',
-                'setPlayerSpiritsPool'
+                'setRosterFocusedHero'
             ]),
             unFocus: function() {
                 this.setRosterFocusedHero(null);
             },
+            getFocusedPlayerSpirit: function(playerSpirit) {
+                return new PlayerSpirit(playerSpirit);
+            },
             async updatePlayerSpiritsPool() {
                 this.playerSpirits = await this._currentWeek.playerSpirits().where('hero-race', this.hero.heroRace.name).$get();
-            }
+            },
         },
         computed: {
             ...mapGetters([

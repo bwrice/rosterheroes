@@ -25,7 +25,8 @@
         },
         methods: {
             ...mapActions([
-                'updateHero'
+                'updateHero',
+                'setRosterFocusedHero'
             ]),
             addSpirit: function() {
                 this.pending = true;
@@ -34,7 +35,9 @@
                     console.log("Response Data");
                     console.log(response.data);
                     this.pending = false;
-                    this.updateHero(response.data.data);
+                    let heroResponse = response.data.data;
+                    this.updateHero(heroResponse);
+                    this.setRosterFocusedHero(heroResponse);
                 }).catch((error) => {
                     console.log("ERROR!");
                     console.log(error);

@@ -2382,7 +2382,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['_squad'])),
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['updateHero']), {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['updateHero', 'setRosterFocusedHero']), {
     addSpirit: function addSpirit() {
       var _this = this;
 
@@ -2391,8 +2391,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         console.log("Response Data");
         console.log(response.data);
         _this.pending = false;
+        var heroResponse = response.data.data;
 
-        _this.updateHero(response.data.data);
+        _this.updateHero(heroResponse);
+
+        _this.setRosterFocusedHero(heroResponse);
       })["catch"](function (error) {
         console.log("ERROR!");
         console.log(error);
@@ -2498,6 +2501,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _PlayerSpiritPanel__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PlayerSpiritPanel */ "./resources/js/components/commandCenter/roster/PlayerSpiritPanel.vue");
 /* harmony import */ var _AddSpiritButton__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./AddSpiritButton */ "./resources/js/components/commandCenter/roster/AddSpiritButton.vue");
 /* harmony import */ var _RemoveSpiritButton__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./RemoveSpiritButton */ "./resources/js/components/commandCenter/roster/RemoveSpiritButton.vue");
+/* harmony import */ var _models_PlayerSpirit__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../models/PlayerSpirit */ "./resources/js/models/PlayerSpirit.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2560,6 +2564,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "HeroSpiritSelection",
   props: ['hero'],
@@ -2576,9 +2581,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       playerSpirits: []
     };
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['setRosterFocusedHero', 'setPlayerSpiritsPool']), {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['setRosterFocusedHero']), {
     unFocus: function unFocus() {
       this.setRosterFocusedHero(null);
+    },
+    getFocusedPlayerSpirit: function getFocusedPlayerSpirit(playerSpirit) {
+      return new _models_PlayerSpirit__WEBPACK_IMPORTED_MODULE_5__["default"](playerSpirit);
     },
     updatePlayerSpiritsPool: function () {
       var _updatePlayerSpiritsPool = _asyncToGenerator(
@@ -2623,6 +2631,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _models_PlayerSpirit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../models/PlayerSpirit */ "./resources/js/models/PlayerSpirit.js");
 //
 //
 //
@@ -2653,6 +2662,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "PlayerSpiritPanel",
   props: ['playerSpirit']
@@ -55426,10 +55436,14 @@ var render = function() {
       _vm._v(" "),
       _c("v-btn", { on: { click: _vm.unFocus } }, [_vm._v("Cancel")]),
       _vm._v(" "),
-      _vm.hero.playerSpiritObject
+      _vm.hero.playerSpirit
         ? [
             _c("PlayerSpiritPanel", {
-              attrs: { "player-spirit": _vm.hero.playerSpiritObject },
+              attrs: {
+                "player-spirit": _vm.getFocusedPlayerSpirit(
+                  _vm.hero.playerSpirit
+                )
+              },
               scopedSlots: _vm._u(
                 [
                   {
@@ -55439,7 +55453,9 @@ var render = function() {
                         _c("RemoveSpiritButton", {
                           attrs: {
                             hero: _vm.hero,
-                            "player-spirit": _vm.hero.playerSpiritObject
+                            "player-spirit": _vm.getFocusedPlayerSpirit(
+                              _vm.hero.playerSpirit
+                            )
                           }
                         })
                       ]
@@ -55449,7 +55465,7 @@ var render = function() {
                 ],
                 null,
                 false,
-                4276314244
+                2286202269
               )
             })
           ]

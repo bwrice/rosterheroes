@@ -29,6 +29,8 @@
 </template>
 
 <script>
+    import PlayerSpirit from "../../../models/PlayerSpirit";
+
     export default {
         name: "PlayerSpiritPanel",
         props: ['playerSpirit']
