@@ -2358,12 +2358,20 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AddSpiritButton",
   props: ['playerSpirit', 'hero'],
@@ -2372,18 +2380,20 @@ __webpack_require__.r(__webpack_exports__);
       pending: false
     };
   },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['_squad'])),
   methods: {
     addSpirit: function addSpirit() {
-      var self = this;
-      self.pending = true;
+      var _this = this;
+
+      this.pending = true;
       axios.post('/api/v1/heroes/' + this.hero.uuid + '/player-spirit/' + this.playerSpirit.uuid).then(function (response) {
         console.log("Response Data");
         console.log(response.data);
-        self.pending = false;
+        _this.pending = false;
       })["catch"](function (error) {
         console.log("ERROR!");
         console.log(error);
-        self.pending = false;
+        _this.pending = false;
       });
     }
   }
@@ -2672,16 +2682,17 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     removeSpirit: function removeSpirit() {
-      var self = this;
-      self.pending = true;
+      var _this = this;
+
+      this.pending = true;
       axios["delete"]('/api/v1/heroes/' + this.hero.uuid + '/player-spirit/' + this.playerSpirit.uuid).then(function (response) {
         console.log("Response Data");
         console.log(response.data);
-        self.pending = false;
+        _this.pending = false;
       })["catch"](function (error) {
         console.log("ERROR!");
         console.log(error);
-        self.pending = false;
+        _this.pending = false;
       });
     }
   }
@@ -101242,6 +101253,15 @@ function (_Model) {
   }
 
   _createClass(Squad, [{
+    key: "updateHero",
+    value: function updateHero(hero) {
+      this.heroes.forEach(function (currentHero) {
+        if (currentHero.uuid === hero.uuid) {
+          currentHero = hero;
+        }
+      });
+    }
+  }, {
     key: "heroes",
     get: function get() {
       var _heroes = [];
