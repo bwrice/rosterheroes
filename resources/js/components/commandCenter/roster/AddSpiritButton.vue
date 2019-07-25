@@ -18,11 +18,6 @@
                 pending: false
             }
         },
-        computed: {
-            ...mapGetters([
-                '_squad'
-            ])
-        },
         methods: {
             ...mapActions([
                 'updateHero',

@@ -2381,7 +2381,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       pending: false
     };
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['_squad'])),
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['updateHero', 'setRosterFocusedHero']), {
     addSpirit: function addSpirit() {
       var _this = this;
@@ -2452,6 +2451,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _PlayerSpiritPanel__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PlayerSpiritPanel */ "./resources/js/components/commandCenter/roster/PlayerSpiritPanel.vue");
 /* harmony import */ var _RemoveSpiritButton__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RemoveSpiritButton */ "./resources/js/components/commandCenter/roster/RemoveSpiritButton.vue");
 /* harmony import */ var _EditSpiritButton__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./EditSpiritButton */ "./resources/js/components/commandCenter/roster/EditSpiritButton.vue");
+/* harmony import */ var _models_PlayerSpirit__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../models/PlayerSpirit */ "./resources/js/models/PlayerSpirit.js");
 //
 //
 //
@@ -2471,17 +2471,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "HeroRosterCard",
+  props: ['hero'],
   components: {
     EditSpiritButton: _EditSpiritButton__WEBPACK_IMPORTED_MODULE_2__["default"],
     RemoveSpiritButton: _RemoveSpiritButton__WEBPACK_IMPORTED_MODULE_1__["default"],
     PlayerSpiritPanel: _PlayerSpiritPanel__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  props: ['hero']
+  methods: {
+    getPlayerSpirit: function getPlayerSpirit(playerSpirit) {
+      return new _models_PlayerSpirit__WEBPACK_IMPORTED_MODULE_3__["default"](playerSpirit);
+    }
+  }
 });
 
 /***/ }),
@@ -2514,6 +2520,8 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
 //
 //
 //
@@ -2679,12 +2687,20 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "RemoveSpiritButton",
   props: ['playerSpirit', 'hero'],
@@ -2693,7 +2709,7 @@ __webpack_require__.r(__webpack_exports__);
       pending: false
     };
   },
-  methods: {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['updateHero', 'setRosterFocusedHero']), {
     removeSpirit: function removeSpirit() {
       var _this = this;
 
@@ -2702,13 +2718,18 @@ __webpack_require__.r(__webpack_exports__);
         console.log("Response Data");
         console.log(response.data);
         _this.pending = false;
+        var heroResponse = response.data.data;
+
+        _this.updateHero(heroResponse);
+
+        _this.setRosterFocusedHero(heroResponse);
       })["catch"](function (error) {
         console.log("ERROR!");
         console.log(error);
         _this.pending = false;
       });
     }
-  }
+  })
 });
 
 /***/ }),
@@ -55374,7 +55395,9 @@ var render = function() {
             "div",
             [
               _c("PlayerSpiritPanel", {
-                attrs: { "player-spirit": _vm.hero.playerSpirit },
+                attrs: {
+                  "player-spirit": _vm.getPlayerSpirit(_vm.hero.playerSpirit)
+                },
                 scopedSlots: _vm._u(
                   [
                     {
@@ -55386,7 +55409,9 @@ var render = function() {
                           _c("RemoveSpiritButton", {
                             attrs: {
                               hero: _vm.hero,
-                              "player-spirit": _vm.hero.playerSpirit
+                              "player-spirit": _vm.getPlayerSpirit(
+                                _vm.hero.playerSpirit
+                              )
                             }
                           })
                         ]
@@ -55396,7 +55421,7 @@ var render = function() {
                   ],
                   null,
                   false,
-                  3015427335
+                  4191454470
                 )
               })
             ],
@@ -55432,9 +55457,19 @@ var render = function() {
   return _c(
     "v-card",
     [
-      _c("h3", [_vm._v(_vm._s(_vm.hero.name))]),
+      _c(
+        "v-btn",
+        { on: { click: _vm.unFocus } },
+        [
+          _c("v-icon", { attrs: { dark: "", left: "" } }, [
+            _vm._v("arrow_back")
+          ]),
+          _vm._v("Back\n    ")
+        ],
+        1
+      ),
       _vm._v(" "),
-      _c("v-btn", { on: { click: _vm.unFocus } }, [_vm._v("Cancel")]),
+      _c("h3", [_vm._v(_vm._s(_vm.hero.name))]),
       _vm._v(" "),
       _vm.hero.playerSpirit
         ? [

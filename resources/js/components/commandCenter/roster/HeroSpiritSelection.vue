@@ -1,7 +1,9 @@
 <template>
     <v-card>
+        <v-btn v-on:click="unFocus">
+            <v-icon dark left>arrow_back</v-icon>Back
+        </v-btn>
         <h3>{{hero.name}}</h3>
-        <v-btn v-on:click="unFocus">Cancel</v-btn>
         <template v-if="hero.playerSpirit">
             <PlayerSpiritPanel :player-spirit="getFocusedPlayerSpirit(hero.playerSpirit)">
                 <template v-slot:spirit-actions>

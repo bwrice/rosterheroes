@@ -5,6 +5,8 @@
 </template>
 
 <script>
+    import { mapActions } from 'vuex';
+
     export default {
         name: "RemoveSpiritButton",
         props: ['playerSpirit', 'hero'],
@@ -16,6 +18,10 @@
         },
 
         methods: {
+            ...mapActions([
+                'updateHero',
+                'setRosterFocusedHero'
+            ]),
             removeSpirit: function () {
                 this.pending = true;
                 axios.delete('/api/v1/heroes/' + this.hero.uuid + '/player-spirit/' + this.playerSpirit.uuid)
@@ -23,6 +29,9 @@
                         console.log("Response Data");
                         console.log(response.data);
                         this.pending = false;
+                        let heroResponse = response.data.data;
+                        this.updateHero(heroResponse);
+                        this.setRosterFocusedHero(heroResponse);
                     }).catch((error) => {
                     console.log("ERROR!");
                     console.log(error);
