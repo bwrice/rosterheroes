@@ -2461,8 +2461,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.updateHero(heroResponse);
 
         _this.setRosterFocusedHero(heroResponse);
-
-        _this.snackBarSuccess('Hero Updated');
       })["catch"](function (error) {
         _this.pending = false; // TODO: add Errors class to snackBar store and handle there
 
@@ -2795,8 +2793,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         if (_this._rosterFocusedHero) {
           _this.setRosterFocusedHero(heroResponse);
         }
-
-        _this.snackBarSuccess('Hero Updated');
       })["catch"](function (error) {
         console.log("ERROR!");
         console.log(error);
@@ -55435,7 +55431,7 @@ var render = function() {
           attrs: { dark: "", flat: "" },
           on: {
             click: function($event) {
-              _vm.snackBar = true
+              _vm.snackBar = false
             }
           }
         },

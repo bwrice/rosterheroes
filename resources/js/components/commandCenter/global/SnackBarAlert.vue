@@ -11,7 +11,7 @@
         <v-btn
                 dark
                 flat
-                @click="snackBar = true"
+                @click="snackBar = false"
         >
             Close
         </v-btn>
