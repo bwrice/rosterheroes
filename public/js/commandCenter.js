@@ -2550,6 +2550,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _AddSpiritButton__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./AddSpiritButton */ "./resources/js/components/commandCenter/roster/AddSpiritButton.vue");
 /* harmony import */ var _RemoveSpiritButton__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./RemoveSpiritButton */ "./resources/js/components/commandCenter/roster/RemoveSpiritButton.vue");
 /* harmony import */ var _models_PlayerSpirit__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../models/PlayerSpirit */ "./resources/js/models/PlayerSpirit.js");
+/* harmony import */ var _HeroRosterCard__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./HeroRosterCard */ "./resources/js/components/commandCenter/roster/HeroRosterCard.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2609,6 +2610,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+
 
 
 
@@ -2619,6 +2624,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   name: "HeroSpiritSelection",
   props: ['hero'],
   components: {
+    HeroRosterCard: _HeroRosterCard__WEBPACK_IMPORTED_MODULE_6__["default"],
     RemoveSpiritButton: _RemoveSpiritButton__WEBPACK_IMPORTED_MODULE_4__["default"],
     AddSpiritButton: _AddSpiritButton__WEBPACK_IMPORTED_MODULE_3__["default"],
     PlayerSpiritPanel: _PlayerSpiritPanel__WEBPACK_IMPORTED_MODULE_2__["default"]
@@ -55572,42 +55578,54 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("h3", [_vm._v(_vm._s(_vm.hero.name))]),
-      _vm._v(" "),
-      _vm.hero.playerSpirit
-        ? [
-            _c("PlayerSpiritPanel", {
-              attrs: {
-                "player-spirit": _vm.getFocusedPlayerSpirit(
-                  _vm.hero.playerSpirit
-                )
-              },
-              scopedSlots: _vm._u(
-                [
-                  {
-                    key: "spirit-actions",
-                    fn: function() {
-                      return [
-                        _c("RemoveSpiritButton", {
-                          attrs: {
-                            hero: _vm.hero,
-                            "player-spirit": _vm.getFocusedPlayerSpirit(
-                              _vm.hero.playerSpirit
-                            )
+      _c(
+        "HeroRosterCard",
+        { attrs: { hero: _vm.hero } },
+        [
+          _c(
+            "template",
+            { slot: "body" },
+            [
+              _vm.hero.playerSpirit
+                ? [
+                    _c("PlayerSpiritPanel", {
+                      attrs: {
+                        "player-spirit": _vm.getFocusedPlayerSpirit(
+                          _vm.hero.playerSpirit
+                        )
+                      },
+                      scopedSlots: _vm._u(
+                        [
+                          {
+                            key: "spirit-actions",
+                            fn: function() {
+                              return [
+                                _c("RemoveSpiritButton", {
+                                  attrs: {
+                                    hero: _vm.hero,
+                                    "player-spirit": _vm.getFocusedPlayerSpirit(
+                                      _vm.hero.playerSpirit
+                                    )
+                                  }
+                                })
+                              ]
+                            },
+                            proxy: true
                           }
-                        })
-                      ]
-                    },
-                    proxy: true
-                  }
-                ],
-                null,
-                false,
-                2286202269
-              )
-            })
-          ]
-        : _vm._e(),
+                        ],
+                        null,
+                        false,
+                        2286202269
+                      )
+                    })
+                  ]
+                : _vm._e()
+            ],
+            2
+          )
+        ],
+        2
+      ),
       _vm._v(" "),
       _c("v-data-iterator", {
         attrs: {
@@ -55675,7 +55693,7 @@ var render = function() {
         ])
       })
     ],
-    2
+    1
   )
 }
 var staticRenderFns = []

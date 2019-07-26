@@ -3,14 +3,17 @@
         <v-btn v-on:click="unFocus">
             <v-icon dark left>arrow_back</v-icon>Back
         </v-btn>
-        <h3>{{hero.name}}</h3>
-        <template v-if="hero.playerSpirit">
-            <PlayerSpiritPanel :player-spirit="getFocusedPlayerSpirit(hero.playerSpirit)">
-                <template v-slot:spirit-actions>
-                    <RemoveSpiritButton :hero="hero" :player-spirit="getFocusedPlayerSpirit(hero.playerSpirit)"></RemoveSpiritButton>
+        <HeroRosterCard :hero="hero">
+            <template slot="body">
+                <template v-if="hero.playerSpirit">
+                    <PlayerSpiritPanel :player-spirit="getFocusedPlayerSpirit(hero.playerSpirit)">
+                        <template v-slot:spirit-actions>
+                            <RemoveSpiritButton :hero="hero" :player-spirit="getFocusedPlayerSpirit(hero.playerSpirit)"></RemoveSpiritButton>
+                        </template>
+                    </PlayerSpiritPanel>
                 </template>
-            </PlayerSpiritPanel>
-        </template>
+            </template>
+        </HeroRosterCard>
         <v-data-iterator
                 :items="this.playerSpirits"
                 content-tag="v-layout"
@@ -53,12 +56,14 @@
     import AddSpiritButton from "./AddSpiritButton";
     import RemoveSpiritButton from "./RemoveSpiritButton";
     import PlayerSpirit from "../../../models/PlayerSpirit";
+    import HeroRosterCard from "./HeroRosterCard";
 
     export default {
         name: "HeroSpiritSelection",
         props: ['hero'],
 
         components: {
+            HeroRosterCard,
             RemoveSpiritButton,
             AddSpiritButton,
             PlayerSpiritPanel
