@@ -41,9 +41,14 @@ export default {
         snackBarSuccess({commit}, payload) {
             commit('SET_TEXT', payload);
             commit('SET_COLOR', 'success');
-            commit('SET_TIMEOUT', 2500);
+            commit('SET_TIMEOUT', 2000);
             commit('TRIGGER');
-
+        },
+        snackBarError({commit}, payload) {
+            commit('SET_TEXT', payload);
+            commit('SET_COLOR', 'error');
+            commit('SET_TIMEOUT', 5000);
+            commit('TRIGGER');
         }
     }
 };
