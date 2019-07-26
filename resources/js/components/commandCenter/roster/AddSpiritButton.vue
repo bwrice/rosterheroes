@@ -21,7 +21,8 @@
         methods: {
             ...mapActions([
                 'updateHero',
-                'setRosterFocusedHero'
+                'setRosterFocusedHero',
+                'snackBarSuccess'
             ]),
             addSpirit: function() {
                 this.pending = true;
@@ -33,6 +34,7 @@
                     let heroResponse = response.data.data;
                     this.updateHero(heroResponse);
                     this.setRosterFocusedHero(heroResponse);
+                    this.snackBarSuccess('Hero Updated');
                 }).catch((error) => {
                     console.log("ERROR!");
                     console.log(error);

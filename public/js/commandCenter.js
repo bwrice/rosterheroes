@@ -2349,6 +2349,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/global/SnackBarAlert.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/commandCenter/global/SnackBarAlert.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "RhSnackBarAlert",
+  data: function data() {
+    return {
+      snackBar: false
+    };
+  },
+  watch: {
+    trigger: function trigger(_trigger) {
+      /**
+       * We don't care about the value of trigger, just know that
+       * it changed. this.snackbar will automatically get set back to
+       * false inside the v-snackbar component
+       */
+      this.snackBar = true;
+    }
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['_snackBar']), {
+    trigger: function trigger() {
+      return this._snackBar.trigger;
+    },
+    color: function color() {
+      return this._snackBar.color;
+    },
+    timeout: function timeout() {
+      return this._snackBar.timeout;
+    }
+  })
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/roster/AddSpiritButton.vue?vue&type=script&lang=js&":
 /*!***********************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/commandCenter/roster/AddSpiritButton.vue?vue&type=script&lang=js& ***!
@@ -2380,7 +2449,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       pending: false
     };
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['updateHero', 'setRosterFocusedHero']), {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['updateHero', 'setRosterFocusedHero', 'snackBarSuccess']), {
     addSpirit: function addSpirit() {
       var _this = this;
 
@@ -2394,6 +2463,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.updateHero(heroResponse);
 
         _this.setRosterFocusedHero(heroResponse);
+
+        _this.snackBarSuccess('Hero Updated');
       })["catch"](function (error) {
         console.log("ERROR!");
         console.log(error);
@@ -2638,7 +2709,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _models_PlayerSpirit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../models/PlayerSpirit */ "./resources/js/models/PlayerSpirit.js");
 //
 //
 //
@@ -2669,7 +2739,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "PlayerSpiritPanel",
   props: ['playerSpirit']
@@ -3148,6 +3217,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _models_Squad__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../models/Squad */ "./resources/js/models/Squad.js");
 /* harmony import */ var _models_Week__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../models/Week */ "./resources/js/models/Week.js");
+/* harmony import */ var _components_commandCenter_global_SnackBarAlert__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../components/commandCenter/global/SnackBarAlert */ "./resources/js/components/commandCenter/global/SnackBarAlert.vue");
 
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
@@ -3194,6 +3264,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+
 
 
 
@@ -3206,6 +3278,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "CommandCenter",
   components: {
+    RhSnackBarAlert: _components_commandCenter_global_SnackBarAlert__WEBPACK_IMPORTED_MODULE_9__["default"],
     BarracksFooterButton: _components_commandCenter_footer_BarracksFooterButton__WEBPACK_IMPORTED_MODULE_1__["default"],
     RosterFooterButton: _components_commandCenter_footer_RosterFooterButton__WEBPACK_IMPORTED_MODULE_2__["default"],
     MapFooterButton: _components_commandCenter_footer_MapFooterButton__WEBPACK_IMPORTED_MODULE_3__["default"],
@@ -55315,6 +55388,64 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/global/SnackBarAlert.vue?vue&type=template&id=5be5f7a5&scoped=true&":
+/*!*************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/commandCenter/global/SnackBarAlert.vue?vue&type=template&id=5be5f7a5&scoped=true& ***!
+  \*************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-snackbar",
+    {
+      attrs: {
+        color: this.color,
+        "multi-line": true,
+        timeout: 2000,
+        absolute: false,
+        top: true
+      },
+      model: {
+        value: _vm.snackBar,
+        callback: function($$v) {
+          _vm.snackBar = $$v
+        },
+        expression: "snackBar"
+      }
+    },
+    [
+      _vm._v("\n    " + _vm._s(this._snackBar.text) + "\n    "),
+      _c(
+        "v-btn",
+        {
+          attrs: { dark: "", flat: "" },
+          on: {
+            click: function($event) {
+              _vm.snackBar = true
+            }
+          }
+        },
+        [_vm._v("\n        Close\n    ")]
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/roster/AddSpiritButton.vue?vue&type=template&id=9e04464c&scoped=true&":
 /*!***************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/commandCenter/roster/AddSpiritButton.vue?vue&type=template&id=9e04464c&scoped=true& ***!
@@ -56296,7 +56427,9 @@ var render = function() {
           _c("NationFooterButton")
         ],
         1
-      )
+      ),
+      _vm._v(" "),
+      _c("RhSnackBarAlert")
     ],
     1
   )
@@ -99633,6 +99766,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/commandCenter/global/SnackBarAlert.vue":
+/*!************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/global/SnackBarAlert.vue ***!
+  \************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _SnackBarAlert_vue_vue_type_template_id_5be5f7a5_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SnackBarAlert.vue?vue&type=template&id=5be5f7a5&scoped=true& */ "./resources/js/components/commandCenter/global/SnackBarAlert.vue?vue&type=template&id=5be5f7a5&scoped=true&");
+/* harmony import */ var _SnackBarAlert_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SnackBarAlert.vue?vue&type=script&lang=js& */ "./resources/js/components/commandCenter/global/SnackBarAlert.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _SnackBarAlert_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _SnackBarAlert_vue_vue_type_template_id_5be5f7a5_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _SnackBarAlert_vue_vue_type_template_id_5be5f7a5_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "5be5f7a5",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/commandCenter/global/SnackBarAlert.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/global/SnackBarAlert.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/global/SnackBarAlert.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SnackBarAlert_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./SnackBarAlert.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/global/SnackBarAlert.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SnackBarAlert_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/global/SnackBarAlert.vue?vue&type=template&id=5be5f7a5&scoped=true&":
+/*!*******************************************************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/global/SnackBarAlert.vue?vue&type=template&id=5be5f7a5&scoped=true& ***!
+  \*******************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SnackBarAlert_vue_vue_type_template_id_5be5f7a5_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./SnackBarAlert.vue?vue&type=template&id=5be5f7a5&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/global/SnackBarAlert.vue?vue&type=template&id=5be5f7a5&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SnackBarAlert_vue_vue_type_template_id_5be5f7a5_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SnackBarAlert_vue_vue_type_template_id_5be5f7a5_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/commandCenter/roster/AddSpiritButton.vue":
 /*!**************************************************************************!*\
   !*** ./resources/js/components/commandCenter/roster/AddSpiritButton.vue ***!
@@ -101573,9 +101775,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _squad__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./squad */ "./resources/js/store/commandCenter/squad.js");
 /* harmony import */ var _roster__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./roster */ "./resources/js/store/commandCenter/roster.js");
 /* harmony import */ var _week__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./week */ "./resources/js/store/commandCenter/week.js");
+/* harmony import */ var _snackBar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./snackBar */ "./resources/js/store/commandCenter/snackBar.js");
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
+
 
 
 
@@ -101583,7 +101787,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   modules: {
     squadModule: _squad__WEBPACK_IMPORTED_MODULE_2__["default"],
     rosterModule: _roster__WEBPACK_IMPORTED_MODULE_3__["default"],
-    weekModule: _week__WEBPACK_IMPORTED_MODULE_4__["default"]
+    weekModule: _week__WEBPACK_IMPORTED_MODULE_4__["default"],
+    snackBarModule: _snackBar__WEBPACK_IMPORTED_MODULE_5__["default"]
   }
 });
 
@@ -101627,6 +101832,64 @@ __webpack_require__.r(__webpack_exports__);
     setPlayerSpiritsPool: function setPlayerSpiritsPool(_ref2, payload) {
       var commit = _ref2.commit;
       commit('SET_PLAYER_SPIRITS_POOL', payload);
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/commandCenter/snackBar.js":
+/*!******************************************************!*\
+  !*** ./resources/js/store/commandCenter/snackBar.js ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  state: {
+    snackBar: {
+      trigger: false,
+      color: '',
+      mode: '',
+      timeout: 2000,
+      text: ''
+    }
+  },
+  getters: {
+    _snackBar: function _snackBar(state) {
+      return state.snackBar;
+    }
+  },
+  mutations: {
+    SET_SNACKBAR: function SET_SNACKBAR(state, payload) {
+      state.snackBar = payload;
+    },
+    SET_COLOR: function SET_COLOR(state, payload) {
+      state.snackBar.color = payload;
+    },
+    SET_TEXT: function SET_TEXT(state, payload) {
+      state.snackBar.text = payload;
+    },
+    SET_TIMEOUT: function SET_TIMEOUT(state, payload) {
+      state.snackBar.timeout = payload;
+    },
+    TRIGGER: function TRIGGER(state) {
+      state.snackBar.trigger++;
+    }
+  },
+  actions: {
+    setSnackBar: function setSnackBar(_ref, payload) {
+      var commit = _ref.commit;
+      commit('SET_SNACKBAR', payload);
+    },
+    snackBarSuccess: function snackBarSuccess(_ref2, payload) {
+      var commit = _ref2.commit;
+      commit('SET_TEXT', payload);
+      commit('SET_COLOR', 'success');
+      commit('SET_TIMEOUT', 2500);
+      commit('TRIGGER');
     }
   }
 });
