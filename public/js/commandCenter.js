@@ -2516,10 +2516,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _PlayerSpiritPanel__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PlayerSpiritPanel */ "./resources/js/components/commandCenter/roster/PlayerSpiritPanel.vue");
-/* harmony import */ var _RemoveSpiritButton__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RemoveSpiritButton */ "./resources/js/components/commandCenter/roster/RemoveSpiritButton.vue");
-/* harmony import */ var _EditSpiritButton__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./EditSpiritButton */ "./resources/js/components/commandCenter/roster/EditSpiritButton.vue");
-/* harmony import */ var _models_PlayerSpirit__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../models/PlayerSpirit */ "./resources/js/models/PlayerSpirit.js");
 //
 //
 //
@@ -2531,31 +2527,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "HeroRosterCard",
-  props: ['hero'],
-  components: {
-    EditSpiritButton: _EditSpiritButton__WEBPACK_IMPORTED_MODULE_2__["default"],
-    RemoveSpiritButton: _RemoveSpiritButton__WEBPACK_IMPORTED_MODULE_1__["default"],
-    PlayerSpiritPanel: _PlayerSpiritPanel__WEBPACK_IMPORTED_MODULE_0__["default"]
-  },
-  methods: {
-    getPlayerSpirit: function getPlayerSpirit(playerSpirit) {
-      return new _models_PlayerSpirit__WEBPACK_IMPORTED_MODULE_3__["default"](playerSpirit);
-    }
-  }
+  props: ['hero']
 });
 
 /***/ }),
@@ -2819,7 +2793,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _HeroRosterCard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HeroRosterCard */ "./resources/js/components/commandCenter/roster/HeroRosterCard.vue");
 /* harmony import */ var _HeroSpiritSelection__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HeroSpiritSelection */ "./resources/js/components/commandCenter/roster/HeroSpiritSelection.vue");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _RemoveSpiritButton__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./RemoveSpiritButton */ "./resources/js/components/commandCenter/roster/RemoveSpiritButton.vue");
+/* harmony import */ var _EditSpiritButton__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./EditSpiritButton */ "./resources/js/components/commandCenter/roster/EditSpiritButton.vue");
+/* harmony import */ var _PlayerSpiritPanel__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./PlayerSpiritPanel */ "./resources/js/components/commandCenter/roster/PlayerSpiritPanel.vue");
+/* harmony import */ var _models_PlayerSpirit__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../models/PlayerSpirit */ "./resources/js/models/PlayerSpirit.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2836,6 +2814,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
 
 
 
@@ -2843,9 +2839,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   name: "SquadRoster",
   components: {
     HeroRosterCard: _HeroRosterCard__WEBPACK_IMPORTED_MODULE_0__["default"],
-    HeroSpiritSelection: _HeroSpiritSelection__WEBPACK_IMPORTED_MODULE_1__["default"]
+    HeroSpiritSelection: _HeroSpiritSelection__WEBPACK_IMPORTED_MODULE_1__["default"],
+    EditSpiritButton: _EditSpiritButton__WEBPACK_IMPORTED_MODULE_3__["default"],
+    RemoveSpiritButton: _RemoveSpiritButton__WEBPACK_IMPORTED_MODULE_2__["default"],
+    PlayerSpiritPanel: _PlayerSpiritPanel__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])(['_squad', '_availableSpiritEssence', '_rosterFocusedHero']), {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_6__["mapGetters"])(['_squad', '_availableSpiritEssence', '_rosterFocusedHero']), {
     heroes: function heroes() {
       var _heroes = [];
 
@@ -2859,7 +2858,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       return _heroes;
     }
-  })
+  }),
+  methods: {
+    getPlayerSpirit: function getPlayerSpirit(playerSpirit) {
+      return new _models_PlayerSpirit__WEBPACK_IMPORTED_MODULE_5__["default"](playerSpirit);
+    }
+  }
 });
 
 /***/ }),
@@ -55526,46 +55530,9 @@ var render = function() {
     [
       _c("v-card-title", [_c("h3", [_vm._v(_vm._s(_vm.hero.name))])]),
       _vm._v(" "),
-      _vm.hero.playerSpirit
-        ? _c(
-            "div",
-            [
-              _c("PlayerSpiritPanel", {
-                attrs: {
-                  "player-spirit": _vm.getPlayerSpirit(_vm.hero.playerSpirit)
-                },
-                scopedSlots: _vm._u(
-                  [
-                    {
-                      key: "spirit-actions",
-                      fn: function() {
-                        return [
-                          _c("EditSpiritButton", { attrs: { hero: _vm.hero } }),
-                          _vm._v(" "),
-                          _c("RemoveSpiritButton", {
-                            attrs: {
-                              hero: _vm.hero,
-                              "player-spirit": _vm.getPlayerSpirit(
-                                _vm.hero.playerSpirit
-                              )
-                            }
-                          })
-                        ]
-                      },
-                      proxy: true
-                    }
-                  ],
-                  null,
-                  false,
-                  4191454470
-                )
-              })
-            ],
-            1
-          )
-        : _c("div", [_c("EditSpiritButton", { attrs: { hero: _vm.hero } })], 1)
+      _vm._t("body")
     ],
-    1
+    2
   )
 }
 var staticRenderFns = []
@@ -55870,7 +55837,62 @@ var render = function() {
           _vm._l(this.heroes, function(hero, uuid) {
             return _c(
               "div",
-              [_c("HeroRosterCard", { attrs: { hero: hero } })],
+              [
+                _c(
+                  "HeroRosterCard",
+                  { attrs: { hero: hero } },
+                  [
+                    _c("template", { slot: "body" }, [
+                      hero.playerSpirit
+                        ? _c(
+                            "div",
+                            [
+                              _c("PlayerSpiritPanel", {
+                                attrs: {
+                                  "player-spirit": _vm.getPlayerSpirit(
+                                    hero.playerSpirit
+                                  )
+                                },
+                                scopedSlots: _vm._u(
+                                  [
+                                    {
+                                      key: "spirit-actions",
+                                      fn: function() {
+                                        return [
+                                          _c("EditSpiritButton", {
+                                            attrs: { hero: hero }
+                                          }),
+                                          _vm._v(" "),
+                                          _c("RemoveSpiritButton", {
+                                            attrs: {
+                                              hero: hero,
+                                              "player-spirit": _vm.getPlayerSpirit(
+                                                hero.playerSpirit
+                                              )
+                                            }
+                                          })
+                                        ]
+                                      },
+                                      proxy: true
+                                    }
+                                  ],
+                                  null,
+                                  true
+                                )
+                              })
+                            ],
+                            1
+                          )
+                        : _c(
+                            "div",
+                            [_c("EditSpiritButton", { attrs: { hero: hero } })],
+                            1
+                          )
+                    ])
+                  ],
+                  2
+                )
+              ],
               1
             )
           })

@@ -3,7 +3,21 @@
     <v-card v-else>
         <span class="display-3">{{this._squad.availableSpiritEssence}}</span>
         <div v-for="(hero, uuid) in this.heroes">
-            <HeroRosterCard :hero="hero"></HeroRosterCard>
+            <HeroRosterCard :hero="hero">
+                <template slot="body">
+                    <div v-if="hero.playerSpirit">
+                        <PlayerSpiritPanel :player-spirit="getPlayerSpirit(hero.playerSpirit)">
+                            <template v-slot:spirit-actions>
+                                <EditSpiritButton :hero="hero"></EditSpiritButton>
+                                <RemoveSpiritButton :hero="hero" :player-spirit="getPlayerSpirit(hero.playerSpirit)"></RemoveSpiritButton>
+                            </template>
+                        </PlayerSpiritPanel>
+                    </div>
+                    <div v-else>
+                        <EditSpiritButton :hero="hero"></EditSpiritButton>
+                    </div>
+                </template>
+            </HeroRosterCard>
         </div>
     </v-card>
 </template>
@@ -12,13 +26,22 @@
 
     import HeroRosterCard from './HeroRosterCard';
     import HeroSpiritSelection from './HeroSpiritSelection';
+    import RemoveSpiritButton from "./RemoveSpiritButton";
+    import EditSpiritButton from "./EditSpiritButton";
+    import PlayerSpiritPanel from "./PlayerSpiritPanel";
+
+    import PlayerSpirit from "../../../models/PlayerSpirit";
+
     import { mapGetters } from 'vuex'
 
     export default {
         name: "SquadRoster",
         components: {
             HeroRosterCard,
-            HeroSpiritSelection
+            HeroSpiritSelection,
+            EditSpiritButton,
+            RemoveSpiritButton,
+            PlayerSpiritPanel
         },
         computed: {
             ...mapGetters([
@@ -36,6 +59,11 @@
                     });
                 }
                 return _heroes;
+            }
+        },
+        methods: {
+            getPlayerSpirit: function(playerSpirit) {
+                return new PlayerSpirit(playerSpirit)
             }
         }
     }
