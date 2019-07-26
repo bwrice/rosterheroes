@@ -84,7 +84,7 @@ class AddSpiritToHeroAction extends HeroSpiritAction
     protected function validateEssenceCost(Hero $hero, PlayerSpirit $playerSpirit): void
     {
         if (! $this->heroCanAffordSpirit($hero, $playerSpirit)) {
-            $message = $hero->availableEssence() . " essence available, but " . $playerSpirit->essence_cost . "needed";
+            $message = $hero->availableEssence() . " essence available, but " . $playerSpirit->essence_cost . " needed";
             throw new HeroPlayerSpiritException(
                 $hero,
                 $playerSpirit,
@@ -107,7 +107,7 @@ class AddSpiritToHeroAction extends HeroSpiritAction
 
         /** @var Hero $squadHeroUsingSpirit */
         if ($squadHeroUsingSpirit) {
-            $message = $playerSpirit->player->fullName() . ' already in use by ' . $squadHeroUsingSpirit->name;
+            $message = $playerSpirit->player->fullName() . ' is already in use by ' . $squadHeroUsingSpirit->name;
             throw new HeroPlayerSpiritException(
                 $hero,
                 $playerSpirit,
