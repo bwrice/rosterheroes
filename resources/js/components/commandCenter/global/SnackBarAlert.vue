@@ -3,7 +3,7 @@
             v-model="snackBar"
             :color="this.color"
             :multi-line="true"
-            :timeout="2000"
+            :timeout="this.timeout"
             :absolute="false"
             :top="true"
     >

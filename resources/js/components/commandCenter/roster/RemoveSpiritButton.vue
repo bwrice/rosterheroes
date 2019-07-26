@@ -28,7 +28,9 @@
         methods: {
             ...mapActions([
                 'updateHero',
-                'setRosterFocusedHero'
+                'setRosterFocusedHero',
+                'snackBarSuccess',
+                'snackBarError'
             ]),
             removeSpirit: function () {
                 this.pending = true;
@@ -42,10 +44,15 @@
                         if (this._rosterFocusedHero) {
                             this.setRosterFocusedHero(heroResponse);
                         }
+                        this.snackBarSuccess('Hero Updated');
                     }).catch((error) => {
                     console.log("ERROR!");
                     console.log(error);
                     this.pending = false;
+                    // TODO: add Errors class to snackBar store and handle there
+                    if (error.response && error.response.data.errors.roster) {
+                        this.snackBarError(error.response.data.errors.roster[0]);
+                    }
                 });
             }
         }

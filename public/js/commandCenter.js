@@ -2779,7 +2779,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['_rosterFocusedHero'])),
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['updateHero', 'setRosterFocusedHero']), {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['updateHero', 'setRosterFocusedHero', 'snackBarSuccess', 'snackBarError']), {
     removeSpirit: function removeSpirit() {
       var _this = this;
 
@@ -2795,10 +2795,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         if (_this._rosterFocusedHero) {
           _this.setRosterFocusedHero(heroResponse);
         }
+
+        _this.snackBarSuccess('Hero Updated');
       })["catch"](function (error) {
         console.log("ERROR!");
         console.log(error);
-        _this.pending = false;
+        _this.pending = false; // TODO: add Errors class to snackBar store and handle there
+
+        if (error.response && error.response.data.errors.roster) {
+          _this.snackBarError(error.response.data.errors.roster[0]);
+        }
       });
     }
   })
@@ -55409,7 +55415,7 @@ var render = function() {
       attrs: {
         color: this.color,
         "multi-line": true,
-        timeout: 2000,
+        timeout: this.timeout,
         absolute: false,
         top: true
       },
@@ -101888,7 +101894,7 @@ __webpack_require__.r(__webpack_exports__);
       var commit = _ref2.commit;
       commit('SET_TEXT', payload);
       commit('SET_COLOR', 'success');
-      commit('SET_TIMEOUT', 2000);
+      commit('SET_TIMEOUT', 1500);
       commit('TRIGGER');
     },
     snackBarError: function snackBarError(_ref3, payload) {
