@@ -239,7 +239,11 @@ class Hero extends EventSourcedModel implements HasSlots
      */
     public function availableEssence()
     {
-        return $this->heroPost->squad->availableSpiritEssence() - $this->essenceUsed();
+        /*
+         * Add current hero essence used back,
+         * because availableSpiritEssence() on squad is subtracting it out
+         */
+        return $this->heroPost->squad->availableSpiritEssence() + $this->essenceUsed();
     }
 
 }
