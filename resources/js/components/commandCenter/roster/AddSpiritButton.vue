@@ -22,23 +22,27 @@
             ...mapActions([
                 'updateHero',
                 'setRosterFocusedHero',
-                'snackBarSuccess'
+                'snackBarSuccess',
+                'snackBarError'
             ]),
             addSpirit: function() {
                 this.pending = true;
                 axios.post('/api/v1/heroes/' + this.hero.uuid + '/player-spirit/' + this.playerSpirit.uuid)
                     .then((response) => {
-                    console.log("Response Data");
-                    console.log(response.data);
+
                     this.pending = false;
                     let heroResponse = response.data.data;
                     this.updateHero(heroResponse);
                     this.setRosterFocusedHero(heroResponse);
                     this.snackBarSuccess('Hero Updated');
+
                 }).catch((error) => {
-                    console.log("ERROR!");
-                    console.log(error);
+
                     this.pending = false;
+                    // TODO: add Errors class to snackBar store and handle there
+                    if (error.response && error.response.data.errors.roster) {
+                        this.snackBarError(error.response.data.errors.roster[0]);
+                    }
                 });
             }
         }

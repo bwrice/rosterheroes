@@ -2449,14 +2449,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       pending: false
     };
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['updateHero', 'setRosterFocusedHero', 'snackBarSuccess']), {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['updateHero', 'setRosterFocusedHero', 'snackBarSuccess', 'snackBarError']), {
     addSpirit: function addSpirit() {
       var _this = this;
 
       this.pending = true;
       axios.post('/api/v1/heroes/' + this.hero.uuid + '/player-spirit/' + this.playerSpirit.uuid).then(function (response) {
-        console.log("Response Data");
-        console.log(response.data);
         _this.pending = false;
         var heroResponse = response.data.data;
 
@@ -2466,9 +2464,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         _this.snackBarSuccess('Hero Updated');
       })["catch"](function (error) {
-        console.log("ERROR!");
-        console.log(error);
-        _this.pending = false;
+        _this.pending = false; // TODO: add Errors class to snackBar store and handle there
+
+        if (error.response && error.response.data.errors.roster) {
+          _this.snackBarError(error.response.data.errors.roster[0]);
+        }
       });
     }
   })
@@ -101888,7 +101888,14 @@ __webpack_require__.r(__webpack_exports__);
       var commit = _ref2.commit;
       commit('SET_TEXT', payload);
       commit('SET_COLOR', 'success');
-      commit('SET_TIMEOUT', 2500);
+      commit('SET_TIMEOUT', 2000);
+      commit('TRIGGER');
+    },
+    snackBarError: function snackBarError(_ref3, payload) {
+      var commit = _ref3.commit;
+      commit('SET_TEXT', payload);
+      commit('SET_COLOR', 'error');
+      commit('SET_TIMEOUT', 5000);
       commit('TRIGGER');
     }
   }
