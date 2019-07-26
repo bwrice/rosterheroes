@@ -34,7 +34,6 @@
                     let heroResponse = response.data.data;
                     this.updateHero(heroResponse);
                     this.setRosterFocusedHero(heroResponse);
-                    this.snackBarSuccess('Hero Updated');
 
                 }).catch((error) => {
 

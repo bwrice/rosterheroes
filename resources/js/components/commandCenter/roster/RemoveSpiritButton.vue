@@ -44,7 +44,6 @@
                         if (this._rosterFocusedHero) {
                             this.setRosterFocusedHero(heroResponse);
                         }
-                        this.snackBarSuccess('Hero Updated');
                     }).catch((error) => {
                     console.log("ERROR!");
                     console.log(error);
