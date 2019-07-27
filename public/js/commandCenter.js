@@ -2461,6 +2461,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.updateHero(heroResponse);
 
         _this.setRosterFocusedHero(heroResponse);
+
+        _this.snackBarSuccess('Hero Updated');
       })["catch"](function (error) {
         _this.pending = false; // TODO: add Errors class to snackBar store and handle there
 
@@ -2857,8 +2859,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.pending = true;
       axios["delete"]('/api/v1/heroes/' + this.hero.uuid + '/player-spirit/' + this.playerSpirit.uuid).then(function (response) {
-        console.log("Response Data");
-        console.log(response.data);
         _this.pending = false;
         var heroResponse = response.data.data;
 
@@ -2867,9 +2867,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         if (_this._rosterFocusedHero) {
           _this.setRosterFocusedHero(heroResponse);
         }
+
+        _this.snackBarSuccess('Hero Updated');
       })["catch"](function (error) {
-        console.log("ERROR!");
-        console.log(error);
         _this.pending = false; // TODO: add Errors class to snackBar store and handle there
 
         if (error.response && error.response.data.errors.roster) {
