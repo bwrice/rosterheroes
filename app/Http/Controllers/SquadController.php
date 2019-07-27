@@ -56,7 +56,7 @@ class SquadController extends Controller
         ]);
     }
 
-    public function show(Request $request, $squadSlug, $any = null)
+    public function show($squadSlug)
     {
         $squad = Squad::slugOrFail($squadSlug);
         return new SquadResource($squad->loadMissing([
