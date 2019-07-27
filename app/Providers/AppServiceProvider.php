@@ -18,7 +18,7 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        $this->setTheCurrentWeek();
+//        $this->setTheCurrentWeek();
 
         Date::use(CarbonImmutable::class);
     }
