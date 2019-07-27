@@ -76,7 +76,8 @@ return [
 
     'middleware' => [
         'web',
-        Authorize::class,
+        // TODO: determine if we want this middleware
+//        Authorize::class,
     ],
 
     /*
