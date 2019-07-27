@@ -1,8 +1,8 @@
 <template>
-    <v-card elevation="5">
+    <v-card elevation="5" color="blue-grey darken-1">
         <v-card-title class="primary-title">
             <div>
-                <h3 class="headline mb-0">{{ this.playerSpirit.playerName }}</h3>
+                <h4 class="headline mb-0">{{ this.playerSpirit.playerName }}</h4>
                 <v-layout class="row wrap">
                     <v-flex class="xs8">
                         <v-layout class="row wrap">
@@ -14,6 +14,9 @@
                             </v-flex>
                             <v-flex class="xs12">
                                 Energy: {{ this.playerSpirit.energy }}
+                            </v-flex>
+                            <v-flex class="xs12">
+                                <PositionChipList :positions="playerSpiritPositions"></PositionChipList>
                             </v-flex>
                         </v-layout>
                     </v-flex>
@@ -30,9 +33,18 @@
 
 <script>
 
+    import PositionChipList from "./PositionChipList";
     export default {
         name: "PlayerSpiritPanel",
-        props: ['playerSpirit']
+        components: {PositionChipList},
+        props: ['playerSpirit'],
+
+        computed: {
+            playerSpiritPositions: function() {
+                // TODO filter out overlapping positions
+                return this.playerSpirit.player.positions;
+            }
+        }
     }
 </script>
 

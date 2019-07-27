@@ -1,5 +1,5 @@
 <template>
-    <v-card>
+    <v-card class="mx-1 my-1">
         <v-card-title>
             <h3>{{hero.name}}</h3>
             <PositionChipList :positions="heroPositions"></PositionChipList>

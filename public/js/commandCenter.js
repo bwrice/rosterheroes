@@ -2516,6 +2516,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _PositionChip__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PositionChip */ "./resources/js/components/commandCenter/roster/PositionChip.vue");
+/* harmony import */ var _PositionChipList__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PositionChipList */ "./resources/js/components/commandCenter/roster/PositionChipList.vue");
 //
 //
 //
@@ -2527,9 +2529,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "HeroRosterCard",
-  props: ['hero']
+  components: {
+    PositionChipList: _PositionChipList__WEBPACK_IMPORTED_MODULE_1__["default"],
+    PositionChip: _PositionChip__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  props: ['hero'],
+  computed: {
+    heroPositions: function heroPositions() {
+      // TODO filter out overlapping positions
+      return this.hero.heroRace.positions;
+    }
+  }
 });
 
 /***/ }),
@@ -2687,6 +2702,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _PositionChipList__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PositionChipList */ "./resources/js/components/commandCenter/roster/PositionChipList.vue");
 //
 //
 //
@@ -2713,13 +2729,91 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "PlayerSpiritPanel",
+  components: {
+    PositionChipList: _PositionChipList__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  props: ['playerSpirit'],
+  computed: {
+    playerSpiritPositions: function playerSpiritPositions() {
+      // TODO filter out overlapping positions
+      return this.playerSpirit.player.positions;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/roster/PositionChip.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/commandCenter/roster/PositionChip.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
 //
 //
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "PlayerSpiritPanel",
-  props: ['playerSpirit']
+  name: "PositionChip",
+  props: ['position'],
+  computed: {
+    color: function color() {
+      switch (this.position.sport_id) {
+        case 1:
+          return 'success';
+
+        case 2:
+          return 'warning';
+
+        case 3:
+          return 'primary';
+
+        case 4:
+        default:
+          return 'error';
+      }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/roster/PositionChipList.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/commandCenter/roster/PositionChipList.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _PositionChip__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PositionChip */ "./resources/js/components/commandCenter/roster/PositionChip.vue");
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "PositionChipList",
+  components: {
+    PositionChip: _PositionChip__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  props: ['positions']
 });
 
 /***/ }),
@@ -55533,8 +55627,17 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "v-card",
+    { staticClass: "mx-1 my-1" },
     [
-      _c("v-card-title", [_c("h3", [_vm._v(_vm._s(_vm.hero.name))])]),
+      _c(
+        "v-card-title",
+        [
+          _c("h3", [_vm._v(_vm._s(_vm.hero.name))]),
+          _vm._v(" "),
+          _c("PositionChipList", { attrs: { positions: _vm.heroPositions } })
+        ],
+        1
+      ),
       _vm._v(" "),
       _vm._t("body")
     ],
@@ -55720,13 +55823,13 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "v-card",
-    { attrs: { elevation: "5" } },
+    { attrs: { elevation: "5", color: "blue-grey darken-1" } },
     [
       _c("v-card-title", { staticClass: "primary-title" }, [
         _c(
           "div",
           [
-            _c("h3", { staticClass: "headline mb-0" }, [
+            _c("h4", { staticClass: "headline mb-0" }, [
               _vm._v(_vm._s(this.playerSpirit.playerName))
             ]),
             _vm._v(" "),
@@ -55764,7 +55867,18 @@ var render = function() {
                               _vm._s(this.playerSpirit.energy) +
                               "\n                        "
                           )
-                        ])
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "v-flex",
+                          { staticClass: "xs12" },
+                          [
+                            _c("PositionChipList", {
+                              attrs: { positions: _vm.playerSpiritPositions }
+                            })
+                          ],
+                          1
+                        )
                       ],
                       1
                     )
@@ -55786,6 +55900,67 @@ var render = function() {
         )
       ])
     ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/roster/PositionChip.vue?vue&type=template&id=3df5b922&":
+/*!************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/commandCenter/roster/PositionChip.vue?vue&type=template&id=3df5b922& ***!
+  \************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-chip",
+    { attrs: { small: true, color: _vm.color, "text-color": "#FFFFFF" } },
+    [_vm._v(_vm._s(_vm.position.abbreviation))]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/roster/PositionChipList.vue?vue&type=template&id=440a75ad&scoped=true&":
+/*!****************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/commandCenter/roster/PositionChipList.vue?vue&type=template&id=440a75ad&scoped=true& ***!
+  \****************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    _vm._l(_vm.positions, function(position) {
+      return _c("PositionChip", {
+        key: position.id,
+        attrs: { position: position }
+      })
+    }),
     1
   )
 }
@@ -100217,6 +100392,144 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PlayerSpiritPanel_vue_vue_type_template_id_13a530f0_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PlayerSpiritPanel_vue_vue_type_template_id_13a530f0_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/roster/PositionChip.vue":
+/*!***********************************************************************!*\
+  !*** ./resources/js/components/commandCenter/roster/PositionChip.vue ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _PositionChip_vue_vue_type_template_id_3df5b922___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PositionChip.vue?vue&type=template&id=3df5b922& */ "./resources/js/components/commandCenter/roster/PositionChip.vue?vue&type=template&id=3df5b922&");
+/* harmony import */ var _PositionChip_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PositionChip.vue?vue&type=script&lang=js& */ "./resources/js/components/commandCenter/roster/PositionChip.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _PositionChip_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _PositionChip_vue_vue_type_template_id_3df5b922___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _PositionChip_vue_vue_type_template_id_3df5b922___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/commandCenter/roster/PositionChip.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/roster/PositionChip.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/roster/PositionChip.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PositionChip_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./PositionChip.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/roster/PositionChip.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PositionChip_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/roster/PositionChip.vue?vue&type=template&id=3df5b922&":
+/*!******************************************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/roster/PositionChip.vue?vue&type=template&id=3df5b922& ***!
+  \******************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PositionChip_vue_vue_type_template_id_3df5b922___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./PositionChip.vue?vue&type=template&id=3df5b922& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/roster/PositionChip.vue?vue&type=template&id=3df5b922&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PositionChip_vue_vue_type_template_id_3df5b922___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PositionChip_vue_vue_type_template_id_3df5b922___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/roster/PositionChipList.vue":
+/*!***************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/roster/PositionChipList.vue ***!
+  \***************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _PositionChipList_vue_vue_type_template_id_440a75ad_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PositionChipList.vue?vue&type=template&id=440a75ad&scoped=true& */ "./resources/js/components/commandCenter/roster/PositionChipList.vue?vue&type=template&id=440a75ad&scoped=true&");
+/* harmony import */ var _PositionChipList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PositionChipList.vue?vue&type=script&lang=js& */ "./resources/js/components/commandCenter/roster/PositionChipList.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _PositionChipList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _PositionChipList_vue_vue_type_template_id_440a75ad_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _PositionChipList_vue_vue_type_template_id_440a75ad_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "440a75ad",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/commandCenter/roster/PositionChipList.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/roster/PositionChipList.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/roster/PositionChipList.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PositionChipList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./PositionChipList.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/roster/PositionChipList.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PositionChipList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/roster/PositionChipList.vue?vue&type=template&id=440a75ad&scoped=true&":
+/*!**********************************************************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/roster/PositionChipList.vue?vue&type=template&id=440a75ad&scoped=true& ***!
+  \**********************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PositionChipList_vue_vue_type_template_id_440a75ad_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./PositionChipList.vue?vue&type=template&id=440a75ad&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/roster/PositionChipList.vue?vue&type=template&id=440a75ad&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PositionChipList_vue_vue_type_template_id_440a75ad_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PositionChipList_vue_vue_type_template_id_440a75ad_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
