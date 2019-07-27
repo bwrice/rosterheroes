@@ -28,7 +28,7 @@ class HeroPlayerSpiritController extends Controller
             $hero = $action->execute($hero, $playerSpirit);
             return new HeroResource($hero->loadMissing([
                 'heroClass',
-                'heroRace',
+                'heroRace.positions',
                 'playerSpirit.game.homeTeam',
                 'playerSpirit.game.awayTeam',
                 'playerSpirit.player.positions',
@@ -59,7 +59,7 @@ class HeroPlayerSpiritController extends Controller
             $hero = $action->execute($hero, $playerSpirit);
             return new HeroResource($hero->loadMissing([
                 'heroClass',
-                'heroRace'
+                'heroRace.positions'
             ]));
 
         } catch (HeroPlayerSpiritException $exception) {
