@@ -1,5 +1,5 @@
 <template>
-    <v-chip :color="color" text-color="#FFFFFF">{{position.abbreviation}}</v-chip>
+    <v-chip :small="true" :color="color" text-color="#FFFFFF">{{position.abbreviation}}</v-chip>
 </template>
 
 <script>
@@ -24,6 +24,6 @@
     }
 </script>
 
-<style scoped>
+<style>
 
 </style>
