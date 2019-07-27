@@ -1,5 +1,5 @@
 <template>
-    <v-card elevation="5" color="blue-grey darken-1">
+    <v-card color="blue-grey darken-1">
         <v-card-title class="primary-title">
             <div>
                 <h4 class="headline mb-0">{{ this.playerSpirit.playerName }}</h4>

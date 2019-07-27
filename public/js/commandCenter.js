@@ -55747,7 +55747,7 @@ var render = function() {
                   "v-toolbar",
                   {
                     staticClass: "mb-2",
-                    attrs: { color: "#FFC747", dark: "", flat: "" }
+                    attrs: { color: "secondary", dark: "", flat: "" }
                   },
                   [_c("v-toolbar-title", [_vm._v("Select Player Spirit")])],
                   1
@@ -55823,7 +55823,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "v-card",
-    { attrs: { elevation: "5", color: "blue-grey darken-1" } },
+    { attrs: { color: "blue-grey darken-1" } },
     [
       _c("v-card-title", { staticClass: "primary-title" }, [
         _c(
@@ -56023,10 +56023,10 @@ var render = function() {
     : _c(
         "v-card",
         [
-          _c("span", { staticClass: "display-3" }, [
+          _c("span", { staticClass: "display-3 px-1" }, [
             _vm._v(_vm._s(this._squad.availableSpiritEssence))
           ]),
-          _vm._v(" "),
+          _vm._v(" Spirit Essence Available\n    "),
           _vm._l(this.heroes, function(hero, uuid) {
             return _c(
               "div",

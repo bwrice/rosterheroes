@@ -24,7 +24,7 @@
             <template v-slot:header>
                 <v-toolbar
                         class="mb-2"
-                        color="#FFC747"
+                        color="secondary"
                         dark
                         flat
                 >
