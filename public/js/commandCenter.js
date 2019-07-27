@@ -2981,6 +2981,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "BarracksMain",
   created: function created() {
@@ -56115,9 +56117,18 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("router-view")
+  return _vm._m(0)
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("h1", { staticClass: "mx-4" }, [_vm._v("TODO: Barracks")])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -56234,7 +56245,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [_c("h1", [_vm._v("CAMPAIGN MAIN!")])])
+    return _c("div", [
+      _c("h1", { staticClass: "mx-4" }, [_vm._v("TODO: Campaign")])
+    ])
   }
 ]
 render._withStripped = true
@@ -56324,7 +56337,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [_c("h1", [_vm._v("MAP MAIN!")])])
+    return _c("div", [_c("h1", { staticClass: "mx-4" }, [_vm._v("TODO: Map")])])
   }
 ]
 render._withStripped = true
@@ -56414,7 +56427,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [_c("h1", [_vm._v("NATION MAIN!")])])
+    return _c("div", [
+      _c("h1", { staticClass: "mx-4" }, [_vm._v("TODO: Nation")])
+    ])
   }
 ]
 render._withStripped = true

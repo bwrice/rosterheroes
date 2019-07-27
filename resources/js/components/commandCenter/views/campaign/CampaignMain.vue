@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>CAMPAIGN MAIN!</h1>
+        <h1 class="mx-4">TODO: Campaign</h1>
     </div>
 </template>
 

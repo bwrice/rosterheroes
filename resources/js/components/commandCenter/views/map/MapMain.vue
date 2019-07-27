@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>MAP MAIN!</h1>
+        <h1 class="mx-4">TODO: Map</h1>
     </div>
 </template>
 
