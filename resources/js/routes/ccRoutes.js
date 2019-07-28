@@ -8,7 +8,8 @@ import CampaignMain from '../components/commandCenter/views/campaign/CampaignMai
 import CampaignNavigationDrawer from '../components/commandCenter/views/campaign/CampaignNavigationDrawer'
 import NationMain from '../components/commandCenter/views/nation/NationMain'
 import NationNavigationDrawer from '../components/commandCenter/views/nation/NationNavigationDrawer'
-import HeroView from '../components/commandCenter/views/barracks/HeroView'
+import HeroBarracksView from '../components/commandCenter/views/barracks/HeroBarracksView'
+import Barracks from "../components/commandCenter/views/barracks/Barracks";
 
 export const routes = [
     {
@@ -18,14 +19,22 @@ export const routes = [
             footerButton: 'barracks'
         },
         components: {
-            default: BarracksMain,
+            default: Barracks,
             drawer: BarracksNavigationDrawer
         },
         children: [
             {
+                path: '',
+                component: BarracksMain,
+                name: 'barracks-main',
+                meta: {
+                    footerButton: 'barracks'
+                }
+            },
+            {
                 path: 'hero/:heroSlug',
-                component: HeroView,
-                name: 'hero',
+                component: HeroBarracksView,
+                name: 'barracks-hero',
                 meta: {
                     footerButton: 'barracks'
                 }
