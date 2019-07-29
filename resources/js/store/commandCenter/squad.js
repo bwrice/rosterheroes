@@ -1,5 +1,3 @@
-import Squad from "../../models/Squad";
-import Hero from "../../models/Hero";
 
 export default {
 

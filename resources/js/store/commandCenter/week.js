@@ -2,7 +2,7 @@
 export default {
 
     state: {
-        week: {}
+        week: null
     },
 
     getters: {

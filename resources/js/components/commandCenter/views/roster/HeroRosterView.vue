@@ -58,10 +58,12 @@
     import HeroRosterCard from "../../roster/HeroRosterCard";
 
     import PlayerSpirit from "../../../../models/PlayerSpirit";
+    import Squad from "../../../../models/Squad";
+    import Hero from "../../../../models/Hero";
+    import Week from "../../../../models/Week";
 
     export default {
         name: "HeroRosterView",
-        props: ['hero'],
 
         components: {
             HeroRosterCard,
@@ -70,13 +72,24 @@
             PlayerSpiritPanel
         },
 
-        mounted() {
-            this.updatePlayerSpiritsPool();
+        async mounted() {
+            this.hero = await Hero.$find(this.$route.params.heroSlug);
+            // this.playerSpirits = await this._currentWeek.playerSpirits().where('hero-race', this.hero.heroRace.name).$get();
+            // this.updatePlayerSpiritsPool();
         },
 
         data: function() {
             return {
+                hero: {
+                    heroRace: {}
+                },
                 playerSpirits: []
+            }
+        },
+
+        watch: {
+            _currentWeek: function(newWeek) {
+                this.setPlayerSpirits(newWeek);
             }
         },
 
@@ -84,21 +97,40 @@
             ...mapActions([
                 'setRosterFocusedHero'
             ]),
+            setHero: function() {
+                let squad = new Squad(this._squad);
+                console.log("Heroes");
+                console.log(squad.heroes);
+                this.hero = squad.getHero(this.$route.params.heroSlug);
+            },
+            setPlayerSpirits: async function(currentWeek) {
+                if (currentWeek && currentWeek.uuid) {
+                    console.log("CURRENT WEEK");
+                    console.log(currentWeek);
+                    let week = new Week(currentWeek);
+                    this.playerSpirits = await week.playerSpirits().where('hero-race', this.hero.heroRace.name).$get();
+                }
+            },
             unFocus: function() {
                 this.setRosterFocusedHero(null);
             },
             getFocusedPlayerSpirit: function(playerSpirit) {
                 return new PlayerSpirit(playerSpirit);
-            },
-            async updatePlayerSpiritsPool() {
-                this.playerSpirits = await this._currentWeek.playerSpirits().where('hero-race', this.hero.heroRace.name).$get();
-            },
+            }
         },
         computed: {
             ...mapGetters([
                 '_squad',
                 '_currentWeek'
-            ])
+            ]),
+            // playerSpirits: function() {
+            //     if (this._currentWeek) {
+            //         return [];
+            //         // let week = new Week(this._currentWeek.uuid);
+            //         // return await week.playerSpirits().where('hero-race', this.hero.heroRace.name).$get();
+            //     }
+            //     return [];
+            // }
         },
     }
 </script>
