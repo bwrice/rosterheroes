@@ -1,19 +1,21 @@
 <template>
-    <v-btn v-on:click="focusHero" class="primary">Edit</v-btn>
+    <v-btn :to="heroRoute()" class="primary">Edit</v-btn>
 </template>
 
 <script>
-    import { mapActions } from 'vuex'
+    import { mapGetters } from 'vuex';
 
     export default {
         name: "EditSpiritButton",
         props: ['hero'],
+        computed: {
+            ...mapGetters([
+                '_squad',
+            ])
+        },
         methods: {
-            ...mapActions([
-                'setRosterFocusedHero'
-            ]),
-            focusHero: function() {
-                this.setRosterFocusedHero(this.hero);
+            heroRoute: function() {
+                return '/command-center/' + this._squad.slug + '/roster/hero/' + this.hero.slug;
             }
         }
     }
