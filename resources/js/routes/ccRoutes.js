@@ -10,6 +10,8 @@ import NationMain from '../components/commandCenter/views/nation/NationMain'
 import NationNavigationDrawer from '../components/commandCenter/views/nation/NationNavigationDrawer'
 import HeroBarracksView from '../components/commandCenter/views/barracks/HeroBarracksView'
 import Barracks from "../components/commandCenter/views/barracks/Barracks";
+import Roster from "../components/commandCenter/views/roster/Roster";
+import HeroRosterView from "../components/commandCenter/views/roster/HeroRosterView";
 
 export const routes = [
     {
@@ -48,9 +50,27 @@ export const routes = [
             footerButton: 'roster'
         },
         components: {
-            default: RosterMain,
+            default: Roster,
             drawer: RosterNavigationDrawer
-        }
+        },
+        children: [
+            {
+                path: '',
+                component: RosterMain,
+                name: 'barracks-main',
+                meta: {
+                    footerButton: 'barracks'
+                }
+            },
+            {
+                path: 'hero/:heroSlug',
+                component: HeroRosterView,
+                name: 'barracks-hero',
+                meta: {
+                    footerButton: 'barracks'
+                }
+            }
+        ]
     },
     {
         path: '/command-center/:squadSlug/map',
