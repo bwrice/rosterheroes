@@ -16,7 +16,6 @@ import HeroRosterView from "../components/commandCenter/views/roster/HeroRosterV
 export const routes = [
     {
         path: '/command-center/:squadSlug/barracks',
-        name: 'barracks',
         meta: {
             footerButton: 'barracks'
         },
@@ -45,7 +44,6 @@ export const routes = [
     },
     {
         path: '/command-center/:squadSlug/roster',
-        name: 'roster',
         meta: {
             footerButton: 'roster'
         },
