@@ -57,17 +57,17 @@ export const routes = [
             {
                 path: '',
                 component: RosterMain,
-                name: 'barracks-main',
+                name: 'roster-main',
                 meta: {
-                    footerButton: 'barracks'
+                    footerButton: 'roster'
                 }
             },
             {
                 path: 'hero/:heroSlug',
                 component: HeroRosterView,
-                name: 'barracks-hero',
+                name: 'roster-hero',
                 meta: {
-                    footerButton: 'barracks'
+                    footerButton: 'roster'
                 }
             }
         ]
