@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HeroController;
 use App\Http\Controllers\WeekController;
 use App\Http\Controllers\SquadBorderTravelController;
 use App\Http\Controllers\SquadController;
@@ -44,6 +45,8 @@ Route::prefix('v1')->group(function () {
 
         Route::post('/squad/{squadUuid}/heroes', [SquadHeroController::class, 'store']);
         Route::post('/squad/{squadUuid}/campaigns', [SquadCampaignController::class, 'store']);
+
+        Route::get('/heroes/{heroSlug}', [HeroController::class, 'show']);
 
         Route::post('/heroes/{heroUuid}/player-spirit/{playerSpiritUuid}', [HeroPlayerSpiritController::class, 'store']);
         Route::delete('/heroes/{heroUuid}/player-spirit/{playerSpiritUuid}', [HeroPlayerSpiritController::class, 'delete']);
