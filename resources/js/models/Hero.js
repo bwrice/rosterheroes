@@ -3,6 +3,10 @@ import PlayerSpirit from "./PlayerSpirit";
 
 export default class Hero extends Model {
 
+    resource() {
+        return 'heroes';
+    }
+
     get essenceUsed() {
         if (this.playerSpirit) {
             return this.playerSpirit.essence_cost;

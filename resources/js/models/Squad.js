@@ -22,4 +22,13 @@ export default class Squad extends Model {
         });
         return available;
     }
+
+    getHero(heroSlug) {
+        this.heroes.forEach(function(hero) {
+            if(hero.slug === heroSlug) {
+                return hero;
+            }
+        });
+        return {};
+    }
 }
