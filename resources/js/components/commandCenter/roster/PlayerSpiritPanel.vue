@@ -2,18 +2,18 @@
     <v-card color="blue-grey darken-1">
         <v-card-title class="primary-title">
             <div>
-                <h4 class="headline mb-0">{{ this.playerSpirit.playerName }}</h4>
+                <h4 class="headline mb-0">{{ playerName }}</h4>
                 <v-layout class="row wrap">
                     <v-flex class="xs8">
                         <v-layout class="row wrap">
                             <v-flex class="xs12">
-                                {{ this.playerSpirit.gameDescription }}
+                                {{ gameDescription }}
                             </v-flex>
                             <v-flex class="xs12">
-                                Essence Cost: {{ this.playerSpirit.essence_cost }}
+                                Essence Cost: {{ essenceCost }}
                             </v-flex>
                             <v-flex class="xs12">
-                                Energy: {{ this.playerSpirit.energy }}
+                                Energy: {{ energy }}
                             </v-flex>
                             <v-flex class="xs12">
                                 <PositionChipList :positions="playerSpiritPositions"></PositionChipList>
@@ -32,8 +32,9 @@
 </template>
 
 <script>
-
     import PositionChipList from "./PositionChipList";
+    import PlayerSpirit from "../../../models/PlayerSpirit";
+
     export default {
         name: "PlayerSpiritPanel",
         components: {PositionChipList},
@@ -41,8 +42,22 @@
 
         computed: {
             playerSpiritPositions: function() {
-                // TODO filter out overlapping positions
+                // TODO filter out overlapping positions when new Hero Races are added
                 return this.playerSpirit.player.positions;
+            },
+            playerName: function() {
+                let playerSpirit = new PlayerSpirit(this.playerSpirit);
+                return playerSpirit.playerName;
+            },
+            gameDescription: function() {
+                let playerSpirit = new PlayerSpirit(this.playerSpirit);
+                return playerSpirit.gameDescription;
+            },
+            essenceCost: function() {
+                return this.playerSpirit.essence_cost;
+            },
+            energy: function() {
+                return this.playerSpirit.energy;
             }
         }
     }

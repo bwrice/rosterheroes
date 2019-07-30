@@ -6,9 +6,9 @@
         <HeroRosterCard :hero="_hero" v-if="_hero">
             <template slot="body">
                 <template v-if="_hero.playerSpirit">
-                    <PlayerSpiritPanel :player-spirit="getFocusedPlayerSpirit(_hero.playerSpirit)">
+                    <PlayerSpiritPanel :player-spirit="_hero.playerSpirit">
                         <template v-slot:spirit-actions>
-                            <RemoveSpiritButton :hero="_hero" :player-spirit="getFocusedPlayerSpirit(_hero.playerSpirit)"></RemoveSpiritButton>
+                            <RemoveSpiritButton :hero="_hero" :player-spirit="_hero.playerSpirit"></RemoveSpiritButton>
                         </template>
                     </PlayerSpiritPanel>
                 </template>
@@ -56,8 +56,6 @@
     import RemoveSpiritButton from "../../roster/RemoveSpiritButton";
     import HeroRosterCard from "../../roster/HeroRosterCard";
 
-    import PlayerSpirit from "../../../../models/PlayerSpirit";
-
     export default {
         name: "HeroRosterView",
 
@@ -68,11 +66,6 @@
             PlayerSpiritPanel
         },
 
-        methods: {
-            getFocusedPlayerSpirit: function(playerSpirit) {
-                return new PlayerSpirit(playerSpirit);
-            }
-        },
         computed: {
             ...mapGetters([
                 '_squad',
