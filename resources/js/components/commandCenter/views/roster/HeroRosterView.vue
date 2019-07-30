@@ -3,7 +3,7 @@
         <v-btn v-on:click="unFocus">
             <v-icon dark left>arrow_back</v-icon>Back
         </v-btn>
-        <HeroRosterCard :hero="hero">
+        <HeroRosterCard :hero="hero" v-if="hero">
             <template slot="body">
                 <template v-if="hero.playerSpirit">
                     <PlayerSpiritPanel :player-spirit="getFocusedPlayerSpirit(hero.playerSpirit)">
@@ -58,8 +58,6 @@
     import HeroRosterCard from "../../roster/HeroRosterCard";
 
     import PlayerSpirit from "../../../../models/PlayerSpirit";
-    import Squad from "../../../../models/Squad";
-    import Hero from "../../../../models/Hero";
     import Week from "../../../../models/Week";
 
     export default {
@@ -72,24 +70,26 @@
             PlayerSpiritPanel
         },
 
-        async mounted() {
-            this.hero = await Hero.$find(this.$route.params.heroSlug);
-            // this.playerSpirits = await this._currentWeek.playerSpirits().where('hero-race', this.hero.heroRace.name).$get();
-            // this.updatePlayerSpiritsPool();
-        },
-
         data: function() {
             return {
-                hero: {
-                    heroRace: {}
-                },
-                playerSpirits: []
+                hero: null,
+                playerSpirits: [],
+                week: null
             }
         },
 
         watch: {
-            _currentWeek: function(newWeek) {
-                this.setPlayerSpirits(newWeek);
+            _currentWeek: function(week) {
+                this.week = week;
+                if (this.week && this.hero) {
+                    this.setPlayerSpirits();
+                }
+            },
+            _hero: function(hero) {
+                this.hero = hero;
+                if (this.week && this.hero) {
+                    this.setPlayerSpirits();
+                }
             }
         },
 
@@ -97,19 +97,9 @@
             ...mapActions([
                 'setRosterFocusedHero'
             ]),
-            setHero: function() {
-                let squad = new Squad(this._squad);
-                console.log("Heroes");
-                console.log(squad.heroes);
-                this.hero = squad.getHero(this.$route.params.heroSlug);
-            },
-            setPlayerSpirits: async function(currentWeek) {
-                if (currentWeek && currentWeek.uuid) {
-                    console.log("CURRENT WEEK");
-                    console.log(currentWeek);
-                    let week = new Week(currentWeek);
-                    this.playerSpirits = await week.playerSpirits().where('hero-race', this.hero.heroRace.name).$get();
-                }
+            setPlayerSpirits: async function() {
+                let week = new Week(this.week);
+                this.playerSpirits = await week.playerSpirits().where('hero-race', this.hero.heroRace.name).$get();
             },
             unFocus: function() {
                 this.setRosterFocusedHero(null);
@@ -121,16 +111,9 @@
         computed: {
             ...mapGetters([
                 '_squad',
-                '_currentWeek'
-            ]),
-            // playerSpirits: function() {
-            //     if (this._currentWeek) {
-            //         return [];
-            //         // let week = new Week(this._currentWeek.uuid);
-            //         // return await week.playerSpirits().where('hero-race', this.hero.heroRace.name).$get();
-            //     }
-            //     return [];
-            // }
+                '_currentWeek',
+                '_hero'
+            ])
         },
     }
 </script>
