@@ -47,6 +47,7 @@
     import Squad from "../models/Squad";
     import Week from "../models/Week";
     import RhSnackBarAlert from "../components/commandCenter/global/SnackBarAlert";
+    import Hero from "../models/Hero";
 
     export default {
         name: "CommandCenter",
@@ -65,6 +66,10 @@
             this.setSquad(squad);
             let currentWeek = await Week.$find('current');
             this.setCurrentWeek(currentWeek);
+            if (this.$route.params.heroSlug) {
+                let hero = await Hero.$find(this.$route.params.heroSlug);
+                this.setHero(hero);
+            }
         },
 
         data: function() {
@@ -75,7 +80,8 @@
         methods: {
             ...mapActions([
                 'setSquad',
-                'setCurrentWeek'
+                'setCurrentWeek',
+                'setHero'
             ])
         },
         computed: {
