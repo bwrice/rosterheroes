@@ -72,7 +72,7 @@
             if (this.$route.params.heroSlug) {
 
                 let hero = await Hero.$find(this.$route.params.heroSlug);
-                this.setHero(hero);
+                this.updateHero(hero);
 
                 if (this.$route.name === 'roster-hero') {
                     this.updatePlayerSpiritsPool();
@@ -88,8 +88,8 @@
         methods: {
             ...mapActions([
                 'setSquad',
+                'updateHero',
                 'setCurrentWeek',
-                'setHero',
                 'setPlayerSpiritsPool',
                 'updatePlayerSpiritsPool'
             ])

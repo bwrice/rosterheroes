@@ -48,8 +48,7 @@
         computed: {
             ...mapGetters([
                 '_squad',
-                '_availableSpiritEssence',
-                '_rosterFocusedHero'
+                '_availableSpiritEssence'
             ]),
             heroes: function() {
                 let _heroes = [];

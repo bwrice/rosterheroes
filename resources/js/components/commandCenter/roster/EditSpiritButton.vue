@@ -11,11 +11,11 @@
         props: ['hero'],
         methods: {
             ...mapActions([
-                'setHero',
+                'updateHero',
                 'updatePlayerSpiritsPool'
             ]),
             showHeroRosterView() {
-                this.setHero(this.hero);
+                this.updateHero(this.hero);
                 this.updatePlayerSpiritsPool();
                 this.$router.push(this.heroRoute);
             }

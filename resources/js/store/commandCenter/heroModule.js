@@ -16,7 +16,7 @@ export default {
         },
     },
     actions: {
-        setHero({commit}, payload) {
+        updateHero({commit}, payload) {
             commit('SET_HERO', payload)
         }
     }

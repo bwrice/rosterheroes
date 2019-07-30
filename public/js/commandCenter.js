@@ -2460,8 +2460,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         _this.updateHero(heroResponse);
 
-        _this.setRosterFocusedHero(heroResponse);
-
         _this.snackBarSuccess('Hero Updated');
       })["catch"](function (error) {
         _this.pending = false; // TODO: add Errors class to snackBar store and handle there
@@ -2497,12 +2495,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "EditSpiritButton",
   props: ['hero'],
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['setRosterFocusedHero']), {
-    focusHero: function focusHero() {
-      this.setRosterFocusedHero(this.hero);
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['updateHero', 'updatePlayerSpiritsPool']), {
+    showHeroRosterView: function showHeroRosterView() {
+      this.updateHero(this.hero);
+      this.updatePlayerSpiritsPool();
+      this.$router.push(this.heroRoute);
+    }
+  }),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['_squad']), {
+    heroRoute: function heroRoute() {
+      return '/command-center/' + this._squad.slug + '/roster/hero/' + this.hero.slug;
     }
   })
 });
@@ -2852,7 +2858,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       pending: false
     };
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['_rosterFocusedHero'])),
+  computed: {},
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['updateHero', 'setRosterFocusedHero', 'snackBarSuccess', 'snackBarError']), {
     removeSpirit: function removeSpirit() {
       var _this = this;
@@ -2864,10 +2870,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         _this.updateHero(heroResponse);
 
-        if (_this._rosterFocusedHero) {
-          _this.setRosterFocusedHero(heroResponse);
-        }
-
         _this.snackBarSuccess('Hero Updated');
       })["catch"](function (error) {
         _this.pending = false; // TODO: add Errors class to snackBar store and handle there
@@ -2878,92 +2880,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     }
   })
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/roster/SquadRoster.vue?vue&type=script&lang=js&":
-/*!*******************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/commandCenter/roster/SquadRoster.vue?vue&type=script&lang=js& ***!
-  \*******************************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _HeroRosterCard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HeroRosterCard */ "./resources/js/components/commandCenter/roster/HeroRosterCard.vue");
-/* harmony import */ var _HeroSpiritSelection__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HeroSpiritSelection */ "./resources/js/components/commandCenter/roster/HeroSpiritSelection.vue");
-/* harmony import */ var _RemoveSpiritButton__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./RemoveSpiritButton */ "./resources/js/components/commandCenter/roster/RemoveSpiritButton.vue");
-/* harmony import */ var _EditSpiritButton__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./EditSpiritButton */ "./resources/js/components/commandCenter/roster/EditSpiritButton.vue");
-/* harmony import */ var _PlayerSpiritPanel__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./PlayerSpiritPanel */ "./resources/js/components/commandCenter/roster/PlayerSpiritPanel.vue");
-/* harmony import */ var _models_PlayerSpirit__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../models/PlayerSpirit */ "./resources/js/models/PlayerSpirit.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: "SquadRoster",
-  components: {
-    HeroRosterCard: _HeroRosterCard__WEBPACK_IMPORTED_MODULE_0__["default"],
-    HeroSpiritSelection: _HeroSpiritSelection__WEBPACK_IMPORTED_MODULE_1__["default"],
-    EditSpiritButton: _EditSpiritButton__WEBPACK_IMPORTED_MODULE_3__["default"],
-    RemoveSpiritButton: _RemoveSpiritButton__WEBPACK_IMPORTED_MODULE_2__["default"],
-    PlayerSpiritPanel: _PlayerSpiritPanel__WEBPACK_IMPORTED_MODULE_4__["default"]
-  },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_6__["mapGetters"])(['_squad', '_availableSpiritEssence', '_rosterFocusedHero']), {
-    heroes: function heroes() {
-      var _heroes = [];
-
-      if (this._squad.heroPosts) {
-        this._squad.heroPosts.forEach(function (heroPost) {
-          if (heroPost.hero) {
-            _heroes.push(heroPost.hero);
-          }
-        });
-      }
-
-      return _heroes;
-    }
-  }),
-  methods: {
-    getPlayerSpirit: function getPlayerSpirit(playerSpirit) {
-      return new _models_PlayerSpirit__WEBPACK_IMPORTED_MODULE_5__["default"](playerSpirit);
-    }
-  }
 });
 
 /***/ }),
@@ -3263,6 +3179,125 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/views/roster/HeroRosterView.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/commandCenter/views/roster/HeroRosterView.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _roster_PlayerSpiritPanel__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../roster/PlayerSpiritPanel */ "./resources/js/components/commandCenter/roster/PlayerSpiritPanel.vue");
+/* harmony import */ var _roster_AddSpiritButton__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../roster/AddSpiritButton */ "./resources/js/components/commandCenter/roster/AddSpiritButton.vue");
+/* harmony import */ var _roster_RemoveSpiritButton__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../roster/RemoveSpiritButton */ "./resources/js/components/commandCenter/roster/RemoveSpiritButton.vue");
+/* harmony import */ var _roster_HeroRosterCard__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../roster/HeroRosterCard */ "./resources/js/components/commandCenter/roster/HeroRosterCard.vue");
+/* harmony import */ var _models_PlayerSpirit__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../models/PlayerSpirit */ "./resources/js/models/PlayerSpirit.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "HeroRosterView",
+  components: {
+    HeroRosterCard: _roster_HeroRosterCard__WEBPACK_IMPORTED_MODULE_4__["default"],
+    RemoveSpiritButton: _roster_RemoveSpiritButton__WEBPACK_IMPORTED_MODULE_3__["default"],
+    AddSpiritButton: _roster_AddSpiritButton__WEBPACK_IMPORTED_MODULE_2__["default"],
+    PlayerSpiritPanel: _roster_PlayerSpiritPanel__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  methods: {
+    getFocusedPlayerSpirit: function getFocusedPlayerSpirit(playerSpirit) {
+      return new _models_PlayerSpirit__WEBPACK_IMPORTED_MODULE_5__["default"](playerSpirit);
+    }
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['_squad', '_currentWeek', '_hero', '_playerSpiritsPool']), {
+    rosterPage: function rosterPage() {
+      // TODO use navigation mixin?
+      return '/command-center/' + this.$route.params.squadSlug + '/roster';
+    }
+  })
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/views/roster/Roster.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/commandCenter/views/roster/Roster.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "Roster"
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/views/roster/RosterMain.vue?vue&type=script&lang=js&":
 /*!************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/commandCenter/views/roster/RosterMain.vue?vue&type=script&lang=js& ***!
@@ -3272,7 +3307,38 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _roster_SquadRoster__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../roster/SquadRoster */ "./resources/js/components/commandCenter/roster/SquadRoster.vue");
+/* harmony import */ var _roster_HeroRosterCard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../roster/HeroRosterCard */ "./resources/js/components/commandCenter/roster/HeroRosterCard.vue");
+/* harmony import */ var _roster_HeroSpiritSelection__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../roster/HeroSpiritSelection */ "./resources/js/components/commandCenter/roster/HeroSpiritSelection.vue");
+/* harmony import */ var _roster_RemoveSpiritButton__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../roster/RemoveSpiritButton */ "./resources/js/components/commandCenter/roster/RemoveSpiritButton.vue");
+/* harmony import */ var _roster_EditSpiritButton__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../roster/EditSpiritButton */ "./resources/js/components/commandCenter/roster/EditSpiritButton.vue");
+/* harmony import */ var _roster_PlayerSpiritPanel__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../roster/PlayerSpiritPanel */ "./resources/js/components/commandCenter/roster/PlayerSpiritPanel.vue");
+/* harmony import */ var _models_PlayerSpirit__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../models/PlayerSpirit */ "./resources/js/models/PlayerSpirit.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3280,10 +3346,40 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
+
+
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "RosterMain",
   components: {
-    RhSquadRoster: _roster_SquadRoster__WEBPACK_IMPORTED_MODULE_0__["default"]
+    HeroRosterCard: _roster_HeroRosterCard__WEBPACK_IMPORTED_MODULE_0__["default"],
+    HeroSpiritSelection: _roster_HeroSpiritSelection__WEBPACK_IMPORTED_MODULE_1__["default"],
+    EditSpiritButton: _roster_EditSpiritButton__WEBPACK_IMPORTED_MODULE_3__["default"],
+    RemoveSpiritButton: _roster_RemoveSpiritButton__WEBPACK_IMPORTED_MODULE_2__["default"],
+    PlayerSpiritPanel: _roster_PlayerSpiritPanel__WEBPACK_IMPORTED_MODULE_4__["default"]
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_6__["mapGetters"])(['_squad', '_availableSpiritEssence']), {
+    heroes: function heroes() {
+      var _heroes = [];
+
+      if (this._squad.heroPosts) {
+        this._squad.heroPosts.forEach(function (heroPost) {
+          if (heroPost.hero) {
+            _heroes.push(heroPost.hero);
+          }
+        });
+      }
+
+      return _heroes;
+    }
+  }),
+  methods: {
+    getPlayerSpirit: function getPlayerSpirit(playerSpirit) {
+      return new _models_PlayerSpirit__WEBPACK_IMPORTED_MODULE_5__["default"](playerSpirit);
+    }
   }
 });
 
@@ -3345,6 +3441,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _models_Squad__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../models/Squad */ "./resources/js/models/Squad.js");
 /* harmony import */ var _models_Week__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../models/Week */ "./resources/js/models/Week.js");
 /* harmony import */ var _components_commandCenter_global_SnackBarAlert__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../components/commandCenter/global/SnackBarAlert */ "./resources/js/components/commandCenter/global/SnackBarAlert.vue");
+/* harmony import */ var _models_Hero__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../models/Hero */ "./resources/js/models/Hero.js");
 
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
@@ -3402,6 +3499,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "CommandCenter",
   components: {
@@ -3416,7 +3514,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var _mounted = _asyncToGenerator(
     /*#__PURE__*/
     _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-      var squad, currentWeek;
+      var squad, currentWeek, hero;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
@@ -3432,9 +3530,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
             case 6:
               currentWeek = _context.sent;
-              this.setCurrentWeek(currentWeek);
+              this.setCurrentWeek(currentWeek); // If we land on a hero page, we need to update associated stores
 
-            case 8:
+              if (!this.$route.params.heroSlug) {
+                _context.next = 14;
+                break;
+              }
+
+              _context.next = 11;
+              return _models_Hero__WEBPACK_IMPORTED_MODULE_10__["default"].$find(this.$route.params.heroSlug);
+
+            case 11:
+              hero = _context.sent;
+              this.updateHero(hero);
+
+              if (this.$route.name === 'roster-hero') {
+                this.updatePlayerSpiritsPool();
+              }
+
+            case 14:
             case "end":
               return _context.stop();
           }
@@ -3453,7 +3567,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       drawer: false
     };
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_6__["mapActions"])(['setSquad', 'setCurrentWeek'])),
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_6__["mapActions"])(['setSquad', 'updateHero', 'setCurrentWeek', 'setPlayerSpiritsPool', 'updatePlayerSpiritsPool'])),
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_6__["mapGetters"])(['_squad', '_currentWeek']))
 });
 
@@ -55620,9 +55734,18 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("v-btn", { staticClass: "primary", on: { click: _vm.focusHero } }, [
-    _vm._v("Edit")
-  ])
+  return _c(
+    "v-btn",
+    {
+      staticClass: "primary",
+      on: {
+        click: function($event) {
+          return _vm.showHeroRosterView()
+        }
+      }
+    },
+    [_vm._v("Edit")]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -56016,103 +56139,6 @@ var render = function() {
     },
     [_vm._v("\n    Remove\n")]
   )
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/roster/SquadRoster.vue?vue&type=template&id=337b7e0a&scoped=true&":
-/*!***********************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/commandCenter/roster/SquadRoster.vue?vue&type=template&id=337b7e0a&scoped=true& ***!
-  \***********************************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return this._rosterFocusedHero
-    ? _c("HeroSpiritSelection", { attrs: { hero: this._rosterFocusedHero } })
-    : _c(
-        "v-card",
-        [
-          _c("span", { staticClass: "display-3 px-1" }, [
-            _vm._v(_vm._s(this._squad.availableSpiritEssence))
-          ]),
-          _vm._v(" Spirit Essence Available\n    "),
-          _vm._l(this.heroes, function(hero, uuid) {
-            return _c(
-              "div",
-              [
-                _c(
-                  "HeroRosterCard",
-                  { attrs: { hero: hero } },
-                  [
-                    _c("template", { slot: "body" }, [
-                      hero.playerSpirit
-                        ? _c(
-                            "div",
-                            [
-                              _c("PlayerSpiritPanel", {
-                                attrs: {
-                                  "player-spirit": _vm.getPlayerSpirit(
-                                    hero.playerSpirit
-                                  )
-                                },
-                                scopedSlots: _vm._u(
-                                  [
-                                    {
-                                      key: "spirit-actions",
-                                      fn: function() {
-                                        return [
-                                          _c("EditSpiritButton", {
-                                            attrs: { hero: hero }
-                                          }),
-                                          _vm._v(" "),
-                                          _c("RemoveSpiritButton", {
-                                            attrs: {
-                                              hero: hero,
-                                              "player-spirit": _vm.getPlayerSpirit(
-                                                hero.playerSpirit
-                                              )
-                                            }
-                                          })
-                                        ]
-                                      },
-                                      proxy: true
-                                    }
-                                  ],
-                                  null,
-                                  true
-                                )
-                              })
-                            ],
-                            1
-                          )
-                        : _c(
-                            "div",
-                            [_c("EditSpiritButton", { attrs: { hero: hero } })],
-                            1
-                          )
-                    ])
-                  ],
-                  2
-                )
-              ],
-              1
-            )
-          })
-        ],
-        2
-      )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -56540,6 +56566,187 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/views/roster/HeroRosterView.vue?vue&type=template&id=85b1003a&scoped=true&":
+/*!********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/commandCenter/views/roster/HeroRosterView.vue?vue&type=template&id=85b1003a&scoped=true& ***!
+  \********************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-card",
+    [
+      _c(
+        "v-btn",
+        { attrs: { to: _vm.rosterPage } },
+        [
+          _c("v-icon", { attrs: { dark: "", left: "" } }, [
+            _vm._v("arrow_back")
+          ]),
+          _vm._v("Back\n    ")
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _vm._hero
+        ? _c(
+            "HeroRosterCard",
+            { attrs: { hero: _vm._hero } },
+            [
+              _c(
+                "template",
+                { slot: "body" },
+                [
+                  _vm._hero.playerSpirit
+                    ? [
+                        _c("PlayerSpiritPanel", {
+                          attrs: {
+                            "player-spirit": _vm.getFocusedPlayerSpirit(
+                              _vm._hero.playerSpirit
+                            )
+                          },
+                          scopedSlots: _vm._u(
+                            [
+                              {
+                                key: "spirit-actions",
+                                fn: function() {
+                                  return [
+                                    _c("RemoveSpiritButton", {
+                                      attrs: {
+                                        hero: _vm._hero,
+                                        "player-spirit": _vm.getFocusedPlayerSpirit(
+                                          _vm._hero.playerSpirit
+                                        )
+                                      }
+                                    })
+                                  ]
+                                },
+                                proxy: true
+                              }
+                            ],
+                            null,
+                            false,
+                            961664189
+                          )
+                        })
+                      ]
+                    : _vm._e()
+                ],
+                2
+              )
+            ],
+            2
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _c("v-data-iterator", {
+        attrs: {
+          items: _vm._playerSpiritsPool,
+          "content-tag": "v-layout",
+          "hide-actions": "",
+          row: "",
+          wrap: ""
+        },
+        scopedSlots: _vm._u([
+          {
+            key: "header",
+            fn: function() {
+              return [
+                _c(
+                  "v-toolbar",
+                  {
+                    staticClass: "mb-2",
+                    attrs: { color: "secondary", dark: "", flat: "" }
+                  },
+                  [_c("v-toolbar-title", [_vm._v("Select Player Spirit")])],
+                  1
+                )
+              ]
+            },
+            proxy: true
+          },
+          {
+            key: "item",
+            fn: function(props) {
+              return [
+                _c(
+                  "v-flex",
+                  { attrs: { fluid: "", "py-1": "", xs12: "" } },
+                  [
+                    _c("PlayerSpiritPanel", {
+                      attrs: { "player-spirit": props.item },
+                      scopedSlots: _vm._u(
+                        [
+                          {
+                            key: "spirit-actions",
+                            fn: function() {
+                              return [
+                                _c("AddSpiritButton", {
+                                  attrs: {
+                                    hero: _vm._hero,
+                                    "player-spirit": props.item
+                                  }
+                                })
+                              ]
+                            },
+                            proxy: true
+                          }
+                        ],
+                        null,
+                        true
+                      )
+                    })
+                  ],
+                  1
+                )
+              ]
+            }
+          }
+        ])
+      })
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/views/roster/Roster.vue?vue&type=template&id=8484e8f8&scoped=true&":
+/*!************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/commandCenter/views/roster/Roster.vue?vue&type=template&id=8484e8f8&scoped=true& ***!
+  \************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("router-view")
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/views/roster/RosterMain.vue?vue&type=template&id=6ec11add&scoped=true&":
 /*!****************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/commandCenter/views/roster/RosterMain.vue?vue&type=template&id=6ec11add&scoped=true& ***!
@@ -56555,7 +56762,85 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("v-container", { staticClass: "pa-2" }, [_c("RhSquadRoster")], 1)
+  return _c(
+    "v-container",
+    { staticClass: "pa-2" },
+    [
+      _c(
+        "v-card",
+        [
+          _c("span", { staticClass: "display-3 px-1" }, [
+            _vm._v(_vm._s(this._squad.availableSpiritEssence))
+          ]),
+          _vm._v(" Spirit Essence Available\n        "),
+          _vm._l(this.heroes, function(hero, uuid) {
+            return _c(
+              "div",
+              [
+                _c(
+                  "HeroRosterCard",
+                  { attrs: { hero: hero } },
+                  [
+                    _c("template", { slot: "body" }, [
+                      hero.playerSpirit
+                        ? _c(
+                            "div",
+                            [
+                              _c("PlayerSpiritPanel", {
+                                attrs: {
+                                  "player-spirit": _vm.getPlayerSpirit(
+                                    hero.playerSpirit
+                                  )
+                                },
+                                scopedSlots: _vm._u(
+                                  [
+                                    {
+                                      key: "spirit-actions",
+                                      fn: function() {
+                                        return [
+                                          _c("EditSpiritButton", {
+                                            attrs: { hero: hero }
+                                          }),
+                                          _vm._v(" "),
+                                          _c("RemoveSpiritButton", {
+                                            attrs: {
+                                              hero: hero,
+                                              "player-spirit": _vm.getPlayerSpirit(
+                                                hero.playerSpirit
+                                              )
+                                            }
+                                          })
+                                        ]
+                                      },
+                                      proxy: true
+                                    }
+                                  ],
+                                  null,
+                                  true
+                                )
+                              })
+                            ],
+                            1
+                          )
+                        : _c(
+                            "div",
+                            [_c("EditSpiritButton", { attrs: { hero: hero } })],
+                            1
+                          )
+                    ])
+                  ],
+                  2
+                )
+              ],
+              1
+            )
+          })
+        ],
+        2
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -99610,7 +99895,14 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   mode: 'history',
-  routes: _routes_ccRoutes__WEBPACK_IMPORTED_MODULE_2__["routes"]
+  routes: _routes_ccRoutes__WEBPACK_IMPORTED_MODULE_2__["routes"],
+  // always go to top of content when new route is hit
+  scrollBehavior: function scrollBehavior(to, from, savedPosition) {
+    return {
+      x: 0,
+      y: 0
+    };
+  }
 });
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_3__["default"]);
@@ -100662,75 +100954,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/commandCenter/roster/SquadRoster.vue":
-/*!**********************************************************************!*\
-  !*** ./resources/js/components/commandCenter/roster/SquadRoster.vue ***!
-  \**********************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _SquadRoster_vue_vue_type_template_id_337b7e0a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SquadRoster.vue?vue&type=template&id=337b7e0a&scoped=true& */ "./resources/js/components/commandCenter/roster/SquadRoster.vue?vue&type=template&id=337b7e0a&scoped=true&");
-/* harmony import */ var _SquadRoster_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SquadRoster.vue?vue&type=script&lang=js& */ "./resources/js/components/commandCenter/roster/SquadRoster.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _SquadRoster_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _SquadRoster_vue_vue_type_template_id_337b7e0a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _SquadRoster_vue_vue_type_template_id_337b7e0a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  "337b7e0a",
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/commandCenter/roster/SquadRoster.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/commandCenter/roster/SquadRoster.vue?vue&type=script&lang=js&":
-/*!***********************************************************************************************!*\
-  !*** ./resources/js/components/commandCenter/roster/SquadRoster.vue?vue&type=script&lang=js& ***!
-  \***********************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SquadRoster_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./SquadRoster.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/roster/SquadRoster.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SquadRoster_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/commandCenter/roster/SquadRoster.vue?vue&type=template&id=337b7e0a&scoped=true&":
-/*!*****************************************************************************************************************!*\
-  !*** ./resources/js/components/commandCenter/roster/SquadRoster.vue?vue&type=template&id=337b7e0a&scoped=true& ***!
-  \*****************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SquadRoster_vue_vue_type_template_id_337b7e0a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./SquadRoster.vue?vue&type=template&id=337b7e0a&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/roster/SquadRoster.vue?vue&type=template&id=337b7e0a&scoped=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SquadRoster_vue_vue_type_template_id_337b7e0a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SquadRoster_vue_vue_type_template_id_337b7e0a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
 /***/ "./resources/js/components/commandCenter/views/barracks/Barracks.vue":
 /*!***************************************************************************!*\
   !*** ./resources/js/components/commandCenter/views/barracks/Barracks.vue ***!
@@ -101421,6 +101644,144 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/commandCenter/views/roster/HeroRosterView.vue":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/views/roster/HeroRosterView.vue ***!
+  \*******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _HeroRosterView_vue_vue_type_template_id_85b1003a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HeroRosterView.vue?vue&type=template&id=85b1003a&scoped=true& */ "./resources/js/components/commandCenter/views/roster/HeroRosterView.vue?vue&type=template&id=85b1003a&scoped=true&");
+/* harmony import */ var _HeroRosterView_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HeroRosterView.vue?vue&type=script&lang=js& */ "./resources/js/components/commandCenter/views/roster/HeroRosterView.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _HeroRosterView_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _HeroRosterView_vue_vue_type_template_id_85b1003a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _HeroRosterView_vue_vue_type_template_id_85b1003a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "85b1003a",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/commandCenter/views/roster/HeroRosterView.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/views/roster/HeroRosterView.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/views/roster/HeroRosterView.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_HeroRosterView_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./HeroRosterView.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/views/roster/HeroRosterView.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_HeroRosterView_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/views/roster/HeroRosterView.vue?vue&type=template&id=85b1003a&scoped=true&":
+/*!**************************************************************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/views/roster/HeroRosterView.vue?vue&type=template&id=85b1003a&scoped=true& ***!
+  \**************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_HeroRosterView_vue_vue_type_template_id_85b1003a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./HeroRosterView.vue?vue&type=template&id=85b1003a&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/views/roster/HeroRosterView.vue?vue&type=template&id=85b1003a&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_HeroRosterView_vue_vue_type_template_id_85b1003a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_HeroRosterView_vue_vue_type_template_id_85b1003a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/views/roster/Roster.vue":
+/*!***********************************************************************!*\
+  !*** ./resources/js/components/commandCenter/views/roster/Roster.vue ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Roster_vue_vue_type_template_id_8484e8f8_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Roster.vue?vue&type=template&id=8484e8f8&scoped=true& */ "./resources/js/components/commandCenter/views/roster/Roster.vue?vue&type=template&id=8484e8f8&scoped=true&");
+/* harmony import */ var _Roster_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Roster.vue?vue&type=script&lang=js& */ "./resources/js/components/commandCenter/views/roster/Roster.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Roster_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Roster_vue_vue_type_template_id_8484e8f8_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Roster_vue_vue_type_template_id_8484e8f8_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "8484e8f8",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/commandCenter/views/roster/Roster.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/views/roster/Roster.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/views/roster/Roster.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Roster_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Roster.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/views/roster/Roster.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Roster_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/commandCenter/views/roster/Roster.vue?vue&type=template&id=8484e8f8&scoped=true&":
+/*!******************************************************************************************************************!*\
+  !*** ./resources/js/components/commandCenter/views/roster/Roster.vue?vue&type=template&id=8484e8f8&scoped=true& ***!
+  \******************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Roster_vue_vue_type_template_id_8484e8f8_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Roster.vue?vue&type=template&id=8484e8f8&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/commandCenter/views/roster/Roster.vue?vue&type=template&id=8484e8f8&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Roster_vue_vue_type_template_id_8484e8f8_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Roster_vue_vue_type_template_id_8484e8f8_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/commandCenter/views/roster/RosterMain.vue":
 /*!***************************************************************************!*\
   !*** ./resources/js/components/commandCenter/views/roster/RosterMain.vue ***!
@@ -101721,6 +102082,11 @@ function (_Model) {
   }
 
   _createClass(Hero, [{
+    key: "resource",
+    value: function resource() {
+      return 'heroes';
+    }
+  }, {
     key: "essenceUsed",
     get: function get() {
       if (this.playerSpirit) {
@@ -102007,6 +102373,16 @@ function (_Model) {
   }
 
   _createClass(Squad, [{
+    key: "getHero",
+    value: function getHero(heroSlug) {
+      this.heroes.forEach(function (hero) {
+        if (hero.slug === heroSlug) {
+          return hero;
+        }
+      });
+      return {};
+    }
+  }, {
     key: "heroes",
     get: function get() {
       var _heroes = [];
@@ -102169,6 +102545,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_commandCenter_views_nation_NationNavigationDrawer__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../components/commandCenter/views/nation/NationNavigationDrawer */ "./resources/js/components/commandCenter/views/nation/NationNavigationDrawer.vue");
 /* harmony import */ var _components_commandCenter_views_barracks_HeroBarracksView__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../components/commandCenter/views/barracks/HeroBarracksView */ "./resources/js/components/commandCenter/views/barracks/HeroBarracksView.vue");
 /* harmony import */ var _components_commandCenter_views_barracks_Barracks__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../components/commandCenter/views/barracks/Barracks */ "./resources/js/components/commandCenter/views/barracks/Barracks.vue");
+/* harmony import */ var _components_commandCenter_views_roster_Roster__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../components/commandCenter/views/roster/Roster */ "./resources/js/components/commandCenter/views/roster/Roster.vue");
+/* harmony import */ var _components_commandCenter_views_roster_HeroRosterView__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../components/commandCenter/views/roster/HeroRosterView */ "./resources/js/components/commandCenter/views/roster/HeroRosterView.vue");
+
+
 
 
 
@@ -102183,7 +102563,6 @@ __webpack_require__.r(__webpack_exports__);
 
 var routes = [{
   path: '/command-center/:squadSlug/barracks',
-  name: 'barracks',
   meta: {
     footerButton: 'barracks'
   },
@@ -102208,14 +102587,28 @@ var routes = [{
   }]
 }, {
   path: '/command-center/:squadSlug/roster',
-  name: 'roster',
   meta: {
     footerButton: 'roster'
   },
   components: {
-    "default": _components_commandCenter_views_roster_RosterMain__WEBPACK_IMPORTED_MODULE_2__["default"],
+    "default": _components_commandCenter_views_roster_Roster__WEBPACK_IMPORTED_MODULE_12__["default"],
     drawer: _components_commandCenter_views_roster_RosterNavigationDrawer__WEBPACK_IMPORTED_MODULE_3__["default"]
-  }
+  },
+  children: [{
+    path: '',
+    component: _components_commandCenter_views_roster_RosterMain__WEBPACK_IMPORTED_MODULE_2__["default"],
+    name: 'roster-main',
+    meta: {
+      footerButton: 'roster'
+    }
+  }, {
+    path: 'hero/:heroSlug',
+    component: _components_commandCenter_views_roster_HeroRosterView__WEBPACK_IMPORTED_MODULE_13__["default"],
+    name: 'roster-hero',
+    meta: {
+      footerButton: 'roster'
+    }
+  }]
 }, {
   path: '/command-center/:squadSlug/map',
   name: 'map',
@@ -102264,9 +102657,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _squad__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./squad */ "./resources/js/store/commandCenter/squad.js");
-/* harmony import */ var _roster__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./roster */ "./resources/js/store/commandCenter/roster.js");
-/* harmony import */ var _week__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./week */ "./resources/js/store/commandCenter/week.js");
-/* harmony import */ var _snackBar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./snackBar */ "./resources/js/store/commandCenter/snackBar.js");
+/* harmony import */ var _heroModule__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./heroModule */ "./resources/js/store/commandCenter/heroModule.js");
+/* harmony import */ var _roster__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./roster */ "./resources/js/store/commandCenter/roster.js");
+/* harmony import */ var _week__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./week */ "./resources/js/store/commandCenter/week.js");
+/* harmony import */ var _snackBar__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./snackBar */ "./resources/js/store/commandCenter/snackBar.js");
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
@@ -102274,12 +102668,47 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
 
 
 
+
 var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   modules: {
     squadModule: _squad__WEBPACK_IMPORTED_MODULE_2__["default"],
-    rosterModule: _roster__WEBPACK_IMPORTED_MODULE_3__["default"],
-    weekModule: _week__WEBPACK_IMPORTED_MODULE_4__["default"],
-    snackBarModule: _snackBar__WEBPACK_IMPORTED_MODULE_5__["default"]
+    heroModule: _heroModule__WEBPACK_IMPORTED_MODULE_3__["default"],
+    rosterModule: _roster__WEBPACK_IMPORTED_MODULE_4__["default"],
+    weekModule: _week__WEBPACK_IMPORTED_MODULE_5__["default"],
+    snackBarModule: _snackBar__WEBPACK_IMPORTED_MODULE_6__["default"]
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/commandCenter/heroModule.js":
+/*!********************************************************!*\
+  !*** ./resources/js/store/commandCenter/heroModule.js ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  state: {
+    hero: null
+  },
+  getters: {
+    _hero: function _hero(state) {
+      return state.hero;
+    }
+  },
+  mutations: {
+    SET_HERO: function SET_HERO(state, payload) {
+      state.hero = payload;
+    }
+  },
+  actions: {
+    updateHero: function updateHero(_ref, payload) {
+      var commit = _ref.commit;
+      commit('SET_HERO', payload);
+    }
   }
 });
 
@@ -102294,36 +102723,71 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _models_Week__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../models/Week */ "./resources/js/models/Week.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   state: {
-    rosterFocusedHero: null,
     playerSpiritsPool: []
   },
   getters: {
-    _rosterFocusedHero: function _rosterFocusedHero(state) {
-      return state.rosterFocusedHero;
-    },
     _playerSpiritsPool: function _playerSpiritsPool(state) {
       return state.playerSpiritsPool;
     }
   },
   mutations: {
-    SET_ROSTER_FOCUSED_HERO: function SET_ROSTER_FOCUSED_HERO(state, payload) {
-      state.rosterFocusedHero = payload;
-    },
     SET_PLAYER_SPIRITS_POOL: function SET_PLAYER_SPIRITS_POOL(state, payload) {
       state.playerSpiritsPool = payload;
     }
   },
   actions: {
-    setRosterFocusedHero: function setRosterFocusedHero(_ref, payload) {
-      var commit = _ref.commit;
-      commit('SET_ROSTER_FOCUSED_HERO', payload);
-    },
-    setPlayerSpiritsPool: function setPlayerSpiritsPool(_ref2, payload) {
-      var commit = _ref2.commit;
-      commit('SET_PLAYER_SPIRITS_POOL', payload);
-    }
+    updatePlayerSpiritsPool: function () {
+      var _updatePlayerSpiritsPool = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(_ref) {
+        var state, commit, rootState, week, hero, currentWeek, playerSpirits;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                state = _ref.state, commit = _ref.commit, rootState = _ref.rootState;
+                week = rootState.weekModule.week;
+                hero = rootState.heroModule.hero;
+
+                if (!(week && hero)) {
+                  _context.next = 9;
+                  break;
+                }
+
+                currentWeek = new _models_Week__WEBPACK_IMPORTED_MODULE_1__["default"](week);
+                _context.next = 7;
+                return currentWeek.playerSpirits().where('hero-race', hero.heroRace.name).$get();
+
+              case 7:
+                playerSpirits = _context.sent;
+                commit('SET_PLAYER_SPIRITS_POOL', playerSpirits);
+
+              case 9:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      function updatePlayerSpiritsPool(_x) {
+        return _updatePlayerSpiritsPool.apply(this, arguments);
+      }
+
+      return updatePlayerSpiritsPool;
+    }()
   }
 });
 
@@ -102403,10 +102867,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _models_Squad__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../models/Squad */ "./resources/js/models/Squad.js");
-/* harmony import */ var _models_Hero__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../models/Hero */ "./resources/js/models/Hero.js");
-
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   state: {
     squad: {}
@@ -102459,7 +102919,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   state: {
-    week: {}
+    week: null
   },
   getters: {
     _currentWeek: function _currentWeek(state) {
