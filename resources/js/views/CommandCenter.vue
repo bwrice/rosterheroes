@@ -62,17 +62,20 @@
         },
 
         async mounted() {
+
             let squad = await Squad.$find(this.$route.params.squadSlug);
             this.setSquad(squad);
             let currentWeek = await Week.$find('current');
             this.setCurrentWeek(currentWeek);
+
+            // If we land on a hero page, we need to update associated stores
             if (this.$route.params.heroSlug) {
+
                 let hero = await Hero.$find(this.$route.params.heroSlug);
                 this.setHero(hero);
 
                 if (this.$route.name === 'roster-hero') {
-                    let playerSpirits = await currentWeek.playerSpirits().where('hero-race', hero.heroRace.name).$get();
-                    this.setPlayerSpiritsPool(playerSpirits);
+                    this.updatePlayerSpiritsPool();
                 }
             }
         },
@@ -87,7 +90,8 @@
                 'setSquad',
                 'setCurrentWeek',
                 'setHero',
-                'setPlayerSpiritsPool'
+                'setPlayerSpiritsPool',
+                'updatePlayerSpiritsPool'
             ])
         },
         computed: {
