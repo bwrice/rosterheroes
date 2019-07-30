@@ -3246,6 +3246,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 
@@ -56572,43 +56574,118 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "v-card",
+    "v-container",
+    { staticClass: "pa-2" },
     [
       _c(
-        "v-btn",
-        { attrs: { to: _vm.rosterPage } },
+        "v-card",
         [
-          _c("v-icon", { attrs: { dark: "", left: "" } }, [
-            _vm._v("arrow_back")
-          ]),
-          _vm._v("Back\n    ")
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _vm._hero
-        ? _c(
-            "HeroRosterCard",
-            { attrs: { hero: _vm._hero } },
+          _c(
+            "v-btn",
+            { attrs: { to: _vm.rosterPage } },
             [
-              _c(
-                "template",
-                { slot: "body" },
+              _c("v-icon", { attrs: { dark: "", left: "" } }, [
+                _vm._v("arrow_back")
+              ]),
+              _vm._v("Back\n        ")
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _vm._hero
+            ? _c(
+                "HeroRosterCard",
+                { attrs: { hero: _vm._hero } },
                 [
-                  _vm._hero.playerSpirit
-                    ? [
+                  _c(
+                    "template",
+                    { slot: "body" },
+                    [
+                      _vm._hero.playerSpirit
+                        ? [
+                            _c("PlayerSpiritPanel", {
+                              attrs: {
+                                "player-spirit": _vm._hero.playerSpirit
+                              },
+                              scopedSlots: _vm._u(
+                                [
+                                  {
+                                    key: "spirit-actions",
+                                    fn: function() {
+                                      return [
+                                        _c("RemoveSpiritButton", {
+                                          attrs: {
+                                            hero: _vm._hero,
+                                            "player-spirit":
+                                              _vm._hero.playerSpirit
+                                          }
+                                        })
+                                      ]
+                                    },
+                                    proxy: true
+                                  }
+                                ],
+                                null,
+                                false,
+                                2383194321
+                              )
+                            })
+                          ]
+                        : _vm._e()
+                    ],
+                    2
+                  )
+                ],
+                2
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _c("v-data-iterator", {
+            attrs: {
+              items: _vm._playerSpiritsPool,
+              "content-tag": "v-layout",
+              "hide-actions": "",
+              row: "",
+              wrap: ""
+            },
+            scopedSlots: _vm._u([
+              {
+                key: "header",
+                fn: function() {
+                  return [
+                    _c(
+                      "v-toolbar",
+                      {
+                        staticClass: "mb-2",
+                        attrs: { color: "secondary", dark: "", flat: "" }
+                      },
+                      [_c("v-toolbar-title", [_vm._v("Select Player Spirit")])],
+                      1
+                    )
+                  ]
+                },
+                proxy: true
+              },
+              {
+                key: "item",
+                fn: function(props) {
+                  return [
+                    _c(
+                      "v-flex",
+                      { attrs: { fluid: "", "py-1": "", xs12: "" } },
+                      [
                         _c("PlayerSpiritPanel", {
-                          attrs: { "player-spirit": _vm._hero.playerSpirit },
+                          attrs: { "player-spirit": props.item },
                           scopedSlots: _vm._u(
                             [
                               {
                                 key: "spirit-actions",
                                 fn: function() {
                                   return [
-                                    _c("RemoveSpiritButton", {
+                                    _c("AddSpiritButton", {
                                       attrs: {
                                         hero: _vm._hero,
-                                        "player-spirit": _vm._hero.playerSpirit
+                                        "player-spirit": props.item
                                       }
                                     })
                                   ]
@@ -56617,85 +56694,20 @@ var render = function() {
                               }
                             ],
                             null,
-                            false,
-                            2383194321
+                            true
                           )
                         })
-                      ]
-                    : _vm._e()
-                ],
-                2
-              )
-            ],
-            2
-          )
-        : _vm._e(),
-      _vm._v(" "),
-      _c("v-data-iterator", {
-        attrs: {
-          items: _vm._playerSpiritsPool,
-          "content-tag": "v-layout",
-          "hide-actions": "",
-          row: "",
-          wrap: ""
-        },
-        scopedSlots: _vm._u([
-          {
-            key: "header",
-            fn: function() {
-              return [
-                _c(
-                  "v-toolbar",
-                  {
-                    staticClass: "mb-2",
-                    attrs: { color: "secondary", dark: "", flat: "" }
-                  },
-                  [_c("v-toolbar-title", [_vm._v("Select Player Spirit")])],
-                  1
-                )
-              ]
-            },
-            proxy: true
-          },
-          {
-            key: "item",
-            fn: function(props) {
-              return [
-                _c(
-                  "v-flex",
-                  { attrs: { fluid: "", "py-1": "", xs12: "" } },
-                  [
-                    _c("PlayerSpiritPanel", {
-                      attrs: { "player-spirit": props.item },
-                      scopedSlots: _vm._u(
-                        [
-                          {
-                            key: "spirit-actions",
-                            fn: function() {
-                              return [
-                                _c("AddSpiritButton", {
-                                  attrs: {
-                                    hero: _vm._hero,
-                                    "player-spirit": props.item
-                                  }
-                                })
-                              ]
-                            },
-                            proxy: true
-                          }
-                        ],
-                        null,
-                        true
-                      )
-                    })
-                  ],
-                  1
-                )
-              ]
-            }
-          }
-        ])
-      })
+                      ],
+                      1
+                    )
+                  ]
+                }
+              }
+            ])
+          })
+        ],
+        1
+      )
     ],
     1
   )
