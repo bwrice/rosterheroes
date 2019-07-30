@@ -1,6 +1,6 @@
 <template>
     <v-card>
-        <v-btn v-on:click="unFocus">
+        <v-btn :to="rosterPage">
             <v-icon dark left>arrow_back</v-icon>Back
         </v-btn>
         <HeroRosterCard :hero="_hero" v-if="_hero">
@@ -69,9 +69,6 @@
         },
 
         methods: {
-            unFocus: function() {
-                this.setRosterFocusedHero(null);
-            },
             getFocusedPlayerSpirit: function(playerSpirit) {
                 return new PlayerSpirit(playerSpirit);
             }
@@ -82,7 +79,11 @@
                 '_currentWeek',
                 '_hero',
                 '_playerSpiritsPool'
-            ])
+            ]),
+            rosterPage() {
+                // TODO use navigation mixin?
+                return '/command-center/' + this.$route.params.squadSlug + '/roster' ;
+            }
         },
     }
 </script>
