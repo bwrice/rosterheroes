@@ -21,6 +21,7 @@
         methods: {
             ...mapActions([
                 'updateHero',
+                'setHero',
                 'setRosterFocusedHero',
                 'snackBarSuccess',
                 'snackBarError'
@@ -32,8 +33,8 @@
 
                     this.pending = false;
                     let heroResponse = response.data.data;
-                    this.updateHero(heroResponse);
-                    this.setRosterFocusedHero(heroResponse);
+                    this.updateHero(heroResponse); // squad store
+                    this.setHero(heroResponse); // hero store
                     this.snackBarSuccess('Hero Updated');
 
                 }).catch((error) => {

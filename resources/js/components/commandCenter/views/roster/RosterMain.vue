@@ -1,7 +1,6 @@
 <template>
     <v-container class="pa-2">
-        <HeroSpiritSelection v-if="this._rosterFocusedHero" :hero="this._rosterFocusedHero"></HeroSpiritSelection>
-        <v-card v-else>
+        <v-card>
             <span class="display-3 px-1">{{this._squad.availableSpiritEssence}}</span> Spirit Essence Available
             <div v-for="(hero, uuid) in this.heroes">
                 <HeroRosterCard :hero="hero">
