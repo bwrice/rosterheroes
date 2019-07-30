@@ -1,3 +1,4 @@
+import Week from "../../models/Week";
 
 export default {
 
@@ -27,8 +28,17 @@ export default {
         setRosterFocusedHero({commit}, payload) {
             commit('SET_ROSTER_FOCUSED_HERO', payload)
         },
-        setPlayerSpiritsPool({commit}, payload) {
-            commit('SET_PLAYER_SPIRITS_POOL', payload)
+        async updatePlayerSpiritsPool({state, commit, rootState}) {
+
+            let week = rootState.weekModule.week;
+            let hero = rootState.heroModule.hero;
+            if (week && hero) {
+                console.log("HERE");
+
+                let currentWeek = new Week(week);
+                let playerSpirits = await currentWeek.playerSpirits().where('hero-race', hero.heroRace.name).$get();
+                commit('SET_PLAYER_SPIRITS_POOL', playerSpirits)
+            }
         }
     }
 };
