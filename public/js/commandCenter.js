@@ -2711,6 +2711,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _PositionChipList__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PositionChipList */ "./resources/js/components/commandCenter/roster/PositionChipList.vue");
+/* harmony import */ var _mixins_playerSpiritMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../mixins/playerSpiritMixin */ "./resources/js/mixins/playerSpiritMixin.js");
 //
 //
 //
@@ -2745,18 +2746,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "PlayerSpiritPanel",
   components: {
     PositionChipList: _PositionChipList__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   props: ['playerSpirit'],
-  computed: {
-    playerSpiritPositions: function playerSpiritPositions() {
-      // TODO filter out overlapping positions
-      return this.playerSpirit.player.positions;
-    }
-  }
+  mixins: [_mixins_playerSpiritMixin__WEBPACK_IMPORTED_MODULE_1__["playerSpiritMixin"]]
 });
 
 /***/ }),
@@ -3193,7 +3190,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _roster_AddSpiritButton__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../roster/AddSpiritButton */ "./resources/js/components/commandCenter/roster/AddSpiritButton.vue");
 /* harmony import */ var _roster_RemoveSpiritButton__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../roster/RemoveSpiritButton */ "./resources/js/components/commandCenter/roster/RemoveSpiritButton.vue");
 /* harmony import */ var _roster_HeroRosterCard__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../roster/HeroRosterCard */ "./resources/js/components/commandCenter/roster/HeroRosterCard.vue");
-/* harmony import */ var _models_PlayerSpirit__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../models/PlayerSpirit */ "./resources/js/models/PlayerSpirit.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -3255,7 +3251,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "HeroRosterView",
   components: {
@@ -3263,11 +3258,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     RemoveSpiritButton: _roster_RemoveSpiritButton__WEBPACK_IMPORTED_MODULE_3__["default"],
     AddSpiritButton: _roster_AddSpiritButton__WEBPACK_IMPORTED_MODULE_2__["default"],
     PlayerSpiritPanel: _roster_PlayerSpiritPanel__WEBPACK_IMPORTED_MODULE_1__["default"]
-  },
-  methods: {
-    getFocusedPlayerSpirit: function getFocusedPlayerSpirit(playerSpirit) {
-      return new _models_PlayerSpirit__WEBPACK_IMPORTED_MODULE_5__["default"](playerSpirit);
-    }
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['_squad', '_currentWeek', '_hero', '_playerSpiritsPool']), {
     rosterPage: function rosterPage() {
@@ -55974,7 +55964,7 @@ var render = function() {
           "div",
           [
             _c("h4", { staticClass: "headline mb-0" }, [
-              _vm._v(_vm._s(this.playerSpirit.playerName))
+              _vm._v(_vm._s(_vm.playerName))
             ]),
             _vm._v(" "),
             _c(
@@ -55992,7 +55982,7 @@ var render = function() {
                         _c("v-flex", { staticClass: "xs12" }, [
                           _vm._v(
                             "\n                            " +
-                              _vm._s(this.playerSpirit.gameDescription) +
+                              _vm._s(_vm.gameDescription) +
                               "\n                        "
                           )
                         ]),
@@ -56000,7 +55990,7 @@ var render = function() {
                         _c("v-flex", { staticClass: "xs12" }, [
                           _vm._v(
                             "\n                            Essence Cost: " +
-                              _vm._s(this.playerSpirit.essence_cost) +
+                              _vm._s(_vm.essenceCost) +
                               "\n                        "
                           )
                         ]),
@@ -56008,7 +55998,7 @@ var render = function() {
                         _c("v-flex", { staticClass: "xs12" }, [
                           _vm._v(
                             "\n                            Energy: " +
-                              _vm._s(this.playerSpirit.energy) +
+                              _vm._s(_vm.energy) +
                               "\n                        "
                           )
                         ]),
@@ -56608,11 +56598,7 @@ var render = function() {
                   _vm._hero.playerSpirit
                     ? [
                         _c("PlayerSpiritPanel", {
-                          attrs: {
-                            "player-spirit": _vm.getFocusedPlayerSpirit(
-                              _vm._hero.playerSpirit
-                            )
-                          },
+                          attrs: { "player-spirit": _vm._hero.playerSpirit },
                           scopedSlots: _vm._u(
                             [
                               {
@@ -56622,9 +56608,7 @@ var render = function() {
                                     _c("RemoveSpiritButton", {
                                       attrs: {
                                         hero: _vm._hero,
-                                        "player-spirit": _vm.getFocusedPlayerSpirit(
-                                          _vm._hero.playerSpirit
-                                        )
+                                        "player-spirit": _vm._hero.playerSpirit
                                       }
                                     })
                                   ]
@@ -56634,7 +56618,7 @@ var render = function() {
                             ],
                             null,
                             false,
-                            961664189
+                            2383194321
                           )
                         })
                       ]
@@ -101950,6 +101934,51 @@ var navButtonMixin = {
     to: function to() {
       return '/command-center/' + this.$route.params.squadSlug + '/' + this.name;
     }
+  }
+};
+
+/***/ }),
+
+/***/ "./resources/js/mixins/playerSpiritMixin.js":
+/*!**************************************************!*\
+  !*** ./resources/js/mixins/playerSpiritMixin.js ***!
+  \**************************************************/
+/*! exports provided: playerSpiritMixin */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "playerSpiritMixin", function() { return playerSpiritMixin; });
+/* harmony import */ var _models_PlayerSpirit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../models/PlayerSpirit */ "./resources/js/models/PlayerSpirit.js");
+
+var playerSpiritMixin = {
+  data: function data() {
+    return {//
+    };
+  },
+  computed: {
+    playerSpiritPositions: function playerSpiritPositions() {
+      // TODO filter out overlapping positions when new Hero Races are added
+      return this.playerSpirit.player.positions;
+    },
+    playerName: function playerName() {
+      var playerSpirit = new _models_PlayerSpirit__WEBPACK_IMPORTED_MODULE_0__["default"](this.playerSpirit);
+      return playerSpirit.playerName;
+    },
+    gameDescription: function gameDescription() {
+      var playerSpirit = new _models_PlayerSpirit__WEBPACK_IMPORTED_MODULE_0__["default"](this.playerSpirit);
+      return playerSpirit.gameDescription;
+    },
+    essenceCost: function essenceCost() {
+      return this.playerSpirit.essence_cost;
+    },
+    energy: function energy() {
+      return this.playerSpirit.energy;
+    }
+  },
+  watch: {//
+  },
+  methods: {//
   }
 };
 
