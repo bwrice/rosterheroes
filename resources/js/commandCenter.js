@@ -8,7 +8,11 @@ Vue.use(VueRouter);
 
 const router = new VueRouter({
     mode: 'history',
-    routes
+    routes,
+    // always go to top of content when new route is hit
+    scrollBehavior (to, from, savedPosition) {
+        return { x: 0, y: 0 }
+    }
 });
 
 
