@@ -69,6 +69,11 @@
             if (this.$route.params.heroSlug) {
                 let hero = await Hero.$find(this.$route.params.heroSlug);
                 this.setHero(hero);
+
+                if (this.$route.name === 'roster-hero') {
+                    let playerSpirits = await currentWeek.playerSpirits().where('hero-race', hero.heroRace.name).$get();
+                    this.setPlayerSpiritsPool(playerSpirits);
+                }
             }
         },
 
@@ -81,7 +86,8 @@
             ...mapActions([
                 'setSquad',
                 'setCurrentWeek',
-                'setHero'
+                'setHero',
+                'setPlayerSpiritsPool'
             ])
         },
         computed: {
