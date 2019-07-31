@@ -18,7 +18,7 @@
             <v-data-iterator
                     :items="_playerSpiritsPool"
                     content-tag="v-layout"
-                    hide-actions
+                    hide-default-footer
                     row
                     wrap
             >
@@ -27,7 +27,7 @@
                             class="mb-2"
                             color="secondary"
                             dark
-                            flat
+                            text
                     >
                         <v-toolbar-title>Select Player Spirit</v-toolbar-title>
                     </v-toolbar>

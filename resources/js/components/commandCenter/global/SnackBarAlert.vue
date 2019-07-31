@@ -10,7 +10,7 @@
         {{ this._snackBar.text }}
         <v-btn
                 dark
-                flat
+                text
                 @click="snackBar = false"
         >
             Close

@@ -1,7 +1,7 @@
 <template>
     <v-btn
             color="#ffc747"
-            flat
+            text
             :value="value"
             :to="to"
             style="min-width: 52px"

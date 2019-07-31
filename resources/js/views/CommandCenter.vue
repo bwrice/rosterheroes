@@ -1,11 +1,12 @@
 <template>
-    <v-app dark>
-        <v-toolbar fixed app>
-            <v-toolbar-side-icon
+    <v-app>
+        <v-app-bar fixed app>
+            <v-app-bar-nav-icon
                     class="accent--text"
-                    @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+                    @click.stop="drawer = !drawer"
+            ></v-app-bar-nav-icon>
             <v-toolbar-title>{{ _squad.name }}</v-toolbar-title>
-        </v-toolbar>
+        </v-app-bar>
         <v-navigation-drawer
                 fixed
                 v-model="drawer"
@@ -16,7 +17,7 @@
         <v-content>
             <router-view></router-view>
         </v-content>
-        <v-bottom-nav
+        <v-bottom-navigation
                 :value="true"
                 :height="76"
                 fixed
@@ -28,7 +29,7 @@
             <MapFooterButton></MapFooterButton>
             <CampaignFooterButton></CampaignFooterButton>
             <NationFooterButton></NationFooterButton>
-        </v-bottom-nav>
+        </v-bottom-navigation>
         <RhSnackBarAlert></RhSnackBarAlert>
     </v-app>
 </template>

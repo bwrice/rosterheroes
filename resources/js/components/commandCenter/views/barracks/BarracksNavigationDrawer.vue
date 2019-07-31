@@ -3,20 +3,20 @@
         <v-list-group
                 value="true"
         >
-            <v-list-tile slot="activator">
-                <v-list-tile-title>Heroes</v-list-tile-title>
-            </v-list-tile>
+            <v-list-item slot="activator">
+                <v-list-item-title>Heroes</v-list-item-title>
+            </v-list-item>
             <v-divider></v-divider>
 
-            <v-list-tile
+            <v-list-item
                     v-for="hero in _squad.heroes"
                     :key="hero.uuid"
                     :to="heroRoute(hero)"
                     ripple
                     active-class="accent--text"
             >
-                <v-list-tile-title v-text="hero.name"></v-list-tile-title>
-            </v-list-tile>
+                <v-list-item-title v-text="hero.name"></v-list-item-title>
+            </v-list-item>
         </v-list-group>
     </v-list>
 </template>

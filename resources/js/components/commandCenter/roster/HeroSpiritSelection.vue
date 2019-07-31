@@ -26,7 +26,7 @@
                         class="mb-2"
                         color="secondary"
                         dark
-                        flat
+                        text
                 >
                     <v-toolbar-title>Select Player Spirit</v-toolbar-title>
                 </v-toolbar>
