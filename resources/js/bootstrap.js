@@ -36,26 +36,10 @@ if (token) {
     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
-import Vue from 'vue';
-import Vuetify from 'vuetify';
-
-Vue.use(Vuetify, {
-    theme: {
-        // primary: '#419183',
-        primary: '#3fa391',
-        accent: '#ffc747',
-        info: '#6a6099',
-        success: '#52b266'
-    }
-});
-
 import Vuelidate from 'vuelidate';
+
+import Vue from 'vue';
 Vue.use(Vuelidate);
-
-$( document ).ready(function() {
-    console.log( "ready!" );
-});
-
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

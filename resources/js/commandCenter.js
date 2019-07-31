@@ -15,16 +15,34 @@ const router = new VueRouter({
     }
 });
 
+import Vuetify from 'vuetify';
+import 'vuetify/dist/vuetify.min.css'
+
+Vue.use(Vuetify);
 
 import Vuex from 'vuex';
-
 Vue.use(Vuex);
 
 import CommandCenter from './views/CommandCenter';
 import { store } from "./store/commandCenter/ccStore";
 
+const vuetifyOptions = {
+    theme: {
+        dark: true,
+        themes: {
+            dark: {
+                primary: '#3fa391',
+                accent: '#ffc747',
+                info: '#6a6099',
+                success: '#52b266'
+            }
+        }
+    }
+};
+
 const app = new Vue({
     el: '#app',
+    vuetify: new Vuetify(vuetifyOptions),
     store,
     router,
     components: {
