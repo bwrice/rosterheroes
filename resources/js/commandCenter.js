@@ -16,7 +16,8 @@ const router = new VueRouter({
 });
 
 import Vuetify from 'vuetify';
-import 'vuetify/dist/vuetify.min.css'
+import 'vuetify/dist/vuetify.min.css';
+import '@mdi/font/css/materialdesignicons.css';
 
 Vue.use(Vuetify);
 
@@ -37,7 +38,10 @@ const vuetifyOptions = {
                 success: '#52b266'
             }
         }
-    }
+    },
+    icons: {
+        iconfont: 'mdi'
+    },
 };
 
 const app = new Vue({
