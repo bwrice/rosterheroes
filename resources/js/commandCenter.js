@@ -16,7 +16,7 @@ const router = new VueRouter({
 });
 
 import Vuetify from 'vuetify';
-import 'vuetify/dist/vuetify.min.css';
+import 'vuetify/dist/vuetify.min.css'; // TODO: remove this if we want to override sass variables
 import '@mdi/font/css/materialdesignicons.css';
 
 Vue.use(Vuetify);

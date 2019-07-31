@@ -48010,14 +48010,26 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/sass/command.scss":
+/*!*************************************!*\
+  !*** ./resources/sass/command.scss ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ 0:
-/*!*******************************************!*\
-  !*** multi ./resources/js/createSquad.js ***!
-  \*******************************************/
+/*!*************************************************************************!*\
+  !*** multi ./resources/js/createSquad.js ./resources/sass/command.scss ***!
+  \*************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/brianrice/Code/rosterheroestwo/resources/js/createSquad.js */"./resources/js/createSquad.js");
+__webpack_require__(/*! /Users/brianrice/Code/rosterheroestwo/resources/js/createSquad.js */"./resources/js/createSquad.js");
+module.exports = __webpack_require__(/*! /Users/brianrice/Code/rosterheroestwo/resources/sass/command.scss */"./resources/sass/command.scss");
 
 
 /***/ })
