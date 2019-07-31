@@ -17,7 +17,6 @@
             </HeroRosterCard>
             <v-data-iterator
                     :items="_playerSpiritsPool"
-                    content-tag="v-layout"
                     hide-default-footer
                     row
                     wrap
