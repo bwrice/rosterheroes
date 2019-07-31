@@ -1,9 +1,12 @@
 <template>
     <v-app>
-        <v-app-bar fixed app>
+        <v-app-bar
+                fixed
+                app
+        >
             <v-app-bar-nav-icon
-                    class="accent--text"
                     @click.stop="drawer = !drawer"
+                    class="accent--text"
             ></v-app-bar-nav-icon>
             <v-toolbar-title>{{ _squad.name }}</v-toolbar-title>
         </v-app-bar>

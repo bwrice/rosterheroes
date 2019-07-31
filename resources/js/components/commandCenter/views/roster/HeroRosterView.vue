@@ -2,7 +2,7 @@
     <v-container class="pa-2">
         <v-card>
             <v-btn :to="rosterPage">
-                <v-icon dark left>arrow_back</v-icon>Back
+                <v-icon>arrow_back</v-icon>Back
             </v-btn>
             <HeroRosterCard :hero="_hero" v-if="_hero">
                 <template slot="body">
