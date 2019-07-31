@@ -1,5 +1,5 @@
 <template>
-    <v-container class="pa-2">
+    <v-flex class="xs12">
         <v-card>
             <v-btn :to="rosterPage">
                 <v-icon>arrow_back</v-icon>Back
@@ -46,7 +46,7 @@
                 </template>
             </v-data-iterator>
         </v-card>
-    </v-container>
+    </v-flex>
 </template>
 
 <script>

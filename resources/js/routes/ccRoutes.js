@@ -12,6 +12,7 @@ import HeroBarracksView from '../components/commandCenter/views/barracks/HeroBar
 import Barracks from "../components/commandCenter/views/barracks/Barracks";
 import Roster from "../components/commandCenter/views/roster/Roster";
 import HeroRosterView from "../components/commandCenter/views/roster/HeroRosterView";
+import BaseView from "../components/commandCenter/views/BaseView";
 
 export const routes = [
     {
@@ -48,7 +49,7 @@ export const routes = [
             footerButton: 'roster'
         },
         components: {
-            default: Roster,
+            default: BaseView,
             drawer: RosterNavigationDrawer
         },
         children: [
