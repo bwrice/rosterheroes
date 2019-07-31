@@ -7,7 +7,6 @@
             style="min-width: 52px"
     >
         <v-sheet
-                class="d-flex pa-1"
                 color="transparent"
                 height="60"
                 width="60"

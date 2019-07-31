@@ -1,6 +1,6 @@
 <template>
     <FooterIcon :value="name" :to="to">
-        <svg viewBox="0 0 52 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <svg viewBox="0 0 56 52" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <g id="Canvas" >
                 <g id="Vector">
                     <use xlink:href="#rh_campaign_button0_fill" :fill="fillColor"></use>

@@ -1,6 +1,6 @@
 <template>
     <FooterIcon :value="name" :to="to">
-        <svg viewBox="0 0 46 46" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <svg viewBox="0 0 50 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <g id="Canvas">
                 <g id="Subtract">
                     <use xlink:href="#rh_map_button0_fill" :fill="fillColor"></use>
