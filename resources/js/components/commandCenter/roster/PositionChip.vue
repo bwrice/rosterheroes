@@ -1,5 +1,5 @@
 <template>
-    <v-chip :small="true" :color="color" text-color="#FFFFFF">{{position.abbreviation}}</v-chip>
+    <v-chip x-small label :color="color" class="px-1" text-color="#FFFFFF">{{position.abbreviation}}</v-chip>
 </template>
 
 <script>

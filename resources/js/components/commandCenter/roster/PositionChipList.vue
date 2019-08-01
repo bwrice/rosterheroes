@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <v-chip-group>
         <PositionChip v-for="position in positions" v-bind:key="position.id" :position="position"></PositionChip>
-    </div>
+    </v-chip-group>
 </template>
 
 <script>
