@@ -1,7 +1,9 @@
 <template>
-    <div>
-        <h1 class="mx-4">TODO: Map</h1>
-    </div>
+    <v-flex class="xs12">
+        <v-card>
+            <h3>Map Main</h3>
+        </v-card>
+    </v-flex>
 </template>
 
 <script>
