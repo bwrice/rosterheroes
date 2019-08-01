@@ -19,7 +19,7 @@ export default {
 
     actions: {
         async updateProvinces({commit}) {
-            let provinces = Province.$get();
+            let provinces = await Province.$get();
             commit('UPDATE_PROVINCES', provinces)
         },
     }
