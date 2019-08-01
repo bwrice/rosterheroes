@@ -21,9 +21,12 @@ class ProvinceResource extends JsonResource
      */
     public function toArray($request)
     {
-        // TODO: relations?
         return [
             'name' => $this->name,
+            'color' => $this->color,
+            'vector_paths' => $this->vector_paths,
+            'continent' => $this->whenLoaded('continent'),
+            'territory' => $this->whenLoaded('territory')
         ];
     }
 }

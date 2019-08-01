@@ -17,7 +17,9 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property string $name
- * @property string uuid
+ * @property string $uuid
+ * @property string $color
+ * @property string $vector_paths
  * @property int $continent_id
  * @property int $territory_id
  *
