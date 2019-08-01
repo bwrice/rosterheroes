@@ -24,40 +24,37 @@ use App\Squads\HeroPostAvailability;
 class AddNewHeroToSquadAction
 {
     /**
-     * @var \App\Domain\Models\Squad
+     * @var CreateHeroAction
      */
-    private $squad;
-    /**
-     * @var CreateNewHeroAction
-     */
-    private $createNewHeroAction;
+    private $createHeroAction;
 
-    public function __construct(Squad $squad, CreateNewHeroAction $createNewHeroAction)
+    public function __construct(CreateHeroAction $createHeroAction)
     {
-        $this->squad = $squad;
-        $this->createNewHeroAction = $createNewHeroAction;
+        $this->createHeroAction = $createHeroAction;
     }
 
     /**
-     * @return Hero
+     * @param Squad $squad
+     * @param string $heroName
+     * @param HeroClass $heroClass
+     * @param HeroRace $heroRace
+     * @return Hero|null
      * @throws HeroPostNotFoundException
      * @throws InvalidHeroClassException
      */
-    public function __invoke(): Hero
+    public function execute(Squad $squad, string $heroName, HeroClass $heroClass, HeroRace $heroRace)
     {
-        $heroRace = $this->createNewHeroAction->getHeroRace();
-        $heroPost= $this->squad->getHeroPostAvailability()->heroRace($heroRace)->first();
+        $heroPost= $squad->getHeroPostAvailability()->heroRace($heroRace)->first();
         if (! $heroPost) {
             throw new HeroPostNotFoundException($heroRace);
         }
 
-        $heroClass = $this->createNewHeroAction->getHeroClass();
-        if (! $this->squad->getHeroClassAvailability()->contains($heroClass)) {
+        if (! $squad->getHeroClassAvailability()->contains($heroClass)) {
             throw new InvalidHeroClassException($heroClass);
         }
 
         // invoke the CreateNewHeroAction
-        $hero = call_user_func($this->createNewHeroAction);
+        $hero = $this->createHeroAction->execute($heroName, $heroClass, $heroRace, HeroRank::getStarting());
 
         $heroPost->hero_id = $hero->id;
         $heroPost->save();

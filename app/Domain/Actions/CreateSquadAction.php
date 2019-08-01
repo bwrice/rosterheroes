@@ -32,9 +32,9 @@ class CreateSquadAction
     /**
      * @param int $userID
      * @param string $name
-     * @return Squad|null
+     * @return Squad
      */
-    public function execute(int $userID, string $name)
+    public function execute(int $userID, string $name): Squad
     {
         $squadUuid = Str::uuid();
         /** @var SquadAggregate $aggregate */

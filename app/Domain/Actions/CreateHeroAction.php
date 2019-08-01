@@ -26,9 +26,11 @@ class CreateHeroAction
      * @param string $name
      * @param HeroClass $heroClass
      * @param HeroRace $heroRace
+     * @param HeroRank $heroRank
+     *
      * @return Hero|null
      */
-    public function execute(string $name, HeroClass $heroClass, HeroRace $heroRace)
+    public function execute(string $name, HeroClass $heroClass, HeroRace $heroRace, HeroRank $heroRank): Hero
     {
         $heroUuid = Str::uuid();
         /** @var HeroAggregate $heroAggregate */
@@ -37,7 +39,7 @@ class CreateHeroAction
             $name,
             $heroClass->id,
             $heroRace->id,
-            HeroRank::getStarting()->id
+            $heroRank->id
         ));
 
         /*
