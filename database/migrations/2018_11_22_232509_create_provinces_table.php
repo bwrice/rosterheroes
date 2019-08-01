@@ -21,11 +21,7 @@ class CreateProvincesTable extends Migration
             $table->string('name')->unique();
             $table->integer('nation_id')->unsigned()->nullable();
             $table->string('color');
-            $table->float('realm_x', 10, 4);
-            $table->float('realm_y', 10, 4);
-            $table->float('focus_scale', 8 , 4);
-            $table->integer('focus_x');
-            $table->integer('focus_y');
+            $table->text('vector_paths');
             $table->timestamps();
         });
 
