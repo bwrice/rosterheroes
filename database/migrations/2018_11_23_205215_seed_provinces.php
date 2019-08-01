@@ -7754,6 +7754,9 @@ class SeedProvinces extends Migration
         $territoriesCollection = \App\Domain\Models\Territory::all();
         $continents = \App\Domain\Models\Continent::all();
 
+        /** @var \App\Domain\Actions\CreateProvinceAction $createProvinceAction */
+        $createProvinceAction = app(\App\Domain\Actions\CreateProvinceAction::class);
+
         foreach ($territories as $territory) {
 
             /** @var \App\Domain\Models\Territory $territoryModel */
@@ -7771,9 +7774,6 @@ class SeedProvinces extends Migration
                 $pathsText = collect($province['vector_paths'])->map(function($vectorPath) {
                     return '<path d="' . $vectorPath['path'] . '" />';
                 })->implode('');
-
-                /** @var \App\Domain\Actions\CreateProvinceAction $createProvinceAction */
-                $createProvinceAction = app(\App\Domain\Actions\CreateProvinceAction::class);
 
                 $provinceCreated = $createProvinceAction->execute(
                     $province['name'],
