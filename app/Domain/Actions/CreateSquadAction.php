@@ -15,46 +15,34 @@ use App\Domain\Models\MobileStorageRank;
 use App\Domain\Models\Province;
 use App\Domain\Models\Squad;
 use App\Domain\Models\SquadRank;
+use Illuminate\Support\Str;
 
-class CreateNewSquadAction
+class CreateSquadAction
 {
-    /**
-     * @var string
-     */
-    private $uuid;
-    /**
-     * @var int
-     */
-    private $userID;
-    /**
-     * @var string
-     */
-    private $name;
     /**
      * @var UpdateSquadSlotsAction
      */
     private $updateSquadSlotsAction;
 
-    public function __construct(
-        string $uuid,
-        int $userID,
-        string $name,
-        UpdateSquadSlotsAction $updateSquadSlotsAction)
+    public function __construct(UpdateSquadSlotsAction $updateSquadSlotsAction)
     {
-        $this->userID = $userID;
-        $this->name = $name;
         $this->updateSquadSlotsAction = $updateSquadSlotsAction;
-        $this->uuid = $uuid;
     }
 
-    public function __invoke(): Squad
+    /**
+     * @param int $userID
+     * @param string $name
+     * @return Squad|null
+     */
+    public function execute(int $userID, string $name)
     {
+        $squadUuid = Str::uuid();
         /** @var SquadAggregate $aggregate */
-        $aggregate = SquadAggregate::retrieve($this->uuid);
+        $aggregate = SquadAggregate::retrieve($squadUuid);
 
         $aggregate->createSquad(
-            $this->userID,
-            $this->name,
+            $userID,
+            $name,
             SquadRank::getStarting()->id,
             MobileStorageRank::getStarting()->id,
             Province::getStarting()->id
@@ -74,8 +62,9 @@ class CreateNewSquadAction
          * because that action will query the DB
          */
         $aggregate->persist();
-        ($this->updateSquadSlotsAction)();
+        $squad = Squad::uuid($squadUuid);
+        $this->updateSquadSlotsAction->execute($squad);
 
-        return Squad::uuid($this->uuid);
+        return $squad->fresh();
     }
 }
