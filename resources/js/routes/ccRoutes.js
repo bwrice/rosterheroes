@@ -13,6 +13,7 @@ import Barracks from "../components/commandCenter/views/barracks/Barracks";
 import Roster from "../components/commandCenter/views/roster/Roster";
 import HeroRosterView from "../components/commandCenter/views/roster/HeroRosterView";
 import BaseView from "../components/commandCenter/views/BaseView";
+import Map from "../components/commandCenter/views/map/Map";
 
 export const routes = [
     {
@@ -78,9 +79,19 @@ export const routes = [
             footerButton: 'map'
         },
         components: {
-            default: MapMain,
+            default: Map,
             drawer: MapNavigationDrawer
-        }
+        },
+        children: [
+            {
+                path: '',
+                component: MapMain,
+                name: 'map-main',
+                meta: {
+                    footerButton: 'map'
+                }
+            }
+        ]
     },
     {
         path: '/command-center/:squadSlug/campaign',
