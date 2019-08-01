@@ -7824,11 +7824,6 @@ class SeedProvinces extends Migration
      */
     public function down()
     {
-        \Illuminate\Support\Facades\DB::table('borders')->truncate();
-        $provinces = \App\Domain\Models\Province::all();
-        $provinces->each(function(\App\Domain\Models\Province $province){
-           $province->vectorPaths()->delete();
-        });
-        \App\Domain\Models\Province::query()->delete();
+        //
     }
 }
