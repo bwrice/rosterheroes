@@ -26,7 +26,7 @@ class Territory extends Model
     const DESERT_OF_DESPAIR = 'Desert of Despair';
     const HUMBLING_HILLS = 'Humbling Hills';
     const GULF_OF_SERPENTS = 'Gulf of Serpents';
-    const CANNIBAL_CANYONS = 'Cannibal Canyons';
+    const CARNIVOROUS_CANYONS = 'Carnivorous Canyons';
     const INFERNAL_ISLANDS = 'Infernal Islands';
     const JADE_JUNGLE = 'Jade Jungle';
     const SHORES_OF_THE_SHADOWS = 'Shores of the Shadows';

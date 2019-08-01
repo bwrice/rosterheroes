@@ -96,7 +96,7 @@ class SeedTerritories extends Migration
             ]
         ],
         [
-            'name' => \App\Domain\Models\Territory::CANNIBAL_CANYONS,
+            'name' => \App\Domain\Models\Territory::CARNIVOROUS_CANYONS,
             'continents' => [
                 \App\Domain\Models\Continent::WEST_WOZUL
             ]
