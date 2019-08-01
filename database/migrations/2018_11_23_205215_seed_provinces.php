@@ -7768,37 +7768,19 @@ class SeedProvinces extends Migration
                     return $continent->name == $province['continent'];
                 });
 
-                if(!key_exists('focus_scale', $province)){
-                    $province['focus_scale'] = 0;
-                }
-                if(!key_exists('focus_x', $province)){
-                    $province['focus_x'] = 0;
-                }
-                if(!key_exists('focus_y', $province)){
-                    $province['focus_y'] = 0;
-                }
+                $pathsText = collect($province['vector_paths'])->map(function($vectorPath) {
+                    return '<path d="' . $vectorPath['path'] . '" />';
+                })->implode('');
 
                 /** @var \App\Domain\Models\Province $provinceCreated */
-                $provinceCreated = \App\Domain\Models\Province::create([
+                $provinceCreated = \App\Domain\Models\Province::query()->create([
                     'name' => $province['name'],
-                    'uuid' => (string) \Ramsey\Uuid\Uuid::uuid4(),
+                    'uuid' => \Illuminate\Support\Str::uuid(),
                     'continent_id' => $continent->id,
                     'territory_id' => $territoryModel->id,
                     'color' => $province['realm_color'],
-                    'realm_x' => $province['realm_x'],
-                    'realm_y' => $province['realm_y'],
-                    'focus_scale' => $province['focus_scale'],
-                    'focus_x' => $province['focus_x'],
-                    'focus_y' => $province['focus_y']
+                    'vector_paths' => $pathsText
                 ]);
-
-                if (key_exists('vector_paths', $province)) {
-                    foreach ($province['vector_paths'] as $vectorPath) {
-                        $provinceCreated->vectorPaths()->create([
-                            'path' => $vectorPath['path']
-                        ]);
-                    }
-                }
             }
         }
 
