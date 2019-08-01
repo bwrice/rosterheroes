@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HeroController;
+use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\WeekController;
 use App\Http\Controllers\SquadBorderTravelController;
 use App\Http\Controllers\SquadController;
@@ -32,6 +33,8 @@ use Illuminate\Http\Request;
 Route::prefix('v1')->group(function () {
 
     Route::get('/weeks/{weekUuid}', [WeekController::class, 'show']);
+    Route::get('/weeks/{weekUuid}/player-spirits', [WeekPlayerSpiritController::class, 'index']);
+    Route::get('/provinces', [ProvinceController::class, 'index']);
 
     Route::middleware(['auth:api'])->group(function () {
 
@@ -52,8 +55,6 @@ Route::prefix('v1')->group(function () {
         Route::delete('/heroes/{heroUuid}/player-spirit/{playerSpiritUuid}', [HeroPlayerSpiritController::class, 'delete']);
 
         Route::post('/campaign/{campaign}/quest/{questUuid}', [CampaignQuestController::class, 'store']);
-
-        Route::get('/weeks/{weekUuid}/player-spirits', [WeekPlayerSpiritController::class, 'index']);
     });
 });
 
