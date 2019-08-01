@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Aggregates\SquadAggregate;
-use App\Domain\Actions\CreateNewSquadAction;
+use App\Domain\Actions\CreateSquadAction;
 use App\Domain\Actions\UpdateSquadSlotsAction;
 use App\Domain\Models\HeroPostType;
 use App\Domain\Models\SlotType;
@@ -28,23 +28,14 @@ use Illuminate\Support\Str;
 
 class SquadController extends Controller
 {
-    public function store(Request $request)
+    public function store(Request $request, CreateSquadAction $createSquadAction)
     {
         //TODO authorize (limit squad creation to 1?)
         $request->validate([
             'name' => 'required|unique:squads|between:4,20|regex:/^[\w\s]+$/'
         ]);
 
-        $uuid = Str::uuid();
-
-        $createAction = new CreateNewSquadAction(
-            $uuid,
-            auth()->user()->id,
-            $request->name,
-            new UpdateSquadSlotsAction($uuid)
-        );
-        // invoke the action
-        $squad = $createAction();
+        $squad = $createSquadAction->execute(auth()->user()->id, $request->name);
 
         return response()->json(new SquadResource($squad), 201);
     }
@@ -52,6 +43,7 @@ class SquadController extends Controller
     public function create()
     {
         return view('create-squad', [
+            // If squad is still in creation state, Command Center Controller reuses this view
             'squad' => null
         ]);
     }
