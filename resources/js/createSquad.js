@@ -7,23 +7,7 @@ import 'vuetify/dist/vuetify.min.css'; // TODO: remove this if we want to overri
 import '@mdi/font/css/materialdesignicons.css';
 Vue.use(Vuetify);
 
-const vuetifyOptions = {
-    theme: {
-        dark: true,
-        themes: {
-            dark: {
-                primary: '#3fa391',
-                accent: '#ffc747',
-                info: '#6a6099',
-                success: '#52b266'
-            }
-        }
-    },
-    icons: {
-        iconfont: 'mdi'
-    },
-};
-
+import { vuetifyOptions } from "./vuetifyOptions";
 
 import CreateSquad from './views/CreateSquad';
 
