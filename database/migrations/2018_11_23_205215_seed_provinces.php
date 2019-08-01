@@ -7772,15 +7772,16 @@ class SeedProvinces extends Migration
                     return '<path d="' . $vectorPath['path'] . '" />';
                 })->implode('');
 
-                /** @var \App\Domain\Models\Province $provinceCreated */
-                $provinceCreated = \App\Domain\Models\Province::query()->create([
-                    'name' => $province['name'],
-                    'uuid' => \Illuminate\Support\Str::uuid(),
-                    'continent_id' => $continent->id,
-                    'territory_id' => $territoryModel->id,
-                    'color' => $province['realm_color'],
-                    'vector_paths' => $pathsText
-                ]);
+                /** @var \App\Domain\Actions\CreateProvinceAction $createProvinceAction */
+                $createProvinceAction = app(\App\Domain\Actions\CreateProvinceAction::class);
+
+                $provinceCreated = $createProvinceAction->execute(
+                    $province['name'],
+                    $province['realm_color'],
+                    $pathsText,
+                    $continent,
+                    $territoryModel
+                );
             }
         }
 
