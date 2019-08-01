@@ -58,9 +58,11 @@ class LoginController extends Controller
     /**
      * Obtain the user information from GitHub.
      *
+     * @param CreateUserAction $createUserAction
+     *
      * @return \Illuminate\Http\Response
      */
-    public function handleProviderCallback()
+    public function handleProviderCallback(CreateUserAction $createUserAction)
     {
         $googleUser = Socialite::driver('google')->user();
 
@@ -69,8 +71,7 @@ class LoginController extends Controller
             $user = User::where('email', '=', $googleUser->email)->first();
 
             if (! $user) {
-                $createAction = new CreateUserAction($googleUser->email, $googleUser->name);
-                $user = $createAction();
+                $user = $createUserAction->execute($googleUser->email, $googleUser->name);
             }
             Auth::login($user);
             return redirect('/');

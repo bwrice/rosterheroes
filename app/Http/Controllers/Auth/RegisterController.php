@@ -60,11 +60,12 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
+     * @param CreateUserAction $createUserAction
      * @return User
      */
-    protected function create(array $data)
+    protected function create(array $data, CreateUserAction $createUserAction)
     {
-        $action = new CreateUserAction($data['email'], $data['name'], $data['password']);
-        return $action();
+        $user = $createUserAction->execute($data['email'], $data['name'], $data['password']);
+        return $user;
     }
 }
