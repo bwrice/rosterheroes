@@ -15,27 +15,18 @@ use App\Domain\Models\Squad;
 
 class UpdateSquadSlotsAction
 {
-
     /**
-     * @var string
+     * @param Squad $squad
      */
-    private $squadUuid;
-
-    public function __construct(string $squadUuid)
+    public function execute(Squad $squad)
     {
-        $this->squadUuid = $squadUuid;
-    }
-
-    public function __invoke()
-    {
-        $squad = Squad::uuid($this->squadUuid);
         $slotsNeededCount = $squad->mobileStorageRank->getBehavior()->getSlotsCount();
         $currentSlotsCount = $squad->slots()->count();
         $diff = $slotsNeededCount - $currentSlotsCount;
 
         if ($diff > 0) {
             /** @var SquadAggregate $aggregate */
-            $aggregate = SquadAggregate::retrieve($this->squadUuid);
+            $aggregate = SquadAggregate::retrieve($squad->uuid);
             $aggregate->addSlots(SlotType::UNIVERSAL, $diff);
             $aggregate->persist();
         }
