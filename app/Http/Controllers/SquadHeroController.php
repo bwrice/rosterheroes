@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Domain\Actions\AddNewHeroToSquadAction;
-use App\Domain\Actions\CreateNewHeroAction;
+use App\Domain\Actions\CreateHeroAction;
 use App\StorableEvents\HeroCreated;
 use App\Exceptions\GameStartedException;
 use App\Exceptions\HeroPostNotFoundException;
@@ -27,11 +27,12 @@ class SquadHeroController extends Controller
     /**
      * @param Request $request
      * @param $squadUuid
+     * @param AddNewHeroToSquadAction $domainAction
      * @return \Illuminate\Http\JsonResponse
      * @throws ValidationException
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function store(Request $request, $squadUuid)
+    public function store(Request $request, $squadUuid, AddNewHeroToSquadAction $domainAction)
     {
         $squad = Squad::uuidOrFail($squadUuid);
         $this->authorize(Squad::MANAGE_AUTHORIZATION, $squad);
@@ -42,18 +43,16 @@ class SquadHeroController extends Controller
             'class' => 'required|exists:hero_classes,name'
         ]);
 
-        /** @var \App\Domain\Models\HeroRace $heroRace */
-        $heroRace = HeroRace::query()->where('name', '=', $request->race)->first();
         /** @var \App\Domain\Models\HeroClass $heroClass */
         $heroClass = HeroClass::query()->where('name', '=', $request->class)->first();
-
-        $heroRank = HeroRank::getStarting();
-
-        $action = new AddNewHeroToSquadAction($squad, new CreateNewHeroAction($request->name, $heroClass, $heroRace, $heroRank));
+        /** @var \App\Domain\Models\HeroRace $heroRace */
+        $heroRace = HeroRace::query()->where('name', '=', $request->race)->first();
 
         try {
-            $hero = $action();
+
+            $hero = $domainAction->execute($squad, $request->name, $heroClass, $heroRace);
             return response()->json(new HeroResource($hero->fresh()), 201);
+
         } catch (HeroPostNotFoundException $exception) {
             throw ValidationException::withMessages([
                 'race' => $squad->name . ' does not have a hero post available for hero race: ' . $exception->getHeroRace()->name
