@@ -99,7 +99,7 @@
                 required,
                 minLength: minLength(4),
                 maxLength: maxLength(20),
-                format: helpers.regex('format', /^[\w\-\s]+$/)
+                format: helpers.regex('format', /^[\w\s]+$/)
             },
             heroClass: { required },
             heroRace: { required }

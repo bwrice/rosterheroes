@@ -32,7 +32,7 @@ class SquadController extends Controller
     {
         //TODO authorize (limit squad creation to 1?)
         $request->validate([
-            'name' => 'required|unique:squads|between:4,20|regex:/^[\w\-\s]+$/'
+            'name' => 'required|unique:squads|between:4,20|regex:/^[\w\s]+$/'
         ]);
 
         $uuid = Str::uuid();
