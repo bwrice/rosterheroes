@@ -20,43 +20,24 @@ use App\Domain\Models\SlotType;
 use App\StorableEvents\HeroCreated;
 use Illuminate\Support\Str;
 
-class CreateNewHeroAction
+class CreateHeroAction
 {
     /**
-     * @var string
+     * @param string $name
+     * @param HeroClass $heroClass
+     * @param HeroRace $heroRace
+     * @return Hero|null
      */
-    private $name;
-    /**
-     * @var HeroClass
-     */
-    private $heroClass;
-    /**
-     * @var HeroRace
-     */
-    private $heroRace;
-    /**
-     * @var HeroRank
-     */
-    private $heroRank;
-
-    public function __construct(string $name, HeroClass $heroClass, HeroRace $heroRace, HeroRank $heroRank)
-    {
-        $this->name = $name;
-        $this->heroClass = $heroClass;
-        $this->heroRace = $heroRace;
-        $this->heroRank = $heroRank;
-    }
-
-    public function __invoke(): Hero
+    public function execute(string $name, HeroClass $heroClass, HeroRace $heroRace)
     {
         $heroUuid = Str::uuid();
         /** @var HeroAggregate $heroAggregate */
         $heroAggregate = HeroAggregate::retrieve($heroUuid);
         $heroAggregate->recordThat(new HeroCreated(
-            $this->name,
-            $this->heroClass->id,
-            $this->heroRace->id,
-            $this->heroRank->id
+            $name,
+            $heroClass->id,
+            $heroRace->id,
+            HeroRank::getStarting()->id
         ));
 
         /*
@@ -81,29 +62,5 @@ class CreateNewHeroAction
         // Persist slots
         $heroAggregate->persist();
         return Hero::uuid($heroUuid);
-    }
-
-    /**
-     * @return HeroClass
-     */
-    public function getHeroClass(): HeroClass
-    {
-        return $this->heroClass;
-    }
-
-    /**
-     * @return HeroRace
-     */
-    public function getHeroRace(): HeroRace
-    {
-        return $this->heroRace;
-    }
-
-    /**
-     * @return HeroRank
-     */
-    public function getHeroRank(): HeroRank
-    {
-        return $this->heroRank;
     }
 }
