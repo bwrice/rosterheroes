@@ -18,7 +18,7 @@ export default {
     },
 
     actions: {
-        async updateProvinces({commit}) {
+        async setMap({commit}) {
             let provinces = await Province.$get();
             commit('UPDATE_PROVINCES', provinces)
         },

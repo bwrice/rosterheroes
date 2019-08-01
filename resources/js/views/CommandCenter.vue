@@ -82,6 +82,8 @@
                     this.updatePlayerSpiritsPool();
                 }
             }
+
+            this.setMap();
         },
 
         data: function() {
@@ -95,7 +97,8 @@
                 'updateHero',
                 'setCurrentWeek',
                 'setPlayerSpiritsPool',
-                'updatePlayerSpiritsPool'
+                'updatePlayerSpiritsPool',
+                'setMap'
             ])
         },
         computed: {
