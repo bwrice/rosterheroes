@@ -8,12 +8,16 @@
 
     import {mapActions} from 'vuex';
     import {mapGetters} from 'vuex';
+    import { continentMixin } from '../../../../mixins/continentMixin';
     import ProvinceVector from "./ProvinceVector";
 
     export default {
         name: "ContinentVector",
         components: {ProvinceVector},
         props: ['continent'],
+        mixins: [
+            continentMixin
+        ],
 
         data: function() {
             return {
@@ -41,16 +45,6 @@
                 '_continents',
                 '_squad'
             ]),
-            provincesForContinent() {
-                let continentProvinces = [];
-                let self = this;
-                this._provinces.forEach(function(province) {
-                    if (province.continent_id === self.continent.id) {
-                        continentProvinces.push(province);
-                    }
-                });
-                return continentProvinces;
-            },
             fillColor() {
                 return this.continent.realm_color;
             },
