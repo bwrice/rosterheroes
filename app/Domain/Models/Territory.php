@@ -415,7 +415,7 @@ class Territory extends Model
             case self::SCREAMING_HIGHLANDS_OF_NIGHTMARES:
                 return new TerritoryBehavior(
                     new RealmBehavior(
-                        '#FFFFFF',
+                        '#74367f',
                         [
                             'pan_x' => 0,
                             'pan_y' => 0,
@@ -427,7 +427,7 @@ class Territory extends Model
             case self::CLOUD_PIERCING_CLIFFS:
                 return new TerritoryBehavior(
                     new RealmBehavior(
-                        '#FFFFFF',
+                        '#a05709',
                         [
                             'pan_x' => 0,
                             'pan_y' => 0,
@@ -439,7 +439,7 @@ class Territory extends Model
             case self::OUTER_RIM_OF_THE_DEMONIC:
                 return new TerritoryBehavior(
                     new RealmBehavior(
-                        '#FFFFFF',
+                        '#5277af',
                         [
                             'pan_x' => 0,
                             'pan_y' => 0,
