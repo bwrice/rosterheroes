@@ -40,18 +40,18 @@ class Continent extends Model
     {
         switch($this->name) {
             case self::FETROYA:
-                return new ContinentBehavior('#ccc802', [
-                    'pan_x' => 174,
-                    'pan_y' => 18,
-                    'zoom_x' => 142,
-                    'zoom_y' => 100
+                return new ContinentBehavior('#b2b800', [
+                    'pan_x' => 178,
+                    'pan_y' => 20,
+                    'zoom_x' => 130,
+                    'zoom_y' => 96
                 ]);
             case self::EAST_WOZUL:
                 return new ContinentBehavior('#d18c02', [
-                    'pan_x' => 178,
-                    'pan_y' => 70,
-                    'zoom_x' => 150,
-                    'zoom_y' => 100
+                    'pan_x' => 185,
+                    'pan_y' => 72,
+                    'zoom_x' => 130,
+                    'zoom_y' => 93
                 ]);
             case self::WEST_WOZUL:
                 return new ContinentBehavior('#c12907', [
@@ -62,17 +62,17 @@ class Continent extends Model
                 ]);
             case self::NORTH_JAGONETH:
                 return new ContinentBehavior('#46a040', [
-                    'pan_x' => 68,
-                    'pan_y' => -1,
-                    'zoom_x' => 150,
-                    'zoom_y' => 130
+                    'pan_x' => 78,
+                    'pan_y' => 3,
+                    'zoom_x' => 132,
+                    'zoom_y' => 122
                 ]);
             case self::CENTRAL_JAGONETH:
                 return new ContinentBehavior('#3e81a5', [
                     'pan_x' => 58,
                     'pan_y' => 48,
-                    'zoom_x' => 115,
-                    'zoom_y' => 100
+                    'zoom_x' => 113,
+                    'zoom_y' => 98
                 ]);
             case self::SOUTH_JAGONETH:
                 return new ContinentBehavior('#6834aa', [

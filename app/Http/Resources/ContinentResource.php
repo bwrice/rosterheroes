@@ -25,7 +25,8 @@ class ContinentResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'slug' => $this->slug,
-            'realm_color' => $this->realmColor()
+            'realm_color' => $this->realmColor(),
+            'realm_view_box' => $this->getRealmViewBox()
         ];
     }
 }
