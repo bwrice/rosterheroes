@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\ContinentController;
 use App\Http\Controllers\HeroController;
 use App\Http\Controllers\ProvinceController;
+use App\Http\Controllers\TerritoryController;
 use App\Http\Controllers\WeekController;
 use App\Http\Controllers\SquadBorderTravelController;
 use App\Http\Controllers\SquadController;
@@ -34,7 +36,10 @@ Route::prefix('v1')->group(function () {
 
     Route::get('/weeks/{weekUuid}', [WeekController::class, 'show']);
     Route::get('/weeks/{weekUuid}/player-spirits', [WeekPlayerSpiritController::class, 'index']);
+
     Route::get('/provinces', [ProvinceController::class, 'index']);
+    Route::get('/territories', [TerritoryController::class, 'index']);
+    Route::get('/continents', [ContinentController::class, 'index']);
 
     Route::middleware(['auth:api'])->group(function () {
 
