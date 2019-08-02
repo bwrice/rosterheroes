@@ -3,8 +3,10 @@
 namespace App\Domain\Models;
 
 use App\Domain\Behaviors\Continents\ContinentBehavior;
+use App\Domain\Traits\HasSlug;
 use App\Exceptions\UnknownBehaviorException;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Sluggable\SlugOptions;
 
 /**
  * Class Continent
@@ -15,6 +17,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Continent extends Model
 {
+    use HasSlug;
+
     const FETROYA = 'Fetroya';
     const EAST_WOZUL = 'East Wozul';
     const WEST_WOZUL = 'West Wozul';
@@ -57,5 +61,12 @@ class Continent extends Model
     public function realmColor()
     {
         return $this->getBehavior()->getRealmColor();
+    }
+
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug');
     }
 }

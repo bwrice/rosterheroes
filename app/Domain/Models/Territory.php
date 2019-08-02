@@ -3,7 +3,9 @@
 namespace App\Domain\Models;
 
 use App\Domain\Models\Continent;
+use App\Domain\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Sluggable\SlugOptions;
 
 /**
  * Class Territory
@@ -14,6 +16,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Territory extends Model
 {
+    use HasSlug;
+
     const GARDENS_OF_REDEMPTION = 'Gardens of Redemption';
     const WOODS_OF_THE_WILD = 'Woods of the Wild';
     const TWISTING_ISLES_OF_ILLUSIONS = 'Twisting Isles of Illusions';
@@ -56,5 +60,12 @@ class Territory extends Model
     public function provinces()
     {
         return $this->hasMany(Province::class);
+    }
+
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug');
     }
 }
