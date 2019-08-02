@@ -14,6 +14,7 @@ import Roster from "../components/commandCenter/views/roster/Roster";
 import HeroRosterView from "../components/commandCenter/views/roster/HeroRosterView";
 import BaseView from "../components/commandCenter/views/BaseView";
 import Map from "../components/commandCenter/views/map/Map";
+import ContinentView from "../components/commandCenter/views/map/ContinentView";
 
 export const routes = [
     {
@@ -86,6 +87,14 @@ export const routes = [
                 path: '',
                 component: MapMain,
                 name: 'map-main',
+                meta: {
+                    footerButton: 'map'
+                }
+            },
+            {
+                path: 'continents/:continentSlug',
+                component: ContinentView,
+                name: 'map-continent',
                 meta: {
                     footerButton: 'map'
                 }

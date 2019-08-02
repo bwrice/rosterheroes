@@ -1,7 +1,9 @@
 <template>
-    <g :fill="fillColor" :opacity="opacity" @mouseover="setHovered(true)" @mouseleave="setHovered(false)">
-        <ProvinceVector v-for="(province, uuid) in provincesForContinent" :key="uuid" :province="province"></ProvinceVector>
-    </g>
+    <router-link :to="continentRoute">
+        <g :fill="fillColor" :opacity="opacity" @mouseover="setHovered(true)" @mouseleave="setHovered(false)">
+            <ProvinceVector v-for="(province, uuid) in provincesForContinent" :key="uuid" :province="province"></ProvinceVector>
+        </g>
+    </router-link>
 </template>
 
 <script>
@@ -30,7 +32,8 @@
             ...mapGetters([
                 '_provinces',
                 '_territories',
-                '_continents'
+                '_continents',
+                '_squad'
             ]),
             provincesForContinent() {
                 let continentProvinces = [];
@@ -50,6 +53,15 @@
                     return .6;
                 }
                 return 1;
+            },
+            continentRoute() {
+                return {
+                    name: 'map-continent',
+                    params: {
+                        squadSlug: this._squad.slug,
+                        continentSlug: this.continent.slug
+                    }
+                }
             }
         }
     }
