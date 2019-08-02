@@ -1,5 +1,5 @@
 <template>
-    <v-card :color="cardColor">
+    <v-card :color="oceanColor">
         <svg xmlns="http://www.w3.org/2000/svg"
              version="1.1"
              :viewBox="viewBoxString">
@@ -35,8 +35,8 @@
             viewBoxString() {
                 return this.viewBox.pan_x + ' ' + this.viewBox.pan_y + ' ' + this.viewBox.zoom_x + ' ' + this.viewBox.zoom_y;
             },
-            cardColor() {
-                return '#E3EFEB'
+            oceanColor() {
+                return '#d5f5f5'
             }
         }
     }
