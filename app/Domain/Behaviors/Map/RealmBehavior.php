@@ -1,10 +1,10 @@
 <?php
 
 
-namespace App\Domain\Behaviors\Continents;
+namespace App\Domain\Behaviors\Map;
 
 
-class ContinentBehavior
+class RealmBehavior
 {
     /**
      * @var string

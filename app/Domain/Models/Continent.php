@@ -2,7 +2,8 @@
 
 namespace App\Domain\Models;
 
-use App\Domain\Behaviors\Continents\ContinentBehavior;
+use App\Domain\Behaviors\Map\ContinentBehavior;
+use App\Domain\Behaviors\Map\RealmBehavior;
 use App\Domain\Traits\HasSlug;
 use App\Exceptions\UnknownBehaviorException;
 use Illuminate\Database\Eloquent\Model;
@@ -38,63 +39,71 @@ class Continent extends Model
 
     public function getBehavior(): ContinentBehavior
     {
-        switch($this->name) {
+        switch ($this->name) {
             case self::FETROYA:
-                return new ContinentBehavior('#b2b800', [
-                    'pan_x' => 178,
-                    'pan_y' => 20,
-                    'zoom_x' => 130,
-                    'zoom_y' => 96
-                ]);
+                return new ContinentBehavior(
+                    new RealmBehavior('#b2b800', [
+                        'pan_x' => 178,
+                        'pan_y' => 20,
+                        'zoom_x' => 130,
+                        'zoom_y' => 96
+                    ]));
             case self::EAST_WOZUL:
-                return new ContinentBehavior('#d18c02', [
-                    'pan_x' => 185,
-                    'pan_y' => 72,
-                    'zoom_x' => 130,
-                    'zoom_y' => 93
-                ]);
+                return new ContinentBehavior(
+                    new RealmBehavior('#d18c02', [
+                        'pan_x' => 185,
+                        'pan_y' => 72,
+                        'zoom_x' => 130,
+                        'zoom_y' => 93
+                    ]));
             case self::WEST_WOZUL:
-                return new ContinentBehavior('#c12907', [
-                    'pan_x' => 155,
-                    'pan_y' => 100,
-                    'zoom_x' => 120,
-                    'zoom_y' => 110
-                ]);
+                return new ContinentBehavior(
+                    new RealmBehavior('#c12907', [
+                        'pan_x' => 155,
+                        'pan_y' => 100,
+                        'zoom_x' => 120,
+                        'zoom_y' => 110
+                    ]));
             case self::NORTH_JAGONETH:
-                return new ContinentBehavior('#46a040', [
-                    'pan_x' => 78,
-                    'pan_y' => 3,
-                    'zoom_x' => 132,
-                    'zoom_y' => 122
-                ]);
+                return new ContinentBehavior(
+                    new RealmBehavior('#46a040', [
+                        'pan_x' => 78,
+                        'pan_y' => 3,
+                        'zoom_x' => 132,
+                        'zoom_y' => 122
+                    ]));
             case self::CENTRAL_JAGONETH:
-                return new ContinentBehavior('#3e81a5', [
-                    'pan_x' => 58,
-                    'pan_y' => 48,
-                    'zoom_x' => 113,
-                    'zoom_y' => 98
-                ]);
+                return new ContinentBehavior(
+                    new RealmBehavior('#3e81a5', [
+                        'pan_x' => 58,
+                        'pan_y' => 48,
+                        'zoom_x' => 113,
+                        'zoom_y' => 98
+                    ]));
             case self::SOUTH_JAGONETH:
-                return new ContinentBehavior('#6834aa', [
-                    'pan_x' => 36,
-                    'pan_y' => 74,
-                    'zoom_x' => 150,
-                    'zoom_y' => 130
-                ]);
+                return new ContinentBehavior(
+                    new RealmBehavior('#6834aa', [
+                        'pan_x' => 36,
+                        'pan_y' => 74,
+                        'zoom_x' => 150,
+                        'zoom_y' => 130
+                    ]));
             case self::VINDOBERON:
-                return new ContinentBehavior('#4f547a', [
-                    'pan_x' => 0,
-                    'pan_y' => 10,
-                    'zoom_x' => 100,
-                    'zoom_y' => 138
-                ]);
+                return new ContinentBehavior(
+                    new RealmBehavior('#4f547a', [
+                        'pan_x' => 0,
+                        'pan_y' => 10,
+                        'zoom_x' => 100,
+                        'zoom_y' => 138
+                    ]));
             case self::DEMAUXOR:
-                return new ContinentBehavior('#9e1284', [
-                    'pan_x' => 0,
-                    'pan_y' => 135,
-                    'zoom_x' => 160,
-                    'zoom_y' => 100
-                ]);
+                return new ContinentBehavior(
+                    new RealmBehavior('#9e1284', [
+                        'pan_x' => 0,
+                        'pan_y' => 135,
+                        'zoom_x' => 160,
+                        'zoom_y' => 100
+                    ]));
         }
         throw new UnknownBehaviorException((string)$this->name, ContinentBehavior::class);
     }
