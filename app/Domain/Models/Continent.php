@@ -2,7 +2,8 @@
 
 namespace App\Domain\Models;
 
-use App\Domain\Models\Province;
+use App\Domain\Behaviors\Continents\ContinentBehavior;
+use App\Exceptions\UnknownBehaviorException;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -28,5 +29,33 @@ class Continent extends Model
     public function provinces()
     {
         return $this->hasMany(Province::class);
+    }
+
+    public function getBehavior(): ContinentBehavior
+    {
+        switch($this->name) {
+            case self::FETROYA:
+                return new ContinentBehavior('#ccc802');
+            case self::EAST_WOZUL:
+                return new ContinentBehavior('#d18c02');
+            case self::WEST_WOZUL:
+                return new ContinentBehavior('#c12907');
+            case self::NORTH_JAGONETH:
+                return new ContinentBehavior('#46a040');
+            case self::CENTRAL_JAGONETH:
+                return new ContinentBehavior('#3e81a5');
+            case self::SOUTH_JAGONETH:
+                return new ContinentBehavior('#6834aa');
+            case self::VINDOBERON:
+                return new ContinentBehavior('#4f547a');
+            case self::DEMAUXOR:
+                return new ContinentBehavior('#9e1284');
+        }
+        throw new UnknownBehaviorException((string)$this->name, ContinentBehavior::class);
+    }
+
+    public function realmColor()
+    {
+        return $this->getBehavior()->getRealmColor();
     }
 }
