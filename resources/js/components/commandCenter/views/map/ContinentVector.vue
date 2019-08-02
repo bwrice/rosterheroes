@@ -1,13 +1,12 @@
 <template>
-    <router-link :to="continentRoute">
-        <g :fill="fillColor" :opacity="opacity" @mouseover="setHovered(true)" @mouseleave="setHovered(false)">
-            <ProvinceVector v-for="(province, uuid) in provincesForContinent" :key="uuid" :province="province"></ProvinceVector>
-        </g>
-    </router-link>
+    <g :fill="fillColor" :opacity="opacity" @mouseover="setHovered(true)" @mouseleave="setHovered(false)" @click="navigateToContinent">
+        <ProvinceVector v-for="(province, uuid) in provincesForContinent" :key="uuid" :province="province"></ProvinceVector>
+    </g>
 </template>
 
 <script>
 
+    import {mapActions} from 'vuex';
     import {mapGetters} from 'vuex';
     import ProvinceVector from "./ProvinceVector";
 
@@ -23,8 +22,15 @@
         },
 
         methods: {
+            ...mapActions([
+                'updateContinent',
+            ]),
             setHovered: function(hoveredState) {
                 this.hovered = hoveredState;
+            },
+            navigateToContinent() {
+                this.updateContinent(this.continent);
+                this.$router.push(this.continentRoute);
             }
         },
 
