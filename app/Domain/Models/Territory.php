@@ -46,7 +46,7 @@ class Territory extends Model
     const TURBULENT_TUNDRA = 'Turbulent Tundra';
     const COVES_OF_CORRUPTION = 'Coves of Corruption';
     const MOUNTAINS_OF_MISERY = 'Mountains of Misery';
-    const ENCHANTED_ENCLAVE_OF_VISIONS = 'Enchanted Enclave of Visions';
+    const ENCLAVE_OF_ENIGMAS = 'Enclave of Enigmas';
     const SCREAMING_HIGHLANDS_OF_NIGHTMARES = 'Screaming Highlands of Nightmares';
     const CLOUD_PIERCING_CLIFFS = 'Cloud Piercing Cliffs';
     const OUTER_RIM_OF_THE_DEMONIC = 'Outer Rim of the Demonic';
