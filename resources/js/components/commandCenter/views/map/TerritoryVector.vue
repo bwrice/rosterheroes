@@ -34,18 +34,20 @@
 
         methods: {
             ...mapActions([
-
+                'updateTerritory'
             ]),
             setHovered: function(hoveredState) {
                 this.hovered = hoveredState;
             },
             navigateToTerritory() {
-                //TODO
+                this.updateTerritory(this.territory);
+                this.$router.push(this.territoryRoute)
             }
         },
 
         computed: {
             ...mapGetters([
+                '_squad',
                 '_provinces',
                 '_territories'
             ]),
@@ -68,6 +70,15 @@
                 });
                 return territoryProvinces;
             },
+            territoryRoute() {
+                return {
+                    name: 'map-territory',
+                    params: {
+                        squadSlug: this._squad.slug,
+                        territorySlug: this.territory.slug
+                    }
+                }
+            }
         }
     }
 </script>
