@@ -24,6 +24,7 @@ class ContinentResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'slug' => $this->slug,
             'realm_color' => $this->realmColor()
         ];
     }

@@ -14,6 +14,7 @@ use Spatie\Sluggable\SlugOptions;
  *
  * @property int $id
  * @property string $name
+ * @property string $slug
  */
 class Continent extends Model
 {
