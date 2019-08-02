@@ -1,15 +1,9 @@
 <template>
     <v-flex class="xs12 lg8 offset-lg2">
         <v-card>
-            <svg xmlns="http://www.w3.org/2000/svg"
-                 version="1.1"
-                 viewBox="0 0 315 240">
-
-                <rect width="315" height="240" rx="5" ry="5"
-                      style="fill: #c9e5ea; stroke: #E3EFEB; stroke-width: 2"
-                ></rect>
+            <Realm>
                 <ProvinceVector v-for="(province, uuid) in this._provinces" :key="uuid" :province="province"></ProvinceVector>
-            </svg>
+            </Realm>
         </v-card>
     </v-flex>
 </template>
@@ -18,10 +12,11 @@
 
     import {mapGetters} from 'vuex';
     import ProvinceVector from "./ProvinceVector";
+    import Realm from "./Realm";
 
     export default {
         name: "MapMain",
-        components: {ProvinceVector},
+        components: {Realm, ProvinceVector},
 
         data: function() {
             return {
