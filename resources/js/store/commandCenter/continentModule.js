@@ -11,7 +11,7 @@ export default {
     },
     mutations: {
         SET_CONTINENT(state, payload) {
-            state.hero = payload;
+            state.continent = payload;
         },
     },
     actions: {
