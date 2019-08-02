@@ -1,5 +1,5 @@
 <template>
-    <g>
+    <g :fill="this.continent.realm_color">
         <ProvinceVector v-for="(province, uuid) in provincesForContinent" :key="uuid" :province="province"></ProvinceVector>
     </g>
 </template>
