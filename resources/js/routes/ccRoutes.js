@@ -74,7 +74,6 @@ export const routes = [
     },
     {
         path: '/command-center/:squadSlug/map',
-        name: 'map',
         meta: {
             footerButton: 'map'
         },
