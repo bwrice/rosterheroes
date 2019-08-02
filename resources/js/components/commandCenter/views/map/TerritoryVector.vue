@@ -1,7 +1,7 @@
 <template>
-    <g @mouseover="setHovered(true)" @mouseleave="setHovered(false)" @click="navigateToContinent">
+    <g @mouseover="setHovered(true)" @mouseleave="setHovered(false)" @click="navigateToTerritory">
         <ProvinceVector
-                v-for="(province, uuid) in provincesForContinent"
+                v-for="(province, uuid) in provincesForTerritory"
                 :key="uuid"
                 :province="province"
                 :fill-color="fillColor"
@@ -15,16 +15,12 @@
 
     import {mapActions} from 'vuex';
     import {mapGetters} from 'vuex';
-    import { continentMixin } from '../../../../mixins/continentMixin';
     import ProvinceVector from "./ProvinceVector";
 
     export default {
-        name: "ContinentVector",
+        name: "TerritoryVector",
         components: {ProvinceVector},
-        props: ['continent'],
-        mixins: [
-            continentMixin
-        ],
+        props: ['territory'],
 
         data: function() {
             return {
@@ -34,25 +30,23 @@
 
         methods: {
             ...mapActions([
-                'updateContinent',
+
             ]),
             setHovered: function(hoveredState) {
                 this.hovered = hoveredState;
             },
-            navigateToContinent() {
-                this.updateContinent(this.continent);
-                this.$router.push(this.continentRoute);
+            navigateToTerritory() {
+                //TODO
             }
         },
 
         computed: {
             ...mapGetters([
                 '_provinces',
-                '_continents',
-                '_squad'
+                '_territories'
             ]),
             fillColor() {
-                return this.continent.realm_color;
+                return this.territory.realm_color;
             },
             opacity() {
                 if (this.hovered) {
@@ -60,15 +54,16 @@
                 }
                 return 1;
             },
-            continentRoute() {
-                return {
-                    name: 'map-continent',
-                    params: {
-                        squadSlug: this._squad.slug,
-                        continentSlug: this.continent.slug
+            provincesForTerritory() {
+                let territoryProvinces = [];
+                let self = this;
+                this._provinces.forEach(function(province) {
+                    if (province.territory_id === self.territory.id) {
+                        territoryProvinces.push(province);
                     }
-                }
-            }
+                });
+                return territoryProvinces;
+            },
         }
     }
 </script>
