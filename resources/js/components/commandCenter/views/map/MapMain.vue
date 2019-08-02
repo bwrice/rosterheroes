@@ -1,11 +1,21 @@
 <template>
     <v-flex class="xs12 lg8 offset-lg2">
-        <Realm v-if="inContinentMode">
-            <ContinentVector v-for="(continent, id) in this._continents" :key="id" :continent="continent"></ContinentVector>
-        </Realm>
-        <Realm v-else>
-            <ProvinceVector v-for="(province, uuid) in this._provinces" :key="uuid" :province="province"></ProvinceVector>
-        </Realm>
+        <v-layout>
+            <v-flex class="xs12">
+                <Realm v-if="inContinentMode">
+                    <ContinentVector v-for="(continent, id) in this._continents" :key="id" :continent="continent"></ContinentVector>
+                </Realm>
+                <Realm v-else>
+                    <ProvinceVector v-for="(province, uuid) in this._provinces" :key="uuid" :province="province"></ProvinceVector>
+                </Realm>
+            </v-flex>
+        </v-layout>
+        <v-layout>
+            <v-flex class="xs12 pa-2">
+                <v-chip :input-value="inContinentMode" @click="setMode('continent')" label>Continents</v-chip>
+                <v-chip :input-value="inTerritoryMode" @click="setMode('territory')"  label>Territories</v-chip>
+            </v-flex>
+        </v-layout>
     </v-flex>
 </template>
 
@@ -29,6 +39,13 @@
                 mode: 'continent'
             }
         },
+
+        methods: {
+            setMode: function(mode) {
+                this.mode = mode;
+            }
+        },
+
         computed: {
             ...mapGetters([
                 '_provinces',
@@ -37,6 +54,9 @@
             ]),
             inContinentMode: function() {
                 return this.mode === 'continent';
+            },
+            inTerritoryMode: function() {
+                return this.mode === 'territory';
             }
         }
     }
