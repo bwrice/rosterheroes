@@ -6735,7 +6735,7 @@ class SeedProvinces extends Migration
                 ]
             ],
             [
-                'name' => \App\Domain\Models\Territory::ENCHANTED_ENCLAVE_OF_VISIONS,
+                'name' => \App\Domain\Models\Territory::ENCLAVE_OF_ENIGMAS,
                 'provinces' => [
                     [
                         'name' => 'Gravysk',
