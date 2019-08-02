@@ -7,7 +7,8 @@ export default {
     state: {
         provinces: [],
         territories: [],
-        continents: []
+        continents: [],
+        continent: null
     },
 
     getters: {
@@ -19,6 +20,9 @@ export default {
         },
         _continents(state) {
             return state.continents;
+        },
+        _continent(state) {
+            return state.continent;
         }
     },
     mutations: {
@@ -30,7 +34,10 @@ export default {
         },
         UPDATE_CONTINENTS(state, payload) {
             state.continents = payload;
-        }
+        },
+        SET_CONTINENT(state, payload) {
+            state.continent = payload;
+        },
     },
 
     actions: {
@@ -42,5 +49,8 @@ export default {
             let continents = await Continent.$get();
             commit('UPDATE_CONTINENTS', continents);
         },
+        updateContinent({commit}, payload) {
+            commit('SET_CONTINENT', payload)
+        }
     }
 };

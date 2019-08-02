@@ -8,7 +8,6 @@ import heroModule from './heroModule';
 import rosterModule from './roster';
 import weekModule from './week';
 import mapModule from './mapModule';
-import continentModule from './continentModule';
 import snackBarModule from './snackBar';
 
 export const store = new Vuex.Store({
@@ -19,7 +18,6 @@ export const store = new Vuex.Store({
         rosterModule,
         weekModule,
         mapModule,
-        continentModule,
         snackBarModule
     }
 });
