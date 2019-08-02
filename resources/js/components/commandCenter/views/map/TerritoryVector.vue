@@ -15,12 +15,16 @@
 
     import {mapActions} from 'vuex';
     import {mapGetters} from 'vuex';
+    import { territoryMixin } from '../../../../mixins/territoryMixin';
     import ProvinceVector from "./ProvinceVector";
 
     export default {
         name: "TerritoryVector",
         components: {ProvinceVector},
         props: ['territory'],
+        mixins: [
+            territoryMixin
+        ],
 
         data: function() {
             return {
