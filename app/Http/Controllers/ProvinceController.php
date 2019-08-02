@@ -9,11 +9,6 @@ class ProvinceController extends Controller
 {
     public function index()
     {
-        $provinces = Province::query()->with([
-            'continent',
-            'territory'
-        ])->get();
-
-        return ProvinceResource::collection($provinces);
+        return ProvinceResource::collection(Province::all());
     }
 }
