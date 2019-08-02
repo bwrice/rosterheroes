@@ -1,5 +1,5 @@
 <template>
-    <g v-html="province.vector_paths" :fill="fillColor">
+    <g v-html="province.vector_paths" :fill="fill" :opacity="opacity">
     </g>
 </template>
 
@@ -10,14 +10,18 @@
             province: {
                 required: true
             },
-            overrideColor: {
-                type: String
+            fillColor: {
+                type: String,
+            },
+            opacity: {
+                type: Number,
+                default: 1
             }
         },
         computed: {
-            fillColor() {
-                if (this.overrideColor) {
-                    return this.overrideColor;
+            fill() {
+                if (this.fillColor) {
+                    return this.fillColor;
                 }
                 return this.province.color;
             }

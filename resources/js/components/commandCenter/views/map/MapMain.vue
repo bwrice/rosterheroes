@@ -1,13 +1,11 @@
 <template>
     <v-flex class="xs12 lg8 offset-lg2">
-        <v-card>
-            <Realm v-if="inContinentMode">
-                <ContinentVector v-for="(continent, id) in this._continents" :key="id" :continent="continent"></ContinentVector>
-            </Realm>
-            <Realm v-else>
-                <ProvinceVector v-for="(province, uuid) in this._provinces" :key="uuid" :province="province"></ProvinceVector>
-            </Realm>
-        </v-card>
+        <Realm v-if="inContinentMode">
+            <ContinentVector v-for="(continent, id) in this._continents" :key="id" :continent="continent"></ContinentVector>
+        </Realm>
+        <Realm v-else>
+            <ProvinceVector v-for="(province, uuid) in this._provinces" :key="uuid" :province="province"></ProvinceVector>
+        </Realm>
     </v-flex>
 </template>
 

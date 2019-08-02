@@ -1,10 +1,8 @@
 <template>
     <v-flex class="xs12 lg8 offset-lg2">
-        <v-card>
-            <Realm>
-                <ProvinceVector v-for="(province, uuid) in provincesForContinent" :key="uuid" :province="province"></ProvinceVector>
-            </Realm>
-        </v-card>
+        <Realm :view-box="viewBox">
+            <ProvinceVector v-for="(province, uuid) in provincesForContinent" :key="uuid" :province="province"></ProvinceVector>
+        </Realm>
     </v-flex>
 </template>
 
@@ -30,6 +28,9 @@
             // needed for continent mixin
             continent() {
                 return this._continent;
+            },
+            viewBox() {
+                return this._continent.realm_view_box;
             }
         }
     }
