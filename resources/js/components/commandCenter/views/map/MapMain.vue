@@ -1,5 +1,5 @@
 <template>
-    <v-flex class="xs12">
+    <v-flex class="xs12 lg8 offset-lg2">
         <v-card>
             <svg xmlns="http://www.w3.org/2000/svg"
                  version="1.1"
@@ -8,7 +8,7 @@
                 <rect width="315" height="240" rx="5" ry="5"
                       style="fill: #c9e5ea; stroke: #E3EFEB; stroke-width: 2"
                 ></rect>
-                <Province v-for="(province, uuid) in this._provinces" :key="uuid" :province="province"></Province>
+                <ProvinceVector v-for="(province, uuid) in this._provinces" :key="uuid" :province="province"></ProvinceVector>
             </svg>
         </v-card>
     </v-flex>
@@ -17,17 +17,22 @@
 <script>
 
     import {mapGetters} from 'vuex';
-    import Province from "./Province";
+    import ProvinceVector from "./ProvinceVector";
 
     export default {
         name: "MapMain",
-        components: {Province},
-        created: () => {
-            console.log("Map Created!");
+        components: {ProvinceVector},
+
+        data: function() {
+            return {
+                mode: 'continent'
+            }
         },
         computed: {
             ...mapGetters([
-                '_provinces'
+                '_provinces',
+                '_territories',
+                '_continents'
             ])
         }
     }

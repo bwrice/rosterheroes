@@ -5,7 +5,7 @@
 
 <script>
     export default {
-        name: "Province",
+        name: "ProvinceVector",
         props: {
             province: {
                 required: true
