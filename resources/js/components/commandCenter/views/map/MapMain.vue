@@ -6,14 +6,30 @@
                     <ContinentVector v-for="(continent, id) in this._continents" :key="id" :continent="continent"></ContinentVector>
                 </Realm>
                 <Realm v-else>
-                    <ProvinceVector v-for="(province, uuid) in this._provinces" :key="uuid" :province="province"></ProvinceVector>
+                    <TerritoryVector v-for="(territory, id) in this._territories" :key="id" :territory="territory"></TerritoryVector>
                 </Realm>
             </v-flex>
         </v-layout>
         <v-layout>
             <v-flex class="xs12 pa-2">
-                <v-chip :input-value="inContinentMode" @click="setMode('continent')" label>Continents</v-chip>
-                <v-chip :input-value="inTerritoryMode" @click="setMode('territory')"  label>Territories</v-chip>
+                <v-chip
+                        :input-value="inContinentMode"
+                        @click="setMode('continent')"
+                        filter
+                        filter-icon="mdi-eye"
+                        label
+                >
+                    Continents
+                </v-chip>
+                <v-chip
+                        :input-value="inTerritoryMode"
+                        @click="setMode('territory')"
+                        filter
+                        filter-icon="mdi-eye"
+                        label
+                >
+                    Territories
+                </v-chip>
             </v-flex>
         </v-layout>
     </v-flex>
@@ -25,10 +41,12 @@
     import ProvinceVector from "./ProvinceVector";
     import Realm from "./Realm";
     import ContinentVector from "./ContinentVector";
+    import TerritoryVector from "./TerritoryVector";
 
     export default {
         name: "MapMain",
         components: {
+            TerritoryVector,
             ContinentVector,
             Realm,
             ProvinceVector
