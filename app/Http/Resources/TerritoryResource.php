@@ -24,7 +24,9 @@ class TerritoryResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'slug' => $this->slug
+            'slug' => $this->slug,
+            'realm_color' => $this->realmColor(),
+            'realm_view_box' => $this->realmViewBox()
         ];
     }
 }

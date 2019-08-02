@@ -452,4 +452,14 @@ class Territory extends Model
 
         throw new UnknownBehaviorException($this->name, TerritoryBehavior::class);
     }
+
+    public function realmColor()
+    {
+        return $this->getBehavior()->getRealmColor();
+    }
+
+    public function realmViewBox()
+    {
+        return $this->getBehavior()->getRealmViewBox();
+    }
 }
