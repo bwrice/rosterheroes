@@ -1,5 +1,5 @@
 <template>
-    <g :fill="this.continent.realm_color">
+    <g :fill="fillColor" :opacity="opacity" @mouseover="setHovered(true)" @mouseleave="setHovered(false)">
         <ProvinceVector v-for="(province, uuid) in provincesForContinent" :key="uuid" :province="province"></ProvinceVector>
     </g>
 </template>
@@ -14,9 +14,16 @@
         components: {ProvinceVector},
         props: ['continent'],
 
-        mounted: function() {
-            console.log("Continent");
-            console.log(this.continent);
+        data: function() {
+            return {
+                hovered: false
+            }
+        },
+
+        methods: {
+            setHovered: function(hoveredState) {
+                this.hovered = hoveredState;
+            }
         },
 
         computed: {
@@ -34,6 +41,15 @@
                     }
                 });
                 return continentProvinces;
+            },
+            fillColor() {
+                return this.continent.realm_color;
+            },
+            opacity() {
+                if (this.hovered) {
+                    return .6;
+                }
+                return 1;
             }
         }
     }
