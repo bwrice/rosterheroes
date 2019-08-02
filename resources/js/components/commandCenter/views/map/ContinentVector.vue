@@ -1,6 +1,6 @@
 <template>
-    <g :fill="fillColor" :opacity="opacity" @mouseover="setHovered(true)" @mouseleave="setHovered(false)" @click="navigateToContinent">
-        <ProvinceVector v-for="(province, uuid) in provincesForContinent" :key="uuid" :province="province"></ProvinceVector>
+    <g :opacity="opacity" @mouseover="setHovered(true)" @mouseleave="setHovered(false)" @click="navigateToContinent">
+        <ProvinceVector v-for="(province, uuid) in provincesForContinent" :key="uuid" :province="province" :override-color="fillColor"></ProvinceVector>
     </g>
 </template>
 
