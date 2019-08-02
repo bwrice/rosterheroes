@@ -10,10 +10,15 @@ class ContinentBehavior
      * @var string
      */
     private $realmColor;
+    /**
+     * @var array
+     */
+    private $realmViewBox;
 
-    public function __construct(string $realmColor)
+    public function __construct(string $realmColor, array $realmViewBox)
     {
         $this->realmColor = $realmColor;
+        $this->realmViewBox = $realmViewBox;
     }
 
     /**
@@ -22,5 +27,13 @@ class ContinentBehavior
     public function getRealmColor(): string
     {
         return $this->realmColor;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRealmViewBox(): array
+    {
+        return $this->realmViewBox;
     }
 }

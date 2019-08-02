@@ -40,21 +40,61 @@ class Continent extends Model
     {
         switch($this->name) {
             case self::FETROYA:
-                return new ContinentBehavior('#ccc802');
+                return new ContinentBehavior('#ccc802', [
+                    'pan_x' => 174,
+                    'pan_y' => 18,
+                    'zoom_x' => 142,
+                    'zoom_y' => 100
+                ]);
             case self::EAST_WOZUL:
-                return new ContinentBehavior('#d18c02');
+                return new ContinentBehavior('#d18c02', [
+                    'pan_x' => 178,
+                    'pan_y' => 70,
+                    'zoom_x' => 150,
+                    'zoom_y' => 100
+                ]);
             case self::WEST_WOZUL:
-                return new ContinentBehavior('#c12907');
+                return new ContinentBehavior('#c12907', [
+                    'pan_x' => 155,
+                    'pan_y' => 100,
+                    'zoom_x' => 120,
+                    'zoom_y' => 110
+                ]);
             case self::NORTH_JAGONETH:
-                return new ContinentBehavior('#46a040');
+                return new ContinentBehavior('#46a040', [
+                    'pan_x' => 68,
+                    'pan_y' => -1,
+                    'zoom_x' => 150,
+                    'zoom_y' => 130
+                ]);
             case self::CENTRAL_JAGONETH:
-                return new ContinentBehavior('#3e81a5');
+                return new ContinentBehavior('#3e81a5', [
+                    'pan_x' => 58,
+                    'pan_y' => 48,
+                    'zoom_x' => 115,
+                    'zoom_y' => 100
+                ]);
             case self::SOUTH_JAGONETH:
-                return new ContinentBehavior('#6834aa');
+                return new ContinentBehavior('#6834aa', [
+                    'pan_x' => 36,
+                    'pan_y' => 74,
+                    'zoom_x' => 150,
+                    'zoom_y' => 130
+                ]);
             case self::VINDOBERON:
-                return new ContinentBehavior('#4f547a');
+                return new ContinentBehavior('#4f547a', [
+                    'pan_x' => 0,
+                    'pan_y' => 10,
+                    'zoom_x' => 100,
+                    'zoom_y' => 138
+                ]);
             case self::DEMAUXOR:
-                return new ContinentBehavior('#9e1284');
+                return new ContinentBehavior('#9e1284', [
+                    'pan_x' => 0,
+                    'pan_y' => 135,
+                    'zoom_x' => 160,
+                    'zoom_y' => 100
+                ]);
         }
         throw new UnknownBehaviorException((string)$this->name, ContinentBehavior::class);
     }
@@ -62,6 +102,11 @@ class Continent extends Model
     public function realmColor()
     {
         return $this->getBehavior()->getRealmColor();
+    }
+
+    public function getRealmViewBox()
+    {
+        return $this->getBehavior()->getRealmViewBox();
     }
 
     public function getSlugOptions(): SlugOptions
