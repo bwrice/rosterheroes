@@ -10,6 +10,7 @@ export default {
         continents: [],
         continent: null,
         territory: null,
+        realmMapMode: 'continent'
     },
 
     getters: {
@@ -27,6 +28,9 @@ export default {
         },
         _continent(state) {
             return state.continent;
+        },
+        _realmMapMode(state) {
+            return state.realmMapMode;
         }
     },
     mutations: {
@@ -45,6 +49,9 @@ export default {
         SET_CONTINENT(state, payload) {
             state.continent = payload;
         },
+        SET_REALM_MAP_MODE(state, payload) {
+            state.realmMapMode = payload;
+        },
     },
 
     actions: {
@@ -61,6 +68,9 @@ export default {
         },
         updateContinent({commit}, payload) {
             commit('SET_CONTINENT', payload)
+        },
+        setRealmMapMode({commit}, payload) {
+            commit('SET_REALM_MAP_MODE', payload)
         },
     }
 };

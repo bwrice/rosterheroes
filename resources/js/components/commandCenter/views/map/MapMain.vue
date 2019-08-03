@@ -14,7 +14,7 @@
             <v-flex class="xs12 pa-2">
                 <v-chip
                         :input-value="inContinentMode"
-                        @click="setMode('continent')"
+                        @click="setRealmMapMode('continent')"
                         filter
                         filter-icon="mdi-eye"
                         label
@@ -23,7 +23,7 @@
                 </v-chip>
                 <v-chip
                         :input-value="inTerritoryMode"
-                        @click="setMode('territory')"
+                        @click="setRealmMapMode('territory')"
                         filter
                         filter-icon="mdi-eye"
                         label
@@ -38,6 +38,8 @@
 <script>
 
     import {mapGetters} from 'vuex';
+    import {mapActions} from 'vuex';
+
     import ProvinceVector from "../../map/ProvinceVector";
     import Realm from "../../map/Realm";
     import ContinentVector from "../../map/ContinentVector";
@@ -59,22 +61,23 @@
         },
 
         methods: {
-            setMode: function(mode) {
-                this.mode = mode;
-            }
+            ...mapActions([
+                'setRealmMapMode',
+            ]),
         },
 
         computed: {
             ...mapGetters([
                 '_provinces',
                 '_territories',
-                '_continents'
+                '_continents',
+                '_realmMapMode'
             ]),
             inContinentMode: function() {
-                return this.mode === 'continent';
+                return this._realmMapMode === 'continent';
             },
             inTerritoryMode: function() {
-                return this.mode === 'territory';
+                return this._realmMapMode === 'territory';
             }
         }
     }
