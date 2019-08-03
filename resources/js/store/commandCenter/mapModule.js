@@ -8,8 +8,24 @@ export default {
         provinces: [],
         territories: [],
         continents: [],
-        continent: null,
-        territory: null,
+        continent: {
+            'name': '',
+            'realm_view_box': {
+                'pan_x': 0,
+                'pan_y': 0,
+                'zoom_x': 315,
+                'zoom_y': 240
+            }
+        },
+        territory: {
+            'name': '',
+            'realm_view_box': {
+                'pan_x': 0,
+                'pan_y': 0,
+                'zoom_x': 315,
+                'zoom_y': 240
+            }
+        },
         realmMapMode: 'continent'
     },
 
@@ -55,13 +71,28 @@ export default {
     },
 
     actions: {
-        async setMap({commit}) {
+        async setMap({commit}, route) {
+
             let provinces = await Province.$get();
             commit('UPDATE_PROVINCES', provinces);
             let territories = await Territory.$get();
             commit('UPDATE_TERRITORIES', territories);
             let continents = await Continent.$get();
             commit('UPDATE_CONTINENTS', continents);
+
+            if (route.params.continentSlug) {
+                continents.forEach(function (continent) {
+                    if (continent.slug === route.params.continentSlug) {
+                        commit('SET_CONTINENT', continent);
+                    }
+                });
+            } else if (route.params.territorySlug) {
+                territories.forEach(function (territory) {
+                    if (territory.slug === route.params.territorySlug) {
+                        commit('SET_TERRITORY', territory);
+                    }
+                });
+            }
         },
         updateTerritory({commit}, payload) {
             commit('SET_TERRITORY', payload)

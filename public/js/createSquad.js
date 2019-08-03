@@ -1881,7 +1881,7 @@ __webpack_require__.r(__webpack_exports__);
       required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"],
       minLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["minLength"])(4),
       maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["maxLength"])(20),
-      format: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["helpers"].regex('format', /^[\w\-\s]+$/)
+      format: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["helpers"].regex('format', /^[\w\s]+$/)
     },
     heroClass: {
       required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
@@ -2031,7 +2031,7 @@ __webpack_require__.r(__webpack_exports__);
       required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"],
       minLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["minLength"])(4),
       maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["maxLength"])(20),
-      format: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["helpers"].regex('format', /^[\w\-\s]+$/)
+      format: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["helpers"].regex('format', /^[\w\s]+$/)
     }
   },
   data: function data() {

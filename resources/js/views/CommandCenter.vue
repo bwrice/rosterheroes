@@ -83,7 +83,7 @@
                 }
             }
 
-            this.setMap();
+            this.setMap(this.$route);
         },
 
         data: function() {
