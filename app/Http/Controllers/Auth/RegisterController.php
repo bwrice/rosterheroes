@@ -60,11 +60,13 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @param CreateUserAction $createUserAction
      * @return User
      */
-    protected function create(array $data, CreateUserAction $createUserAction)
+    protected function create(array $data)
     {
+        /** @var CreateUserAction $createUserAction */
+        $createUserAction = app(CreateUserAction::class); // can't inject because this is called inside trait
+
         $user = $createUserAction->execute($data['email'], $data['name'], $data['password']);
         return $user;
     }
