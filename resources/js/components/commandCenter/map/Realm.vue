@@ -23,20 +23,20 @@
                 <v-layout align-space-between wrap>
                     <v-flex class="xs6">
                         <v-layout justify-center>
-                            <v-btn fab small>
+                            <v-btn fab small @click="panUp">
                                 <v-icon dark>arrow_drop_up</v-icon>
                             </v-btn>
                         </v-layout>
                         <v-layout justify-space-around>
-                            <v-btn fab small>
+                            <v-btn fab small @click="panLeft">
                                 <v-icon dark>arrow_left</v-icon>
                             </v-btn>
-                            <v-btn fab small>
+                            <v-btn fab small @click="panRight">
                                 <v-icon dark>arrow_right</v-icon>
                             </v-btn>
                         </v-layout>
                         <v-layout justify-center>
-                            <v-btn fab small>
+                            <v-btn fab small @click="panDown">
                                 <v-icon dark>arrow_drop_down</v-icon>
                             </v-btn>
                         </v-layout>
@@ -88,6 +88,21 @@
                 originalViewBox: {}
             }
         },
+        methods: {
+            panUp() {
+                this.viewBox.pan_y -= (.1 * this.viewBox.zoom_y);
+            },
+            panDown() {
+                this.viewBox.pan_y += (.1 * this.viewBox.zoom_y);
+            },
+            panLeft() {
+                this.viewBox.pan_x -= (.1 * this.viewBox.zoom_x);
+            },
+            panRight() {
+                this.viewBox.pan_x += (.1 * this.viewBox.zoom_x);
+            },
+        },
+
         computed: {
             viewBoxString() {
                 return this.viewBox.pan_x + ' ' + this.viewBox.pan_y + ' ' + this.viewBox.zoom_x + ' ' + this.viewBox.zoom_y;
