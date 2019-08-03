@@ -7,7 +7,7 @@
                          version="1.1"
                          :viewBox="viewBoxString">
                         <slot>
-                            <!-- ProvinceVector components slotted here -->
+                            <!-- Default Slot: ProvinceVector components slotted here -->
                         </slot>
                     </svg>
                 </v-sheet>
@@ -18,7 +18,32 @@
 
             </v-flex>
             <v-flex class="xs4">
-                <v-btn></v-btn>
+                <v-layout>
+                    <v-flex class="xs6 offset-xs3">
+                        <v-btn fab dark small>
+                            <v-icon dark>arrow_drop_up</v-icon>
+                        </v-btn>
+                    </v-flex>
+                </v-layout>
+                <v-layout>
+                    <v-flex class="xs6">
+                        <v-btn fab dark small>
+                            <v-icon dark>arrow_left</v-icon>
+                        </v-btn>
+                    </v-flex>
+                    <v-flex class="xs6">
+                        <v-btn fab dark small>
+                            <v-icon dark>arrow_right</v-icon>
+                        </v-btn>
+                    </v-flex>
+                </v-layout>
+                <v-layout>
+                    <v-flex class="xs6 offset-xs3">
+                        <v-btn fab dark small>
+                            <v-icon dark>arrow_drop_down</v-icon>
+                        </v-btn>
+                    </v-flex>
+                </v-layout>
             </v-flex>
         </v-layout>
     </v-card>
