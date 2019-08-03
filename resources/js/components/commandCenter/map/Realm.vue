@@ -53,7 +53,7 @@
                             </v-btn>
                         </v-layout>
                         <v-layout justify-center>
-                            <v-btn small>
+                            <v-btn small @click="restViewBox">
                                 Reset
                             </v-btn>
                         </v-layout>
@@ -80,32 +80,37 @@
                 }
             }
         },
-        mounted() {
+        created() {
             this.originalViewBox = _.cloneDeep(this.viewBox);
+            this.currentViewBox = _.cloneDeep(this.viewBox);
         },
         data() {
             return {
-                originalViewBox: {}
+                originalViewBox: {},
+                currentViewBox: {}
             }
         },
         methods: {
             panUp() {
-                this.viewBox.pan_y -= (.1 * this.viewBox.zoom_y);
+                this.currentViewBox.pan_y -= (.1 * this.currentViewBox.zoom_y);
             },
             panDown() {
-                this.viewBox.pan_y += (.1 * this.viewBox.zoom_y);
+                this.currentViewBox.pan_y += (.1 * this.currentViewBox.zoom_y);
             },
             panLeft() {
-                this.viewBox.pan_x -= (.1 * this.viewBox.zoom_x);
+                this.currentViewBox.pan_x -= (.1 * this.currentViewBox.zoom_x);
             },
             panRight() {
-                this.viewBox.pan_x += (.1 * this.viewBox.zoom_x);
+                this.currentViewBox.pan_x += (.1 * this.currentViewBox.zoom_x);
             },
+            restViewBox() {
+                this.currentViewBox = _.cloneDeep(this.originalViewBox);
+            }
         },
 
         computed: {
             viewBoxString() {
-                return this.viewBox.pan_x + ' ' + this.viewBox.pan_y + ' ' + this.viewBox.zoom_x + ' ' + this.viewBox.zoom_y;
+                return this.currentViewBox.pan_x + ' ' + this.currentViewBox.pan_y + ' ' + this.currentViewBox.zoom_x + ' ' + this.currentViewBox.zoom_y;
             },
             oceanColor() {
                 return '#d5f5f5'
