@@ -80,6 +80,14 @@
                 }
             }
         },
+        mounted() {
+            this.originalViewBox = _.cloneDeep(this.viewBox);
+        },
+        data() {
+            return {
+                originalViewBox: {}
+            }
+        },
         computed: {
             viewBoxString() {
                 return this.viewBox.pan_x + ' ' + this.viewBox.pan_y + ' ' + this.viewBox.zoom_x + ' ' + this.viewBox.zoom_y;
