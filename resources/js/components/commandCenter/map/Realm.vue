@@ -14,34 +14,49 @@
             </v-flex>
         </v-layout>
         <v-layout>
-            <v-flex class="xs8">
+            <v-flex class="xs7">
 
             </v-flex>
-            <v-flex class="xs4">
-                <v-layout>
-                    <v-flex class="xs6 offset-xs3">
-                        <v-btn fab dark small>
-                            <v-icon dark>arrow_drop_up</v-icon>
-                        </v-btn>
-                    </v-flex>
-                </v-layout>
-                <v-layout>
+            <v-flex class="xs5 pa-1">
+                <v-layout align-space-between>
                     <v-flex class="xs6">
-                        <v-btn fab dark small>
-                            <v-icon dark>arrow_left</v-icon>
-                        </v-btn>
+                        <v-layout justify-center>
+                            <v-btn fab small>
+                                <v-icon dark>arrow_drop_up</v-icon>
+                            </v-btn>
+                        </v-layout>
+                        <v-layout justify-space-around>
+                            <v-btn fab small>
+                                <v-icon dark>arrow_left</v-icon>
+                            </v-btn>
+                            <v-btn fab small>
+                                <v-icon dark>arrow_right</v-icon>
+                            </v-btn>
+                        </v-layout>
+                        <v-layout justify-center>
+                            <v-btn fab small>
+                                <v-icon dark>arrow_drop_down</v-icon>
+                            </v-btn>
+                        </v-layout>
                     </v-flex>
                     <v-flex class="xs6">
-                        <v-btn fab dark small>
-                            <v-icon dark>arrow_right</v-icon>
-                        </v-btn>
-                    </v-flex>
-                </v-layout>
-                <v-layout>
-                    <v-flex class="xs6 offset-xs3">
-                        <v-btn fab dark small>
-                            <v-icon dark>arrow_drop_down</v-icon>
-                        </v-btn>
+                        <v-layout justify-center class="pa-1">
+                            <v-btn fab small>
+                                <v-icon dark>add</v-icon>
+                            </v-btn>
+                        </v-layout>
+                        <v-layout justify-center class="pa-1">
+                            <v-btn fab small>
+                                <v-icon dark>remove</v-icon>
+                            </v-btn>
+                        </v-layout>
+                        <v-layout>
+                            <v-flex class="xs12">
+                                <v-btn small>
+                                    Reset
+                                </v-btn>
+                            </v-flex>
+                        </v-layout>
                     </v-flex>
                 </v-layout>
             </v-flex>
