@@ -321,10 +321,10 @@ class Territory extends Model
                     new RealmBehavior(
                         '#a3277c',
                         [
-                            'pan_x' => 0,
-                            'pan_y' => 0,
-                            'zoom_x' => 315,
-                            'zoom_y' => 240
+                            'pan_x' => 26,
+                            'pan_y' => 56,
+                            'zoom_x' => 105,
+                            'zoom_y' => 80
                         ]
                     )
                 );
@@ -333,10 +333,10 @@ class Territory extends Model
                     new RealmBehavior(
                         '#ba3f3f',
                         [
-                            'pan_x' => 0,
-                            'pan_y' => 0,
-                            'zoom_x' => 315,
-                            'zoom_y' => 240
+                            'pan_x' => 3,
+                            'pan_y' => 36,
+                            'zoom_x' => 100,
+                            'zoom_y' => 75
                         ]
                     )
                 );
@@ -345,10 +345,10 @@ class Territory extends Model
                     new RealmBehavior(
                         '#196e96',
                         [
-                            'pan_x' => 0,
-                            'pan_y' => 0,
-                            'zoom_x' => 315,
-                            'zoom_y' => 240
+                            'pan_x' => 20,
+                            'pan_y' => 82,
+                            'zoom_x' => 95,
+                            'zoom_y' => 72
                         ]
                     )
                 );
@@ -357,10 +357,10 @@ class Territory extends Model
                     new RealmBehavior(
                         '#af9f08',
                         [
-                            'pan_x' => 0,
-                            'pan_y' => 0,
-                            'zoom_x' => 315,
-                            'zoom_y' => 240
+                            'pan_x' => 50,
+                            'pan_y' => 132,
+                            'zoom_x' => 110,
+                            'zoom_y' => 84
                         ]
                     )
                 );
@@ -369,10 +369,10 @@ class Territory extends Model
                     new RealmBehavior(
                         '#5ba373',
                         [
-                            'pan_x' => 0,
-                            'pan_y' => 0,
-                            'zoom_x' => 315,
-                            'zoom_y' => 240
+                            'pan_x' => 9,
+                            'pan_y' => 16,
+                            'zoom_x' => 68,
+                            'zoom_y' => 52
                         ]
                     )
                 );
@@ -381,10 +381,10 @@ class Territory extends Model
                     new RealmBehavior(
                         '#c62e1d',
                         [
-                            'pan_x' => 0,
-                            'pan_y' => 0,
-                            'zoom_x' => 315,
-                            'zoom_y' => 240
+                            'pan_x' => 100,
+                            'pan_y' => 176,
+                            'zoom_x' => 70,
+                            'zoom_y' => 53
                         ]
                     )
                 );
@@ -393,10 +393,10 @@ class Territory extends Model
                     new RealmBehavior(
                         '#6c6491',
                         [
-                            'pan_x' => 0,
-                            'pan_y' => 0,
-                            'zoom_x' => 315,
-                            'zoom_y' => 240
+                            'pan_x' => -40,
+                            'pan_y' => 44,
+                            'zoom_x' => 130,
+                            'zoom_y' => 99
                         ]
                     )
                 );
@@ -406,9 +406,9 @@ class Territory extends Model
                         '#598e47',
                         [
                             'pan_x' => 0,
-                            'pan_y' => 0,
-                            'zoom_x' => 315,
-                            'zoom_y' => 240
+                            'pan_y' => 118,
+                            'zoom_x' => 86,
+                            'zoom_y' => 66
                         ]
                     )
                 );
@@ -417,10 +417,10 @@ class Territory extends Model
                     new RealmBehavior(
                         '#74367f',
                         [
-                            'pan_x' => 0,
-                            'pan_y' => 0,
-                            'zoom_x' => 315,
-                            'zoom_y' => 240
+                            'pan_x' => 29,
+                            'pan_y' => 165,
+                            'zoom_x' => 90,
+                            'zoom_y' => 69
                         ]
                     )
                 );
@@ -429,10 +429,10 @@ class Territory extends Model
                     new RealmBehavior(
                         '#a05709',
                         [
-                            'pan_x' => 0,
-                            'pan_y' => 0,
-                            'zoom_x' => 315,
-                            'zoom_y' => 240
+                            'pan_x' => -52,
+                            'pan_y' => 70,
+                            'zoom_x' => 136,
+                            'zoom_y' => 104
                         ]
                     )
                 );
@@ -441,10 +441,10 @@ class Territory extends Model
                     new RealmBehavior(
                         '#5277af',
                         [
-                            'pan_x' => 0,
-                            'pan_y' => 0,
-                            'zoom_x' => 315,
-                            'zoom_y' => 240
+                            'pan_x' => -7,
+                            'pan_y' => 156,
+                            'zoom_x' => 110,
+                            'zoom_y' => 84
                         ]
                     )
                 );
