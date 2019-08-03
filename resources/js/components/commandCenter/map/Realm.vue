@@ -14,11 +14,13 @@
             </v-flex>
         </v-layout>
         <v-layout>
-            <v-flex class="xs7">
+            <v-flex class="xs7 md9">
+                <slot name="footer-content">
 
+                </slot>
             </v-flex>
-            <v-flex class="xs5 pa-1">
-                <v-layout align-space-between>
+            <v-flex class="xs5 md3 pa-1">
+                <v-layout align-space-between wrap>
                     <v-flex class="xs6">
                         <v-layout justify-center>
                             <v-btn fab small>
@@ -50,12 +52,10 @@
                                 <v-icon dark>remove</v-icon>
                             </v-btn>
                         </v-layout>
-                        <v-layout>
-                            <v-flex class="xs12">
-                                <v-btn small>
-                                    Reset
-                                </v-btn>
-                            </v-flex>
+                        <v-layout justify-center>
+                            <v-btn small>
+                                Reset
+                            </v-btn>
                         </v-layout>
                     </v-flex>
                 </v-layout>
@@ -79,7 +79,6 @@
                     };
                 }
             }
-
         },
         computed: {
             viewBoxString() {
