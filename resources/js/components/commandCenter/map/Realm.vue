@@ -1,16 +1,26 @@
 <template>
-    <v-card :color="oceanColor">
-        <svg xmlns="http://www.w3.org/2000/svg"
-             version="1.1"
-             :viewBox="viewBoxString">
+    <v-card>
+        <v-layout>
+            <v-flex class="xs12">
+                <v-sheet tile :color="oceanColor">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         version="1.1"
+                         :viewBox="viewBoxString">
+                        <slot>
+                            <!-- ProvinceVector components slotted here -->
+                        </slot>
+                    </svg>
+                </v-sheet>
+            </v-flex>
+        </v-layout>
+        <v-layout>
+            <v-flex class="xs8">
 
-            <!--        <rect width="315" height="240" rx="5" ry="5"-->
-            <!--              style="fill: #c9e5ea; stroke: #E3EFEB; stroke-width: 2"-->
-            <!--        ></rect>-->
-            <slot>
-                <!-- ProvinceVector components slotted here -->
-            </slot>
-        </svg>
+            </v-flex>
+            <v-flex class="xs4">
+                <v-btn></v-btn>
+            </v-flex>
+        </v-layout>
     </v-card>
 </template>
 
