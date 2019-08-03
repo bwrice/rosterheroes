@@ -9,9 +9,9 @@
 <script>
 
     import {mapGetters} from 'vuex';
-    import Realm from "./Realm";
+    import Realm from "../../map/Realm";
     import { territoryMixin } from '../../../../mixins/territoryMixin';
-    import ProvinceVector from "./ProvinceVector";
+    import ProvinceVector from "../../map/ProvinceVector";
 
     export default {
         name: "TerritoryView",

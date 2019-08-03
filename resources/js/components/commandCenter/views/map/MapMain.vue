@@ -38,10 +38,10 @@
 <script>
 
     import {mapGetters} from 'vuex';
-    import ProvinceVector from "./ProvinceVector";
-    import Realm from "./Realm";
-    import ContinentVector from "./ContinentVector";
-    import TerritoryVector from "./TerritoryVector";
+    import ProvinceVector from "../../map/ProvinceVector";
+    import Realm from "../../map/Realm";
+    import ContinentVector from "../../map/ContinentVector";
+    import TerritoryVector from "../../map/TerritoryVector";
 
     export default {
         name: "MapMain",

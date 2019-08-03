@@ -15,7 +15,7 @@
 
     import {mapActions} from 'vuex';
     import {mapGetters} from 'vuex';
-    import { territoryMixin } from '../../../../mixins/territoryMixin';
+    import { territoryMixin } from '../../../mixins/territoryMixin';
     import ProvinceVector from "./ProvinceVector";
 
     export default {

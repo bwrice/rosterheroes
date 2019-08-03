@@ -10,8 +10,8 @@
 
     import {mapGetters} from 'vuex';
     import { continentMixin } from '../../../../mixins/continentMixin';
-    import Realm from "./Realm";
-    import ProvinceVector from "./ProvinceVector";
+    import Realm from "../../map/Realm";
+    import ProvinceVector from "../../map/ProvinceVector";
 
     export default {
         name: "ContinentView",
