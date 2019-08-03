@@ -44,65 +44,65 @@ class Continent extends Model
                 return new ContinentBehavior(
                     new RealmBehavior('#b2b800', [
                         'pan_x' => 178,
-                        'pan_y' => 20,
+                        'pan_y' => 18,
                         'zoom_x' => 130,
-                        'zoom_y' => 96
+                        'zoom_y' => 99
                     ]));
             case self::EAST_WOZUL:
                 return new ContinentBehavior(
                     new RealmBehavior('#d18c02', [
                         'pan_x' => 185,
-                        'pan_y' => 72,
+                        'pan_y' => 70,
                         'zoom_x' => 130,
-                        'zoom_y' => 93
+                        'zoom_y' => 99
                     ]));
             case self::WEST_WOZUL:
                 return new ContinentBehavior(
                     new RealmBehavior('#c12907', [
-                        'pan_x' => 155,
-                        'pan_y' => 100,
-                        'zoom_x' => 120,
-                        'zoom_y' => 110
+                        'pan_x' => 135,
+                        'pan_y' => 99,
+                        'zoom_x' => 150,
+                        'zoom_y' => 114
                     ]));
             case self::NORTH_JAGONETH:
                 return new ContinentBehavior(
                     new RealmBehavior('#46a040', [
-                        'pan_x' => 78,
+                        'pan_x' => 60,
                         'pan_y' => 3,
-                        'zoom_x' => 132,
+                        'zoom_x' => 160,
                         'zoom_y' => 122
                     ]));
             case self::CENTRAL_JAGONETH:
                 return new ContinentBehavior(
                     new RealmBehavior('#3e81a5', [
-                        'pan_x' => 58,
+                        'pan_x' => 48,
                         'pan_y' => 48,
-                        'zoom_x' => 113,
-                        'zoom_y' => 98
+                        'zoom_x' => 130,
+                        'zoom_y' => 99
                     ]));
             case self::SOUTH_JAGONETH:
                 return new ContinentBehavior(
                     new RealmBehavior('#6834aa', [
-                        'pan_x' => 36,
+                        'pan_x' => 24,
                         'pan_y' => 74,
-                        'zoom_x' => 150,
-                        'zoom_y' => 130
+                        'zoom_x' => 172,
+                        'zoom_y' => 131
                     ]));
             case self::VINDOBERON:
                 return new ContinentBehavior(
                     new RealmBehavior('#4f547a', [
-                        'pan_x' => 0,
-                        'pan_y' => 10,
-                        'zoom_x' => 100,
-                        'zoom_y' => 138
+                        'pan_x' => -48,
+                        'pan_y' => 8,
+                        'zoom_x' => 184,
+                        'zoom_y' => 141
                     ]));
             case self::DEMAUXOR:
                 return new ContinentBehavior(
                     new RealmBehavior('#9e1284', [
                         'pan_x' => 0,
-                        'pan_y' => 135,
+                        'pan_y' => 126,
                         'zoom_x' => 160,
-                        'zoom_y' => 100
+                        'zoom_y' => 121
                     ]));
         }
         throw new UnknownBehaviorException((string)$this->name, ContinentBehavior::class);
