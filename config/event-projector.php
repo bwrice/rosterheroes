@@ -28,7 +28,7 @@ return [
         \App\Projectors\MeasurableProjector::class,
         \App\Projectors\CampaignProjector::class,
         \App\Projectors\PlayerSpiritProjector::class,
-        \App\Projectors\ProvinceProjectory::class
+        \App\Projectors\ProvinceProjector::class
     ],
 
     /*

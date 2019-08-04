@@ -7,7 +7,7 @@ use App\StorableEvents\ProvinceCreated;
 use Spatie\EventProjector\Projectors\Projector;
 use Spatie\EventProjector\Projectors\ProjectsEvents;
 
-final class ProvinceProjectory implements Projector
+final class ProvinceProjector implements Projector
 {
     use ProjectsEvents;
 
@@ -17,6 +17,7 @@ final class ProvinceProjectory implements Projector
             'uuid' => $aggregateUuid,
             'name' => $event->name,
             'color' => $event->color,
+            'view_box' => json_encode($event->viewBox),
             'vector_paths' => $event->vectorPaths,
             'continent_id' => $event->continentID,
             'territory_id' => $event->territoryID

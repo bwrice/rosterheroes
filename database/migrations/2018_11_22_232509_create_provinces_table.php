@@ -22,6 +22,7 @@ class CreateProvincesTable extends Migration
             $table->string('slug')->unique();
             $table->integer('nation_id')->unsigned()->nullable();
             $table->string('color');
+            $table->json('view_box');
             $table->text('vector_paths');
             $table->timestamps();
         });

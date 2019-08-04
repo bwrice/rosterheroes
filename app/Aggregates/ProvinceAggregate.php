@@ -9,11 +9,12 @@ use Spatie\EventProjector\AggregateRoot;
 
 final class ProvinceAggregate extends AggregateRoot
 {
-    public function createProvince(string $name, string $color, string $vectorPaths, Continent $continent, Territory $territory)
+    public function createProvince(string $name, string $color, array $viewBox, string $vectorPaths, Continent $continent, Territory $territory)
     {
         $this->recordThat(new ProvinceCreated(
             $name,
             $color,
+            $viewBox,
             $vectorPaths,
             $continent->id,
             $territory->id

@@ -15,12 +15,13 @@ class CreateProvinceAction
     /**
      * @param string $name
      * @param string $color
+     * @param array $viewBox
      * @param string $vectorPaths
      * @param Continent $continent
      * @param Territory $territory
      * @return Province
      */
-    public function execute(string $name, string $color, string $vectorPaths, Continent $continent, Territory $territory): Province
+    public function execute(string $name, string $color, array $viewBox, string $vectorPaths, Continent $continent, Territory $territory): Province
     {
         $uuid = Str::uuid();
 
