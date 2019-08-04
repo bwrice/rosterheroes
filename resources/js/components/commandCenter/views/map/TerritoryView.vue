@@ -1,7 +1,12 @@
 <template>
     <v-flex class="xs12 lg8 offset-lg2">
         <Realm :view-box="viewBox">
-            <ProvinceVector v-for="(province, uuid) in provincesForTerritory" :key="uuid" :province="province"></ProvinceVector>
+            <ProvinceVector
+                v-for="(province, uuid) in provincesForTerritory"
+                :key="uuid"
+                :province="province"
+                :route-link="true"
+            ></ProvinceVector>
         </Realm>
     </v-flex>
 </template>
