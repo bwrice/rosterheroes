@@ -25,7 +25,7 @@ class ProvinceResource extends JsonResource
             'name' => $this->name,
             'slug' => $this->slug,
             'color' => $this->color,
-            'view_box' => $this->view_box,
+            'view_box' => $this->getViewBox(),
             'vector_paths' => $this->vector_paths,
             'continent_id' => $this->continent_id,
             'territory_id' => $this->territory_id,

@@ -22,7 +22,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $slug
  * @property string $uuid
  * @property string $color
- * @property array $view_box
+ * @property string $view_box
  * @property string $vector_paths
  * @property int $continent_id
  * @property int $territory_id
@@ -46,10 +46,6 @@ class Province extends EventSourcedModel
         'Baoca',
         'Zynden',
         'Keplyos'
-    ];
-
-    protected $casts = [
-        'view_box' =>'array'
     ];
 
     protected $guarded = [];
@@ -101,6 +97,11 @@ class Province extends EventSourcedModel
     public function isBorderedBy(Province $province)
     {
         return in_array($province->id, $this->borderedBy()->pluck('id')->toArray());
+    }
+
+    public function getViewBox()
+    {
+        return json_decode($this->view_box, true);
     }
 
     /**
