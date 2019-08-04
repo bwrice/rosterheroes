@@ -19,6 +19,7 @@ use Spatie\Sluggable\SlugOptions;
  *
  * @property int $id
  * @property string $name
+ * @property string $slug
  * @property string $uuid
  * @property string $color
  * @property string $vector_paths

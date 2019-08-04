@@ -23,6 +23,7 @@ class ProvinceResource extends JsonResource
     {
         return [
             'name' => $this->name,
+            'slug' => $this->slug,
             'color' => $this->color,
             'vector_paths' => $this->vector_paths,
             'continent_id' => $this->continent_id,
