@@ -2,6 +2,12 @@
     <v-flex class="xs12 lg8 offset-lg2">
         <Realm>
             <ProvinceVector :province="this._province"></ProvinceVector>
+            <ProvinceVector
+                v-for="(province, uuid) in this._borders"
+                :key="uuid"
+                :province="province"
+            >
+            </ProvinceVector>
         </Realm>
     </v-flex>
 </template>
@@ -17,7 +23,8 @@
         components: {ProvinceVector, Realm},
         computed: {
             ...mapGetters([
-                '_province'
+                '_province',
+                '_borders'
             ])
         }
     }
