@@ -39,7 +39,7 @@ Route::prefix('v1')->group(function () {
     Route::get('/weeks/{weekUuid}/player-spirits', [WeekPlayerSpiritController::class, 'index']);
 
     Route::get('/provinces', [ProvinceController::class, 'index']);
-    Route::get('/provinces/{provinceSlug}/borders', [ProvinceBorderController::class, 'show']);
+    Route::get('/provinces/{provinceSlug}/borders', [ProvinceBorderController::class, 'index']);
     Route::get('/territories', [TerritoryController::class, 'index']);
     Route::get('/continents', [ContinentController::class, 'index']);
 

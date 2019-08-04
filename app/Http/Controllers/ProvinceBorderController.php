@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class ProvinceBorderController extends Controller
 {
-    public function show($provinceSlug)
+    public function index($provinceSlug)
     {
         $province = Province::slugOrFail($provinceSlug);
         return ProvinceResource::collection($province->borders);
