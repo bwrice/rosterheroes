@@ -27,8 +27,13 @@
         },
 
         methods: {
+            ...mapActions([
+                'setProvince'
+            ]),
+
             navigateToProvince() {
                 if (this.routeLink) {
+                    this.setProvince(this.province);
                     this.$router.push(this.provinceRoute);
                 }
             }

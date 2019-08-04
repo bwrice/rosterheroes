@@ -5,7 +5,7 @@ export default {
     },
 
     getters: {
-        _currentProvince(state) {
+        _province(state) {
             return state.province;
         }
     },
