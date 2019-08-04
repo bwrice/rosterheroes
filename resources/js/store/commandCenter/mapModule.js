@@ -26,7 +26,16 @@ export default {
                 'zoom_y': 240
             }
         },
-        realmMapMode: 'continent'
+        realmMapMode: 'continent',
+        province: {
+            view_box: {
+                'pan_x': 0,
+                'pan_y': 0,
+                'zoom_x': 315,
+                'zoom_y': 240,
+            }
+        },
+        borders: []
     },
 
     getters: {
@@ -47,7 +56,13 @@ export default {
         },
         _realmMapMode(state) {
             return state.realmMapMode;
-        }
+        },
+        _province(state) {
+            return state.province;
+        },
+        _borders(state) {
+            return state.borders;
+        },
     },
     mutations: {
         UPDATE_PROVINCES(state, payload) {
@@ -67,6 +82,12 @@ export default {
         },
         SET_REALM_MAP_MODE(state, payload) {
             state.realmMapMode = payload;
+        },
+        SET_PROVINCE(state, payload) {
+            state.province = payload;
+        },
+        SET_BORDERS(state, payload) {
+            state.borders = payload;
         },
     },
 
@@ -93,6 +114,12 @@ export default {
                     }
                 });
             }
+        },
+        async setProvince({commit}, payload) {
+            commit('SET_PROVINCE', payload);
+            let province = new Province(payload);
+            let borders = await Province.custom(province, 'borders').$get();
+            commit('SET_BORDERS', borders);
         },
         updateTerritory({commit}, payload) {
             commit('SET_TERRITORY', payload)
