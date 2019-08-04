@@ -43,12 +43,12 @@
                     </v-flex>
                     <v-flex class="xs6">
                         <v-layout justify-center class="pa-1">
-                            <v-btn fab small>
+                            <v-btn fab small @click="zoomIn">
                                 <v-icon dark>add</v-icon>
                             </v-btn>
                         </v-layout>
                         <v-layout justify-center class="pa-1">
-                            <v-btn fab small>
+                            <v-btn fab small @click="zoomOut">
                                 <v-icon dark>remove</v-icon>
                             </v-btn>
                         </v-layout>
@@ -105,6 +105,24 @@
             },
             restViewBox() {
                 this.currentViewBox = _.cloneDeep(this.originalViewBox);
+            },
+            zoomIn() {
+                /*
+                By panning 10% but zooming 80% (instead of 90), we zoom the center of the SVG
+                 */
+                this.panRight();
+                this.panDown();
+                this.currentViewBox.zoom_x *= .8;
+                this.currentViewBox.zoom_y *= .8;
+            },
+            zoomOut() {
+                /*
+                We have to pan after we adjust the zoom to reverse zoomIn() effect
+                 */
+                this.currentViewBox.zoom_x /= .8;
+                this.currentViewBox.zoom_y /= .8;
+                this.panLeft();
+                this.panUp();
             }
         },
 
