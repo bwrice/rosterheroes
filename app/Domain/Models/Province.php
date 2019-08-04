@@ -7,9 +7,11 @@ use App\Domain\Models\EventSourcedModel;
 use App\Domain\Collections\ProvinceCollection;
 use App\Domain\Models\Territory;
 use App\Domain\Models\VectorPath;
+use App\Domain\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Sluggable\SlugOptions;
 
 /**
  * Class Province
@@ -33,6 +35,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Province extends EventSourcedModel
 {
+    use HasSlug;
+
     const STARTING_PROVINCES = [
         'Prasynein',
         'Thona',
@@ -47,6 +51,13 @@ class Province extends EventSourcedModel
     public function newCollection(array $models = [])
     {
         return new ProvinceCollection($models);
+    }
+
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug');
     }
 
     public function vectorPaths()

@@ -19,6 +19,7 @@ class CreateProvincesTable extends Migration
             $table->integer('continent_id')->unsigned();
             $table->integer('territory_id')->unsigned();
             $table->string('name')->unique();
+            $table->string('slug')->unique();
             $table->integer('nation_id')->unsigned()->nullable();
             $table->string('color');
             $table->text('vector_paths');
