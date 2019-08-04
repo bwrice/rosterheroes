@@ -7774,11 +7774,15 @@ class SeedProvinces extends Migration
                     return $vectorPath['path'];
                 })->implode('');
 
+                /*
+                 * Vector paths for provinces used to be relative and we used svg transforms to zoom and pan. The following
+                 * math converts those transforms into absolute view-boxes.
+                 */
                 $focusScale = $province['focus_scale'];
-                $panX = round($province['realm_x'] - ($province['focus_x']/$focusScale), 2);
-                $panY = round($province['realm_y'] - ($province['focus_y']/$focusScale), 2);
-                $zoomX = round(315/$focusScale, 2);
-                $zoomY = round(240/$focusScale, 2);
+                $panX = round($province['realm_x'] - ($province['focus_x']/($focusScale * .9)), 2);
+                $panY = round($province['realm_y'] - ($province['focus_y']/($focusScale * .97)), 2);
+                $zoomX = round(315/($focusScale * .9), 2);
+                $zoomY = round(240/($focusScale * .9), 2);
 
                 $provinceCreated = $createProvinceAction->execute(
                     $province['name'],
