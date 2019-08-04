@@ -3,6 +3,7 @@ import MapBase from "../components/commandCenter/views/map/MapBase";
 import MapNavigationDrawer from "../components/commandCenter/views/map/MapNavigationDrawer";
 import ContinentView from "../components/commandCenter/views/map/ContinentView";
 import TerritoryView from "../components/commandCenter/views/map/TerritoryView";
+import ProvinceView from "../components/commandCenter/views/map/ProvinceView";
 
 export const mapRoutes = {
     path: '/command-center/:squadSlug/map',
@@ -34,6 +35,14 @@ export const mapRoutes = {
             path: 'territories/:territorySlug',
             component: TerritoryView,
             name: 'map-territory',
+            meta: {
+                footerButton: 'map'
+            }
+        },
+        {
+            path: 'provinces/:provinceSlug',
+            component: ProvinceView,
+            name: 'map-province',
             meta: {
                 footerButton: 'map'
             }
