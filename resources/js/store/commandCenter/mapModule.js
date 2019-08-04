@@ -92,7 +92,7 @@ export default {
     },
 
     actions: {
-        async setMap({commit}, route) {
+        async setMap({commit, dispatch}, route) {
 
             let provinces = await Province.$get();
             commit('UPDATE_PROVINCES', provinces);
@@ -111,6 +111,12 @@ export default {
                 territories.forEach(function (territory) {
                     if (territory.slug === route.params.territorySlug) {
                         commit('SET_TERRITORY', territory);
+                    }
+                });
+            } else if(route.params.provinceSlug) {
+                provinces.forEach(function (province) {
+                    if (province.slug === route.params.provinceSlug) {
+                        dispatch('setProvince', province);
                     }
                 });
             }
