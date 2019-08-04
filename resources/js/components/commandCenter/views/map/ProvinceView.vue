@@ -7,6 +7,7 @@
                 v-for="(province, uuid) in this._borders"
                 :key="uuid"
                 :province="province"
+                :route-link="true"
             >
             </ProvinceVector>
 
