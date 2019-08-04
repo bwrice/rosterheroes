@@ -5,7 +5,7 @@
                 :key="uuid"
                 :province="province"
                 :fill-color="fillColor"
-                :opacity="opacity"
+                :parent-hovered="hovered"
         >
         </ProvinceVector>
     </g>

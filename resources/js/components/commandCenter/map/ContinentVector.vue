@@ -5,7 +5,7 @@
                 :key="uuid"
                 :province="province"
                 :fill-color="fillColor"
-                :opacity="opacity"
+                :parent-hovered="hovered"
         >
         </ProvinceVector>
     </g>
@@ -53,12 +53,6 @@
             ]),
             fillColor() {
                 return this.continent.realm_color;
-            },
-            opacity() {
-                if (this.hovered) {
-                    return .6;
-                }
-                return 1;
             },
             continentRoute() {
                 return {

@@ -16,9 +16,9 @@
             fillColor: {
                 type: String,
             },
-            opacity: {
-                type: Number,
-                default: 1
+            parentHovered: {
+                type: Boolean,
+                default: false
             },
             routeLink: {
                 type: Boolean,
@@ -61,6 +61,13 @@
                         provinceSlug: this.province.slug
                     }
                 }
+            },
+
+            opacity() {
+                if (this.parentHovered) {
+                    return .6;
+                }
+                return 1;
             },
             stroke() {
                 if (this.highlight) {
