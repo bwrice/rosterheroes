@@ -84,12 +84,21 @@
             this.originalViewBox = _.cloneDeep(this.viewBox);
             this.currentViewBox = _.cloneDeep(this.viewBox);
         },
+
         data() {
             return {
                 originalViewBox: {},
                 currentViewBox: {}
             }
         },
+
+        watch: {
+            viewBox: function(newValue) {
+                this.originalViewBox = _.cloneDeep(newValue);
+                this.currentViewBox = _.cloneDeep(newValue);
+            }
+        },
+
         methods: {
             panUp() {
                 this.currentViewBox.pan_y -= (.1 * this.currentViewBox.zoom_y);
