@@ -1,5 +1,14 @@
 <template>
-    <g v-html="province.vector_paths" :fill="fill" :opacity="opacity" @click="navigateToProvince" :stroke="stroke" stroke-width=".5" stroke-opacity=".9">
+    <g
+        v-html="province.vector_paths"
+        :fill="fill" :opacity="opacity"
+        @click="navigateToProvince"
+        :stroke="stroke"
+        stroke-width=".5"
+        stroke-opacity=".9"
+        @mouseover="setHovered(true)"
+        @mouseleave="setHovered(false)"
+    >
     </g>
 </template>
 
@@ -30,11 +39,19 @@
             }
         },
 
+        data: function() {
+            return {
+                hovered: false
+            }
+        },
+
         methods: {
             ...mapActions([
                 'setProvince'
             ]),
-
+            setHovered: function(hoveredState) {
+                this.hovered = hoveredState;
+            },
             navigateToProvince() {
                 if (this.routeLink) {
                     this.setProvince(this.province);
@@ -64,7 +81,7 @@
             },
 
             opacity() {
-                if (this.parentHovered) {
+                if (this.parentHovered || (this.routeLink && this.hovered)) {
                     return .6;
                 }
                 return 1;
