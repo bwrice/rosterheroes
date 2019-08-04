@@ -1,6 +1,6 @@
 <template>
     <v-flex class="xs12 lg8 offset-lg2">
-        <Realm>
+        <Realm :view-box="this._province.view_box">
             <ProvinceVector :province="this._province"></ProvinceVector>
             <ProvinceVector
                 v-for="(province, uuid) in this._borders"

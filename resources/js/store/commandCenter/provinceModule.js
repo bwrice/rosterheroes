@@ -2,7 +2,14 @@ import Province from "../../models/Province";
 
 export default {
     state: {
-        province: null,
+        province: {
+            view_box: {
+                'pan_x': 0,
+                'pan_y': 0,
+                'zoom_x': 315,
+                'zoom_y': 240,
+            }
+        },
         borders: []
     },
 
