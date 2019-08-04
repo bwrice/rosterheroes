@@ -7,7 +7,7 @@
     import BaseView from "../BaseView";
 
     export default {
-        name: "Map",
+        name: "MapBase",
         components: {BaseView}
 
     }
