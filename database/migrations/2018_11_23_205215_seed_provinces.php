@@ -7774,9 +7774,21 @@ class SeedProvinces extends Migration
                     return $vectorPath['path'];
                 })->implode('');
 
+                $focusScale = $province['focus_scale'];
+                $panX = round($province['realm_x'] - ($province['focus_x']/$focusScale), 2);
+                $panY = round($province['realm_y'] - ($province['focus_y']/$focusScale), 2);
+                $zoomX = round(315/$focusScale, 2);
+                $zoomY = round(240/$focusScale, 2);
+
                 $provinceCreated = $createProvinceAction->execute(
                     $province['name'],
                     $province['realm_color'],
+                    [
+                        'pan_x' => $panX,
+                        'pan_y' => $panY,
+                        'zoom_x' => $zoomX,
+                        'zoom_y' => $zoomY
+                    ],
                     $pathsText,
                     $continent,
                     $territoryModel

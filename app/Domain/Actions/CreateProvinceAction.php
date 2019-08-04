@@ -30,6 +30,7 @@ class CreateProvinceAction
         $aggregate->createProvince(
             $name,
             $color,
+            $viewBox,
             $vectorPaths,
             $continent,
             $territory
