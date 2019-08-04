@@ -1,5 +1,5 @@
 <template>
-    <g v-html="province.vector_paths" :fill="fill" :opacity="opacity" @click="navigateToProvince">
+    <g v-html="province.vector_paths" :fill="fill" :opacity="opacity" @click="navigateToProvince" :stroke="stroke" stroke-width=".5" stroke-opacity=".9">
     </g>
 </template>
 
@@ -21,6 +21,10 @@
                 default: 1
             },
             routeLink: {
+                type: Boolean,
+                default: false
+            },
+            highlight: {
                 type: Boolean,
                 default: false
             }
@@ -57,6 +61,12 @@
                         provinceSlug: this.province.slug
                     }
                 }
+            },
+            stroke() {
+                if (this.highlight) {
+                    return '#FFFFFF';
+                }
+                return 'none';
             }
         }
     }
