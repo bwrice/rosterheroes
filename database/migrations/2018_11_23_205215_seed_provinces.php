@@ -6495,7 +6495,7 @@ class SeedProvinces extends Migration
                         'realm_x' => 109.20893,
                         'realm_y' => 201.20387,
                         'focus_x' => 155,
-                        'focus_y' => 100,
+                        'focus_y' => 80,
                         'focus_scale' => 9.25,
                         'vector_paths' => [
                             [
