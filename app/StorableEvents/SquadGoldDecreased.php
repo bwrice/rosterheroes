@@ -4,7 +4,7 @@ namespace App\StorableEvents;
 
 use Spatie\EventProjector\ShouldBeStored;
 
-final class SquadGoldIncreased implements ShouldBeStored
+final class SquadGoldDecreased implements ShouldBeStored
 {
     /**
      * @var int

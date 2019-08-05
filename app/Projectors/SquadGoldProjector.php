@@ -2,6 +2,7 @@
 
 namespace App\Projectors;
 
+use App\StorableEvents\SquadGoldDecreased;
 use App\StorableEvents\SquadGoldIncreased;
 use App\Domain\Models\Squad;
 use Spatie\EventProjector\Projectors\Projector;
@@ -15,6 +16,13 @@ class SquadGoldProjector implements Projector
     {
         $squad = Squad::uuid($aggregateUuid);
         $squad->gold += $event->amount;
+        $squad->save();
+    }
+
+    public function onSquadGoldDecreased(SquadGoldDecreased $event, string $aggregateUuid)
+    {
+        $squad = Squad::uuid($aggregateUuid);
+        $squad->gold -= $event->amount;
         $squad->save();
     }
 }
