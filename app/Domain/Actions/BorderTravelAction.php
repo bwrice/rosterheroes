@@ -36,5 +36,8 @@ class BorderTravelAction
         if($availableGold < $costToTravel) {
             throw new NotEnoughGoldException($availableGold, $costToTravel);
         }
+
+        $travelsBorders->decreaseGold($costToTravel);
+        $travelsBorders->updateLocation($border);
     }
 }

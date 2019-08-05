@@ -10,5 +10,5 @@ interface HasLocation
 {
     public function getCurrentLocation(): Province;
 
-    public function updateLocation(Province $border);
+    public function updateLocation(Province $newLocation);
 }
