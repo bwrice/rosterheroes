@@ -6,9 +6,9 @@ namespace App\Domain\Interfaces;
 
 use App\Domain\Models\Province;
 
-interface TravelsBorders
+interface TravelsBorders extends HasGold
 {
-    public function getAvailableGold(): int;
-
     public function borderTravelIsFree(Province $border): bool;
+
+    public function getCurrentLocation(): Province;
 }
