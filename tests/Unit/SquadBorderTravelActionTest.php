@@ -15,7 +15,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class BorderTravelActionTest extends TestCase
+class SquadBorderTravelActionTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -38,6 +38,42 @@ class BorderTravelActionTest extends TestCase
     }
 
     /**
+     * @test
+     */
+    public function a_squad_can_border_travel()
+    {
+        /*
+         * Force Squad to have no travel cost exemption
+         */
+        $exemptionMock = \Mockery::mock(SquadBorderTravelCostExemption::class);
+        $exemptionMock->shouldReceive('isExempt')->andReturn(false);
+        // put the mock into the container
+        app()->instance(SquadBorderTravelCostExemption::class, $exemptionMock);
+
+        $this->assertFalse($this->squad->hasBorderTravelCostExemption($this->border), "Border travel is free");
+
+        /*
+         * Force travel cost to be less than available gold
+         */
+        $availableGold = $this->squad->getAvailableGold();
+        $this->assertGreaterThan(0, $availableGold);
+        $cost = $availableGold - 1;
+        $costCalculatorMock = \Mockery::mock(BorderTravelCostCalculator::class);
+        $costCalculatorMock->shouldReceive('goldCost')->andReturn($cost);
+        // put the mock into the container
+        app()->instance(BorderTravelCostCalculator::class, $costCalculatorMock);
+
+        /** @var BorderTravelAction  $borderTravelAction */
+        $borderTravelAction = app(BorderTravelAction::class);
+        $borderTravelAction->execute($this->squad, $this->border);
+
+        $squad = $this->squad->fresh();
+
+        $this->assertEquals($availableGold - $cost, $squad->getAvailableGold());
+        $this->assertEquals($this->border->id, $squad->province_id);
+    }
+
+        /**
      * @test
      */
     public function it_will_throw_an_exception_if_they_dont_border_each_other()
