@@ -373,9 +373,14 @@ class Squad extends EventSourcedModel implements HasSlots, TravelsBorders
         return $this->province;
     }
 
+    public function increaseGold(int $amount)
+    {
+        $this->getAggregate()->increaseGold($amount);
+    }
+
     public function decreaseGold(int $amount)
     {
-        // TODO: Implement spendGold() method.
+        $this->getAggregate()->decreaseGold($amount)->persist();
     }
 
     public function updateLocation(Province $border)

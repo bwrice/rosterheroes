@@ -7,6 +7,7 @@ use App\Domain\Models\SlotType;
 use App\StorableEvents\SquadCreated;
 use App\StorableEvents\SquadEssenceIncreased;
 use App\StorableEvents\SquadFavorIncreased;
+use App\StorableEvents\SquadGoldDecreased;
 use App\StorableEvents\SquadGoldIncreased;
 use App\StorableEvents\SquadHeroPostAdded;
 use App\StorableEvents\SquadSlotsAdded;
@@ -39,6 +40,13 @@ final class SquadAggregate extends AggregateRoot
     public function increaseGold(int $amount)
     {
         $this->recordThat(new SquadGoldIncreased($amount));
+
+        return $this;
+    }
+
+    public function decreaseGold(int $amount)
+    {
+        $this->recordThat(new SquadGoldDecreased($amount));
 
         return $this;
     }
