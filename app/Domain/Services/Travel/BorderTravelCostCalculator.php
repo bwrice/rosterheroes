@@ -11,7 +11,7 @@ class BorderTravelCostCalculator
 {
     public function goldCost(TravelsBorders $travelsBorders, Province $border)
     {
-        if ($travelsBorders->borderTravelIsFree($border)) {
+        if ($travelsBorders->hasBorderTravelCostExemption($border)) {
             return 0;
         }
 

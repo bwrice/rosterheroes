@@ -4,6 +4,7 @@ namespace App\Domain\Models;
 
 use App\Domain\Actions\CreateCampaignAction;
 use App\Domain\Interfaces\TravelsBorders;
+use App\Domain\Services\Travel\SquadBorderTravelCostExemption;
 use App\StorableEvents\SquadFavorIncreased;
 use App\StorableEvents\SquadCreated;
 use App\StorableEvents\SquadGoldIncreased;
@@ -349,10 +350,11 @@ class Squad extends EventSourcedModel implements HasSlots, TravelsBorders
         return $this->gold;
     }
 
-    public function borderTravelIsFree(Province $border): bool
+    public function hasBorderTravelCostExemption(Province $border): bool
     {
-        // TODO: any logic such as free until a certain level, or ally provinces
-        return false;
+        /** @var SquadBorderTravelCostExemption $costExemption */
+        $costExemption = app(SquadBorderTravelCostExemption::class);
+        return $costExemption->isExempt($this, $border);
     }
 
     public function getCurrentLocation(): Province

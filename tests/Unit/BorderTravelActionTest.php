@@ -6,6 +6,7 @@ use App\Domain\Actions\BorderTravelAction;
 use App\Domain\Models\Province;
 use App\Domain\Models\Squad;
 use App\Domain\Services\Travel\BorderTravelCostCalculator;
+use App\Domain\Services\Travel\SquadBorderTravelCostExemption;
 use App\Exceptions\NotBorderedByException;
 use App\Exceptions\NotEnoughGoldException;
 use Illuminate\Database\Eloquent\Builder;
@@ -67,17 +68,26 @@ class BorderTravelActionTest extends TestCase
      */
     public function it_will_throw_an_exception_if_the_squad_cannot_afford_the_travel_expenses()
     {
+        /*
+         * Force Squad to have no travel cost exemption
+         */
+        $exemptionMock = \Mockery::mock(SquadBorderTravelCostExemption::class);
+        $exemptionMock->shouldReceive('isExempt')->andReturn(false);
+        // put the mock into the container
+        app()->instance(SquadBorderTravelCostExemption::class, $exemptionMock);
+
+        $this->assertFalse($this->squad->hasBorderTravelCostExemption($this->border), "Border travel is free");
+
+        /*
+         * Force travel cost to be too expensive
+         */
         $availableGold = $this->squad->getAvailableGold();
-
+        $cost = $availableGold + 1;
         $costCalculatorMock = \Mockery::mock(BorderTravelCostCalculator::class);
-
+        $costCalculatorMock->shouldReceive('goldCost')->andReturn($cost);
         // put the mock into the container
         app()->instance(BorderTravelCostCalculator::class, $costCalculatorMock);
 
-        $cost = $availableGold + 1;
-        $costCalculatorMock->shouldReceive('goldCost')->andReturn($cost);
-
-        $this->assertFalse($this->squad->borderTravelIsFree($this->border), "Border travel is free");
 
         try {
             /** @var BorderTravelAction  $borderTravelAction */
@@ -93,6 +103,5 @@ class BorderTravelActionTest extends TestCase
         }
 
         $this->fail("Exception not thrown");
-
     }
 }
