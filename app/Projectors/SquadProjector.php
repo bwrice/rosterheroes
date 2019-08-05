@@ -4,6 +4,7 @@ namespace App\Projectors;
 
 use App\StorableEvents\SquadCreated;
 use App\Domain\Models\Squad;
+use App\StorableEvents\SquadLocationUpdated;
 use Spatie\EventProjector\Projectors\Projector;
 use Spatie\EventProjector\Projectors\ProjectsEvents;
 
@@ -22,5 +23,12 @@ class SquadProjector implements Projector
             'province_id' => $event->provinceID
         ]);
         return $squad;
+    }
+
+    public function onLocationUpdated(SquadLocationUpdated $event, string $aggregateUuid)
+    {
+        $squad = Squad::uuid($aggregateUuid);
+        $squad->province_id = $event->toProvinceID;
+        $squad->save();
     }
 }
