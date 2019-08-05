@@ -8,5 +8,5 @@ interface HasGold
 {
     public function getAvailableGold(): int;
 
-    public function spendGold(int $amount);
+    public function decreaseGold(int $amount);
 }

@@ -2,6 +2,7 @@
 
 namespace App\Domain\Models;
 
+use App\Aggregates\SquadAggregate;
 use App\Domain\Actions\CreateCampaignAction;
 use App\Domain\Interfaces\TravelsBorders;
 use App\Domain\Services\Travel\SquadBorderTravelCostExemption;
@@ -75,6 +76,16 @@ class Squad extends EventSourcedModel implements HasSlots, TravelsBorders
     ];
 
     protected $guarded = [];
+
+    /**
+     * @return SquadAggregate
+     */
+    public function getAggregate()
+    {
+        /** @var SquadAggregate $aggregate */
+        $aggregate = SquadAggregate::retrieve($this->uuid);
+        return $aggregate;
+    }
 
     /**
      * Get the options for generating the slug.
@@ -360,5 +371,15 @@ class Squad extends EventSourcedModel implements HasSlots, TravelsBorders
     public function getCurrentLocation(): Province
     {
         return $this->province;
+    }
+
+    public function decreaseGold(int $amount)
+    {
+        // TODO: Implement spendGold() method.
+    }
+
+    public function updateLocation(Province $border)
+    {
+        // TODO: Implement updateLocation() method.
     }
 }
