@@ -11,6 +11,7 @@ use App\Domain\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Spatie\Sluggable\SlugOptions;
 
 /**
@@ -82,12 +83,18 @@ class Province extends EventSourcedModel
         return $this->hasMany(Squad::class);
     }
 
+    /**
+     * @return BelongsToMany
+     */
     public function borders()
     {
         return $this->belongsToMany(self::class, 'borders', 'province_id', 'border_id')
             ->withTimestamps();
     }
 
+    /**
+     * @return BelongsToMany
+     */
     public function borderedBy()
     {
         return $this->belongsToMany(self::class, 'borders', 'border_id', 'province_id')

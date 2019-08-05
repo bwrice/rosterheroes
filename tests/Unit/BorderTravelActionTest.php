@@ -5,7 +5,9 @@ namespace Tests\Unit;
 use App\Domain\Actions\BorderTravelAction;
 use App\Domain\Models\Province;
 use App\Domain\Models\Squad;
+use App\Domain\Services\Travel\BorderTravelCostCalculator;
 use App\Exceptions\NotBorderedByException;
+use App\Exceptions\NotEnoughGoldException;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
@@ -16,35 +18,81 @@ class BorderTravelActionTest extends TestCase
 {
     use DatabaseTransactions;
 
+    /** @var Squad */
+    protected $squad;
+
+    /** @var Province */
+    protected $startingProvince;
+
+    /** @var Province */
+    protected $border;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->squad = factory(Squad::class)->create();
+        $this->startingProvince = $this->squad->province;
+        $this->border = $this->squad->province->borders()->inRandomOrder()->first();
+    }
+
     /**
      * @test
      */
     public function it_will_throw_an_exception_if_they_dont_border_each_other()
     {
-        /** @var Squad $squad */
-        $squad = factory(Squad::class)->create();
-        $currentProvince = $squad->province;
-
         /** @var Province $nonBorder */
-        $nonBorder = Province::query()->whereDoesntHave('borders', function(Builder $builder) use ($currentProvince) {
-            return $builder->where('id', '=', $currentProvince->id);
+        $nonBorder = Province::query()->whereDoesntHave('borders', function(Builder $builder){
+            return $builder->where('id', '=', $this->startingProvince->id);
         })->first();
 
-        /** @var BorderTravelAction $domainAction */
-        $domainAction = app(BorderTravelAction::class);
-
         try {
-
-            $domainAction->execute($squad, $nonBorder);
+            /** @var BorderTravelAction  $borderTravelAction */
+            $borderTravelAction = app(BorderTravelAction::class);
+            $borderTravelAction->execute($this->squad, $nonBorder);
 
         } catch (NotBorderedByException $exception) {
 
-            $squad = $squad->fresh();
+            $squad = $this->squad->fresh();
 
-            $this->assertEquals($currentProvince->id, $squad->province_id);
+            $this->assertEquals($this->startingProvince->id, $squad->province_id);
             return;
         }
 
         $this->fail("Exception not thrown");
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_throw_an_exception_if_the_squad_cannot_afford_the_travel_expenses()
+    {
+        $availableGold = $this->squad->getAvailableGold();
+
+        $costCalculatorMock = \Mockery::mock(BorderTravelCostCalculator::class);
+
+        // put the mock into the container
+        app()->instance(BorderTravelCostCalculator::class, $costCalculatorMock);
+
+        $cost = $availableGold + 1;
+        $costCalculatorMock->shouldReceive('goldCost')->andReturn($cost);
+
+        $this->assertFalse($this->squad->borderTravelIsFree($this->border), "Border travel is free");
+
+        try {
+            /** @var BorderTravelAction  $borderTravelAction */
+            $borderTravelAction = app(BorderTravelAction::class);
+            $borderTravelAction->execute($this->squad, $this->border);
+
+        } catch (NotEnoughGoldException $exception) {
+
+            $squad = $this->squad->fresh();
+            $this->assertEquals($availableGold, $squad->getAvailableGold());
+            $this->assertEquals($this->startingProvince->id, $squad->province_id);
+            return;
+        }
+
+        $this->fail("Exception not thrown");
+
     }
 }

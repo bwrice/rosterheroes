@@ -354,4 +354,9 @@ class Squad extends EventSourcedModel implements HasSlots, TravelsBorders
         // TODO: any logic such as free until a certain level, or ally provinces
         return false;
     }
+
+    public function getCurrentLocation(): Province
+    {
+        return $this->province;
+    }
 }
