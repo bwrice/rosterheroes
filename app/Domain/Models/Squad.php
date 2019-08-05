@@ -3,6 +3,7 @@
 namespace App\Domain\Models;
 
 use App\Domain\Actions\CreateCampaignAction;
+use App\Domain\Interfaces\TravelsBorders;
 use App\StorableEvents\SquadFavorIncreased;
 use App\StorableEvents\SquadCreated;
 use App\StorableEvents\SquadGoldIncreased;
@@ -45,7 +46,7 @@ use Spatie\Sluggable\SlugOptions;
  *
  * @property HeroPostCollection $heroPosts
  */
-class Squad extends EventSourcedModel implements HasSlots
+class Squad extends EventSourcedModel implements HasSlots, TravelsBorders
 {
     use HasSlug;
 
@@ -124,22 +125,6 @@ class Squad extends EventSourcedModel implements HasSlots
             'hero_post_type_id' => $heroPostType->id
         ]);
     }
-
-//    /**
-//     * @param array $attributes
-//     * @return Squad|null
-//     * @throws \Exception
-//     */
-//    public static function createWithAttributes(array $attributes)
-//    {
-//        $uuid = (string) Uuid::uuid4();
-//
-//        $attributes['uuid'] = $uuid;
-//
-//        event(new SquadCreated($attributes));
-//
-//        return self::uuid($uuid);
-//    }
 
     public function mobileStorageRank()
     {
@@ -357,5 +342,16 @@ class Squad extends EventSourcedModel implements HasSlots
         }
 
         return HeroClass::all();
+    }
+
+    public function getAvailableGold(): int
+    {
+        return $this->gold;
+    }
+
+    public function borderTravelIsFree(Province $border): bool
+    {
+        // TODO: any logic such as free until a certain level, or ally provinces
+        return false;
     }
 }
