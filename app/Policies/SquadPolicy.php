@@ -10,7 +10,6 @@ class SquadPolicy
 {
     use HandlesAuthorization;
 
-
     public function manageSquad(User $user, Squad $squad)
     {
         return $user->id === $squad->user_id;
