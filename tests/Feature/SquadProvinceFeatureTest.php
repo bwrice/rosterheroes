@@ -26,7 +26,7 @@ class SquadProvinceFeatureTest extends TestCase
 
         Passport::actingAs($squad->user);
 
-        $response = $this->json('POST', 'api/v1/squads/' . $squad->uuid . '/border/' . $border->uuid );
+        $response = $this->json('POST', 'api/v1/squads/' . $squad->slug . '/border/' . $border->slug );
         $this->assertEquals(201, $response->status());
         $this->assertEquals($border->id, $squad->fresh()->province_id);
     }

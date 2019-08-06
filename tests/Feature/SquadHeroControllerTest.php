@@ -43,7 +43,7 @@ class SquadHeroControllerTest extends TestCase
         $heroRace = HeroRace::HUMAN;
         $heroClass = HeroClass::WARRIOR;
 
-        $response = $this->json('POST','api/v1/squad/' . $squad->uuid .  '/heroes', [
+        $response = $this->json('POST','api/v1/squad/' . $squad->slug .  '/heroes', [
             'name' => $heroName,
             'race' => $heroRace,
             'class' => $heroClass
@@ -109,7 +109,7 @@ class SquadHeroControllerTest extends TestCase
         $heroClass = HeroClass::WARRIOR;
 
         try {
-            $response = $this->json('POST','api/v1/squad/' . $squad->uuid .  '/heroes', [
+            $response = $this->json('POST','api/v1/squad/' . $squad->slug .  '/heroes', [
                 'name' => $heroName,
                 'race' => $heroRace,
                 'class' => $heroClass
@@ -146,7 +146,7 @@ class SquadHeroControllerTest extends TestCase
         $heroName = 'TestHero' . rand(1,999999);
 
         try {
-            $response = $this->json('POST','api/v1/squad/' . $squad->uuid .  '/heroes', [
+            $response = $this->json('POST','api/v1/squad/' . $squad->slug .  '/heroes', [
                 'name' => $heroName,
                 'race' => $invalidHeroRace->name,
                 'class' => HeroClass::RANGER
@@ -201,7 +201,7 @@ class SquadHeroControllerTest extends TestCase
         $heroName = 'TestHero' . rand(1,999999);
 
         try {
-            $response = $this->json('POST','api/v1/squad/' . $squad->uuid .  '/heroes', [
+            $response = $this->json('POST','api/v1/squad/' . $squad->slug .  '/heroes', [
                 'name' => $heroName,
                 'race' => HeroRace::DWARF,
                 'class' => $overloadedHeroClass->name

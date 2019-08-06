@@ -35,7 +35,7 @@ class SquadFastTravelControllerTest extends TestCase
 
         $this->assertEquals(3, $routeProvinces->count());
 
-        $response = $this->post('/api/v1/squads/' . $squad->uuid . '/fast-travel', [
+        $response = $this->post('/api/v1/squads/' . $squad->slug . '/fast-travel', [
             'travel_route' => $routeProvinces->pluck('uuid')->toArray()
         ]);
 
