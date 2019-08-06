@@ -5,6 +5,7 @@ use App\Http\Controllers\FastTravelController;
 use App\Http\Controllers\HeroController;
 use App\Http\Controllers\ProvinceBorderController;
 use App\Http\Controllers\ProvinceController;
+use App\Http\Controllers\SquadCurrentLocationController;
 use App\Http\Controllers\TerritoryController;
 use App\Http\Controllers\WeekController;
 use App\Http\Controllers\SquadBorderTravelController;
@@ -54,7 +55,9 @@ Route::prefix('v1')->group(function () {
         Route::get('/squad/{squadUuid}/hero-classes', SquadHeroClassController::class);
         Route::get('/squad/{squadUuid}/hero-races', SquadHeroRaceController::class);
 
-        Route::post('/squad/{squadUuid}/border/{borderUuid}', [SquadBorderTravelController::class, 'store']);
+        Route::get('/squads/{squadUuid}/current-location', SquadCurrentLocationController::class);
+
+        Route::post('/squads/{squadUuid}/border/{borderUuid}', [SquadBorderTravelController::class, 'store']);
         Route::get('/squads/{squadUuid}/border/{borderUuid', [SquadBorderTravelController::class, 'show']);
 
         Route::post('/squad/{squadUuid}/heroes', [SquadHeroController::class, 'store']);
