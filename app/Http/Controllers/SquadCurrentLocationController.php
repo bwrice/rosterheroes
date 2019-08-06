@@ -2,12 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Domain\Models\Squad;
+use App\Http\Resources\CurrentLocationResource;
 use Illuminate\Http\Request;
 
 class SquadCurrentLocationController extends Controller
 {
     public function __invoke($squadUuid)
     {
-        // TODO: Implement __invoke() method.
+        $squad = Squad::uuidOrFail($squadUuid);
+        $this->authorize(Squad::MANAGE_AUTHORIZATION, $squad);
+
+        $currentLocation = $squad->province()->with([
+            // TODO relations
+        ])->withCount([
+            'squads'
+        ]);
+
+        return response()->json(new CurrentLocationResource($currentLocation), 200);
     }
 }
