@@ -55,6 +55,7 @@ Route::prefix('v1')->group(function () {
         Route::get('/squad/{squadUuid}/hero-races', SquadHeroRaceController::class);
 
         Route::post('/squad/{squadUuid}/border/{borderUuid}', [SquadBorderTravelController::class, 'store']);
+        Route::get('/squads/{squadUuid}/border/{borderUuid', [SquadBorderTravelController::class, 'show']);
 
         Route::post('/squad/{squadUuid}/heroes', [SquadHeroController::class, 'store']);
         Route::post('/squad/{squadUuid}/campaigns', [SquadCampaignController::class, 'store']);
