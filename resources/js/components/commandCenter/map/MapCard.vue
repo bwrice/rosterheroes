@@ -66,7 +66,7 @@
 
 <script>
     export default {
-        name: "Realm",
+        name: "MapCard",
         props: {
             viewBox: {
                 type: Object,

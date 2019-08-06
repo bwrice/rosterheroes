@@ -1,6 +1,6 @@
 <template>
     <v-flex class="xs12 lg8 offset-lg2">
-        <Realm :view-box="this._province.view_box">
+        <MapCard :view-box="this._province.view_box">
 
             <!-- Borders -->
             <ProvinceVector
@@ -13,19 +13,22 @@
 
             <!-- Province -->
             <ProvinceVector :province="this._province" :highlight="true"></ProvinceVector>
-        </Realm>
+        </MapCard>
     </v-flex>
 </template>
 
 <script>
 
     import {mapGetters} from 'vuex';
-    import Realm from "../../map/Realm";
-    import ProvinceVector from "../../map/ProvinceVector";
+    import MapCard from "../../../map/MapCard";
+    import ProvinceVector from "../../../map/ProvinceVector";
 
     export default {
         name: "ProvinceView",
-        components: {ProvinceVector, Realm},
+        components: {
+            MapCard,
+            ProvinceVector
+        },
         computed: {
             ...mapGetters([
                 '_province',

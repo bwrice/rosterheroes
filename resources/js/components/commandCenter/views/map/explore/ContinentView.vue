@@ -1,26 +1,24 @@
 <template>
-    <v-flex class="xs12 lg8 offset-lg2">
-        <Realm :view-box="viewBox">
-            <ProvinceVector
-                v-for="(province, uuid) in provincesForContinent"
-                :key="uuid"
-                :province="province"
-                :route-link="true"
-            ></ProvinceVector>
-        </Realm>
-    </v-flex>
+    <MapCard :view-box="viewBox">
+        <ProvinceVector
+            v-for="(province, uuid) in provincesForContinent"
+            :key="uuid"
+            :province="province"
+            :route-link="true"
+        ></ProvinceVector>
+    </MapCard>
 </template>
 
 <script>
 
     import {mapGetters} from 'vuex';
-    import { continentMixin } from '../../../../mixins/continentMixin';
-    import Realm from "../../map/Realm";
-    import ProvinceVector from "../../map/ProvinceVector";
+    import { continentMixin } from '../../../../../mixins/continentMixin';
+    import MapCard from "../../../map/MapCard";
+    import ProvinceVector from "../../../map/ProvinceVector";
 
     export default {
         name: "ContinentView",
-        components: {ProvinceVector, Realm},
+        components: {ProvinceVector, MapCard},
         mixins: [
             continentMixin
         ],

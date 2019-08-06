@@ -1,28 +1,28 @@
 <template>
     <v-flex class="xs12 lg8 offset-lg2">
-        <Realm :view-box="viewBox">
+        <MapCard :view-box="viewBox">
             <ProvinceVector
                 v-for="(province, uuid) in provincesForTerritory"
                 :key="uuid"
                 :province="province"
                 :route-link="true"
             ></ProvinceVector>
-        </Realm>
+        </MapCard>
     </v-flex>
 </template>
 
 <script>
 
     import {mapGetters} from 'vuex';
-    import Realm from "../../map/Realm";
-    import { territoryMixin } from '../../../../mixins/territoryMixin';
-    import ProvinceVector from "../../map/ProvinceVector";
+    import MapCard from "../../../map/MapCard";
+    import { territoryMixin } from '../../../../../mixins/territoryMixin';
+    import ProvinceVector from "../../../map/ProvinceVector";
 
     export default {
         name: "TerritoryView",
 
         components: {
-            Realm,
+            MapCard,
             ProvinceVector
         },
 
