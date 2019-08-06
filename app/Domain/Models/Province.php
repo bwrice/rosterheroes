@@ -31,7 +31,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property Continent $continent
  * @property Territory $territory
  * @property ProvinceCollection $borders
- * @property \App\Domain\Collections\ProvinceCollection $borderedBy
+ * @property ProvinceCollection $borderedBy
  *
  * @method static Builder bordersCount(int $count)
  * @method static Builder starting
