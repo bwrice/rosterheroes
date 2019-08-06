@@ -4,6 +4,7 @@ import MapNavigationDrawer from "../components/commandCenter/views/map/MapNaviga
 import ContinentView from "../components/commandCenter/views/map/ContinentView";
 import TerritoryView from "../components/commandCenter/views/map/TerritoryView";
 import ProvinceView from "../components/commandCenter/views/map/ProvinceView";
+import ExploreView from "../components/commandCenter/views/map/ExploreView";
 
 export const mapRoutes = {
     path: '/command-center/:squadSlug/map',
@@ -19,6 +20,14 @@ export const mapRoutes = {
             path: '',
             component: MapMain,
             name: 'map-main',
+            meta: {
+                footerButton: 'map'
+            }
+        },
+        {
+            path: 'explore',
+            component: ExploreView,
+            name: 'map-explore',
             meta: {
                 footerButton: 'map'
             }
