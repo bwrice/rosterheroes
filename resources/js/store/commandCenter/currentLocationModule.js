@@ -1,0 +1,27 @@
+
+export default {
+
+    state: {
+        currentLocation: {
+            name: '',
+            border: []
+        }
+    },
+
+    getters: {
+        _currentLocation(state) {
+            return state.currentLocation;
+        }
+    },
+    mutations: {
+        SET_CURRENT_LOCATION(state, payload) {
+            state.week = payload;
+        }
+    },
+
+    actions: {
+        setCurrentLocation({commit}, payload) {
+            commit('SET_CURRENT_WEEK', payload)
+        },
+    }
+};
