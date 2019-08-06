@@ -8,9 +8,9 @@ use App\Http\Resources\HeroClassResource as HeroClassResource;
 
 class SquadHeroClassController extends Controller
 {
-    public function __invoke($squadUuid)
+    public function __invoke($squadSlug)
     {
-        $squad = Squad::uuidOrFail($squadUuid);
+        $squad = Squad::slugOrFail($squadSlug);
         $this->authorize(Squad::MANAGE_AUTHORIZATION, $squad);
         return response(HeroClassResource::collection($squad->getHeroClassAvailability()), 200);
     }

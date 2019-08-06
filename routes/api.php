@@ -50,23 +50,23 @@ Route::prefix('v1')->group(function () {
         Route::post('/squads', [SquadController::class, 'store']);
         Route::get('/squads/{squadSlug}', [SquadController::class, 'show']);
 
-        Route::post('/squads/{squadUuid}/fast-travel', FastTravelController::class);
+        Route::post('/squads/{squadSlug}/fast-travel', FastTravelController::class);
 
-        Route::get('/squad/{squadUuid}/hero-classes', SquadHeroClassController::class);
-        Route::get('/squad/{squadUuid}/hero-races', SquadHeroRaceController::class);
+        Route::get('/squad/{squadSlug}/hero-classes', SquadHeroClassController::class);
+        Route::get('/squad/{squadSlug}/hero-races', SquadHeroRaceController::class);
 
-        Route::get('/squads/{squadUuid}/current-location', SquadCurrentLocationController::class);
+        Route::get('/squads/{squadSlug}/current-location', SquadCurrentLocationController::class);
 
-        Route::post('/squads/{squadUuid}/border/{borderUuid}', [SquadBorderTravelController::class, 'store']);
-        Route::get('/squads/{squadUuid}/border/{borderUuid', [SquadBorderTravelController::class, 'show']);
+        Route::post('/squads/{squadSlug}/border/{borderSlug}', [SquadBorderTravelController::class, 'store']);
+        Route::get('/squads/{squadSlug}/border/{borderSlug}', [SquadBorderTravelController::class, 'show']);
 
-        Route::post('/squad/{squadUuid}/heroes', [SquadHeroController::class, 'store']);
-        Route::post('/squad/{squadUuid}/campaigns', [SquadCampaignController::class, 'store']);
+        Route::post('/squad/{squadSlug}/heroes', [SquadHeroController::class, 'store']);
+        Route::post('/squad/{squadSlug}/campaigns', [SquadCampaignController::class, 'store']);
 
         Route::get('/heroes/{heroSlug}', [HeroController::class, 'show']);
 
-        Route::post('/heroes/{heroUuid}/player-spirit/{playerSpiritUuid}', [HeroPlayerSpiritController::class, 'store']);
-        Route::delete('/heroes/{heroUuid}/player-spirit/{playerSpiritUuid}', [HeroPlayerSpiritController::class, 'delete']);
+        Route::post('/heroes/{heroSlug}/player-spirit/{playerSpiritUuid}', [HeroPlayerSpiritController::class, 'store']);
+        Route::delete('/heroes/{heroSlug}/player-spirit/{playerSpiritUuid}', [HeroPlayerSpiritController::class, 'delete']);
 
         Route::post('/campaign/{campaign}/quest/{questUuid}', [CampaignQuestController::class, 'store']);
     });

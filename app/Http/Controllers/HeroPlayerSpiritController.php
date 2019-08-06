@@ -12,13 +12,9 @@ use Illuminate\Validation\ValidationException;
 
 class HeroPlayerSpiritController extends Controller
 {
-    public function store($heroUuid, $playerSpiritUuid, AddSpiritToHeroAction $action)
+    public function store($heroSlug, $playerSpiritUuid, AddSpiritToHeroAction $action)
     {
-        $hero = Hero::uuid($heroUuid);
-        if (! $hero) {
-            throw ValidationException::withMessages(["Hero could not be found"]);
-        }
-
+        $hero = Hero::slugOrFail($heroSlug);
         $playerSpirit = PlayerSpirit::uuid($playerSpiritUuid);
         if (! $playerSpirit) {
             throw ValidationException::withMessages(['Player could not be found']);
@@ -43,13 +39,9 @@ class HeroPlayerSpiritController extends Controller
         }
     }
 
-    public function delete($heroUuid, $playerSpiritUuid, RemoveSpiritFromHeroAction $action)
+    public function delete($heroSlug, $playerSpiritUuid, RemoveSpiritFromHeroAction $action)
     {
-        $hero = Hero::uuid($heroUuid);
-        if (! $hero) {
-            throw ValidationException::withMessages(["Hero could not be found"]);
-        }
-
+        $hero = Hero::slugOrFail($heroSlug);
         $playerSpirit = PlayerSpirit::uuid($playerSpiritUuid);
         if (! $playerSpirit) {
             throw ValidationException::withMessages(['Player could not be found']);

@@ -26,15 +26,15 @@ class SquadHeroController extends Controller
 {
     /**
      * @param Request $request
-     * @param $squadUuid
+     * @param $squadSlug
      * @param AddNewHeroToSquadAction $domainAction
      * @return \Illuminate\Http\JsonResponse
      * @throws ValidationException
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function store(Request $request, $squadUuid, AddNewHeroToSquadAction $domainAction)
+    public function store(Request $request, $squadSlug, AddNewHeroToSquadAction $domainAction)
     {
-        $squad = Squad::uuidOrFail($squadUuid);
+        $squad = Squad::slugOrFail($squadSlug);
         $this->authorize(Squad::MANAGE_AUTHORIZATION, $squad);
 
         $this->validate($request, [

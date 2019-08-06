@@ -8,13 +8,13 @@ use App\Domain\Models\Squad;
 class SquadHeroRaceController extends Controller
 {
     /**
-     * @param $squadUuid
+     * @param $squadSlug
      * @return \Illuminate\Http\JsonResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function __invoke($squadUuid)
+    public function __invoke($squadSlug)
     {
-        $squad = Squad::uuidOrFail($squadUuid);
+        $squad = Squad::slugOrFail($squadSlug);
         $this->authorize(Squad::MANAGE_AUTHORIZATION, $squad);
         return response()->json(HeroRaceResource::collection($squad->getHeroRaceAvailability()), 200);
     }

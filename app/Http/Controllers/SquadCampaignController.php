@@ -10,9 +10,9 @@ use Illuminate\Validation\ValidationException;
 
 class SquadCampaignController extends Controller
 {
-    public function store($squadUuid)
+    public function store($squadSlug)
     {
-        $squad = Squad::uuidOrFail($squadUuid);
+        $squad = Squad::slugOrFail($squadSlug);
         $this->authorize(Squad::MANAGE_AUTHORIZATION, $squad);
         try {
 

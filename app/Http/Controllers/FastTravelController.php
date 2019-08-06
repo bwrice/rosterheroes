@@ -16,15 +16,15 @@ use Illuminate\Validation\ValidationException;
 class FastTravelController extends Controller
 {
     /**
-     * @param $squadUuid
+     * @param $squadSlug
      * @param Request $request
      * @param FastTravelAction $fastTravelAction
      * @return JsonResponse
      * @throws AuthorizationException
      */
-    public function __invoke($squadUuid, Request $request, FastTravelAction $fastTravelAction)
+    public function __invoke($squadSlug, Request $request, FastTravelAction $fastTravelAction)
     {
-        $squad = Squad::uuidOrFail($squadUuid);
+        $squad = Squad::slugOrFail($squadSlug);
         $this->authorize(Squad::MANAGE_AUTHORIZATION, $squad);
 
         $travelRoute = new ProvinceCollection();

@@ -15,11 +15,11 @@ use Illuminate\Validation\ValidationException;
 
 class SquadBorderTravelController extends Controller
 {
-    public function store($squadUuid, $borderUuid)
+    public function store($squadSlug, $borderSlug)
     {
-        $squad = Squad::uuidOrFail($squadUuid);
+        $squad = Squad::slugOrFail($squadSlug);
         $this->authorize(Squad::MANAGE_AUTHORIZATION, $squad);
-        $border = Province::uuidOrFail($borderUuid);
+        $border = Province::slugOrFail($borderSlug);
         try {
             $squad->borderTravel($border);
             return response()->json($squad->load('province'), 201);
@@ -30,11 +30,11 @@ class SquadBorderTravelController extends Controller
         }
     }
 
-    public function get($squadUuid, $borderUuid, BorderTravelCostCalculator $costCalculator)
+    public function get($squadSlug, $borderSlug, BorderTravelCostCalculator $costCalculator)
     {
-        $squad = Squad::uuidOrFail($squadUuid);
+        $squad = Squad::slugOrFail($squadSlug);
         $this->authorize(Squad::MANAGE_AUTHORIZATION, $squad);
-        $border = Province::uuidOrFail($borderUuid);
+        $border = Province::slugOrFail($borderSlug);
         $cost = $costCalculator->goldCost($squad, $border);
         return response()->json([
             'squad' => new SquadResource($squad),
