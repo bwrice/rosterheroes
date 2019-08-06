@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ContinentController;
+use App\Http\Controllers\FastTravelController;
 use App\Http\Controllers\HeroController;
 use App\Http\Controllers\ProvinceBorderController;
 use App\Http\Controllers\ProvinceController;
@@ -47,6 +48,8 @@ Route::prefix('v1')->group(function () {
 
         Route::post('/squads', [SquadController::class, 'store']);
         Route::get('/squads/{squadSlug}', [SquadController::class, 'show']);
+
+        Route::post('/squads/{squadUuid}/fast-travel', FastTravelController::class);
 
         Route::get('/squad/{squadUuid}/hero-classes', SquadHeroClassController::class);
         Route::get('/squad/{squadUuid}/hero-races', SquadHeroRaceController::class);
