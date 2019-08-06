@@ -2,15 +2,11 @@
     <v-card>
         <v-layout>
             <v-flex class="xs12">
-                <v-sheet tile :color="oceanColor">
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                         version="1.1"
-                         :viewBox="viewBoxString">
-                        <slot>
-                            <!-- Default Slot: ProvinceVector components slotted here -->
-                        </slot>
-                    </svg>
-                </v-sheet>
+                <MapViewPort :view-box="currentViewBox">
+                    <slot>
+                        <!-- Default Slot: ProvinceVector components slotted here -->
+                    </slot>
+                </MapViewPort>
             </v-flex>
         </v-layout>
         <v-layout>
@@ -65,8 +61,10 @@
 </template>
 
 <script>
+    import MapViewPort from "./MapViewPort";
     export default {
         name: "MapCard",
+        components: {MapViewPort},
         props: {
             viewBox: {
                 type: Object,
@@ -132,15 +130,6 @@
                 this.currentViewBox.zoom_y /= .8;
                 this.panLeft();
                 this.panUp();
-            }
-        },
-
-        computed: {
-            viewBoxString() {
-                return this.currentViewBox.pan_x + ' ' + this.currentViewBox.pan_y + ' ' + this.currentViewBox.zoom_x + ' ' + this.currentViewBox.zoom_y;
-            },
-            oceanColor() {
-                return '#d5f5f5'
             }
         }
     }
