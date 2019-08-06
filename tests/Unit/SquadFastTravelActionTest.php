@@ -8,12 +8,10 @@ use App\Domain\Models\Province;
 use App\Domain\Models\Squad;
 use App\Domain\Services\Travel\BorderTravelCostCalculator;
 use App\Domain\Services\Travel\SquadBorderTravelCostExemption;
-use App\Exceptions\NotBorderedByException;
+use App\Exceptions\BorderTravelException;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class SquadFastTravelActionTest extends TestCase
 {
@@ -133,11 +131,11 @@ class SquadFastTravelActionTest extends TestCase
             $fastTravelAction = app(FastTravelAction::class);
             $fastTravelAction->execute($this->squad, $this->travelRoute);
 
-        } catch (NotBorderedByException $exception) {
+        } catch (BorderTravelException $exception) {
 
             $squad = $this->squad->fresh();
 
-            $this->assertEquals($lastLocation->id, $exception->getProvince()->id);
+            $this->assertEquals(BorderTravelException::NOT_BORDERED_BY, $exception->getCode());
             $this->assertEquals($nonBorder->id, $exception->getBorder()->id);
             $this->assertEquals($this->startingProvince->id, $squad->province_id, "Squad never relocated");
             $this->assertEquals($availableGold, $squad->getAvailableGold(), "No gold was spent");

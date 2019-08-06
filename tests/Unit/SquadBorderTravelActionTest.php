@@ -7,13 +7,10 @@ use App\Domain\Models\Province;
 use App\Domain\Models\Squad;
 use App\Domain\Services\Travel\BorderTravelCostCalculator;
 use App\Domain\Services\Travel\SquadBorderTravelCostExemption;
-use App\Exceptions\NotBorderedByException;
-use App\Exceptions\NotEnoughGoldException;
+use App\Exceptions\BorderTravelException;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class SquadBorderTravelActionTest extends TestCase
 {
@@ -88,10 +85,10 @@ class SquadBorderTravelActionTest extends TestCase
             $borderTravelAction = app(BorderTravelAction::class);
             $borderTravelAction->execute($this->squad, $nonBorder);
 
-        } catch (NotBorderedByException $exception) {
+        } catch (BorderTravelException $exception) {
 
             $squad = $this->squad->fresh();
-
+            $this->assertEquals(BorderTravelException::NOT_BORDERED_BY, $exception->getCode());
             $this->assertEquals($this->startingProvince->id, $squad->province_id);
             return;
         }
@@ -130,9 +127,10 @@ class SquadBorderTravelActionTest extends TestCase
             $borderTravelAction = app(BorderTravelAction::class);
             $borderTravelAction->execute($this->squad, $this->border);
 
-        } catch (NotEnoughGoldException $exception) {
+        } catch (BorderTravelException $exception) {
 
             $squad = $this->squad->fresh();
+            $this->assertEquals(BorderTravelException::NOT_ENOUGH_GOLD, $exception->getCode());
             $this->assertEquals($availableGold, $squad->getAvailableGold());
             $this->assertEquals($this->startingProvince->id, $squad->province_id);
             return;
