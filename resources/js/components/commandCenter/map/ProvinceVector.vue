@@ -72,7 +72,7 @@
             },
             provinceRoute() {
                 return {
-                    name: 'map-province',
+                    name: 'explore-province',
                     params: {
                         squadSlug: this._squad.slug,
                         provinceSlug: this.province.slug

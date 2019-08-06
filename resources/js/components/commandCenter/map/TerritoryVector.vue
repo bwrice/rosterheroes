@@ -72,7 +72,7 @@
             },
             territoryRoute() {
                 return {
-                    name: 'map-territory',
+                    name: 'explore-territory',
                     params: {
                         squadSlug: this._squad.slug,
                         territorySlug: this.territory.slug

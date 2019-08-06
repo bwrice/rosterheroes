@@ -31,7 +31,6 @@ export const mapRoutes = {
         {
             path: 'explore',
             component: ExploreView,
-            name: 'explore',
             meta: {
                 footerButton: 'map'
             },

@@ -56,7 +56,7 @@
             },
             continentRoute() {
                 return {
-                    name: 'map-continent',
+                    name: 'explore-continent',
                     params: {
                         squadSlug: this._squad.slug,
                         continentSlug: this.continent.slug
