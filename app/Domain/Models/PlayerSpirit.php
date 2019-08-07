@@ -37,22 +37,6 @@ class PlayerSpirit extends EventSourcedModel
     public const MAX_USAGE_BEFORE_ENERGY_ADJUSTMENT = 10;
     public const MIN_MAX_ENERGY_RATIO = 5;
 
-//    /**
-//     * @param array $attributes
-//     * @return self|null
-//     * @throws \Exception
-//     */
-//    public static function createWithAttributes(array $attributes)
-//    {
-//        $uuid = (string) Uuid::uuid4();
-//
-//        $attributes['uuid'] = $uuid;
-//
-//        event(new PlayerSpiritCreationRequested($attributes));
-//
-//        return self::uuid($uuid);
-//    }
-
     public static function uuid(string $uuid): ?self
     {
         return static::where('uuid', $uuid)->first();
