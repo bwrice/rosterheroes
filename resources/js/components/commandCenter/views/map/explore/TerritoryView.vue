@@ -34,7 +34,7 @@
 
         watch:{
             $route (to) {
-                // this updates province if user hits back/forward through browser
+                // this updates territory if user hits back/forward through browser
                 if (to.params.territorySlug !== this._territory.slug) {
                     this.setTerritoryBySlug(to.params.provinceSlug);
                 }

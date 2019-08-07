@@ -111,11 +111,7 @@ export default {
             commit('UPDATE_CONTINENTS', continents);
 
             if (route.params.continentSlug) {
-                continents.forEach(function (continent) {
-                    if (continent.slug === route.params.continentSlug) {
-                        commit('SET_CONTINENT', continent);
-                    }
-                });
+                dispatch('setContinentBySlug', route.params.continentSlug);
             } else if (route.params.territorySlug) {
                 dispatch('setTerritoryBySlug', route.params.territorySlug);
             } else if(route.params.provinceSlug) {
@@ -138,7 +134,7 @@ export default {
         updateTerritory({commit}, payload) {
             commit('SET_TERRITORY', payload)
         },
-        setTerritoryBySlug({state, commit, dispatch}, payload) {
+        setTerritoryBySlug({state, commit}, payload) {
             state.territories.forEach(function (territory) {
                 if (territory.slug === route.params.territorySlug) {
                     commit('SET_TERRITORY', territory);
@@ -147,6 +143,13 @@ export default {
         },
         updateContinent({commit}, payload) {
             commit('SET_CONTINENT', payload)
+        },
+        setContinentBySlug({state, commit}, payload) {
+            state.continents.forEach(function (continent) {
+                if (continent.slug === route.params.continentSlug) {
+                    commit('SET_CONTINENT', continent);
+                }
+            });
         },
         setRealmMapMode({commit}, payload) {
             commit('SET_REALM_MAP_MODE', payload)
