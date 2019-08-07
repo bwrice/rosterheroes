@@ -13,9 +13,10 @@ class SquadCurrentLocationController extends Controller
         $squad = Squad::slugOrFail($squadSlug);
         $this->authorize(Squad::MANAGE_AUTHORIZATION, $squad);
 
-        $currentLocation = $squad->province()->with([
-            // TODO relations
-        ])->withCount([
+        $currentLocation = $squad->province->load([
+            'continent',
+            'territory'
+        ])->loadCount([
             'squads'
         ]);
 
