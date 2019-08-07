@@ -117,11 +117,7 @@ export default {
                     }
                 });
             } else if (route.params.territorySlug) {
-                territories.forEach(function (territory) {
-                    if (territory.slug === route.params.territorySlug) {
-                        commit('SET_TERRITORY', territory);
-                    }
-                });
+                dispatch('setTerritoryBySlug', route.params.territorySlug);
             } else if(route.params.provinceSlug) {
                 dispatch('setProvinceBySlug', route.params.provinceSlug);
             }
@@ -141,6 +137,13 @@ export default {
         },
         updateTerritory({commit}, payload) {
             commit('SET_TERRITORY', payload)
+        },
+        setTerritoryBySlug({state, commit, dispatch}, payload) {
+            state.territories.forEach(function (territory) {
+                if (territory.slug === route.params.territorySlug) {
+                    commit('SET_TERRITORY', territory);
+                }
+            });
         },
         updateContinent({commit}, payload) {
             commit('SET_CONTINENT', payload)

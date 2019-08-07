@@ -14,6 +14,8 @@
 <script>
 
     import {mapGetters} from 'vuex';
+    import {mapActions} from 'vuex';
+
     import MapCard from "../../../map/MapCard";
     import { territoryMixin } from '../../../../../mixins/territoryMixin';
     import ProvinceVector from "../../../map/ProvinceVector";
@@ -29,6 +31,21 @@
         mixins: [
             territoryMixin
         ],
+
+        watch:{
+            $route (to) {
+                // this updates province if user hits back/forward through browser
+                if (to.params.territorySlug !== this._territory.slug) {
+                    this.setTerritoryBySlug(to.params.provinceSlug);
+                }
+            }
+        },
+
+        methods: {
+            ...mapActions([
+                'setTerritoryBySlug',
+            ])
+        },
 
         computed: {
             ...mapGetters([
