@@ -63,6 +63,15 @@ export default {
         _borders(state) {
             return state.borders;
         },
+        _getProvinceBySlug(state, slug) {
+            let slugProvince = null;
+            state.provinces.forEach(function (province) {
+                if (province.slug === slug) {
+                    slugProvince = province;
+                }
+            });
+            return slugProvince;
+        }
     },
     mutations: {
         UPDATE_PROVINCES(state, payload) {
@@ -114,11 +123,7 @@ export default {
                     }
                 });
             } else if(route.params.provinceSlug) {
-                provinces.forEach(function (province) {
-                    if (province.slug === route.params.provinceSlug) {
-                        dispatch('setProvince', province);
-                    }
-                });
+                dispatch('setProvinceBySlug', route.params.provinceSlug);
             }
         },
         async setProvince({commit}, payload) {
@@ -126,6 +131,13 @@ export default {
             let province = new Province(payload);
             let borders = await Province.custom(province, 'borders').$get();
             commit('SET_BORDERS', borders);
+        },
+        setProvinceBySlug({state, commit, dispatch}, payload) {
+            state.provinces.forEach(function (province) {
+                if (province.slug === payload) {
+                    dispatch('setProvince', province);
+                }
+            });
         },
         updateTerritory({commit}, payload) {
             commit('SET_TERRITORY', payload)
