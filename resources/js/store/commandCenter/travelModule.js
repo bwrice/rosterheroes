@@ -2,20 +2,20 @@
 export default {
 
     state: {
-        start: null,
+        routePosition: null,
         route: []
     },
 
     getters: {
-        _travelStart(state) {
-            return state.start;
+        _routePosition(state) {
+            return state.routePosition;
         },
         _travelRoute(state) {
             return state.route;
         }
     },
     mutations: {
-        SET_TRAVEL_START(state, payload) {
+        SET_ROUTE_POSITION(state, payload) {
             state.start = payload;
         },
         ADD_TO_TRAVEL_ROUTE(state, payload) {
@@ -24,8 +24,8 @@ export default {
     },
 
     actions: {
-        setTravelStart({commit}, payload) {
-            commit('SET_TRAVEL_START', payload)
+        setRoutePosition({commit}, payload) {
+            commit('SET_ROUTE_POSITION', payload)
         },
         addToTravelRoute({commit}, payload) {
             commit('ADD_TO_TRAVEL_ROUTE', payload)
