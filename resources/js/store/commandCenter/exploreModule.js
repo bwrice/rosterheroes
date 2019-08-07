@@ -10,6 +10,7 @@ export default {
         continents: [],
         continent: {
             'name': '',
+            'slug': null,
             'realm_view_box': {
                 'pan_x': 0,
                 'pan_y': 0,
@@ -19,6 +20,7 @@ export default {
         },
         territory: {
             'name': '',
+            'slug': null,
             'realm_view_box': {
                 'pan_x': 0,
                 'pan_y': 0,
@@ -28,6 +30,7 @@ export default {
         },
         realmMapMode: 'continent',
         province: {
+            'slug': null,
             view_box: {
                 'pan_x': 0,
                 'pan_y': 0,
@@ -101,7 +104,7 @@ export default {
     },
 
     actions: {
-        async setMap({commit, dispatch}, route) {
+        async setExploreMap({commit, dispatch}, route) {
 
             let provinces = await Province.$get();
             commit('UPDATE_PROVINCES', provinces);
@@ -124,9 +127,9 @@ export default {
             let borders = await Province.custom(province, 'borders').$get();
             commit('SET_BORDERS', borders);
         },
-        setProvinceBySlug({state, commit, dispatch}, payload) {
+        setProvinceBySlug({state, commit, dispatch}, slug) {
             state.provinces.forEach(function (province) {
-                if (province.slug === payload) {
+                if (province.slug === slug) {
                     dispatch('setProvince', province);
                 }
             });
@@ -134,9 +137,9 @@ export default {
         updateTerritory({commit}, payload) {
             commit('SET_TERRITORY', payload)
         },
-        setTerritoryBySlug({state, commit}, payload) {
+        setTerritoryBySlug({state, commit}, slug) {
             state.territories.forEach(function (territory) {
-                if (territory.slug === route.params.territorySlug) {
+                if (territory.slug === slug) {
                     commit('SET_TERRITORY', territory);
                 }
             });
@@ -144,9 +147,9 @@ export default {
         updateContinent({commit}, payload) {
             commit('SET_CONTINENT', payload)
         },
-        setContinentBySlug({state, commit}, payload) {
+        setContinentBySlug({state, commit}, slug) {
             state.continents.forEach(function (continent) {
-                if (continent.slug === route.params.continentSlug) {
+                if (continent.slug === slug) {
                     commit('SET_CONTINENT', continent);
                 }
             });

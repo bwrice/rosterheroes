@@ -3,7 +3,8 @@
 </template>
 
 <script>
-    import { mapActions } from 'vuex'
+    import {mapActions} from 'vuex';
+    import {mapGetters} from 'vuex';
 
     import Squad from "../../../../models/Squad";
     import Province from "../../../../models/Province";
@@ -14,6 +15,9 @@
         components: {BaseView},
 
         async mounted() {
+            this.setExploreMap(this.$route);
+            this.updateFocusedLocations(this.$route);
+
             let squadSlug = this.$route.params.squadSlug;
             let squad = new Squad({slug: squadSlug});
             let currentLocation = await Province.custom(squad, 'current-location').$first();
@@ -22,8 +26,31 @@
 
         methods: {
             ...mapActions([
-                'setCurrentLocation'
-            ])
+                'setExploreMap',
+                'setCurrentLocation',
+                'setProvinceBySlug',
+                'setTerritoryBySlug',
+                'setContinentBySlug',
+            ]),
+            updateFocusedLocations(route) {
+                console.log("UPDATE ROUTE");
+                console.log(route);
+                if (route.params.continentSlug !== this._continent.slug) {
+                    this.setContinentBySlug(route.params.continentSlug);
+                } else if (route.params.territorySlug !== this._territory.slug) {
+                    this.setTerritoryBySlug(route.params.territorySlug);
+                } else if(route.params.provinceSlug !== this._province.slug) {
+                    this.setProvinceBySlug(route.params.territorySlug);
+                }
+            }
+        },
+
+        computed: {
+            ...mapGetters([
+                '_province',
+                '_territory',
+                '_continent'
+            ]),
         }
 
     }

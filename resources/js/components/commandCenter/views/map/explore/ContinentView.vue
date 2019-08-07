@@ -29,7 +29,7 @@
             $route (to) {
                 // this updates continent if user hits back/forward through browser
                 if (to.params.continentSlug !== this._territory.continentSlug) {
-                    this.setTerritoryBySlug(to.params.continentSlug);
+                    this.setContinentBySlug(to.params.continentSlug);
                 }
             }
         },

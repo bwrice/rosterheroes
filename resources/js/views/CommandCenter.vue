@@ -82,8 +82,6 @@
                     this.updatePlayerSpiritsPool();
                 }
             }
-
-            this.setMap(this.$route);
         },
 
         data: function() {
