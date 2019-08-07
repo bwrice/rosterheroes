@@ -18,7 +18,8 @@ class SquadCurrentLocationController extends Controller
             'territory',
             'borders'
         ])->loadCount([
-            'squads'
+            'squads',
+            'quests'
         ]);
 
         return response()->json(new CurrentLocationResource($currentLocation), 200);

@@ -16,6 +16,14 @@
                         <ProvinceVector :province="_currentLocation" :highlight="true"></ProvinceVector>
                     </MapViewPort>
                 </v-flex>
+                <v-flex class="xs7 px-1">
+                    <p>
+                        Current Location: {{_currentLocation.name}} <br>
+                        Borders: {{bordersCount}} <br>
+                        Squads: {{_currentLocation.squads_count}} <br>
+                        Quests: {{_currentLocation.quests_count}}
+                    </p>
+                </v-flex>
             </v-layout>
         </v-card>
     </v-flex>
@@ -54,7 +62,10 @@
         computed: {
             ...mapGetters([
                 '_currentLocation'
-            ])
+            ]),
+            bordersCount() {
+                return this._currentLocation.borders.length;
+            }
         }
     }
 </script>

@@ -4,7 +4,7 @@ export default {
     state: {
         currentLocation: {
             name: '',
-            border: [],
+            borders: []
         }
     },
 

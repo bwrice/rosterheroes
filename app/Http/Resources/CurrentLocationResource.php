@@ -16,7 +16,8 @@ class CurrentLocationResource extends ProvinceResource
 
         $data = [
             'borders' => ProvinceResource::collection($this->whenLoaded('borders')),
-            'squads_count' => $this->squads_count
+            'squads_count' => $this->squads_count,
+            'quests_count' => $this->quests_count
         ];
 
         return array_merge($parent, $data);
