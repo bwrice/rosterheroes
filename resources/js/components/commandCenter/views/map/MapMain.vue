@@ -43,12 +43,9 @@
 
 <script>
 
-    import { mapActions } from 'vuex'
     import { mapGetters } from 'vuex';
 
     import MapViewPort from "../../map/MapViewPort";
-    import Squad from "../../../../models/Squad";
-    import Province from "../../../../models/Province";
     import ProvinceVector from "../../map/ProvinceVector";
 
     export default {
@@ -56,19 +53,6 @@
         components: {
             ProvinceVector,
             MapViewPort
-        },
-
-        async mounted() {
-            let squadSlug = this.$route.params.squadSlug;
-            let squad = new Squad({slug: squadSlug});
-            let currentLocation = await Province.custom(squad, 'current-location').$first();
-            this.setCurrentLocation(currentLocation);
-        },
-
-        methods: {
-            ...mapActions([
-                'setCurrentLocation'
-            ])
         },
 
         computed: {
