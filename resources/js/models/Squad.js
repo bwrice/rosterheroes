@@ -3,6 +3,10 @@ import Hero from "./Hero";
 
 export default class Squad extends Model {
 
+    primaryKey() {
+        return 'slug';
+    }
+
     get heroes() {
         let _heroes = [];
         if (this.heroPosts) {
