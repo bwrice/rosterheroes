@@ -3,7 +3,18 @@
         <v-card class="pa-1">
             <v-layout>
                 <v-flex class="xs5">
-                    <MapViewPort :tile="false"></MapViewPort>
+                    <MapViewPort :tile="false" :view-box="_currentLocation.view_box">
+
+                        <!-- Borders -->
+                        <ProvinceVector
+                            v-for="(province, uuid) in this._currentLocation.borders"
+                            :key="uuid"
+                            :province="province"
+                        >
+                        </ProvinceVector>
+
+                        <ProvinceVector :province="_currentLocation" :highlight="true"></ProvinceVector>
+                    </MapViewPort>
                 </v-flex>
             </v-layout>
         </v-card>
@@ -11,20 +22,39 @@
 </template>
 
 <script>
+
+    import { mapActions } from 'vuex'
+    import { mapGetters } from 'vuex';
+
     import MapViewPort from "../../map/MapViewPort";
     import Squad from "../../../../models/Squad";
     import Province from "../../../../models/Province";
+    import ProvinceVector from "../../map/ProvinceVector";
+
     export default {
         name: "MapMain",
         components: {
+            ProvinceVector,
             MapViewPort
         },
+
         async mounted() {
             let squadSlug = this.$route.params.squadSlug;
             let squad = new Squad({slug: squadSlug});
-            let currentLocation = await Province.custom(squad, 'current-location').$get();
-            console.log("Current Location");
-            console.log(currentLocation);
+            let currentLocation = await Province.custom(squad, 'current-location').$first();
+            this.setCurrentLocation(currentLocation);
+        },
+
+        methods: {
+            ...mapActions([
+                'setCurrentLocation'
+            ])
+        },
+
+        computed: {
+            ...mapGetters([
+                '_currentLocation'
+            ])
         }
     }
 </script>

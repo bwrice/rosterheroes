@@ -4,7 +4,7 @@ export default {
     state: {
         currentLocation: {
             name: '',
-            border: []
+            border: [],
         }
     },
 
@@ -15,13 +15,13 @@ export default {
     },
     mutations: {
         SET_CURRENT_LOCATION(state, payload) {
-            state.week = payload;
+            state.currentLocation = payload;
         }
     },
 
     actions: {
         setCurrentLocation({commit}, payload) {
-            commit('SET_CURRENT_WEEK', payload)
+            commit('SET_CURRENT_LOCATION', payload)
         },
     }
 };
