@@ -3,17 +3,26 @@
         <v-card>
             <v-layout>
                 <v-flex class="xs5">
-                    <MapViewPort :ocean-color="oceanColor">
+                    <v-layout>
+                        <v-flex class="xs12">
+                            <MapViewPort :ocean-color="oceanColor">
 
-                        <!-- Borders -->
-                        <ProvinceVector
-                            v-for="(province, uuid) in this._provinces"
-                            :key="uuid"
-                            :province="province"
-                            :fill-color="provinceColor(province)"
-                        >
-                        </ProvinceVector>
-                    </MapViewPort>
+                                <!-- Borders -->
+                                <ProvinceVector
+                                    v-for="(province, uuid) in this._provinces"
+                                    :key="uuid"
+                                    :province="province"
+                                    :fill-color="minimMapProvinceColor(province)"
+                                >
+                                </ProvinceVector>
+                            </MapViewPort>
+                        </v-flex>
+                    </v-layout>
+                    <v-layout>
+                        <v-flex class="xs12">
+                            <h5 class="text-center">Current Route</h5>
+                        </v-flex>
+                    </v-layout>
                 </v-flex>
             </v-layout>
         </v-card>
@@ -38,11 +47,11 @@
             ...mapActions([
                 'setCurrentLocation'
             ]),
-            provinceColor: function(province) {
+            minimMapProvinceColor: function(province) {
                 if (province.uuid === this._currentLocation.uuid) {
                     return '#035afc';
                 }
-                return '#FFFFFF';
+                return '#dedede';
             }
         },
 
