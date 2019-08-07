@@ -15,7 +15,8 @@ class SquadCurrentLocationController extends Controller
 
         $currentLocation = $squad->province->load([
             'continent',
-            'territory'
+            'territory',
+            'borders'
         ])->loadCount([
             'squads'
         ]);

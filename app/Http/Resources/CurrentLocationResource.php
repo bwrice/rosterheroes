@@ -15,7 +15,7 @@ class CurrentLocationResource extends ProvinceResource
         $parent = parent::toArray($request);
 
         $data = [
-            'borders' => $this->whenLoaded('borders'),
+            'borders' => ProvinceResource::collection($this->whenLoaded('borders')),
             'squads_count' => $this->squads_count
         ];
 
