@@ -81,7 +81,8 @@
                 type: Object,
                 required: true
             },
-            squadUuid: {
+            squadSlug: {
+                type: String,
                 required: true
             },
             allowedHeroClasses: {
@@ -119,7 +120,7 @@
             createHero: function() {
                 let self = this;
                 self.buttonDisabled = true;
-                axios.post('/api/v1/squad/' + this.squadUuid + '/heroes', {
+                axios.post('/api/v1/squad/' + this.squadSlug + '/heroes', {
                     name: this.name,
                     race: this.heroRace,
                     class: this.heroClass

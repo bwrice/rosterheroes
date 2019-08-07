@@ -1,5 +1,5 @@
 <template>
-    <v-sheet tile :color="oceanColor">
+    <v-sheet :tile="tile" :color="oceanColor">
         <svg xmlns="http://www.w3.org/2000/svg"
              version="1.1"
              :viewBox="viewBoxString">
@@ -28,6 +28,10 @@
             oceanColor: {
                 type: String,
                 default: '#d5f5f5'
+            },
+            tile: {
+                type: Boolean,
+                default: true
             }
         },
         computed: {

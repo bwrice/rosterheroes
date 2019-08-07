@@ -36,7 +36,7 @@
                                         v-for="heroStep in heroSteps"
                                         :heroStep="heroStep"
                                         :key="heroStep.id"
-                                        :squad-uuid="squadClone.uuid"
+                                        :squad-slug="squadClone.slug"
                                         :allowed-hero-classes="allowedHeroClasses"
                                         :allowed-hero-races="allowedHeroRaces"
                                         @hero-created="handleHeroCreated"
@@ -134,7 +134,7 @@
             },
             updateHeroClasses: function() {
                 let self = this;
-                axios.get('/api/v1/squad/' + this.squadClone.uuid + '/hero-classes').
+                axios.get('/api/v1/squad/' + this.squadClone.slug + '/hero-classes').
                 then(function (response) {
                     self.allowedHeroClasses = response.data;
                 }).catch(function (error) {
@@ -143,7 +143,7 @@
             },
             updateHeroRaces: function() {
                 let self = this;
-                axios.get('/api/v1/squad/' + this.squadClone.uuid + '/hero-races').
+                axios.get('/api/v1/squad/' + this.squadClone.slug + '/hero-races').
                 then(function (response) {
                     self.allowedHeroRaces = response.data;
                 }).catch(function (error) {

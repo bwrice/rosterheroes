@@ -32,7 +32,7 @@
             ]),
             removeSpirit: function () {
                 this.pending = true;
-                axios.delete('/api/v1/heroes/' + this.hero.uuid + '/player-spirit/' + this.playerSpirit.uuid)
+                axios.delete('/api/v1/heroes/' + this.hero.slug + '/player-spirit/' + this.playerSpirit.uuid)
                     .then((response) => {
                         this.pending = false;
                         let heroResponse = response.data.data;

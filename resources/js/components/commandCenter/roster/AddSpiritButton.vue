@@ -27,7 +27,7 @@
             ]),
             addSpirit: function() {
                 this.pending = true;
-                axios.post('/api/v1/heroes/' + this.hero.uuid + '/player-spirit/' + this.playerSpirit.uuid)
+                axios.post('/api/v1/heroes/' + this.hero.slug + '/player-spirit/' + this.playerSpirit.uuid)
                     .then((response) => {
 
                     this.pending = false;
