@@ -6,6 +6,7 @@ import TerritoryView from "../components/commandCenter/views/map/explore/Territo
 import ProvinceView from "../components/commandCenter/views/map/explore/ProvinceView";
 import ExploreView from "../components/commandCenter/views/map/explore/ExploreView";
 import RealmView from "../components/commandCenter/views/map/explore/RealmView";
+import TravelView from "../components/commandCenter/views/map/TravelView";
 
 export const mapRoutes = {
     path: '/command-center/:squadSlug/map',
@@ -24,6 +25,14 @@ export const mapRoutes = {
             path: '',
             component: MapMain,
             name: 'map-main',
+            meta: {
+                footerButton: 'map'
+            }
+        },
+        {
+            path: 'travel',
+            component: TravelView,
+            name: 'travel',
             meta: {
                 footerButton: 'map'
             }
