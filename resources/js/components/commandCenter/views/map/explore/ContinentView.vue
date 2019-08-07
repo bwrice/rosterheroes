@@ -12,7 +12,6 @@
 <script>
 
     import {mapGetters} from 'vuex';
-    import {mapActions} from 'vuex';
 
     import { continentMixin } from '../../../../../mixins/continentMixin';
     import MapCard from "../../../map/MapCard";
@@ -24,21 +23,6 @@
         mixins: [
             continentMixin
         ],
-
-        watch:{
-            $route (to) {
-                // this updates continent if user hits back/forward through browser
-                if (to.params.continentSlug !== this._territory.continentSlug) {
-                    this.setContinentBySlug(to.params.continentSlug);
-                }
-            }
-        },
-
-        methods: {
-            ...mapActions([
-                'setContinentBySlug',
-            ])
-        },
 
         computed: {
             ...mapGetters([
