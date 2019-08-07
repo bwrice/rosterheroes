@@ -24,6 +24,20 @@
                         </v-flex>
                     </v-layout>
                 </v-flex>
+                <v-flex class="xs7">
+                    <MapViewPort :tile="true" :view-box="_routePosition.view_box">
+
+                        <!-- Borders -->
+                        <ProvinceVector
+                            v-for="(province, uuid) in this._routePosition.borders"
+                            :key="uuid"
+                            :province="province"
+                        >
+                        </ProvinceVector>
+
+                        <ProvinceVector :province="_routePosition" :highlight="true"></ProvinceVector>
+                    </MapViewPort>
+                </v-flex>
             </v-layout>
         </v-card>
     </v-flex>
@@ -58,6 +72,7 @@
         computed: {
             ...mapGetters([
                 '_currentLocation',
+                '_routePosition',
                 '_provinces'
             ]),
             oceanColor() {

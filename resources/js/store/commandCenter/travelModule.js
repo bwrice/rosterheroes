@@ -2,7 +2,10 @@
 export default {
 
     state: {
-        routePosition: null,
+        routePosition: {
+            name: '',
+            borders: []
+        },
         route: []
     },
 
@@ -15,8 +18,8 @@ export default {
         }
     },
     mutations: {
-        SET_ROUTE_POSITION(state, payload) {
-            state.start = payload;
+        SET_CURRENT_LOCATION(state, payload) {
+            state.routePosition = payload;
         },
         ADD_TO_TRAVEL_ROUTE(state, payload) {
             state.route.push(payload);
@@ -24,9 +27,6 @@ export default {
     },
 
     actions: {
-        setRoutePosition({commit}, payload) {
-            commit('SET_ROUTE_POSITION', payload)
-        },
         addToTravelRoute({commit}, payload) {
             commit('ADD_TO_TRAVEL_ROUTE', payload)
         }
