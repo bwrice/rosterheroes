@@ -23,6 +23,17 @@
                         Squads: {{_currentLocation.squads_count}} <br>
                         Quests: {{_currentLocation.quests_count}}
                     </p>
+                    <v-layout>
+                        <v-flex class="xs12 md8 offset-md2">
+                            <v-btn
+                                :color="'primary'"
+                            >Travel</v-btn>
+                            <v-btn
+                                :color="'primary'"
+                                :to="exploreRoute"
+                            >Explore</v-btn>
+                        </v-flex>
+                    </v-layout>
                 </v-flex>
             </v-layout>
         </v-card>
@@ -65,6 +76,14 @@
             ]),
             bordersCount() {
                 return this._currentLocation.borders.length;
+            },
+            exploreRoute() {
+                return {
+                    name: 'explore-realm',
+                    params: {
+                        squadSlug: this.$route.params.squadSlug
+                    }
+                }
             }
         }
     }
