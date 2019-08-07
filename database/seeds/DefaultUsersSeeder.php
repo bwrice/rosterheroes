@@ -48,7 +48,7 @@ class DefaultUsersSeeder extends Seeder
             $addNewHeroToSquadAction->execute($squad, $hero['name'], $hero['hero_class'], $hero['hero_race']);
         }
 
-        $user = $createUserAction->execute('georigin@gmail.com', 'George Paul', 'password');
+        $user = $createUserAction->execute('georigin@gmail.com', 'George Paul Puthukkeril', 'password');
         $squad = $createSquadAction->execute($user->id, 'Squad of George');
 
         $heroes = [
