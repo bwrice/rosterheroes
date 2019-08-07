@@ -17,9 +17,10 @@
 
         watch:{
             $route (to) {
-                // this updates continent if user hits back/forward through browser
                 if (to.params.continentSlug !== this._continent.slug) {
                     this.setContinentBySlug(to.params.continentSlug);
+                } else if (to.params.territorySlug !== this._territory.slug) {
+                    this.setTerritoryBySlug(to.params.provinceSlug);
                 }
             }
         },
@@ -27,11 +28,13 @@
         methods: {
             ...mapActions([
                 'setContinentBySlug',
+                'setTerritoryBySlug',
             ])
         },
         computed: {
             ...mapGetters([
                 '_continent',
+                '_territory',
             ]),
         }
     }
