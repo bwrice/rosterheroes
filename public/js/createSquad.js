@@ -1864,7 +1864,8 @@ __webpack_require__.r(__webpack_exports__);
       type: Object,
       required: true
     },
-    squadUuid: {
+    squadSlug: {
+      type: String,
       required: true
     },
     allowedHeroClasses: {
@@ -1903,7 +1904,7 @@ __webpack_require__.r(__webpack_exports__);
     createHero: function createHero() {
       var self = this;
       self.buttonDisabled = true;
-      axios.post('/api/v1/squad/' + this.squadUuid + '/heroes', {
+      axios.post('/api/v1/squad/' + this.squadSlug + '/heroes', {
         name: this.name,
         race: this.heroRace,
         "class": this.heroClass
@@ -2229,7 +2230,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     updateHeroClasses: function updateHeroClasses() {
       var self = this;
-      axios.get('/api/v1/squad/' + this.squadClone.uuid + '/hero-classes').then(function (response) {
+      axios.get('/api/v1/squad/' + this.squadClone.slug + '/hero-classes').then(function (response) {
         self.allowedHeroClasses = response.data;
       })["catch"](function (error) {
         console.log(error);
@@ -2237,7 +2238,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     updateHeroRaces: function updateHeroRaces() {
       var self = this;
-      axios.get('/api/v1/squad/' + this.squadClone.uuid + '/hero-races').then(function (response) {
+      axios.get('/api/v1/squad/' + this.squadClone.slug + '/hero-races').then(function (response) {
         self.allowedHeroRaces = response.data;
       })["catch"](function (error) {
         console.log(error);
@@ -34229,7 +34230,7 @@ var render = function() {
                                     key: heroStep.id,
                                     attrs: {
                                       heroStep: heroStep,
-                                      "squad-uuid": _vm.squadClone.uuid,
+                                      "squad-slug": _vm.squadClone.slug,
                                       "allowed-hero-classes":
                                         _vm.allowedHeroClasses,
                                       "allowed-hero-races": _vm.allowedHeroRaces
