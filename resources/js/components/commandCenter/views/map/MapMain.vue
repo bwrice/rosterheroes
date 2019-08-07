@@ -27,6 +27,7 @@
                         <v-flex class="xs12 md8 offset-md2">
                             <v-btn
                                 :color="'primary'"
+                                :to="travelRoute"
                             >Travel</v-btn>
                             <v-btn
                                 :color="'primary'"
@@ -80,6 +81,14 @@
             exploreRoute() {
                 return {
                     name: 'explore-realm',
+                    params: {
+                        squadSlug: this.$route.params.squadSlug
+                    }
+                }
+            },
+            travelRoute() {
+                return {
+                    name: 'travel',
                     params: {
                         squadSlug: this.$route.params.squadSlug
                     }
