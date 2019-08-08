@@ -20,6 +20,13 @@
                     <v-layout>
                         <v-flex class="xs12">
                             <h5>Current Route</h5>
+                            <TravelRouteListItem
+                                v-for="(province, uuid) in this._travelRoute"
+                                :province="province"
+                                :key="uuid"
+                                :color="routeItemColor(province)"
+                            >
+                            </TravelRouteListItem>
                             <v-sheet tile :color="routeItemColor(_currentLocation)" class="pa-1">
                                 {{this._currentLocation.name}}
                             </v-sheet>
@@ -53,10 +60,12 @@
 
     import MapViewPort from "../../map/MapViewPort";
     import ProvinceVector from "../../map/ProvinceVector";
+    import TravelRouteListItem from "../../map/TravelRouteListItem";
 
     export default {
         name: "TravelView",
         components: {
+            TravelRouteListItem,
             ProvinceVector,
             MapViewPort
         },
@@ -73,7 +82,7 @@
             },
             routeItemColor(province) {
                 if (province.uuid === this._routePosition.uuid) {
-                    return '#035afc';
+                    return 'primary';
                 }
                 return 'success';
             }
@@ -84,7 +93,8 @@
                 '_currentLocation',
                 '_routePosition',
                 '_routePositionBorders',
-                '_provinces'
+                '_provinces',
+                '_travelRoute'
             ]),
             oceanColor() {
                 return '#000000';
