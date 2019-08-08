@@ -21,7 +21,7 @@
                         <v-flex class="xs12">
                             <h5>Current Route</h5>
                             <TravelRouteListItem
-                                v-for="(province, uuid) in this._travelRoute"
+                                v-for="(province, uuid) in routeList"
                                 :province="province"
                                 :key="uuid"
                                 :color="routeItemColor(province)"
@@ -42,6 +42,8 @@
                             :key="uuid"
                             :province="province"
                             @provinceClicked="extendTravelRoute"
+                            :fill-color="borderColor(province)"
+                            :highlight="provinceInRoute(province)"
                         >
                         </ProvinceVector>
 
@@ -76,15 +78,34 @@
             ]),
             minimMapProvinceColor(province) {
                 if (province.uuid === this._routePosition.uuid) {
-                    return '#035afc';
+                    return '#4ef542';
+                } else if (this.provinceInRoute(province)
+                    || province.uuid === this._currentLocation.uuid
+                ) {
+                    return '#035afc'
                 }
                 return '#dedede';
             },
             routeItemColor(province) {
                 if (province.uuid === this._routePosition.uuid) {
-                    return 'primary';
+                    return 'success';
                 }
-                return 'success';
+                return 'primary';
+            },
+            provinceInRoute(province) {
+                let value = false;
+                this._travelRoute.forEach(function (routeProvince) {
+                    if (routeProvince.uuid === province.uuid) {
+                        value = true;
+                    }
+                });
+                return value;
+            },
+            borderColor(province) {
+                if (this.provinceInRoute(province)) {
+                    return '#4a4a4a';
+                }
+                return province.color;
             }
         },
 
@@ -98,6 +119,9 @@
             ]),
             oceanColor() {
                 return '#000000';
+            },
+            routeList() {
+                return this._travelRoute.reverse();
             }
         }
     }

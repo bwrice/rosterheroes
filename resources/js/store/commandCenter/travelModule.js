@@ -39,7 +39,6 @@ export default {
 
     actions: {
         async extendTravelRoute({commit}, payload) {
-            console.log("Extend");
             commit('ADD_TO_TRAVEL_ROUTE', payload);
             commit('SET_ROUTE_POSITION', payload);
             let province = new Province(payload);
