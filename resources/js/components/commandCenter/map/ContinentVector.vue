@@ -13,7 +13,6 @@
 
 <script>
 
-    import {mapActions} from 'vuex';
     import {mapGetters} from 'vuex';
     import { continentMixin } from '../../../mixins/continentMixin';
     import ProvinceVector from "./ProvinceVector";
@@ -33,14 +32,10 @@
         },
 
         methods: {
-            ...mapActions([
-                'updateContinent',
-            ]),
             setHovered: function(hoveredState) {
                 this.hovered = hoveredState;
             },
             navigateToContinent() {
-                this.updateContinent(this.continent);
                 this.$router.push(this.continentRoute);
             }
         },

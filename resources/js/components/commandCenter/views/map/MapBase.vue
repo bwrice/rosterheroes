@@ -33,8 +33,6 @@
                 'setContinentBySlug',
             ]),
             updateFocusedLocations(route) {
-                console.log("UPDATE ROUTE");
-                console.log(route);
                 if (route.params.continentSlug !== this._continent.slug) {
                     this.setContinentBySlug(route.params.continentSlug);
                 } else if (route.params.territorySlug !== this._territory.slug) {

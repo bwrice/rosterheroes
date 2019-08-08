@@ -13,7 +13,6 @@
 
 <script>
 
-    import {mapActions} from 'vuex';
     import {mapGetters} from 'vuex';
     import { territoryMixin } from '../../../mixins/territoryMixin';
     import ProvinceVector from "./ProvinceVector";
@@ -33,14 +32,10 @@
         },
 
         methods: {
-            ...mapActions([
-                'updateTerritory'
-            ]),
             setHovered: function(hoveredState) {
                 this.hovered = hoveredState;
             },
             navigateToTerritory() {
-                this.updateTerritory(this.territory);
                 this.$router.push(this.territoryRoute)
             }
         },

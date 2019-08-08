@@ -13,7 +13,6 @@
 </template>
 
 <script>
-    import {mapActions} from 'vuex';
     import {mapGetters} from 'vuex';
 
     export default {
@@ -46,15 +45,11 @@
         },
 
         methods: {
-            ...mapActions([
-                'setProvince'
-            ]),
             setHovered: function(hoveredState) {
                 this.hovered = hoveredState;
             },
             navigateToProvince() {
                 if (this.routeLink) {
-                    this.setProvince(this.province);
                     this.$router.push(this.provinceRoute);
                 }
             }
