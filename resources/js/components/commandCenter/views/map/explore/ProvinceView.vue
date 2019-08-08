@@ -7,7 +7,7 @@
                 v-for="(province, uuid) in this._borders"
                 :key="uuid"
                 :province="province"
-                :route-link="true"
+                @provinceClicked="navigateToProvince"
             >
             </ProvinceVector>
 
@@ -21,6 +21,8 @@
 
     import {mapGetters} from 'vuex';
 
+    import {provinceNavigationMixin} from "../../../../../mixins/provinceNavigationMixin";
+
     import MapCard from "../../../map/MapCard";
     import ProvinceVector from "../../../map/ProvinceVector";
 
@@ -30,6 +32,11 @@
             MapCard,
             ProvinceVector
         },
+
+        mixins: [
+            provinceNavigationMixin
+        ],
+
         computed: {
             ...mapGetters([
                 '_province',
