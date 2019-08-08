@@ -1,3 +1,4 @@
+import Province from "../../models/Province";
 
 export default {
 
@@ -28,15 +29,22 @@ export default {
         SET_ROUTE_POSITION(state, payload) {
             state.routePosition = payload;
         },
+        SET_ROUTE_BORDERS(state, payload) {
+            state.routePositionBorders = payload;
+        },
         ADD_TO_TRAVEL_ROUTE(state, payload) {
             state.route.push(payload);
         }
     },
 
     actions: {
-        addToTravelRoute({commit}, payload) {
+        async extendTravelRoute({commit}, payload) {
+            console.log("Extend");
             commit('ADD_TO_TRAVEL_ROUTE', payload);
             commit('SET_ROUTE_POSITION', payload);
+            let province = new Province(payload);
+            let borders = await Province.custom(province, 'borders').$get();
+            commit('SET_ROUTE_BORDERS', borders);
         }
     }
 };

@@ -5,9 +5,8 @@
                 <v-flex class="xs5">
                     <v-layout>
                         <v-flex class="xs12">
+                            <!-- Mini-map -->
                             <MapViewPort :ocean-color="oceanColor">
-
-                                <!-- Borders -->
                                 <ProvinceVector
                                     v-for="(province, uuid) in this._provinces"
                                     :key="uuid"
@@ -35,6 +34,7 @@
                             v-for="(province, uuid) in this._routePositionBorders"
                             :key="uuid"
                             :province="province"
+                            @provinceClicked="extendTravelRoute"
                         >
                         </ProvinceVector>
 
@@ -53,17 +53,19 @@
 
     import MapViewPort from "../../map/MapViewPort";
     import ProvinceVector from "../../map/ProvinceVector";
+    import TravelRouteBorder from "../../map/TravelRouteBorder";
 
     export default {
         name: "TravelView",
         components: {
+            TravelRouteBorder,
             ProvinceVector,
             MapViewPort
         },
         methods: {
             ...mapActions([
                 'setCurrentLocation',
-                'addToTravelRoute'
+                'extendTravelRoute'
             ]),
             minimMapProvinceColor(province) {
                 if (province.uuid === this._routePosition.uuid) {
@@ -76,7 +78,7 @@
                     return '#035afc';
                 }
                 return 'success';
-            },
+            }
         },
 
         computed: {
