@@ -20,18 +20,20 @@
                     <v-layout>
                         <v-flex class="xs12">
                             <h5 class="text-center">Current Route</h5>
-                            <v-card class="pa-1">
-                                <TravelRouteListItem
-                                    v-for="(province, uuid) in routeList"
-                                    :province="province"
-                                    :key="uuid"
-                                    :color="routeItemColor(province)"
-                                >
-                                </TravelRouteListItem>
-                                <v-sheet tile :color="routeItemColor(_currentLocation)" class="pa-1">
-                                    {{this._currentLocation.name}}
-                                </v-sheet>
-                            </v-card>
+                            <div style=" max-height:200px; overflow-y:auto">
+                                <v-card class="pa-1" :max-height="300">
+                                    <TravelRouteListItem
+                                        v-for="(province, uuid) in routeList"
+                                        :province="province"
+                                        :key="uuid"
+                                        :color="routeItemColor(province)"
+                                    >
+                                    </TravelRouteListItem>
+                                    <v-sheet tile :color="routeItemColor(_currentLocation)" class="pa-1">
+                                        {{this._currentLocation.name}}
+                                    </v-sheet>
+                                </v-card>
+                            </div>
                         </v-flex>
                     </v-layout>
                 </v-flex>
