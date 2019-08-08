@@ -1,6 +1,15 @@
 <template>
     <v-sheet tile :color="color" class="pa-1">
-        {{province.name}}
+        <v-layout>
+            <v-flex class="xs8">
+                {{province.name}}
+            </v-flex>
+            <v-flex class="xs4">
+                <v-chip small>
+                    {{travelCost}}
+                </v-chip>
+            </v-flex>
+        </v-layout>
     </v-sheet>
 </template>
 
@@ -15,6 +24,14 @@
             color: {
                 type: String,
                 default: 'success'
+            }
+        },
+        computed: {
+            travelCost() {
+                if (this.province.travel_cost) {
+                    return this.province.travel_cost
+                }
+                return 'free';
             }
         }
     }

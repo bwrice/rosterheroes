@@ -16,6 +16,6 @@ class BorderTravelCostCalculator
         }
 
         // TODO expense calculation
-        return 0;
+        return 10;
     }
 }
