@@ -38,12 +38,21 @@ export default {
     },
 
     actions: {
-        async extendTravelRoute({commit}, payload) {
-            commit('ADD_TO_TRAVEL_ROUTE', payload);
-            commit('SET_ROUTE_POSITION', payload);
-            let province = new Province(payload);
-            let borders = await Province.custom(province, 'borders').$get();
-            commit('SET_ROUTE_BORDERS', borders);
+        async extendTravelRoute({commit, rootState}, payload) {
+            try {
+                let squad = rootState.squadModule.squad;
+                let response = await axios.get('/api/v1/squads/' + squad.slug + '/border/' + payload.slug);
+                let routeProvince = response.data;
+                commit('SET_ROUTE_POSITION', routeProvince);
+                commit('ADD_TO_TRAVEL_ROUTE', routeProvince);
+                commit('SET_ROUTE_BORDERS', []);
+                let bordersResponse = await axios.get('/api/v1/provinces/' + routeProvince.slug + '/borders');
+                let borders = bordersResponse.data.data;
+                commit('SET_ROUTE_BORDERS', borders);
+            } catch (error) {
+                console.log("ERROR");
+                console.log(error);
+            }
         }
     }
 };

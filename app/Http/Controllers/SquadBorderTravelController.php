@@ -35,8 +35,7 @@ class SquadBorderTravelController extends Controller
         $squad = Squad::slugOrFail($squadSlug);
         $this->authorize(Squad::MANAGE_AUTHORIZATION, $squad);
         $border = Province::slugOrFail($borderSlug);
-        $cost = $costCalculator->goldCost($squad, $border);
-        $border->travel_cost = $cost;
+        $border->travel_cost = $costCalculator->goldCost($squad, $border);
         return response()->json(new ProvinceResource($border), 200);
     }
 }
