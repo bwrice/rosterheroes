@@ -3,9 +3,9 @@ export default {
 
     state: {
         routePosition: {
-            name: '',
-            borders: []
+            name: ''
         },
+        routePositionBorders: [],
         route: []
     },
 
@@ -13,12 +13,19 @@ export default {
         _routePosition(state) {
             return state.routePosition;
         },
+        _routePositionBorders(state) {
+            return state.routePositionBorders;
+        },
         _travelRoute(state) {
             return state.route;
         }
     },
     mutations: {
         SET_CURRENT_LOCATION(state, payload) {
+            state.routePosition = payload;
+            state.routePositionBorders = payload.borders;
+        },
+        SET_ROUTE_POSITION(state, payload) {
             state.routePosition = payload;
         },
         ADD_TO_TRAVEL_ROUTE(state, payload) {
@@ -28,7 +35,8 @@ export default {
 
     actions: {
         addToTravelRoute({commit}, payload) {
-            commit('ADD_TO_TRAVEL_ROUTE', payload)
+            commit('ADD_TO_TRAVEL_ROUTE', payload);
+            commit('SET_ROUTE_POSITION', payload);
         }
     }
 };

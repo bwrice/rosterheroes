@@ -32,7 +32,7 @@
 
                         <!-- Borders -->
                         <ProvinceVector
-                            v-for="(province, uuid) in this._routePosition.borders"
+                            v-for="(province, uuid) in this._routePositionBorders"
                             :key="uuid"
                             :province="province"
                         >
@@ -62,7 +62,8 @@
         },
         methods: {
             ...mapActions([
-                'setCurrentLocation'
+                'setCurrentLocation',
+                'addToTravelRoute'
             ]),
             minimMapProvinceColor(province) {
                 if (province.uuid === this._routePosition.uuid) {
@@ -75,13 +76,14 @@
                     return '#035afc';
                 }
                 return 'success';
-            }
+            },
         },
 
         computed: {
             ...mapGetters([
                 '_currentLocation',
                 '_routePosition',
+                '_routePositionBorders',
                 '_provinces'
             ]),
             oceanColor() {
