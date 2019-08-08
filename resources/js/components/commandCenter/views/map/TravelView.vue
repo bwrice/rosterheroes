@@ -53,12 +53,10 @@
 
     import MapViewPort from "../../map/MapViewPort";
     import ProvinceVector from "../../map/ProvinceVector";
-    import TravelRouteBorder from "../../map/TravelRouteBorder";
 
     export default {
         name: "TravelView",
         components: {
-            TravelRouteBorder,
             ProvinceVector,
             MapViewPort
         },
