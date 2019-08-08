@@ -5,7 +5,7 @@
                 v-for="(province, uuid) in provincesForTerritory"
                 :key="uuid"
                 :province="province"
-                :route-link="true"
+                @provinceClicked="navigateToProvince"
             ></ProvinceVector>
         </MapCard>
     </v-flex>
@@ -15,8 +15,10 @@
 
     import {mapGetters} from 'vuex';
 
+    import {territoryMixin} from '../../../../../mixins/territoryMixin';
+    import {provinceNavigationMixin} from "../../../../../mixins/provinceNavigationMixin";
+
     import MapCard from "../../../map/MapCard";
-    import { territoryMixin } from '../../../../../mixins/territoryMixin';
     import ProvinceVector from "../../../map/ProvinceVector";
 
     export default {
@@ -28,7 +30,8 @@
         },
 
         mixins: [
-            territoryMixin
+            territoryMixin,
+            provinceNavigationMixin
         ],
 
         computed: {
