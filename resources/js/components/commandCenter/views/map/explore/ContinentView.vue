@@ -13,7 +13,9 @@
 
     import {mapGetters} from 'vuex';
 
-    import { continentMixin } from '../../../../../mixins/continentMixin';
+    import {continentMixin} from '../../../../../mixins/continentMixin';
+    import {provinceNavigationMixin} from "../../../../../mixins/provinceNavigationMixin";
+
     import MapCard from "../../../map/MapCard";
     import ProvinceVector from "../../../map/ProvinceVector";
 
@@ -24,31 +26,14 @@
             MapCard
         },
         mixins: [
-            continentMixin
+            continentMixin,
+            provinceNavigationMixin
         ],
-
-        methods: {
-            navigateToProvince(province) {
-                console.log("Navigate to province");
-                let provinceRoute = this.provinceRoute(this._squad, province);
-                this.$router.push(provinceRoute);
-            },
-            provinceRoute(squad, province) {
-                return {
-                    name: 'explore-province',
-                    params: {
-                        squadSlug: squad.slug,
-                        provinceSlug: province.slug
-                    }
-                }
-            }
-        },
 
         computed: {
             ...mapGetters([
                 '_provinces',
-                '_continent',
-                '_squad'
+                '_continent'
             ]),
             // needed for continent mixin
             continent() {
