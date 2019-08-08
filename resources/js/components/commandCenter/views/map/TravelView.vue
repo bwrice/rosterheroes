@@ -20,7 +20,10 @@
                     </v-layout>
                     <v-layout>
                         <v-flex class="xs12">
-                            <h5 class="text-center">Current Route</h5>
+                            <h5>Current Route</h5>
+                            <v-sheet tile :color="routeItemColor(_currentLocation)" class="pa-1">
+                                {{this._currentLocation.name}}
+                            </v-sheet>
                         </v-flex>
                     </v-layout>
                 </v-flex>
@@ -61,11 +64,17 @@
             ...mapActions([
                 'setCurrentLocation'
             ]),
-            minimMapProvinceColor: function(province) {
-                if (province.uuid === this._currentLocation.uuid) {
+            minimMapProvinceColor(province) {
+                if (province.uuid === this._routePosition.uuid) {
                     return '#035afc';
                 }
                 return '#dedede';
+            },
+            routeItemColor(province) {
+                if (province.uuid === this._routePosition.uuid) {
+                    return '#035afc';
+                }
+                return 'success';
             }
         },
 
