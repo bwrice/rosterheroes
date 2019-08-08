@@ -17,10 +17,18 @@
 
         watch:{
             $route (to) {
-                if (to.params.continentSlug !== this._continent.slug) {
+                console.log(to.params);
+                if (to.params.continentSlug
+                    && to.params.continentSlug !== this._continent.slug) {
                     this.setContinentBySlug(to.params.continentSlug);
-                } else if (to.params.territorySlug !== this._territory.slug) {
-                    this.setTerritoryBySlug(to.params.provinceSlug);
+
+                } else if (to.params.territorySlug
+                    && to.params.territorySlug !== this._territory.slug) {
+                    this.setTerritoryBySlug(to.params.territorySlug);
+
+                } else if (to.params.provinceSlug
+                    && to.params.provinceSlug !== this._province.slug) {
+                    this.setProvinceBySlug(to.params.provinceSlug);
                 }
             }
         },
@@ -29,12 +37,14 @@
             ...mapActions([
                 'setContinentBySlug',
                 'setTerritoryBySlug',
+                'setProvinceBySlug',
             ])
         },
         computed: {
             ...mapGetters([
                 '_continent',
                 '_territory',
+                '_province',
             ]),
         }
     }

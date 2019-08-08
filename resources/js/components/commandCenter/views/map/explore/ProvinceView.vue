@@ -20,7 +20,6 @@
 <script>
 
     import {mapGetters} from 'vuex';
-    import {mapActions} from 'vuex';
 
     import MapCard from "../../../map/MapCard";
     import ProvinceVector from "../../../map/ProvinceVector";
@@ -30,19 +29,6 @@
         components: {
             MapCard,
             ProvinceVector
-        },
-        watch:{
-            $route (to) {
-                // this updates province if user hits back/forward through browser
-                if (to.params.provinceSlug !== this._province.slug) {
-                    this.setProvinceBySlug(to.params.provinceSlug);
-                }
-            }
-        },
-        methods: {
-            ...mapActions([
-                'setProvinceBySlug',
-            ])
         },
         computed: {
             ...mapGetters([
