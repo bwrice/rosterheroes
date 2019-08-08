@@ -1,11 +1,12 @@
 <template>
     <g
         v-html="province.vector_paths"
-        :fill="fill" :opacity="opacity"
-        @click="navigateToProvince"
+        :fill="fill"
+        :opacity="opacity"
         :stroke="stroke"
         stroke-width=".5"
         stroke-opacity=".9"
+        @click="clicked"
         @mouseover="setHovered(true)"
         @mouseleave="setHovered(false)"
     >
@@ -13,8 +14,6 @@
 </template>
 
 <script>
-    import {mapGetters} from 'vuex';
-
     export default {
         name: "ProvinceVector",
         props: {
@@ -48,31 +47,17 @@
             setHovered: function(hoveredState) {
                 this.hovered = hoveredState;
             },
-            navigateToProvince() {
-                if (this.routeLink) {
-                    this.$router.push(this.provinceRoute);
-                }
+            clicked: function(event) {
+                this.$emit('provinceClicked', this.province, event);
             }
         },
 
         computed: {
-            ...mapGetters([
-                '_squad'
-            ]),
             fill() {
                 if (this.fillColor) {
                     return this.fillColor;
                 }
                 return this.province.color;
-            },
-            provinceRoute() {
-                return {
-                    name: 'explore-province',
-                    params: {
-                        squadSlug: this._squad.slug,
-                        provinceSlug: this.province.slug
-                    }
-                }
             },
 
             opacity() {

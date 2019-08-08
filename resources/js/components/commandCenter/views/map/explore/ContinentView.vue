@@ -4,7 +4,7 @@
             v-for="(province, uuid) in provincesForContinent"
             :key="uuid"
             :province="province"
-            :route-link="true"
+            @provinceClicked="navigateToProvince"
         ></ProvinceVector>
     </MapCard>
 </template>
@@ -19,15 +19,36 @@
 
     export default {
         name: "ContinentView",
-        components: {ProvinceVector, MapCard},
+        components: {
+            ProvinceVector,
+            MapCard
+        },
         mixins: [
             continentMixin
         ],
+
+        methods: {
+            navigateToProvince(province) {
+                console.log("Navigate to province");
+                let provinceRoute = this.provinceRoute(this._squad, province);
+                this.$router.push(provinceRoute);
+            },
+            provinceRoute(squad, province) {
+                return {
+                    name: 'explore-province',
+                    params: {
+                        squadSlug: squad.slug,
+                        provinceSlug: province.slug
+                    }
+                }
+            }
+        },
 
         computed: {
             ...mapGetters([
                 '_provinces',
                 '_continent',
+                '_squad'
             ]),
             // needed for continent mixin
             continent() {
@@ -35,7 +56,7 @@
             },
             viewBox() {
                 return this._continent.realm_view_box;
-            }
+            },
         }
     }
 </script>
