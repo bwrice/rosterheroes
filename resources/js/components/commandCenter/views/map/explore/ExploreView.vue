@@ -17,7 +17,6 @@
 
         watch:{
             $route (to) {
-                console.log(to.params);
                 if (to.params.continentSlug
                     && to.params.continentSlug !== this._continent.slug) {
                     this.setContinentBySlug(to.params.continentSlug);

@@ -16,7 +16,6 @@
 
         async mounted() {
             this.setExploreMap(this.$route);
-            this.updateFocusedLocations(this.$route);
 
             let squadSlug = this.$route.params.squadSlug;
             let squad = new Squad({slug: squadSlug});
@@ -27,20 +26,8 @@
         methods: {
             ...mapActions([
                 'setExploreMap',
-                'setCurrentLocation',
-                'setProvinceBySlug',
-                'setTerritoryBySlug',
-                'setContinentBySlug',
-            ]),
-            updateFocusedLocations(route) {
-                if (route.params.continentSlug !== this._continent.slug) {
-                    this.setContinentBySlug(route.params.continentSlug);
-                } else if (route.params.territorySlug !== this._territory.slug) {
-                    this.setTerritoryBySlug(route.params.territorySlug);
-                } else if(route.params.provinceSlug !== this._province.slug) {
-                    this.setProvinceBySlug(route.params.territorySlug);
-                }
-            }
+                'setCurrentLocation'
+            ])
         },
 
         computed: {
