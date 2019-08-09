@@ -38,7 +38,6 @@
     import {mapGetters} from 'vuex';
     import {mapActions} from 'vuex';
 
-    import MapCard from "../../../map/MapCard";
     import ContinentVector from "../../../map/ContinentVector";
     import TerritoryVector from "../../../map/TerritoryVector";
     import MapViewPort from "../../../map/MapViewPort";
@@ -52,8 +51,7 @@
             MapControls,
             MapViewPort,
             TerritoryVector,
-            ContinentVector,
-            MapCard
+            ContinentVector
         },
 
         data: function() {

@@ -1,20 +1,17 @@
 <template>
-    <v-flex class="xs12 lg8 offset-lg2">
-        <MapCard :view-box="this._province.view_box">
+    <ExploreMapCard :view-box="this._province.view_box">
+        <!-- Borders -->
+        <ProvinceVector
+            v-for="(province, uuid) in this._borders"
+            :key="uuid"
+            :province="province"
+            @provinceClicked="navigateToProvince"
+        >
+        </ProvinceVector>
 
-            <!-- Borders -->
-            <ProvinceVector
-                v-for="(province, uuid) in this._borders"
-                :key="uuid"
-                :province="province"
-                @provinceClicked="navigateToProvince"
-            >
-            </ProvinceVector>
-
-            <!-- Province -->
-            <ProvinceVector :province="this._province" :highlight="true"></ProvinceVector>
-        </MapCard>
-    </v-flex>
+        <!-- Province -->
+        <ProvinceVector :province="this._province" :highlight="true"></ProvinceVector>
+    </ExploreMapCard>
 </template>
 
 <script>
@@ -23,13 +20,13 @@
 
     import {provinceNavigationMixin} from "../../../../../mixins/provinceNavigationMixin";
 
-    import MapCard from "../../../map/MapCard";
     import ProvinceVector from "../../../map/ProvinceVector";
+    import ExploreMapCard from "../../../map/ExploreMapCard";
 
     export default {
         name: "ProvinceView",
         components: {
-            MapCard,
+            ExploreMapCard,
             ProvinceVector
         },
 

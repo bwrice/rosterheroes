@@ -1,14 +1,12 @@
 <template>
-    <v-flex class="xs12 lg8 offset-lg2">
-        <MapCard :view-box="viewBox">
-            <ProvinceVector
-                v-for="(province, uuid) in provincesForTerritory"
-                :key="uuid"
-                :province="province"
-                @provinceClicked="navigateToProvince"
-            ></ProvinceVector>
-        </MapCard>
-    </v-flex>
+    <ExploreMapCard :view-box="viewBox">
+        <ProvinceVector
+            v-for="(province, uuid) in provincesForTerritory"
+            :key="uuid"
+            :province="province"
+            @provinceClicked="navigateToProvince"
+        ></ProvinceVector>
+    </ExploreMapCard>
 </template>
 
 <script>
@@ -18,14 +16,14 @@
     import {territoryMixin} from '../../../../../mixins/territoryMixin';
     import {provinceNavigationMixin} from "../../../../../mixins/provinceNavigationMixin";
 
-    import MapCard from "../../../map/MapCard";
     import ProvinceVector from "../../../map/ProvinceVector";
+    import ExploreMapCard from "../../../map/ExploreMapCard";
 
     export default {
         name: "TerritoryView",
 
         components: {
-            MapCard,
+            ExploreMapCard,
             ProvinceVector
         },
 

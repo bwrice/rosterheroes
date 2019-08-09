@@ -16,7 +16,6 @@
     import {continentMixin} from '../../../../../mixins/continentMixin';
     import {provinceNavigationMixin} from "../../../../../mixins/provinceNavigationMixin";
 
-    import MapCard from "../../../map/MapCard";
     import ProvinceVector from "../../../map/ProvinceVector";
     import ExploreMapCard from "../../../map/ExploreMapCard";
 
@@ -24,8 +23,7 @@
         name: "ContinentView",
         components: {
             ExploreMapCard,
-            ProvinceVector,
-            MapCard
+            ProvinceVector
         },
         mixins: [
             continentMixin,
