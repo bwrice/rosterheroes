@@ -20,7 +20,7 @@
                     <v-layout>
                         <v-flex class="xs12">
                             <h5 class="text-center">Current Route</h5>
-                            <div style=" max-height:200px; overflow-y:auto">
+                            <div style=" max-height:120px; overflow-y:auto">
                                 <v-card class="pa-1" :max-height="300">
                                     <TravelRouteListItem
                                         v-for="(province, uuid) in routeList"
@@ -75,6 +75,17 @@
                                     @reset="restViewBox"
                                 ></MapControls>
                             </v-card>
+                        </v-flex>
+                    </v-layout>
+                    <v-layout row class="px-3">
+                        <v-flex class="xs12 ma-1">
+                            <v-btn block>Clear Route</v-btn>
+                        </v-flex>
+                        <v-flex class="xs12 ma-1">
+                            <v-btn block>Undo</v-btn>
+                        </v-flex>
+                        <v-flex class="xs12 ma-1">
+                            <v-btn block>Travel</v-btn>
                         </v-flex>
                     </v-layout>
                 </v-flex>
