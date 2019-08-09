@@ -43,6 +43,7 @@
                                     :disabled="emptyRoute"
                                     color="warning"
                                     block
+                                    @click="removeLastRoutePosition"
                                 >Undo</v-btn>
                             </v-sheet>
                         </v-flex>
@@ -148,6 +149,7 @@
                 'setCurrentLocation',
                 'extendTravelRoute',
                 'clearTravelRoute',
+                'removeLastRoutePosition',
                 'snackBarError'
             ]),
             minimMapProvinceColor(province) {

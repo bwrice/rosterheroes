@@ -26,6 +26,9 @@ export default {
         },
         CLEAR_TRAVEL_ROUTE(state, payload) {
             state.travelRoute = [];
+        },
+        REMOVE_LAST_ROUTE_POSITION(state) {
+            state.travelRoute.pop();
         }
     },
 
@@ -43,6 +46,9 @@ export default {
         },
         clearTravelRoute({commit, rootState}) {
             commit('CLEAR_TRAVEL_ROUTE');
+        },
+        removeLastRoutePosition({commit}) {
+            commit('REMOVE_LAST_ROUTE_POSITION');
         }
     }
 };
