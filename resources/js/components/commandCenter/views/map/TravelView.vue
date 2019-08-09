@@ -39,12 +39,21 @@
                     <v-layout row class="px-3">
                         <v-flex class="xs12">
                             <v-sheet class="pa-1">
-                                <v-btn color="warning" block>Undo</v-btn>
+                                <v-btn
+                                    :disabled="emptyRoute"
+                                    color="warning"
+                                    block
+                                >Undo</v-btn>
                             </v-sheet>
                         </v-flex>
                         <v-flex class="xs12">
                             <v-sheet class="pa-1">
-                                <v-btn color="error" block>Clear Route</v-btn>
+                                <v-btn
+                                    :disabled="emptyRoute"
+                                    color="error"
+                                    block
+                                    @click="clearTravelRoute"
+                                >Clear Route</v-btn>
                             </v-sheet>
                         </v-flex>
                     </v-layout>
@@ -56,7 +65,7 @@
 
                                 <!-- Borders -->
                                 <ProvinceVector
-                                    v-for="(province, uuid) in this._routePosition.borders"
+                                    v-for="(province, uuid) in _routePosition.borders"
                                     :key="uuid"
                                     :province="province"
                                     @provinceClicked="addToRoute"
@@ -92,7 +101,7 @@
                     <v-layout>
                         <v-flex class="xs12">
                             <v-sheet class="pa-2">
-                                <v-btn color="success" x-large block>
+                                <v-btn :disabled="emptyRoute" color="success" x-large block>
                                     Travel
                                 </v-btn>
                             </v-sheet>
@@ -138,6 +147,7 @@
             ...mapActions([
                 'setCurrentLocation',
                 'extendTravelRoute',
+                'clearTravelRoute',
                 'snackBarError'
             ]),
             minimMapProvinceColor(province) {
@@ -186,7 +196,6 @@
             ...mapGetters([
                 '_currentLocation',
                 '_routePosition',
-                '_routePositionBorders',
                 '_provinces',
                 '_travelRoute'
             ]),
@@ -194,7 +203,11 @@
                 return '#000000';
             },
             routeList() {
-                return this._travelRoute.reverse();
+                let travelRoute = _.cloneDeep(this._travelRoute);
+                return travelRoute.reverse();
+            },
+            emptyRoute() {
+                return ! this._travelRoute.length;
             }
         }
     }
