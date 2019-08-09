@@ -39,6 +39,13 @@
             </v-flex>
             <v-flex class="xs5 md3 pa-1">
                 <MapControls
+                    @panUp="panUp"
+                    @panDown="panDown"
+                    @panLeft="panLeft"
+                    @panRight="panRight"
+                    @zoomIn="zoomIn"
+                    @zoomOut="zoomOut"
+                    @reset="restViewBox"
                 ></MapControls>
             </v-flex>
         </v-layout>
