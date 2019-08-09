@@ -1,12 +1,12 @@
 <template>
-    <MapCard :view-box="viewBox">
+    <ExploreMapCard :view-box="viewBox">
         <ProvinceVector
             v-for="(province, uuid) in provincesForContinent"
             :key="uuid"
             :province="province"
             @provinceClicked="navigateToProvince"
         ></ProvinceVector>
-    </MapCard>
+    </ExploreMapCard>
 </template>
 
 <script>
@@ -18,10 +18,12 @@
 
     import MapCard from "../../../map/MapCard";
     import ProvinceVector from "../../../map/ProvinceVector";
+    import ExploreMapCard from "../../../map/ExploreMapCard";
 
     export default {
         name: "ContinentView",
         components: {
+            ExploreMapCard,
             ProvinceVector,
             MapCard
         },
