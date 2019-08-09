@@ -31,8 +31,9 @@ class ProvinceResource extends JsonResource
             'vector_paths' => $this->vector_paths,
             'continent_id' => $this->continent_id,
             'territory_id' => $this->territory_id,
-            'continent' => $this->whenLoaded('continent'),
-            'territory' => $this->whenLoaded('territory')
+            'borders' => ProvinceResource::collection($this->whenLoaded('borders')),
+            'continent' => new ContinentResource($this->whenLoaded('continent')),
+            'territory' => new TerritoryResource($this->whenLoaded('territory'))
         ];
     }
 }
