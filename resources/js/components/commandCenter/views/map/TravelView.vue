@@ -5,16 +5,7 @@
                 <v-flex class="xs5">
                     <v-layout>
                         <v-flex class="xs12">
-                            <!-- Mini-map -->
-                            <MapViewPort :ocean-color="oceanColor">
-                                <ProvinceVector
-                                    v-for="(province, uuid) in this._provinces"
-                                    :key="uuid"
-                                    :province="province"
-                                    :fill-color="minimMapProvinceColor(province)"
-                                >
-                                </ProvinceVector>
-                            </MapViewPort>
+                            <TravelRouteMap></TravelRouteMap>
                         </v-flex>
                     </v-layout>
                     <v-layout>
@@ -163,10 +154,12 @@
     import ProvinceVector from "../../map/ProvinceVector";
     import TravelRouteListItem from "../../map/TravelRouteListItem";
     import MapControls from "../../map/MapControls";
+    import TravelRouteMap from "../../map/TravelRouteMap";
 
     export default {
         name: "TravelView",
         components: {
+            TravelRouteMap,
             MapControls,
             TravelRouteListItem,
             ProvinceVector,
