@@ -3,22 +3,20 @@ import Province from "../../models/Province";
 export default {
 
     state: {
-        routePosition: {
-            name: ''
-        },
-        routePositionBorders: [],
-        route: []
+        routePosition: null,
+        travelRoute: []
     },
 
     getters: {
-        _routePosition(state) {
-            return state.routePosition;
-        },
-        _routePositionBorders(state) {
-            return state.routePositionBorders;
+        _routePosition(state, getters, rootState) {
+            if (state.routePosition) {
+                return state.routePosition;
+            } else {
+                return rootState.currentLocationModule.currentLocation;
+            }
         },
         _travelRoute(state) {
-            return state.route;
+            return state.travelRoute;
         }
     },
     mutations: {
@@ -33,7 +31,10 @@ export default {
             state.routePositionBorders = payload;
         },
         ADD_TO_TRAVEL_ROUTE(state, payload) {
-            state.route.push(payload);
+            state.travelRoute.push(payload);
+        },
+        CLEAR_TRAVEL_ROUTE(state, payload) {
+            state.travelRoute = [];
         }
     },
 
@@ -45,14 +46,14 @@ export default {
                 let routeProvince = response.data;
                 commit('SET_ROUTE_POSITION', routeProvince);
                 commit('ADD_TO_TRAVEL_ROUTE', routeProvince);
-                commit('SET_ROUTE_BORDERS', []);
-                let bordersResponse = await axios.get('/api/v1/provinces/' + routeProvince.slug + '/borders');
-                let borders = bordersResponse.data.data;
                 commit('SET_ROUTE_BORDERS', borders);
             } catch (error) {
                 console.log("ERROR");
                 console.log(error);
             }
+        },
+        clearTravelRoute({commit, rootState}) {
+            commit('CLEAR_TRAVEL_ROUTE');
         }
     }
 };

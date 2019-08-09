@@ -56,7 +56,7 @@
 
                                 <!-- Borders -->
                                 <ProvinceVector
-                                    v-for="(province, uuid) in this._routePositionBorders"
+                                    v-for="(province, uuid) in this._routePosition.borders"
                                     :key="uuid"
                                     :province="province"
                                     @provinceClicked="addToRoute"
