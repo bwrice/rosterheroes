@@ -155,8 +155,9 @@
 <script>
 
     import {mapActions} from 'vuex'
-    import {mapGetters} from 'vuex';
+
     import {viewBoxControlsMixin} from "../../../../mixins/viewBoxControlsMixin";
+    import {travelMixin} from "../../../../mixins/travelMixin";
 
     import MapViewPort from "../../map/MapViewPort";
     import ProvinceVector from "../../map/ProvinceVector";
@@ -172,7 +173,8 @@
             MapViewPort
         },
         mixins: [
-            viewBoxControlsMixin
+            viewBoxControlsMixin,
+            travelMixin
         ],
         mounted() {
             this.setViewBox(this._routePosition.view_box);
@@ -195,30 +197,11 @@
                 'removeLastRoutePosition',
                 'snackBarError'
             ]),
-            minimMapProvinceColor(province) {
-                if (province.uuid === this._currentLocation.uuid) {
-                    return '#dd00ff';
-                } else if (province.uuid === this._routePosition.uuid) {
-                    return '#4ef542';
-                } else if (this.provinceInRoute(province)) {
-                    return '#035afc'
-                }
-                return '#dedede';
-            },
             routeItemColor(province) {
                 if (province.uuid === this._routePosition.uuid) {
                     return 'success';
                 }
                 return 'primary';
-            },
-            provinceInRoute(province) {
-                let value = false;
-                this._travelRoute.forEach(function (routeProvince) {
-                    if (routeProvince.uuid === province.uuid) {
-                        value = true;
-                    }
-                });
-                return value;
             },
             borderColor(province) {
                 if (this.provinceInRoute(province)) {
@@ -238,12 +221,6 @@
         },
 
         computed: {
-            ...mapGetters([
-                '_currentLocation',
-                '_routePosition',
-                '_provinces',
-                '_travelRoute'
-            ]),
             oceanColor() {
                 return '#000000';
             },
