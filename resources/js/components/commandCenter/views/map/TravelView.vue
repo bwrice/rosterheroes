@@ -44,7 +44,9 @@
                                     color="warning"
                                     block
                                     @click="removeLastRoutePosition"
-                                >Undo</v-btn>
+                                >
+                                    Undo
+                                </v-btn>
                             </v-sheet>
                         </v-flex>
                         <v-flex class="xs12">
@@ -54,7 +56,9 @@
                                     color="error"
                                     block
                                     @click="clearTravelRoute"
-                                >Clear Route</v-btn>
+                                >
+                                    Clear Route
+                                </v-btn>
                             </v-sheet>
                         </v-flex>
                     </v-layout>
@@ -102,7 +106,13 @@
                     <v-layout>
                         <v-flex class="xs12">
                             <v-sheet class="pa-2">
-                                <v-btn :disabled="emptyRoute" color="success" x-large block>
+                                <v-btn
+                                    :disabled="emptyRoute"
+                                    color="success"
+                                    x-large
+                                    block
+                                    @click="travelDialog = true"
+                                >
                                     Travel
                                 </v-btn>
                             </v-sheet>
@@ -111,6 +121,34 @@
                 </v-flex>
             </v-layout>
         </v-card>
+        <v-dialog
+            v-model="travelDialog"
+            max-width="920"
+        >
+            <v-card>
+                <v-card-title class="headline">Travel to {{_routePosition.name}}?</v-card-title>
+
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+
+                    <v-btn
+                        color="red darken-1"
+                        text
+                        @click="travelDialog = false"
+                    >
+                        Cancel
+                    </v-btn>
+
+                    <v-btn
+                        color="green darken-1"
+                        text
+                        @click="travelDialog = false"
+                    >
+                        Confirm Travel
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
     </v-flex>
 </template>
 
@@ -138,6 +176,11 @@
         ],
         mounted() {
             this.setViewBox(this._routePosition.view_box);
+        },
+        data: function() {
+            return {
+                travelDialog: false
+            }
         },
         watch: {
             _routePosition: function(newValue) {
