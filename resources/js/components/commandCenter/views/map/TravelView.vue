@@ -38,26 +38,45 @@
                     </v-layout>
                 </v-flex>
                 <v-flex class="xs7">
-                    <MapViewPort :tile="true" :view-box="_routePosition.view_box">
+                    <v-layout>
+                        <v-flex class="xs12">
+                            <MapViewPort :tile="true" :view-box="currentViewBox">
 
-                        <!-- Borders -->
-                        <ProvinceVector
-                            v-for="(province, uuid) in this._routePositionBorders"
-                            :key="uuid"
-                            :province="province"
-                            @provinceClicked="addToRoute"
-                            :fill-color="borderColor(province)"
-                            :highlight="provinceInRoute(province)"
-                        >
-                        </ProvinceVector>
+                                <!-- Borders -->
+                                <ProvinceVector
+                                    v-for="(province, uuid) in this._routePositionBorders"
+                                    :key="uuid"
+                                    :province="province"
+                                    @provinceClicked="addToRoute"
+                                    :fill-color="borderColor(province)"
+                                    :highlight="provinceInRoute(province)"
+                                >
+                                </ProvinceVector>
 
-                        <ProvinceVector
-                            :province="_routePosition"
-                            :highlight="true"
-                            @provinceClicked="snackBarError('Click on a border to add to your route')"
-                        >
-                        </ProvinceVector>
-                    </MapViewPort>
+                                <ProvinceVector
+                                    :province="_routePosition"
+                                    :highlight="true"
+                                    @provinceClicked="snackBarError('Click on a border to add to your route')"
+                                >
+                                </ProvinceVector>
+                            </MapViewPort>
+                        </v-flex>
+                    </v-layout>
+                    <v-layout>
+                        <v-flex class="xs12">
+                            <v-card flat class="pa-3">
+                                <MapControls
+                                    @panUp="panUp"
+                                    @panDown="panDown"
+                                    @panLeft="panLeft"
+                                    @panRight="panRight"
+                                    @zoomIn="zoomIn"
+                                    @zoomOut="zoomOut"
+                                    @reset="restViewBox"
+                                ></MapControls>
+                            </v-card>
+                        </v-flex>
+                    </v-layout>
                 </v-flex>
             </v-layout>
         </v-card>
@@ -66,19 +85,33 @@
 
 <script>
 
-    import { mapActions } from 'vuex'
-    import { mapGetters } from 'vuex';
+    import {mapActions} from 'vuex'
+    import {mapGetters} from 'vuex';
+    import {viewBoxControlsMixin} from "../../../../mixins/viewBoxControlsMixin";
 
     import MapViewPort from "../../map/MapViewPort";
     import ProvinceVector from "../../map/ProvinceVector";
     import TravelRouteListItem from "../../map/TravelRouteListItem";
+    import MapControls from "../../map/MapControls";
 
     export default {
         name: "TravelView",
         components: {
+            MapControls,
             TravelRouteListItem,
             ProvinceVector,
             MapViewPort
+        },
+        mixins: [
+            viewBoxControlsMixin
+        ],
+        mounted() {
+            this.setViewBox(this._routePosition.view_box);
+        },
+        watch: {
+            _routePosition: function(newValue) {
+                this.setViewBox(newValue.view_box);
+            }
         },
         methods: {
             ...mapActions([
