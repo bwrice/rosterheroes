@@ -45,13 +45,18 @@
                             v-for="(province, uuid) in this._routePositionBorders"
                             :key="uuid"
                             :province="province"
-                            @provinceClicked="extendTravelRoute"
+                            @provinceClicked="addToRoute"
                             :fill-color="borderColor(province)"
                             :highlight="provinceInRoute(province)"
                         >
                         </ProvinceVector>
 
-                        <ProvinceVector :province="_routePosition" :highlight="true"></ProvinceVector>
+                        <ProvinceVector
+                            :province="_routePosition"
+                            :highlight="true"
+                            @provinceClicked="snackBarError('Click on a border to add to your route')"
+                        >
+                        </ProvinceVector>
                     </MapViewPort>
                 </v-flex>
             </v-layout>
@@ -78,14 +83,15 @@
         methods: {
             ...mapActions([
                 'setCurrentLocation',
-                'extendTravelRoute'
+                'extendTravelRoute',
+                'snackBarError'
             ]),
             minimMapProvinceColor(province) {
-                if (province.uuid === this._routePosition.uuid) {
+                if (province.uuid === this._currentLocation.uuid) {
+                    return '#a969b3';
+                } else if (province.uuid === this._routePosition.uuid) {
                     return '#4ef542';
-                } else if (this.provinceInRoute(province)
-                    || province.uuid === this._currentLocation.uuid
-                ) {
+                } else if (this.provinceInRoute(province)) {
                     return '#035afc'
                 }
                 return '#dedede';
@@ -110,6 +116,15 @@
                     return '#4a4a4a';
                 }
                 return province.color;
+            },
+            addToRoute(province) {
+                if (province.uuid === this._currentLocation.uuid) {
+                    this.snackBarError("You're already in " + province.name);
+                }else if(this.provinceInRoute(province)) {
+                    this.snackBarError(province.name + ' is already part of your route');
+                } else {
+                    this.extendTravelRoute(province);
+                }
             }
         },
 
