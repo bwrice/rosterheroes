@@ -118,7 +118,7 @@
         >
             <v-card>
                 <v-card-title class="headline">Travel to {{_routePosition.name}}?</v-card-title>
-
+                <TravelRouteMap></TravelRouteMap>
                 <v-card-actions>
                     <v-spacer></v-spacer>
 
