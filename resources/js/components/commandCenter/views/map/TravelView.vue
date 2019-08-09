@@ -20,8 +20,8 @@
                     <v-layout>
                         <v-flex class="xs12">
                             <h5 class="text-center">Current Route</h5>
-                            <div style=" max-height:120px; overflow-y:auto">
-                                <v-card class="pa-1" :max-height="300">
+                            <div style="min-height:150px; max-height:150px; overflow-y:auto">
+                                <v-card class="pa-1" flat>
                                     <TravelRouteListItem
                                         v-for="(province, uuid) in routeList"
                                         :province="province"
@@ -29,11 +29,23 @@
                                         :color="routeItemColor(province)"
                                     >
                                     </TravelRouteListItem>
-                                    <v-sheet tile :color="routeItemColor(_currentLocation)" class="pa-1">
+                                    <v-sheet tile :color="'#a969b3'" class="pa-1">
                                         {{this._currentLocation.name}}
                                     </v-sheet>
                                 </v-card>
                             </div>
+                        </v-flex>
+                    </v-layout>
+                    <v-layout row class="px-3">
+                        <v-flex class="xs12">
+                            <v-sheet class="pa-1">
+                                <v-btn color="warning" block>Undo</v-btn>
+                            </v-sheet>
+                        </v-flex>
+                        <v-flex class="xs12">
+                            <v-sheet class="pa-1">
+                                <v-btn color="error" block>Clear Route</v-btn>
+                            </v-sheet>
                         </v-flex>
                     </v-layout>
                 </v-flex>
@@ -77,15 +89,13 @@
                             </v-card>
                         </v-flex>
                     </v-layout>
-                    <v-layout row class="px-3">
-                        <v-flex class="xs12 ma-1">
-                            <v-btn block>Clear Route</v-btn>
-                        </v-flex>
-                        <v-flex class="xs12 ma-1">
-                            <v-btn block>Undo</v-btn>
-                        </v-flex>
-                        <v-flex class="xs12 ma-1">
-                            <v-btn block>Travel</v-btn>
+                    <v-layout>
+                        <v-flex class="xs12">
+                            <v-sheet class="pa-2">
+                                <v-btn color="success" x-large block>
+                                    Travel
+                                </v-btn>
+                            </v-sheet>
                         </v-flex>
                     </v-layout>
                 </v-flex>
@@ -132,7 +142,7 @@
             ]),
             minimMapProvinceColor(province) {
                 if (province.uuid === this._currentLocation.uuid) {
-                    return '#a969b3';
+                    return '#dd00ff';
                 } else if (province.uuid === this._routePosition.uuid) {
                     return '#4ef542';
                 } else if (this.provinceInRoute(province)) {
