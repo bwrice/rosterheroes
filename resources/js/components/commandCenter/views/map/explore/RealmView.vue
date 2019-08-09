@@ -38,8 +38,6 @@
     import {mapGetters} from 'vuex';
     import {mapActions} from 'vuex';
 
-    import {viewBoxControlsMixin} from "../../../../../mixins/viewBoxControlsMixin";
-
     import MapCard from "../../../map/MapCard";
     import ContinentVector from "../../../map/ContinentVector";
     import TerritoryVector from "../../../map/TerritoryVector";
@@ -57,10 +55,6 @@
             ContinentVector,
             MapCard
         },
-
-        mixins: [
-            viewBoxControlsMixin
-        ],
 
         data: function() {
             return {

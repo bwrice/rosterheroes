@@ -44,13 +44,18 @@
         props: {
             viewBox: {
                 type: Object,
-                default: {
-                    pan_x: 0,
-                    pan_y: 0,
-                    zoom_x: 315,
-                    zoom_y: 240,
+                default: function() {
+                    return {
+                        pan_x: 0,
+                        pan_y: 0,
+                        zoom_x: 315,
+                        zoom_y: 240,
+                    }
                 }
             }
+        },
+        mounted() {
+          this.setViewBox(this.viewBox);
         },
         watch: {
             viewBox: function(newValue) {
