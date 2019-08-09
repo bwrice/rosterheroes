@@ -1,36 +1,48 @@
 <template>
-    <MapCard>
-        <template v-if="inContinentMode">
-            <ContinentVector v-for="(continent, id) in this._continents" :key="id" :continent="continent"></ContinentVector>
-        </template>
-        <template v-else>
-            <TerritoryVector v-for="(territory, id) in this._territories" :key="id" :territory="territory"></TerritoryVector>
-        </template>
-        <template slot="footer-content">
-            <v-layout>
-                <v-flex class="xs12">
-                    <v-chip class="ma-1"
-                            :input-value="inContinentMode"
-                            @click="setRealmMapMode('continent')"
-                            filter
-                            filter-icon="mdi-eye"
-                            label
-                    >
-                        Continents
-                    </v-chip>
-                    <v-chip class="ma-1"
-                            :input-value="inTerritoryMode"
-                            @click="setRealmMapMode('territory')"
-                            filter
-                            filter-icon="mdi-eye"
-                            label
-                    >
-                        Territories
-                    </v-chip>
-                </v-flex>
-            </v-layout>
-        </template>
-    </MapCard>
+    <v-card>
+        <v-layout>
+            <v-flex class="xs12">
+                <MapViewPort :view-box="currentViewBox">
+                    <template v-if="inContinentMode">
+                        <ContinentVector v-for="(continent, id) in this._continents" :key="id" :continent="continent"></ContinentVector>
+                    </template>
+                    <template v-else>
+                        <TerritoryVector v-for="(territory, id) in this._territories" :key="id" :territory="territory"></TerritoryVector>
+                    </template>
+                </MapViewPort>
+            </v-flex>
+        </v-layout>
+        <v-layout>
+            <v-flex class="xs7 md9">
+                <v-layout>
+                    <v-flex class="xs12">
+                        <v-chip class="ma-1"
+                                :input-value="inContinentMode"
+                                @click="setRealmMapMode('continent')"
+                                filter
+                                filter-icon="mdi-eye"
+                                label
+                        >
+                            Continents
+                        </v-chip>
+                        <v-chip class="ma-1"
+                                :input-value="inTerritoryMode"
+                                @click="setRealmMapMode('territory')"
+                                filter
+                                filter-icon="mdi-eye"
+                                label
+                        >
+                            Territories
+                        </v-chip>
+                    </v-flex>
+                </v-layout>
+            </v-flex>
+            <v-flex class="xs5 md3 pa-1">
+                <MapControls
+                ></MapControls>
+            </v-flex>
+        </v-layout>
+    </v-card>
 </template>
 
 <script>
@@ -41,10 +53,14 @@
     import MapCard from "../../../map/MapCard";
     import ContinentVector from "../../../map/ContinentVector";
     import TerritoryVector from "../../../map/TerritoryVector";
+    import MapViewPort from "../../../map/MapViewPort";
+    import MapControls from "../../../map/MapControls";
 
     export default {
         name: "RealmView",
         components: {
+            MapControls,
+            MapViewPort,
             TerritoryVector,
             ContinentVector,
             MapCard
@@ -52,7 +68,26 @@
 
         data: function() {
             return {
-                mode: 'continent'
+                mode: 'continent',
+                originalViewBox: {
+                    pan_x: 0,
+                    pan_y: 0,
+                    zoom_x: 315,
+                    zoom_y: 240,
+                },
+                currentViewBox: {
+                    pan_x: 0,
+                    pan_y: 0,
+                    zoom_x: 315,
+                    zoom_y: 240,
+                }
+            }
+        },
+
+        watch: {
+            viewBox: function(newValue) {
+                this.originalViewBox = _.cloneDeep(newValue);
+                this.currentViewBox = _.cloneDeep(newValue);
             }
         },
 
@@ -60,6 +95,39 @@
             ...mapActions([
                 'setRealmMapMode',
             ]),
+            panUp() {
+                this.currentViewBox.pan_y -= (.1 * this.currentViewBox.zoom_y);
+            },
+            panDown() {
+                this.currentViewBox.pan_y += (.1 * this.currentViewBox.zoom_y);
+            },
+            panLeft() {
+                this.currentViewBox.pan_x -= (.1 * this.currentViewBox.zoom_x);
+            },
+            panRight() {
+                this.currentViewBox.pan_x += (.1 * this.currentViewBox.zoom_x);
+            },
+            restViewBox() {
+                this.currentViewBox = _.cloneDeep(this.originalViewBox);
+            },
+            zoomIn() {
+                /*
+                By panning 10% but zooming 80% (instead of 90), we zoom the center of the SVG
+                 */
+                this.panRight();
+                this.panDown();
+                this.currentViewBox.zoom_x *= .8;
+                this.currentViewBox.zoom_y *= .8;
+            },
+            zoomOut() {
+                /*
+                We have to pan after we adjust the zoom to reverse zoomIn() effect
+                 */
+                this.currentViewBox.zoom_x /= .8;
+                this.currentViewBox.zoom_y /= .8;
+                this.panLeft();
+                this.panUp();
+            }
         },
 
         computed: {
