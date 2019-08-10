@@ -26,6 +26,10 @@ class SquadResource extends JsonResource
             'slug' => $this->slug,
             'name' => $this->name,
             'spirit_essence' => $this->spirit_essence,
+            'gold' => $this->gold,
+            'experience' => $this->experience,
+            'favor' => $this->favor,
+            'province' => new CurrentLocationResource($this->whenLoaded('province')),
             'heroPosts' => HeroPostResource::collection($this->whenLoaded('heroPosts'))
         ];
     }
