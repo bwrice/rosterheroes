@@ -28,7 +28,7 @@ class FastTravelController extends Controller
         $this->authorize(Squad::MANAGE_AUTHORIZATION, $squad);
 
         $travelRoute = new ProvinceCollection();
-        foreach($request->travel_route as $provinceUuid) {
+        foreach($request->travelRoute as $provinceUuid) {
             $province = \App\Domain\Models\Province::uuidOrFail($provinceUuid);
             $travelRoute->push($province);
         };

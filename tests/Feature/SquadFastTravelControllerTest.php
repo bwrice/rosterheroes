@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Domain\Models\Squad;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Laravel\Passport\Passport;
 use Mockery\Generator\StringManipulation\Pass\Pass;
 use Tests\TestCase;
@@ -11,6 +12,9 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class SquadFastTravelControllerTest extends TestCase
 {
+
+    use DatabaseTransactions;
+
     /**
      * @test
      */
@@ -36,7 +40,7 @@ class SquadFastTravelControllerTest extends TestCase
         $this->assertEquals(3, $routeProvinces->count());
 
         $response = $this->post('/api/v1/squads/' . $squad->slug . '/fast-travel', [
-            'travel_route' => $routeProvinces->pluck('uuid')->toArray()
+            'travelRoute' => $routeProvinces->pluck('uuid')->toArray()
         ]);
 
         $response->assertStatus(201);
