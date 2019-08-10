@@ -121,7 +121,6 @@
                 <TravelRouteMap></TravelRouteMap>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-
                     <v-btn
                         color="red darken-1"
                         text
@@ -185,11 +184,13 @@
         },
         methods: {
             ...mapActions([
+                'setSquad',
                 'setCurrentLocation',
                 'extendTravelRoute',
                 'clearTravelRoute',
                 'removeLastRoutePosition',
-                'snackBarError'
+                'snackBarError',
+                'snackBarSuccess'
             ]),
             routeItemColor(province) {
                 if (province.uuid === this._routePosition.uuid) {
@@ -213,15 +214,28 @@
                 }
             },
             async confirmTravel() {
+
                 let provinces = this._travelRoute.map(function (province) {
                     return province.uuid;
                 });
+
                 try {
+
                     let response = await axios.post('/api/v1/squads/' + this._squad.slug + '/fast-travel', {
                         travelRoute: provinces
                     });
-                    console.log("RESPONSE");
-                    console.log(response);
+                    let squad = response.data;
+                    let currentLocation = squad.province;
+                    this.clearTravelRoute();
+                    this.setCurrentLocation(currentLocation);
+                    this.setSquad(squad);
+                    this.snackBarSuccess('Welcome to ' + currentLocation.name);
+                    this.$router.push({
+                        name: 'map-main',
+                        params: {
+                            squadSlug: squad.slug
+                        }});
+
                 } catch (error) {
                     let responseErrors = error.response.data;
                     if (responseErrors.errors.travel) {
