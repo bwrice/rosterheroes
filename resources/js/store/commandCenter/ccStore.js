@@ -9,6 +9,7 @@ import rosterModule from './roster';
 import weekModule from './week';
 import exploreModule from './exploreModule';
 import snackBarModule from './snackBar';
+import overlayModule from "./overlayModule";
 import currentLocationModule from "./currentLocationModule";
 import travelModule from "./travelModule";
 
@@ -22,6 +23,7 @@ export const store = new Vuex.Store({
         exploreModule,
         currentLocationModule,
         travelModule,
-        snackBarModule
+        snackBarModule,
+        overlayModule
     }
 });
