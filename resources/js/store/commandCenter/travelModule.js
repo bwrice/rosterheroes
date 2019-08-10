@@ -34,6 +34,7 @@ export default {
 
     actions: {
         async extendTravelRoute({commit, rootState}, payload) {
+            //TODO move everything but setter out
             try {
                 let squad = rootState.squadModule.squad;
                 let response = await axios.get('/api/v1/squads/' + squad.slug + '/border/' + payload.slug);
@@ -49,6 +50,6 @@ export default {
         },
         removeLastRoutePosition({commit}) {
             commit('REMOVE_LAST_ROUTE_POSITION');
-        }
+        },
     }
 };

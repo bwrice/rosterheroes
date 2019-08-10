@@ -133,7 +133,7 @@
                     <v-btn
                         color="green darken-1"
                         text
-                        @click="travelDialog = false"
+                        @click="confirmTravel"
                     >
                         Confirm Travel
                     </v-btn>
@@ -210,6 +210,13 @@
                 } else {
                     this.extendTravelRoute(province);
                 }
+            },
+            confirmTravel() {
+                let provinces = this._travelRoute.map(function (province) {
+                    return province.uuid;
+                });
+                console.log("Provinces");
+                console.log(provinces);
             }
         },
 
