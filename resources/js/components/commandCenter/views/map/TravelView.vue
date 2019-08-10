@@ -190,7 +190,9 @@
                 'clearTravelRoute',
                 'removeLastRoutePosition',
                 'snackBarError',
-                'snackBarSuccess'
+                'snackBarSuccess',
+                'setOverlay',
+                'stopOverlay'
             ]),
             routeItemColor(province) {
                 if (province.uuid === this._routePosition.uuid) {
@@ -216,6 +218,9 @@
             async confirmTravel() {
 
                 this.travelDialog = false;
+                this.setOverlay({
+                    show: true
+                });
 
                 let provinces = this._travelRoute.map(function (province) {
                     return province.uuid;
@@ -231,6 +236,7 @@
                     this.clearTravelRoute();
                     this.setCurrentLocation(currentLocation);
                     this.setSquad(squad);
+                    this.stopOverlay();
                     this.snackBarSuccess('Welcome to ' + currentLocation.name);
                     this.$router.push({
                         name: 'map-main',
@@ -239,6 +245,7 @@
                         }});
 
                 } catch (error) {
+                    this.stopOverlay();
                     let responseErrors = error.response.data;
                     if (responseErrors.errors.travel) {
                         this.snackBarError(responseErrors.errors.travel[0]);
