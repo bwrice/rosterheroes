@@ -145,7 +145,8 @@
 
 <script>
 
-    import {mapActions} from 'vuex'
+    import {mapActions} from 'vuex';
+    import {mapGetters} from 'vuex';
 
     import {viewBoxControlsMixin} from "../../../../mixins/viewBoxControlsMixin";
     import {travelMixin} from "../../../../mixins/travelMixin";
@@ -211,16 +212,26 @@
                     this.extendTravelRoute(province);
                 }
             },
-            confirmTravel() {
+            async confirmTravel() {
                 let provinces = this._travelRoute.map(function (province) {
                     return province.uuid;
                 });
-                console.log("Provinces");
-                console.log(provinces);
+                try {
+                    let response = await axios.post('/api/v1/squads/' + this._squad.slug + '/fast-travel', {
+                        travelRoute: provinces
+                    });
+                    console.log("RESPONSE");
+                    console.log(response);
+                } catch (error) {
+
+                }
             }
         },
 
         computed: {
+            ...mapGetters([
+                '_squad',
+            ]),
             oceanColor() {
                 return '#000000';
             },
