@@ -223,7 +223,12 @@
                     console.log("RESPONSE");
                     console.log(response);
                 } catch (error) {
-
+                    let responseErrors = error.response.data;
+                    if (responseErrors.errors.travel) {
+                        this.snackBarError(responseErrors.errors.travel[0]);
+                    } else {
+                        this.snackBarError("Oops something went wrong");
+                    }
                 }
             }
         },
