@@ -42,6 +42,8 @@ class FastTravelController extends Controller
                 'travel' => $exception->getMessage()
             ]);
         }
-        return response()->json(new SquadResource($squad->fresh()), 201);
+        return response()->json(new SquadResource($squad->fresh()->load([
+            'province.borders',
+        ])), 201);
     }
 }
