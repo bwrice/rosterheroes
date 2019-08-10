@@ -215,6 +215,8 @@
             },
             async confirmTravel() {
 
+                this.travelDialog = false;
+
                 let provinces = this._travelRoute.map(function (province) {
                     return province.uuid;
                 });
