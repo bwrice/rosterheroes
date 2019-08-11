@@ -6,6 +6,7 @@ Vue.use(Vuex);
 import squadModule from './squad';
 import heroModule from './heroModule';
 import rosterModule from './roster';
+import barracksModule from "./barracksModule";
 import weekModule from './week';
 import exploreModule from './exploreModule';
 import snackBarModule from './snackBar';
@@ -19,6 +20,7 @@ export const store = new Vuex.Store({
         squadModule,
         heroModule,
         rosterModule,
+        barracksModule,
         weekModule,
         exploreModule,
         currentLocationModule,
