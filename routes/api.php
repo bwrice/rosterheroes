@@ -5,6 +5,7 @@ use App\Http\Controllers\FastTravelController;
 use App\Http\Controllers\HeroController;
 use App\Http\Controllers\ProvinceBorderController;
 use App\Http\Controllers\ProvinceController;
+use App\Http\Controllers\BarracksHeroesController;
 use App\Http\Controllers\SquadCurrentLocationController;
 use App\Http\Controllers\TerritoryController;
 use App\Http\Controllers\WeekController;
@@ -51,6 +52,8 @@ Route::prefix('v1')->group(function () {
         Route::get('/squads/{squadSlug}', [SquadController::class, 'show']);
 
         Route::post('/squads/{squadSlug}/fast-travel', FastTravelController::class);
+
+        Route::get('/squads/{squadSlug}/barracks/heroes', BarracksHeroesController::class);
 
         Route::get('/squad/{squadSlug}/hero-classes', SquadHeroClassController::class);
         Route::get('/squad/{squadSlug}/hero-races', SquadHeroRaceController::class);

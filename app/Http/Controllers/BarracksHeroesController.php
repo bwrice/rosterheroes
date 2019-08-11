@@ -7,7 +7,7 @@ use App\Domain\Models\Squad;
 use App\Http\Resources\HeroResource;
 use Illuminate\Http\Request;
 
-class SquadBarracksHeroesController extends Controller
+class BarracksHeroesController extends Controller
 {
     public function __invoke($squadSlug)
     {
