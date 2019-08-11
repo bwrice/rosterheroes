@@ -43,6 +43,18 @@ class BarracksHeroesControllerTest extends TestCase
         Passport::actingAs($squad->user);
 
         $response = $this->get('/api/v1/squads/' . $squad->slug . '/barracks/heroes');
-        $this->assertEquals(200, $response->status());
+
+        $response
+            ->assertStatus(200)
+            ->assertJson([
+                'data' => [
+                    [
+                        'uuid' => $heroOne->uuid
+                    ],
+                    [
+                        'uuid' => $heroTwo->uuid
+                    ]
+                ]
+            ]);
     }
 }
