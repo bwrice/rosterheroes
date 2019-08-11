@@ -5,10 +5,21 @@
 </template>
 
 <script>
+
+    import {mapActions} from 'vuex';
+
     export default {
         name: "BarracksMain",
-        created: () => {
+        created() {
             console.log("Barracks Created!");
+        },
+        mounted() {
+            this.updateBarracksHeroes(this.$route.params.squadSlug);
+        },
+        methods: {
+            ...mapActions([
+                'updateBarracksHeroes'
+            ])
         }
     }
 </script>
