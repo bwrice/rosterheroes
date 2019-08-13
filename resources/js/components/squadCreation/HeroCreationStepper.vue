@@ -18,49 +18,82 @@
                 <v-layout wrap>
                     <v-flex xs6>
                         <v-radio-group
-                                v-model="heroClass"
-                                label="Hero Class"
-                                @blur="$v.heroClass.$touch()"
-                                @click="serverErrors.flush()"
-                                :error-messages="classErrors"
-                                column>
-                            <v-radio :disabled="! validClass('warrior')" label="Warrior" value="warrior"></v-radio>
-                            <v-radio :disabled="! validClass('ranger')" label="Ranger" value="ranger"></v-radio>
-                            <v-radio :disabled="! validClass('sorcerer')" label="Sorcerer" value="sorcerer"></v-radio>
+                            ripple="false"
+                            :name="'hero-class-' + heroNumber"
+                            v-model="heroClass"
+                            label="Hero Class"
+                            @blur="$v.heroClass.$touch()"
+                            @click="serverErrors.flush()"
+                            :error-messages="classErrors"
+                            column
+                        >
+                            <v-radio
+                                :disabled="! validClass('warrior')"
+                                label="Warrior"
+                                value="warrior">
+                            </v-radio>
+                            <v-radio
+                                :disabled="! validClass('ranger')"
+                                label="Ranger"
+                                value="ranger">
+                            </v-radio>
+                            <v-radio
+                                :disabled="! validClass('sorcerer')"
+                                label="Sorcerer"
+                                value="sorcerer">
+                            </v-radio>
                         </v-radio-group>
                     </v-flex>
                     <v-flex xs6>
                         <v-radio-group
-                                v-model="heroRace"
-                                label="Hero Race"
-                                @blur="$v.heroRace.$touch()"
-                                @click="serverErrors.flush()"
-                                :error-messages="raceErrors"
-                                column>
-                            <v-radio :disabled="! validRace('human')" label="Human" value="human">
+                            :name="'hero-race-' + heroNumber"
+                            v-model="heroRace"
+                            label="Hero Race"
+                            @blur="$v.heroRace.$touch()"
+                            @click="serverErrors.flush()"
+                            :error-messages="raceErrors"
+                            column
+                        >
+                            <v-radio
+                                :disabled="! validRace('human')"
+                                label="Human"
+                                value="human">
                             </v-radio>
-                            <v-radio :disabled="! validRace('elf')" label="Elf" value="elf"></v-radio>
-                            <v-radio :disabled="! validRace('dwarf')" label="Dwarf" value="dwarf"></v-radio>
-                            <v-radio :disabled="! validRace('orc')" label="Orc" value="orc"></v-radio>
+                            <v-radio
+                                :disabled="! validRace('elf')"
+                                label="Elf"
+                                value="elf">
+                            </v-radio>
+                            <v-radio
+                                :disabled="! validRace('dwarf')"
+                                label="Dwarf"
+                                value="dwarf">
+                            </v-radio>
+                            <v-radio
+                                :disabled="! validRace('orc')"
+                                label="Orc"
+                                value="orc">
+                            </v-radio>
                         </v-radio-group>
                     </v-flex>
                 </v-layout>
             </v-flex>
             <v-flex xs12 md4>
                 <v-text-field
-                        label="Hero Name"
-                        :name="'hero-name-' + (heroStep.step - 1)"
-                        outline
-                        v-model="name"
-                        @blur="$v.name.$touch()"
-                        @input="serverErrors.flush()"
-                        :error-messages="nameErrors"
-                        messages="Letters, numbers and spaces allowed"
+                    label="Hero Name"
+                    :name="'hero-name-' + heroNumber"
+                    outline
+                    v-model="name"
+                    @blur="$v.name.$touch()"
+                    @input="serverErrors.flush()"
+                    :error-messages="nameErrors"
+                    messages="Letters, numbers and spaces allowed"
                 ></v-text-field>
                 <v-btn
-                        color="primary"
-                        @click="createHero"
-                        :disabled="$v.$invalid || buttonDisabled"
+                    :name="'hero-submit-' + heroNumber"
+                    color="primary"
+                    @click="createHero"
+                    :disabled="$v.$invalid || buttonDisabled"
                 >
                     Continue
                 </v-btn>
@@ -185,6 +218,9 @@
                     })
                 }
                 return errors;
+            },
+            heroNumber() {
+                return this.heroStep.step - 1;
             }
         }
     }
