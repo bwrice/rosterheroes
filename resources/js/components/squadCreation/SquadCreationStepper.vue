@@ -3,20 +3,22 @@
         <v-stepper-content step="1">
             <v-flex xs12>
                 <v-text-field
-                        label="Squad Name"
-                        outline
-                        v-model="name"
-                        @blur="$v.name.$touch()"
-                        @input="serverErrors.flush()"
-                        :error-messages="nameErrors"
-                        messages="Letters, numbers and spaces allowed"
+                    name="squad-name"
+                    label="Squad Name"
+                    outline
+                    v-model="name"
+                    @blur="$v.name.$touch()"
+                    @input="serverErrors.flush()"
+                    :error-messages="nameErrors"
+                    messages="Letters, numbers and spaces allowed"
                 ></v-text-field>
             </v-flex>
 
             <v-btn
-                    color="primary"
-                    @click="createSquad"
-                    :disabled="buttonDisabled"
+                name="squad-submit"
+                color="primary"
+                @click="createSquad"
+                :disabled="buttonDisabled"
             >
                 Continue
             </v-btn>

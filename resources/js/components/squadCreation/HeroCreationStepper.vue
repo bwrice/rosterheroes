@@ -49,6 +49,7 @@
             <v-flex xs12 md4>
                 <v-text-field
                         label="Hero Name"
+                        :name="'hero-name-' + (heroStep.step - 1)"
                         outline
                         v-model="name"
                         @blur="$v.name.$touch()"
@@ -83,7 +84,7 @@
             },
             squadSlug: {
                 type: String,
-                required: true
+                default: ''
             },
             allowedHeroClasses: {
                 type: Array,
