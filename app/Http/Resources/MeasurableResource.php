@@ -22,7 +22,8 @@ class MeasurableResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'amount_raised' => $this->amount_raised
+            'amount_raised' => $this->amount_raised,
+            'measurable_type' => new MeasurableTypeResource($this->whenLoaded('measurableType'))
         ];
     }
 }

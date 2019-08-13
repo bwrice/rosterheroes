@@ -14,6 +14,9 @@ class BarracksHeroesController extends Controller
         $squad = Squad::slugOrFail($squadSlug);
         $this->authorize(Squad::MANAGE_AUTHORIZATION, $squad);
         $heroes = Hero::query()->amongSquad($squad)->get();
+        $heroes->load([
+            'measurables.measurableType'
+        ]);
         return HeroResource::collection($heroes);
     }
 }

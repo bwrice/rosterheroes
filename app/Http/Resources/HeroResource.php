@@ -28,7 +28,8 @@ class HeroResource extends JsonResource
             'playerSpirit' => new PlayerSpiritResource($this->whenLoaded('playerSpirit')),
             'heroPost' => new HeroPostResource($this->whenLoaded('heroPost')),
             'heroRace' => new HeroRaceResource($this->whenLoaded('heroRace')),
-            'heroClass' => new HeroClassResource($this->whenLoaded('heroClass'))
+            'heroClass' => new HeroClassResource($this->whenLoaded('heroClass')),
+            'measurables' => MeasurableResource::collection($this->whenLoaded('measurables'))
         ];
     }
 }
