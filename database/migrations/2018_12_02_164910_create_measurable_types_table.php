@@ -16,13 +16,7 @@ class CreateMeasurableTypesTable extends Migration
         Schema::create('measurable_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('measurable_group_id')->unsigned();
             $table->timestamps();
-        });
-
-
-        Schema::table('measurable_types', function (Blueprint $table) {
-            $table->foreign('measurable_group_id')->references('id')->on('measurable_groups');
         });
     }
 
