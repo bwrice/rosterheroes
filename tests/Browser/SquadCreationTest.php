@@ -15,19 +15,25 @@ class SquadCreationTest extends DuskTestCase
      */
     public function a_user_can_create_a_squad()
     {
+        // TODO: extend BeyondCode DuskTestCase and try the dashboard sometime in the future when they fix the package
+
         $user = factory(User::class)->create();
-        $squadName = 'My Squad' . random_int(1, 99999);
 
-        $this->browse(function (Browser $browser) use ($user, $squadName) {
-            $browser->loginAs($user)
-                ->resize(375,667)
+        $this->browse(function (Browser $browser) use ($user) {
+
+            $squadName = 'My Squad ' . random_int(1, 9999999);
+
+            $browser = $browser->loginAs($user)
                 ->visit('/squads/create')
+                ->resize(375, 667)
                 ->type('squad-name', $squadName)
-                ->press('squad-submit');
-        });
+                ->press('squad-submit')->pause(1500);
 
-        $squad = Squad::query()->where('name', '=', $squadName)->first();
-        $this->assertNotNull($squad);
-        $this->assertEquals($user->id, $squad->user_id);
+            $baseHeroName = 'My Hero ';
+
+            $browser = $browser->press('label[for=warrior-1]')
+                ->type('hero-name-1', $baseHeroName . random_int(1, 9999999))
+                ->press('hero-submit-1');
+        });
     }
 }
