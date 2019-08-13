@@ -1,5 +1,9 @@
 <template>
-    <h1>HERE IS THE HERO VIEW</h1>
+    <v-flex class="xs12">
+        <v-card>
+            <v-card-title>Hero Barracks View</v-card-title>
+        </v-card>
+    </v-flex>
 </template>
 
 <script>
