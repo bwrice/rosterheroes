@@ -2,8 +2,8 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Interfaces\HasMeasurables;
 use App\Domain\Models\EventSourcedModel;
-use App\Events\MeasurableCreationRequested;
 use App\Domain\Models\MeasurableType;
 use Illuminate\Database\Eloquent\Model;
 use Ramsey\Uuid\Uuid;
@@ -15,6 +15,8 @@ use Ramsey\Uuid\Uuid;
  * @property int $id
  * @property int $measurable_type_id
  * @property int $amount_raised
+ *
+ * @property HasMeasurables $hasMeasurables
  */
 class Measurable extends EventSourcedModel
 {
@@ -30,5 +32,8 @@ class Measurable extends EventSourcedModel
         return $this->morphTo();
     }
 
-
+    public function getCostToRaise(): int
+    {
+        return $this->hasMeasurables->costToRaiseMeasurable($this);
+    }
 }

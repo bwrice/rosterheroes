@@ -4,6 +4,7 @@ namespace App\Domain\Models;
 
 use App\Domain\Actions\AddSpiritToHeroAction;
 use App\Domain\Actions\RemoveSpiritFromHeroAction;
+use App\Domain\Interfaces\HasMeasurables;
 use App\Domain\QueryBuilders\HeroQueryBuilder;
 use App\Domain\Traits\HasSlug;
 use App\StorableEvents\HeroCreated;
@@ -60,7 +61,7 @@ use Spatie\Sluggable\SlugOptions;
  *
  * @method static HeroQueryBuilder query();
  */
-class Hero extends EventSourcedModel implements HasSlots
+class Hero extends EventSourcedModel implements HasSlots, HasMeasurables
 {
     use HasSlug;
 
@@ -246,4 +247,8 @@ class Hero extends EventSourcedModel implements HasSlots
         return $this->heroPost->squad->availableSpiritEssence() + $this->essenceUsed();
     }
 
+    public function costToRaiseMeasurable(Measurable $measurable): int
+    {
+        return $this->heroClass->getBehavior()->costToRaiseMeasurable($measurable);
+    }
 }

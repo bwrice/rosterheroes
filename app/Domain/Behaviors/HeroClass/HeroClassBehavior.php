@@ -11,6 +11,7 @@ namespace App\Domain\Behaviors\HeroClass;
 
 use App\Domain\Models\ItemBlueprint;
 use App\Domain\Collections\ItemBlueprintCollection;
+use App\Domain\Models\Measurable;
 
 class HeroClassBehavior
 {
@@ -40,5 +41,11 @@ class HeroClassBehavior
         /** @var ItemBlueprintCollection $collection */
         $collection = ItemBlueprint::query()->whereIn('item_name', $this->getStarterItemBlueprintNames())->get();
         return $collection;
+    }
+
+    public function costToRaiseMeasurable(Measurable $measurable): int
+    {
+        // TODO
+        return 10;
     }
 }
