@@ -1,15 +1,23 @@
 <template>
-    <div>
-        <h1 class="mx-4">TODO: Barracks</h1>
-    </div>
+    <v-flex class="xs12">
+        <BarracksHeroCard
+            v-for="(hero, uuid) in _barracksHeroes"
+            :key="uuid"
+            :hero="hero"
+        >
+        </BarracksHeroCard>
+    </v-flex>
 </template>
 
 <script>
 
     import {mapActions} from 'vuex';
+    import {mapGetters} from 'vuex';
+    import BarracksHeroCard from "../../barracks/BarracksHeroCard";
 
     export default {
         name: "BarracksMain",
+        components: {BarracksHeroCard},
         created() {
             console.log("Barracks Created!");
         },
@@ -19,6 +27,11 @@
         methods: {
             ...mapActions([
                 'updateBarracksHeroes'
+            ])
+        },
+        computed: {
+            ...mapGetters([
+                '_barracksHeroes'
             ])
         }
     }
