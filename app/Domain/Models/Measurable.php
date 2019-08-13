@@ -36,4 +36,9 @@ class Measurable extends EventSourcedModel
     {
         return $this->hasMeasurables->costToRaiseMeasurable($this);
     }
+
+    public function getCurrentAmount(): int
+    {
+        return $this->hasMeasurables->getCurrentMeasurableAmount($this);
+    }
 }

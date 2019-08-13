@@ -48,4 +48,9 @@ class HeroClassBehavior
         // TODO
         return 10;
     }
+
+    public function getCurrentMeasurableAmount(Measurable $measurable): int
+    {
+        return 50;
+    }
 }
