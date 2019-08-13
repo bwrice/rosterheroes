@@ -1,10 +1,12 @@
 <template>
-    <router-view></router-view>
+    <BaseView></BaseView>
 </template>
 
 <script>
+    import BaseView from "../BaseView";
     export default {
-        name: "Barracks"
+        name: "Barracks",
+        components: {BaseView}
     }
 </script>
 
