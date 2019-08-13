@@ -14,6 +14,7 @@ use Ramsey\Uuid\Uuid;
  *
  * @property int $id
  * @property int $measurable_type_id
+ * @property int $amount_raised
  */
 class Measurable extends EventSourcedModel
 {
@@ -28,4 +29,6 @@ class Measurable extends EventSourcedModel
     {
         return $this->morphTo();
     }
+
+
 }
