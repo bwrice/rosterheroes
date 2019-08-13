@@ -20,8 +20,7 @@ export default {
     actions: {
         async updateBarracksHeroes({commit}, squadSlug) {
             let heroes = await squadApi.getBarracksHeroes(squadSlug);
-            console.log("Barracks Heroes");
-            console.log(heroes);
+            commit('SET_BARRACKS_HEROES', heroes);
         }
     }
 };
