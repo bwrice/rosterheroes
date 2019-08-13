@@ -3,6 +3,7 @@
 namespace App\Domain\Models;
 
 use App\Domain\Behaviors\HeroClass\HeroClassBehavior;
+use App\Domain\Behaviors\HeroClass\MeasurableBaseBonus;
 use App\Domain\Behaviors\HeroClass\RangerBehavior;
 use App\Domain\Behaviors\HeroClass\SorcererBehavior;
 use App\Domain\Behaviors\HeroClass\WarriorBehavior;
@@ -47,18 +48,88 @@ class HeroClass extends Model
     {
         switch($this->name) {
             case self::WARRIOR:
-                return new HeroClassBehavior([
-                    ItemBlueprint::STARTER_SHIELD,
-                    ItemBlueprint::STARTER_SWORD
-                ]);
+                return new HeroClassBehavior(
+                    collect([
+                        [
+                            'measurable_type' => MeasurableType::STRENGTH,
+                            'amount' => 30
+                        ],
+                        [
+                            'measurable_type' => MeasurableType::VALOR,
+                            'amount' => 40
+                        ],
+                        [
+                            'measurable_type' => MeasurableType::AGILITY,
+                            'amount' => 10
+                        ],
+                        [
+                            'measurable_type' => MeasurableType::HEALTH,
+                            'amount' => 200
+                        ],
+                        [
+                            'measurable_type' => MeasurableType::STAMINA,
+                            'amount' => 50
+                        ]
+                    ]), [
+                        ItemBlueprint::STARTER_SHIELD,
+                        ItemBlueprint::STARTER_SWORD
+                    ]);
             case self::RANGER:
-                return new HeroClassBehavior([
-                    ItemBlueprint::STARTER_BOW
-                ]);
+                return new HeroClassBehavior(
+                    collect([
+                        [
+                            'measurable_type' => MeasurableType::STRENGTH,
+                            'amount' => 10
+                        ],
+                        [
+                            'measurable_type' => MeasurableType::AGILITY,
+                            'amount' => 30
+                        ],
+                        [
+                            'measurable_type' => MeasurableType::FOCUS,
+                            'amount' => 40
+                        ],
+                        [
+                            'measurable_type' => MeasurableType::HEALTH,
+                            'amount' => 50
+                        ],
+                        [
+                            'measurable_type' => MeasurableType::STAMINA,
+                            'amount' => 150
+                        ],
+                        [
+                            'measurable_type' => MeasurableType::MANA,
+                            'amount' => 50
+                        ]
+                    ]), [
+                        ItemBlueprint::STARTER_BOW
+                    ]);
             case self::SORCERER:
-                return new HeroClassBehavior([
-                    ItemBlueprint::STARTER_STAFF
-                ]);
+                return new HeroClassBehavior(
+                    collect([
+                        [
+                            'measurable_type' => MeasurableType::FOCUS,
+                            'amount' => 10
+                        ],
+                        [
+                            'measurable_type' => MeasurableType::APTITUDE,
+                            'amount' => 40
+                        ],
+                        [
+                            'measurable_type' => MeasurableType::INTELLIGENCE,
+                            'amount' => 30
+                        ],
+                        [
+                            'measurable_type' => MeasurableType::HEALTH,
+                            'amount' => 50
+                        ],
+                        [
+                            'measurable_type' => MeasurableType::MANA,
+                            'amount' => 200
+                        ]
+                    ]), [
+                        ItemBlueprint::STARTER_STAFF
+                    ]);
         }
 
         throw new UnknownBehaviorException($this->name, HeroClassBehavior::class);

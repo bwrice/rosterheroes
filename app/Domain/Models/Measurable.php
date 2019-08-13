@@ -17,6 +17,7 @@ use Ramsey\Uuid\Uuid;
  * @property int $amount_raised
  *
  * @property HasMeasurables $hasMeasurables
+ * @property MeasurableType $measurableType
  */
 class Measurable extends EventSourcedModel
 {

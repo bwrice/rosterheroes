@@ -12,16 +12,24 @@ namespace App\Domain\Behaviors\HeroClass;
 use App\Domain\Models\ItemBlueprint;
 use App\Domain\Collections\ItemBlueprintCollection;
 use App\Domain\Models\Measurable;
+use Illuminate\Support\Collection;
 
 class HeroClassBehavior
 {
+    public const STARTING_MEASURABLE_AMOUNT = 20;
+
     /**
      * @var array
      */
     private $starterItemBlueprintNames;
+    /**
+     * @var Collection
+     */
+    private $measurableAmountBonuses;
 
-    public function __construct(array $starterItemBlueprintNames)
+    public function __construct(Collection $measurableAmountBonuses, array $starterItemBlueprintNames)
     {
+        $this->measurableAmountBonuses = $measurableAmountBonuses;
         $this->starterItemBlueprintNames = $starterItemBlueprintNames;
     }
 
@@ -34,7 +42,7 @@ class HeroClassBehavior
     }
 
     /**
-     * @return \App\Domain\Collections\ItemBlueprintCollection
+     * @return ItemBlueprintCollection
      */
     public function getStartItemBlueprints()
     {
@@ -51,6 +59,15 @@ class HeroClassBehavior
 
     public function getCurrentMeasurableAmount(Measurable $measurable): int
     {
-        return 50;
+        $currentAmount = self::STARTING_MEASURABLE_AMOUNT + $measurable->amount_raised;
+        $measurableTypeName = $measurable->measurableType->name;
+
+        $this->measurableAmountBonuses->each(function($bonus) use (&$currentAmount, $measurableTypeName) {
+            if ($measurableTypeName === $bonus['measurable_type']) {
+                $currentAmount += $bonus['amount'];
+            }
+        });
+
+        return $currentAmount;
     }
 }
