@@ -1,4 +1,5 @@
 
 export async function getBarracksHeroes(squadSlug) {
-    return await axios.get('/api/v1/squads/' + squadSlug + '/barracks/heroes');
+    let response = await axios.get('/api/v1/squads/' + squadSlug + '/barracks/heroes');
+    return response.data.data;
 }
