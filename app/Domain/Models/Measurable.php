@@ -43,8 +43,8 @@ class Measurable extends EventSourcedModel
         return $this->hasMeasurables->getCurrentMeasurableAmount($this);
     }
 
-    public function getCostToRaiseCoefficient()
+    public function getCostToRaiseCoefficientMultiplier()
     {
-        return $this->measurableType->getBehavior()->getCostToRaiseCoefficient();
+        return $this->measurableType->getBehavior()->getCostToRaiseCoefficientMultiplier();
     }
 }

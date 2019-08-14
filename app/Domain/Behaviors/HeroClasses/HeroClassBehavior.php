@@ -41,9 +41,10 @@ abstract class HeroClassBehavior
     {
         $K = $this->getCostToRaiseCoefficient($measurable->measurableType->name);
         $n = $this->getCostToRaiseExponent($measurable->measurableType->name);
+        $J = $measurable->getCostToRaiseCoefficientMultiplier();
         $x = $measurable->amount_raised;
 
-        return ($K * $x) + ($x**$n);
+        return ($J * $K * $x) + ($x**$n);
     }
 
 
