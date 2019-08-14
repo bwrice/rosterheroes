@@ -23,6 +23,10 @@ abstract class HeroClassBehavior
 
     abstract protected function getMeasurableStartingBonusAmount($measurableTypeName): int;
 
+    abstract protected function getCostToRaiseCoefficient($measurableTypeName): int;
+
+    abstract protected function getCostToRaiseExponent($measurableTypeName): float;
+
     /**
      * @return ItemBlueprintCollection
      */
@@ -35,9 +39,13 @@ abstract class HeroClassBehavior
 
     public function costToRaiseMeasurable(Measurable $measurable): int
     {
-        // TODO
-        return 10;
+        $K = $this->getCostToRaiseCoefficient($measurable->measurableType->name);
+        $n = $this->getCostToRaiseExponent($measurable->measurableType->name);
+        $x = $measurable->amount_raised;
+
+        return ($K * $x) + ($x**$n);
     }
+
 
     public function getCurrentMeasurableAmount(Measurable $measurable): int
     {
