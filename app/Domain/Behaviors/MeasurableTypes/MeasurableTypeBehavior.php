@@ -37,7 +37,7 @@ class MeasurableTypeBehavior
         return $this->baseAmount;
     }
 
-    public function getCostToRaiseCoefficient(): float
+    public function getCostToRaiseCoefficientMultiplier(): float
     {
         //TODO
         return 50;
