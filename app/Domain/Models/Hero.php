@@ -256,4 +256,20 @@ class Hero extends EventSourcedModel implements HasSlots, HasMeasurables
     {
         return $this->heroClass->getBehavior()->getCurrentMeasurableAmount($measurable);
     }
+
+    /**
+     * @param string $measurableTypeName
+     * @return Measurable
+     */
+    public function getMeasurable(string $measurableTypeName)
+    {
+        $measurable = $this->measurables()->whereHas('measurableType', function (Builder $builder) use ($measurableTypeName) {
+            return $builder->where('name', '=', $measurableTypeName);
+        })->first();
+
+        if (! $measurable) {
+            throw new \RuntimeException('Hero: ' . $this->name . ' does not have a measurable of type: ' . $measurableTypeName);
+        }
+        return $measurable;
+    }
 }
