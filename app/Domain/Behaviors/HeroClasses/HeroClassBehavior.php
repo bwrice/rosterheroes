@@ -9,6 +9,8 @@
 namespace App\Domain\Behaviors\HeroClasses;
 
 
+use App\Domain\Interfaces\MeasurableCalculator;
+use App\Domain\Interfaces\MeasurableOperator;
 use App\Domain\Models\ItemBlueprint;
 use App\Domain\Collections\ItemBlueprintCollection;
 use App\Domain\Models\Measurable;
@@ -16,6 +18,16 @@ use Illuminate\Support\Collection;
 
 abstract class HeroClassBehavior
 {
+    /**
+     * @var MeasurableCalculator
+     */
+    private $measurableCalculator;
+
+    public function __construct(MeasurableCalculator $measurableOperator)
+    {
+        $this->measurableCalculator = $measurableOperator;
+    }
+
     /**
      * @return array
      */
@@ -27,6 +39,8 @@ abstract class HeroClassBehavior
 
     abstract protected function getCostToRaiseExponent($measurableTypeName): float;
 
+    abstract protected function getMeasurableOperator(): MeasurableOperator;
+
     /**
      * @return ItemBlueprintCollection
      */
@@ -37,22 +51,21 @@ abstract class HeroClassBehavior
         return $collection;
     }
 
+    /**
+     * @param Measurable $measurable
+     * @return int
+     */
     public function costToRaiseMeasurable(Measurable $measurable): int
     {
-        $K = $this->getCostToRaiseCoefficient($measurable->measurableType->name);
-        $n = $this->getCostToRaiseExponent($measurable->measurableType->name);
-        $J = $measurable->getCostToRaiseCoefficientMultiplier();
-        $x = $measurable->amount_raised;
-
-        return ($J * $K * $x) + ($x**$n);
+        return $this->measurableCalculator->getCostToRaiseMeasurable($measurable, $this->getMeasurableOperator());
     }
 
-
+    /**
+     * @param Measurable $measurable
+     * @return int
+     */
     public function getCurrentMeasurableAmount(Measurable $measurable): int
     {
-        $currentAmount = $measurable->measurableType->getBehavior()->getBaseAmount() + $measurable->amount_raised;
-        $currentAmount += $this->getMeasurableStartingBonusAmount($measurable->measurableType->name);
-
-        return $currentAmount;
+        return $this->measurableCalculator->getCurrentMeasurableAmount($measurable, $this->getMeasurableOperator());
     }
 }
