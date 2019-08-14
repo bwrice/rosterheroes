@@ -13,6 +13,4 @@ interface MeasurableOperator
     public function getCostToRaiseExponent(Measurable $measurable): float;
 
     public function getBaseAmount(Measurable $measurable): int;
-
-    public function getCurrentAmountBonus(Measurable $measurable): int;
 }
