@@ -99,5 +99,17 @@ class HeroMeasurableTest extends TestCase
         $this->assertGreaterThan($warriorFocus->getCurrentAmount(), $rangerFocus->getCurrentAmount());
     }
 
+    /**
+     * @test
+     */
+    public function raising_a_measurable_will_increase_its_cost()
+    {
+        $warriorStrength = $this->warrior->getMeasurable(MeasurableType::STRENGTH);
+        $this->assertEquals(0, $warriorStrength->amount_raised);
+        $startingCost = $warriorStrength->getCostToRaise();
+        $warriorStrength->amount_raised += 2;
+        $warriorStrength->save();
 
+        $this->assertGreaterThan($startingCost, $warriorStrength->getCostToRaise());
+    }
 }
