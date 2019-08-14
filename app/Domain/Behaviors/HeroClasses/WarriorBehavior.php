@@ -3,10 +3,19 @@
 
 namespace App\Domain\Behaviors\HeroClasses;
 
+use App\Domain\Behaviors\HeroClasses\MeasurableOperators\HeroMeasurableCalculator;
+use App\Domain\Behaviors\HeroClasses\MeasurableOperators\WarriorMeasurableOperator;
 use App\Domain\Models\ItemBlueprint;
 
 class WarriorBehavior extends HeroClassBehavior
 {
+    public function __construct(
+        HeroMeasurableCalculator $measurableCalculator,
+        WarriorMeasurableOperator $measurableOperator)
+    {
+        parent::__construct($measurableCalculator, $measurableOperator);
+    }
+
     /**
      * @return array
      */

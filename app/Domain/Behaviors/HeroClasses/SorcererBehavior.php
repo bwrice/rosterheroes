@@ -3,10 +3,20 @@
 
 namespace App\Domain\Behaviors\HeroClasses;
 
+use App\Domain\Behaviors\HeroClasses\MeasurableOperators\HeroMeasurableCalculator;
+use App\Domain\Behaviors\HeroClasses\MeasurableOperators\SorcererMeasurableOperator;
+use App\Domain\Interfaces\MeasurableCalculator;
+use App\Domain\Interfaces\MeasurableOperator;
 use App\Domain\Models\ItemBlueprint;
 
 class SorcererBehavior extends HeroClassBehavior
 {
+    public function __construct(
+        HeroMeasurableCalculator $measurableCalculator,
+        SorcererMeasurableOperator $measurableOperator)
+    {
+        parent::__construct($measurableCalculator, $measurableOperator);
+    }
 
     /**
      * @return array
