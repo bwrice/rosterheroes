@@ -14,28 +14,28 @@ abstract class HeroMeasurableOperator implements MeasurableOperator
 
     abstract protected function secondaryMeasurableTypes(): array;
 
-    public function getCostToRaiseCoefficient(Measurable $measurable): float
+    public function getCostToRaiseBaseAmount(Measurable $measurable): float
     {
         if ($this->isPrimaryType($measurable->measurableType)) {
-            $coefficient = 40;
+            $baseAmount = 40;
         } elseif ($this->isSecondaryType($measurable->measurableType)) {
-            $coefficient = 60;
+            $baseAmount = 60;
         } else {
-            $coefficient = 75;
+            $baseAmount = 75;
         }
 
-        return $measurable->getCostToRaiseCoefficientMultiplier() * $coefficient;
+        return $measurable->getMeasurableGroupWeight() * $baseAmount;
     }
 
     public function getCostToRaiseExponent(Measurable $measurable): float
     {
         if ($this->isPrimaryType($measurable->measurableType)) {
-            return 1.9;
+            return 2;
         } elseif ($this->isSecondaryType($measurable->measurableType)) {
-            return 2.1;
+            return 2.25;
         }
 
-        return 2.25;
+        return 2.5;
     }
 
     public function getBaseAmount(Measurable $measurable): int

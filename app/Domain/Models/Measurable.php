@@ -48,7 +48,7 @@ class Measurable extends EventSourcedModel
         return $this->measurableType->getBehavior()->getBaseAmount();
     }
 
-    public function getCostToRaiseCoefficientMultiplier()
+    public function getMeasurableGroupWeight()
     {
         return $this->measurableType->getBehavior()->getCostToRaiseCoefficientMultiplier();
     }

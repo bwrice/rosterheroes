@@ -8,7 +8,7 @@ use App\Domain\Models\Measurable;
 
 interface MeasurableOperator
 {
-    public function getCostToRaiseCoefficient(Measurable $measurable): float;
+    public function getCostToRaiseBaseAmount(Measurable $measurable): float;
 
     public function getCostToRaiseExponent(Measurable $measurable): float;
 

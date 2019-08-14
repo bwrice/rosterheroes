@@ -17,11 +17,11 @@ class HeroMeasurableCalculator implements MeasurableCalculator
      */
     public function getCostToRaiseMeasurable(Measurable $measurable, MeasurableOperator $operator): int
     {
-        $K = $operator->getCostToRaiseCoefficient($measurable);
-        $n = $operator->getCostToRaiseExponent($measurable);
-        $x = $measurable->amount_raised + 1;
+        $base = $operator->getCostToRaiseBaseAmount($measurable);
+        $exponent = $operator->getCostToRaiseExponent($measurable);
+        $amountRaised = $measurable->amount_raised;
 
-        return (int) round(($K * $x) + (($x-1)**$n));
+        return (int) round($base + (($base/4) * $amountRaised ** $exponent));
     }
 
     /**

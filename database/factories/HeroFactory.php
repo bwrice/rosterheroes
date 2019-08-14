@@ -28,6 +28,7 @@ $factory->afterCreatingState(\App\Domain\Models\Hero::class, 'with-slots', funct
         ]);
     });
 });
+
 $factory->afterCreatingState(\App\Domain\Models\Hero::class, 'with-measurables', function(\App\Domain\Models\Hero $hero, Faker $faker) {
     $measurableTypes = \App\Domain\Models\MeasurableType::heroTypes()->get();
     $measurableTypes->each(function (\App\Domain\Models\MeasurableType $measurableType) use ($hero) {
