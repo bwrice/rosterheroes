@@ -10,6 +10,9 @@ use App\Domain\Models\MeasurableType;
 
 abstract class HeroMeasurableOperator implements MeasurableOperator
 {
+    abstract protected function primaryMeasurableTypes(): array;
+
+    abstract protected function secondaryMeasurableTypes(): array;
 
     public function getCostToRaiseCoefficient(Measurable $measurable): float
     {
@@ -51,8 +54,14 @@ abstract class HeroMeasurableOperator implements MeasurableOperator
         return 0;
     }
 
-    abstract public function isPrimaryType(MeasurableType $measurableType): bool;
+    protected function isPrimaryType(MeasurableType $measurableType)
+    {
+        return in_array($measurableType->name, $this->primaryMeasurableTypes());
+    }
 
-    abstract public function isSecondaryType(MeasurableType $measurableType): bool;
+    protected function isSecondaryType(MeasurableType $measurableType)
+    {
+        return in_array($measurableType->name, $this->secondaryMeasurableTypes());
+    }
 
 }
