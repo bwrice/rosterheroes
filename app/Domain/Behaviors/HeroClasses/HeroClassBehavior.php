@@ -6,7 +6,7 @@
  * Time: 8:12 PM
  */
 
-namespace App\Domain\Behaviors\HeroClass;
+namespace App\Domain\Behaviors\HeroClasses;
 
 
 use App\Domain\Models\ItemBlueprint;
@@ -14,31 +14,14 @@ use App\Domain\Collections\ItemBlueprintCollection;
 use App\Domain\Models\Measurable;
 use Illuminate\Support\Collection;
 
-class HeroClassBehavior
+abstract class HeroClassBehavior
 {
-
-    /**
-     * @var array
-     */
-    private $starterItemBlueprintNames;
-    /**
-     * @var Collection
-     */
-    private $measurableAmountBonuses;
-
-    public function __construct(Collection $measurableAmountBonuses, array $starterItemBlueprintNames)
-    {
-        $this->measurableAmountBonuses = $measurableAmountBonuses;
-        $this->starterItemBlueprintNames = $starterItemBlueprintNames;
-    }
-
     /**
      * @return array
      */
-    protected function getStarterItemBlueprintNames(): array
-    {
-        return $this->starterItemBlueprintNames;
-    }
+    abstract protected function getStarterItemBlueprintNames(): array;
+
+    abstract protected function getMeasurableStartingBonusAmount($measurableTypeName): int;
 
     /**
      * @return ItemBlueprintCollection
@@ -59,13 +42,7 @@ class HeroClassBehavior
     public function getCurrentMeasurableAmount(Measurable $measurable): int
     {
         $currentAmount = $measurable->measurableType->getBehavior()->getBaseAmount() + $measurable->amount_raised;
-        $measurableTypeName = $measurable->measurableType->name;
-
-        $this->measurableAmountBonuses->each(function($bonus) use (&$currentAmount, $measurableTypeName) {
-            if ($measurableTypeName === $bonus['measurable_type']) {
-                $currentAmount += $bonus['amount'];
-            }
-        });
+        $currentAmount += $this->getMeasurableStartingBonusAmount($measurable->measurableType->name);
 
         return $currentAmount;
     }
