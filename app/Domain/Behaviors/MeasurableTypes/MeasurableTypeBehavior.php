@@ -40,6 +40,6 @@ class MeasurableTypeBehavior
     public function getCostToRaiseCoefficientMultiplier(): float
     {
         //TODO
-        return 50;
+        return 1;
     }
 }
