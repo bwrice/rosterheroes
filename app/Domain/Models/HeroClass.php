@@ -3,10 +3,6 @@
 namespace App\Domain\Models;
 
 use App\Domain\Behaviors\HeroClass\HeroClassBehavior;
-use App\Domain\Behaviors\HeroClass\MeasurableBaseBonus;
-use App\Domain\Behaviors\HeroClass\RangerBehavior;
-use App\Domain\Behaviors\HeroClass\SorcererBehavior;
-use App\Domain\Behaviors\HeroClass\WarriorBehavior;
 use App\Exceptions\UnknownBehaviorException;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -64,7 +60,7 @@ class HeroClass extends Model
                         ],
                         [
                             'measurable_type' => MeasurableType::HEALTH,
-                            'amount' => 200
+                            'amount' => 250
                         ],
                         [
                             'measurable_type' => MeasurableType::STAMINA,
@@ -91,7 +87,7 @@ class HeroClass extends Model
                         ],
                         [
                             'measurable_type' => MeasurableType::HEALTH,
-                            'amount' => 50
+                            'amount' => 100
                         ],
                         [
                             'measurable_type' => MeasurableType::STAMINA,
@@ -120,12 +116,8 @@ class HeroClass extends Model
                             'amount' => 30
                         ],
                         [
-                            'measurable_type' => MeasurableType::HEALTH,
-                            'amount' => 50
-                        ],
-                        [
                             'measurable_type' => MeasurableType::MANA,
-                            'amount' => 200
+                            'amount' => 300
                         ]
                     ]), [
                         ItemBlueprint::STARTER_STAFF
