@@ -16,7 +16,6 @@ use Illuminate\Support\Collection;
 
 class HeroClassBehavior
 {
-    public const STARTING_MEASURABLE_AMOUNT = 20;
 
     /**
      * @var array
@@ -59,7 +58,7 @@ class HeroClassBehavior
 
     public function getCurrentMeasurableAmount(Measurable $measurable): int
     {
-        $currentAmount = self::STARTING_MEASURABLE_AMOUNT + $measurable->amount_raised;
+        $currentAmount = $measurable->measurableType->getBehavior()->getBaseAmount() + $measurable->amount_raised;
         $measurableTypeName = $measurable->measurableType->name;
 
         $this->measurableAmountBonuses->each(function($bonus) use (&$currentAmount, $measurableTypeName) {
