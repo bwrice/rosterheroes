@@ -56,4 +56,48 @@ class HeroMeasurableTest extends TestCase
         $this->assertGreaterThan(0, $measurable->getCostToRaise());
         $this->assertLessThan(200, $measurable->getCostToRaise());
     }
+
+    /**
+     * @test
+     */
+    public function a_warrior_starting_strength_is_higher_than_a_sorcerers()
+    {
+        $warriorStrength = $this->warrior->getMeasurable(MeasurableType::STRENGTH);
+        $sorcererStrength = $this->sorcerer->getMeasurable(MeasurableType::STRENGTH);
+
+        $this->assertEquals(0, $warriorStrength->amount_raised);
+        $this->assertEquals(0, $sorcererStrength->amount_raised);
+
+        $this->assertGreaterThan($sorcererStrength->getCurrentAmount(), $warriorStrength->getCurrentAmount());
+    }
+
+    /**
+     * @test
+     */
+    public function a_sorcerers_starting_intelligence_is_higher_than_a_rangers()
+    {
+        $sorcererIntelligence = $this->sorcerer->getMeasurable(MeasurableType::INTELLIGENCE);
+        $rangerIntelligence = $this->ranger->getMeasurable(MeasurableType::INTELLIGENCE);
+
+        $this->assertEquals(0, $sorcererIntelligence->amount_raised);
+        $this->assertEquals(0, $rangerIntelligence->amount_raised);
+
+        $this->assertGreaterThan($rangerIntelligence->getCurrentAmount(), $sorcererIntelligence->getCurrentAmount());
+    }
+
+    /**
+     * @test
+     */
+    public function a_rangers_starting_focus_is_higher_than_a_warriors()
+    {
+        $rangerFocus = $this->ranger->getMeasurable(MeasurableType::FOCUS);
+        $warriorFocus = $this->warrior->getMeasurable(MeasurableType::FOCUS);
+
+        $this->assertEquals(0, $rangerFocus->amount_raised);
+        $this->assertEquals(0, $warriorFocus->amount_raised);
+
+        $this->assertGreaterThan($warriorFocus->getCurrentAmount(), $rangerFocus->getCurrentAmount());
+    }
+
+
 }
