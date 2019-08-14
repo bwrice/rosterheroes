@@ -21,7 +21,7 @@ class HeroMeasurableCalculator implements MeasurableCalculator
         $n = $operator->getCostToRaiseExponent($measurable);
         $x = $measurable->amount_raised + 1;
 
-        return (int) round(($K * $x) + ($x**$n));
+        return (int) round(($K * $x) + (($x-1)**$n));
     }
 
     /**
