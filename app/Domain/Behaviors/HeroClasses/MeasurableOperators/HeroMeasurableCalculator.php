@@ -32,7 +32,6 @@ class HeroMeasurableCalculator implements MeasurableCalculator
     public function getCurrentMeasurableAmount(Measurable $measurable, MeasurableOperator $operator): int
     {
         $currentAmount = $operator->getBaseAmount($measurable) + $measurable->amount_raised;
-        $currentAmount += $operator->getCurrentAmountBonus($measurable);
         return $currentAmount;
     }
 }
