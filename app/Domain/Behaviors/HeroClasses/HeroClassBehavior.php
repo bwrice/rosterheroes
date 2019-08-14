@@ -22,10 +22,15 @@ abstract class HeroClassBehavior
      * @var MeasurableCalculator
      */
     private $measurableCalculator;
+    /**
+     * @var MeasurableOperator
+     */
+    private $measurableOperator;
 
-    public function __construct(MeasurableCalculator $measurableOperator)
+    public function __construct(MeasurableCalculator $measurableCalculator, MeasurableOperator $measurableOperator)
     {
-        $this->measurableCalculator = $measurableOperator;
+        $this->measurableCalculator = $measurableCalculator;
+        $this->measurableOperator = $measurableOperator;
     }
 
     /**
@@ -38,9 +43,6 @@ abstract class HeroClassBehavior
     abstract protected function getCostToRaiseCoefficient($measurableTypeName): int;
 
     abstract protected function getCostToRaiseExponent($measurableTypeName): float;
-
-    abstract protected function getMeasurableOperator(): MeasurableOperator;
-
     /**
      * @return ItemBlueprintCollection
      */
@@ -57,7 +59,7 @@ abstract class HeroClassBehavior
      */
     public function costToRaiseMeasurable(Measurable $measurable): int
     {
-        return $this->measurableCalculator->getCostToRaiseMeasurable($measurable, $this->getMeasurableOperator());
+        return $this->measurableCalculator->getCostToRaiseMeasurable($measurable, $this->measurableOperator);
     }
 
     /**
@@ -66,6 +68,6 @@ abstract class HeroClassBehavior
      */
     public function getCurrentMeasurableAmount(Measurable $measurable): int
     {
-        return $this->measurableCalculator->getCurrentMeasurableAmount($measurable, $this->getMeasurableOperator());
+        return $this->measurableCalculator->getCurrentMeasurableAmount($measurable, $this->measurableOperator);
     }
 }
