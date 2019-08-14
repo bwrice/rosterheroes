@@ -38,11 +38,6 @@ abstract class HeroClassBehavior
      */
     abstract protected function getStarterItemBlueprintNames(): array;
 
-    abstract protected function getMeasurableStartingBonusAmount($measurableTypeName): int;
-
-    abstract protected function getCostToRaiseCoefficient($measurableTypeName): int;
-
-    abstract protected function getCostToRaiseExponent($measurableTypeName): float;
     /**
      * @return ItemBlueprintCollection
      */
