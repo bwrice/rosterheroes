@@ -1855,6 +1855,40 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1866,7 +1900,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     squadSlug: {
       type: String,
-      required: true
+      "default": ''
     },
     allowedHeroClasses: {
       type: Array,
@@ -1973,6 +2007,9 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return errors;
+    },
+    heroNumber: function heroNumber() {
+      return this.heroStep.step - 1;
     }
   }
 });
@@ -1991,6 +2028,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _classes_errors__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../classes/errors */ "./resources/js/classes/errors.js");
+//
+//
 //
 //
 //
@@ -33830,6 +33869,8 @@ var render = function() {
                         "v-radio-group",
                         {
                           attrs: {
+                            ripple: "false",
+                            name: "hero-class-" + _vm.heroNumber,
                             label: "Hero Class",
                             "error-messages": _vm.classErrors,
                             column: ""
@@ -33889,6 +33930,7 @@ var render = function() {
                         "v-radio-group",
                         {
                           attrs: {
+                            name: "hero-race-" + _vm.heroNumber,
                             label: "Hero Race",
                             "error-messages": _vm.raceErrors,
                             column: ""
@@ -33961,6 +34003,7 @@ var render = function() {
               _c("v-text-field", {
                 attrs: {
                   label: "Hero Name",
+                  name: "hero-name-" + _vm.heroNumber,
                   outline: "",
                   "error-messages": _vm.nameErrors,
                   messages: "Letters, numbers and spaces allowed"
@@ -33986,6 +34029,7 @@ var render = function() {
                 "v-btn",
                 {
                   attrs: {
+                    name: "hero-submit-" + _vm.heroNumber,
                     color: "primary",
                     disabled: _vm.$v.$invalid || _vm.buttonDisabled
                   },
@@ -34038,6 +34082,7 @@ var render = function() {
             [
               _c("v-text-field", {
                 attrs: {
+                  name: "squad-name",
                   label: "Squad Name",
                   outline: "",
                   "error-messages": _vm.nameErrors,
@@ -34066,7 +34111,11 @@ var render = function() {
           _c(
             "v-btn",
             {
-              attrs: { color: "primary", disabled: _vm.buttonDisabled },
+              attrs: {
+                name: "squad-submit",
+                color: "primary",
+                disabled: _vm.buttonDisabled
+              },
               on: { click: _vm.createSquad }
             },
             [_vm._v("\n            Continue\n        ")]
