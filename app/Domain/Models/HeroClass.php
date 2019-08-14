@@ -2,7 +2,10 @@
 
 namespace App\Domain\Models;
 
-use App\Domain\Behaviors\HeroClass\HeroClassBehavior;
+use App\Domain\Behaviors\HeroClasses\HeroClassBehavior;
+use App\Domain\Behaviors\HeroClasses\RangerBehavior;
+use App\Domain\Behaviors\HeroClasses\SorcererBehavior;
+use App\Domain\Behaviors\HeroClasses\WarriorBehavior;
 use App\Exceptions\UnknownBehaviorException;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -44,84 +47,11 @@ class HeroClass extends Model
     {
         switch($this->name) {
             case self::WARRIOR:
-                return new HeroClassBehavior(
-                    collect([
-                        [
-                            'measurable_type' => MeasurableType::STRENGTH,
-                            'amount' => 30
-                        ],
-                        [
-                            'measurable_type' => MeasurableType::VALOR,
-                            'amount' => 40
-                        ],
-                        [
-                            'measurable_type' => MeasurableType::AGILITY,
-                            'amount' => 10
-                        ],
-                        [
-                            'measurable_type' => MeasurableType::HEALTH,
-                            'amount' => 250
-                        ],
-                        [
-                            'measurable_type' => MeasurableType::STAMINA,
-                            'amount' => 50
-                        ]
-                    ]), [
-                        ItemBlueprint::STARTER_SHIELD,
-                        ItemBlueprint::STARTER_SWORD
-                    ]);
+                return app(WarriorBehavior::class);
             case self::RANGER:
-                return new HeroClassBehavior(
-                    collect([
-                        [
-                            'measurable_type' => MeasurableType::STRENGTH,
-                            'amount' => 10
-                        ],
-                        [
-                            'measurable_type' => MeasurableType::AGILITY,
-                            'amount' => 30
-                        ],
-                        [
-                            'measurable_type' => MeasurableType::FOCUS,
-                            'amount' => 40
-                        ],
-                        [
-                            'measurable_type' => MeasurableType::HEALTH,
-                            'amount' => 100
-                        ],
-                        [
-                            'measurable_type' => MeasurableType::STAMINA,
-                            'amount' => 150
-                        ],
-                        [
-                            'measurable_type' => MeasurableType::MANA,
-                            'amount' => 50
-                        ]
-                    ]), [
-                        ItemBlueprint::STARTER_BOW
-                    ]);
+                return app(RangerBehavior::class);
             case self::SORCERER:
-                return new HeroClassBehavior(
-                    collect([
-                        [
-                            'measurable_type' => MeasurableType::FOCUS,
-                            'amount' => 10
-                        ],
-                        [
-                            'measurable_type' => MeasurableType::APTITUDE,
-                            'amount' => 40
-                        ],
-                        [
-                            'measurable_type' => MeasurableType::INTELLIGENCE,
-                            'amount' => 30
-                        ],
-                        [
-                            'measurable_type' => MeasurableType::MANA,
-                            'amount' => 300
-                        ]
-                    ]), [
-                        ItemBlueprint::STARTER_STAFF
-                    ]);
+                return app(SorcererBehavior::class);
         }
 
         throw new UnknownBehaviorException($this->name, HeroClassBehavior::class);
@@ -132,7 +62,9 @@ class HeroClass extends Model
      */
     public static function warrior()
     {
-        return self::where('name', '=', self::WARRIOR)->first();
+        /** @var HeroClass $heroClass */
+        $heroClass = self::query()->where('name', '=', self::WARRIOR)->first();
+        return $heroClass;
     }
 
     /**
@@ -140,7 +72,9 @@ class HeroClass extends Model
      */
     public static function ranger()
     {
-        return self::where('name', '=', self::RANGER)->first();
+        /** @var HeroClass $heroClass */
+        $heroClass = self::query()->where('name', '=', self::RANGER)->first();
+        return $heroClass;
     }
 
     /**
@@ -148,7 +82,9 @@ class HeroClass extends Model
      */
     public static function sorcerer()
     {
-        return self::where('name', '=', self::SORCERER)->first();
+        /** @var HeroClass $heroClass */
+        $heroClass = self::query()->where('name', '=', self::SORCERER)->first();
+        return $heroClass;
     }
 
     public function scopeRequiredStarting(Builder $builder)
