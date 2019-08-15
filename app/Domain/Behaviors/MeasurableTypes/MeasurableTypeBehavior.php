@@ -4,29 +4,18 @@
 namespace App\Domain\Behaviors\MeasurableTypes;
 
 
-class MeasurableTypeBehavior
+use App\Domain\Behaviors\MeasurableTypes\MeasurableGroups\MeasurableGroup;
+
+abstract class MeasurableTypeBehavior
 {
     /**
-     * @var string
+     * @var MeasurableGroup
      */
     private $measurableGroup;
-    /**
-     * @var int
-     */
-    private $baseAmount;
 
-    public function __construct(string $measurableGroup, int $baseAmount)
+    public function __construct(MeasurableGroup $attributeGroup)
     {
-        $this->measurableGroup = $measurableGroup;
-        $this->baseAmount = $baseAmount;
-    }
-
-    /**
-     * @return string
-     */
-    public function getMeasurableGroup(): string
-    {
-        return $this->measurableGroup;
+        $this->measurableGroup = $attributeGroup;
     }
 
     /**
