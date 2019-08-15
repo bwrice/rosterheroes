@@ -9,4 +9,6 @@ abstract class MeasurableTypeBehavior
     abstract public function getBaseAmount(): int;
 
     abstract public function getMeasurableImportanceWeight(): float;
+
+    abstract public function getMeasurableGroup(): string;
 }

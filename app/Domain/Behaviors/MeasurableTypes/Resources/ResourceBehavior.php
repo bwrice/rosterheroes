@@ -11,4 +11,9 @@ abstract class ResourceBehavior extends MeasurableTypeBehavior
     {
         return .65;
     }
+
+    public function getMeasurableGroup(): string
+    {
+        return 'resource';
+    }
 }

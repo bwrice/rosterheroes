@@ -16,4 +16,9 @@ abstract class AttributeBehavior extends MeasurableTypeBehavior
     {
         return 1;
     }
+
+    public function getMeasurableGroup(): string
+    {
+        return 'attribute';
+    }
 }

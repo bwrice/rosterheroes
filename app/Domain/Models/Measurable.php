@@ -52,4 +52,9 @@ class Measurable extends EventSourcedModel
     {
         return $this->measurableType->getBehavior()->getMeasurableImportanceWeight();
     }
+
+    public function getMeasurableGroup(): string
+    {
+        return $this->measurableType->getBehavior()->getMeasurableGroup();
+    }
 }

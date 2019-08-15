@@ -113,4 +113,9 @@ class MeasurableType extends Model
 
         throw new UnknownBehaviorException($this->name, MeasurableTypeBehavior::class);
     }
+
+    public function getMeasurableGroup()
+    {
+        return $this->getBehavior()->getMeasurableGroup();
+    }
 }

@@ -16,4 +16,9 @@ abstract class QualityBehavior extends MeasurableTypeBehavior
     {
         return .8;
     }
+
+    public function getMeasurableGroup(): string
+    {
+        return 'quality';
+    }
 }
