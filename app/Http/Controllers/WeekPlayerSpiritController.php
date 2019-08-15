@@ -17,7 +17,12 @@ class WeekPlayerSpiritController extends Controller
 {
     public function index($weekUuid)
     {
-        $week = Week::uuidOrFail($weekUuid);
+        if ('current' === $weekUuid) {
+            $week = Week::current();
+        } else {
+            $week = Week::uuidOrFail($weekUuid);
+        }
+
         $query = PlayerSpirit::query()->forWeek($week);
         $playerSpirits = QueryBuilder::for($query)
             ->allowedFilters([
@@ -28,7 +33,7 @@ class WeekPlayerSpiritController extends Controller
             ])
             ->with([
                 'player.positions', 'player.team', 'game.homeTeam', 'game.awayTeam'
-            ])->orderByDesc('essence_cost')->take(50)->get();
+            ])->orderByDesc('essence_cost')->get();
         return PlayerSpiritResource::collection($playerSpirits);
     }
 }
