@@ -1,7 +1,7 @@
 import Barracks from "../components/commandCenter/views/barracks/Barracks";
 import BarracksNavigationDrawer from "../components/commandCenter/views/barracks/BarracksNavigationDrawer";
 import BarracksMain from "../components/commandCenter/views/barracks/BarracksMain";
-import HeroBarracksView from "../components/commandCenter/views/barracks/BarracksHeroView";
+import BarracksHeroView from "../components/commandCenter/views/barracks/BarracksHeroView";
 
 export const barracksRoutes = {
     path: '/command-center/:squadSlug/barracks',
@@ -23,7 +23,7 @@ export const barracksRoutes = {
         },
         {
             path: 'hero/:heroSlug',
-            component: HeroBarracksView,
+            component: BarracksHeroView,
             name: 'barracks-hero',
             meta: {
                 footerButton: 'barracks'

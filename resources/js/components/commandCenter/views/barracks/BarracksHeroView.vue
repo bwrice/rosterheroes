@@ -1,34 +1,61 @@
 <template>
     <v-flex class="xs12">
-        <v-card>
-            <v-card-title>{{ hero.name }}</v-card-title>
-        </v-card>
+        <v-layout>
+            <v-flex class="xs12">
+                <v-card>
+                    <v-card-title>{{ _barracksFocusedHero.name }}</v-card-title>
+                </v-card>
+            </v-flex>
+        </v-layout>
+        <v-layout>
+            <v-flex class="xs12">
+                <v-card>
+                    <v-card-title>Attributes</v-card-title>
+                    <MeasurablePanel
+                        v-for="(attribute, uuid) in attributes"
+                        :key="uuid"
+                        :measurable="attribute"
+                    ></MeasurablePanel>
+                </v-card>
+                <v-card>
+                    <v-card-title>Resources</v-card-title>
+                </v-card>
+                <v-card>
+                    <v-card-title>Qualities</v-card-title>
+                </v-card>
+            </v-flex>
+        </v-layout>
     </v-flex>
 </template>
 
 <script>
     import {mapGetters} from 'vuex';
+    import {mapActions} from 'vuex';
+    import MeasurablePanel from "../../barracks/MeasurablePanel";
 
     export default {
-        name: "HeroView",
+        name: "BarracksHeroView",
+        components: {MeasurablePanel},
+
+        mounted() {
+            this.setBarracksFocusedHeroBySlug(this.$route.params.heroSlug);
+        },
+
+        methods: {
+            ...mapActions([
+                'setBarracksFocusedHeroBySlug'
+            ])
+        },
+
         computed: {
             ...mapGetters([
-                '_barracksHeroes'
+                '_barracksHeroes',
+                '_barracksFocusedHero'
             ]),
-            hero() {
-
-                let self = this;
-                let hero = this._barracksHeroes.find(function (hero) {
-                    return hero.slug === self.$route.params.heroSlug;
-                });
-
-                if (hero) {
-                    return hero;
-                }
-                return {
-                    'name': '',
-                    'measurables': []
-                }
+            attributes() {
+                return this._barracksFocusedHero.measurables.filter(function (measurable) {
+                    return measurable.measurable_type.group === 'attribute';
+                })
             }
         }
     }

@@ -21,14 +21,6 @@
         created() {
             console.log("Barracks Created!");
         },
-        mounted() {
-            this.updateBarracksHeroes(this.$route.params.squadSlug);
-        },
-        methods: {
-            ...mapActions([
-                'updateBarracksHeroes'
-            ])
-        },
         computed: {
             ...mapGetters([
                 '_barracksHeroes'
