@@ -11,4 +11,9 @@ abstract class QualityBehavior extends MeasurableTypeBehavior
     {
         return 100;
     }
+
+    public function getMeasurableImportanceWeight(): float
+    {
+        return .8;
+    }
 }

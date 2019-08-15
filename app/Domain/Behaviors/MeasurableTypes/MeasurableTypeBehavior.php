@@ -8,9 +8,5 @@ abstract class MeasurableTypeBehavior
 {
     abstract public function getBaseAmount(): int;
 
-    public function getCostToRaiseCoefficientMultiplier(): float
-    {
-        //TODO
-        return 1;
-    }
+    abstract public function getMeasurableImportanceWeight(): float;
 }

@@ -11,4 +11,9 @@ abstract class AttributeBehavior extends MeasurableTypeBehavior
     {
         return 20;
     }
+
+    public function getMeasurableImportanceWeight(): float
+    {
+        return 1;
+    }
 }

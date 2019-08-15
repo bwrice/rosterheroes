@@ -24,7 +24,7 @@ abstract class HeroMeasurableOperator implements MeasurableOperator
             $baseAmount = 75;
         }
 
-        return $measurable->getMeasurableGroupWeight() * $baseAmount;
+        return $measurable->getMeasurableImportanceWeight() * $baseAmount;
     }
 
     public function getCostToRaiseExponent(Measurable $measurable): float
