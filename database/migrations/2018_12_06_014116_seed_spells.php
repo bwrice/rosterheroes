@@ -17,7 +17,6 @@ class SeedSpells extends Migration
 
         $measurableGroups = [
             [
-                'name' => \App\Domain\Models\MeasurableGroup::ATTRIBUTE,
                 'types' => [
                     [
                         'name' => \App\Domain\Models\MeasurableType::STRENGTH,
@@ -292,7 +291,6 @@ class SeedSpells extends Migration
                 ]
             ],
             [
-                'name' => \App\Domain\Models\MeasurableGroup::RESOURCE,
                 'types' => [
                     [
                         'name' => \App\Domain\Models\MeasurableType::HEALTH,
@@ -387,7 +385,6 @@ class SeedSpells extends Migration
                 ]
             ],
             [
-                'name' => \App\Domain\Models\MeasurableGroup::QUALITY,
                 'types' => [
                     [
                         'name' => \App\Domain\Models\MeasurableType::PASSION,
