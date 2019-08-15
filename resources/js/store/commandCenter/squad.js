@@ -1,3 +1,4 @@
+import * as squadApi from '../../api/squadApi';
 
 export default {
 
@@ -31,8 +32,9 @@ export default {
     },
 
     actions: {
-        setSquad({commit}, payload) {
-            commit('SET_SQUAD', payload)
+        async updateSquad({commit}, route) {
+            let squad = await squadApi.getSquad(route.params.squadSlug);
+            commit('SET_SQUAD', squad)
         },
         updateHero({commit}, payload) {
             commit('UPDATE_HERO', payload)

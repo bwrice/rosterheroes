@@ -66,9 +66,9 @@
         },
 
         async mounted() {
+            let route = this.$route;
+            await this.updateSquad(route);
 
-            let squad = await Squad.$find(this.$route.params.squadSlug);
-            this.setSquad(squad);
             let currentWeek = await Week.$find('current');
             this.setCurrentWeek(currentWeek);
 
@@ -91,7 +91,7 @@
         },
         methods: {
             ...mapActions([
-                'setSquad',
+                'updateSquad',
                 'updateHero',
                 'setCurrentWeek',
                 'setPlayerSpiritsPool',
