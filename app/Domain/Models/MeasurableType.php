@@ -2,7 +2,21 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Behaviors\MeasurableTypes\Attributes\AgilityBehavior;
+use App\Domain\Behaviors\MeasurableTypes\Attributes\AptitudeBehavior;
+use App\Domain\Behaviors\MeasurableTypes\Attributes\FocusBehavior;
+use App\Domain\Behaviors\MeasurableTypes\Attributes\IntelligenceBehavior;
+use App\Domain\Behaviors\MeasurableTypes\Attributes\StrengthBehavior;
+use App\Domain\Behaviors\MeasurableTypes\Attributes\ValorBehavior;
 use App\Domain\Behaviors\MeasurableTypes\MeasurableTypeBehavior;
+use App\Domain\Behaviors\MeasurableTypes\Qualities\BalanceBehavior;
+use App\Domain\Behaviors\MeasurableTypes\Qualities\HonorBehavior;
+use App\Domain\Behaviors\MeasurableTypes\Qualities\PassionBehavior;
+use App\Domain\Behaviors\MeasurableTypes\Qualities\PrestigeBehavior;
+use App\Domain\Behaviors\MeasurableTypes\Qualities\WrathBehavior;
+use App\Domain\Behaviors\MeasurableTypes\Resources\HealthBehavior;
+use App\Domain\Behaviors\MeasurableTypes\Resources\ManaBehavior;
+use App\Domain\Behaviors\MeasurableTypes\Resources\StaminaBehavior;
 use App\Exceptions\UnknownBehaviorException;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -66,35 +80,35 @@ class MeasurableType extends Model
     {
         switch ($this->name) {
             case self::STRENGTH:
-                return new MeasurableTypeBehavior('attribute', 20);
+                return app(StrengthBehavior::class);
             case self::VALOR:
-                return new MeasurableTypeBehavior('attribute', 20);
+                return app(ValorBehavior::class);
             case self::AGILITY:
-                return new MeasurableTypeBehavior('attribute', 20);
+                return app(AgilityBehavior::class);
             case self::FOCUS:
-                return new MeasurableTypeBehavior('attribute', 20);
+                return app(FocusBehavior::class);
             case self::APTITUDE:
-                return new MeasurableTypeBehavior('attribute', 20);
+                return app(AptitudeBehavior::class);
             case self::INTELLIGENCE:
-                return new MeasurableTypeBehavior('attribute', 20);
+                return app(IntelligenceBehavior::class);
 
             case self::HEALTH:
-                return new MeasurableTypeBehavior('resource', 250);
+                return app(HealthBehavior::class);
             case self::STAMINA:
-                return new MeasurableTypeBehavior('resource', 250);
+                return app(StaminaBehavior::class);
             case self::MANA:
-                return new MeasurableTypeBehavior('resource', 250);
+                return app(ManaBehavior::class);
 
             case self::PASSION:
-                return new MeasurableTypeBehavior('quality', 100);
+                return app(PassionBehavior::class);
             case self::BALANCE:
-                return new MeasurableTypeBehavior('quality', 100);
+                return app(BalanceBehavior::class);
             case self::HONOR:
-                return new MeasurableTypeBehavior('quality', 100);
+                return app(HonorBehavior::class);
             case self::PRESTIGE:
-                return new MeasurableTypeBehavior('quality', 100);
+                return app(PrestigeBehavior::class);
             case self::WRATH:
-                return new MeasurableTypeBehavior('quality', 100);
+                return app(WrathBehavior::class);
         }
 
         throw new UnknownBehaviorException($this->name, MeasurableTypeBehavior::class);
