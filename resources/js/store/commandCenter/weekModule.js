@@ -1,3 +1,4 @@
+import * as weekApi from '../../api/weekApi';
 
 export default {
 
@@ -17,8 +18,9 @@ export default {
     },
 
     actions: {
-        setCurrentWeek({commit}, payload) {
-            commit('SET_CURRENT_WEEK', payload)
+        async updateCurrentWeek({commit}) {
+            let week = await weekApi.getCurrentWeek();
+            commit('SET_CURRENT_WEEK', week)
         },
     }
 };

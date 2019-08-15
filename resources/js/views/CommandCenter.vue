@@ -65,23 +65,21 @@
             NationFooterButton
         },
 
-        async mounted() {
+        mounted() {
             let route = this.$route;
-            await this.updateSquad(route);
-
-            let currentWeek = await Week.$find('current');
-            this.setCurrentWeek(currentWeek);
+            this.updateSquad(route);
+            this.updateCurrentWeek();
 
             // If we land on a hero page, we need to update associated stores
-            if (this.$route.params.heroSlug) {
-
-                let hero = await Hero.$find(this.$route.params.heroSlug);
-                this.updateHero(hero);
-
-                if (this.$route.name === 'roster-hero') {
-                    this.updatePlayerSpiritsPool();
-                }
-            }
+            // if (this.$route.params.heroSlug) {
+            //
+            //     let hero = await Hero.$find(this.$route.params.heroSlug);
+            //     this.updateHero(hero);
+            //
+            //     if (this.$route.name === 'roster-hero') {
+            //         this.updatePlayerSpiritsPool();
+            //     }
+            // }
         },
 
         data: function() {
@@ -93,7 +91,7 @@
             ...mapActions([
                 'updateSquad',
                 'updateHero',
-                'setCurrentWeek',
+                'updateCurrentWeek',
                 'setPlayerSpiritsPool',
                 'updatePlayerSpiritsPool',
                 'setMap'

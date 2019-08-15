@@ -3,11 +3,11 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
-import squadModule from './squad';
+import squadModule from './squadModule';
 import heroModule from './heroModule';
 import rosterModule from './roster';
 import barracksModule from "./barracksModule";
-import weekModule from './week';
+import weekModule from './weekModule';
 import exploreModule from './exploreModule';
 import snackBarModule from './snackBar';
 import overlayModule from "./overlayModule";
