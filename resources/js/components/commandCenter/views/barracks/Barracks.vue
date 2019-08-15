@@ -3,20 +3,13 @@
 </template>
 
 <script>
-    import {mapActions} from 'vuex';
+
     import BaseView from "../BaseView";
     export default {
         name: "Barracks",
-        components: {BaseView},
-        mounted() {
-            this.updateBarracksHeroes(this.$route);
-        },
-        methods: {
-            ...mapActions([
-                'updateBarracksHeroes'
-            ])
-        },
+        components: {BaseView}
     }
+
 </script>
 
 <style scoped>

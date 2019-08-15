@@ -69,6 +69,7 @@
             let route = this.$route;
             this.updateSquad(route);
             this.updateCurrentWeek();
+            this.updateBarracksHeroes(route);
 
             // If we land on a hero page, we need to update associated stores
             // if (this.$route.params.heroSlug) {
@@ -92,6 +93,7 @@
                 'updateSquad',
                 'updateHero',
                 'updateCurrentWeek',
+                'updateBarracksHeroes',
                 'setPlayerSpiritsPool',
                 'updatePlayerSpiritsPool',
                 'setMap'
