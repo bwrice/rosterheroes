@@ -41,6 +41,14 @@
             this.setBarracksFocusedHeroBySlug(this.$route.params.heroSlug);
         },
 
+        watch:{
+            $route (to) {
+                if (to.params.heroSlug && to.params.heroSlug !== this._barracksFocusedHero.slug) {
+                    this.setBarracksFocusedHeroBySlug(to.params.heroSlug);
+                }
+            }
+        },
+
         methods: {
             ...mapActions([
                 'setBarracksFocusedHeroBySlug'

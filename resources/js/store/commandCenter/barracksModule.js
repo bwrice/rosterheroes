@@ -29,9 +29,12 @@ export default {
     },
 
     actions: {
-        async updateBarracksHeroes({commit}, squadSlug) {
-            let heroes = await squadApi.getBarracksHeroes(squadSlug);
+        async updateBarracksHeroes({commit, dispatch}, routeParams) {
+            let heroes = await squadApi.getBarracksHeroes(routeParams.squadSlug);
             commit('SET_BARRACKS_HEROES', heroes);
+            if (routeParams.heroSlug) {
+                dispatch('setBarracksFocusedHeroBySlug', routeParams.heroSlug);
+            }
         },
         setBarracksFocusedHeroBySlug({state, commit}, heroSlug) {
             if (heroSlug !== state.barracksFocusedHero.slug) {

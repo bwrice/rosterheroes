@@ -16,7 +16,6 @@ export const provinceNavigationMixin = {
     },
     methods: {
         navigateToProvince(province) {
-            console.log("Navigate to province");
             let provinceRoute = this.provinceRoute(this._squad, province);
             this.$router.push(provinceRoute);
         },

@@ -9,7 +9,7 @@
         name: "Barracks",
         components: {BaseView},
         mounted() {
-            this.updateBarracksHeroes(this.$route.params.squadSlug);
+            this.updateBarracksHeroes(this.$route.params);
         },
         methods: {
             ...mapActions([

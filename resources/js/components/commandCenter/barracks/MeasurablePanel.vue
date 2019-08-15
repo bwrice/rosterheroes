@@ -1,5 +1,5 @@
 <template>
-    <v-sheet>
+    <v-sheet flat color="#706856" class="ma-1 pa-1">
         {{name}}
     </v-sheet>
 </template>
