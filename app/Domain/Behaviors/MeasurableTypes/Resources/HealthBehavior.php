@@ -4,7 +4,11 @@
 namespace App\Domain\Behaviors\MeasurableTypes\Resources;
 
 
-class HealthBehavior
+class HealthBehavior extends ResourceBehavior
 {
 
+    public function getBaseAmount(): int
+    {
+        return 500;
+    }
 }

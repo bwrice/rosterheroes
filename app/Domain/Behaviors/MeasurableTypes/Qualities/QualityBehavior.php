@@ -14,4 +14,9 @@ abstract class QualityBehavior extends MeasurableTypeBehavior
     {
         parent::__construct($qualityGroup);
     }
+
+    public function getBaseAmount(): int
+    {
+        return 100;
+    }
 }

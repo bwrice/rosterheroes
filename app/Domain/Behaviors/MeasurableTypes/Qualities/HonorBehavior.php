@@ -4,7 +4,7 @@
 namespace App\Domain\Behaviors\MeasurableTypes\Qualities;
 
 
-class HonorBehavior
+class HonorBehavior extends QualityBehavior
 {
 
 }

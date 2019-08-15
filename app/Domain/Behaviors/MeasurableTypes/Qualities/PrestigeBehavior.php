@@ -4,7 +4,7 @@
 namespace App\Domain\Behaviors\MeasurableTypes\Qualities;
 
 
-class PrestigeBehavior
+class PrestigeBehavior extends QualityBehavior
 {
 
 }

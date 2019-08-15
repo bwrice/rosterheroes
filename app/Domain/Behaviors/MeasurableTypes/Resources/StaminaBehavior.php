@@ -4,7 +4,11 @@
 namespace App\Domain\Behaviors\MeasurableTypes\Resources;
 
 
-class StaminaBehavior
+class StaminaBehavior extends ResourceBehavior
 {
 
+    public function getBaseAmount(): int
+    {
+        return 250;
+    }
 }

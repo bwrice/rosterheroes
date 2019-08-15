@@ -4,7 +4,11 @@
 namespace App\Domain\Behaviors\MeasurableTypes\Resources;
 
 
-class ManaBehavior
+class ManaBehavior extends ResourceBehavior
 {
 
+    public function getBaseAmount(): int
+    {
+        return 250;
+    }
 }

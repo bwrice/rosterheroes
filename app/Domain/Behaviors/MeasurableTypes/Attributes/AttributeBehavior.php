@@ -13,4 +13,9 @@ abstract class AttributeBehavior extends MeasurableTypeBehavior
     {
         parent::__construct($attributeGroup);
     }
+
+    public function getBaseAmount(): int
+    {
+        return 20;
+    }
 }

@@ -18,13 +18,8 @@ abstract class MeasurableTypeBehavior
         $this->measurableGroup = $attributeGroup;
     }
 
-    /**
-     * @return int
-     */
-    public function getBaseAmount(): int
-    {
-        return $this->baseAmount;
-    }
+
+    abstract public function getBaseAmount(): int;
 
     public function getCostToRaiseCoefficientMultiplier(): float
     {
