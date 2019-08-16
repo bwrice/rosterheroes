@@ -24,7 +24,7 @@ class FastTravelController extends Controller
      */
     public function __invoke($squadSlug, Request $request, FastTravelAction $fastTravelAction)
     {
-        $squad = Squad::slugOrFail($squadSlug);
+        $squad = Squad::findSlugOrFail($squadSlug);
         $this->authorize(Squad::MANAGE_AUTHORIZATION, $squad);
 
         $travelRoute = new ProvinceCollection();

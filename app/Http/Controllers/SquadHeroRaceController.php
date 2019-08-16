@@ -14,7 +14,7 @@ class SquadHeroRaceController extends Controller
      */
     public function __invoke($squadSlug)
     {
-        $squad = Squad::slugOrFail($squadSlug);
+        $squad = Squad::findSlugOrFail($squadSlug);
         $this->authorize(Squad::MANAGE_AUTHORIZATION, $squad);
         return response()->json(HeroRaceResource::collection($squad->getHeroRaceAvailability()), 200);
     }

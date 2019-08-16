@@ -34,7 +34,7 @@ class SquadHeroController extends Controller
      */
     public function store(Request $request, $squadSlug, AddNewHeroToSquadAction $domainAction)
     {
-        $squad = Squad::slugOrFail($squadSlug);
+        $squad = Squad::findSlugOrFail($squadSlug);
         $this->authorize(Squad::MANAGE_AUTHORIZATION, $squad);
 
         $this->validate($request, [

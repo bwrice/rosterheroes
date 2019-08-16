@@ -12,7 +12,7 @@ class SquadCampaignController extends Controller
 {
     public function store($squadSlug)
     {
-        $squad = Squad::slugOrFail($squadSlug);
+        $squad = Squad::findSlugOrFail($squadSlug);
         $this->authorize(Squad::MANAGE_AUTHORIZATION, $squad);
         try {
 

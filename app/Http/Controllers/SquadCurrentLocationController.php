@@ -10,7 +10,7 @@ class SquadCurrentLocationController extends Controller
 {
     public function __invoke($squadSlug)
     {
-        $squad = Squad::slugOrFail($squadSlug);
+        $squad = Squad::findSlugOrFail($squadSlug);
         $this->authorize(Squad::MANAGE_AUTHORIZATION, $squad);
 
         $currentLocation = $squad->province->load([

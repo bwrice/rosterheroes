@@ -18,6 +18,15 @@ abstract class EventSourcedModel extends Model
     protected  $guarded = [];
 
     /**
+     * @param string $uuid
+     * @return Builder
+     */
+    public static function uuid(string $uuid)
+    {
+        return static::query()->where('uuid', '=', $uuid);
+    }
+
+    /**
      *
      * A helper method to quickly retrieve by uuid.
      *
@@ -27,7 +36,7 @@ abstract class EventSourcedModel extends Model
     public static function findUuid(string $uuid)
     {
         /** @var static $model */
-        $model = static::query()->where('uuid', $uuid)->first();
+        $model = static::uuid($uuid)->first();
         return $model;
     }
 
@@ -38,7 +47,7 @@ abstract class EventSourcedModel extends Model
     public static function findUuidOrFail(string $uuid)
     {
         /** @var static $model */
-        $model = static::query()->where('uuid', $uuid)->firstOrFail();
+        $model = static::uuid($uuid)->firstOrFail();
         return $model;
     }
 }

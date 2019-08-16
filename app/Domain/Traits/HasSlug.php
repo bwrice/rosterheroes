@@ -9,6 +9,8 @@
 namespace App\Domain\Traits;
 
 
+use Illuminate\Database\Eloquent\Builder;
+
 trait HasSlug
 {
     use \Spatie\Sluggable\HasSlug;
@@ -17,8 +19,17 @@ trait HasSlug
      * @param $slug
      * @return static
      */
-    public static function slugOrFail($slug)
+    public static function findSlugOrFail($slug)
     {
-        return static::where('slug', '=', $slug)->firstOrFail();
+        return static::slug($slug)->firstOrFail();
+    }
+
+    /**
+     * @param $slug
+     * @return Builder
+     */
+    public static function slug($slug)
+    {
+        return static::query()->where('slug', '=', $slug);
     }
 }

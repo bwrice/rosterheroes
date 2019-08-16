@@ -10,7 +10,7 @@ class ProvinceBorderController extends Controller
 {
     public function index($provinceSlug)
     {
-        $province = Province::slugOrFail($provinceSlug);
+        $province = Province::findSlugOrFail($provinceSlug);
         return ProvinceResource::collection($province->borders);
     }
 }

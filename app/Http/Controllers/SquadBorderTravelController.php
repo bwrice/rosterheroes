@@ -17,9 +17,9 @@ class SquadBorderTravelController extends Controller
 {
     public function store($squadSlug, $borderSlug)
     {
-        $squad = Squad::slugOrFail($squadSlug);
+        $squad = Squad::findSlugOrFail($squadSlug);
         $this->authorize(Squad::MANAGE_AUTHORIZATION, $squad);
-        $border = Province::slugOrFail($borderSlug);
+        $border = Province::findSlugOrFail($borderSlug);
         try {
             $squad->borderTravel($border);
             return response()->json($squad->load('province'), 201);
@@ -32,9 +32,9 @@ class SquadBorderTravelController extends Controller
 
     public function show($squadSlug, $borderSlug, BorderTravelCostCalculator $costCalculator)
     {
-        $squad = Squad::slugOrFail($squadSlug);
+        $squad = Squad::findSlugOrFail($squadSlug);
         $this->authorize(Squad::MANAGE_AUTHORIZATION, $squad);
-        $border = Province::slugOrFail($borderSlug);
+        $border = Province::findSlugOrFail($borderSlug);
         $border->travel_cost = $costCalculator->goldCost($squad, $border);
         return response()->json(new ProvinceResource($border->load('borders')), 200);
     }

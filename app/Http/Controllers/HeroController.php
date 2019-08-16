@@ -11,7 +11,7 @@ class HeroController extends Controller
     public function show($heroSlug)
     {
         // TODO: auth
-        $hero = Hero::slugOrFail($heroSlug);
+        $hero = Hero::findSlugOrFail($heroSlug);
         return new HeroResource($hero->loadMissing([
             'heroClass',
             'heroRace.positions',

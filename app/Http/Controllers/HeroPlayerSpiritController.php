@@ -14,7 +14,7 @@ class HeroPlayerSpiritController extends Controller
 {
     public function store($heroSlug, $playerSpiritUuid, AddSpiritToHeroAction $action)
     {
-        $hero = Hero::slugOrFail($heroSlug);
+        $hero = Hero::findSlugOrFail($heroSlug);
         $playerSpirit = PlayerSpirit::findUuid($playerSpiritUuid);
         if (! $playerSpirit) {
             throw ValidationException::withMessages(['Player could not be found']);
@@ -41,7 +41,7 @@ class HeroPlayerSpiritController extends Controller
 
     public function delete($heroSlug, $playerSpiritUuid, RemoveSpiritFromHeroAction $action)
     {
-        $hero = Hero::slugOrFail($heroSlug);
+        $hero = Hero::findSlugOrFail($heroSlug);
         $playerSpirit = PlayerSpirit::findUuid($playerSpiritUuid);
         if (! $playerSpirit) {
             throw ValidationException::withMessages(['Player could not be found']);

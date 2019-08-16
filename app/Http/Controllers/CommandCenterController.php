@@ -18,7 +18,7 @@ class CommandCenterController extends Controller
             return redirect('/command-center/' . $squadSlug . '/barracks');
         }
 
-        $squad = Squad::slugOrFail($squadSlug);
+        $squad = Squad::findSlugOrFail($squadSlug);
 
         if ($squad->inCreationState()) {
             return view('create-squad', [
