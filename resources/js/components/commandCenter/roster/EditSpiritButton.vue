@@ -1,31 +1,15 @@
 <template>
-    <v-btn v-on:click="showHeroRosterView()" class="primary">Edit</v-btn>
+    <v-btn :to="heroRoute" class="primary">Edit</v-btn>
 </template>
 
 <script>
-    import { mapGetters } from 'vuex';
-    import { mapActions } from 'vuex';
-
     export default {
         name: "EditSpiritButton",
         props: ['hero'],
-        methods: {
-            ...mapActions([
-                'updateHero',
-                'updatePlayerSpiritsPool'
-            ]),
-            showHeroRosterView() {
-                this.updateHero(this.hero);
-                this.updatePlayerSpiritsPool();
-                this.$router.push(this.heroRoute);
-            }
-        },
         computed: {
-            ...mapGetters([
-                '_squad',
-            ]),
             heroRoute: function() {
-                return '/command-center/' + this._squad.slug + '/roster/hero/' + this.hero.slug;
+                let squadSlug = this.$route.params.squadSlug;
+                return '/command-center/' + squadSlug + '/roster/hero/' + this.hero.slug;
             }
         }
     }

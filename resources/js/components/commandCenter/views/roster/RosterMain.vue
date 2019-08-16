@@ -1,8 +1,8 @@
 <template>
     <v-flex class="xs12">
         <v-card>
-            <span class="display-3 px-1">{{this._squad.availableSpiritEssence}}</span> Spirit Essence Available
-            <div v-for="(hero, uuid) in this.heroes">
+            <span class="display-3 px-1">{{this._squad.available_spirit_essence}}</span> Spirit Essence Available
+            <div v-for="(hero, uuid) in _rosterHeroes">
                 <HeroRosterCard :hero="hero">
                     <template slot="body">
                         <div v-if="hero.playerSpirit">
@@ -47,20 +47,9 @@
         },
         computed: {
             ...mapGetters([
-                '_squad',
-                '_availableSpiritEssence'
+                '_rosterHeroes',
+                '_squad'
             ]),
-            heroes: function() {
-                let _heroes = [];
-                if (this._squad.heroPosts) {
-                    this._squad.heroPosts.forEach(function (heroPost) {
-                        if (heroPost.hero) {
-                            _heroes.push(heroPost.hero);
-                        }
-                    });
-                }
-                return _heroes;
-            }
         },
         methods: {
             getPlayerSpirit: function(playerSpirit) {

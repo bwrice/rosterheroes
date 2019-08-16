@@ -58,7 +58,7 @@
     import HeroRosterCard from "../../roster/HeroRosterCard";
 
     export default {
-        name: "HeroRosterView",
+        name: "RosterHeroView",
 
         components: {
             HeroRosterCard,
@@ -75,7 +75,6 @@
                 '_playerSpiritsPool'
             ]),
             rosterPage() {
-                // TODO use navigation mixin?
                 return '/command-center/' + this.$route.params.squadSlug + '/roster' ;
             }
         },

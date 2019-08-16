@@ -28,7 +28,7 @@ export default {
             state.playerSpiritsPool = payload;
         },
         SET_ROSTER_HEROES(state, payload) {
-            state.rosterheroes = payload;
+            state.rosterHeroes = payload;
         },
         SET_ROSTER_FOCUSED_HERO(state, payload) {
             state.rosterFocusedHero = payload;
