@@ -39,9 +39,6 @@ export default {
             commit('SET_SNACKBAR', payload)
         },
         snackBarSuccess({commit}, payload) {
-            console.log("SNACK BAR SUCCESS");
-            console.log(payload);
-
             let {
                 timeout = 1500,
                 mode = '',
@@ -58,16 +55,27 @@ export default {
                 text,
                 trigger
             });
-            // commit('SET_TEXT', payload);
-            // commit('SET_COLOR', 'success');
-            // commit('SET_TIMEOUT', 1500);
-            // commit('TRIGGER');
         },
         snackBarError({commit}, payload) {
-            commit('SET_TEXT', payload);
-            commit('SET_COLOR', 'error');
-            commit('SET_TIMEOUT', 5000);
-            commit('TRIGGER');
+
+            console.log(payload);
+
+            let {
+                timeout = 4000,
+                mode = '',
+                text = 'Oops. Something went wrong',
+                color = 'error'
+            } = payload;
+
+            let trigger = 1;
+
+            commit('SET_SNACKBAR', {
+                timeout,
+                color,
+                mode,
+                text,
+                trigger
+            });
         }
     }
 };
