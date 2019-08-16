@@ -23,26 +23,19 @@
                 'updateHero',
                 'setRosterFocusedHero',
                 'snackBarSuccess',
-                'snackBarError'
+                'snackBarError',
+                'addSpiritToHero'
             ]),
-            addSpirit: function() {
+            async addSpirit() {
+
                 this.pending = true;
-                axios.post('/api/v1/heroes/' + this.hero.slug + '/player-spirit/' + this.playerSpirit.uuid)
-                    .then((response) => {
 
-                    this.pending = false;
-                    let heroResponse = response.data.data;
-                    this.updateHero(heroResponse);
-                    this.snackBarSuccess('Hero Updated');
-
-                }).catch((error) => {
-
-                    this.pending = false;
-                    // TODO: add Errors class to snackBar store and handle there
-                    if (error.response && error.response.data.errors.roster) {
-                        this.snackBarError(error.response.data.errors.roster[0]);
-                    }
+                await this.addSpiritToHero({
+                    heroSlug: this.hero.slug,
+                    spiritUuid: this.playerSpirit.uuid
                 });
+
+                this.pending = false;
             }
         }
     }

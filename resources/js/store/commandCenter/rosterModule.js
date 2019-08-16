@@ -15,9 +15,6 @@ export default {
         },
         _rosterHeroes(state) {
             return state.rosterHeroes;
-        },
-        _rosterFocusedHero(state) {
-            return state.rosterFocusedHero;
         }
     },
     mutations: {
@@ -40,15 +37,19 @@ export default {
         },
 
         async addSpiritToHero({state, commit}, payload) {
+
             let updatedHero = await heroApi.addSpirit(payload.heroSlug, payload.spiritUuid);
             let rosterHeroes = _.cloneDeep(state.rosterHeroes);
+
             let index = rosterHeroes.findIndex(function (hero) {
                 return hero.uuid === updatedHero.uuid;
             });
 
-            if (index) {
+            if (index !== -1) {
                 rosterHeroes.splice(index, 1, updatedHero);
                 commit('SET_ROSTER_HEROES', rosterHeroes);
+            } else {
+                console.warn("Didn't update roster heroes when adding spirit");
             }
         }
     }
