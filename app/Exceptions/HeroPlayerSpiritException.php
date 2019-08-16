@@ -18,6 +18,7 @@ class HeroPlayerSpiritException extends \Exception
     public const NOT_ENOUGH_ESSENCE = 3;
     public const GAME_STARTED = 4;
     public const SPIRIT_ALREADY_USED = 5;
+    public const NOT_EMBODIED_BY = 6;
 
     /**
      * @var Hero
