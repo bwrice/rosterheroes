@@ -36,7 +36,7 @@ export default {
             commit('SET_PLAYER_SPIRITS_POOL', playerSpirits);
         },
 
-        async addSpiritToHero({state, commit}, payload) {
+        async addSpiritToHero({state, commit, dispatch}, payload) {
 
             let updatedHero = await heroApi.addSpirit(payload.heroSlug, payload.spiritUuid);
             let rosterHeroes = _.cloneDeep(state.rosterHeroes);
@@ -47,7 +47,12 @@ export default {
 
             if (index !== -1) {
                 rosterHeroes.splice(index, 1, updatedHero);
+                console.log(updatedHero);
                 commit('SET_ROSTER_HEROES', rosterHeroes);
+                dispatch('snackBarSuccess', {
+                    text: updatedHero.playerSpirit.player.full_name + ' now embodies ' + updatedHero.name,
+                    timeout: 3000
+                })
             } else {
                 console.warn("Didn't update roster heroes when adding spirit");
             }

@@ -9,7 +9,7 @@ import rosterModule from './rosterModule';
 import barracksModule from "./barracksModule";
 import weekModule from './weekModule';
 import exploreModule from './exploreModule';
-import snackBarModule from './snackBar';
+import snackBarModule from './snackBarModule';
 import overlayModule from "./overlayModule";
 import currentLocationModule from "./currentLocationModule";
 import travelModule from "./travelModule";
