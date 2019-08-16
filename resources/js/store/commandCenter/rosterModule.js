@@ -6,14 +6,7 @@ export default {
 
     state: {
         playerSpiritsPool: [],
-        rosterHeroes: [],
-        rosterFocusedHero: {
-            name: '',
-            playerSpirit: null,
-            heroRace: {
-                positions: []
-            }
-        }
+        rosterHeroes: []
     },
 
     getters: {
@@ -33,10 +26,7 @@ export default {
         },
         SET_ROSTER_HEROES(state, payload) {
             state.rosterHeroes = payload;
-        },
-        SET_ROSTER_FOCUSED_HERO(state, payload) {
-            state.rosterFocusedHero = payload;
-        },
+        }
     },
 
     actions: {
@@ -45,23 +35,8 @@ export default {
             let heroes = await squadApi.getRosterHeroes(route.params.squadSlug);
             commit('SET_ROSTER_HEROES', heroes);
 
-            if ('roster-hero' === route.name) {
-                dispatch('setRosterFocusedHeroBySlug', route.params.heroSlug);
-            }
-
             let playerSpirits = await weekApi.getCurrentPlayerSpirits();
             commit('SET_PLAYER_SPIRITS_POOL', playerSpirits);
-        },
-
-        setRosterFocusedHeroBySlug({state, commit}, heroSlug) {
-            let hero = state.rosterHeroes.find(function (hero) {
-                return hero.slug === heroSlug;
-            });
-            if (hero) {
-                commit('SET_ROSTER_FOCUSED_HERO', hero);
-            } else {
-                console.warn("Couldn't set roster focused hero by slug: " + heroSlug);
-            }
         },
 
         async addSpiritToHero({state, commit}, payload) {
