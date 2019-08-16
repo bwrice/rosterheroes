@@ -4,12 +4,12 @@
             <v-btn :to="rosterPage">
                 <v-icon>arrow_back</v-icon>Back
             </v-btn>
-            <HeroRosterCard :hero="_hero" v-if="_hero">
+            <HeroRosterCard :hero="_rosterFocusedHero" v-if="_rosterFocusedHero">
                 <template slot="body">
-                    <template v-if="_hero.playerSpirit">
-                        <PlayerSpiritPanel :player-spirit="_hero.playerSpirit">
+                    <template v-if="_rosterFocusedHero.playerSpirit">
+                        <PlayerSpiritPanel :player-spirit="_rosterFocusedHero.playerSpirit">
                             <template v-slot:spirit-actions>
-                                <RemoveSpiritButton :hero="_hero" :player-spirit="_hero.playerSpirit"></RemoveSpiritButton>
+                                <RemoveSpiritButton :hero="_rosterFocusedHero" :player-spirit="_rosterFocusedHero.playerSpirit"></RemoveSpiritButton>
                             </template>
                         </PlayerSpiritPanel>
                     </template>
@@ -39,7 +39,7 @@
                     >
                         <PlayerSpiritPanel :player-spirit="props.item">
                             <template v-slot:spirit-actions>
-                                <AddSpiritButton :hero="_hero" :player-spirit="props.item"></AddSpiritButton>
+                                <AddSpiritButton :hero="_rosterFocusedHero" :player-spirit="props.item"></AddSpiritButton>
                             </template>
                         </PlayerSpiritPanel>
                     </v-flex>
@@ -71,7 +71,7 @@
             ...mapGetters([
                 '_squad',
                 '_currentWeek',
-                '_hero',
+                '_rosterFocusedHero',
                 '_playerSpiritsPool'
             ]),
             rosterPage() {

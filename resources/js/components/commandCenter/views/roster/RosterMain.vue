@@ -6,10 +6,10 @@
                 <HeroRosterCard :hero="hero">
                     <template slot="body">
                         <div v-if="hero.playerSpirit">
-                            <PlayerSpiritPanel :player-spirit="getPlayerSpirit(hero.playerSpirit)">
+                            <PlayerSpiritPanel :player-spirit="hero.playerSpirit">
                                 <template v-slot:spirit-actions>
                                     <EditSpiritButton :hero="hero"></EditSpiritButton>
-                                    <RemoveSpiritButton :hero="hero" :player-spirit="getPlayerSpirit(hero.playerSpirit)"></RemoveSpiritButton>
+                                    <RemoveSpiritButton :hero="hero" :player-spirit="hero.playerSpirit"></RemoveSpiritButton>
                                 </template>
                             </PlayerSpiritPanel>
                         </div>
@@ -32,8 +32,6 @@
     import EditSpiritButton from "../../roster/EditSpiritButton";
     import PlayerSpiritPanel from "../../roster/PlayerSpiritPanel";
 
-    import PlayerSpirit from "../../../../models/PlayerSpirit";
-
     import { mapGetters } from 'vuex'
 
     export default {
@@ -51,11 +49,6 @@
                 '_squad'
             ]),
         },
-        methods: {
-            getPlayerSpirit: function(playerSpirit) {
-                return new PlayerSpirit(playerSpirit)
-            }
-        }
     }
 </script>
 

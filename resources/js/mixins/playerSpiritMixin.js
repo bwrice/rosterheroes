@@ -1,6 +1,4 @@
 
-import PlayerSpirit from '../models/PlayerSpirit';
-
 export const playerSpiritMixin = {
     data: function() {
         return {
@@ -9,16 +7,13 @@ export const playerSpiritMixin = {
     },
     computed: {
         playerSpiritPositions: function() {
-            // TODO filter out overlapping positions when new Hero Races are added
             return this.playerSpirit.player.positions;
         },
         playerName: function() {
-            let playerSpirit = new PlayerSpirit(this.playerSpirit);
-            return playerSpirit.playerName;
+            return this.playerSpirit.player.full_name;
         },
         gameDescription: function() {
-            let playerSpirit = new PlayerSpirit(this.playerSpirit);
-            return playerSpirit.gameDescription;
+            return this.playerSpirit.game.description;
         },
         essenceCost: function() {
             return this.playerSpirit.essence_cost;
