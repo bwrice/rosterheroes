@@ -5,7 +5,7 @@ Vue.use(Vuex);
 
 import squadModule from './squadModule';
 import heroModule from './heroModule';
-import rosterModule from './roster';
+import rosterModule from './rosterModule';
 import barracksModule from "./barracksModule";
 import weekModule from './weekModule';
 import exploreModule from './exploreModule';

@@ -29,10 +29,10 @@ export default {
     },
 
     actions: {
-        async updateBarracksHeroes({commit, dispatch}, route) {
+        async updateBarracks({commit, dispatch}, route) {
             let heroes = await squadApi.getBarracksHeroes(route.params.squadSlug);
             commit('SET_BARRACKS_HEROES', heroes);
-            if (route.params.heroSlug) {
+            if ('barracks-hero' === route.name) {
                 dispatch('setBarracksFocusedHeroBySlug', route.params.heroSlug);
             }
         },
