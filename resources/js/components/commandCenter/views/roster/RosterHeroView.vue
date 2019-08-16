@@ -4,12 +4,12 @@
             <v-btn :to="rosterPage">
                 <v-icon>arrow_back</v-icon>Back
             </v-btn>
-            <HeroRosterCard :hero="_rosterFocusedHero" v-if="_rosterFocusedHero">
+            <HeroRosterCard :hero="rosterFocusedHero" v-if="rosterFocusedHero">
                 <template slot="body">
-                    <template v-if="_rosterFocusedHero.playerSpirit">
-                        <PlayerSpiritPanel :player-spirit="_rosterFocusedHero.playerSpirit">
+                    <template v-if="rosterFocusedHero.playerSpirit">
+                        <PlayerSpiritPanel :player-spirit="rosterFocusedHero.playerSpirit">
                             <template v-slot:spirit-actions>
-                                <RemoveSpiritButton :hero="_rosterFocusedHero" :player-spirit="_rosterFocusedHero.playerSpirit"></RemoveSpiritButton>
+                                <RemoveSpiritButton :hero="rosterFocusedHero" :player-spirit="rosterFocusedHero.playerSpirit"></RemoveSpiritButton>
                             </template>
                         </PlayerSpiritPanel>
                     </template>
@@ -39,7 +39,7 @@
                     >
                         <PlayerSpiritPanel :player-spirit="props.item">
                             <template v-slot:spirit-actions>
-                                <AddSpiritButton :hero="_rosterFocusedHero" :player-spirit="props.item"></AddSpiritButton>
+                                <AddSpiritButton :hero="rosterFocusedHero" :player-spirit="props.item"></AddSpiritButton>
                             </template>
                         </PlayerSpiritPanel>
                     </v-flex>
@@ -67,15 +67,37 @@
             PlayerSpiritPanel
         },
 
+        data() {
+            return {
+                emptyHero: {
+                    name: '',
+                    playerSpirit: null,
+                    heroRace: {
+                        positions: []
+                    }
+                }
+            }
+        },
+
         computed: {
             ...mapGetters([
                 '_squad',
                 '_currentWeek',
-                '_rosterFocusedHero',
+                '_rosterHeroes',
                 '_playerSpiritsPool'
             ]),
             rosterPage() {
                 return '/command-center/' + this.$route.params.squadSlug + '/roster' ;
+            },
+            rosterFocusedHero() {
+                if ('roster-hero' === this.$route.name) {
+                    let hero = this._rosterHeroes.find((hero) => hero.slug === this.$route.params.heroSlug);
+                    if (hero) {
+                        return hero;
+                    }
+                }
+
+                return this.emptyHero;
             }
         },
     }
