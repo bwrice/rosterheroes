@@ -24,6 +24,7 @@ class PlayerResource extends JsonResource
         return [
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
+            'full_name' => $this->fullName(),
             'team' => new TeamResource($this->whenLoaded('team')),
             'positions' => PositionResource::collection($this->whenLoaded('positions'))
         ];
