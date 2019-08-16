@@ -71,7 +71,7 @@ class CreatePlayerSpiritAction
         $aggregate->createPlayerSpirit($this->week->id, $this->player->id, $this->game->id, $essenceCost, PlayerSpirit::STARTING_ENERGY)
             ->persist();
 
-        return PlayerSpirit::uuid($playerSpiritUuid);
+        return PlayerSpirit::findUuid($playerSpiritUuid);
     }
 
     /**

@@ -26,7 +26,7 @@ class HeroProjector implements Projector
 
     public function onHeroSlotCreated(HeroSlotCreated $event, string $aggregateUuid)
     {
-        $hero = Hero::uuid($aggregateUuid);
+        $hero = Hero::findUuid($aggregateUuid);
         $hero->slots()->create([
             'slot_type_id' => $event->slotTypeID
         ]);
@@ -34,7 +34,7 @@ class HeroProjector implements Projector
 
     public function onUpdateHeroPlayerSpirit(UpdateHeroPlayerSpirit $event, string $aggregateUuid)
     {
-        $hero = Hero::uuid($aggregateUuid);
+        $hero = Hero::findUuid($aggregateUuid);
         $hero->player_spirit_id = $event->playerSpiritID;
         $hero->save();
     }

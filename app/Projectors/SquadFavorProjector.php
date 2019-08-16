@@ -13,7 +13,7 @@ class SquadFavorProjector implements Projector
 
     public function onSquadFavorIncreased(SquadFavorIncreased $event, string $aggregateUuid)
     {
-        $squad = Squad::uuid($aggregateUuid);
+        $squad = Squad::findUuid($aggregateUuid);
         $squad->favor += $event->amount;
         $squad->save();
     }

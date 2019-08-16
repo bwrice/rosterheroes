@@ -13,7 +13,7 @@ class SquadExperienceProjector implements Projector
 
     public function onSquadExperienceIncreased(SquadExperienceIncreased $event, string $uuid)
     {
-        $squad = Squad::uuid($uuid);
+        $squad = Squad::findUuid($uuid);
         $squad->experience += $event->amount;
         $squad->save();
     }

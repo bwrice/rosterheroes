@@ -21,7 +21,7 @@ class StoreSquadHero extends FormRequest
      */
     public function authorize()
     {
-        $squad = Squad::uuid($this->route('squadUuid'));
+        $squad = Squad::findUuid($this->route('squadUuid'));
         if (! $squad) {
             throw ValidationException::withMessages([
                 'Squad could not be found'

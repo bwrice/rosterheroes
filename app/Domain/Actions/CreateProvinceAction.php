@@ -36,6 +36,6 @@ class CreateProvinceAction
             $territory
         )->persist();
 
-        return Province::uuid($uuid);
+        return Province::findUuid($uuid);
     }
 }

@@ -20,7 +20,7 @@ class WeekPlayerSpiritController extends Controller
         if ('current' === $weekUuid) {
             $week = Week::current();
         } else {
-            $week = Week::uuidOrFail($weekUuid);
+            $week = Week::findUuidOrFail($weekUuid);
         }
 
         $query = PlayerSpirit::query()->forWeek($week);

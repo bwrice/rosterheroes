@@ -129,7 +129,7 @@ class Hero extends EventSourcedModel implements HasSlots, HasMeasurables
         return $this->heroPost ? $this->heroPost->squad : null;
     }
 
-    public static function uuid(string $uuid): ?self
+    public static function findUuid(string $uuid): ?self
     {
         return static::where('uuid', $uuid)->first();
     }

@@ -50,6 +50,7 @@ class SquadController extends Controller
 
     public function show($squadSlug)
     {
+        $squad = '';
         $squad = Squad::slugOrFail($squadSlug);
         return new SquadResource($squad);
     }

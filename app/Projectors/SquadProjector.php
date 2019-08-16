@@ -27,7 +27,7 @@ class SquadProjector implements Projector
 
     public function onLocationUpdated(SquadLocationUpdated $event, string $aggregateUuid)
     {
-        $squad = Squad::uuid($aggregateUuid);
+        $squad = Squad::findUuid($aggregateUuid);
         $squad->province_id = $event->toProvinceID;
         $squad->save();
     }

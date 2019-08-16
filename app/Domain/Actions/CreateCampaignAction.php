@@ -60,6 +60,6 @@ class CreateCampaignAction
         $campaignAggregate = CampaignAggregate::retrieve($campaignUuid);
         $campaignAggregate->createCampaign($this->squad->id, $this->week->id, $this->continent->id)->persist();
 
-        return Campaign::uuid($campaignUuid);
+        return Campaign::findUuid($campaignUuid);
     }
 }

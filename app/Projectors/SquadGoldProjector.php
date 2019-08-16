@@ -14,14 +14,14 @@ class SquadGoldProjector implements Projector
 
     public function onSquadGoldIncreased(SquadGoldIncreased $event, string $aggregateUuid)
     {
-        $squad = Squad::uuid($aggregateUuid);
+        $squad = Squad::findUuid($aggregateUuid);
         $squad->gold += $event->amount;
         $squad->save();
     }
 
     public function onSquadGoldDecreased(SquadGoldDecreased $event, string $aggregateUuid)
     {
-        $squad = Squad::uuid($aggregateUuid);
+        $squad = Squad::findUuid($aggregateUuid);
         $squad->gold -= $event->amount;
         $squad->save();
     }

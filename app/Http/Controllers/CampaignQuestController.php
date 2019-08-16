@@ -17,8 +17,8 @@ class CampaignQuestController extends Controller
 {
     public function store($campaignUuid, $questUuid)
     {
-        $campaign = Campaign::uuidOrFail($campaignUuid);
-        $quest = Quest::uuidOrFail($questUuid);
+        $campaign = Campaign::findUuidOrFail($campaignUuid);
+        $quest = Quest::findUuidOrFail($questUuid);
 
         try {
             $campaign->addQuest($quest);

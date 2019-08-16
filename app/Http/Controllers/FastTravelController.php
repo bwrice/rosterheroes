@@ -29,7 +29,7 @@ class FastTravelController extends Controller
 
         $travelRoute = new ProvinceCollection();
         foreach($request->travelRoute as $provinceUuid) {
-            $province = \App\Domain\Models\Province::uuidOrFail($provinceUuid);
+            $province = \App\Domain\Models\Province::findUuidOrFail($provinceUuid);
             $travelRoute->push($province);
         };
 

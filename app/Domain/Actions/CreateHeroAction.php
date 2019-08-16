@@ -47,7 +47,7 @@ class CreateHeroAction
          * for the rest of the creation process
          */
         $heroAggregate->persist();
-        $hero = Hero::uuid($heroUuid);
+        $hero = Hero::findUuid($heroUuid);
 
         MeasurableType::heroTypes()->each(function (MeasurableType $measurableType) use ($hero) {
             $measurableUuid = Str::uuid();
@@ -63,6 +63,6 @@ class CreateHeroAction
 
         // Persist slots
         $heroAggregate->persist();
-        return Hero::uuid($heroUuid);
+        return Hero::findUuid($heroUuid);
     }
 }

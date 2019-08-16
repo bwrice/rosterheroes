@@ -19,7 +19,7 @@ final class SquadSlotsProjector implements Projector
         /** @var SlotType $slotType */
         $slotType = SlotType::query()->where('name', '=', $event->slotTypeName)->first();
 
-        $squad = Squad::uuid($aggregateUuid);
+        $squad = Squad::findUuid($aggregateUuid);
         $slots = new SlotCollection();
 
         foreach(range(1, $event->count) as $slotCount) {

@@ -13,7 +13,7 @@ class SquadEssenceProjector implements Projector
 
     public function onSquadEssenceIncreased(SquadEssenceIncreased $event, string $aggregateUuid)
     {
-        $squad = Squad::uuid($aggregateUuid);
+        $squad = Squad::findUuid($aggregateUuid);
         $squad->spirit_essence += $event->amount;
         $squad->save();
     }

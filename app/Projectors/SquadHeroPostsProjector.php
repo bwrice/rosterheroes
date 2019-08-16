@@ -16,7 +16,7 @@ class SquadHeroPostsProjector implements Projector
     {
         /** @var HeroPostType $heroPostType */
         $heroPostType = HeroPostType::query()->where('name', '=', $event->heroPostTypeName)->first();
-        $squad = Squad::uuid($aggregateUuid);
+        $squad = Squad::findUuid($aggregateUuid);
         $squad->heroPosts()->create([
             'hero_post_type_id' => $heroPostType->id
         ]);

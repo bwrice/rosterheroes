@@ -62,7 +62,7 @@ class CreateSquadAction
          * because that action will query the DB
          */
         $aggregate->persist();
-        $squad = Squad::uuid($squadUuid);
+        $squad = Squad::findUuid($squadUuid);
         $this->updateSquadSlotsAction->execute($squad);
 
         return $squad->fresh();
