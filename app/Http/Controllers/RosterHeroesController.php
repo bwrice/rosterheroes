@@ -15,12 +15,12 @@ class RosterHeroesController extends Controller
         $this->authorize(Squad::MANAGE_AUTHORIZATION, $squad);
         $heroes = Hero::query()->amongSquad($squad)->get();
         $heroes->load([
-            'hero.heroRace.positions',
-            'hero.heroClass',
-            'hero.playerSpirit.game.homeTeam',
-            'hero.playerSpirit.game.awayTeam',
-            'hero.playerSpirit.player.team',
-            'hero.playerSpirit.player.positions'
+            'heroRace.positions',
+            'heroClass',
+            'playerSpirit.game.homeTeam',
+            'playerSpirit.game.awayTeam',
+            'playerSpirit.player.team',
+            'playerSpirit.player.positions'
         ]);
         return HeroResource::collection($heroes);
     }
