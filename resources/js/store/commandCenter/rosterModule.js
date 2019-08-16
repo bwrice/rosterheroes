@@ -38,23 +38,38 @@ export default {
 
         async addSpiritToHero({state, commit, dispatch}, payload) {
 
-            let updatedHero = await heroApi.addSpirit(payload.heroSlug, payload.spiritUuid);
-            let rosterHeroes = _.cloneDeep(state.rosterHeroes);
+            try {
 
-            let index = rosterHeroes.findIndex(function (hero) {
-                return hero.uuid === updatedHero.uuid;
-            });
+                let updatedHero = await heroApi.addSpirit(payload.heroSlug, payload.spiritUuid);
+                let rosterHeroes = _.cloneDeep(state.rosterHeroes);
 
-            if (index !== -1) {
-                rosterHeroes.splice(index, 1, updatedHero);
-                console.log(updatedHero);
-                commit('SET_ROSTER_HEROES', rosterHeroes);
-                dispatch('snackBarSuccess', {
-                    text: updatedHero.playerSpirit.player.full_name + ' now embodies ' + updatedHero.name,
-                    timeout: 3000
-                })
-            } else {
-                console.warn("Didn't update roster heroes when adding spirit");
+                let index = rosterHeroes.findIndex(function (hero) {
+                    return hero.uuid === updatedHero.uuid;
+                });
+
+                if (index !== -1) {
+                    rosterHeroes.splice(index, 1, updatedHero);
+                    commit('SET_ROSTER_HEROES', rosterHeroes);
+                    dispatch('snackBarSuccess', {
+                        text: updatedHero.playerSpirit.player.full_name + ' now embodies ' + updatedHero.name,
+                        timeout: 3000
+                    })
+                } else {
+                    console.warn("Didn't update roster heroes when adding spirit");
+                }
+
+            } catch (e) {
+                let errors = e.response.data.errors;
+                console.log(errors);
+                let snackBarPayload = {};
+                if (errors && errors.roster) {
+
+                    console.log(errors.roster[0]);
+                    snackBarPayload = {
+                        text: errors.roster[0]
+                    }
+                }
+                dispatch('snackBarError', snackBarPayload)
             }
         }
     }
