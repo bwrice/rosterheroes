@@ -9,37 +9,8 @@
 </template>
 
 <script>
-    import {mapGetters} from 'vuex';
-    import {mapActions} from 'vuex';
-
     export default {
         name: "ExploreView",
-
-        watch:{
-            $route (to) {
-                if (to.params.territorySlug
-                    && to.params.territorySlug !== this._territory.slug) {
-                    this.setTerritoryBySlug(to.params.territorySlug);
-
-                } else if (to.params.provinceSlug
-                    && to.params.provinceSlug !== this._province.slug) {
-                    this.setProvinceBySlug(to.params.provinceSlug);
-                }
-            }
-        },
-
-        methods: {
-            ...mapActions([
-                'setTerritoryBySlug',
-                'setProvinceBySlug',
-            ])
-        },
-        computed: {
-            ...mapGetters([
-                '_territory',
-                '_province',
-            ]),
-        }
     }
 </script>
 

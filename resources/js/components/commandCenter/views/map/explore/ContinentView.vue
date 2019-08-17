@@ -35,7 +35,6 @@
                 '_provinces',
                 '_continents'
             ]),
-            // needed for continent mixin
             continent() {
                 let slug = this.$route.params.continentSlug;
                 let continent = this._continents.find((continent) => continent.slug === slug);

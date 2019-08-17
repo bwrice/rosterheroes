@@ -4,8 +4,6 @@
 
 <script>
     import {mapActions} from 'vuex';
-    import {mapGetters} from 'vuex';
-
     import Squad from "../../../../models/Squad";
     import Province from "../../../../models/Province";
     import BaseView from "../BaseView";
@@ -29,13 +27,6 @@
                 'setCurrentLocation'
             ])
         },
-
-        computed: {
-            ...mapGetters([
-                '_province',
-                '_territory'
-            ]),
-        }
 
     }
 </script>
