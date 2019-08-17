@@ -16,9 +16,8 @@
 
 <script>
 
-    import {mapGetters} from 'vuex';
-
     import {provinceNavigationMixin} from "../../../../../mixins/provinceNavigationMixin";
+    import {bordersMixin} from "../../../../../mixins/bordersMixin";
 
     import ProvinceVector from "../../../map/ProvinceVector";
     import ExploreMapCard from "../../../map/ExploreMapCard";
@@ -31,15 +30,11 @@
         },
 
         mixins: [
-            provinceNavigationMixin
+            provinceNavigationMixin,
+            bordersMixin
         ],
 
         computed: {
-            ...mapGetters([
-                '_province',
-                '_borders',
-                '_provinces'
-            ]),
             province() {
                 let slug = this.$route.params.provinceSlug;
                 let province = this._provinces.find((province) => province.slug === slug);
@@ -56,12 +51,6 @@
                     },
                     borders: []
                 };
-            },
-            borders() {
-                let borderUuids = this.province.borders.map((border) => border.uuid);
-                return this._provinces.filter(function(province) {
-                    return borderUuids.includes(province.uuid);
-                })
             }
         }
     }
