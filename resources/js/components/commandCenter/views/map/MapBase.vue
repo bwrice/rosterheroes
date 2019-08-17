@@ -13,7 +13,6 @@
         components: {BaseView},
 
         async mounted() {
-            this.setExploreMap(this.$route);
 
             let squadSlug = this.$route.params.squadSlug;
             let squad = new Squad({slug: squadSlug});
@@ -23,7 +22,6 @@
 
         methods: {
             ...mapActions([
-                'setExploreMap',
                 'setCurrentLocation'
             ])
         },

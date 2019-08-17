@@ -42,7 +42,7 @@ export default {
     },
 
     actions: {
-        async setExploreMap({commit}) {
+        async setRealm({commit}) {
             let provinces = await Province.$get();
             commit('UPDATE_PROVINCES', provinces);
             let territories = await Territory.$get();

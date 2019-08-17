@@ -71,17 +71,7 @@
             this.updateCurrentWeek();
             this.updateBarracks(route);
             this.updateRoster(route);
-
-            // If we land on a hero page, we need to update associated stores
-            // if (this.$route.params.heroSlug) {
-            //
-            //     let hero = await Hero.$find(this.$route.params.heroSlug);
-            //     this.updateHero(hero);
-            //
-            //     if (this.$route.name === 'roster-hero') {
-            //         this.updatePlayerSpiritsPool();
-            //     }
-            // }
+            this.setRealm();
         },
 
         data: function() {
@@ -98,7 +88,7 @@
                 'updateRoster',
                 'setPlayerSpiritsPool',
                 'updatePlayerSpiritsPool',
-                'setMap'
+                'setRealm'
             ])
         },
         computed: {
