@@ -6,7 +6,6 @@
 
 <script>
 
-    import { mapGetters } from 'vuex';
     import { mapActions } from 'vuex';
 
     export default {
@@ -18,33 +17,21 @@
                 pending: false
             }
         },
-
-        computed: {
-
-        },
-
         methods: {
             ...mapActions([
                 'updateHero',
                 'setRosterFocusedHero',
                 'snackBarSuccess',
-                'snackBarError'
+                'snackBarError',
+                'removeSpiritFromHero'
             ]),
-            removeSpirit: function () {
+            async removeSpirit() {
                 this.pending = true;
-                axios.delete('/api/v1/heroes/' + this.hero.slug + '/player-spirit/' + this.playerSpirit.uuid)
-                    .then((response) => {
-                        this.pending = false;
-                        let heroResponse = response.data.data;
-                        this.updateHero(heroResponse);
-                        this.snackBarSuccess('Hero Updated');
-                    }).catch((error) => {
-                    this.pending = false;
-                    // TODO: add Errors class to snackBar store and handle there
-                    if (error.response && error.response.data.errors.roster) {
-                        this.snackBarError(error.response.data.errors.roster[0]);
-                    }
+                await this.removeSpiritFromHero({
+                    heroSlug: this.hero.slug,
+                    spiritUuid: this.playerSpirit.uuid
                 });
+                this.pending = false;
             }
         }
     }
