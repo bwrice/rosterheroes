@@ -21,14 +21,14 @@ trait HasSlug
      */
     public static function findSlugOrFail($slug)
     {
-        return static::slug($slug)->firstOrFail();
+        return static::forSlug($slug)->firstOrFail();
     }
 
     /**
      * @param $slug
      * @return Builder
      */
-    public static function slug($slug)
+    public static function forSlug($slug)
     {
         return static::query()->where('slug', '=', $slug);
     }
