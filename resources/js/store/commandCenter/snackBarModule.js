@@ -22,18 +22,6 @@ export default {
         SET_SNACKBAR(state, payload) {
             state.snackBar = payload;
         },
-        SET_COLOR(state, payload) {
-            state.snackBar.color = payload;
-        },
-        SET_TEXT(state, payload) {
-            state.snackBar.text = payload;
-        },
-        SET_TIMEOUT(state, payload) {
-            state.snackBar.timeout = payload;
-        },
-        TRIGGER(state) {
-            state.snackBar.trigger++;
-        }
     },
 
     actions: {
@@ -41,6 +29,7 @@ export default {
             commit('SET_SNACKBAR', payload)
         },
         snackBarSuccess({state, commit}, payload) {
+
             let {
                 timeout = 1500,
                 mode = '',
@@ -59,8 +48,6 @@ export default {
             });
         },
         snackBarError({state, commit}, payload) {
-
-            console.log(payload);
 
             let {
                 timeout = 4000,
