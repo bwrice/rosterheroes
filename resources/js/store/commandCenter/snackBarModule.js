@@ -8,7 +8,9 @@ export default {
             mode: '',
             timeout: 2000,
             text: ''
-        }
+        },
+        // Used to increment, because we just need a different number each time
+        triggerCount: 0
     },
 
     getters: {
@@ -38,7 +40,7 @@ export default {
         setSnackBar({commit}, payload) {
             commit('SET_SNACKBAR', payload)
         },
-        snackBarSuccess({commit}, payload) {
+        snackBarSuccess({state, commit}, payload) {
             let {
                 timeout = 1500,
                 mode = '',
@@ -46,7 +48,7 @@ export default {
                 color = 'success'
             } = payload;
 
-            let trigger = 1;
+            let trigger = state.trigger++;
 
             commit('SET_SNACKBAR', {
                 timeout,
@@ -56,7 +58,7 @@ export default {
                 trigger
             });
         },
-        snackBarError({commit}, payload) {
+        snackBarError({state, commit}, payload) {
 
             console.log(payload);
 
@@ -67,7 +69,7 @@ export default {
                 color = 'error'
             } = payload;
 
-            let trigger = 1;
+            let trigger = state.trigger++;
 
             commit('SET_SNACKBAR', {
                 timeout,
