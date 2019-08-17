@@ -6118,7 +6118,7 @@ class SeedProvinces extends Migration
                         'name' => 'Aglidym',
                         'continent' => \App\Domain\Models\Continent::VINDOBERON,
                         'borders' => [367,368,370,394,395],
-                        'realm_color' => '#3f6381',
+                        'realm_color' => '#48759d',
                         'realm_x' => 28.834416,
                         'realm_y' => 61.543716,
                         'focus_x' => 155,
