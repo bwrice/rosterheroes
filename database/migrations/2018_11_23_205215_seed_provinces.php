@@ -3568,7 +3568,7 @@ class SeedProvinces extends Migration
                     [
                         'name' => 'Davlus',
                         'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
-                        'borders' => [214,215,217,219,346,347,348],
+                        'borders' => [214,215,217,219,347,348],
                         'realm_color' => '#3d52a5',
                         'realm_x' => 134.73389,
                         'realm_y' => 166.82153,
@@ -3616,7 +3616,7 @@ class SeedProvinces extends Migration
                     [
                         'name' => 'Kaostriana',
                         'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
-                        'borders' => [216,217,218,272,273,346,347],
+                        'borders' => [216,217,218,272,273,346],
                         'realm_color' => '#4a3ead',
                         'realm_x' => 154.64637,
                         'realm_y' => 166.28409,
@@ -5738,7 +5738,7 @@ class SeedProvinces extends Migration
                     [
                         'name' => 'Ruashen',
                         'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
-                        'borders' => [216,219,272,376,345,347,350],
+                        'borders' => [219,272,376,345,347,350],
                         'realm_color' => '#3c3aa3',
                         'realm_x' => 131.05401,
                         'realm_y' => 171.22281,
@@ -5754,7 +5754,7 @@ class SeedProvinces extends Migration
                     [
                         'name' => 'Lynaesk',
                         'continent' => \App\Domain\Models\Continent::SOUTH_JAGONETH,
-                        'borders' => [216,219,346,348],
+                        'borders' => [216,346,348],
                         'realm_color' => '#6e3fb7',
                         'realm_x' => 131.05402,
                         'realm_y' => 171.22281,
