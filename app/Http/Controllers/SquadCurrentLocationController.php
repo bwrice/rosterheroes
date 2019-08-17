@@ -22,6 +22,6 @@ class SquadCurrentLocationController extends Controller
             'quests'
         ]);
 
-        return response()->json(new CurrentLocationResource($currentLocation), 200);
+        return new CurrentLocationResource($currentLocation);
     }
 }
