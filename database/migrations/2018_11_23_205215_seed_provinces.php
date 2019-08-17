@@ -5100,7 +5100,7 @@ class SeedProvinces extends Migration
                     [
                         'name' => 'Levyndus',
                         'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
-                        'borders' => [251,252,254,257,306,309,310,311,312],
+                        'borders' => [251,252,254,257,306,309,311,312],
                         'realm_color' => '#28a3ba',
                         'realm_x' => 86.164321,
                         'realm_y' => 97.424251,
@@ -5116,7 +5116,7 @@ class SeedProvinces extends Migration
                     [
                         'name' => 'Vuqor',
                         'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
-                        'borders' => [306,307,308,310,311],
+                        'borders' => [306,307,308,310],
                         'realm_color' => '#34b99a',
                         'realm_x' => 72.663405,
                         'realm_y' => 97.424251,
@@ -5132,7 +5132,7 @@ class SeedProvinces extends Migration
                     [
                         'name' => 'Anedrias',
                         'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
-                        'borders' => [308,309,311,313,314,335],
+                        'borders' => [309,311,313,314,335],
                         'realm_color' => '#418cb9',
                         'realm_x' => 72.663405,
                         'realm_y' => 97.424251,
@@ -5148,7 +5148,7 @@ class SeedProvinces extends Migration
                     [
                         'name' => 'Haschgua',
                         'continent' => \App\Domain\Models\Continent::CENTRAL_JAGONETH,
-                        'borders' => [308,309,310,312,313],
+                        'borders' => [308,310,312,313],
                         'realm_color' => '#205962',
                         'realm_x' => 72.663405,
                         'realm_y' => 97.424251,
