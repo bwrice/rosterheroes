@@ -1,5 +1,5 @@
 <template>
-    <ExploreMapCard :view-box="viewBox">
+    <ExploreMapCard :view-box="territory.realm_view_box">
         <ProvinceVector
             v-for="(province, uuid) in provincesForTerritory"
             :key="uuid"
@@ -35,14 +35,24 @@
         computed: {
             ...mapGetters([
                 '_provinces',
-                '_territory',
+                '_territories'
             ]),
-            // needed for territory mixin
             territory() {
-                return this._territory;
-            },
-            viewBox() {
-                return this._territory.realm_view_box;
+                let slug = this.$route.params.territorySlug;
+                let territory = this._territories.find((territory) => territory.slug === slug);
+                if (territory) {
+                    return territory;
+                }
+                return {
+                    'name': '',
+                    'slug': null,
+                    'realm_view_box': {
+                        'pan_x': 0,
+                        'pan_y': 0,
+                        'zoom_x': 315,
+                        'zoom_y': 240
+                    }
+                };
             }
         }
     }
