@@ -60,7 +60,41 @@ export default {
 
             } catch (e) {
                 let errors = e.response.data.errors;
-                console.log(errors);
+                let snackBarPayload = {};
+                if (errors && errors.roster) {
+
+                    console.log(errors.roster[0]);
+                    snackBarPayload = {
+                        text: errors.roster[0]
+                    }
+                }
+                dispatch('snackBarError', snackBarPayload)
+            }
+        },
+
+        async removeSpiritFromHero({state, commit, dispatch}, payload) {
+            try {
+
+                let updatedHero = await heroApi.removeSpirit(payload.heroSlug, payload.spiritUuid);
+                let rosterHeroes = _.cloneDeep(state.rosterHeroes);
+
+                let index = rosterHeroes.findIndex(function (hero) {
+                    return hero.uuid === updatedHero.uuid;
+                });
+
+                if (index !== -1) {
+                    rosterHeroes.splice(index, 1, updatedHero);
+                    commit('SET_ROSTER_HEROES', rosterHeroes);
+                    dispatch('snackBarSuccess', {
+                        text: updatedHero.name + ' saved',
+                        timeout: 1500
+                    })
+                } else {
+                    console.warn("Didn't update roster heroes when removing spirit");
+                }
+
+            } catch (e) {
+                let errors = e.response.data.errors;
                 let snackBarPayload = {};
                 if (errors && errors.roster) {
 
