@@ -8,16 +8,6 @@ export default {
         provinces: [],
         territories: [],
         continents: [],
-        continent: {
-            'name': '',
-            'slug': null,
-            'realm_view_box': {
-                'pan_x': 0,
-                'pan_y': 0,
-                'zoom_x': 315,
-                'zoom_y': 240
-            }
-        },
         territory: {
             'name': '',
             'slug': null,
@@ -53,9 +43,6 @@ export default {
         },
         _continents(state) {
             return state.continents;
-        },
-        _continent(state) {
-            return state.continent;
         },
         _realmMapMode(state) {
             return state.realmMapMode;
@@ -113,9 +100,7 @@ export default {
             let continents = await Continent.$get();
             commit('UPDATE_CONTINENTS', continents);
 
-            if (route.params.continentSlug) {
-                dispatch('setContinentBySlug', route.params.continentSlug);
-            } else if (route.params.territorySlug) {
+            if (route.params.territorySlug) {
                 dispatch('setTerritoryBySlug', route.params.territorySlug);
             } else if(route.params.provinceSlug) {
                 dispatch('setProvinceBySlug', route.params.provinceSlug);

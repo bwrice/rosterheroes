@@ -1,5 +1,5 @@
 <template>
-    <ExploreMapCard :view-box="viewBox">
+    <ExploreMapCard :view-box="continent.realm_view_box">
         <ProvinceVector
             v-for="(province, uuid) in provincesForContinent"
             :key="uuid"
@@ -33,15 +33,26 @@
         computed: {
             ...mapGetters([
                 '_provinces',
-                '_continent'
+                '_continents'
             ]),
             // needed for continent mixin
             continent() {
-                return this._continent;
-            },
-            viewBox() {
-                return this._continent.realm_view_box;
-            },
+                let slug = this.$route.params.continentSlug;
+                let continent = this._continents.find((continent) => continent.slug === slug);
+                if (continent) {
+                    return continent;
+                }
+                return {
+                    'name': '',
+                    'slug': null,
+                    'realm_view_box': {
+                        'pan_x': 0,
+                        'pan_y': 0,
+                        'zoom_x': 315,
+                        'zoom_y': 240
+                    }
+                };
+            }
         }
     }
 </script>

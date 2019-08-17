@@ -17,11 +17,7 @@
 
         watch:{
             $route (to) {
-                if (to.params.continentSlug
-                    && to.params.continentSlug !== this._continent.slug) {
-                    this.setContinentBySlug(to.params.continentSlug);
-
-                } else if (to.params.territorySlug
+                if (to.params.territorySlug
                     && to.params.territorySlug !== this._territory.slug) {
                     this.setTerritoryBySlug(to.params.territorySlug);
 
@@ -34,14 +30,12 @@
 
         methods: {
             ...mapActions([
-                'setContinentBySlug',
                 'setTerritoryBySlug',
                 'setProvinceBySlug',
             ])
         },
         computed: {
             ...mapGetters([
-                '_continent',
                 '_territory',
                 '_province',
             ]),

@@ -33,8 +33,7 @@
         computed: {
             ...mapGetters([
                 '_province',
-                '_territory',
-                '_continent'
+                '_territory'
             ]),
         }
 
