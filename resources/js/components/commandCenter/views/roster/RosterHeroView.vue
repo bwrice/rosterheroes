@@ -16,9 +16,8 @@
                 </template>
             </HeroRosterCard>
             <v-data-iterator
-                    :items="playerSpiritsPool"
+                    :items="filteredSpirits"
                     :loading="_rosterLoading"
-                    :search="spiritSearch"
                     row
                     wrap
             >
@@ -65,6 +64,8 @@
 </template>
 
 <script>
+    import * as jsSearch from 'js-search';
+
     import { mapGetters } from 'vuex';
 
     import PlayerSpiritPanel from '../../roster/PlayerSpiritPanel';
@@ -127,6 +128,18 @@
                     let filtered = spiritPositionIDs.filter(spiritPosID => heroPositionIDs.includes(spiritPosID));
                     return filtered.length > 0;
                 });
+            },
+            filteredSpirits() {
+                if (this.spiritSearch.length) {
+                    let search = new jsSearch.Search('uuid');
+                    search.addIndex(['player', 'full_name']);
+                    search.addIndex(['game', 'homeTeam', 'name']);
+                    search.addIndex(['game', 'awayTeam', 'name']);
+                    search.addDocuments(this.playerSpiritsPool);
+                    return search.search(this.spiritSearch);
+                } else {
+                    return this.playerSpiritsPool;
+                }
             }
         },
     }
