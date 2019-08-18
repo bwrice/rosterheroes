@@ -17,6 +17,7 @@
             </HeroRosterCard>
             <v-data-iterator
                     :items="playerSpiritsPool"
+                    :loading="_rosterLoading"
                     hide-default-footer
                     row
                     wrap
@@ -43,6 +44,11 @@
                             </template>
                         </PlayerSpiritPanel>
                     </v-flex>
+                </template>
+                <template v-slot:loading>
+                    <v-row :justify="'center'" class="py-5">
+                        <v-progress-circular indeterminate size="36"></v-progress-circular>
+                    </v-row>
                 </template>
             </v-data-iterator>
         </v-card>
@@ -84,7 +90,8 @@
                 '_squad',
                 '_currentWeek',
                 '_rosterHeroes',
-                '_playerSpiritsPool'
+                '_playerSpiritsPool',
+                '_rosterLoading'
             ]),
             rosterPage() {
                 return '/command-center/' + this.$route.params.squadSlug + '/roster' ;
