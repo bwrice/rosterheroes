@@ -9,7 +9,8 @@ export default {
         territories: [],
         continents: [],
         realmMapMode: 'continent',
-        borders: []
+        borders: [],
+        loading: false
     },
 
     getters: {
@@ -24,6 +25,9 @@ export default {
         },
         _realmMapMode(state) {
             return state.realmMapMode;
+        },
+        _realmLoading(state) {
+            return state.loading;
         }
     },
     mutations: {
@@ -39,16 +43,21 @@ export default {
         SET_REALM_MAP_MODE(state, payload) {
             state.realmMapMode = payload;
         },
+        SET_REALM_LOADING(state, payload) {
+            state.loading = payload;
+        }
     },
 
     actions: {
-        async setRealm({commit}) {
+        async setRealm({state, commit}) {
+            commit('SET_REALM_LOADING', true);
             let provinces = await Province.$get();
             commit('UPDATE_PROVINCES', provinces);
             let territories = await Territory.$get();
             commit('UPDATE_TERRITORIES', territories);
             let continents = await Continent.$get();
             commit('UPDATE_CONTINENTS', continents);
+            commit('SET_REALM_LOADING', false);
         },
         setRealmMapMode({commit}, payload) {
             commit('SET_REALM_MAP_MODE', payload)
