@@ -22,14 +22,6 @@
                     wrap
             >
                 <template v-slot:header>
-                    <v-toolbar
-                            class="mb-2"
-                            color="secondary"
-                            dark
-                            text
-                    >
-                        <v-toolbar-title>Select Player Spirit</v-toolbar-title>
-                    </v-toolbar>
                     <v-text-field
                         v-model="spiritSearch"
                         clearable
