@@ -26,5 +26,8 @@ export default {
             let location = await squadApi.getCurrentLocation(squadSlug);
             commit('SET_CURRENT_LOCATION', location)
         },
+        setCurrentLocation({commit}, location) {
+            commit('SET_CURRENT_LOCATION', location);
+        }
     }
 };
