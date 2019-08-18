@@ -6,6 +6,7 @@ export default {
 
     state: {
         playerSpiritsPool: [],
+        loading: false,
         rosterHeroes: []
     },
 
@@ -15,6 +16,9 @@ export default {
         },
         _rosterHeroes(state) {
             return state.rosterHeroes;
+        },
+        _rosterLoading(state) {
+            return state.loading;
         }
     },
     mutations: {
@@ -23,17 +27,24 @@ export default {
         },
         SET_ROSTER_HEROES(state, payload) {
             state.rosterHeroes = payload;
+        },
+        SET_ROSTER_LOADING(state, payload) {
+            state.loading = payload;
         }
     },
 
     actions: {
-        async updateRoster({commit, dispatch}, route) {
+        async updateRoster({commit}, route) {
+
+            commit('SET_ROSTER_LOADING', true);
 
             let heroes = await squadApi.getRosterHeroes(route.params.squadSlug);
             commit('SET_ROSTER_HEROES', heroes);
 
             let playerSpirits = await weekApi.getCurrentPlayerSpirits();
             commit('SET_PLAYER_SPIRITS_POOL', playerSpirits);
+
+            commit('SET_ROSTER_LOADING', false);
         },
 
         async addSpiritToHero({state, commit, dispatch}, payload) {
