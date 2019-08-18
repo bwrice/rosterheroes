@@ -7,10 +7,16 @@
                 <!-- Default Slot: ProvinceVector components slotted here -->
             </slot>
         </svg>
+        <v-overlay :absolute="true" :value="loading">
+            <v-progress-circular indeterminate size="48"></v-progress-circular>
+        </v-overlay>
     </v-sheet>
 </template>
 
 <script>
+
+    import {mapGetters} from 'vuex';
+
     export default {
         name: "MapViewPort",
         props: {
@@ -32,12 +38,26 @@
             tile: {
                 type: Boolean,
                 default: true
+            },
+            requiresRealm: {
+                type: Boolean,
+                default: true
             }
         },
         computed: {
+            ...mapGetters([
+                '_realmLoading'
+            ]),
             viewBoxString() {
                 return this.viewBox.pan_x + ' ' + this.viewBox.pan_y + ' ' + this.viewBox.zoom_x + ' ' + this.viewBox.zoom_y;
+            },
+            loading() {
+                if (this.requiresRealm) {
+                    return this._realmLoading;
+                }
+                return false;
             }
+
         }
     }
 </script>
