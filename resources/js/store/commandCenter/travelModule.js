@@ -1,4 +1,4 @@
-import Province from "../../models/Province";
+import * as squadApi from '../../api/squadApi';
 
 export default {
 
@@ -34,22 +34,60 @@ export default {
 
     actions: {
         async extendTravelRoute({commit, rootState}, payload) {
-            //TODO move everything but setter out
             try {
                 let squad = rootState.squadModule.squad;
                 let response = await axios.get('/api/v1/squads/' + squad.slug + '/border/' + payload.slug);
                 let routeProvince = response.data;
                 commit('ADD_TO_TRAVEL_ROUTE', routeProvince);
             } catch (error) {
-                console.log("ERROR");
-                console.log(error);
+                //
             }
         },
-        clearTravelRoute({commit, rootState}) {
+        clearTravelRoute({commit}) {
             commit('CLEAR_TRAVEL_ROUTE');
         },
         removeLastRoutePosition({commit}) {
             commit('REMOVE_LAST_ROUTE_POSITION');
         },
+        async confirmTravel({state, commit, dispatch}, payload) {
+            dispatch('setOverlay', {show: true});
+
+            let travelRoute = state.travelRoute.map(function (province) {
+                return province.uuid;
+            });
+
+            let squadSlug = payload.route.params.squadSlug;
+
+            try {
+
+                let currentLocation = await squadApi.fastTravel(squadSlug, travelRoute);
+                dispatch('setCurrentLocation', currentLocation);
+                dispatch('clearTravelRoute');
+                dispatch('updateSquad', payload.route);
+                dispatch('snackBarSuccess', {
+                    'text': 'Welcome to ' + currentLocation.name,
+                    timeout: 4000
+
+                });
+                payload.router.push({
+                    name: 'map-main',
+                    params: {
+                        squadSlug: squadSlug
+                    }});
+
+            } catch (e) {
+                let errors = e.response.data.errors;
+                let snackBarPayload = {};
+                if (errors && errors.travel) {
+                    snackBarPayload = {
+                        text: errors.travel[0]
+                    }
+                }
+                dispatch('snackBarError', snackBarPayload)
+            }
+
+            dispatch('stopOverlay');
+        }
+
     }
 };

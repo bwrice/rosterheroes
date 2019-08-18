@@ -62,8 +62,6 @@ export default {
                 let errors = e.response.data.errors;
                 let snackBarPayload = {};
                 if (errors && errors.roster) {
-
-                    console.log(errors.roster[0]);
                     snackBarPayload = {
                         text: errors.roster[0]
                     }
