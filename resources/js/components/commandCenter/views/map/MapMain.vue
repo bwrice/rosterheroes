@@ -1,8 +1,8 @@
 <template>
-    <v-flex class="xs12">
-        <v-card class="pa-1">
-            <v-layout>
-                <v-flex class="xs5">
+    <v-col cols="12">
+        <v-card>
+            <v-row no-gutters>
+                <v-col cols="5" class="pa-1">
                     <MapViewPort :tile="false" :view-box="_currentLocation.view_box">
 
                         <!-- Borders -->
@@ -15,16 +15,20 @@
 
                         <ProvinceVector :province="_currentLocation" :highlight="true"></ProvinceVector>
                     </MapViewPort>
-                </v-flex>
-                <v-flex class="xs7 px-1">
-                    <p>
-                        Current Location: {{_currentLocation.name}} <br>
-                        Borders: {{bordersCount}} <br>
-                        Squads: {{_currentLocation.squads_count}} <br>
-                        Quests: {{_currentLocation.quests_count}}
-                    </p>
-                    <v-layout>
-                        <v-flex class="xs12 md8 offset-md2">
+                </v-col>
+                <v-col cols="7" class="pa-1">
+                    <v-row no-gutters>
+                        <v-col cols="12">
+                            <p>
+                                Current Location: {{_currentLocation.name}} <br>
+                                Borders: {{bordersCount}} <br>
+                                Squads: {{_currentLocation.squads_count}} <br>
+                                Quests: {{_currentLocation.quests_count}}
+                            </p>
+                        </v-col>
+                    </v-row>
+                    <v-row no-gutters>
+                        <v-col cols="12">
                             <v-btn
                                 :color="'primary'"
                                 :to="travelRoute"
@@ -33,12 +37,12 @@
                                 :color="'primary'"
                                 :to="exploreRoute"
                             >Explore</v-btn>
-                        </v-flex>
-                    </v-layout>
-                </v-flex>
-            </v-layout>
+                        </v-col>
+                    </v-row>
+                </v-col>
+            </v-row>
         </v-card>
-    </v-flex>
+    </v-col>
 </template>
 
 <script>
