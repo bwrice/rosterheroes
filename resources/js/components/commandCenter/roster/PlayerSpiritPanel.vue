@@ -5,23 +5,23 @@
                 {{ playerName }}
             </v-card-title>
             <v-card-text>
-                <v-layout>
-                    <v-flex class="xs8">
+                <v-row :dense="true">
+                    <v-col cols="8">
                         <p class="ma-0">{{ gameDescription }}</p>
                         <p class="ma-0">Essence Cost: {{ essenceCost }}</p>
                         <p class="ma-0">Energy: {{ energy }}</p>
-                    </v-flex>
-                    <v-flex class="xs4">
+                    </v-col>
+                    <v-col cols="4">
                         <slot name="spirit-actions">
                             <!-- Slotted Spirit Actions -->
                         </slot>
-                    </v-flex>
-                </v-layout>
-                <v-layout>
-                    <v-flex class="xs12">
+                    </v-col>
+                </v-row>
+                <v-row :dense="true">
+                    <v-col cols="12">
                         <PositionChipList :positions="playerSpiritPositions"></PositionChipList>
-                    </v-flex>
-                </v-layout>
+                    </v-col>
+                </v-row>
             </v-card-text>
         </v-card>
     </transition>

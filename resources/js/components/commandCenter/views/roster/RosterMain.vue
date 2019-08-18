@@ -1,5 +1,5 @@
 <template>
-    <v-flex class="xs12">
+    <v-col>
         <v-card>
             <span class="display-3 px-1">{{this._squad.available_spirit_essence}}</span> Spirit Essence Available
             <div v-for="(hero, uuid) in _rosterHeroes">
@@ -20,7 +20,7 @@
                 </HeroRosterCard>
             </div>
         </v-card>
-    </v-flex>
+    </v-col>
 </template>
 
 <script>
