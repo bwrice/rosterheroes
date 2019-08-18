@@ -22,6 +22,7 @@ class PositionResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'name' => $this->name,
             'abbreviation' => $this->getBehavior()->getAbbreviation(),
             'sport_id' => $this->sport_id

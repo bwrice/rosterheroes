@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * Class Position
  * @package App
  *
+ * @property int $id
  * @property string $name
  * @property int $sport_id
  *
