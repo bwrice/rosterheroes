@@ -61,7 +61,7 @@
 
                                 <!-- Borders -->
                                 <ProvinceVector
-                                    v-for="(province, uuid) in _routePosition.borders"
+                                    v-for="(province, uuid) in borders"
                                     :key="uuid"
                                     :province="province"
                                     @provinceClicked="addToRoute"
@@ -149,6 +149,7 @@
 
     import {viewBoxControlsMixin} from "../../../../mixins/viewBoxControlsMixin";
     import {travelMixin} from "../../../../mixins/travelMixin";
+    import {bordersMixin} from "../../../../mixins/bordersMixin";
 
     import MapViewPort from "../../map/MapViewPort";
     import ProvinceVector from "../../map/ProvinceVector";
@@ -167,7 +168,8 @@
         },
         mixins: [
             viewBoxControlsMixin,
-            travelMixin
+            travelMixin,
+            bordersMixin
         ],
         mounted() {
             this.setViewBox(this._routePosition.view_box);
@@ -269,6 +271,10 @@
             },
             emptyRoute() {
                 return ! this._travelRoute.length;
+            },
+            // needed for borders mixin
+            province() {
+                return this._routePosition;
             }
         }
     }

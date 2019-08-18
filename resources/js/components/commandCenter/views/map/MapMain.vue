@@ -7,7 +7,7 @@
 
                         <!-- Borders -->
                         <ProvinceVector
-                            v-for="(province, uuid) in this._currentLocation.borders"
+                            v-for="(province, uuid) in borders"
                             :key="uuid"
                             :province="province"
                         >
@@ -45,6 +45,8 @@
 
     import { mapGetters } from 'vuex';
 
+    import {bordersMixin} from "../../../../mixins/bordersMixin";
+
     import MapViewPort from "../../map/MapViewPort";
     import ProvinceVector from "../../map/ProvinceVector";
 
@@ -54,6 +56,10 @@
             ProvinceVector,
             MapViewPort
         },
+
+        mixins: [
+            bordersMixin
+        ],
 
         computed: {
             ...mapGetters([
@@ -77,6 +83,10 @@
                         squadSlug: this.$route.params.squadSlug
                     }
                 }
+            },
+            // needed for borders mixin
+            province() {
+                return this._currentLocation;
             }
         }
     }
