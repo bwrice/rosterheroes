@@ -18,7 +18,7 @@
             <v-data-iterator
                     :items="playerSpiritsPool"
                     :loading="_rosterLoading"
-                    hide-default-footer
+                    :search="spiritSearch"
                     row
                     wrap
             >
@@ -31,6 +31,15 @@
                     >
                         <v-toolbar-title>Select Player Spirit</v-toolbar-title>
                     </v-toolbar>
+                    <v-text-field
+                        v-model="spiritSearch"
+                        clearable
+                        flat
+                        solo-inverted
+                        hide-details
+                        prepend-inner-icon="search"
+                        label="Search Player Spirits"
+                    ></v-text-field>
                 </template>
                 <template v-slot:item="props">
                     <v-flex
@@ -81,7 +90,8 @@
                     heroRace: {
                         positions: []
                     }
-                }
+                },
+                spiritSearch: ''
             }
         },
 
