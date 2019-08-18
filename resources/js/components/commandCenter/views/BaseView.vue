@@ -1,8 +1,8 @@
 <template>
-    <v-container class="fluid pa-1">
-        <v-layout>
+    <v-container>
+        <v-row no-gutters>
             <router-view></router-view>
-        </v-layout>
+        </v-row>
         <v-overlay :value="_overlay.show">
             <v-progress-circular
                 size="64"
