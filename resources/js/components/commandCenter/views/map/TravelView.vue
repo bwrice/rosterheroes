@@ -1,116 +1,118 @@
 <template>
-    <v-flex class="xs12">
+    <v-col cols="12" md="8" offset-md="2">
         <v-card>
-            <v-layout>
-                <v-flex class="xs5">
-                    <v-layout>
-                        <v-flex class="xs12">
-                            <TravelRouteMap></TravelRouteMap>
-                        </v-flex>
-                    </v-layout>
-                    <v-layout>
-                        <v-flex class="xs12">
-                            <h5 class="text-center">Current Route</h5>
-                            <div style="min-height:150px; max-height:150px; overflow-y:auto">
-                                <v-card class="pa-1" flat>
-                                    <TravelRouteListItem
-                                        v-for="(province, uuid) in routeList"
-                                        :province="province"
-                                        :key="uuid"
-                                        :color="routeItemColor(province)"
+            <v-container class="pa-0">
+                <v-row no-gutters>
+                    <v-col cols="5" class="pa-1">
+                        <v-row no-gutters>
+                            <v-col cols="12">
+                                <TravelRouteMap></TravelRouteMap>
+                            </v-col>
+                        </v-row>
+                        <v-row no-gutters>
+                            <v-col cols="12">
+                                <h5 class="text-center">Current Route</h5>
+                                <div style="min-height:150px; max-height:150px; overflow-y:auto">
+                                    <v-card class="pa-1" flat>
+                                        <TravelRouteListItem
+                                            v-for="(province, uuid) in routeList"
+                                            :province="province"
+                                            :key="uuid"
+                                            :color="routeItemColor(province)"
+                                        >
+                                        </TravelRouteListItem>
+                                        <v-sheet tile :color="'#a969b3'" class="pa-1">
+                                            {{this._currentLocation.name}}
+                                        </v-sheet>
+                                    </v-card>
+                                </div>
+                            </v-col>
+                        </v-row>
+                        <v-row no-gutters>
+                            <v-col cols="12">
+                                <v-sheet class="pa-1">
+                                    <v-btn
+                                        :disabled="emptyRoute"
+                                        color="warning"
+                                        block
+                                        @click="removeLastRoutePosition"
                                     >
-                                    </TravelRouteListItem>
-                                    <v-sheet tile :color="'#a969b3'" class="pa-1">
-                                        {{this._currentLocation.name}}
-                                    </v-sheet>
+                                        Undo
+                                    </v-btn>
+                                </v-sheet>
+                            </v-col>
+                            <v-col cols="12">
+                                <v-sheet class="pa-1">
+                                    <v-btn
+                                        :disabled="emptyRoute"
+                                        color="error"
+                                        block
+                                        @click="clearTravelRoute"
+                                    >
+                                        Clear Route
+                                    </v-btn>
+                                </v-sheet>
+                            </v-col>
+                        </v-row>
+                    </v-col>
+                    <v-col cols="7" class="pa-1">
+                        <v-row no-gutters>
+                            <v-col class="xs12">
+                                <MapViewPort :tile="true" :view-box="currentViewBox">
+
+                                    <!-- Borders -->
+                                    <ProvinceVector
+                                        v-for="(province, uuid) in borders"
+                                        :key="uuid"
+                                        :province="province"
+                                        @provinceClicked="addToRoute"
+                                        :fill-color="borderColor(province)"
+                                        :highlight="provinceInRoute(province)"
+                                    >
+                                    </ProvinceVector>
+
+                                    <ProvinceVector
+                                        :province="_routePosition"
+                                        :highlight="true"
+                                        @provinceClicked="snackBarError({text: 'Click on a border to add to your route'})"
+                                    >
+                                    </ProvinceVector>
+                                </MapViewPort>
+                            </v-col>
+                        </v-row>
+                        <v-row no-gutters>
+                            <v-col cols="12">
+                                <v-card flat class="pa-3">
+                                    <MapControls
+                                        @panUp="panUp"
+                                        @panDown="panDown"
+                                        @panLeft="panLeft"
+                                        @panRight="panRight"
+                                        @zoomIn="zoomIn"
+                                        @zoomOut="zoomOut"
+                                        @reset="restViewBox"
+                                    ></MapControls>
                                 </v-card>
-                            </div>
-                        </v-flex>
-                    </v-layout>
-                    <v-layout row class="px-3">
-                        <v-flex class="xs12">
-                            <v-sheet class="pa-1">
-                                <v-btn
-                                    :disabled="emptyRoute"
-                                    color="warning"
-                                    block
-                                    @click="removeLastRoutePosition"
-                                >
-                                    Undo
-                                </v-btn>
-                            </v-sheet>
-                        </v-flex>
-                        <v-flex class="xs12">
-                            <v-sheet class="pa-1">
-                                <v-btn
-                                    :disabled="emptyRoute"
-                                    color="error"
-                                    block
-                                    @click="clearTravelRoute"
-                                >
-                                    Clear Route
-                                </v-btn>
-                            </v-sheet>
-                        </v-flex>
-                    </v-layout>
-                </v-flex>
-                <v-flex class="xs7">
-                    <v-layout>
-                        <v-flex class="xs12">
-                            <MapViewPort :tile="true" :view-box="currentViewBox">
-
-                                <!-- Borders -->
-                                <ProvinceVector
-                                    v-for="(province, uuid) in borders"
-                                    :key="uuid"
-                                    :province="province"
-                                    @provinceClicked="addToRoute"
-                                    :fill-color="borderColor(province)"
-                                    :highlight="provinceInRoute(province)"
-                                >
-                                </ProvinceVector>
-
-                                <ProvinceVector
-                                    :province="_routePosition"
-                                    :highlight="true"
-                                    @provinceClicked="snackBarError({text: 'Click on a border to add to your route'})"
-                                >
-                                </ProvinceVector>
-                            </MapViewPort>
-                        </v-flex>
-                    </v-layout>
-                    <v-layout>
-                        <v-flex class="xs12">
-                            <v-card flat class="pa-3">
-                                <MapControls
-                                    @panUp="panUp"
-                                    @panDown="panDown"
-                                    @panLeft="panLeft"
-                                    @panRight="panRight"
-                                    @zoomIn="zoomIn"
-                                    @zoomOut="zoomOut"
-                                    @reset="restViewBox"
-                                ></MapControls>
-                            </v-card>
-                        </v-flex>
-                    </v-layout>
-                    <v-layout>
-                        <v-flex class="xs12">
-                            <v-sheet class="pa-2">
-                                <v-btn
-                                    :disabled="emptyRoute"
-                                    color="success"
-                                    x-large
-                                    block
-                                    @click="travelDialog = true"
-                                >
-                                    Travel
-                                </v-btn>
-                            </v-sheet>
-                        </v-flex>
-                    </v-layout>
-                </v-flex>
-            </v-layout>
+                            </v-col>
+                        </v-row>
+                        <v-row no-gutters>
+                            <v-col cols="12">
+                                <v-sheet class="pa-2">
+                                    <v-btn
+                                        :disabled="emptyRoute"
+                                        color="success"
+                                        x-large
+                                        block
+                                        @click="travelDialog = true"
+                                    >
+                                        Travel
+                                    </v-btn>
+                                </v-sheet>
+                            </v-col>
+                        </v-row>
+                    </v-col>
+                </v-row>
+            </v-container>
         </v-card>
         <v-dialog
             v-model="travelDialog"
@@ -142,7 +144,7 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
-    </v-flex>
+    </v-col>
 </template>
 
 <script>
