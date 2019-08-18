@@ -6,6 +6,7 @@ use App\Domain\Actions\FastTravelAction;
 use App\Domain\Collections\ProvinceCollection;
 use App\Domain\Models\Squad;
 use App\Exceptions\BorderTravelException;
+use App\Http\Resources\CurrentLocationResource;
 use App\Http\Resources\SquadResource;
 use App\Nova\Province;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -19,7 +20,7 @@ class FastTravelController extends Controller
      * @param $squadSlug
      * @param Request $request
      * @param FastTravelAction $fastTravelAction
-     * @return JsonResponse
+     * @return CurrentLocationResource
      * @throws AuthorizationException
      */
     public function __invoke($squadSlug, Request $request, FastTravelAction $fastTravelAction)
@@ -42,8 +43,7 @@ class FastTravelController extends Controller
                 'travel' => $exception->getMessage()
             ]);
         }
-        return response()->json(new SquadResource($squad->fresh()->load([
-            'province.borders',
-        ])), 201);
+        $currentLocation = $squad->fresh()->province;
+        return new CurrentLocationResource($currentLocation);
     }
 }
