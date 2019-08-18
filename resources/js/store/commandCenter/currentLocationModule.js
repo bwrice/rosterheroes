@@ -1,3 +1,4 @@
+import * as squadApi from '../../api/squadApi';
 
 export default {
 
@@ -20,8 +21,10 @@ export default {
     },
 
     actions: {
-        setCurrentLocation({commit}, payload) {
-            commit('SET_CURRENT_LOCATION', payload)
+        async updateCurrentLocation({commit}, route) {
+            let squadSlug = route.params.squadSlug;
+            let location = await squadApi.getCurrentLocation(squadSlug);
+            commit('SET_CURRENT_LOCATION', location)
         },
     }
 };

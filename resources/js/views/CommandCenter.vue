@@ -71,6 +71,7 @@
             this.updateCurrentWeek();
             this.updateBarracks(route);
             this.updateRoster(route);
+            this.updateCurrentLocation(route);
             this.setRealm();
         },
 
@@ -88,6 +89,7 @@
                 'updateRoster',
                 'setPlayerSpiritsPool',
                 'updatePlayerSpiritsPool',
+                'updateCurrentLocation',
                 'setRealm'
             ])
         },
