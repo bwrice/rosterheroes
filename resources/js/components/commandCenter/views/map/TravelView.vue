@@ -73,7 +73,7 @@
                                 <ProvinceVector
                                     :province="_routePosition"
                                     :highlight="true"
-                                    @provinceClicked="snackBarError('Click on a border to add to your route')"
+                                    @provinceClicked="snackBarError({text: 'Click on a border to add to your route'})"
                                 >
                                 </ProvinceVector>
                             </MapViewPort>
@@ -132,7 +132,10 @@
                     <v-btn
                         color="green darken-1"
                         text
-                        @click="confirmTravel"
+                        @click="confirmTravel({
+                            route: $route,
+                            router: $router
+                        })"
                     >
                         Confirm Travel
                     </v-btn>
@@ -193,8 +196,7 @@
                 'removeLastRoutePosition',
                 'snackBarError',
                 'snackBarSuccess',
-                'setOverlay',
-                'stopOverlay'
+                'confirmTravel'
             ]),
             routeItemColor(province) {
                 if (province.uuid === this._routePosition.uuid) {
@@ -210,52 +212,17 @@
             },
             addToRoute(province) {
                 if (province.uuid === this._currentLocation.uuid) {
-                    this.snackBarError("You're already in " + province.name);
+                    this.snackBarError({
+                        text: "You're already in " + province.name
+                    });
                 }else if(this.provinceInRoute(province)) {
-                    this.snackBarError(province.name + ' is already part of your route');
+                    this.snackBarError({
+                        text: province.name + ' is already part of your route'
+                    });
                 } else {
                     this.extendTravelRoute(province);
                 }
             },
-            async confirmTravel() {
-
-                this.travelDialog = false;
-                this.setOverlay({
-                    show: true
-                });
-
-                let provinces = this._travelRoute.map(function (province) {
-                    return province.uuid;
-                });
-
-                try {
-
-                    let response = await axios.post('/api/v1/squads/' + this._squad.slug + '/fast-travel', {
-                        travelRoute: provinces
-                    });
-                    let squad = response.data;
-                    let currentLocation = squad.province;
-                    this.clearTravelRoute();
-                    this.setCurrentLocation(currentLocation);
-                    this.setSquad(squad);
-                    this.stopOverlay();
-                    this.snackBarSuccess('Welcome to ' + currentLocation.name);
-                    this.$router.push({
-                        name: 'map-main',
-                        params: {
-                            squadSlug: squad.slug
-                        }});
-
-                } catch (error) {
-                    this.stopOverlay();
-                    let responseErrors = error.response.data;
-                    if (responseErrors.errors.travel) {
-                        this.snackBarError(responseErrors.errors.travel[0]);
-                    } else {
-                        this.snackBarError("Oops something went wrong");
-                    }
-                }
-            }
         },
 
         computed: {
