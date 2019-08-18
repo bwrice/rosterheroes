@@ -16,7 +16,7 @@
                 </template>
             </HeroRosterCard>
             <v-data-iterator
-                    :items="_playerSpiritsPool"
+                    :items="playerSpiritsPool"
                     hide-default-footer
                     row
                     wrap
@@ -98,6 +98,18 @@
                 }
 
                 return this.emptyHero;
+            },
+            playerSpiritsPool() {
+                let heroPositionIDs = this.rosterFocusedHero.heroRace.positions.map(function (position) {
+                    return position.id;
+                });
+                return this._playerSpiritsPool.filter(function (playerSpirit) {
+                    let spiritPositionIDs = playerSpirit.player.positions.map(function (position) {
+                        return position.id;
+                    });
+                    let filtered = spiritPositionIDs.filter(spiritPosID => heroPositionIDs.includes(spiritPosID));
+                    return filtered.length > 0;
+                });
             }
         },
     }
