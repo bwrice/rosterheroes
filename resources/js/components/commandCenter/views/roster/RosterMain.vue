@@ -1,7 +1,7 @@
 <template>
     <v-col>
         <v-card>
-            <span class="display-3 px-1">{{this._squad.available_spirit_essence}}</span> Spirit Essence Available
+            <span class="display-3 px-1">{{availableSpiritEssence}}</span> Spirit Essence Available
             <div v-for="(hero, uuid) in _rosterHeroes">
                 <HeroRosterCard :hero="hero">
                     <template slot="body">
@@ -48,6 +48,17 @@
                 '_rosterHeroes',
                 '_squad'
             ]),
+            availableSpiritEssence() {
+
+                let startingSpiritEssence = this._squad.spirit_essence;
+                let usedEssence =  this._rosterHeroes.reduce(function (essence, hero) {
+                    if (hero.playerSpirit) {
+                        return essence + hero.playerSpirit.essence_cost;
+                    }
+                    return essence;
+                }, 0);
+                return startingSpiritEssence - usedEssence;
+            }
         },
     }
 </script>

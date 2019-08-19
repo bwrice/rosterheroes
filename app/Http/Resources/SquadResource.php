@@ -26,7 +26,6 @@ class SquadResource extends JsonResource
             'slug' => $this->slug,
             'name' => $this->name,
             'spirit_essence' => $this->spirit_essence,
-            'available_spirit_essence' => $this->availableSpiritEssence(),
             'gold' => $this->gold,
             'experience' => $this->experience,
             'favor' => $this->favor,
