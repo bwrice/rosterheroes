@@ -16,6 +16,7 @@
                             v-for="(attribute, uuid) in attributes"
                             :key="uuid"
                             :measurable="attribute"
+                            @measurableClicked="setFocusedMeasurable"
                         ></MeasurablePanel>
                     </v-card>
                     <v-card>
@@ -27,6 +28,21 @@
                 </v-card>
             </v-col>
         </v-row>
+        <v-dialog
+            v-model="measurableFocused"
+            max-width="600"
+        >
+            <v-card>
+                <v-card-title class="headline">{{focusedMeasurable.measurable_type.name.toUpperCase()}}</v-card-title>
+                <v-card-actions>
+                    <v-btn
+                        color="primary"
+                    >
+                        Raise {{focusedMeasurable.measurable_type.name.toUpperCase()}}
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
     </v-col>
 </template>
 
@@ -43,7 +59,18 @@
             this.setBarracksFocusedHeroBySlug(this.$route.params.heroSlug);
         },
 
-        watch:{
+        data() {
+            return {
+                focusedMeasurable: {
+                    measurable_type: {
+                        name: ''
+                    }
+                },
+                measurableFocused: false
+            }
+        },
+
+        watch: {
             $route (to) {
                 if (to.params.heroSlug && to.params.heroSlug !== this._barracksFocusedHero.slug) {
                     this.setBarracksFocusedHeroBySlug(to.params.heroSlug);
@@ -54,7 +81,11 @@
         methods: {
             ...mapActions([
                 'setBarracksFocusedHeroBySlug'
-            ])
+            ]),
+            setFocusedMeasurable(measurable) {
+                this.focusedMeasurable = measurable;
+                this.measurableFocused = true;
+            }
         },
 
         computed: {
