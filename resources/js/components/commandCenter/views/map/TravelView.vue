@@ -116,7 +116,7 @@
         </v-card>
         <v-dialog
             v-model="travelDialog"
-            max-width="920"
+            max-width="600"
         >
             <v-card>
                 <v-card-title class="headline">Travel to {{_routePosition.name}}?</v-card-title>
