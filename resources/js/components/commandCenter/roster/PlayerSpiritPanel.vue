@@ -5,7 +5,7 @@
                 {{ playerName }}
             </v-card-title>
             <v-card-text>
-                <v-row :dense="true">
+                <v-row no-gutters>
                     <v-col cols="8">
                         <p class="ma-0">{{ gameDescription }}</p>
                         <p class="ma-0">Essence Cost: {{ essenceCost }}</p>
@@ -17,7 +17,7 @@
                         </slot>
                     </v-col>
                 </v-row>
-                <v-row :dense="true">
+                <v-row no-gutters>
                     <v-col cols="12">
                         <PositionChipList :positions="playerSpiritPositions"></PositionChipList>
                     </v-col>

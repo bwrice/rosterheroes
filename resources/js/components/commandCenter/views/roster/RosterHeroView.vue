@@ -1,5 +1,5 @@
 <template>
-    <v-flex class="xs12">
+    <v-col cols="12">
         <v-card>
             <v-btn :to="rosterPage">
                 <v-icon>arrow_back</v-icon>Back
@@ -19,7 +19,7 @@
                     :items="filteredSpirits"
                     :loading="_rosterLoading"
                     row
-                    wrap
+                    no-gutters
             >
                 <template v-slot:header>
                     <v-text-field
@@ -33,17 +33,11 @@
                     ></v-text-field>
                 </template>
                 <template v-slot:item="props">
-                    <v-flex
-                            fluid
-                            py-1
-                            xs12
-                    >
                         <PlayerSpiritPanel :player-spirit="props.item">
                             <template v-slot:spirit-actions>
                                 <AddSpiritButton :hero="rosterFocusedHero" :player-spirit="props.item"></AddSpiritButton>
                             </template>
                         </PlayerSpiritPanel>
-                    </v-flex>
                 </template>
                 <template v-slot:loading>
                     <v-row :justify="'center'" class="py-5">
@@ -52,7 +46,7 @@
                 </template>
             </v-data-iterator>
         </v-card>
-    </v-flex>
+    </v-col>
 </template>
 
 <script>

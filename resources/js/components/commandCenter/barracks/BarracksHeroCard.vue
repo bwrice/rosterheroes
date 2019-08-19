@@ -1,5 +1,5 @@
 <template>
-    <v-card>
+    <v-card class="my-2">
         <v-card-title>{{hero.name}}</v-card-title>
         <v-card-actions>
             <v-btn :to="barracksHeroRoute">Edit</v-btn>

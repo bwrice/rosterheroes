@@ -1,12 +1,12 @@
 <template>
-    <v-flex class="xs12">
+    <v-col cols="12">
         <BarracksHeroCard
             v-for="(hero, uuid) in _barracksHeroes"
             :key="uuid"
             :hero="hero"
         >
         </BarracksHeroCard>
-    </v-flex>
+    </v-col>
 </template>
 
 <script>

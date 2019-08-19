@@ -1,31 +1,33 @@
 <template>
-    <v-flex class="xs12">
-        <v-layout>
-            <v-flex class="xs12">
-                <v-card>
+    <v-col cols="12">
+        <v-row no-gutters>
+            <v-col cols="12">
+                <v-card class="my-2">
                     <v-card-title>{{ _barracksFocusedHero.name }}</v-card-title>
                 </v-card>
-            </v-flex>
-        </v-layout>
-        <v-layout>
-            <v-flex class="xs12">
+            </v-col>
+        </v-row>
+        <v-row no-gutters>
+            <v-col cols="12">
                 <v-card>
-                    <v-card-title>Attributes</v-card-title>
-                    <MeasurablePanel
-                        v-for="(attribute, uuid) in attributes"
-                        :key="uuid"
-                        :measurable="attribute"
-                    ></MeasurablePanel>
+                    <v-card>
+                        <v-card-title>Attributes</v-card-title>
+                        <MeasurablePanel
+                            v-for="(attribute, uuid) in attributes"
+                            :key="uuid"
+                            :measurable="attribute"
+                        ></MeasurablePanel>
+                    </v-card>
+                    <v-card>
+                        <v-card-title>Resources</v-card-title>
+                    </v-card>
+                    <v-card>
+                        <v-card-title>Qualities</v-card-title>
+                    </v-card>
                 </v-card>
-                <v-card>
-                    <v-card-title>Resources</v-card-title>
-                </v-card>
-                <v-card>
-                    <v-card-title>Qualities</v-card-title>
-                </v-card>
-            </v-flex>
-        </v-layout>
-    </v-flex>
+            </v-col>
+        </v-row>
+    </v-col>
 </template>
 
 <script>

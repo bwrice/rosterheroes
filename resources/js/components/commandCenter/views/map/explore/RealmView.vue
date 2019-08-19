@@ -7,8 +7,8 @@
             <TerritoryVector v-for="(territory, id) in this._territories" :key="id" :territory="territory"></TerritoryVector>
         </template>
         <template slot="footer-content">
-            <v-layout>
-                <v-flex class="xs12">
+            <v-row no-gutters>
+                <v-col cols="12">
                     <v-chip class="ma-1"
                             :input-value="inContinentMode"
                             @click="setRealmMapMode('continent')"
@@ -27,8 +27,8 @@
                     >
                         Territories
                     </v-chip>
-                </v-flex>
-            </v-layout>
+                </v-col>
+            </v-row>
         </template>
     </ExploreMapCard>
 </template>
