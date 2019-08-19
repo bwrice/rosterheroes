@@ -33,13 +33,37 @@
             max-width="600"
         >
             <v-card>
-                <v-card-title class="headline">{{focusedMeasurable.measurable_type.name.toUpperCase()}}</v-card-title>
+                <v-card-title class="headline">{{}}</v-card-title>
                 <v-card-actions>
-                    <v-btn
-                        color="primary"
-                    >
-                        Raise {{focusedMeasurable.measurable_type.name.toUpperCase()}}
-                    </v-btn>
+                        <v-row>
+                            <v-col cols="7">
+                                <v-btn
+                                    icon
+                                    @click="lowerRaiseAmount"
+                                >
+                                    <v-icon dark>remove</v-icon>
+                                </v-btn>
+                                <v-btn
+                                    icon
+                                    @click="increaseRaiseAmount"
+                                >
+                                    <v-icon dark>add</v-icon>
+                                </v-btn>
+
+                                <v-text-field
+                                    type="number"
+                                    v-model="measurableRaiseAmount"
+                                ></v-text-field>
+                            </v-col>
+                            <v-col cols="5">
+                                <v-btn
+                                    color="primary"
+                                    block
+                                >
+                                    Raise {{focusedMeasurable.measurable_type.name.toUpperCase()}}
+                                </v-btn>
+                            </v-col>
+                        </v-row>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -66,7 +90,8 @@
                         name: ''
                     }
                 },
-                measurableFocused: false
+                measurableFocused: false,
+                measurableRaiseAmount: 1
             }
         },
 
@@ -85,6 +110,12 @@
             setFocusedMeasurable(measurable) {
                 this.focusedMeasurable = measurable;
                 this.measurableFocused = true;
+            },
+            lowerRaiseAmount() {
+
+            },
+            increaseRaiseAmount() {
+
             }
         },
 
@@ -97,6 +128,12 @@
                 return this._barracksFocusedHero.measurables.filter(function (measurable) {
                     return measurable.measurable_type.group === 'attribute';
                 })
+            },
+            measurableName() {
+                return this.focusedMeasurable.measurable_type.name.toUpperCase();
+            },
+            measurableCardTitle() {
+                return this.measurableName() + ': ' + this.focusedMeasurable.amount_raised;
             }
         }
     }
