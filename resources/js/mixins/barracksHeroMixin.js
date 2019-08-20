@@ -12,7 +12,15 @@ export const barracksHeroMixin = {
         ]),
         barracksHero() {
             let slug = this.$route.params.heroSlug;
-            return this._barracksHeroes.find(hero => hero.slug === slug);
+            let hero = this._barracksHeroes.find(hero => hero.slug === slug);
+            if (hero) {
+                return hero;
+            }
+            return {
+                name: '',
+                player_spirit: null,
+                measurable: []
+            }
         }
     },
     watch: {
