@@ -112,4 +112,15 @@ class HeroMeasurableTest extends TestCase
 
         $this->assertGreaterThan($startingCost, $warriorStrength->getCostToRaise());
     }
+
+    /**
+     * @test
+     */
+    public function raising_a_measurable_twice_will_cost_more_than_double_raising_just_once()
+    {
+        $sorcererAptitude = $this->sorcerer->getMeasurable(MeasurableType::APTITUDE);
+        $costToRaiseOnce = $sorcererAptitude->getCostToRaise(1);
+        $costToRaiseTwice = $sorcererAptitude->getCostToRaise(2);
+        $this->assertGreaterThan(2 * $costToRaiseOnce, $costToRaiseTwice);
+    }
 }
