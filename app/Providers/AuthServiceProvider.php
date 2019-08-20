@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Domain\Models\Measurable;
+use App\Policies\MeasurablePolicy;
 use App\Policies\SquadPolicy;
 use App\Domain\Models\Squad;
 use Illuminate\Support\Facades\Gate;
@@ -16,7 +18,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        Squad::class => SquadPolicy::class
+        Squad::class => SquadPolicy::class,
+        Measurable::class => MeasurablePolicy::class,
     ];
 
     /**
