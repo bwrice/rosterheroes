@@ -6,6 +6,7 @@ use App\Http\Controllers\HeroController;
 use App\Http\Controllers\ProvinceBorderController;
 use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\BarracksHeroesController;
+use App\Http\Controllers\RaiseMeasurableController;
 use App\Http\Controllers\RosterHeroesController;
 use App\Http\Controllers\SquadCurrentLocationController;
 use App\Http\Controllers\TerritoryController;
@@ -74,5 +75,9 @@ Route::prefix('v1')->group(function () {
         Route::delete('/heroes/{heroSlug}/player-spirit/{playerSpiritUuid}', [HeroPlayerSpiritController::class, 'delete']);
 
         Route::post('/campaign/{campaign}/quest/{questUuid}', [CampaignQuestController::class, 'store']);
+
+        Route::prefix('measurables')->group(function () {
+            Route::get('/{measurableUuid}/raise', [RaiseMeasurableController::class, 'get']);
+        });
     });
 });
