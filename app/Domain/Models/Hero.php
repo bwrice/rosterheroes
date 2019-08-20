@@ -247,9 +247,9 @@ class Hero extends EventSourcedModel implements HasSlots, HasMeasurables
         return $this->heroPost->squad->availableSpiritEssence() + $this->essenceUsed();
     }
 
-    public function costToRaiseMeasurable(Measurable $measurable): int
+    public function costToRaiseMeasurable(Measurable $measurable, int $amount = 1): int
     {
-        return $this->heroClass->getBehavior()->costToRaiseMeasurable($measurable);
+        return $this->heroClass->getBehavior()->costToRaiseMeasurable($measurable, $amount);
     }
 
     public function getCurrentMeasurableAmount(Measurable $measurable): int

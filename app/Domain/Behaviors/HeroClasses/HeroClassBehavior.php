@@ -50,11 +50,12 @@ abstract class HeroClassBehavior
 
     /**
      * @param Measurable $measurable
+     * @param int $amount
      * @return int
      */
-    public function costToRaiseMeasurable(Measurable $measurable): int
+    public function costToRaiseMeasurable(Measurable $measurable, int $amount = 1): int
     {
-        return $this->measurableCalculator->getCostToRaiseMeasurable($measurable, $this->measurableOperator);
+        return $this->measurableCalculator->getCostToRaise($measurable, $this->measurableOperator, $amount);
     }
 
     /**
@@ -63,6 +64,6 @@ abstract class HeroClassBehavior
      */
     public function getCurrentMeasurableAmount(Measurable $measurable): int
     {
-        return $this->measurableCalculator->getCurrentMeasurableAmount($measurable, $this->measurableOperator);
+        return $this->measurableCalculator->getCurrentAmount($measurable, $this->measurableOperator);
     }
 }
