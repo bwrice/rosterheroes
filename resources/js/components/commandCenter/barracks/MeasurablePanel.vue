@@ -95,6 +95,11 @@
         mounted() {
             this.costToRaise = this.measurable.cost_to_raise;
         },
+        created() {
+            this.debounceSetCostToRaiseAmount = _.debounce(async function() {
+                this.setCostToRaiseAmount()
+            }, 500);
+        },
 
         data() {
             return {
@@ -104,10 +109,9 @@
             }
         },
         watch: {
-
             measurableRaiseAmount: function (newAmount, oldAmount) {
                 this.costToRaise = 'Calculating...';
-                this.setCostToRaiseAmount()
+                this.debounceSetCostToRaiseAmount();
             }
         },
 
