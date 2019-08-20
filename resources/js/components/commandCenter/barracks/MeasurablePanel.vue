@@ -51,7 +51,7 @@
                             </v-col>
                             <v-col cols="6">
                                 <v-row :justify="'center'">
-                                    Cost: 9834
+                                    Cost: {{costToRaise}}
                                 </v-row>
                             </v-col>
                         </v-row>
@@ -82,11 +82,18 @@
 </template>
 
 <script>
+
+    import * as measurableApi from '../../../api/measurableApi';
+
     export default {
         name: "MeasurablePanel",
         props: {
             measurable: Object,
             required: true
+        },
+
+        mounted() {
+            this.costToRaise = this.measurable.cost_to_raise;
         },
 
         data() {
@@ -96,6 +103,14 @@
                 costToRaise: 0
             }
         },
+        watch: {
+
+            measurableRaiseAmount: function (newAmount, oldAmount) {
+                this.costToRaise = 'Calculating...';
+                this.setCostToRaiseAmount()
+            }
+        },
+
         methods: {
             decreaseRaiseAmount() {
                 this.measurableRaiseAmount--;
@@ -103,8 +118,12 @@
             increaseRaiseAmount() {
                 this.measurableRaiseAmount++;
             },
-            getCostToRaiseAmount() {
-
+            async setCostToRaiseAmount() {
+                if (this.measurableRaiseAmount === 1) {
+                    this.costToRaise = this.measurable.cost_to_raise;
+                } else {
+                    this.costToRaise = await measurableApi.getCostToRaise(this.measurable.uuid, this.measurableRaiseAmount);
+                }
             }
         },
         computed: {
@@ -126,7 +145,7 @@
             },
             decreaseDisabled() {
                 return this.measurableRaiseAmount <= 1;
-            },
+            }
         }
     }
 </script>
