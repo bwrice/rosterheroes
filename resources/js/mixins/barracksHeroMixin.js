@@ -19,7 +19,7 @@ export const barracksHeroMixin = {
             return {
                 name: '',
                 player_spirit: null,
-                measurable: []
+                measurables: []
             }
         }
     },

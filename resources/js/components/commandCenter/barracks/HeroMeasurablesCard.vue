@@ -58,17 +58,18 @@
 </template>
 
 <script>
+
+    import {barracksHeroMixin} from "../../../mixins/barracksHeroMixin";
+
     import MeasurablePanel from "./MeasurablePanel";
 
     export default {
         name: "HeroMeasurablesCard",
         components: {MeasurablePanel},
-        props: {
-            measurables: {
-                type: Array,
-                required: true
-            }
-        },
+
+        mixins: [
+            barracksHeroMixin
+        ],
 
         data() {
             return {
@@ -97,7 +98,7 @@
 
         computed: {
             attributes() {
-                return this.measurables.filter(function (measurable) {
+                return this.barracksHero.measurables.filter(function (measurable) {
                     return measurable.measurable_type.group === 'attribute';
                 })
             },
@@ -105,7 +106,7 @@
                 return this.focusedMeasurable.measurable_type.name.toUpperCase();
             },
             measurableCardTitle() {
-                return this.measurableName() + ': ' + this.focusedMeasurable.amount_raised;
+                return this.measurableName + ': ' + this.focusedMeasurable.amount_raised;
             }
         }
     }
