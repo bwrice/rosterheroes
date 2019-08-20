@@ -32,23 +32,21 @@
             max-width="600"
         >
                 <v-card>
-                    <v-card-title class="headline">{{measurableCardTitle}}</v-card-title>
+                    <v-card-title class="headline">{{measurableName}}: {{potentialAmount}}(+{{measurableRaiseAmount}})</v-card-title>
                     <v-card-actions>
-
                         <v-container>
-                        <v-row>
-                            <v-col cols="10" offset="1">
-                                <v-row>
-                                    <v-col cols="5">
-                                        <v-text-field
-                                            outlined
-                                            solo
-                                            type="number"
-                                            v-model="measurableRaiseAmount"
-                                        >
-                                        </v-text-field>
-                                    </v-col>
-                                    <v-col cols="7">
+                            <v-row no-gutters>
+                                <v-col cols="6">
+                                    <v-text-field
+                                        outlined
+                                        solo
+                                        type="number"
+                                        v-model="measurableRaiseAmount"
+                                    >
+                                    </v-text-field>
+                                </v-col>
+                                <v-col cols="6">
+                                    <v-row :justify="'center'">
                                         <v-btn
                                             fab
                                             small
@@ -63,18 +61,29 @@
                                         >
                                             <v-icon dark>remove</v-icon>
                                         </v-btn>
-                                    </v-col>
-                                </v-row>
-                            </v-col>
-                        </v-row>
-                        <v-row no gutters>
-                            <v-btn
-                                color="primary"
-                                block
-                            >
-                                Raise {{measurableName}}
-                            </v-btn>
-                        </v-row>
+                                    </v-row>
+                                </v-col>
+                            </v-row>
+                            <v-row>
+                                <v-col cols="6">
+                                    <v-row :justify="'center'">
+                                        Available: 48304
+                                    </v-row>
+                                </v-col>
+                                <v-col cols="6">
+                                    <v-row :justify="'center'">
+                                        Cost: 9834
+                                    </v-row>
+                                </v-col>
+                            </v-row>
+                            <v-row no gutters>
+                                <v-btn
+                                    color="primary"
+                                    block
+                                >
+                                    Raise {{measurableName}}
+                                </v-btn>
+                            </v-row>
                         </v-container>
                     </v-card-actions>
                 </v-card>
@@ -140,8 +149,15 @@
             measurableName() {
                 return this.focusedMeasurable.measurable_type.name.toUpperCase();
             },
-            measurableCardTitle() {
-                return this.measurableName + ': ' + this.focusedMeasurable.amount_raised;
+            potentialAmount() {
+                let potential = this.focusedMeasurable.current_amount;
+                if (this.raiseAmount) {
+                    potential += this.raiseAmount;
+                }
+                return potential;
+            },
+            raiseAmount() {
+                return parseInt(this.measurableRaiseAmount);
             }
         }
     }
