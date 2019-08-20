@@ -77,12 +77,23 @@
                                 </v-col>
                             </v-row>
                             <v-row no gutters>
-                                <v-btn
-                                    color="primary"
-                                    block
-                                >
-                                    Raise {{measurableName}}
-                                </v-btn>
+                                <v-col cols="4">
+                                    <v-btn
+                                        color="error"
+                                        block
+                                        @click="measurableFocused = false"
+                                    >
+                                        Cancel
+                                    </v-btn>
+                                </v-col>
+                                <v-col cols="8">
+                                    <v-btn
+                                        color="primary"
+                                        block
+                                    >
+                                        Raise {{measurableName}}
+                                    </v-btn>
+                                </v-col>
                             </v-row>
                         </v-container>
                     </v-card-actions>
