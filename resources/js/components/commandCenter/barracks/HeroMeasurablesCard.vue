@@ -11,9 +11,78 @@
         </v-card>
         <v-card>
             <v-card-title>Resources</v-card-title>
+            <MeasurablePanel
+                v-for="(resource, uuid) in resources"
+                :key="uuid"
+                :measurable="resource"
+                @measurableClicked="setFocusedMeasurable"
+            ></MeasurablePanel>
         </v-card>
         <v-card>
             <v-card-title>Qualities</v-card-title>
+            <MeasurablePanel
+                v-for="(quality, uuid) in qualities"
+                :key="uuid"
+                :measurable="quality"
+                @measurableClicked="setFocusedMeasurable"
+            ></MeasurablePanel>
+        </v-card>
+        <v-card>
+            <v-container>
+                <v-row :justify="'center'">
+                    <v-col>
+                        <v-row :align="'center'">
+                            <v-card>
+                                <v-btn
+                                    fab
+                                    small
+                                    @click="increaseRaiseAmount"
+                                >
+                                    <v-icon dark>add</v-icon>
+                                </v-btn>
+                            </v-card>
+                            <!--                                    <v-text-field-->
+                            <!--                                        outlined-->
+                            <!--                                        solo-->
+                            <!--                                        type="number"-->
+                            <!--                                        v-model="measurableRaiseAmount"-->
+                            <!--                                    ></v-text-field>-->
+                        </v-row>
+                    </v-col>
+                    <v-col>
+                        <v-row no gutters>
+                            <v-col class="py-1">
+                                <v-btn
+                                    fab
+                                    small
+                                    @click="increaseRaiseAmount"
+                                >
+                                    <v-icon dark>add</v-icon>
+                                </v-btn>
+                            </v-col>
+                        </v-row>
+                        <v-row no gutters>
+                            <v-col class="py-1">
+                                <v-btn
+                                    fab
+                                    small
+                                    @click="lowerRaiseAmount"
+                                >
+                                    <v-icon dark>remove</v-icon>
+                                </v-btn>
+                            </v-col>
+                        </v-row>
+                    </v-col>
+                </v-row>
+                <v-row no gutters>
+                    <v-btn
+                        color="primary"
+                        block
+                    >
+                        Raise {{measurableName}}
+                    </v-btn>
+                </v-row>
+            </v-container>
         </v-card>
         <v-dialog
             v-model="measurableFocused"
@@ -22,35 +91,63 @@
             <v-card>
                 <v-card-title class="headline">{{measurableCardTitle}}</v-card-title>
                 <v-card-actions>
-                    <v-row>
-                        <v-col cols="7">
-                            <v-btn
-                                icon
-                                @click="lowerRaiseAmount"
-                            >
-                                <v-icon dark>remove</v-icon>
-                            </v-btn>
-                            <v-btn
-                                icon
-                                @click="increaseRaiseAmount"
-                            >
-                                <v-icon dark>add</v-icon>
-                            </v-btn>
-
-                            <v-text-field
-                                type="number"
-                                v-model="measurableRaiseAmount"
-                            ></v-text-field>
-                        </v-col>
-                        <v-col cols="5">
+                    <v-container fluid>
+                        <v-row :justify="'center'">
+                            <v-col>
+                                <v-container>
+                                    <v-row :align="'center'">
+                                        <v-card>
+                                            <v-btn
+                                                fab
+                                                small
+                                                @click="increaseRaiseAmount"
+                                            >
+                                                <v-icon dark>add</v-icon>
+                                            </v-btn>
+                                        </v-card>
+                                        <!--                                    <v-text-field-->
+                                        <!--                                        outlined-->
+                                        <!--                                        solo-->
+                                        <!--                                        type="number"-->
+                                        <!--                                        v-model="measurableRaiseAmount"-->
+                                        <!--                                    ></v-text-field>-->
+                                    </v-row>
+                                </v-container>
+                            </v-col>
+                            <v-col>
+                                <v-row no gutters>
+                                    <v-col class="py-1">
+                                        <v-btn
+                                            fab
+                                            small
+                                            @click="increaseRaiseAmount"
+                                        >
+                                            <v-icon dark>add</v-icon>
+                                        </v-btn>
+                                    </v-col>
+                                </v-row>
+                                <v-row no gutters>
+                                    <v-col class="py-1">
+                                        <v-btn
+                                            fab
+                                            small
+                                            @click="lowerRaiseAmount"
+                                        >
+                                            <v-icon dark>remove</v-icon>
+                                        </v-btn>
+                                    </v-col>
+                                </v-row>
+                            </v-col>
+                        </v-row>
+                        <v-row no gutters>
                             <v-btn
                                 color="primary"
                                 block
                             >
-                                Raise {{focusedMeasurable.measurable_type.name.toUpperCase()}}
+                                Raise {{measurableName}}
                             </v-btn>
-                        </v-col>
-                    </v-row>
+                        </v-row>
+                    </v-container>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -100,6 +197,16 @@
             attributes() {
                 return this.barracksHero.measurables.filter(function (measurable) {
                     return measurable.measurable_type.group === 'attribute';
+                })
+            },
+            resources() {
+                return this.barracksHero.measurables.filter(function (measurable) {
+                    return measurable.measurable_type.group === 'resource';
+                })
+            },
+            qualities() {
+                return this.barracksHero.measurables.filter(function (measurable) {
+                    return measurable.measurable_type.group === 'quality';
                 })
             },
             measurableName() {
