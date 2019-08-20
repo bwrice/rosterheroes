@@ -50,6 +50,7 @@
                                         <v-btn
                                             fab
                                             small
+                                            :disabled="increaseDisabled"
                                             @click="increaseRaiseAmount"
                                         >
                                             <v-icon dark>add</v-icon>
@@ -57,7 +58,8 @@
                                         <v-btn
                                             fab
                                             small
-                                            @click="lowerRaiseAmount"
+                                            :disabled="decreaseDisabled"
+                                            @click="decreaseRaiseAmount"
                                         >
                                             <v-icon dark>remove</v-icon>
                                         </v-btn>
@@ -133,11 +135,11 @@
                 this.focusedMeasurable = measurable;
                 this.measurableFocused = true;
             },
-            lowerRaiseAmount() {
-
+            decreaseRaiseAmount() {
+                this.measurableRaiseAmount--;
             },
             increaseRaiseAmount() {
-
+                this.measurableRaiseAmount++;
             }
         },
 
@@ -169,6 +171,12 @@
             },
             raiseAmount() {
                 return parseInt(this.measurableRaiseAmount);
+            },
+            increaseDisabled() {
+                return this.measurableRaiseAmount >= 100;
+            },
+            decreaseDisabled() {
+                return this.measurableRaiseAmount <= 1;
             }
         }
     }
