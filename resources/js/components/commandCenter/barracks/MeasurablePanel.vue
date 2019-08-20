@@ -1,6 +1,6 @@
 <template>
     <v-sheet flat color="#706856" class="pa-1 ma-1">
-        <v-row no-gutters justify="space-between">
+        <v-row no-gutters :align="'center'" justify="space-between">
             <p>{{measurableName}}</p>
             <v-btn @click="measurableFocused = true">+</v-btn>
         </v-row>
@@ -92,7 +92,8 @@
         data() {
             return {
                 measurableFocused: false,
-                measurableRaiseAmount: 1
+                measurableRaiseAmount: 1,
+                costToRaise: 0
             }
         },
         methods: {
@@ -101,6 +102,9 @@
             },
             increaseRaiseAmount() {
                 this.measurableRaiseAmount++;
+            },
+            getCostToRaiseAmount() {
+
             }
         },
         computed: {
@@ -122,7 +126,7 @@
             },
             decreaseDisabled() {
                 return this.measurableRaiseAmount <= 1;
-            }
+            },
         }
     }
 </script>
