@@ -4,6 +4,7 @@ namespace App\Domain\Models;
 
 use App\Domain\Actions\AddSpiritToHeroAction;
 use App\Domain\Actions\RemoveSpiritFromHeroAction;
+use App\Domain\Collections\MeasurableCollection;
 use App\Domain\Interfaces\HasMeasurables;
 use App\Domain\QueryBuilders\HeroQueryBuilder;
 use App\Domain\Traits\HasSlug;
@@ -57,7 +58,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property PlayerSpirit|null $playerSpirit
  *
  * @property SlotCollection $slots
- * @property Collection $measurables
+ * @property MeasurableCollection $measurables
  *
  * @method static HeroQueryBuilder query();
  */
@@ -276,5 +277,17 @@ class Hero extends EventSourcedModel implements HasSlots, HasMeasurables
             throw new \RuntimeException('Hero: ' . $this->name . ' does not have a measurable of type: ' . $measurableTypeName);
         }
         return $measurable;
+    }
+
+    public function availableExperience(): int
+    {
+        $squad = $this->getSquad();
+        if (! $squad) {
+            return 0;
+        }
+
+        $squadExp = $squad->experience;
+        $expSpentOnMeasurables = $this->measurables->experienceSpentOnRaising();
+        return $squadExp - $expSpentOnMeasurables;
     }
 }

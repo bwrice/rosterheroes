@@ -13,4 +13,6 @@ interface HasMeasurables
     public function spentOnRaisingMeasurable(Measurable $measurable): int;
 
     public function getCurrentMeasurableAmount(Measurable $measurable): int;
+
+    public function availableExperience(): int;
 }
