@@ -252,6 +252,11 @@ class Hero extends EventSourcedModel implements HasSlots, HasMeasurables
         return $this->heroClass->getBehavior()->costToRaiseMeasurable($measurable, $amount);
     }
 
+    public function spentOnRaisingMeasurable(Measurable $measurable): int
+    {
+        return $this->heroClass->getBehavior()->spentOnRaisingMeasurable($measurable);
+    }
+
     public function getCurrentMeasurableAmount(Measurable $measurable): int
     {
         return $this->heroClass->getBehavior()->getCurrentMeasurableAmount($measurable);
