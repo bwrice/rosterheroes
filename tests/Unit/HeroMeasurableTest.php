@@ -118,9 +118,45 @@ class HeroMeasurableTest extends TestCase
      */
     public function raising_a_measurable_twice_will_cost_more_than_double_raising_just_once()
     {
-        $sorcererAptitude = $this->sorcerer->getMeasurable(MeasurableType::APTITUDE);
-        $costToRaiseOnce = $sorcererAptitude->getCostToRaise(1);
-        $costToRaiseTwice = $sorcererAptitude->getCostToRaise(2);
+        $sorcererMana = $this->sorcerer->getMeasurable(MeasurableType::MANA);
+        $costToRaiseOnce = $sorcererMana->getCostToRaise(1);
+        $costToRaiseTwice = $sorcererMana->getCostToRaise(2);
         $this->assertGreaterThan(2 * $costToRaiseOnce, $costToRaiseTwice);
+    }
+
+    /**
+     * @test
+     */
+    public function a_measurable_not_raised_will_have_zero_spent_on_raising()
+    {
+        $rangerFocus = $this->ranger->getMeasurable(MeasurableType::FOCUS);
+        $this->assertEquals(0, $rangerFocus->amount_raised);
+        $this->assertEquals(0, $rangerFocus->spentOnRaising());
+    }
+
+    /**
+     * @test
+     */
+    public function the_cost_to_raise_a_measurable_to_an_amount_is_equal_to_the_amount_spent_for_the_same_amount()
+    {
+        $warriorWrath = $this->warrior->getMeasurable(MeasurableType::WRATH);
+        $this->assertEquals(0, $warriorWrath->amount_raised);
+
+        $raiseAmount = 5;
+
+        $costToRaiseToFirstFive = $warriorWrath->getCostToRaise($raiseAmount);
+        $warriorWrath->amount_raised += $raiseAmount;
+        $warriorWrath->save();
+
+        $spentOnRaising = $warriorWrath->spentOnRaising();
+
+        $this->assertEquals($costToRaiseToFirstFive, $spentOnRaising);
+
+        $costToRaiseAnotherFive = $warriorWrath->getCostToRaise($raiseAmount);
+        $warriorWrath->amount_raised += $raiseAmount;
+        $warriorWrath->save();
+
+        $spentOnRaising = $warriorWrath->spentOnRaising();
+        $this->assertEquals($costToRaiseToFirstFive + $costToRaiseAnotherFive, $spentOnRaising);
     }
 }
