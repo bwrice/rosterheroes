@@ -77,7 +77,8 @@ Route::prefix('v1')->group(function () {
         Route::post('/campaign/{campaign}/quest/{questUuid}', [CampaignQuestController::class, 'store']);
 
         Route::prefix('measurables')->group(function () {
-            Route::get('/{measurableUuid}/raise', [RaiseMeasurableController::class, 'get']);
+            Route::get('/{measurableUuid}/raise', [RaiseMeasurableController::class, 'show']);
+            Route::post('/{measurableUuid}/raise', [RaiseMeasurableController::class, 'store']);
         });
     });
 });
