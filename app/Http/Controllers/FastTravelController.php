@@ -9,6 +9,7 @@ use App\Exceptions\BorderTravelException;
 use App\Http\Resources\CurrentLocationResource;
 use App\Http\Resources\SquadResource;
 use App\Nova\Province;
+use App\Policies\SquadPolicy;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -26,7 +27,7 @@ class FastTravelController extends Controller
     public function __invoke($squadSlug, Request $request, FastTravelAction $fastTravelAction)
     {
         $squad = Squad::findSlugOrFail($squadSlug);
-        $this->authorize(Squad::MANAGE_AUTHORIZATION, $squad);
+        $this->authorize(SquadPolicy::MANAGE, $squad);
 
         $travelRoute = new ProvinceCollection();
         foreach($request->travelRoute as $provinceUuid) {

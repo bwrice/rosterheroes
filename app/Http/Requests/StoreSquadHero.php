@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Domain\Models\Squad;
 use App\Domain\Models\User;
+use App\Policies\SquadPolicy;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 
@@ -27,7 +28,7 @@ class StoreSquadHero extends FormRequest
                 'Squad could not be found'
             ]);
         }
-        return $this->user()->can(Squad::MANAGE_AUTHORIZATION, $squad);
+        return $this->user()->can(SquadPolicy::MANAGE, $squad);
     }
 
     /**

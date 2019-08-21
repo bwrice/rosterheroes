@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\HeroRaceResource;
 use App\Domain\Models\Squad;
+use App\Policies\SquadPolicy;
 
 class SquadHeroRaceController extends Controller
 {
@@ -15,7 +16,7 @@ class SquadHeroRaceController extends Controller
     public function __invoke($squadSlug)
     {
         $squad = Squad::findSlugOrFail($squadSlug);
-        $this->authorize(Squad::MANAGE_AUTHORIZATION, $squad);
+        $this->authorize(SquadPolicy::MANAGE, $squad);
         return response()->json(HeroRaceResource::collection($squad->getHeroRaceAvailability()), 200);
     }
 }

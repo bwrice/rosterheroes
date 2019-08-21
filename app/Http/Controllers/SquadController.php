@@ -7,6 +7,7 @@ use App\Domain\Actions\CreateSquadAction;
 use App\Domain\Actions\UpdateSquadSlotsAction;
 use App\Domain\Models\HeroPostType;
 use App\Domain\Models\SlotType;
+use App\Policies\SquadPolicy;
 use App\StorableEvents\HeroCreated;
 use App\StorableEvents\SquadCreated;
 use App\Domain\Models\Hero;
@@ -51,6 +52,7 @@ class SquadController extends Controller
     public function show($squadSlug)
     {
         $squad = Squad::findSlugOrFail($squadSlug);
+        $this->authorize(SquadPolicy::MANAGE, $squad);
         return new SquadResource($squad);
     }
 }

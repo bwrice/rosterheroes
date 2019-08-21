@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Domain\Actions\AddNewHeroToSquadAction;
 use App\Domain\Actions\CreateHeroAction;
+use App\Policies\SquadPolicy;
 use App\StorableEvents\HeroCreated;
 use App\Exceptions\GameStartedException;
 use App\Exceptions\HeroPostNotFoundException;
@@ -35,7 +36,7 @@ class SquadHeroController extends Controller
     public function store(Request $request, $squadSlug, AddNewHeroToSquadAction $domainAction)
     {
         $squad = Squad::findSlugOrFail($squadSlug);
-        $this->authorize(Squad::MANAGE_AUTHORIZATION, $squad);
+        $this->authorize(SquadPolicy::MANAGE, $squad);
 
         $this->validate($request, [
             'name' => 'required|regex:/^[\w\-\s]+$/|between:4,20|unique:heroes,name',
@@ -43,9 +44,9 @@ class SquadHeroController extends Controller
             'class' => 'required|exists:hero_classes,name'
         ]);
 
-        /** @var \App\Domain\Models\HeroClass $heroClass */
+        /** @var HeroClass $heroClass */
         $heroClass = HeroClass::query()->where('name', '=', $request->class)->first();
-        /** @var \App\Domain\Models\HeroRace $heroRace */
+        /** @var HeroRace $heroRace */
         $heroRace = HeroRace::query()->where('name', '=', $request->race)->first();
 
         try {

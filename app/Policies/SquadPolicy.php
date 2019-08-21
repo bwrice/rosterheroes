@@ -8,9 +8,12 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 
 class SquadPolicy
 {
+    public const MANAGE = 'manage';
+    public const VIEW = 'view';
+
     use HandlesAuthorization;
 
-    public function manageSquad(User $user, Squad $squad)
+    public function manage(User $user, Squad $squad)
     {
         return $user->id === $squad->user_id;
     }

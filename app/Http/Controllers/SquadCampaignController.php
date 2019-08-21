@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exceptions\CampaignExistsException;
 use App\Exceptions\WeekLockedException;
 use App\Domain\Models\Squad;
+use App\Policies\SquadPolicy;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
@@ -13,7 +14,7 @@ class SquadCampaignController extends Controller
     public function store($squadSlug)
     {
         $squad = Squad::findSlugOrFail($squadSlug);
-        $this->authorize(Squad::MANAGE_AUTHORIZATION, $squad);
+        $this->authorize(SquadPolicy::MANAGE, $squad);
         try {
 
             $campaign = $squad->createCampaign();

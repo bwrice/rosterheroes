@@ -53,7 +53,6 @@ class Squad extends EventSourcedModel implements HasSlots, TravelsBorders
     use HasSlug;
 
     const RELATION_MORPH_MAP_KEY = 'squads';
-    const MANAGE_AUTHORIZATION = 'manage-squad';
 
     const STARTING_GOLD = 500;
     const STARTING_FAVOR = 100;
