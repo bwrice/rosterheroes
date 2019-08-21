@@ -60,7 +60,7 @@ abstract class HeroClassBehavior
 
     public function spentOnRaisingMeasurable(Measurable $measurable): int
     {
-        return $this->measurableCalculator->getSpentOnRaising($measurable, $this->measurableCalculator);
+        return $this->measurableCalculator->spentOnRaising($measurable, $this->measurableOperator);
     }
 
     /**

@@ -24,9 +24,18 @@ class HeroMeasurableCalculator implements MeasurableCalculator
         return $this->sumCostToRaise($measurable, $operator, $startRange, $endRange);
     }
 
+    /**
+     * @param Measurable $measurable
+     * @param MeasurableOperator $operator
+     * @return int
+     */
     public function spentOnRaising(Measurable $measurable, MeasurableOperator $operator): int
     {
-        //
+        $amountRaised = $measurable->amount_raised;
+        if ($amountRaised < 1) {
+            return 0;
+        }
+        return $this->sumCostToRaise($measurable, $operator, 1, $amountRaised);
     }
 
     protected function sumCostToRaise(Measurable $measurable, MeasurableOperator $operator, int $raisedAmountStart, int $raisedAmountEnd)
@@ -41,9 +50,13 @@ class HeroMeasurableCalculator implements MeasurableCalculator
     }
 
 
-    protected function calculateSingleCostToRaise(int $amountRaised, float $base, float $exponent): int
+    protected function calculateSingleCostToRaise(int $newAmountRaised, float $base, float $exponent): int
     {
-        return (int) round($base + (($base/4) * ($amountRaised - 1) ** $exponent));
+        /*
+         * Subtract 1 from new amount raised so that a measurable not raised
+         * will only cost the base amount for the initial raise
+         */
+        return (int) round($base + (($base/4) * ($newAmountRaised - 1) ** $exponent));
     }
 
     /**
