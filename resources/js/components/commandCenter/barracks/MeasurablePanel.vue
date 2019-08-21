@@ -20,6 +20,7 @@
                                     type="number"
                                     :rules="[raiseAmountRules.positive, raiseAmountRules.tooLarge]"
                                     v-model="measurableRaiseAmount"
+                                    @update:error="updateRaiseInputErrors"
                                 >
                                 </v-text-field>
                             </v-col>
@@ -69,6 +70,7 @@
                             <v-col cols="8">
                                 <v-btn
                                     color="primary"
+                                    :disabled="raiseMeasurableDisabled"
                                     block
                                 >
                                     Raise {{measurableName}}
@@ -116,11 +118,14 @@
                     positive: amount => amount > 0 || 'must be a positive number',
                     tooLarge: amount => amount <= 100 || 'amount is too large'
                 },
+                raiseInputHasErrors: false,
+                calculatingCost: false,
             }
         },
         watch: {
             measurableRaiseAmount: function (newAmount, oldAmount) {
                 this.costToRaise = 'Calculating...';
+                this.calculatingCost = true;
                 this.debounceSetCostToRaiseAmount();
             }
         },
@@ -133,11 +138,15 @@
                 this.measurableRaiseAmount++;
             },
             async setCostToRaiseAmount() {
-                if (this.measurableRaiseAmount === 1) {
+                if (this.measurableRaiseAmount <= 1) {
                     this.costToRaise = this.measurable.cost_to_raise;
                 } else {
                     this.costToRaise = await measurableApi.getCostToRaise(this.measurable.uuid, this.measurableRaiseAmount);
                 }
+                this.calculatingCost = false;
+            },
+            updateRaiseInputErrors(hasErrors) {
+                this.raiseInputHasErrors = hasErrors;
             }
         },
         computed: {
@@ -159,6 +168,14 @@
             },
             decreaseDisabled() {
                 return this.measurableRaiseAmount <= 1;
+            },
+            raiseMeasurableDisabled() {
+                if (this.raiseInputHasErrors || this.calculatingCost) {
+                    return true;
+                } else if( this.costToRaise > this.availableExperience ) {
+                    return true;
+                }
+                return false;
             }
         }
     }
