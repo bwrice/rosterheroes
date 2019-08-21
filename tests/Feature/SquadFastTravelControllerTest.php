@@ -43,7 +43,7 @@ class SquadFastTravelControllerTest extends TestCase
             'travelRoute' => $routeProvinces->pluck('uuid')->toArray()
         ]);
 
-        $response->assertStatus(201);
+        $response->assertStatus(200);
 
         $squad = $squad->fresh();
 
