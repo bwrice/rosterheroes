@@ -49,4 +49,38 @@ class RaiseMeasurableControllerTest extends TestCase
         $costTwo = (int) $response->getContent();
         $this->assertGreaterThan($costOne, $costTwo);
     }
+
+    /**
+     * @test
+     */
+    public function it_will_raise_a_hero_measurable()
+    {
+        $this->withoutExceptionHandling();
+
+        /** @var Measurable $measurable */
+        $measurable = $this->hero->measurables()->inRandomOrder()->first();
+        $startingAmount = $measurable->amount_raised;
+        $squad = $this->hero->getSquad();
+        $squad->experience = 999999;
+        $squad->save();
+        $amount = 5;
+
+        Passport::actingAs($this->heroPost->squad->user);
+
+        $response = $this->json('POST', 'api/v1/measurables/' . $measurable->uuid . '/raise', [
+            'amount' => $amount
+        ]);
+
+        $expectedAmountRaised = $startingAmount + $amount;
+
+        $response->assertJson([
+            'data' => [
+                'uuid' => $measurable->uuid,
+                'amount_raised' => $expectedAmountRaised
+            ]
+        ]);
+
+        $measurable = $measurable->fresh();
+        $this->assertEquals($expectedAmountRaised, $measurable->amount_raised);
+    }
 }
