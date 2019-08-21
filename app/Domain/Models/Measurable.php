@@ -2,11 +2,8 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Collections\MeasurableCollection;
 use App\Domain\Interfaces\HasMeasurables;
-use App\Domain\Models\EventSourcedModel;
-use App\Domain\Models\MeasurableType;
-use Illuminate\Database\Eloquent\Model;
-use Ramsey\Uuid\Uuid;
 
 /**
  * Class Measurable
@@ -22,6 +19,11 @@ use Ramsey\Uuid\Uuid;
 class Measurable extends EventSourcedModel
 {
     protected $guarded = [];
+
+    public function newCollection(array $models = [])
+    {
+        return new MeasurableCollection($models);
+    }
 
     public function measurableType()
     {
