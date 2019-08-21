@@ -18,6 +18,7 @@
                                     outlined
                                     solo
                                     type="number"
+                                    :rules="[raiseAmountRules.positive, raiseAmountRules.tooLarge]"
                                     v-model="measurableRaiseAmount"
                                 >
                                 </v-text-field>
@@ -46,7 +47,7 @@
                         <v-row>
                             <v-col cols="6">
                                 <v-row :justify="'center'">
-                                    Available: 48304
+                                    Available: {{availableExperience}}
                                 </v-row>
                             </v-col>
                             <v-col cols="6">
@@ -85,12 +86,17 @@
 
     import * as measurableApi from '../../../api/measurableApi';
 
+    import {barracksHeroMixin} from "../../../mixins/barracksHeroMixin";
+
     export default {
         name: "MeasurablePanel",
         props: {
             measurable: Object,
             required: true
         },
+        mixins: [
+            barracksHeroMixin
+        ],
 
         mounted() {
             this.costToRaise = this.measurable.cost_to_raise;
@@ -105,7 +111,11 @@
             return {
                 measurableFocused: false,
                 measurableRaiseAmount: 1,
-                costToRaise: 0
+                costToRaise: 0,
+                raiseAmountRules: {
+                    positive: amount => amount > 0 || 'must be a positive number',
+                    tooLarge: amount => amount <= 100 || 'amount is too large'
+                },
             }
         },
         watch: {
