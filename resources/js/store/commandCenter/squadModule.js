@@ -3,7 +3,11 @@ import * as squadApi from '../../api/squadApi';
 export default {
 
     state: {
-        squad: {}
+        squad: {
+            experience: 0,
+            gold: 0,
+            favor: 0,
+        }
     },
 
     getters: {
