@@ -8,7 +8,8 @@ export const barracksHeroMixin = {
     },
     computed: {
         ...mapGetters([
-            '_barracksHeroes'
+            '_barracksHeroes',
+            '_squad'
         ]),
         barracksHero() {
             let slug = this.$route.params.heroSlug;
@@ -21,6 +22,12 @@ export const barracksHeroMixin = {
                 player_spirit: null,
                 measurables: []
             }
+        },
+        availableExperience() {
+            let squadExperience = this._squad.experience;
+            return this.barracksHero.measurables.reduce(function (availableExperience, measurable) {
+                return availableExperience - measurable.spent_on_raising;
+            }, squadExperience);
         }
     },
     watch: {
