@@ -18,22 +18,32 @@ class HeroMeasurableCalculator implements MeasurableCalculator
      */
     public function getCostToRaise(Measurable $measurable, MeasurableOperator $operator, int $amount = 1): int
     {
+        $amountRaised = $measurable->amount_raised;
+        $startRange = $amountRaised + 1;
+        $endRange = $amountRaised + $amount;
+        return $this->sumCostToRaise($measurable, $operator, $startRange, $endRange);
+    }
+
+    public function spentOnRaising(Measurable $measurable, MeasurableOperator $operator): int
+    {
+        //
+    }
+
+    protected function sumCostToRaise(Measurable $measurable, MeasurableOperator $operator, int $raisedAmountStart, int $raisedAmountEnd)
+    {
         $base = $operator->getCostToRaiseBaseAmount($measurable);
         $exponent = $operator->getCostToRaiseExponent($measurable);
-        $amountRaised = $measurable->amount_raised;
-
-        $amount = $amount >= 1 ? $amount : 1;
         $totalCost = 0;
-        foreach(range(1, $amount) as $count) {
-            $totalCost += $this->calculateCostToRaise($amountRaised, $base, $exponent);
-            $amountRaised++;
+        foreach (range($raisedAmountStart, $raisedAmountEnd) as $amountRaised) {
+            $totalCost += $this->calculateSingleCostToRaise($amountRaised, $base, $exponent);
         }
         return $totalCost;
     }
 
-    protected function calculateCostToRaise(int $amountRaised, float $base, float $exponent): int
+
+    protected function calculateSingleCostToRaise(int $amountRaised, float $base, float $exponent): int
     {
-        return (int) round($base + (($base/4) * $amountRaised ** $exponent));
+        return (int) round($base + (($base/4) * ($amountRaised - 1) ** $exponent));
     }
 
     /**
