@@ -30,12 +30,12 @@ abstract class HeroMeasurableOperator implements MeasurableOperator
     public function getCostToRaiseExponent(Measurable $measurable): float
     {
         if ($this->isPrimaryType($measurable->measurableType)) {
-            return 2;
+            return 1.85;
         } elseif ($this->isSecondaryType($measurable->measurableType)) {
-            return 2.25;
+            return 2;
         }
 
-        return 2.5;
+        return 2.15;
     }
 
     public function getBaseAmount(Measurable $measurable): int
