@@ -52,6 +52,7 @@ class SquadFeatureTest extends TestCase
         $this->assertEquals(Squad::STARTING_ESSENCE, $squad->spirit_essence, "Squad has starting spirit essence");
         $this->assertEquals(Squad::STARTING_GOLD, $squad->gold, "Squad has starting gold");
         $this->assertEquals(Squad::STARTING_FAVOR, $squad->favor, "Squad has starting favor");
+        $this->assertEquals(Squad::STARTING_EXPERIENCE, $squad->experience, "Squad has starting experience");
 
         $this->assertEquals($squad->mobileStorageRank->getBehavior()->getSlotsCount(), $squad->slots()->count(), "Squad has it's slots");
 
