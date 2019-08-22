@@ -1,15 +1,18 @@
 <template>
-    <v-sheet flat color="#706856" class="pa-1 ma-1">
-        <v-row no-gutters :align="'center'" justify="space-between">
-            <p>{{measurableName}}</p>
-            <v-btn @click="measurableFocused = true">+</v-btn>
+    <v-sheet flat color="#706856" class="py-1 px-2 ma-1">
+        <v-row no-gutters :align="'center'" :justify="'space-between'">
+            <span class="subtitle-2 font-weight-bold">{{measurableName}}</span>
+            <div>
+                <v-chip label color="primary" class="mx-1">{{measurable.current_amount}}</v-chip>
+                <v-btn small @click="measurableFocused = true">+</v-btn>
+            </div>
         </v-row>
         <v-dialog
             v-model="measurableFocused"
             max-width="600"
         >
             <v-card>
-                <v-card-title class="headline">{{measurableName}}: {{potentialAmount}}(+{{measurableRaiseAmount}})</v-card-title>
+                <v-card-title class="headline">{{measurableName}}: {{measurable.current_amount}}</v-card-title>
                 <v-card-actions>
                     <v-container>
                         <v-row no-gutters>
@@ -171,13 +174,6 @@
         computed: {
             measurableName() {
                 return this.measurable.measurable_type.name.toUpperCase();
-            },
-            potentialAmount() {
-                let potential = this.measurable.current_amount;
-                if (this.raiseAmount) {
-                    potential += this.raiseAmount;
-                }
-                return potential;
             },
             raiseAmount() {
                 return parseInt(this.measurableRaiseAmount);
