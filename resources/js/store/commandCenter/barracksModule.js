@@ -23,7 +23,7 @@ export default {
             let heroes = await squadApi.getBarracksHeroes(route.params.squadSlug);
             commit('SET_BARRACKS_HEROES', heroes);
         },
-        async raiseHeroMeasurable({state, commit}, payload) {
+        async raiseHeroMeasurable({state, commit, dispatch}, payload) {
 
             try {
                 let updatedMeasurable = await measurableApi.raise(payload.measurableUuid, payload.raiseAmount);
@@ -38,15 +38,16 @@ export default {
 
                 matchingHero.measurables.splice(measurableIndex, 1, updatedMeasurable);
 
-                console.log("Matching Hero");
-                console.log(matchingHero);
-                console.log("UPDATED HEROES");
-                console.log(updatedHeroes);
                 commit('SET_BARRACKS_HEROES', updatedHeroes);
 
+                let text = updatedMeasurable.measurable_type.name.toUpperCase() + ' raised to ' + updatedMeasurable.current_amount;
+                dispatch('snackBarSuccess', {
+                    text: text,
+                    timeout: 3000
+                })
+
             } catch(e) {
-                console.log("ERRORS");
-                console.log(e);
+                dispatch('snackBarError', {});
             }
         }
     }
