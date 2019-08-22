@@ -7,6 +7,7 @@ use App\Domain\Models\Hero;
 use App\Domain\Models\Measurable;
 use App\Exceptions\RaiseMeasurableException;
 use App\Http\Resources\MeasurableResource;
+use App\Policies\MeasurablePolicy;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
@@ -23,7 +24,9 @@ class RaiseMeasurableController extends Controller
     public function store($measurableUuid, Request $request, RaiseMeasurableAction $raiseMeasurableAction)
     {
         $measurable = Measurable::findUuidOrFail($measurableUuid);
+        $this->authorize(MeasurablePolicy::RAISE, $measurable);
         $amount = $request->get('amount');
+
         try {
             $raiseMeasurableAction->execute($measurable, $amount);
 
