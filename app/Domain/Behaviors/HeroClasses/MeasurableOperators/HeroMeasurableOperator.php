@@ -46,9 +46,9 @@ abstract class HeroMeasurableOperator implements MeasurableOperator
     public function getCurrentAmountBonus(Measurable $measurable): int
     {
         if ($this->isPrimaryType($measurable->measurableType)) {
-            return 40;
+            return (int) round(40 / $measurable->getMeasurableImportanceWeight() );
         } elseif ($this->isSecondaryType($measurable->measurableType)) {
-            return 20;
+            return (int) round(20 / $measurable->getMeasurableImportanceWeight() );
         }
 
         return 0;
