@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Domain\Models\Hero;
 use App\Domain\Models\HeroPost;
 use App\Domain\Models\Measurable;
+use App\Domain\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
@@ -82,5 +83,32 @@ class RaiseMeasurableControllerTest extends TestCase
 
         $measurable = $measurable->fresh();
         $this->assertEquals($expectedAmountRaised, $measurable->amount_raised);
+    }
+
+    /**
+     * @test
+     */
+    public function a_user_cannot_raise_a_measurable_on_a_hero_it_doesnt_own()
+    {
+        /** @var Measurable $measurable */
+        $measurable = $this->hero->measurables()->inRandomOrder()->first();
+        $startingAmount = $measurable->amount_raised;
+        $squad = $this->hero->getSquad();
+        $squad->experience = 999999;
+        $squad->save();
+        $amount = 5;
+
+        // Create random user
+        $user = factory(User::class)->create();
+        Passport::actingAs($user);
+
+        $response = $this->json('POST', 'api/v1/measurables/' . $measurable->uuid . '/raise', [
+            'amount' => $amount
+        ]);
+
+        $response->assertStatus(403);
+
+        $measurable = $measurable->fresh();
+        $this->assertEquals($startingAmount, $measurable->amount_raised);
     }
 }
