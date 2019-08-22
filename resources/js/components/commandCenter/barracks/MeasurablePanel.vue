@@ -163,6 +163,8 @@
                     raiseAmount: this.measurableRaiseAmount
                 });
 
+                this.measurableRaiseAmount = 1;
+                await this.setCostToRaiseAmount();
                 this.pendingMeasurableRaise = false;
             }
         },
