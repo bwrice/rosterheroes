@@ -72,6 +72,7 @@
                                     color="primary"
                                     :disabled="raiseMeasurableDisabled"
                                     block
+                                    @click="raiseMeasurable"
                                 >
                                     Raise {{measurableName}}
                                 </v-btn>
@@ -89,6 +90,8 @@
     import * as measurableApi from '../../../api/measurableApi';
 
     import {barracksHeroMixin} from "../../../mixins/barracksHeroMixin";
+
+    import {mapActions} from 'vuex';
 
     export default {
         name: "MeasurablePanel",
@@ -119,18 +122,21 @@
                     tooLarge: amount => amount <= 100 || 'amount is too large'
                 },
                 raiseInputHasErrors: false,
-                calculatingCost: false,
+                pendingMeasurableRaise: false,
             }
         },
         watch: {
             measurableRaiseAmount: function (newAmount, oldAmount) {
                 this.costToRaise = 'Calculating...';
-                this.calculatingCost = true;
+                this.pendingMeasurableRaise = true;
                 this.debounceSetCostToRaiseAmount();
             }
         },
 
         methods: {
+            ...mapActions([
+                'raiseHeroMeasurable'
+            ]),
             decreaseRaiseAmount() {
                 this.measurableRaiseAmount--;
             },
@@ -143,10 +149,21 @@
                 } else {
                     this.costToRaise = await measurableApi.getCostToRaise(this.measurable.uuid, this.measurableRaiseAmount);
                 }
-                this.calculatingCost = false;
+                this.pendingMeasurableRaise = false;
             },
             updateRaiseInputErrors(hasErrors) {
                 this.raiseInputHasErrors = hasErrors;
+            },
+            async raiseMeasurable() {
+                this.pendingMeasurableRaise = true;
+
+                await this.raiseHeroMeasurable({
+                    heroSlug: this.$route.params.heroSlug,
+                    measurableUuid: this.measurable.uuid,
+                    raiseAmount: this.measurableRaiseAmount
+                });
+
+                this.pendingMeasurableRaise = false;
             }
         },
         computed: {
@@ -170,7 +187,7 @@
                 return this.measurableRaiseAmount <= 1;
             },
             raiseMeasurableDisabled() {
-                if (this.raiseInputHasErrors || this.calculatingCost) {
+                if (this.raiseInputHasErrors || this.pendingMeasurableRaise) {
                     return true;
                 } else if( this.costToRaise > this.availableExperience ) {
                     return true;
