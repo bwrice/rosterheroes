@@ -6,6 +6,7 @@ use App\Domain\Models\HeroPostType;
 use App\Domain\Models\SlotType;
 use App\StorableEvents\SquadCreated;
 use App\StorableEvents\SquadEssenceIncreased;
+use App\StorableEvents\SquadExperienceIncreased;
 use App\StorableEvents\SquadFavorIncreased;
 use App\StorableEvents\SquadGoldDecreased;
 use App\StorableEvents\SquadGoldIncreased;
@@ -55,6 +56,13 @@ final class SquadAggregate extends AggregateRoot
     public function increaseFavor(int $amount)
     {
         $this->recordThat(new SquadFavorIncreased($amount));
+
+        return $this;
+    }
+
+    public function increaseExperience(int $amount)
+    {
+        $this->recordThat(new SquadExperienceIncreased($amount));
 
         return $this;
     }

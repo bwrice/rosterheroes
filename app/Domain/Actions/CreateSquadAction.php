@@ -48,7 +48,8 @@ class CreateSquadAction
             Province::getStarting()->id
         )->increaseEssence(Squad::STARTING_ESSENCE)
             ->increaseGold(Squad::STARTING_GOLD)
-            ->increaseFavor(Squad::STARTING_FAVOR);
+            ->increaseFavor(Squad::STARTING_FAVOR)
+            ->increaseExperience(Squad::STARTING_EXPERIENCE);
 
         $startingHeroPostTypes = HeroPostType::squadStarting();
         $startingHeroPostTypes->each(function (array $startingHeroPostType) use ($aggregate) {

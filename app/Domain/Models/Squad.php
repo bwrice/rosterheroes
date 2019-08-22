@@ -55,6 +55,7 @@ class Squad extends EventSourcedModel implements HasSlots, TravelsBorders
     const RELATION_MORPH_MAP_KEY = 'squads';
 
     const STARTING_GOLD = 500;
+    const STARTING_EXPERIENCE = 1000;
     const STARTING_FAVOR = 100;
     const STARTING_ESSENCE = 30000;
     const QUESTS_PER_WEEK = 3;
