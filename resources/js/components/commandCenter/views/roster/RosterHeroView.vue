@@ -116,7 +116,7 @@
                 });
             },
             filteredSpirits() {
-                if (this.spiritSearch.length) {
+                if (this.spiritSearch && this.spiritSearch.length) {
                     let search = new jsSearch.Search('uuid');
                     search.addIndex(['player', 'full_name']);
                     search.addIndex(['game', 'homeTeam', 'name']);
