@@ -9,6 +9,6 @@ class ManaBehavior extends ResourceBehavior
 
     public function getBaseAmount(): int
     {
-        return 250;
+        return 200;
     }
 }

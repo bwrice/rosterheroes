@@ -9,7 +9,7 @@ abstract class ResourceBehavior extends MeasurableTypeBehavior
 {
     public function getMeasurableImportanceWeight(): float
     {
-        return .25;
+        return .125;
     }
 
     public function getMeasurableGroup(): string

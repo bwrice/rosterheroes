@@ -9,6 +9,6 @@ class HealthBehavior extends ResourceBehavior
 
     public function getBaseAmount(): int
     {
-        return 500;
+        return 400;
     }
 }
