@@ -4,6 +4,9 @@ namespace App\Domain\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property string $name
+ */
 class MaterialGroup extends Model
 {
     const HIDE = 'hide';
@@ -16,4 +19,9 @@ class MaterialGroup extends Model
     const PSIONIC = 'psionic';
 
     protected $guarded = [];
+
+    public function materialTypes()
+    {
+        return $this->hasMany(MaterialType::class);
+    }
 }

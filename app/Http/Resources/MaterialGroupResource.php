@@ -2,8 +2,15 @@
 
 namespace App\Http\Resources;
 
+use App\Domain\Models\MaterialGroup;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * Class MaterialGroupResource
+ * @package App\Http\Resources
+ *
+ * @mixin MaterialGroup
+ */
 class MaterialGroupResource extends JsonResource
 {
     /**
@@ -14,6 +21,8 @@ class MaterialGroupResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'name' => $this->name
+        ];
     }
 }
