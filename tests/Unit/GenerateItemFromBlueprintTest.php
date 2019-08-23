@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Domain\Actions\GenerateItemFromBlueprintAction;
 use App\Domain\Models\Enchantment;
 use App\Domain\Models\Item;
 use App\Domain\Models\ItemBlueprint;
@@ -14,19 +15,30 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class ItemBlueprintTest extends TestCase
+class GenerateItemFromBlueprintTest extends TestCase
 {
     use DatabaseTransactions;
+
+    /** @var GenerateItemFromBlueprintAction */
+    protected $domainAction;
+
+    /** @var ItemBlueprint */
+    protected $itemBlueprint;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->domainAction = app(GenerateItemFromBlueprintAction::class);
+        $this->itemBlueprint = factory(ItemBlueprint::class)->create();
+    }
 
     /**
      * @test
      */
     public function it_will_generate_an_item()
     {
-        /** @var ItemBlueprint $blueprint */
-        $blueprint = factory(ItemBlueprint::class)->create();
-
-        $item = $blueprint->generate();
+        $item = $this->domainAction->execute($this->itemBlueprint);
 
         $this->assertTrue($item instanceof Item);
         $this->assertDatabaseHas( 'items', [
@@ -39,9 +51,8 @@ class ItemBlueprintTest extends TestCase
      */
     public function it_will_attach_already_defined_enchantments()
     {
-        $blueprint = factory( ItemBlueprint::class )->create([
-            'item_class_id' => ItemClass::where('name', ItemClass::ENCHANTED )->first()->id
-        ]);
+        $this->itemBlueprint->item_class_id = ItemClass::query()->where('name', ItemClass::ENCHANTED )->first()->id;
+        $this->itemBlueprint->save();
 
         $enchantments = Enchantment::inRandomOrder()->take(3)->get();
         $enchantmentIDs = $enchantments->pluck('id')->toArray();
@@ -49,10 +60,10 @@ class ItemBlueprintTest extends TestCase
         $this->assertEquals( 3, count($enchantmentIDs));
 
         /** @var ItemBlueprint $blueprint */
-        $blueprint->enchantments()->attach($enchantmentIDs);
+        $this->itemBlueprint->enchantments()->attach($enchantmentIDs);
 
-        /** @var \App\Domain\Models\Item $item */
-        $item = $blueprint->generate();
+        /** @var Item $item */
+        $item = $this->domainAction->execute($this->itemBlueprint->fresh());
 
         $this->assertDatabaseHas('items', [
             'id' => $item->id
@@ -67,14 +78,14 @@ class ItemBlueprintTest extends TestCase
     /**
      * @test
      */
-    public function it_will_attach_enchantments_when_generating_an_enchanted_class_item_when_note_defined()
+    public function it_will_attach_enchantments_when_generating_an_enchanted_class_item_when_not_defined()
     {
-        /** @var ItemBlueprint $blueprint */
-        $blueprint = factory( ItemBlueprint::class )->create([
-            'item_class_id' => ItemClass::where('name', ItemClass::ENCHANTED )->first()->id
-        ]);
-        $this->assertEquals(0, $blueprint->enchantments->count());
-        $item = $blueprint->generate();
+        $this->itemBlueprint->item_class_id = ItemClass::query()->where('name', ItemClass::ENCHANTED )->first()->id;
+        $this->itemBlueprint->save();
+
+        $this->assertEquals(0, $this->itemBlueprint->enchantments->count());
+        $item = $this->domainAction->execute($this->itemBlueprint->fresh());
+
         $this->assertGreaterThan(0, $item->enchantments->count());
     }
 
@@ -88,15 +99,13 @@ class ItemBlueprintTest extends TestCase
     public function it_will_generate_a_correct_item_type_from_an_item_base($itemBaseName)
     {
         /** @var ItemBase $itemBaseForBlueprint */
-        $itemBaseForBlueprint = ItemBase::where('name', '=', $itemBaseName)->first();
+        $itemBaseForBlueprint = ItemBase::query()->where('name', '=', $itemBaseName)->first();
 
-        /** @var ItemBlueprint $blueprint */
-        $blueprint = factory(ItemBlueprint::class)->create([
-            'item_type_id' => null, //Override default set by factory
-            'item_base_id' => $itemBaseForBlueprint->id
-        ]);
+        $this->itemBlueprint->item_type_id = null;
+        $this->itemBlueprint->item_base_id = $itemBaseForBlueprint->id;
+        $this->itemBlueprint->save();
 
-        $item = $blueprint->generate();
+        $item = $this->domainAction->execute($this->itemBlueprint->fresh());
 
         $this->assertEquals($itemBaseForBlueprint->id, $item->itemType->itemBase->id, "Item base of the item generate is the same as the blueprint");
     }
@@ -244,29 +253,24 @@ class ItemBlueprintTest extends TestCase
     }
 
 
-
     /**
      * @test
      */
     public function it_can_create_an_item_by_group()
     {
-        $itemGroup = ItemGroup::where('name', ItemGroup::ARMOR )->first();
+        $itemGroup = ItemGroup::query()->where('name', ItemGroup::ARMOR)->first();
 
-        $this->assertNotNull( $itemGroup );
-
-        $blueprint = factory(ItemBlueprint::class)->create([
-            'item_type_id' => null,
-            'item_group_id' => $itemGroup->id
-        ]);
+        $this->itemBlueprint->item_type_id = null;
+        $this->itemBlueprint->item_group_id = $itemGroup->id;
+        $this->itemBlueprint->save();
 
         /** @var Item $item */
-        $item = $blueprint->generate();
+        $item = $this->domainAction->execute($this->itemBlueprint->fresh());
 
         $this->assertDatabaseHas( 'items', [
             'id' => $item->id
         ]);
 
-        $this->assertEquals( $item->itemType->itemBase->itemGroup->id, $itemGroup-> id );
-
+        $this->assertEquals($item->itemType->itemBase->itemGroup->id, $itemGroup->id);
     }
 }
