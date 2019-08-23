@@ -15,6 +15,8 @@ use Ramsey\Uuid\Uuid;
  * @package App
  *
  * @property int $id
+ * @property string $uuid
+ * @property string $name
  *
  * @property ItemType $itemType
  * @property ItemClass $itemClass
@@ -74,12 +76,23 @@ class Item extends Model implements Slottable
     {
         return $this->slots;
     }
-    
+
     /*
      * A helper method to quickly retrieve an account by uuid.
      */
     public static function uuid(string $uuid): ?Item
     {
         return static::where('uuid', $uuid)->first();
+    }
+
+    public function getItemName(): string
+    {
+        return $this->name ?: $this->buildItemName();
+    }
+
+    protected function buildItemName(): string
+    {
+        //TODO
+        return 'Item';
     }
 }
