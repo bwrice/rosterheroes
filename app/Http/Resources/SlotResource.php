@@ -2,8 +2,16 @@
 
 namespace App\Http\Resources;
 
+use App\Domain\Models\Item;
+use App\Domain\Slot;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * Class SlotResource
+ * @package App\Http\Resources
+ *
+ * @mixin Slot
+ */
 class SlotResource extends JsonResource
 {
     /**
@@ -14,8 +22,13 @@ class SlotResource extends JsonResource
      */
     public function toArray($request)
     {
+        $hasItem = $this->slottable instanceof Item;
+
         return [
-            'slottable' => ''
+            'item' => $this->when($hasItem, function() {
+                return new ItemResource($this->slottable);
+            }),
+            'slotType' => new SlotTypeResource($this->slotType)
         ];
     }
 }
