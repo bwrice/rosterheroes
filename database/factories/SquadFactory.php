@@ -20,3 +20,7 @@ $factory->define(\App\Domain\Models\Squad::class, function (Faker $faker) {
 $factory->afterCreatingState(\App\Domain\Models\Squad::class, 'starting-posts', function (\App\Domain\Models\Squad $squad, $faker) {
     $squad->addStartingHeroPosts();
 });
+
+$factory->afterCreatingState(\App\Domain\Models\Squad::class, 'with-slots', function (\App\Domain\Models\Squad $squad, $faker) {
+    $squad->addSlots();
+});
