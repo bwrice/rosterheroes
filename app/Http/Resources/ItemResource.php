@@ -22,7 +22,11 @@ class ItemResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'uuid' => $this->uuid
+            'uuid' => $this->uuid,
+            'name' => $this->getItemName(),
+            'itemClass' => new ItemClassResource($this->itemClass),
+            'itemType' => new ItemTypeResource($this->itemType),
+            'materialType' => new MaterialTypeResource($this->materialType)
         ];
     }
 }
