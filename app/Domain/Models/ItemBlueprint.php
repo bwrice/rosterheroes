@@ -19,16 +19,21 @@ use Illuminate\Database\Eloquent\Model;
  * @package App
  *
  * @property int $id
- * @property string $item_name
- * @property int $attack_power
- * @property int $enchantment_power
+ * @property string|null $item_name
+ * @property int|null $attack_power
+ * @property int|null $enchantment_power
+ * @property int|null $item_class_id
+ * @property int|null $item_type_id
+ * @property int|null $item_base_id
+ * @property int|null $item_group_id
+ * @property string|null $description
  *
  * @property Collection $enchantments
- * @property ItemClass $itemClass
- * @property ItemType $itemType
- * @property ItemBase $itemBase
- * @property ItemGroup $itemGroup
- * @property MaterialType $materialType
+ * @property ItemClass|null $itemClass
+ * @property ItemType|null $itemType
+ * @property ItemBase|null $itemBase
+ * @property ItemGroup|null $itemGroup
+ * @property MaterialType|null $materialType
  */
 class ItemBlueprint extends Model
 {
