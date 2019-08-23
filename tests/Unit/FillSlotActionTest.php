@@ -20,18 +20,29 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class SlotterTest extends TestCase
+class FillSlotActionTest extends TestCase
 {
     use DatabaseTransactions;
 
-    protected $squadName;
+    /** @var FillSlotAction */
+    protected $domainAction;
 
-    /** @var User */
-    protected $user;
-    /** @var Squad */
-    protected $squad;
-    /** @var \App\Domain\Actions\FillSlotAction $slotter */
-    protected $slotter;
+    /** @var Hero */
+    protected $hero;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->domainAction = app(FillSlotAction::class);
+
+        $this->hero = factory(Hero::class)->states('with-slots', 'with-measurables')->create();
+
+        factory(HeroPost::class)->create([
+            'hero_id' => $this->hero->id,
+            'squad_id' => factory(Squad::class)->states('with-slots')->create()->id
+        ]);
+    }
 
     /**
      * @test
@@ -42,22 +53,20 @@ class SlotterTest extends TestCase
      */
     public function it_can_slot_items_on_empty_heroes($itemBase)
     {
-        /** @var Hero $hero */
-        $hero = factory(Hero::class)->states('with-slots', 'with-measurables')->create();
-
         /** @var \App\Domain\Models\ItemBase $itemBase */
-        $itemBase = ItemBase::where('name', $itemBase)->first();
+        $itemBase = ItemBase::query()->where('name', $itemBase)->first();
+        /** @var ItemType $itemType */
+        $itemType = $itemBase->itemTypes()->inRandomOrder()->first();
+        $materialType = $itemType->materialTypes()->inRandomOrder()->first();
 
-        /** @var \App\Domain\Models\ItemBlueprint $blueprint */
-        $blueprint = factory(ItemBlueprint::class)->create([
-            'item_type_id' => null, //Override default set by factory
-            'item_base_id' => $itemBase->id
+        $item = factory(Item::class)->create([
+            'item_type_id' => $itemType->id,
+            'material_type_id' => $materialType->id
         ]);
 
-        $item = $blueprint->generate();
+        $this->domainAction->execute($this->hero, $item);
 
-        $action = new FillSlotAction($hero, $item);
-        $action();
+        $item = $item->fresh();
 
         $this->assertEquals($itemBase->getSlotsCount(), $item->slots->count(), "Item takes up the correct amount of slots");
         $item->slots->each(function (Slot $slot) use ($item) {
@@ -65,7 +74,7 @@ class SlotterTest extends TestCase
             $this->assertEquals($slot->slottable_type, Item::RELATION_MORPH_MAP);
         });
 
-        $this->assertEquals($itemBase->getSlotsCount(), $hero->slots->filled()->count(), "Hero has correct amount of slots filled");
+        $this->assertEquals($itemBase->getSlotsCount(), $this->hero->slots->filled()->count(), "Hero has correct amount of slots filled");
     }
 
     public function provides_it_can_slot_items_on_empty_heroes()
@@ -181,50 +190,41 @@ class SlotterTest extends TestCase
      */
     public function it_can_slot_and_replace_items_on_heroes_and_move_them_to_squad($firstItemBaseName, $secondItemBaseName)
     {
+        /** @var \App\Domain\Models\ItemBase $itemBase */
+        $itemBase = ItemBase::query()->where('name', $firstItemBaseName)->first();
+        /** @var ItemType $itemType */
+        $itemType = $itemBase->itemTypes()->inRandomOrder()->first();
+        $materialType = $itemType->materialTypes()->inRandomOrder()->first();
 
-        /** @var HeroPost $heroPost */
-        $heroPost = factory(HeroPost::class)->create();
-        $heroPost->squad->addSlots();
-
-        /** @var Hero $hero */
-        $hero = factory(Hero::class)->states('with-slots', 'with-measurables')->create();
-        $heroPost->hero_id = $hero->id;
-        $heroPost->save();
-
-        /** @var ItemBase $firstItemBase */
-        $firstItemBase = ItemBase::where('name', $firstItemBaseName)->first();
-
-        /** @var ItemBlueprint $firstBlueprint */
-        $firstBlueprint = factory(ItemBlueprint::class)->create([
-            'item_type_id' => null, //Override default set by factory
-            'item_base_id' => $firstItemBase->id
+        $firstItem = factory(Item::class)->create([
+            'item_type_id' => $itemType->id,
+            'material_type_id' => $materialType->id
         ]);
 
-        $itemOne = $firstBlueprint->generate();
+        /** @var \App\Domain\Models\ItemBase $itemBase */
+        $itemBase = ItemBase::query()->where('name', $secondItemBaseName)->first();
+        /** @var ItemType $itemType */
+        $itemType = $itemBase->itemTypes()->inRandomOrder()->first();
+        $materialType = $itemType->materialTypes()->inRandomOrder()->first();
 
-        $action = new FillSlotAction($hero, $itemOne);
-        $action();
-
-        /** @var \App\Domain\Models\ItemBase $firstItemBase */
-        $secondItemBase = ItemBase::where('name', $secondItemBaseName)->first();
-
-        $secondBlueprint = factory(ItemBlueprint::class)->create([
-            'item_type_id' => null, //Override default set by factory
-            'item_base_id' => $secondItemBase->id
+        $secondItem = factory(Item::class)->create([
+            'item_type_id' => $itemType->id,
+            'material_type_id' => $materialType->id
         ]);
 
+        $this->domainAction->execute($this->hero->fresh(), $firstItem);
 
-        $itemTwo = $secondBlueprint->generate();
+        $this->domainAction->execute($this->hero->fresh(), $secondItem);
 
-        $action = new FillSlotAction($hero, $itemTwo);
-        $action();
+        $firstItem = $firstItem->fresh();
+        $secondItem = $secondItem->fresh();
 
-        $itemOne->slots->each(function (Slot $slot) use ($heroPost) {
-            $this->assertEquals($heroPost->squad->id, $slot->has_slots_id, "First item now slotted in squad");
+        $firstItem->slots->each(function (Slot $slot) {
+            $this->assertEquals($this->hero->getSquad()->id, $slot->has_slots_id, "First item now slotted in squad");
         });
 
-        $itemTwo->slots->each(function (Slot $slot) use ($hero) {
-            $this->assertEquals($hero->id, $slot->has_slots_id, "Second item now slotted in hero");
+        $secondItem->slots->each(function (Slot $slot) {
+            $this->assertEquals($this->hero->fresh()->id, $slot->has_slots_id, "Second item now slotted in hero");
         });
     }
 
@@ -268,69 +268,60 @@ class SlotterTest extends TestCase
      */
     public function it_can_slot_single_slot_items_with_multi_slot_options_and_only_move_one_to_the_squad_if_possible($firstItemBaseName, $secondItemBaseName, $thirdItemBaseName)
     {
-        /** @var HeroPost $heroPost */
-        $heroPost = factory(HeroPost::class)->create();
-        $heroPost->squad->addSlots();
+        /** @var \App\Domain\Models\ItemBase $itemBase */
+        $itemBase = ItemBase::query()->where('name', $firstItemBaseName)->first();
+        /** @var ItemType $itemType */
+        $itemType = $itemBase->itemTypes()->inRandomOrder()->first();
+        $materialType = $itemType->materialTypes()->inRandomOrder()->first();
 
-        /** @var \App\Domain\Models\Hero $hero */
-        $hero = factory(Hero::class)->states('with-slots', 'with-measurables')->create();
-        $heroPost->hero_id = $hero->id;
-        $heroPost->save();
-
-        /** @var ItemBase $itemBase */
-        $itemBase = ItemBase::where('name', $firstItemBaseName)->first();
-
-        /** @var \App\Domain\Models\ItemBlueprint $itemBlueprint */
-        $itemBlueprint = factory(ItemBlueprint::class)->create([
-            'item_type_id' => null, //Override default set by factory
-            'item_base_id' => $itemBase->id
+        $firstItem = factory(Item::class)->create([
+            'item_type_id' => $itemType->id,
+            'material_type_id' => $materialType->id
         ]);
 
-        $itemOne = $itemBlueprint->generate();
+        /** @var \App\Domain\Models\ItemBase $itemBase */
+        $itemBase = ItemBase::query()->where('name', $secondItemBaseName)->first();
+        /** @var ItemType $itemType */
+        $itemType = $itemBase->itemTypes()->inRandomOrder()->first();
+        $materialType = $itemType->materialTypes()->inRandomOrder()->first();
 
-        $action = new FillSlotAction($hero, $itemOne);
-        $action();
-
-        /** @var \App\Domain\Models\ItemBase $firstItemBase */
-        $itemBase = ItemBase::where('name', $secondItemBaseName)->first();
-
-        /** @var \App\Domain\Models\ItemBlueprint $firstBlueprint */
-        $itemBlueprint = factory(ItemBlueprint::class)->create([
-            'item_type_id' => null, //Override default set by factory
-            'item_base_id' => $itemBase->id
+        $secondItem = factory(Item::class)->create([
+            'item_type_id' => $itemType->id,
+            'material_type_id' => $materialType->id
         ]);
 
-        $itemTwo = $itemBlueprint->generate();
+        /** @var \App\Domain\Models\ItemBase $itemBase */
+        $itemBase = ItemBase::query()->where('name', $thirdItemBaseName)->first();
+        /** @var ItemType $itemType */
+        $itemType = $itemBase->itemTypes()->inRandomOrder()->first();
+        $materialType = $itemType->materialTypes()->inRandomOrder()->first();
 
-        $action = new FillSlotAction($hero, $itemTwo);
-        $action();
-
-        /** @var ItemBase $firstItemBase */
-        $itemBase = ItemBase::where('name', $thirdItemBaseName)->first();
-
-        /** @var \App\Domain\Models\ItemBlueprint $firstBlueprint */
-        $itemBlueprint = factory(ItemBlueprint::class)->create([
-            'item_type_id' => null, //Override default set by factory
-            'item_base_id' => $itemBase->id
+        $thirdItem = factory(Item::class)->create([
+            'item_type_id' => $itemType->id,
+            'material_type_id' => $materialType->id
         ]);
 
-        $itemThree = $itemBlueprint->generate();
+        $this->domainAction->execute($this->hero->fresh(), $firstItem);
+        $this->domainAction->execute($this->hero->fresh(), $secondItem);
+        $this->domainAction->execute($this->hero->fresh(), $thirdItem);
 
-        $action = new FillSlotAction($hero, $itemThree);
-        $action();
+        $firstItem = $firstItem->fresh();
+        $secondItem = $secondItem->fresh();
+        $thirdItem = $thirdItem->fresh();
 
-        $this->assertEquals(1, $itemOne->slots->count(), "Single slot item only taking up one slot");
-        $this->assertEquals(1, $itemTwo->slots->count(), "Single slot item only taking up one slot");
-        $this->assertEquals(1, $itemThree->slots->count(), "Single slot item only taking up one slot");
+        $this->assertEquals(1, $firstItem->slots->count(), "Single slot item only taking up one slot");
+        $this->assertEquals(1, $secondItem->slots->count(), "Single slot item only taking up one slot");
+        $this->assertEquals(1, $thirdItem->slots->count(), "Single slot item only taking up one slot");
 
-        $slotOne = $itemOne->slots->first();
-        $slotTwo = $itemTwo->slots->first();
-        $slotThree = $itemThree->slots->first();
+        $slotOne = $firstItem->slots->first();
+        $slotTwo = $secondItem->slots->first();
+        $slotThree = $thirdItem->slots->first();
 
+        $this->hero = $this->hero->fresh();
 
-        $this->assertEquals($heroPost->squad->id, $slotOne->has_slots_id, "First item now slotted in squad");
-        $this->assertEquals($hero->id, $slotTwo->has_slots_id, "Second item is still slotted in hero");
-        $this->assertEquals($hero->id, $slotThree->has_slots_id, "Third item now slotted in hero");
+        $this->assertEquals($this->hero->getSquad()->id, $slotOne->has_slots_id, "First item now slotted in squad");
+        $this->assertEquals($this->hero->id, $slotTwo->has_slots_id, "Second item is still slotted in hero");
+        $this->assertEquals($this->hero->id, $slotThree->has_slots_id, "Third item now slotted in hero");
     }
 
     public function provides_it_can_slot_single_slot_items_with_multi_slot_options_and_only_move_one_to_the_squad_if_possible()
@@ -357,62 +348,49 @@ class SlotterTest extends TestCase
     /**
      * @test
      * @dataProvider provides_slotting_to_a_full_squad_will_stash_the_item_if_no_store_house_is_available
+     * @param $slotsToKeepCount
+     * @param $firstItemBaseName
+     * @param $secondItemBaseName
+     * @throws \Exception
      */
     public function slotting_to_a_full_squad_will_stash_the_item_if_no_store_house_is_available($slotsToKeepCount, $firstItemBaseName, $secondItemBaseName)
     {
-        /** @var HeroPost $heroPost */
-        $heroPost = factory(HeroPost::class)->create();
-        $squad = $heroPost->squad;
-        $squad->addSlots();
 
-        /** @var Hero $hero */
-        $hero = factory(Hero::class)->states('with-slots', 'with-measurables')->create();
-        $heroPost->hero_id = $hero->id;
-        $heroPost->save();
+        /** @var \App\Domain\Models\ItemBase $itemBase */
+        $itemBase = ItemBase::query()->where('name', $firstItemBaseName)->first();
+        /** @var ItemType $itemType */
+        $itemType = $itemBase->itemTypes()->inRandomOrder()->first();
+        $materialType = $itemType->materialTypes()->inRandomOrder()->first();
+
+        /** @var Item $firstItem */
+        $firstItem = factory(Item::class)->create([
+            'item_type_id' => $itemType->id,
+            'material_type_id' => $materialType->id
+        ]);
+
+        /** @var \App\Domain\Models\ItemBase $itemBase */
+        $itemBase = ItemBase::query()->where('name', $secondItemBaseName)->first();
+        /** @var ItemType $itemType */
+        $itemType = $itemBase->itemTypes()->inRandomOrder()->first();
+        $materialType = $itemType->materialTypes()->inRandomOrder()->first();
+
+        /** @var Item $secondItem */
+        $secondItem = factory(Item::class)->create([
+            'item_type_id' => $itemType->id,
+            'material_type_id' => $materialType->id
+        ]);
+
+        $squad = $this->hero->getSquad();
 
         // delete all slots but the slots to keep
         $squadSlotCount = $squad->slots()->count();
         $squad->slots()->take($squadSlotCount - $slotsToKeepCount)->delete();
-        $this->assertGreaterThan(0, $squad->slots()->count());
 
-        $itemBase = ItemBase::where('name', '=', $firstItemBaseName)->first();
+        $this->domainAction->execute($squad->fresh(), $firstItem);
+        $this->domainAction->execute($squad->fresh(), $secondItem);
 
-        /** @var \App\Domain\Models\ItemBlueprint $itemBlueprint */
-        $itemBlueprint = factory(ItemBlueprint::class)->create([
-            'item_type_id' => null, //Override default set by factory
-            'item_base_id' => $itemBase->id
-        ]);
-
-        $firstItem = $itemBlueprint->generate();
-
-        // delete local storehouse if it exists
-        if($squad->getLocalStoreHouse()) {
-            $squad->getLocalStoreHouse()->delete();
-        }
-        $squad = $squad->fresh();
-
-        $action = new FillSlotAction($squad, $firstItem);
-        $action();
-
-        $firstItemSlots = $firstItem->slots()->get();
-        $this->assertEquals($firstItem->getSlotsCount(), $firstItemSlots->count(), "First item is slotted");
-
-        $firstItemSlots->each(function (Slot $slot) use ($squad) {
-            $this->assertEquals($squad->id, $slot->has_slots_id, "item slots belong to squad");
-        });
-
-        $itemBase = ItemBase::where('name', '=', $secondItemBaseName)->first();
-
-        /** @var \App\Domain\Models\ItemBlueprint $itemBlueprint */
-        $itemBlueprint = factory(ItemBlueprint::class)->create([
-            'item_type_id' => null, //Override default set by factory
-            'item_base_id' => $itemBase->id
-        ]);
-
-        $secondItem = $itemBlueprint->generate();
-
-        $action = new FillSlotAction($squad, $secondItem);
-        $action();
+        $firstItem = $firstItem->fresh();
+        $secondItem = $secondItem->fresh();
 
         $secondItemSlots = $secondItem->slots()->get();
         $this->assertEquals($secondItem->getSlotsCount(), $secondItemSlots->count(), "Second item is slotted");
