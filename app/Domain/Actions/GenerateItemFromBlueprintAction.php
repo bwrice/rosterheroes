@@ -24,15 +24,6 @@ use Illuminate\Support\Str;
 
 class GenerateItemFromBlueprintAction
 {
-//    /**
-//     * @var ItemBlueprint
-//     */
-//    private $itemBlueprint;
-//
-//    public function __construct(ItemBlueprint $itemBlueprint)
-//    {
-//        $this->itemBlueprint = $itemBlueprint;
-//    }
 
     public function execute(ItemBlueprint $itemBlueprint)
     {
