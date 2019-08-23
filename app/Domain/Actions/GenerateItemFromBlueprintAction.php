@@ -24,31 +24,31 @@ use Illuminate\Support\Str;
 
 class GenerateItemFromBlueprintAction
 {
-    /**
-     * @var ItemBlueprint
-     */
-    private $itemBlueprint;
+//    /**
+//     * @var ItemBlueprint
+//     */
+//    private $itemBlueprint;
+//
+//    public function __construct(ItemBlueprint $itemBlueprint)
+//    {
+//        $this->itemBlueprint = $itemBlueprint;
+//    }
 
-    public function __construct(ItemBlueprint $itemBlueprint)
+    public function execute(ItemBlueprint $itemBlueprint)
     {
-        $this->itemBlueprint = $itemBlueprint;
-    }
-
-    public function __invoke(): Item
-    {
-        $itemClass = $this->getItemClass();
-        $itemType = $this->getItemType();
-        $materialType = $this->getMaterialType($itemType);
+        $itemClass = $this->getItemClass($itemBlueprint);
+        $itemType = $this->getItemType($itemBlueprint);
+        $materialType = $this->getMaterialType($itemBlueprint, $itemType);
 
         $uuid = Str::uuid();
         /** @var ItemAggregate $itemAggregate */
         $itemAggregate = ItemAggregate::retrieve($uuid);
-        $itemAggregate->createItem($itemClass->id, $itemType->id, $materialType->id, $this->itemBlueprint->id, $this->itemBlueprint->item_name);
+        $itemAggregate->createItem($itemClass->id, $itemType->id, $materialType->id, $itemBlueprint->id, $itemBlueprint->item_name);
         $itemAggregate->persist();
 
         $item = Item::uuid($uuid);
 
-        $enchantments = $this->getEnchantments($item->itemClass->name);
+        $enchantments = $this->getEnchantments($itemBlueprint, $item->itemClass->name);
         $enchantments->each(function (Enchantment $enchantment) use ($itemAggregate) {
             $itemAggregate->attachEnchantment($enchantment->id);
         });
@@ -60,35 +60,29 @@ class GenerateItemFromBlueprintAction
         return $item->fresh();
     }
 
-    /**
-     * @return ItemClass
-     */
-    protected function getItemClass(): ItemClass
+    protected function getItemClass(ItemBlueprint $itemBlueprint): ItemClass
     {
-        if ($this->itemBlueprint->itemClass) {
-            return $this->itemBlueprint->itemClass;
+        if ($itemBlueprint->itemClass) {
+            return $itemBlueprint->itemClass;
         }
-        $itemClassName =  count($this->itemBlueprint->enchantments) > 0 ? ItemClass::ENCHANTED : ItemClass::GENERIC;
+        $itemClassName =  count($itemBlueprint->enchantments) > 0 ? ItemClass::ENCHANTED : ItemClass::GENERIC;
         /** @var ItemClass $itemClass */
         $itemClass = ItemClass::query()->where('name', '=', $itemClassName)->first();
         return $itemClass;
     }
 
-    /**
-     * @return ItemType
-     */
-    protected function getItemType(): ItemType
+    protected function getItemType(ItemBlueprint $itemBlueprint): ItemType
     {
-        if ($this->itemBlueprint->itemType) {
-            return $this->itemBlueprint->itemType;
+        if ($itemBlueprint->itemType) {
+            return $itemBlueprint->itemType;
         }
 
-        if ($this->itemBlueprint->itemBase) {
-            return $this->getItemTypeFromBase($this->itemBlueprint->itemBase);
+        if ($itemBlueprint->itemBase) {
+            return $this->getItemTypeFromBase($itemBlueprint->itemBase);
         }
 
-        if ($this->itemBlueprint->itemGroup) {
-            return $this->getItemTypeFromGroup($this->itemBlueprint->itemGroup);
+        if ($itemBlueprint->itemGroup) {
+            return $this->getItemTypeFromGroup($itemBlueprint->itemGroup);
         }
 
         /** @var ItemType $itemType */
@@ -127,16 +121,12 @@ class GenerateItemFromBlueprintAction
         return $itemType;
     }
 
-    /**
-     * @param ItemType $itemType
-     * @return MaterialType
-     */
-    protected function getMaterialType(ItemType $itemType): MaterialType
+    protected function getMaterialType(ItemBlueprint $itemBlueprint, ItemType $itemType): MaterialType
     {
-        $materialType = $this->itemBlueprint->materialType;
+        $materialType = $itemBlueprint->materialType;
         if ($materialType) {
             if ( ! in_array($materialType->id, $itemType->materialTypes()->pluck('id')->toArray())) {
-                throw new InvalidItemBlueprintException($this->itemBlueprint);
+                throw new InvalidItemBlueprintException($itemBlueprint);
             }
         } else {
             $materialType = $itemType->materialTypes()->inRandomOrder()->first();
@@ -146,30 +136,23 @@ class GenerateItemFromBlueprintAction
     }
 
 
-    /**
-     * @param string $itemClassName
-     * @return Collection
-     */
-    protected function getEnchantments(string $itemClassName)
+    protected function getEnchantments(ItemBlueprint $itemBlueprint, string $itemClassName)
     {
         /** @var Item $item */
-        if ($this->itemBlueprint->enchantments->count() > 0) {
+        if ($itemBlueprint->enchantments->count() > 0) {
 
-            return $this->itemBlueprint->enchantments;
+            return $itemBlueprint->enchantments;
 
         } elseif ($itemClassName === ItemClass::ENCHANTED) {
 
-            return $this->findEnchantments();
+            return $this->findEnchantments($itemBlueprint);
         }
         return collect();
     }
 
-    /**
-     * @return Collection
-     */
-    protected function findEnchantments()
+    protected function findEnchantments(ItemBlueprint $itemBlueprint)
     {
-        $enchantmentsPower = $this->itemBlueprint->enchantment_power ?: 10;
+        $enchantmentsPower = $itemBlueprint->enchantment_power ?: 10;
 
         $enchantments = collect();
 
@@ -208,7 +191,7 @@ class GenerateItemFromBlueprintAction
     /**
      * @param ItemType $itemType
      * @param $attacksPower
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
     protected function getAttacks(ItemType $itemType, $attacksPower)
     {
@@ -230,6 +213,5 @@ class GenerateItemFromBlueprintAction
 
         return $attacksToAttach;
     }
-
 
 }
