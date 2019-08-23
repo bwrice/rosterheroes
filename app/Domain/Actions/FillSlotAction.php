@@ -11,69 +11,54 @@ namespace App\Domain\Actions;
 
 use App\Domain\Interfaces\HasSlots;
 use App\Domain\Interfaces\Slottable;
+use App\Exceptions\FillSlotException;
 
 class FillSlotAction
 {
-    /**
-     * @var HasSlots
-     */
-    private $hasSlots;
-    /**
-     * @var Slottable
-     */
-    private $slottable;
-    /**
-     * @var bool
-     */
-    private $secondAttempt;
 
-    public function __construct(HasSlots $hasSlots, Slottable $slottable, $secondAttempt = false)
+    /**
+     * @param HasSlots $hasSlots
+     * @param Slottable $slottable
+     * @param bool $secondAttempt
+     * @throws FillSlotException
+     */
+    public function execute(HasSlots $hasSlots, Slottable $slottable, $secondAttempt = false)
     {
-        $this->hasSlots = $hasSlots;
-        $this->slottable = $slottable;
-        $this->secondAttempt = $secondAttempt;
-    }
-
-    public function __invoke()
-    {
-
-        $slotTypeIDs = $this->slottable->getSlotTypeIDs();
-        $slotsNeededCount = $this->slottable->getSlotsCount();
-        $emptySlots = $this->hasSlots->getEmptySlots($slotsNeededCount, $slotTypeIDs);
+        $slotTypeIDs = $slottable->getSlotTypeIDs();
+        $slotsNeededCount = $slottable->getSlotsCount();
+        $emptySlots = $hasSlots->getEmptySlots($slotsNeededCount, $slotTypeIDs);
 
         $slotsToEmptyCount = $slotsNeededCount - $emptySlots->count();
 
         if ($slotsToEmptyCount > 0) {
 
-            if ($this->secondAttempt) {
-                throw new \RuntimeException("Not enough empty slots on 2nd attempt of equipping");
+            if ($secondAttempt) {
+                $message = "Failed to equip";
+                throw new FillSlotException($hasSlots, $slottable, $message, FillSlotException::CODE_SECOND_ATTEMPT);
             }
 
-            $backup = $this->hasSlots->getBackupHasSlots();
+            $backup = $hasSlots->getBackupHasSlots();
 
             if (! $backup) {
-                throw new \RuntimeException("Not enough empty slots with no back-up available");
+                $message = "Failed to find back-up storage";
+                throw new FillSlotException($hasSlots, $slottable, $message, FillSlotException::NO_BACKUP);
             }
 
             // Get slots we need to remove from their slots to make space for what we intend to slot
-            $slottables = $this->hasSlots->getSlots()->filled()->take($slotsToEmptyCount)->getSlottables();
+            $slottables = $hasSlots->getSlots()->filled()->take($slotsToEmptyCount)->getSlottables();
             // Now get the slots those slottables are currently slotted into and empty them
             $slottables->getSlots()->emptySlottables();
 
             // Re-slot the slottables that were removed
             $slottables->each(function (Slottable $slottable) use ($backup) {
-                $action = (new static($backup, $slottable, false));
-                $action(); //invoke
+                $this->execute($backup, $slottable, false);
             });
 
             //Now try to slot the original slottable again
-            $action = (new static($this->hasSlots->getFresh(), $this->slottable, true));
-            $action(); //invoke
-
+            $this->execute($hasSlots->getFresh(), $slottable, true);
         } else {
             $slots = $emptySlots->take($slotsNeededCount);
-            $this->slottable->slots()->saveMany($slots);
+            $slottable->slots()->saveMany($slots);
         }
     }
-
 }
