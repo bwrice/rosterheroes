@@ -123,10 +123,10 @@ class ItemBase extends Model
     }
 
     /**
-     * @return mixed
+     * @return ItemBaseBehavior
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
-    public function getBehavior()
+    public function getBehavior(): ItemBaseBehavior
     {
         switch( $this->name ) {
             case self::DAGGER:
