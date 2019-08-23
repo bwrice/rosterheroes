@@ -5,6 +5,10 @@ namespace App\Domain\Models;
 use App\Domain\Models\ItemBase;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int $id
+ * @property string $name
+ */
 class ItemGroup extends Model
 {
     const WEAPON = 'weapon';

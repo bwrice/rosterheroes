@@ -51,6 +51,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property string $name
  *
+ * @property ItemGroup $itemGroup
+ *
  * @property Collection $slotTypes
  */
 class ItemBase extends Model
