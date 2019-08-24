@@ -135,8 +135,10 @@ class Hero extends EventSourcedModel implements HasSlots, HasMeasurables
     public function getItems(): ItemCollection
     {
         $items = new ItemCollection();
-        $this->slots->each(function (Slot $slot) use ($items) {
-            $items->push($slot->item);
+        $this->slots->loadMissing('item')->each(function (Slot $slot) use ($items) {
+            if ($slot->item) {
+                $items->push($slot->item);
+            }
         });
 
         return $items->unique();
