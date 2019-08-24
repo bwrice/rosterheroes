@@ -19,7 +19,7 @@ use App\Exceptions\NotEnoughEssenceException;
 use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\HeroClass;
 use App\Domain\Collections\HeroCollection;
-use App\Domain\Actions\FillSlotAction;
+use App\Domain\Actions\FillSlotsWithItemAction;
 use App\Domain\Interfaces\HasSlots;
 use App\Domain\Models\Slot;
 use App\Domain\Collections\SlotCollection;
@@ -129,57 +129,22 @@ class Hero extends EventSourcedModel implements HasSlots, HasMeasurables
         return $this->heroPost ? $this->heroPost->squad : null;
     }
 
-    public static function findUuid(string $uuid): ?self
-    {
-        return static::where('uuid', $uuid)->first();
-    }
-
     /**
      * @return ItemCollection
      */
-    public function getItems()
+    public function getItems(): ItemCollection
     {
         $items = new ItemCollection();
-        $this->slotsThatHaveItems->each(function (Slot $slot) use ($items) {
-                $items->push($slot->slottable);
-            });
+        $this->slots->each(function (Slot $slot) use ($items) {
+            $items->push($slot->item);
+        });
 
         return $items->unique();
-    }
-
-    public function slotsThatHaveItems()
-    {
-        return $this->slots()->where('slottable_type', '=', Item::RELATION_MORPH_MAP);
     }
 
     public function getClassBehavior()
     {
         return $this->heroClass->getBehavior();
-    }
-
-    protected function addStartingGear()
-    {
-        $blueprints = $this->heroClass->getBehavior()->getStartItemBlueprints();
-        $items = $blueprints->generate();
-        $items->each(function (Item $item) {
-            $this->equip($item);
-        });
-    }
-
-    /**
-     * @return FillSlotAction
-     */
-    protected function getEquipper()
-    {
-        return app()->make(FillSlotAction::class);
-    }
-
-    /**
-     * @param \App\Domain\Interfaces\Slottable $slottable
-     */
-    public function equip(Slottable $slottable)
-    {
-        $this->getEquipper()->slot($this, $slottable);
     }
 
     /**
@@ -198,16 +163,6 @@ class Hero extends EventSourcedModel implements HasSlots, HasMeasurables
     public function getBackupHasSlots(): ?HasSlots
     {
         return $this->getSquad();
-    }
-
-    /**
-     * @param int $count
-     * @param array $slotTypeIDs
-     * @return SlottableCollection
-     */
-    public function emptySlots(int $count = null, array $slotTypeIDs = []): SlottableCollection
-    {
-        return $this->slots->emptySlots($count, $slotTypeIDs);
     }
 
     /**
@@ -277,7 +232,7 @@ class Hero extends EventSourcedModel implements HasSlots, HasMeasurables
             return $builder->where('name', '=', $measurableTypeName);
         })->first();
 
-        if (! $measurable) {
+        if (!$measurable) {
             throw new \RuntimeException('Hero: ' . $this->name . ' does not have a measurable of type: ' . $measurableTypeName);
         }
         return $measurable;
@@ -286,7 +241,7 @@ class Hero extends EventSourcedModel implements HasSlots, HasMeasurables
     public function availableExperience(): int
     {
         $squad = $this->getSquad();
-        if (! $squad) {
+        if (!$squad) {
             return 0;
         }
 

@@ -29,14 +29,14 @@ class AddNewHeroToSquadAction
      */
     private $generateItemFromBlueprintAction;
     /**
-     * @var FillSlotAction
+     * @var FillSlotsWithItemAction
      */
     private $fillSlotAction;
 
     public function __construct(
         CreateHeroAction $createHeroAction,
         GenerateItemFromBlueprintAction $generateItemFromBlueprintAction,
-        FillSlotAction $fillSlotAction)
+        FillSlotsWithItemAction $fillSlotAction)
     {
         $this->createHeroAction = $createHeroAction;
         $this->generateItemFromBlueprintAction = $generateItemFromBlueprintAction;
