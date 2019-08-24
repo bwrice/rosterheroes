@@ -4,6 +4,7 @@ namespace App\Domain;
 
 use App\Domain\Collections\SlotCollection;
 use App\Domain\Interfaces\Slottable;
+use App\Domain\Models\Item;
 use App\Domain\Models\SlotType;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -19,7 +20,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $has_slots_id
  * @property string $has_slots_type
  *
- * @property Collection $items
  * @property Slottable $slottable
  * @property \App\Domain\Models\SlotType $slotType
  */
