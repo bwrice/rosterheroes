@@ -37,11 +37,6 @@ class PlayerSpirit extends EventSourcedModel
     public const MAX_USAGE_BEFORE_ENERGY_ADJUSTMENT = 10;
     public const MIN_MAX_ENERGY_RATIO = 5;
 
-    public static function findUuid(string $uuid): ?self
-    {
-        return static::where('uuid', $uuid)->first();
-    }
-
     public function newCollection(array $models = [])
     {
         return new PlayerSpiritCollection($models);
