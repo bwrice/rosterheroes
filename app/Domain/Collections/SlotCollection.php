@@ -9,29 +9,21 @@
 namespace App\Domain\Collections;
 
 use App\Domain\Models\Slot;
-use App\Domain\Collections\SlottableCollection;
 use Illuminate\Database\Eloquent\Collection;
 
 class SlotCollection extends Collection
 {
-    public function filled()
+    public function slotFilled()
     {
         return $this->filter(function (Slot $slot) {
-            return $slot->slottable_id != null;
+            return $slot->item_id != null;
         });
     }
 
     public function slotEmpty()
     {
         return $this->filter(function (Slot $slot) {
-            return $slot->slottable_id == null;
-        });
-    }
-
-    public function slotFilled()
-    {
-        return $this->filter(function (Slot $slot) {
-           return $slot->slottable_id != null;
+            return $slot->item_id == null;
         });
     }
 
@@ -43,18 +35,18 @@ class SlotCollection extends Collection
     }
 
     /**
-     * @return SlottableCollection
+     * @return ItemCollection
      */
-    public function getSlottables()
+    public function getItems(): ItemCollection
     {
-        $slottableCollection = new SlottableCollection();
-        $this->loadMissing('slottable')->each(function (Slot $slot) use ($slottableCollection) {
-           $slottable = $slot->slottable;
-           if ($slottable) {
-               $slottableCollection->push($slottable);
+        $items = new ItemCollection();
+        $this->loadMissing('item')->each(function (Slot $slot) use ($items) {
+           $item = $slot->item;
+           if ($item) {
+               $items->push($item);
            }
         });
-        return $slottableCollection->unique();
+        return $items->unique();
     }
 
     /**
@@ -71,61 +63,8 @@ class SlotCollection extends Collection
     public function emptySlottables()
     {
         return $this->each(function (Slot $slot) {
-            $slot->slottable_id = null;
-            $slot->slottable_type = null;
+            $slot->item_id = null;
             $slot->save();
         });
-    }
-
-    /**
-     * @param int $count
-     * @param array $slotTypeIDs
-     *
-     * @return SlottableCollection
-     *
-     * @throws \RuntimeException
-     *
-     * Takes $count number of slots with slot_type_id in array $slotTypeIDs, empties them from slots
-     * and returns a SlottableCollection of the slottables that were emptied
-     */
-    public function emptySlots(int $count = null, array $slotTypeIDs = [])
-    {
-
-        if ( $slotTypeIDs ) {
-            $slotsToEmpty = $this->filter(function(Slot $slot) use ($slotTypeIDs) {
-                return in_array( $slot->slot_type_id, $slotTypeIDs );
-            });
-        } else {
-            $slotsToEmpty = $this;
-        }
-
-        //Lazy load the slottables and filter Slots by those with a slottable
-        $slotsToEmpty = $slotsToEmpty->loadMissing('slottable')->slotFilled();
-
-        if ( is_integer($count) ) {
-
-            if ( $count > $slotsToEmpty->count() ) {
-                throw new \RuntimeException("Not enough available filled slots to empty");
-            }
-
-            $slotsToEmpty = $slotsToEmpty->take($count);
-        }
-
-//        $slottables = new SlottableCollection();
-//        $slotsToEmpty->each(function (Slot $slot) use ($slottables) {
-//            $slottables->push($slot->slottable);
-//            $slot->slottable_id = null;
-//            $slot->slottable_type = null;
-//            $slot->save();
-//        });
-
-        $slottableArray = $slotsToEmpty->map(function (Slot $slot) {
-            return $slot->slottable;
-            //filter nulls
-        })->filter()->values()->unique()->toArray();
-
-        $slottables = new SlottableCollection($slottableArray);
-
-        return $slottables->removeFromSlots();
     }
 }
