@@ -4,8 +4,10 @@ namespace App\Domain\Models;
 
 use App\Domain\Actions\AddSpiritToHeroAction;
 use App\Domain\Actions\RemoveSpiritFromHeroAction;
+use App\Domain\Collections\ItemCollection;
 use App\Domain\Collections\MeasurableCollection;
 use App\Domain\Interfaces\HasMeasurables;
+use App\Domain\Models\Item;
 use App\Domain\QueryBuilders\HeroQueryBuilder;
 use App\Domain\Traits\HasSlug;
 use App\StorableEvents\HeroCreated;
@@ -17,10 +19,6 @@ use App\Exceptions\NotEnoughEssenceException;
 use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\HeroClass;
 use App\Domain\Collections\HeroCollection;
-use App\Domain\Models\HeroPost;
-use App\Domain\Models\Item;
-use App\Domain\Models\Measurable;
-use App\Domain\Models\MeasurableType;
 use App\Domain\Actions\FillSlotAction;
 use App\Domain\Interfaces\HasSlots;
 use App\Domain\Slot;
@@ -58,6 +56,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property PlayerSpirit|null $playerSpirit
  *
  * @property SlotCollection $slots
+ * @property SlotCollection $slotsThatHaveItems
  * @property MeasurableCollection $measurables
  *
  * @method static HeroQueryBuilder query();
@@ -136,16 +135,21 @@ class Hero extends EventSourcedModel implements HasSlots, HasMeasurables
     }
 
     /**
-     * @return \Illuminate\Support\Collection
+     * @return ItemCollection
      */
     public function getItems()
     {
-        $items = collect();
-        $this->slots()->with('items')->get()->each(function(Slot $slot) use (&$items) {
-            $items->merge($slot->items);
-        });
+        $items = new ItemCollection();
+        $this->slotsThatHaveItems->each(function (Slot $slot) use ($items) {
+                $items->push($slot->slottable);
+            });
 
         return $items->unique();
+    }
+
+    public function slotsThatHaveItems()
+    {
+        return $this->slots()->where('slottable_type', '=', Item::RELATION_MORPH_MAP);
     }
 
     public function getClassBehavior()
