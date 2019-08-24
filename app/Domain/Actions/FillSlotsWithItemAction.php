@@ -14,7 +14,7 @@ use App\Domain\Interfaces\Slottable;
 use App\Domain\Models\Item;
 use App\Exceptions\FillSlotException;
 
-class FillSlotAction
+class FillSlotsWithItemAction
 {
 
     /**
@@ -46,20 +46,20 @@ class FillSlotAction
             }
 
             // Get slots we need to remove from their slots to make space for what we intend to slot
-            $items = $hasSlots->getSlots()->filled()->take($slotsToEmptyCount)->getItems();
+            $items = $hasSlots->getSlots()->slotFilled()->take($slotsToEmptyCount)->getItems();
             // Now get the slots those slottables are currently slotted into and empty them
             $items->getSlots()->emptySlottables();
 
             // Re-slot the slottables that were removed
-            $items->each(function (Slottable $slottable) use ($backup) {
-                $this->execute($backup, $slottable, false);
+            $items->each(function (Item $item) use ($backup) {
+                $this->execute($backup, $item, false);
             });
 
             //Now try to slot the original slottable again
-            $this->execute($hasSlots->getFresh(), $slottable, true);
+            $this->execute($hasSlots->getFresh(), $item, true);
         } else {
             $slots = $emptySlots->take($slotsNeededCount);
-            $slottable->slots()->saveMany($slots);
+            $item->slots()->saveMany($slots);
         }
     }
 }
