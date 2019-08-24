@@ -17,12 +17,13 @@ class CreateSlotsTable extends Migration
             $table->increments('id');
             $table->integer('slot_type_id')->unsigned();
             $table->morphs('has_slots');
-            $table->nullableMorphs('slottable');
+            $table->bigInteger('item_id')->unsigned()->nullable();
             $table->timestamps();
         });
 
         Schema::table('slots', function (Blueprint $table) {
             $table->foreign('slot_type_id')->references('id')->on('slot_types');
+            $table->foreign('item_id')->references('id')->on('items');
         });
     }
 
