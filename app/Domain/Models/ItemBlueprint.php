@@ -79,7 +79,8 @@ class ItemBlueprint extends Model
      */
     public function generate(): Item
     {
-        $action = new GenerateItemFromBlueprintAction($this);
-        return $action();
+        /** @var GenerateItemFromBlueprintAction $domainAction */
+        $domainAction = app(GenerateItemFromBlueprintAction::class);
+        return $domainAction->execute($this);
     }
 }
