@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Domain\Models\Hero;
 use App\Domain\Models\Squad;
+use App\Http\Resources\BarracksHeroResource;
 use App\Http\Resources\HeroResource;
 use App\Policies\SquadPolicy;
 use Illuminate\Http\Request;
@@ -16,8 +17,12 @@ class BarracksHeroesController extends Controller
         $this->authorize(SquadPolicy::MANAGE, $squad);
         $heroes = Hero::query()->amongSquad($squad)->get();
         $heroes->load([
-            'measurables.measurableType'
+            'heroRace',
+            'heroClass',
+            'playerSpirit.player',
+            'measurables.measurableType',
+            'slots.slottable.itemType',
         ]);
-        return HeroResource::collection($heroes);
+        return BarracksHeroResource::collection($heroes);
     }
 }
