@@ -25,7 +25,11 @@ use Illuminate\Support\Str;
 class GenerateItemFromBlueprintAction
 {
 
-    public function execute(ItemBlueprint $itemBlueprint)
+    /**
+     * @param ItemBlueprint $itemBlueprint
+     * @return Item
+     */
+    public function execute(ItemBlueprint $itemBlueprint): Item
     {
         $itemClass = $this->getItemClass($itemBlueprint);
         $itemType = $this->getItemType($itemBlueprint);
