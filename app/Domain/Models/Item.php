@@ -59,7 +59,7 @@ class Item extends Model implements Slottable
 
     public function slots()
     {
-        return $this->morphMany(Slot::class, 'slottable');
+        return $this->hasMany(Slot::class);
     }
 
     public function getSlotTypeIDs(): array

@@ -14,13 +14,12 @@ use Illuminate\Database\Eloquent\Model;
  * @package App
  *
  * @property int $id
+ * @property int|null $item_id
  * @property int $slot_type_id
- * @property int $slottable_id
- * @property string $slottable_type
  * @property int $has_slots_id
  * @property string $has_slots_type
  *
- * @property Slottable $slottable
+ * @property Item|null $item
  * @property \App\Domain\Models\SlotType $slotType
  */
 class Slot extends Model
@@ -42,8 +41,8 @@ class Slot extends Model
         return $this->morphTo();
     }
 
-    public function slottable()
+    public function item()
     {
-        return $this->morphTo();
+        return $this->belongsTo(Item::class);
     }
 }
