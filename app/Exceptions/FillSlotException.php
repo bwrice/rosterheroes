@@ -6,6 +6,7 @@ namespace App\Exceptions;
 
 use App\Domain\Interfaces\HasSlots;
 use App\Domain\Interfaces\Slottable;
+use App\Domain\Models\Item;
 use Throwable;
 
 class FillSlotException extends \Exception
@@ -18,15 +19,15 @@ class FillSlotException extends \Exception
      */
     private $hasSlots;
     /**
-     * @var Slottable
+     * @var Item
      */
-    private $slottable;
+    private $item;
 
-    public function __construct(HasSlots $hasSlots, Slottable $slottable, $message = "", $code = 0, Throwable $previous = null)
+    public function __construct(HasSlots $hasSlots, Item $item, $message = "", $code = 0, Throwable $previous = null)
     {
         parent::__construct($message, $code, $previous);
         $this->hasSlots = $hasSlots;
-        $this->slottable = $slottable;
+        $this->$item = $item;
     }
 
     /**
@@ -38,10 +39,10 @@ class FillSlotException extends \Exception
     }
 
     /**
-     * @return Slottable
+     * @return Item
      */
-    public function getSlottable(): Slottable
+    public function getItem(): Item
     {
-        return $this->slottable;
+        return $this->item;
     }
 }

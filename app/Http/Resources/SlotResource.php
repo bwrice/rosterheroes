@@ -22,12 +22,8 @@ class SlotResource extends JsonResource
      */
     public function toArray($request)
     {
-        $hasItem = $this->slottable instanceof Item;
-
         return [
-            'item' => $this->when($hasItem, function() {
-                return new ItemResource($this->slottable);
-            }),
+            'item' => $this->whenLoaded('item', new ItemResource($this->item)),
             'slotType' => new SlotTypeResource($this->slotType)
         ];
     }

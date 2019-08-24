@@ -12,7 +12,7 @@ use App\Domain\Models\ItemBase;
 use App\Domain\Models\ItemType;
 use App\Domain\Models\Slot;
 use App\Domain\Collections\SlotCollection;
-use App\Domain\Actions\FillSlotAction;
+use App\Domain\Actions\FillSlotsWithItemAction;
 use App\Domain\Models\Squad;
 use App\Domain\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -24,7 +24,7 @@ class FillSlotActionTest extends TestCase
 {
     use DatabaseTransactions;
 
-    /** @var FillSlotAction */
+    /** @var FillSlotsWithItemAction */
     protected $domainAction;
 
     /** @var Hero */
@@ -34,7 +34,7 @@ class FillSlotActionTest extends TestCase
     {
         parent::setUp();
 
-        $this->domainAction = app(FillSlotAction::class);
+        $this->domainAction = app(FillSlotsWithItemAction::class);
 
         $this->hero = factory(Hero::class)->states('with-slots', 'with-measurables')->create();
 
@@ -70,11 +70,10 @@ class FillSlotActionTest extends TestCase
 
         $this->assertEquals($itemBase->getSlotsCount(), $item->slots->count(), "Item takes up the correct amount of slots");
         $item->slots->each(function (Slot $slot) use ($item) {
-            $this->assertEquals($slot->slottable_id, $item->id);
-            $this->assertEquals($slot->slottable_type, Item::RELATION_MORPH_MAP);
+            $this->assertEquals($slot->item_id, $item->id);
         });
 
-        $this->assertEquals($itemBase->getSlotsCount(), $this->hero->slots->filled()->count(), "Hero has correct amount of slots filled");
+        $this->assertEquals($itemBase->getSlotsCount(), $this->hero->slots->slotFilled()->count(), "Hero has correct amount of slots filled");
     }
 
     public function provides_it_can_slot_items_on_empty_heroes()
