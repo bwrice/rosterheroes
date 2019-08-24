@@ -15,7 +15,7 @@ class CreateEnchantmentItemPivot extends Migration
     {
         Schema::create('enchantment_item', function (Blueprint $table) {
             $table->integer('enchantment_id')->unsigned();
-            $table->integer('item_id')->unsigned();
+            $table->bigInteger('item_id')->unsigned();
             $table->primary(['enchantment_id', 'item_id']);
             $table->timestamps();
         });
