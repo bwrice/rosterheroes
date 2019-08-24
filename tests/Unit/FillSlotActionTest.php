@@ -10,7 +10,7 @@ use App\Domain\Models\Item;
 use App\Domain\Models\ItemBlueprint;
 use App\Domain\Models\ItemBase;
 use App\Domain\Models\ItemType;
-use App\Domain\Slot;
+use App\Domain\Models\Slot;
 use App\Domain\Collections\SlotCollection;
 use App\Domain\Actions\FillSlotAction;
 use App\Domain\Models\Squad;

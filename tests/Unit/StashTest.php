@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Domain\Slot;
+use App\Domain\Models\Slot;
 use App\Domain\Models\SlotType;
 use App\Domain\Models\Stash;
 use Illuminate\Foundation\Testing\DatabaseTransactions;

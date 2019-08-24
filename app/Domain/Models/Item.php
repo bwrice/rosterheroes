@@ -3,7 +3,7 @@
 namespace App\Domain\Models;
 
 use App\Domain\Collections\EnchantmentCollection;
-use App\Domain\Slot;
+use App\Domain\Models\Slot;
 use App\Domain\Collections\SlotCollection;
 use App\Domain\Interfaces\Slottable;
 use App\StorableEvents\ItemCreated;

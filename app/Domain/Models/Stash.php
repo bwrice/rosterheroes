@@ -6,7 +6,7 @@ use App\Domain\Interfaces\HasSlots;
 use App\Domain\Models\Province;
 use App\Domain\Models\SlotType;
 use App\Domain\Models\Squad;
-use App\Domain\Slot;
+use App\Domain\Models\Slot;
 use App\Domain\Collections\SlotCollection;
 use Illuminate\Database\Eloquent\Model;
 

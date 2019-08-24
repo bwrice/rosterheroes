@@ -3,7 +3,7 @@
 use Faker\Generator as Faker;
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(\App\Domain\Slot::class, function (Faker $faker) {
+$factory->define(\App\Domain\Models\Slot::class, function (Faker $faker) {
 
     $slotType = \App\Domain\Models\SlotType::heroTypes()->first();
     $hero = factory(\App\Domain\Models\Hero::class)->create();

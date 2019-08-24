@@ -3,7 +3,7 @@
 namespace App\Wagons;
 
 use App\Domain\Interfaces\HasSlots;
-use App\Domain\Slot;
+use App\Domain\Models\Slot;
 use App\Domain\Collections\SlotCollection;
 use App\Domain\Interfaces\Slottable;
 use App\Domain\Collections\SlottableCollection;

@@ -9,7 +9,7 @@ use App\Domain\Models\HeroPost;
 use App\Domain\Models\HeroRace;
 use App\Domain\Models\Measurable;
 use App\Domain\Models\MeasurableType;
-use App\Domain\Slot;
+use App\Domain\Models\Slot;
 use App\Domain\Models\SlotType;
 use App\Domain\Models\Squad;
 use App\Domain\Models\User;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain;
+namespace App\Domain\Models;
 
 use App\Domain\Collections\SlotCollection;
 use App\Domain\Interfaces\Slottable;

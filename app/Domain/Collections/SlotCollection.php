@@ -8,7 +8,7 @@
 
 namespace App\Domain\Collections;
 
-use App\Domain\Slot;
+use App\Domain\Models\Slot;
 use App\Domain\Collections\SlottableCollection;
 use Illuminate\Database\Eloquent\Collection;
 

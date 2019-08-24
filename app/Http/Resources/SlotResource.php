@@ -3,7 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Domain\Models\Item;
-use App\Domain\Slot;
+use App\Domain\Models\Slot;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**

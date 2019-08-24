@@ -11,7 +11,7 @@ use App\Domain\Models\Measurable;
 use App\Domain\Models\MeasurableType;
 use App\Domain\Models\Player;
 use App\Domain\Models\PlayerSpirit;
-use App\Domain\Slot;
+use App\Domain\Models\Slot;
 use App\Domain\Models\SlotType;
 use App\Domain\Models\Squad;
 use App\Domain\Models\User;

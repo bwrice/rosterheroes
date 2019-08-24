@@ -12,7 +12,7 @@
 */
 
 use App\Domain\Models\SlotType;
-use App\Domain\Slot;
+use App\Domain\Models\Slot;
 
 $app = new Illuminate\Foundation\Application(
     dirname(__DIR__)

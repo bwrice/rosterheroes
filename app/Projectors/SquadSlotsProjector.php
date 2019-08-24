@@ -5,7 +5,7 @@ namespace App\Projectors;
 use App\Domain\Collections\SlotCollection;
 use App\Domain\Models\SlotType;
 use App\Domain\Models\Squad;
-use App\Domain\Slot;
+use App\Domain\Models\Slot;
 use App\StorableEvents\SquadSlotsAdded;
 use Spatie\EventProjector\Projectors\Projector;
 use Spatie\EventProjector\Projectors\ProjectsEvents;

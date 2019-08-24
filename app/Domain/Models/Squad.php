@@ -17,7 +17,7 @@ use App\Exceptions\WeekLockedException;
 use App\Domain\Collections\HeroCollection;
 use App\Domain\Collections\HeroPostCollection;
 use App\Domain\Interfaces\HasSlots;
-use App\Domain\Slot;
+use App\Domain\Models\Slot;
 use App\Domain\Collections\SlotCollection;
 use App\Domain\Traits\HasSlug;
 use Ramsey\Uuid\Uuid;
