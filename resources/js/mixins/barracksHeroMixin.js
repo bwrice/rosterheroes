@@ -11,21 +11,16 @@ export const barracksHeroMixin = {
             '_barracksHeroes',
             '_squad'
         ]),
-        barracksHero() {
+        barracksHeroFromRoute() {
             let slug = this.$route.params.heroSlug;
-            let hero = this._barracksHeroes.find(hero => hero.slug === slug);
-            if (hero) {
-                return hero;
-            }
-            return {
-                name: '',
-                player_spirit: null,
-                measurables: []
-            }
+            return this._barracksHeroes.find(hero => hero.slug === slug);
         },
         availableExperience() {
+            if (! this.barracksHeroFromRoute) {
+                return 0;
+            }
             let squadExperience = this._squad.experience;
-            return this.barracksHero.measurables.reduce(function (availableExperience, measurable) {
+            return this.barracksHeroFromRoute.measurables.reduce(function (availableExperience, measurable) {
                 return availableExperience - measurable.spent_on_raising;
             }, squadExperience);
         }
