@@ -43,19 +43,28 @@
 
         computed: {
             attributes() {
-                return this.barracksHero.measurables.filter(function (measurable) {
-                    return measurable.measurable_type.group === 'attribute';
-                })
+                if (this.barracksHeroFromRoute) {
+                    return this.barracksHeroFromRoute.measurables.filter(function (measurable) {
+                        return measurable.measurable_type.group === 'attribute';
+                    })
+                }
+                return [];
             },
             resources() {
-                return this.barracksHero.measurables.filter(function (measurable) {
-                    return measurable.measurable_type.group === 'resource';
-                })
+                if (this.barracksHeroFromRoute) {
+                    return this.barracksHeroFromRoute.measurables.filter(function (measurable) {
+                        return measurable.measurable_type.group === 'resource';
+                    })
+                }
+                return [];
             },
             qualities() {
-                return this.barracksHero.measurables.filter(function (measurable) {
-                    return measurable.measurable_type.group === 'quality';
-                })
+                if (this.barracksHeroFromRoute) {
+                    return this.barracksHeroFromRoute.measurables.filter(function (measurable) {
+                        return measurable.measurable_type.group === 'quality';
+                    })
+                }
+                return [];
             }
         }
     }
