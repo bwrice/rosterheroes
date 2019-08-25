@@ -1,5 +1,5 @@
 <template>
-    <g :fill="svgFill" :stroke="svgStroke" stroke-width=".5769">
+    <g :fill="svgFill" :fill-opacity="svgFillOpacity" :stroke="svgStroke" :stroke-width="svgStrokeWidth">
         <slot>
             <!-- default slot for svg paths-->
         </slot>
@@ -8,28 +8,31 @@
 
 <script>
     export default {
-        name: "GearSlotSVG",
+        name: "HeroGearSlotSVG",
         props: {
-            slot: {
+            heroSlot: {
                 typ: Object,
                 required: true
             }
         },
         computed: {
             empty() {
-                return ! this.slot.item;
+                return ! this.heroSlot.item;
             },
             svgFill() {
                 if (this.empty) {
-                    return '#c7c7c7';
+                    return '#fff';
                 }
                 return '#ffc747';
             },
             svgStroke() {
-                if (this.empty) {
-                    return '#000';
-                }
-                return '#fff';
+                return this.empty? '#000' : '';
+            },
+            svgStrokeWidth() {
+                return this.empty? .5769 : 2.3;
+            },
+            svgFillOpacity() {
+                return this.empty? .1 : 1;
             }
         }
     }
