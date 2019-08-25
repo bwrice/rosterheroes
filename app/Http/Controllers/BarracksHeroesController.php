@@ -21,7 +21,7 @@ class BarracksHeroesController extends Controller
             'heroClass',
             'playerSpirit.player',
             'measurables.measurableType',
-            'slots.slottable.itemType',
+            'slots.item.itemType',
         ]);
         return BarracksHeroResource::collection($heroes);
     }
