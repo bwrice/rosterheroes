@@ -1,75 +1,41 @@
 <?php
 
 use App\Domain\Models\SlotType;
+use App\Helpers\ModelNameSeeding\ModelNameSeederMigration;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class SeedSlotTypes extends Migration
+class SeedSlotTypes extends ModelNameSeederMigration
 {
     /**
-     * Run the migrations.
-     *
-     * @return void
+     * @return string
      */
-    public function up()
+    protected function getModelClass(): string
     {
-        $slotTypes = [
-            [
-                'name' => SlotType::RIGHT_ARM
-            ],
-            [
-                'name' => SlotType::LEFT_ARM
-            ],
-            [
-                'name' => SlotType::TORSO
-            ],
-            [
-                'name' => SlotType::HEAD
-            ],
-            [
-                'name' => SlotType::HANDS
-            ],
-            [
-                'name' => SlotType::FEET,
-            ],
-            [
-                'name' => SlotType::WAIST
-            ],
-            [
-                'name' => SlotType::NECK,
-            ],
-            [
-                'name' => SlotType::RIGHT_WRIST
-            ],
-            [
-                'name' => SlotType::LEFT_WRIST
-            ],
-            [
-                'name' => SlotType::RIGHT_RING
-            ],
-            [
-                'name' => SlotType::LEFT_RING
-            ],
-            [
-                'name' => SlotType::UNIVERSAL
-            ]
-        ];
-
-        foreach ($slotTypes as $slotType) {
-            $slotTypeCreated = SlotType::query()->create([
-                'name' => $slotType['name'],
-            ]);
-        }
+        return SlotType::class;
     }
 
     /**
-     * Reverse the migrations.
-     *
-     * @return void
+     * @return array
      */
-    public function down()
+    protected function getSeedNames(): array
     {
-        //
+        return [
+            SlotType::RIGHT_ARM,
+            SlotType::LEFT_ARM,
+            SlotType::HEAD,
+            SlotType::TORSO,
+            SlotType::LEGS,
+            SlotType::HANDS,
+            SlotType::FEET,
+            SlotType::WAIST,
+            SlotType::NECK,
+            SlotType::RIGHT_WRIST,
+            SlotType::LEFT_WRIST,
+            SlotType::RIGHT_RING,
+            SlotType::LEFT_RING,
+            SlotType::UNIVERSAL
+        ];
     }
 }
