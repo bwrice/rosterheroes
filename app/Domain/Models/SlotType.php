@@ -35,11 +35,6 @@ class SlotType extends Model
 
     protected $guarded = [];
 
-    public function vectorPaths()
-    {
-        return $this->morphMany(VectorPath::class, 'has_paths');
-    }
-
     /**
      * @param Builder $builder
      * @return Builder
