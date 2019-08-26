@@ -9,7 +9,7 @@
         </v-row>
         <v-row>
             <v-col cols="12">
-<!--                <GearCard></GearCard>-->
+                <GearCard></GearCard>
             </v-col>
         </v-row>
         <v-row no-gutters>
