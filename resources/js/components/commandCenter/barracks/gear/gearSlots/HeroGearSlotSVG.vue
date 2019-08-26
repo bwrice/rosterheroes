@@ -1,12 +1,27 @@
 <template>
-    <g :fill="svgFill" :fill-opacity="svgFillOpacity" :stroke="svgStroke" :stroke-width="svgStrokeWidth" :stroke-opacity="svgStrokeOpacity">
-        <slot>
-            <!-- default slot for svg paths-->
-        </slot>
+    <g>
+        <g
+            :fill="svgFill"
+            :fill-opacity="svgFillOpacity"
+            :stroke="svgStroke"
+            :stroke-width="svgStrokeWidth"
+            :stroke-opacity="svgStrokeOpacity"
+        >
+            <slot>
+                <!-- default slot for svg paths-->
+            </slot>
+        </g>
+        <g @click="emitHeroSlotClicked" fill="#fff" fill-opacity=".4" stroke="#000" stroke-width="2">
+            <slot name="click-area">
+                <!-- slot for clickable rectangle(s)-->
+            </slot>
+        </g>
     </g>
 </template>
 
 <script>
+    import Slot from "../../../../../models/Slot";
+
     export default {
         name: "HeroGearSlotSVG",
         props: {
@@ -19,18 +34,17 @@
                 required: true
             }
         },
+        methods: {
+            emitHeroSlotClicked() {
+                this.$emit('heroSlotClicked', {
+                    heroSlot: this.heroSlot
+                })
+            }
+        },
         computed: {
             heroSlot() {
                 let heroSlot = this.heroSlots.find(slot => slot.slotType.name === this.name);
-                if (heroSlot) {
-                    return heroSlot;
-                }
-                return {
-                    item: null,
-                    slotType: {
-                        name : ''
-                    }
-                }
+                return heroSlot ? new Slot(heroSlot) : new Slot({});
             },
             empty() {
                 return ! this.heroSlot.item;
