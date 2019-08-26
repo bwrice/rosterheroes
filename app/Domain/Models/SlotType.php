@@ -19,19 +19,20 @@ use Illuminate\Database\Eloquent\Model;
 class SlotType extends Model
 {
 
-    const RIGHT_ARM = 'right-arm';
-    const LEFT_ARM = 'left-arm';
-    const TORSO = 'torso';
-    const HEAD = 'head';
-    const FEET = 'feet';
-    const HANDS = 'hands';
-    const WAIST = 'waist';
-    const NECK = 'neck';
-    const RIGHT_WRIST = 'right-wrist';
-    const LEFT_WRIST = 'left-wrist';
-    const RIGHT_RING = 'right-ring';
-    const LEFT_RING = 'left-ring';
-    const UNIVERSAL = 'universal';
+    public const RIGHT_ARM = 'right-arm';
+    public const LEFT_ARM = 'left-arm';
+    public const HEAD = 'head';
+    public const TORSO = 'torso';
+    public const LEGS = 'legs';
+    public const FEET = 'feet';
+    public const HANDS = 'hands';
+    public const WAIST = 'waist';
+    public const NECK = 'neck';
+    public const RIGHT_WRIST = 'right-wrist';
+    public const LEFT_WRIST = 'left-wrist';
+    public const RIGHT_RING = 'right-ring';
+    public const LEFT_RING = 'left-ring';
+    public const UNIVERSAL = 'universal';
 
     protected $guarded = [];
 
@@ -45,6 +46,8 @@ class SlotType extends Model
             self::FEET,
             self::HANDS,
             self::HEAD,
+            self::TORSO,
+            self::LEGS,
             self::LEFT_ARM,
             self::RIGHT_ARM,
             self::LEFT_WRIST,
@@ -52,8 +55,7 @@ class SlotType extends Model
             self::LEFT_RING,
             self::RIGHT_RING,
             self::NECK,
-            self::WAIST,
-            self::TORSO
+            self::WAIST
         ]);
     }
 }
