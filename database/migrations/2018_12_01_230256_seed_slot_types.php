@@ -53,6 +53,7 @@ class SeedSlotTypes extends Migration
             ],
             [
                 'name' => SlotType::UNIVERSAL
+            ]
         ];
 
         foreach ($slotTypes as $slotType) {
