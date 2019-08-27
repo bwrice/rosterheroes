@@ -67,8 +67,9 @@ class GenerateItemFromBlueprintAction
 
     protected function getItemType(ItemBlueprint $itemBlueprint): ItemType
     {
-        if ($itemBlueprint->itemType) {
-            return $itemBlueprint->itemType;
+        $itemTypes = $itemBlueprint->itemTypes;
+        if ($itemTypes->count() > 0) {
+            return $itemTypes->random();
         }
 
         $itemBases = $itemBlueprint->itemBases;

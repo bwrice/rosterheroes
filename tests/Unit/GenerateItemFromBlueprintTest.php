@@ -101,8 +101,6 @@ class GenerateItemFromBlueprintTest extends TestCase
         /** @var ItemBase $itemBaseForBlueprint */
         $itemBaseForBlueprint = ItemBase::query()->where('name', '=', $itemBaseName)->first();
 
-        $this->itemBlueprint->item_type_id = null;
-        $this->itemBlueprint->save();
         $this->itemBlueprint->itemBases()->attach($itemBaseForBlueprint);
 
         $item = $this->domainAction->execute($this->itemBlueprint->fresh());

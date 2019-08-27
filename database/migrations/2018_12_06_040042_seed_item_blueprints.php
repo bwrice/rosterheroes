@@ -95,8 +95,6 @@ class SeedItemBlueprints extends Migration
      */
     public function down()
     {
-        \Illuminate\Support\Facades\DB::table('enchantment_item_blueprint')->truncate();
-        \App\Domain\Models\Item::query()->whereHas('itemBlueprint')->delete();
-        \App\Domain\Models\ItemBlueprint::query()->delete();
+        //
     }
 }

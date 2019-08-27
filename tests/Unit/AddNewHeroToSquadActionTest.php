@@ -7,12 +7,15 @@ use App\Domain\Models\HeroClass;
 use App\Domain\Models\HeroRace;
 use App\Domain\Models\ItemBlueprint;
 use App\Domain\Models\Squad;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AddNewHeroToSquadActionTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /** @var AddNewHeroToSquadAction */
     protected $domainAction;
 
@@ -67,7 +70,8 @@ class AddNewHeroToSquadActionTest extends TestCase
         $itemTypeIDs = $items->pluck('item_type_id')->values()->toArray();
 
         $blueprints->each(function (ItemBlueprint $itemBlueprint) use ($itemTypeIDs) {
-            $this->assertTrue(in_array($itemBlueprint->item_type_id, $itemTypeIDs));
+            $intersect = array_intersect($itemBlueprint->itemTypes()->pluck('id')->toArray(), $itemTypeIDs);
+            $this->assertGreaterThan(0, count($intersect));
         });
     }
 
