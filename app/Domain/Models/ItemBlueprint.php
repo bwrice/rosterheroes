@@ -32,6 +32,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property ItemType|null $itemType
  *
  * @property Collection $enchantments
+ * @property Collection $itemTypes
  * @property Collection $itemBases
  * @property Collection $materialTypes
  */
@@ -57,6 +58,11 @@ class ItemBlueprint extends Model
     public function enchantments()
     {
         return $this->belongsToMany(Enchantment::class, 'enchantment_item_blueprint', 'blueprint_id', 'ench_id')->withTimestamps();
+    }
+
+    public function itemTypes()
+    {
+        return $this->belongsToMany(ItemType::class, 'item_blueprint_item_type', 'blueprint_id', 'i_type_id')->withTimestamps();
     }
 
     public function itemBases()
