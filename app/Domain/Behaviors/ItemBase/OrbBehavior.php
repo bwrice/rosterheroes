@@ -9,7 +9,7 @@
 namespace App\Domain\Behaviors\ItemBase;
 
 
-class OrbBehavior extends ItemBaseBehavior
+class OrbBehavior extends WeaponBehavior
 {
 
     public function getSlotsCount(): int

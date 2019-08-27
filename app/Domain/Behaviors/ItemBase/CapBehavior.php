@@ -9,7 +9,7 @@
 namespace App\Domain\Behaviors\ItemBase;
 
 
-class CapBehavior extends ItemBaseBehavior
+class CapBehavior extends ClothingBehavior
 {
 
     public function getSlotsCount(): int

@@ -9,7 +9,7 @@
 namespace App\Domain\Behaviors\ItemBase;
 
 
-class GlovesBehavior extends ItemBaseBehavior
+class GlovesBehavior extends ClothingBehavior
 {
 
     public function getSlotsCount(): int

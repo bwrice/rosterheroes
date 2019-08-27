@@ -9,7 +9,7 @@
 namespace App\Domain\Behaviors\ItemBase;
 
 
-class MaceBehavior extends ItemBaseBehavior
+class MaceBehavior extends WeaponBehavior
 {
 
     public function getSlotsCount(): int

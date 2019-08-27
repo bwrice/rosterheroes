@@ -9,7 +9,7 @@
 namespace App\Domain\Behaviors\ItemBase;
 
 
-class TwoHandSwordBehavior extends ItemBaseBehavior
+class TwoHandSwordBehavior extends WeaponBehavior
 {
 
     public function getSlotsCount(): int

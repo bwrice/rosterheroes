@@ -9,7 +9,7 @@
 namespace App\Domain\Behaviors\ItemBase;
 
 
-class HeavyArmorBehavior extends ItemBaseBehavior
+class HeavyArmorBehavior extends ArmorBehavior
 {
 
     public function getSlotsCount(): int

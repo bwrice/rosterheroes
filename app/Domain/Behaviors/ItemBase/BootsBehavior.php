@@ -9,7 +9,7 @@
 namespace App\Domain\Behaviors\ItemBase;
 
 
-class BootsBehavior extends ItemBaseBehavior
+class BootsBehavior extends ArmorBehavior
 {
 
     public function getSlotsCount(): int

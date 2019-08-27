@@ -9,7 +9,7 @@
 namespace App\Domain\Behaviors\ItemBase;
 
 
-class BowBehavior extends ItemBaseBehavior
+class BowBehavior extends WeaponBehavior
 {
 
     public function getSlotsCount(): int

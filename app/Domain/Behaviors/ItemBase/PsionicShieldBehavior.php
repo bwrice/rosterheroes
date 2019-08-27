@@ -9,7 +9,7 @@
 namespace App\Domain\Behaviors\ItemBase;
 
 
-class PsionicShieldBehavior extends ItemBaseBehavior
+class PsionicShieldBehavior extends ShieldGroupBehavior
 {
 
     public function getSlotsCount(): int

@@ -9,7 +9,7 @@
 namespace App\Domain\Behaviors\ItemBase;
 
 
-class SashBehavior extends ItemBaseBehavior
+class SashBehavior extends ClothingBehavior
 {
 
     public function getSlotsCount(): int

@@ -9,7 +9,7 @@
 namespace App\Domain\Behaviors\ItemBase;
 
 
-class GauntletsBehavior extends ItemBaseBehavior
+class GauntletsBehavior extends ArmorBehavior
 {
 
     public function getSlotsCount(): int

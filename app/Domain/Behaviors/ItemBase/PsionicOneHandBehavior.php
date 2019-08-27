@@ -9,7 +9,7 @@
 namespace App\Domain\Behaviors\ItemBase;
 
 
-class PsionicOneHandBehavior extends ItemBaseBehavior
+class PsionicOneHandBehavior extends WeaponBehavior
 {
 
     public function getSlotsCount(): int

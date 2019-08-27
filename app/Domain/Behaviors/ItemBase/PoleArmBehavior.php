@@ -9,7 +9,7 @@
 namespace App\Domain\Behaviors\ItemBase;
 
 
-class PoleArmBehavior extends ItemBaseBehavior
+class PoleArmBehavior extends WeaponBehavior
 {
 
     public function getSlotsCount(): int

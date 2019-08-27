@@ -9,7 +9,7 @@
 namespace App\Domain\Behaviors\ItemBase;
 
 
-class BraceletBehavior extends ItemBaseBehavior
+class BraceletBehavior extends JewelryBehavior
 {
 
     public function getSlotsCount(): int

@@ -9,7 +9,7 @@
 namespace App\Domain\Behaviors\ItemBase;
 
 
-class DaggerBehavior extends ItemBaseBehavior
+class DaggerBehavior extends WeaponBehavior
 {
 
     public function getSlotsCount(): int

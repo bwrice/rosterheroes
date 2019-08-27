@@ -9,7 +9,7 @@
 namespace App\Domain\Behaviors\ItemBase;
 
 
-class HelmetBehavior extends ItemBaseBehavior
+class HelmetBehavior extends ArmorBehavior
 {
 
     public function getSlotsCount(): int
