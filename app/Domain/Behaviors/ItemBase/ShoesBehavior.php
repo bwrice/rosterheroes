@@ -9,11 +9,20 @@
 namespace App\Domain\Behaviors\ItemBase;
 
 
+use App\Domain\Models\SlotType;
+
 class ShoesBehavior extends ClothingBehavior
 {
 
     public function getSlotsCount(): int
     {
         return 1;
+    }
+
+    public function getSlotTypeNames(): array
+    {
+        return [
+            SlotType::FEET
+        ];
     }
 }

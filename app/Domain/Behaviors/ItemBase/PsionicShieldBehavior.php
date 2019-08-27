@@ -9,6 +9,8 @@
 namespace App\Domain\Behaviors\ItemBase;
 
 
+use App\Domain\Models\SlotType;
+
 class PsionicShieldBehavior extends ShieldGroupBehavior
 {
 

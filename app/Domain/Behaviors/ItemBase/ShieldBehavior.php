@@ -9,7 +9,7 @@
 namespace App\Domain\Behaviors\ItemBase;
 
 
-class ShieldBehavior extends ItemBaseBehavior
+class ShieldBehavior extends ShieldGroupBehavior
 {
 
     public function getSlotsCount(): int

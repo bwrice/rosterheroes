@@ -9,6 +9,8 @@
 namespace App\Domain\Behaviors\ItemBase;
 
 
+use App\Domain\Models\SlotType;
+
 class EyeWearBehavior extends ItemBaseBehavior
 {
 
@@ -20,5 +22,12 @@ class EyeWearBehavior extends ItemBaseBehavior
     public function getItemGroup(): string
     {
         return 'eye-wear';
+    }
+
+    public function getSlotTypeNames(): array
+    {
+        return [
+            SlotType::HEAD
+        ];
     }
 }

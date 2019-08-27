@@ -9,11 +9,21 @@
 namespace App\Domain\Behaviors\ItemBase;
 
 
+use App\Domain\Models\SlotType;
+
 class RingBehavior extends JewelryBehavior
 {
 
     public function getSlotsCount(): int
     {
         return 1;
+    }
+
+    public function getSlotTypeNames(): array
+    {
+        return [
+            SlotType::LEFT_RING,
+            SlotType::RIGHT_RING
+        ];
     }
 }
