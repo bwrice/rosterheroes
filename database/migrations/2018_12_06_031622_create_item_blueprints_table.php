@@ -18,7 +18,6 @@ class CreateItemBlueprintsTable extends Migration
             $table->integer('item_type_id')->unsigned()->nullable();
             $table->integer( 'material_type_id' )->unsigned()->nullable();
             $table->integer('item_base_id')->unsigned()->nullable();
-            $table->integer('item_group_id')->unsigned()->nullable();
             $table->integer('item_class_id')->unsigned()->nullable();
             $table->integer('enchantment_power')->nullable();
             $table->integer('attack_power')->nullable();
@@ -31,7 +30,6 @@ class CreateItemBlueprintsTable extends Migration
             $table->foreign('item_type_id')->references('id')->on('item_types');
             $table->foreign('material_type_id')->references('id')->on('material_types');
             $table->foreign('item_base_id')->references('id')->on('item_bases');
-            $table->foreign('item_group_id')->references('id')->on('item_groups');
             $table->foreign('item_class_id')->references('id')->on('item_classes');
         });
     }
