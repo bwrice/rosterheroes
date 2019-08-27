@@ -9,9 +9,18 @@
 namespace App\Domain\Behaviors\ItemBase;
 
 
-abstract class ItemBaseBehavior
-{
-    abstract public function getSlotsCount(): int;
+use App\Domain\Interfaces\ItemBehavior;
+use App\Domain\Models\SlotType;
 
-    abstract public function getItemGroup(): string;
+abstract class ItemBaseBehavior implements ItemBehavior
+{
+    abstract public function getSlotTypeNames(): array;
+
+    public function getSlotTypeIDs(): array
+    {
+        return SlotType::query()
+            ->whereIn('name', $this->getSlotTypeNames())
+            ->pluck('id')
+            ->toArray();
+    }
 }
