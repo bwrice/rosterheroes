@@ -41,6 +41,7 @@ use App\Domain\Behaviors\ItemBase\WandBehavior;
 use App\Domain\Models\ItemType;
 use App\Domain\Models\MeasurableType;
 use App\Domain\Models\SlotType;
+use App\Exceptions\UnknownBehaviorException;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -124,79 +125,78 @@ class ItemBase extends Model
 
     /**
      * @return ItemBaseBehavior
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function getBehavior(): ItemBaseBehavior
     {
         switch( $this->name ) {
             case self::DAGGER:
-                return app()->make(DaggerBehavior::class);
+                return app(DaggerBehavior::class);
             case self::SWORD:
-                return app()->make(SwordBehavior::class);
+                return app(SwordBehavior::class);
             case self::AXE:
-                return app()->make(AxeBehavior::class);
+                return app(AxeBehavior::class);
             case self::MACE:
-                return app()->make(MaceBehavior::class);
+                return app(MaceBehavior::class);
             case self::BOW:
-                return app()->make(BowBehavior::class);
+                return app(BowBehavior::class);
             case self::CROSSBOW:
-                return app()->make(CrossbowBehavior::class);
+                return app(CrossbowBehavior::class);
             case self::THROWING_WEAPON:
-                return app()->make(ThrowingWeaponBehavior::class);
+                return app(ThrowingWeaponBehavior::class);
             case self::POLE_ARM:
-                return app()->make(PoleArmBehavior::class);
+                return app(PoleArmBehavior::class);
             case self::TWO_HAND_SWORD:
-                return app()->make(TwoHandSwordBehavior::class);
+                return app(TwoHandSwordBehavior::class);
             case self::TWO_HAND_AXE:
-                return app()->make(TwoHandAxeBehavior::class);
+                return app(TwoHandAxeBehavior::class);
             case self::WAND:
-                return app()->make(WandBehavior::class);
+                return app(WandBehavior::class);
             case self::ORB:
-                return app()->make(OrbBehavior::class);
+                return app(OrbBehavior::class);
             case self::STAFF:
-                return app()->make(StaffBehavior::class);
+                return app(StaffBehavior::class);
             case self::PSIONIC_ONE_HAND:
-                return app()->make(PsionicOneHandBehavior::class);
+                return app(PsionicOneHandBehavior::class);
             case self::PSIONIC_TWO_HAND:
-                return app()->make(PsionicTwoHandBehavior::class);
+                return app(PsionicTwoHandBehavior::class);
             case self::SHIELD:
-                return app()->make(ShieldBehavior::class);
+                return app(ShieldBehavior::class);
             case self::PSIONIC_SHIELD:
-                return app()->make(PsionicShieldBehavior::class);
+                return app(PsionicShieldBehavior::class);
             case self::HELMET:
-                return app()->make(HelmetBehavior::class);
+                return app(HelmetBehavior::class);
             case self::CAP:
-                return app()->make(CapBehavior::class);
+                return app(CapBehavior::class);
             case self::EYE_WEAR:
-                return app()->make(EyeWearBehavior::class);
+                return app(EyeWearBehavior::class);
             case self::HEAVY_ARMOR:
-                return app()->make(HeavyArmorBehavior::class);
+                return app(HeavyArmorBehavior::class);
             case self::LIGHT_ARMOR:
-                return app()->make(LightArmorBehavior::class);
+                return app(LightArmorBehavior::class);
             case self::ROBES:
-                return app()->make(RobesBehavior::class);
+                return app(RobesBehavior::class);
             case self::GLOVES:
-                return app()->make(GlovesBehavior::class);
+                return app(GlovesBehavior::class);
             case self::GAUNTLETS:
-                return app()->make(GauntletsBehavior::class);
+                return app(GauntletsBehavior::class);
             case self::BOOTS:
-                return app()->make( BootsBehavior::class );
+                return app(BootsBehavior::class);
             case self::SHOES:
-                return app()->make(ShoesBehavior::class);
+                return app(ShoesBehavior::class);
             case self::BELT:
-                return app()->make(BeltBehavior::class);
+                return app(BeltBehavior::class);
             case self::SASH:
-                return app()->make(SashBehavior::class);
+                return app(SashBehavior::class);
             case self::NECKLACE:
-                return app()->make(NecklaceBehavior::class);
+                return app(NecklaceBehavior::class);
             case self::BRACELET:
-                return app()->make(BraceletBehavior::class);
+                return app(BraceletBehavior::class);
             case self::RING:
-                return app()->make(RingBehavior::class);
+                return app(RingBehavior::class);
             case self::CROWN:
-                return app()->make(CrownBehavior::class);
+                return app(CrownBehavior::class);
         }
 
-        throw new \RuntimeException("Unknown behavior for item base");
+        throw new UnknownBehaviorException($this->name, ItemBaseBehavior::class);
     }
 }
