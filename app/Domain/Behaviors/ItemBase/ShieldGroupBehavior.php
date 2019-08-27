@@ -3,14 +3,14 @@
 
 namespace App\Domain\Behaviors\ItemBase;
 
-
+use App\Domain\Behaviors\ItemGroup\ShieldGroup;
 use App\Domain\Models\SlotType;
 
 abstract class ShieldGroupBehavior extends ItemBaseBehavior
 {
-    public function getGroupName(): string
+    public function __construct(ShieldGroup $shieldGroup)
     {
-        return 'shield';
+        parent::__construct($shieldGroup);
     }
 
     public function getSlotTypeNames(): array

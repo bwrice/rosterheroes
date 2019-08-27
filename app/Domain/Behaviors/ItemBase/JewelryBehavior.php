@@ -3,11 +3,12 @@
 
 namespace App\Domain\Behaviors\ItemBase;
 
+use App\Domain\Behaviors\ItemGroup\JewelryGroup;
 
 abstract class JewelryBehavior extends ItemBaseBehavior
 {
-    public function getGroupName(): string
+    public function __construct(JewelryGroup $jewelryGroup)
     {
-        return 'jewelry';
+        parent::__construct($jewelryGroup);
     }
 }

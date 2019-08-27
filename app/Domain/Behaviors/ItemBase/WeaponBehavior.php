@@ -4,13 +4,14 @@
 namespace App\Domain\Behaviors\ItemBase;
 
 
+use App\Domain\Behaviors\ItemGroup\WeaponGroup;
 use App\Domain\Models\SlotType;
 
 abstract class WeaponBehavior extends ItemBaseBehavior
 {
-    public function getGroupName(): string
+    public function __construct(WeaponGroup $weaponGroup)
     {
-        return 'weapon';
+        parent::__construct($weaponGroup);
     }
 
     public function getSlotTypeNames(): array

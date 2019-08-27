@@ -4,10 +4,12 @@
 namespace App\Domain\Behaviors\ItemBase;
 
 
+use App\Domain\Behaviors\ItemGroup\ArmorGroup;
+
 abstract class ArmorBehavior extends ItemBaseBehavior
 {
-    public function getGroupName(): string
+    public function __construct(ArmorGroup $armorGroup)
     {
-        return 'armor';
+        parent::__construct($armorGroup);
     }
 }
