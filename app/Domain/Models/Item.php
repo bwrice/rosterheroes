@@ -3,6 +3,7 @@
 namespace App\Domain\Models;
 
 use App\Domain\Collections\EnchantmentCollection;
+use App\Domain\Interfaces\ItemBehavior;
 use App\Domain\Models\Slot;
 use App\Domain\Collections\SlotCollection;
 use App\Domain\Interfaces\Slottable;
@@ -26,7 +27,7 @@ use Ramsey\Uuid\Uuid;
  * @property SlotCollection $slots
  * @property EnchantmentCollection $enchantments
  */
-class Item extends Model implements Slottable
+class Item extends EventSourcedModel implements Slottable
 {
     const RELATION_MORPH_MAP = 'items';
 
@@ -64,7 +65,7 @@ class Item extends Model implements Slottable
 
     public function getSlotTypeIDs(): array
     {
-        return $this->itemType->itemBase->slotTypes->pluck('id')->toArray();
+        return $this->getBehavior()->getSlotTypeIDs();
     }
 
     public function getSlotsCount(): int
@@ -77,17 +78,14 @@ class Item extends Model implements Slottable
         return $this->slots;
     }
 
-    /*
-     * A helper method to quickly retrieve an account by uuid.
-     */
-    public static function uuid(string $uuid): ?Item
-    {
-        return static::where('uuid', $uuid)->first();
-    }
-
     public function getItemName(): string
     {
         return $this->name ?: $this->buildItemName();
+    }
+
+    public function getBehavior(): ItemBehavior
+    {
+        return $this->itemType->getItemBehavior();
     }
 
     protected function buildItemName(): string
