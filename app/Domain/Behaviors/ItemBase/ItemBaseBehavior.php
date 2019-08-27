@@ -11,6 +11,7 @@ namespace App\Domain\Behaviors\ItemBase;
 
 use App\Domain\Interfaces\ItemBehavior;
 use App\Domain\Models\SlotType;
+use Illuminate\Support\Arr;
 
 abstract class ItemBaseBehavior implements ItemBehavior
 {
@@ -18,8 +19,11 @@ abstract class ItemBaseBehavior implements ItemBehavior
 
     public function getSlotTypeIDs(): array
     {
+        $slotTypes = $this->getSlotTypeNames();
+        $slotTypes[] = SlotType::UNIVERSAL;
+
         return SlotType::query()
-            ->whereIn('name', $this->getSlotTypeNames())
+            ->whereIn('name', $slotTypes)
             ->pluck('id')
             ->toArray();
     }
