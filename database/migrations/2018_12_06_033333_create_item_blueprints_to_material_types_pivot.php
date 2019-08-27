@@ -33,6 +33,6 @@ class CreateItemBlueprintsToMaterialTypesPivot extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('item_blueprints_to_material_types_pivot');
+        //
     }
 }

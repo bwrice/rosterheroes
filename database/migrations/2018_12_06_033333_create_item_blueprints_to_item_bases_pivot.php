@@ -33,6 +33,6 @@ class CreateItemBlueprintsToItemBasesPivot extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('item_blueprints_to_item_bases_pivot');
+        //
     }
 }
