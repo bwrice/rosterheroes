@@ -41,7 +41,7 @@ class GenerateItemFromBlueprintAction
         $itemAggregate->createItem($itemClass->id, $itemType->id, $materialType->id, $itemBlueprint->id, $itemBlueprint->item_name);
         $itemAggregate->persist();
 
-        $item = Item::uuid($uuid);
+        $item = Item::findUuid($uuid);
 
         $enchantments = $this->getEnchantments($itemBlueprint, $item->itemClass->name);
         $enchantments->each(function (Enchantment $enchantment) use ($itemAggregate) {
