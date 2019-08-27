@@ -96,16 +96,19 @@ class GenerateItemFromBlueprintAction
 
     protected function getMaterialType(ItemBlueprint $itemBlueprint, ItemType $itemType): MaterialType
     {
-        $materialType = $itemBlueprint->materialType;
-        if ($materialType) {
-            if ( ! in_array($materialType->id, $itemType->materialTypes()->pluck('id')->toArray())) {
-                throw new InvalidItemBlueprintException($itemBlueprint);
-            }
-        } else {
-            $materialType = $itemType->materialTypes()->inRandomOrder()->first();
+        $randomMaterialType = null;
+        $materialTypes = $itemBlueprint->materialTypes;
+
+        if ($materialTypes->count() > 0) {
+            $materialTypeIDs = $itemType->materialTypes()->pluck('id')->toArray();
+            $randomMaterialType = $materialTypes->shuffle()->first(function (MaterialType $materialType) use ($materialTypeIDs) {
+                return in_array($materialType->id, $materialTypeIDs);
+            });
         }
 
-        return $materialType;
+        $randomMaterialType = $randomMaterialType ?: $itemType->materialTypes()->inRandomOrder()->first();
+
+        return $randomMaterialType;
     }
 
 
