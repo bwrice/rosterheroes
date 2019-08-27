@@ -8,13 +8,26 @@
 
 namespace App\Domain\Behaviors\ItemBase;
 
-
-use App\Domain\Interfaces\ItemBehavior;
+use App\Domain\Behaviors\ItemGroup\ItemGroupInterface;
 use App\Domain\Models\SlotType;
-use Illuminate\Support\Arr;
 
-abstract class ItemBaseBehavior implements ItemBehavior
+abstract class ItemBaseBehavior implements ItemBaseBehaviorInterface
 {
+    /**
+     * @var ItemGroupInterface
+     */
+    private $itemGroup;
+
+    public function __construct(ItemGroupInterface $itemGroup)
+    {
+        $this->itemGroup = $itemGroup;
+    }
+
+    public function getGroupName(): string
+    {
+        return $this->itemGroup->name();
+    }
+
     abstract public function getSlotTypeNames(): array;
 
     public function getSlotTypeIDs(): array

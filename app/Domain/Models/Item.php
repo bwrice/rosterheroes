@@ -3,7 +3,7 @@
 namespace App\Domain\Models;
 
 use App\Domain\Collections\EnchantmentCollection;
-use App\Domain\Interfaces\ItemBehavior;
+use App\Domain\Behaviors\ItemBase\ItemBaseBehaviorInterface;
 use App\Domain\Models\Slot;
 use App\Domain\Collections\SlotCollection;
 use App\Domain\Interfaces\Slottable;
@@ -83,7 +83,7 @@ class Item extends EventSourcedModel implements Slottable
         return $this->name ?: $this->buildItemName();
     }
 
-    public function getBehavior(): ItemBehavior
+    public function getBehavior(): ItemBaseBehaviorInterface
     {
         return $this->itemType->getItemBehavior();
     }

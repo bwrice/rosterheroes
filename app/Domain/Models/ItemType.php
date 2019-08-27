@@ -2,7 +2,7 @@
 
 namespace App\Domain\Models;
 
-use App\Domain\Interfaces\ItemBehavior;
+use App\Domain\Behaviors\ItemBase\ItemBaseBehaviorInterface;
 use App\Domain\Models\ItemBase;
 use App\Domain\Models\MaterialType;
 use Illuminate\Database\Eloquent\Model;
@@ -34,7 +34,7 @@ class ItemType extends Model
         return $this->belongsTo(ItemBase::class);
     }
 
-    public function getItemBehavior(): ItemBehavior
+    public function getItemBehavior(): ItemBaseBehaviorInterface
     {
         return $this->itemBase->getBehavior();
     }

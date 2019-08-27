@@ -6,7 +6,7 @@ namespace App\Domain\Behaviors\ItemBase;
 
 abstract class ArmorBehavior extends ItemBaseBehavior
 {
-    public function getItemGroup(): string
+    public function getGroupName(): string
     {
         return 'armor';
     }

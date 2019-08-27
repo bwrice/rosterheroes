@@ -8,7 +8,7 @@ use App\Domain\Models\SlotType;
 
 abstract class WeaponBehavior extends ItemBaseBehavior
 {
-    public function getItemGroup(): string
+    public function getGroupName(): string
     {
         return 'weapon';
     }

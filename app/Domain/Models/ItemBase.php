@@ -2,7 +2,7 @@
 
 namespace App\Domain\Models;
 
-use App\Domain\Interfaces\ItemBehavior;
+use App\Domain\Behaviors\ItemBase\ItemBaseBehaviorInterface;
 use App\Domain\Models\HeroRank;
 use App\Domain\Models\ItemGroup;
 use App\Domain\Behaviors\ItemBase\AxeBehavior;
@@ -125,9 +125,9 @@ class ItemBase extends Model
     }
 
     /**
-     * @return ItemBehavior
+     * @return ItemBaseBehaviorInterface
      */
-    public function getBehavior(): ItemBehavior
+    public function getBehavior(): ItemBaseBehaviorInterface
     {
         switch( $this->name ) {
             case self::DAGGER:
@@ -198,6 +198,6 @@ class ItemBase extends Model
                 return app(CrownBehavior::class);
         }
 
-        throw new UnknownBehaviorException($this->name, ItemBehavior::class);
+        throw new UnknownBehaviorException($this->name, ItemBaseBehaviorInterface::class);
     }
 }

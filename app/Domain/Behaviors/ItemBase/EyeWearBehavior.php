@@ -19,11 +19,6 @@ class EyeWearBehavior extends ItemBaseBehavior
         return 1;
     }
 
-    public function getItemGroup(): string
-    {
-        return 'eye-wear';
-    }
-
     public function getSlotTypeNames(): array
     {
         return [
