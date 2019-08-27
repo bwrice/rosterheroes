@@ -12,4 +12,6 @@ namespace App\Domain\Behaviors\ItemBase;
 abstract class ItemBaseBehavior
 {
     abstract public function getSlotsCount(): int;
+
+    abstract public function getItemGroup(): string;
 }
