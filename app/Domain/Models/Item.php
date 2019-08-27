@@ -70,7 +70,7 @@ class Item extends EventSourcedModel implements Slottable
 
     public function getSlotsCount(): int
     {
-        return $this->itemType->itemBase->getSlotsCount();
+        return $this->getBehavior()->getSlotsCount();
     }
 
     public function getSlots(): SlotCollection
