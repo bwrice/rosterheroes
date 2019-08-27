@@ -1,5 +1,9 @@
 <?php
 
+use App\Domain\Models\ItemBase;
+use App\Domain\Models\ItemGroup;
+use App\Domain\Models\MeasurableType;
+use App\Domain\Models\SlotType;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -13,377 +17,377 @@ class SeedItemBases extends Migration
      */
     public function up()
     {
-        $itemGroups = \App\Domain\Models\ItemGroup::all();
-        $measurableTypes = \App\Domain\Models\MeasurableType::all();
-        $slotTypes = \App\Domain\Models\SlotType::all();
+        $itemGroups = ItemGroup::all();
+        $measurableTypes = MeasurableType::all();
+        $slotTypes = SlotType::all();
 
         $itemBases = [
             [
-                'name' => \App\Domain\Models\ItemBase::DAGGER,
-                'group' => \App\Domain\Models\ItemGroup::WEAPON,
+                'name' => ItemBase::DAGGER,
+                'group' => ItemGroup::WEAPON,
                 'slot_types' => [
-                    \App\Domain\Models\SlotType::RIGHT_ARM,
-                    \App\Domain\Models\SlotType::LEFT_ARM
+                    SlotType::RIGHT_ARM,
+                    SlotType::LEFT_ARM
                 ],
                 'measurable types' => [
-                    \App\Domain\Models\MeasurableType::AGILITY,
-                    \App\Domain\Models\MeasurableType::FOCUS
+                    MeasurableType::AGILITY,
+                    MeasurableType::FOCUS
                 ]
             ],
             [
-                'name' => \App\Domain\Models\ItemBase::SWORD,
-                'group' => \App\Domain\Models\ItemGroup::WEAPON,
+                'name' => ItemBase::SWORD,
+                'group' => ItemGroup::WEAPON,
                 'slot_types' => [
-                    \App\Domain\Models\SlotType::RIGHT_ARM,
-                    \App\Domain\Models\SlotType::LEFT_ARM
+                    SlotType::RIGHT_ARM,
+                    SlotType::LEFT_ARM
                 ],
                 'measurable types' => [
-                    \App\Domain\Models\MeasurableType::VALOR,
-                    \App\Domain\Models\MeasurableType::AGILITY
+                    MeasurableType::VALOR,
+                    MeasurableType::AGILITY
                 ]
             ],
             [
-                'name' => \App\Domain\Models\ItemBase::AXE,
-                'group' => \App\Domain\Models\ItemGroup::WEAPON,
+                'name' => ItemBase::AXE,
+                'group' => ItemGroup::WEAPON,
                 'slot_types' => [
-                    \App\Domain\Models\SlotType::RIGHT_ARM,
-                    \App\Domain\Models\SlotType::LEFT_ARM
+                    SlotType::RIGHT_ARM,
+                    SlotType::LEFT_ARM
                 ],
                 'measurable types' => [
-                    \App\Domain\Models\MeasurableType::STRENGTH,
-                    \App\Domain\Models\MeasurableType::VALOR
+                    MeasurableType::STRENGTH,
+                    MeasurableType::VALOR
                 ]
             ],
             [
-                'name' => \App\Domain\Models\ItemBase::MACE,
-                'group' => \App\Domain\Models\ItemGroup::WEAPON,
+                'name' => ItemBase::MACE,
+                'group' => ItemGroup::WEAPON,
                 'slot_types' => [
-                    \App\Domain\Models\SlotType::RIGHT_ARM,
-                    \App\Domain\Models\SlotType::LEFT_ARM
+                    SlotType::RIGHT_ARM,
+                    SlotType::LEFT_ARM
                 ],
                 'measurable types' => [
-                    \App\Domain\Models\MeasurableType::STRENGTH,
-                    \App\Domain\Models\MeasurableType::AGILITY
+                    MeasurableType::STRENGTH,
+                    MeasurableType::AGILITY
                 ]
             ],
             [
-                'name' => \App\Domain\Models\ItemBase::BOW,
-                'group' => \App\Domain\Models\ItemGroup::WEAPON,
+                'name' => ItemBase::BOW,
+                'group' => ItemGroup::WEAPON,
                 'slot_types' => [
-                    \App\Domain\Models\SlotType::RIGHT_ARM,
-                    \App\Domain\Models\SlotType::LEFT_ARM
+                    SlotType::RIGHT_ARM,
+                    SlotType::LEFT_ARM
                 ],
                 'measurable types' => [
-                    \App\Domain\Models\MeasurableType::AGILITY,
-                    \App\Domain\Models\MeasurableType::FOCUS
+                    MeasurableType::AGILITY,
+                    MeasurableType::FOCUS
                 ]
             ],
             [
-                'name' => \App\Domain\Models\ItemBase::CROSSBOW,
-                'group' => \App\Domain\Models\ItemGroup::WEAPON,
+                'name' => ItemBase::CROSSBOW,
+                'group' => ItemGroup::WEAPON,
                 'slot_types' => [
-                    \App\Domain\Models\SlotType::RIGHT_ARM,
-                    \App\Domain\Models\SlotType::LEFT_ARM
+                    SlotType::RIGHT_ARM,
+                    SlotType::LEFT_ARM
                 ],
                 'measurable types' => [
-                    \App\Domain\Models\MeasurableType::STRENGTH,
-                    \App\Domain\Models\MeasurableType::AGILITY,
-                    \App\Domain\Models\MeasurableType::FOCUS
+                    MeasurableType::STRENGTH,
+                    MeasurableType::AGILITY,
+                    MeasurableType::FOCUS
                 ]
             ],
             [
-                'name' => \App\Domain\Models\ItemBase::THROWING_WEAPON,
-                'group' => \App\Domain\Models\ItemGroup::WEAPON,
+                'name' => ItemBase::THROWING_WEAPON,
+                'group' => ItemGroup::WEAPON,
                 'slot_types' => [
-                    \App\Domain\Models\SlotType::RIGHT_ARM,
-                    \App\Domain\Models\SlotType::LEFT_ARM
+                    SlotType::RIGHT_ARM,
+                    SlotType::LEFT_ARM
                 ],
                 'measurable types' => [
-                    \App\Domain\Models\MeasurableType::STRENGTH,
-                    \App\Domain\Models\MeasurableType::FOCUS
+                    MeasurableType::STRENGTH,
+                    MeasurableType::FOCUS
                 ]
             ],
             [
-                'name' => \App\Domain\Models\ItemBase::POLE_ARM,
-                'group' => \App\Domain\Models\ItemGroup::WEAPON,
+                'name' => ItemBase::POLE_ARM,
+                'group' => ItemGroup::WEAPON,
                 'slot_types' => [
-                    \App\Domain\Models\SlotType::RIGHT_ARM,
-                    \App\Domain\Models\SlotType::LEFT_ARM
+                    SlotType::RIGHT_ARM,
+                    SlotType::LEFT_ARM
                 ],
                 'measurable types' => [
-                    \App\Domain\Models\MeasurableType::STRENGTH,
-                    \App\Domain\Models\MeasurableType::AGILITY,
-                    \App\Domain\Models\MeasurableType::FOCUS
+                    MeasurableType::STRENGTH,
+                    MeasurableType::AGILITY,
+                    MeasurableType::FOCUS
                 ]
             ],
             [
-                'name' => \App\Domain\Models\ItemBase::TWO_HAND_SWORD,
-                'group' => \App\Domain\Models\ItemGroup::WEAPON,
+                'name' => ItemBase::TWO_HAND_SWORD,
+                'group' => ItemGroup::WEAPON,
                 'slot_types' => [
-                    \App\Domain\Models\SlotType::RIGHT_ARM,
-                    \App\Domain\Models\SlotType::LEFT_ARM
+                    SlotType::RIGHT_ARM,
+                    SlotType::LEFT_ARM
                 ],
                 'measurable types' => [
-                    \App\Domain\Models\MeasurableType::STRENGTH,
-                    \App\Domain\Models\MeasurableType::VALOR,
-                    \App\Domain\Models\MeasurableType::AGILITY
+                    MeasurableType::STRENGTH,
+                    MeasurableType::VALOR,
+                    MeasurableType::AGILITY
                 ]
             ],
             [
-                'name' => \App\Domain\Models\ItemBase::TWO_HAND_AXE,
-                'group' => \App\Domain\Models\ItemGroup::WEAPON,
+                'name' => ItemBase::TWO_HAND_AXE,
+                'group' => ItemGroup::WEAPON,
                 'slot_types' => [
-                    \App\Domain\Models\SlotType::RIGHT_ARM,
-                    \App\Domain\Models\SlotType::LEFT_ARM
+                    SlotType::RIGHT_ARM,
+                    SlotType::LEFT_ARM
                 ],
                 'measurable types' => [
-                    \App\Domain\Models\MeasurableType::STRENGTH,
-                    \App\Domain\Models\MeasurableType::VALOR
+                    MeasurableType::STRENGTH,
+                    MeasurableType::VALOR
                 ]
             ],
             [
-                'name' => \App\Domain\Models\ItemBase::WAND,
-                'group' => \App\Domain\Models\ItemGroup::WEAPON,
+                'name' => ItemBase::WAND,
+                'group' => ItemGroup::WEAPON,
                 'slot_types' => [
-                    \App\Domain\Models\SlotType::RIGHT_ARM,
-                    \App\Domain\Models\SlotType::LEFT_ARM
+                    SlotType::RIGHT_ARM,
+                    SlotType::LEFT_ARM
                 ],
                 'measurable types' => [
-                    \App\Domain\Models\MeasurableType::FOCUS,
-                    \App\Domain\Models\MeasurableType::INTELLIGENCE
+                    MeasurableType::FOCUS,
+                    MeasurableType::INTELLIGENCE
                 ]
             ],
             [
-                'name' => \App\Domain\Models\ItemBase::ORB,
-                'group' => \App\Domain\Models\ItemGroup::WEAPON,
+                'name' => ItemBase::ORB,
+                'group' => ItemGroup::WEAPON,
                 'slot_types' => [
-                    \App\Domain\Models\SlotType::RIGHT_ARM,
-                    \App\Domain\Models\SlotType::LEFT_ARM
+                    SlotType::RIGHT_ARM,
+                    SlotType::LEFT_ARM
                 ],
                 'measurable types' => [
-                    \App\Domain\Models\MeasurableType::FOCUS,
-                    \App\Domain\Models\MeasurableType::APTITUDE
+                    MeasurableType::FOCUS,
+                    MeasurableType::APTITUDE
                 ]
             ],
             [
-                'name' => \App\Domain\Models\ItemBase::STAFF,
-                'group' => \App\Domain\Models\ItemGroup::WEAPON,
+                'name' => ItemBase::STAFF,
+                'group' => ItemGroup::WEAPON,
                 'slot_types' => [
-                    \App\Domain\Models\SlotType::RIGHT_ARM,
-                    \App\Domain\Models\SlotType::LEFT_ARM
+                    SlotType::RIGHT_ARM,
+                    SlotType::LEFT_ARM
                 ],
                 'measurable types' => [
-                    \App\Domain\Models\MeasurableType::FOCUS,
-                    \App\Domain\Models\MeasurableType::APTITUDE,
-                    \App\Domain\Models\MeasurableType::INTELLIGENCE
+                    MeasurableType::FOCUS,
+                    MeasurableType::APTITUDE,
+                    MeasurableType::INTELLIGENCE
                 ]
             ],
             [
-                'name' => \App\Domain\Models\ItemBase::PSIONIC_ONE_HAND,
-                'group' => \App\Domain\Models\ItemGroup::WEAPON,
+                'name' => ItemBase::PSIONIC_ONE_HAND,
+                'group' => ItemGroup::WEAPON,
                 'slot_types' => [
-                    \App\Domain\Models\SlotType::RIGHT_ARM,
-                    \App\Domain\Models\SlotType::LEFT_ARM
+                    SlotType::RIGHT_ARM,
+                    SlotType::LEFT_ARM
                 ],
                 'measurable types' => [
-                    \App\Domain\Models\MeasurableType::AGILITY,
-                    \App\Domain\Models\MeasurableType::APTITUDE,
-                    \App\Domain\Models\MeasurableType::INTELLIGENCE
+                    MeasurableType::AGILITY,
+                    MeasurableType::APTITUDE,
+                    MeasurableType::INTELLIGENCE
                 ]
             ],
             [
-                'name' => \App\Domain\Models\ItemBase::PSIONIC_TWO_HAND,
-                'group' => \App\Domain\Models\ItemGroup::WEAPON,
+                'name' => ItemBase::PSIONIC_TWO_HAND,
+                'group' => ItemGroup::WEAPON,
                 'slot_types' => [
-                    \App\Domain\Models\SlotType::RIGHT_ARM,
-                    \App\Domain\Models\SlotType::LEFT_ARM
+                    SlotType::RIGHT_ARM,
+                    SlotType::LEFT_ARM
                 ],
                 'measurable types' => [
-                    \App\Domain\Models\MeasurableType::STRENGTH,
-                    \App\Domain\Models\MeasurableType::FOCUS,
-                    \App\Domain\Models\MeasurableType::APTITUDE
+                    MeasurableType::STRENGTH,
+                    MeasurableType::FOCUS,
+                    MeasurableType::APTITUDE
                 ]
             ],
             [
-                'name' => \App\Domain\Models\ItemBase::SHIELD,
-                'group' => \App\Domain\Models\ItemGroup::ARMOR,
+                'name' => ItemBase::SHIELD,
+                'group' => ItemGroup::ARMOR,
                 'slot_types' => [
-                    \App\Domain\Models\SlotType::LEFT_ARM
+                    SlotType::LEFT_ARM
                 ],
                 'measurable types' => [
 
                 ]
             ],
             [
-                'name' => \App\Domain\Models\ItemBase::PSIONIC_SHIELD,
-                'group' => \App\Domain\Models\ItemGroup::ARMOR,
+                'name' => ItemBase::PSIONIC_SHIELD,
+                'group' => ItemGroup::ARMOR,
                 'slot_types' => [
-                    \App\Domain\Models\SlotType::LEFT_ARM
+                    SlotType::LEFT_ARM
                 ],
                 'measurable types' => [
 
                 ]
             ],
             [
-                'name' => \App\Domain\Models\ItemBase::HELMET,
-                'group' => \App\Domain\Models\ItemGroup::ARMOR,
+                'name' => ItemBase::HELMET,
+                'group' => ItemGroup::ARMOR,
                 'slot_types' => [
-                    \App\Domain\Models\SlotType::HEAD
+                    SlotType::HEAD
                 ],
                 'measurable types' => [
 
                 ]
             ],
             [
-                'name' => \App\Domain\Models\ItemBase::CAP,
-                'group' => \App\Domain\Models\ItemGroup::ARMOR,
+                'name' => ItemBase::CAP,
+                'group' => ItemGroup::ARMOR,
                 'slot_types' => [
-                    \App\Domain\Models\SlotType::HEAD
+                    SlotType::HEAD
                 ],
                 'measurable types' => [
 
                 ]
             ],
             [
-                'name' => \App\Domain\Models\ItemBase::EYE_WEAR,
-                'group' => \App\Domain\Models\ItemGroup::ARMOR,
+                'name' => ItemBase::EYE_WEAR,
+                'group' => ItemGroup::ARMOR,
                 'slot_types' => [
-                    \App\Domain\Models\SlotType::HEAD
+                    SlotType::HEAD
                 ],
                 'measurable types' => [
 
                 ]
             ],
             [
-                'name' => \App\Domain\Models\ItemBase::HEAVY_ARMOR,
-                'group' => \App\Domain\Models\ItemGroup::ARMOR,
+                'name' => ItemBase::HEAVY_ARMOR,
+                'group' => ItemGroup::ARMOR,
                 'slot_types' => [
-                    \App\Domain\Models\SlotType::TORSO
+                    SlotType::TORSO
                 ],
                 'measurable types' => [
 
                 ]
             ],
             [
-                'name' => \App\Domain\Models\ItemBase::LIGHT_ARMOR,
-                'group' => \App\Domain\Models\ItemGroup::ARMOR,
+                'name' => ItemBase::LIGHT_ARMOR,
+                'group' => ItemGroup::ARMOR,
                 'slot_types' => [
-                    \App\Domain\Models\SlotType::TORSO
+                    SlotType::TORSO
                 ],
                 'measurable types' => [
 
                 ]
             ],
             [
-                'name' => \App\Domain\Models\ItemBase::ROBES,
-                'group' => \App\Domain\Models\ItemGroup::ARMOR,
+                'name' => ItemBase::ROBES,
+                'group' => ItemGroup::ARMOR,
                 'slot_types' => [
-                    \App\Domain\Models\SlotType::TORSO
+                    SlotType::TORSO
                 ],
                 'measurable types' => [
 
                 ]
             ],
             [
-                'name' => \App\Domain\Models\ItemBase::GLOVES,
-                'group' => \App\Domain\Models\ItemGroup::ARMOR,
+                'name' => ItemBase::GLOVES,
+                'group' => ItemGroup::ARMOR,
                 'slot_types' => [
-                    \App\Domain\Models\SlotType::HANDS
+                    SlotType::HANDS
                 ],
                 'measurable types' => [
 
                 ]
             ],
             [
-                'name' => \App\Domain\Models\ItemBase::GAUNTLETS,
-                'group' => \App\Domain\Models\ItemGroup::ARMOR,
+                'name' => ItemBase::GAUNTLETS,
+                'group' => ItemGroup::ARMOR,
                 'slot_types' => [
-                    \App\Domain\Models\SlotType::HANDS
+                    SlotType::HANDS
                 ],
                 'measurable types' => [
 
                 ]
             ],
             [
-                'name' => \App\Domain\Models\ItemBase::SHOES,
-                'group' => \App\Domain\Models\ItemGroup::ARMOR,
+                'name' => ItemBase::SHOES,
+                'group' => ItemGroup::ARMOR,
                 'slot_types' => [
-                    \App\Domain\Models\SlotType::FEET
+                    SlotType::FEET
                 ],
                 'measurable types' => [
 
                 ]
             ],
             [
-                'name' => \App\Domain\Models\ItemBase::BOOTS,
-                'group' => \App\Domain\Models\ItemGroup::ARMOR,
+                'name' => ItemBase::BOOTS,
+                'group' => ItemGroup::ARMOR,
                 'slot_types' => [
-                    \App\Domain\Models\SlotType::FEET
+                    SlotType::FEET
                 ],
                 'measurable types' => [
 
                 ]
             ],
             [
-                'name' => \App\Domain\Models\ItemBase::BELT,
-                'group' => \App\Domain\Models\ItemGroup::ARMOR,
+                'name' => ItemBase::BELT,
+                'group' => ItemGroup::ARMOR,
                 'slot_types' => [
-                    \App\Domain\Models\SlotType::WAIST
+                    SlotType::WAIST
                 ],
                 'measurable types' => [
 
                 ]
             ],
             [
-                'name' => \App\Domain\Models\ItemBase::SASH,
-                'group' => \App\Domain\Models\ItemGroup::ARMOR,
+                'name' => ItemBase::SASH,
+                'group' => ItemGroup::ARMOR,
                 'slot_types' => [
-                    \App\Domain\Models\SlotType::WAIST
+                    SlotType::WAIST
                 ],
                 'measurable types' => [
 
                 ]
             ],
             [
-                'name' => \App\Domain\Models\ItemBase::NECKLACE,
-                'group' => \App\Domain\Models\ItemGroup::JEWELRY,
+                'name' => ItemBase::NECKLACE,
+                'group' => ItemGroup::JEWELRY,
                 'slot_types' => [
-                    \App\Domain\Models\SlotType::NECK
+                    SlotType::NECK
                 ],
                 'measurable types' => [
-                    \App\Domain\Models\MeasurableType::HEALTH
+                    MeasurableType::HEALTH
                 ]
             ],
             [
-                'name' => \App\Domain\Models\ItemBase::BRACELET,
-                'group' => \App\Domain\Models\ItemGroup::JEWELRY,
+                'name' => ItemBase::BRACELET,
+                'group' => ItemGroup::JEWELRY,
                 'slot_types' => [
-                    \App\Domain\Models\SlotType::LEFT_WRIST,
-                    \App\Domain\Models\SlotType::RIGHT_WRIST
+                    SlotType::LEFT_WRIST,
+                    SlotType::RIGHT_WRIST
                 ],
                 'measurable types' => [
-                    \App\Domain\Models\MeasurableType::STAMINA
+                    MeasurableType::STAMINA
                 ]
             ],
             [
-                'name' => \App\Domain\Models\ItemBase::RING,
-                'group' => \App\Domain\Models\ItemGroup::JEWELRY,
+                'name' => ItemBase::RING,
+                'group' => ItemGroup::JEWELRY,
                 'slot_types' => [
-                    \App\Domain\Models\SlotType::LEFT_RING,
-                    \App\Domain\Models\SlotType::RIGHT_RING
+                    SlotType::LEFT_RING,
+                    SlotType::RIGHT_RING
                 ],
                 'measurable types' => [
-                    \App\Domain\Models\MeasurableType::MANA
+                    MeasurableType::MANA
                 ]
             ],
             [
-                'name' => \App\Domain\Models\ItemBase::CROWN,
-                'group' => \App\Domain\Models\ItemGroup::JEWELRY,
+                'name' => ItemBase::CROWN,
+                'group' => ItemGroup::JEWELRY,
                 'slot_types' => [
-                    \App\Domain\Models\SlotType::HEAD
+                    SlotType::HEAD
                 ],
                 'measurable types' => [
-                    \App\Domain\Models\MeasurableType::HEALTH
+                    MeasurableType::HEALTH
                 ]
             ],
         ];
@@ -396,11 +400,11 @@ class SeedItemBases extends Migration
             ] );
 
             $measurableTypesToSave = $measurableTypes->whereIn( 'name', $itemBase['measurable types'] );
-            /** @var \App\Domain\Models\ItemBase $itemBaseCreated */
+            /** @var ItemBase $itemBaseCreated */
             $itemBaseCreated->measurableTypes()->saveMany( $measurableTypesToSave );
 
             //Add universal and wagon slot type to all current item bases
-            $itemBase['slot_types'][] = \App\Domain\Models\SlotType::UNIVERSAL;
+            $itemBase['slot_types'][] = SlotType::UNIVERSAL;
             $slotTypesToSave = $slotTypes->whereIn( 'name', $itemBase['slot_types'] );
             $itemBaseCreated->slotTypes()->saveMany( $slotTypesToSave );
         }
@@ -415,6 +419,6 @@ class SeedItemBases extends Migration
     {
         \Illuminate\Support\Facades\DB::table('item_base_slot_type')->truncate();
         \Illuminate\Support\Facades\DB::table('item_base_measurable_type')->truncate();
-        \App\Domain\Models\ItemBase::query()->delete();
+        ItemBase::query()->delete();
     }
 }
