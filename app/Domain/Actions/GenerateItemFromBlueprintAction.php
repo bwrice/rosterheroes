@@ -76,29 +76,9 @@ class GenerateItemFromBlueprintAction
             return $this->getItemTypeFromBase($itemBlueprint->itemBase);
         }
 
-        if ($itemBlueprint->itemGroup) {
-            return $this->getItemTypeFromGroup($itemBlueprint->itemGroup);
-        }
-
         /** @var ItemType $itemType */
         $itemType = ItemType::query()->inRandomOrder()->first();
         return $itemType;
-    }
-
-    /**
-     * @param ItemGroup $itemGroup
-     * @return ItemType
-     */
-    protected function getItemTypeFromGroup(ItemGroup $itemGroup): ItemType
-    {
-        /** @var ItemBase $itemBase */
-        $itemBase = $itemGroup->itemBases()->inRandomOrder()->first();
-
-        if (!$itemBase) {
-            $itemBase = ItemBase::query()->inRandomOrder()->first();
-        }
-
-        return $this->getItemTypeFromBase($itemBase);
     }
 
     /**

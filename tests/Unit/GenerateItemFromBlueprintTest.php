@@ -252,25 +252,4 @@ class GenerateItemFromBlueprintTest extends TestCase
 //        $this->assertEquals( $attackIDs, $actualAttacks->pluck('id')->toArray() );
     }
 
-
-    /**
-     * @test
-     */
-    public function it_can_create_an_item_by_group()
-    {
-        $itemGroup = ItemGroup::query()->where('name', ItemGroup::ARMOR)->first();
-
-        $this->itemBlueprint->item_type_id = null;
-        $this->itemBlueprint->item_group_id = $itemGroup->id;
-        $this->itemBlueprint->save();
-
-        /** @var Item $item */
-        $item = $this->domainAction->execute($this->itemBlueprint->fresh());
-
-        $this->assertDatabaseHas( 'items', [
-            'id' => $item->id
-        ]);
-
-        $this->assertEquals($item->itemType->itemBase->itemGroup->id, $itemGroup->id);
-    }
 }

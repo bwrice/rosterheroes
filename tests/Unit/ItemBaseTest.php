@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\Domain\Behaviors\ItemBase\ItemBaseBehavior;
 use App\Domain\Models\ItemBase;
+use App\Domain\Models\SlotType;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
@@ -45,14 +46,13 @@ class ItemBaseTest extends TestCase
      */
     public function it_belongs_to_at_least_one_hero_type()
     {
-        $bases = ItemBase::query()->with([
-            'slotTypes' => function (BelongsToMany $query) {
-                //heroTypes scope on SlotType model
-                return $query->heroTypes();
-            }])->get();
+        $bases = ItemBase::all();
+        $heroSlotTypeIDs = SlotType::query()->heroTypes()->pluck('id')->values()->toArray();
 
-        $bases->each(function (ItemBase $itemBase) {
-           $this->assertGreaterThan(0, $itemBase->slotTypes->count(), $itemBase->name . " belongs to at least 1 hero slot type");
+        $bases->each(function (ItemBase $itemBase) use ($heroSlotTypeIDs) {
+            $slotTypeIDs = $itemBase->getBehavior()->getSlotTypeIDs();
+            $intersectingIDs = array_intersect($slotTypeIDs, $heroSlotTypeIDs);
+            $this->assertGreaterThan(0, count($intersectingIDs), $itemBase->name . " belongs to at least 1 hero slot type");
         });
     }
 }

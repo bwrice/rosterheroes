@@ -64,11 +64,6 @@ class ItemBlueprint extends Model
         return $this->belongsTo(ItemBase::class);
     }
 
-    public function itemGroup()
-    {
-        return $this->belongsTo(ItemGroup::class);
-    }
-
     public function enchantments()
     {
         return $this->belongsToMany(Enchantment::class, 'enchantment_item_blueprint', 'blueprint_id', 'ench_id')->withTimestamps();
