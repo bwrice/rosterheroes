@@ -26,7 +26,7 @@ class ItemProjector implements Projector
 
     public function onEnchantmentAttachedToItem(EnchantmentAttachedToItem $event, string $aggregateUuid)
     {
-        $item = Item::uuid($aggregateUuid);
+        $item = Item::findUuid($aggregateUuid);
         $item->enchantments()->attach($event->enchantmentID);
     }
 }
