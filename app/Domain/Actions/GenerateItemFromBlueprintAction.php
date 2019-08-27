@@ -15,11 +15,10 @@ use App\Domain\Models\Item;
 use App\Domain\Models\ItemBase;
 use App\Domain\Models\ItemBlueprint;
 use App\Domain\Models\ItemClass;
-use App\Domain\Models\ItemGroup;
 use App\Domain\Models\ItemType;
 use App\Domain\Models\MaterialType;
 use App\Exceptions\InvalidItemBlueprintException;
-use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
 
 class GenerateItemFromBlueprintAction
@@ -72,8 +71,9 @@ class GenerateItemFromBlueprintAction
             return $itemBlueprint->itemType;
         }
 
-        if ($itemBlueprint->itemBase) {
-            return $this->getItemTypeFromBase($itemBlueprint->itemBase);
+        $itemBases = $itemBlueprint->itemBases;
+        if ($itemBases->count() > 0) {
+            return $this->getItemTypeFromBases($itemBases);
         }
 
         /** @var ItemType $itemType */
@@ -82,17 +82,15 @@ class GenerateItemFromBlueprintAction
     }
 
     /**
-     * @param ItemBase $itemBase
+     * @param Collection $itemBases
      * @return ItemType
      */
-    protected function getItemTypeFromBase(ItemBase $itemBase): ItemType
+    protected function getItemTypeFromBases(Collection $itemBases): ItemType
     {
-        $itemType = $itemBase->itemTypes()->inRandomOrder()->first();
+        /** @var ItemBase $randomItemBase */
+        $randomItemBase = $itemBases->random();
 
-        if (!$itemType) {
-            $itemType = ItemType::query()->inRandomOrder()->first();
-        }
-
+        $itemType = $randomItemBase->itemTypes()->inRandomOrder()->first();
         return $itemType;
     }
 

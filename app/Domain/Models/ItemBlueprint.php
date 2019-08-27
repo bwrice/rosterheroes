@@ -28,12 +28,13 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $item_group_id
  * @property string|null $description
  *
- * @property Collection $enchantments
  * @property ItemClass|null $itemClass
  * @property ItemType|null $itemType
  * @property ItemBase|null $itemBase
- * @property ItemGroup|null $itemGroup
  * @property MaterialType|null $materialType
+ *
+ * @property Collection $enchantments
+ * @property Collection $itemBases
  */
 class ItemBlueprint extends Model
 {
@@ -67,6 +68,11 @@ class ItemBlueprint extends Model
     public function enchantments()
     {
         return $this->belongsToMany(Enchantment::class, 'enchantment_item_blueprint', 'blueprint_id', 'ench_id')->withTimestamps();
+    }
+
+    public function itemBases()
+    {
+        return $this->belongsToMany(ItemBase::class, 'item_base_item_blueprint', 'blueprint_id', 'base_id')->withTimestamps();
     }
 
     /**
