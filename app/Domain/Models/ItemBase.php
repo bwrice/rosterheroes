@@ -59,39 +59,40 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ItemBase extends Model
 {
-    const DAGGER = 'dagger';
-    const SWORD = 'sword';
-    const AXE = 'axe';
-    const MACE = 'mace';
-    const BOW = 'bow';
-    const CROSSBOW = 'crossbow';
-    const THROWING_WEAPON = 'throwing-weapon';
-    const POLE_ARM = 'pole-arm';
-    const TWO_HAND_SWORD = 'two-hand-sword';
-    const TWO_HAND_AXE = 'two-hand-axe';
-    const WAND = 'wand';
-    const ORB = 'orb';
-    const STAFF = 'staff';
-    const PSIONIC_ONE_HAND = 'psionic-one-hand';
-    const PSIONIC_TWO_HAND = 'psionic-two-hand';
-    const SHIELD = 'shield';
-    const PSIONIC_SHIELD = 'psionic-shield';
-    const HELMET = 'helmet';
-    const CAP = 'cap';
-    const EYE_WEAR = 'eye-wear';
-    const HEAVY_ARMOR = 'heavy-armor';
-    const LIGHT_ARMOR = 'light-armor';
-    const ROBES = 'robes';
-    const GLOVES = 'gloves';
-    const GAUNTLETS = 'gauntlets';
-    const SHOES = 'shoes';
-    const BOOTS = 'boots';
-    const BELT = 'belt';
-    const SASH = 'sash';
-    const NECKLACE = 'necklace';
-    const BRACELET = 'bracelet';
-    const RING = 'ring';
-    const CROWN = 'crown';
+    public const DAGGER = 'dagger';
+    public const SWORD = 'sword';
+    public const AXE = 'axe';
+    public const MACE = 'mace';
+    public const BOW = 'bow';
+    public const CROSSBOW = 'crossbow';
+    public const THROWING_WEAPON = 'throwing-weapon';
+    public const POLE_ARM = 'pole-arm';
+    public const TWO_HAND_SWORD = 'two-hand-sword';
+    public const TWO_HAND_AXE = 'two-hand-axe';
+    public const WAND = 'wand';
+    public const ORB = 'orb';
+    public const STAFF = 'staff';
+    public const PSIONIC_ONE_HAND = 'psionic-one-hand';
+    public const PSIONIC_TWO_HAND = 'psionic-two-hand';
+    public const SHIELD = 'shield';
+    public const PSIONIC_SHIELD = 'psionic-shield';
+    public const HELMET = 'helmet';
+    public const CAP = 'cap';
+    public const EYE_WEAR = 'eye-wear';
+    public const HEAVY_ARMOR = 'heavy-armor';
+    public const LIGHT_ARMOR = 'light-armor';
+    public const LEGGINGS = 'leggings';
+    public const ROBES = 'robes';
+    public const GLOVES = 'gloves';
+    public const GAUNTLETS = 'gauntlets';
+    public const SHOES = 'shoes';
+    public const BOOTS = 'boots';
+    public const BELT = 'belt';
+    public const SASH = 'sash';
+    public const NECKLACE = 'necklace';
+    public const BRACELET = 'bracelet';
+    public const RING = 'ring';
+    public const CROWN = 'crown';
 
     protected $guarded = [];
 
@@ -173,6 +174,8 @@ class ItemBase extends Model
             case self::HEAVY_ARMOR:
                 return app(HeavyArmorBehavior::class);
             case self::LIGHT_ARMOR:
+                return app(LightArmorBehavior::class);
+            case self::LEGGINGS:
                 return app(LightArmorBehavior::class);
             case self::ROBES:
                 return app(RobesBehavior::class);
