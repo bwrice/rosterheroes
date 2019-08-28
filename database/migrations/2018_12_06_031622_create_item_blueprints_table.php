@@ -15,16 +15,11 @@ class CreateItemBlueprintsTable extends Migration
     {
         Schema::create('item_blueprints', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('item_class_id')->unsigned()->nullable();
             $table->integer('enchantment_power')->nullable();
             $table->integer('attack_power')->nullable();
             $table->string('item_name')->nullable();
             $table->string('description')->nullable();
             $table->timestamps();
-        });
-
-        Schema::table('item_blueprints', function (Blueprint $table) {
-            $table->foreign('item_class_id')->references('id')->on('item_classes');
         });
     }
 

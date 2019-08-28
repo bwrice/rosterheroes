@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateItemBlueprintsToItemBasesPivot extends Migration
+class CreateItemBlueprintsToItemClassesPivot extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,16 @@ class CreateItemBlueprintsToItemBasesPivot extends Migration
      */
     public function up()
     {
-        Schema::create('item_base_item_blueprint', function (Blueprint $table) {
-            $table->integer('i_base_id')->unsigned();
+        Schema::create('item_blueprint_item_class', function (Blueprint $table) {
             $table->integer('blueprint_id')->unsigned();
-            $table->primary(['i_base_id', 'blueprint_id']);
+            $table->integer('i_class_id')->unsigned();
+            $table->primary(['blueprint_id', 'i_class_id']);
             $table->timestamps();
         });
 
-        Schema::table('item_base_item_blueprint', function (Blueprint $table) {
-            $table->foreign('i_base_id')->references('id')->on('item_bases');
+        Schema::table('item_blueprint_item_class', function (Blueprint $table) {
             $table->foreign('blueprint_id')->references('id')->on('item_blueprints');
+            $table->foreign('i_class_id')->references('id')->on('item_classes');
         });
     }
 
@@ -33,6 +33,6 @@ class CreateItemBlueprintsToItemBasesPivot extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('item_blueprints_to_item_classes_pivot');
     }
 }
