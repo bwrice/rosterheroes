@@ -26,7 +26,7 @@ class SeedItemBlueprints extends Migration
             [
                 'create_array' => [
                     'name' => \App\Domain\Models\ItemBlueprint::STARTER_SWORD,
-                    'item_class_id' => $itemClasses->where('name', '=', \App\Domain\Models\ItemClass::ENCHANTED )->first()->id,
+                    'item_class' => $itemClasses->where('name', '=', \App\Domain\Models\ItemClass::ENCHANTED )->first(),
                     'item_type' => $itemTypes->where( 'name', '=', 'Short Sword' )->first(),
                     'material_type' => $materialTypes->where( 'name', '=', 'Copper' )->first(),
                 ],
@@ -37,7 +37,7 @@ class SeedItemBlueprints extends Migration
             [
                 'create_array' => [
                     'name' => \App\Domain\Models\ItemBlueprint::STARTER_SHIELD,
-                    'item_class_id' => $itemClasses->where('name', '=', \App\Domain\Models\ItemClass::ENCHANTED )->first()->id,
+                    'item_class' => $itemClasses->where('name', '=', \App\Domain\Models\ItemClass::ENCHANTED )->first(),
                     'item_type' => $itemTypes->where( 'name', '=', 'Buckler' )->first(),
                     'material_type' => $materialTypes->where( 'name', '=', 'Copper' )->first(),
                 ],
@@ -48,7 +48,7 @@ class SeedItemBlueprints extends Migration
             [
                 'create_array' => [
                     'name' => \App\Domain\Models\ItemBlueprint::STARTER_BOW,
-                    'item_class_id' => $itemClasses->where('name', '=', \App\Domain\Models\ItemClass::ENCHANTED )->first()->id,
+                    'item_class' => $itemClasses->where('name', '=', \App\Domain\Models\ItemClass::ENCHANTED )->first(),
                     'item_type' => $itemTypes->where( 'name', '=', 'Straight Bow' )->first(),
                     'material_type' => $materialTypes->where( 'name', '=', 'Yew' )->first(),
                 ],
@@ -60,7 +60,7 @@ class SeedItemBlueprints extends Migration
             [
                 'create_array' => [
                     'name' => \App\Domain\Models\ItemBlueprint::STARTER_STAFF,
-                    'item_class_id' => $itemClasses->where('name', '=', \App\Domain\Models\ItemClass::ENCHANTED )->first()->id,
+                    'item_class' => $itemClasses->where('name', '=', \App\Domain\Models\ItemClass::ENCHANTED )->first(),
                     'item_type' => $itemTypes->where( 'name', '=', 'Lesser Staff' )->first(),
                     'material_type' => $materialTypes->where( 'name', '=', 'Yew' )->first(),
                 ],
@@ -75,12 +75,12 @@ class SeedItemBlueprints extends Migration
 
             /** @var \App\Domain\Models\ItemBlueprint $blueprintCreated */
             $blueprintCreated = \App\Domain\Models\ItemBlueprint::create([
-                'item_name' => $blueprint['create_array']['name'],
-                'item_class_id' => $blueprint['create_array']['item_class_id']
+                'item_name' => $blueprint['create_array']['name']
             ]);
 
             $blueprintCreated->itemTypes()->attach($blueprint['create_array']['item_type']);
             $blueprintCreated->materialTypes()->attach($blueprint['create_array']['material_type']);
+            $blueprintCreated->itemClasses()->attach($blueprint['create_array']['item_class']);
 
             $enchantmentsToAttach = $enchantments->whereIn('name', $blueprint['enchantments']);
 
