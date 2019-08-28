@@ -34,6 +34,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Collection $enchantments
  * @property Collection $itemTypes
  * @property Collection $itemBases
+ * @property Collection $itemClasses
  * @property Collection $materialTypes
  */
 class ItemBlueprint extends Model
@@ -44,16 +45,6 @@ class ItemBlueprint extends Model
     public const STARTER_STAFF = 'Starter Staff';
 
     protected $guarded = [];
-
-    public function itemClass()
-    {
-        return $this->belongsTo(ItemClass::class);
-    }
-
-    public function itemType()
-    {
-        return $this->belongsTo(ItemType::class);
-    }
 
     public function enchantments()
     {
@@ -67,7 +58,12 @@ class ItemBlueprint extends Model
 
     public function itemBases()
     {
-        return $this->belongsToMany(ItemBase::class, 'item_base_item_blueprint', 'blueprint_id', 'base_id')->withTimestamps();
+        return $this->belongsToMany(ItemBase::class, 'item_base_item_blueprint', 'blueprint_id', 'i_base_id')->withTimestamps();
+    }
+
+    public function itemClasses()
+    {
+        return $this->belongsToMany(ItemClass::class, 'item_blueprint_item_class', 'blueprint_id', 'i_class_id')->withTimestamps();
     }
 
     public function materialTypes()

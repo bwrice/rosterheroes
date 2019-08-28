@@ -56,8 +56,9 @@ class GenerateItemFromBlueprintAction
 
     protected function getItemClass(ItemBlueprint $itemBlueprint): ItemClass
     {
-        if ($itemBlueprint->itemClass) {
-            return $itemBlueprint->itemClass;
+        $itemClasses = $itemBlueprint->itemClasses;
+        if ($itemClasses->count() > 0) {
+            return $itemClasses->random();
         }
         $itemClassName =  count($itemBlueprint->enchantments) > 0 ? ItemClass::ENCHANTED : ItemClass::GENERIC;
         /** @var ItemClass $itemClass */
