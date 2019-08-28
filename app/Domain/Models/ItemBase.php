@@ -3,6 +3,7 @@
 namespace App\Domain\Models;
 
 use App\Domain\Behaviors\ItemBase\ItemBaseBehaviorInterface;
+use App\Domain\Behaviors\ItemBase\LeggingsBehavior;
 use App\Domain\Models\HeroRank;
 use App\Domain\Models\ItemGroup;
 use App\Domain\Behaviors\ItemBase\AxeBehavior;
@@ -176,7 +177,7 @@ class ItemBase extends Model
             case self::LIGHT_ARMOR:
                 return app(LightArmorBehavior::class);
             case self::LEGGINGS:
-                return app(LightArmorBehavior::class);
+                return app(LeggingsBehavior::class);
             case self::ROBES:
                 return app(RobesBehavior::class);
             case self::GLOVES:
