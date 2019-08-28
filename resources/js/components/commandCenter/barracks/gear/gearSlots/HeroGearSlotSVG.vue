@@ -11,7 +11,7 @@
                 <!-- default slot for svg paths-->
             </slot>
         </g>
-        <g @click="emitHeroSlotClicked" fill="#fff" fill-opacity=".4" stroke="#000" stroke-width="2">
+        <g @click="emitHeroSlotClicked" fill-opacity="0">
             <slot name="click-area">
                 <!-- slot for clickable rectangle(s)-->
             </slot>
