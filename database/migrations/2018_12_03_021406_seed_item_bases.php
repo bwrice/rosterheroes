@@ -41,6 +41,7 @@ class SeedItemBases extends ModelNameSeederMigration
             ItemBase::EYE_WEAR,
             ItemBase::HEAVY_ARMOR,
             ItemBase::LIGHT_ARMOR,
+            ItemBase::LEGGINGS,
             ItemBase::ROBES,
             ItemBase::GLOVES,
             ItemBase::GAUNTLETS,
