@@ -51,7 +51,8 @@ class GenerateItemFromBlueprintTest extends TestCase
      */
     public function it_will_attach_already_defined_enchantments()
     {
-        $this->itemBlueprint->item_class_id = ItemClass::query()->where('name', ItemClass::ENCHANTED )->first()->id;
+        $itemClass = ItemClass::query()->where('name', ItemClass::ENCHANTED )->first();
+        $this->itemBlueprint->itemClasses()->attach($itemClass);
         $this->itemBlueprint->save();
 
         $enchantments = Enchantment::inRandomOrder()->take(3)->get();
@@ -80,7 +81,8 @@ class GenerateItemFromBlueprintTest extends TestCase
      */
     public function it_will_attach_enchantments_when_generating_an_enchanted_class_item_when_not_defined()
     {
-        $this->itemBlueprint->item_class_id = ItemClass::query()->where('name', ItemClass::ENCHANTED )->first()->id;
+        $itemClass = ItemClass::query()->where('name', ItemClass::ENCHANTED )->first();
+        $this->itemBlueprint->itemClasses()->attach($itemClass);
         $this->itemBlueprint->save();
 
         $this->assertEquals(0, $this->itemBlueprint->enchantments->count());
