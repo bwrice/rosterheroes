@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePriorityTypesTable extends Migration
+class CreateTargetPrioritiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreatePriorityTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('priority_types', function (Blueprint $table) {
+        Schema::create('target_priorities', function (Blueprint $table) {
             $table->integer('id');
             $table->string('name');
             $table->timestamps();
@@ -27,6 +27,6 @@ class CreatePriorityTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('priority_types');
+        Schema::dropIfExists('target_priorities');
     }
 }
