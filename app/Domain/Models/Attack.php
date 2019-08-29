@@ -19,6 +19,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  */
 class Attack extends Model
 {
+
+    protected $guarded = [];
+
     /**
      * @return BelongsToMany
      */
