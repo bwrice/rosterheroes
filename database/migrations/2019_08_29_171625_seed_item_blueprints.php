@@ -1,5 +1,10 @@
 <?php
 
+use App\Domain\Models\Enchantment;
+use App\Domain\Models\ItemBlueprint;
+use App\Domain\Models\ItemClass;
+use App\Domain\Models\ItemType;
+use App\Domain\Models\MaterialType;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -13,10 +18,10 @@ class SeedItemBlueprints extends Migration
      */
     public function up()
     {
-        $itemTypes = \App\Domain\Models\ItemType::all();
-        $itemClasses = \App\Domain\Models\ItemClass::all();
-        $materialTypes = \App\Domain\Models\MaterialType::all();
-        $enchantments = \App\Domain\Models\Enchantment::all();
+        $itemTypes = ItemType::all();
+        $itemClasses = ItemClass::all();
+        $materialTypes = MaterialType::all();
+        $enchantments = Enchantment::all();
 
         $blueprints = [
 
@@ -25,8 +30,8 @@ class SeedItemBlueprints extends Migration
              */
             [
                 'create_array' => [
-                    'name' => \App\Domain\Models\ItemBlueprint::STARTER_SWORD,
-                    'item_class' => $itemClasses->where('name', '=', \App\Domain\Models\ItemClass::ENCHANTED )->first(),
+                    'name' => ItemBlueprint::STARTER_SWORD,
+                    'item_class' => $itemClasses->where('name', '=', ItemClass::ENCHANTED)->first(),
                     'item_type' => $itemTypes->where( 'name', '=', 'Short Sword' )->first(),
                     'material_type' => $materialTypes->where( 'name', '=', 'Copper' )->first(),
                 ],
@@ -36,8 +41,8 @@ class SeedItemBlueprints extends Migration
             ],
             [
                 'create_array' => [
-                    'name' => \App\Domain\Models\ItemBlueprint::STARTER_SHIELD,
-                    'item_class' => $itemClasses->where('name', '=', \App\Domain\Models\ItemClass::ENCHANTED )->first(),
+                    'name' => ItemBlueprint::STARTER_SHIELD,
+                    'item_class' => $itemClasses->where('name', '=', ItemClass::ENCHANTED)->first(),
                     'item_type' => $itemTypes->where( 'name', '=', 'Buckler' )->first(),
                     'material_type' => $materialTypes->where( 'name', '=', 'Copper' )->first(),
                 ],
@@ -47,8 +52,8 @@ class SeedItemBlueprints extends Migration
             ],
             [
                 'create_array' => [
-                    'name' => \App\Domain\Models\ItemBlueprint::STARTER_BOW,
-                    'item_class' => $itemClasses->where('name', '=', \App\Domain\Models\ItemClass::ENCHANTED )->first(),
+                    'name' => ItemBlueprint::STARTER_BOW,
+                    'item_class' => $itemClasses->where('name', '=', ItemClass::ENCHANTED)->first(),
                     'item_type' => $itemTypes->where( 'name', '=', 'Straight Bow' )->first(),
                     'material_type' => $materialTypes->where( 'name', '=', 'Yew' )->first(),
                 ],
@@ -59,8 +64,8 @@ class SeedItemBlueprints extends Migration
             ],
             [
                 'create_array' => [
-                    'name' => \App\Domain\Models\ItemBlueprint::STARTER_STAFF,
-                    'item_class' => $itemClasses->where('name', '=', \App\Domain\Models\ItemClass::ENCHANTED )->first(),
+                    'name' => ItemBlueprint::STARTER_STAFF,
+                    'item_class' => $itemClasses->where('name', '=', ItemClass::ENCHANTED)->first(),
                     'item_type' => $itemTypes->where( 'name', '=', 'Lesser Staff' )->first(),
                     'material_type' => $materialTypes->where( 'name', '=', 'Yew' )->first(),
                 ],
@@ -73,8 +78,8 @@ class SeedItemBlueprints extends Migration
 
         foreach( $blueprints as $blueprint ) {
 
-            /** @var \App\Domain\Models\ItemBlueprint $blueprintCreated */
-            $blueprintCreated = \App\Domain\Models\ItemBlueprint::create([
+            /** @var ItemBlueprint $blueprintCreated */
+            $blueprintCreated = ItemBlueprint::create([
                 'item_name' => $blueprint['create_array']['name']
             ]);
 

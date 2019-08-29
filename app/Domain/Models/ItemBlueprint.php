@@ -13,6 +13,7 @@ use App\Domain\Models\ItemType;
 use App\Domain\Models\MaterialType;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * Class ItemBlueprint
@@ -46,26 +47,41 @@ class ItemBlueprint extends Model
 
     protected $guarded = [];
 
+    /**
+     * @return BelongsToMany
+     */
     public function enchantments()
     {
         return $this->belongsToMany(Enchantment::class, 'enchantment_item_blueprint', 'blueprint_id', 'ench_id')->withTimestamps();
     }
 
+    /**
+     * @return BelongsToMany
+     */
     public function itemTypes()
     {
         return $this->belongsToMany(ItemType::class, 'item_blueprint_item_type', 'blueprint_id', 'i_type_id')->withTimestamps();
     }
 
+    /**
+     * @return BelongsToMany
+     */
     public function itemBases()
     {
         return $this->belongsToMany(ItemBase::class, 'item_base_item_blueprint', 'blueprint_id', 'i_base_id')->withTimestamps();
     }
 
+    /**
+     * @return BelongsToMany
+     */
     public function itemClasses()
     {
         return $this->belongsToMany(ItemClass::class, 'item_blueprint_item_class', 'blueprint_id', 'i_class_id')->withTimestamps();
     }
 
+    /**
+     * @return BelongsToMany
+     */
     public function materialTypes()
     {
         return $this->belongsToMany(MaterialType::class, 'item_blueprint_material_type', 'blueprint_id', 'm_type_id')->withTimestamps();
