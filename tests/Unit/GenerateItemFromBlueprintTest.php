@@ -167,9 +167,9 @@ class GenerateItemFromBlueprintTest extends TestCase
             ItemBase::CAP => [
                 'item_base' => ItemBase::CAP,
             ],
-            ItemBase::EYE_WEAR => [
-                'item_base' => ItemBase::EYE_WEAR,
-            ],
+//            ItemBase::EYE_WEAR => [
+//                'item_base' => ItemBase::EYE_WEAR,
+//            ],
             ItemBase::HEAVY_ARMOR => [
                 'item_base' => ItemBase::HEAVY_ARMOR,
             ],

@@ -79,7 +79,7 @@ class ItemBase extends Model
     public const PSIONIC_SHIELD = 'psionic-shield';
     public const HELMET = 'helmet';
     public const CAP = 'cap';
-    public const EYE_WEAR = 'eye-wear';
+//    public const EYE_WEAR = 'eye-wear';
     public const HEAVY_ARMOR = 'heavy-armor';
     public const LIGHT_ARMOR = 'light-armor';
     public const LEGGINGS = 'leggings';
@@ -170,8 +170,8 @@ class ItemBase extends Model
                 return app(HelmetBehavior::class);
             case self::CAP:
                 return app(CapBehavior::class);
-            case self::EYE_WEAR:
-                return app(EyeWearBehavior::class);
+//            case self::EYE_WEAR:
+//                return app(EyeWearBehavior::class);
             case self::HEAVY_ARMOR:
                 return app(HeavyArmorBehavior::class);
             case self::LIGHT_ARMOR:

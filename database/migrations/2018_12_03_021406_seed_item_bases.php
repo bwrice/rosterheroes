@@ -38,7 +38,6 @@ class SeedItemBases extends ModelNameSeederMigration
             ItemBase::PSIONIC_SHIELD,
             ItemBase::HELMET,
             ItemBase::CAP,
-            ItemBase::EYE_WEAR,
             ItemBase::HEAVY_ARMOR,
             ItemBase::LIGHT_ARMOR,
             ItemBase::LEGGINGS,

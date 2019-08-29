@@ -15,6 +15,7 @@ use App\Domain\Models\SlotType;
 
 class EyeWearBehavior extends ItemBaseBehavior
 {
+    // TODO: Implement eye-wear
     public function __construct(EyeWearGroup $eyeWearGroup)
     {
         parent::__construct($eyeWearGroup);
