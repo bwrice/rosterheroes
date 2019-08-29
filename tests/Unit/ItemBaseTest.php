@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Domain\Behaviors\ItemBase\ItemBaseBehavior;
+use App\Domain\Behaviors\ItemBases\ItemBaseBehavior;
 use App\Domain\Models\ItemBase;
 use App\Domain\Models\SlotType;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;

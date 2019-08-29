@@ -3,7 +3,7 @@
 namespace App\Domain\Models;
 
 use App\Domain\Collections\EnchantmentCollection;
-use App\Domain\Behaviors\ItemBase\ItemBaseBehaviorInterface;
+use App\Domain\Behaviors\ItemBases\ItemBaseBehaviorInterface;
 use App\Domain\Models\Slot;
 use App\Domain\Collections\SlotCollection;
 use App\Domain\Interfaces\Slottable;

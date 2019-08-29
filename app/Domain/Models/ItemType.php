@@ -2,7 +2,7 @@
 
 namespace App\Domain\Models;
 
-use App\Domain\Behaviors\ItemBase\ItemBaseBehaviorInterface;
+use App\Domain\Behaviors\ItemBases\ItemBaseBehaviorInterface;
 use App\Domain\Models\ItemBase;
 use App\Domain\Models\MaterialType;
 use Illuminate\Database\Eloquent\Model;
