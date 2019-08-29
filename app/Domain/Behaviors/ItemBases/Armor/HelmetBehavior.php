@@ -3,15 +3,16 @@
  * Created by PhpStorm.
  * User: bwrice
  * Date: 12/18/18
- * Time: 9:26 PM
+ * Time: 9:25 PM
  */
 
-namespace App\Domain\Behaviors\ItemBases;
+namespace App\Domain\Behaviors\ItemBases\Armor;
 
 
+use App\Domain\Behaviors\ItemBases\Armor\ArmorBehavior;
 use App\Domain\Models\SlotType;
 
-class BootsBehavior extends ArmorBehavior
+class HelmetBehavior extends ArmorBehavior
 {
 
     public function getSlotsCount(): int
@@ -22,7 +23,7 @@ class BootsBehavior extends ArmorBehavior
     public function getSlotTypeNames(): array
     {
         return [
-            SlotType::FEET
+            SlotType::HEAD
         ];
     }
 }

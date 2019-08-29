@@ -3,15 +3,16 @@
  * Created by PhpStorm.
  * User: bwrice
  * Date: 12/18/18
- * Time: 9:26 PM
+ * Time: 9:25 PM
  */
 
-namespace App\Domain\Behaviors\ItemBases;
+namespace App\Domain\Behaviors\ItemBases\Armor;
 
 
+use App\Domain\Behaviors\ItemBases\Armor\ArmorBehavior;
 use App\Domain\Models\SlotType;
 
-class LightArmorBehavior extends ArmorBehavior
+class HeavyArmorBehavior extends ArmorBehavior
 {
 
     public function getSlotsCount(): int

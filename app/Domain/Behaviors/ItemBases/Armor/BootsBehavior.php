@@ -6,12 +6,13 @@
  * Time: 9:26 PM
  */
 
-namespace App\Domain\Behaviors\ItemBases;
+namespace App\Domain\Behaviors\ItemBases\Armor;
 
 
+use App\Domain\Behaviors\ItemBases\Armor\ArmorBehavior;
 use App\Domain\Models\SlotType;
 
-class GauntletsBehavior extends ArmorBehavior
+class BootsBehavior extends ArmorBehavior
 {
 
     public function getSlotsCount(): int
@@ -22,7 +23,7 @@ class GauntletsBehavior extends ArmorBehavior
     public function getSlotTypeNames(): array
     {
         return [
-            SlotType::HANDS
+            SlotType::FEET
         ];
     }
 }

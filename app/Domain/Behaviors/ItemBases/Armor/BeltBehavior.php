@@ -6,9 +6,10 @@
  * Time: 9:27 PM
  */
 
-namespace App\Domain\Behaviors\ItemBases;
+namespace App\Domain\Behaviors\ItemBases\Armor;
 
 
+use App\Domain\Behaviors\ItemBases\Armor\ArmorBehavior;
 use App\Domain\Models\SlotType;
 
 class BeltBehavior extends ArmorBehavior
