@@ -6,10 +6,12 @@
  * Time: 9:23 PM
  */
 
-namespace App\Domain\Behaviors\ItemBases;
+namespace App\Domain\Behaviors\ItemBases\Weapons;
 
 
-class PsionicTwoHandBehavior extends WeaponBehavior
+use App\Domain\Behaviors\ItemBases\Weapons\WeaponBehavior;
+
+class OrbBehavior extends WeaponBehavior
 {
 
     public function getSlotsCount(): int

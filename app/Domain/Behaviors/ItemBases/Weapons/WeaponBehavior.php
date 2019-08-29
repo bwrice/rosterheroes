@@ -1,9 +1,10 @@
 <?php
 
 
-namespace App\Domain\Behaviors\ItemBases;
+namespace App\Domain\Behaviors\ItemBases\Weapons;
 
 
+use App\Domain\Behaviors\ItemBases\ItemBaseBehavior;
 use App\Domain\Behaviors\ItemGroup\WeaponGroup;
 use App\Domain\Models\SlotType;
 

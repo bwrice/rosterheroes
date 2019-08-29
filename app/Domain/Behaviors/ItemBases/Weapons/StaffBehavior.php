@@ -6,8 +6,10 @@
  * Time: 9:23 PM
  */
 
-namespace App\Domain\Behaviors\ItemBases;
+namespace App\Domain\Behaviors\ItemBases\Weapons;
 
+
+use App\Domain\Behaviors\ItemBases\Weapons\WeaponBehavior;
 
 class StaffBehavior extends WeaponBehavior
 {

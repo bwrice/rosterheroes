@@ -6,10 +6,12 @@
  * Time: 9:19 PM
  */
 
-namespace App\Domain\Behaviors\ItemBases;
+namespace App\Domain\Behaviors\ItemBases\Weapons;
 
 
-class SwordBehavior extends WeaponBehavior
+use App\Domain\Behaviors\ItemBases\Weapons\WeaponBehavior;
+
+class DaggerBehavior extends WeaponBehavior
 {
 
     public function getSlotsCount(): int
