@@ -19,7 +19,8 @@ class CreateAttacksTable extends Migration
             $table->integer('damage_type_id')->unsigned();
             $table->integer('target_range_id')->unsigned();
             $table->integer('target_priority_id')->unsigned();
-            $table->float('speed');
+            $table->float('speed_rating');
+            $table->float('damage_rating');
             $table->json('resource_costs');
             $table->json('requirements');
             $table->timestamps();
@@ -28,7 +29,7 @@ class CreateAttacksTable extends Migration
         Schema::table('attacks', function (Blueprint $table) {
             $table->foreign('damage_type_id')->references('id')->on('damage_types');
             $table->foreign('target_range_id')->references('id')->on('target_ranges');
-            $table->foreign('priority_type_id')->references('id')->on('target_priorities');
+            $table->foreign('target_priority_id')->references('id')->on('target_priorities');
         });
     }
 

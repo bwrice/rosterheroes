@@ -13,7 +13,7 @@ class CreateAttacksToItemsPivot extends Migration
      */
     public function up()
     {
-        Schema::table('attack_item', function (Blueprint $table) {
+        Schema::create('attack_item', function (Blueprint $table) {
             $table->integer('attack_id')->unsigned();
             $table->bigInteger('item_id')->unsigned();
             $table->primary(['attack_id', 'item_id']);
