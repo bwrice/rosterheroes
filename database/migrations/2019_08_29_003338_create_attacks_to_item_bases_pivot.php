@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAttacksToItemsPivot extends Migration
+class CreateAttacksToItemBasesPivot extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,16 @@ class CreateAttacksToItemsPivot extends Migration
      */
     public function up()
     {
-        Schema::table('attack_item', function (Blueprint $table) {
+        Schema::table('attack_item_base', function (Blueprint $table) {
             $table->integer('attack_id')->unsigned();
-            $table->bigInteger('item_id')->unsigned();
-            $table->primary(['attack_id', 'item_id']);
+            $table->bigInteger('item_base_id')->unsigned();
+            $table->primary(['attack_id', 'item_base_id']);
             $table->timestamps();
         });
 
-        Schema::table('attack_item', function (Blueprint $table) {
+        Schema::table('attack_item_base', function (Blueprint $table) {
             $table->foreign('attack_id')->references('id')->on('attacks');
-            $table->foreign('item_id')->references('id')->on('items');
+            $table->foreign('item_base_id')->references('item_base_id')->on('item_bases');
         });
     }
 
