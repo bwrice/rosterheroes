@@ -3,15 +3,16 @@
  * Created by PhpStorm.
  * User: bwrice
  * Date: 12/18/18
- * Time: 9:27 PM
+ * Time: 9:26 PM
  */
 
-namespace App\Domain\Behaviors\ItemBases;
+namespace App\Domain\Behaviors\ItemBases\Clothing;
 
 
+use App\Domain\Behaviors\ItemBases\Clothing\ClothingBehavior;
 use App\Domain\Models\SlotType;
 
-class SashBehavior extends ClothingBehavior
+class GlovesBehavior extends ClothingBehavior
 {
 
     public function getSlotsCount(): int
@@ -22,7 +23,7 @@ class SashBehavior extends ClothingBehavior
     public function getSlotTypeNames(): array
     {
         return [
-            SlotType::WAIST
+            SlotType::HANDS
         ];
     }
 }

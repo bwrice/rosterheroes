@@ -6,23 +6,17 @@
  * Time: 9:25 PM
  */
 
-namespace App\Domain\Behaviors\ItemBases;
+namespace App\Domain\Behaviors\ItemBases\Shields;
 
 
+use App\Domain\Behaviors\ItemBases\Shields\ShieldGroupBehavior;
 use App\Domain\Models\SlotType;
 
-class CapBehavior extends ClothingBehavior
+class PsionicShieldBehavior extends ShieldGroupBehavior
 {
 
     public function getSlotsCount(): int
     {
         return 1;
-    }
-
-    public function getSlotTypeNames(): array
-    {
-        return [
-            SlotType::HEAD
-        ];
     }
 }

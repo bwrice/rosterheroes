@@ -1,8 +1,9 @@
 <?php
 
 
-namespace App\Domain\Behaviors\ItemBases;
+namespace App\Domain\Behaviors\ItemBases\Shields;
 
+use App\Domain\Behaviors\ItemBases\ItemBaseBehavior;
 use App\Domain\Behaviors\ItemGroup\ShieldGroup;
 use App\Domain\Models\SlotType;
 

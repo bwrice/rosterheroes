@@ -6,12 +6,13 @@
  * Time: 9:26 PM
  */
 
-namespace App\Domain\Behaviors\ItemBases;
+namespace App\Domain\Behaviors\ItemBases\Clothing;
 
 
+use App\Domain\Behaviors\ItemBases\Clothing\ClothingBehavior;
 use App\Domain\Models\SlotType;
 
-class GlovesBehavior extends ClothingBehavior
+class ShoesBehavior extends ClothingBehavior
 {
 
     public function getSlotsCount(): int
@@ -22,7 +23,7 @@ class GlovesBehavior extends ClothingBehavior
     public function getSlotTypeNames(): array
     {
         return [
-            SlotType::HANDS
+            SlotType::FEET
         ];
     }
 }

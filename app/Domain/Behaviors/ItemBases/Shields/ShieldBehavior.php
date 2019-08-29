@@ -6,8 +6,10 @@
  * Time: 9:24 PM
  */
 
-namespace App\Domain\Behaviors\ItemBases;
+namespace App\Domain\Behaviors\ItemBases\Shields;
 
+
+use App\Domain\Behaviors\ItemBases\Shields\ShieldGroupBehavior;
 
 class ShieldBehavior extends ShieldGroupBehavior
 {
