@@ -38,6 +38,11 @@ class Item extends EventSourcedModel implements Slottable
         return $this->belongsToMany(Enchantment::class)->withTimestamps();
     }
 
+    public function attacks()
+    {
+        return $this->belongsToMany(Attack::class)->withTimestamps();
+    }
+
     public function itemBlueprint()
     {
         return $this->belongsTo(ItemBlueprint::class);
