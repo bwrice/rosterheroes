@@ -6,9 +6,10 @@
  * Time: 9:28 PM
  */
 
-namespace App\Domain\Behaviors\ItemBases;
+namespace App\Domain\Behaviors\ItemBases\Jewelry;
 
 
+use App\Domain\Behaviors\ItemBases\Jewelry\JewelryBehavior;
 use App\Domain\Models\SlotType;
 
 class BraceletBehavior extends JewelryBehavior

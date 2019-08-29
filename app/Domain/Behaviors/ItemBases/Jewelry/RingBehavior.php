@@ -6,12 +6,13 @@
  * Time: 9:30 PM
  */
 
-namespace App\Domain\Behaviors\ItemBases;
+namespace App\Domain\Behaviors\ItemBases\Jewelry;
 
 
+use App\Domain\Behaviors\ItemBases\Jewelry\JewelryBehavior;
 use App\Domain\Models\SlotType;
 
-class CrownBehavior extends JewelryBehavior
+class RingBehavior extends JewelryBehavior
 {
 
     public function getSlotsCount(): int
@@ -22,7 +23,8 @@ class CrownBehavior extends JewelryBehavior
     public function getSlotTypeNames(): array
     {
         return [
-            SlotType::HEAD
+            SlotType::LEFT_RING,
+            SlotType::RIGHT_RING
         ];
     }
 }
