@@ -14,7 +14,7 @@ class CreateTargetPrioritiesTable extends Migration
     public function up()
     {
         Schema::create('target_priorities', function (Blueprint $table) {
-            $table->integer('id');
+            $table->increments('id');
             $table->string('name');
             $table->timestamps();
         });
