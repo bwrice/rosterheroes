@@ -9,13 +9,15 @@
 namespace App\Domain\Behaviors\ItemBases\Weapons;
 
 
+use App\Domain\Behaviors\ItemBases\Weapons\ArmBehaviors\TwoArmBehavior;
 use App\Domain\Behaviors\ItemBases\Weapons\WeaponBehavior;
+use App\Domain\Behaviors\ItemGroup\WeaponGroup;
 
 class StaffBehavior extends WeaponBehavior
 {
 
-    public function getSlotsCount(): int
+    public function __construct(WeaponGroup $weaponGroup, TwoArmBehavior $armBehavior)
     {
-        return 2;
+        parent::__construct($weaponGroup, $armBehavior);
     }
 }

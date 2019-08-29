@@ -9,13 +9,15 @@
 namespace App\Domain\Behaviors\ItemBases\Weapons;
 
 
+use App\Domain\Behaviors\ItemBases\Weapons\ArmBehaviors\SingleArmBehavior;
+use App\Domain\Behaviors\ItemBases\Weapons\ArmBehaviors\TwoArmBehavior;
 use App\Domain\Behaviors\ItemBases\Weapons\WeaponBehavior;
+use App\Domain\Behaviors\ItemGroup\WeaponGroup;
 
 class ThrowingWeaponBehavior extends WeaponBehavior
 {
-
-    public function getSlotsCount(): int
+    public function __construct(WeaponGroup $weaponGroup, SingleArmBehavior $armBehavior)
     {
-        return 1;
+        parent::__construct($weaponGroup, $armBehavior);
     }
 }
