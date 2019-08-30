@@ -58,6 +58,14 @@ class ItemBlueprint extends Model
     /**
      * @return BelongsToMany
      */
+    public function attacks()
+    {
+        return $this->belongsToMany(Attack::class)->withTimestamps();
+    }
+
+    /**
+     * @return BelongsToMany
+     */
     public function itemTypes()
     {
         return $this->belongsToMany(ItemType::class, 'item_blueprint_item_type', 'blueprint_id', 'i_type_id')->withTimestamps();
