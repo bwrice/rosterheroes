@@ -15,6 +15,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property int $id
  * @property string $name
  * @property int $grade
+ * @property float $speed_rating
+ * @property float $damage_rating
+ *
+ * @property DamageType $damageType
+ * @property TargetRange $targetRange
+ * @property TargetPriority $targetPriority
  *
  * @property ItemCollection $items
  */
@@ -50,6 +56,21 @@ class Attack extends Model
     public function itemBases()
     {
         return $this->belongsToMany(ItemBase::class)->withTimestamps();
+    }
+
+    public function damageType()
+    {
+        return $this->belongsTo(DamageType::class);
+    }
+
+    public function targetRange()
+    {
+        return $this->belongsTo(TargetRange::class);
+    }
+
+    public function targetPriority()
+    {
+        return $this->belongsTo(TargetPriority::class);
     }
 
     public function newCollection(array $models = [])
