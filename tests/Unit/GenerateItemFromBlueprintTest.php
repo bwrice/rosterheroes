@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Domain\Actions\GenerateItemFromBlueprintAction;
+use App\Domain\Models\Attack;
 use App\Domain\Models\Enchantment;
 use App\Domain\Models\Item;
 use App\Domain\Models\ItemBlueprint;
@@ -212,44 +213,23 @@ class GenerateItemFromBlueprintTest extends TestCase
         ];
     }
 
-    //TODO write test where item_base will generate the correct item type for item
-
     /**
      * @test
      */
-    public function it_can_create_a_weapon_with_attacks()
+    public function it_will_create_an_item_with_attacks_that_matches_the_blueprints_attacks()
     {
-        $this->assertTrue(true, "TODO attacks for item blueprint generation");
-        //TODO
-//        $itemType = ItemType::where('name', 'short sword')->first();
-//
-//        $this->assertNotNull( $itemType );
-//
-//        /** @var Collection $attacks */
-//        $attacks = Attack::inRandomOrder()->take(2)->get();
-//
-//        $this->assertEquals( 2, $attacks->count() );
-//
-//        $attackIDs = $attacks->pluck('id')->toArray();
-//
-//        $blueprint = factory(ItemBlueprint::class)->create([
-//            'item_type_id' => $itemType,
-//        ]);
-//
-//        /** @var ItemBlueprint $blueprint */
-//        $blueprint->attacks()->attach($attackIDs);
-//
-//        /** @var Item $item */
-//        $item = $blueprint->generate();
-//
-//        $this->assertDatabaseHas('items', [
-//            'id' => $item->id
-//        ]);
-//
-//        $item = $item->fresh();
-//        $actualAttacks = $item->attacks()->get();
-//
-//        $this->assertEquals( $attackIDs, $actualAttacks->pluck('id')->toArray() );
+
+        $this->itemBlueprint->itemTypes()->sync([]);
+        $swordBase = ItemBase::query()->where('name', '=', ItemBase::SWORD)->first();
+        $this->itemBlueprint->itemBases()->save($swordBase);
+        $this->itemBlueprint->save();
+
+        $attacks = Attack::query()->whereIn('name', Attack::START_SWORD_ATTACKS);
+        $this->assertGreaterThan(0, $attacks->count());
+
+        $item = $this->domainAction->execute($this->itemBlueprint->fresh());
+        $this->assertEquals($attacks->count(), $item->attacks->count());
+        $this->assertEquals($attacks->pluck('id')->values()->toArray(), $item->attacks->pluck('id')->values()->toArray());
     }
 
 }
