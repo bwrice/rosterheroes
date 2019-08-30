@@ -20,7 +20,7 @@ class SeedAttacks extends Migration
     {
         $attacks = [
             [
-                'name' => 'Cut',
+                'name' => Attack::BASIC_BOW_ATTACK_NAME,
                 'damage_type' => DamageType::SINGLE_TARGET,
                 'target_range' => TargetRange::MELEE,
                 'target_priority' => TargetPriority::ANY,
@@ -34,7 +34,7 @@ class SeedAttacks extends Migration
                 'requirements' => []
             ],
             [
-                'name' => 'Arrow',
+                'name' => Attack::BASIC_BOW_ATTACK_NAME,
                 'damage_type' => DamageType::SINGLE_TARGET,
                 'target_range' => TargetRange::MID_RANGE,
                 'target_priority' => TargetPriority::ANY,
@@ -47,7 +47,7 @@ class SeedAttacks extends Migration
                 'requirements' => []
             ],
             [
-                'name' => 'Magic Bolt',
+                'name' => Attack::BASIC_MAGIC_ATTACK_NAME,
                 'damage_type' => DamageType::SINGLE_TARGET,
                 'target_range' => TargetRange::MID_RANGE,
                 'target_priority' => TargetPriority::ANY,

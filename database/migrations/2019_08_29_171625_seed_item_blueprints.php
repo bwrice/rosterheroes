@@ -1,5 +1,6 @@
 <?php
 
+use App\Domain\Models\Attack;
 use App\Domain\Models\Enchantment;
 use App\Domain\Models\ItemBlueprint;
 use App\Domain\Models\ItemClass;
@@ -37,7 +38,10 @@ class SeedItemBlueprints extends Migration
                 ],
                 'enchantments' => [
                     'Level 1 Strength'
-                ]
+                ],
+                'attacks' => Attack::query()
+                    ->whereIn('name', Attack::START_SWORD_ATTACKS)
+                    ->get()
             ],
             [
                 'create_array' => [
@@ -48,6 +52,9 @@ class SeedItemBlueprints extends Migration
                 ],
                 'enchantments' => [
                     'Level 1 Valor'
+                ],
+                'attacks' => [
+                    // No attacks for shield
                 ]
             ],
             [
@@ -60,7 +67,10 @@ class SeedItemBlueprints extends Migration
                 'enchantments' => [
                     'Level 1 Agility',
                     'Level 1 Focus'
-                ]
+                ],
+                'attacks' => Attack::query()
+                    ->whereIn('name', Attack::STARTER_BOW_ATTACKS)
+                    ->get()
             ],
             [
                 'create_array' => [
@@ -72,11 +82,14 @@ class SeedItemBlueprints extends Migration
                 'enchantments' => [
                     'Level 1 Aptitude',
                     'Level 1 Intelligence'
-                ]
+                ],
+                'attacks' => Attack::query()
+                    ->whereIn('name', Attack::STARTER_STAFF_ATTACKS)
+                    ->get()
             ]
         ];
 
-        foreach( $blueprints as $blueprint ) {
+        foreach($blueprints as $blueprint) {
 
             /** @var ItemBlueprint $blueprintCreated */
             $blueprintCreated = ItemBlueprint::create([
