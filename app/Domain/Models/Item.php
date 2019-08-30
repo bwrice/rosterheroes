@@ -2,6 +2,7 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Collections\AttackCollection;
 use App\Domain\Collections\EnchantmentCollection;
 use App\Domain\Behaviors\ItemBases\ItemBaseBehaviorInterface;
 use App\Domain\Models\Slot;
@@ -9,6 +10,7 @@ use App\Domain\Collections\SlotCollection;
 use App\Domain\Interfaces\Slottable;
 use App\StorableEvents\ItemCreated;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Ramsey\Uuid\Uuid;
 
 /**
@@ -26,6 +28,7 @@ use Ramsey\Uuid\Uuid;
  *
  * @property SlotCollection $slots
  * @property EnchantmentCollection $enchantments
+ * @property AttackCollection $attacks
  */
 class Item extends EventSourcedModel implements Slottable
 {
@@ -33,11 +36,17 @@ class Item extends EventSourcedModel implements Slottable
 
     protected $guarded = [];
 
+    /**
+     * @return BelongsToMany
+     */
     public function enchantments()
     {
         return $this->belongsToMany(Enchantment::class)->withTimestamps();
     }
 
+    /**
+     * @return BelongsToMany
+     */
     public function attacks()
     {
         return $this->belongsToMany(Attack::class)->withTimestamps();

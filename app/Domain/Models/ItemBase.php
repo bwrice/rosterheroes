@@ -4,6 +4,7 @@ namespace App\Domain\Models;
 
 use App\Domain\Behaviors\ItemBases\ItemBaseBehaviorInterface;
 use App\Domain\Behaviors\ItemBases\Armor\LeggingsBehavior;
+use App\Domain\Collections\AttackCollection;
 use App\Domain\Models\HeroRank;
 use App\Domain\Models\ItemGroup;
 use App\Domain\Behaviors\ItemBases\Weapons\AxeBehavior;
@@ -54,9 +55,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property string $name
  *
- * @property ItemGroup $itemGroup
- *
  * @property Collection $slotTypes
+ * @property AttackCollection $attacks
  */
 class ItemBase extends Model
 {
@@ -106,6 +106,11 @@ class ItemBase extends Model
     public function measurableTypes()
     {
         return $this->belongsToMany(MeasurableType::class, 'item_base_measurable_type', 'item_base_id', 'type_id')->withTimestamps();
+    }
+
+    public function attacks()
+    {
+        return $this->belongsToMany(Attack::class);
     }
 
     public function itemTypes()

@@ -3,14 +3,7 @@
 namespace App\Domain\Models;
 
 use App\Domain\Actions\GenerateItemFromBlueprintAction;
-use App\Domain\Models\Enchantment;
-use App\Domain\Models\Item;
-use App\Events\ItemBlueprintCreated;
-use App\Domain\Models\ItemClass;
-use App\Domain\Models\ItemGroup;
-use App\Domain\Models\ItemBase;
-use App\Domain\Models\ItemType;
-use App\Domain\Models\MaterialType;
+use App\Domain\Collections\AttackCollection;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -23,10 +16,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property string|null $item_name
  * @property int|null $attack_power
  * @property int|null $enchantment_power
- * @property int|null $item_class_id
- * @property int|null $item_type_id
- * @property int|null $item_base_id
- * @property int|null $item_group_id
  * @property string|null $description
  *
  * @property ItemClass|null $itemClass
@@ -37,6 +26,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property Collection $itemBases
  * @property Collection $itemClasses
  * @property Collection $materialTypes
+ * @property AttackCollection $attacks
  */
 class ItemBlueprint extends Model
 {

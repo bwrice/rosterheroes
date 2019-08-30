@@ -103,6 +103,7 @@ class SeedItemBlueprints extends Migration
             $enchantmentsToAttach = $enchantments->whereIn('name', $blueprint['enchantments']);
 
             $blueprintCreated->enchantments()->saveMany($enchantmentsToAttach);
+            $blueprintCreated->attacks()->saveMany($blueprint['attacks']);
         }
     }
 

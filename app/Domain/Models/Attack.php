@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  *
  * @property int $id
  * @property string $name
+ * @property int $grade
  *
  * @property ItemCollection $items
  */

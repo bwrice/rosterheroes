@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Model;
  * Class Enchantment
  * @package App\Domain\Models
  *
+ * @property int $id
+ *
  * @property MeasurableBoostCollection $measurableBoosts
  */
 class Enchantment extends Model
