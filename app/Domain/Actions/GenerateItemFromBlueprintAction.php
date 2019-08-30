@@ -10,6 +10,8 @@ namespace App\Domain\Actions;
 
 
 use App\Aggregates\ItemAggregate;
+use App\Domain\Collections\AttackCollection;
+use App\Domain\Models\Attack;
 use App\Domain\Models\Enchantment;
 use App\Domain\Models\Item;
 use App\Domain\Models\ItemBase;
@@ -47,8 +49,11 @@ class GenerateItemFromBlueprintAction
             $itemAggregate->attachEnchantment($enchantment->id);
         });
 
-        // TODO attacks
-        //$this->attachAttacks();
+        $attacks = $this->getAttacks($itemBlueprint, $itemType);
+
+        $attacks->each(function (Attack $attack) use ($itemAggregate) {
+            $itemAggregate->attachAttack($attack->id);
+        });
 
         $itemAggregate->persist(); // persist enchantment and attack events
         return $item->fresh();
@@ -167,26 +172,29 @@ class GenerateItemFromBlueprintAction
     }
 
     /**
+     * @param ItemBlueprint $blueprint
      * @param ItemType $itemType
-     * @param $attacksPower
-     * @return Collection
+     * @return AttackCollection
      */
-    protected function getAttacks(ItemType $itemType, $attacksPower)
+    protected function getAttacks(ItemBlueprint $blueprint, ItemType $itemType)
     {
-        //TODO what to do if itemType doesn't support attacks
-        $attacksPower = $attacksPower > 0 ? $attacksPower : $itemType->grade;
+        $blueprintAttacks = $blueprint->attacks;
+        if ($blueprintAttacks->isNotEmpty()) {
+            return $blueprintAttacks;
+        }
+        $attackPower = $blueprint->attack_power;
+        $attackPower = $attackPower > 0 ? $attackPower : $itemType->grade;
 
-        $attacks = $itemType->attacks()->get()->shuffle();
+        $attacksPool = $itemType->itemBase->attacks;
+        $attacksToAttach = new AttackCollection();
 
-        $attacksToAttach = collect();
+        while ($attackPower > 0 && $attacksPool->isNotEmpty()) {
 
-        while ($attacksPower > 0 && $attacks->count() > 0) {
-
-            $attack = $attacks->shift();
+            /** @var Attack $attack */
+            $attack = $attacksPool->shift();
             $attacksToAttach->push($attack);
 
-            //TODO figure out attack grade?
-            $attacksPower -= $attack->grade;
+            $attackPower -= $attack->grade;
         }
 
         return $attacksToAttach;
