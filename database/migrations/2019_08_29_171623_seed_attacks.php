@@ -20,10 +20,11 @@ class SeedAttacks extends Migration
     {
         $attacks = [
             [
-                'name' => Attack::BASIC_BOW_ATTACK_NAME,
+                'name' => Attack::BASIC_BLADE_ATTACK_NAME,
                 'damage_type' => DamageType::SINGLE_TARGET,
                 'target_range' => TargetRange::MELEE,
                 'target_priority' => TargetPriority::ANY,
+                'grade' => 5,
                 'speed_rating' => 100/12,
                 'damage_rating' => 5.5,
                 'item_bases' => [
@@ -38,6 +39,7 @@ class SeedAttacks extends Migration
                 'damage_type' => DamageType::SINGLE_TARGET,
                 'target_range' => TargetRange::MID_RANGE,
                 'target_priority' => TargetPriority::ANY,
+                'grade' => 5,
                 'speed_rating' => 100/23,
                 'damage_rating' => 10,
                 'item_bases' => [
@@ -51,6 +53,7 @@ class SeedAttacks extends Migration
                 'damage_type' => DamageType::SINGLE_TARGET,
                 'target_range' => TargetRange::MID_RANGE,
                 'target_priority' => TargetPriority::ANY,
+                'grade' => 5,
                 'speed_rating' => 100/18,
                 'damage_rating' => 8,
                 'item_bases' => [
