@@ -2,8 +2,15 @@
 
 namespace App\Http\Resources;
 
+use App\Domain\Models\TargetRange;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * Class TargetRangeResource
+ * @package App\Http\Resources
+ *
+ * @mixin TargetRange
+ */
 class TargetRangeResource extends JsonResource
 {
     /**
@@ -14,6 +21,8 @@ class TargetRangeResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'name' => $this->name
+        ];
     }
 }

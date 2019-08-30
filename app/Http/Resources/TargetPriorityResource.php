@@ -2,8 +2,15 @@
 
 namespace App\Http\Resources;
 
+use App\Domain\Models\TargetPriority;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * Class TargetPriorityResource
+ * @package App\Http\Resources
+ *
+ * @mixin TargetPriority
+ */
 class TargetPriorityResource extends JsonResource
 {
     /**
@@ -14,6 +21,8 @@ class TargetPriorityResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'name' => $this->name
+        ];
     }
 }

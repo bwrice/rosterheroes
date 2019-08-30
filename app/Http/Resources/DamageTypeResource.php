@@ -2,8 +2,15 @@
 
 namespace App\Http\Resources;
 
+use App\Domain\Models\DamageType;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * Class DamageTypeResource
+ * @package App\Http\Resources
+ *
+ * @mixin DamageType
+ */
 class DamageTypeResource extends JsonResource
 {
     /**
@@ -14,6 +21,8 @@ class DamageTypeResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'name' => $this->name
+        ];
     }
 }

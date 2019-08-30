@@ -4,6 +4,12 @@ namespace App\Domain\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class TargetRange
+ * @package App\Domain\Models
+ *
+ * @property string $name
+ */
 class TargetRange extends Model
 {
     public const MELEE = 'melee';
