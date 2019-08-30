@@ -2,6 +2,7 @@
 
 namespace App\Projectors;
 
+use App\StorableEvents\AttackAttachedToItem;
 use App\StorableEvents\ItemCreated;
 use App\Domain\Models\Item;
 use App\StorableEvents\EnchantmentAttachedToItem;
@@ -28,5 +29,11 @@ class ItemProjector implements Projector
     {
         $item = Item::findUuid($aggregateUuid);
         $item->enchantments()->attach($event->enchantmentID);
+    }
+
+    public function onAttackAttachedToItem(AttackAttachedToItem $event, string $aggregateUuid)
+    {
+        $item = Item::findUuid($aggregateUuid);
+        $item->attacks()->attach($event->attackID);
     }
 }
