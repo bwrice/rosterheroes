@@ -4,7 +4,7 @@
 namespace App\Domain\Behaviors\TargetRanges;
 
 
-class TargetRangeBehavior implements TargetRangeBehaviorInterface
+abstract class TargetRangeBehavior implements TargetRangeBehaviorInterface
 {
 
 }
