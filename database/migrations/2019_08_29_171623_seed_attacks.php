@@ -78,6 +78,7 @@ class SeedAttacks extends Migration
                 'damage_type_id' => $damageTypes->firstWhere('name', '=', $attackData['damage_type'])->id,
                 'target_range_id' => $targetRanges->firstWhere('name', '=', $attackData['target_range'])->id,
                 'target_priority_id' => $targetPriorities->firstWhere('name', '=', $attackData['target_priority'])->id,
+                'grade' => $attackData['grade'],
                 'speed_rating' => $attackData['speed_rating'],
                 'damage_rating' => $attackData['damage_rating'],
                 'resource_costs' => json_encode($attackData['resource_costs']),
