@@ -9,9 +9,9 @@ use App\Exceptions\UnknownBehaviorException;
 
 class DamageTypeBehaviorFactory
 {
-    public function getBehavior(DamageType $damageType): DamageTypeBehaviorInterface
+    public function getBehavior(string $damageTypeName): DamageTypeBehaviorInterface
     {
-        switch($damageType->name) {
+        switch($damageTypeName) {
             case DamageType::SINGLE_TARGET:
                 return app(SingleTargetBehavior::class);
             case DamageType::MULTI_TARGET:
@@ -22,6 +22,6 @@ class DamageTypeBehaviorFactory
                 return app(AreaOfEffectBehavior::class);
         }
 
-        throw new UnknownBehaviorException($damageType->name, DamageTypeBehaviorInterface::class);
+        throw new UnknownBehaviorException($damageTypeName, DamageTypeBehaviorInterface::class);
     }
 }
