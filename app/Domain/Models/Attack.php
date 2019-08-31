@@ -2,6 +2,8 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Behaviors\Attacks\AttackBehavior;
+use App\Domain\Behaviors\Attacks\AttackBehaviorFactory;
 use App\Domain\Collections\AttackCollection;
 use App\Domain\Collections\ItemCollection;
 use App\Domain\QueryBuilders\AttackQueryBuilder;
@@ -81,5 +83,22 @@ class Attack extends Model
     public function newEloquentBuilder($query)
     {
         return new AttackQueryBuilder($query);
+    }
+
+    public function getBehavior(): AttackBehavior
+    {
+        /** @var AttackBehaviorFactory $behaviorFactory */
+        $behaviorFactory = app(AttackBehaviorFactory::class);
+        return $behaviorFactory->getAttackBehavior($this);
+    }
+
+    public function getBaseDamage()
+    {
+        //TODO
+    }
+
+    public function getBaseSpeed()
+    {
+        //TODO
     }
 }
