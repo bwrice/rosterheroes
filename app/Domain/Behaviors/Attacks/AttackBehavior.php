@@ -32,4 +32,10 @@ class AttackBehavior
         $this->targetRangeBehavior = $targetRangeBehavior;
         $this->targetPriorityBehavior = $targetPriorityBehavior;
     }
+
+    public function adjustCombatSpeed(float $speed)
+    {
+        $speed = $this->damageTypeBehavior->adjustCombatSpeed($speed);
+        return $speed;
+    }
 }

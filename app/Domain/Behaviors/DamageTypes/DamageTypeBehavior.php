@@ -4,7 +4,7 @@
 namespace App\Domain\Behaviors\DamageTypes;
 
 
-class DamageTypeBehavior implements DamageTypeBehaviorInterface
+abstract class DamageTypeBehavior implements DamageTypeBehaviorInterface
 {
 
 }

@@ -4,7 +4,9 @@
 namespace App\Domain\Behaviors\DamageTypes;
 
 
-interface DamageTypeBehaviorInterface
+use App\Domain\Interfaces\AdjustsCombatSpeed;
+
+interface DamageTypeBehaviorInterface extends AdjustsCombatSpeed
 {
 
 }
