@@ -44,6 +44,7 @@ use App\Domain\Behaviors\ItemBases\Weapons\WandBehavior;
 use App\Domain\Models\ItemType;
 use App\Domain\Models\MeasurableType;
 use App\Domain\Models\SlotType;
+use App\Domain\Models\Traits\HasUniqueNames;
 use App\Exceptions\UnknownBehaviorException;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -60,6 +61,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ItemBase extends Model
 {
+
+    use HasUniqueNames;
+
     public const DAGGER = 'dagger';
     public const SWORD = 'sword';
     public const AXE = 'axe';
@@ -96,7 +100,6 @@ class ItemBase extends Model
     public const CROWN = 'crown';
 
     protected $guarded = [];
-
 
     public function slotTypes()
     {
