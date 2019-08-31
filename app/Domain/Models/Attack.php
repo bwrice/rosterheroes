@@ -97,8 +97,9 @@ class Attack extends Model
         //TODO
     }
 
-    public function getBaseSpeed()
+    public function getCombatSpeed()
     {
-        //TODO
+        $baseSpeed = 100/$this->speed_rating;
+        return $this->getBehavior()->adjustCombatSpeed($baseSpeed);
     }
 }
