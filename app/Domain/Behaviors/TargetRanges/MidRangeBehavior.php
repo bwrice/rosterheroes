@@ -4,7 +4,7 @@
 namespace App\Domain\Behaviors\TargetRanges;
 
 
-class MidRangeBehavior
+class MidRangeBehavior extends TargetRangeBehavior
 {
 
 }

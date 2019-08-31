@@ -4,7 +4,7 @@
 namespace App\Domain\Behaviors\TargetRanges;
 
 
-class LongRangeBehavior
+class LongRangeBehavior extends TargetRangeBehavior
 {
 
 }

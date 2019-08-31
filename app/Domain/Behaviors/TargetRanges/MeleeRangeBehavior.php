@@ -4,7 +4,7 @@
 namespace App\Domain\Behaviors\TargetRanges;
 
 
-class MeleeRangeBehavior
+class MeleeRangeBehavior extends TargetRangeBehavior
 {
 
 }
