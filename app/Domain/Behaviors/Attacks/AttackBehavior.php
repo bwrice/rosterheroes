@@ -7,8 +7,10 @@ namespace App\Domain\Behaviors\Attacks;
 use App\Domain\Behaviors\DamageTypes\DamageTypeBehaviorInterface;
 use App\Domain\Behaviors\TargetPriorities\TargetPriorityBehaviorInterface;
 use App\Domain\Behaviors\TargetRanges\TargetRangeBehaviorInterface;
+use App\Domain\Interfaces\AdjustsBaseDamage;
+use App\Domain\Interfaces\AdjustsCombatSpeed;
 
-class AttackBehavior
+class AttackBehavior implements AdjustsCombatSpeed, AdjustsBaseDamage
 {
     /**
      * @var DamageTypeBehaviorInterface
@@ -33,10 +35,17 @@ class AttackBehavior
         $this->targetPriorityBehavior = $targetPriorityBehavior;
     }
 
-    public function adjustCombatSpeed(float $speed)
+    public function adjustBaseSpeed(float $speed): float
     {
-        $speed = $this->damageTypeBehavior->adjustCombatSpeed($speed);
-        $speed = $this->targetRangeBehavior->adjustCombatSpeed($speed);
+        $speed = $this->damageTypeBehavior->adjustBaseSpeed($speed);
+        $speed = $this->targetRangeBehavior->adjustBaseSpeed($speed);
         return $speed;
+    }
+
+    public function adjustBaseDamage(float $baseDamage): float
+    {
+        $baseDamage = $this->damageTypeBehavior->adjustBaseDamage($baseDamage);
+        $baseDamage = $this->targetRangeBehavior->adjustBaseDamage($baseDamage);
+        return $baseDamage;
     }
 }

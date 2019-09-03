@@ -4,7 +4,10 @@
 namespace App\Domain\Behaviors\TargetRanges;
 
 
-interface TargetRangeBehaviorInterface
+use App\Domain\Interfaces\AdjustsBaseDamage;
+use App\Domain\Interfaces\AdjustsCombatSpeed;
+
+interface TargetRangeBehaviorInterface extends AdjustsCombatSpeed, AdjustsBaseDamage
 {
-    public function adjustCombatSpeed(float $speed): float;
+
 }
