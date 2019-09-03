@@ -18,7 +18,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property string $name
  * @property int $grade
  * @property float $speed_rating
- * @property float $damage_rating
+ * @property float $base_damage_rating
+ * @property float $damage_modifier_rating
  *
  * @property DamageType $damageType
  * @property TargetRange $targetRange
@@ -94,12 +95,13 @@ class Attack extends Model
 
     public function getBaseDamage()
     {
-        //TODO
+        $baseDamage = $this->base_damage_rating;
+        return $this->getBehavior()->adjustBaseDamage($baseDamage);
     }
 
-    public function getCombatSpeed()
+    public function getBaseCombatSpeed()
     {
-        $baseSpeed = 100/$this->speed_rating;
-        return $this->getBehavior()->adjustCombatSpeed($baseSpeed);
+        $baseSpeed = $this->speed_rating;
+        return $this->getBehavior()->adjustBaseSpeed($baseSpeed);
     }
 }
