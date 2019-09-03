@@ -26,7 +26,8 @@ class SeedAttacks extends Migration
                 'target_priority' => TargetPriority::ANY,
                 'grade' => 5,
                 'speed_rating' => 100/12,
-                'damage_rating' => 5.5,
+                'base_damage_rating' => 5.5,
+                'damage_modifier_rating' => 10,
                 'item_bases' => [
                     ItemBase::SWORD,
                     ItemBase::DAGGER
@@ -41,7 +42,8 @@ class SeedAttacks extends Migration
                 'target_priority' => TargetPriority::ANY,
                 'grade' => 5,
                 'speed_rating' => 100/23,
-                'damage_rating' => 10,
+                'base_damage_rating' => 10,
+                'damage_modifier_rating' => 10,
                 'item_bases' => [
                     ItemBase::BOW,
                 ],
@@ -55,7 +57,8 @@ class SeedAttacks extends Migration
                 'target_priority' => TargetPriority::ANY,
                 'grade' => 5,
                 'speed_rating' => 100/18,
-                'damage_rating' => 8,
+                'base_damage_rating' => 8,
+                'damage_modifier_rating' => 10,
                 'item_bases' => [
                     ItemBase::STAFF,
                     ItemBase::WAND,
@@ -80,7 +83,8 @@ class SeedAttacks extends Migration
                 'target_priority_id' => $targetPriorities->firstWhere('name', '=', $attackData['target_priority'])->id,
                 'grade' => $attackData['grade'],
                 'speed_rating' => $attackData['speed_rating'],
-                'damage_rating' => $attackData['damage_rating'],
+                'base_damage_rating' => $attackData['base_damage_rating'],
+                'damage_modifier_rating' => $attackData['damage_modifier_rating'],
                 'resource_costs' => json_encode($attackData['resource_costs']),
                 'requirements' => json_encode($attackData['requirements'])
             ]);
