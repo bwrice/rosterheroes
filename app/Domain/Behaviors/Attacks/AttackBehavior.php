@@ -36,6 +36,7 @@ class AttackBehavior
     public function adjustCombatSpeed(float $speed)
     {
         $speed = $this->damageTypeBehavior->adjustCombatSpeed($speed);
+        $speed = $this->targetRangeBehavior->adjustCombatSpeed($speed);
         return $speed;
     }
 }
