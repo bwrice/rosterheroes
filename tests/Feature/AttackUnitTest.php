@@ -62,4 +62,33 @@ class AttackUnitTest extends TestCase
 
         $this->assertEquals(DamageType::all()->count(), $damageTypesTested, "All damage types tested");
     }
+
+    /**
+     * @test
+     */
+    public function attack_speed_is_correctly_adjusted_for_target_ranges()
+    {
+        $damageTypesTested = 0;
+
+        $this->attack->target_range_id = TargetRange::forName(TargetRange::MELEE)->id;
+        $this->attack->save();
+        $meleeTargetRange = $this->attack->fresh()->getCombatSpeed();
+        $damageTypesTested++;
+
+        $this->attack->target_range_id = TargetRange::forName(TargetRange::MID_RANGE)->id;
+        $this->attack->save();
+        $midRangeSpeed = $this->attack->fresh()->getCombatSpeed();
+        $damageTypesTested++;
+
+        $this->assertGreaterThan($midRangeSpeed, $meleeTargetRange);
+
+        $this->attack->target_range_id = TargetRange::forName(TargetRange::LONG_RANGE)->id;
+        $this->attack->save();
+        $longRangeSpeed = $this->attack->fresh()->getCombatSpeed();
+        $damageTypesTested++;
+
+        $this->assertGreaterThan($longRangeSpeed, $midRangeSpeed);
+
+        $this->assertEquals(TargetRange::all()->count(), $damageTypesTested, "All target ranges tested");
+    }
 }
