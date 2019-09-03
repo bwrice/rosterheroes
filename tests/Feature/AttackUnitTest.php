@@ -36,26 +36,26 @@ class AttackUnitTest extends TestCase
 
         $this->attack->damage_type_id = DamageType::forName(DamageType::SINGLE_TARGET)->id;
         $this->attack->save();
-        $singleTargetSpeed = $this->attack->fresh()->getCombatSpeed();
+        $singleTargetSpeed = $this->attack->fresh()->getBaseCombatSpeed();
         $damageTypesTested++;
 
         $this->attack->damage_type_id = DamageType::forName(DamageType::MULTI_TARGET)->id;
         $this->attack->save();
-        $multiTargetSpeed = $this->attack->fresh()->getCombatSpeed();
+        $multiTargetSpeed = $this->attack->fresh()->getBaseCombatSpeed();
         $damageTypesTested++;
 
         $this->assertGreaterThan($multiTargetSpeed, $singleTargetSpeed);
 
         $this->attack->damage_type_id = DamageType::forName(DamageType::DISPERSED)->id;
         $this->attack->save();
-        $dispersedSpeed = $this->attack->fresh()->getCombatSpeed();
+        $dispersedSpeed = $this->attack->fresh()->getBaseCombatSpeed();
         $damageTypesTested++;
 
         $this->assertGreaterThan($dispersedSpeed, $multiTargetSpeed);
 
         $this->attack->damage_type_id = DamageType::forName(DamageType::AREA_OF_EFFECT)->id;
         $this->attack->save();
-        $aoeSpeed = $this->attack->fresh()->getCombatSpeed();
+        $aoeSpeed = $this->attack->fresh()->getBaseCombatSpeed();
         $damageTypesTested++;
 
         $this->assertGreaterThan($aoeSpeed, $dispersedSpeed);
@@ -68,27 +68,91 @@ class AttackUnitTest extends TestCase
      */
     public function attack_speed_is_correctly_adjusted_for_target_ranges()
     {
-        $damageTypesTested = 0;
+        $targetRangesTested = 0;
 
         $this->attack->target_range_id = TargetRange::forName(TargetRange::MELEE)->id;
         $this->attack->save();
-        $meleeTargetRange = $this->attack->fresh()->getCombatSpeed();
-        $damageTypesTested++;
+        $meleeSpeed = $this->attack->fresh()->getBaseCombatSpeed();
+        $targetRangesTested++;
 
         $this->attack->target_range_id = TargetRange::forName(TargetRange::MID_RANGE)->id;
         $this->attack->save();
-        $midRangeSpeed = $this->attack->fresh()->getCombatSpeed();
-        $damageTypesTested++;
+        $midRangeSpeed = $this->attack->fresh()->getBaseCombatSpeed();
+        $targetRangesTested++;
 
-        $this->assertGreaterThan($midRangeSpeed, $meleeTargetRange);
+        $this->assertGreaterThan($midRangeSpeed, $meleeSpeed);
 
         $this->attack->target_range_id = TargetRange::forName(TargetRange::LONG_RANGE)->id;
         $this->attack->save();
-        $longRangeSpeed = $this->attack->fresh()->getCombatSpeed();
-        $damageTypesTested++;
+        $longRangeSpeed = $this->attack->fresh()->getBaseCombatSpeed();
+        $targetRangesTested++;
 
         $this->assertGreaterThan($longRangeSpeed, $midRangeSpeed);
 
-        $this->assertEquals(TargetRange::all()->count(), $damageTypesTested, "All target ranges tested");
+        $this->assertEquals(TargetRange::all()->count(), $targetRangesTested, "All target ranges tested");
+    }
+
+    /**
+     * @test
+     */
+    public function attack_base_damage_is_correctly_adjusted_for_damage_types()
+    {
+        $damageTypesTested = 0;
+
+        $this->attack->damage_type_id = DamageType::forName(DamageType::DISPERSED)->id;
+        $this->attack->save();
+        $dispersedBaseDamage = $this->attack->fresh()->getBaseDamage();
+        $damageTypesTested++;
+
+        $this->attack->damage_type_id = DamageType::forName(DamageType::SINGLE_TARGET)->id;
+        $this->attack->save();
+        $singleTargetBaseDamage = $this->attack->fresh()->getBaseDamage();
+        $damageTypesTested++;
+
+        $this->assertGreaterThan($singleTargetBaseDamage, $dispersedBaseDamage);
+
+        $this->attack->damage_type_id = DamageType::forName(DamageType::MULTI_TARGET)->id;
+        $this->attack->save();
+        $multiTargetBaseDamage = $this->attack->fresh()->getBaseDamage();
+        $damageTypesTested++;
+
+        $this->assertGreaterThan($multiTargetBaseDamage, $singleTargetBaseDamage);
+
+        $this->attack->damage_type_id = DamageType::forName(DamageType::AREA_OF_EFFECT)->id;
+        $this->attack->save();
+        $aoeBaseDamage = $this->attack->fresh()->getBaseDamage();
+        $damageTypesTested++;
+
+        $this->assertGreaterThan($aoeBaseDamage, $dispersedBaseDamage);
+
+        $this->assertEquals(DamageType::all()->count(), $damageTypesTested, "All damage types tested");
+    }
+    /**
+     * @test
+     */
+    public function attack_base_damage_is_correctly_adjusted_for_target_ranges()
+    {
+        $targetRangesTested = 0;
+
+        $this->attack->target_range_id = TargetRange::forName(TargetRange::MELEE)->id;
+        $this->attack->save();
+        $meleeBaseDamage = $this->attack->fresh()->getBaseDamage();
+        $targetRangesTested++;
+
+        $this->attack->target_range_id = TargetRange::forName(TargetRange::MID_RANGE)->id;
+        $this->attack->save();
+        $midRangeBaseDamage = $this->attack->fresh()->getBaseDamage();
+        $targetRangesTested++;
+
+        $this->assertGreaterThan($midRangeBaseDamage, $meleeBaseDamage);
+
+        $this->attack->target_range_id = TargetRange::forName(TargetRange::LONG_RANGE)->id;
+        $this->attack->save();
+        $longRangeBaseDamage = $this->attack->fresh()->getBaseDamage();
+        $targetRangesTested++;
+
+        $this->assertGreaterThan($longRangeBaseDamage, $midRangeBaseDamage);
+
+        $this->assertEquals(TargetRange::all()->count(), $targetRangesTested, "All target ranges tested");
     }
 }
