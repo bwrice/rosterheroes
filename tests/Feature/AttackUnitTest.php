@@ -36,26 +36,26 @@ class AttackUnitTest extends TestCase
 
         $this->attack->damage_type_id = DamageType::forName(DamageType::SINGLE_TARGET)->id;
         $this->attack->save();
-        $singleTargetSpeed = $this->attack->fresh()->getBaseCombatSpeed();
+        $singleTargetSpeed = $this->attack->fresh()->getCombatSpeed();
         $damageTypesTested++;
 
         $this->attack->damage_type_id = DamageType::forName(DamageType::MULTI_TARGET)->id;
         $this->attack->save();
-        $multiTargetSpeed = $this->attack->fresh()->getBaseCombatSpeed();
+        $multiTargetSpeed = $this->attack->fresh()->getCombatSpeed();
         $damageTypesTested++;
 
         $this->assertGreaterThan($multiTargetSpeed, $singleTargetSpeed);
 
         $this->attack->damage_type_id = DamageType::forName(DamageType::DISPERSED)->id;
         $this->attack->save();
-        $dispersedSpeed = $this->attack->fresh()->getBaseCombatSpeed();
+        $dispersedSpeed = $this->attack->fresh()->getCombatSpeed();
         $damageTypesTested++;
 
         $this->assertGreaterThan($dispersedSpeed, $multiTargetSpeed);
 
         $this->attack->damage_type_id = DamageType::forName(DamageType::AREA_OF_EFFECT)->id;
         $this->attack->save();
-        $aoeSpeed = $this->attack->fresh()->getBaseCombatSpeed();
+        $aoeSpeed = $this->attack->fresh()->getCombatSpeed();
         $damageTypesTested++;
 
         $this->assertGreaterThan($aoeSpeed, $dispersedSpeed);
@@ -72,19 +72,19 @@ class AttackUnitTest extends TestCase
 
         $this->attack->target_range_id = TargetRange::forName(TargetRange::MELEE)->id;
         $this->attack->save();
-        $meleeSpeed = $this->attack->fresh()->getBaseCombatSpeed();
+        $meleeSpeed = $this->attack->fresh()->getCombatSpeed();
         $targetRangesTested++;
 
         $this->attack->target_range_id = TargetRange::forName(TargetRange::MID_RANGE)->id;
         $this->attack->save();
-        $midRangeSpeed = $this->attack->fresh()->getBaseCombatSpeed();
+        $midRangeSpeed = $this->attack->fresh()->getCombatSpeed();
         $targetRangesTested++;
 
         $this->assertGreaterThan($midRangeSpeed, $meleeSpeed);
 
         $this->attack->target_range_id = TargetRange::forName(TargetRange::LONG_RANGE)->id;
         $this->attack->save();
-        $longRangeSpeed = $this->attack->fresh()->getBaseCombatSpeed();
+        $longRangeSpeed = $this->attack->fresh()->getCombatSpeed();
         $targetRangesTested++;
 
         $this->assertGreaterThan($longRangeSpeed, $midRangeSpeed);

@@ -104,12 +104,12 @@ class Attack extends Model
         return (int) ceil($baseDamage);
     }
 
-    public function getBaseCombatSpeed(HasAttacks $hasAttacks = null): float
+    public function getCombatSpeed(HasAttacks $hasAttacks = null): float
     {
         $baseSpeed = $this->speed_rating;
-        $baseSpeed = $this->getBehavior()->adjustBaseSpeed($baseSpeed);
+        $baseSpeed = $this->getBehavior()->adjustCombatSpeed($baseSpeed);
         if ($hasAttacks) {
-            $baseSpeed = $hasAttacks->adjustBaseSpeed($baseSpeed);
+            $baseSpeed = $hasAttacks->adjustCombatSpeed($baseSpeed);
         }
         return $baseSpeed;
     }

@@ -35,10 +35,10 @@ class AttackBehavior implements AdjustsCombatSpeed, AdjustsBaseDamage
         $this->targetPriorityBehavior = $targetPriorityBehavior;
     }
 
-    public function adjustBaseSpeed(float $speed): float
+    public function adjustCombatSpeed(float $speed): float
     {
-        $speed = $this->damageTypeBehavior->adjustBaseSpeed($speed);
-        $speed = $this->targetRangeBehavior->adjustBaseSpeed($speed);
+        $speed = $this->damageTypeBehavior->adjustCombatSpeed($speed);
+        $speed = $this->targetRangeBehavior->adjustCombatSpeed($speed);
         return $speed;
     }
 

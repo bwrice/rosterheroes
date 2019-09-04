@@ -6,5 +6,5 @@ namespace App\Domain\Interfaces;
 
 interface AdjustsCombatSpeed
 {
-    public function adjustBaseSpeed(float $speed): float;
+    public function adjustCombatSpeed(float $speed): float;
 }
