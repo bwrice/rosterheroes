@@ -6,6 +6,7 @@ use App\Domain\Behaviors\Attacks\AttackBehavior;
 use App\Domain\Behaviors\Attacks\AttackBehaviorFactory;
 use App\Domain\Collections\AttackCollection;
 use App\Domain\Collections\ItemCollection;
+use App\Domain\Interfaces\HasAttacks;
 use App\Domain\QueryBuilders\AttackQueryBuilder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -93,10 +94,14 @@ class Attack extends Model
         return $behaviorFactory->getAttackBehavior($this);
     }
 
-    public function getBaseDamage()
+    public function getBaseDamage(HasAttacks $hasAttacks = null): int
     {
         $baseDamage = $this->base_damage_rating;
-        return $this->getBehavior()->adjustBaseDamage($baseDamage);
+        $baseDamage = $this->getBehavior()->adjustBaseDamage($baseDamage);
+        if ($hasAttacks) {
+            $baseDamage = $hasAttacks->adjustBaseDamage( $baseDamage);
+        }
+        return (int) ceil($baseDamage);
     }
 
     public function getBaseCombatSpeed()
