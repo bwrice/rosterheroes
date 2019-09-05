@@ -123,10 +123,11 @@ class AttackUnitTest extends TestCase
         $aoeBaseDamage = $this->attack->fresh()->getBaseDamage();
         $damageTypesTested++;
 
-        $this->assertGreaterThan($aoeBaseDamage, $dispersedBaseDamage);
+        $this->assertGreaterThan($aoeBaseDamage, $multiTargetBaseDamage);
 
         $this->assertEquals(DamageType::all()->count(), $damageTypesTested, "All damage types tested");
     }
+
     /**
      * @test
      */
@@ -154,5 +155,41 @@ class AttackUnitTest extends TestCase
         $this->assertGreaterThan($longRangeBaseDamage, $midRangeBaseDamage);
 
         $this->assertEquals(TargetRange::all()->count(), $targetRangesTested, "All target ranges tested");
+    }
+
+    /**
+     * @test
+     */
+    public function attack_damage_modifier_is_correctly_adjusted_for_damage_types()
+    {
+        $damageTypesTested = 0;
+
+        $this->attack->damage_type_id = DamageType::forName(DamageType::DISPERSED)->id;
+        $this->attack->save();
+        $dispersedDamageModifier = $this->attack->fresh()->getDamageModifier();
+        $damageTypesTested++;
+
+        $this->attack->damage_type_id = DamageType::forName(DamageType::SINGLE_TARGET)->id;
+        $this->attack->save();
+        $singleTargetDamageModifier = $this->attack->fresh()->getDamageModifier();
+        $damageTypesTested++;
+
+        $this->assertGreaterThan($singleTargetDamageModifier, $dispersedDamageModifier);
+
+        $this->attack->damage_type_id = DamageType::forName(DamageType::MULTI_TARGET)->id;
+        $this->attack->save();
+        $multiTargetDamageModifier = $this->attack->fresh()->getDamageModifier();
+        $damageTypesTested++;
+
+        $this->assertGreaterThan($multiTargetDamageModifier, $singleTargetDamageModifier);
+
+        $this->attack->damage_type_id = DamageType::forName(DamageType::AREA_OF_EFFECT)->id;
+        $this->attack->save();
+        $aoeDamageModifier = $this->attack->fresh()->getDamageModifier();
+        $damageTypesTested++;
+
+        $this->assertGreaterThan($aoeDamageModifier, $multiTargetDamageModifier);
+
+        $this->assertEquals(DamageType::all()->count(), $damageTypesTested, "All damage types tested");
     }
 }
