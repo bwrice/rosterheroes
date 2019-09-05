@@ -16,4 +16,9 @@ class SingleTargetBehavior extends DamageTypeBehavior
     {
         return $baseDamage;
     }
+
+    public function adjustDamageModifier(float $damageModifier): float
+    {
+        return $damageModifier;
+    }
 }

@@ -16,4 +16,9 @@ class AreaOfEffectBehavior extends DamageTypeBehavior
     {
         return $baseDamage/2.5;
     }
+
+    public function adjustDamageModifier(float $damageModifier): float
+    {
+        return $damageModifier/2.5;
+    }
 }

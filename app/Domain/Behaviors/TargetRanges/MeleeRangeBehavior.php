@@ -16,4 +16,9 @@ class MeleeRangeBehavior extends TargetRangeBehavior
     {
         return $baseDamage;
     }
+
+    public function adjustDamageModifier(float $damageModifier): float
+    {
+        return $damageModifier;
+    }
 }

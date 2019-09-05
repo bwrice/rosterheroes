@@ -16,4 +16,9 @@ class MidRangeBehavior extends TargetRangeBehavior
     {
         return $baseDamage/1.3;
     }
+
+    public function adjustDamageModifier(float $damageModifier): float
+    {
+        return $damageModifier/1.3;
+    }
 }
