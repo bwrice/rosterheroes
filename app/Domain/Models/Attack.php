@@ -113,4 +113,14 @@ class Attack extends Model
         }
         return $baseSpeed;
     }
+
+    public function getDamageModifier(HasAttacks $hasAttacks = null): float
+    {
+        $damageModifier = $this->damage_modifier_rating;
+        $damageModifier = $this->getBehavior()->adjustDamageModifier($damageModifier);
+        if ($hasAttacks) {
+            $hasAttacks->adjustDamageModifier($damageModifier);
+        }
+        return $damageModifier;
+    }
 }
