@@ -192,4 +192,33 @@ class AttackUnitTest extends TestCase
 
         $this->assertEquals(DamageType::all()->count(), $damageTypesTested, "All damage types tested");
     }
+
+    /**
+     * @test
+     */
+    public function attack_damage_modifier_is_correctly_adjusted_for_target_ranges()
+    {
+        $targetRangesTested = 0;
+
+        $this->attack->target_range_id = TargetRange::forName(TargetRange::MELEE)->id;
+        $this->attack->save();
+        $meleeAttackModifier = $this->attack->fresh()->getDamageModifier();
+        $targetRangesTested++;
+
+        $this->attack->target_range_id = TargetRange::forName(TargetRange::MID_RANGE)->id;
+        $this->attack->save();
+        $midRangeAttackModifier = $this->attack->fresh()->getDamageModifier();
+        $targetRangesTested++;
+
+        $this->assertGreaterThan($midRangeAttackModifier, $meleeAttackModifier);
+
+        $this->attack->target_range_id = TargetRange::forName(TargetRange::LONG_RANGE)->id;
+        $this->attack->save();
+        $longRangeAttackModifier = $this->attack->fresh()->getDamageModifier();
+        $targetRangesTested++;
+
+        $this->assertGreaterThan($longRangeAttackModifier, $midRangeAttackModifier);
+
+        $this->assertEquals(TargetRange::all()->count(), $targetRangesTested, "All target ranges tested");
+    }
 }
