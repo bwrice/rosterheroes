@@ -4,7 +4,11 @@
 namespace App\Domain\Behaviors\ItemBases;
 
 
-interface ItemBaseBehaviorInterface
+use App\Domain\Interfaces\AdjustsBaseDamage;
+use App\Domain\Interfaces\AdjustsCombatSpeed;
+use App\Domain\Interfaces\AdjustsDamageModifier;
+
+interface ItemBaseBehaviorInterface extends AdjustsBaseDamage, AdjustsDamageModifier, AdjustsCombatSpeed
 {
     public function getSlotsCount(): int;
 

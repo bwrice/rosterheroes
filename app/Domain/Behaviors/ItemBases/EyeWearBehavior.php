@@ -32,4 +32,19 @@ class EyeWearBehavior extends ItemBaseBehavior
             SlotType::HEAD
         ];
     }
+
+    public function adjustBaseDamage(float $baseDamage): float
+    {
+        // TODO: Implement adjustBaseDamage() method.
+    }
+
+    public function adjustCombatSpeed(float $speed): float
+    {
+        // TODO: Implement adjustCombatSpeed() method.
+    }
+
+    public function adjustDamageModifier(float $damageModifier): float
+    {
+        // TODO: Implement adjustDamageModifier() method.
+    }
 }
