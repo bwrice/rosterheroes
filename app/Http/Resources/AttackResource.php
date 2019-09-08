@@ -19,7 +19,7 @@ class AttackResource extends JsonResource
     /** @var HasAttacks */
     protected $hasAttacks;
 
-    public function __construct($resource, HasAttacks $hasAttacks = null)
+    public function __construct($resource, $key = 0, HasAttacks $hasAttacks = null)
     {
         parent::__construct($resource);
         $this->hasAttacks = $hasAttacks;
@@ -42,5 +42,15 @@ class AttackResource extends JsonResource
             'damage_modifier' => $this->getDamageModifier($this->hasAttacks),
             'combat_speed' => $this->getCombatSpeed($this->hasAttacks)
         ];
+    }
+
+    /**
+     * @param HasAttacks $hasAttacks
+     * @return AttackResource
+     */
+    public function setHasAttacks(HasAttacks $hasAttacks = null): AttackResource
+    {
+        $this->hasAttacks = $hasAttacks;
+        return $this;
     }
 }
