@@ -26,7 +26,8 @@ class ItemResource extends JsonResource
             'name' => $this->getItemName(),
             'itemClass' => new ItemClassResource($this->itemClass),
             'itemType' => new ItemTypeResource($this->itemType),
-            'materialType' => new MaterialTypeResource($this->materialType)
+            'materialType' => new MaterialTypeResource($this->materialType),
+            'attacks' => new AttackResourceCollection($this->attacks, $this->resource)
         ];
     }
 }
