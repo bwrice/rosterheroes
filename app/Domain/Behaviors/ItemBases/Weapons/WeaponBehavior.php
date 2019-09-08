@@ -34,4 +34,17 @@ abstract class WeaponBehavior extends ItemBaseBehavior
     {
         return $this->armBehavior->getSlotsCount();
     }
+
+    /**
+     * higher = faster
+     * @return float
+     */
+    abstract public function getSpeedModifier(): float;
+
+    /**
+     * higher = more variance
+     * @return float
+     */
+    abstract public function getVarianceModifier(): float;
+
 }

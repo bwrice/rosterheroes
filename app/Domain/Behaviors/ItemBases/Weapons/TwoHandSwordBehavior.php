@@ -19,4 +19,22 @@ class TwoHandSwordBehavior extends WeaponBehavior
     {
         parent::__construct($weaponGroup, $armBehavior);
     }
+
+    /**
+     * Higher = faster
+     * @return float
+     */
+    public function getSpeedModifier(): float
+    {
+        return 1;
+    }
+
+    /**
+     * Higher = more variance
+     * @return float
+     */
+    public function getVarianceModifier(): float
+    {
+        return 1;
+    }
 }
