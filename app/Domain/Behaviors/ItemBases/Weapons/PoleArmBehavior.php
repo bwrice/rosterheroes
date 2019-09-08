@@ -39,4 +39,13 @@ class PoleArmBehavior extends WeaponBehavior
         return .2;
     }
 
+    /**
+     * higher = more base damage
+     * @return float
+     */
+    public function getBaseDamageModifier(): float
+    {
+        return .8;
+    }
+
 }

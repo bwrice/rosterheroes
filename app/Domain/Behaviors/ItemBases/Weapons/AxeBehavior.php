@@ -37,4 +37,13 @@ class AxeBehavior extends WeaponBehavior
     {
         return .85;
     }
+
+    /**
+     * higher = more base damage
+     * @return float
+     */
+    public function getBaseDamageModifier(): float
+    {
+        return .75;
+    }
 }

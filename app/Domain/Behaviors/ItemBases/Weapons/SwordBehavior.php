@@ -38,4 +38,13 @@ class SwordBehavior extends WeaponBehavior
     {
         return .5;
     }
+
+    /**
+     * higher = more base damage
+     * @return float
+     */
+    public function getBaseDamageModifier(): float
+    {
+        return .85;
+    }
 }

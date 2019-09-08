@@ -37,4 +37,13 @@ class BowBehavior extends WeaponBehavior
         return .3;
     }
 
+    /**
+     * higher = more base damage
+     * @return float
+     */
+    public function getBaseDamageModifier(): float
+    {
+        return .35;
+    }
+
 }

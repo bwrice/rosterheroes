@@ -38,4 +38,13 @@ class ThrowingWeaponBehavior extends WeaponBehavior
     {
         return .95;
     }
+
+    /**
+     * higher = more base damage
+     * @return float
+     */
+    public function getBaseDamageModifier(): float
+    {
+        return .65;
+    }
 }

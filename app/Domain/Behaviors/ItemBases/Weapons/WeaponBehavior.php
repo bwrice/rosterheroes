@@ -48,6 +48,12 @@ abstract class WeaponBehavior extends ItemBaseBehavior
     abstract public function getVarianceModifier(): float;
 
     /**
+     * higher = more base damage
+     * @return float
+     */
+    abstract public function getBaseDamageModifier(): float;
+
+    /**
      * @param float $speed
      * @return float
      */
@@ -62,6 +68,16 @@ abstract class WeaponBehavior extends ItemBaseBehavior
          * speed modifier divided by square-route of slots count
          */
         return $this->getSpeedModifier() / ($this->getSlotsCount() ** .5);
+    }
+
+    public function adjustBaseDamage(float $baseDamage): float
+    {
+        return $baseDamage * ($this->getBaseDamageModifier() / $this->getSpeedAdjustment());
+    }
+
+    public function adjustDamageModifier(float $damageModifier): float
+    {
+        return $damageModifier / ($this->getSpeedAdjustment() + $this->getBaseDamageModifier()/10);
     }
 
 }

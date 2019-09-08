@@ -37,4 +37,13 @@ class PsionicTwoHandBehavior extends WeaponBehavior
     {
         return .7;
     }
+
+    /**
+     * higher = more base damage
+     * @return float
+     */
+    public function getBaseDamageModifier(): float
+    {
+        return .15;
+    }
 }

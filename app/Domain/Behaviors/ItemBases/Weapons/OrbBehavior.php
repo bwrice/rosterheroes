@@ -38,4 +38,13 @@ class OrbBehavior extends WeaponBehavior
     {
         return .35;
     }
+
+    /**
+     * higher = more base damage
+     * @return float
+     */
+    public function getBaseDamageModifier(): float
+    {
+        return .5;
+    }
 }

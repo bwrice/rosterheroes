@@ -38,4 +38,13 @@ class StaffBehavior extends WeaponBehavior
     {
         return .45;
     }
+
+    /**
+     * higher = more base damage
+     * @return float
+     */
+    public function getBaseDamageModifier(): float
+    {
+        return .4;
+    }
 }
