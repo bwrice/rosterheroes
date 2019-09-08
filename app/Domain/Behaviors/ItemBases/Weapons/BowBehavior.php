@@ -25,7 +25,7 @@ class BowBehavior extends WeaponBehavior
      */
     public function getSpeedModifier(): float
     {
-        return 1;
+        return .65;
     }
 
     /**
@@ -34,7 +34,7 @@ class BowBehavior extends WeaponBehavior
      */
     public function getVarianceModifier(): float
     {
-        return 1;
+        return .3;
     }
 
 }

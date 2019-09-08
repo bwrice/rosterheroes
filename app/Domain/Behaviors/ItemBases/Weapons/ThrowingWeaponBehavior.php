@@ -27,7 +27,7 @@ class ThrowingWeaponBehavior extends WeaponBehavior
      */
     public function getSpeedModifier(): float
     {
-        return 1;
+        return .18;
     }
 
     /**
@@ -36,6 +36,6 @@ class ThrowingWeaponBehavior extends WeaponBehavior
      */
     public function getVarianceModifier(): float
     {
-        return 1;
+        return .95;
     }
 }

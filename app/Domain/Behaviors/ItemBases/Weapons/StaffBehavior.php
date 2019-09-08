@@ -27,7 +27,7 @@ class StaffBehavior extends WeaponBehavior
      */
     public function getSpeedModifier(): float
     {
-        return 1;
+        return .35;
     }
 
     /**
@@ -36,6 +36,6 @@ class StaffBehavior extends WeaponBehavior
      */
     public function getVarianceModifier(): float
     {
-        return 1;
+        return .45;
     }
 }

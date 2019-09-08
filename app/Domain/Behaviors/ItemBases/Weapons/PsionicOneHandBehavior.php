@@ -27,7 +27,7 @@ class PsionicOneHandBehavior extends WeaponBehavior
      */
     public function getSpeedModifier(): float
     {
-        return 1;
+        return .4;
     }
 
     /**
@@ -36,6 +36,6 @@ class PsionicOneHandBehavior extends WeaponBehavior
      */
     public function getVarianceModifier(): float
     {
-        return 1;
+        return .6;
     }
 }

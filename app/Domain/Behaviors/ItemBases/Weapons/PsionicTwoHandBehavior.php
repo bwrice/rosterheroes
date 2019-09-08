@@ -26,7 +26,7 @@ class PsionicTwoHandBehavior extends WeaponBehavior
      */
     public function getSpeedModifier(): float
     {
-        return 1;
+        return .25;
     }
 
     /**
@@ -35,6 +35,6 @@ class PsionicTwoHandBehavior extends WeaponBehavior
      */
     public function getVarianceModifier(): float
     {
-        return 1;
+        return .7;
     }
 }

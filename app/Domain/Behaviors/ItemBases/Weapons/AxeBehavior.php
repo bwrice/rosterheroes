@@ -26,7 +26,7 @@ class AxeBehavior extends WeaponBehavior
      */
     public function getSpeedModifier(): float
     {
-        return 1;
+        return .32;
     }
 
     /**
@@ -35,6 +35,6 @@ class AxeBehavior extends WeaponBehavior
      */
     public function getVarianceModifier(): float
     {
-        return 1;
+        return .85;
     }
 }

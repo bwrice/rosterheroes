@@ -27,7 +27,7 @@ class SwordBehavior extends WeaponBehavior
      */
     public function getSpeedModifier(): float
     {
-        return 1;
+        return .5;
     }
 
     /**
@@ -36,6 +36,6 @@ class SwordBehavior extends WeaponBehavior
      */
     public function getVarianceModifier(): float
     {
-        return 1;
+        return .5;
     }
 }
