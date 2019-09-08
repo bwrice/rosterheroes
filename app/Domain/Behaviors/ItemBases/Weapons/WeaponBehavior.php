@@ -47,4 +47,21 @@ abstract class WeaponBehavior extends ItemBaseBehavior
      */
     abstract public function getVarianceModifier(): float;
 
+    /**
+     * @param float $speed
+     * @return float
+     */
+    public function adjustCombatSpeed(float $speed): float
+    {
+        return $speed * $this->getSpeedAdjustment();
+    }
+
+    protected function getSpeedAdjustment(): float
+    {
+        /*
+         * speed modifier divided by square-route of slots count
+         */
+        return $this->getSpeedModifier() / ($this->getSlotsCount() ** .5);
+    }
+
 }
