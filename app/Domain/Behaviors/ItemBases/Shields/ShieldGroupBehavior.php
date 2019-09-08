@@ -20,4 +20,20 @@ abstract class ShieldGroupBehavior extends ItemBaseBehavior
             SlotType::LEFT_ARM
         ];
     }
+
+    public function adjustDamageModifier(float $damageModifier): float
+    {
+        return $damageModifier;
+    }
+
+    public function adjustBaseDamage(float $baseDamage): float
+    {
+        return $baseDamage;
+    }
+
+    public function adjustCombatSpeed(float $speed): float
+    {
+        return $speed;
+    }
+
 }
