@@ -7,6 +7,9 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class AttackResourceCollection extends ResourceCollection
 {
+
+    public $collects = AttackResource::class;
+
     /**
      * @var HasAttacks
      */
@@ -26,8 +29,8 @@ class AttackResourceCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return [
-            'data' => $this->collection->map
-        ];
+        return $this->collection->map(function (AttackResource $attackResource) {
+                return $attackResource->setHasAttacks($this->hasAttacks);
+            })->toArray();
     }
 }
