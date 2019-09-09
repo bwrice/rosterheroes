@@ -3,6 +3,9 @@
 namespace App\Domain\Models;
 
 use App\Domain\Behaviors\ItemBases\ItemBaseBehaviorInterface;
+use App\Domain\Interfaces\AdjustsBaseDamage;
+use App\Domain\Interfaces\AdjustsCombatSpeed;
+use App\Domain\Interfaces\AdjustsDamageModifier;
 use App\Domain\Models\ItemBase;
 use App\Domain\Models\MaterialType;
 use Illuminate\Database\Eloquent\Model;
@@ -34,7 +37,7 @@ class ItemType extends Model
         return $this->belongsTo(ItemBase::class);
     }
 
-    public function getItemBehavior(): ItemBaseBehaviorInterface
+    public function getItemBaseBehavior(): ItemBaseBehaviorInterface
     {
         return $this->itemBase->getBehavior();
     }

@@ -5,6 +5,7 @@ namespace App\Domain\Models;
 use App\Domain\Collections\AttackCollection;
 use App\Domain\Collections\EnchantmentCollection;
 use App\Domain\Behaviors\ItemBases\ItemBaseBehaviorInterface;
+use App\Domain\Interfaces\HasAttacks;
 use App\Domain\Models\Slot;
 use App\Domain\Collections\SlotCollection;
 use App\Domain\Interfaces\Slottable;
@@ -30,7 +31,7 @@ use Ramsey\Uuid\Uuid;
  * @property EnchantmentCollection $enchantments
  * @property AttackCollection $attacks
  */
-class Item extends EventSourcedModel implements Slottable
+class Item extends EventSourcedModel implements Slottable, HasAttacks
 {
     const RELATION_MORPH_MAP = 'items';
 
@@ -79,12 +80,12 @@ class Item extends EventSourcedModel implements Slottable
 
     public function getSlotTypeIDs(): array
     {
-        return $this->getBehavior()->getSlotTypeIDs();
+        return $this->getItemBaseBehavior()->getSlotTypeIDs();
     }
 
     public function getSlotsCount(): int
     {
-        return $this->getBehavior()->getSlotsCount();
+        return $this->getItemBaseBehavior()->getSlotsCount();
     }
 
     public function getSlots(): SlotCollection
@@ -97,14 +98,37 @@ class Item extends EventSourcedModel implements Slottable
         return $this->name ?: $this->buildItemName();
     }
 
-    public function getBehavior(): ItemBaseBehaviorInterface
+    public function getItemBaseBehavior(): ItemBaseBehaviorInterface
     {
-        return $this->itemType->getItemBehavior();
+        return $this->itemType->getItemBaseBehavior();
+    }
+
+    protected function itemTypeGrade()
+    {
+        return $this->itemType->grade;
     }
 
     protected function buildItemName(): string
     {
         //TODO
         return 'Item';
+    }
+
+    public function adjustCombatSpeed(float $speed): float
+    {
+        $gradeModifier = 1 + ($this->itemTypeGrade() ** .5)/10;
+        return $gradeModifier * $this->getItemBaseBehavior()->adjustCombatSpeed($speed);
+    }
+
+    public function adjustBaseDamage(float $baseDamage): float
+    {
+        $gradeModifier = 1 + ($this->itemTypeGrade() ** .5)/5;
+        return $gradeModifier * $this->getItemBaseBehavior()->adjustBaseDamage($baseDamage);
+    }
+
+    public function adjustDamageModifier(float $damageModifier): float
+    {
+        $gradeModifier = 1 + ($this->itemTypeGrade() ** .5)/5;
+        return $gradeModifier * $this->getItemBaseBehavior()->adjustDamageModifier($damageModifier);
     }
 }
