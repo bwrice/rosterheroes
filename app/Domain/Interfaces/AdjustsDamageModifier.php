@@ -6,5 +6,5 @@ namespace App\Domain\Interfaces;
 
 interface AdjustsDamageModifier
 {
-    public function adjustDamageModifier(float $damageModifier): float;
+    public function adjustDamageMultiplier(float $damageModifier): float;
 }

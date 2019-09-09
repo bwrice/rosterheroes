@@ -50,10 +50,10 @@ class AttackBehavior implements AdjustsCombatSpeed, AdjustsBaseDamage, AdjustsDa
         return $baseDamage;
     }
 
-    public function adjustDamageModifier(float $damageModifier): float
+    public function adjustDamageMultiplier(float $damageModifier): float
     {
-        $damageModifier = $this->damageTypeBehavior->adjustDamageModifier($damageModifier);
-        $damageModifier = $this->targetRangeBehavior->adjustDamageModifier($damageModifier);
+        $damageModifier = $this->damageTypeBehavior->adjustDamageMultiplier($damageModifier);
+        $damageModifier = $this->targetRangeBehavior->adjustDamageMultiplier($damageModifier);
         return $damageModifier;
     }
 }

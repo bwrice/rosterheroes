@@ -17,7 +17,7 @@ class LongRangeBehavior extends TargetRangeBehavior
         return $baseDamage/1.75;
     }
 
-    public function adjustDamageModifier(float $damageModifier): float
+    public function adjustDamageMultiplier(float $damageModifier): float
     {
         return $damageModifier/1.75;
     }

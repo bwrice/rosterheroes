@@ -117,9 +117,9 @@ class Attack extends Model
     public function getDamageModifier(HasAttacks $hasAttacks = null): float
     {
         $damageModifier = $this->damage_modifier_rating;
-        $damageModifier = $this->getBehavior()->adjustDamageModifier($damageModifier);
+        $damageModifier = $this->getBehavior()->adjustDamageMultiplier($damageModifier);
         if ($hasAttacks) {
-            $hasAttacks->adjustDamageModifier($damageModifier);
+            $hasAttacks->adjustDamageMultiplier($damageModifier);
         }
         return $damageModifier;
     }

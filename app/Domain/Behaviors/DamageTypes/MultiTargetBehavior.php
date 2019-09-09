@@ -17,7 +17,7 @@ class MultiTargetBehavior extends DamageTypeBehavior
         return $baseDamage/1.8;
     }
 
-    public function adjustDamageModifier(float $damageModifier): float
+    public function adjustDamageMultiplier(float $damageModifier): float
     {
         return $damageModifier/1.8;
     }

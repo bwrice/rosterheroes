@@ -17,7 +17,7 @@ class DispersedBehavior extends DamageTypeBehavior
         return $baseDamage * 1.5;
     }
 
-    public function adjustDamageModifier(float $damageModifier): float
+    public function adjustDamageMultiplier(float $damageModifier): float
     {
         return $damageModifier * 1.5;
     }
