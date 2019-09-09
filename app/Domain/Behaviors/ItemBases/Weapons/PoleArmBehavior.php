@@ -25,7 +25,7 @@ class PoleArmBehavior extends WeaponBehavior
      * Higher = faster
      * @return float
      */
-    public function getSpeedModifier(): float
+    public function itemBaseSpeedModifier(): float
     {
         return .82;
     }
@@ -43,7 +43,7 @@ class PoleArmBehavior extends WeaponBehavior
      * higher = more base damage
      * @return float
      */
-    public function getBaseDamageModifier(): float
+    public function itemBaseDamageModifier(): float
     {
         return .8;
     }

@@ -39,7 +39,7 @@ abstract class WeaponBehavior extends ItemBaseBehavior
      * higher = faster
      * @return float
      */
-    abstract public function getSpeedModifier(): float;
+    abstract public function itemBaseSpeedModifier(): float;
 
     /**
      * higher = more variance
@@ -51,33 +51,24 @@ abstract class WeaponBehavior extends ItemBaseBehavior
      * higher = more base damage
      * @return float
      */
-    abstract public function getBaseDamageModifier(): float;
+    abstract public function itemBaseDamageModifier(): float;
 
     /**
-     * @param float $speed
      * @return float
      */
-    public function adjustCombatSpeed(float $speed): float
+    public function getCombatSpeedModifier(): float
     {
-        return $speed * $this->getSpeedAdjustment();
+        return $this->itemBaseSpeedModifier() / ($this->getSlotsCount() ** .5);
     }
 
-    protected function getSpeedAdjustment(): float
+    public function getBaseDamageModifier(): float
     {
-        /*
-         * speed modifier divided by square-route of slots count
-         */
-        return $this->getSpeedModifier() / ($this->getSlotsCount() ** .5);
+        return $this->itemBaseDamageModifier() / $this->getCombatSpeedModifier();
     }
 
-    public function adjustBaseDamage(float $baseDamage): float
+    public function getDamageMultiplierModifier(): float
     {
-        return $baseDamage * ($this->getBaseDamageModifier() / $this->getSpeedAdjustment());
-    }
-
-    public function adjustDamageModifier(float $damageModifier): float
-    {
-        return $damageModifier / ($this->getSpeedAdjustment() + $this->getBaseDamageModifier()/10);
+        return $this->getCombatSpeedModifier() + $this->itemBaseDamageModifier()/10;
     }
 
 }

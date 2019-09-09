@@ -33,18 +33,18 @@ class EyeWearBehavior extends ItemBaseBehavior
         ];
     }
 
-    public function adjustBaseDamage(float $baseDamage): float
+    public function getBaseDamageModifier(): float
     {
-        // TODO: Implement adjustBaseDamage() method.
+        return 1;
     }
 
-    public function adjustCombatSpeed(float $speed): float
+    public function getCombatSpeedModifier(): float
     {
-        // TODO: Implement adjustCombatSpeed() method.
+        return 1;
     }
 
-    public function adjustDamageModifier(float $damageModifier): float
+    public function getDamageMultiplierModifier(): float
     {
-        // TODO: Implement adjustDamageModifier() method.
+        return 1;
     }
 }

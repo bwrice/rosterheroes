@@ -24,7 +24,7 @@ class AxeBehavior extends WeaponBehavior
      * Higher = faster
      * @return float
      */
-    public function getSpeedModifier(): float
+    public function itemBaseSpeedModifier(): float
     {
         return .32;
     }
@@ -42,7 +42,7 @@ class AxeBehavior extends WeaponBehavior
      * higher = more base damage
      * @return float
      */
-    public function getBaseDamageModifier(): float
+    public function itemBaseDamageModifier(): float
     {
         return .75;
     }

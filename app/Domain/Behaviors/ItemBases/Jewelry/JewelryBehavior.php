@@ -13,18 +13,18 @@ abstract class JewelryBehavior extends ItemBaseBehavior
         parent::__construct($jewelryGroup);
     }
 
-    public function adjustDamageModifier(float $damageModifier): float
+    public function getDamageMultiplierModifier(): float
     {
-        return $damageModifier;
+        return 1;
     }
 
-    public function adjustBaseDamage(float $baseDamage): float
+    public function getBaseDamageModifier(): float
     {
-        return $baseDamage;
+        return 1;
     }
 
-    public function adjustCombatSpeed(float $speed): float
+    public function getCombatSpeedModifier(): float
     {
-        return $speed;
+        return 1;
     }
 }
