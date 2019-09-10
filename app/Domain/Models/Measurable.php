@@ -3,7 +3,7 @@
 namespace App\Domain\Models;
 
 use App\Domain\Collections\MeasurableCollection;
-use App\Domain\Interfaces\HasMeasurables;
+use App\Domain\Interfaces\RaisesMeasurables;
 
 /**
  * Class Measurable
@@ -13,7 +13,7 @@ use App\Domain\Interfaces\HasMeasurables;
  * @property int $measurable_type_id
  * @property int $amount_raised
  *
- * @property HasMeasurables $hasMeasurables
+ * @property RaisesMeasurables $hasMeasurables
  * @property MeasurableType $measurableType
  */
 class Measurable extends EventSourcedModel
