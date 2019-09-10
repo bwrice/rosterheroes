@@ -12,6 +12,8 @@ namespace App\Domain\Behaviors\ItemBases\Weapons;
 use App\Domain\Behaviors\ItemBases\Weapons\ArmBehaviors\SingleArmBehavior;
 use App\Domain\Behaviors\ItemBases\Weapons\WeaponBehavior;
 use App\Domain\Behaviors\ItemGroup\WeaponGroup;
+use App\Domain\Interfaces\HasItems;
+use App\Domain\Models\MeasurableType;
 
 class AxeBehavior extends WeaponBehavior
 {
@@ -45,5 +47,12 @@ class AxeBehavior extends WeaponBehavior
     public function itemBaseDamageModifier(): float
     {
         return .75;
+    }
+
+    public function getBaseDamageModifier(HasItems $hasItems = null): float
+    {
+        $valorAmount = $hasItems->getCurrentMeasurableAmount(MeasurableType::VALOR);
+        $valorAmount = $hasItems->getCurrentMeasurableAmount(MeasurableType::STAMINA);
+        return $this->itemBaseDamageModifier() / $this->getCombatSpeedModifier();
     }
 }

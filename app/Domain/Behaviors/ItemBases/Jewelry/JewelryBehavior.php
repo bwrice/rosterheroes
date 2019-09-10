@@ -5,6 +5,7 @@ namespace App\Domain\Behaviors\ItemBases\Jewelry;
 
 use App\Domain\Behaviors\ItemBases\ItemBaseBehavior;
 use App\Domain\Behaviors\ItemGroup\JewelryGroup;
+use App\Domain\Interfaces\HasItems;
 
 abstract class JewelryBehavior extends ItemBaseBehavior
 {
@@ -13,17 +14,17 @@ abstract class JewelryBehavior extends ItemBaseBehavior
         parent::__construct($jewelryGroup);
     }
 
-    public function getDamageMultiplierModifier(): float
+    public function getDamageMultiplierModifier(HasItems $hasItems = null): float
     {
         return 1;
     }
 
-    public function getBaseDamageModifier(): float
+    public function getBaseDamageModifier(HasItems $hasItems = null): float
     {
         return 1;
     }
 
-    public function getCombatSpeedModifier(): float
+    public function getCombatSpeedModifier(HasItems $hasItems = null): float
     {
         return 1;
     }

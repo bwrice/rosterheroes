@@ -6,6 +6,7 @@ namespace App\Domain\Behaviors\ItemBases\Clothing;
 
 use App\Domain\Behaviors\ItemBases\ItemBaseBehavior;
 use App\Domain\Behaviors\ItemGroup\ClothingGroup;
+use App\Domain\Interfaces\HasItems;
 
 abstract class ClothingBehavior extends ItemBaseBehavior
 {
@@ -14,17 +15,17 @@ abstract class ClothingBehavior extends ItemBaseBehavior
         parent::__construct($clothingGroup);
     }
 
-    public function getDamageMultiplierModifier(): float
+    public function getDamageMultiplierModifier(HasItems $hasItems = null): float
     {
         return 1;
     }
 
-    public function getBaseDamageModifier(): float
+    public function getBaseDamageModifier(HasItems $hasItems = null): float
     {
         return 1;
     }
 
-    public function getCombatSpeedModifier(): float
+    public function getCombatSpeedModifier(HasItems $hasItems = null): float
     {
         return 1;
     }

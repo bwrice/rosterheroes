@@ -12,6 +12,7 @@ namespace App\Domain\Behaviors\ItemBases\Weapons;
 use App\Domain\Behaviors\ItemBases\Weapons\ArmBehaviors\SingleArmBehavior;
 use App\Domain\Behaviors\ItemBases\Weapons\WeaponBehavior;
 use App\Domain\Behaviors\ItemGroup\WeaponGroup;
+use App\Domain\Interfaces\HasItems;
 
 class DaggerBehavior extends WeaponBehavior
 {
@@ -46,5 +47,10 @@ class DaggerBehavior extends WeaponBehavior
     public function itemBaseDamageModifier(): float
     {
         return .2;
+    }
+
+    public function getBaseDamageModifier(HasItems $hasItems = null): float
+    {
+        return $this->itemBaseDamageModifier() / $this->getCombatSpeedModifier();
     }
 }

@@ -1,7 +1,8 @@
 <?php
 
-
 namespace App\Domain\Behaviors\ItemBases;
+
+use App\Domain\Interfaces\HasItems;
 
 interface ItemBaseBehaviorInterface
 {
@@ -11,9 +12,9 @@ interface ItemBaseBehaviorInterface
 
     public function getSlotTypeIDs(): array;
 
-    public function getCombatSpeedModifier(): float;
+    public function getCombatSpeedModifier(HasItems $hasItems = null): float;
 
-    public function getBaseDamageModifier(): float;
+    public function getBaseDamageModifier(HasItems $hasItems = null): float;
 
-    public function getDamageMultiplierModifier(): float;
+    public function getDamageMultiplierModifier(HasItems $hasItems = null): float;
 }

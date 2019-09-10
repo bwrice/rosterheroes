@@ -12,6 +12,7 @@ namespace App\Domain\Behaviors\ItemBases\Weapons;
 use App\Domain\Behaviors\ItemBases\Weapons\ArmBehaviors\TwoArmBehavior;
 use App\Domain\Behaviors\ItemBases\Weapons\WeaponBehavior;
 use App\Domain\Behaviors\ItemGroup\WeaponGroup;
+use App\Domain\Interfaces\HasItems;
 
 class TwoHandSwordBehavior extends WeaponBehavior
 {
@@ -45,5 +46,10 @@ class TwoHandSwordBehavior extends WeaponBehavior
     public function itemBaseDamageModifier(): float
     {
         return .95;
+    }
+
+    public function getBaseDamageModifier(HasItems $hasItems = null): float
+    {
+        return $this->itemBaseDamageModifier() / $this->getCombatSpeedModifier();
     }
 }
