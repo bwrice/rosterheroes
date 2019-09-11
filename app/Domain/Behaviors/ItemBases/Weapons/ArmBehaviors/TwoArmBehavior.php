@@ -16,4 +16,9 @@ class TwoArmBehavior implements ArmBehaviorInterface
     {
         return 1.6;
     }
+
+    public function getSpeedRatingModifier(): float
+    {
+        return .7;
+    }
 }

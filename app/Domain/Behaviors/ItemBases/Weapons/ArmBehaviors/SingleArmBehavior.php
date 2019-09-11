@@ -16,4 +16,9 @@ class SingleArmBehavior implements ArmBehaviorInterface
     {
         return 1;
     }
+
+    public function getSpeedRatingModifier(): float
+    {
+        return 1;
+    }
 }
