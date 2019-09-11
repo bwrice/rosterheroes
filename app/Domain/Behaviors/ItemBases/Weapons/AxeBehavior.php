@@ -17,6 +17,9 @@ use App\Domain\Models\MeasurableType;
 
 class AxeBehavior extends WeaponBehavior
 {
+    public const SPEED_RATING = 32;
+    public const BASE_DAMAGE_RAGING = 75;
+
     public function __construct(WeaponGroup $weaponGroup, SingleArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);
@@ -51,8 +54,8 @@ class AxeBehavior extends WeaponBehavior
 
     public function getBaseDamageModifier(HasItems $hasItems = null): float
     {
-        $valorAmount = $hasItems->getCurrentMeasurableAmount(MeasurableType::VALOR);
-        $valorAmount = $hasItems->getCurrentMeasurableAmount(MeasurableType::STAMINA);
-        return $this->itemBaseDamageModifier() / $this->getCombatSpeedModifier();
+        $valorModifier =  1 + $hasItems->getValorAmount()/50;
+        $baseDamageModifier = self::BASE_DAMAGE_RAGING/self::SPEED_RATING;
+        return $valorModifier * $baseDamageModifier;
     }
 }
