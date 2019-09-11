@@ -13,9 +13,12 @@ use App\Domain\Behaviors\ItemBases\Weapons\ArmBehaviors\SingleArmBehavior;
 use App\Domain\Behaviors\ItemBases\Weapons\WeaponBehavior;
 use App\Domain\Behaviors\ItemGroup\WeaponGroup;
 use App\Domain\Interfaces\UsesItems;
+use App\Domain\Models\MeasurableType;
 
 class DaggerBehavior extends WeaponBehavior
 {
+    public const SPEED_RATING = 95;
+    public const BASE_DAMAGE_RAGING = 20;
 
     public function __construct(WeaponGroup $weaponGroup, SingleArmBehavior $armBehavior)
     {
@@ -51,16 +54,18 @@ class DaggerBehavior extends WeaponBehavior
 
     protected function getBaseDamageMeasurablesModifier(UsesItems $usesItems): float
     {
-        return 0;
+        $agilityBonus =  .02 * $usesItems->getMeasurableAmount(MeasurableType::AGILITY);
+        $focusBonus =  .02 * $usesItems->getMeasurableAmount(MeasurableType::FOCUS);
+        return 1 + ($agilityBonus + $focusBonus);
     }
 
     protected function getStartingSpeedRating(): int
     {
-        return 1;
+        return self::SPEED_RATING;
     }
 
     protected function getStartingBaseDamageRating(): int
     {
-        return 1;
+        return self::BASE_DAMAGE_RAGING;
     }
 }
