@@ -52,15 +52,6 @@ class SwordBehavior extends WeaponBehavior
         return .65;
     }
 
-    public function getBaseDamageModifier(UsesItems $usesItems = null): float
-    {
-        $strengthModifier =  1 + $usesItems->getMeasurableAmount(MeasurableType::STRENGTH)/65;
-        $valorModifier =  1 + $usesItems->getMeasurableAmount(MeasurableType::VALOR)/65;
-        $agilityModifier =  1 + $usesItems->getMeasurableAmount(MeasurableType::AGILITY)/65;
-        $baseDamageModifier = self::BASE_DAMAGE_RAGING/self::SPEED_RATING;
-        return $strengthModifier * $valorModifier * $agilityModifier * $baseDamageModifier;
-    }
-
     protected function getBaseDamageMeasurablesModifier(UsesItems $usesItems): float
     {
         return 0;

@@ -53,15 +53,6 @@ class ThrowingWeaponBehavior extends WeaponBehavior
         return .65;
     }
 
-    public function getBaseDamageModifier(UsesItems $usesItems = null): float
-    {
-        $strengthModifier =  1 + $usesItems->getMeasurableAmount(MeasurableType::STRENGTH)/80;
-        $agilityModifier =  1 + $usesItems->getMeasurableAmount(MeasurableType::AGILITY)/80;
-        $focusModifier =  1 + $usesItems->getMeasurableAmount(MeasurableType::AGILITY)/35;
-        $baseDamageModifier = self::BASE_DAMAGE_RAGING/self::SPEED_RATING;
-        return $strengthModifier * $agilityModifier * $agilityModifier * $focusModifier * $baseDamageModifier;
-    }
-
     protected function getBaseDamageMeasurablesModifier(UsesItems $usesItems): float
     {
         return 0;

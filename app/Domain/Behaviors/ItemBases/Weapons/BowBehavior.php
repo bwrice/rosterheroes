@@ -51,16 +51,6 @@ class BowBehavior extends WeaponBehavior
         return .35;
     }
 
-    public function getBaseDamageModifier(UsesItems $usesItems = null): float
-    {
-        $strengthModifier =  1 + $usesItems->getMeasurableAmount(MeasurableType::STRENGTH)/80;
-        $agilityModifier =  1 + $usesItems->getMeasurableAmount(MeasurableType::AGILITY)/80;
-        $focusModifier =  1 + $usesItems->getMeasurableAmount(MeasurableType::FOCUS)/35;
-        $baseDamageModifier = self::BASE_DAMAGE_RAGING/self::SPEED_RATING;
-        $twoHandBonus = 1.6;
-        return $twoHandBonus * $strengthModifier * $agilityModifier * $agilityModifier * $focusModifier * $baseDamageModifier;
-    }
-
     protected function getBaseDamageMeasurablesModifier(UsesItems $usesItems): float
     {
         return 0;

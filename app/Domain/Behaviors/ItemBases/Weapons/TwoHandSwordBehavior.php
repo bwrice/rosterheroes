@@ -52,16 +52,6 @@ class TwoHandSwordBehavior extends WeaponBehavior
         return .95;
     }
 
-
-    public function getBaseDamageModifier(UsesItems $usesItems = null): float
-    {
-        $strengthModifier =  1 + $usesItems->getMeasurableAmount(MeasurableType::STRENGTH)/60;
-        $valorModifier =  1 + $usesItems->getMeasurableAmount(MeasurableType::VALOR)/30;
-        $baseDamageModifier = self::BASE_DAMAGE_RAGING/self::SPEED_RATING;
-        $twoHandBonus = 1.6;
-        return $twoHandBonus * $strengthModifier * $valorModifier * $baseDamageModifier;
-    }
-
     protected function getBaseDamageMeasurablesModifier(UsesItems $usesItems): float
     {
         return 0;
