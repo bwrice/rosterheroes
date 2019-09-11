@@ -18,8 +18,8 @@ use App\Domain\Models\MeasurableType;
 
 class ThrowingWeaponBehavior extends WeaponBehavior
 {
-    public const SPEED_RATING = 65;
-    public const BASE_DAMAGE_RAGING = 35;
+    public const SPEED_RATING = 18;
+    public const BASE_DAMAGE_RAGING = 75;
 
     public function __construct(WeaponGroup $weaponGroup, SingleArmBehavior $armBehavior)
     {
@@ -55,16 +55,18 @@ class ThrowingWeaponBehavior extends WeaponBehavior
 
     protected function getBaseDamageMeasurablesModifier(UsesItems $usesItems): float
     {
-        return 0;
+        $strengthBonus =  .02 * $usesItems->getMeasurableAmount(MeasurableType::STRENGTH);
+        $focusBonus =  .02 * $usesItems->getMeasurableAmount(MeasurableType::FOCUS);
+        return 1 + ($strengthBonus + $focusBonus);
     }
 
     protected function getStartingSpeedRating(): int
     {
-        return 1;
+        return self::SPEED_RATING;
     }
 
     protected function getStartingBaseDamageRating(): int
     {
-        return 1;
+        return self::BASE_DAMAGE_RAGING;
     }
 }
