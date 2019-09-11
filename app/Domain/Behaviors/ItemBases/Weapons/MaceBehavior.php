@@ -54,8 +54,9 @@ class MaceBehavior extends WeaponBehavior
 
     public function getBaseDamageModifier(UsesItems $usesItems = null): float
     {
-        $valorModifier =  1 + $usesItems->getMeasurableAmount(MeasurableType::VALOR)/30;
+        $strengthModifier =  1 + $usesItems->getMeasurableAmount(MeasurableType::STRENGTH)/40;
+        $valorModifier =  1 + $usesItems->getMeasurableAmount(MeasurableType::VALOR)/80;
         $baseDamageModifier = self::BASE_DAMAGE_RAGING/self::SPEED_RATING;
-        return $valorModifier * $baseDamageModifier;
+        return $strengthModifier * $valorModifier * $baseDamageModifier;
     }
 }
