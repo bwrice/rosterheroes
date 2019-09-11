@@ -11,4 +11,9 @@ class SingleArmBehavior implements ArmBehaviorInterface
     {
         return 1;
     }
+
+    public function getBaseDamageRatingModifier(): float
+    {
+        return 1;
+    }
 }

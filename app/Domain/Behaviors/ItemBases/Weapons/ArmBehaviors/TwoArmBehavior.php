@@ -11,4 +11,9 @@ class TwoArmBehavior implements ArmBehaviorInterface
     {
         return 2;
     }
+
+    public function getBaseDamageRatingModifier(): float
+    {
+        return 1.6;
+    }
 }
