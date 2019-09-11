@@ -79,9 +79,9 @@ class WeaponBehaviorUnitTest extends TestCase
             ItemBase::AXE => [
                 'weaponBehaviorClass' => AxeBehavior::class
             ],
-//            ItemBase::MACE => [
-//                'weaponBehaviorClass' => MaceBehavior::class
-//            ],
+            ItemBase::MACE => [
+                'weaponBehaviorClass' => MaceBehavior::class
+            ],
         ];
     }
 }

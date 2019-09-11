@@ -13,6 +13,7 @@ use App\Domain\Behaviors\ItemBases\Weapons\ArmBehaviors\SingleArmBehavior;
 use App\Domain\Behaviors\ItemBases\Weapons\WeaponBehavior;
 use App\Domain\Behaviors\ItemGroup\WeaponGroup;
 use App\Domain\Interfaces\UsesItems;
+use App\Domain\Models\MeasurableType;
 
 class MaceBehavior extends WeaponBehavior
 {
@@ -53,9 +54,8 @@ class MaceBehavior extends WeaponBehavior
 
     public function getBaseDamageModifier(UsesItems $usesItems = null): float
     {
-        $valorModifier =  1 + $usesItems->getValorAmount()/50;
-        $strengthModifier =  1 + $usesItems->getStrengthAmount()/50;
+        $valorModifier =  1 + $usesItems->getMeasurableAmount(MeasurableType::VALOR)/30;
         $baseDamageModifier = self::BASE_DAMAGE_RAGING/self::SPEED_RATING;
-        return $strengthModifier * $valorModifier * $baseDamageModifier;
+        return $valorModifier * $baseDamageModifier;
     }
 }
