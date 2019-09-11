@@ -54,8 +54,8 @@ class DaggerBehavior extends WeaponBehavior
 
     protected function getBaseDamageMeasurablesModifier(UsesItems $usesItems): float
     {
-        $agilityBonus =  .02 * $usesItems->getMeasurableAmount(MeasurableType::AGILITY);
-        $focusBonus =  .02 * $usesItems->getMeasurableAmount(MeasurableType::FOCUS);
+        $agilityBonus = .02 * $usesItems->getMeasurableAmount(MeasurableType::AGILITY);
+        $focusBonus = .02 * $usesItems->getMeasurableAmount(MeasurableType::FOCUS);
         return 1 + ($agilityBonus + $focusBonus);
     }
 

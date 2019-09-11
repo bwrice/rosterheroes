@@ -53,9 +53,9 @@ class BowBehavior extends WeaponBehavior
 
     protected function getBaseDamageMeasurablesModifier(UsesItems $usesItems): float
     {
-        $strengthBonus =  .012 * $usesItems->getMeasurableAmount(MeasurableType::STRENGTH);
-        $agilityBonus =  .015 * $usesItems->getMeasurableAmount(MeasurableType::AGILITY);
-        $focusBonus =  .0185 * $usesItems->getMeasurableAmount(MeasurableType::FOCUS);
+        $strengthBonus = .012 * $usesItems->getMeasurableAmount(MeasurableType::STRENGTH);
+        $agilityBonus = .015 * $usesItems->getMeasurableAmount(MeasurableType::AGILITY);
+        $focusBonus = .0185 * $usesItems->getMeasurableAmount(MeasurableType::FOCUS);
         return 1 + ($strengthBonus + $agilityBonus + $focusBonus);
     }
 
