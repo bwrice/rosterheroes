@@ -3,7 +3,12 @@
 namespace Tests\Unit;
 
 use App\Domain\Behaviors\ItemBases\Weapons\AxeBehavior;
+use App\Domain\Behaviors\ItemBases\Weapons\BowBehavior;
 use App\Domain\Behaviors\ItemBases\Weapons\MaceBehavior;
+use App\Domain\Behaviors\ItemBases\Weapons\SwordBehavior;
+use App\Domain\Behaviors\ItemBases\Weapons\ThrowingWeaponBehavior;
+use App\Domain\Behaviors\ItemBases\Weapons\TwoHandAxeBehavior;
+use App\Domain\Behaviors\ItemBases\Weapons\TwoHandSwordBehavior;
 use App\Domain\Behaviors\ItemBases\Weapons\WeaponBehavior;
 use App\Domain\Interfaces\UsesItems;
 use App\Domain\Models\Item;
@@ -81,6 +86,15 @@ class WeaponBehaviorUnitTest extends TestCase
             ],
             ItemBase::MACE => [
                 'weaponBehaviorClass' => MaceBehavior::class
+            ],
+            ItemBase::SWORD => [
+                'weaponBehaviorClass' => SwordBehavior::class
+            ],
+            ItemBase::TWO_HAND_AXE => [
+                'weaponBehaviorClass' => TwoHandAxeBehavior::class
+            ],
+            ItemBase::TWO_HAND_SWORD => [
+                'weaponBehaviorClass' => TwoHandSwordBehavior::class
             ],
         ];
     }
