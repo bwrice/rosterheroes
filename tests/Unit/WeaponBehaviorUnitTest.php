@@ -104,8 +104,8 @@ class WeaponBehaviorUnitTest extends TestCase
                 'weaponBehaviorClass' => ThrowingWeaponBehavior::class
             ],
             ItemBase::PSIONIC_TWO_HAND => [
-        'weaponBehaviorClass' => PsionicTwoHandBehavior::class
-    ],
+                'weaponBehaviorClass' => PsionicTwoHandBehavior::class
+            ],
         ];
     }
 
@@ -332,6 +332,80 @@ class WeaponBehaviorUnitTest extends TestCase
             ],
             ItemBase::PSIONIC_TWO_HAND => [
                 'weaponBehaviorClass' => PsionicTwoHandBehavior::class
+            ],
+        ];
+    }
+
+    /**
+     * @test
+     * @param $weaponBehaviorClass
+     * @dataProvider provides_higher_agility_increases_the_speed_of_weapons
+     */
+    public function higher_agility_increases_the_speed_of_weapons($weaponBehaviorClass)
+    {
+
+        /** @var WeaponBehavior $weaponBehavior */
+        $weaponBehavior = app($weaponBehaviorClass);
+
+        $this->usesItems->setMeasurable(MeasurableType::AGILITY, 10);
+        $lowAgilityModifier = $weaponBehavior->getCombatSpeedModifier($this->usesItems);
+
+
+        $this->usesItems->setMeasurable(MeasurableType::AGILITY, 99);
+        $higherAgilityModifier = $weaponBehavior->getCombatSpeedModifier($this->usesItems);
+
+        $diff = $higherAgilityModifier - $lowAgilityModifier;
+        // Make sure the diff is greater than PHP float error, AKA, a number very close to zero
+        $this->assertGreaterThan(PHP_FLOAT_EPSILON, $diff);
+    }
+
+    public function provides_higher_agility_increases_the_speed_of_weapons()
+    {
+        return [
+            ItemBase::WAND => [
+                'weaponBehaviorClass' => WandBehavior::class
+            ],
+            ItemBase::ORB => [
+                'weaponBehaviorClass' => OrbBehavior::class
+            ],
+            ItemBase::STAFF => [
+                'weaponBehaviorClass' => StaffBehavior::class
+            ],
+            ItemBase::PSIONIC_ONE_HAND => [
+                'weaponBehaviorClass' => PsionicOneHandBehavior::class
+            ],
+            ItemBase::PSIONIC_TWO_HAND => [
+                'weaponBehaviorClass' => PsionicTwoHandBehavior::class
+            ],
+            ItemBase::CROSSBOW => [
+                'weaponBehaviorClass' => CrossbowBehavior::class
+            ],
+            ItemBase::AXE => [
+                'weaponBehaviorClass' => AxeBehavior::class
+            ],
+            ItemBase::MACE => [
+                'weaponBehaviorClass' => MaceBehavior::class
+            ],
+            ItemBase::SWORD => [
+                'weaponBehaviorClass' => SwordBehavior::class
+            ],
+            ItemBase::TWO_HAND_AXE => [
+                'weaponBehaviorClass' => TwoHandAxeBehavior::class
+            ],
+            ItemBase::TWO_HAND_SWORD => [
+                'weaponBehaviorClass' => TwoHandSwordBehavior::class
+            ],
+            ItemBase::POLE_ARM => [
+                'weaponBehaviorClass' => PoleArmBehavior::class
+            ],
+            ItemBase::DAGGER => [
+                'weaponBehaviorClass' => DaggerBehavior::class
+            ],
+            ItemBase::BOW => [
+                'weaponBehaviorClass' => BowBehavior::class
+            ],
+            ItemBase::THROWING_WEAPON => [
+                'weaponBehaviorClass' => ThrowingWeaponBehavior::class
             ],
         ];
     }
