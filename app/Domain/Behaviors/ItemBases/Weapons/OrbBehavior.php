@@ -13,9 +13,12 @@ use App\Domain\Behaviors\ItemBases\Weapons\ArmBehaviors\TwoArmBehavior;
 use App\Domain\Behaviors\ItemBases\Weapons\WeaponBehavior;
 use App\Domain\Behaviors\ItemGroup\WeaponGroup;
 use App\Domain\Interfaces\UsesItems;
+use App\Domain\Models\MeasurableType;
 
 class OrbBehavior extends WeaponBehavior
 {
+    public const SPEED_RATING = 85;
+    public const BASE_DAMAGE_RAGING = 35;
 
     public function __construct(WeaponGroup $weaponGroup, TwoArmBehavior $armBehavior)
     {
@@ -51,16 +54,19 @@ class OrbBehavior extends WeaponBehavior
 
     protected function getBaseDamageMeasurablesModifier(UsesItems $usesItems): float
     {
-        return 0;
+        $focusBonus =  .02 * $usesItems->getMeasurableAmount(MeasurableType::FOCUS);
+        $aptitudeBonus =  .02 * $usesItems->getMeasurableAmount(MeasurableType::APTITUDE);
+        $intelligenceBonus =  .02 * $usesItems->getMeasurableAmount(MeasurableType::INTELLIGENCE);
+        return 1 + ($focusBonus + $aptitudeBonus + $intelligenceBonus);
     }
 
     protected function getStartingSpeedRating(): int
     {
-        return 1;
+        return self::SPEED_RATING;
     }
 
     protected function getStartingBaseDamageRating(): int
     {
-        return 1;
+        return self::BASE_DAMAGE_RAGING;
     }
 }
