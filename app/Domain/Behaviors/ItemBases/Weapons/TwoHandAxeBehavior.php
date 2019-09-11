@@ -52,6 +52,13 @@ class TwoHandAxeBehavior extends WeaponBehavior
         return .9;
     }
 
+    public function getBaseDamageModifier(UsesItems $usesItems = null): float
+    {
+        $strengthBonus =  .027 * $usesItems->getMeasurableAmount(MeasurableType::STRENGTH);
+        $valorBonus =  .017 * $usesItems->getMeasurableAmount(MeasurableType::VALOR);
+        return 1 + ($strengthBonus + $valorBonus);
+    }
+
     protected function getBaseDamageMeasurablesModifier(UsesItems $usesItems): float
     {
         return 0;
@@ -59,11 +66,11 @@ class TwoHandAxeBehavior extends WeaponBehavior
 
     protected function getStartingSpeedRating(): int
     {
-        return 1;
+        return self::SPEED_RATING;
     }
 
     protected function getStartingBaseDamageRating(): int
     {
-        return 1;
+        return self::BASE_DAMAGE_RAGING;
     }
 }
