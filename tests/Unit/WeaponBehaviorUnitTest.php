@@ -3,8 +3,9 @@
 namespace Tests\Unit;
 
 use App\Domain\Behaviors\ItemBases\Weapons\AxeBehavior;
+use App\Domain\Behaviors\ItemBases\Weapons\MaceBehavior;
 use App\Domain\Behaviors\ItemBases\Weapons\WeaponBehavior;
-use App\Domain\Interfaces\HasItems;
+use App\Domain\Interfaces\UsesItems;
 use App\Domain\Models\Item;
 use App\Domain\Models\ItemBase;
 use App\Domain\Models\MeasurableType;
@@ -17,6 +18,39 @@ class WeaponBehaviorUnitTest extends TestCase
 {
     use DatabaseTransactions;
 
+
+    /** @var UsesItems */
+    protected $usesItems;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->usesItems = new class() implements UsesItems {
+
+            protected $measurables = [
+                'strength' => 0,
+                'valor' => 0,
+                'agility' => 0,
+                'focus' => 0,
+                'aptitude' => 0,
+                'intelligence' => 0,
+            ];
+
+            public function setMeasurable(string $measurableTypeName, int $value)
+            {
+                $this->measurables[$measurableTypeName] = $value;
+            }
+
+            public function getMeasurableAmount(string $measurableTypeName): int
+            {
+                if (array_key_exists($measurableTypeName, $this->measurables)) {
+                    return $this->measurables[$measurableTypeName];
+                }
+                return 0;
+            }
+        };
+    }
+
     /**
      * @test
      * @dataProvider provides_certain_weapons_have_more_base_damage_with_more_valor
@@ -27,16 +61,16 @@ class WeaponBehaviorUnitTest extends TestCase
         /** @var WeaponBehavior $weaponBehavior */
         $weaponBehavior = app($weaponBehaviorClass);
 
-        $lowValor = \Mockery::mock(HasItems::class);
-        $lowValor->shouldReceive('getValorAmount')->andReturn(10);
+        $this->usesItems->setMeasurable(MeasurableType::VALOR, 10);
+        $lowValorBaseDamageModifier = $weaponBehavior->getBaseDamageModifier($this->usesItems);
 
-        $highValor = \Mockery::mock(HasItems::class);
-        $highValor->shouldReceive('getValorAmount')->andReturn(99);
 
-        $lowValorBaseDamageModifier = $weaponBehavior->getBaseDamageModifier($lowValor);
-        $highValorBaseDamageModifier = $weaponBehavior->getBaseDamageModifier($highValor);
+        $this->usesItems->setMeasurable(MeasurableType::VALOR, 99);
+        $highValorBaseDamageModifier = $weaponBehavior->getBaseDamageModifier($this->usesItems);
 
-        $this->assertGreaterThan($lowValorBaseDamageModifier, $highValorBaseDamageModifier);
+        $diff = $highValorBaseDamageModifier - $lowValorBaseDamageModifier;
+        // Make sure the diff is greater than PHP float error, AKA, a number very close to zero
+        $this->assertGreaterThan(PHP_FLOAT_EPSILON, $diff);
     }
 
     public function provides_certain_weapons_have_more_base_damage_with_more_valor()
@@ -44,7 +78,10 @@ class WeaponBehaviorUnitTest extends TestCase
         return [
             ItemBase::AXE => [
                 'weaponBehaviorClass' => AxeBehavior::class
-            ]
+            ],
+//            ItemBase::MACE => [
+//                'weaponBehaviorClass' => MaceBehavior::class
+//            ],
         ];
     }
 }
