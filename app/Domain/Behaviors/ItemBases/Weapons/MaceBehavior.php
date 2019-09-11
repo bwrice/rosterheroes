@@ -17,7 +17,7 @@ use App\Domain\Models\MeasurableType;
 
 class MaceBehavior extends WeaponBehavior
 {
-    public const SPEED_RATING = 22;
+    public const SPEED_RATING = 38;
     public const BASE_DAMAGE_RAGING = 65;
 
     public function __construct(WeaponGroup $weaponGroup, SingleArmBehavior $armBehavior)
@@ -31,7 +31,7 @@ class MaceBehavior extends WeaponBehavior
      */
     public function itemBaseSpeedModifier(): float
     {
-        return .22;
+        return .38;
     }
 
     /**

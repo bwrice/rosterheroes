@@ -31,7 +31,7 @@ class SwordBehavior extends WeaponBehavior
      */
     public function itemBaseSpeedModifier(): float
     {
-        return .5;
+        return .55;
     }
 
     /**

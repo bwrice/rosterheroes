@@ -17,7 +17,7 @@ use App\Domain\Models\MeasurableType;
 
 class AxeBehavior extends WeaponBehavior
 {
-    public const SPEED_RATING = 32;
+    public const SPEED_RATING = 44;
     public const BASE_DAMAGE_RAGING = 75;
 
     public function __construct(WeaponGroup $weaponGroup, SingleArmBehavior $armBehavior)
@@ -31,7 +31,7 @@ class AxeBehavior extends WeaponBehavior
      */
     public function itemBaseSpeedModifier(): float
     {
-        return .32;
+        return .4;
     }
 
     /**
