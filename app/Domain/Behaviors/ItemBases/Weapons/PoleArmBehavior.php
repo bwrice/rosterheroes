@@ -13,9 +13,12 @@ use App\Domain\Behaviors\ItemBases\Weapons\ArmBehaviors\TwoArmBehavior;
 use App\Domain\Behaviors\ItemBases\Weapons\WeaponBehavior;
 use App\Domain\Behaviors\ItemGroup\WeaponGroup;
 use App\Domain\Interfaces\UsesItems;
+use App\Domain\Models\MeasurableType;
 
 class PoleArmBehavior extends WeaponBehavior
 {
+    public const SPEED_RATING = 82;
+    public const BASE_DAMAGE_RAGING = 30;
 
     public function __construct(WeaponGroup $weaponGroup, TwoArmBehavior $armBehavior)
     {
@@ -51,17 +54,19 @@ class PoleArmBehavior extends WeaponBehavior
 
     protected function getBaseDamageMeasurablesModifier(UsesItems $usesItems): float
     {
-        return 0;
+        $valorBonus =  .02 * $usesItems->getMeasurableAmount(MeasurableType::VALOR);
+        $agilityBonus =  .02 * $usesItems->getMeasurableAmount(MeasurableType::AGILITY);
+        return 1 + ($valorBonus + $agilityBonus);
     }
 
     protected function getStartingSpeedRating(): int
     {
-        return 1;
+        return self::SPEED_RATING;
     }
 
     protected function getStartingBaseDamageRating(): int
     {
-        return 1;
+        return self::BASE_DAMAGE_RAGING;
     }
 
 }
