@@ -61,4 +61,19 @@ class TwoHandSwordBehavior extends WeaponBehavior
         $twoHandBonus = 1.6;
         return $twoHandBonus * $strengthModifier * $valorModifier * $baseDamageModifier;
     }
+
+    protected function getBaseDamageMeasurablesModifier(UsesItems $usesItems): float
+    {
+        return 0;
+    }
+
+    protected function getStartingSpeedRating(): int
+    {
+        return 1;
+    }
+
+    protected function getStartingBaseDamageRating(): int
+    {
+        return 1;
+    }
 }

@@ -8,6 +8,7 @@ use App\Domain\Behaviors\ItemBases\ItemBaseBehavior;
 use App\Domain\Behaviors\ItemBases\Weapons\ArmBehaviors\ArmBehaviorInterface;
 use App\Domain\Behaviors\ItemGroup\WeaponGroup;
 use App\Domain\Interfaces\UsesItems;
+use App\Domain\Models\MeasurableType;
 use App\Domain\Models\SlotType;
 
 abstract class WeaponBehavior extends ItemBaseBehavior
@@ -53,6 +54,22 @@ abstract class WeaponBehavior extends ItemBaseBehavior
      * @return float
      */
     abstract public function itemBaseDamageModifier(): float;
+
+
+    public function getSpeedRating(): float
+    {
+        return $this->getStartingSpeedRating() * $this->armBehavior->getSpeedRatingModifier();
+    }
+
+    abstract protected function getStartingSpeedRating(): int;
+
+    public function getBaseDamageRating(): float
+    {
+        return $this->getStartingBaseDamageRating() * $this->armBehavior->getBaseDamageRatingModifier();
+    }
+
+    abstract protected function getStartingBaseDamageRating(): int;
+
 
     /**
      * @param UsesItems|null $hasItems

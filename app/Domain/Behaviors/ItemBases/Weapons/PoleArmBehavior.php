@@ -54,4 +54,19 @@ class PoleArmBehavior extends WeaponBehavior
         return $this->itemBaseDamageModifier() / $this->getCombatSpeedModifier();
     }
 
+    protected function getBaseDamageMeasurablesModifier(UsesItems $usesItems): float
+    {
+        return 0;
+    }
+
+    protected function getStartingSpeedRating(): int
+    {
+        return 1;
+    }
+
+    protected function getStartingBaseDamageRating(): int
+    {
+        return 1;
+    }
+
 }

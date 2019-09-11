@@ -61,4 +61,19 @@ class ThrowingWeaponBehavior extends WeaponBehavior
         $baseDamageModifier = self::BASE_DAMAGE_RAGING/self::SPEED_RATING;
         return $strengthModifier * $agilityModifier * $agilityModifier * $focusModifier * $baseDamageModifier;
     }
+
+    protected function getBaseDamageMeasurablesModifier(UsesItems $usesItems): float
+    {
+        return 0;
+    }
+
+    protected function getStartingSpeedRating(): int
+    {
+        return 1;
+    }
+
+    protected function getStartingBaseDamageRating(): int
+    {
+        return 1;
+    }
 }

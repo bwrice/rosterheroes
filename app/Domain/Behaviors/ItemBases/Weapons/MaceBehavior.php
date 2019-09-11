@@ -59,4 +59,19 @@ class MaceBehavior extends WeaponBehavior
         $baseDamageModifier = self::BASE_DAMAGE_RAGING/self::SPEED_RATING;
         return $strengthModifier * $valorModifier * $baseDamageModifier;
     }
+
+    protected function getBaseDamageMeasurablesModifier(UsesItems $usesItems): float
+    {
+        return 0;
+    }
+
+    protected function getStartingSpeedRating(): int
+    {
+        return 1;
+    }
+
+    protected function getStartingBaseDamageRating(): int
+    {
+        return 1;
+    }
 }
