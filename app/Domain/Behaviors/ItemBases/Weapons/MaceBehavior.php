@@ -12,10 +12,12 @@ namespace App\Domain\Behaviors\ItemBases\Weapons;
 use App\Domain\Behaviors\ItemBases\Weapons\ArmBehaviors\SingleArmBehavior;
 use App\Domain\Behaviors\ItemBases\Weapons\WeaponBehavior;
 use App\Domain\Behaviors\ItemGroup\WeaponGroup;
-use App\Domain\Interfaces\HasItems;
+use App\Domain\Interfaces\UsesItems;
 
 class MaceBehavior extends WeaponBehavior
 {
+    public const SPEED_RATING = 22;
+    public const BASE_DAMAGE_RAGING = 65;
 
     public function __construct(WeaponGroup $weaponGroup, SingleArmBehavior $armBehavior)
     {
@@ -49,8 +51,11 @@ class MaceBehavior extends WeaponBehavior
         return .65;
     }
 
-    public function getBaseDamageModifier(HasItems $hasItems = null): float
+    public function getBaseDamageModifier(UsesItems $usesItems = null): float
     {
-        return $this->itemBaseDamageModifier() / $this->getCombatSpeedModifier();
+        $valorModifier =  1 + $usesItems->getValorAmount()/50;
+        $strengthModifier =  1 + $usesItems->getStrengthAmount()/50;
+        $baseDamageModifier = self::BASE_DAMAGE_RAGING/self::SPEED_RATING;
+        return $strengthModifier * $valorModifier * $baseDamageModifier;
     }
 }

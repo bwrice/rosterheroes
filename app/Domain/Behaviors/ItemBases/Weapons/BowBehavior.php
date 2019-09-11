@@ -11,7 +11,7 @@ namespace App\Domain\Behaviors\ItemBases\Weapons;
 
 use App\Domain\Behaviors\ItemBases\Weapons\ArmBehaviors\TwoArmBehavior;
 use App\Domain\Behaviors\ItemGroup\WeaponGroup;
-use App\Domain\Interfaces\HasItems;
+use App\Domain\Interfaces\UsesItems;
 
 class BowBehavior extends WeaponBehavior
 {
@@ -47,7 +47,7 @@ class BowBehavior extends WeaponBehavior
         return .35;
     }
 
-    public function getBaseDamageModifier(HasItems $hasItems = null): float
+    public function getBaseDamageModifier(UsesItems $usesItems = null): float
     {
         return $this->itemBaseDamageModifier() / $this->getCombatSpeedModifier();
     }

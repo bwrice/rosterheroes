@@ -13,7 +13,7 @@ use App\Domain\Behaviors\ItemBases\Weapons\ArmBehaviors\SingleArmBehavior;
 use App\Domain\Behaviors\ItemBases\Weapons\ArmBehaviors\TwoArmBehavior;
 use App\Domain\Behaviors\ItemBases\Weapons\WeaponBehavior;
 use App\Domain\Behaviors\ItemGroup\WeaponGroup;
-use App\Domain\Interfaces\HasItems;
+use App\Domain\Interfaces\UsesItems;
 
 class ThrowingWeaponBehavior extends WeaponBehavior
 {
@@ -49,7 +49,7 @@ class ThrowingWeaponBehavior extends WeaponBehavior
         return .65;
     }
 
-    public function getBaseDamageModifier(HasItems $hasItems = null): float
+    public function getBaseDamageModifier(UsesItems $usesItems = null): float
     {
         return $this->itemBaseDamageModifier() / $this->getCombatSpeedModifier();
     }

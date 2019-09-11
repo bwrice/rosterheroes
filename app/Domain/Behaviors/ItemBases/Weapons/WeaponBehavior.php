@@ -7,7 +7,7 @@ namespace App\Domain\Behaviors\ItemBases\Weapons;
 use App\Domain\Behaviors\ItemBases\ItemBaseBehavior;
 use App\Domain\Behaviors\ItemBases\Weapons\ArmBehaviors\ArmBehaviorInterface;
 use App\Domain\Behaviors\ItemGroup\WeaponGroup;
-use App\Domain\Interfaces\HasItems;
+use App\Domain\Interfaces\UsesItems;
 use App\Domain\Models\SlotType;
 
 abstract class WeaponBehavior extends ItemBaseBehavior
@@ -55,15 +55,15 @@ abstract class WeaponBehavior extends ItemBaseBehavior
     abstract public function itemBaseDamageModifier(): float;
 
     /**
-     * @param HasItems|null $hasItems
+     * @param UsesItems|null $hasItems
      * @return float
      */
-    public function getCombatSpeedModifier(HasItems $hasItems = null): float
+    public function getCombatSpeedModifier(UsesItems $hasItems = null): float
     {
         return $this->itemBaseSpeedModifier() / ($this->getSlotsCount() ** .5);
     }
 
-    public function getDamageMultiplierModifier(HasItems $hasItems = null): float
+    public function getDamageMultiplierModifier(UsesItems $hasItems = null): float
     {
         return $this->getCombatSpeedModifier() + $this->itemBaseDamageModifier()/10;
     }

@@ -11,7 +11,7 @@ namespace App\Domain\Behaviors\ItemBases;
 
 use App\Domain\Behaviors\ItemGroup\EyeWearGroup;
 use App\Domain\Behaviors\ItemGroup\ItemGroupInterface;
-use App\Domain\Interfaces\HasItems;
+use App\Domain\Interfaces\UsesItems;
 use App\Domain\Models\SlotType;
 
 class EyeWearBehavior extends ItemBaseBehavior
@@ -34,17 +34,17 @@ class EyeWearBehavior extends ItemBaseBehavior
         ];
     }
 
-    public function getBaseDamageModifier(HasItems $hasItems = null): float
+    public function getBaseDamageModifier(UsesItems $usesItems = null): float
     {
         return 1;
     }
 
-    public function getCombatSpeedModifier(HasItems $hasItems = null): float
+    public function getCombatSpeedModifier(UsesItems $hasItems = null): float
     {
         return 1;
     }
 
-    public function getDamageMultiplierModifier(HasItems $hasItems = null): float
+    public function getDamageMultiplierModifier(UsesItems $hasItems = null): float
     {
         return 1;
     }

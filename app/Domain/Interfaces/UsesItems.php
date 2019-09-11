@@ -4,7 +4,7 @@
 namespace App\Domain\Interfaces;
 
 
-interface HasItems
+interface UsesItems
 {
     public function getMeasurableAmount(string $measurableTypeName): int;
 }
