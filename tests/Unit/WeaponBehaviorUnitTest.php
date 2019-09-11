@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use App\Domain\Behaviors\ItemBases\Weapons\AxeBehavior;
 use App\Domain\Behaviors\ItemBases\Weapons\BowBehavior;
 use App\Domain\Behaviors\ItemBases\Weapons\MaceBehavior;
+use App\Domain\Behaviors\ItemBases\Weapons\PoleArmBehavior;
 use App\Domain\Behaviors\ItemBases\Weapons\SwordBehavior;
 use App\Domain\Behaviors\ItemBases\Weapons\ThrowingWeaponBehavior;
 use App\Domain\Behaviors\ItemBases\Weapons\TwoHandAxeBehavior;
@@ -51,6 +52,55 @@ class WeaponBehaviorUnitTest extends TestCase
 
     /**
      * @test
+     * @dataProvider provides_certain_weapons_have_more_base_damage_with_more_strength
+     * @param $weaponBehaviorClass
+     */
+    public function certain_weapons_have_more_base_damage_with_more_strength($weaponBehaviorClass)
+    {
+        /** @var WeaponBehavior $weaponBehavior */
+        $weaponBehavior = app($weaponBehaviorClass);
+
+        $this->usesItems->setMeasurable(MeasurableType::STRENGTH, 10);
+        $lowValorBaseDamageModifier = $weaponBehavior->getBaseDamageModifier($this->usesItems);
+
+
+        $this->usesItems->setMeasurable(MeasurableType::STRENGTH, 99);
+        $highValorBaseDamageModifier = $weaponBehavior->getBaseDamageModifier($this->usesItems);
+
+        $diff = $highValorBaseDamageModifier - $lowValorBaseDamageModifier;
+        // Make sure the diff is greater than PHP float error, AKA, a number very close to zero
+        $this->assertGreaterThan(PHP_FLOAT_EPSILON, $diff);
+    }
+
+    public function provides_certain_weapons_have_more_base_damage_with_more_strength()
+    {
+        return [
+            ItemBase::AXE => [
+                'weaponBehaviorClass' => AxeBehavior::class
+            ],
+            ItemBase::MACE => [
+                'weaponBehaviorClass' => MaceBehavior::class
+            ],
+            ItemBase::SWORD => [
+                'weaponBehaviorClass' => SwordBehavior::class
+            ],
+            ItemBase::TWO_HAND_AXE => [
+                'weaponBehaviorClass' => TwoHandAxeBehavior::class
+            ],
+            ItemBase::TWO_HAND_SWORD => [
+                'weaponBehaviorClass' => TwoHandSwordBehavior::class
+            ],
+            ItemBase::BOW => [
+                'weaponBehaviorClass' => BowBehavior::class
+            ],
+            ItemBase::THROWING_WEAPON => [
+                'weaponBehaviorClass' => ThrowingWeaponBehavior::class
+            ],
+        ];
+    }
+
+    /**
+     * @test
      * @dataProvider provides_certain_weapons_have_more_base_damage_with_more_valor
      * @param $weaponBehaviorClass
      */
@@ -88,6 +138,9 @@ class WeaponBehaviorUnitTest extends TestCase
             ],
             ItemBase::TWO_HAND_SWORD => [
                 'weaponBehaviorClass' => TwoHandSwordBehavior::class
+            ],
+            ItemBase::POLE_ARM => [
+                'weaponBehaviorClass' => PoleArmBehavior::class
             ],
         ];
     }
