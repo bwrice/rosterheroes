@@ -32,14 +32,7 @@ class WeaponBehaviorUnitTest extends TestCase
         parent::setUp();
         $this->usesItems = new class() implements UsesItems {
 
-            protected $measurables = [
-                'strength' => 0,
-                'valor' => 0,
-                'agility' => 0,
-                'focus' => 0,
-                'aptitude' => 0,
-                'intelligence' => 0,
-            ];
+            protected $measurables = [];
 
             public function setMeasurable(string $measurableTypeName, int $value)
             {
