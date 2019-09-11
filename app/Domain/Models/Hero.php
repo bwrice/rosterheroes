@@ -229,9 +229,9 @@ class Hero extends EventSourcedModel implements HasSlots, RaisesMeasurables
      */
     public function getMeasurable(string $measurableTypeName)
     {
-        $measurable = $this->measurables()->whereHas('measurableType', function (Builder $builder) use ($measurableTypeName) {
-            return $builder->where('name', '=', $measurableTypeName);
-        })->first();
+        $measurable = $this->loadMissing('measurables.measurableType')->measurables->first(function (Measurable $measurable) use ($measurableTypeName) {
+            return $measurable->measurableType->name === $measurableTypeName;
+        });
 
         if (!$measurable) {
             throw new \RuntimeException('Hero: ' . $this->name . ' does not have a measurable of type: ' . $measurableTypeName);
