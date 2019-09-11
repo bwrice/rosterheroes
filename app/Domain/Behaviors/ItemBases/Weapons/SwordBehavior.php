@@ -13,9 +13,12 @@ use App\Domain\Behaviors\ItemBases\Weapons\ArmBehaviors\SingleArmBehavior;
 use App\Domain\Behaviors\ItemBases\Weapons\WeaponBehavior;
 use App\Domain\Behaviors\ItemGroup\WeaponGroup;
 use App\Domain\Interfaces\UsesItems;
+use App\Domain\Models\MeasurableType;
 
 class SwordBehavior extends WeaponBehavior
 {
+    public const SPEED_RATING = 55;
+    public const BASE_DAMAGE_RAGING = 65;
 
     public function __construct(WeaponGroup $weaponGroup, SingleArmBehavior $armBehavior)
     {
@@ -46,11 +49,15 @@ class SwordBehavior extends WeaponBehavior
      */
     public function itemBaseDamageModifier(): float
     {
-        return .85;
+        return .65;
     }
 
     public function getBaseDamageModifier(UsesItems $usesItems = null): float
     {
-        return $this->itemBaseDamageModifier() / $this->getCombatSpeedModifier();
+        $strengthModifier =  1 + $usesItems->getMeasurableAmount(MeasurableType::STRENGTH)/65;
+        $valorModifier =  1 + $usesItems->getMeasurableAmount(MeasurableType::VALOR)/65;
+        $agilityModifier =  1 + $usesItems->getMeasurableAmount(MeasurableType::AGILITY)/65;
+        $baseDamageModifier = self::BASE_DAMAGE_RAGING/self::SPEED_RATING;
+        return $strengthModifier * $valorModifier * $agilityModifier * $baseDamageModifier;
     }
 }

@@ -54,8 +54,8 @@ class AxeBehavior extends WeaponBehavior
 
     public function getBaseDamageModifier(UsesItems $usesItems = null): float
     {
-        $valorModifier =  1 + $usesItems->getMeasurableAmount(MeasurableType::VALOR)/50;
         $strengthModifier =  1 + $usesItems->getMeasurableAmount(MeasurableType::STRENGTH)/50;
+        $valorModifier =  1 + $usesItems->getMeasurableAmount(MeasurableType::VALOR)/50;
         $baseDamageModifier = self::BASE_DAMAGE_RAGING/self::SPEED_RATING;
         return $strengthModifier * $valorModifier * $baseDamageModifier;
     }
