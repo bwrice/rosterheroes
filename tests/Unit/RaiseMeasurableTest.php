@@ -3,7 +3,7 @@
 namespace Tests\Unit;
 
 use App\Domain\Actions\RaiseMeasurableAction;
-use App\Domain\Interfaces\HasMeasurables;
+use App\Domain\Interfaces\RaisesMeasurables;
 use App\Domain\Models\Hero;
 use App\Domain\Models\HeroPost;
 use App\Domain\Models\Measurable;
