@@ -68,4 +68,9 @@ class WandBehavior extends WeaponBehavior
     {
         return self::BASE_DAMAGE_RAGING;
     }
+
+    protected function getDamageMultiplierMeasurablesModifier(UsesItems $usesItems): float
+    {
+        return 1;
+    }
 }

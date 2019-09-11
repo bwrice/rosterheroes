@@ -95,4 +95,6 @@ abstract class WeaponBehavior extends ItemBaseBehavior
         return $this->getCombatSpeedModifier() + $this->itemBaseDamageModifier()/10;
     }
 
+    abstract protected function getDamageMultiplierMeasurablesModifier(UsesItems $usesItems): float;
+
 }
