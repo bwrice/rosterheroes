@@ -54,9 +54,10 @@ class PoleArmBehavior extends WeaponBehavior
 
     protected function getBaseDamageMeasurablesModifier(UsesItems $usesItems): float
     {
-        $valorBonus =  .02 * $usesItems->getMeasurableAmount(MeasurableType::VALOR);
-        $agilityBonus =  .02 * $usesItems->getMeasurableAmount(MeasurableType::AGILITY);
-        return 1 + ($valorBonus + $agilityBonus);
+        $valorBonus =  .012 * $usesItems->getMeasurableAmount(MeasurableType::VALOR);
+        $agilityBonus =  .018 * $usesItems->getMeasurableAmount(MeasurableType::AGILITY);
+        $focusBonus =  .018 * $usesItems->getMeasurableAmount(MeasurableType::FOCUS);
+        return 1 + ($valorBonus + $agilityBonus + $focusBonus);
     }
 
     protected function getStartingSpeedRating(): int
