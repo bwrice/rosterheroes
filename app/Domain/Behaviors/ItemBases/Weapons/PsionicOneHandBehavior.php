@@ -13,9 +13,12 @@ use App\Domain\Behaviors\ItemBases\Weapons\ArmBehaviors\SingleArmBehavior;
 use App\Domain\Behaviors\ItemBases\Weapons\WeaponBehavior;
 use App\Domain\Behaviors\ItemGroup\WeaponGroup;
 use App\Domain\Interfaces\UsesItems;
+use App\Domain\Models\MeasurableType;
 
 class PsionicOneHandBehavior extends WeaponBehavior
 {
+    public const SPEED_RATING = 65;
+    public const BASE_DAMAGE_RAGING = 40;
 
     public function __construct(WeaponGroup $weaponGroup, SingleArmBehavior $armBehavior)
     {
@@ -51,16 +54,19 @@ class PsionicOneHandBehavior extends WeaponBehavior
 
     protected function getBaseDamageMeasurablesModifier(UsesItems $usesItems): float
     {
-        return 0;
+        $agilityBonus =  .015 * $usesItems->getMeasurableAmount(MeasurableType::AGILITY);
+        $aptitudeBonus =  .015 * $usesItems->getMeasurableAmount(MeasurableType::APTITUDE);
+        $intelligenceBonus =  .015 * $usesItems->getMeasurableAmount(MeasurableType::INTELLIGENCE);
+        return 1 + ($agilityBonus + $aptitudeBonus + $intelligenceBonus);
     }
 
     protected function getStartingSpeedRating(): int
     {
-        return 1;
+        return self::SPEED_RATING;
     }
 
     protected function getStartingBaseDamageRating(): int
     {
-        return 1;
+        return self::BASE_DAMAGE_RAGING;
     }
 }
