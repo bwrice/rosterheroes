@@ -4,9 +4,12 @@ namespace Tests\Unit;
 
 use App\Domain\Behaviors\ItemBases\Weapons\AxeBehavior;
 use App\Domain\Behaviors\ItemBases\Weapons\BowBehavior;
+use App\Domain\Behaviors\ItemBases\Weapons\CrossbowBehavior;
 use App\Domain\Behaviors\ItemBases\Weapons\DaggerBehavior;
 use App\Domain\Behaviors\ItemBases\Weapons\MaceBehavior;
+use App\Domain\Behaviors\ItemBases\Weapons\OrbBehavior;
 use App\Domain\Behaviors\ItemBases\Weapons\PoleArmBehavior;
+use App\Domain\Behaviors\ItemBases\Weapons\StaffBehavior;
 use App\Domain\Behaviors\ItemBases\Weapons\SwordBehavior;
 use App\Domain\Behaviors\ItemBases\Weapons\ThrowingWeaponBehavior;
 use App\Domain\Behaviors\ItemBases\Weapons\TwoHandAxeBehavior;
@@ -143,6 +146,9 @@ class WeaponBehaviorUnitTest extends TestCase
             ItemBase::POLE_ARM => [
                 'weaponBehaviorClass' => PoleArmBehavior::class
             ],
+            ItemBase::STAFF => [
+                'weaponBehaviorClass' => StaffBehavior::class
+            ],
         ];
     }
 
@@ -171,17 +177,63 @@ class WeaponBehaviorUnitTest extends TestCase
     public function provides_certain_weapons_have_more_base_damage_with_more_agility()
     {
         return [
-            ItemBase::MACE => [
+            ItemBase::DAGGER => [
                 'weaponBehaviorClass' => DaggerBehavior::class
             ],
             ItemBase::SWORD => [
                 'weaponBehaviorClass' => SwordBehavior::class
             ],
-            ItemBase::TWO_HAND_AXE => [
+            ItemBase::BOW => [
                 'weaponBehaviorClass' => BowBehavior::class
             ],
-            ItemBase::TWO_HAND_SWORD => [
+            ItemBase::POLE_ARM => [
                 'weaponBehaviorClass' => PoleArmBehavior::class
+            ],
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider provides_certain_weapons_have_more_base_damage_with_more_focus
+     * @param $weaponBehaviorClass
+     */
+    public function certain_weapons_have_more_base_damage_with_more_focus($weaponBehaviorClass)
+    {
+        /** @var WeaponBehavior $weaponBehavior */
+        $weaponBehavior = app($weaponBehaviorClass);
+
+        $this->usesItems->setMeasurable(MeasurableType::FOCUS, 10);
+        $lowValorBaseDamageModifier = $weaponBehavior->getBaseDamageModifier($this->usesItems);
+
+
+        $this->usesItems->setMeasurable(MeasurableType::FOCUS, 99);
+        $highValorBaseDamageModifier = $weaponBehavior->getBaseDamageModifier($this->usesItems);
+
+        $diff = $highValorBaseDamageModifier - $lowValorBaseDamageModifier;
+        // Make sure the diff is greater than PHP float error, AKA, a number very close to zero
+        $this->assertGreaterThan(PHP_FLOAT_EPSILON, $diff);
+    }
+
+    public function provides_certain_weapons_have_more_base_damage_with_more_focus()
+    {
+        return [
+            ItemBase::DAGGER => [
+                'weaponBehaviorClass' => DaggerBehavior::class
+            ],
+            ItemBase::BOW => [
+                'weaponBehaviorClass' => BowBehavior::class
+            ],
+            ItemBase::CROSSBOW => [
+                'weaponBehaviorClass' => CrossbowBehavior::class
+            ],
+            ItemBase::POLE_ARM => [
+                'weaponBehaviorClass' => PoleArmBehavior::class
+            ],
+            ItemBase::THROWING_WEAPON => [
+                'weaponBehaviorClass' => ThrowingWeaponBehavior::class
+            ],
+            ItemBase::ORB => [
+                'weaponBehaviorClass' => OrbBehavior::class
             ],
         ];
     }
