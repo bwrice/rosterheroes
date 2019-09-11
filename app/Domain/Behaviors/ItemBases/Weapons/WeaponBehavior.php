@@ -70,6 +70,8 @@ abstract class WeaponBehavior extends ItemBaseBehavior
 
     abstract protected function getStartingBaseDamageRating(): int;
 
+    abstract protected function getBaseDamageMeasurablesModifier(UsesItems $usesItems): float;
+
 
     /**
      * @param UsesItems|null $hasItems
