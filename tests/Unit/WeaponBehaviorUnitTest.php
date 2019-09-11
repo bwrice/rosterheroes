@@ -9,6 +9,8 @@ use App\Domain\Behaviors\ItemBases\Weapons\DaggerBehavior;
 use App\Domain\Behaviors\ItemBases\Weapons\MaceBehavior;
 use App\Domain\Behaviors\ItemBases\Weapons\OrbBehavior;
 use App\Domain\Behaviors\ItemBases\Weapons\PoleArmBehavior;
+use App\Domain\Behaviors\ItemBases\Weapons\PsionicOneHandBehavior;
+use App\Domain\Behaviors\ItemBases\Weapons\PsionicTwoHandBehavior;
 use App\Domain\Behaviors\ItemBases\Weapons\StaffBehavior;
 use App\Domain\Behaviors\ItemBases\Weapons\SwordBehavior;
 use App\Domain\Behaviors\ItemBases\Weapons\ThrowingWeaponBehavior;
@@ -101,6 +103,9 @@ class WeaponBehaviorUnitTest extends TestCase
             ItemBase::THROWING_WEAPON => [
                 'weaponBehaviorClass' => ThrowingWeaponBehavior::class
             ],
+            ItemBase::PSIONIC_TWO_HAND => [
+        'weaponBehaviorClass' => PsionicTwoHandBehavior::class
+    ],
         ];
     }
 
@@ -190,6 +195,9 @@ class WeaponBehaviorUnitTest extends TestCase
             ItemBase::POLE_ARM => [
                 'weaponBehaviorClass' => PoleArmBehavior::class
             ],
+            ItemBase::PSIONIC_ONE_HAND => [
+                'weaponBehaviorClass' => PsionicOneHandBehavior::class
+            ],
         ];
     }
 
@@ -275,6 +283,55 @@ class WeaponBehaviorUnitTest extends TestCase
             ],
             ItemBase::STAFF => [
                 'weaponBehaviorClass' => StaffBehavior::class
+            ],
+            ItemBase::PSIONIC_ONE_HAND => [
+                'weaponBehaviorClass' => PsionicOneHandBehavior::class
+            ],
+            ItemBase::PSIONIC_TWO_HAND => [
+                'weaponBehaviorClass' => PsionicTwoHandBehavior::class
+            ],
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider provides_certain_weapons_have_more_base_damage_with_more_intelligence
+     * @param $weaponBehaviorClass
+     */
+    public function certain_weapons_have_more_base_damage_with_more_intelligence($weaponBehaviorClass)
+    {
+        /** @var WeaponBehavior $weaponBehavior */
+        $weaponBehavior = app($weaponBehaviorClass);
+
+        $this->usesItems->setMeasurable(MeasurableType::INTELLIGENCE, 10);
+        $lowValorBaseDamageModifier = $weaponBehavior->getBaseDamageModifier($this->usesItems);
+
+
+        $this->usesItems->setMeasurable(MeasurableType::INTELLIGENCE, 99);
+        $highValorBaseDamageModifier = $weaponBehavior->getBaseDamageModifier($this->usesItems);
+
+        $diff = $highValorBaseDamageModifier - $lowValorBaseDamageModifier;
+        // Make sure the diff is greater than PHP float error, AKA, a number very close to zero
+        $this->assertGreaterThan(PHP_FLOAT_EPSILON, $diff);
+    }
+
+    public function provides_certain_weapons_have_more_base_damage_with_more_intelligence()
+    {
+        return [
+            ItemBase::WAND => [
+                'weaponBehaviorClass' => WandBehavior::class
+            ],
+            ItemBase::ORB => [
+                'weaponBehaviorClass' => OrbBehavior::class
+            ],
+            ItemBase::STAFF => [
+                'weaponBehaviorClass' => StaffBehavior::class
+            ],
+            ItemBase::PSIONIC_ONE_HAND => [
+                'weaponBehaviorClass' => PsionicOneHandBehavior::class
+            ],
+            ItemBase::PSIONIC_TWO_HAND => [
+                'weaponBehaviorClass' => PsionicTwoHandBehavior::class
             ],
         ];
     }
