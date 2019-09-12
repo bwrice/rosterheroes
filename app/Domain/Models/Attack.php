@@ -99,7 +99,7 @@ class Attack extends Model
         $baseDamage = $this->base_damage_rating;
         $baseDamage = $this->getBehavior()->adjustBaseDamage($baseDamage);
         if ($hasAttacks) {
-            $baseDamage = $hasAttacks->adjustBaseDamage( $baseDamage);
+            $baseDamage = $hasAttacks->adjustBaseDamage($baseDamage);
         }
         return (int) ceil($baseDamage);
     }

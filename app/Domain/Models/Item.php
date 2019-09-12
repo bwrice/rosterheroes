@@ -6,6 +6,7 @@ use App\Domain\Collections\AttackCollection;
 use App\Domain\Collections\EnchantmentCollection;
 use App\Domain\Behaviors\ItemBases\ItemBaseBehaviorInterface;
 use App\Domain\Interfaces\HasAttacks;
+use App\Domain\Interfaces\UsesItems;
 use App\Domain\Models\Slot;
 use App\Domain\Collections\SlotCollection;
 use App\Domain\Interfaces\Slottable;
@@ -117,18 +118,34 @@ class Item extends EventSourcedModel implements Slottable, HasAttacks
     public function adjustCombatSpeed(float $speed): float
     {
         $gradeModifier = 1 + ($this->itemTypeGrade() ** .5)/10;
-        return $speed * $gradeModifier * $this->getItemBaseBehavior()->getCombatSpeedModifier();
+        $behaviorModifier = $this->getItemBaseBehavior()->getCombatSpeedModifier($this->getUsesItems());
+        return $speed * $gradeModifier * $behaviorModifier;
     }
 
     public function adjustBaseDamage(float $baseDamage): float
     {
         $gradeModifier = 1 + ($this->itemTypeGrade() ** .5)/5;
-        return $baseDamage * $gradeModifier * $this->getItemBaseBehavior()->getBaseDamageModifier();
+        $behaviorModifier = $this->getItemBaseBehavior()->getBaseDamageModifier($this->getUsesItems());
+        return $baseDamage * $gradeModifier * $behaviorModifier;
     }
 
     public function adjustDamageMultiplier(float $damageModifier): float
     {
         $gradeModifier = 1 + ($this->itemTypeGrade() ** .5)/5;
-        return $damageModifier * $gradeModifier * $this->getItemBaseBehavior()->getDamageMultiplierModifier();
+        $behaviorModifier = $this->getItemBaseBehavior()->getDamageMultiplierModifier($this->getUsesItems());
+        return $damageModifier * $gradeModifier * $behaviorModifier;
     }
+
+    public function getUsesItems(): ?UsesItems
+    {
+        return null;
+    }
+
+//    protected function getHasItems()
+//    {
+//        $slot = $this->slots->first();
+//        if ($slot) {
+//
+//        }
+//    }
 }
