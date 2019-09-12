@@ -55,9 +55,19 @@ class ThrowingWeaponBehavior extends WeaponBehavior
 
     protected function getBaseDamageMeasurablesModifier(UsesItems $usesItems): float
     {
+        return 1 + $this->getMeasurablesDamageBonus($usesItems);
+    }
+
+    protected function getDamageMultiplierMeasurablesModifier(UsesItems $usesItems): float
+    {
+        return 1 + $this->getMeasurablesDamageBonus($usesItems);
+    }
+
+    protected function getMeasurablesDamageBonus(UsesItems $usesItems)
+    {
         $strengthBonus = .02 * $usesItems->getMeasurableAmount(MeasurableType::STRENGTH);
         $focusBonus = .02 * $usesItems->getMeasurableAmount(MeasurableType::FOCUS);
-        return 1 + ($strengthBonus + $focusBonus);
+        return $strengthBonus + $focusBonus;
     }
 
     protected function getStartingSpeedRating(): int
@@ -68,10 +78,5 @@ class ThrowingWeaponBehavior extends WeaponBehavior
     protected function getStartingBaseDamageRating(): int
     {
         return self::BASE_DAMAGE_RAGING;
-    }
-
-    protected function getDamageMultiplierMeasurablesModifier(UsesItems $usesItems): float
-    {
-        return 1;
     }
 }

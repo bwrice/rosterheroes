@@ -54,10 +54,20 @@ class SwordBehavior extends WeaponBehavior
 
     protected function getBaseDamageMeasurablesModifier(UsesItems $usesItems): float
     {
+        return 1 + $this->getMeasurablesDamageBonus($usesItems);
+    }
+
+    protected function getDamageMultiplierMeasurablesModifier(UsesItems $usesItems): float
+    {
+        return 1 + $this->getMeasurablesDamageBonus($usesItems);
+    }
+
+    protected function getMeasurablesDamageBonus(UsesItems $usesItems)
+    {
         $strengthBonus = .015 * $usesItems->getMeasurableAmount(MeasurableType::STRENGTH);
         $valorBonus = .015 * $usesItems->getMeasurableAmount(MeasurableType::VALOR);
         $agilityBonus = .015 * $usesItems->getMeasurableAmount(MeasurableType::AGILITY);
-        return 1 + ($strengthBonus + $valorBonus + $agilityBonus);
+        return $strengthBonus + $valorBonus + $agilityBonus;
     }
 
     protected function getStartingSpeedRating(): int
@@ -68,10 +78,5 @@ class SwordBehavior extends WeaponBehavior
     protected function getStartingBaseDamageRating(): int
     {
         return self::BASE_DAMAGE_RAGING;
-    }
-
-    protected function getDamageMultiplierMeasurablesModifier(UsesItems $usesItems): float
-    {
-        return 1;
     }
 }

@@ -53,10 +53,20 @@ class BowBehavior extends WeaponBehavior
 
     protected function getBaseDamageMeasurablesModifier(UsesItems $usesItems): float
     {
+        return 1 + $this->getMeasurablesDamageBonus($usesItems);
+    }
+
+    protected function getDamageMultiplierMeasurablesModifier(UsesItems $usesItems): float
+    {
+        return 1 + $this->getMeasurablesDamageBonus($usesItems);
+    }
+
+    protected function getMeasurablesDamageBonus(UsesItems $usesItems)
+    {
         $strengthBonus = .012 * $usesItems->getMeasurableAmount(MeasurableType::STRENGTH);
         $agilityBonus = .015 * $usesItems->getMeasurableAmount(MeasurableType::AGILITY);
         $focusBonus = .0185 * $usesItems->getMeasurableAmount(MeasurableType::FOCUS);
-        return 1 + ($strengthBonus + $agilityBonus + $focusBonus);
+        return $strengthBonus + $agilityBonus + $focusBonus;
     }
 
     protected function getStartingSpeedRating(): int
@@ -67,11 +77,6 @@ class BowBehavior extends WeaponBehavior
     protected function getStartingBaseDamageRating(): int
     {
         return self::BASE_DAMAGE_RAGING;
-    }
-
-    protected function getDamageMultiplierMeasurablesModifier(UsesItems $usesItems): float
-    {
-        return 1;
     }
 
 }

@@ -54,9 +54,19 @@ class MaceBehavior extends WeaponBehavior
 
     protected function getBaseDamageMeasurablesModifier(UsesItems $usesItems): float
     {
+        return 1 + $this->getMeasurablesDamageBonus($usesItems);
+    }
+
+    protected function getDamageMultiplierMeasurablesModifier(UsesItems $usesItems): float
+    {
+        return 1 + $this->getMeasurablesDamageBonus($usesItems);
+    }
+
+    protected function getMeasurablesDamageBonus(UsesItems $usesItems)
+    {
         $strengthBonus = .028 * $usesItems->getMeasurableAmount(MeasurableType::STRENGTH);
         $valorBonus = .0125 * $usesItems->getMeasurableAmount(MeasurableType::VALOR);
-        return 1 + ($strengthBonus + $valorBonus);
+        return $strengthBonus + $valorBonus;
     }
 
     protected function getStartingSpeedRating(): int
@@ -67,10 +77,5 @@ class MaceBehavior extends WeaponBehavior
     protected function getStartingBaseDamageRating(): int
     {
         return self::BASE_DAMAGE_RAGING;
-    }
-
-    protected function getDamageMultiplierMeasurablesModifier(UsesItems $usesItems): float
-    {
-        return 1;
     }
 }
