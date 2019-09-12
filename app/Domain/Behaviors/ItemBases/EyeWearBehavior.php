@@ -34,7 +34,7 @@ class EyeWearBehavior extends ItemBaseBehavior
         ];
     }
 
-    public function getBaseDamageModifier(UsesItems $usesItems = null): float
+    public function getBaseDamageBonus(UsesItems $usesItems = null): float
     {
         return 1;
     }

@@ -73,7 +73,7 @@ abstract class WeaponBehavior extends ItemBaseBehavior
     abstract protected function getBaseDamageMeasurablesModifier(UsesItems $usesItems): float;
 
 
-    public function getBaseDamageModifier(UsesItems $usesItems = null): float
+    public function getBaseDamageBonus(UsesItems $usesItems = null): float
     {
         $measurablesModifier = $usesItems ? $this->getBaseDamageMeasurablesModifier($usesItems) : 1;
         return $measurablesModifier * ($this->getBaseDamageRating()/$this->getSpeedRating());

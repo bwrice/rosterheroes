@@ -14,7 +14,7 @@ interface ItemBaseBehaviorInterface
 
     public function getCombatSpeedModifier(UsesItems $hasItems = null): float;
 
-    public function getBaseDamageModifier(UsesItems $usesItems = null): float;
+    public function getBaseDamageBonus(UsesItems $usesItems = null): float;
 
     public function getDamageMultiplierBonus(UsesItems $usesItems = null): float;
 }

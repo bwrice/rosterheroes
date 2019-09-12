@@ -20,7 +20,7 @@ abstract class ArmorBehavior extends ItemBaseBehavior
         return 1;
     }
 
-    public function getBaseDamageModifier(UsesItems $usesItems = null): float
+    public function getBaseDamageBonus(UsesItems $usesItems = null): float
     {
         return 1;
     }

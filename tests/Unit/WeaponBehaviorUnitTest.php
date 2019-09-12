@@ -67,10 +67,10 @@ class WeaponBehaviorUnitTest extends TestCase
         $weaponBehavior = app($weaponBehaviorClass);
 
         $this->usesItems->setMeasurable(MeasurableType::STRENGTH, 10);
-        $lowStrengthBaseDamageModifier = $weaponBehavior->getBaseDamageModifier($this->usesItems);
+        $lowStrengthBaseDamageModifier = $weaponBehavior->getBaseDamageBonus($this->usesItems);
 
         $this->usesItems->setMeasurable(MeasurableType::STRENGTH, 99);
-        $highStrengthBaseDamageModifier = $weaponBehavior->getBaseDamageModifier($this->usesItems);
+        $highStrengthBaseDamageModifier = $weaponBehavior->getBaseDamageBonus($this->usesItems);
 
         $diff = $highStrengthBaseDamageModifier - $lowStrengthBaseDamageModifier;
         // Make sure the diff is greater than PHP float error, AKA, a number very close to zero
@@ -118,10 +118,10 @@ class WeaponBehaviorUnitTest extends TestCase
         $weaponBehavior = app($weaponBehaviorClass);
 
         $this->usesItems->setMeasurable(MeasurableType::VALOR, 10);
-        $lowValorBaseDamageModifier = $weaponBehavior->getBaseDamageModifier($this->usesItems);
+        $lowValorBaseDamageModifier = $weaponBehavior->getBaseDamageBonus($this->usesItems);
 
         $this->usesItems->setMeasurable(MeasurableType::VALOR, 99);
-        $highValorBaseDamageModifier = $weaponBehavior->getBaseDamageModifier($this->usesItems);
+        $highValorBaseDamageModifier = $weaponBehavior->getBaseDamageBonus($this->usesItems);
 
         $diff = $highValorBaseDamageModifier - $lowValorBaseDamageModifier;
         // Make sure the diff is greater than PHP float error, AKA, a number very close to zero
@@ -166,10 +166,10 @@ class WeaponBehaviorUnitTest extends TestCase
         $weaponBehavior = app($weaponBehaviorClass);
 
         $this->usesItems->setMeasurable(MeasurableType::AGILITY, 10);
-        $lowAgilityBaseDamageModifier = $weaponBehavior->getBaseDamageModifier($this->usesItems);
+        $lowAgilityBaseDamageModifier = $weaponBehavior->getBaseDamageBonus($this->usesItems);
 
         $this->usesItems->setMeasurable(MeasurableType::AGILITY, 99);
-        $highAgilityBaseDamageModifier = $weaponBehavior->getBaseDamageModifier($this->usesItems);
+        $highAgilityBaseDamageModifier = $weaponBehavior->getBaseDamageBonus($this->usesItems);
 
         $diff = $highAgilityBaseDamageModifier - $lowAgilityBaseDamageModifier;
         // Make sure the diff is greater than PHP float error, AKA, a number very close to zero
@@ -208,10 +208,10 @@ class WeaponBehaviorUnitTest extends TestCase
         $weaponBehavior = app($weaponBehaviorClass);
 
         $this->usesItems->setMeasurable(MeasurableType::FOCUS, 10);
-        $lowFocusBaseDamageModifier = $weaponBehavior->getBaseDamageModifier($this->usesItems);
+        $lowFocusBaseDamageModifier = $weaponBehavior->getBaseDamageBonus($this->usesItems);
 
         $this->usesItems->setMeasurable(MeasurableType::FOCUS, 99);
-        $highFocusBaseDamageModifier = $weaponBehavior->getBaseDamageModifier($this->usesItems);
+        $highFocusBaseDamageModifier = $weaponBehavior->getBaseDamageBonus($this->usesItems);
 
         $diff = $highFocusBaseDamageModifier - $lowFocusBaseDamageModifier;
         // Make sure the diff is greater than PHP float error, AKA, a number very close to zero
@@ -253,11 +253,11 @@ class WeaponBehaviorUnitTest extends TestCase
         $weaponBehavior = app($weaponBehaviorClass);
 
         $this->usesItems->setMeasurable(MeasurableType::APTITUDE, 10);
-        $lowValorBaseDamageModifier = $weaponBehavior->getBaseDamageModifier($this->usesItems);
+        $lowValorBaseDamageModifier = $weaponBehavior->getBaseDamageBonus($this->usesItems);
 
 
         $this->usesItems->setMeasurable(MeasurableType::APTITUDE, 99);
-        $highValorBaseDamageModifier = $weaponBehavior->getBaseDamageModifier($this->usesItems);
+        $highValorBaseDamageModifier = $weaponBehavior->getBaseDamageBonus($this->usesItems);
 
         $diff = $highValorBaseDamageModifier - $lowValorBaseDamageModifier;
         // Make sure the diff is greater than PHP float error, AKA, a number very close to zero
@@ -299,10 +299,10 @@ class WeaponBehaviorUnitTest extends TestCase
         $weaponBehavior = app($weaponBehaviorClass);
 
         $this->usesItems->setMeasurable(MeasurableType::INTELLIGENCE, 10);
-        $lowValorBaseDamageModifier = $weaponBehavior->getBaseDamageModifier($this->usesItems);
+        $lowValorBaseDamageModifier = $weaponBehavior->getBaseDamageBonus($this->usesItems);
 
         $this->usesItems->setMeasurable(MeasurableType::INTELLIGENCE, 99);
-        $highValorBaseDamageModifier = $weaponBehavior->getBaseDamageModifier($this->usesItems);
+        $highValorBaseDamageModifier = $weaponBehavior->getBaseDamageBonus($this->usesItems);
 
         $diff = $highValorBaseDamageModifier - $lowValorBaseDamageModifier;
         // Make sure the diff is greater than PHP float error, AKA, a number very close to zero
