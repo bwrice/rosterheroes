@@ -54,19 +54,19 @@ class StaffBehavior extends WeaponBehavior
 
     protected function getBaseDamageMeasurablesModifier(UsesItems $usesItems): float
     {
-        return 1 + $this->getMeasurablesDamageBonus($usesItems);
+        return $this->getMeasurablesDamageBonus($usesItems);
     }
 
     protected function getDamageMultiplierMeasurablesBonus(UsesItems $usesItems): float
     {
-        return 1 + $this->getMeasurablesDamageBonus($usesItems);
+        return $this->getMeasurablesDamageBonus($usesItems);
     }
 
     protected function getMeasurablesDamageBonus(UsesItems $usesItems)
     {
-        $valorBonus = .017 * $usesItems->getMeasurableAmount(MeasurableType::VALOR);
-        $aptitudeBonus = .017 * $usesItems->getMeasurableAmount(MeasurableType::APTITUDE);
-        $intelligenceBonus = .015 * $usesItems->getMeasurableAmount(MeasurableType::INTELLIGENCE);
+        $valorBonus = .006 * $usesItems->getMeasurableAmount(MeasurableType::VALOR);
+        $aptitudeBonus = .006 * $usesItems->getMeasurableAmount(MeasurableType::APTITUDE);
+        $intelligenceBonus = .012 * $usesItems->getMeasurableAmount(MeasurableType::INTELLIGENCE);
         return $valorBonus + $aptitudeBonus + $intelligenceBonus;
     }
 

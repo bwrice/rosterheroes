@@ -64,8 +64,8 @@ class MaceBehavior extends WeaponBehavior
 
     protected function getMeasurablesDamageBonus(UsesItems $usesItems)
     {
-        $strengthBonus = .028 * $usesItems->getMeasurableAmount(MeasurableType::STRENGTH);
-        $valorBonus = .0125 * $usesItems->getMeasurableAmount(MeasurableType::VALOR);
+        $strengthBonus = .02 * $usesItems->getMeasurableAmount(MeasurableType::STRENGTH);
+        $valorBonus = .006 * $usesItems->getMeasurableAmount(MeasurableType::VALOR);
         return $strengthBonus + $valorBonus;
     }
 

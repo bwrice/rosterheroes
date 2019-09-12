@@ -64,9 +64,9 @@ class PsionicOneHandBehavior extends WeaponBehavior
 
     protected function getMeasurablesDamageBonus(UsesItems $usesItems)
     {
-        $agilityBonus =  .015 * $usesItems->getMeasurableAmount(MeasurableType::AGILITY);
-        $aptitudeBonus =  .015 * $usesItems->getMeasurableAmount(MeasurableType::APTITUDE);
-        $intelligenceBonus =  .015 * $usesItems->getMeasurableAmount(MeasurableType::INTELLIGENCE);
+        $agilityBonus = .007 * $usesItems->getMeasurableAmount(MeasurableType::AGILITY);
+        $aptitudeBonus = .007 * $usesItems->getMeasurableAmount(MeasurableType::APTITUDE);
+        $intelligenceBonus = .007 * $usesItems->getMeasurableAmount(MeasurableType::INTELLIGENCE);
         return $agilityBonus + $aptitudeBonus + $intelligenceBonus;
     }
 

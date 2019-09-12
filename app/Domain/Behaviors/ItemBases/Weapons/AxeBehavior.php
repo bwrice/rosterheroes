@@ -54,18 +54,18 @@ class AxeBehavior extends WeaponBehavior
 
     protected function getBaseDamageMeasurablesModifier(UsesItems $usesItems): float
     {
-        return 1 + $this->getMeasurablesDamageBonus($usesItems);
+        return $this->getMeasurablesDamageBonus($usesItems);
     }
 
     protected function getDamageMultiplierMeasurablesBonus(UsesItems $usesItems): float
     {
-        return 1 + $this->getMeasurablesDamageBonus($usesItems);
+        return $this->getMeasurablesDamageBonus($usesItems);
     }
 
     protected function getMeasurablesDamageBonus(UsesItems $usesItems)
     {
-        $strengthBonus = .02 * $usesItems->getMeasurableAmount(MeasurableType::STRENGTH);
-        $valorBonus = .02 * $usesItems->getMeasurableAmount(MeasurableType::VALOR);
+        $strengthBonus = .0125 * $usesItems->getMeasurableAmount(MeasurableType::STRENGTH);
+        $valorBonus = .0125 * $usesItems->getMeasurableAmount(MeasurableType::VALOR);
         return $strengthBonus + $valorBonus;
     }
 

@@ -54,19 +54,19 @@ class SwordBehavior extends WeaponBehavior
 
     protected function getBaseDamageMeasurablesModifier(UsesItems $usesItems): float
     {
-        return 1 + $this->getMeasurablesDamageBonus($usesItems);
+        return $this->getMeasurablesDamageBonus($usesItems);
     }
 
     protected function getDamageMultiplierMeasurablesBonus(UsesItems $usesItems): float
     {
-        return 1 + $this->getMeasurablesDamageBonus($usesItems);
+        return $this->getMeasurablesDamageBonus($usesItems);
     }
 
     protected function getMeasurablesDamageBonus(UsesItems $usesItems)
     {
-        $strengthBonus = .015 * $usesItems->getMeasurableAmount(MeasurableType::STRENGTH);
-        $valorBonus = .015 * $usesItems->getMeasurableAmount(MeasurableType::VALOR);
-        $agilityBonus = .015 * $usesItems->getMeasurableAmount(MeasurableType::AGILITY);
+        $strengthBonus = .007 * $usesItems->getMeasurableAmount(MeasurableType::STRENGTH);
+        $valorBonus = .007 * $usesItems->getMeasurableAmount(MeasurableType::VALOR);
+        $agilityBonus = .007 * $usesItems->getMeasurableAmount(MeasurableType::AGILITY);
         return $strengthBonus + $valorBonus + $agilityBonus;
     }
 

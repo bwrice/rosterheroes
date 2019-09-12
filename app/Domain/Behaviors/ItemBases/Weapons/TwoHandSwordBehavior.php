@@ -64,8 +64,8 @@ class TwoHandSwordBehavior extends WeaponBehavior
 
     protected function getMeasurablesDamageBonus(UsesItems $usesItems)
     {
-        $strengthBonus = .018 * $usesItems->getMeasurableAmount(MeasurableType::STRENGTH);
-        $valorBonus = .025 * $usesItems->getMeasurableAmount(MeasurableType::VALOR);
+        $strengthBonus = .007 * $usesItems->getMeasurableAmount(MeasurableType::STRENGTH);
+        $valorBonus = .02 * $usesItems->getMeasurableAmount(MeasurableType::VALOR);
         return $strengthBonus + $valorBonus;
     }
 
