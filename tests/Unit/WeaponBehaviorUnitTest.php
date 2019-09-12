@@ -19,7 +19,6 @@ use App\Domain\Behaviors\ItemBases\Weapons\TwoHandSwordBehavior;
 use App\Domain\Behaviors\ItemBases\Weapons\WandBehavior;
 use App\Domain\Behaviors\ItemBases\Weapons\WeaponBehavior;
 use App\Domain\Interfaces\UsesItems;
-use App\Domain\Models\Item;
 use App\Domain\Models\ItemBase;
 use App\Domain\Models\MeasurableType;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -68,13 +67,12 @@ class WeaponBehaviorUnitTest extends TestCase
         $weaponBehavior = app($weaponBehaviorClass);
 
         $this->usesItems->setMeasurable(MeasurableType::STRENGTH, 10);
-        $lowValorBaseDamageModifier = $weaponBehavior->getBaseDamageModifier($this->usesItems);
-
+        $lowStrengthBaseDamageModifier = $weaponBehavior->getBaseDamageModifier($this->usesItems);
 
         $this->usesItems->setMeasurable(MeasurableType::STRENGTH, 99);
-        $highValorBaseDamageModifier = $weaponBehavior->getBaseDamageModifier($this->usesItems);
+        $highStrengthBaseDamageModifier = $weaponBehavior->getBaseDamageModifier($this->usesItems);
 
-        $diff = $highValorBaseDamageModifier - $lowValorBaseDamageModifier;
+        $diff = $highStrengthBaseDamageModifier - $lowStrengthBaseDamageModifier;
         // Make sure the diff is greater than PHP float error, AKA, a number very close to zero
         $this->assertGreaterThan(PHP_FLOAT_EPSILON, $diff);
     }
@@ -122,7 +120,6 @@ class WeaponBehaviorUnitTest extends TestCase
         $this->usesItems->setMeasurable(MeasurableType::VALOR, 10);
         $lowValorBaseDamageModifier = $weaponBehavior->getBaseDamageModifier($this->usesItems);
 
-
         $this->usesItems->setMeasurable(MeasurableType::VALOR, 99);
         $highValorBaseDamageModifier = $weaponBehavior->getBaseDamageModifier($this->usesItems);
 
@@ -169,13 +166,12 @@ class WeaponBehaviorUnitTest extends TestCase
         $weaponBehavior = app($weaponBehaviorClass);
 
         $this->usesItems->setMeasurable(MeasurableType::AGILITY, 10);
-        $lowValorBaseDamageModifier = $weaponBehavior->getBaseDamageModifier($this->usesItems);
-
+        $lowAgilityBaseDamageModifier = $weaponBehavior->getBaseDamageModifier($this->usesItems);
 
         $this->usesItems->setMeasurable(MeasurableType::AGILITY, 99);
-        $highValorBaseDamageModifier = $weaponBehavior->getBaseDamageModifier($this->usesItems);
+        $highAgilityBaseDamageModifier = $weaponBehavior->getBaseDamageModifier($this->usesItems);
 
-        $diff = $highValorBaseDamageModifier - $lowValorBaseDamageModifier;
+        $diff = $highAgilityBaseDamageModifier - $lowAgilityBaseDamageModifier;
         // Make sure the diff is greater than PHP float error, AKA, a number very close to zero
         $this->assertGreaterThan(PHP_FLOAT_EPSILON, $diff);
     }
@@ -212,13 +208,12 @@ class WeaponBehaviorUnitTest extends TestCase
         $weaponBehavior = app($weaponBehaviorClass);
 
         $this->usesItems->setMeasurable(MeasurableType::FOCUS, 10);
-        $lowValorBaseDamageModifier = $weaponBehavior->getBaseDamageModifier($this->usesItems);
-
+        $lowFocusBaseDamageModifier = $weaponBehavior->getBaseDamageModifier($this->usesItems);
 
         $this->usesItems->setMeasurable(MeasurableType::FOCUS, 99);
-        $highValorBaseDamageModifier = $weaponBehavior->getBaseDamageModifier($this->usesItems);
+        $highFocusBaseDamageModifier = $weaponBehavior->getBaseDamageModifier($this->usesItems);
 
-        $diff = $highValorBaseDamageModifier - $lowValorBaseDamageModifier;
+        $diff = $highFocusBaseDamageModifier - $lowFocusBaseDamageModifier;
         // Make sure the diff is greater than PHP float error, AKA, a number very close to zero
         $this->assertGreaterThan(PHP_FLOAT_EPSILON, $diff);
     }
@@ -305,7 +300,6 @@ class WeaponBehaviorUnitTest extends TestCase
 
         $this->usesItems->setMeasurable(MeasurableType::INTELLIGENCE, 10);
         $lowValorBaseDamageModifier = $weaponBehavior->getBaseDamageModifier($this->usesItems);
-
 
         $this->usesItems->setMeasurable(MeasurableType::INTELLIGENCE, 99);
         $highValorBaseDamageModifier = $weaponBehavior->getBaseDamageModifier($this->usesItems);
