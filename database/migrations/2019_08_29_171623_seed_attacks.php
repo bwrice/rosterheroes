@@ -4,7 +4,7 @@ use App\Domain\Models\Attack;
 use App\Domain\Models\DamageType;
 use App\Domain\Models\ItemBase;
 use App\Domain\Models\TargetPriority;
-use App\Domain\Models\TargetRange;
+use App\Domain\Models\CombatPosition;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -22,7 +22,7 @@ class SeedAttacks extends Migration
             [
                 'name' => Attack::BASIC_BLADE_ATTACK_NAME,
                 'damage_type' => DamageType::SINGLE_TARGET,
-                'target_range' => TargetRange::MELEE,
+                'target_range' => CombatPosition::MELEE,
                 'target_priority' => TargetPriority::ANY,
                 'grade' => 5,
                 'speed_rating' => 100/12,
@@ -38,7 +38,7 @@ class SeedAttacks extends Migration
             [
                 'name' => Attack::BASIC_BOW_ATTACK_NAME,
                 'damage_type' => DamageType::SINGLE_TARGET,
-                'target_range' => TargetRange::MID_RANGE,
+                'target_range' => CombatPosition::MID_RANGE,
                 'target_priority' => TargetPriority::ANY,
                 'grade' => 5,
                 'speed_rating' => 100/23,
@@ -53,7 +53,7 @@ class SeedAttacks extends Migration
             [
                 'name' => Attack::BASIC_MAGIC_ATTACK_NAME,
                 'damage_type' => DamageType::SINGLE_TARGET,
-                'target_range' => TargetRange::MID_RANGE,
+                'target_range' => CombatPosition::MID_RANGE,
                 'target_priority' => TargetPriority::ANY,
                 'grade' => 5,
                 'speed_rating' => 100/18,
@@ -70,7 +70,7 @@ class SeedAttacks extends Migration
         ];
 
         $damageTypes = DamageType::all();
-        $targetRanges = TargetRange::all();
+        $targetRanges = CombatPosition::all();
         $targetPriorities = TargetPriority::all();
         $itemBases = ItemBase::all();
 

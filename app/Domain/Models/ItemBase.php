@@ -119,10 +119,10 @@ class ItemBase extends Model
         return $this->hasMany(ItemType::class);
     }
 
-    public function itemGroup()
-    {
-        return $this->belongsTo(ItemGroup::class);
-    }
+//    public function itemGroup()
+//    {
+//        return $this->belongsTo(ItemGroup::class);
+//    }
 
     /**
      * @return int

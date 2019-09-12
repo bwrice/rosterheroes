@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property string $name
  */
-class TargetRange extends Model
+class CombatPosition extends Model
 {
     use HasUniqueNames;
 

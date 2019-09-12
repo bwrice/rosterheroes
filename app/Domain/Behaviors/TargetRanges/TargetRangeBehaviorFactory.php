@@ -4,7 +4,7 @@
 namespace App\Domain\Behaviors\TargetRanges;
 
 
-use App\Domain\Models\TargetRange;
+use App\Domain\Models\CombatPosition;
 use App\Exceptions\UnknownBehaviorException;
 
 class TargetRangeBehaviorFactory
@@ -12,11 +12,11 @@ class TargetRangeBehaviorFactory
     public function getBehavior(string $targetRangeName): TargetRangeBehaviorInterface
     {
         switch ($targetRangeName) {
-            case TargetRange::MELEE:
+            case CombatPosition::MELEE:
                 return app(MeleeRangeBehavior::class);
-            case TargetRange::MID_RANGE:
+            case CombatPosition::MID_RANGE:
                 return app(MidRangeBehavior::class);
-            case TargetRange::LONG_RANGE:
+            case CombatPosition::LONG_RANGE:
                 return app(LongRangeBehavior::class);
         }
 

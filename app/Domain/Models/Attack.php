@@ -23,7 +23,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property float $damage_modifier_rating
  *
  * @property DamageType $damageType
- * @property TargetRange $targetRange
+ * @property CombatPosition $targetRange
  * @property TargetPriority $targetPriority
  *
  * @property ItemCollection $items
@@ -69,7 +69,7 @@ class Attack extends Model
 
     public function targetRange()
     {
-        return $this->belongsTo(TargetRange::class);
+        return $this->belongsTo(CombatPosition::class);
     }
 
     public function targetPriority()
@@ -114,7 +114,7 @@ class Attack extends Model
         return $combatSpeed;
     }
 
-    public function getDamageModifier(HasAttacks $hasAttacks = null): float
+    public function getDamageMultiplier(HasAttacks $hasAttacks = null): float
     {
         $damageModifier = 1;
         $damageModifier += $this->damage_modifier_rating**.25;

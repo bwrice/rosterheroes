@@ -2,14 +2,14 @@
 
 namespace App\Http\Resources;
 
-use App\Domain\Models\TargetRange;
+use App\Domain\Models\CombatPosition;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
  * Class TargetRangeResource
  * @package App\Http\Resources
  *
- * @mixin TargetRange
+ * @mixin CombatPosition
  */
 class TargetRangeResource extends JsonResource
 {
