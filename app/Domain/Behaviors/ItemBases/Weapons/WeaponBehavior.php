@@ -79,10 +79,12 @@ abstract class WeaponBehavior extends ItemBaseBehavior
         return $measurablesModifier * ($this->getBaseDamageRating()/$this->getSpeedRating());
     }
 
-    public function getDamageMultiplierModifier(UsesItems $usesItems = null): float
+    public function getDamageMultiplierBonus(UsesItems $usesItems = null): float
     {
-        $measurablesModifier = $usesItems ? $this->getDamageMultiplierMeasurablesModifier($usesItems) : 1;
-        return $measurablesModifier * ($this->getBaseDamageRating()/$this->getSpeedRating());
+        $measurablesBonus = $usesItems ? $this->getDamageMultiplierMeasurablesBonus($usesItems) : 0;
+        $damageRatingBonus = $this->getBaseDamageRating()/200;
+        $slownessBonus = max((110 - $this->getSpeedRating())/100, 0);
+        return $measurablesBonus + $damageRatingBonus + $slownessBonus;
     }
 
     /**
@@ -96,6 +98,6 @@ abstract class WeaponBehavior extends ItemBaseBehavior
         return 1 + $speedRatingBonus + $agilityBonus;
     }
 
-    abstract protected function getDamageMultiplierMeasurablesModifier(UsesItems $usesItems): float;
+    abstract protected function getDamageMultiplierMeasurablesBonus(UsesItems $usesItems): float;
 
 }
