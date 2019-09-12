@@ -7,6 +7,7 @@ use App\Domain\Actions\RemoveSpiritFromHeroAction;
 use App\Domain\Collections\ItemCollection;
 use App\Domain\Collections\MeasurableCollection;
 use App\Domain\Interfaces\RaisesMeasurables;
+use App\Domain\Interfaces\UsesItems;
 use App\Domain\Models\Item;
 use App\Domain\QueryBuilders\HeroQueryBuilder;
 use App\Domain\Traits\HasSlug;
@@ -60,7 +61,7 @@ use Spatie\Sluggable\SlugOptions;
  *
  * @method static HeroQueryBuilder query();
  */
-class Hero extends EventSourcedModel implements HasSlots, RaisesMeasurables
+class Hero extends EventSourcedModel implements HasSlots, RaisesMeasurables, UsesItems
 {
     use HasSlug;
 
@@ -249,5 +250,11 @@ class Hero extends EventSourcedModel implements HasSlots, RaisesMeasurables
         $squadExp = $squad->experience;
         $expSpentOnMeasurables = $this->measurables->experienceSpentOnRaising();
         return $squadExp - $expSpentOnMeasurables;
+    }
+
+    public function getMeasurableAmount(string $measurableTypeName): int
+    {
+        $measurable = $this->getMeasurable($measurableTypeName);
+        return $this->getCurrentMeasurableAmount($measurable);
     }
 }
