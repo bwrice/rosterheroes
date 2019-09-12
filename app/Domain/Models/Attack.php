@@ -106,20 +106,21 @@ class Attack extends Model
 
     public function getCombatSpeed(HasAttacks $hasAttacks = null): float
     {
-        $baseSpeed = $this->speed_rating;
-        $baseSpeed = $this->getBehavior()->adjustCombatSpeed($baseSpeed);
+        $combatSpeed = $this->speed_rating;
+        $combatSpeed = $this->getBehavior()->adjustCombatSpeed($combatSpeed);
         if ($hasAttacks) {
-            $baseSpeed = $hasAttacks->adjustCombatSpeed($baseSpeed);
+            $combatSpeed = $hasAttacks->adjustCombatSpeed($combatSpeed);
         }
-        return $baseSpeed;
+        return $combatSpeed;
     }
 
     public function getDamageModifier(HasAttacks $hasAttacks = null): float
     {
-        $damageModifier = $this->damage_modifier_rating;
+        $damageModifier = 1;
+        $damageModifier += $this->damage_modifier_rating**.25;
         $damageModifier = $this->getBehavior()->adjustDamageMultiplier($damageModifier);
         if ($hasAttacks) {
-            $hasAttacks->adjustDamageMultiplier($damageModifier);
+            $damageModifier = $hasAttacks->adjustDamageMultiplier($damageModifier);
         }
         return $damageModifier;
     }
