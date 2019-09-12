@@ -15,7 +15,7 @@ abstract class ClothingBehavior extends ItemBaseBehavior
         parent::__construct($clothingGroup);
     }
 
-    public function getDamageMultiplierModifier(UsesItems $hasItems = null): float
+    public function getDamageMultiplierModifier(UsesItems $usesItems = null): float
     {
         return 1;
     }

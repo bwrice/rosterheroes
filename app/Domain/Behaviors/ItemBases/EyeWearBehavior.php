@@ -44,7 +44,7 @@ class EyeWearBehavior extends ItemBaseBehavior
         return 1;
     }
 
-    public function getDamageMultiplierModifier(UsesItems $hasItems = null): float
+    public function getDamageMultiplierModifier(UsesItems $usesItems = null): float
     {
         return 1;
     }

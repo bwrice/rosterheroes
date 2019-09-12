@@ -14,7 +14,7 @@ abstract class JewelryBehavior extends ItemBaseBehavior
         parent::__construct($jewelryGroup);
     }
 
-    public function getDamageMultiplierModifier(UsesItems $hasItems = null): float
+    public function getDamageMultiplierModifier(UsesItems $usesItems = null): float
     {
         return 1;
     }

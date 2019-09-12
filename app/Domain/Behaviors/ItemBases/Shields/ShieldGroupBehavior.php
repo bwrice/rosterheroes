@@ -22,7 +22,7 @@ abstract class ShieldGroupBehavior extends ItemBaseBehavior
         ];
     }
 
-    public function getDamageMultiplierModifier(UsesItems $hasItems = null): float
+    public function getDamageMultiplierModifier(UsesItems $usesItems = null): float
     {
         return 1;
     }
