@@ -131,9 +131,9 @@ class Item extends EventSourcedModel implements Slottable, HasAttacks
 
     public function adjustDamageMultiplier(float $damageModifier): float
     {
-        $gradeModifier = 1 + ($this->itemTypeGrade() ** .5)/5;
-        $behaviorModifier = $this->getItemBaseBehavior()->getDamageMultiplierModifier();
-        return $damageModifier * $gradeModifier * $behaviorModifier;
+        $gradeBonus = $this->itemTypeGrade()/100;
+        $behaviorBonus = $this->getItemBaseBehavior()->getDamageMultiplierBonus($this->getUsesItems());
+        return $damageModifier * (1 + $gradeBonus + $behaviorBonus);
     }
 
     public function getUsesItems(): ?UsesItems
