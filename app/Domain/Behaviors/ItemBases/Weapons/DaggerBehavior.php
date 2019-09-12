@@ -54,9 +54,19 @@ class DaggerBehavior extends WeaponBehavior
 
     protected function getBaseDamageMeasurablesModifier(UsesItems $usesItems): float
     {
+        return 1 + $this->getMeasurablesDamageBonus($usesItems);
+    }
+
+    protected function getDamageMultiplierMeasurablesModifier(UsesItems $usesItems): float
+    {
+        return 1 + $this->getMeasurablesDamageBonus($usesItems);
+    }
+
+    protected function getMeasurablesDamageBonus(UsesItems $usesItems)
+    {
         $agilityBonus = .02 * $usesItems->getMeasurableAmount(MeasurableType::AGILITY);
         $focusBonus = .02 * $usesItems->getMeasurableAmount(MeasurableType::FOCUS);
-        return 1 + ($agilityBonus + $focusBonus);
+        return $agilityBonus + $focusBonus;
     }
 
     protected function getStartingSpeedRating(): int
@@ -67,10 +77,5 @@ class DaggerBehavior extends WeaponBehavior
     protected function getStartingBaseDamageRating(): int
     {
         return self::BASE_DAMAGE_RAGING;
-    }
-
-    protected function getDamageMultiplierMeasurablesModifier(UsesItems $usesItems): float
-    {
-        return 1;
     }
 }

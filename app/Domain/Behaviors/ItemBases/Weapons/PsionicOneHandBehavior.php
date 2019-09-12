@@ -54,10 +54,20 @@ class PsionicOneHandBehavior extends WeaponBehavior
 
     protected function getBaseDamageMeasurablesModifier(UsesItems $usesItems): float
     {
+        return 1 + $this->getMeasurablesDamageBonus($usesItems);
+    }
+
+    protected function getDamageMultiplierMeasurablesModifier(UsesItems $usesItems): float
+    {
+        return 1 + $this->getMeasurablesDamageBonus($usesItems);
+    }
+
+    protected function getMeasurablesDamageBonus(UsesItems $usesItems)
+    {
         $agilityBonus =  .015 * $usesItems->getMeasurableAmount(MeasurableType::AGILITY);
         $aptitudeBonus =  .015 * $usesItems->getMeasurableAmount(MeasurableType::APTITUDE);
         $intelligenceBonus =  .015 * $usesItems->getMeasurableAmount(MeasurableType::INTELLIGENCE);
-        return 1 + ($agilityBonus + $aptitudeBonus + $intelligenceBonus);
+        return $agilityBonus + $aptitudeBonus + $intelligenceBonus;
     }
 
     protected function getStartingSpeedRating(): int
@@ -68,10 +78,5 @@ class PsionicOneHandBehavior extends WeaponBehavior
     protected function getStartingBaseDamageRating(): int
     {
         return self::BASE_DAMAGE_RAGING;
-    }
-
-    protected function getDamageMultiplierMeasurablesModifier(UsesItems $usesItems): float
-    {
-        return 1;
     }
 }
