@@ -437,6 +437,48 @@ class WeaponBehaviorUnitTest extends TestCase
 
     /**
      * @test
+     * @dataProvider provides_certain_weapons_have_a_higher_damage_multiplier_with_more_agility
+     * @param $weaponBehaviorClass
+     */
+    public function certain_weapons_have_a_higher_damage_multiplier_with_more_agility($weaponBehaviorClass)
+    {
+        /** @var WeaponBehavior $weaponBehavior */
+        $weaponBehavior = app($weaponBehaviorClass);
+
+        $this->usesItems->setMeasurable(MeasurableType::AGILITY, 10);
+        $lowAgilityDamageMultiplier = $weaponBehavior->getDamageMultiplierModifier($this->usesItems);
+
+        $this->usesItems->setMeasurable(MeasurableType::AGILITY, 99);
+        $highAgilityDamageMultiplier = $weaponBehavior->getDamageMultiplierModifier($this->usesItems);
+
+        $diff = $highAgilityDamageMultiplier - $lowAgilityDamageMultiplier;
+        // Make sure the diff is greater than PHP float error, AKA, a number very close to zero
+        $this->assertGreaterThan(PHP_FLOAT_EPSILON, $diff);
+    }
+
+    public function provides_certain_weapons_have_a_higher_damage_multiplier_with_more_agility()
+    {
+        return [
+            ItemBase::DAGGER => [
+                'weaponBehaviorClass' => DaggerBehavior::class
+            ],
+            ItemBase::SWORD => [
+                'weaponBehaviorClass' => SwordBehavior::class
+            ],
+            ItemBase::BOW => [
+                'weaponBehaviorClass' => BowBehavior::class
+            ],
+            ItemBase::POLE_ARM => [
+                'weaponBehaviorClass' => PoleArmBehavior::class
+            ],
+            ItemBase::PSIONIC_ONE_HAND => [
+                'weaponBehaviorClass' => PsionicOneHandBehavior::class
+            ],
+        ];
+    }
+
+    /**
+     * @test
      * @param $weaponBehaviorClass
      * @dataProvider provides_higher_agility_increases_the_speed_of_weapons
      */
