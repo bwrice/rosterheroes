@@ -28,6 +28,7 @@ class AttackResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'name' => $this->name,
             'damageType' => new DamageTypeResource($this->damageType),
             'targetRange' => new TargetRangeResource($this->targetRange),
             'targetPriority' => new TargetPriorityResource($this->targetPriority),
