@@ -341,10 +341,10 @@ class WeaponBehaviorUnitTest extends TestCase
         $weaponBehavior = app($weaponBehaviorClass);
 
         $this->usesItems->setMeasurable(MeasurableType::STRENGTH, 10);
-        $lowStrengthDamageMultiplier = $weaponBehavior->getDamageMultiplierModifier($this->usesItems);
+        $lowStrengthDamageMultiplier = $weaponBehavior->getDamageMultiplierBonus($this->usesItems);
 
         $this->usesItems->setMeasurable(MeasurableType::STRENGTH, 99);
-        $highStrengthDamageMultiplier = $weaponBehavior->getDamageMultiplierModifier($this->usesItems);
+        $highStrengthDamageMultiplier = $weaponBehavior->getDamageMultiplierBonus($this->usesItems);
 
         $diff = $highStrengthDamageMultiplier - $lowStrengthDamageMultiplier;
         // Make sure the diff is greater than PHP float error, AKA, a number very close to zero
@@ -392,10 +392,10 @@ class WeaponBehaviorUnitTest extends TestCase
         $weaponBehavior = app($weaponBehaviorClass);
 
         $this->usesItems->setMeasurable(MeasurableType::VALOR, 10);
-        $lowValorDamageMultiplier = $weaponBehavior->getDamageMultiplierModifier($this->usesItems);
+        $lowValorDamageMultiplier = $weaponBehavior->getDamageMultiplierBonus($this->usesItems);
 
         $this->usesItems->setMeasurable(MeasurableType::VALOR, 99);
-        $highValorDamageMultiplier = $weaponBehavior->getDamageMultiplierModifier($this->usesItems);
+        $highValorDamageMultiplier = $weaponBehavior->getDamageMultiplierBonus($this->usesItems);
 
         $diff = $highValorDamageMultiplier - $lowValorDamageMultiplier;
         // Make sure the diff is greater than PHP float error, AKA, a number very close to zero
@@ -440,10 +440,10 @@ class WeaponBehaviorUnitTest extends TestCase
         $weaponBehavior = app($weaponBehaviorClass);
 
         $this->usesItems->setMeasurable(MeasurableType::AGILITY, 10);
-        $lowAgilityDamageMultiplier = $weaponBehavior->getDamageMultiplierModifier($this->usesItems);
+        $lowAgilityDamageMultiplier = $weaponBehavior->getDamageMultiplierBonus($this->usesItems);
 
         $this->usesItems->setMeasurable(MeasurableType::AGILITY, 99);
-        $highAgilityDamageMultiplier = $weaponBehavior->getDamageMultiplierModifier($this->usesItems);
+        $highAgilityDamageMultiplier = $weaponBehavior->getDamageMultiplierBonus($this->usesItems);
 
         $diff = $highAgilityDamageMultiplier - $lowAgilityDamageMultiplier;
         // Make sure the diff is greater than PHP float error, AKA, a number very close to zero
@@ -482,10 +482,10 @@ class WeaponBehaviorUnitTest extends TestCase
         $weaponBehavior = app($weaponBehaviorClass);
 
         $this->usesItems->setMeasurable(MeasurableType::FOCUS, 10);
-        $lowFocusDamageMultiplier = $weaponBehavior->getDamageMultiplierModifier($this->usesItems);
+        $lowFocusDamageMultiplier = $weaponBehavior->getDamageMultiplierBonus($this->usesItems);
 
         $this->usesItems->setMeasurable(MeasurableType::FOCUS, 99);
-        $highFocusDamageMultiplier = $weaponBehavior->getDamageMultiplierModifier($this->usesItems);
+        $highFocusDamageMultiplier = $weaponBehavior->getDamageMultiplierBonus($this->usesItems);
 
         $diff = $highFocusDamageMultiplier - $lowFocusDamageMultiplier;
         // Make sure the diff is greater than PHP float error, AKA, a number very close to zero
@@ -527,10 +527,10 @@ class WeaponBehaviorUnitTest extends TestCase
         $weaponBehavior = app($weaponBehaviorClass);
 
         $this->usesItems->setMeasurable(MeasurableType::APTITUDE, 10);
-        $lowAptitudeDamageMultiplier = $weaponBehavior->getDamageMultiplierModifier($this->usesItems);
+        $lowAptitudeDamageMultiplier = $weaponBehavior->getDamageMultiplierBonus($this->usesItems);
 
         $this->usesItems->setMeasurable(MeasurableType::APTITUDE, 99);
-        $highAptitudeDamageMultiplier = $weaponBehavior->getDamageMultiplierModifier($this->usesItems);
+        $highAptitudeDamageMultiplier = $weaponBehavior->getDamageMultiplierBonus($this->usesItems);
 
         $diff = $highAptitudeDamageMultiplier - $lowAptitudeDamageMultiplier;
         // Make sure the diff is greater than PHP float error, AKA, a number very close to zero
@@ -572,10 +572,10 @@ class WeaponBehaviorUnitTest extends TestCase
         $weaponBehavior = app($weaponBehaviorClass);
 
         $this->usesItems->setMeasurable(MeasurableType::INTELLIGENCE, 10);
-        $lowIntelligenceDamageMultiplier = $weaponBehavior->getDamageMultiplierModifier($this->usesItems);
+        $lowIntelligenceDamageMultiplier = $weaponBehavior->getDamageMultiplierBonus($this->usesItems);
 
         $this->usesItems->setMeasurable(MeasurableType::INTELLIGENCE, 99);
-        $highIntelligenceDamageMultiplier = $weaponBehavior->getDamageMultiplierModifier($this->usesItems);
+        $highIntelligenceDamageMultiplier = $weaponBehavior->getDamageMultiplierBonus($this->usesItems);
 
         $diff = $highIntelligenceDamageMultiplier - $lowIntelligenceDamageMultiplier;
         // Make sure the diff is greater than PHP float error, AKA, a number very close to zero

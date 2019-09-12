@@ -15,7 +15,7 @@ abstract class ArmorBehavior extends ItemBaseBehavior
         parent::__construct($armorGroup);
     }
 
-    public function getDamageMultiplierModifier(UsesItems $usesItems = null): float
+    public function getDamageMultiplierBonus(UsesItems $usesItems = null): float
     {
         return 1;
     }

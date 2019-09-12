@@ -58,7 +58,7 @@ class ThrowingWeaponBehavior extends WeaponBehavior
         return 1 + $this->getMeasurablesDamageBonus($usesItems);
     }
 
-    protected function getDamageMultiplierMeasurablesModifier(UsesItems $usesItems): float
+    protected function getDamageMultiplierMeasurablesBonus(UsesItems $usesItems): float
     {
         return 1 + $this->getMeasurablesDamageBonus($usesItems);
     }
