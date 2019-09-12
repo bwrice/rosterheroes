@@ -12,7 +12,7 @@ interface ItemBaseBehaviorInterface
 
     public function getSlotTypeIDs(): array;
 
-    public function getCombatSpeedModifier(UsesItems $hasItems = null): float;
+    public function getCombatSpeedBonus(UsesItems $hasItems = null): float;
 
     public function getBaseDamageBonus(UsesItems $usesItems = null): float;
 

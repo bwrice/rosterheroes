@@ -25,7 +25,7 @@ abstract class ArmorBehavior extends ItemBaseBehavior
         return 0;
     }
 
-    public function getCombatSpeedModifier(UsesItems $hasItems = null): float
+    public function getCombatSpeedBonus(UsesItems $hasItems = null): float
     {
         return 0;
     }
