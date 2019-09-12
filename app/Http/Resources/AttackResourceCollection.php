@@ -5,6 +5,9 @@ namespace App\Http\Resources;
 use App\Domain\Interfaces\HasAttacks;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
+/*
+ * TODO: Delete?
+ */
 class AttackResourceCollection extends ResourceCollection
 {
 

@@ -16,14 +16,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
  */
 class AttackResource extends JsonResource
 {
-    /** @var HasAttacks */
+    /** @var HasAttacks|null */
     protected $hasAttacks;
-
-    public function __construct($resource, $key = 0, HasAttacks $hasAttacks = null)
-    {
-        parent::__construct($resource);
-        $this->hasAttacks = $hasAttacks;
-    }
 
     /**
      * Transform the resource into an array.
