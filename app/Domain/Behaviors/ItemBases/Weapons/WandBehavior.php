@@ -54,9 +54,19 @@ class WandBehavior extends WeaponBehavior
 
     protected function getBaseDamageMeasurablesModifier(UsesItems $usesItems): float
     {
+        return 1 + $this->getMeasurablesDamageBonus($usesItems);
+    }
+
+    protected function getDamageMultiplierMeasurablesModifier(UsesItems $usesItems): float
+    {
+        return 1 + $this->getMeasurablesDamageBonus($usesItems);
+    }
+
+    protected function getMeasurablesDamageBonus(UsesItems $usesItems)
+    {
         $aptitudeBonus = .02 * $usesItems->getMeasurableAmount(MeasurableType::APTITUDE);
         $intelligenceBonus = .02 * $usesItems->getMeasurableAmount(MeasurableType::INTELLIGENCE);
-        return 1 + ($aptitudeBonus + $intelligenceBonus);
+        return $aptitudeBonus + $intelligenceBonus;
     }
 
     protected function getStartingSpeedRating(): int
@@ -67,10 +77,5 @@ class WandBehavior extends WeaponBehavior
     protected function getStartingBaseDamageRating(): int
     {
         return self::BASE_DAMAGE_RAGING;
-    }
-
-    protected function getDamageMultiplierMeasurablesModifier(UsesItems $usesItems): float
-    {
-        return 1;
     }
 }

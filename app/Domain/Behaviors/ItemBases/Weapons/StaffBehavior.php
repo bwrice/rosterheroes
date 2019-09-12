@@ -54,10 +54,20 @@ class StaffBehavior extends WeaponBehavior
 
     protected function getBaseDamageMeasurablesModifier(UsesItems $usesItems): float
     {
+        return 1 + $this->getMeasurablesDamageBonus($usesItems);
+    }
+
+    protected function getDamageMultiplierMeasurablesModifier(UsesItems $usesItems): float
+    {
+        return 1 + $this->getMeasurablesDamageBonus($usesItems);
+    }
+
+    protected function getMeasurablesDamageBonus(UsesItems $usesItems)
+    {
         $valorBonus = .017 * $usesItems->getMeasurableAmount(MeasurableType::VALOR);
         $aptitudeBonus = .017 * $usesItems->getMeasurableAmount(MeasurableType::APTITUDE);
         $intelligenceBonus = .015 * $usesItems->getMeasurableAmount(MeasurableType::INTELLIGENCE);
-        return 1 + ($valorBonus + $aptitudeBonus + $intelligenceBonus);
+        return $valorBonus + $aptitudeBonus + $intelligenceBonus;
     }
 
     protected function getStartingSpeedRating(): int
@@ -68,10 +78,5 @@ class StaffBehavior extends WeaponBehavior
     protected function getStartingBaseDamageRating(): int
     {
         return self::BASE_DAMAGE_RAGING;
-    }
-
-    protected function getDamageMultiplierMeasurablesModifier(UsesItems $usesItems): float
-    {
-        return 1;
     }
 }

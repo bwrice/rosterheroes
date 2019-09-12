@@ -54,9 +54,19 @@ class CrossbowBehavior extends WeaponBehavior
 
     protected function getBaseDamageMeasurablesModifier(UsesItems $usesItems): float
     {
+        return 1 + $this->getMeasurablesDamageBonus($usesItems);
+    }
+
+    protected function getDamageMultiplierMeasurablesModifier(UsesItems $usesItems): float
+    {
+        return 1 + $this->getMeasurablesDamageBonus($usesItems);
+    }
+
+    protected function getMeasurablesDamageBonus(UsesItems $usesItems)
+    {
         $focusBonus = .02 * $usesItems->getMeasurableAmount(MeasurableType::FOCUS);
         $aptitudeBonus = .02 * $usesItems->getMeasurableAmount(MeasurableType::APTITUDE);
-        return 1 + ($focusBonus + $aptitudeBonus);
+        return $focusBonus + $aptitudeBonus;
     }
 
     protected function getStartingSpeedRating(): int
@@ -67,10 +77,5 @@ class CrossbowBehavior extends WeaponBehavior
     protected function getStartingBaseDamageRating(): int
     {
         return self::BASE_DAMAGE_RAGING;
-    }
-
-    protected function getDamageMultiplierMeasurablesModifier(UsesItems $usesItems): float
-    {
-        return 1;
     }
 }
