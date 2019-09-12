@@ -17,16 +17,16 @@ abstract class ClothingBehavior extends ItemBaseBehavior
 
     public function getDamageMultiplierBonus(UsesItems $usesItems = null): float
     {
-        return 1;
+        return 0;
     }
 
     public function getBaseDamageBonus(UsesItems $usesItems = null): float
     {
-        return 1;
+        return 0;
     }
 
     public function getCombatSpeedModifier(UsesItems $hasItems = null): float
     {
-        return 1;
+        return 0;
     }
 }
