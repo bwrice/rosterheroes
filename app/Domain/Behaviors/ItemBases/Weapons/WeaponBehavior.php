@@ -95,7 +95,7 @@ abstract class WeaponBehavior extends ItemBaseBehavior
     {
         $agilityBonus = $hasItems ? $hasItems->getMeasurableAmount(MeasurableType::AGILITY)/500 : 0;
         $speedRatingBonus = $this->getSpeedRating()/100;
-        return 1 + $speedRatingBonus + $agilityBonus;
+        return $speedRatingBonus + $agilityBonus;
     }
 
     abstract protected function getDamageMultiplierMeasurablesBonus(UsesItems $usesItems): float;

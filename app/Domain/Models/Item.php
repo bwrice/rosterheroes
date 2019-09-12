@@ -117,9 +117,9 @@ class Item extends EventSourcedModel implements Slottable, HasAttacks
 
     public function adjustCombatSpeed(float $speed): float
     {
-        $gradeModifier = 1 + ($this->itemTypeGrade() ** .5)/10;
-        $behaviorModifier = $this->getItemBaseBehavior()->getCombatSpeedBonus($this->getUsesItems());
-        return $speed * $gradeModifier * $behaviorModifier;
+        $gradeBonus = ($this->itemTypeGrade() ** .5)/25;
+        $behaviorBonus = $this->getItemBaseBehavior()->getCombatSpeedBonus($this->getUsesItems());
+        return $speed * (1 + $gradeBonus + $behaviorBonus);
     }
 
     public function adjustBaseDamage(float $baseDamage): float
