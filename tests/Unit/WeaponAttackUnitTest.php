@@ -19,17 +19,30 @@ use App\Domain\Behaviors\ItemBases\Weapons\TwoHandSwordBehavior;
 use App\Domain\Behaviors\ItemBases\Weapons\WandBehavior;
 use App\Domain\Behaviors\ItemBases\Weapons\WeaponBehavior;
 use App\Domain\Interfaces\UsesItems;
+use App\Domain\Models\Attack;
+use App\Domain\Models\Hero;
+use App\Domain\Models\Item;
 use App\Domain\Models\ItemBase;
+use App\Domain\Models\ItemType;
 use App\Domain\Models\MeasurableType;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class WeaponBehaviorUnitTest extends TestCase
+class WeaponAttackUnitTest extends TestCase
 {
     use DatabaseTransactions;
 
+    /** @var Attack */
+    protected $attack;
+
+    /** @var Hero */
+    protected $hero;
+
+    /** @var Item */
+    protected $item;
 
     /** @var UsesItems */
     protected $usesItems;
@@ -37,6 +50,13 @@ class WeaponBehaviorUnitTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+
+        $this->attack = factory(Attack::class)->create();
+        $this->hero = factory(Hero::class)->states('with-slots', 'with-measurables')->create();
+        $anySlot = $this->hero->slots->random();
+        $this->item = factory(Item::class)->create();
+        $this->item->slots()->save($anySlot);
+
         $this->usesItems = new class() implements UsesItems {
 
             protected $measurables = [];
@@ -59,20 +79,31 @@ class WeaponBehaviorUnitTest extends TestCase
     /**
      * @test
      * @dataProvider provides_certain_weapons_have_more_base_damage_with_more_strength
-     * @param $weaponBehaviorClass
+     * @param $itemBaseName
      */
-    public function certain_weapons_have_more_base_damage_with_more_strength($weaponBehaviorClass)
+    public function certain_weapons_have_more_base_damage_with_more_strength($itemBaseName)
     {
-        /** @var WeaponBehavior $weaponBehavior */
-        $weaponBehavior = app($weaponBehaviorClass);
+        /** @var ItemType $itemType */
+        $itemType = ItemType::query()->whereHas('itemBase', function (Builder $builder) use ($itemBaseName) {
+            return $builder->where('name', '=', $itemBaseName);
+        })->inRandomOrder()->first();
 
-        $this->usesItems->setMeasurable(MeasurableType::STRENGTH, 10);
-        $lowStrengthBaseDamageModifier = $weaponBehavior->getBaseDamageBonus($this->usesItems);
+        $this->item->item_type_id = $itemType->id;
+        $this->item->save();
 
-        $this->usesItems->setMeasurable(MeasurableType::STRENGTH, 99);
-        $highStrengthBaseDamageModifier = $weaponBehavior->getBaseDamageBonus($this->usesItems);
+        $strength = $this->hero->getMeasurable(MeasurableType::STRENGTH);
+        $strength->amount_raised = 0;
+        $strength->save();
 
-        $diff = $highStrengthBaseDamageModifier - $lowStrengthBaseDamageModifier;
+        $lowStrengthBaseDamage = $this->attack->getBaseDamage($this->item->fresh());
+
+        $strength = $this->hero->getMeasurable(MeasurableType::STRENGTH);
+        $strength->amount_raised = 99;
+        $strength->save();
+
+        $highStrengthBaseDamage = $this->attack->getBaseDamage($this->item->fresh());
+
+        $diff = $highStrengthBaseDamage - $lowStrengthBaseDamage;
         // Make sure the diff is greater than PHP float error, AKA, a number very close to zero
         $this->assertGreaterThan(PHP_FLOAT_EPSILON, $diff);
     }
@@ -81,28 +112,28 @@ class WeaponBehaviorUnitTest extends TestCase
     {
         return [
             ItemBase::AXE => [
-                'weaponBehaviorClass' => AxeBehavior::class
+                'itemBaseName' => ItemBase::AXE
             ],
             ItemBase::MACE => [
-                'weaponBehaviorClass' => MaceBehavior::class
+                'itemBaseName' => ItemBase::MACE
             ],
             ItemBase::SWORD => [
-                'weaponBehaviorClass' => SwordBehavior::class
+                'itemBaseName' => ItemBase::SWORD
             ],
             ItemBase::TWO_HAND_AXE => [
-                'weaponBehaviorClass' => TwoHandAxeBehavior::class
+                'itemBaseName' => ItemBase::TWO_HAND_AXE
             ],
             ItemBase::TWO_HAND_SWORD => [
-                'weaponBehaviorClass' => TwoHandSwordBehavior::class
+                'itemBaseName' => ItemBase::TWO_HAND_SWORD
             ],
             ItemBase::BOW => [
-                'weaponBehaviorClass' => BowBehavior::class
+                'itemBaseName' => ItemBase::BOW
             ],
             ItemBase::THROWING_WEAPON => [
-                'weaponBehaviorClass' => ThrowingWeaponBehavior::class
+                'itemBaseName' => ItemBase::THROWING_WEAPON
             ],
             ItemBase::PSIONIC_TWO_HAND => [
-                'weaponBehaviorClass' => PsionicTwoHandBehavior::class
+                'itemBaseName' => ItemBase::PSIONIC_TWO_HAND
             ],
         ];
     }
