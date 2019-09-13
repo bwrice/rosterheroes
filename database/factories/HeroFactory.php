@@ -16,7 +16,10 @@ $factory->define(\App\Domain\Models\Hero::class, function (Faker $faker) {
         'uuid' => $uuid,
         'hero_class_id' => $class->id,
         'hero_rank_id' => $rank->id,
-        'hero_race_id' => $heroRace->id
+        'hero_race_id' => $heroRace->id,
+        'combat_position_id' => function() {
+            return \App\Domain\Models\CombatPosition::query()->inRandomOrder()->first()->id;
+        }
     ];
 });
 
