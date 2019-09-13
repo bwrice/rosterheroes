@@ -33,4 +33,19 @@ class CombatPosition extends Model
         $factory = app(CombatPositionBehaviorFactory::class);
         return $factory->getBehavior($this->name);
     }
+
+    public static function melee(): self
+    {
+        return self::forName(self::MELEE);
+    }
+
+    public static function midRange(): self
+    {
+        return self::forName(self::MELEE);
+    }
+
+    public static function longRange(): self
+    {
+        return self::forName(self::MELEE);
+    }
 }
