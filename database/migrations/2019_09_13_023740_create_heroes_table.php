@@ -21,6 +21,7 @@ class CreateHeroesTable extends Migration
             $table->integer('hero_class_id')->unsigned();
             $table->integer('hero_rank_id')->unsigned();
             $table->integer('hero_race_id')->unsigned();
+            $table->integer('combat_position_id')->unsigned();
             $table->integer('player_spirit_id')->unsigned()->nullable();
             $table->timestamps();
         });
@@ -29,6 +30,7 @@ class CreateHeroesTable extends Migration
             $table->foreign('hero_class_id')->references('id')->on('hero_classes');
             $table->foreign('hero_rank_id')->references('id')->on('hero_ranks');
             $table->foreign('hero_race_id')->references('id')->on('hero_races');
+            $table->foreign('combat_position_id')->references('id')->on('combat_positions');
             $table->foreign('player_spirit_id')->references('id')->on('player_spirits');
         });
     }
