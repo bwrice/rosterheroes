@@ -29,12 +29,17 @@ final class HeroCreated implements ShouldBeStored
      * @var int
      */
     public $heroRankID;
+    /**
+     * @var int
+     */
+    public $combatPositionID;
 
-    public function __construct(string $name, int $heroClassID, int $heroRaceID, int $heroRankID)
+    public function __construct(string $name, int $heroClassID, int $heroRaceID, int $heroRankID, int $combatPositionID)
     {
         $this->name = $name;
         $this->heroClassID = $heroClassID;
         $this->heroRaceID = $heroRaceID;
         $this->heroRankID = $heroRankID;
+        $this->combatPositionID = $combatPositionID;
     }
 }

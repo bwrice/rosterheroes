@@ -20,7 +20,8 @@ class HeroProjector implements Projector
             'name' => $event->name,
             'hero_class_id' => $event->heroClassID,
             'hero_race_id' => $event->heroRaceID,
-            'hero_rank_id' => $event->heroRankID
+            'hero_rank_id' => $event->heroRankID,
+            'combat_position_id' => $event->combatPositionID
         ]);
     }
 

@@ -39,7 +39,8 @@ class CreateHeroAction
             $name,
             $heroClass->id,
             $heroRace->id,
-            $heroRank->id
+            $heroRank->id,
+            $heroClass->getBehavior()->getStartingCombatPosition()->id
         ));
 
         /*
