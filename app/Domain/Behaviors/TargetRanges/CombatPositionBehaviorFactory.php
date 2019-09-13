@@ -9,9 +9,9 @@ use App\Exceptions\UnknownBehaviorException;
 
 class CombatPositionBehaviorFactory
 {
-    public function getBehavior(string $targetRangeName): CombatPositionBehaviorInterface
+    public function getBehavior(string $combatPositionName): CombatPositionBehaviorInterface
     {
-        switch ($targetRangeName) {
+        switch ($combatPositionName) {
             case CombatPosition::MELEE:
                 return app(MeleeRangeBehavior::class);
             case CombatPosition::MID_RANGE:
@@ -20,6 +20,6 @@ class CombatPositionBehaviorFactory
                 return app(LongRangeBehavior::class);
         }
 
-        throw new UnknownBehaviorException($targetRangeName, CombatPositionBehaviorInterface::class);
+        throw new UnknownBehaviorException($combatPositionName, CombatPositionBehaviorInterface::class);
     }
 }
