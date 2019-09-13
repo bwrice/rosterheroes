@@ -16,8 +16,8 @@ class CreateAttacksTable extends Migration
         Schema::create('attacks', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->integer('combat_position_id')->unsigned();
             $table->integer('damage_type_id')->unsigned();
-            $table->integer('target_range_id')->unsigned();
             $table->integer('target_priority_id')->unsigned();
             $table->integer('grade')->unsigned();
             $table->float('speed_rating');
@@ -29,8 +29,8 @@ class CreateAttacksTable extends Migration
         });
 
         Schema::table('attacks', function (Blueprint $table) {
+            $table->foreign('combat_position_id')->references('id')->on('combat_positions');
             $table->foreign('damage_type_id')->references('id')->on('damage_types');
-            $table->foreign('target_range_id')->references('id')->on('target_ranges');
             $table->foreign('target_priority_id')->references('id')->on('target_priorities');
         });
     }

@@ -8,7 +8,7 @@ use App\Domain\Interfaces\AdjustsBaseDamage;
 use App\Domain\Interfaces\AdjustsCombatSpeed;
 use App\Domain\Interfaces\AdjustsDamageModifier;
 
-interface TargetRangeBehaviorInterface extends AdjustsCombatSpeed, AdjustsBaseDamage, AdjustsDamageModifier
+interface CombatPositionBehaviorInterface extends AdjustsCombatSpeed, AdjustsBaseDamage, AdjustsDamageModifier
 {
 
 }

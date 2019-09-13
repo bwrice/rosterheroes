@@ -4,7 +4,7 @@
 namespace App\Domain\Behaviors\TargetRanges;
 
 
-class MidRangeBehavior extends TargetRangeBehavior
+class MidRangeBehavior extends CombatPositionBehavior
 {
 
     public function adjustCombatSpeed(float $speed): float
