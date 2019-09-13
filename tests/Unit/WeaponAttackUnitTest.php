@@ -80,8 +80,9 @@ class WeaponAttackUnitTest extends TestCase
      * @test
      * @dataProvider provides_certain_weapons_have_more_base_damage_with_more_strength
      * @param $itemBaseName
+     * @param $measurableTypeNames
      */
-    public function certain_weapons_have_more_base_damage_with_more_strength($itemBaseName)
+    public function certain_weapons_have_more_base_damage_with_more_strength($itemBaseName, $measurableTypeNames)
     {
         /** @var ItemType $itemType */
         $itemType = ItemType::query()->whereHas('itemBase', function (Builder $builder) use ($itemBaseName) {
@@ -91,49 +92,75 @@ class WeaponAttackUnitTest extends TestCase
         $this->item->item_type_id = $itemType->id;
         $this->item->save();
 
-        $strength = $this->hero->getMeasurable(MeasurableType::STRENGTH);
-        $strength->amount_raised = 0;
-        $strength->save();
+        foreach($measurableTypeNames as $measurableTypeName) {
 
-        $lowStrengthBaseDamage = $this->attack->getBaseDamage($this->item->fresh());
+            $measurable = $this->hero->getMeasurable($measurableTypeName);
+            $measurable->amount_raised = 0;
+            $measurable->save();
 
-        $strength = $this->hero->getMeasurable(MeasurableType::STRENGTH);
-        $strength->amount_raised = 99;
-        $strength->save();
+            $lowMeasurableBaseDamage = $this->attack->getBaseDamage($this->item->fresh());
 
-        $highStrengthBaseDamage = $this->attack->getBaseDamage($this->item->fresh());
+            $measurable->amount_raised = 99;
+            $measurable->save();
 
-        $diff = $highStrengthBaseDamage - $lowStrengthBaseDamage;
-        // Make sure the diff is greater than PHP float error, AKA, a number very close to zero
-        $this->assertGreaterThan(PHP_FLOAT_EPSILON, $diff);
+            $higherMeasurableBaseDamage = $this->attack->getBaseDamage($this->item->fresh());
+
+            $diff = $higherMeasurableBaseDamage - $lowMeasurableBaseDamage;
+            // Make sure the diff is greater than PHP float error, AKA, a number very close to zero
+            $this->assertGreaterThan(PHP_FLOAT_EPSILON, $diff);
+        }
     }
 
     public function provides_certain_weapons_have_more_base_damage_with_more_strength()
     {
         return [
             ItemBase::AXE => [
-                'itemBaseName' => ItemBase::AXE
+                'itemBaseName' => ItemBase::AXE,
+                'measurableTypeNames' => [
+                    MeasurableType::STRENGTH
+                ]
             ],
             ItemBase::MACE => [
-                'itemBaseName' => ItemBase::MACE
+                'itemBaseName' => ItemBase::MACE,
+                'measurableTypeNames' => [
+                    MeasurableType::STRENGTH
+                ]
             ],
             ItemBase::SWORD => [
-                'itemBaseName' => ItemBase::SWORD
+                'itemBaseName' => ItemBase::SWORD,
+                'measurableTypeNames' => [
+                    MeasurableType::STRENGTH
+                ]
             ],
             ItemBase::TWO_HAND_AXE => [
-                'itemBaseName' => ItemBase::TWO_HAND_AXE
+                'itemBaseName' => ItemBase::TWO_HAND_AXE,
+                'measurableTypeNames' => [
+                    MeasurableType::STRENGTH
+                ]
             ],
             ItemBase::TWO_HAND_SWORD => [
-                'itemBaseName' => ItemBase::TWO_HAND_SWORD
+                'itemBaseName' => ItemBase::TWO_HAND_SWORD,
+                'measurableTypeNames' => [
+                    MeasurableType::STRENGTH
+                ]
             ],
             ItemBase::BOW => [
-                'itemBaseName' => ItemBase::BOW
+                'itemBaseName' => ItemBase::BOW,
+                'measurableTypeNames' => [
+                    MeasurableType::STRENGTH
+                ]
             ],
             ItemBase::THROWING_WEAPON => [
-                'itemBaseName' => ItemBase::THROWING_WEAPON
+                'itemBaseName' => ItemBase::THROWING_WEAPON,
+                'measurableTypeNames' => [
+                    MeasurableType::STRENGTH
+                ]
             ],
             ItemBase::PSIONIC_TWO_HAND => [
-                'itemBaseName' => ItemBase::PSIONIC_TWO_HAND
+                'itemBaseName' => ItemBase::PSIONIC_TWO_HAND,
+                'measurableTypeNames' => [
+                    MeasurableType::STRENGTH
+                ]
             ],
         ];
     }
