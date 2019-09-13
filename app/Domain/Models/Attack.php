@@ -88,13 +88,6 @@ class Attack extends Model
         return new AttackQueryBuilder($query);
     }
 
-    public function getBehavior(): AttackBehavior
-    {
-        /** @var AttackBehaviorFactory $behaviorFactory */
-        $behaviorFactory = app(AttackBehaviorFactory::class);
-        return $behaviorFactory->getAttackBehavior($this);
-    }
-
     public function getBaseDamage(HasAttacks $hasAttacks = null): int
     {
         $baseDamage = $this->base_damage_rating;
