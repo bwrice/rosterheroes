@@ -2,6 +2,8 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Behaviors\DamageTypes\DamageTypeBehaviorFactory;
+use App\Domain\Behaviors\DamageTypes\DamageTypeBehaviorInterface;
 use App\Domain\Models\Traits\HasUniqueNames;
 use Illuminate\Database\Eloquent\Model;
 
@@ -23,4 +25,13 @@ class DamageType extends Model
 
     protected $guarded = [];
 
+    /**
+     * @return DamageTypeBehaviorInterface
+     */
+    public function getBehavior(): DamageTypeBehaviorInterface
+    {
+        /** @var DamageTypeBehaviorFactory $factory */
+        $factory = app(DamageTypeBehaviorFactory::class);
+        return $factory->getBehavior($this->name);
+    }
 }
