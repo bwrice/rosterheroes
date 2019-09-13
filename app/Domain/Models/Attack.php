@@ -98,7 +98,8 @@ class Attack extends Model
     public function getBaseDamage(HasAttacks $hasAttacks = null): int
     {
         $baseDamage = $this->base_damage_rating;
-        $baseDamage = $this->getBehavior()->adjustBaseDamage($baseDamage);
+        $baseDamage = $this->attackerPosition->getBehavior()->adjustBaseDamage($baseDamage);
+        $baseDamage = $this->damageType->getBehavior()->adjustBaseDamage($baseDamage);
         if ($hasAttacks) {
             $baseDamage = $hasAttacks->adjustBaseDamage($baseDamage);
         }
@@ -108,7 +109,8 @@ class Attack extends Model
     public function getCombatSpeed(HasAttacks $hasAttacks = null): float
     {
         $combatSpeed = $this->speed_rating;
-        $combatSpeed = $this->getBehavior()->adjustCombatSpeed($combatSpeed);
+        $combatSpeed = $this->attackerPosition->getBehavior()->adjustCombatSpeed($combatSpeed);
+        $combatSpeed = $this->damageType->getBehavior()->adjustCombatSpeed($combatSpeed);
         if ($hasAttacks) {
             $combatSpeed = $hasAttacks->adjustCombatSpeed($combatSpeed);
         }
@@ -119,7 +121,8 @@ class Attack extends Model
     {
         $damageModifier = 1;
         $damageModifier += $this->damage_modifier_rating**.25;
-        $damageModifier = $this->getBehavior()->adjustDamageMultiplier($damageModifier);
+        $damageModifier = $this->attackerPosition->getBehavior()->adjustDamageMultiplier($damageModifier);
+        $damageModifier = $this->damageType->getBehavior()->adjustDamageMultiplier($damageModifier);
         if ($hasAttacks) {
             $damageModifier = $hasAttacks->adjustDamageMultiplier($damageModifier);
         }
