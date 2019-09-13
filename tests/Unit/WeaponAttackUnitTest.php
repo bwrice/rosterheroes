@@ -78,7 +78,7 @@ class WeaponAttackUnitTest extends TestCase
 
     /**
      * @test
-     * @dataProvider provides_certain_weapons_have_more_base_damage_with_more_strength
+     * @dataProvider provides_weapon_base_damage_is_increased_by_specific_measurables
      * @param $itemBaseName
      * @param $measurableTypeNames
      */
@@ -111,7 +111,7 @@ class WeaponAttackUnitTest extends TestCase
         }
     }
 
-    public function provides_certain_weapons_have_more_base_damage_with_more_strength()
+    public function provides_weapon_base_damage_is_increased_by_specific_measurables()
     {
         return [
             ItemBase::DAGGER => [
@@ -231,51 +231,153 @@ class WeaponAttackUnitTest extends TestCase
 
     /**
      * @test
-     * @dataProvider provides_certain_weapons_have_a_higher_damage_multiplier_with_more_strength
-     * @param $weaponBehaviorClass
+     * @dataProvider provides_weapon_damage_multiplier_is_increased_by_specific_measurables
+     * @param $itemBaseName
+     * @param $measurableTypeNames
      */
-    public function certain_weapons_have_a_higher_damage_multiplier_with_more_strength($weaponBehaviorClass)
+    public function weapon_damage_multiplier_is_increased_by_specific_measurables($itemBaseName, $measurableTypeNames)
     {
-        /** @var WeaponBehavior $weaponBehavior */
-        $weaponBehavior = app($weaponBehaviorClass);
+        /** @var ItemType $itemType */
+        $itemType = ItemType::query()->whereHas('itemBase', function (Builder $builder) use ($itemBaseName) {
+            return $builder->where('name', '=', $itemBaseName);
+        })->inRandomOrder()->first();
 
-        $this->usesItems->setMeasurable(MeasurableType::STRENGTH, 10);
-        $lowStrengthDamageMultiplier = $weaponBehavior->getDamageMultiplierBonus($this->usesItems);
+        $this->item->item_type_id = $itemType->id;
+        $this->item->save();
 
-        $this->usesItems->setMeasurable(MeasurableType::STRENGTH, 99);
-        $highStrengthDamageMultiplier = $weaponBehavior->getDamageMultiplierBonus($this->usesItems);
+        foreach($measurableTypeNames as $measurableTypeName) {
 
-        $diff = $highStrengthDamageMultiplier - $lowStrengthDamageMultiplier;
-        // Make sure the diff is greater than PHP float error, AKA, a number very close to zero
-        $this->assertGreaterThan(PHP_FLOAT_EPSILON, $diff);
+            $measurable = $this->hero->getMeasurable($measurableTypeName);
+            $measurable->amount_raised = 0;
+            $measurable->save();
+
+            $lowMeasurableBaseDamage = $this->attack->getDamageMultiplier($this->item->fresh());
+
+            $measurable->amount_raised = 99;
+            $measurable->save();
+
+            $higherMeasurableBaseDamage = $this->attack->getDamageMultiplier($this->item->fresh());
+
+            $diff = $higherMeasurableBaseDamage - $lowMeasurableBaseDamage;
+            // Make sure the diff is greater than PHP float error, AKA, a number very close to zero
+            $this->assertGreaterThan(PHP_FLOAT_EPSILON, $diff);
+        }
     }
 
-    public function provides_certain_weapons_have_a_higher_damage_multiplier_with_more_strength()
+    public function provides_weapon_damage_multiplier_is_increased_by_specific_measurables()
     {
         return [
-            ItemBase::AXE => [
-                'weaponBehaviorClass' => AxeBehavior::class
-            ],
-            ItemBase::MACE => [
-                'weaponBehaviorClass' => MaceBehavior::class
+            ItemBase::DAGGER => [
+                'itemBaseName' => ItemBase::DAGGER,
+                'measurableTypeNames' => [
+                    MeasurableType::AGILITY,
+                    MeasurableType::FOCUS,
+                ]
             ],
             ItemBase::SWORD => [
-                'weaponBehaviorClass' => SwordBehavior::class
+                'itemBaseName' => ItemBase::SWORD,
+                'measurableTypeNames' => [
+                    MeasurableType::STRENGTH,
+                    MeasurableType::VALOR,
+                    MeasurableType::AGILITY,
+                ]
             ],
-            ItemBase::TWO_HAND_AXE => [
-                'weaponBehaviorClass' => TwoHandAxeBehavior::class
+            ItemBase::AXE => [
+                'itemBaseName' => ItemBase::AXE,
+                'measurableTypeNames' => [
+                    MeasurableType::STRENGTH,
+                    MeasurableType::VALOR,
+                ]
             ],
-            ItemBase::TWO_HAND_SWORD => [
-                'weaponBehaviorClass' => TwoHandSwordBehavior::class
+            ItemBase::MACE => [
+                'itemBaseName' => ItemBase::MACE,
+                'measurableTypeNames' => [
+                    MeasurableType::STRENGTH,
+                    MeasurableType::VALOR,
+                ]
             ],
             ItemBase::BOW => [
-                'weaponBehaviorClass' => BowBehavior::class
+                'itemBaseName' => ItemBase::BOW,
+                'measurableTypeNames' => [
+                    MeasurableType::STRENGTH,
+                    MeasurableType::AGILITY,
+                    MeasurableType::FOCUS,
+                ]
+            ],
+            ItemBase::CROSSBOW => [
+                'itemBaseName' => ItemBase::CROSSBOW,
+                'measurableTypeNames' => [
+                    MeasurableType::FOCUS,
+                    MeasurableType::APTITUDE,
+                ]
             ],
             ItemBase::THROWING_WEAPON => [
-                'weaponBehaviorClass' => ThrowingWeaponBehavior::class
+                'itemBaseName' => ItemBase::THROWING_WEAPON,
+                'measurableTypeNames' => [
+                    MeasurableType::STRENGTH,
+                    MeasurableType::FOCUS,
+                ]
+            ],
+            ItemBase::POLE_ARM => [
+                'itemBaseName' => ItemBase::POLE_ARM,
+                'measurableTypeNames' => [
+                    MeasurableType::VALOR,
+                    MeasurableType::AGILITY,
+                    MeasurableType::APTITUDE,
+                ]
+            ],
+            ItemBase::TWO_HAND_SWORD => [
+                'itemBaseName' => ItemBase::TWO_HAND_SWORD,
+                'measurableTypeNames' => [
+                    MeasurableType::STRENGTH,
+                    MeasurableType::VALOR,
+                ]
+            ],
+            ItemBase::TWO_HAND_AXE => [
+                'itemBaseName' => ItemBase::TWO_HAND_AXE,
+                'measurableTypeNames' => [
+                    MeasurableType::STRENGTH,
+                    MeasurableType::VALOR,
+                ]
+            ],
+            ItemBase::WAND => [
+                'itemBaseName' => ItemBase::WAND,
+                'measurableTypeNames' => [
+                    MeasurableType::APTITUDE,
+                    MeasurableType::INTELLIGENCE,
+                ]
+            ],
+            ItemBase::ORB => [
+                'itemBaseName' => ItemBase::ORB,
+                'measurableTypeNames' => [
+                    MeasurableType::FOCUS,
+                    MeasurableType::APTITUDE,
+                    MeasurableType::INTELLIGENCE,
+                ]
+            ],
+            ItemBase::STAFF => [
+                'itemBaseName' => ItemBase::STAFF,
+                'measurableTypeNames' => [
+                    MeasurableType::VALOR,
+                    MeasurableType::APTITUDE,
+                    MeasurableType::INTELLIGENCE,
+                ]
+            ],
+            ItemBase::PSIONIC_ONE_HAND => [
+                'itemBaseName' => ItemBase::PSIONIC_ONE_HAND,
+                'measurableTypeNames' => [
+                    MeasurableType::AGILITY,
+                    MeasurableType::APTITUDE,
+                    MeasurableType::INTELLIGENCE,
+                ]
             ],
             ItemBase::PSIONIC_TWO_HAND => [
-                'weaponBehaviorClass' => PsionicTwoHandBehavior::class
+                'itemBaseName' => ItemBase::PSIONIC_TWO_HAND,
+                'measurableTypeNames' => [
+                    MeasurableType::STRENGTH,
+                    MeasurableType::APTITUDE,
+                    MeasurableType::INTELLIGENCE,
+                ]
             ],
         ];
     }
