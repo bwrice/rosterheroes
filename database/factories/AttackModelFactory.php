@@ -10,6 +10,9 @@ $factory->define(\App\Domain\Models\Attack::class, function (Faker $faker) {
         'attacker_position_id' => function() {
             return \App\Domain\Models\CombatPosition::query()->inRandomOrder()->first()->id;
         },
+        'target_position_id' => function() {
+            return \App\Domain\Models\CombatPosition::query()->inRandomOrder()->first()->id;
+        },
         'damage_type_id' => function() {
             return \App\Domain\Models\DamageType::query()->inRandomOrder()->first()->id;
         },
