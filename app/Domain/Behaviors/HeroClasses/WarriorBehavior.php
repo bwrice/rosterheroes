@@ -5,6 +5,7 @@ namespace App\Domain\Behaviors\HeroClasses;
 
 use App\Domain\Behaviors\HeroClasses\MeasurableOperators\HeroMeasurableCalculator;
 use App\Domain\Behaviors\HeroClasses\MeasurableOperators\WarriorMeasurableOperator;
+use App\Domain\Models\CombatPosition;
 use App\Domain\Models\ItemBlueprint;
 
 class WarriorBehavior extends HeroClassBehavior
@@ -25,5 +26,10 @@ class WarriorBehavior extends HeroClassBehavior
             ItemBlueprint::STARTER_SHIELD,
             ItemBlueprint::STARTER_SWORD
         ];
+    }
+
+    public function getStartingCombatPosition(): CombatPosition
+    {
+        return CombatPosition::melee();
     }
 }

@@ -5,6 +5,7 @@ namespace App\Domain\Behaviors\HeroClasses;
 
 use App\Domain\Behaviors\HeroClasses\MeasurableOperators\HeroMeasurableCalculator;
 use App\Domain\Behaviors\HeroClasses\MeasurableOperators\RangerMeasurableOperator;
+use App\Domain\Models\CombatPosition;
 use App\Domain\Models\ItemBlueprint;
 
 class RangerBehavior extends HeroClassBehavior
@@ -24,5 +25,10 @@ class RangerBehavior extends HeroClassBehavior
         return [
             ItemBlueprint::STARTER_BOW
         ];
+    }
+
+    public function getStartingCombatPosition(): CombatPosition
+    {
+        return CombatPosition::midRange();
     }
 }

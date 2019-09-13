@@ -11,6 +11,7 @@ namespace App\Domain\Behaviors\HeroClasses;
 
 use App\Domain\Interfaces\MeasurableCalculator;
 use App\Domain\Interfaces\MeasurableOperator;
+use App\Domain\Models\CombatPosition;
 use App\Domain\Models\ItemBlueprint;
 use App\Domain\Collections\ItemBlueprintCollection;
 use App\Domain\Models\Measurable;
@@ -37,6 +38,8 @@ abstract class HeroClassBehavior
      * @return array
      */
     abstract protected function getStarterItemBlueprintNames(): array;
+
+    abstract public function getStartingCombatPosition(): CombatPosition;
 
     /**
      * @return ItemBlueprintCollection

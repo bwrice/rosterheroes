@@ -5,6 +5,7 @@ namespace App\Domain\Behaviors\HeroClasses;
 
 use App\Domain\Behaviors\HeroClasses\MeasurableOperators\HeroMeasurableCalculator;
 use App\Domain\Behaviors\HeroClasses\MeasurableOperators\SorcererMeasurableOperator;
+use App\Domain\Models\CombatPosition;
 use App\Domain\Models\ItemBlueprint;
 
 class SorcererBehavior extends HeroClassBehavior
@@ -24,5 +25,11 @@ class SorcererBehavior extends HeroClassBehavior
         return [
             ItemBlueprint::STARTER_STAFF
         ];
+    }
+
+
+    public function getStartingCombatPosition(): CombatPosition
+    {
+        return CombatPosition::midRange();
     }
 }
