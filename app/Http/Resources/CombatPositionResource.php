@@ -11,7 +11,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  *
  * @mixin CombatPosition
  */
-class TargetRangeResource extends JsonResource
+class CombatPositionResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
