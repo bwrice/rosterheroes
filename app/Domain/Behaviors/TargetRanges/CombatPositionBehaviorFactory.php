@@ -7,7 +7,7 @@ namespace App\Domain\Behaviors\TargetRanges;
 use App\Domain\Models\CombatPosition;
 use App\Exceptions\UnknownBehaviorException;
 
-class TargetRangeBehaviorFactory
+class CombatPositionBehaviorFactory
 {
     public function getBehavior(string $targetRangeName): CombatPositionBehaviorInterface
     {

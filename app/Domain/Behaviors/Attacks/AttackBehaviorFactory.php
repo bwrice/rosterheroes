@@ -6,7 +6,7 @@ namespace App\Domain\Behaviors\Attacks;
 
 use App\Domain\Behaviors\DamageTypes\DamageTypeBehaviorFactory;
 use App\Domain\Behaviors\TargetPriorities\TargetPriorityBehaviorFactory;
-use App\Domain\Behaviors\TargetRanges\TargetRangeBehaviorFactory;
+use App\Domain\Behaviors\TargetRanges\CombatPositionBehaviorFactory;
 use App\Domain\Models\Attack;
 
 class AttackBehaviorFactory
@@ -16,9 +16,9 @@ class AttackBehaviorFactory
      */
     private $damageTypeBehaviorFactory;
     /**
-     * @var TargetRangeBehaviorFactory
+     * @var CombatPositionBehaviorFactory
      */
-    private $targetRangeBehaviorFactory;
+    private $combatPositionBehaviorFactory;
     /**
      * @var TargetPriorityBehaviorFactory
      */
@@ -26,11 +26,11 @@ class AttackBehaviorFactory
 
     public function __construct(
         DamageTypeBehaviorFactory $damageTypeBehaviorFactory,
-        TargetRangeBehaviorFactory $targetRangeBehaviorFactory,
+        CombatPositionBehaviorFactory $combatPositionBehaviorFactory,
         TargetPriorityBehaviorFactory $targetPriorityBehaviorFactory)
     {
         $this->damageTypeBehaviorFactory = $damageTypeBehaviorFactory;
-        $this->targetRangeBehaviorFactory = $targetRangeBehaviorFactory;
+        $this->combatPositionBehaviorFactory = $combatPositionBehaviorFactory;
         $this->targetPriorityBehaviorFactory = $targetPriorityBehaviorFactory;
     }
 
@@ -41,7 +41,7 @@ class AttackBehaviorFactory
     public function getAttackBehavior(Attack $attack): AttackBehavior
     {
         $damageTypeBehavior = $this->damageTypeBehaviorFactory->getBehavior($attack->damageType->name);
-        $targetRangeBehavior = $this->targetRangeBehaviorFactory->getBehavior($attack->attackerPosition->name);
+        $targetRangeBehavior = $this->combatPositionBehaviorFactory->getBehavior($attack->attackerPosition->name);
         $targetPriorityBehavior = $this->targetPriorityBehaviorFactory->getBehavior($attack->targetPriority->name);
         return new AttackBehavior($damageTypeBehavior, $targetRangeBehavior, $targetPriorityBehavior);
     }
