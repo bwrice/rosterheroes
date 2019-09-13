@@ -82,7 +82,7 @@ class WeaponAttackUnitTest extends TestCase
      * @param $itemBaseName
      * @param $measurableTypeNames
      */
-    public function certain_weapons_have_more_base_damage_with_more_strength($itemBaseName, $measurableTypeNames)
+    public function weapon_base_damage_is_increased_by_specific_measurables($itemBaseName, $measurableTypeNames)
     {
         /** @var ItemType $itemType */
         $itemType = ItemType::query()->whereHas('itemBase', function (Builder $builder) use ($itemBaseName) {
@@ -114,276 +114,117 @@ class WeaponAttackUnitTest extends TestCase
     public function provides_certain_weapons_have_more_base_damage_with_more_strength()
     {
         return [
-            ItemBase::AXE => [
-                'itemBaseName' => ItemBase::AXE,
+            ItemBase::DAGGER => [
+                'itemBaseName' => ItemBase::DAGGER,
                 'measurableTypeNames' => [
-                    MeasurableType::STRENGTH
-                ]
-            ],
-            ItemBase::MACE => [
-                'itemBaseName' => ItemBase::MACE,
-                'measurableTypeNames' => [
-                    MeasurableType::STRENGTH
+                    MeasurableType::AGILITY,
+                    MeasurableType::FOCUS,
                 ]
             ],
             ItemBase::SWORD => [
                 'itemBaseName' => ItemBase::SWORD,
                 'measurableTypeNames' => [
-                    MeasurableType::STRENGTH
+                    MeasurableType::STRENGTH,
+                    MeasurableType::VALOR,
+                    MeasurableType::AGILITY,
                 ]
             ],
-            ItemBase::TWO_HAND_AXE => [
-                'itemBaseName' => ItemBase::TWO_HAND_AXE,
+            ItemBase::AXE => [
+                'itemBaseName' => ItemBase::AXE,
                 'measurableTypeNames' => [
-                    MeasurableType::STRENGTH
+                    MeasurableType::STRENGTH,
+                    MeasurableType::VALOR,
                 ]
             ],
-            ItemBase::TWO_HAND_SWORD => [
-                'itemBaseName' => ItemBase::TWO_HAND_SWORD,
+            ItemBase::MACE => [
+                'itemBaseName' => ItemBase::MACE,
                 'measurableTypeNames' => [
-                    MeasurableType::STRENGTH
+                    MeasurableType::STRENGTH,
+                    MeasurableType::VALOR,
                 ]
             ],
             ItemBase::BOW => [
                 'itemBaseName' => ItemBase::BOW,
                 'measurableTypeNames' => [
-                    MeasurableType::STRENGTH
+                    MeasurableType::STRENGTH,
+                    MeasurableType::AGILITY,
+                    MeasurableType::FOCUS,
+                ]
+            ],
+            ItemBase::CROSSBOW => [
+                'itemBaseName' => ItemBase::CROSSBOW,
+                'measurableTypeNames' => [
+                    MeasurableType::FOCUS,
+                    MeasurableType::APTITUDE,
                 ]
             ],
             ItemBase::THROWING_WEAPON => [
                 'itemBaseName' => ItemBase::THROWING_WEAPON,
                 'measurableTypeNames' => [
-                    MeasurableType::STRENGTH
+                    MeasurableType::STRENGTH,
+                    MeasurableType::FOCUS,
+                ]
+            ],
+            ItemBase::POLE_ARM => [
+                'itemBaseName' => ItemBase::POLE_ARM,
+                'measurableTypeNames' => [
+                    MeasurableType::VALOR,
+                    MeasurableType::AGILITY,
+                    MeasurableType::APTITUDE,
+                ]
+            ],
+            ItemBase::TWO_HAND_SWORD => [
+                'itemBaseName' => ItemBase::TWO_HAND_SWORD,
+                'measurableTypeNames' => [
+                    MeasurableType::STRENGTH,
+                    MeasurableType::VALOR,
+                ]
+            ],
+            ItemBase::TWO_HAND_AXE => [
+                'itemBaseName' => ItemBase::TWO_HAND_AXE,
+                'measurableTypeNames' => [
+                    MeasurableType::STRENGTH,
+                    MeasurableType::VALOR,
+                ]
+            ],
+            ItemBase::WAND => [
+                'itemBaseName' => ItemBase::WAND,
+                'measurableTypeNames' => [
+                    MeasurableType::APTITUDE,
+                    MeasurableType::INTELLIGENCE,
+                ]
+            ],
+            ItemBase::ORB => [
+                'itemBaseName' => ItemBase::ORB,
+                'measurableTypeNames' => [
+                    MeasurableType::FOCUS,
+                    MeasurableType::APTITUDE,
+                    MeasurableType::INTELLIGENCE,
+                ]
+            ],
+            ItemBase::STAFF => [
+                'itemBaseName' => ItemBase::STAFF,
+                'measurableTypeNames' => [
+                    MeasurableType::VALOR,
+                    MeasurableType::APTITUDE,
+                    MeasurableType::INTELLIGENCE,
+                ]
+            ],
+            ItemBase::PSIONIC_ONE_HAND => [
+                'itemBaseName' => ItemBase::PSIONIC_ONE_HAND,
+                'measurableTypeNames' => [
+                    MeasurableType::AGILITY,
+                    MeasurableType::APTITUDE,
+                    MeasurableType::INTELLIGENCE,
                 ]
             ],
             ItemBase::PSIONIC_TWO_HAND => [
                 'itemBaseName' => ItemBase::PSIONIC_TWO_HAND,
                 'measurableTypeNames' => [
-                    MeasurableType::STRENGTH
+                    MeasurableType::STRENGTH,
+                    MeasurableType::APTITUDE,
+                    MeasurableType::INTELLIGENCE,
                 ]
-            ],
-        ];
-    }
-
-    /**
-     * @test
-     * @dataProvider provides_certain_weapons_have_more_base_damage_with_more_valor
-     * @param $weaponBehaviorClass
-     */
-    public function certain_weapons_have_more_base_damage_with_more_valor($weaponBehaviorClass)
-    {
-        /** @var WeaponBehavior $weaponBehavior */
-        $weaponBehavior = app($weaponBehaviorClass);
-
-        $this->usesItems->setMeasurable(MeasurableType::VALOR, 10);
-        $lowValorBaseDamageModifier = $weaponBehavior->getBaseDamageBonus($this->usesItems);
-
-        $this->usesItems->setMeasurable(MeasurableType::VALOR, 99);
-        $highValorBaseDamageModifier = $weaponBehavior->getBaseDamageBonus($this->usesItems);
-
-        $diff = $highValorBaseDamageModifier - $lowValorBaseDamageModifier;
-        // Make sure the diff is greater than PHP float error, AKA, a number very close to zero
-        $this->assertGreaterThan(PHP_FLOAT_EPSILON, $diff);
-    }
-
-    public function provides_certain_weapons_have_more_base_damage_with_more_valor()
-    {
-        return [
-            ItemBase::AXE => [
-                'weaponBehaviorClass' => AxeBehavior::class
-            ],
-            ItemBase::MACE => [
-                'weaponBehaviorClass' => MaceBehavior::class
-            ],
-            ItemBase::SWORD => [
-                'weaponBehaviorClass' => SwordBehavior::class
-            ],
-            ItemBase::TWO_HAND_AXE => [
-                'weaponBehaviorClass' => TwoHandAxeBehavior::class
-            ],
-            ItemBase::TWO_HAND_SWORD => [
-                'weaponBehaviorClass' => TwoHandSwordBehavior::class
-            ],
-            ItemBase::POLE_ARM => [
-                'weaponBehaviorClass' => PoleArmBehavior::class
-            ],
-            ItemBase::STAFF => [
-                'weaponBehaviorClass' => StaffBehavior::class
-            ],
-        ];
-    }
-
-    /**
-     * @test
-     * @dataProvider provides_certain_weapons_have_more_base_damage_with_more_agility
-     * @param $weaponBehaviorClass
-     */
-    public function certain_weapons_have_more_base_damage_with_more_agility($weaponBehaviorClass)
-    {
-        /** @var WeaponBehavior $weaponBehavior */
-        $weaponBehavior = app($weaponBehaviorClass);
-
-        $this->usesItems->setMeasurable(MeasurableType::AGILITY, 10);
-        $lowAgilityBaseDamageModifier = $weaponBehavior->getBaseDamageBonus($this->usesItems);
-
-        $this->usesItems->setMeasurable(MeasurableType::AGILITY, 99);
-        $highAgilityBaseDamageModifier = $weaponBehavior->getBaseDamageBonus($this->usesItems);
-
-        $diff = $highAgilityBaseDamageModifier - $lowAgilityBaseDamageModifier;
-        // Make sure the diff is greater than PHP float error, AKA, a number very close to zero
-        $this->assertGreaterThan(PHP_FLOAT_EPSILON, $diff);
-    }
-
-    public function provides_certain_weapons_have_more_base_damage_with_more_agility()
-    {
-        return [
-            ItemBase::DAGGER => [
-                'weaponBehaviorClass' => DaggerBehavior::class
-            ],
-            ItemBase::SWORD => [
-                'weaponBehaviorClass' => SwordBehavior::class
-            ],
-            ItemBase::BOW => [
-                'weaponBehaviorClass' => BowBehavior::class
-            ],
-            ItemBase::POLE_ARM => [
-                'weaponBehaviorClass' => PoleArmBehavior::class
-            ],
-            ItemBase::PSIONIC_ONE_HAND => [
-                'weaponBehaviorClass' => PsionicOneHandBehavior::class
-            ],
-        ];
-    }
-
-    /**
-     * @test
-     * @dataProvider provides_certain_weapons_have_more_base_damage_with_more_focus
-     * @param $weaponBehaviorClass
-     */
-    public function certain_weapons_have_more_base_damage_with_more_focus($weaponBehaviorClass)
-    {
-        /** @var WeaponBehavior $weaponBehavior */
-        $weaponBehavior = app($weaponBehaviorClass);
-
-        $this->usesItems->setMeasurable(MeasurableType::FOCUS, 10);
-        $lowFocusBaseDamageModifier = $weaponBehavior->getBaseDamageBonus($this->usesItems);
-
-        $this->usesItems->setMeasurable(MeasurableType::FOCUS, 99);
-        $highFocusBaseDamageModifier = $weaponBehavior->getBaseDamageBonus($this->usesItems);
-
-        $diff = $highFocusBaseDamageModifier - $lowFocusBaseDamageModifier;
-        // Make sure the diff is greater than PHP float error, AKA, a number very close to zero
-        $this->assertGreaterThan(PHP_FLOAT_EPSILON, $diff);
-    }
-
-    public function provides_certain_weapons_have_more_base_damage_with_more_focus()
-    {
-        return [
-            ItemBase::DAGGER => [
-                'weaponBehaviorClass' => DaggerBehavior::class
-            ],
-            ItemBase::BOW => [
-                'weaponBehaviorClass' => BowBehavior::class
-            ],
-            ItemBase::CROSSBOW => [
-                'weaponBehaviorClass' => CrossbowBehavior::class
-            ],
-            ItemBase::POLE_ARM => [
-                'weaponBehaviorClass' => PoleArmBehavior::class
-            ],
-            ItemBase::THROWING_WEAPON => [
-                'weaponBehaviorClass' => ThrowingWeaponBehavior::class
-            ],
-            ItemBase::ORB => [
-                'weaponBehaviorClass' => OrbBehavior::class
-            ],
-        ];
-    }
-
-    /**
-     * @test
-     * @dataProvider provides_certain_weapons_have_more_base_damage_with_more_aptitude
-     * @param $weaponBehaviorClass
-     */
-    public function certain_weapons_have_more_base_damage_with_more_aptitude($weaponBehaviorClass)
-    {
-        /** @var WeaponBehavior $weaponBehavior */
-        $weaponBehavior = app($weaponBehaviorClass);
-
-        $this->usesItems->setMeasurable(MeasurableType::APTITUDE, 10);
-        $lowValorBaseDamageModifier = $weaponBehavior->getBaseDamageBonus($this->usesItems);
-
-
-        $this->usesItems->setMeasurable(MeasurableType::APTITUDE, 99);
-        $highValorBaseDamageModifier = $weaponBehavior->getBaseDamageBonus($this->usesItems);
-
-        $diff = $highValorBaseDamageModifier - $lowValorBaseDamageModifier;
-        // Make sure the diff is greater than PHP float error, AKA, a number very close to zero
-        $this->assertGreaterThan(PHP_FLOAT_EPSILON, $diff);
-    }
-
-    public function provides_certain_weapons_have_more_base_damage_with_more_aptitude()
-    {
-        return [
-            ItemBase::WAND => [
-                'weaponBehaviorClass' => WandBehavior::class
-            ],
-            ItemBase::CROSSBOW => [
-                'weaponBehaviorClass' => CrossbowBehavior::class
-            ],
-            ItemBase::ORB => [
-                'weaponBehaviorClass' => OrbBehavior::class
-            ],
-            ItemBase::STAFF => [
-                'weaponBehaviorClass' => StaffBehavior::class
-            ],
-            ItemBase::PSIONIC_ONE_HAND => [
-                'weaponBehaviorClass' => PsionicOneHandBehavior::class
-            ],
-            ItemBase::PSIONIC_TWO_HAND => [
-                'weaponBehaviorClass' => PsionicTwoHandBehavior::class
-            ],
-        ];
-    }
-
-    /**
-     * @test
-     * @dataProvider provides_certain_weapons_have_more_base_damage_with_more_intelligence
-     * @param $weaponBehaviorClass
-     */
-    public function certain_weapons_have_more_base_damage_with_more_intelligence($weaponBehaviorClass)
-    {
-        /** @var WeaponBehavior $weaponBehavior */
-        $weaponBehavior = app($weaponBehaviorClass);
-
-        $this->usesItems->setMeasurable(MeasurableType::INTELLIGENCE, 10);
-        $lowValorBaseDamageModifier = $weaponBehavior->getBaseDamageBonus($this->usesItems);
-
-        $this->usesItems->setMeasurable(MeasurableType::INTELLIGENCE, 99);
-        $highValorBaseDamageModifier = $weaponBehavior->getBaseDamageBonus($this->usesItems);
-
-        $diff = $highValorBaseDamageModifier - $lowValorBaseDamageModifier;
-        // Make sure the diff is greater than PHP float error, AKA, a number very close to zero
-        $this->assertGreaterThan(PHP_FLOAT_EPSILON, $diff);
-    }
-
-    public function provides_certain_weapons_have_more_base_damage_with_more_intelligence()
-    {
-        return [
-            ItemBase::WAND => [
-                'weaponBehaviorClass' => WandBehavior::class
-            ],
-            ItemBase::ORB => [
-                'weaponBehaviorClass' => OrbBehavior::class
-            ],
-            ItemBase::STAFF => [
-                'weaponBehaviorClass' => StaffBehavior::class
-            ],
-            ItemBase::PSIONIC_ONE_HAND => [
-                'weaponBehaviorClass' => PsionicOneHandBehavior::class
-            ],
-            ItemBase::PSIONIC_TWO_HAND => [
-                'weaponBehaviorClass' => PsionicTwoHandBehavior::class
             ],
         ];
     }
