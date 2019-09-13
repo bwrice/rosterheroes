@@ -22,7 +22,7 @@ class SeedAttacks extends Migration
             [
                 'name' => Attack::BASIC_BLADE_ATTACK_NAME,
                 'damage_type' => DamageType::SINGLE_TARGET,
-                'combat_position' => CombatPosition::MELEE,
+                'attacker_position' => CombatPosition::MELEE,
                 'target_priority' => TargetPriority::ANY,
                 'grade' => 5,
                 'speed_rating' => 100/12,
@@ -38,7 +38,7 @@ class SeedAttacks extends Migration
             [
                 'name' => Attack::BASIC_BOW_ATTACK_NAME,
                 'damage_type' => DamageType::SINGLE_TARGET,
-                'combat_position' => CombatPosition::MID_RANGE,
+                'attacker_position' => CombatPosition::MID_RANGE,
                 'target_priority' => TargetPriority::ANY,
                 'grade' => 5,
                 'speed_rating' => 100/23,
@@ -53,7 +53,7 @@ class SeedAttacks extends Migration
             [
                 'name' => Attack::BASIC_MAGIC_ATTACK_NAME,
                 'damage_type' => DamageType::SINGLE_TARGET,
-                'combat_position' => CombatPosition::MID_RANGE,
+                'attacker_position' => CombatPosition::MID_RANGE,
                 'target_priority' => TargetPriority::ANY,
                 'grade' => 5,
                 'speed_rating' => 100/18,
@@ -79,7 +79,7 @@ class SeedAttacks extends Migration
             $attack = Attack::query()->create([
                 'name' => $attackData['name'],
                 'damage_type_id' => $damageTypes->firstWhere('name', '=', $attackData['damage_type'])->id,
-                'combat_position_id' => $combatPositions->firstWhere('name', '=', $attackData['combat_position'])->id,
+                'attacker_position_id' => $combatPositions->firstWhere('name', '=', $attackData['attacker_position'])->id,
                 'target_priority_id' => $targetPriorities->firstWhere('name', '=', $attackData['target_priority'])->id,
                 'grade' => $attackData['grade'],
                 'speed_rating' => $attackData['speed_rating'],

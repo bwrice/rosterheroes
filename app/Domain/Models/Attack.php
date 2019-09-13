@@ -18,12 +18,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property int $id
  * @property string $name
  * @property int $grade
+ * @property int $attacker_position_id
  * @property float $speed_rating
  * @property float $base_damage_rating
  * @property float $damage_modifier_rating
  *
  * @property DamageType $damageType
- * @property CombatPosition $combatPosition
+ * @property CombatPosition $attackerPosition
  * @property TargetPriority $targetPriority
  *
  * @property ItemCollection $items
@@ -67,9 +68,9 @@ class Attack extends Model
         return $this->belongsTo(DamageType::class);
     }
 
-    public function combatPosition()
+    public function attackerPosition()
     {
-        return $this->belongsTo(CombatPosition::class);
+        return $this->belongsTo(CombatPosition::class, 'attacker_position_id');
     }
 
     public function targetPriority()

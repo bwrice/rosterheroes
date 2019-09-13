@@ -30,7 +30,7 @@ class AttackResource extends JsonResource
         return [
             'name' => $this->name,
             'damageType' => new DamageTypeResource($this->damageType),
-            'targetRange' => new TargetRangeResource($this->combatPosition),
+            'targetRange' => new TargetRangeResource($this->attackerPosition),
             'targetPriority' => new TargetPriorityResource($this->targetPriority),
             'grade' => $this->grade,
             'base_damage' => $this->getBaseDamage($this->hasAttacks),

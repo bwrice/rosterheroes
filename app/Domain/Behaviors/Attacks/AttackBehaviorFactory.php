@@ -41,7 +41,7 @@ class AttackBehaviorFactory
     public function getAttackBehavior(Attack $attack): AttackBehavior
     {
         $damageTypeBehavior = $this->damageTypeBehaviorFactory->getBehavior($attack->damageType->name);
-        $targetRangeBehavior = $this->targetRangeBehaviorFactory->getBehavior($attack->combatPosition->name);
+        $targetRangeBehavior = $this->targetRangeBehaviorFactory->getBehavior($attack->attackerPosition->name);
         $targetPriorityBehavior = $this->targetPriorityBehaviorFactory->getBehavior($attack->targetPriority->name);
         return new AttackBehavior($damageTypeBehavior, $targetRangeBehavior, $targetPriorityBehavior);
     }
