@@ -615,11 +615,11 @@ class WeaponBehaviorUnitTest extends TestCase
         $weaponBehavior = app($weaponBehaviorClass);
 
         $this->usesItems->setMeasurable(MeasurableType::AGILITY, 10);
-        $lowAgilityModifier = $weaponBehavior->getCombatSpeedModifier($this->usesItems);
+        $lowAgilityModifier = $weaponBehavior->getCombatSpeedBonus($this->usesItems);
 
 
         $this->usesItems->setMeasurable(MeasurableType::AGILITY, 99);
-        $higherAgilityModifier = $weaponBehavior->getCombatSpeedModifier($this->usesItems);
+        $higherAgilityModifier = $weaponBehavior->getCombatSpeedBonus($this->usesItems);
 
         $diff = $higherAgilityModifier - $lowAgilityModifier;
         // Make sure the diff is greater than PHP float error, AKA, a number very close to zero
