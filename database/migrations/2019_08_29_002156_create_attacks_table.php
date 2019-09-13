@@ -17,6 +17,7 @@ class CreateAttacksTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->integer('attacker_position_id')->unsigned();
+            $table->integer('target_position_id')->unsigned();
             $table->integer('damage_type_id')->unsigned();
             $table->integer('target_priority_id')->unsigned();
             $table->integer('grade')->unsigned();
@@ -30,6 +31,7 @@ class CreateAttacksTable extends Migration
 
         Schema::table('attacks', function (Blueprint $table) {
             $table->foreign('attacker_position_id')->references('id')->on('combat_positions');
+            $table->foreign('target_position_id')->references('id')->on('combat_positions');
             $table->foreign('damage_type_id')->references('id')->on('damage_types');
             $table->foreign('target_priority_id')->references('id')->on('target_priorities');
         });
