@@ -2,22 +2,6 @@
 
 namespace Tests\Unit;
 
-use App\Domain\Behaviors\ItemBases\Weapons\AxeBehavior;
-use App\Domain\Behaviors\ItemBases\Weapons\BowBehavior;
-use App\Domain\Behaviors\ItemBases\Weapons\CrossbowBehavior;
-use App\Domain\Behaviors\ItemBases\Weapons\DaggerBehavior;
-use App\Domain\Behaviors\ItemBases\Weapons\MaceBehavior;
-use App\Domain\Behaviors\ItemBases\Weapons\OrbBehavior;
-use App\Domain\Behaviors\ItemBases\Weapons\PoleArmBehavior;
-use App\Domain\Behaviors\ItemBases\Weapons\PsionicOneHandBehavior;
-use App\Domain\Behaviors\ItemBases\Weapons\PsionicTwoHandBehavior;
-use App\Domain\Behaviors\ItemBases\Weapons\StaffBehavior;
-use App\Domain\Behaviors\ItemBases\Weapons\SwordBehavior;
-use App\Domain\Behaviors\ItemBases\Weapons\ThrowingWeaponBehavior;
-use App\Domain\Behaviors\ItemBases\Weapons\TwoHandAxeBehavior;
-use App\Domain\Behaviors\ItemBases\Weapons\TwoHandSwordBehavior;
-use App\Domain\Behaviors\ItemBases\Weapons\WandBehavior;
-use App\Domain\Behaviors\ItemBases\Weapons\WeaponBehavior;
 use App\Domain\Interfaces\UsesItems;
 use App\Domain\Models\Attack;
 use App\Domain\Models\Hero;
