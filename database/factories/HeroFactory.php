@@ -5,7 +5,7 @@ use Faker\Generator as Faker;
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(\App\Domain\Models\Hero::class, function (Faker $faker) {
 
-    $name = 'TestHero' . str_random(8);
+    $name = 'TestHero_' . random_int(1,999999999);
     $class = \App\Domain\Models\HeroClass::query()->inRandomOrder()->first();
     $heroRace = \App\Domain\Models\HeroRace::query()->inRandomOrder()->first();
     $rank = \App\Domain\Models\HeroRank::private();
