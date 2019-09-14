@@ -34,6 +34,16 @@ class CombatPosition extends Model
         return $factory->getBehavior($this->name);
     }
 
+    public function attackerIcon()
+    {
+        return $this->getBehavior()->attackerIcon();
+    }
+
+    public function targetIcon()
+    {
+        return $this->getBehavior()->targetIcon();
+    }
+
     public static function melee(): self
     {
         return self::forName(self::MELEE);
