@@ -10,5 +10,7 @@ use App\Domain\Interfaces\AdjustsDamageModifier;
 
 interface CombatPositionBehaviorInterface extends AdjustsCombatSpeed, AdjustsBaseDamage, AdjustsDamageModifier
 {
+    public function attackerIcon(): string;
 
+    public function targetIcon(): string;
 }

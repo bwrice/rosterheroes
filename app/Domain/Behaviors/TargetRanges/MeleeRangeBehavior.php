@@ -21,4 +21,14 @@ class MeleeRangeBehavior extends CombatPositionBehavior
     {
         return $damageModifier;
     }
+
+    public function attackerIcon(): string
+    {
+        return asset('svg/icons/combatPositions/attackers/front-line.svg');
+    }
+
+    public function targetIcon(): string
+    {
+        return asset('svg/icons/combatPositions/targets/front-line.svg');
+    }
 }

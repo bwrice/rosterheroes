@@ -21,4 +21,14 @@ class MidRangeBehavior extends CombatPositionBehavior
     {
         return $damageModifier/1.3;
     }
+
+    public function attackerIcon(): string
+    {
+        return asset('svg/icons/combatPositions/attackers/back-line.svg');
+    }
+
+    public function targetIcon(): string
+    {
+        return asset('svg/icons/combatPositions/targets/back-line.svg');
+    }
 }

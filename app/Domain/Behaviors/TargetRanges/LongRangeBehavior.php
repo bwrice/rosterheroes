@@ -21,4 +21,14 @@ class LongRangeBehavior extends CombatPositionBehavior
     {
         return $damageModifier/1.75;
     }
+
+    public function attackerIcon(): string
+    {
+        return asset('svg/icons/combatPositions/attackers/high-ground.svg');
+    }
+
+    public function targetIcon(): string
+    {
+        return asset('svg/icons/combatPositions/targets/high-ground.svg');
+    }
 }
