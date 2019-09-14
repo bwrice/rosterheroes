@@ -9,7 +9,7 @@
         </v-row>
         <v-row>
             <v-col cols="12">
-                <GearCard></GearCard>
+                <HeroGearCard></HeroGearCard>
             </v-col>
         </v-row>
         <v-row no-gutters>
@@ -24,11 +24,11 @@
     import {barracksHeroMixin} from "../../../../mixins/barracksHeroMixin";
     import MeasurablePanel from "../../barracks/MeasurablePanel";
     import HeroMeasurablesCard from "../../barracks/HeroMeasurablesCard";
-    import GearCard from "../../barracks/gear/HeroGearCard";
+    import HeroGearCard from "../../barracks/gear/HeroGearCard";
 
     export default {
         name: "BarracksHeroView",
-        components: {GearCard, HeroMeasurablesCard, MeasurablePanel},
+        components: {HeroGearCard, HeroMeasurablesCard, MeasurablePanel},
         mixins: [
             barracksHeroMixin
         ],
