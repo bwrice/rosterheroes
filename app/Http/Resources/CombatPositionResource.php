@@ -22,7 +22,9 @@ class CombatPositionResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'name' => $this->name
+            'name' => $this->name,
+            'attacker_icon' => $this->attackerIcon(),
+            'target_icon' => $this->targetIcon()
         ];
     }
 }
