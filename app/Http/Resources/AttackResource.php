@@ -29,7 +29,7 @@ class AttackResource extends JsonResource
     {
         return [
             'name' => $this->name,
-            'attackPosition' => new CombatPositionResource($this->attackerPosition),
+            'attackerPosition' => new CombatPositionResource($this->attackerPosition),
             'targetPosition' => new CombatPositionResource($this->targetPosition),
             'damageType' => new DamageTypeResource($this->damageType),
             'targetPriority' => new TargetPriorityResource($this->targetPriority),

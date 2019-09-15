@@ -3,8 +3,7 @@ import SlotType from "./SlotType";
 
 export default class Slot {
 
-    constructor({uuid, item, slotType = {}} = {}) {
-        this.uuid = uuid;
+    constructor({item, slotType = {}} = {}) {
         this.item = item ? new Item(item) : null;
         this.slotType = new SlotType(slotType);
     }
