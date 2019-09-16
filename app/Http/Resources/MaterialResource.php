@@ -2,16 +2,16 @@
 
 namespace App\Http\Resources;
 
-use App\Domain\Models\MaterialType;
+use App\Domain\Models\Material;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
  * Class MaterialTypeResource
  * @package App\Http\Resources
  *
- * @mixin MaterialType
+ * @mixin Material
  */
-class MaterialTypeResource extends JsonResource
+class MaterialResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

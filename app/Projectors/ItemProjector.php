@@ -19,7 +19,7 @@ class ItemProjector implements Projector
             'uuid' => $aggregateUuid,
             'item_class_id' => $event->itemClassID,
             'item_type_id' => $event->itemTypeID,
-            'material_type_id' => $event->materialTypeID,
+            'material_id' => $event->materialTypeID,
             'item_blueprint_id' => $event->itemBlueprintID,
             'name' => $event->name
         ]);

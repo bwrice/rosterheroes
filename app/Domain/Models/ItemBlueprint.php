@@ -82,7 +82,7 @@ class ItemBlueprint extends Model
      */
     public function materialTypes()
     {
-        return $this->belongsToMany(MaterialType::class, 'item_blueprint_material_type', 'blueprint_id', 'm_type_id')->withTimestamps();
+        return $this->belongsToMany(Material::class, 'item_blueprint_material', 'blueprint_id', 'material_id')->withTimestamps();
     }
 
     /**

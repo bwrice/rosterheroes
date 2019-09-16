@@ -27,7 +27,7 @@ use Ramsey\Uuid\Uuid;
  * @property ItemType $itemType
  * @property ItemClass $itemClass
  * @property ItemBlueprint $itemBlueprint
- * @property MaterialType $materialType
+ * @property Material $material
  *
  * @property SlotCollection $slots
  * @property EnchantmentCollection $enchantments
@@ -70,9 +70,9 @@ class Item extends EventSourcedModel implements Slottable, HasAttacks
         return $this->belongsTo(ItemClass::class);
     }
 
-    public function materialType()
+    public function material()
     {
-        return $this->belongsTo(MaterialType::class);
+        return $this->belongsTo(Material::class);
     }
 
     public function slots()

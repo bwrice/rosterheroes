@@ -18,7 +18,7 @@ use App\Domain\Models\ItemBase;
 use App\Domain\Models\ItemBlueprint;
 use App\Domain\Models\ItemClass;
 use App\Domain\Models\ItemType;
-use App\Domain\Models\MaterialType;
+use App\Domain\Models\Material;
 use App\Exceptions\InvalidItemBlueprintException;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
@@ -101,19 +101,19 @@ class GenerateItemFromBlueprintAction
         return $itemType;
     }
 
-    protected function getMaterialType(ItemBlueprint $itemBlueprint, ItemType $itemType): MaterialType
+    protected function getMaterialType(ItemBlueprint $itemBlueprint, ItemType $itemType): Material
     {
         $randomMaterialType = null;
         $materialTypes = $itemBlueprint->materialTypes;
 
         if ($materialTypes->count() > 0) {
-            $materialTypeIDs = $itemType->materialTypes()->pluck('id')->toArray();
-            $randomMaterialType = $materialTypes->shuffle()->first(function (MaterialType $materialType) use ($materialTypeIDs) {
+            $materialTypeIDs = $itemType->materials()->pluck('id')->toArray();
+            $randomMaterialType = $materialTypes->shuffle()->first(function (Material $materialType) use ($materialTypeIDs) {
                 return in_array($materialType->id, $materialTypeIDs);
             });
         }
 
-        $randomMaterialType = $randomMaterialType ?: $itemType->materialTypes()->inRandomOrder()->first();
+        $randomMaterialType = $randomMaterialType ?: $itemType->materials()->inRandomOrder()->first();
 
         return $randomMaterialType;
     }

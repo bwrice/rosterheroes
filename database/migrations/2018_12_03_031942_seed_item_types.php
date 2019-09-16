@@ -14,7 +14,7 @@ class SeedItemTypes extends Migration
     public function up()
     {
         $itemBases = \App\Domain\Models\ItemBase::all();
-        $materialTypes = \App\Domain\Models\MaterialType::all();
+        $materials = \App\Domain\Models\Material::all();
         $itemTypes = [
 
             /*
@@ -25,7 +25,7 @@ class SeedItemTypes extends Migration
                 'base' => \App\Domain\Models\ItemBase::DAGGER,
                 'name' => 'Knife',
                 'grade' => 6,
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -88,7 +88,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Sprig',
                 'grade' => 7,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -151,7 +151,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Club',
                 'grade' => 8,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -214,7 +214,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Short Sword',
                 'grade' => 9,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -277,7 +277,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Lesser Staff',
                 'grade' => 10,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -340,7 +340,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Hatchet',
                 'grade' => 12,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -403,7 +403,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Straight Bow',
                 'grade' => 13,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -466,7 +466,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Longsword',
                 'grade' => 14,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -529,7 +529,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Throwing Knives',
                 'grade' => 15,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -592,7 +592,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Cudgel',
                 'grade' => 16,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -655,7 +655,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Spear',
                 'grade' => 17,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -718,7 +718,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Light Crossbow',
                 'grade' => 18,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -781,7 +781,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Kris',
                 'grade' => 19,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -844,7 +844,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Lesser Orb',
                 'grade' => 20,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -908,7 +908,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Bardiche',
                 'grade' => 21,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -971,7 +971,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Lesser Wand',
                 'grade' => 22,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -1034,7 +1034,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Falchion',
                 'grade' => 23,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -1097,7 +1097,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Longbow',
                 'grade' => 24,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -1160,7 +1160,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Dirk',
                 'grade' => 26,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -1223,7 +1223,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Rod',
                 'grade' => 27,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -1286,7 +1286,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Bastard Sword',
                 'grade' => 28,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -1349,7 +1349,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Glaive',
                 'grade' => 29,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -1412,7 +1412,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Spell Blade',
                 'grade' => 30,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -1475,7 +1475,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Hand Axe',
                 'grade' => 31,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -1538,7 +1538,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Spell Cleaver',
                 'grade' => 32,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -1601,7 +1601,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Heavy Crossbow',
                 'grade' => 33,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -1664,7 +1664,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Flail',
                 'grade' => 34,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -1727,7 +1727,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Recurve Bow',
                 'grade' => 36,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -1790,7 +1790,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Throwing Stars',
                 'grade' => 37,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -1853,7 +1853,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Scepter',
                 'grade' => 38,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -1916,7 +1916,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Pickaxe',
                 'grade' => 39,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -1979,7 +1979,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Lance',
                 'grade' => 41,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -2042,7 +2042,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Scythe',
                 'grade' => 42,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -2105,7 +2105,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Katar',
                 'grade' => 43,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -2168,7 +2168,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Greater Staff',
                 'grade' => 44,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -2231,7 +2231,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Scimitar',
                 'grade' => 45,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -2294,7 +2294,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Reflex Bow',
                 'grade' => 46,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -2357,7 +2357,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Nagamaki',
                 'grade' => 49,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -2420,7 +2420,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Greater Orb',
                 'grade' => 50,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -2483,7 +2483,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Trident',
                 'grade' => 51,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -2546,7 +2546,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Sickle',
                 'grade' => 52,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -2609,7 +2609,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Arbalest',
                 'grade' => 53,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -2672,7 +2672,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Battle Mace',
                 'grade' => 54,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -2735,7 +2735,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Stiletto',
                 'grade' => 55,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -2798,7 +2798,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Greater Wand',
                 'grade' => 56,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -2861,7 +2861,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Ono',
                 'grade' => 57,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -2924,7 +2924,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Master\'s Rod',
                 'grade' => 58,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -2987,7 +2987,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Sabre',
                 'grade' => 59,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -3050,7 +3050,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Composite Bow',
                 'grade' => 60,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -3113,7 +3113,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Claymore',
                 'grade' => 61,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -3176,7 +3176,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Mind Blade',
                 'grade' => 62,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -3239,7 +3239,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Halberd',
                 'grade' => 63,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -3302,7 +3302,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Great Axe',
                 'grade' => 64,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -3365,7 +3365,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Mind Cleaver',
                 'grade' => 65,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -3428,7 +3428,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Broad Axe',
                 'grade' => 66,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -3491,7 +3491,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Javelins',
                 'grade' => 67,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -3554,7 +3554,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Knight\'s Dagger',
                 'grade' => 68,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -3617,7 +3617,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Greatsword',
                 'grade' => 70,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -3680,7 +3680,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Greater Scepter',
                 'grade' => 71,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -3743,7 +3743,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Battle Bow',
                 'grade' => 72,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -3806,7 +3806,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Morning Star',
                 'grade' => 74,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -3869,7 +3869,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Repeating Crossbow',
                 'grade' => 76,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -3932,7 +3932,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Gladius',
                 'grade' => 77,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -3995,7 +3995,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Battle Staff',
                 'grade' => 78,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -4058,7 +4058,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Rapier',
                 'grade' => 79,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -4121,7 +4121,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Naginata',
                 'grade' => 80,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -4184,7 +4184,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Labrys',
                 'grade' => 81,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -4247,7 +4247,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Compound Bow',
                 'grade' => 82,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -4310,7 +4310,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Katana',
                 'grade' => 83,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -4373,7 +4373,7 @@ class SeedItemTypes extends Migration
                 'name' => 'War Hammer',
                 'grade' => 84,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -4436,7 +4436,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Exploding Flasks',
                 'grade' => 86,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -4499,7 +4499,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Battle Axe',
                 'grade' => 87,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -4562,7 +4562,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Conjure Blade',
                 'grade' => 88,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -4625,7 +4625,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Magus Orb',
                 'grade' => 89,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -4688,7 +4688,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Conjure Cleaver',
                 'grade' => 90,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -4751,7 +4751,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Ninjato',
                 'grade' => 91,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -4814,7 +4814,7 @@ class SeedItemTypes extends Migration
                 'name' => 'War Scythe',
                 'grade' => 92,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -4877,7 +4877,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Magus Scepter',
                 'grade' => 93,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -4940,7 +4940,7 @@ class SeedItemTypes extends Migration
                 'name' => 'War Sword',
                 'grade' => 94,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -5003,7 +5003,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Heavy Arbalest',
                 'grade' => 95,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -5066,7 +5066,7 @@ class SeedItemTypes extends Migration
                 'name' => 'War Bow',
                 'grade' => 96,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -5129,7 +5129,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Giant\'s Axe',
                 'grade' => 97,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -5192,7 +5192,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Magus Staff',
                 'grade' => 98,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -5255,7 +5255,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Giant\'s Sword',
                 'grade' => 99,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -5323,7 +5323,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Fez',
                 'grade' => 6,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -5386,7 +5386,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Buckler',
                 'grade' => 8,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -5449,7 +5449,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Kettle Hat',
                 'grade' => 9,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -5512,7 +5512,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Frock',
                 'grade' => 10,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -5575,7 +5575,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Slippers',
                 'grade' => 11,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -5638,7 +5638,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Light Cuirass',
                 'grade' => 12,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -5701,7 +5701,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Light Boots',
                 'grade' => 13,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -5764,7 +5764,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Light Gloves',
                 'grade' => 14,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -5827,7 +5827,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Breastplate',
                 'grade' => 15,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -5890,7 +5890,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Beret',
                 'grade' => 16,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -5953,7 +5953,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Targe',
                 'grade' => 17,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -6016,7 +6016,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Light Gauntlets',
                 'grade' => 18,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -6079,7 +6079,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Skullcap',
                 'grade' => 19,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -6142,7 +6142,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Greaves',
                 'grade' => 22,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -6205,7 +6205,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Light Belt',
                 'grade' => 23,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -6268,7 +6268,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Pupil\'s Sash',
                 'grade' => 25,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -6331,7 +6331,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Spangenhelm',
                 'grade' => 27,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -6394,7 +6394,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Heavy Buckler',
                 'grade' => 29,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -6457,7 +6457,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Gages',
                 'grade' => 31,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -6520,7 +6520,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Coat',
                 'grade' => 32,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -6583,7 +6583,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Busby',
                 'grade' => 33,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -6646,7 +6646,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Heavy Boots',
                 'grade' => 34,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -6709,7 +6709,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Helm',
                 'grade' => 35,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -6772,7 +6772,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Barrier',
                 'grade' => 37,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -6835,7 +6835,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Clogs',
                 'grade' => 38,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -6898,7 +6898,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Heavy Gauntlets',
                 'grade' => 39,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -6961,7 +6961,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Plackart',
                 'grade' => 40,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -7024,7 +7024,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Rondache',
                 'grade' => 42,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -7087,7 +7087,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Chainmail',
                 'grade' => 43,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -7150,7 +7150,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Tassets',
                 'grade' => 44,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -7213,7 +7213,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Helm',
                 'grade' => 45,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -7276,7 +7276,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Trilby',
                 'grade' => 48,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -7339,7 +7339,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Heavy Belt',
                 'grade' => 50,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -7402,7 +7402,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Veteran\'s Sash',
                 'grade' => 51,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -7465,7 +7465,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Gages',
                 'grade' => 52,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -7528,7 +7528,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Bascinet',
                 'grade' => 53,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -7591,7 +7591,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Heater Shield',
                 'grade' => 55,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -7654,7 +7654,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Heavy Cuirass',
                 'grade' => 56,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -7717,7 +7717,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Scalemail',
                 'grade' => 57,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -7780,7 +7780,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Pantofles',
                 'grade' => 58,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -7843,7 +7843,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Mantle',
                 'grade' => 59,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -7906,7 +7906,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Tubetieka',
                 'grade' => 60,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -7969,7 +7969,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Combat Boots',
                 'grade' => 61,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -8032,7 +8032,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Armet',
                 'grade' => 62,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -8095,7 +8095,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Force-field',
                 'grade' => 64,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -8158,7 +8158,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Kite Shield',
                 'grade' => 66,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -8221,7 +8221,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Battle Gauntlets',
                 'grade' => 68,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -8284,7 +8284,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Sallet',
                 'grade' => 71,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -8347,7 +8347,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Cuisses',
                 'grade' => 72,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -8410,7 +8410,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Wizard Hands',
                 'grade' => 73,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -8473,7 +8473,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Captain\'s Belt',
                 'grade' => 74,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -8536,7 +8536,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Master\'s Sash',
                 'grade' => 75,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -8599,7 +8599,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Wizard\'s Cap',
                 'grade' => 76,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -8662,7 +8662,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Cape',
                 'grade' => 77,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -8725,7 +8725,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Gothic Shield',
                 'grade' => 78,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -8788,7 +8788,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Hauberk',
                 'grade' => 79,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -8851,7 +8851,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Great Bascinet',
                 'grade' => 80,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -8914,7 +8914,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Platemail',
                 'grade' => 82,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -8977,7 +8977,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Tower Shield',
                 'grade' => 85,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -9040,7 +9040,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Chausses',
                 'grade' => 87,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -9103,7 +9103,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Fluted Armet',
                 'grade' => 88,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -9166,7 +9166,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Magus Pantofles',
                 'grade' => 90,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -9229,7 +9229,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Sorcerer Palms',
                 'grade' => 91,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -9292,7 +9292,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Magus Sash',
                 'grade' => 92,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -9355,7 +9355,7 @@ class SeedItemTypes extends Migration
                 'name' => 'War Gauntlets',
                 'grade' => 92,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -9418,7 +9418,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Citadel',
                 'grade' => 93,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -9481,7 +9481,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Spartan Sandals',
                 'grade' => 93,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -9544,7 +9544,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Sorcerer\'s Hat',
                 'grade' => 94,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -9607,7 +9607,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Cloak',
                 'grade' => 94,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -9670,7 +9670,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Ranger\'s Suit',
                 'grade' => 94,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -9733,7 +9733,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Giant\'s Belt',
                 'grade' => 95,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -9796,7 +9796,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Sallet with Bevor',
                 'grade' => 95,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -9859,7 +9859,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Phalanx Suit',
                 'grade' => 96,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -9922,7 +9922,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Giant\'s Shield',
                 'grade' => 97,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -9990,7 +9990,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Band',
                 'grade' => 10,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -10053,7 +10053,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Shackle',
                 'grade' => 10,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -10116,7 +10116,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Beeds',
                 'grade' => 10,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -10179,7 +10179,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Headband',
                 'grade' => 28,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -10242,7 +10242,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Ring',
                 'grade' => 30,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -10305,7 +10305,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Bracelet',
                 'grade' => 30,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -10368,7 +10368,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Necklace',
                 'grade' => 30,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -10431,7 +10431,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Circlet',
                 'grade' => 36,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -10494,7 +10494,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Chaplet',
                 'grade' => 46,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -10557,7 +10557,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Heavy Band',
                 'grade' => 50,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -10620,7 +10620,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Arm Band',
                 'grade' => 50,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -10683,7 +10683,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Locket',
                 'grade' => 50,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -10746,7 +10746,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Tiara',
                 'grade' => 54,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -10809,7 +10809,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Coronet',
                 'grade' => 69,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -10872,7 +10872,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Signet',
                 'grade' => 70,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -10935,7 +10935,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Bangle',
                 'grade' => 70,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -10998,7 +10998,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Pendant',
                 'grade' => 70,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -11061,7 +11061,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Queen\'s Crown',
                 'grade' => 81,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -11124,7 +11124,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Royal Signet',
                 'grade' => 90,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -11187,7 +11187,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Armlet',
                 'grade' => 90,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -11250,7 +11250,7 @@ class SeedItemTypes extends Migration
                 'name' => 'Amulet',
                 'grade' => 90,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -11313,7 +11313,7 @@ class SeedItemTypes extends Migration
                 'name' => 'King\'s Crown',
                 'grade' => 92,
 
-                'material_types' => [
+                'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
                     'Minotaur Horn',
@@ -11381,10 +11381,10 @@ class SeedItemTypes extends Migration
                 'grade' => $itemType['grade']
             ]);
 
-            /** @var \Illuminate\Database\Eloquent\Collection $materialTypes */
-            $materialTypesToSave = $materialTypes->whereIn('name', $itemType['material_types']);
+            /** @var \Illuminate\Database\Eloquent\Collection $materials */
+            $materialTypesToSave = $materials->whereIn('name', $itemType['materials']);
 
-            $itemTypeModel->materialTypes()->saveMany( $materialTypesToSave );
+            $itemTypeModel->materials()->saveMany( $materialTypesToSave );
 
         }
     }
@@ -11396,7 +11396,7 @@ class SeedItemTypes extends Migration
      */
     public function down()
     {
-        \Illuminate\Support\Facades\DB::table('item_type_material_type')->truncate();
+        \Illuminate\Support\Facades\DB::table('item_type_material')->truncate();
         \App\Domain\Models\ItemType::query()->delete();
     }
 }

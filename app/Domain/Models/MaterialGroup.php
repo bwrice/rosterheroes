@@ -22,6 +22,6 @@ class MaterialGroup extends Model
 
     public function materialTypes()
     {
-        return $this->hasMany(MaterialType::class);
+        return $this->hasMany(Material::class);
     }
 }

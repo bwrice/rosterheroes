@@ -18,7 +18,7 @@ class CreateItemsTable extends Migration
             $table->uuid('uuid');
             $table->integer('item_class_id')->unsigned();
             $table->integer('item_type_id')->unsigned();
-            $table->integer('material_type_id')->unsigned();
+            $table->integer('material_id')->unsigned();
             $table->integer('item_blueprint_id')->unsigned();
             $table->string('name')->nullable();
             $table->timestamps();
@@ -26,7 +26,7 @@ class CreateItemsTable extends Migration
 
         Schema::table('items', function (Blueprint $table) {
             $table->foreign('item_type_id')->references('id')->on('item_types');
-            $table->foreign('material_type_id')->references('id')->on('material_types');
+            $table->foreign('material_id')->references('id')->on('materials');
             $table->foreign('item_class_id')->references('id')->on('item_classes');
             $table->foreign('item_blueprint_id')->references('id')->on('item_blueprints');
         });

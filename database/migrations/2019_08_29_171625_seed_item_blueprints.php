@@ -5,7 +5,7 @@ use App\Domain\Models\Enchantment;
 use App\Domain\Models\ItemBlueprint;
 use App\Domain\Models\ItemClass;
 use App\Domain\Models\ItemType;
-use App\Domain\Models\MaterialType;
+use App\Domain\Models\Material;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -21,7 +21,7 @@ class SeedItemBlueprints extends Migration
     {
         $itemTypes = ItemType::all();
         $itemClasses = ItemClass::all();
-        $materialTypes = MaterialType::all();
+        $materials = Material::all();
         $enchantments = Enchantment::all();
 
         $blueprints = [
@@ -34,7 +34,7 @@ class SeedItemBlueprints extends Migration
                     'name' => ItemBlueprint::STARTER_SWORD,
                     'item_class' => $itemClasses->where('name', '=', ItemClass::ENCHANTED)->first(),
                     'item_type' => $itemTypes->where( 'name', '=', 'Short Sword' )->first(),
-                    'material_type' => $materialTypes->where( 'name', '=', 'Copper' )->first(),
+                    'material' => $materials->where( 'name', '=', 'Copper' )->first(),
                 ],
                 'enchantments' => [
                     'Level 1 Strength'
@@ -48,7 +48,7 @@ class SeedItemBlueprints extends Migration
                     'name' => ItemBlueprint::STARTER_SHIELD,
                     'item_class' => $itemClasses->where('name', '=', ItemClass::ENCHANTED)->first(),
                     'item_type' => $itemTypes->where( 'name', '=', 'Buckler' )->first(),
-                    'material_type' => $materialTypes->where( 'name', '=', 'Copper' )->first(),
+                    'material' => $materials->where( 'name', '=', 'Copper' )->first(),
                 ],
                 'enchantments' => [
                     'Level 1 Valor'
@@ -62,7 +62,7 @@ class SeedItemBlueprints extends Migration
                     'name' => ItemBlueprint::STARTER_BOW,
                     'item_class' => $itemClasses->where('name', '=', ItemClass::ENCHANTED)->first(),
                     'item_type' => $itemTypes->where( 'name', '=', 'Straight Bow' )->first(),
-                    'material_type' => $materialTypes->where( 'name', '=', 'Yew' )->first(),
+                    'material' => $materials->where( 'name', '=', 'Yew' )->first(),
                 ],
                 'enchantments' => [
                     'Level 1 Agility',
@@ -77,7 +77,7 @@ class SeedItemBlueprints extends Migration
                     'name' => ItemBlueprint::STARTER_STAFF,
                     'item_class' => $itemClasses->where('name', '=', ItemClass::ENCHANTED)->first(),
                     'item_type' => $itemTypes->where( 'name', '=', 'Lesser Staff' )->first(),
-                    'material_type' => $materialTypes->where( 'name', '=', 'Yew' )->first(),
+                    'material' => $materials->where( 'name', '=', 'Yew' )->first(),
                 ],
                 'enchantments' => [
                     'Level 1 Aptitude',
@@ -97,7 +97,7 @@ class SeedItemBlueprints extends Migration
             ]);
 
             $blueprintCreated->itemTypes()->attach($blueprint['create_array']['item_type']);
-            $blueprintCreated->materialTypes()->attach($blueprint['create_array']['material_type']);
+            $blueprintCreated->materialTypes()->attach($blueprint['create_array']['material']);
             $blueprintCreated->itemClasses()->attach($blueprint['create_array']['item_class']);
 
             $enchantmentsToAttach = $enchantments->whereIn('name', $blueprint['enchantments']);

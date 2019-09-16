@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class SeedMaterialTypes extends Migration
+class SeedMaterials extends Migration
 {
     /**
      * Run the migrations.
@@ -294,7 +294,7 @@ class SeedMaterialTypes extends Migration
         ];
 
         foreach ($materials as $material) {
-            \App\Domain\Models\MaterialType::create([
+            \App\Domain\Models\Material::query()->create([
                 'name' => $material['name'],
                 'grade' => $material['grade'],
                 'material_group_id' => $materialGroups->where('name', '=', $material['material_group'])->first()->id
@@ -309,6 +309,6 @@ class SeedMaterialTypes extends Migration
      */
     public function down()
     {
-        \App\Domain\Models\MaterialType::query()->delete();
+        \App\Domain\Models\Material::query()->delete();
     }
 }

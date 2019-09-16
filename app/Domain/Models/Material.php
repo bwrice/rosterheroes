@@ -5,7 +5,7 @@ namespace App\Domain\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class MaterialType
+ * Class Material
  * @package App
  *
  * @property int $id
@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property MaterialGroup $materialGroup
  */
-class MaterialType extends Model
+class Material extends Model
 {
     protected $guarded = [];
 

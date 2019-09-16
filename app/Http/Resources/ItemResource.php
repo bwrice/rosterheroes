@@ -26,7 +26,7 @@ class ItemResource extends JsonResource
             'name' => $this->getItemName(),
             'itemClass' => new ItemClassResource($this->itemClass),
             'itemType' => new ItemTypeResource($this->itemType),
-            'materialType' => new MaterialTypeResource($this->materialType),
+            'material' => new MaterialResource($this->material),
             'attacks' => AttackResource::collection($this->attacks)->collection->each(function (AttackResource $attackResource) {
                 $attackResource->setHasAttacks($this->resource);
             })

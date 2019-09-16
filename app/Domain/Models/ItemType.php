@@ -7,7 +7,7 @@ use App\Domain\Interfaces\AdjustsBaseDamage;
 use App\Domain\Interfaces\AdjustsCombatSpeed;
 use App\Domain\Interfaces\AdjustsDamageModifier;
 use App\Domain\Models\ItemBase;
-use App\Domain\Models\MaterialType;
+use App\Domain\Models\Material;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -27,9 +27,9 @@ class ItemType extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function materialTypes()
+    public function materials()
     {
-        return $this->belongsToMany(MaterialType::class, 'item_type_material_type', 'i_type_id', 'm_type_id')->withTimestamps();
+        return $this->belongsToMany(Material::class, 'item_type_material', 'i_type_id', 'material_id')->withTimestamps();
     }
 
     public function itemBase()
