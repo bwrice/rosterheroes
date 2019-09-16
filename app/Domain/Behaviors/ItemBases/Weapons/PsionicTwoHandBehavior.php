@@ -20,6 +20,8 @@ class PsionicTwoHandBehavior extends WeaponBehavior
     public const SPEED_RATING = 35;
     public const BASE_DAMAGE_RAGING = 75;
 
+    protected $weightMultiplier = 7;
+
     public function __construct(WeaponGroup $weaponGroup, TwoArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);

@@ -20,6 +20,8 @@ class TwoHandAxeBehavior extends WeaponBehavior
     public const SPEED_RATING = 25;
     public const BASE_DAMAGE_RAGING = 9;
 
+    protected $weightMultiplier = 15;
+
     public function __construct(WeaponGroup $weaponGroup, TwoArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);

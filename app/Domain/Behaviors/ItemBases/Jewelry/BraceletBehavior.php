@@ -15,6 +15,8 @@ use App\Domain\Models\SlotType;
 class BraceletBehavior extends JewelryBehavior
 {
 
+    protected $weightMultiplier = 1.3;
+
     public function getSlotsCount(): int
     {
         return 1;

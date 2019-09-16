@@ -20,6 +20,8 @@ class OrbBehavior extends WeaponBehavior
     public const SPEED_RATING = 85;
     public const BASE_DAMAGE_RAGING = 35;
 
+    protected $weightMultiplier = 5.5;
+
     public function __construct(WeaponGroup $weaponGroup, TwoArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);

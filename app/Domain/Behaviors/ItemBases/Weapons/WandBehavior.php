@@ -20,6 +20,8 @@ class WandBehavior extends WeaponBehavior
     public const SPEED_RATING = 70;
     public const BASE_DAMAGE_RAGING = 30;
 
+    protected $weightMultiplier = 2;
+
     public function __construct(WeaponGroup $weaponGroup, SingleArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);

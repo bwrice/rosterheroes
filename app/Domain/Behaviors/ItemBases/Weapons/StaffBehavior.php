@@ -20,6 +20,8 @@ class StaffBehavior extends WeaponBehavior
     public const SPEED_RATING = 35;
     public const BASE_DAMAGE_RAGING = 44;
 
+    protected $weightMultiplier = 7.3;
+
     public function __construct(WeaponGroup $weaponGroup, TwoArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);

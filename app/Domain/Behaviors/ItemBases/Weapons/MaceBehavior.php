@@ -20,6 +20,8 @@ class MaceBehavior extends WeaponBehavior
     public const SPEED_RATING = 38;
     public const BASE_DAMAGE_RAGING = 65;
 
+    protected $weightMultiplier = 7.2;
+
     public function __construct(WeaponGroup $weaponGroup, SingleArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);

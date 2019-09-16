@@ -14,6 +14,7 @@ use App\Domain\Models\SlotType;
 
 class SashBehavior extends ClothingBehavior
 {
+    protected $weightMultiplier = 1.3;
 
     public function getSlotsCount(): int
     {

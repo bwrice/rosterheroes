@@ -20,6 +20,8 @@ class PoleArmBehavior extends WeaponBehavior
     public const SPEED_RATING = 82;
     public const BASE_DAMAGE_RAGING = 30;
 
+    protected $weightMultiplier = 9;
+
     public function __construct(WeaponGroup $weaponGroup, TwoArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);

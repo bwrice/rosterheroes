@@ -18,6 +18,8 @@ abstract class ItemBaseBehavior implements ItemBaseBehaviorInterface
      */
     private $itemGroup;
 
+    protected $weightMultiplier = 1;
+
     public function __construct(ItemGroupInterface $itemGroup)
     {
         $this->itemGroup = $itemGroup;
@@ -39,5 +41,10 @@ abstract class ItemBaseBehavior implements ItemBaseBehaviorInterface
             ->whereIn('name', $slotTypes)
             ->pluck('id')
             ->toArray();
+    }
+
+    public function getWeightMultiplier(): float
+    {
+        return $this->weightMultiplier;
     }
 }

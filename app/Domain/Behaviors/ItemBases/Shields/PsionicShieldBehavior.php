@@ -15,6 +15,8 @@ use App\Domain\Models\SlotType;
 class PsionicShieldBehavior extends ShieldGroupBehavior
 {
 
+    protected $weightMultiplier = 14;
+
     public function getSlotsCount(): int
     {
         return 1;

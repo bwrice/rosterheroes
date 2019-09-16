@@ -14,6 +14,7 @@ use App\Domain\Models\SlotType;
 
 class CrownBehavior extends JewelryBehavior
 {
+    protected $weightMultiplier = 2.5;
 
     public function getSlotsCount(): int
     {

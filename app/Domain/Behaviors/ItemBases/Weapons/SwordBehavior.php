@@ -20,6 +20,8 @@ class SwordBehavior extends WeaponBehavior
     public const SPEED_RATING = 55;
     public const BASE_DAMAGE_RAGING = 65;
 
+    protected $weightMultiplier = 5;
+
     public function __construct(WeaponGroup $weaponGroup, SingleArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);

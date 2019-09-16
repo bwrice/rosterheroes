@@ -19,6 +19,8 @@ class BowBehavior extends WeaponBehavior
     public const SPEED_RATING = 65;
     public const BASE_DAMAGE_RAGING = 35;
 
+    protected $weightMultiplier = 8.5;
+
     public function __construct(WeaponGroup $weaponGroup, TwoArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);

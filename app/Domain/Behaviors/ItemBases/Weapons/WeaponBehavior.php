@@ -99,5 +99,4 @@ abstract class WeaponBehavior extends ItemBaseBehavior
     }
 
     abstract protected function getDamageMultiplierMeasurablesBonus(UsesItems $usesItems): float;
-
 }
