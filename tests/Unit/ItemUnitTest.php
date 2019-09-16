@@ -148,14 +148,141 @@ class ItemUnitTest extends TestCase
         ];
     }
 
-
     /**
      * @test
+     * @dataProvider provides_items_of_a_certain_item_base_weigh_more
+     * @param $lighterBase
+     * @param $heavierBase
      */
-    public function a_two_handed_weapon_weighs_more_than_single_hand_weapon()
+    public function items_of_a_certain_item_base_weigh_more($lighterBase, $heavierBase)
     {
-        //TODO
-        $this->assertTrue(true);
+        $lighterBase_id = ItemBase::forName($lighterBase)->id;
+        $heavierBase_id = ItemBase::forName($heavierBase)->id;
+
+        /** @var ItemType $heavierItemType */
+        $heavierItemType = ItemType::query()->where('item_base_id', '=', $heavierBase_id)->inRandomOrder()->first();
+
+        /** @var ItemType $lighterItemType */
+        $lighterItemType = ItemType::query()->where('item_base_id', '=', $lighterBase_id)->inRandomOrder()->first();
+
+        $this->assertNotNull($lighterItemType);
+
+        $this->item->item_type_id = $lighterItemType->id;
+        $this->item->save();
+        $this->item = $this->item->fresh();
+        // Set to same grade to compare
+        $this->item->itemType->grade = 10;
+        $lighterItemTypeWeight = $this->item->getWeight();
+
+        $this->item->item_type_id = $heavierItemType->id;
+        $this->item->save();
+        $this->item = $this->item->fresh();
+        $this->item->itemType->grade = 10;
+        $heavierItemTypeWeight = $this->item->getWeight();
+
+        $this->assertGreaterThan($lighterItemTypeWeight, $heavierItemTypeWeight);
+    }
+
+    public function provides_items_of_a_certain_item_base_weigh_more()
+    {
+        return [
+            ItemBase::DAGGER . ' vs ' . ItemBase::SWORD => [
+                'lighterBase' => ItemBase::DAGGER,
+                'heavierBase' => ItemBase::SWORD
+            ],
+            ItemBase::SWORD . ' vs ' . ItemBase::MACE => [
+                'lighterBase' => ItemBase::SWORD,
+                'heavierBase' => ItemBase::MACE
+            ],
+            ItemBase::AXE . ' vs ' . ItemBase::TWO_HAND_SWORD => [
+                'lighterBase' => ItemBase::AXE,
+                'heavierBase' => ItemBase::TWO_HAND_SWORD
+            ],
+            ItemBase::MACE . ' vs ' . ItemBase::TWO_HAND_AXE => [
+                'lighterBase' => ItemBase::MACE,
+                'heavierBase' => ItemBase::TWO_HAND_AXE
+            ],
+            ItemBase::POLE_ARM . ' vs ' . ItemBase::TWO_HAND_SWORD => [
+                'lighterBase' => ItemBase::POLE_ARM,
+                'heavierBase' => ItemBase::TWO_HAND_SWORD
+            ],
+            ItemBase::BOW . ' vs ' . ItemBase::CROSSBOW => [
+                'lighterBase' => ItemBase::BOW,
+                'heavierBase' => ItemBase::CROSSBOW
+            ],
+            ItemBase::WAND . ' vs ' . ItemBase::ORB => [
+                'lighterBase' => ItemBase::WAND,
+                'heavierBase' => ItemBase::ORB
+            ],
+            ItemBase::ORB . ' vs ' . ItemBase::STAFF => [
+                'lighterBase' => ItemBase::ORB,
+                'heavierBase' => ItemBase::STAFF
+            ],
+            ItemBase::PSIONIC_ONE_HAND . ' vs ' . ItemBase::PSIONIC_TWO_HAND => [
+                'lighterBase' => ItemBase::PSIONIC_ONE_HAND,
+                'heavierBase' => ItemBase::PSIONIC_TWO_HAND
+            ],
+            ItemBase::PSIONIC_TWO_HAND . ' vs ' . ItemBase::TWO_HAND_SWORD => [
+                'lighterBase' => ItemBase::PSIONIC_TWO_HAND,
+                'heavierBase' => ItemBase::TWO_HAND_SWORD
+            ],
+            ItemBase::STAFF . ' vs ' . ItemBase::BOW => [
+                'lighterBase' => ItemBase::STAFF,
+                'heavierBase' => ItemBase::BOW
+            ],
+            ItemBase::DAGGER . ' vs ' . ItemBase::THROWING_WEAPON => [
+                'lighterBase' => ItemBase::DAGGER,
+                'heavierBase' => ItemBase::THROWING_WEAPON
+            ],
+            ItemBase::THROWING_WEAPON . ' vs ' . ItemBase::AXE => [
+                'lighterBase' => ItemBase::THROWING_WEAPON,
+                'heavierBase' => ItemBase::AXE
+            ],
+            ItemBase::CAP . ' vs ' . ItemBase::HELMET => [
+                'lighterBase' => ItemBase::CAP,
+                'heavierBase' => ItemBase::HELMET
+            ],
+            ItemBase::LIGHT_ARMOR . ' vs ' . ItemBase::HEAVY_ARMOR => [
+                'lighterBase' => ItemBase::LIGHT_ARMOR,
+                'heavierBase' => ItemBase::HEAVY_ARMOR
+            ],
+            ItemBase::ROBES . ' vs ' . ItemBase::LIGHT_ARMOR => [
+                'lighterBase' => ItemBase::ROBES,
+                'heavierBase' => ItemBase::LIGHT_ARMOR
+            ],
+            ItemBase::LEGGINGS . ' vs ' . ItemBase::HEAVY_ARMOR => [
+                'lighterBase' => ItemBase::LEGGINGS,
+                'heavierBase' => ItemBase::HEAVY_ARMOR
+            ],
+            ItemBase::CAP . ' vs ' . ItemBase::CROWN => [
+                'lighterBase' => ItemBase::CAP,
+                'heavierBase' => ItemBase::CROWN
+            ],
+            ItemBase::SASH . ' vs ' . ItemBase::BELT => [
+                'lighterBase' => ItemBase::SASH,
+                'heavierBase' => ItemBase::BELT
+            ],
+            ItemBase::SHOES . ' vs ' . ItemBase::BOOTS => [
+                'lighterBase' => ItemBase::SHOES,
+                'heavierBase' => ItemBase::BOOTS
+            ],
+            ItemBase::GLOVES . ' vs ' . ItemBase::GAUNTLETS => [
+                'lighterBase' => ItemBase::GLOVES,
+                'heavierBase' => ItemBase::GAUNTLETS
+            ],
+            ItemBase::PSIONIC_SHIELD . ' vs ' . ItemBase::SHIELD => [
+                'lighterBase' => ItemBase::PSIONIC_SHIELD,
+                'heavierBase' => ItemBase::SHIELD
+            ],
+            ItemBase::PSIONIC_ONE_HAND . ' vs ' . ItemBase::PSIONIC_SHIELD => [
+                'lighterBase' => ItemBase::PSIONIC_ONE_HAND,
+                'heavierBase' => ItemBase::PSIONIC_SHIELD
+            ],
+            ItemBase::MACE . ' vs ' . ItemBase::SHIELD => [
+                'lighterBase' => ItemBase::MACE,
+                'heavierBase' => ItemBase::SHIELD
+            ]
+        ];
     }
 
     /**
