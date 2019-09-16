@@ -64,6 +64,6 @@ class MaterialType extends Model
 
     public function getWeightModifier()
     {
-
+        return $this->getBehavior()->getWeightModifier();
     }
 }

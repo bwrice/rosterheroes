@@ -137,7 +137,7 @@ class ItemBase extends Model
      */
     public function getBehavior(): ItemBaseBehaviorInterface
     {
-        switch( $this->name ) {
+        switch($this->name) {
             case self::DAGGER:
                 return app(DaggerBehavior::class);
             case self::SWORD:
