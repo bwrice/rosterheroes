@@ -21,6 +21,7 @@ use Ramsey\Uuid\Uuid;
  *
  * @property int $id
  * @property int $item_type_id
+ * @property int $material_id
  * @property string $uuid
  * @property string $name
  *
@@ -150,6 +151,7 @@ class Item extends EventSourcedModel implements Slottable, HasAttacks
     public function getWeight(): int
     {
         $itemTypeGrade = $this->itemType->grade;
-        return $itemTypeGrade;
+        $itemTypeGrade *= $this->material->getWeightModifier();
+        return (int) ceil($itemTypeGrade);
     }
 }

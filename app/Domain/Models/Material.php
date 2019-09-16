@@ -22,4 +22,10 @@ class Material extends Model
     {
         return $this->belongsTo(MaterialType::class);
     }
+
+    public function getWeightModifier()
+    {
+        $gradeModifier = 1 + ($this->grade**.25/5);
+        return $gradeModifier;
+    }
 }
