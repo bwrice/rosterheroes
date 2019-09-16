@@ -118,8 +118,7 @@ class Attack extends Model
 
     public function getDamageMultiplier(HasAttacks $hasAttacks = null): float
     {
-        $damageMultiplier = 1;
-        $damageMultiplier += $this->damage_modifier_rating**.25;
+        $damageMultiplier = $this->damage_modifier_rating**.25;
         $damageMultiplier = $this->attackerPosition->getBehavior()->adjustDamageMultiplier($damageMultiplier);
         $damageMultiplier = $this->damageType->getBehavior()->adjustDamageMultiplier($damageMultiplier);
         if ($hasAttacks) {
