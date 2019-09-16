@@ -57,11 +57,11 @@ class FillSlotActionTest extends TestCase
         $itemBase = ItemBase::query()->where('name', $itemBase)->first();
         /** @var ItemType $itemType */
         $itemType = $itemBase->itemTypes()->inRandomOrder()->first();
-        $materialType = $itemType->materialTypes()->inRandomOrder()->first();
+        $materialType = $itemType->materials()->inRandomOrder()->first();
 
         $item = factory(Item::class)->create([
             'item_type_id' => $itemType->id,
-            'material_type_id' => $materialType->id
+            'material_id' => $materialType->id
         ]);
 
         $this->domainAction->execute($this->hero, $item);
@@ -193,22 +193,22 @@ class FillSlotActionTest extends TestCase
         $itemBase = ItemBase::query()->where('name', $firstItemBaseName)->first();
         /** @var ItemType $itemType */
         $itemType = $itemBase->itemTypes()->inRandomOrder()->first();
-        $materialType = $itemType->materialTypes()->inRandomOrder()->first();
+        $materialType = $itemType->materials()->inRandomOrder()->first();
 
         $firstItem = factory(Item::class)->create([
             'item_type_id' => $itemType->id,
-            'material_type_id' => $materialType->id
+            'material_id' => $materialType->id
         ]);
 
         /** @var \App\Domain\Models\ItemBase $itemBase */
         $itemBase = ItemBase::query()->where('name', $secondItemBaseName)->first();
         /** @var ItemType $itemType */
         $itemType = $itemBase->itemTypes()->inRandomOrder()->first();
-        $materialType = $itemType->materialTypes()->inRandomOrder()->first();
+        $materialType = $itemType->materials()->inRandomOrder()->first();
 
         $secondItem = factory(Item::class)->create([
             'item_type_id' => $itemType->id,
-            'material_type_id' => $materialType->id
+            'material_id' => $materialType->id
         ]);
 
         $this->domainAction->execute($this->hero->fresh(), $firstItem);
@@ -271,33 +271,33 @@ class FillSlotActionTest extends TestCase
         $itemBase = ItemBase::query()->where('name', $firstItemBaseName)->first();
         /** @var ItemType $itemType */
         $itemType = $itemBase->itemTypes()->inRandomOrder()->first();
-        $materialType = $itemType->materialTypes()->inRandomOrder()->first();
+        $materialType = $itemType->materials()->inRandomOrder()->first();
 
         $firstItem = factory(Item::class)->create([
             'item_type_id' => $itemType->id,
-            'material_type_id' => $materialType->id
+            'material_id' => $materialType->id
         ]);
 
         /** @var \App\Domain\Models\ItemBase $itemBase */
         $itemBase = ItemBase::query()->where('name', $secondItemBaseName)->first();
         /** @var ItemType $itemType */
         $itemType = $itemBase->itemTypes()->inRandomOrder()->first();
-        $materialType = $itemType->materialTypes()->inRandomOrder()->first();
+        $materialType = $itemType->materials()->inRandomOrder()->first();
 
         $secondItem = factory(Item::class)->create([
             'item_type_id' => $itemType->id,
-            'material_type_id' => $materialType->id
+            'material_id' => $materialType->id
         ]);
 
         /** @var \App\Domain\Models\ItemBase $itemBase */
         $itemBase = ItemBase::query()->where('name', $thirdItemBaseName)->first();
         /** @var ItemType $itemType */
         $itemType = $itemBase->itemTypes()->inRandomOrder()->first();
-        $materialType = $itemType->materialTypes()->inRandomOrder()->first();
+        $materialType = $itemType->materials()->inRandomOrder()->first();
 
         $thirdItem = factory(Item::class)->create([
             'item_type_id' => $itemType->id,
-            'material_type_id' => $materialType->id
+            'material_id' => $materialType->id
         ]);
 
         $this->domainAction->execute($this->hero->fresh(), $firstItem);
@@ -359,24 +359,24 @@ class FillSlotActionTest extends TestCase
         $itemBase = ItemBase::query()->where('name', $firstItemBaseName)->first();
         /** @var ItemType $itemType */
         $itemType = $itemBase->itemTypes()->inRandomOrder()->first();
-        $materialType = $itemType->materialTypes()->inRandomOrder()->first();
+        $materialType = $itemType->materials()->inRandomOrder()->first();
 
         /** @var Item $firstItem */
         $firstItem = factory(Item::class)->create([
             'item_type_id' => $itemType->id,
-            'material_type_id' => $materialType->id
+            'material_id' => $materialType->id
         ]);
 
         /** @var \App\Domain\Models\ItemBase $itemBase */
         $itemBase = ItemBase::query()->where('name', $secondItemBaseName)->first();
         /** @var ItemType $itemType */
         $itemType = $itemBase->itemTypes()->inRandomOrder()->first();
-        $materialType = $itemType->materialTypes()->inRandomOrder()->first();
+        $materialType = $itemType->materials()->inRandomOrder()->first();
 
         /** @var Item $secondItem */
         $secondItem = factory(Item::class)->create([
             'item_type_id' => $itemType->id,
-            'material_type_id' => $materialType->id
+            'material_id' => $materialType->id
         ]);
 
         $squad = $this->hero->getSquad();

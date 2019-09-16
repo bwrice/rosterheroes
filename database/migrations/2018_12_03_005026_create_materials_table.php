@@ -15,14 +15,14 @@ class CreateMaterialsTable extends Migration
     {
         Schema::create('materials', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('material_group_id')->unsigned();
+            $table->integer('material_type_id')->unsigned();
             $table->string('name');
             $table->integer('grade');
             $table->timestamps();
         });
 
         Schema::table('materials', function (Blueprint $table) {
-            $table->foreign('material_group_id')->references('id')->on('material_groups');
+            $table->foreign('material_type_id')->references('id')->on('material_types');
         });
     }
 

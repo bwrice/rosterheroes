@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property string $name
  */
-class MaterialGroup extends Model
+class MaterialType extends Model
 {
     const HIDE = 'hide';
     const METAL = 'metal';
@@ -20,7 +20,7 @@ class MaterialGroup extends Model
 
     protected $guarded = [];
 
-    public function materialTypes()
+    public function materials()
     {
         return $this->hasMany(Material::class);
     }

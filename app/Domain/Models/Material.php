@@ -12,14 +12,14 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $name
  * @property int $grade
  *
- * @property MaterialGroup $materialGroup
+ * @property MaterialType $materialType
  */
 class Material extends Model
 {
     protected $guarded = [];
 
-    public function materialGroup()
+    public function materialType()
     {
-        return $this->belongsTo(MaterialGroup::class);
+        return $this->belongsTo(MaterialType::class);
     }
 }

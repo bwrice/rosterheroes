@@ -24,7 +24,7 @@ class MaterialResource extends JsonResource
         return [
             'name' => $this->name,
             'grade' => $this->grade,
-            'materialGroup' => new MaterialGroupResource($this->materialGroup)
+            'materialType' => new MaterialTypeResource($this->materialType)
         ];
     }
 }
