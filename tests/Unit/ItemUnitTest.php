@@ -88,12 +88,10 @@ class ItemUnitTest extends TestCase
         $materialType2_ID = MaterialType::forName($materialType2)->id;
 
         /** @var Material $firstMaterial */
-        $firstMaterial = Material::query()->where('material_type_id', '=', $materialType1_ID)->inRandomOrder()->first();
+        $firstMaterial = Material::query()->where('material_type_id', '=', $materialType1_ID)->orderBy('grade')->first();
         /** @var Material $secondMaterial */
-        $secondMaterial = Material::query()->where('material_type_id', '=', $materialType2_ID)->get()->first(function (Material $material) use ($firstMaterial) {
-            $gradeDiff = abs($material->grade - $firstMaterial->grade);
-            return $gradeDiff < 15;
-        });
+        $secondMaterial = Material::query()->where('material_type_id', '=', $materialType2_ID)->orderBy('grade')->first();
+        /** @var Material $secondMaterial */
 
         $this->assertNotNull($secondMaterial);
 
