@@ -20,6 +20,7 @@ use Ramsey\Uuid\Uuid;
  * @package App
  *
  * @property int $id
+ * @property int $item_type_id
  * @property string $uuid
  * @property string $name
  *
@@ -146,11 +147,9 @@ class Item extends EventSourcedModel implements Slottable, HasAttacks
         return $slot->hasSlots instanceof UsesItems ? $slot->hasSlots : null;
     }
 
-//    protected function getHasItems()
-//    {
-//        $slot = $this->slots->first();
-//        if ($slot) {
-//
-//        }
-//    }
+    public function getWeight(): int
+    {
+        $itemTypeGrade = $this->itemType->grade;
+        return $itemTypeGrade;
+    }
 }
