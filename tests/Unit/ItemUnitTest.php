@@ -76,6 +76,80 @@ class ItemUnitTest extends TestCase
         $this->assertGreaterThan($weight1, $weight2);
     }
 
+    /**
+     * @test
+     * @dataProvider provides_items_of_certain_material_types_weigh_more
+     * @param $materialType1
+     * @param $materialType2
+     */
+    public function items_of_certain_material_types_weigh_more($materialType1, $materialType2)
+    {
+        $materialType1_ID = MaterialType::forName($materialType1)->id;
+        $materialType2_ID = MaterialType::forName($materialType2)->id;
+
+        /** @var Material $firstMaterial */
+        $firstMaterial = Material::query()->where('material_type_id', '=', $materialType1_ID)->inRandomOrder()->first();
+        /** @var Material $secondMaterial */
+        $secondMaterial = Material::query()->where('material_type_id', '=', $materialType2_ID)->get()->first(function (Material $material) use ($firstMaterial) {
+            $gradeDiff = abs($material->grade - $firstMaterial->grade);
+            return $gradeDiff < 15;
+        });
+
+        $this->assertNotNull($secondMaterial);
+
+        $this->item->material_id = $firstMaterial->id;
+        $this->item->save();
+        $weight1 = $this->item->fresh()->getWeight();
+
+        $this->item->material_id = $secondMaterial->id;
+        $this->item->save();
+        $weight2 = $this->item->fresh()->getWeight();
+
+        $this->assertGreaterThan($weight1, $weight2);
+    }
+
+    public function provides_items_of_certain_material_types_weigh_more()
+    {
+        return [
+            MaterialType::CLOTH . ' vs ' . MaterialType::HIDE => [
+                'materialType1' => MaterialType::CLOTH,
+                'materialType2' => MaterialType::HIDE
+            ],
+            MaterialType::PSIONIC . ' vs ' . MaterialType::BONE => [
+                'materialType1' => MaterialType::PSIONIC,
+                'materialType2' => MaterialType::BONE
+            ],
+            MaterialType::HIDE . ' vs ' . MaterialType::BONE => [
+                'materialType1' => MaterialType::HIDE,
+                'materialType2' => MaterialType::BONE
+            ],
+            MaterialType::PSIONIC . ' vs ' . MaterialType::BONE => [
+                'materialType1' => MaterialType::PSIONIC,
+                'materialType2' => MaterialType::BONE
+            ],
+            MaterialType::BONE . ' vs ' . MaterialType::METAL => [
+                'materialType1' => MaterialType::BONE,
+                'materialType2' => MaterialType::METAL
+            ],
+            MaterialType::WOOD . ' vs ' . MaterialType::METAL => [
+                'materialType1' => MaterialType::WOOD,
+                'materialType2' => MaterialType::METAL
+            ],
+            MaterialType::WOOD . ' vs ' . MaterialType::BONE => [
+                'materialType1' => MaterialType::WOOD,
+                'materialType2' => MaterialType::BONE
+            ],
+            MaterialType::METAL . ' vs ' . MaterialType::GEMSTONE => [
+                'materialType1' => MaterialType::METAL,
+                'materialType2' => MaterialType::GEMSTONE
+            ],
+            MaterialType::WOOD . ' vs ' . MaterialType::PRECIOUS_METAL => [
+                'materialType1' => MaterialType::WOOD,
+                'materialType2' => MaterialType::PRECIOUS_METAL
+            ]
+        ];
+    }
+
 
     /**
      * @test
