@@ -18,5 +18,5 @@ interface ItemBaseBehaviorInterface
 
     public function getDamageMultiplierBonus(UsesItems $usesItems = null): float;
 
-    public function getWeightMultiplier(): float;
+    public function getWeightModifier(): float;
 }

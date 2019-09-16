@@ -9,7 +9,6 @@
 namespace App\Domain\Behaviors\ItemBases\Shields;
 
 
-use App\Domain\Behaviors\ItemBases\Shields\ShieldGroupBehavior;
 
 class ShieldBehavior extends ShieldGroupBehavior
 {

@@ -284,13 +284,4 @@ class ItemUnitTest extends TestCase
             ]
         ];
     }
-
-    /**
-     * @test
-     */
-    public function shields_are_very_heavy()
-    {
-        //TODO
-        $this->assertTrue(true);
-    }
 }
