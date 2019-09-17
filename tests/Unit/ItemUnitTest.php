@@ -389,7 +389,7 @@ class ItemUnitTest extends TestCase
         $this->item->item_type_id = $itemType->id;
         $this->item->save();
         $this->item = $this->item->fresh();
-        $this->item->material->grade = 1;
+        $this->item->material->grade = 10;
         $lowGradeMaterialProtection = $this->item->getProtection();
 
         $this->item->material->grade = 99;
@@ -410,6 +410,86 @@ class ItemUnitTest extends TestCase
             ],
             ItemBase::ROBES => [
                 'itemBaseName' => ItemBase::ROBES
+            ],
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider provides_certain_materials_give_items_more_protection
+     * @param $materialType1
+     * @param $materialType2
+     * @param $itemBase
+     */
+    public function certain_materials_give_items_more_protection($materialType1, $materialType2, $itemBase)
+    {
+        /** @var Material $lowerProtectionMaterial */
+        $lowerProtectionMaterial = Material::query()->whereHas('materialType', function (Builder $builder) use ($materialType1) {
+            return $builder->where('name', '=', $materialType1);
+        })->first();
+
+        /** @var Material $higherProtectionMaterial */
+        $higherProtectionMaterial = Material::query()->whereHas('materialType', function (Builder $builder) use ($materialType2) {
+            return $builder->where('name', '=', $materialType2);
+        })->first();
+
+        $itemType = ItemType::query()->whereHas('itemBase', function (Builder $builder) use ($itemBase) {
+            return $builder->where('name', '=', $itemBase);
+        })->first();
+
+        $this->item->item_type_id = $itemType->id;
+        $this->item->material_id = $lowerProtectionMaterial->id;
+        $this->item->save();
+        $this->item = $this->item->fresh();
+
+        // Manually make sure the materials which are of different type have the same grade
+        $this->item->material->grade = 10;
+        $lowerProtectionMaterialProtection = $this->item->getProtection();
+
+        $this->item->material_id = $higherProtectionMaterial->id;
+        $this->item->save();
+        $this->item = $this->item->fresh();
+
+        // Manually make sure the materials which are of different type have the same grade
+        $this->item->material->grade = 10;
+        $higherProtectionMaterialProtection = $this->item->getProtection();
+
+        $this->assertGreaterThan($lowerProtectionMaterialProtection, $higherProtectionMaterialProtection);
+    }
+
+    public function provides_certain_materials_give_items_more_protection()
+    {
+
+        return [
+            MaterialType::CLOTH . ' vs ' . MaterialType::HIDE => [
+                'materialType1' => MaterialType::CLOTH,
+                'materialType2' => MaterialType::HIDE,
+                'itemBase' => ItemBase::LIGHT_ARMOR
+            ],
+            MaterialType::HIDE . ' vs ' . MaterialType::BONE => [
+                'materialType1' => MaterialType::HIDE,
+                'materialType2' => MaterialType::BONE,
+                'itemBase' => ItemBase::LIGHT_ARMOR
+            ],
+            MaterialType::BONE . ' vs ' . MaterialType::METAL => [
+                'materialType1' => MaterialType::BONE,
+                'materialType2' => MaterialType::METAL,
+                'itemBase' => ItemBase::HEAVY_ARMOR
+            ],
+            MaterialType::WOOD . ' vs ' . MaterialType::METAL => [
+                'materialType1' => MaterialType::WOOD,
+                'materialType2' => MaterialType::METAL,
+                'itemBase' => ItemBase::SHIELD
+            ],
+            MaterialType::WOOD . ' vs ' . MaterialType::BONE => [
+                'materialType1' => MaterialType::WOOD,
+                'materialType2' => MaterialType::BONE,
+                'itemBase' => ItemBase::SHIELD
+            ],
+            MaterialType::METAL . ' vs ' . MaterialType::GEMSTONE => [
+                'materialType1' => MaterialType::METAL,
+                'materialType2' => MaterialType::GEMSTONE,
+                'itemBase' => ItemBase::HEAVY_ARMOR
             ],
         ];
     }
