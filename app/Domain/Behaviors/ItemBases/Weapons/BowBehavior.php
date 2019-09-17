@@ -20,6 +20,7 @@ class BowBehavior extends WeaponBehavior
     public const BASE_DAMAGE_RAGING = 35;
 
     protected $weightModifier = 8.5;
+    protected $blockChanceModifier = .5;
 
     public function __construct(WeaponGroup $weaponGroup, TwoArmBehavior $armBehavior)
     {

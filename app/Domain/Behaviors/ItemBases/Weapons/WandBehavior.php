@@ -21,6 +21,7 @@ class WandBehavior extends WeaponBehavior
     public const BASE_DAMAGE_RAGING = 30;
 
     protected $weightModifier = 2;
+    protected $blockChanceModifier = 0;
 
     public function __construct(WeaponGroup $weaponGroup, SingleArmBehavior $armBehavior)
     {

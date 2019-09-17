@@ -21,6 +21,7 @@ class PsionicTwoHandBehavior extends WeaponBehavior
     public const BASE_DAMAGE_RAGING = 75;
 
     protected $weightModifier = 7;
+    protected $blockChanceModifier = 1.3;
 
     public function __construct(WeaponGroup $weaponGroup, TwoArmBehavior $armBehavior)
     {

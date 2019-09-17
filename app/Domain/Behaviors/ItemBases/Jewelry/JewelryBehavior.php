@@ -10,6 +10,7 @@ use App\Domain\Interfaces\UsesItems;
 abstract class JewelryBehavior extends ItemBaseBehavior
 {
     protected $protectionModifier = 0;
+    protected $blockChanceModifier = 0;
 
     public function __construct(JewelryGroup $jewelryGroup)
     {

@@ -21,6 +21,7 @@ class CrossbowBehavior extends WeaponBehavior
     public const BASE_DAMAGE_RAGING = 95;
 
     protected $weightModifier = 9;
+    protected $blockChanceModifier = 0;
 
     public function __construct(WeaponGroup $weaponGroup, TwoArmBehavior $armBehavior)
     {

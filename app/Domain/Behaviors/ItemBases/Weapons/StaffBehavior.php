@@ -21,6 +21,7 @@ class StaffBehavior extends WeaponBehavior
     public const BASE_DAMAGE_RAGING = 44;
 
     protected $weightModifier = 7.3;
+    protected $blockChanceModifier = .5;
 
     public function __construct(WeaponGroup $weaponGroup, TwoArmBehavior $armBehavior)
     {

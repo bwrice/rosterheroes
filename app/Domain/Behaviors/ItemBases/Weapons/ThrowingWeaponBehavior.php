@@ -22,6 +22,7 @@ class ThrowingWeaponBehavior extends WeaponBehavior
     public const BASE_DAMAGE_RAGING = 75;
 
     protected $weightModifier = 4;
+    protected $blockChanceModifier = 0;
 
     public function __construct(WeaponGroup $weaponGroup, SingleArmBehavior $armBehavior)
     {

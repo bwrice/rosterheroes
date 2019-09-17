@@ -10,6 +10,8 @@ use App\Domain\Interfaces\UsesItems;
 
 abstract class ArmorBehavior extends ItemBaseBehavior
 {
+    protected $blockChanceModifier = 0;
+
     public function __construct(ArmorGroup $armorGroup)
     {
         parent::__construct($armorGroup);

@@ -21,6 +21,7 @@ class PoleArmBehavior extends WeaponBehavior
     public const BASE_DAMAGE_RAGING = 30;
 
     protected $weightModifier = 9;
+    protected $blockChanceModifier = 1.7;
 
     public function __construct(WeaponGroup $weaponGroup, TwoArmBehavior $armBehavior)
     {

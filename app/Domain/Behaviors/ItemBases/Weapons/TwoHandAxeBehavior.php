@@ -21,6 +21,7 @@ class TwoHandAxeBehavior extends WeaponBehavior
     public const BASE_DAMAGE_RAGING = 9;
 
     protected $weightModifier = 15;
+    protected $blockChanceModifier = 1.5;
 
     public function __construct(WeaponGroup $weaponGroup, TwoArmBehavior $armBehavior)
     {

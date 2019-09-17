@@ -21,6 +21,7 @@ class DaggerBehavior extends WeaponBehavior
     public const BASE_DAMAGE_RAGING = 20;
 
     protected $weightModifier = 2.8;
+    protected $blockChanceModifier = 0;
 
     public function __construct(WeaponGroup $weaponGroup, SingleArmBehavior $armBehavior)
     {

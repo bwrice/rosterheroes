@@ -10,6 +10,8 @@ use App\Domain\Interfaces\UsesItems;
 
 abstract class ClothingBehavior extends ItemBaseBehavior
 {
+    protected $blockChanceModifier = 0;
+
     public function __construct(ClothingGroup $clothingGroup)
     {
         parent::__construct($clothingGroup);
