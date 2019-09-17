@@ -182,6 +182,7 @@ class Item extends EventSourcedModel implements Slottable, HasAttacks
     {
         $value = $this->itemTypeGrade()**1.5;
         $value *= $this->material->getValueModifier();
+        $value *= 1 + $this->enchantments->boostLevelSum()**.5/5;
         return (int) ceil($value);
     }
 }
