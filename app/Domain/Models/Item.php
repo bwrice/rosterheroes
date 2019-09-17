@@ -150,7 +150,7 @@ class Item extends EventSourcedModel implements Slottable, HasAttacks
 
     public function getWeight(): int
     {
-        $weight = $this->itemType->grade;
+        $weight = $this->itemTypeGrade();
         $weight *= $this->itemType->getItemBaseBehavior()->getWeightModifier();
         $weight *= $this->material->getWeightModifier();
         return (int) ceil($weight);
@@ -158,9 +158,15 @@ class Item extends EventSourcedModel implements Slottable, HasAttacks
 
     public function getProtection(): int
     {
-        $protection = $this->itemType->grade;
+        $protection = $this->itemTypeGrade();
         $protection *= $this->itemType->getItemBaseBehavior()->getProtectionModifier();
         $protection *= $this->material->getProtectionModifier();
         return (int) ceil($protection);
+    }
+
+    public function getBlockChance(): float
+    {
+        $blockChance = 1 + ($this->itemTypeGrade()**.5)/5;
+        return $blockChance;
     }
 }
