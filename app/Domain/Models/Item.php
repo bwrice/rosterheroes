@@ -159,6 +159,7 @@ class Item extends EventSourcedModel implements Slottable, HasAttacks
     public function getProtection(): int
     {
         $protection = $this->itemType->grade;
+        $protection *= $this->itemType->getItemBaseBehavior()->getProtectionModifier();
         return (int) ceil($protection);
     }
 }

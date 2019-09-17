@@ -336,5 +336,46 @@ class ItemUnitTest extends TestCase
         ];
     }
 
+    /**
+     * @test
+     * @dataProvider provides_items_of_some_item_bases_give_no_protection
+     * @param $itemBaseName
+     */
+    public function items_of_some_item_bases_give_no_protection($itemBaseName)
+    {
+        $itemType = ItemType::query()->whereHas('itemBase', function (Builder $builder) use ($itemBaseName) {
+            return $builder->where('name', '=', $itemBaseName);
+        })->inRandomOrder()->first();
+
+        $this->item->item_type_id = $itemType->id;
+        $this->item->save();
+        $protection = $this->item->fresh()->getProtection();
+
+        $this->assertEquals(0, $protection);
+    }
+
+    public function provides_items_of_some_item_bases_give_no_protection()
+    {
+        return [
+            ItemBase::SWORD => [
+                'itemBaseName' => ItemBase::SWORD
+            ],
+            ItemBase::BOW => [
+                'itemBaseName' => ItemBase::BOW
+            ],
+            ItemBase::ORB => [
+                'itemBaseName' => ItemBase::ORB
+            ],
+            ItemBase::CROWN => [
+                'itemBaseName' => ItemBase::CROWN
+            ],
+            ItemBase::RING => [
+                'itemBaseName' => ItemBase::RING
+            ],
+        ];
+    }
+
+
+
 
 }
