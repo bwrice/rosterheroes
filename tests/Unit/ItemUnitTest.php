@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Domain\Models\Enchantment;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Item;
 use App\Domain\Models\ItemBase;
@@ -11,6 +12,7 @@ use App\Domain\Models\MaterialType;
 use App\Domain\Models\MeasurableType;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Collection;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -974,6 +976,32 @@ class ItemUnitTest extends TestCase
         $highValue = $this->item->fresh()->getValue();
 
         $this->assertGreaterThan($lowValue, $highValue);
+    }
+
+    /**
+     * @test
+     */
+    public function an_items_value_increases_with_enchantments()
+    {
+        $this->assertEquals(0, $this->item->enchantments->count());
+
+        $noEnchantmentsValue = $this->item->getValue();
+        /** @var Collection $enchantmentsToAttach */
+        $enchantmentsToAttach = Enchantment::query()->inRandomOrder()->take(2)->get();
+
+        $firstEnchantment = $enchantmentsToAttach->shift();
+        $this->item->enchantments()->save($firstEnchantment);
+        $this->item = $this->item->fresh();
+        $singleEnchantmentValue = $this->item->getValue();
+
+        $this->assertGreaterThan($noEnchantmentsValue, $singleEnchantmentValue);
+
+        $secondEnchantment = $enchantmentsToAttach->shift();
+        $this->item->enchantments()->save($secondEnchantment);
+        $this->item = $this->item->fresh();
+        $multiEnchantmentValue = $this->item->getValue();
+
+        $this->assertGreaterThan($singleEnchantmentValue, $multiEnchantmentValue);
     }
 
 }
