@@ -36,4 +36,10 @@ class Material extends Model
         $protectionModifier *= $this->materialType->getProtectionModifier();
         return $protectionModifier;
     }
+
+    public function getBlockChanceModifier()
+    {
+        $blockChanceModifier = 1 + ($this->grade**.25)/5;
+        return $blockChanceModifier;
+    }
 }
