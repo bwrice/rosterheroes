@@ -20,6 +20,7 @@ abstract class ItemBaseBehavior implements ItemBaseBehaviorInterface
 
     protected $weightModifier = 1;
     protected $protectionModifier = 1;
+    protected $blockChanceModifier = 1;
 
     public function __construct(ItemGroupInterface $itemGroup)
     {
@@ -52,5 +53,10 @@ abstract class ItemBaseBehavior implements ItemBaseBehaviorInterface
     public function getProtectionModifier(): float
     {
         return $this->protectionModifier;
+    }
+
+    public function getBlockChanceModifier(): float
+    {
+        return $this->blockChanceModifier;
     }
 }

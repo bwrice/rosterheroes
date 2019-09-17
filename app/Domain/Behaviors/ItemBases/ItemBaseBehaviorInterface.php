@@ -21,4 +21,6 @@ interface ItemBaseBehaviorInterface
     public function getWeightModifier(): float;
 
     public function getProtectionModifier(): float;
+
+    public function getBlockChanceModifier(): float;
 }
