@@ -14,7 +14,7 @@ use App\Domain\Models\SlotType;
 
 class CapBehavior extends ClothingBehavior
 {
-    protected $weightMultiplier = 1;
+    protected $weightModifier = 1;
 
     public function getSlotsCount(): int
     {

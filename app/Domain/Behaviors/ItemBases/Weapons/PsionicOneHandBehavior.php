@@ -20,7 +20,7 @@ class PsionicOneHandBehavior extends WeaponBehavior
     public const SPEED_RATING = 65;
     public const BASE_DAMAGE_RAGING = 40;
 
-    protected $weightMultiplier = 3;
+    protected $weightModifier = 3;
 
     public function __construct(WeaponGroup $weaponGroup, SingleArmBehavior $armBehavior)
     {

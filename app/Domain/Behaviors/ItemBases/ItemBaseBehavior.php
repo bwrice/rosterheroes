@@ -18,7 +18,7 @@ abstract class ItemBaseBehavior implements ItemBaseBehaviorInterface
      */
     private $itemGroup;
 
-    protected $weightMultiplier = 1;
+    protected $weightModifier = 1;
 
     public function __construct(ItemGroupInterface $itemGroup)
     {
@@ -45,6 +45,6 @@ abstract class ItemBaseBehavior implements ItemBaseBehaviorInterface
 
     public function getWeightModifier(): float
     {
-        return $this->weightMultiplier;
+        return $this->weightModifier;
     }
 }

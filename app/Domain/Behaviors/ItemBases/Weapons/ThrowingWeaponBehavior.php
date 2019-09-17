@@ -21,7 +21,7 @@ class ThrowingWeaponBehavior extends WeaponBehavior
     public const SPEED_RATING = 18;
     public const BASE_DAMAGE_RAGING = 75;
 
-    protected $weightMultiplier = 4;
+    protected $weightModifier = 4;
 
     public function __construct(WeaponGroup $weaponGroup, SingleArmBehavior $armBehavior)
     {

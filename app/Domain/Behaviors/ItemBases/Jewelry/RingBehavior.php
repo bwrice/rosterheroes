@@ -14,7 +14,7 @@ use App\Domain\Models\SlotType;
 
 class RingBehavior extends JewelryBehavior
 {
-    protected $weightMultiplier = 1;
+    protected $weightModifier = 1;
 
     public function getSlotsCount(): int
     {

@@ -12,7 +12,7 @@ namespace App\Domain\Behaviors\ItemBases\Shields;
 
 class ShieldBehavior extends ShieldGroupBehavior
 {
-    protected $weightMultiplier = 24;
+    protected $weightModifier = 24;
 
     public function getSlotsCount(): int
     {

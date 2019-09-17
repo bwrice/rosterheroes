@@ -20,7 +20,7 @@ class DaggerBehavior extends WeaponBehavior
     public const SPEED_RATING = 95;
     public const BASE_DAMAGE_RAGING = 20;
 
-    protected $weightMultiplier = 2.8;
+    protected $weightModifier = 2.8;
 
     public function __construct(WeaponGroup $weaponGroup, SingleArmBehavior $armBehavior)
     {

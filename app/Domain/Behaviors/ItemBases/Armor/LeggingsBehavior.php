@@ -9,7 +9,7 @@ use App\Domain\Models\SlotType;
 
 class LeggingsBehavior extends ArmorBehavior
 {
-    protected $weightMultiplier = 3.8;
+    protected $weightModifier = 3.8;
 
     public function getSlotTypeNames(): array
     {
