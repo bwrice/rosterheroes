@@ -57,10 +57,6 @@ class SeedEnchantments extends Migration
      */
     public function down()
     {
-
-        \App\Domain\Models\Enchantment::all()->each(function(\App\Domain\Models\Enchantment $enchantment) {
-            $enchantment->measurableBoosts()->delete();
-            $enchantment->delete();
-        });
+        //
     }
 }

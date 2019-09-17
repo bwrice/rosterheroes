@@ -841,9 +841,6 @@ class SeedSpells extends Migration
      */
     public function down()
     {
-        \App\Domain\Models\Spell::all()->each(function(\App\Domain\Models\Spell $spell) {
-            $spell->measurableBoosts()->delete();
-            $spell->delete();
-        });
+        //
     }
 }
