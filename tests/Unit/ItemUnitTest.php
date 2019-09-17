@@ -328,10 +328,10 @@ class ItemUnitTest extends TestCase
                 'itemBaseName' => ItemBase::SHIELD
             ],
             ItemBase::HEAVY_ARMOR => [
-                'itemBaseName' => ItemBase::SHIELD
+                'itemBaseName' => ItemBase::HEAVY_ARMOR
             ],
             ItemBase::ROBES => [
-                'itemBaseName' => ItemBase::SHIELD
+                'itemBaseName' => ItemBase::ROBES
             ],
         ];
     }
