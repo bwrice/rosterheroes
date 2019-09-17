@@ -15,6 +15,7 @@ use App\Domain\Models\SlotType;
 class ShoesBehavior extends ClothingBehavior
 {
     protected $weightModifier = 1.8;
+    protected $protectionModifier = 1.1;
 
     public function getSlotsCount(): int
     {

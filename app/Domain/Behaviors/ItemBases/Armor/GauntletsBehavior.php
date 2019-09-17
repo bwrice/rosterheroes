@@ -15,6 +15,7 @@ use App\Domain\Models\SlotType;
 class GauntletsBehavior extends ArmorBehavior
 {
     protected $weightModifier = 2.8;
+    protected $protectionModifier = 1.75;
 
     public function getSlotsCount(): int
     {

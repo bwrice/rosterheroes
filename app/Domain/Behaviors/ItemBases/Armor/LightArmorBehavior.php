@@ -15,6 +15,7 @@ use App\Domain\Models\SlotType;
 class LightArmorBehavior extends ArmorBehavior
 {
     protected $weightModifier = 6.5;
+    protected $protectionModifier = 5.25;
 
     public function getSlotsCount(): int
     {

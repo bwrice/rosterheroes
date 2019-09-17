@@ -15,6 +15,7 @@ use App\Domain\Models\SlotType;
 class BootsBehavior extends ArmorBehavior
 {
     protected $weightModifier = 2.6;
+    protected $protectionModifier = 1.6;
 
     public function getSlotsCount(): int
     {

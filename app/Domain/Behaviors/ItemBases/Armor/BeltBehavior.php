@@ -15,6 +15,7 @@ use App\Domain\Models\SlotType;
 class BeltBehavior extends ArmorBehavior
 {
     protected $weightModifier = 2.4;
+    protected $protectionModifier = 1.5;
 
     public function getSlotsCount(): int
     {

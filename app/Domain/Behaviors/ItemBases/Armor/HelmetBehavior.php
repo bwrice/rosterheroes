@@ -15,6 +15,7 @@ use App\Domain\Models\SlotType;
 class HelmetBehavior extends ArmorBehavior
 {
     protected $weightModifier = 2.9;
+    protected $protectionModifier = 2.1;
 
     public function getSlotsCount(): int
     {
