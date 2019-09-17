@@ -29,7 +29,11 @@ class ItemResource extends JsonResource
             'material' => new MaterialResource($this->material),
             'attacks' => AttackResource::collection($this->attacks)->collection->each(function (AttackResource $attackResource) {
                 $attackResource->setHasAttacks($this->resource);
-            })
+            }),
+            'weight' => $this->getWeight(),
+            'protection' => $this->getProtection(),
+            'blockChance' => $this->getBlockChance(),
+            'value' => $this->getValue()
         ];
     }
 }
