@@ -375,6 +375,44 @@ class ItemUnitTest extends TestCase
         ];
     }
 
+    /**
+     * @test
+     * @dataProvider provides_items_with_a_higher_material_grade_give_more_protection
+     * @param $itemBaseName
+     */
+    public function items_with_a_higher_material_grade_give_more_protection($itemBaseName)
+    {
+        $itemType = ItemType::query()->whereHas('itemBase', function (Builder $builder) use ($itemBaseName) {
+            return $builder->where('name', '=', $itemBaseName);
+        })->inRandomOrder()->first();
+
+        $this->item->item_type_id = $itemType->id;
+        $this->item->save();
+        $this->item = $this->item->fresh();
+        $this->item->material->grade = 1;
+        $lowGradeMaterialProtection = $this->item->getProtection();
+
+        $this->item->material->grade = 99;
+        $highGradeMaterialProtection = $this->item->getProtection();
+
+        $this->assertGreaterThan($lowGradeMaterialProtection, $highGradeMaterialProtection);
+    }
+
+    public function provides_items_with_a_higher_material_grade_give_more_protection()
+    {
+
+        return [
+            ItemBase::SHIELD => [
+                'itemBaseName' => ItemBase::SHIELD
+            ],
+            ItemBase::HEAVY_ARMOR => [
+                'itemBaseName' => ItemBase::HEAVY_ARMOR
+            ],
+            ItemBase::ROBES => [
+                'itemBaseName' => ItemBase::ROBES
+            ],
+        ];
+    }
 
 
 
