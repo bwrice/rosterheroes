@@ -181,6 +181,7 @@ class Item extends EventSourcedModel implements Slottable, HasAttacks
     public function getValue(): int
     {
         $value = $this->itemTypeGrade()**1.5;
+        $value *= $this->material->getValueModifier();
         return (int) ceil($value);
     }
 }

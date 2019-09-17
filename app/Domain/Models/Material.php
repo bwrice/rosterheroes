@@ -42,4 +42,10 @@ class Material extends Model
         $blockChanceModifier = 1 + ($this->grade**.25)/5;
         return $blockChanceModifier;
     }
+
+    public function getValueModifier()
+    {
+        $valueModifier = 1 + ($this->grade**.5/2);
+        return $valueModifier;
+    }
 }
