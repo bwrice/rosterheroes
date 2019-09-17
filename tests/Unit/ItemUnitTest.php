@@ -569,6 +569,59 @@ class ItemUnitTest extends TestCase
         ];
     }
 
+    /**
+     * @test
+     * @dataProvider provides_higher_grade_items_have_give_higher_block_chance
+     * @param $itemBaseName
+     */
+    public function higher_grade_items_have_give_higher_block_chance($itemBaseName)
+    {
+        $itemTypes = ItemType::query()->whereHas('itemBase', function (Builder $builder) use ($itemBaseName) {
+            return $builder->where('name', '=', $itemBaseName);
+        })->orderBy('grade')->get();
+
+        /** @var ItemType $lowerGradeItemType */
+        $lowerGradeItemType = $itemTypes->shift();
+        /** @var ItemType $higherGradeItemType */
+        $higherGradeItemType = $itemTypes->shift();
+
+        $this->item->item_type_id = $lowerGradeItemType->id;
+        $this->item->save();
+        $lowerGradeBlockChance = $this->item->fresh()->getBlockChance();
+
+        $this->item->item_type_id = $higherGradeItemType->id;
+        $this->item->save();
+        $higherGradeBlockChance = $this->item->fresh()->getBlockChance();
+
+        $diff = $higherGradeBlockChance - $lowerGradeBlockChance;
+
+        $this->assertGreaterThan(PHP_FLOAT_EPSILON, $diff);
+    }
+
+    public function provides_higher_grade_items_have_give_higher_block_chance()
+    {
+        return [
+            ItemBase::SHIELD => [
+                'itemBaseName' => ItemBase::SHIELD
+            ],
+            ItemBase::PSIONIC_SHIELD => [
+                'itemBaseName' => ItemBase::PSIONIC_SHIELD
+            ],
+            ItemBase::POLE_ARM => [
+                'itemBaseName' => ItemBase::POLE_ARM
+            ],
+            ItemBase::TWO_HAND_SWORD => [
+                'itemBaseName' => ItemBase::TWO_HAND_SWORD
+            ],
+            ItemBase::TWO_HAND_AXE => [
+                'itemBaseName' => ItemBase::TWO_HAND_AXE
+            ],
+            ItemBase::STAFF => [
+                'itemBaseName' => ItemBase::STAFF
+            ],
+        ];
+    }
+
 
 
 }
