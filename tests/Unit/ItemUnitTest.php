@@ -955,4 +955,25 @@ class ItemUnitTest extends TestCase
         $this->assertGreaterThan($lowerGradeValue, $higherGradeValue);
     }
 
+    /**
+     * @test
+     */
+    public function a_higher_grade_material_increases_an_items_value()
+    {
+        $materialTypeID = MaterialType::query()->inRandomOrder()->first()->id;
+        $materials = Material::query()->where('material_type_id', '=', $materialTypeID)->orderBy('grade')->get();
+
+        $lowGradeMaterial = $materials->shift();
+        $this->item->material_id = $lowGradeMaterial->id;
+        $this->item->save();
+        $lowValue = $this->item->fresh()->getValue();
+
+        $highGradeMaterial = $materials->shift();
+        $this->item->material_id = $highGradeMaterial->id;
+        $this->item->save();
+        $highValue = $this->item->fresh()->getValue();
+
+        $this->assertGreaterThan($lowValue, $highValue);
+    }
+
 }
