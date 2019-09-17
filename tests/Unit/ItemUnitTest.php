@@ -497,6 +497,7 @@ class ItemUnitTest extends TestCase
             ],
         ];
     }
+
     /**
      * @test
      * @dataProvider provides_items_of_a_certain_item_base_give_protection
@@ -616,12 +617,226 @@ class ItemUnitTest extends TestCase
             ItemBase::TWO_HAND_AXE => [
                 'itemBaseName' => ItemBase::TWO_HAND_AXE
             ],
+            ItemBase::PSIONIC_TWO_HAND => [
+                'itemBaseName' => ItemBase::PSIONIC_TWO_HAND
+            ],
+            ItemBase::BOW => [
+                'itemBaseName' => ItemBase::BOW
+            ],
             ItemBase::STAFF => [
                 'itemBaseName' => ItemBase::STAFF
             ],
         ];
     }
 
+    /**
+     * @test
+     * @dataProvider provides_items_of_some_item_bases_give_zero_block_chance
+     * @param $itemBaseName
+     */
+    public function items_of_some_item_bases_give_zero_block_chance($itemBaseName)
+    {
+        $itemType = ItemType::query()->whereHas('itemBase', function (Builder $builder) use ($itemBaseName) {
+            return $builder->where('name', '=', $itemBaseName);
+        })->inRandomOrder()->first();
 
+        $this->item->item_type_id = $itemType->id;
+        $this->item->save();
+        $blockChance = $this->item->fresh()->getBlockChance();
+
+        $this->assertEquals(0, $blockChance);
+    }
+
+    public function provides_items_of_some_item_bases_give_zero_block_chance()
+    {
+        return [
+            ItemBase::DAGGER => [
+                'itemBaseName' => ItemBase::DAGGER
+            ],
+            ItemBase::SWORD => [
+                'itemBaseName' => ItemBase::SWORD
+            ],
+            ItemBase::AXE => [
+                'itemBaseName' => ItemBase::AXE
+            ],
+            ItemBase::MACE => [
+                'itemBaseName' => ItemBase::MACE
+            ],
+            ItemBase::PSIONIC_ONE_HAND => [
+                'itemBaseName' => ItemBase::PSIONIC_ONE_HAND
+            ],
+            ItemBase::CROSSBOW => [
+                'itemBaseName' => ItemBase::CROSSBOW
+            ],
+            ItemBase::THROWING_WEAPON => [
+                'itemBaseName' => ItemBase::THROWING_WEAPON
+            ],
+            ItemBase::WAND => [
+                'itemBaseName' => ItemBase::WAND
+            ],
+            ItemBase::ORB => [
+                'itemBaseName' => ItemBase::ORB
+            ],
+            ItemBase::HELMET => [
+                'itemBaseName' => ItemBase::HELMET
+            ],
+            ItemBase::CAP => [
+                'itemBaseName' => ItemBase::CAP
+            ],
+            ItemBase::HEAVY_ARMOR => [
+                'itemBaseName' => ItemBase::HEAVY_ARMOR
+            ],
+            ItemBase::LIGHT_ARMOR => [
+                'itemBaseName' => ItemBase::LIGHT_ARMOR
+            ],
+            ItemBase::LEGGINGS => [
+                'itemBaseName' => ItemBase::LEGGINGS
+            ],
+            ItemBase::ROBES => [
+                'itemBaseName' => ItemBase::ROBES
+            ],
+            ItemBase::GLOVES => [
+                'itemBaseName' => ItemBase::GLOVES
+            ],
+            ItemBase::GAUNTLETS => [
+                'itemBaseName' => ItemBase::GAUNTLETS
+            ],
+            ItemBase::SHOES => [
+                'itemBaseName' => ItemBase::SHOES
+            ],
+            ItemBase::BOOTS => [
+                'itemBaseName' => ItemBase::BOOTS
+            ],
+            ItemBase::BELT => [
+                'itemBaseName' => ItemBase::BELT
+            ],
+            ItemBase::SASH => [
+                'itemBaseName' => ItemBase::SASH
+            ],
+            ItemBase::NECKLACE => [
+                'itemBaseName' => ItemBase::NECKLACE
+            ],
+            ItemBase::BRACELET => [
+                'itemBaseName' => ItemBase::BRACELET
+            ],
+            ItemBase::RING => [
+                'itemBaseName' => ItemBase::RING
+            ],
+            ItemBase::CROWN => [
+                'itemBaseName' => ItemBase::CROWN
+            ],
+        ];
+    }
+
+
+    /**
+     * @test
+     * @dataProvider provides_items_with_a_higher_material_grade_give_higher_block_chance
+     * @param $itemBaseName
+     */
+    public function items_with_a_higher_material_grade_give_higher_block_chance($itemBaseName)
+    {
+        $itemType = ItemType::query()->whereHas('itemBase', function (Builder $builder) use ($itemBaseName) {
+            return $builder->where('name', '=', $itemBaseName);
+        })->inRandomOrder()->first();
+
+        $this->item->item_type_id = $itemType->id;
+        $this->item->save();
+        $this->item = $this->item->fresh();
+        $this->item->material->grade = 10;
+        $lowGradeMaterialBlockChance = $this->item->getBlockChance();
+
+        $this->item->material->grade = 99;
+        $highGradeMaterialBlockChance = $this->item->getBlockChance();
+
+        $this->assertGreaterThan($lowGradeMaterialBlockChance, $highGradeMaterialBlockChance);
+    }
+
+    public function provides_items_with_a_higher_material_grade_give_higher_block_chance()
+    {
+
+        return [
+            ItemBase::SHIELD => [
+                'itemBaseName' => ItemBase::SHIELD
+            ],
+            ItemBase::POLE_ARM => [
+                'itemBaseName' => ItemBase::POLE_ARM
+            ],
+            ItemBase::STAFF => [
+                'itemBaseName' => ItemBase::STAFF
+            ],
+            ItemBase::BOW => [
+                'itemBaseName' => ItemBase::BOW
+            ],
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider provides_items_of_a_certain_item_base_give_higher_block_chance
+     * @param $lesserBlockChanceBase
+     * @param $greaterBlockChanceBase
+     */
+    public function items_of_a_certain_item_base_give_higher_block_chance($lesserBlockChanceBase, $greaterBlockChanceBase)
+    {
+        $lessBlockChanceBase_id = ItemBase::forName($lesserBlockChanceBase)->id;
+        $greaterBlockChanceBaseBase_id = ItemBase::forName($greaterBlockChanceBase)->id;
+
+        /** @var ItemType $lessBlockChanceItemType */
+        $lessBlockChanceItemType = ItemType::query()->where('item_base_id', '=', $greaterBlockChanceBaseBase_id)->inRandomOrder()->first();
+
+        /** @var ItemType $moreBlockChanceItemType */
+        $moreBlockChanceItemType = ItemType::query()->where('item_base_id', '=', $lessBlockChanceBase_id)->inRandomOrder()->first();
+
+        $this->assertNotNull($moreBlockChanceItemType);
+
+        $this->item->item_type_id = $moreBlockChanceItemType->id;
+        $this->item->save();
+        $this->item = $this->item->fresh();
+        // Set to same grade to compare
+        $this->item->itemType->grade = 10;
+        $lesserItemTypeBlockChance = $this->item->getBlockChance();
+
+        $this->assertGreaterThan(0, $lesserItemTypeBlockChance);
+
+        $this->item->item_type_id = $lessBlockChanceItemType->id;
+        $this->item->save();
+        $this->item = $this->item->fresh();
+        $this->item->itemType->grade = 10;
+        $greaterItemTypeBlockChance = $this->item->getBlockChance();
+
+        $this->assertGreaterThan(0, $greaterItemTypeBlockChance);
+        $this->assertGreaterThan($lesserItemTypeBlockChance, $greaterItemTypeBlockChance);
+    }
+
+    public function provides_items_of_a_certain_item_base_give_higher_block_chance()
+    {
+        return [
+            ItemBase::BOW . ' vs ' . ItemBase::TWO_HAND_SWORD => [
+                'lesserBlockChanceBase' => ItemBase::BOW,
+                'greatBlockChanceBase' => ItemBase::TWO_HAND_SWORD
+            ],
+            ItemBase::STAFF . ' vs ' . ItemBase::TWO_HAND_AXE => [
+                'lesserBlockChanceBase' => ItemBase::STAFF,
+                'greatBlockChanceBase' => ItemBase::TWO_HAND_AXE
+            ],
+            ItemBase::PSIONIC_TWO_HAND . ' vs ' . ItemBase::POLE_ARM => [
+                'lesserBlockChanceBase' => ItemBase::PSIONIC_TWO_HAND,
+                'greatBlockChanceBase' => ItemBase::POLE_ARM
+            ],
+            ItemBase::POLE_ARM . ' vs ' . ItemBase::PSIONIC_SHIELD => [
+                'lesserBlockChanceBase' => ItemBase::POLE_ARM,
+                'greatBlockChanceBase' => ItemBase::PSIONIC_SHIELD
+            ],
+            ItemBase::TWO_HAND_AXE . ' vs ' . ItemBase::SHIELD => [
+                'lesserBlockChanceBase' => ItemBase::TWO_HAND_AXE,
+                'greatBlockChanceBase' => ItemBase::SHIELD
+            ],
+            ItemBase::PSIONIC_SHIELD . ' vs ' . ItemBase::SHIELD => [
+                'lesserBlockChanceBase' => ItemBase::PSIONIC_SHIELD,
+                'greatBlockChanceBase' => ItemBase::SHIELD
+            ],
+        ];
+    }
 
 }
