@@ -9,12 +9,16 @@ use App\Domain\Models\ItemType;
 use App\Domain\Models\Material;
 use App\Domain\Models\MaterialType;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ItemUnitTest extends TestCase
 {
+
+    use DatabaseTransactions;
+
     /** @var Item */
     protected $item;
 
@@ -490,6 +494,77 @@ class ItemUnitTest extends TestCase
                 'materialType1' => MaterialType::METAL,
                 'materialType2' => MaterialType::GEMSTONE,
                 'itemBase' => ItemBase::HEAVY_ARMOR
+            ],
+        ];
+    }
+    /**
+     * @test
+     * @dataProvider provides_items_of_a_certain_item_base_give_protection
+     * @param $lessProtectionBase
+     * @param $moreProtectionBase
+     */
+    public function items_of_a_certain_item_base_give_protection($lessProtectionBase, $moreProtectionBase)
+    {
+        $lessProtectionBase_id = ItemBase::forName($lessProtectionBase)->id;
+        $moreProtectionBaseBase_id = ItemBase::forName($moreProtectionBase)->id;
+
+        /** @var ItemType $lessProtectionItemType */
+        $lessProtectionItemType = ItemType::query()->where('item_base_id', '=', $moreProtectionBaseBase_id)->inRandomOrder()->first();
+
+        /** @var ItemType $moreProtectionItemType */
+        $moreProtectionItemType = ItemType::query()->where('item_base_id', '=', $lessProtectionBase_id)->inRandomOrder()->first();
+
+        $this->assertNotNull($moreProtectionItemType);
+
+        $this->item->item_type_id = $moreProtectionItemType->id;
+        $this->item->save();
+        $this->item = $this->item->fresh();
+        // Set to same grade to compare
+        $this->item->itemType->grade = 10;
+        $lessProtectionItemTypeProtection = $this->item->getProtection();
+
+        $this->assertGreaterThan(0, $lessProtectionItemTypeProtection);
+
+        $this->item->item_type_id = $lessProtectionItemType->id;
+        $this->item->save();
+        $this->item = $this->item->fresh();
+        $this->item->itemType->grade = 10;
+        $moreProtectionItemTypeProtection = $this->item->getProtection();
+
+        $this->assertGreaterThan(0, $moreProtectionItemTypeProtection);
+        $this->assertGreaterThan($lessProtectionItemTypeProtection, $moreProtectionItemTypeProtection);
+    }
+
+    public function provides_items_of_a_certain_item_base_give_protection()
+    {
+        return [
+            ItemBase::CAP . ' vs ' . ItemBase::HELMET => [
+                'lighterBase' => ItemBase::CAP,
+                'heavierBase' => ItemBase::HELMET
+            ],
+            ItemBase::LIGHT_ARMOR . ' vs ' . ItemBase::HEAVY_ARMOR => [
+                'lighterBase' => ItemBase::LIGHT_ARMOR,
+                'heavierBase' => ItemBase::HEAVY_ARMOR
+            ],
+            ItemBase::ROBES . ' vs ' . ItemBase::LIGHT_ARMOR => [
+                'lighterBase' => ItemBase::ROBES,
+                'heavierBase' => ItemBase::LIGHT_ARMOR
+            ],
+            ItemBase::SASH . ' vs ' . ItemBase::BELT => [
+                'lighterBase' => ItemBase::SASH,
+                'heavierBase' => ItemBase::BELT
+            ],
+            ItemBase::SHOES . ' vs ' . ItemBase::BOOTS => [
+                'lighterBase' => ItemBase::SHOES,
+                'heavierBase' => ItemBase::BOOTS
+            ],
+            ItemBase::GLOVES . ' vs ' . ItemBase::GAUNTLETS => [
+                'lighterBase' => ItemBase::GLOVES,
+                'heavierBase' => ItemBase::GAUNTLETS
+            ],
+            ItemBase::PSIONIC_SHIELD . ' vs ' . ItemBase::SHIELD => [
+                'lighterBase' => ItemBase::PSIONIC_SHIELD,
+                'heavierBase' => ItemBase::SHIELD
             ],
         ];
     }
