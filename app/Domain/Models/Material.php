@@ -25,14 +25,15 @@ class Material extends Model
 
     public function getWeightModifier()
     {
-        $gradeModifier = 1 + ($this->grade**.25/5);
-        $materialTypeModifier =  $this->materialType->getWeightModifier();
-        return $gradeModifier * $materialTypeModifier;
+        $weightModifier = 1 + ($this->grade**.25/5);
+        $weightModifier *=  $this->materialType->getWeightModifier();
+        return $weightModifier;
     }
 
     public function getProtectionModifier()
     {
         $protectionModifier = 1 + ($this->grade**.25/5);
+        $protectionModifier *= $this->materialType->getProtectionModifier();
         return $protectionModifier;
     }
 }
