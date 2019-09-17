@@ -28,9 +28,6 @@ class WeaponAttackUnitTest extends TestCase
     /** @var Item */
     protected $item;
 
-    /** @var UsesItems */
-    protected $usesItems;
-
     public function setUp(): void
     {
         parent::setUp();
@@ -40,24 +37,6 @@ class WeaponAttackUnitTest extends TestCase
         $anySlot = $this->hero->slots->random();
         $this->item = factory(Item::class)->create();
         $this->item->slots()->save($anySlot);
-
-        $this->usesItems = new class() implements UsesItems {
-
-            protected $measurables = [];
-
-            public function setMeasurable(string $measurableTypeName, int $value)
-            {
-                $this->measurables[$measurableTypeName] = $value;
-            }
-
-            public function getMeasurableAmount(string $measurableTypeName): int
-            {
-                if (array_key_exists($measurableTypeName, $this->measurables)) {
-                    return $this->measurables[$measurableTypeName];
-                }
-                return 0;
-            }
-        };
     }
 
     /**
