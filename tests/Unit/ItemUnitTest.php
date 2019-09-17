@@ -2,11 +2,13 @@
 
 namespace Tests\Unit;
 
+use App\Domain\Models\Hero;
 use App\Domain\Models\Item;
 use App\Domain\Models\ItemBase;
 use App\Domain\Models\ItemType;
 use App\Domain\Models\Material;
 use App\Domain\Models\MaterialType;
+use Illuminate\Database\Eloquent\Builder;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -16,10 +18,17 @@ class ItemUnitTest extends TestCase
     /** @var Item */
     protected $item;
 
+    /** @var Hero */
+    protected $hero;
+
     public function setUp(): void
     {
         parent::setUp();
         $this->item = factory(Item::class)->create();
+        $this->hero = factory(Hero::class)->states('with-slots', 'with-measurables')->create();
+        $anySlot = $this->hero->slots->random();
+        $this->item = factory(Item::class)->create();
+        $this->item->slots()->save($anySlot);
     }
 
     /**
@@ -284,4 +293,48 @@ class ItemUnitTest extends TestCase
             ]
         ];
     }
+
+    /**
+     * @test
+     * @dataProvider provides_higher_grade_items_have_give_more_protection
+     * @param $itemBaseName
+     */
+    public function higher_grade_items_have_give_more_protection($itemBaseName)
+    {
+        $itemTypes = ItemType::query()->whereHas('itemBase', function (Builder $builder) use ($itemBaseName) {
+            return $builder->where('name', '=', $itemBaseName);
+        })->orderBy('grade')->get();
+
+        /** @var ItemType $lowerGradeItemType */
+        $lowerGradeItemType = $itemTypes->shift();
+        /** @var ItemType $higherGradeItemType */
+        $higherGradeItemType = $itemTypes->shift();
+
+        $this->item->item_type_id = $lowerGradeItemType->id;
+        $this->item->save();
+        $lowerGradeProtection = $this->item->fresh()->getProtection();
+
+        $this->item->item_type_id = $higherGradeItemType->id;
+        $this->item->save();
+        $higherGradeProtection = $this->item->fresh()->getProtection();
+
+        $this->assertGreaterThan($lowerGradeProtection, $higherGradeProtection);
+    }
+
+    public function provides_higher_grade_items_have_give_more_protection()
+    {
+        return [
+            ItemBase::SHIELD => [
+                'itemBaseName' => ItemBase::SHIELD
+            ],
+            ItemBase::HEAVY_ARMOR => [
+                'itemBaseName' => ItemBase::SHIELD
+            ],
+            ItemBase::ROBES => [
+                'itemBaseName' => ItemBase::SHIELD
+            ],
+        ];
+    }
+
+
 }
