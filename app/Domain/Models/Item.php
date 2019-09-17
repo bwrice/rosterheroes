@@ -177,4 +177,10 @@ class Item extends EventSourcedModel implements Slottable, HasAttacks
         $blockChance *= $this->material->getBlockChanceModifier();
         return min(30, $blockChance);
     }
+
+    public function getValue(): int
+    {
+        $value = $this->itemTypeGrade()**1.5;
+        return (int) ceil($value);
+    }
 }
