@@ -171,6 +171,8 @@ class Item extends EventSourcedModel implements Slottable, HasAttacks
         if ($this->getUsesItems()) {
             $agilityAmount = $this->getUsesItems()->getMeasurableAmount(MeasurableType::AGILITY);
             $blockChance *= 1 + $agilityAmount**.5/50;
+            $aptitudeAmount = $this->getUsesItems()->getMeasurableAmount(MeasurableType::APTITUDE);
+            $blockChance *= 1 + $aptitudeAmount**.5/50;
         }
         $blockChance *= $this->material->getBlockChanceModifier();
         return min(30, $blockChance);
