@@ -9,6 +9,8 @@ use App\Domain\Interfaces\UsesItems;
 
 abstract class JewelryBehavior extends ItemBaseBehavior
 {
+    protected $protectionModifier = 0;
+
     public function __construct(JewelryGroup $jewelryGroup)
     {
         parent::__construct($jewelryGroup);

@@ -18,6 +18,8 @@ abstract class WeaponBehavior extends ItemBaseBehavior
      */
     private $armBehavior;
 
+    protected $protectionModifier = 0;
+
     public function __construct(WeaponGroup $weaponGroup, ArmBehaviorInterface $armBehavior)
     {
         parent::__construct($weaponGroup);
