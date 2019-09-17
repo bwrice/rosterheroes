@@ -934,4 +934,25 @@ class ItemUnitTest extends TestCase
         ];
     }
 
+    /**
+     * @test
+     */
+    public function a_higher_grade_item_has_more_value()
+    {
+        $itemBaseID = ItemBase::query()->inRandomOrder()->first()->id;
+        $itemTypes = ItemType::query()->where('item_base_id', '=', $itemBaseID)->orderBy('grade')->get();
+
+        $lowerGradeItemType = $itemTypes->shift();
+        $this->item->item_type_id = $lowerGradeItemType->id;
+        $this->item->save();
+        $lowerGradeValue = $this->item->fresh()->getValue();
+
+        $higherGradeItemType = $itemTypes->shift();
+        $this->item->item_type_id = $higherGradeItemType->id;
+        $this->item->save();
+        $higherGradeValue = $this->item->fresh()->getValue();
+
+        $this->assertGreaterThan($lowerGradeValue, $higherGradeValue);
+    }
+
 }
