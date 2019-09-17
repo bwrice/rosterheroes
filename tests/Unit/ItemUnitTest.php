@@ -8,6 +8,7 @@ use App\Domain\Models\ItemBase;
 use App\Domain\Models\ItemType;
 use App\Domain\Models\Material;
 use App\Domain\Models\MaterialType;
+use App\Domain\Models\MeasurableType;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
@@ -835,6 +836,53 @@ class ItemUnitTest extends TestCase
             ItemBase::PSIONIC_SHIELD . ' vs ' . ItemBase::SHIELD => [
                 'lesserBlockChanceBase' => ItemBase::PSIONIC_SHIELD,
                 'greatBlockChanceBase' => ItemBase::SHIELD
+            ],
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider provides_a_heroes_agility_increases_an_items_block_chance
+     * @param $itemBaseName
+     */
+    public function a_heroes_agility_increases_an_items_block_chance($itemBaseName)
+    {
+        $itemType = ItemType::query()->whereHas('itemBase', function (Builder $builder) use ($itemBaseName) {
+            return $builder->where('name', '=', $itemBaseName);
+        })->inRandomOrder()->first();
+
+        $this->item->item_type_id = $itemType->id;
+        $this->item->save();
+
+        $measurable = $this->hero->getMeasurable(MeasurableType::AGILITY);
+        $measurable->amount_raised = 0;
+        $measurable->save();
+        $this->hero = $this->hero->fresh();
+        $lowerAgilityBlockChance = $this->item->fresh()->getBlockChance();
+
+        $measurable->amount_raised = 99;
+        $measurable->save();
+        $this->hero = $this->hero->fresh();
+        $higherAgilityBlockChance = $this->item->fresh()->getBlockChance();
+
+        $this->assertGreaterThan($lowerAgilityBlockChance, $higherAgilityBlockChance);
+    }
+
+    public function provides_a_heroes_agility_increases_an_items_block_chance()
+    {
+
+        return [
+            ItemBase::SHIELD => [
+                'itemBaseName' => ItemBase::SHIELD
+            ],
+            ItemBase::POLE_ARM => [
+                'itemBaseName' => ItemBase::POLE_ARM
+            ],
+            ItemBase::STAFF => [
+                'itemBaseName' => ItemBase::STAFF
+            ],
+            ItemBase::BOW => [
+                'itemBaseName' => ItemBase::BOW
             ],
         ];
     }
