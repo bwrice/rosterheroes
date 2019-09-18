@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  * @package App\Domain\Models
  *
  * @property int $id
+ * @property string $name
  *
  * @property MeasurableBoostCollection $measurableBoosts
  */
