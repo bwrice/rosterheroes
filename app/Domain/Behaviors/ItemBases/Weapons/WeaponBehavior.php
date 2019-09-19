@@ -29,8 +29,8 @@ abstract class WeaponBehavior extends ItemBaseBehavior
     public function getSlotTypeNames(): array
     {
         return [
-            SlotType::LEFT_ARM,
-            SlotType::RIGHT_ARM
+            SlotType::OFF_ARM,
+            SlotType::PRIMARY_ARM
         ];
     }
 

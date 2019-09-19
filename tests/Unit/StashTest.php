@@ -20,7 +20,7 @@ class StashTest extends TestCase
     public function it_will_return_universal_slot_type_id_as_preferred_slot_type_id_if_available()
     {
         $universalSlotTypeID = SlotType::where('name', '=', SlotType::UNIVERSAL)->first()->id;
-        $slotTypeIDs[] = SlotType::where('name', '=', SlotType::RIGHT_ARM)->first()->id;
+        $slotTypeIDs[] = SlotType::where('name', '=', SlotType::PRIMARY_ARM)->first()->id;
         $slotTypeIDs[] = $universalSlotTypeID;
         $slotTypeIDs[] = SlotType::where('name', '=', SlotType::TORSO)->first()->id;
 
@@ -38,7 +38,7 @@ class StashTest extends TestCase
     public function it_will_still_return_a_slot_type_id_if_universal_type_is_not_available()
     {
 
-        $slotTypeIDs[] = SlotType::where('name', '=', SlotType::RIGHT_ARM)->first()->id;
+        $slotTypeIDs[] = SlotType::where('name', '=', SlotType::PRIMARY_ARM)->first()->id;
         $slotTypeIDs[] = SlotType::where('name', '=', SlotType::TORSO)->first()->id;
 
         $this->assertEquals(2, count($slotTypeIDs));

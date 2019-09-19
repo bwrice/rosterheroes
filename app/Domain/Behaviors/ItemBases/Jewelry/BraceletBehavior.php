@@ -25,8 +25,8 @@ class BraceletBehavior extends JewelryBehavior
     public function getSlotTypeNames(): array
     {
         return [
-            SlotType::LEFT_WRIST,
-            SlotType::RIGHT_WRIST
+            SlotType::OFF_WRIST,
+            SlotType::PRIMARY_WRIST
         ];
     }
 }

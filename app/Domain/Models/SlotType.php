@@ -19,8 +19,8 @@ use Illuminate\Database\Eloquent\Model;
 class SlotType extends Model
 {
 
-    public const RIGHT_ARM = 'right-arm';
-    public const LEFT_ARM = 'left-arm';
+    public const PRIMARY_ARM = 'primary-arm';
+    public const OFF_ARM = 'off-arm';
     public const HEAD = 'head';
     public const TORSO = 'torso';
     public const LEGS = 'legs';
@@ -28,10 +28,10 @@ class SlotType extends Model
     public const HANDS = 'hands';
     public const WAIST = 'waist';
     public const NECK = 'neck';
-    public const RIGHT_WRIST = 'right-wrist';
-    public const LEFT_WRIST = 'left-wrist';
-    public const RIGHT_RING = 'right-ring';
-    public const LEFT_RING = 'left-ring';
+    public const PRIMARY_WRIST = 'primary-wrist';
+    public const OFF_WRIST = 'off-wrist';
+    public const RING_ONE = 'ring-one';
+    public const RING_TWO = 'ring-two';
     public const UNIVERSAL = 'universal';
 
     protected $guarded = [];
@@ -48,12 +48,12 @@ class SlotType extends Model
             self::HEAD,
             self::TORSO,
             self::LEGS,
-            self::LEFT_ARM,
-            self::RIGHT_ARM,
-            self::LEFT_WRIST,
-            self::RIGHT_WRIST,
-            self::LEFT_RING,
-            self::RIGHT_RING,
+            self::OFF_ARM,
+            self::PRIMARY_ARM,
+            self::OFF_WRIST,
+            self::PRIMARY_WRIST,
+            self::RING_TWO,
+            self::RING_ONE,
             self::NECK,
             self::WAIST
         ]);

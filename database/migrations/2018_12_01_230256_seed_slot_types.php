@@ -22,8 +22,8 @@ class SeedSlotTypes extends ModelNameSeederMigration
     protected function getSeedNames(): array
     {
         return [
-            SlotType::RIGHT_ARM,
-            SlotType::LEFT_ARM,
+            SlotType::PRIMARY_ARM,
+            SlotType::OFF_ARM,
             SlotType::HEAD,
             SlotType::TORSO,
             SlotType::LEGS,
@@ -31,10 +31,10 @@ class SeedSlotTypes extends ModelNameSeederMigration
             SlotType::FEET,
             SlotType::WAIST,
             SlotType::NECK,
-            SlotType::RIGHT_WRIST,
-            SlotType::LEFT_WRIST,
-            SlotType::RIGHT_RING,
-            SlotType::LEFT_RING,
+            SlotType::PRIMARY_WRIST,
+            SlotType::OFF_WRIST,
+            SlotType::RING_ONE,
+            SlotType::RING_TWO,
             SlotType::UNIVERSAL
         ];
     }

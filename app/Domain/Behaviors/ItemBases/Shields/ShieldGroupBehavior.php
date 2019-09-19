@@ -18,7 +18,7 @@ abstract class ShieldGroupBehavior extends ItemBaseBehavior
     public function getSlotTypeNames(): array
     {
         return [
-            SlotType::LEFT_ARM
+            SlotType::OFF_ARM
         ];
     }
 

@@ -24,8 +24,8 @@ class RingBehavior extends JewelryBehavior
     public function getSlotTypeNames(): array
     {
         return [
-            SlotType::LEFT_RING,
-            SlotType::RIGHT_RING
+            SlotType::RING_TWO,
+            SlotType::RING_ONE
         ];
     }
 }
