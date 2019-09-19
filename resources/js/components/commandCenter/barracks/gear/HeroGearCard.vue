@@ -45,6 +45,7 @@
         },
         methods: {
             handleHeroSlotClicked({heroSlot}) {
+                console.log(heroSlot);
                 console.log("CLICKED");
             }
         },
