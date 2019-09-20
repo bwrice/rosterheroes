@@ -31,9 +31,9 @@ class ItemResource extends JsonResource
                 $attackResource->setHasAttacks($this->resource);
             }),
             'enchantments' => EnchantmentResource::collection($this->enchantments),
-            'weight' => $this->getWeight(),
+            'burden' => $this->getBurden(),
             'protection' => $this->getProtection(),
-            'blockChance' => $this->getBlockChance(),
+            'blockChance' => round($this->getBlockChance(), 2),
             'value' => $this->getValue()
         ];
     }

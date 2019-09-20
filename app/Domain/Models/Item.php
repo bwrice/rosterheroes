@@ -148,11 +148,11 @@ class Item extends EventSourcedModel implements Slottable, HasAttacks
         return $slot->hasSlots instanceof UsesItems ? $slot->hasSlots : null;
     }
 
-    public function getWeight(): int
+    public function getBurden(): int
     {
         $weight = $this->itemTypeGrade();
-        $weight *= $this->itemType->getItemBaseBehavior()->getWeightModifier();
-        $weight *= $this->material->getWeightModifier();
+        $weight *= $this->itemType->getItemBaseBehavior()->getBurdenModifier();
+        $weight *= $this->material->getBurdenModifier();
         return (int) ceil($weight);
     }
 

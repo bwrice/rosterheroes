@@ -45,7 +45,7 @@ abstract class ItemBaseBehavior implements ItemBaseBehaviorInterface
             ->toArray();
     }
 
-    public function getWeightModifier(): float
+    public function getBurdenModifier(): float
     {
         return $this->weightModifier;
     }
