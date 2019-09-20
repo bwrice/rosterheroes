@@ -4,31 +4,31 @@
 namespace App\Domain\Behaviors\TargetRanges;
 
 
-class MeleeRangeBehavior extends CombatPositionBehavior
+class BackLineBehavior extends CombatPositionBehavior
 {
 
     public function adjustCombatSpeed(float $speed): float
     {
-        return $speed;
+        return $speed/1.3;
     }
 
     public function adjustBaseDamage(float $baseDamage): float
     {
-        return $baseDamage;
+        return $baseDamage/1.3;
     }
 
     public function adjustDamageMultiplier(float $damageModifier): float
     {
-        return $damageModifier;
+        return $damageModifier/1.3;
     }
 
     public function attackerIcon(): string
     {
-        return asset('svg/icons/combatPositions/attackers/front-line.svg');
+        return asset('svg/icons/combatPositions/attackers/back-line.svg');
     }
 
     public function targetIcon(): string
     {
-        return asset('svg/icons/combatPositions/targets/front-line.svg');
+        return asset('svg/icons/combatPositions/targets/back-line.svg');
     }
 }

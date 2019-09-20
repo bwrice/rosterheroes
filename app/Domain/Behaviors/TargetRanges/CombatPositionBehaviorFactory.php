@@ -12,12 +12,12 @@ class CombatPositionBehaviorFactory
     public function getBehavior(string $combatPositionName): CombatPositionBehaviorInterface
     {
         switch ($combatPositionName) {
-            case CombatPosition::MELEE:
-                return app(MeleeRangeBehavior::class);
-            case CombatPosition::MID_RANGE:
-                return app(MidRangeBehavior::class);
-            case CombatPosition::LONG_RANGE:
-                return app(LongRangeBehavior::class);
+            case CombatPosition::FRONT_LINE:
+                return app(FrontLineBehavior::class);
+            case CombatPosition::BACK_LINE:
+                return app(BackLineBehavior::class);
+            case CombatPosition::HIGH_GROUND:
+                return app(HighGroundBehavior::class);
         }
 
         throw new UnknownBehaviorException($combatPositionName, CombatPositionBehaviorInterface::class);

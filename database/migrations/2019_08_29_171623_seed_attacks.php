@@ -22,8 +22,8 @@ class SeedAttacks extends Migration
             [
                 'name' => Attack::BASIC_BLADE_ATTACK_NAME,
                 'damage_type' => DamageType::SINGLE_TARGET,
-                'attacker_position' => CombatPosition::MELEE,
-                'target_position' => CombatPosition::MELEE,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'grade' => 5,
                 'speed_rating' => 100/12,
@@ -39,8 +39,8 @@ class SeedAttacks extends Migration
             [
                 'name' => Attack::BASIC_BOW_ATTACK_NAME,
                 'damage_type' => DamageType::SINGLE_TARGET,
-                'attacker_position' => CombatPosition::MID_RANGE,
-                'target_position' => CombatPosition::MELEE,
+                'attacker_position' => CombatPosition::BACK_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'grade' => 5,
                 'speed_rating' => 100/23,
@@ -55,8 +55,8 @@ class SeedAttacks extends Migration
             [
                 'name' => Attack::BASIC_MAGIC_ATTACK_NAME,
                 'damage_type' => DamageType::SINGLE_TARGET,
-                'attacker_position' => CombatPosition::MID_RANGE,
-                'target_position' => CombatPosition::MELEE,
+                'attacker_position' => CombatPosition::BACK_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'grade' => 5,
                 'speed_rating' => 100/18,

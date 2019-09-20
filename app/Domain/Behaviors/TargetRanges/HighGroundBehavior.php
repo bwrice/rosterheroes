@@ -4,31 +4,31 @@
 namespace App\Domain\Behaviors\TargetRanges;
 
 
-class MidRangeBehavior extends CombatPositionBehavior
+class HighGroundBehavior extends CombatPositionBehavior
 {
 
     public function adjustCombatSpeed(float $speed): float
     {
-        return $speed/1.3;
+        return $speed/1.75;
     }
 
     public function adjustBaseDamage(float $baseDamage): float
     {
-        return $baseDamage/1.3;
+        return $baseDamage/1.75;
     }
 
     public function adjustDamageMultiplier(float $damageModifier): float
     {
-        return $damageModifier/1.3;
+        return $damageModifier/1.75;
     }
 
     public function attackerIcon(): string
     {
-        return asset('svg/icons/combatPositions/attackers/back-line.svg');
+        return asset('svg/icons/combatPositions/attackers/high-ground.svg');
     }
 
     public function targetIcon(): string
     {
-        return asset('svg/icons/combatPositions/targets/back-line.svg');
+        return asset('svg/icons/combatPositions/targets/high-ground.svg');
     }
 }

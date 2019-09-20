@@ -18,9 +18,9 @@ class CombatPosition extends Model
 {
     use HasUniqueNames;
 
-    public const MELEE = 'melee';
-    public const MID_RANGE = 'mid-range';
-    public const LONG_RANGE = 'long-range';
+    public const FRONT_LINE = 'front-line';
+    public const BACK_LINE = 'back-line';
+    public const HIGH_GROUND = 'high-ground';
 
     protected $guarded = [];
 
@@ -34,6 +34,10 @@ class CombatPosition extends Model
         return $factory->getBehavior($this->name);
     }
 
+    public function getIcon($attacker = true)
+    {
+    }
+
     public function attackerIcon()
     {
         return $this->getBehavior()->attackerIcon();
@@ -44,18 +48,18 @@ class CombatPosition extends Model
         return $this->getBehavior()->targetIcon();
     }
 
-    public static function melee(): self
+    public static function frontLine(): self
     {
-        return self::forName(self::MELEE);
+        return self::forName(self::FRONT_LINE);
     }
 
-    public static function midRange(): self
+    public static function backLine(): self
     {
-        return self::forName(self::MELEE);
+        return self::forName(self::BACK_LINE);
     }
 
-    public static function longRange(): self
+    public static function highGround(): self
     {
-        return self::forName(self::MELEE);
+        return self::forName(self::HIGH_GROUND);
     }
 }

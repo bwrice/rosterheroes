@@ -29,6 +29,6 @@ class RangerBehavior extends HeroClassBehavior
 
     public function getStartingCombatPosition(): CombatPosition
     {
-        return CombatPosition::midRange();
+        return CombatPosition::backLine();
     }
 }

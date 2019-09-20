@@ -70,19 +70,19 @@ class AttackUnitTest extends TestCase
     {
         $targetRangesTested = 0;
 
-        $this->attack->attacker_position_id = CombatPosition::forName(CombatPosition::MELEE)->id;
+        $this->attack->attacker_position_id = CombatPosition::forName(CombatPosition::FRONT_LINE)->id;
         $this->attack->save();
         $meleeSpeed = $this->attack->fresh()->getCombatSpeed();
         $targetRangesTested++;
 
-        $this->attack->attacker_position_id = CombatPosition::forName(CombatPosition::MID_RANGE)->id;
+        $this->attack->attacker_position_id = CombatPosition::forName(CombatPosition::BACK_LINE)->id;
         $this->attack->save();
         $midRangeSpeed = $this->attack->fresh()->getCombatSpeed();
         $targetRangesTested++;
 
         $this->assertGreaterThan($midRangeSpeed, $meleeSpeed);
 
-        $this->attack->attacker_position_id = CombatPosition::forName(CombatPosition::LONG_RANGE)->id;
+        $this->attack->attacker_position_id = CombatPosition::forName(CombatPosition::HIGH_GROUND)->id;
         $this->attack->save();
         $longRangeSpeed = $this->attack->fresh()->getCombatSpeed();
         $targetRangesTested++;
@@ -135,19 +135,19 @@ class AttackUnitTest extends TestCase
     {
         $targetRangesTested = 0;
 
-        $this->attack->attacker_position_id = CombatPosition::forName(CombatPosition::MELEE)->id;
+        $this->attack->attacker_position_id = CombatPosition::forName(CombatPosition::FRONT_LINE)->id;
         $this->attack->save();
         $meleeBaseDamage = $this->attack->fresh()->getBaseDamage();
         $targetRangesTested++;
 
-        $this->attack->attacker_position_id = CombatPosition::forName(CombatPosition::MID_RANGE)->id;
+        $this->attack->attacker_position_id = CombatPosition::forName(CombatPosition::BACK_LINE)->id;
         $this->attack->save();
         $midRangeBaseDamage = $this->attack->fresh()->getBaseDamage();
         $targetRangesTested++;
 
         $this->assertGreaterThan($midRangeBaseDamage, $meleeBaseDamage);
 
-        $this->attack->attacker_position_id = CombatPosition::forName(CombatPosition::LONG_RANGE)->id;
+        $this->attack->attacker_position_id = CombatPosition::forName(CombatPosition::HIGH_GROUND)->id;
         $this->attack->save();
         $longRangeBaseDamage = $this->attack->fresh()->getBaseDamage();
         $targetRangesTested++;
@@ -200,19 +200,19 @@ class AttackUnitTest extends TestCase
     {
         $targetRangesTested = 0;
 
-        $this->attack->attacker_position_id = CombatPosition::forName(CombatPosition::MELEE)->id;
+        $this->attack->attacker_position_id = CombatPosition::forName(CombatPosition::FRONT_LINE)->id;
         $this->attack->save();
         $meleeAttackModifier = $this->attack->fresh()->getDamageMultiplier();
         $targetRangesTested++;
 
-        $this->attack->attacker_position_id = CombatPosition::forName(CombatPosition::MID_RANGE)->id;
+        $this->attack->attacker_position_id = CombatPosition::forName(CombatPosition::BACK_LINE)->id;
         $this->attack->save();
         $midRangeAttackModifier = $this->attack->fresh()->getDamageMultiplier();
         $targetRangesTested++;
 
         $this->assertGreaterThan($midRangeAttackModifier, $meleeAttackModifier);
 
-        $this->attack->attacker_position_id = CombatPosition::forName(CombatPosition::LONG_RANGE)->id;
+        $this->attack->attacker_position_id = CombatPosition::forName(CombatPosition::HIGH_GROUND)->id;
         $this->attack->save();
         $longRangeAttackModifier = $this->attack->fresh()->getDamageMultiplier();
         $targetRangesTested++;

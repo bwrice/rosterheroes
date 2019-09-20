@@ -13,9 +13,9 @@ class SeedCombatPosition extends ModelNameSeederMigration
     public function getSeedNames(): array
     {
         return [
-            CombatPosition::MELEE,
-            CombatPosition::MID_RANGE,
-            CombatPosition::LONG_RANGE
+            CombatPosition::FRONT_LINE,
+            CombatPosition::BACK_LINE,
+            CombatPosition::HIGH_GROUND
         ];
     }
 }

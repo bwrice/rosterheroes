@@ -30,6 +30,6 @@ class WarriorBehavior extends HeroClassBehavior
 
     public function getStartingCombatPosition(): CombatPosition
     {
-        return CombatPosition::melee();
+        return CombatPosition::frontLine();
     }
 }
