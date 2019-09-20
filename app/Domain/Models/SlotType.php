@@ -58,4 +58,17 @@ class SlotType extends Model
             self::WAIST
         ]);
     }
+
+    public function getDisplayName()
+    {
+        // TODO refactor into SlotType behaviors
+        switch($this->name) {
+            case self::OFF_ARM:
+                return 'Off-Arm';
+            case self::OFF_WRIST:
+                return 'Off-Wrist';
+            default:
+                return ucwords(str_replace('-', ' ', $this->name));
+        }
+    }
 }

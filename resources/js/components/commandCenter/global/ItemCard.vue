@@ -1,7 +1,7 @@
 <template>
     <v-row>
         <v-col cols="3"></v-col>
-        <v-col cols="5">
+        <v-col cols="6">
             <p>{{item.name}}</p>
         </v-col>
         <v-col cols="4"></v-col>
@@ -10,7 +10,7 @@
 
 <script>
     export default {
-        name: "ItemPanel",
+        name: "ItemCard",
         props: {
             item: {
                 type: Object,

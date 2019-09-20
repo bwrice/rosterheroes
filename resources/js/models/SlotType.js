@@ -1,6 +1,7 @@
 
 export default class SlotType {
-    constructor({name = ''}) {
+    constructor({name = '', displayName}) {
         this.name = name;
+        this.displayName = displayName
     }
 }

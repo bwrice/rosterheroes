@@ -14,7 +14,7 @@
                 <v-row>
                     <v-col cols="12">
                         <v-card>
-                            <v-card-title>{{focusedHeroSlot.slotType.name}}</v-card-title>
+                            <v-card-title>{{focusedHeroSlot.slotType.displayName}}</v-card-title>
                             <v-card-text>
                                 <ItemPanel v-if="focusedHeroSlot.item" :item="focusedHeroSlot.item"></ItemPanel>
                                 <h3 v-else>(EMPTY)</h3>
@@ -34,7 +34,7 @@
     import {barracksHeroMixin} from "../../../../mixins/barracksHeroMixin";
 
     import HeroGearSVG from "./HeroGearSVG";
-    import ItemPanel from "../../global/ItemPanel";
+    import ItemPanel from "../../global/ItemCard";
 
     export default {
         name: "HeroGearCard",
