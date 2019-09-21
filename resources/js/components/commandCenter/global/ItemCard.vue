@@ -1,5 +1,5 @@
 <template>
-    <v-card>
+    <v-card color="rgba(255, 255, 255, 0.1)">
         <v-card-text>
             <v-row>
                 <h3>{{item.name}}</h3>
@@ -22,10 +22,8 @@
                 </v-col>
             </v-row>
             <v-row>
-                <v-col cols="12">
-                    <h4>Attacks:</h4>
-                    <AttackPanel v-for="attack in item.attacks" v-bind:key="attack.name" :attack="attack"></AttackPanel>
-                </v-col>
+                <h4>Attacks:</h4>
+                <AttackPanel v-for="attack in item.attacks" v-bind:key="attack.name" :attack="attack"></AttackPanel>
             </v-row>
         </v-card-text>
     </v-card>

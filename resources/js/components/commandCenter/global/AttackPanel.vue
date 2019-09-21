@@ -11,12 +11,17 @@
                     </v-col>
                 </v-row>
                 <v-row>
-                    <v-col cols="12">
+                    <v-col cols="12" class="py-1 caption">
                         Resource Costs:
+                        <ul>
+                            <li v-for="resourceCost in attack.resourceCosts">
+                                {{resourceCost.description}}
+                            </li>
+                        </ul>
                     </v-col>
                 </v-row>
                 <v-row>
-                    <v-col cols="12">
+                    <v-col cols="12" class="py-1 caption">
                         Requirements: (none)
                     </v-col>
                 </v-row>
