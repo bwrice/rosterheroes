@@ -22,13 +22,18 @@ class BackLineBehavior extends CombatPositionBehavior
         return $damageModifier/1.3;
     }
 
-    public function attackerIcon(): string
+    public function attackerIconSrc(): string
     {
         return asset('svg/icons/combatPositions/attackers/back-line.svg');
     }
 
-    public function targetIcon(): string
+    public function targetIconSrc(): string
     {
         return asset('svg/icons/combatPositions/targets/back-line.svg');
+    }
+
+    public function getIconAlt(): string
+    {
+        return 'Back Line Combat Position';
     }
 }

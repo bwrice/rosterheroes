@@ -22,13 +22,18 @@ class FrontLineBehavior extends CombatPositionBehavior
         return $damageModifier;
     }
 
-    public function attackerIcon(): string
+    public function attackerIconSrc(): string
     {
         return asset('svg/icons/combatPositions/attackers/front-line.svg');
     }
 
-    public function targetIcon(): string
+    public function targetIconSrc(): string
     {
         return asset('svg/icons/combatPositions/targets/front-line.svg');
+    }
+
+    public function getIconAlt(): string
+    {
+        return 'Front Line Combat Position';
     }
 }

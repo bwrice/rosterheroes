@@ -36,16 +36,7 @@ class CombatPosition extends Model
 
     public function getIcon($attacker = true)
     {
-    }
-
-    public function attackerIcon()
-    {
-        return $this->getBehavior()->attackerIcon();
-    }
-
-    public function targetIcon()
-    {
-        return $this->getBehavior()->targetIcon();
+        return $this->getBehavior()->getIcon($attacker);
     }
 
     public static function frontLine(): self

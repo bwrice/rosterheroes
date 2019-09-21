@@ -22,13 +22,18 @@ class HighGroundBehavior extends CombatPositionBehavior
         return $damageModifier/1.75;
     }
 
-    public function attackerIcon(): string
+    public function attackerIconSrc(): string
     {
         return asset('svg/icons/combatPositions/attackers/high-ground.svg');
     }
 
-    public function targetIcon(): string
+    public function targetIconSrc(): string
     {
         return asset('svg/icons/combatPositions/targets/high-ground.svg');
+    }
+
+    public function getIconAlt(): string
+    {
+        return 'High Ground Combat Position';
     }
 }
