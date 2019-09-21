@@ -13,6 +13,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
  */
 class CombatPositionResource extends JsonResource
 {
+    protected $attacker = true;
+
     /**
      * Transform the resource into an array.
      *
@@ -23,8 +25,17 @@ class CombatPositionResource extends JsonResource
     {
         return [
             'name' => $this->name,
-            'attacker_icon' => $this->attackerIcon(),
-            'target_icon' => $this->targetIcon()
+            'icon' => $this->getIcon($this->attacker)
         ];
+    }
+
+    /**
+     * @param bool $attacker
+     * @return CombatPositionResource
+     */
+    public function setAttacker(bool $attacker): CombatPositionResource
+    {
+        $this->attacker = $attacker;
+        return $this;
     }
 }
