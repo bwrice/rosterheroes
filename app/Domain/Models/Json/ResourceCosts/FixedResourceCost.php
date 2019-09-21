@@ -21,6 +21,6 @@ class FixedResourceCost extends ResourceCost
 
     public function getDescription(): string
     {
-        return $this->amount . ' ' . $this->resourceName;
+        return $this->amount . ' ' . ucwords($this->resourceName);
     }
 }

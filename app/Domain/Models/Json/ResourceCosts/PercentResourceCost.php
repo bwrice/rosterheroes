@@ -21,6 +21,6 @@ class PercentResourceCost extends ResourceCost
 
     public function getDescription(): string
     {
-        return $this->percent . '% of available ' . $this->resourceName;
+        return $this->percent . '% of available ' . ucwords($this->resourceName);
     }
 }
