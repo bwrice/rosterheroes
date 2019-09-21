@@ -1,6 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0,0,320,320">
-    <rect x="0" y="0" rx="20" ry="20" width="320" height="320" fill="#383838"/>
     <path d="M120,290 A1,1 0 0,0 120,30" fill="#808080"/>
     <path d="M120,260 A1,1 0 0,0 120,60" fill="#808080" stroke="#383838"/>
-    <path d="M120,220 A1,1 0 0,0 120,100" fill="#00ffd1" stroke="#fff"/>
+    <path d="M120,220 A1,1 0 0,0 120,100" fill="#fc4c1c" stroke="#fff"/>
 </svg>
