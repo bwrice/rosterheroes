@@ -13,7 +13,9 @@ export default class Attack {
                     attackerPosition,
                     targetPosition,
                     damageType,
-                    targetPriority
+                    targetPriority,
+                    resourceCosts = [],
+                    requirements = [],
                 }) {
 
         this.name = name;
@@ -25,5 +27,7 @@ export default class Attack {
         this.targetPosition = new CombatPosition(targetPosition);
         this.damageType = new DamageType(damageType);
         this.targetPriority = new TargetPriority(targetPriority);
+        this.resourceCosts = resourceCosts;
+        this.requirments = requirements;
     }
 }
