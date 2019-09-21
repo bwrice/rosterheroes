@@ -1,9 +1,32 @@
 <template>
     <v-sheet>
         <v-row>
-            <v-col cols="2"></v-col>
-            <v-col cols="6">{{attack.name}}</v-col>
+            <v-col cols="8">
+                <v-row>
+                    <v-col cols="4">
+                        ✔
+                    </v-col>
+                    <v-col cols="8">
+                        {{attack.name}}
+                    </v-col>
+                </v-row>
+                <v-row>
+                    <v-col cols="12">
+                        Resource Costs:
+                    </v-col>
+                </v-row>
+                <v-row>
+                    <v-col cols="12">
+                        Requirements: (none)
+                    </v-col>
+                </v-row>
+            </v-col>
             <v-col cols="4">
+                <v-row>
+                    <v-col cols="12">
+                        Speed: {{attack.combatSpeed}}
+                    </v-col>
+                </v-row>
                 <v-row>
                     <v-col cols="6" class="pa-0">
                         <v-img
