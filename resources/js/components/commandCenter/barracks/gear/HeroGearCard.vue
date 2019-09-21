@@ -10,19 +10,13 @@
         <v-dialog
             v-model="heroGearDialog"
             max-width="600">
-            <v-container>
-                <v-row>
-                    <v-col cols="12">
-                        <v-card>
-                            <v-card-title>{{focusedHeroSlot.slotType.displayName}}</v-card-title>
-                            <v-card-text>
-                                <ItemPanel v-if="focusedHeroSlot.item" :item="focusedHeroSlot.item"></ItemPanel>
-                                <h3 v-else>(EMPTY)</h3>
-                            </v-card-text>
-                        </v-card>
-                    </v-col>
-                </v-row>
-            </v-container>
+            <v-card>
+                <v-card-title>{{focusedHeroSlot.slotType.displayName}}</v-card-title>
+                <v-card-text>
+                    <ItemPanel v-if="focusedHeroSlot.item" :item="focusedHeroSlot.item"></ItemPanel>
+                    <h3 v-else>(EMPTY)</h3>
+                </v-card-text>
+            </v-card>
         </v-dialog>
     </v-card>
 </template>
