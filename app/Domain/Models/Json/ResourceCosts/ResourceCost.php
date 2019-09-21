@@ -8,6 +8,9 @@ use Illuminate\Contracts\Support\Arrayable;
 
 abstract class ResourceCost implements Arrayable
 {
+    public const FIXED = 'fixed';
+    public const PERCENT_AVAILABLE = 'percent-available';
+
     /**
      * @var string
      */

@@ -2,11 +2,13 @@
 
 namespace App\Domain\Models;
 
-use App\Domain\Behaviors\Attacks\AttackBehavior;
-use App\Domain\Behaviors\Attacks\AttackBehaviorFactory;
 use App\Domain\Collections\AttackCollection;
 use App\Domain\Collections\ItemCollection;
+use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Interfaces\HasAttacks;
+use App\Domain\Models\Json\ResourceCosts\FixedResourceCost;
+use App\Domain\Models\Json\ResourceCosts\PercentResourceCost;
+use App\Domain\Models\Json\ResourceCosts\ResourceCost;
 use App\Domain\QueryBuilders\AttackQueryBuilder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -22,6 +24,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property float $speed_rating
  * @property float $base_damage_rating
  * @property float $damage_modifier_rating
+ * @property string $resource_costs
  *
  * @property DamageType $damageType
  * @property CombatPosition $attackerPosition
@@ -125,5 +128,22 @@ class Attack extends Model
             $damageMultiplier = $hasAttacks->adjustDamageMultiplier($damageMultiplier);
         }
         return $damageMultiplier;
+    }
+
+    public function getResourceCosts()
+    {
+        $resourceCostsArray = json_decode($this->resource_costs, true);
+
+        $resourceCosts = array_map(function ($resourceCostArray) {
+            switch ($resourceCostArray['type']) {
+                case ResourceCost::FIXED:
+                    return new FixedResourceCost($resourceCostArray['resource'], $resourceCostArray['amount']);
+                case ResourceCost::PERCENT_AVAILABLE:
+                    return new PercentResourceCost($resourceCostArray['resource'], $resourceCostArray['percent']);
+            }
+            throw new \RuntimeException("Unknown type for Resource Cost: " . $resourceCostArray['type']);
+        }, $resourceCostsArray);
+
+        return new ResourceCostsCollection($resourceCosts);
     }
 }

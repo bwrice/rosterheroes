@@ -36,7 +36,8 @@ class AttackResource extends JsonResource
             'grade' => $this->grade,
             'base_damage' => $this->getBaseDamage($this->hasAttacks),
             'damage_multiplier' => $this->getDamageMultiplier($this->hasAttacks),
-            'combat_speed' => $this->getCombatSpeed($this->hasAttacks)
+            'combat_speed' => round($this->getCombatSpeed($this->hasAttacks), 2),
+            'resourceCosts' => $this->getResourceCosts()
         ];
     }
 
