@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Domain\Models\ResourceCosts;
+namespace App\Domain\Models\Json\ResourceCosts;
 
 
 use Illuminate\Contracts\Support\Arrayable;

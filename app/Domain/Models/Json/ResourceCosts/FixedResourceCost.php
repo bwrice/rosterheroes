@@ -1,8 +1,10 @@
 <?php
 
 
-namespace App\Domain\Models\ResourceCosts;
+namespace App\Domain\Models\Json\ResourceCosts;
 
+
+use App\Domain\Models\Json\ResourceCosts\ResourceCost;
 
 class FixedResourceCost extends ResourceCost
 {
