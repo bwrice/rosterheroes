@@ -2,9 +2,9 @@
     <v-card>
         <v-card-text>
             <v-row>
-                <h4>{{item.name}}</h4>
+                <h3>{{item.name}}</h3>
             </v-row>
-            <v-row>
+            <v-row class="py-0 my-0">
                 <v-col cols="6">
                     <p class="caption">
                         Type: {{item.itemType.name}} <br>
@@ -21,15 +21,23 @@
                     </p>
                 </v-col>
             </v-row>
+            <v-row>
+                <v-col cols="12">
+                    <h4>Attacks:</h4>
+                    <AttackPanel v-for="attack in item.attacks" v-bind:key="attack.name" :attack="attack"></AttackPanel>
+                </v-col>
+            </v-row>
         </v-card-text>
     </v-card>
 </template>
 
 <script>
     import Item from "../../../models/Item";
+    import AttackPanel from "./AttackPanel";
 
     export default {
         name: "ItemCard",
+        components: {AttackPanel},
         props: {
             item: {
                 type: Item,
