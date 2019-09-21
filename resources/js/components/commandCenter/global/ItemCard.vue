@@ -1,8 +1,10 @@
 <template>
-    <v-card color="rgba(255, 255, 255, 0.1)">
+    <v-sheet color="rgba(255, 255, 255, 0.1)">
         <v-card-text>
             <v-row>
-                <h3>{{item.name}}</h3>
+                <v-col cols="12">
+                    <h3>{{item.name}}</h3>
+                </v-col>
             </v-row>
             <v-row class="py-0 my-0">
                 <v-col cols="6">
@@ -22,11 +24,13 @@
                 </v-col>
             </v-row>
             <v-row>
-                <h4>Attacks:</h4>
-                <AttackPanel v-for="attack in item.attacks" v-bind:key="attack.name" :attack="attack"></AttackPanel>
+                <v-col cols="12">
+                    <h4>Attacks:</h4>
+                    <AttackPanel v-for="attack in item.attacks" v-bind:key="attack.name" :attack="attack"></AttackPanel>
+                </v-col>
             </v-row>
         </v-card-text>
-    </v-card>
+    </v-sheet>
 </template>
 
 <script>
