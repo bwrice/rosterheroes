@@ -3,6 +3,8 @@
 use App\Domain\Models\Attack;
 use App\Domain\Models\DamageType;
 use App\Domain\Models\ItemBase;
+use App\Domain\Models\Json\ResourceCosts\ResourceCost;
+use App\Domain\Models\MeasurableType;
 use App\Domain\Models\TargetPriority;
 use App\Domain\Models\CombatPosition;
 use Illuminate\Support\Facades\Schema;
@@ -33,7 +35,13 @@ class SeedAttacks extends Migration
                     ItemBase::SWORD,
                     ItemBase::DAGGER
                 ],
-                'resource_costs' => [],
+                'resource_costs' => [
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::STAMINA,
+                        'amount' => 3
+                    ]
+                ],
                 'requirements' => []
             ],
             [
@@ -49,7 +57,13 @@ class SeedAttacks extends Migration
                 'item_bases' => [
                     ItemBase::BOW,
                 ],
-                'resource_costs' => [],
+                'resource_costs' => [
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::STAMINA,
+                        'amount' => 5
+                    ]
+                ],
                 'requirements' => []
             ],
             [
@@ -67,7 +81,18 @@ class SeedAttacks extends Migration
                     ItemBase::WAND,
                     ItemBase::ORB
                 ],
-                'resource_costs' => [],
+                'resource_costs' => [
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::STAMINA,
+                        'amount' => 2
+                    ],
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::MANA,
+                        'amount' => 1
+                    ]
+                ],
                 'requirements' => []
             ],
         ];
