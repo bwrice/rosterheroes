@@ -29,6 +29,12 @@
                     <AttackPanel v-for="attack in item.attacks" v-bind:key="attack.name" :attack="attack"></AttackPanel>
                 </v-col>
             </v-row>
+            <v-row class="no-gutters">
+                <v-col cols="12" class="px-1">
+                    <h4>Enchantments:</h4>
+                    <EnchantmentSheet v-for="enchantment in item.enchantments" v-bind:key="enchantment.name" :enchantment="enchantment"></EnchantmentSheet>
+                </v-col>
+            </v-row>
         </v-card-text>
     </v-sheet>
 </template>
@@ -36,10 +42,11 @@
 <script>
     import Item from "../../../models/Item";
     import AttackPanel from "./AttackPanel";
+    import EnchantmentSheet from "./EnchantmentSheet";
 
     export default {
         name: "ItemCard",
-        components: {AttackPanel},
+        components: {EnchantmentSheet, AttackPanel},
         props: {
             item: {
                 type: Item,
