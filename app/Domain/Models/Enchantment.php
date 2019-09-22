@@ -39,11 +39,6 @@ class Enchantment extends Model implements BoostsMeasurables
         return $this->measurableBoosts->boostLevelSum();
     }
 
-//    public function getBoostAmount(int $boostLevel, MeasurableType $measurableType): int
-//    {
-//        return $boostLevel * $measurableType->getBehavior()->getEnchantmentBoostMultiplier();
-//    }
-
     public function getAttributeBoostMultiplier(): int
     {
         return 1;

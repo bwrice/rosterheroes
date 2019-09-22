@@ -28,12 +28,15 @@ class MeasurableBoost extends Model
         return $this->belongsTo(MeasurableType::class);
     }
 
-    public function getBoostAmount(BoostsMeasurables $boostsMeasurables): int
+    public function getBoostAmount(BoostsMeasurables $boostsMeasurables = null): int
     {
+        if (! $boostsMeasurables) {
+            return $this->boost_level;
+        }
         return $this->boost_level * $this->measurableType->getBehavior()->getBoostMultiplier($boostsMeasurables);
     }
 
-    public function getDescription(BoostsMeasurables $boostsMeasurables): string
+    public function getDescription(BoostsMeasurables $boostsMeasurables = null): string
     {
         $boostAmount = $this->getBoostAmount($boostsMeasurables);
         return "+" . $boostAmount . " " . ucwords($this->measurableType->name);

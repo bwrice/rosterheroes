@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Domain\Interfaces\BoostsMeasurables;
 use App\Domain\Models\MeasurableBoost;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -13,6 +14,9 @@ use Illuminate\Http\Resources\Json\JsonResource;
  */
 class MeasurableBoostResource extends JsonResource
 {
+    /** @var BoostsMeasurables */
+    protected $boostsMeasurables;
+
     /**
      * Transform the resource into an array.
      *
@@ -23,7 +27,19 @@ class MeasurableBoostResource extends JsonResource
     {
         return [
             'measurableType' => new MeasurableTypeResource($this->measurableType),
-            'boost_level' => $this->boost_level
+            'boost_level' => $this->boost_level,
+            'boostAmount' => $this->getBoostAmount($this->boostsMeasurables),
+            'description' => $this->getDescription($this->boostsMeasurables)
         ];
+    }
+
+    /**
+     * @param BoostsMeasurables $boostsMeasurables
+     * @return MeasurableBoostResource
+     */
+    public function setBoostsMeasurables(BoostsMeasurables $boostsMeasurables): MeasurableBoostResource
+    {
+        $this->boostsMeasurables = $boostsMeasurables;
+        return $this;
     }
 }
