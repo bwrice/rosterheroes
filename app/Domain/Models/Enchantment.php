@@ -2,8 +2,10 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Behaviors\MeasurableTypes\Qualities\QualityBehavior;
 use App\Domain\Collections\EnchantmentCollection;
 use App\Domain\Collections\MeasurableBoostCollection;
+use App\Domain\Interfaces\BoostsMeasurables;
 use App\Domain\Models\MeasurableBoost;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,7 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property MeasurableBoostCollection $measurableBoosts
  */
-class Enchantment extends Model
+class Enchantment extends Model implements BoostsMeasurables
 {
     const RELATION_MORPH_MAP_KEY = 'enchantments';
 
@@ -35,5 +37,10 @@ class Enchantment extends Model
     public function boostLevelSum()
     {
         return $this->measurableBoosts->boostLevelSum();
+    }
+
+    public function getBoostAmount(int $boostLevel, MeasurableType $measurableType): int
+    {
+        return $boostLevel * $measurableType->getBehavior()->getEnchantmentBoostMultiplier();
     }
 }

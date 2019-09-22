@@ -3,6 +3,7 @@
 namespace App\Domain\Models;
 
 use App\Domain\Collections\MeasurableBoostCollection;
+use App\Domain\Interfaces\BoostsMeasurables;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -25,5 +26,10 @@ class MeasurableBoost extends Model
     public function measurableType()
     {
         return $this->belongsTo(MeasurableType::class);
+    }
+
+    public function getBoostAmount(BoostsMeasurables $boostsMeasurables): int
+    {
+        return $boostsMeasurables->getBoostAmount($this->boost_level, $this->measurableType);
     }
 }
