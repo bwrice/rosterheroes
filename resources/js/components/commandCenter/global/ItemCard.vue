@@ -1,6 +1,6 @@
 <template>
     <v-sheet color="rgba(255, 255, 255, 0.1)">
-        <v-card-text>
+        <v-card-text class="pa-1">
             <v-row>
                 <v-col cols="12">
                     <h3>{{item.name}}</h3>
@@ -23,8 +23,8 @@
                     </p>
                 </v-col>
             </v-row>
-            <v-row>
-                <v-col cols="12">
+            <v-row class="no-gutters">
+                <v-col cols="12" class="px-1">
                     <h4>Attacks:</h4>
                     <AttackPanel v-for="attack in item.attacks" v-bind:key="attack.name" :attack="attack"></AttackPanel>
                 </v-col>

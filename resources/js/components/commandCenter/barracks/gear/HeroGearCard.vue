@@ -12,7 +12,7 @@
             max-width="600">
             <v-card>
                 <v-card-title>{{focusedHeroSlot.slotType.displayName}}</v-card-title>
-                <v-card-text>
+                <v-card-text class="pa-2">
                     <ItemPanel v-if="focusedHeroSlot.item" :item="focusedHeroSlot.item"></ItemPanel>
                     <h3 v-else>(EMPTY)</h3>
                 </v-card-text>
