@@ -25,6 +25,7 @@ class FillSlotsWithItemAction
      */
     public function execute(HasSlots $hasSlots, Item $item, $secondAttempt = false)
     {
+        $item->getSlots()->emptySlottables();
         $slotTypeIDs = $item->getSlotTypeIDs();
         $slotsNeededCount = $item->getSlotsCount();
         $emptySlots = $hasSlots->getEmptySlots($slotsNeededCount, $slotTypeIDs);

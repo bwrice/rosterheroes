@@ -8,7 +8,6 @@ use App\Domain\Models\Slot;
 use App\Exceptions\EmptySlotException;
 use App\Exceptions\FillSlotException;
 
-//TODO decide if needed or delete
 class EmptySlotAction
 {
     /**
@@ -38,8 +37,8 @@ class EmptySlotAction
 
         $hasSlots = $slot->hasSlots;
         $backup = $hasSlots->getBackupHasSlots();
-        if ($backup) {
-            throw new EmptySlotException($slot, 'Cannot empty without a backup', EmptySlotException::NO_BACKUP_EXCEPTION);
+        if (! $backup) {
+            throw new EmptySlotException($slot, 'Cannot empty slot without a backup', EmptySlotException::NO_BACKUP_EXCEPTION);
         }
 
         $this->fillSlotsWithItemAction->execute($backup, $item);
