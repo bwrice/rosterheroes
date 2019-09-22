@@ -32,4 +32,10 @@ class MeasurableBoost extends Model
     {
         return $this->boost_level * $this->measurableType->getBehavior()->getBoostMultiplier($boostsMeasurables);
     }
+
+    public function getDescription(BoostsMeasurables $boostsMeasurables): string
+    {
+        $boostAmount = $this->getBoostAmount($boostsMeasurables);
+        return "+" . $boostAmount . " " . ucwords($this->measurableType->name);
+    }
 }
