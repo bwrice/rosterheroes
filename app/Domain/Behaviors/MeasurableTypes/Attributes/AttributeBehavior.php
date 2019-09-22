@@ -7,6 +7,9 @@ use App\Domain\Behaviors\MeasurableTypes\MeasurableTypeBehavior;
 
 abstract class AttributeBehavior extends MeasurableTypeBehavior
 {
+
+    public const GROUP_NAME = 'attribute';
+
     public function getBaseAmount(): int
     {
         return 20;
@@ -19,6 +22,11 @@ abstract class AttributeBehavior extends MeasurableTypeBehavior
 
     public function getMeasurableGroup(): string
     {
-        return 'attribute';
+        return self::GROUP_NAME;
+    }
+
+    public function getEnchantmentBoostMultiplier(): int
+    {
+        return 1;
     }
 }

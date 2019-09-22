@@ -7,6 +7,8 @@ use App\Domain\Behaviors\MeasurableTypes\MeasurableTypeBehavior;
 
 abstract class ResourceBehavior extends MeasurableTypeBehavior
 {
+    public const GROUP_NAME = 'resource';
+
     public function getMeasurableImportanceWeight(): float
     {
         return .125;
@@ -14,6 +16,11 @@ abstract class ResourceBehavior extends MeasurableTypeBehavior
 
     public function getMeasurableGroup(): string
     {
-        return 'resource';
+        return self::GROUP_NAME;
+    }
+
+    public function getEnchantmentBoostMultiplier(): int
+    {
+        return 4;
     }
 }
