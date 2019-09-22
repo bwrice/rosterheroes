@@ -3,6 +3,7 @@
 namespace App\Domain\Models;
 
 use App\Domain\Collections\SlotCollection;
+use App\Domain\Interfaces\HasSlots;
 use App\Domain\Interfaces\Slottable;
 use App\Domain\Models\Item;
 use App\Domain\Models\SlotType;
@@ -20,7 +21,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $has_slots_type
  *
  * @property Item|null $item
- * @property \App\Domain\Models\SlotType $slotType
+ * @property SlotType $slotType
+ * @property HasSlots $hasSlots
  */
 class Slot extends Model
 {
