@@ -30,6 +30,6 @@ class MeasurableBoost extends Model
 
     public function getBoostAmount(BoostsMeasurables $boostsMeasurables): int
     {
-        return $boostsMeasurables->getBoostAmount($this->boost_level, $this->measurableType);
+        return $this->boost_level * $this->measurableType->getBehavior()->getBoostMultiplier($boostsMeasurables);
     }
 }

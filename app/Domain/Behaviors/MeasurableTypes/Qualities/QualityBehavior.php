@@ -4,6 +4,7 @@
 namespace App\Domain\Behaviors\MeasurableTypes\Qualities;
 
 use App\Domain\Behaviors\MeasurableTypes\MeasurableTypeBehavior;
+use App\Domain\Interfaces\BoostsMeasurables;
 
 abstract class QualityBehavior extends MeasurableTypeBehavior
 {
@@ -24,8 +25,8 @@ abstract class QualityBehavior extends MeasurableTypeBehavior
         return self::GROUP_NAME;
     }
 
-    public function getEnchantmentBoostMultiplier(): int
+    public function getBoostMultiplier(BoostsMeasurables $boostsMeasurables): int
     {
-        return 2;
+        return $boostsMeasurables->getQualityBoostMultiplier();
     }
 }

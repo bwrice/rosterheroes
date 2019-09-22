@@ -4,6 +4,7 @@
 namespace App\Domain\Behaviors\MeasurableTypes\Resources;
 
 use App\Domain\Behaviors\MeasurableTypes\MeasurableTypeBehavior;
+use App\Domain\Interfaces\BoostsMeasurables;
 
 abstract class ResourceBehavior extends MeasurableTypeBehavior
 {
@@ -19,8 +20,8 @@ abstract class ResourceBehavior extends MeasurableTypeBehavior
         return self::GROUP_NAME;
     }
 
-    public function getEnchantmentBoostMultiplier(): int
+    public function getBoostMultiplier(BoostsMeasurables $boostsMeasurables): int
     {
-        return 4;
+        return $boostsMeasurables->getResourceBoostMultiplier();
     }
 }
