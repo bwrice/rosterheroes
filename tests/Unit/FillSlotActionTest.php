@@ -13,8 +13,10 @@ use App\Domain\Models\ItemType;
 use App\Domain\Models\Slot;
 use App\Domain\Collections\SlotCollection;
 use App\Domain\Actions\FillSlotsWithItemAction;
+use App\Domain\Models\SlotType;
 use App\Domain\Models\Squad;
 use App\Domain\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -426,5 +428,121 @@ class FillSlotActionTest extends TestCase
                 'secondItemBase' => ItemBase::CROSSBOW
             ]
         ];
+    }
+
+    /**
+     * @test
+     */
+    public function the_item_transaction_collection_will_have_the_expected_items()
+    {
+        /*
+         * Attach a two-hand sword to hero
+         */
+        $twoHandSwordType = ItemType::query()->whereHas('itemBase', function (Builder $builder) {
+            return $builder->where('name', '=', ItemBase::TWO_HAND_SWORD);
+        })->first();
+
+        /** @var Item $twoHandSword */
+        $twoHandSword = factory(Item::class)->create([
+            'item_type_id' => $twoHandSwordType->id
+        ]);
+
+        $heroSlots = $this->hero->slots->filter(function (Slot $slot) {
+            return in_array($slot->slotType->name, [
+                SlotType::PRIMARY_ARM,
+                SlotType::OFF_ARM
+            ]);
+        });
+
+        $this->assertEquals(2, $heroSlots->count());
+        $twoHandSword->slots()->saveMany($heroSlots);
+
+        /*
+         * Delete all but two squad slots and fill them with items
+         */
+        $squad = $this->hero->getSquad();
+        $squadSlotsCount = $squad->slots->count();
+        $squad->slots()->take($squadSlotsCount - 2)->delete();
+        $squadSlots = $squad->fresh()->slots;
+        $this->assertEquals(2, $squadSlots->count());
+
+        $beltType = ItemType::query()->whereHas('itemBase', function (Builder $builder) {
+            return $builder->where('name', '=', ItemBase::BELT);
+        })->first();
+
+        /** @var Item $belt */
+        $belt = factory(Item::class)->create([
+            'item_type_id' => $beltType->id
+        ]);
+
+        $ringType = ItemType::query()->whereHas('itemBase', function (Builder $builder) {
+            return $builder->where('name', '=', ItemBase::SHOES);
+        })->first();
+
+        /** @var Item $ring */
+        $ring = factory(Item::class)->create([
+            'item_type_id' => $ringType->id
+        ]);
+
+        /** @var Slot $firstSquadSlot */
+        $firstSquadSlot = $squadSlots->shift();
+        $firstSquadSlot->item_id = $belt->id;
+        $firstSquadSlot->save();
+
+        /** @var Slot $firstSquadSlot */
+        $secondSquadSlot = $squadSlots->shift();
+        $secondSquadSlot->item_id = $ring->id;
+        $secondSquadSlot->save();
+
+        /*
+         * Create a dagger to attach to replace two-hand sword on hero
+         */
+        $daggerType = ItemType::query()->whereHas('itemBase', function (Builder $builder) {
+            return $builder->where('name', '=', ItemBase::DAGGER);
+        })->first();
+
+        /** @var Item $dagger */
+        $dagger = factory(Item::class)->create([
+            'item_type_id' => $daggerType->id
+        ]);
+
+        $transaction = $this->domainAction->execute($this->hero->fresh(), $dagger);
+
+        $squad = $squad->fresh();
+
+        // A stash should have been created
+        $stash = $squad->getLocalStash();
+        $this->assertNotNull($stash);
+
+        // two-hand sword should be attached to squad
+        $twoHandSwordSlots = $twoHandSword->fresh()->slots;
+        $this->assertEquals(2, $twoHandSwordSlots->count());
+        $twoHandSwordSlots->each(function (Slot $slot) use ($squad) {
+            $this->assertEquals($slot->has_slots_id, $squad->id);
+        });
+
+        // belt should be attached to stash
+        $beltSlots = $belt->fresh()->slots;
+        $this->assertEquals(1, $beltSlots->count());
+        $this->assertEquals($stash->id, $beltSlots->first()->has_slots_id);
+
+        // ring should be attached to stash
+        $ringSlots = $ring->fresh()->slots;
+        $this->assertEquals(1, $ringSlots->count());
+        $this->assertEquals($stash->id, $ringSlots->first()->has_slots_id);
+
+        // dagger should be attached to hero
+        $daggerSlots = $dagger->fresh()->slots;
+        $this->assertEquals(1, $daggerSlots->count());
+        $this->assertEquals($this->hero->id, $daggerSlots->first()->has_slots_id);
+
+        // The item transaction has all of our items involved and no dupes
+        $this->assertEquals(4, $transaction->count());
+        $transaction = $transaction->fresh()->load(['itemType', 'slots.hasSlots']);
+
+        $match = $transaction->first(function (Item $item) use ($dagger) {
+            return $item->uuid == $dagger->uuid;
+        });
+        $this->assertNotNull($match);
     }
 }
