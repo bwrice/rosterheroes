@@ -9,6 +9,7 @@
 namespace App\Domain\Actions;
 
 
+use App\Domain\Collections\ItemCollection;
 use App\Domain\Interfaces\HasSlots;
 use App\Domain\Interfaces\Slottable;
 use App\Domain\Models\Item;
@@ -21,10 +22,13 @@ class FillSlotsWithItemAction
      * @param HasSlots $hasSlots
      * @param Item $item
      * @param bool $secondAttempt
+     * @param ItemCollection|null $transaction
+     * @return ItemCollection
      * @throws FillSlotException
      */
-    public function execute(HasSlots $hasSlots, Item $item, $secondAttempt = false)
+    public function execute(HasSlots $hasSlots, Item $item, $secondAttempt = false, ItemCollection $transaction = null): ItemCollection
     {
+        $transaction = $transaction ?: new ItemCollection();
         $item->getSlots()->emptySlottables();
         $slotTypeIDs = $item->getSlotTypeIDs();
         $slotsNeededCount = $item->getSlotsCount();
@@ -52,15 +56,17 @@ class FillSlotsWithItemAction
             $items->getSlots()->emptySlottables();
 
             // Re-slot the slottables that were removed
-            $items->each(function (Item $item) use ($backup) {
-                $this->execute($backup, $item, false);
+            $items->each(function (Item $item) use ($backup, $transaction) {
+                $transaction->merge($this->execute($backup, $item, false, $transaction));
             });
 
             //Now try to slot the original slottable again
-            $this->execute($hasSlots->getFresh(), $item, true);
+            $transaction->merge($this->execute($hasSlots->getFresh(), $item, true, $transaction));
         } else {
             $slots = $emptySlots->take($slotsNeededCount);
             $item->slots()->saveMany($slots);
+            $transaction->push($item->fresh());
         }
+        return $transaction;
     }
 }
