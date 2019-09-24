@@ -24,7 +24,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property WagonSize $wagonSize
  * @property SlotCollection $slots
  */
-class Wagon extends Model implements HasSlots
+//TODO Delete?
+class Wagon extends Model
 {
     const RELATION_MORPH_MAP_KEY = 'wagons';
 

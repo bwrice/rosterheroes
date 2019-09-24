@@ -109,4 +109,9 @@ class Stash extends Model implements HasSlots
     {
         return $this->slots;
     }
+
+    public function getUniqueIdentifier(): string
+    {
+        // TODO: Implement getUniqueIdentifier() method.
+    }
 }

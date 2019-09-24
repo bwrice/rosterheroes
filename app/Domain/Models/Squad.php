@@ -183,7 +183,9 @@ class Squad extends EventSourcedModel implements HasSlots, TravelsBorders
         return $this->belongsTo(User::class);
     }
 
-
+    /**
+     * @return Stash
+     */
     public function getLocalStash()
     {
         return $this->stashes()->firstOrCreate([
@@ -390,5 +392,10 @@ class Squad extends EventSourcedModel implements HasSlots, TravelsBorders
         $this->getAggregate()
             ->updateLocation($this->province_id, $newLocation->id)
             ->persist();
+    }
+
+    public function getUniqueIdentifier(): string
+    {
+        return $this->uuid;
     }
 }

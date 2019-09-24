@@ -11,7 +11,7 @@ namespace App\Domain\Interfaces;
 
 use App\Domain\Collections\SlotCollection;
 
-interface HasSlots
+interface HasSlots extends HasUniqueIdentifier
 {
     /**
      * @param int $count

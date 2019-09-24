@@ -71,4 +71,9 @@ class StoreHouse extends Model implements HasSlots
     {
         // TODO: Implement getSlots() method.
     }
+
+    public function getUniqueIdentifier(): string
+    {
+        // TODO: Implement getUniqueIdentifier() method.
+    }
 }

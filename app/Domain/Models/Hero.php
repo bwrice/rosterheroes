@@ -257,4 +257,9 @@ class Hero extends EventSourcedModel implements HasSlots, RaisesMeasurables, Use
         $measurable = $this->getMeasurable($measurableTypeName);
         return $this->getCurrentMeasurableAmount($measurable);
     }
+
+    public function getUniqueIdentifier(): string
+    {
+        return $this->uuid;
+    }
 }
