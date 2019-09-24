@@ -14,6 +14,6 @@ class WagonBehavior extends MobileStorageRankBehavior
 
     public function getSlotsCount()
     {
-        return 80;
+        return 50;
     }
 }

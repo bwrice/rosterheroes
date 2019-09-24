@@ -8,6 +8,6 @@ class DepotBehavior extends StoreHouseBehavior
 {
     public function __construct()
     {
-        $this->getTotalSlotsCount = 500;
+        $this->getTotalSlotsCount = 300;
     }
 }
