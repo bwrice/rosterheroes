@@ -6,9 +6,11 @@ namespace App\Domain\Actions;
 
 use App\Domain\Models\Hero;
 use App\Domain\Models\Slot;
+use App\Domain\Support\SlotTransaction;
 use App\Exceptions\SlottingException;
+use Illuminate\Support\Collection;
 
-class EmptyHeroSlot
+class EmptyHeroSlotAction
 {
     /**
      * @var SlotItemInSquad
@@ -23,8 +25,10 @@ class EmptyHeroSlot
     /**
      * @param Slot $slot
      * @param Hero $hero
+     * @param Collection|null $slotTransactions
+     * @return Collection
      */
-    public function execute(Slot $slot, Hero $hero)
+    public function execute(Slot $slot, Hero $hero, Collection $slotTransactions = null)
     {
         if ($slot->hasSlots->getUniqueIdentifier() != $hero->getUniqueIdentifier()) {
             throw new SlottingException($slot, $hero, "Slot does not belong to Hero", SlottingException::CODE_INVALID_OWNERSHIP);
@@ -43,6 +47,11 @@ class EmptyHeroSlot
         $filledSlots = $hero->slots->filledWithItem($item);
         $filledSlots->emptyItems();
 
+        $transaction = new SlotTransaction($filledSlots, $hero, $item, SlotTransaction::TYPE_EMPTY);
+        $slotTransactions->push($transaction);
+
         $this->slotItemInSquadAction->execute($squad, $item);
+
+        return $slotTransactions;
     }
 }
