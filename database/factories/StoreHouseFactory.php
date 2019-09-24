@@ -15,3 +15,7 @@ $factory->define(\App\Domain\Models\StoreHouse::class, function (Faker $faker) {
         'province_id' => $squad->province_id
     ];
 });
+
+$factory->afterCreatingState(\App\Domain\Models\StoreHouse::class, 'with-slots', function (\App\Domain\Models\StoreHouse $storeHouse, $faker) {
+    $storeHouse->addSlots();
+});
