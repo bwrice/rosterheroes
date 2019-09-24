@@ -9,7 +9,7 @@ use App\Domain\Models\Hero;
 use App\Domain\Models\Slot;
 use Throwable;
 
-class HeroSlottingException extends \RuntimeException
+class SlottingException extends \RuntimeException
 {
 
     public const CODE_DOESNT_BELONG = 1;
