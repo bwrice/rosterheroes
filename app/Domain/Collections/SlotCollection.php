@@ -8,6 +8,7 @@
 
 namespace App\Domain\Collections;
 
+use App\Domain\Models\Item;
 use App\Domain\Models\Slot;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -60,11 +61,22 @@ class SlotCollection extends Collection
     /**
      * @return SlotCollection
      */
-    public function emptySlottables()
+    public function emptyItems()
     {
         return $this->each(function (Slot $slot) {
             $slot->item_id = null;
             $slot->save();
+        });
+    }
+
+    /**
+     * @param Item $item
+     * @return SlotCollection
+     */
+    public function filledWithItem(Item $item)
+    {
+        return $this->filter(function (Slot $slot) use ($item) {
+            return $slot->item_id === $item->id;
         });
     }
 }
