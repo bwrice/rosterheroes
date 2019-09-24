@@ -183,6 +183,10 @@ class SlotItemInSquadTest extends TestCase
         $this->itemTwo->save();
         $this->itemTwo = $this->itemTwo->fresh();
 
+        $this->itemThree->item_type_id = $itemType->id;
+        $this->itemThree->save();
+        $this->itemThree = $this->itemThree->fresh();
+
         $squadSlotsCount = $this->squad->slots()->count();
         $this->squad->slots()->take($squadSlotsCount - $this->item->getSlotsCount())->delete();
 
@@ -211,6 +215,73 @@ class SlotItemInSquadTest extends TestCase
             $hasSlots = $slot->hasSlots;
             $this->assertInstanceOf(StoreHouse::class, $hasSlots);
             $this->assertEquals($slot->has_slots_id, $this->storeHouse->id);
+        });
+
+        $localStash = $this->squad->getLocalStash();
+
+        $this->itemThree = $this->itemThree->fresh();
+        $filledSlots = $this->itemThree->slots;
+        $this->assertEquals($this->itemThree->getSlotsCount(), $filledSlots->count());
+        $filledSlots->each(function (Slot $slot) use ($localStash) {
+            $hasSlots = $slot->hasSlots;
+            $this->assertInstanceOf(Stash::class, $hasSlots);
+            $this->assertEquals($slot->has_slots_id, $localStash->id);
+        });
+    }
+
+
+    /**
+     * @test
+     */
+    public function it_will_not_create_a_duplicate_stash()
+    {
+        // move the store-house so it's not local to the squad
+        $squadProvinceID = $this->squad->province_id;
+        $newStoreHouseProvinceID = $squadProvinceID > 1 ? $squadProvinceID - 1 : $squadProvinceID + 1;
+        $this->storeHouse->province_id = $newStoreHouseProvinceID;
+        $this->storeHouse->save();
+
+        $itemType = ItemType::query()->inRandomOrder()->first();
+
+        $this->item->item_type_id = $itemType->id;
+        $this->item->save();
+        $this->item = $this->item->fresh();
+
+        $this->itemTwo->item_type_id = $itemType->id;
+        $this->itemTwo->save();
+        $this->itemTwo = $this->itemTwo->fresh();
+
+        $this->itemThree->item_type_id = $itemType->id;
+        $this->itemThree->save();
+        $this->itemThree = $this->itemThree->fresh();
+
+        $squadSlotsCount = $this->squad->slots()->count();
+        $this->squad->slots()->take($squadSlotsCount - $this->item->getSlotsCount())->delete();
+
+        $this->domainAction->execute($this->squad, $this->item);
+        $this->squad = $this->squad->fresh();
+        $this->domainAction->execute($this->squad, $this->itemTwo);
+        $this->squad = $this->squad->fresh();
+        $this->domainAction->execute($this->squad, $this->itemThree);
+
+        $this->item = $this->item->fresh();
+        $filledSlots = $this->item->slots;
+        $this->assertEquals($this->item->getSlotsCount(), $filledSlots->count());
+        $filledSlots->each(function (Slot $slot) {
+            $hasSlots = $slot->hasSlots;
+            $this->assertInstanceOf(Squad::class, $hasSlots);
+            $this->assertEquals($slot->has_slots_id, $this->squad->id);
+        });
+
+        $localStash = $this->squad->getLocalStash();
+
+        $this->itemTwo = $this->itemTwo->fresh();
+        $filledSlots = $this->itemTwo->slots;
+        $this->assertEquals($this->itemTwo->getSlotsCount(), $filledSlots->count());
+        $filledSlots->each(function (Slot $slot) use ($localStash) {
+            $hasSlots = $slot->hasSlots;
+            $this->assertInstanceOf(Stash::class, $hasSlots);
+            $this->assertEquals($slot->has_slots_id, $localStash->id);
         });
 
         $localStash = $this->squad->getLocalStash();
