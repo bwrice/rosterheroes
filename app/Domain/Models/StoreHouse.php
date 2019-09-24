@@ -3,9 +3,6 @@
 namespace App\Domain\Models;
 
 use App\Domain\Interfaces\HasSlots;
-use App\Domain\Models\Province;
-use App\Domain\Models\Squad;
-use App\Domain\Models\Slot;
 use App\Domain\Collections\SlotCollection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,9 +11,13 @@ use Illuminate\Database\Eloquent\Model;
  * @package App
  *
  * @property int $id
+ * @property int $province_id
  *
  * @property Squad $squad
  * @property Province $province
+ * @property StoreHouseType $storeHouseType
+ *
+ * @property SlotCollection $slots
  */
 class StoreHouse extends Model implements HasSlots
 {
@@ -34,7 +35,12 @@ class StoreHouse extends Model implements HasSlots
 
     public function slots()
     {
-        return $this->hasMany(Slot::class);
+        return $this->morphMany(Slot::class, 'has_slots');
+    }
+
+    public function storeHouseType()
+    {
+        return $this->belongsTo(StoreHouseType::class);
     }
 
     /**
@@ -75,5 +81,23 @@ class StoreHouse extends Model implements HasSlots
     public function getUniqueIdentifier(): string
     {
         // TODO: Implement getUniqueIdentifier() method.
+    }
+
+    public function addSlots()
+    {
+        // TODO: refactor this and similar method on Squad to use same logic
+        $slotsNeededCount = $this->storeHouseType->getBehavior()->getGetTotalSlotsCount();
+        $currentSlotsCount = $this->slots()->count();
+        $diff = $slotsNeededCount - $currentSlotsCount;
+
+        if($diff > 0) {
+            /** @var SlotType $slotType */
+            $slotType = SlotType::where('name', '=', SlotType::UNIVERSAL)->first();
+            for($i = 1; $i <= $diff; $i++) {
+                $this->slots()->create([
+                    'slot_type_id' => $slotType->id
+                ]);
+            }
+        }
     }
 }
