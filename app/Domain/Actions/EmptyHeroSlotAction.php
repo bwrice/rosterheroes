@@ -51,7 +51,7 @@ class EmptyHeroSlotAction
         $transaction = new SlotTransaction($filledSlots, $hero, $item, SlotTransaction::TYPE_EMPTY);
         $slotTransactions->push($transaction);
 
-        $this->slotItemInSquadAction->execute($squad, $item);
+        $slotTransactions = $this->slotItemInSquadAction->execute($squad, $item, $slotTransactions);
 
         return $slotTransactions;
     }

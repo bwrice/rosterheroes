@@ -6,11 +6,13 @@ namespace App\Domain\Actions;
 
 use App\Domain\Models\Item;
 use App\Domain\Models\Squad;
+use Illuminate\Support\Collection;
 
 class SlotItemInSquad
 {
-    public function execute(Squad $squad, Item $item)
+    public function execute(Squad $squad, Item $item, Collection $slotTransactions = null)
     {
+        $slotTransactions = $slotTransactions ?: collect();
         $slotsNeeded = $item->getSlotsCount();
         $emptySquadSlots = $squad->slots->slotEmpty();
         if ($emptySquadSlots->count() >= $slotsNeeded) {
@@ -28,6 +30,7 @@ class SlotItemInSquad
             $slotsToFill = $stash->getEmptySlots($slotsNeeded);
             $item->slots()->saveMany($slotsToFill);
         }
+        return $slotTransactions;
     }
 
     /**
