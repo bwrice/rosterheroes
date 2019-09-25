@@ -21,8 +21,8 @@
                         </v-sheet>
                     </v-col>
                 </v-row>
-                <v-row>
-                    <v-col cols="12" class="py-1 caption">
+                <v-row no-gutters>
+                    <v-col cols="12" class="py-1 px-3 caption">
                         Resource Costs:
                         <ul>
                             <li v-for="resourceCost in attack.resourceCosts">
@@ -31,8 +31,8 @@
                         </ul>
                     </v-col>
                 </v-row>
-                <v-row>
-                    <v-col cols="12" class="py-1 caption">
+                <v-row no-gutters>
+                    <v-col cols="12" class="py-1 px-3 caption">
                         Requirements: (none)
                     </v-col>
                 </v-row>
