@@ -70,12 +70,20 @@ Route::prefix('v1')->group(function () {
         Route::post('/squad/{squadSlug}/heroes', [SquadHeroController::class, 'store']);
         Route::post('/squad/{squadSlug}/campaigns', [SquadCampaignController::class, 'store']);
 
-        Route::get('/heroes/{heroSlug}', [HeroController::class, 'show']);
+        Route::prefix('heroes')->group(function () {
+            /*
+             * HEROES
+             *
+             * 'api/v1/heroes'
+             */
 
-        Route::post('/heroes/{heroSlug}/player-spirit/{playerSpiritUuid}', [HeroPlayerSpiritController::class, 'store']);
-        Route::delete('/heroes/{heroSlug}/player-spirit/{playerSpiritUuid}', [HeroPlayerSpiritController::class, 'delete']);
+            Route::get('/{heroSlug}', [HeroController::class, 'show']);
 
-        Route::post('/heroes/{heroSlug}/empty-slots', EmptyHeroSlotsController::class);
+            Route::post('/{heroSlug}/player-spirit/{playerSpiritUuid}', [HeroPlayerSpiritController::class, 'store']);
+            Route::delete('/{heroSlug}/player-spirit/{playerSpiritUuid}', [HeroPlayerSpiritController::class, 'delete']);
+
+            Route::post('/{heroSlug}/empty-slots', EmptyHeroSlotsController::class);
+        });
 
         Route::post('/campaign/{campaign}/quest/{questUuid}', [CampaignQuestController::class, 'store']);
 
