@@ -156,7 +156,7 @@ class Hero extends EventSourcedModel implements HasSlots, RaisesMeasurables, Use
      */
     public function getEmptySlots(int $count, array $slotTypeIDs = []): SlotCollection
     {
-        return $this->slots->slotEmpty()->withSlotTypes($slotTypeIDs);
+        return $this->slots->slotEmpty()->withSlotTypes($slotTypeIDs)->take($count);
     }
 
     /**
