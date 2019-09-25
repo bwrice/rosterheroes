@@ -1,7 +1,7 @@
 import Model from './Model'
 import PlayerSpirit from "./PlayerSpirit";
 
-export default class Hero extends Model {
+export default class HeroModel extends Model {
 
     resource() {
         return 'heroes';
