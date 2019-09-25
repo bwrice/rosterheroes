@@ -4,8 +4,11 @@
 namespace App\Domain\Actions;
 
 
+use App\Domain\Collections\SlotCollection;
+use App\Domain\Interfaces\HasSlots;
 use App\Domain\Models\Item;
 use App\Domain\Models\Squad;
+use App\Domain\Support\SlotTransaction;
 use Illuminate\Support\Collection;
 
 class SlotItemInSquad
@@ -14,40 +17,59 @@ class SlotItemInSquad
     {
         $slotTransactions = $slotTransactions ?: collect();
         $slotsNeeded = $item->getSlotsCount();
-        $emptySquadSlots = $squad->slots->slotEmpty();
-        if ($emptySquadSlots->count() >= $slotsNeeded) {
-            // Squad
-            $slotsToFill = $emptySquadSlots->take($slotsNeeded);
-            $item->slots()->saveMany($slotsToFill);
-        } elseif ($this->storeHouseHasEnoughSlots($squad, $slotsNeeded)) {
-            // StoreHouse
-            $localStoreHouse = $squad->getLocalStoreHouse();
-            $emptyStoreHouseSlots = $localStoreHouse->slots->slotEmpty()->take($slotsNeeded);
-            $item->slots()->saveMany($emptyStoreHouseSlots);
-        } else {
-            // Stash
-            $stash = $squad->getLocalStash();
-            $slotsToFill = $stash->getEmptySlots($slotsNeeded);
-            $item->slots()->saveMany($slotsToFill);
+
+        $squadSlots = $this->getSquadSlots($squad, $slotsNeeded);
+        if ($squadSlots) {
+            return $this->addTransaction($slotTransactions, $item, $squad, $squadSlots);
         }
+
+        $storeHouseSlots = $this->getStoreHouseSlots($squad, $slotsNeeded);
+        if ($storeHouseSlots) {
+            return $this->addTransaction($slotTransactions, $item, $squad->getLocalStoreHouse(), $storeHouseSlots);
+        }
+
+        $stash = $squad->getLocalStash();
+        $stashSlots = $stash->getEmptySlots($slotsNeeded);
+        return $this->addTransaction($slotTransactions, $item, $stash, $stashSlots);
+    }
+
+    protected function addTransaction(Collection $slotTransactions, Item $item, HasSlots $hasSlots, SlotCollection $slotsToFill)
+    {
+        $item->slots()->saveMany($slotsToFill);
+        $transaction = new SlotTransaction($slotsToFill->fresh(), $hasSlots, $item->fresh(), SlotTransaction::TYPE_FILL);
+        $slotTransactions->push($transaction);
         return $slotTransactions;
     }
 
     /**
      * @param Squad $squad
      * @param int $slotsNeeded
-     * @return bool
+     * @return SlotCollection|null
      */
-    protected function storeHouseHasEnoughSlots(Squad $squad, int $slotsNeeded)
+    protected function getSquadSlots(Squad $squad, int $slotsNeeded)
+    {
+        $emptySquadSlots = $squad->slots->slotEmpty();
+        if ($emptySquadSlots->count() < $slotsNeeded) {
+            return null;
+        }
+        return $emptySquadSlots->take($slotsNeeded);
+    }
+
+    /**
+     * @param Squad $squad
+     * @param int $slotsNeeded
+     * @return SlotCollection|null
+     */
+    protected function getStoreHouseSlots(Squad $squad, int $slotsNeeded)
     {
         $localStoreHouse = $squad->getLocalStoreHouse();
         if (! $localStoreHouse) {
-            return false;
+            return null;
         }
         $emptyStoreHouseSlots = $localStoreHouse->slots->slotEmpty();
         if ($emptyStoreHouseSlots->count() < $slotsNeeded) {
-            return false;
+            return null;
         }
-        return true;
+        return $emptyStoreHouseSlots->take($slotsNeeded);
     }
 }

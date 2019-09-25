@@ -12,8 +12,9 @@ use Throwable;
 class SlottingException extends \RuntimeException
 {
 
-    public const CODE_DOESNT_BELONG = 1;
+    public const CODE_INVALID_OWNERSHIP = 1;
     public const CODE_ALREADY_EMPTY = 2;
+    public const CODE_NO_BACKUP = 3;
 
     /**
      * @var Slot
