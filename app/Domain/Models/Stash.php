@@ -9,6 +9,7 @@ use App\Domain\Models\Squad;
 use App\Domain\Models\Slot;
 use App\Domain\Collections\SlotCollection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 /**
  * Class Stash
@@ -62,6 +63,7 @@ class Stash extends Model implements HasSlots
 
             for ($i = 1; $i <= $count; $i++) {
                 $slotCollection = $slotCollection->push($this->slots()->create([
+                    'uuid' => Str::uuid(),
                     'slot_type_id' => $slotTypeID
                 ]));
             }

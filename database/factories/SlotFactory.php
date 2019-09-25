@@ -8,6 +8,7 @@ $factory->define(\App\Domain\Models\Slot::class, function (Faker $faker) {
     $slotType = \App\Domain\Models\SlotType::heroTypes()->first();
     $hero = factory(\App\Domain\Models\Hero::class)->create();
     return [
+        'uuid' => \Illuminate\Support\Str::uuid(),
         'slot_type_id' => $slotType->id,
         'has_slots_type' => \App\Domain\Models\Hero::RELATION_MORPH_MAP_KEY, // 'heroes'
         'has_slots_id' => $hero->id

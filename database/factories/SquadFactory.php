@@ -6,7 +6,7 @@ $factory->define(\App\Domain\Models\Squad::class, function (Faker $faker) {
 
     return [
         'user_id' => factory(\App\Domain\Models\User::class)->create()->id,
-        'uuid' => (string) \Ramsey\Uuid\Uuid::uuid4(),
+        'uuid' => \Illuminate\Support\Str::uuid(),
         'province_id' => \App\Domain\Models\Province::getStarting()->id,
         'squad_rank_id' => \App\Domain\Models\SquadRank::getStarting()->id,
         'mobile_storage_rank_id' => \App\Domain\Models\MobileStorageRank::getStarting()->id,

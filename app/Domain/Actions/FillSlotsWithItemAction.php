@@ -29,7 +29,7 @@ class FillSlotsWithItemAction
     public function execute(HasSlots $hasSlots, Item $item, $secondAttempt = false, ItemCollection $transaction = null): ItemCollection
     {
         $transaction = $transaction ?: new ItemCollection();
-        $item->getSlots()->emptySlottables();
+        $item->getSlots()->emptyItems();
         $slotTypeIDs = $item->getSlotTypeIDs();
         $slotsNeededCount = $item->getSlotsCount();
         $emptySlots = $hasSlots->getEmptySlots($slotsNeededCount, $slotTypeIDs);
@@ -53,7 +53,7 @@ class FillSlotsWithItemAction
             // Get slots we need to remove from their slots to make space for what we intend to slot
             $items = $hasSlots->getSlots()->slotFilled()->take($slotsToEmptyCount)->getItems();
             // Now get the slots those slottables are currently slotted into and empty them
-            $items->getSlots()->emptySlottables();
+            $items->getSlots()->emptyItems();
 
             // Re-slot the slottables that were removed
             $items->each(function (Item $item) use ($backup, $transaction) {

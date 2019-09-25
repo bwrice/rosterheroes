@@ -7,6 +7,7 @@ use App\Domain\Models\SlotType;
 use App\Domain\Models\Squad;
 use App\Domain\Models\Slot;
 use App\StorableEvents\SquadSlotsAdded;
+use Illuminate\Support\Str;
 use Spatie\EventProjector\Projectors\Projector;
 use Spatie\EventProjector\Projectors\ProjectsEvents;
 
@@ -24,7 +25,8 @@ final class SquadSlotsProjector implements Projector
 
         foreach(range(1, $event->count) as $slotCount) {
             $slots->push(Slot::query()->make([
-                'slot_type_id' => $slotType->id
+                'slot_type_id' => $slotType->id,
+                'uuid' => Str::uuid()
             ]));
         }
 

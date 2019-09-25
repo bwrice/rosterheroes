@@ -27,6 +27,7 @@ $factory->afterCreatingState(\App\Domain\Models\Hero::class, 'with-slots', funct
     $heroSlotTypes = \App\Domain\Models\SlotType::heroTypes()->get();
     $heroSlotTypes->each(function (\App\Domain\Models\SlotType $slotType) use ($hero) {
         $hero->slots()->create([
+            'uuid' => \Illuminate\Support\Str::uuid(),
             'slot_type_id' => $slotType->id,
         ]);
     });
@@ -36,7 +37,7 @@ $factory->afterCreatingState(\App\Domain\Models\Hero::class, 'with-measurables',
     $measurableTypes = \App\Domain\Models\MeasurableType::heroTypes()->get();
     $measurableTypes->each(function (\App\Domain\Models\MeasurableType $measurableType) use ($hero) {
        $hero->measurables()->create([
-           'uuid' => (string) \Ramsey\Uuid\Uuid::uuid4(),
+           'uuid' => \Illuminate\Support\Str::uuid(),
            'measurable_type_id' => $measurableType->id,
            'amount_raised' => 0
        ]);

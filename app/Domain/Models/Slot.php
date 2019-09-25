@@ -24,7 +24,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property SlotType $slotType
  * @property HasSlots $hasSlots
  */
-class Slot extends Model
+class Slot extends EventSourcedModel
 {
     protected $guarded = [];
 

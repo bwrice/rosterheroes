@@ -15,6 +15,7 @@ class CreateSlotsTable extends Migration
     {
         Schema::create('slots', function (Blueprint $table) {
             $table->increments('id');
+            $table->uuid('uuid');
             $table->integer('slot_type_id')->unsigned();
             $table->morphs('has_slots');
             $table->bigInteger('item_id')->unsigned()->nullable();

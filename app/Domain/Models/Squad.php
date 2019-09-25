@@ -20,6 +20,7 @@ use App\Domain\Interfaces\HasSlots;
 use App\Domain\Models\Slot;
 use App\Domain\Collections\SlotCollection;
 use App\Domain\Traits\HasSlug;
+use Illuminate\Support\Str;
 use Ramsey\Uuid\Uuid;
 use Spatie\Sluggable\SlugOptions;
 
@@ -113,6 +114,7 @@ class Squad extends EventSourcedModel implements HasSlots, TravelsBorders
             $slotType = SlotType::where('name', '=', SlotType::UNIVERSAL)->first();
             for($i = 1; $i <= $diff; $i++) {
                 $this->slots()->create([
+                    'uuid' => Str::uuid(),
                     'slot_type_id' => $slotType->id
                 ]);
             }

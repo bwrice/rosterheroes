@@ -5,6 +5,7 @@ namespace App\Domain\Models;
 use App\Domain\Interfaces\HasSlots;
 use App\Domain\Collections\SlotCollection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 /**
  * Class StoreHouse
@@ -95,6 +96,7 @@ class StoreHouse extends Model implements HasSlots
             $slotType = SlotType::where('name', '=', SlotType::UNIVERSAL)->first();
             for($i = 1; $i <= $diff; $i++) {
                 $this->slots()->create([
+                    'uuid' => Str::uuid(),
                     'slot_type_id' => $slotType->id
                 ]);
             }

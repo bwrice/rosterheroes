@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Domain\Actions\EmptyHeroSlot;
+use App\Domain\Actions\EmptyHeroSlotAction;
 use App\Domain\Models\HeroPost;
 use App\Domain\Models\Item;
 use App\Domain\Models\ItemBase;
@@ -29,7 +29,7 @@ class EmptyHeroSlotTest extends TestCase
     /** @var Squad */
     protected $squad;
 
-    /** @var EmptyHeroSlot */
+    /** @var EmptyHeroSlotAction */
     protected $domainAction;
 
     public function setUp(): void
@@ -46,7 +46,7 @@ class EmptyHeroSlotTest extends TestCase
             'squad_id' => $this->squad->id
         ]);
 
-        $this->domainAction = app(EmptyHeroSlot::class);
+        $this->domainAction = app(EmptyHeroSlotAction::class);
     }
 
     /**
