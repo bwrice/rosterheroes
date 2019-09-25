@@ -45,7 +45,7 @@
             attributes() {
                 if (this.barracksHeroFromRoute) {
                     return this.barracksHeroFromRoute.measurables.filter(function (measurable) {
-                        return measurable.measurable_type.group === 'attribute';
+                        return measurable.measurableType.group === 'attribute';
                     })
                 }
                 return [];
@@ -53,7 +53,7 @@
             resources() {
                 if (this.barracksHeroFromRoute) {
                     return this.barracksHeroFromRoute.measurables.filter(function (measurable) {
-                        return measurable.measurable_type.group === 'resource';
+                        return measurable.measurableType.group === 'resource';
                     })
                 }
                 return [];
@@ -61,7 +61,7 @@
             qualities() {
                 if (this.barracksHeroFromRoute) {
                     return this.barracksHeroFromRoute.measurables.filter(function (measurable) {
-                        return measurable.measurable_type.group === 'quality';
+                        return measurable.measurableType.group === 'quality';
                     })
                 }
                 return [];

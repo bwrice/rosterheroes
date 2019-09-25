@@ -3,7 +3,7 @@
         <v-row no-gutters :align="'center'" :justify="'space-between'">
             <span class="subtitle-2 font-weight-bold">{{measurableName}}</span>
             <div>
-                <v-chip label color="primary" class="mx-1">{{measurable.current_amount}}</v-chip>
+                <v-chip label color="primary" class="mx-1">{{measurable.currentAmount}}</v-chip>
                 <v-btn small @click="measurableFocused = true">+</v-btn>
             </div>
         </v-row>
@@ -12,7 +12,7 @@
             max-width="600"
         >
             <v-card>
-                <v-card-title class="headline">{{measurableName}}: {{measurable.current_amount}}</v-card-title>
+                <v-card-title class="headline">{{measurableName}}: {{measurable.currentAmount}}</v-card-title>
                 <v-card-actions>
                     <v-container>
                         <v-row no-gutters>
@@ -95,11 +95,12 @@
     import {barracksHeroMixin} from "../../../mixins/barracksHeroMixin";
 
     import {mapActions} from 'vuex';
+    import Measurable from "../../../models/Measurable";
 
     export default {
         name: "MeasurablePanel",
         props: {
-            measurable: Object,
+            measurable: Measurable,
             required: true
         },
         mixins: [
@@ -107,7 +108,7 @@
         ],
 
         mounted() {
-            this.costToRaise = this.measurable.cost_to_raise;
+            this.costToRaise = this.measurable.costToRaise;
         },
         created() {
             this.debounceSetCostToRaiseAmount = _.debounce(async function() {
@@ -148,7 +149,7 @@
             },
             async setCostToRaiseAmount() {
                 if (this.measurableRaiseAmount <= 1) {
-                    this.costToRaise = this.measurable.cost_to_raise;
+                    this.costToRaise = this.measurable.costToRaise;
                 } else {
                     this.costToRaise = await measurableApi.getCostToRaise(this.measurable.uuid, this.measurableRaiseAmount);
                 }
@@ -173,7 +174,7 @@
         },
         computed: {
             measurableName() {
-                return this.measurable.measurable_type.name.toUpperCase();
+                return this.measurable.measurableType.name.toUpperCase();
             },
             raiseAmount() {
                 return parseInt(this.measurableRaiseAmount);
