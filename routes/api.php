@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ContinentController;
+use App\Http\Controllers\EmptyHeroSlotsController;
 use App\Http\Controllers\FastTravelController;
 use App\Http\Controllers\HeroController;
 use App\Http\Controllers\ProvinceBorderController;
@@ -73,6 +74,8 @@ Route::prefix('v1')->group(function () {
 
         Route::post('/heroes/{heroSlug}/player-spirit/{playerSpiritUuid}', [HeroPlayerSpiritController::class, 'store']);
         Route::delete('/heroes/{heroSlug}/player-spirit/{playerSpiritUuid}', [HeroPlayerSpiritController::class, 'delete']);
+
+        Route::post('/heroes/{heroSlug}/empty-slots', EmptyHeroSlotsController::class);
 
         Route::post('/campaign/{campaign}/quest/{questUuid}', [CampaignQuestController::class, 'store']);
 
