@@ -1,5 +1,5 @@
 import Model from './Model'
-import Hero from "./Hero";
+import HeroModel from "./HeroModel";
 
 export default class Squad extends Model {
 
@@ -12,7 +12,7 @@ export default class Squad extends Model {
         if (this.heroPosts) {
             this.heroPosts.forEach(function (heroPost) {
                 if (heroPost.hero) {
-                    _heroes.push(new Hero(heroPost.hero));
+                    _heroes.push(new HeroModel(heroPost.hero));
                 }
             });
         }

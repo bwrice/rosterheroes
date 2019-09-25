@@ -1,5 +1,5 @@
 import Model from './Model'
-import Hero from './Hero';
+import HeroModel from './HeroModel';
 
 export default class HeroPost extends Model {
 
@@ -10,7 +10,7 @@ export default class HeroPost extends Model {
 
     get hero() {
         if (this._hero) {
-            return new Hero(this._hero);
+            return new HeroModel(this._hero);
         }
         return null;
     }

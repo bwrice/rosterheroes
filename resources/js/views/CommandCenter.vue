@@ -51,7 +51,7 @@
     import Squad from "../models/Squad";
     import Week from "../models/Week";
     import RhSnackBarAlert from "../components/commandCenter/global/SnackBarAlert";
-    import Hero from "../models/Hero";
+    import HeroModel from "../models/HeroModel";
 
     export default {
         name: "CommandCenter",
