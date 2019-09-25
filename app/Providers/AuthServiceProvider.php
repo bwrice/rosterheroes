@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Domain\Models\Hero;
 use App\Domain\Models\Measurable;
+use App\Policies\HeroPolicy;
 use App\Policies\MeasurablePolicy;
 use App\Policies\SquadPolicy;
 use App\Domain\Models\Squad;
@@ -19,6 +21,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Squad::class => SquadPolicy::class,
+        Hero::class => HeroPolicy::class,
         Measurable::class => MeasurablePolicy::class,
     ];
 
