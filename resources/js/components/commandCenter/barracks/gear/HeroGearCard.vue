@@ -13,8 +13,13 @@
             <v-card>
                 <v-card-title>{{focusedHeroSlot.slotType.displayName}}</v-card-title>
                 <v-card-text class="pa-2">
-                    <ItemPanel v-if="focusedHeroSlot.item" :item="focusedHeroSlot.item"></ItemPanel>
-                    <h3 v-else>(EMPTY)</h3>
+                    <template v-if="focusedHeroSlot.item">
+                        <EmptyHeroSlotButton :heroSlot="focusedHeroSlot" :hero="barracksHeroFromRoute"></EmptyHeroSlotButton>
+                        <ItemPanel :item="focusedHeroSlot.item"></ItemPanel>
+                    </template>
+                    <template v-else>
+                        <h3>(EMPTY)</h3>
+                    </template>
                 </v-card-text>
             </v-card>
         </v-dialog>
@@ -29,10 +34,11 @@
 
     import HeroGearSVG from "./HeroGearSVG";
     import ItemPanel from "../../global/ItemCard";
+    import EmptyHeroSlotButton from "./EmptyHeroSlotButton";
 
     export default {
         name: "HeroGearCard",
-        components: {ItemPanel, HeroGearSVG},
+        components: {EmptyHeroSlotButton, ItemPanel, HeroGearSVG},
         mixins: [
             barracksHeroMixin
         ],
@@ -52,7 +58,7 @@
         },
         computed: {
             ...mapGetters([
-                '_barracksHeroes'
+                '_barracksHeroes',
             ]),
         }
     }
