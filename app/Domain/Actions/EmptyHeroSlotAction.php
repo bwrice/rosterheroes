@@ -30,6 +30,7 @@ class EmptyHeroSlotAction
      */
     public function execute(Slot $slot, Hero $hero, Collection $slotTransactions = null)
     {
+        $slotTransactions = $slotTransactions ?: collect();
         if ($slot->hasSlots->getUniqueIdentifier() != $hero->getUniqueIdentifier()) {
             throw new SlottingException($slot, $hero, "Slot does not belong to Hero", SlottingException::CODE_INVALID_OWNERSHIP);
         }
