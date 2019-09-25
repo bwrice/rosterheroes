@@ -10,6 +10,7 @@ use App\Domain\Models\ItemType;
 use App\Domain\Models\Slot;
 use App\Domain\Models\SlotType;
 use App\Domain\Models\Squad;
+use App\Domain\Support\SlotTransaction;
 use App\Nova\Hero;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -60,18 +61,18 @@ class EmptyHeroSlotsControllerTest extends TestCase
         $this->item->item_type_id = $itemType->id;
         $this->item->save();
 
-        $slotsToFill = $this->hero->slots->filter(function (Slot $slot) {
+        $heroSlotsToFill = $this->hero->slots->filter(function (Slot $slot) {
             return in_array($slot->slotType->name, [
                 SlotType::PRIMARY_ARM,
                 SlotType::OFF_ARM
             ]);
         });
 
-        $this->item->slots()->saveMany($slotsToFill);
+        $this->item->slots()->saveMany($heroSlotsToFill);
 
-        $this->assertEquals(2, $slotsToFill->count());
+        $this->assertEquals(2, $heroSlotsToFill->count());
 
-        $slotsRequest = $slotsToFill->take(1)->map(function (Slot $slot) {
+        $slotsRequest = $heroSlotsToFill->take(1)->map(function (Slot $slot) {
             return $slot->uuid;
         })->values()->toArray();
 
@@ -81,8 +82,48 @@ class EmptyHeroSlotsControllerTest extends TestCase
             'slots' => $slotsRequest
         ]);
 
-        dd($response->content());
-
         $response->assertStatus(200);
+
+        $responseArray = json_decode($response->content(), true);
+        $this->assertEquals(2, count($responseArray['data']));
+
+        $response->assertJson([
+            'data' => [
+                [
+                    'type' => SlotTransaction::TYPE_EMPTY,
+                    'item' => [
+                        'uuid' => (string)$this->item->uuid,
+                    ],
+                    'hasSlots' => [
+                        'uniqueIdentifier' => (string) $this->hero->uuid
+                    ],
+                    'slots' => [
+                        [
+                            //Assert 2 slots
+                        ],
+                        [
+
+                        ],
+                    ]
+                ],
+                [
+                    'type' => SlotTransaction::TYPE_FILL,
+                    'item' => [
+                        'uuid' => (string)$this->item->uuid,
+                    ],
+                    'hasSlots' => [
+                        'uniqueIdentifier' => (string) $this->squad->uuid
+                    ],
+                    'slots' => [
+                        [
+                            //Assert 2 slots
+                        ],
+                        [
+
+                        ],
+                    ]
+                ],
+            ]
+        ]);
     }
 }
