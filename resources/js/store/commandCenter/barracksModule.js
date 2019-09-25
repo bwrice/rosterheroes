@@ -1,5 +1,7 @@
 import * as squadApi from '../../api/squadApi';
 import * as measurableApi from '../../api/measurableApi';
+import BarracksHero from "../../models/BarracksHero";
+import Measurable from "../../models/Measurable";
 
 export default {
 
@@ -20,13 +22,17 @@ export default {
 
     actions: {
         async updateBarracks({commit, dispatch}, route) {
-            let heroes = await squadApi.getBarracksHeroes(route.params.squadSlug);
+            let heroesResponse = await squadApi.getBarracksHeroes(route.params.squadSlug);
+            let heroes = heroesResponse.map(function (hero) {
+                return new BarracksHero(hero);
+            });
             commit('SET_BARRACKS_HEROES', heroes);
         },
         async raiseHeroMeasurable({state, commit, dispatch}, payload) {
 
             try {
-                let updatedMeasurable = await measurableApi.raise(payload.measurableUuid, payload.raiseAmount);
+                let measurableResponse = await measurableApi.raise(payload.measurableUuid, payload.raiseAmount);
+                let updatedMeasurable = new Measurable(measurableResponse);
                 let updatedHeroes = _.cloneDeep(state.barracksHeroes);
                 let matchingHero = updatedHeroes.find(function (hero) {
                     return payload.heroSlug === hero.slug;
@@ -40,7 +46,7 @@ export default {
 
                 commit('SET_BARRACKS_HEROES', updatedHeroes);
 
-                let text = updatedMeasurable.measurable_type.name.toUpperCase() + ' raised to ' + updatedMeasurable.current_amount;
+                let text = updatedMeasurable.measurableType.name.toUpperCase() + ' raised to ' + updatedMeasurable.currentAmount;
                 dispatch('snackBarSuccess', {
                     text: text,
                     timeout: 3000
