@@ -58,11 +58,43 @@ export default {
             }
         },
 
-        async emptyHeroSlot({state, commit, dispatch}, {hero, slot}) {
+        async emptyHeroSlot({state, commit, dispatch}, {heroSlug, slotUuid}) {
 
-            let transactionResponse = await heroApi.emptySlot(hero.slug, slot.uuid);
-            console.log("Transaction");
-            console.log(transactionResponse);
+            try {
+                let transactionResponse = await heroApi.emptySlot(heroSlug, slotUuid);
+                console.log("Transaction");
+                console.log(transactionResponse);
+                let heroTransaction = transactionResponse.find(function (transaction) {
+                    return transaction.type === 'empty';
+                });
+
+                console.log("Hero Transaction");
+                console.log(heroTransaction);
+
+                let newHeroes = _.cloneDeep(state.barracksHeroes);
+                let matchingHero = newHeroes.find(function (hero) {
+                    return heroSlug === hero.slug;
+                });
+
+                heroTransaction.slots.forEach(function (newSlot) {
+                    let slotIndex = matchingHero.slots.findIndex(function (oldSlot) {
+                        return oldSlot.uuid === newSlot.uuid;
+                    });
+
+                    matchingHero.slots.splice(slotIndex, 1, newSlot);
+                });
+
+                commit('SET_BARRACKS_HEROES', newHeroes);
+
+                // let text = updatedMeasurable.measurableType.name.toUpperCase() + ' raised to ' + updatedMeasurable.currentAmount;
+                dispatch('snackBarSuccess', {
+                    text: 'Item Removed',
+                    timeout: 3000
+                })
+            } catch (e) {
+                console.log(e);
+                dispatch('snackBarError', {});
+            }
         }
     }
 };
