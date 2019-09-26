@@ -1,5 +1,6 @@
 import * as squadApi from '../../api/squadApi';
 import * as measurableApi from '../../api/measurableApi';
+import * as heroApi from '../../api/heroApi';
 import BarracksHero from "../../models/BarracksHero";
 import Measurable from "../../models/Measurable";
 
@@ -55,6 +56,13 @@ export default {
             } catch(e) {
                 dispatch('snackBarError', {});
             }
+        },
+
+        async emptyHeroSlot({state, commit, dispatch}, {hero, slot}) {
+
+            let transactionResponse = await heroApi.emptySlot(hero.slug, slot.uuid);
+            console.log("Transaction");
+            console.log(transactionResponse);
         }
     }
 };
