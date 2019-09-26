@@ -23,6 +23,7 @@ class SlotResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'uuid' => $this->uuid,
             'item' => new ItemResource($this->item),
             'slotType' => new SlotTypeResource($this->slotType)
         ];
