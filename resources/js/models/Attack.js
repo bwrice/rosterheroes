@@ -6,9 +6,9 @@ export default class Attack {
 
     constructor({
                     name = '',
-                    base_damage,
-                    combat_speed,
-                    damage_multiplier,
+                    baseDamage,
+                    combatSpeed,
+                    damageMultiplier,
                     grade,
                     attackerPosition,
                     targetPosition,
@@ -19,9 +19,9 @@ export default class Attack {
                 }) {
 
         this.name = name;
-        this.baseDamage = base_damage;
-        this.combatSpeed = combat_speed;
-        this.damageMultiplier = damage_multiplier;
+        this.baseDamage = baseDamage;
+        this.combatSpeed = combatSpeed;
+        this.damageMultiplier = damageMultiplier;
         this.grade = grade;
         this.attackerPosition = new CombatPosition(attackerPosition);
         this.targetPosition = new CombatPosition(targetPosition);

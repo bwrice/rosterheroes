@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @package App
  *
  * @property int $id
+ * @property string $uuid
  * @property int|null $item_id
  * @property int $slot_type_id
  * @property int $has_slots_id
