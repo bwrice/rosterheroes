@@ -21,6 +21,9 @@
                         <h3>(EMPTY)</h3>
                     </template>
                 </v-card-text>
+                <v-card-actions>
+                    <v-btn @click="heroGearDialog = false" block>Close</v-btn>
+                </v-card-actions>
             </v-card>
         </v-dialog>
     </v-card>
