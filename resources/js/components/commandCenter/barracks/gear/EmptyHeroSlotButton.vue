@@ -33,8 +33,8 @@
             async emptySlot() {
                 this.pending = true;
                 await this.emptyHeroSlot({
-                    hero: this.hero,
-                    slot: this.heroSlot
+                    heroSlug: this.hero.slug,
+                    slotUuid: this.heroSlot.uuid
                 });
                 this.pending = false;
             }
