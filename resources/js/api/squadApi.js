@@ -26,3 +26,8 @@ export async function fastTravel(squadSlug, provinces) {
     });
     return response.data.data;
 }
+
+export async function getMobileStorage(squadSlug) {
+    let response = await axios.get('/api/v1/squads/' + squadSlug + '/mobile-storage');
+    return response.data.data;
+}
