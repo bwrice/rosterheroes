@@ -14,4 +14,9 @@ export default class BarracksHero {
             return new Measurable(measurable);
         })
     }
+
+    getSlot(slotUuid) {
+        let matchingSlot = this.slots.find(slot => slot.uuid === slotUuid);
+        return matchingSlot ? matchingSlot : new Slot({});
+    }
 }
