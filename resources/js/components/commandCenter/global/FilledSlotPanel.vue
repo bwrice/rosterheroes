@@ -1,0 +1,54 @@
+<template>
+    <v-row no-gutters>
+        <v-col cols="12">
+            <v-row no-gutters>
+                <v-col cols="12">
+                    <v-sheet @click="expanded = ! expanded"
+                             color="rgba(255,255,255,0.2)"
+                             tile
+                             style="margin: 1px 0 1px 0"
+                    >
+                        <v-row no-gutters>
+                            <v-col cols="8" class="text-center">
+                                <span class="title font-weight-light pa-2">{{filledSlot.item.name}}</span>
+                            </v-col>
+                            <v-col cols="2" class="text-center">
+                                <v-icon v-if="expanded">expand_less</v-icon>
+                                <v-icon v-else>expand_more</v-icon>
+                            </v-col>
+                        </v-row>
+                    </v-sheet>
+                </v-col>
+            </v-row>
+            <v-row v-if="expanded" no-gutters>
+                <v-col cols="12">
+                    <ItemCard :item="filledSlot.item"></ItemCard>
+                </v-col>
+            </v-row>
+        </v-col>
+    </v-row>
+</template>
+
+<script>
+    import ItemCard from "./ItemCard";
+    import Slot from "../../../models/Slot";
+    export default {
+        name: "FilledSlotPanel",
+        components: {ItemCard},
+        props: {
+            filledSlot: {
+                type: Slot,
+                required: true
+            }
+        },
+        data() {
+            return {
+                expanded: false
+            }
+        }
+    }
+</script>
+
+<style scoped>
+
+</style>
