@@ -3,15 +3,20 @@ import * as measurableApi from '../../api/measurableApi';
 import * as heroApi from '../../api/heroApi';
 import BarracksHero from "../../models/BarracksHero";
 import Measurable from "../../models/Measurable";
+import MobileStorage from "../../models/MobileStorage";
 
 export default {
 
     state: {
-        barracksHeroes: []
+        barracksHeroes: [],
+        mobileStorage: new MobileStorage({})
     },
 
     getters: {
         _barracksHeroes(state) {
+            return state.barracksHeroes;
+        },
+        _mobileStorage(state) {
             return state.barracksHeroes;
         }
     },
@@ -19,16 +24,23 @@ export default {
         SET_BARRACKS_HEROES(state, payload) {
             state.barracksHeroes = payload;
         },
+        SET_MOBILE_STORAGE(state, payload) {
+            state.mobileStorage = payload;
+        },
     },
 
     actions: {
         async updateBarracks({commit, dispatch}, route) {
-            let heroesResponse = await squadApi.getBarracksHeroes(route.params.squadSlug);
+            let squadSlug = route.params.squadSlug;
+            let heroesResponse = await squadApi.getBarracksHeroes(squadSlug);
             let heroes = heroesResponse.map(function (hero) {
                 return new BarracksHero(hero);
             });
             commit('SET_BARRACKS_HEROES', heroes);
+            let mobileStorageResponse = await squadApi.getMobileStorage(squadSlug);
+            commit('SET_MOBILE_STORAGE', new MobileStorage(mobileStorageResponse));
         },
+
         async raiseHeroMeasurable({state, commit, dispatch}, payload) {
 
             try {
@@ -62,14 +74,10 @@ export default {
 
             try {
                 let transactionResponse = await heroApi.emptySlot(heroSlug, slotUuid);
-                console.log("Transaction");
-                console.log(transactionResponse);
+
                 let heroTransaction = transactionResponse.find(function (transaction) {
                     return transaction.type === 'empty';
                 });
-
-                console.log("Hero Transaction");
-                console.log(heroTransaction);
 
                 let newHeroes = _.cloneDeep(state.barracksHeroes);
                 let matchingHero = newHeroes.find(function (hero) {
