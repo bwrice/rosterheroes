@@ -1,6 +1,6 @@
 export default class MobileStorageRank {
 
-    constructor({name}) {
+    constructor({name = ''}) {
         this.name = name;
     }
 }

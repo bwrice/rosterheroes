@@ -9,4 +9,13 @@ export default class MobileStorage {
             return new Slot(slot);
         })
     }
+
+    get filledSlots() {
+        let slotsWithItems = this.slots.filter(function (slot) {
+            return slot.item;
+        });
+        return _.uniqBy(slotsWithItems, function (slot) {
+            return slot.item.uuid;
+        })
+    }
 }
