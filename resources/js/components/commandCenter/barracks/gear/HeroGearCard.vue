@@ -22,7 +22,7 @@
                     </template>
                 </v-card-text>
                 <v-card-actions>
-                    <v-btn @click="heroGearDialog = false" block>Close</v-btn>
+                    <v-btn @click="heroGearDialog = null" block>Close</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -48,14 +48,15 @@
         data() {
             return {
                 heroGearDialog: false,
-                focusedHeroSlot: new Slot({})
+                // focusedHeroSlot: new Slot({}),
+                focusedSlotUuid: null
             }
         },
         methods: {
-            handleHeroSlotClicked({heroSlot}) {
-                this.focusedHeroSlot = heroSlot;
+            handleHeroSlotClicked(slotUuid) {
+                this.focusedSlotUuid = slotUuid;
                 this.heroGearDialog = true;
-                console.log(heroSlot);
+                console.log(slotUuid);
                 console.log("CLICKED");
             }
         },
@@ -63,6 +64,13 @@
             ...mapGetters([
                 '_barracksHeroes',
             ]),
+            focusedHeroSlot() {
+                if (! this.focusedSlotUuid) {
+                    return new Slot({});
+                }
+                let focusedSlot = this.barracksHeroFromRoute.getSlot(this.focusedSlotUuid);
+                return focusedSlot ? focusedSlot : new Slot({});
+            }
         }
     }
 </script>
