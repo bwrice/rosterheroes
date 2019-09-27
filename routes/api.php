@@ -4,6 +4,7 @@ use App\Http\Controllers\ContinentController;
 use App\Http\Controllers\EmptyHeroSlotsController;
 use App\Http\Controllers\FastTravelController;
 use App\Http\Controllers\HeroController;
+use App\Http\Controllers\MobileStorageController;
 use App\Http\Controllers\ProvinceBorderController;
 use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\BarracksHeroesController;
@@ -63,6 +64,8 @@ Route::prefix('v1')->group(function () {
         Route::get('/squad/{squadSlug}/hero-races', SquadHeroRaceController::class);
 
         Route::get('/squads/{squadSlug}/current-location', SquadCurrentLocationController::class);
+
+        Route::get('/squads/{squadSlug}/mobile-storage', MobileStorageController::class);
 
         Route::post('/squads/{squadSlug}/border/{borderSlug}', [SquadBorderTravelController::class, 'store']);
         Route::get('/squads/{squadSlug}/border/{borderSlug}', [SquadBorderTravelController::class, 'show']);
