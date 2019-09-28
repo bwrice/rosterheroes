@@ -8,14 +8,16 @@
                              tile
                              style="margin: 1px 0 1px 0"
                     >
-                        <v-row no-gutters>
-                            <v-col cols="8" class="text-center">
-                                <span class="title font-weight-light pa-2">{{filledSlot.item.name}}</span>
-                            </v-col>
-                            <v-col cols="2" class="text-center">
+                        <v-row align="center" justify="center" class="mx-2">
+                            <span class="title font-weight-light pa-2">{{filledSlot.item.name}}</span>
+                            <div class="flex-grow-1"></div>
+                            <v-btn
+                                fab
+                                dark
+                                x-small>
                                 <v-icon v-if="expanded">expand_less</v-icon>
                                 <v-icon v-else>expand_more</v-icon>
-                            </v-col>
+                            </v-btn>
                         </v-row>
                     </v-sheet>
                 </v-col>
