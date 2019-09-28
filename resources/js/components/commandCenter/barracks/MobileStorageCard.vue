@@ -3,11 +3,23 @@
         <v-card-title>{{storageName}}</v-card-title>
         <v-card-text>
             <v-data-iterator
-                :items="filledStorageSlots"
+                :items="filteredStorageSlots"
                 :items-per-page="itemsPerPage"
                 :page="page"
                 hide-default-footer
             >
+                <template v-slot:header>
+                    <v-text-field
+                        v-model="slotSearch"
+                        clearable
+                        flat
+                        solo-inverted
+                        hide-details
+                        prepend-inner-icon="search"
+                        label="Search Wagon"
+                        class="my-2"
+                    ></v-text-field>
+                </template>
                 <template v-slot:item="props">
                     <FilledSlotPanel :filled-slot="props.item"></FilledSlotPanel>
                 </template>
@@ -46,6 +58,8 @@
 </template>
 
 <script>
+    import * as jsSearch from 'js-search';
+
     import MobileStorage from "../../../models/MobileStorage";
     import FilledSlotPanel from "../global/FilledSlotPanel";
 
@@ -61,7 +75,8 @@
         data() {
             return {
                 page: 1,
-                itemsPerPage: 2
+                itemsPerPage: 2,
+                slotSearch: ''
             }
         },
         computed: {
@@ -72,13 +87,26 @@
                 return this.mobileStorage.filledSlots;
             },
             numberOfPages () {
-                return Math.ceil(this.filledStorageSlots.length / this.itemsPerPage)
+                return Math.ceil(this.filteredStorageSlots.length / this.itemsPerPage)
             },
             formerPageDisabled() {
                 return this.page === 1;
             },
             nextPageDisabled() {
                 return this.page === this.numberOfPages;
+            },
+            filteredStorageSlots() {
+                if (this.slotSearch) {
+                    let search = new jsSearch.Search('uuid');
+                    search.addIndex(['item', 'name']);
+                    search.addIndex(['item', 'itemType', 'name']);
+                    search.addIndex(['item', 'itemClass', 'name']);
+                    search.addIndex(['item', 'material', 'name']);
+                    search.addDocuments(this.filledStorageSlots);
+                    return search.search(this.slotSearch);
+                } else {
+                    return this.filledStorageSlots;
+                }
             }
         },
         methods: {
