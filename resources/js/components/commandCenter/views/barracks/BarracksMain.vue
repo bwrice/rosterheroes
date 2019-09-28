@@ -6,6 +6,7 @@
             :hero="hero"
         >
         </BarracksHeroCard>
+        <MobileStorageCard :mobile-storage="_mobileStorage"></MobileStorageCard>
     </v-col>
 </template>
 
@@ -13,16 +14,18 @@
 
     import {mapGetters} from 'vuex';
     import BarracksHeroCard from "../../barracks/BarracksHeroCard";
+    import MobileStorageCard from "../../barracks/MobileStorageCard";
 
     export default {
         name: "BarracksMain",
-        components: {BarracksHeroCard},
+        components: {MobileStorageCard, BarracksHeroCard},
         created() {
             console.log("Barracks Created!");
         },
         computed: {
             ...mapGetters([
-                '_barracksHeroes'
+                '_barracksHeroes',
+                '_mobileStorage'
             ])
         }
     }
