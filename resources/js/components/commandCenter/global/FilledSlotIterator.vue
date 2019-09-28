@@ -18,7 +18,14 @@
             ></v-text-field>
         </template>
         <template v-slot:item="props">
-            <FilledSlotPanel :filled-slot="props.item"></FilledSlotPanel>
+            <FilledSlotPanel :filled-slot="props.item">
+                <template v-slot:before-expand="panelProps">
+                    <!-- nested scoped slots -->
+                    <slot name="before-expand" :item="panelProps.item">
+                        <!-- slot:before-expand -->
+                    </slot>
+                </template>
+            </FilledSlotPanel>
         </template>
         <template v-slot:footer>
             <v-row class="mt-2" align="center" justify="center">
@@ -67,13 +74,19 @@
             searchLabel: {
                 type: String,
                 default: 'Search Items'
+            },
+            itemsPerPage: {
+                type: Number,
+                default: 10
             }
         },
         data() {
             return {
                 page: 1,
-                itemsPerPage: 2,
-                slotSearch: ''
+                slotSearch: '',
+                user: {
+                    name: 'Brian'
+                }
             }
         },
         methods: {

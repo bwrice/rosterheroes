@@ -3,15 +3,17 @@
         <v-col cols="12">
             <v-row no-gutters>
                 <v-col cols="12">
-                    <v-sheet @click="expanded = ! expanded"
-                             color="rgba(255,255,255,0.2)"
+                    <v-sheet color="rgba(255,255,255,0.2)"
                              tile
                              style="margin: 1px 0 1px 0"
                     >
                         <v-row align="center" justify="center" class="mx-2">
                             <span class="title font-weight-light pa-2">{{filledSlot.item.name}}</span>
                             <div class="flex-grow-1"></div>
-                            <v-btn
+                            <slot name="before-expand" :item="filledSlot.item">
+                                <!-- Slot -->
+                            </slot>
+                            <v-btn @click="expanded = ! expanded"
                                 fab
                                 dark
                                 x-small>
