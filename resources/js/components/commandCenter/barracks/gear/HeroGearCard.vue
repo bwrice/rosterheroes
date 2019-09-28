@@ -24,7 +24,8 @@
                     </v-row>
                     <v-row justify="center" no-gutters>
                         <v-col cols="12">
-                            <FilledSlotIterator :filled-slots="_mobileStorage.filledSlots"></FilledSlotIterator>
+                            <FilledSlotIterator :filled-slots="_mobileStorage.filledSlots" :items-per-page="4" :search-label="'Search Wagon'">
+                            </FilledSlotIterator>
                         </v-col>
                     </v-row>
                 </v-card-text>
