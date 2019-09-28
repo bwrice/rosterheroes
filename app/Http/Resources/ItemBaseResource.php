@@ -2,8 +2,15 @@
 
 namespace App\Http\Resources;
 
+use App\Domain\Models\ItemBase;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * Class ItemBaseResource
+ * @package App\Http\Resources
+ *
+ * @mixin ItemBase
+ */
 class ItemBaseResource extends JsonResource
 {
     /**
@@ -14,6 +21,9 @@ class ItemBaseResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'name' => $this->name,
+            'slotTypes' => SlotTypeResource::collection($this->slotTypes)
+        ];
     }
 }
