@@ -25,6 +25,11 @@
                     <v-row justify="center" no-gutters>
                         <v-col cols="12">
                             <FilledSlotIterator :filled-slots="_mobileStorage.filledSlots" :items-per-page="4" :search-label="'Search Wagon'">
+                                <template v-slot:before-expand="props">
+                                    <div class="px-2">
+                                        <FillSlotFromWagonButton></FillSlotFromWagonButton>
+                                    </div>
+                                </template>
                             </FilledSlotIterator>
                         </v-col>
                     </v-row>
@@ -47,10 +52,17 @@
     import ItemPanel from "../../global/ItemCard";
     import EmptyHeroSlotButton from "./EmptyHeroSlotButton";
     import FilledSlotIterator from "../../global/FilledSlotIterator";
+    import FillSlotFromWagonButton from "./FillSlotFromWagonButton";
 
     export default {
         name: "HeroGearCard",
-        components: {FilledSlotIterator, EmptyHeroSlotButton, ItemPanel, HeroGearSVG},
+        components: {
+            FillSlotFromWagonButton,
+            FilledSlotIterator,
+            EmptyHeroSlotButton,
+            ItemPanel,
+            HeroGearSVG
+        },
         mixins: [
             barracksHeroMixin
         ],
