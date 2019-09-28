@@ -17,7 +17,7 @@ export default {
             return state.barracksHeroes;
         },
         _mobileStorage(state) {
-            return state.barracksHeroes;
+            return state.mobileStorage;
         }
     },
     mutations: {
