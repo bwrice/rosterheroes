@@ -48,7 +48,6 @@
         data() {
             return {
                 heroGearDialog: false,
-                // focusedHeroSlot: new Slot({}),
                 focusedSlotUuid: null
             }
         },
@@ -56,8 +55,6 @@
             handleHeroSlotClicked(slotUuid) {
                 this.focusedSlotUuid = slotUuid;
                 this.heroGearDialog = true;
-                console.log(slotUuid);
-                console.log("CLICKED");
             }
         },
         computed: {
