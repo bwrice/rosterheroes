@@ -1,6 +1,6 @@
 <template>
     <v-card>
-        <v-sheet class="py-5" style="background-image: linear-gradient(to bottom right, #524c59, #7c7287 , #524c59 )">
+        <v-sheet class="py-5" style="background-image: linear-gradient(to bottom right, #524c59, #7c7287 , #524c59)">
             <HeroGearSVG
                 v-if="barracksHeroFromRoute"
                 :hero="barracksHeroFromRoute"
@@ -12,14 +12,21 @@
             max-width="600">
             <v-card>
                 <v-card-title>{{focusedHeroSlot.slotType.displayName}}</v-card-title>
-                <v-card-text class="pa-2">
-                    <template v-if="focusedHeroSlot.item">
-                        <EmptyHeroSlotButton :heroSlot="focusedHeroSlot" :hero="barracksHeroFromRoute"></EmptyHeroSlotButton>
-                        <ItemPanel :item="focusedHeroSlot.item"></ItemPanel>
-                    </template>
-                    <template v-else>
-                        <h3>(EMPTY)</h3>
-                    </template>
+                <v-card-text class="px-2">
+                    <v-row align="center" justify="center">
+                        <template v-if="focusedHeroSlot.item">
+                            <EmptyHeroSlotButton :heroSlot="focusedHeroSlot" :hero="barracksHeroFromRoute"></EmptyHeroSlotButton>
+                            <ItemPanel :item="focusedHeroSlot.item"></ItemPanel>
+                        </template>
+                        <template v-else>
+                            <h3>(EMPTY)</h3>
+                        </template>
+                    </v-row>
+                    <v-row justify="center" no-gutters>
+                        <v-col cols="12">
+                            <FilledSlotIterator :filled-slots="_mobileStorage.filledSlots"></FilledSlotIterator>
+                        </v-col>
+                    </v-row>
                 </v-card-text>
                 <v-card-actions>
                     <v-btn @click="heroGearDialog = null" block>Close</v-btn>
@@ -38,10 +45,11 @@
     import HeroGearSVG from "./HeroGearSVG";
     import ItemPanel from "../../global/ItemCard";
     import EmptyHeroSlotButton from "./EmptyHeroSlotButton";
+    import FilledSlotIterator from "../../global/FilledSlotIterator";
 
     export default {
         name: "HeroGearCard",
-        components: {EmptyHeroSlotButton, ItemPanel, HeroGearSVG},
+        components: {FilledSlotIterator, EmptyHeroSlotButton, ItemPanel, HeroGearSVG},
         mixins: [
             barracksHeroMixin
         ],
@@ -60,6 +68,7 @@
         computed: {
             ...mapGetters([
                 '_barracksHeroes',
+                '_mobileStorage'
             ]),
             focusedHeroSlot() {
                 if (! this.focusedSlotUuid) {
