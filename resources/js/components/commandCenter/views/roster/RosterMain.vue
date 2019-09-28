@@ -2,23 +2,21 @@
     <v-col>
         <v-card>
             <span class="display-3 px-1">{{availableSpiritEssence}}</span> Spirit Essence Available
-            <div v-for="(hero, uuid) in _rosterHeroes">
-                <HeroRosterCard :hero="hero">
-                    <template slot="body">
-                        <div v-if="hero.playerSpirit">
-                            <PlayerSpiritPanel :player-spirit="hero.playerSpirit">
-                                <template v-slot:spirit-actions>
-                                    <EditSpiritButton :hero="hero"></EditSpiritButton>
-                                    <RemoveSpiritButton :hero="hero" :player-spirit="hero.playerSpirit"></RemoveSpiritButton>
-                                </template>
-                            </PlayerSpiritPanel>
-                        </div>
-                        <div v-else>
-                            <EditSpiritButton :hero="hero"></EditSpiritButton>
-                        </div>
-                    </template>
-                </HeroRosterCard>
-            </div>
+            <HeroRosterCard v-for="(hero, uuid) in _rosterHeroes" :key="uuid" :hero="hero">
+                <template slot="body">
+                    <div v-if="hero.playerSpirit">
+                        <PlayerSpiritPanel :player-spirit="hero.playerSpirit">
+                            <template v-slot:spirit-actions>
+                                <EditSpiritButton :hero="hero"></EditSpiritButton>
+                                <RemoveSpiritButton :hero="hero" :player-spirit="hero.playerSpirit"></RemoveSpiritButton>
+                            </template>
+                        </PlayerSpiritPanel>
+                    </div>
+                    <div v-else>
+                        <EditSpiritButton :hero="hero"></EditSpiritButton>
+                    </div>
+                </template>
+            </HeroRosterCard>
         </v-card>
     </v-col>
 </template>
@@ -27,7 +25,6 @@
 
 
     import HeroRosterCard from '../../roster/HeroRosterCard';
-    import HeroSpiritSelection from '../../roster/HeroSpiritSelection';
     import RemoveSpiritButton from "../../roster/RemoveSpiritButton";
     import EditSpiritButton from "../../roster/EditSpiritButton";
     import PlayerSpiritPanel from "../../roster/PlayerSpiritPanel";
@@ -38,7 +35,6 @@
         name: "RosterMain",
         components: {
             HeroRosterCard,
-            HeroSpiritSelection,
             EditSpiritButton,
             RemoveSpiritButton,
             PlayerSpiritPanel
