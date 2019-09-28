@@ -101,7 +101,7 @@ class ItemBase extends Model
 
     public function slotTypes()
     {
-        return $this->belongsToMany( SlotType::class )->withTimestamps();
+        return $this->belongsToMany(SlotType::class)->withTimestamps();
     }
 
     public function measurableTypes()
@@ -130,6 +130,11 @@ class ItemBase extends Model
     public function getSlotsCount()
     {
         return $this->getBehavior()->getSlotsCount();
+    }
+
+    public function getSlotTypeNames()
+    {
+        return $this->getBehavior()->getSlotTypeNames();
     }
 
     /**

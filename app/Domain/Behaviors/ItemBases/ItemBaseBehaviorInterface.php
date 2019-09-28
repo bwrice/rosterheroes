@@ -10,6 +10,8 @@ interface ItemBaseBehaviorInterface
 
     public function getGroupName(): string;
 
+    public function getSlotTypeNames(): array;
+
     public function getSlotTypeIDs(): array;
 
     public function getCombatSpeedBonus(UsesItems $hasItems = null): float;

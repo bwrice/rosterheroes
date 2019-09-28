@@ -23,7 +23,7 @@ class ItemBaseResource extends JsonResource
     {
         return [
             'name' => $this->name,
-            'slotTypes' => SlotTypeResource::collection($this->slotTypes)
+            'slotTypeNames' => $this->getSlotTypeNames()
         ];
     }
 }
