@@ -16,7 +16,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class EmptyHeroSlotTest extends TestCase
+class EmptyHeroSlotActionTest extends TestCase
 {
     use DatabaseTransactions;
 
