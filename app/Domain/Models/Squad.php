@@ -6,10 +6,6 @@ use App\Aggregates\SquadAggregate;
 use App\Domain\Actions\CreateCampaignAction;
 use App\Domain\Interfaces\TravelsBorders;
 use App\Domain\Services\Travel\SquadBorderTravelCostExemption;
-use App\StorableEvents\SquadFavorIncreased;
-use App\StorableEvents\SquadCreated;
-use App\StorableEvents\SquadGoldIncreased;
-use App\StorableEvents\SquadEssenceIncreased;
 use App\Exceptions\CampaignExistsException;
 use App\Exceptions\NotBorderedByException;
 use App\Exceptions\QuestRequiredException;
@@ -17,11 +13,9 @@ use App\Exceptions\WeekLockedException;
 use App\Domain\Collections\HeroCollection;
 use App\Domain\Collections\HeroPostCollection;
 use App\Domain\Interfaces\HasSlots;
-use App\Domain\Models\Slot;
 use App\Domain\Collections\SlotCollection;
 use App\Domain\Traits\HasSlug;
 use Illuminate\Support\Str;
-use Ramsey\Uuid\Uuid;
 use Spatie\Sluggable\SlugOptions;
 
 /**
@@ -398,6 +392,16 @@ class Squad extends EventSourcedModel implements HasSlots, TravelsBorders
 
     public function getUniqueIdentifier(): string
     {
-        return $this->uuid;
+        return (string) $this->uuid;
+    }
+
+    public function hasItem(Item $item)
+    {
+        $slot = $item->slots->first;
+        if (! $slot) {
+            return false;
+        }
+        /** @var Slot $slot */
+        return $slot->belongsToHasSlots($this);
     }
 }
