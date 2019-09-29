@@ -16,6 +16,7 @@ class SlottingException extends \RuntimeException
     public const CODE_INVALID_ITEM_OWNERSHIP = 2;
     public const CODE_ALREADY_EMPTY = 3;
     public const CODE_NO_BACKUP = 4;
+    public const CODE_INVALID_SLOT_TYPE = 5;
 
     /**
      * @var Slot

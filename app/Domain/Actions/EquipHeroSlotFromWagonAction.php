@@ -24,5 +24,11 @@ class EquipHeroSlotFromWagonAction
         if (! $squad) {
             throw new SlottingException($slot, $hero, $item, "No matching squad for hero", SlottingException::CODE_INVALID_ITEM_OWNERSHIP);
         }
+        if (! $squad->hasItem($item)) {
+            throw new SlottingException($slot, $hero, $item, "Item does not belong to squad", SlottingException::CODE_INVALID_ITEM_OWNERSHIP);
+        }
+        if (! in_array($slot->slotType->id, $item->getSlotTypeIDs())) {
+            throw new SlottingException($slot, $hero, $item, "Invalid slot for hero", SlottingException::CODE_INVALID_SLOT_TYPE);
+        }
     }
 }
