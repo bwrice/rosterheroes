@@ -6,15 +6,16 @@ namespace App\Exceptions;
 
 use App\Domain\Interfaces\HasSlots;
 use App\Domain\Models\Hero;
+use App\Domain\Models\Item;
 use App\Domain\Models\Slot;
 use Throwable;
 
 class SlottingException extends \RuntimeException
 {
-
-    public const CODE_INVALID_OWNERSHIP = 1;
-    public const CODE_ALREADY_EMPTY = 2;
-    public const CODE_NO_BACKUP = 3;
+    public const CODE_INVALID_SLOT_OWNERSHIP = 1;
+    public const CODE_INVALID_ITEM_OWNERSHIP = 2;
+    public const CODE_ALREADY_EMPTY = 3;
+    public const CODE_NO_BACKUP = 4;
 
     /**
      * @var Slot
@@ -26,11 +27,17 @@ class SlottingException extends \RuntimeException
      */
     private $hasSlots;
 
-    public function __construct(Slot $slot, HasSlots $hasSlots = null, $message = "", $code = 0, Throwable $previous = null)
+    /**
+     * @var Item
+     */
+    private $item;
+
+    public function __construct(Slot $slot, HasSlots $hasSlots = null, Item $item = null, $message = "", $code = 0, Throwable $previous = null)
     {
         parent::__construct($message, $code, $previous);
         $this->slot = $slot;
         $this->hasSlots = $hasSlots;
+        $this->item = $item;
     }
 
     /**
@@ -47,5 +54,13 @@ class SlottingException extends \RuntimeException
     public function getHasSlots(): ?HasSlots
     {
         return $this->hasSlots;
+    }
+
+    /**
+     * @return Item|null
+     */
+    public function getItem(): ?Item
+    {
+        return $this->item;
     }
 }

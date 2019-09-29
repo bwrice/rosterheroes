@@ -32,17 +32,17 @@ class EmptyHeroSlotAction
     {
         $slotTransactions = $slotTransactions ?: collect();
         if ($slot->hasSlots->getUniqueIdentifier() != $hero->getUniqueIdentifier()) {
-            throw new SlottingException($slot, $hero, "Slot does not belong to Hero", SlottingException::CODE_INVALID_OWNERSHIP);
+            throw new SlottingException($slot, $hero, null,"Slot does not belong to Hero", SlottingException::CODE_INVALID_SLOT_OWNERSHIP);
         }
 
         $item = $slot->item;
         if (! $item) {
-            throw new SlottingException($slot, $hero, "Slot is already empty", SlottingException::CODE_ALREADY_EMPTY);
+            throw new SlottingException($slot, $hero, null,"Slot is already empty", SlottingException::CODE_ALREADY_EMPTY);
         }
 
         $squad = $hero->getSquad();
         if (! $squad) {
-            throw new SlottingException($slot, $hero, "No squad available for hero", SlottingException::CODE_NO_BACKUP);
+            throw new SlottingException($slot, $hero, null,"No squad available for hero", SlottingException::CODE_NO_BACKUP);
         }
 
         $filledSlots = $hero->slots->filledWithItem($item);
