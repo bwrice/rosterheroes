@@ -8,6 +8,7 @@
 
 namespace App\Domain\Collections;
 
+use App\Domain\Interfaces\HasSlots;
 use App\Domain\Models\Item;
 use App\Domain\Models\Slot;
 use Illuminate\Database\Eloquent\Collection;
@@ -78,5 +79,13 @@ class SlotCollection extends Collection
         return $this->filter(function (Slot $slot) use ($item) {
             return $slot->item_id === $item->id;
         });
+    }
+
+    public function allBelongToHasSlots(HasSlots $hasSlots)
+    {
+        $nonMatch = $this->each(function (Slot $slot) use ($hasSlots) {
+            return ! $slot->belongsToHasSlots($hasSlots);
+        });
+        return $nonMatch !== null;
     }
 }
