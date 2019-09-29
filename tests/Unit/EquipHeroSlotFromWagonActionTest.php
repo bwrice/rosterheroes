@@ -98,6 +98,36 @@ class EquipHeroSlotFromWagonActionTest extends TestCase
         $this->fail("Exception not thrown");
     }
 
+    /**
+     * @test
+     */
+    public function it_will_throw_an_exception_if_the_slot_type_is_invalid()
+    {
+        $necklaceType = ItemType::query()->whereHas('itemBase', function (Builder $builder) {
+            return $builder->where('name', '=', ItemBase::NECKLACE);
+        })->first();
+
+        $this->item->item_type_id = $necklaceType->id;
+        $this->item->save();
+        $this->item = $this->item->fresh();
+
+        $wagonSlots = $this->squad->slots->take($this->item->getSlotsCount());
+        $this->item->slots()->saveMany($wagonSlots);
+        $this->item = $this->item->fresh();
+
+        $torsoSlot = $this->hero->slots->first(function (Slot $slot) {
+            return $slot->slotType->name === SlotType::TORSO;
+        });
+
+        try {
+            $this->equipAction->execute($this->hero, $torsoSlot, $this->item);
+        } catch (SlottingException $exception) {
+            $this->assertEquals(SlottingException::CODE_INVALID_SLOT_TYPE, $exception->getCode());
+            return;
+        }
+        $this->fail("Exception not thrown");
+    }
+
     public function it_will_slot_multi_slot_item_if_slots_are_empty()
     {
 
