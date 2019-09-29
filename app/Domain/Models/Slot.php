@@ -48,4 +48,9 @@ class Slot extends EventSourcedModel
     {
         return $this->belongsTo(Item::class);
     }
+
+    public function belongsToHasSlots(HasSlots $hasSlots)
+    {
+        return $hasSlots->getUniqueIdentifier() === $this->hasSlots->getUniqueIdentifier();
+    }
 }
