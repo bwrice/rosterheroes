@@ -394,14 +394,4 @@ class Squad extends EventSourcedModel implements HasSlots, TravelsBorders
     {
         return (string) $this->uuid;
     }
-
-    public function hasItem(Item $item)
-    {
-        $slot = $item->slots->first;
-        if (! $slot) {
-            return false;
-        }
-        /** @var Slot $slot */
-        return $slot->belongsToHasSlots($this);
-    }
 }
