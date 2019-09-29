@@ -83,9 +83,16 @@ class SlotCollection extends Collection
 
     public function allBelongToHasSlots(HasSlots $hasSlots)
     {
-        $nonMatch = $this->each(function (Slot $slot) use ($hasSlots) {
+        $nonMatch = $this->first(function (Slot $slot) use ($hasSlots) {
             return ! $slot->belongsToHasSlots($hasSlots);
         });
-        return $nonMatch !== null;
+        return $nonMatch === null;
+    }
+
+    public function firstMatching(Slot $slotToFind)
+    {
+        return $this->first(function (Slot $slot) use ($slotToFind) {
+            return $slot->id === $slotToFind->id;
+        });
     }
 }
