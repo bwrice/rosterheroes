@@ -99,7 +99,9 @@
         },
         computed: {
             numberOfPages () {
-                return Math.ceil(this.filteredStorageSlots.length / this.itemsPerPage)
+                let slotsCount = this.filteredStorageSlots.length;
+                if (! slotsCount) return 1;
+                return Math.ceil(slotsCount / this.itemsPerPage)
             },
             formerPageDisabled() {
                 return this.page === 1;
