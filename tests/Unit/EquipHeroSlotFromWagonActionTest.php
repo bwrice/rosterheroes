@@ -128,6 +128,38 @@ class EquipHeroSlotFromWagonActionTest extends TestCase
         $this->fail("Exception not thrown");
     }
 
+    /**
+     * @test
+     */
+    public function it_will_slot_single_slot_item_if_slot_is_empty()
+    {
+        $bootsItemType = ItemType::query()->whereHas('itemBase', function(Builder $builder) {
+            return $builder->where('name', '=', ItemBase::BOOTS);
+        })->first();
+
+        $this->item->item_type_id = $bootsItemType->id;
+        $this->item->save();
+        $this->item = $this->item->fresh();
+
+        $wagonSlots = $this->squad->slots->take($this->item->getSlotsCount());
+        $this->item->slots()->saveMany($wagonSlots);
+
+        /** @var Slot $feetSlot */
+        $feetSlot = $this->hero->slots->first(function (Slot $slot) {
+            return $slot->slotType->name === SlotType::FEET;
+        });
+
+        $this->equipAction->execute($this->hero, $feetSlot, $this->item);
+
+        $this->item = $this->item->fresh();
+        $feetSlot = $feetSlot->fresh();
+        $itemSlots = $this->item->slots;
+
+        $this->assertEquals($this->item->getSlotsCount(), $itemSlots->count());
+        $this->assertTrue($itemSlots->allBelongToHasSlots($this->hero));
+        $this->assertEquals($this->item->id, $feetSlot->item_id);
+    }
+
     public function it_will_slot_multi_slot_item_if_slots_are_empty()
     {
 
