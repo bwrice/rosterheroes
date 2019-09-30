@@ -13,11 +13,11 @@ use Illuminate\Support\Collection;
 class EmptyHeroSlotAction
 {
     /**
-     * @var SlotItemInSquadAction
+     * @var SlotItemInWagonAction
      */
     private $slotItemInSquadAction;
 
-    public function __construct(SlotItemInSquadAction $slotItemInSquadAction)
+    public function __construct(SlotItemInWagonAction $slotItemInSquadAction)
     {
         $this->slotItemInSquadAction = $slotItemInSquadAction;
     }
