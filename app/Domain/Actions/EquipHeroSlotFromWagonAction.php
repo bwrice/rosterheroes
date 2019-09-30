@@ -47,7 +47,21 @@ class EquipHeroSlotFromWagonAction
 
     protected function equipHero(Item $item, Slot $slotToFill, SlotCollection $heroSlots, Hero $hero)
     {
-        $item->slots()->save($slotToFill);
-        return new SlotTransaction(new SlotCollection([$slotToFill]), $hero, $item, SlotTransaction::TYPE_FILL);
+        $extraSlotsNeeded = $item->getSlotsCount() - 1;
+        if ($extraSlotsNeeded > 0) {
+            $validSlotTypeIDs = $item->getSlotTypeIDs();
+            /*
+             * Take the number of valid slots needed not including the slot we
+             * already intend to fill
+             */
+            $heroSlots = $heroSlots->reject(function (Slot $slot) use ($slotToFill) {
+                return $slot->id === $slotToFill->id;
+            })->withSlotTypes($validSlotTypeIDs)
+                ->take($extraSlotsNeeded);
+        }
+        $heroSlotsToFill = $heroSlots->push($slotToFill);
+        $item->slots()->saveMany($heroSlotsToFill);
+
+        return new SlotTransaction($heroSlotsToFill, $hero, $item, SlotTransaction::TYPE_FILL);
     }
 }
