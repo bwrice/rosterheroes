@@ -15,10 +15,6 @@ use Illuminate\Support\Collection;
 
 class EquipHeroSlotFromWagonAction
 {
-    /**
-     * @var SlotItemInWagonAction
-     */
-    protected $slotItemInSquadAction;
 
     /** @var Hero */
     protected $hero;
@@ -41,16 +37,20 @@ class EquipHeroSlotFromWagonAction
     /** @var SlotCollection */
     protected $filledWagonSlots;
 
-    public function __construct(SlotItemInWagonAction $slotItemInSquadAction)
+    /**
+     * @var EmptyHeroSlotAction
+     */
+    protected $emptyHeroSlotAction;
+
+    public function __construct(EmptyHeroSlotAction $emptyHeroSlotAction)
     {
-        $this->slotItemInSquadAction = $slotItemInSquadAction;
+        $this->emptyHeroSlotAction = $emptyHeroSlotAction;
     }
 
     public function execute(Hero $hero, Slot $slot, Item $item, Collection $slotTransactions = null)
     {
         $this->setProps($hero, $slot, $item, $slotTransactions);
         $this->validate();
-        $this->emptyHeroSlot();
         $this->removeFromWagon();
         $this->equipHero();
         return $this->slotTransactions;
@@ -84,15 +84,6 @@ class EquipHeroSlotFromWagonAction
         }
     }
 
-    protected function emptyHeroSlot()
-    {
-        $alreadyEquippedItem = $this->slotToFill->item;
-        if ($alreadyEquippedItem) {
-            $this->slotTransactions = $this->slotTransactions->merge($this->slotItemInSquadAction->execute($this->squad, $alreadyEquippedItem));
-            $this->slotToFill = $this->slotToFill->fresh();
-        }
-    }
-
     protected function removeFromWagon()
     {
         $this->filledWagonSlots->emptyItems();
@@ -114,11 +105,19 @@ class EquipHeroSlotFromWagonAction
                 return $slot->id === $this->slotToFill->id;
             })->withSlotTypes($validSlotTypeIDs)
                 ->take($extraSlotsNeeded);
+
         } else {
             $heroSlotsToFill = new SlotCollection();
         }
 
         $heroSlotsToFill = $heroSlotsToFill->push($this->slotToFill);
+        $heroSlotsToEmpty = $heroSlotsToFill->slotFilled()->uniqueByItem();
+        $heroSlotsToEmpty->each(function (Slot $slot) {
+            $this->slotTransactions = $this->emptyHeroSlotAction->execute($slot, $this->hero);
+        });
+
+        $heroSlotsToFill = $heroSlotsToFill->fresh();
+
         $this->itemToEquip->slots()->saveMany($heroSlotsToFill);
 
         $transaction = new SlotTransaction($heroSlotsToFill, $this->hero, $this->itemToEquip->fresh(), SlotTransaction::TYPE_FILL);
