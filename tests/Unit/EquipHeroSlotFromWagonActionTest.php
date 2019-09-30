@@ -238,9 +238,54 @@ class EquipHeroSlotFromWagonActionTest extends TestCase
         $this->assertTrue($previouslyEquippedItemSlots->allBelongToHasSlots($this->squad));
     }
 
-    public function it_will_slot_multi_slot_item_if_current_slot_is_full()
+    /**
+     * @test
+     */
+    public function it_will_slot_single_slot_item_if_slot_already_equipped_with_multi_slot_item()
     {
+        $maceType = ItemType::query()->whereHas('itemBase', function(Builder $builder) {
+            return $builder->where('name', '=', ItemBase::MACE);
+        })->first();
 
+        $this->item->item_type_id = $maceType->id;
+        $this->item->save();
+        $this->item = $this->item->fresh();
+
+        $wagonSlots = $this->squad->slots->take($this->item->getSlotsCount());
+        $this->item->slots()->saveMany($wagonSlots);
+
+        $psionicTwoHandType = ItemType::query()->whereHas('itemBase', function(Builder $builder) {
+            return $builder->where('name', '=', ItemBase::PSIONIC_TWO_HAND);
+        })->first();
+
+        /** @var Item $previouslyEquippedItem */
+        $previouslyEquippedItem = factory(Item::class)->create([
+            'item_type_id' => $psionicTwoHandType->id
+        ]);
+
+        $armSlots = $this->hero->slots->filter(function (Slot $slot) {
+            return $slot->slotType->name === SlotType::PRIMARY_ARM || $slot->slotType->name === SlotType::OFF_ARM;
+        });
+
+        $previouslyEquippedItem->slots()->saveMany($armSlots);
+
+        /** @var Slot $singleArmSlot */
+        $singleArmSlot = $armSlots->shuffle()->first();
+        $this->equipAction->execute($this->hero, $singleArmSlot->fresh(), $this->item);
+
+        $this->item = $this->item->fresh();
+        $singleArmSlot = $singleArmSlot->fresh();
+        $itemSlots = $this->item->slots;
+
+        $this->assertEquals($this->item->getSlotsCount(), $itemSlots->count());
+        $this->assertTrue($itemSlots->allBelongToHasSlots($this->hero));
+        $this->assertEquals($this->item->id, $singleArmSlot->item_id);
+
+        $previouslyEquippedItem = $previouslyEquippedItem->fresh();
+        $previouslyEquippedItemSlots = $previouslyEquippedItem->slots;
+
+        $this->assertEquals($previouslyEquippedItem->getSlotsCount(), $previouslyEquippedItemSlots->count());
+        $this->assertTrue($previouslyEquippedItemSlots->allBelongToHasSlots($this->squad));
     }
 
     public function it_will_slot_multi_slot_item_if_all_slots_are_full()
