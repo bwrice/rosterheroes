@@ -15,6 +15,17 @@ use Illuminate\Support\Collection;
 
 class EquipHeroSlotFromWagonAction
 {
+    /**
+     * @var SlotItemInSquadAction
+     */
+    private $slotItemInSquadAction;
+
+    public function __construct(SlotItemInSquadAction $slotItemInSquadAction)
+    {
+        $this->slotItemInSquadAction = $slotItemInSquadAction;
+    }
+
+
     public function execute(Hero $hero, Slot $slot, Item $item, Collection $slotTransactions = null)
     {
         $heroSlots = $hero->slots;
@@ -34,6 +45,10 @@ class EquipHeroSlotFromWagonAction
             throw new SlottingException($slot, $hero, $item, "Invalid slot for hero", SlottingException::CODE_INVALID_SLOT_TYPE);
         }
         $slotTransactions = $slotTransactions ?: collect();
+        if ($slot->item) {
+            $slotTransactions->push($this->slotItemInSquadAction->execute($squad, $slot->item));
+            $slot = $slot->fresh();
+        }
         $slotTransactions->push($this->removeFromWagon($item, $wagonSlots, $squad));
         $slotTransactions->push($this->equipHero($item, $slot, $heroSlots, $hero));
         return $slotTransactions;
@@ -48,18 +63,22 @@ class EquipHeroSlotFromWagonAction
     protected function equipHero(Item $item, Slot $slotToFill, SlotCollection $heroSlots, Hero $hero)
     {
         $extraSlotsNeeded = $item->getSlotsCount() - 1;
+
         if ($extraSlotsNeeded > 0) {
             $validSlotTypeIDs = $item->getSlotTypeIDs();
             /*
              * Take the number of valid slots needed not including the slot we
              * already intend to fill
              */
-            $heroSlots = $heroSlots->reject(function (Slot $slot) use ($slotToFill) {
+            $heroSlotsToFill = $heroSlots->reject(function (Slot $slot) use ($slotToFill) {
                 return $slot->id === $slotToFill->id;
             })->withSlotTypes($validSlotTypeIDs)
                 ->take($extraSlotsNeeded);
+        } else {
+            $heroSlotsToFill = new SlotCollection();
         }
-        $heroSlotsToFill = $heroSlots->push($slotToFill);
+
+        $heroSlotsToFill = $heroSlotsToFill->push($slotToFill);
         $item->slots()->saveMany($heroSlotsToFill);
 
         return new SlotTransaction($heroSlotsToFill, $hero, $item, SlotTransaction::TYPE_FILL);
