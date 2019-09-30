@@ -192,9 +192,50 @@ class EquipHeroSlotFromWagonActionTest extends TestCase
         $this->assertEquals($this->item->id, $primaryArmSlot->item_id);
     }
 
+    /**
+     * @test
+     */
     public function it_will_slot_single_item_slot_when_slot_is_full()
     {
+        $neckLaceItemType = ItemType::query()->whereHas('itemBase', function(Builder $builder) {
+            return $builder->where('name', '=', ItemBase::NECKLACE);
+        })->first();
 
+        $this->item->item_type_id = $neckLaceItemType->id;
+        $this->item->save();
+        $this->item = $this->item->fresh();
+
+        $wagonSlots = $this->squad->slots->take($this->item->getSlotsCount());
+        $this->item->slots()->saveMany($wagonSlots);
+
+        /** @var Slot $neckSlot */
+        $neckSlot = $this->hero->slots->first(function (Slot $slot) {
+            return $slot->slotType->name === SlotType::NECK;
+        });
+
+        /** @var Item $previouslyEquippedItem */
+        $previouslyEquippedItem = factory(Item::class)->create([
+            'item_type_id' => $neckLaceItemType->id
+        ]);
+
+        $neckSlot->item_id = $previouslyEquippedItem->id;
+        $neckSlot->save();
+        $neckSlot = $neckSlot->fresh();
+
+        $this->equipAction->execute($this->hero, $neckSlot, $this->item);
+
+        $this->item = $this->item->fresh();
+        $neckSlot = $neckSlot->fresh();
+        $itemSlots = $this->item->slots;
+
+        $this->assertEquals($this->item->getSlotsCount(), $itemSlots->count());
+        $this->assertTrue($itemSlots->allBelongToHasSlots($this->hero));
+        $this->assertEquals($this->item->id, $neckSlot->item_id);
+
+        $previouslyEquippedItem = $previouslyEquippedItem->fresh();
+        $previouslyEquippedItemSlots = $previouslyEquippedItem->slots;
+        $this->assertEquals($previouslyEquippedItem->getSlotsCount(), $previouslyEquippedItemSlots->count());
+        $this->assertTrue($previouslyEquippedItemSlots->allBelongToHasSlots($this->squad));
     }
 
     public function it_will_slot_multi_slot_item_if_current_slot_is_full()
