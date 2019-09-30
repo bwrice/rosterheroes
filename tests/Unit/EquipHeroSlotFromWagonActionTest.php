@@ -288,13 +288,125 @@ class EquipHeroSlotFromWagonActionTest extends TestCase
         $this->assertTrue($previouslyEquippedItemSlots->allBelongToHasSlots($this->squad));
     }
 
+    /**
+     * @test
+     */
     public function it_will_slot_multi_slot_item_if_all_slots_are_full()
     {
+        $crossbowType = ItemType::query()->whereHas('itemBase', function(Builder $builder) {
+            return $builder->where('name', '=', ItemBase::CROSSBOW);
+        })->first();
 
+        $this->item->item_type_id = $crossbowType->id;
+        $this->item->save();
+        $this->item = $this->item->fresh();
+
+        $wagonSlots = $this->squad->slots->take($this->item->getSlotsCount());
+        $this->item->slots()->saveMany($wagonSlots);
+
+        $daggerType = ItemType::query()->whereHas('itemBase', function(Builder $builder) {
+            return $builder->where('name', '=', ItemBase::DAGGER);
+        })->first();
+
+        /** @var Item $previouslyEquippedItem1 */
+        $previouslyEquippedItem1 = factory(Item::class)->create([
+            'item_type_id' => $daggerType->id
+        ]);
+
+        /** @var Item $previouslyEquippedItem2 */
+        $previouslyEquippedItem2 = factory(Item::class)->create([
+            'item_type_id' => $daggerType->id
+        ]);
+
+        $armSlots = $this->hero->slots->filter(function (Slot $slot) {
+            return $slot->slotType->name === SlotType::PRIMARY_ARM || $slot->slotType->name === SlotType::OFF_ARM;
+        })->shuffle();
+
+        $singleArmSlot1 = $armSlots->shift();
+        $singleArmSlot2 = $armSlots->shift();
+        $this->assertEquals(0, $armSlots->count());
+
+        $previouslyEquippedItem1->slots()->save($singleArmSlot1);
+        $previouslyEquippedItem2->slots()->save($singleArmSlot2);
+
+        $this->equipAction->execute($this->hero, $singleArmSlot1->fresh(), $this->item);
+
+        $this->item = $this->item->fresh();
+        $singleArmSlot1 = $singleArmSlot1->fresh();
+        $singleArmSlot2 = $singleArmSlot2->fresh();
+        $itemSlots = $this->item->slots;
+
+        $this->assertEquals($this->item->getSlotsCount(), $itemSlots->count());
+        $this->assertTrue($itemSlots->allBelongToHasSlots($this->hero));
+        $this->assertEquals($this->item->id, $singleArmSlot1->item_id);
+        $this->assertEquals($this->item->id, $singleArmSlot2->item_id);
+
+        $previouslyEquippedItem1 = $previouslyEquippedItem1->fresh();
+        $previouslyEquippedItem1Slots = $previouslyEquippedItem1->slots;
+
+        $this->assertEquals($previouslyEquippedItem1->getSlotsCount(), $previouslyEquippedItem1Slots->count());
+        $this->assertTrue($previouslyEquippedItem1Slots->allBelongToHasSlots($this->squad));
+
+        $previouslyEquippedItem2 = $previouslyEquippedItem1->fresh();
+        $previouslyEquippedItem2Slots = $previouslyEquippedItem2->slots;
+
+        $this->assertEquals($previouslyEquippedItem1->getSlotsCount(), $previouslyEquippedItem2Slots->count());
+        $this->assertTrue($previouslyEquippedItem2Slots->allBelongToHasSlots($this->squad));
     }
 
+    /**
+     * @test
+     */
     public function it_will_slot_multi_slot_item_if_only_other_slots_are_full()
     {
+        $twoHandAxe = ItemType::query()->whereHas('itemBase', function(Builder $builder) {
+            return $builder->where('name', '=', ItemBase::TWO_HAND_AXE);
+        })->first();
 
+        $this->item->item_type_id = $twoHandAxe->id;
+        $this->item->save();
+        $this->item = $this->item->fresh();
+
+        $wagonSlots = $this->squad->slots->take($this->item->getSlotsCount());
+        $this->item->slots()->saveMany($wagonSlots);
+
+        $shieldType = ItemType::query()->whereHas('itemBase', function(Builder $builder) {
+            return $builder->where('name', '=', ItemBase::SHIELD);
+        })->first();
+
+        /** @var Item $shield */
+        $shield = factory(Item::class)->create([
+            'item_type_id' => $shieldType->id
+        ]);
+
+        /** @var Slot $offArm */
+        $offArm = $this->hero->slots->filter(function (Slot $slot) {
+            return $slot->slotType->name === SlotType::OFF_ARM;
+        })->first();
+
+        /** @var Slot $primaryArm */
+        $primaryArm = $this->hero->slots->filter(function (Slot $slot) {
+            return $slot->slotType->name === SlotType::PRIMARY_ARM;
+        })->first();
+
+        $shield->slots()->save($offArm);
+
+        $this->equipAction->execute($this->hero, $primaryArm, $this->item);
+
+        $this->item = $this->item->fresh();
+        $primaryArm = $primaryArm->fresh();
+        $offArm = $offArm->fresh();
+        $itemSlots = $this->item->slots;
+
+        $this->assertEquals($this->item->getSlotsCount(), $itemSlots->count());
+        $this->assertTrue($itemSlots->allBelongToHasSlots($this->hero));
+        $this->assertEquals($this->item->id, $primaryArm->item_id);
+        $this->assertEquals($this->item->id, $offArm->item_id);
+
+        $shield = $shield->fresh();
+        $shieldSlots = $shield->slots;
+
+        $this->assertEquals($shield->getSlotsCount(), $shieldSlots->count());
+        $this->assertTrue($shieldSlots->allBelongToHasSlots($this->squad));
     }
 }
