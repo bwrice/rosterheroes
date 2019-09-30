@@ -77,7 +77,7 @@ class RaiseMeasurableControllerTest extends TestCase
         $response->assertJson([
             'data' => [
                 'uuid' => $measurable->uuid,
-                'amount_raised' => $expectedAmountRaised
+                'amountRaised' => $expectedAmountRaised
             ]
         ]);
 
