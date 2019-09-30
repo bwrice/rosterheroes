@@ -36,6 +36,13 @@ class SlotCollection extends Collection
         });
     }
 
+    public function uniqueByItem()
+    {
+        return $this->unique(function (Slot $slot) {
+            return $slot->item_id;
+        });
+    }
+
     /**
      * @return ItemCollection
      */
