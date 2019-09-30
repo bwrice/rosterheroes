@@ -16,71 +16,112 @@ use Illuminate\Support\Collection;
 class EquipHeroSlotFromWagonAction
 {
     /**
-     * @var SlotItemInSquadAction
+     * @var SlotItemInWagonAction
      */
-    private $slotItemInSquadAction;
+    protected $slotItemInSquadAction;
 
-    public function __construct(SlotItemInSquadAction $slotItemInSquadAction)
+    /** @var Hero */
+    protected $hero;
+
+    /** @var SlotCollection */
+    protected $heroSlots;
+
+    /** @var Slot */
+    protected $slotToFill;
+
+    /** @var Item */
+    protected $itemToEquip;
+
+    /** @var Collection */
+    protected $slotTransactions;
+
+    /** @var Squad */
+    protected $squad;
+
+    /** @var SlotCollection */
+    protected $filledWagonSlots;
+
+    public function __construct(SlotItemInWagonAction $slotItemInSquadAction)
     {
         $this->slotItemInSquadAction = $slotItemInSquadAction;
     }
 
-
     public function execute(Hero $hero, Slot $slot, Item $item, Collection $slotTransactions = null)
     {
-        $heroSlots = $hero->slots;
-        $matchingSlot = $heroSlots->firstMatching($slot);
+        $this->setProps($hero, $slot, $item, $slotTransactions);
+        $this->validate();
+        $this->emptyHeroSlot();
+        $this->removeFromWagon();
+        $this->equipHero();
+        return $this->slotTransactions;
+    }
+
+    protected function setProps(Hero $hero, Slot $slot, Item $item, Collection $slotTransactions = null)
+    {
+        $this->hero = $hero;
+        $this->slotToFill = $slot;
+        $this->itemToEquip = $item;
+        $this->filledWagonSlots = $item->slots;
+        $this->heroSlots = $hero->slots;
+        $this->slotTransactions = $slotTransactions ?: collect();
+    }
+
+    protected function validate()
+    {
+        $matchingSlot = $this->heroSlots->firstMatching($this->slotToFill);
         if (! $matchingSlot) {
-            throw new SlottingException($slot, $hero, null, "Slot does not belong to hero", SlottingException::CODE_INVALID_SLOT_OWNERSHIP);
+            throw new SlottingException($this->slotToFill, $this->hero, null, "Slot does not belong to hero", SlottingException::CODE_INVALID_SLOT_OWNERSHIP);
         }
-        $squad = $hero->getSquad();
-        if (! $squad) {
-            throw new SlottingException($slot, $hero, $item, "No matching squad for hero", SlottingException::CODE_INVALID_ITEM_OWNERSHIP);
+        $this->squad = $this->hero->getSquad();
+        if (! $this->squad) {
+            throw new SlottingException($this->slotToFill, $this->hero, $this->itemToEquip, "No matching squad for hero", SlottingException::CODE_INVALID_ITEM_OWNERSHIP);
         }
-        $wagonSlots = $item->slots;
-        if (! $wagonSlots->allBelongToHasSlots($squad)) {
-            throw new SlottingException($slot, $hero, $item, "Item does not belong to squad", SlottingException::CODE_INVALID_ITEM_OWNERSHIP);
+        if (! $this->filledWagonSlots->allBelongToHasSlots($this->squad)) {
+            throw new SlottingException($this->slotToFill, $this->hero, $this->itemToEquip, "Item does not belong to squad", SlottingException::CODE_INVALID_ITEM_OWNERSHIP);
         }
-        if (! in_array($slot->slotType->id, $item->getSlotTypeIDs())) {
-            throw new SlottingException($slot, $hero, $item, "Invalid slot for hero", SlottingException::CODE_INVALID_SLOT_TYPE);
+        if (! in_array($this->slotToFill->slotType->id, $this->itemToEquip->getSlotTypeIDs())) {
+            throw new SlottingException($this->slotToFill, $this->hero, $this->itemToEquip, "Invalid slot for hero", SlottingException::CODE_INVALID_SLOT_TYPE);
         }
-        $slotTransactions = $slotTransactions ?: collect();
-        if ($slot->item) {
-            $slotTransactions->push($this->slotItemInSquadAction->execute($squad, $slot->item));
-            $slot = $slot->fresh();
-        }
-        $slotTransactions->push($this->removeFromWagon($item, $wagonSlots, $squad));
-        $slotTransactions->push($this->equipHero($item, $slot, $heroSlots, $hero));
-        return $slotTransactions;
     }
 
-    protected function removeFromWagon(Item $item, SlotCollection $wagonSlots, Squad $squad)
+    protected function emptyHeroSlot()
     {
-        $wagonSlots->emptyItems();
-        return new SlotTransaction($wagonSlots, $squad, $item, SlotTransaction::TYPE_EMPTY);
+        $alreadyEquippedItem = $this->slotToFill->item;
+        if ($alreadyEquippedItem) {
+            $this->slotTransactions = $this->slotTransactions->merge($this->slotItemInSquadAction->execute($this->squad, $alreadyEquippedItem));
+            $this->slotToFill = $this->slotToFill->fresh();
+        }
     }
 
-    protected function equipHero(Item $item, Slot $slotToFill, SlotCollection $heroSlots, Hero $hero)
+    protected function removeFromWagon()
     {
-        $extraSlotsNeeded = $item->getSlotsCount() - 1;
+        $this->filledWagonSlots->emptyItems();
+        $transaction = new SlotTransaction($this->filledWagonSlots, $this->squad, $this->itemToEquip->fresh(), SlotTransaction::TYPE_EMPTY);
+        $this->slotTransactions->push($transaction);
+    }
+
+    protected function equipHero()
+    {
+        $extraSlotsNeeded = $this->itemToEquip->getSlotsCount() - 1;
 
         if ($extraSlotsNeeded > 0) {
-            $validSlotTypeIDs = $item->getSlotTypeIDs();
+            $validSlotTypeIDs = $this->itemToEquip->getSlotTypeIDs();
             /*
              * Take the number of valid slots needed not including the slot we
              * already intend to fill
              */
-            $heroSlotsToFill = $heroSlots->reject(function (Slot $slot) use ($slotToFill) {
-                return $slot->id === $slotToFill->id;
+            $heroSlotsToFill = $this->heroSlots->reject(function (Slot $slot) {
+                return $slot->id === $this->slotToFill->id;
             })->withSlotTypes($validSlotTypeIDs)
                 ->take($extraSlotsNeeded);
         } else {
             $heroSlotsToFill = new SlotCollection();
         }
 
-        $heroSlotsToFill = $heroSlotsToFill->push($slotToFill);
-        $item->slots()->saveMany($heroSlotsToFill);
+        $heroSlotsToFill = $heroSlotsToFill->push($this->slotToFill);
+        $this->itemToEquip->slots()->saveMany($heroSlotsToFill);
 
-        return new SlotTransaction($heroSlotsToFill, $hero, $item, SlotTransaction::TYPE_FILL);
+        $transaction = new SlotTransaction($heroSlotsToFill, $this->hero, $this->itemToEquip->fresh(), SlotTransaction::TYPE_FILL);
+        $this->slotTransactions->push($transaction);
     }
 }
