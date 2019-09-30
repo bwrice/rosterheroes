@@ -11,7 +11,7 @@ use App\Domain\Models\Squad;
 use App\Domain\Support\SlotTransaction;
 use Illuminate\Support\Collection;
 
-class SlotItemInSquadAction
+class SlotItemInWagonAction
 {
     public function execute(Squad $squad, Item $item, Collection $slotTransactions = null)
     {
