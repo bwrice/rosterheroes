@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Domain\Actions\SlotItemInSquadAction;
+use App\Domain\Actions\SlotItemInWagonAction;
 use App\Domain\Models\Item;
 use App\Domain\Models\ItemBase;
 use App\Domain\Models\ItemType;
@@ -35,7 +35,7 @@ class SlotItemInSquadTest extends TestCase
     /** @var StoreHouse */
     protected $storeHouse;
 
-    /** @var SlotItemInSquadAction */
+    /** @var SlotItemInWagonAction */
     protected $domainAction;
 
     public function setUp(): void
@@ -50,7 +50,7 @@ class SlotItemInSquadTest extends TestCase
             'squad_id' => $this->squad->id,
             'province_id' => $this->squad->province_id
         ]);
-        $this->domainAction = app(SlotItemInSquadAction::class);
+        $this->domainAction = app(SlotItemInWagonAction::class);
     }
 
     /**
