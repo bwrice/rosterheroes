@@ -160,9 +160,36 @@ class EquipHeroSlotFromWagonActionTest extends TestCase
         $this->assertEquals($this->item->id, $feetSlot->item_id);
     }
 
+    /**
+     * @test
+     */
     public function it_will_slot_multi_slot_item_if_slots_are_empty()
     {
+        $twoHandAxeType = ItemType::query()->whereHas('itemBase', function(Builder $builder) {
+            return $builder->where('name', '=', ItemBase::TWO_HAND_AXE);
+        })->first();
 
+        $this->item->item_type_id = $twoHandAxeType->id;
+        $this->item->save();
+        $this->item = $this->item->fresh();
+
+        $wagonSlots = $this->squad->slots->take($this->item->getSlotsCount());
+        $this->item->slots()->saveMany($wagonSlots);
+
+        /** @var Slot $primaryArmSlot */
+        $primaryArmSlot = $this->hero->slots->first(function (Slot $slot) {
+            return $slot->slotType->name === SlotType::PRIMARY_ARM;
+        });
+
+        $this->equipAction->execute($this->hero, $primaryArmSlot, $this->item);
+
+        $this->item = $this->item->fresh();
+        $primaryArmSlot = $primaryArmSlot->fresh();
+        $itemSlots = $this->item->slots;
+
+        $this->assertEquals($this->item->getSlotsCount(), $itemSlots->count());
+        $this->assertTrue($itemSlots->allBelongToHasSlots($this->hero));
+        $this->assertEquals($this->item->id, $primaryArmSlot->item_id);
     }
 
     public function it_will_slot_single_item_slot_when_slot_is_full()
