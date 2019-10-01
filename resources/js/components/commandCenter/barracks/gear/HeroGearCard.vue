@@ -24,10 +24,21 @@
                     </v-row>
                     <v-row justify="center" no-gutters>
                         <v-col cols="12">
-                            <FilledSlotIterator :filled-slots="_mobileStorage.filledSlots" :items-per-page="4" :search-label="'Search Wagon'">
+                            <!-- key on FilledSlotIterator prevents pagination persisting -->
+                            <FilledSlotIterator
+                                :filled-slots="mobileStorageSlots"
+                                :items-per-page="4"
+                                :search-label="'Search Wagon'"
+                                :key="this.focusedHeroSlot.uuid"
+                            >
                                 <template v-slot:before-expand="props">
                                     <div class="px-2">
-                                        <FillSlotFromWagonButton></FillSlotFromWagonButton>
+                                        <FillSlotFromWagonButton
+                                            :hero="barracksHeroFromRoute"
+                                            :hero-slot="focusedHeroSlot"
+                                            :item="props.item"
+                                        >
+                                        </FillSlotFromWagonButton>
                                     </div>
                                 </template>
                             </FilledSlotIterator>
@@ -89,6 +100,15 @@
                 }
                 let focusedSlot = this.barracksHeroFromRoute.getSlot(this.focusedSlotUuid);
                 return focusedSlot ? focusedSlot : new Slot({});
+            },
+            mobileStorageSlots() {
+                let focusedSlot = this.focusedHeroSlot;
+                return this._mobileStorage.filledSlots.filter(function (filledSlot) {
+                    let itemBaseSlotTypeNames = filledSlot.item.itemType.itemBase.slotTypeNames;
+                    return itemBaseSlotTypeNames.find(function (slotTypeName) {
+                        return slotTypeName === focusedSlot.slotType.name;
+                    });
+                })
             }
         }
     }
