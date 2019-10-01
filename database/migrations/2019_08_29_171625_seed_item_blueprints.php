@@ -40,7 +40,7 @@ class SeedItemBlueprints extends Migration
                     'Level 1 Strength'
                 ],
                 'attacks' => Attack::query()
-                    ->whereIn('name', Attack::START_SWORD_ATTACKS)
+                    ->whereIn('name', Attack::STARTER_SWORD_ATTACKS)
                     ->get()
             ],
             [
@@ -86,6 +86,42 @@ class SeedItemBlueprints extends Migration
                 'attacks' => Attack::query()
                     ->whereIn('name', Attack::STARTER_STAFF_ATTACKS)
                     ->get()
+            ],
+            [
+                'create_array' => [
+                    'name' => ItemBlueprint::STARTER_ROBES,
+                    'item_class' => $itemClasses->where('name', '=', ItemClass::ENCHANTED)->first(),
+                    'item_type' => $itemTypes->where( 'name', '=', 'Frock' )->first(),
+                    'material' => $materials->where( 'name', '=', 'Cotton' )->first(),
+                ],
+                'enchantments' => [
+                    "Beginner's Blessing"
+                ],
+                'attacks' => []
+            ],
+            [
+                'create_array' => [
+                    'name' => ItemBlueprint::STARTER_LIGHT_ARMOR,
+                    'item_class' => $itemClasses->where('name', '=', ItemClass::ENCHANTED)->first(),
+                    'item_type' => $itemTypes->where( 'name', '=', 'Light Cuirass' )->first(),
+                    'material' => $materials->where( 'name', '=', 'Leather' )->first(),
+                ],
+                'enchantments' => [
+                    "Beginner's Blessing"
+                ],
+                'attacks' => []
+            ],
+            [
+                'create_array' => [
+                    'name' => ItemBlueprint::STARTER_HEAVY_ARMOR,
+                    'item_class' => $itemClasses->where('name', '=', ItemClass::ENCHANTED)->first(),
+                    'item_type' => $itemTypes->where( 'name', '=', 'Breastplate' )->first(),
+                    'material' => $materials->where( 'name', '=', 'Leather' )->first(),
+                ],
+                'enchantments' => [
+                    "Beginner's Blessing"
+                ],
+                'attacks' => []
             ]
         ];
 
