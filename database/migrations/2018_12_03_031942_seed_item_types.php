@@ -13,6 +13,7 @@ class SeedItemTypes extends Migration
      */
     public function up()
     {
+        // TODO: limit materials for each type
         $itemBases = \App\Domain\Models\ItemBase::all();
         $materials = \App\Domain\Models\Material::all();
         $itemTypes = [

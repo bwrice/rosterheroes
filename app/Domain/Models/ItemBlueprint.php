@@ -34,6 +34,9 @@ class ItemBlueprint extends Model
     public const STARTER_SHIELD = 'Starter Shield';
     public const STARTER_BOW = 'Starter Bow';
     public const STARTER_STAFF = 'Starter Staff';
+    public const STARTER_LIGHT_ARMOR = 'Starter Cuirass';
+    public const STARTER_HEAVY_ARMOR = 'Starter Breastplate';
+    public const STARTER_ROBES = 'Starter Frock';
 
     protected $guarded = [];
 

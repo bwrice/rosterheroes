@@ -24,7 +24,8 @@ class WarriorBehavior extends HeroClassBehavior
     {
         return [
             ItemBlueprint::STARTER_SHIELD,
-            ItemBlueprint::STARTER_SWORD
+            ItemBlueprint::STARTER_SWORD,
+            ItemBlueprint::STARTER_HEAVY_ARMOR
         ];
     }
 

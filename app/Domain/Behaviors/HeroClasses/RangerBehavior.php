@@ -23,7 +23,8 @@ class RangerBehavior extends HeroClassBehavior
     protected function getStarterItemBlueprintNames(): array
     {
         return [
-            ItemBlueprint::STARTER_BOW
+            ItemBlueprint::STARTER_BOW,
+            ItemBlueprint::STARTER_LIGHT_ARMOR
         ];
     }
 

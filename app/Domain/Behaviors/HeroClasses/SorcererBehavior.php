@@ -23,7 +23,8 @@ class SorcererBehavior extends HeroClassBehavior
     protected function getStarterItemBlueprintNames(): array
     {
         return [
-            ItemBlueprint::STARTER_STAFF
+            ItemBlueprint::STARTER_STAFF,
+            ItemBlueprint::STARTER_ROBES
         ];
     }
 
