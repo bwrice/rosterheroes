@@ -11,15 +11,26 @@
             v-model="heroGearDialog"
             max-width="600">
             <v-card>
-                <v-card-title>{{focusedHeroSlot.slotType.displayName}}</v-card-title>
+                <v-card-title class="pb-0">
+                    <v-row align="center" justify="center">
+                        <span>{{focusedHeroSlot.slotType.displayName}}</span>
+                        <div class="flex-grow-1"></div>
+                        <v-icon @click="heroGearDialog = false">close</v-icon>
+                    </v-row>
+                </v-card-title>
                 <v-card-text class="px-2">
                     <v-row align="center" justify="center">
                         <template v-if="focusedHeroSlot.item">
-                            <EmptyHeroSlotButton :heroSlot="focusedHeroSlot" :hero="barracksHeroFromRoute"></EmptyHeroSlotButton>
-                            <ItemPanel :item="focusedHeroSlot.item"></ItemPanel>
+                            <v-col cols="12">
+                                <v-row align="center" justify="center" class="py-2">
+                                    <EmptyHeroSlotButton :heroSlot="focusedHeroSlot"
+                                                         :hero="barracksHeroFromRoute"></EmptyHeroSlotButton>
+                                </v-row>
+                                <ItemPanel :item="focusedHeroSlot.item"></ItemPanel>
+                            </v-col>
                         </template>
                         <template v-else>
-                            <h3>(EMPTY)</h3>
+                            <span class="subtitle-1 font-weight-light">(empty)</span>
                         </template>
                     </v-row>
                     <v-row justify="center" no-gutters>
