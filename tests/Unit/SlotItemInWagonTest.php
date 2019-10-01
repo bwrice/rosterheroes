@@ -16,7 +16,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class SlotItemInSquadTest extends TestCase
+class SlotItemInWagonTest extends TestCase
 {
     use DatabaseTransactions;
 
