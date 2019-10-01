@@ -10,6 +10,7 @@ use App\Domain\Models\ItemType;
 use App\Domain\Models\Slot;
 use App\Domain\Models\SlotType;
 use App\Domain\Models\Squad;
+use App\Domain\Models\User;
 use App\Domain\Support\SlotTransaction;
 use App\Nova\Hero;
 use Illuminate\Database\Eloquent\Builder;
@@ -201,5 +202,21 @@ class EquipHeroControllerTest extends TestCase
                     ],
                 ]
             ]);
+    }
+
+    /**
+     * @test
+     */
+    public function a_user_can_not_equip_an_item_to_a_hero_that_doesnt_belong_to_them()
+    {
+        $differentUser = factory(User::class)->create();
+        Passport::actingAs($differentUser);
+
+        $response = $this->json('POST','api/v1/heroes/' . $this->hero->slug . '/equip', [
+            'slot' => $this->primaryArm->uuid,
+            'item' => $this->twoHandSword->uuid
+        ]);
+
+        $response->assertStatus(403);
     }
 }
