@@ -100,8 +100,22 @@ export default {
                     timeout: 3000
                 })
             } catch (e) {
-                console.log(e);
                 dispatch('snackBarError', {});
+            }
+        },
+
+        async equipHeroSlotFromWagon({state, commit, dispatch}, {heroSlug, slotUuid, itemUuid}) {
+
+            try {
+                let transactionResponse = await heroApi.equipFromWagon({
+                    heroSlug,
+                    slotUuid,
+                    itemUuid
+                });
+                console.log(transactionResponse);
+            } catch (e) {
+                console.log(e);
+                dispatch('snackBarError', {})
             }
         }
     }
