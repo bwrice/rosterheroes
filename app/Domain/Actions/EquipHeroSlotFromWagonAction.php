@@ -12,6 +12,7 @@ use App\Domain\Models\Squad;
 use App\Domain\Support\SlotTransaction;
 use App\Exceptions\SlottingException;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class EquipHeroSlotFromWagonAction
 {
@@ -51,8 +52,10 @@ class EquipHeroSlotFromWagonAction
     {
         $this->setProps($hero, $slot, $item, $slotTransactions);
         $this->validate();
-        $this->removeFromWagon();
-        $this->equipHero();
+        DB::transaction(function () {
+            $this->removeFromWagon();
+            $this->equipHero();
+        });
         return $this->slotTransactions;
     }
 
