@@ -113,7 +113,7 @@ class EquipHeroSlotFromWagonAction
         $heroSlotsToFill = $heroSlotsToFill->push($this->slotToFill);
         $heroSlotsToEmpty = $heroSlotsToFill->slotFilled()->uniqueByItem();
         $heroSlotsToEmpty->each(function (Slot $slot) {
-            $this->slotTransactions = $this->emptyHeroSlotAction->execute($slot, $this->hero);
+            $this->slotTransactions = $this->slotTransactions->merge($this->emptyHeroSlotAction->execute($slot, $this->hero));
         });
 
         $heroSlotsToFill = $heroSlotsToFill->fresh();
