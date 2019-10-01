@@ -22,7 +22,7 @@ class SeedAttacks extends Migration
     {
         $attacks = [
             [
-                'name' => Attack::BASIC_BLADE_ATTACK_NAME,
+                'name' => Attack::BASIC_BLADE_ATTACK_NAME, // Slash
                 'damage_type' => DamageType::SINGLE_TARGET,
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
@@ -32,8 +32,14 @@ class SeedAttacks extends Migration
                 'base_damage_rating' => 5.5,
                 'damage_modifier_rating' => 10,
                 'item_bases' => [
+                    ItemBase::DAGGER,
                     ItemBase::SWORD,
-                    ItemBase::DAGGER
+                    ItemBase::TWO_HAND_SWORD,
+                    ItemBase::AXE,
+                    ItemBase::TWO_HAND_AXE,
+                    ItemBase::POLE_ARM,
+                    ItemBase::PSIONIC_ONE_HAND,
+                    ItemBase::PSIONIC_TWO_HAND
                 ],
                 'resource_costs' => [
                     [
@@ -45,7 +51,51 @@ class SeedAttacks extends Migration
                 'requirements' => []
             ],
             [
-                'name' => Attack::BASIC_BOW_ATTACK_NAME,
+                'name' => 'Smack',
+                'damage_type' => DamageType::SINGLE_TARGET,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'grade' => 5,
+                'speed_rating' => 100/16,
+                'base_damage_rating' => 6,
+                'damage_modifier_rating' => 13,
+                'item_bases' => [
+                    ItemBase::MACE,
+                ],
+                'resource_costs' => [
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::STAMINA,
+                        'amount' => 5
+                    ]
+                ],
+                'requirements' => []
+            ],
+            [
+                'name' => 'Poke',
+                'damage_type' => DamageType::SINGLE_TARGET,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'grade' => 5,
+                'speed_rating' => 100/12,
+                'base_damage_rating' => 4,
+                'damage_modifier_rating' => 11,
+                'item_bases' => [
+                    ItemBase::POLE_ARM,
+                ],
+                'resource_costs' => [
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::STAMINA,
+                        'amount' => 4
+                    ]
+                ],
+                'requirements' => []
+            ],
+            [
+                'name' => Attack::BASIC_BOW_ATTACK_NAME, // Arrow
                 'damage_type' => DamageType::SINGLE_TARGET,
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
@@ -67,7 +117,51 @@ class SeedAttacks extends Migration
                 'requirements' => []
             ],
             [
-                'name' => Attack::BASIC_MAGIC_ATTACK_NAME,
+                'name' => 'Bolt',
+                'damage_type' => DamageType::SINGLE_TARGET,
+                'attacker_position' => CombatPosition::BACK_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'grade' => 5,
+                'speed_rating' => 100/30,
+                'base_damage_rating' => 11,
+                'damage_modifier_rating' => 13,
+                'item_bases' => [
+                    ItemBase::CROSSBOW,
+                ],
+                'resource_costs' => [
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::STAMINA,
+                        'amount' => 7
+                    ]
+                ],
+                'requirements' => []
+            ],
+            [
+                'name' => 'Chuck',
+                'damage_type' => DamageType::SINGLE_TARGET,
+                'attacker_position' => CombatPosition::BACK_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'grade' => 5,
+                'speed_rating' => 100/28,
+                'base_damage_rating' => 9,
+                'damage_modifier_rating' => 11,
+                'item_bases' => [
+                    ItemBase::THROWING_WEAPON,
+                ],
+                'resource_costs' => [
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::STAMINA,
+                        'amount' => 6
+                    ]
+                ],
+                'requirements' => []
+            ],
+            [
+                'name' => Attack::BASIC_MAGIC_ATTACK_NAME, // Magic Bolt
                 'damage_type' => DamageType::SINGLE_TARGET,
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
@@ -91,6 +185,35 @@ class SeedAttacks extends Migration
                         'type' => ResourceCost::FIXED,
                         'resource' => MeasurableType::MANA,
                         'amount' => 1
+                    ]
+                ],
+                'requirements' => []
+            ],
+            [
+                'name' => 'Magic Blast',
+                'damage_type' => DamageType::AREA_OF_EFFECT,
+                'attacker_position' => CombatPosition::BACK_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'grade' => 5,
+                'speed_rating' => 100/45,
+                'base_damage_rating' => 8,
+                'damage_modifier_rating' => 10,
+                'item_bases' => [
+                    ItemBase::STAFF,
+                    ItemBase::WAND,
+                    ItemBase::ORB
+                ],
+                'resource_costs' => [
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::STAMINA,
+                        'amount' => 6
+                    ],
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::MANA,
+                        'amount' => 10
                     ]
                 ],
                 'requirements' => []
