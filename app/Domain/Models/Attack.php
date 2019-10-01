@@ -35,7 +35,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  */
 class Attack extends Model
 {
-    public const BASIC_BLADE_ATTACK_NAME = 'Cut';
+    public const BASIC_BLADE_ATTACK_NAME = 'Slash';
     public const BASIC_BOW_ATTACK_NAME = 'Arrow';
     public const BASIC_MAGIC_ATTACK_NAME = 'Magic Bolt';
 
