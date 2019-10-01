@@ -25,9 +25,8 @@ class EquipHeroController extends Controller
         $item = Item::findUuidOrFail($request->item);
 
         try {
-            $slotTransactions = DB::transaction(function () use ($hero, $slot, $item, $domainAction) {
-                return $domainAction->execute($hero, $slot, $item);
-            });
+            $slotTransactions = $domainAction->execute($hero, $slot, $item);
+
         } catch (SlottingException $exception) {
 
             throw ValidationException::withMessages([
