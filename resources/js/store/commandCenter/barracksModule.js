@@ -100,7 +100,16 @@ export default {
                     slotUuid,
                     itemUuid
                 });
-                console.log(transactionResponse);
+                let slotTransactions = transactionResponse.map(function (transaction) {
+                    return new SlotTransaction(transaction);
+                });
+                slotTransactions.forEach(function (slotTransaction) {
+                    slotTransaction.syncSlots({
+                        state,
+                        commit,
+                        dispatch
+                    })
+                })
             } catch (e) {
                 console.log(e);
                 dispatch('snackBarError', {})
