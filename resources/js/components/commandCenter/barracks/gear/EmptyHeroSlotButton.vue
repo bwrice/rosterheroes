@@ -1,5 +1,5 @@
 <template>
-    <v-btn @click="emptySlot" :disabled="pending">Un-Equip Item</v-btn>
+    <v-btn @click="emptySlot" :disabled="pending">Un-Equip {{itemName}}</v-btn>
 </template>
 
 <script>
@@ -37,6 +37,14 @@
                     slotUuid: this.heroSlot.uuid
                 });
                 this.pending = false;
+            }
+        },
+        computed: {
+            itemName() {
+                if (this.heroSlot.item) {
+                    return this.heroSlot.item.name;
+                }
+                return '';
             }
         }
     }
