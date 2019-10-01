@@ -4,6 +4,8 @@ import * as heroApi from '../../api/heroApi';
 import BarracksHero from "../../models/BarracksHero";
 import Measurable from "../../models/Measurable";
 import MobileStorage from "../../models/MobileStorage";
+import SlotsHelper from "../../helpers/SlotsHelper";
+import SlotTransaction from "../../models/SlotTransaction";
 
 export default {
 
@@ -74,32 +76,18 @@ export default {
 
             try {
                 let transactionResponse = await heroApi.emptySlot(heroSlug, slotUuid);
-
-                let heroTransaction = transactionResponse.find(function (transaction) {
-                    return transaction.type === 'empty';
+                let slotTransactions = transactionResponse.map(function (transaction) {
+                    return new SlotTransaction(transaction);
                 });
-
-                let newHeroes = _.cloneDeep(state.barracksHeroes);
-                let matchingHero = newHeroes.find(function (hero) {
-                    return heroSlug === hero.slug;
-                });
-
-                heroTransaction.slots.forEach(function (newSlot) {
-                    let slotIndex = matchingHero.slots.findIndex(function (oldSlot) {
-                        return oldSlot.uuid === newSlot.uuid;
-                    });
-
-                    matchingHero.slots.splice(slotIndex, 1, newSlot);
-                });
-
-                commit('SET_BARRACKS_HEROES', newHeroes);
-
-                // let text = updatedMeasurable.measurableType.name.toUpperCase() + ' raised to ' + updatedMeasurable.currentAmount;
-                dispatch('snackBarSuccess', {
-                    text: 'Item Removed',
-                    timeout: 3000
+                slotTransactions.forEach(function (slotTransaction) {
+                    slotTransaction.syncSlots({
+                        state,
+                        commit,
+                        dispatch
+                    })
                 })
             } catch (e) {
+                console.log(e);
                 dispatch('snackBarError', {});
             }
         },
@@ -118,5 +106,5 @@ export default {
                 dispatch('snackBarError', {})
             }
         }
-    }
+    },
 };
