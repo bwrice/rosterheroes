@@ -5,6 +5,7 @@ namespace App\Domain\Actions;
 
 
 use App\Domain\Collections\SlotCollection;
+use App\Domain\Collections\SlotTransactionCollection;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Item;
 use App\Domain\Models\Slot;
@@ -29,7 +30,7 @@ class EquipHeroSlotFromWagonAction
     /** @var Item */
     protected $itemToEquip;
 
-    /** @var Collection */
+    /** @var SlotTransactionCollection */
     protected $slotTransactions;
 
     /** @var Squad */
@@ -48,7 +49,7 @@ class EquipHeroSlotFromWagonAction
         $this->emptyHeroSlotAction = $emptyHeroSlotAction;
     }
 
-    public function execute(Hero $hero, Slot $slot, Item $item, Collection $slotTransactions = null)
+    public function execute(Hero $hero, Slot $slot, Item $item, SlotTransactionCollection $slotTransactions = null)
     {
         $this->setProps($hero, $slot, $item, $slotTransactions);
         $this->validate();
@@ -59,14 +60,14 @@ class EquipHeroSlotFromWagonAction
         return $this->slotTransactions;
     }
 
-    protected function setProps(Hero $hero, Slot $slot, Item $item, Collection $slotTransactions = null)
+    protected function setProps(Hero $hero, Slot $slot, Item $item, SlotTransactionCollection $slotTransactions = null)
     {
         $this->hero = $hero;
         $this->slotToFill = $slot;
         $this->itemToEquip = $item;
         $this->filledWagonSlots = $item->slots;
         $this->heroSlots = $hero->slots;
-        $this->slotTransactions = $slotTransactions ?: collect();
+        $this->slotTransactions = $slotTransactions ?: new SlotTransactionCollection();
     }
 
     protected function validate()
@@ -116,7 +117,7 @@ class EquipHeroSlotFromWagonAction
         $heroSlotsToFill = $heroSlotsToFill->push($this->slotToFill);
         $heroSlotsToEmpty = $heroSlotsToFill->slotFilled()->uniqueByItem();
         $heroSlotsToEmpty->each(function (Slot $slot) {
-            $this->slotTransactions = $this->slotTransactions->merge($this->emptyHeroSlotAction->execute($slot, $this->hero));
+            $this->slotTransactions = $this->emptyHeroSlotAction->execute($slot, $this->hero, $this->slotTransactions);
         });
 
         $heroSlotsToFill = $heroSlotsToFill->fresh();
