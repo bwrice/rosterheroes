@@ -9,6 +9,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 /**
  * Class HasSlotsResource
  * @package App\Http\Resources
+ *
  */
 class HasSlotsResource extends JsonResource
 {
@@ -23,7 +24,7 @@ class HasSlotsResource extends JsonResource
         /** @var HasSlots $this */
         return [
             'uniqueIdentifier' => $this->getUniqueIdentifier(),
-            'class' => class_basename($this->resource)
+            'type' => strtolower(class_basename($this->resource))
         ];
     }
 }
