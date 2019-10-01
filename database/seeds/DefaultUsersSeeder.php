@@ -3,6 +3,8 @@
 use App\Domain\Actions\AddNewHeroToSquadAction;
 use App\Domain\Actions\CreateSquadAction;
 use App\Domain\Actions\CreateUserAction;
+use App\Domain\Actions\GenerateItemFromBlueprintAction;
+use App\Domain\Actions\SlotItemInWagonAction;
 use App\Domain\Models\HeroClass;
 use App\Domain\Models\HeroRace;
 use Illuminate\Database\Seeder;
@@ -13,13 +15,17 @@ class DefaultUsersSeeder extends Seeder
      * @param CreateUserAction $createUserAction
      * @param CreateSquadAction $createSquadAction
      * @param AddNewHeroToSquadAction $addNewHeroToSquadAction
+     * @param GenerateItemFromBlueprintAction $generateItemFromBlueprintAction
+     * @param SlotItemInWagonAction $slotItemInWagonAction
      * @throws \App\Exceptions\HeroPostNotFoundException
      * @throws \App\Exceptions\InvalidHeroClassException
      */
     public function run(
         CreateUserAction $createUserAction,
         CreateSquadAction $createSquadAction,
-        AddNewHeroToSquadAction $addNewHeroToSquadAction)
+        AddNewHeroToSquadAction $addNewHeroToSquadAction,
+        GenerateItemFromBlueprintAction $generateItemFromBlueprintAction,
+        SlotItemInWagonAction $slotItemInWagonAction)
     {
         $user = $createUserAction->execute('bwrice83@gmail.com', 'Brian Rice', 'password');
         $squad = $createSquadAction->execute($user->id, 'My Squad');
@@ -51,6 +57,15 @@ class DefaultUsersSeeder extends Seeder
             $addNewHeroToSquadAction->execute($squad, $hero['name'], $hero['hero_class'], $hero['hero_race']);
         }
 
+        /** @var \App\Domain\Models\ItemBlueprint $blueprint */
+        $blueprint = \App\Domain\Models\ItemBlueprint::query()->where('description', '=', 'Completely random enchanted item')->first();
+
+        foreach (range(1,20) as $count) {
+            $item = $generateItemFromBlueprintAction->execute($blueprint);
+            $slotItemInWagonAction->execute($squad, $item);
+        }
+
+
         $user = $createUserAction->execute('georigin@gmail.com', 'George Paul Puthukkeril', 'password');
         $squad = $createSquadAction->execute($user->id, 'Squad of George');
 
@@ -79,6 +94,11 @@ class DefaultUsersSeeder extends Seeder
 
         foreach ($heroes as $hero) {
             $addNewHeroToSquadAction->execute($squad, $hero['name'], $hero['hero_class'], $hero['hero_race']);
+        }
+
+        foreach (range(1,20) as $count) {
+            $item = $generateItemFromBlueprintAction->execute($blueprint);
+            $slotItemInWagonAction->execute($squad, $item);
         }
     }
 }
