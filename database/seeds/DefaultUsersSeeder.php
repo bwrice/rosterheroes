@@ -16,7 +16,10 @@ class DefaultUsersSeeder extends Seeder
      * @throws \App\Exceptions\HeroPostNotFoundException
      * @throws \App\Exceptions\InvalidHeroClassException
      */
-    public function run(CreateUserAction $createUserAction, CreateSquadAction $createSquadAction, AddNewHeroToSquadAction $addNewHeroToSquadAction)
+    public function run(
+        CreateUserAction $createUserAction,
+        CreateSquadAction $createSquadAction,
+        AddNewHeroToSquadAction $addNewHeroToSquadAction)
     {
         $user = $createUserAction->execute('bwrice83@gmail.com', 'Brian Rice', 'password');
         $squad = $createSquadAction->execute($user->id, 'My Squad');
