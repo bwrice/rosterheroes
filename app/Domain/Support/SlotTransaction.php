@@ -7,8 +7,9 @@ namespace App\Domain\Support;
 use App\Domain\Collections\SlotCollection;
 use App\Domain\Interfaces\HasSlots;
 use App\Domain\Models\Item;
+use Illuminate\Contracts\Support\Arrayable;
 
-class SlotTransaction
+class SlotTransaction implements Arrayable
 {
     public const TYPE_EMPTY = 'empty';
     public const TYPE_FILL = 'fill';
@@ -68,5 +69,20 @@ class SlotTransaction
     public function getItem(): Item
     {
         return $this->item;
+    }
+
+    /**
+     * Get the instance as an array.
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        return [
+            'slots' => $this->slots,
+            'item' => $this->item,
+            'hasSlots' => $this->hasSlots,
+            'type' => $this->type
+        ];
     }
 }
