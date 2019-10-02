@@ -10,6 +10,7 @@ use App\Domain\Interfaces\UsesItems;
 use App\Domain\Models\Slot;
 use App\Domain\Collections\SlotCollection;
 use App\Domain\Interfaces\Slottable;
+use App\Domain\Support\ItemNameBuilder;
 use App\StorableEvents\ItemCreated;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -113,8 +114,9 @@ class Item extends EventSourcedModel implements Slottable, HasAttacks
 
     protected function buildItemName(): string
     {
-        //TODO
-        return 'Item';
+        /** @var ItemNameBuilder $nameBuilder */
+        $nameBuilder = app(ItemNameBuilder::class);
+        return $nameBuilder->buildItemName($this);
     }
 
     public function adjustCombatSpeed(float $speed): float
