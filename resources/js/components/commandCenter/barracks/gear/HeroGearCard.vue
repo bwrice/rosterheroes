@@ -26,7 +26,7 @@
                                     <EmptyHeroSlotButton :heroSlot="focusedHeroSlot"
                                                          :hero="barracksHeroFromRoute"></EmptyHeroSlotButton>
                                 </v-row>
-                                <ItemPanel :item="focusedHeroSlot.item"></ItemPanel>
+                                <ItemCard :item="focusedHeroSlot.item"></ItemCard>
                             </v-col>
                         </template>
                         <template v-else>
@@ -71,7 +71,7 @@
     import {barracksHeroMixin} from "../../../../mixins/barracksHeroMixin";
 
     import HeroGearSVG from "./HeroGearSVG";
-    import ItemPanel from "../../global/ItemCard";
+    import ItemCard from "../../global/ItemCard";
     import EmptyHeroSlotButton from "./EmptyHeroSlotButton";
     import FilledSlotIterator from "../../global/FilledSlotIterator";
     import FillSlotFromWagonButton from "./FillSlotFromWagonButton";
@@ -82,7 +82,7 @@
             FillSlotFromWagonButton,
             FilledSlotIterator,
             EmptyHeroSlotButton,
-            ItemPanel,
+            ItemCard,
             HeroGearSVG
         },
         mixins: [
