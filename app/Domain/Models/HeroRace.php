@@ -2,11 +2,13 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Behaviors\HeroRace\DwarfBehavior;
+use App\Domain\Behaviors\HeroRace\ElfBehavior;
 use App\Domain\Behaviors\HeroRace\HeroRaceBehavior;
+use App\Domain\Behaviors\HeroRace\HumanBehavior;
+use App\Domain\Behaviors\HeroRace\OrcBehavior;
 use App\Domain\Collections\HeroRaceCollection;
-use App\Domain\Models\Position;
 use App\Domain\Collections\PositionCollection;
-use App\Domain\Models\HeroPostType;
 use App\Exceptions\UnknownBehaviorException;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -87,17 +89,17 @@ class HeroRace extends Model
         ];
     }
 
-    public function getBehavior()
+    public function getBehavior(): HeroRaceBehavior
     {
         switch ($this->name) {
             case self::HUMAN:
-                return new HeroRaceBehavior('human');
+                return app(HumanBehavior::class);
             case self::ELF:
-                return new HeroRaceBehavior('elf');
+                return app(ElfBehavior::class);
             case self::DWARF:
-                return new HeroRaceBehavior('dwarf');
+                return app(DwarfBehavior::class);
             case self::ORC:
-                return new HeroRaceBehavior('orc');
+                return app(OrcBehavior::class);
         }
         throw new UnknownBehaviorException($this->name, HeroRaceBehavior::class);
     }
