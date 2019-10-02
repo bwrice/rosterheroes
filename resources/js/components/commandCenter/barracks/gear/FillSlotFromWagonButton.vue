@@ -1,5 +1,11 @@
 <template>
-    <v-btn color="success" @click="equip" :disabled="pending">
+    <v-btn
+        fab
+        x-small
+        color="success"
+        @click="equip"
+        :disabled="pending"
+    >
         <v-icon>unarchive</v-icon>
     </v-btn>
 </template>
