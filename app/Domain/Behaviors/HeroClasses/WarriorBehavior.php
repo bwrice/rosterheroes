@@ -17,6 +17,11 @@ class WarriorBehavior extends HeroClassBehavior
         parent::__construct($measurableCalculator, $measurableOperator);
     }
 
+    public function getIconAlt(): string
+    {
+        return 'warrior hero class';
+    }
+
     /**
      * @return array
      */

@@ -92,8 +92,8 @@ class HeroClass extends Model
         return $builder->whereIn('name', self::REQUIRED_STARTING_CLASSES);
     }
 
-    public function getIconSrc()
+    public function getIcon()
     {
-        return $this->getBehavior()->getIconSrc();
+        return $this->getBehavior()->getIcon();
     }
 }

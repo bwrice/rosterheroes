@@ -17,6 +17,16 @@ class RangerBehavior extends HeroClassBehavior
         parent::__construct($measurableCalculator, $measurableOperator);
     }
 
+    public function getIconSrc(): string
+    {
+        return asset('svg/icons/heroClasses/ranger.svg');
+    }
+
+    public function getIconAlt(): string
+    {
+        return 'ranger hero class';
+    }
+
     /**
      * @return array
      */
@@ -31,10 +41,5 @@ class RangerBehavior extends HeroClassBehavior
     public function getStartingCombatPosition(): CombatPosition
     {
         return CombatPosition::backLine();
-    }
-
-    public function getIconSrc(): string
-    {
-        return asset('svg/icons/heroClasses/ranger.svg');
     }
 }

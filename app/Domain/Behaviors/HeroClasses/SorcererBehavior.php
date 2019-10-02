@@ -17,6 +17,11 @@ class SorcererBehavior extends HeroClassBehavior
         parent::__construct($measurableCalculator, $measurableOperator);
     }
 
+    public function getIconAlt(): string
+    {
+        return 'sorcerer hero class';
+    }
+
     /**
      * @return array
      */
