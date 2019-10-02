@@ -1,7 +1,7 @@
 <template>
-    <v-card v-if="focusedSlotUuid">
+    <div id="hero-gear-card"><v-card v-if="focusedSlotUuid">
         <v-card-title class="pb-0">
-            <v-row align="center" justify="center">
+            <v-row align="center" justify="center" class="px-2">
                 <span>{{focusedHeroSlot.slotType.displayName}}</span>
                 <div class="flex-grow-1"></div>
                 <v-icon @click="focusedSlotUuid = null">close</v-icon>
@@ -47,18 +47,19 @@
             </v-row>
         </v-card-text>
         <v-card-actions>
-            <v-btn @click="focusedSlotUuid = null" block>Close</v-btn>
+            <v-btn href="#hero-gear-card" @click="focusedSlotUuid = null" block>Close</v-btn>
         </v-card-actions>
     </v-card>
-    <v-card v-else>
-        <v-sheet class="py-5" style="background-image: linear-gradient(to bottom right, #524c59, #7c7287 , #524c59)">
-            <HeroGearSVG
-                v-if="barracksHeroFromRoute"
-                :hero="barracksHeroFromRoute"
-                @heroSlotClicked="handleHeroSlotClicked"
-            ></HeroGearSVG>
-        </v-sheet>
-    </v-card>
+        <v-card v-else>
+            <v-sheet class="py-5" style="background-image: linear-gradient(to bottom right, #524c59, #7c7287 , #524c59)">
+                <HeroGearSVG
+                    v-if="barracksHeroFromRoute"
+                    :hero="barracksHeroFromRoute"
+                    @heroSlotClicked="handleHeroSlotClicked"
+                ></HeroGearSVG>
+            </v-sheet>
+        </v-card>
+    </div>
 </template>
 
 <script>
@@ -93,7 +94,7 @@
         methods: {
             handleHeroSlotClicked(slotUuid) {
                 this.focusedSlotUuid = slotUuid;
-            }
+            },
         },
         computed: {
             ...mapGetters([
