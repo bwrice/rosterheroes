@@ -18,7 +18,10 @@
             ></v-text-field>
         </template>
         <template v-slot:item="props">
-            <FilledSlotPanel :filled-slot="props.item">
+            <FilledSlotPanel
+                :filled-slot="props.item"
+                :item-name-truncate-extra="itemNameTruncateExtra"
+            >
                 <template v-slot:before-expand="panelProps">
                     <!-- nested scoped slots -->
                     <slot name="before-expand" :item="panelProps.item">
@@ -78,15 +81,16 @@
             itemsPerPage: {
                 type: Number,
                 default: 10
+            },
+            itemNameTruncateExtra: {
+                type: Number,
+                default: 0
             }
         },
         data() {
             return {
                 page: 1,
-                slotSearch: '',
-                user: {
-                    name: 'Brian'
-                }
+                slotSearch: ''
             }
         },
         methods: {
