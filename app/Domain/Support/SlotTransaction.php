@@ -85,4 +85,24 @@ class SlotTransaction implements Arrayable
             'type' => $this->type
         ];
     }
+
+    public function refresh()
+    {
+        $this->slots = $this->slots->fresh([
+            'slotType',
+            'item.itemType',
+            'item.attacks.attackerPosition',
+            'item.attacks.targetPosition',
+            'item.attacks.damageType',
+            'item.enchantments.measurableBoosts.measurableType',
+        ]);
+
+        $this->item = $this->item->fresh([
+            'itemType.itemBase',
+            'attacks.attackerPosition',
+            'attacks.targetPosition',
+            'attacks.damageType',
+            'enchantments.measurableBoosts.measurableType',
+        ]);
+    }
 }
