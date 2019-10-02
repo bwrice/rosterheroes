@@ -22,7 +22,7 @@ class BarracksHeroesController extends Controller
             'playerSpirit.player',
             'measurables.measurableType',
             'slots.slotType',
-            'slots.item.itemType',
+            'slots.item.itemType.itemBase',
             'slots.item.attacks.attackerPosition',
             'slots.item.attacks.targetPosition',
             'slots.item.attacks.damageType',

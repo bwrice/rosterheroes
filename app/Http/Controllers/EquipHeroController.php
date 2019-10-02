@@ -34,6 +34,7 @@ class EquipHeroController extends Controller
             ]);
         }
 
+        $slotTransactions->refresh();
         return SlotTransactionResource::collection($slotTransactions);
     }
 }

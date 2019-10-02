@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Domain\Actions\EmptyHeroSlotAction;
 use App\Domain\Collections\SlotCollection;
+use App\Domain\Collections\SlotTransactionCollection;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Slot;
 use App\Http\Resources\SlotTransactionResource;
@@ -32,15 +33,16 @@ class EmptyHeroSlotsController extends Controller
             $slots->push($singleSlot);
         };
 
-        /** @var Collection $slotTransactions */
+        /** @var SlotTransactionCollection $slotTransactions */
         $slotTransactions = DB::transaction(function () use ($hero, $slots, $domainAction) {
-            $slotTransactions = new Collection();
+            $slotTransactions = new SlotTransactionCollection();
             $slots->each(function (Slot $slot) use ($hero, &$slotTransactions, $domainAction) {
                 $slotTransactions = $slotTransactions->merge($domainAction->execute($slot, $hero));
             });
             return $slotTransactions;
         });
 
+        $slotTransactions->refresh();
         return SlotTransactionResource::collection($slotTransactions);
     }
 }
