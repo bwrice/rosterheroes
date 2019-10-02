@@ -28,9 +28,13 @@ class SorcererBehavior extends HeroClassBehavior
         ];
     }
 
-
     public function getStartingCombatPosition(): CombatPosition
     {
         return CombatPosition::backLine();
+    }
+
+    public function getIconSrc(): string
+    {
+        return asset('svg/icons/heroClasses/sorcerer.svg');
     }
 }

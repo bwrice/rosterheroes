@@ -33,4 +33,9 @@ class WarriorBehavior extends HeroClassBehavior
     {
         return CombatPosition::frontLine();
     }
+
+    public function getIconSrc(): string
+    {
+        return asset('svg/icons/heroClasses/warrior.svg');
+    }
 }

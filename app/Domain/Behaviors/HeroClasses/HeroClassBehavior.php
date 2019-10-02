@@ -41,6 +41,8 @@ abstract class HeroClassBehavior
 
     abstract public function getStartingCombatPosition(): CombatPosition;
 
+    abstract public function getIconSrc(): string;
+
     /**
      * @return ItemBlueprintCollection
      */

@@ -32,4 +32,9 @@ class RangerBehavior extends HeroClassBehavior
     {
         return CombatPosition::backLine();
     }
+
+    public function getIconSrc(): string
+    {
+        return asset('svg/icons/heroClasses/ranger.svg');
+    }
 }
