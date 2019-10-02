@@ -45,22 +45,10 @@
                 </v-row>
                 <v-row class="no-gutters">
                     <v-col cols="6" class="pa-0">
-                        <v-sheet color="(255,255,255,0.3)" class="attack-icon">
-                            <v-img
-                                :src="attack.attackerPosition.icon.src"
-                                :alt="attack.attackerPosition.icon.alt"
-                            >
-                            </v-img>
-                        </v-sheet>
+                        <SvgIconSheet :svg-icon="attack.attackerPosition.icon"></SvgIconSheet>
                     </v-col>
                     <v-col cols="6" class="pa-0">
-                        <v-sheet color="(255,255,255,0.3)" class="attack-icon">
-                            <v-img
-                                :src="attack.targetPosition.icon.src"
-                                :alt="attack.targetPosition.icon.alt"
-                            >
-                            </v-img>
-                        </v-sheet>
+                        <SvgIconSheet :svg-icon="attack.targetPosition.icon"></SvgIconSheet>
                     </v-col>
                 </v-row>
                 <v-row>
@@ -74,9 +62,11 @@
 
 <script>
     import Attack from "../../../models/Attack";
+    import SvgIconSheet from "./SvgIconSheet";
 
     export default {
         name: "AttackPanel",
+        components: {SvgIconSheet},
         props: {
             attack: {
                 type: Attack,
@@ -87,7 +77,5 @@
 </script>
 
 <style scoped>
-    .attack-icon {
-        margin: 2px;
-    }
+
 </style>
