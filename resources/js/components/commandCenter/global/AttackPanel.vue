@@ -1,5 +1,5 @@
 <template>
-    <v-sheet color="rgba(69, 0, 92, .2)" class="px-2">
+    <v-sheet color="rgba(69, 0, 92, .2)" class="px-2 mb-1">
         <v-row>
             <v-col cols="7" class="py-1 px-2">
                 <v-row class="no-gutters">
