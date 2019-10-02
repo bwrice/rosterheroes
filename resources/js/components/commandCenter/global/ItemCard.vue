@@ -10,6 +10,7 @@
                 <v-col cols="6" class="px-2">
                     <p class="caption ma-0">
                         Type: {{item.itemType.name}}<br>
+                        Base: {{item.itemType.itemBase.name}}<br>
                         Class: {{item.itemClass.name}}<br>
                         Material: {{item.material.name}}<br>
                     </p>
