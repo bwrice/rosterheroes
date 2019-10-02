@@ -8,7 +8,7 @@
                              style="margin: 1px 0 1px 0"
                     >
                         <v-row align="center" justify="center" class="mx-2">
-                            <span class="title font-weight-light pa-2">{{filledSlot.item.name}}</span>
+                            <span class="subtitle-2 font-weight-light pa-2">{{itemName}}</span>
                             <div class="flex-grow-1"></div>
                             <slot name="before-expand" :item="filledSlot.item">
                                 <!-- Slot -->
@@ -43,11 +43,26 @@
             filledSlot: {
                 type: Slot,
                 required: true
+            },
+            nameCharacterBuffer: {
+                type: Number,
+                default: 0
             }
         },
         data() {
             return {
                 expanded: false
+            }
+        },
+        computed: {
+            itemName() {
+                let windowWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+                let maxLength = Math.floor(windowWidth/12);
+                maxLength -= this.nameCharacterBuffer;
+                maxLength = Math.min(maxLength, 40);
+                return _.truncate(this.filledSlot.item.name, {
+                    length: maxLength
+                })
             }
         }
     }
