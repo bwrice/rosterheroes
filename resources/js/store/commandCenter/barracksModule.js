@@ -4,7 +4,6 @@ import * as heroApi from '../../api/heroApi';
 import BarracksHero from "../../models/BarracksHero";
 import Measurable from "../../models/Measurable";
 import MobileStorage from "../../models/MobileStorage";
-import SlotsHelper from "../../helpers/SlotsHelper";
 import SlotTransaction from "../../models/SlotTransaction";
 
 export default {
