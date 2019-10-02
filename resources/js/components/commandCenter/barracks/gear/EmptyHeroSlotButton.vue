@@ -1,5 +1,12 @@
 <template>
-    <v-btn @click="emptySlot" :disabled="pending">Un-Equip {{itemName}}</v-btn>
+    <v-btn
+        small
+        @click="emptySlot"
+        :disabled="pending"
+        color="warning"
+    >
+        Un-Equip {{itemName}}
+    </v-btn>
 </template>
 
 <script>
@@ -42,7 +49,12 @@
         computed: {
             itemName() {
                 if (this.heroSlot.item) {
-                    return this.heroSlot.item.name;
+                    let windowWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+                    let maxLength = Math.floor(windowWidth/18);
+                    maxLength = Math.min(maxLength, 26);
+                    return _.truncate(this.heroSlot.item.name, {
+                        length: maxLength
+                    });
                 }
                 return '';
             }
