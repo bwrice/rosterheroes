@@ -44,7 +44,7 @@
                 type: Slot,
                 required: true
             },
-            nameCharacterBuffer: {
+            itemNameTruncateExtra: {
                 type: Number,
                 default: 0
             }
@@ -58,7 +58,7 @@
             itemName() {
                 let windowWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
                 let maxLength = Math.floor(windowWidth/12);
-                maxLength -= this.nameCharacterBuffer;
+                maxLength -= this.itemNameTruncateExtra;
                 maxLength = Math.min(maxLength, 40);
                 return _.truncate(this.filledSlot.item.name, {
                     length: maxLength

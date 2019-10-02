@@ -38,9 +38,10 @@
                             <!-- key on FilledSlotIterator prevents pagination persisting -->
                             <FilledSlotIterator
                                 :filled-slots="mobileStorageSlots"
-                                :items-per-page="4"
+                                :items-per-page="6"
                                 :search-label="'Search Wagon'"
                                 :key="this.focusedHeroSlot.uuid"
+                                :item-name-truncate-extra="4"
                             >
                                 <template v-slot:before-expand="props">
                                     <div class="px-2">
