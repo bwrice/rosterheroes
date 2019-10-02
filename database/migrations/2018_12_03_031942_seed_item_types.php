@@ -652,7 +652,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::POLE_ARM,
+                'base' => \App\Domain\Models\ItemBase::POLEARM,
                 'name' => 'Spear',
                 'grade' => 17,
 
@@ -1346,7 +1346,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::POLE_ARM,
+                'base' => \App\Domain\Models\ItemBase::POLEARM,
                 'name' => 'Glaive',
                 'grade' => 29,
 
@@ -2039,7 +2039,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::POLE_ARM,
+                'base' => \App\Domain\Models\ItemBase::POLEARM,
                 'name' => 'Scythe',
                 'grade' => 42,
 
@@ -2480,7 +2480,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::POLE_ARM,
+                'base' => \App\Domain\Models\ItemBase::POLEARM,
                 'name' => 'Trident',
                 'grade' => 51,
 
@@ -3236,7 +3236,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::POLE_ARM,
+                'base' => \App\Domain\Models\ItemBase::POLEARM,
                 'name' => 'Halberd',
                 'grade' => 63,
 
@@ -4118,7 +4118,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::POLE_ARM,
+                'base' => \App\Domain\Models\ItemBase::POLEARM,
                 'name' => 'Naginata',
                 'grade' => 80,
 
@@ -4811,7 +4811,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::POLE_ARM,
+                'base' => \App\Domain\Models\ItemBase::POLEARM,
                 'name' => 'War Scythe',
                 'grade' => 92,
 

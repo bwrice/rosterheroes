@@ -37,7 +37,7 @@ class SeedAttacks extends Migration
                     ItemBase::TWO_HAND_SWORD,
                     ItemBase::AXE,
                     ItemBase::TWO_HAND_AXE,
-                    ItemBase::POLE_ARM,
+                    ItemBase::POLEARM,
                     ItemBase::PSIONIC_ONE_HAND,
                     ItemBase::PSIONIC_TWO_HAND
                 ],
@@ -83,7 +83,7 @@ class SeedAttacks extends Migration
                 'base_damage_rating' => 4,
                 'damage_modifier_rating' => 11,
                 'item_bases' => [
-                    ItemBase::POLE_ARM,
+                    ItemBase::POLEARM,
                 ],
                 'resource_costs' => [
                     [

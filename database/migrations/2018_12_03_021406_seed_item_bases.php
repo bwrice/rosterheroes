@@ -26,7 +26,7 @@ class SeedItemBases extends ModelNameSeederMigration
             ItemBase::BOW,
             ItemBase::CROSSBOW,
             ItemBase::THROWING_WEAPON,
-            ItemBase::POLE_ARM,
+            ItemBase::POLEARM,
             ItemBase::TWO_HAND_SWORD,
             ItemBase::TWO_HAND_AXE,
             ItemBase::WAND,

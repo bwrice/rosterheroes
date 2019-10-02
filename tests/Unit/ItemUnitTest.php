@@ -218,8 +218,8 @@ class ItemUnitTest extends TestCase
                 'lighterBase' => ItemBase::MACE,
                 'heavierBase' => ItemBase::TWO_HAND_AXE
             ],
-            ItemBase::POLE_ARM . ' vs ' . ItemBase::TWO_HAND_SWORD => [
-                'lighterBase' => ItemBase::POLE_ARM,
+            ItemBase::POLEARM . ' vs ' . ItemBase::TWO_HAND_SWORD => [
+                'lighterBase' => ItemBase::POLEARM,
                 'heavierBase' => ItemBase::TWO_HAND_SWORD
             ],
             ItemBase::BOW . ' vs ' . ItemBase::CROSSBOW => [
@@ -611,8 +611,8 @@ class ItemUnitTest extends TestCase
             ItemBase::PSIONIC_SHIELD => [
                 'itemBaseName' => ItemBase::PSIONIC_SHIELD
             ],
-            ItemBase::POLE_ARM => [
-                'itemBaseName' => ItemBase::POLE_ARM
+            ItemBase::POLEARM => [
+                'itemBaseName' => ItemBase::POLEARM
             ],
             ItemBase::TWO_HAND_SWORD => [
                 'itemBaseName' => ItemBase::TWO_HAND_SWORD
@@ -762,8 +762,8 @@ class ItemUnitTest extends TestCase
             ItemBase::SHIELD => [
                 'itemBaseName' => ItemBase::SHIELD
             ],
-            ItemBase::POLE_ARM => [
-                'itemBaseName' => ItemBase::POLE_ARM
+            ItemBase::POLEARM => [
+                'itemBaseName' => ItemBase::POLEARM
             ],
             ItemBase::STAFF => [
                 'itemBaseName' => ItemBase::STAFF
@@ -823,12 +823,12 @@ class ItemUnitTest extends TestCase
                 'lesserBlockChanceBase' => ItemBase::STAFF,
                 'greatBlockChanceBase' => ItemBase::TWO_HAND_AXE
             ],
-            ItemBase::PSIONIC_TWO_HAND . ' vs ' . ItemBase::POLE_ARM => [
+            ItemBase::PSIONIC_TWO_HAND . ' vs ' . ItemBase::POLEARM => [
                 'lesserBlockChanceBase' => ItemBase::PSIONIC_TWO_HAND,
-                'greatBlockChanceBase' => ItemBase::POLE_ARM
+                'greatBlockChanceBase' => ItemBase::POLEARM
             ],
-            ItemBase::POLE_ARM . ' vs ' . ItemBase::PSIONIC_SHIELD => [
-                'lesserBlockChanceBase' => ItemBase::POLE_ARM,
+            ItemBase::POLEARM . ' vs ' . ItemBase::PSIONIC_SHIELD => [
+                'lesserBlockChanceBase' => ItemBase::POLEARM,
                 'greatBlockChanceBase' => ItemBase::PSIONIC_SHIELD
             ],
             ItemBase::TWO_HAND_AXE . ' vs ' . ItemBase::SHIELD => [
@@ -877,8 +877,8 @@ class ItemUnitTest extends TestCase
             ItemBase::SHIELD => [
                 'itemBaseName' => ItemBase::SHIELD
             ],
-            ItemBase::POLE_ARM => [
-                'itemBaseName' => ItemBase::POLE_ARM
+            ItemBase::POLEARM => [
+                'itemBaseName' => ItemBase::POLEARM
             ],
             ItemBase::STAFF => [
                 'itemBaseName' => ItemBase::STAFF
@@ -924,8 +924,8 @@ class ItemUnitTest extends TestCase
             ItemBase::SHIELD => [
                 'itemBaseName' => ItemBase::SHIELD
             ],
-            ItemBase::POLE_ARM => [
-                'itemBaseName' => ItemBase::POLE_ARM
+            ItemBase::POLEARM => [
+                'itemBaseName' => ItemBase::POLEARM
             ],
             ItemBase::STAFF => [
                 'itemBaseName' => ItemBase::STAFF

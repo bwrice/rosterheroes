@@ -102,8 +102,8 @@ class FillSlotActionTest extends TestCase
             ItemBase::THROWING_WEAPON => [
                 'item_base' => ItemBase::THROWING_WEAPON,
             ],
-            ItemBase::POLE_ARM => [
-                'item_base' => ItemBase::POLE_ARM,
+            ItemBase::POLEARM => [
+                'item_base' => ItemBase::POLEARM,
             ],
             ItemBase::TWO_HAND_SWORD => [
                 'item_base' => ItemBase::TWO_HAND_SWORD,

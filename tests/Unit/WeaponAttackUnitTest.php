@@ -128,8 +128,8 @@ class WeaponAttackUnitTest extends TestCase
                     MeasurableType::FOCUS,
                 ]
             ],
-            ItemBase::POLE_ARM => [
-                'itemBaseName' => ItemBase::POLE_ARM,
+            ItemBase::POLEARM => [
+                'itemBaseName' => ItemBase::POLEARM,
                 'measurableTypeNames' => [
                     MeasurableType::VALOR,
                     MeasurableType::AGILITY,
@@ -281,8 +281,8 @@ class WeaponAttackUnitTest extends TestCase
                     MeasurableType::FOCUS,
                 ]
             ],
-            ItemBase::POLE_ARM => [
-                'itemBaseName' => ItemBase::POLE_ARM,
+            ItemBase::POLEARM => [
+                'itemBaseName' => ItemBase::POLEARM,
                 'measurableTypeNames' => [
                     MeasurableType::VALOR,
                     MeasurableType::AGILITY,
@@ -401,8 +401,8 @@ class WeaponAttackUnitTest extends TestCase
             ItemBase::THROWING_WEAPON => [
                 'itemBaseName' => ItemBase::THROWING_WEAPON,
             ],
-            ItemBase::POLE_ARM => [
-                'itemBaseName' => ItemBase::POLE_ARM,
+            ItemBase::POLEARM => [
+                'itemBaseName' => ItemBase::POLEARM,
             ],
             ItemBase::TWO_HAND_SWORD => [
                 'itemBaseName' => ItemBase::TWO_HAND_SWORD,

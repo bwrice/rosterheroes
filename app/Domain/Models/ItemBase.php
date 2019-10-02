@@ -62,40 +62,40 @@ class ItemBase extends Model
 
     use HasUniqueNames;
 
-    public const DAGGER = 'dagger';
-    public const SWORD = 'sword';
-    public const AXE = 'axe';
-    public const MACE = 'mace';
-    public const BOW = 'bow';
-    public const CROSSBOW = 'crossbow';
-    public const THROWING_WEAPON = 'throwing-weapon';
-    public const POLE_ARM = 'pole-arm';
-    public const TWO_HAND_SWORD = 'two-hand-sword';
-    public const TWO_HAND_AXE = 'two-hand-axe';
-    public const WAND = 'wand';
-    public const ORB = 'orb';
-    public const STAFF = 'staff';
-    public const PSIONIC_ONE_HAND = 'psionic-one-hand';
-    public const PSIONIC_TWO_HAND = 'psionic-two-hand';
-    public const SHIELD = 'shield';
-    public const PSIONIC_SHIELD = 'psionic-shield';
-    public const HELMET = 'helmet';
-    public const CAP = 'cap';
+    public const DAGGER = 'Dagger';
+    public const SWORD = 'Sword';
+    public const AXE = 'Axe';
+    public const MACE = 'Mace';
+    public const BOW = 'Bow';
+    public const CROSSBOW = 'Crossbow';
+    public const THROWING_WEAPON = 'Throwing Weapon';
+    public const POLEARM = 'Polearm';
+    public const TWO_HAND_SWORD = 'Two Hand Sword';
+    public const TWO_HAND_AXE = 'Two Hand Axe';
+    public const WAND = 'Wand';
+    public const ORB = 'Orb';
+    public const STAFF = 'Staff';
+    public const PSIONIC_ONE_HAND = 'Psionic One Hand';
+    public const PSIONIC_TWO_HAND = 'Psionic Two Hand';
+    public const SHIELD = 'Shield';
+    public const PSIONIC_SHIELD = 'Psionic Shield';
+    public const HELMET = 'Helmet';
+    public const CAP = 'Cap';
 //    public const EYE_WEAR = 'eye-wear';
-    public const HEAVY_ARMOR = 'heavy-armor';
-    public const LIGHT_ARMOR = 'light-armor';
-    public const LEGGINGS = 'leggings';
-    public const ROBES = 'robes';
-    public const GLOVES = 'gloves';
-    public const GAUNTLETS = 'gauntlets';
-    public const SHOES = 'shoes';
-    public const BOOTS = 'boots';
-    public const BELT = 'belt';
-    public const SASH = 'sash';
-    public const NECKLACE = 'necklace';
-    public const BRACELET = 'bracelet';
-    public const RING = 'ring';
-    public const CROWN = 'crown';
+    public const HEAVY_ARMOR = 'Heavy Armor';
+    public const LIGHT_ARMOR = 'Light Armor';
+    public const LEGGINGS = 'Leggings';
+    public const ROBES = 'Robes';
+    public const GLOVES = 'Gloves';
+    public const GAUNTLETS = 'Gauntlets';
+    public const SHOES = 'Shoes';
+    public const BOOTS = 'Boots';
+    public const BELT = 'Belt';
+    public const SASH = 'Sash';
+    public const NECKLACE = 'Necklace';
+    public const BRACELET = 'Bracelet';
+    public const RING = 'Ring';
+    public const CROWN = 'Crown';
 
     protected $guarded = [];
 
@@ -157,7 +157,7 @@ class ItemBase extends Model
                 return app(CrossbowBehavior::class);
             case self::THROWING_WEAPON:
                 return app(ThrowingWeaponBehavior::class);
-            case self::POLE_ARM:
+            case self::POLEARM:
                 return app(PoleArmBehavior::class);
             case self::TWO_HAND_SWORD:
                 return app(TwoHandSwordBehavior::class);
