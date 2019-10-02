@@ -19,7 +19,10 @@ class BarracksHeroesController extends Controller
         $heroes->load([
             'heroRace',
             'heroClass',
+            'combatPosition',
             'playerSpirit.player',
+            'playerSpirit.game.homeTeam',
+            'playerSpirit.game.awayTeam',
             'measurables.measurableType',
             'slots.slotType',
             'slots.item.itemType.itemBase',

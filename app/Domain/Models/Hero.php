@@ -53,6 +53,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property HeroClass $heroClass
  * @property HeroPost $heroPost
  * @property HeroRace $heroRace
+ * @property CombatPosition $combatPosition
  * @property PlayerSpirit|null $playerSpirit
  *
  * @property SlotCollection $slots
@@ -114,6 +115,11 @@ class Hero extends EventSourcedModel implements HasSlots, RaisesMeasurables, Use
     public function heroPost()
     {
         return $this->hasOne(HeroPost::class);
+    }
+
+    public function combatPosition()
+    {
+        return $this->belongsTo(CombatPosition::class);
     }
 
     public function playerSpirit()
