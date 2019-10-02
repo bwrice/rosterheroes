@@ -9,23 +9,18 @@
 namespace App\Domain\Behaviors\HeroRace;
 
 
-class HeroRaceBehavior
+abstract class HeroRaceBehavior
 {
-    /**
-     * @var string
-     */
-    private $iconName;
+    abstract public function getIconSrc(): string;
 
-    public function __construct(string $iconName)
+    abstract public function getIconAlt(): string;
+
+    public function getIcon()
     {
-        $this->iconName = $iconName;
+        return [
+            'src' => $this->getIconSrc(),
+            'alt' => $this->getIconAlt()
+        ];
     }
 
-    /**
-     * @return string
-     */
-    public function getIconPath()
-    {
-        return '/svg/icons/' . $this->iconName . '.svg';
-    }
 }
