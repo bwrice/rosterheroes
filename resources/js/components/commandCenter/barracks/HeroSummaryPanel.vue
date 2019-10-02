@@ -9,7 +9,7 @@
 
 <script>
     export default {
-        name: "BarracksHeroCard",
+        name: "HeroSummaryPanel",
         props: {
             hero: {
                 type: Object,
