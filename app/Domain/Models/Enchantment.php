@@ -41,16 +41,16 @@ class Enchantment extends Model implements BoostsMeasurables
 
     public function getAttributeBoostMultiplier(): int
     {
-        return 2;
+        return 1;
     }
 
     public function getQualityBoostMultiplier(): int
     {
-        return 5;
+        return 2;
     }
 
     public function getResourceBoostMultiplier(): int
     {
-        return 10;
+        return 4;
     }
 }
