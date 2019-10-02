@@ -23,7 +23,7 @@ class HeroClassResource extends JsonResource
     {
         return [
             'name' => $this->name,
-            'iconSrc' => $this->getIcon()
+            'icon' => $this->getIcon()
         ];
     }
 }
