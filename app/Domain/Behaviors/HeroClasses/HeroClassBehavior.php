@@ -41,7 +41,7 @@ abstract class HeroClassBehavior
 
     abstract public function getStartingCombatPosition(): CombatPosition;
 
-    abstract public function getVueComponentName(): string;
+    abstract public function getIconSVG(): string;
 
     /**
      * @return ItemBlueprintCollection
