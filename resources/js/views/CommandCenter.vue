@@ -3,12 +3,24 @@
         <v-app-bar
                 fixed
                 app
+                elevate-on-scroll
         >
             <v-app-bar-nav-icon
                     @click.stop="drawer = !drawer"
                     class="accent--text"
             ></v-app-bar-nav-icon>
-            <v-toolbar-title>{{ _squad.name }}</v-toolbar-title>
+            <v-toolbar-title>
+<!--                <v-col cols="12">-->
+<!--                    <v-row class="pt-2">-->
+<!--                        <span class="title font-weight-regular">{{ _squad.name }}</span>-->
+<!--                    </v-row>-->
+<!--                    <v-row>-->
+<!--                        <span class="overline" style="display: block">Roster</span>-->
+<!--                    </v-row>-->
+<!--                </v-col>-->
+                {{ toolBarTitle }}
+<!--                <span class="caption font-weight-light">(Roster)</span>-->
+            </v-toolbar-title>
         </v-app-bar>
         <v-navigation-drawer
                 fixed
@@ -98,7 +110,11 @@
             ...mapGetters([
                 '_squad',
                 '_currentWeek'
-            ])
+            ]),
+            toolBarTitle() {
+
+                return this._squad.name;
+            }
         }
     }
 </script>
