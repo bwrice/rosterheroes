@@ -8,7 +8,7 @@ class ElfBehavior extends HeroRaceBehavior
 {
     public function getIconSVG(): string
     {
-        return "<svg viewBox=\"0 -2 37 46.25\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">
+        return "<svg viewBox=\"0 -2 37 46.25\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display: block\">
                     <title>Elf Icon</title>
                     <path d=\"M37 39.1346C34.4215 36.2885 28.5506 29.0782 25.6944 23.0064V38.6603L37 39.1346Z\" fill=\"#FFF173\"/>
                     <path d=\"M0 39.1346C2.57846 36.2885 8.44942 29.0782 11.3056 23.0064V38.6603L0 39.1346Z\" fill=\"#FFF173\"/>
