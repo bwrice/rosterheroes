@@ -11,10 +11,5 @@ namespace App\Domain\Behaviors\HeroRace;
 
 abstract class HeroRaceBehavior
 {
-    protected $vueComponentName = '';
-
-    public function getVueComponentName()
-    {
-        return $this->vueComponentName;
-    }
+    abstract public function getIconSVG(): string;
 }
