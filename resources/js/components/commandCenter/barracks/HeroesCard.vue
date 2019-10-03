@@ -1,16 +1,18 @@
 <template>
     <v-card>
-        <HeroSummaryPanel
-            v-for="(hero, uuid) in heroes"
-            :key="uuid"
-            :hero="hero"
-        >
-        </HeroSummaryPanel>
+        <v-card-title>Heroes</v-card-title>
+        <v-card-text>
+            <HeroSummaryPanel
+                v-for="(hero, uuid) in heroes"
+                :key="uuid"
+                :hero="hero"
+            >
+            </HeroSummaryPanel>
+        </v-card-text>
     </v-card>
 </template>
 
 <script>
-    import {mapGetters} from 'vuex';
     import HeroSummaryPanel from "./HeroSummaryPanel";
 
     export default {
