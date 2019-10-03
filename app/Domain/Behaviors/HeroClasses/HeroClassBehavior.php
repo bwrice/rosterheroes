@@ -41,17 +41,7 @@ abstract class HeroClassBehavior
 
     abstract public function getStartingCombatPosition(): CombatPosition;
 
-    abstract public function getIconSrc(): string;
-
-    abstract public function getIconAlt(): string;
-
-    public function getIcon()
-    {
-        return [
-            'src' => $this->getIconSrc(),
-            'alt' => $this->getIconAlt()
-        ];
-    }
+    abstract public function getVueComponentName(): string;
 
     /**
      * @return ItemBlueprintCollection

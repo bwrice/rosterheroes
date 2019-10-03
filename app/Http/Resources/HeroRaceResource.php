@@ -24,7 +24,7 @@ class HeroRaceResource extends JsonResource
     {
         return [
             'name' => $this->name,
-            'icon' => $this->getBehavior()->getIcon(),
+            'component' => $this->getBehavior()->getVueComponentName(),
             'positions' => PositionResource::collection($this->whenLoaded('positions'))
         ];
     }

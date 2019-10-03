@@ -17,14 +17,9 @@ class RangerBehavior extends HeroClassBehavior
         parent::__construct($measurableCalculator, $measurableOperator);
     }
 
-    public function getIconSrc(): string
+    public function getVueComponentName(): string
     {
-        return asset('svg/icons/heroClasses/ranger.svg');
-    }
-
-    public function getIconAlt(): string
-    {
-        return 'ranger hero class';
+        return 'RangerSVG';
     }
 
     /**

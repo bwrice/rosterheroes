@@ -6,14 +6,8 @@ namespace App\Domain\Behaviors\HeroRace;
 
 class OrcBehavior extends HeroRaceBehavior
 {
-
-    public function getIconSrc(): string
+    public function __construct()
     {
-        return asset('svg/icons/heroRaces/orc.svg');
-    }
-
-    public function getIconAlt(): string
-    {
-        return '';
+        $this->vueComponentName = 'OrcSVG';
     }
 }

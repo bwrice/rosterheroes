@@ -17,11 +17,6 @@ class SorcererBehavior extends HeroClassBehavior
         parent::__construct($measurableCalculator, $measurableOperator);
     }
 
-    public function getIconAlt(): string
-    {
-        return 'sorcerer hero class';
-    }
-
     /**
      * @return array
      */
@@ -38,8 +33,8 @@ class SorcererBehavior extends HeroClassBehavior
         return CombatPosition::backLine();
     }
 
-    public function getIconSrc(): string
+    public function getVueComponentName(): string
     {
-        return asset('svg/icons/heroClasses/sorcerer.svg');
+        return 'SorcererSVG';
     }
 }

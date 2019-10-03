@@ -11,16 +11,10 @@ namespace App\Domain\Behaviors\HeroRace;
 
 abstract class HeroRaceBehavior
 {
-    abstract public function getIconSrc(): string;
+    protected $vueComponentName = '';
 
-    abstract public function getIconAlt(): string;
-
-    public function getIcon()
+    public function getVueComponentName()
     {
-        return [
-            'src' => $this->getIconSrc(),
-            'alt' => $this->getIconAlt()
-        ];
+        return $this->vueComponentName;
     }
-
 }
