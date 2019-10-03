@@ -55,7 +55,7 @@
     import PlayerSpiritPanel from './PlayerSpiritPanel';
     import AddSpiritButton from "./AddSpiritButton";
     import RemoveSpiritButton from "./RemoveSpiritButton";
-    import PlayerSpirit from "../../../models/PlayerSpirit";
+    import PlayerSpiritApiModel from "../../../models/PlayerSpiritApiModel";
     import HeroRosterCard from "./HeroRosterCard";
 
     export default {
@@ -87,7 +87,7 @@
                 this.setRosterFocusedHero(null);
             },
             getFocusedPlayerSpirit: function(playerSpirit) {
-                return new PlayerSpirit(playerSpirit);
+                return new PlayerSpiritApiModel(playerSpirit);
             },
             async updatePlayerSpiritsPool() {
                 this.playerSpirits = await this._currentWeek.playerSpirits().where('hero-race', this.hero.heroRace.name).$get();

@@ -30,7 +30,7 @@
     import EditSpiritButton from "./EditSpiritButton";
     import PlayerSpiritPanel from "./PlayerSpiritPanel";
 
-    import PlayerSpirit from "../../../models/PlayerSpirit";
+    import PlayerSpiritApiModel from "../../../models/PlayerSpiritApiModel";
 
     import { mapGetters } from 'vuex'
 
@@ -63,7 +63,7 @@
         },
         methods: {
             getPlayerSpirit: function(playerSpirit) {
-                return new PlayerSpirit(playerSpirit)
+                return new PlayerSpiritApiModel(playerSpirit)
             }
         }
     }
