@@ -1,5 +1,5 @@
 <template>
-    <v-sheet :color="color" class="attack-icon">
+    <v-sheet :color="color" class="attack-icon" :class="classesObject">
         <v-img
             :src="svgIcon.src"
             :alt="svgIcon.alt"
@@ -18,9 +18,15 @@
                 type: SvgIcon,
                 required: true
             },
+            classesObject: {
+                type: Object,
+                default: function() {
+                    return {}
+                }
+            },
             color: {
                 type: String,
-                default: '(255,255,255,0.3)'
+                default: 'rgba(0, 0, 0, 0.3)'
             }
         }
     }
