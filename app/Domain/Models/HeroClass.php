@@ -92,8 +92,8 @@ class HeroClass extends Model
         return $builder->whereIn('name', self::REQUIRED_STARTING_CLASSES);
     }
 
-    public function getVueComponentName()
+    public function getIconSVG()
     {
-        return $this->getBehavior()->getVueComponentName();
+        return $this->getBehavior()->getIconSVG();
     }
 }
