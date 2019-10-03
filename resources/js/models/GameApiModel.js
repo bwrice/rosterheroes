@@ -2,7 +2,7 @@ import Model from './Model'
 import moment from 'moment';
 import Team from "./Team";
 
-export default class Game extends Model {
+export default class GameApiModel extends Model {
 
     primaryKey() {
         return 'uuid';
