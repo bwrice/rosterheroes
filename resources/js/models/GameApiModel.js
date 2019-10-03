@@ -1,6 +1,6 @@
 import Model from './Model'
 import moment from 'moment';
-import Team from "./Team";
+import TeamApiModel from "./TeamApiModel";
 
 export default class GameApiModel extends Model {
 
@@ -18,10 +18,10 @@ export default class GameApiModel extends Model {
     }
 
     get homeTeamModel() {
-        return new Team(this.homeTeam);
+        return new TeamApiModel(this.homeTeam);
     }
 
     get awayTeamModel() {
-        return new Team(this.awayTeam);
+        return new TeamApiModel(this.awayTeam);
     }
 }

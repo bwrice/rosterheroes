@@ -1,6 +1,6 @@
 import Model from './Model'
 
-export default class Player extends Model {
+export default class PlayerApiModel extends Model {
 
     primaryKey() {
         return 'uuid';
