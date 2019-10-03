@@ -77,8 +77,13 @@ class PlayerSpirit extends EventSourcedModel
         return $this->player->positions;
     }
 
+    public function scopeWithPositions(PlayerSpiritQueryBuilder $builder, array $positions)
+    {
+        return $builder->withPositions($positions);
+    }
+
     public function scopeWithPosition(PlayerSpiritQueryBuilder $builder, string $position)
     {
-        return $builder->withPositions($position);
+        return $builder->withPositions((array) $position);
     }
 }
