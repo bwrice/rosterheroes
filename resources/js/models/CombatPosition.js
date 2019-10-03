@@ -1,8 +1,6 @@
-import SvgIcon from "./SvgIcon";
-
 export default class CombatPosition {
-    constructor({name = '', icon}) {
+    constructor({name = '', svg = ''}) {
         this.name = name;
-        this.icon = icon ? new SvgIcon(icon) : SvgIcon({});
+        this.svg = svg;
     }
 }

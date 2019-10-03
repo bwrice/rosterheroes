@@ -1,9 +1,8 @@
-import SvgIcon from "./SvgIcon";
 
 export default class HeroClass {
 
-    constructor({name = '', icon}) {
+    constructor({name = '', svg = ''}) {
         this.name = name;
-        this.icon = icon ? new SvgIcon(icon) : new SvgIcon({});
+        this.svg = svg;
     }
 }
