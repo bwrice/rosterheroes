@@ -25,7 +25,7 @@ class CombatPositionResource extends JsonResource
     {
         return [
             'name' => $this->name,
-            'icon' => $this->getIcon($this->attacker)
+            'svg' => $this->getSVG($this->attacker)
         ];
     }
 

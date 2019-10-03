@@ -10,5 +10,5 @@ use App\Domain\Interfaces\AdjustsDamageModifier;
 
 interface CombatPositionBehaviorInterface extends AdjustsCombatSpeed, AdjustsBaseDamage, AdjustsDamageModifier
 {
-    public function getIcon($attacker = true): array;
+    public function getSVG($attacker = true): string;
 }

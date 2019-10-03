@@ -6,19 +6,13 @@ namespace App\Domain\Behaviors\TargetRanges;
 
 abstract class CombatPositionBehavior implements CombatPositionBehaviorInterface
 {
-    public function getIcon($attacker = true): array
+    public function getSVG($attacker = true): string
     {
-        $src = $attacker ? $this->attackerIconSrc() : $this->targetIconSrc();
-        return [
-            'src' => $src,
-            'alt' => $this->getIconAlt()
-        ];
+        return $attacker ? $this->getAttackerSVG() : $this->getTargetSVG();
     }
 
 
-    abstract public function attackerIconSrc(): string;
+    abstract public function getAttackerSVG(): string;
 
-    abstract public function targetIconSrc(): string;
-
-    abstract public function getIconAlt(): string;
+    abstract public function getTargetSVG(): string;
 }

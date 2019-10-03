@@ -34,9 +34,9 @@ class CombatPosition extends Model
         return $factory->getBehavior($this->name);
     }
 
-    public function getIcon($attacker = true)
+    public function getSVG($attacker = true)
     {
-        return $this->getBehavior()->getIcon($attacker);
+        return $this->getBehavior()->getSVG($attacker);
     }
 
     public static function frontLine(): self
