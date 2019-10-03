@@ -1,5 +1,5 @@
 import Model from './Model'
-import PlayerSpirit from "./PlayerSpirit";
+import PlayerSpiritApiModel from "./PlayerSpiritApiModel";
 
 export default class Week extends Model {
 
@@ -8,6 +8,6 @@ export default class Week extends Model {
     }
 
     playerSpirits() {
-        return this.hasMany(PlayerSpirit);
+        return this.hasMany(PlayerSpiritApiModel);
     }
 }

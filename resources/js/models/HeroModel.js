@@ -1,5 +1,5 @@
 import Model from './Model'
-import PlayerSpirit from "./PlayerSpirit";
+import PlayerSpiritApiModel from "./PlayerSpiritApiModel";
 
 export default class HeroModel extends Model {
 
@@ -17,7 +17,7 @@ export default class HeroModel extends Model {
 
     get playerSpiritObject() {
         if (this.playerSpirit) {
-            return new PlayerSpirit(this.playerSpirit);
+            return new PlayerSpiritApiModel(this.playerSpirit);
         }
         return null;
     }
