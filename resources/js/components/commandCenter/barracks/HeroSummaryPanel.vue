@@ -3,11 +3,12 @@
         color="rgba(255, 255, 255, 0.15)"
         class="my-1"
         elevation="5"
+        @click="navigateToBarracksHero"
     >
         <v-row no-gutters align="center">
             <v-col cols="4">
                 <v-row no-gutters>
-                    <v-col cols="6">
+                    <v-col cols="6" class="py-0">
                         <SvgIconSheet
                             :color="'#C8DDE0'"
                             :svg-icon="hero.heroRace.icon"
@@ -27,12 +28,19 @@
             </v-col>
             <v-col cols="6">
                 <v-row align="center" justify="center">
-                    <span class="subtitle-1">{{hero.name}}</span>
+                    <span class="title font-weight-regular">{{hero.name}}</span>
                 </v-row>
             </v-col>
             <v-col cols="2">
-                <SvgIconSheet :svg-icon="hero.combatPosition.icon">
-                </SvgIconSheet>
+<!--                <SvgIconSheet :svg-icon="hero.combatPosition.icon">-->
+<!--                </SvgIconSheet>-->
+            </v-col>
+        </v-row>
+        <v-row no-gutters align="center">
+            <v-col cols="4">
+                <v-sheet class="py-0 ma-1" style="background-image: linear-gradient(to bottom right, #393142, #5e526b , #393142)">
+                    <HeroGearSVG :hero="hero"></HeroGearSVG>
+                </v-sheet>
             </v-col>
         </v-row>
     </v-sheet>
@@ -40,13 +48,19 @@
 
 <script>
     import SvgIconSheet from "../global/SvgIconSheet";
+    import HeroGearSVG from "./gear/HeroGearSVG";
     export default {
         name: "HeroSummaryPanel",
-        components: {SvgIconSheet},
+        components: {HeroGearSVG, SvgIconSheet},
         props: {
             hero: {
                 type: Object,
                 require: true
+            }
+        },
+        methods: {
+            navigateToBarracksHero() {
+                this.$router.push(this.barracksHeroRoute);
             }
         },
         computed: {
