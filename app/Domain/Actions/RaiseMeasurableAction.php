@@ -25,7 +25,7 @@ class RaiseMeasurableAction
             throw new RaiseMeasurableException($measurable, $amount, $message, $code);
         }
 
-        $costToRaise = $measurable->getCostToRaise();
+        $costToRaise = $measurable->getCostToRaise($amount);
         $availableExp = $measurable->hasMeasurables->availableExperience();
         if ($costToRaise > $availableExp) {
             $message = $costToRaise .  " experience required, but only " . $availableExp . " available";

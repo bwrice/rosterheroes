@@ -67,10 +67,10 @@ class RaiseMeasurableTest extends TestCase
         $startingAmount = $staminaMeasurable->amount_raised;
 
         $squad = $this->hero->getSquad();
-        $squad->experience = 0;
+        $squad->experience = 100;
         $squad->save();
 
-        $raiseAmount = 5;
+        $raiseAmount = 99;
         $this->assertGreaterThan($this->hero->availableExperience(), $staminaMeasurable->getCostToRaise($raiseAmount));
 
         try {
@@ -83,7 +83,6 @@ class RaiseMeasurableTest extends TestCase
             return;
         }
         $this->fail("Exception not thrown");
-
     }
     /**
      * @test
