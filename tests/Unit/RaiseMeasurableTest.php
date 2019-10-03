@@ -67,10 +67,12 @@ class RaiseMeasurableTest extends TestCase
         $startingAmount = $staminaMeasurable->amount_raised;
 
         $squad = $this->hero->getSquad();
-        $squad->experience = 100;
+        $squad->experience = $squadTotalExperience = 100;
         $squad->save();
 
         $raiseAmount = 99;
+        // assert passing no value, ie default of 1 to getCostToRaise() is less than squad total experience
+        $this->assertLessThan($squadTotalExperience, $staminaMeasurable->getCostToRaise());
         $this->assertGreaterThan($this->hero->availableExperience(), $staminaMeasurable->getCostToRaise($raiseAmount));
 
         try {
