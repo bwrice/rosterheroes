@@ -11,7 +11,7 @@
                     <v-col cols="6" class="py-0">
                         <SvgIconSheet
                             :color="'#C8DDE0'"
-                            :svg-icon="hero.heroRace.icon"
+                            :svg="hero.heroRace.svg"
                             :classes-object="{'pa-1': true}"
                         >
                         </SvgIconSheet>
@@ -19,7 +19,7 @@
                     <v-col cols="6">
                         <SvgIconSheet
                             :color="'#C8DDE0'"
-                            :svg-icon="hero.heroClass.icon"
+                            :svg="hero.heroClass.svg"
                             :classes-object="{'pa-1': true}"
                         >
                         </SvgIconSheet>
@@ -32,8 +32,8 @@
                 </v-row>
             </v-col>
             <v-col cols="2">
-<!--                <SvgIconSheet :svg-icon="hero.combatPosition.icon">-->
-<!--                </SvgIconSheet>-->
+                <SvgIconSheet :svg="hero.combatPosition.svg">
+                </SvgIconSheet>
             </v-col>
         </v-row>
         <v-row no-gutters align="center">

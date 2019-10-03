@@ -45,10 +45,10 @@
                 </v-row>
                 <v-row class="no-gutters">
                     <v-col cols="6" class="pa-0">
-                        <SvgIconSheet :svg-icon="attack.attackerPosition.icon"></SvgIconSheet>
+                        <SvgIconSheet :svg="attack.attackerPosition.svg"></SvgIconSheet>
                     </v-col>
                     <v-col cols="6" class="pa-0">
-                        <SvgIconSheet :svg-icon="attack.targetPosition.icon"></SvgIconSheet>
+                        <SvgIconSheet :svg="attack.targetPosition.svg"></SvgIconSheet>
                     </v-col>
                 </v-row>
 <!--                <v-row class="no-gutters">-->
