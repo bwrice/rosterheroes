@@ -9,13 +9,14 @@
 namespace App\Domain\Behaviors\HeroClasses;
 
 
+use App\Domain\Behaviors\MeasurableTypes\MeasurableTypeBehavior;
 use App\Domain\Interfaces\MeasurableCalculator;
 use App\Domain\Interfaces\MeasurableOperator;
 use App\Domain\Models\CombatPosition;
 use App\Domain\Models\ItemBlueprint;
 use App\Domain\Collections\ItemBlueprintCollection;
 use App\Domain\Models\Measurable;
-use Illuminate\Support\Collection;
+use App\Domain\Models\MeasurableType;
 
 abstract class HeroClassBehavior
 {
@@ -75,5 +76,40 @@ abstract class HeroClassBehavior
     public function getCurrentMeasurableAmount(Measurable $measurable): int
     {
         return $this->measurableCalculator->getCurrentAmount($measurable, $this->measurableOperator);
+    }
+
+    public function getMeasurableStartingAmount(MeasurableTypeBehavior $measurableTypeBehavior)
+    {
+        $baseAmount = $this->getMeasurableBaseAmount($measurableTypeBehavior->getTypeName());
+
+    }
+
+    /**
+     * @param string $measurableTypeName
+     * @return int
+     */
+    protected function getMeasurableBaseAmount(string $measurableTypeName): int
+    {
+        switch ($measurableTypeName) {
+            case MeasurableType::STRENGTH:
+            case MeasurableType::VALOR:
+            case MeasurableType::AGILITY:
+            case MeasurableType::FOCUS:
+            case MeasurableType::APTITUDE:
+            case MeasurableType::INTELLIGENCE:
+                return 20;
+            case MeasurableType::BALANCE:
+            case MeasurableType::HONOR:
+            case MeasurableType::PASSION:
+            case MeasurableType::PRESTIGE:
+            case MeasurableType::WRATH:
+                return 100;
+            case MeasurableType::MANA:
+            case MeasurableType::STAMINA:
+                return 200;
+            case MeasurableType::HEALTH:
+                return 400;
+        }
+        throw new \InvalidArgumentException("Unknown measurable-type name: " . $measurableTypeName);
     }
 }

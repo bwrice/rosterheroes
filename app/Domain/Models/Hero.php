@@ -4,6 +4,7 @@ namespace App\Domain\Models;
 
 use App\Domain\Actions\AddSpiritToHeroAction;
 use App\Domain\Actions\RemoveSpiritFromHeroAction;
+use App\Domain\Behaviors\MeasurableTypes\MeasurableTypeBehavior;
 use App\Domain\Collections\ItemCollection;
 use App\Domain\Collections\MeasurableCollection;
 use App\Domain\Interfaces\HasMeasurables;
@@ -230,6 +231,18 @@ class Hero extends EventSourcedModel implements HasSlots, HasMeasurables, UsesIt
         return $this->heroClass->getBehavior()->getCurrentMeasurableAmount($measurable);
     }
 
+    public function getBuffedMeasurableAmount(Measurable $measurable): int
+    {
+        $currentAmount = $this->getCurrentMeasurableAmount($measurable);
+        $currentAmount += $this->getEnchantments();
+        return 0;
+    }
+
+    public function getEnchantments()
+    {
+        return $this->getSlots()->getItems()->getEnchantments();
+    }
+
     /**
      * @param string $measurableTypeName
      * @return Measurable
@@ -267,5 +280,10 @@ class Hero extends EventSourcedModel implements HasSlots, HasMeasurables, UsesIt
     public function getUniqueIdentifier(): string
     {
         return $this->uuid;
+    }
+
+    public function getMeasurableStartingAmount(MeasurableTypeBehavior $measurableTypeBehavior): int
+    {
+        return $this->getClassBehavior()->getMeasurableStartingAmount($measurableTypeBehavior);
     }
 }

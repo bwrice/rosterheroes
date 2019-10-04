@@ -19,5 +19,5 @@ interface HasMeasurables
 
     public function availableExperience(): int;
 
-    public function getStartingAmount(MeasurableTypeBehavior $measurableTypeBehavior): int;
+    public function getMeasurableStartingAmount(MeasurableTypeBehavior $measurableTypeBehavior): int;
 }

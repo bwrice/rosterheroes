@@ -11,12 +11,12 @@ abstract class MeasurableTypeBehavior
     protected $name = '';
     protected $group = '';
 
-    public function getName(): string
+    public function getTypeName(): string
     {
         return $this->name;
     }
 
-    public function getGroup(): string
+    public function getGroupName(): string
     {
         return $this->group;
     }

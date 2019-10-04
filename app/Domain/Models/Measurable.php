@@ -47,7 +47,9 @@ class Measurable extends EventSourcedModel
 
     public function getCurrentAmount(): int
     {
-        return $this->hasMeasurables->getCurrentMeasurableAmount($this);
+        $hasMeasurables = $this->hasMeasurables;
+        $startingAmount = $hasMeasurables->getMeasurableStartingAmount($this->getMeasurableTypeBehavior());
+        return $startingAmount + $this->amount_raised;
     }
 
     public function getBaseAmount(): int
@@ -62,6 +64,11 @@ class Measurable extends EventSourcedModel
 
     public function getMeasurableGroup(): string
     {
-        return $this->measurableType->getBehavior()->getGroup();
+        return $this->measurableType->getBehavior()->getGroupName();
+    }
+
+    public function getMeasurableTypeBehavior()
+    {
+        return $this->measurableType->getBehavior();
     }
 }
