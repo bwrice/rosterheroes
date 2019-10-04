@@ -26,11 +26,6 @@ abstract class QualityBehavior extends MeasurableTypeBehavior
         return .5;
     }
 
-    public function getMeasurableGroup(): string
-    {
-        return self::GROUP_NAME;
-    }
-
     public function getBoostMultiplier(BoostsMeasurables $boostsMeasurables): int
     {
         return $boostsMeasurables->getQualityBoostMultiplier();

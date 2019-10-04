@@ -25,11 +25,6 @@ abstract class AttributeBehavior extends MeasurableTypeBehavior
         return 1;
     }
 
-    public function getMeasurableGroup(): string
-    {
-        return self::GROUP_NAME;
-    }
-
     public function getBoostMultiplier(BoostsMeasurables $boostsMeasurables): int
     {
         return $boostsMeasurables->getAttributeBoostMultiplier();

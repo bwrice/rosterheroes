@@ -11,19 +11,19 @@ abstract class MeasurableTypeBehavior
     protected $name = '';
     protected $group = '';
 
-    abstract public function getBaseAmount(): int;
-
-    abstract public function getMeasurableImportanceWeight(): float;
-
-    abstract public function getMeasurableGroup(): string;
-
-    abstract public function getBoostMultiplier(BoostsMeasurables $boostsMeasurables): int;
-
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
+
+    public function getGroup(): string
+    {
+        return $this->group;
+    }
+
+    abstract public function getBaseAmount(): int;
+
+    abstract public function getMeasurableImportanceWeight(): float;
+
+    abstract public function getBoostMultiplier(BoostsMeasurables $boostsMeasurables): int;
 }
