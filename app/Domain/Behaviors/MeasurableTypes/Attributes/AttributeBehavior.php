@@ -8,8 +8,12 @@ use App\Domain\Interfaces\BoostsMeasurables;
 
 abstract class AttributeBehavior extends MeasurableTypeBehavior
 {
-
     public const GROUP_NAME = 'attribute';
+
+    public function __construct()
+    {
+        $this->group = self::GROUP_NAME;
+    }
 
     public function getBaseAmount(): int
     {

@@ -10,6 +10,12 @@ abstract class QualityBehavior extends MeasurableTypeBehavior
 {
     public const GROUP_NAME = 'quality';
 
+    public function __construct()
+    {
+        $this->group = self::GROUP_NAME;
+    }
+
+
     public function getBaseAmount(): int
     {
         return 100;

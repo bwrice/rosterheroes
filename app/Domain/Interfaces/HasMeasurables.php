@@ -4,6 +4,7 @@
 namespace App\Domain\Interfaces;
 
 
+use App\Domain\Behaviors\MeasurableTypes\MeasurableTypeBehavior;
 use App\Domain\Models\Measurable;
 
 interface HasMeasurables
@@ -17,4 +18,6 @@ interface HasMeasurables
     public function getBuffedMeasurableAmount(Measurable $measurable): int;
 
     public function availableExperience(): int;
+
+    public function getStartingAmount(MeasurableTypeBehavior $measurableTypeBehavior): int;
 }

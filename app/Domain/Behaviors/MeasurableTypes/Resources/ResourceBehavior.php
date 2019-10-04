@@ -10,6 +10,11 @@ abstract class ResourceBehavior extends MeasurableTypeBehavior
 {
     public const GROUP_NAME = 'resource';
 
+    public function __construct()
+    {
+        $this->group = self::GROUP_NAME;
+    }
+
     public function getMeasurableImportanceWeight(): float
     {
         return .125;
