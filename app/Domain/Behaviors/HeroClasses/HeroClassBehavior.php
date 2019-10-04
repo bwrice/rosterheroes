@@ -83,9 +83,12 @@ abstract class HeroClassBehavior
         return $this->measurableCalculator->getCostToRaise($measurable, $this->measurableOperator, $amount);
     }
 
-    public function spentOnRaisingMeasurable(Measurable $measurable): int
+    public function spentOnRaisingMeasurable(MeasurableTypeBehavior $measurableTypeBehavior, int $amountRaised): int
     {
-        return $this->measurableCalculator->spentOnRaising($measurable, $this->measurableOperator);
+        if ($amountRaised < 1) {
+            return 0;
+        }
+        return $this->sumCostToRaiseMeasurable($measurableTypeBehavior, 1, $amountRaised);
     }
 
     /**

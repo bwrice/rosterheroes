@@ -4,6 +4,7 @@ namespace App\Domain\Models;
 
 use App\Domain\Actions\AddSpiritToHeroAction;
 use App\Domain\Actions\RemoveSpiritFromHeroAction;
+use App\Domain\Behaviors\HeroClasses\HeroClassBehavior;
 use App\Domain\Behaviors\MeasurableTypes\MeasurableTypeBehavior;
 use App\Domain\Collections\ItemCollection;
 use App\Domain\Collections\MeasurableCollection;
@@ -151,11 +152,6 @@ class Hero extends EventSourcedModel implements HasSlots, HasMeasurables, UsesIt
         return $items->unique();
     }
 
-    public function getClassBehavior()
-    {
-        return $this->heroClass->getBehavior();
-    }
-
     /**
      * @param int $count
      * @param array $slotTypeIDs
@@ -216,26 +212,21 @@ class Hero extends EventSourcedModel implements HasSlots, HasMeasurables, UsesIt
         return $this->heroPost->squad->availableSpiritEssence() + $this->essenceUsed();
     }
 
-    public function costToRaiseMeasurable(Measurable $measurable, int $amount = 1): int
+    public function costToRaiseMeasurable(MeasurableTypeBehavior $measurableTypeBehavior, int $amountAlreadyRaised, int $amountToRaise = 1): int
     {
-        return $this->heroClass->getBehavior()->costToRaiseMeasurable($measurable, $amount);
+        return $this->getHeroClassBehavior()->costToRaiseMeasurable($measurableTypeBehavior, $amountAlreadyRaised, $amountToRaise);
     }
 
-    public function spentOnRaisingMeasurable(Measurable $measurable): int
+    public function spentOnRaisingMeasurable(MeasurableTypeBehavior $measurableTypeBehavior, int $amountRaised): int
     {
-        return $this->heroClass->getBehavior()->spentOnRaisingMeasurable($measurable);
+        return $this->getHeroClassBehavior()->spentOnRaisingMeasurable($measurableTypeBehavior, $amountRaised);
     }
 
-    public function getCurrentMeasurableAmount(Measurable $measurable): int
+    public function getBuffedMeasurableAmount(MeasurableTypeBehavior $measurableTypeBehavior, int $amountRaised): int
     {
-        return $this->heroClass->getBehavior()->getCurrentMeasurableAmount($measurable);
-    }
-
-    public function getBuffedMeasurableAmount(Measurable $measurable): int
-    {
-        $currentAmount = $this->getCurrentMeasurableAmount($measurable);
-        $currentAmount += $this->getEnchantments();
-        return 0;
+        // TODO: enchantments
+        // TODO: spells
+        return $this->getMeasurableCurrentAmount($measurableTypeBehavior, $amountRaised);
     }
 
     public function getEnchantments()
@@ -273,8 +264,7 @@ class Hero extends EventSourcedModel implements HasSlots, HasMeasurables, UsesIt
 
     public function getMeasurableAmount(string $measurableTypeName): int
     {
-        $measurable = $this->getMeasurable($measurableTypeName);
-        return $this->getCurrentMeasurableAmount($measurable);
+        return $this->getMeasurable($measurableTypeName)->getCurrentAmount();
     }
 
     public function getUniqueIdentifier(): string
@@ -282,8 +272,16 @@ class Hero extends EventSourcedModel implements HasSlots, HasMeasurables, UsesIt
         return $this->uuid;
     }
 
-    public function getMeasurableStartingAmount(MeasurableTypeBehavior $measurableTypeBehavior): int
+    public function getMeasurableCurrentAmount(MeasurableTypeBehavior $measurableTypeBehavior, int $amountRaised): int
     {
-        return $this->getClassBehavior()->getMeasurableStartingAmount($measurableTypeBehavior);
+        return $amountRaised + $this->getHeroClassBehavior()->getMeasurableStartingAmount($measurableTypeBehavior);
+    }
+
+    /**
+     * @return HeroClassBehavior
+     */
+    protected function getHeroClassBehavior(): HeroClassBehavior
+    {
+        return $this->heroClass->getBehavior();
     }
 }

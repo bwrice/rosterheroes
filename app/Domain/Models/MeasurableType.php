@@ -116,6 +116,6 @@ class MeasurableType extends Model
 
     public function getMeasurableGroup()
     {
-        return $this->getBehavior()->getMeasurableGroup();
+        return $this->getBehavior()->getGroupName();
     }
 }
