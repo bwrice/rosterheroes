@@ -15,17 +15,6 @@ abstract class QualityBehavior extends MeasurableTypeBehavior
         $this->group = self::GROUP_NAME;
     }
 
-
-    public function getBaseAmount(): int
-    {
-        return 100;
-    }
-
-    public function getMeasurableImportanceWeight(): float
-    {
-        return .5;
-    }
-
     public function getBoostMultiplier(BoostsMeasurables $boostsMeasurables): int
     {
         return $boostsMeasurables->getQualityBoostMultiplier();

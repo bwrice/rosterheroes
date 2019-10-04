@@ -15,11 +15,6 @@ abstract class ResourceBehavior extends MeasurableTypeBehavior
         $this->group = self::GROUP_NAME;
     }
 
-    public function getMeasurableImportanceWeight(): float
-    {
-        return .125;
-    }
-
     public function getBoostMultiplier(BoostsMeasurables $boostsMeasurables): int
     {
         return $boostsMeasurables->getResourceBoostMultiplier();

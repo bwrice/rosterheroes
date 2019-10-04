@@ -13,9 +13,4 @@ class StaminaBehavior extends ResourceBehavior
         parent::__construct();
         $this->name = MeasurableType::STAMINA;
     }
-
-    public function getBaseAmount(): int
-    {
-        return 200;
-    }
 }

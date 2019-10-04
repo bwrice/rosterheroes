@@ -21,9 +21,5 @@ abstract class MeasurableTypeBehavior
         return $this->group;
     }
 
-    abstract public function getBaseAmount(): int;
-
-    abstract public function getMeasurableImportanceWeight(): float;
-
     abstract public function getBoostMultiplier(BoostsMeasurables $boostsMeasurables): int;
 }

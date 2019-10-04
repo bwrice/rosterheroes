@@ -13,9 +13,4 @@ class HealthBehavior extends ResourceBehavior
         parent::__construct();
         $this->name = MeasurableType::HEALTH;
     }
-
-    public function getBaseAmount(): int
-    {
-        return 400;
-    }
 }

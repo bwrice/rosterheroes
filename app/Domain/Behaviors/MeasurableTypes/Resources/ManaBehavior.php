@@ -13,9 +13,4 @@ class ManaBehavior extends ResourceBehavior
         parent::__construct();
         $this->name = MeasurableType::MANA;
     }
-
-    public function getBaseAmount(): int
-    {
-        return 200;
-    }
 }

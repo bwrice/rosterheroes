@@ -15,16 +15,6 @@ abstract class AttributeBehavior extends MeasurableTypeBehavior
         $this->group = self::GROUP_NAME;
     }
 
-    public function getBaseAmount(): int
-    {
-        return 20;
-    }
-
-    public function getMeasurableImportanceWeight(): float
-    {
-        return 1;
-    }
-
     public function getBoostMultiplier(BoostsMeasurables $boostsMeasurables): int
     {
         return $boostsMeasurables->getAttributeBoostMultiplier();
