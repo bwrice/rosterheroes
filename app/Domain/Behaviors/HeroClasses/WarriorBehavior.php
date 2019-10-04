@@ -7,19 +7,26 @@ use App\Domain\Behaviors\HeroClasses\MeasurableOperators\HeroMeasurableCalculato
 use App\Domain\Behaviors\HeroClasses\MeasurableOperators\WarriorMeasurableOperator;
 use App\Domain\Models\CombatPosition;
 use App\Domain\Models\ItemBlueprint;
+use App\Domain\Models\MeasurableType;
 
 class WarriorBehavior extends HeroClassBehavior
 {
+    protected $primaryMeasurableTypes = [
+        MeasurableType::STRENGTH,
+        MeasurableType::VALOR,
+        MeasurableType::HEALTH
+    ];
+
+    protected $secondaryMeasurableTypes = [
+        MeasurableType::AGILITY,
+        MeasurableType::STAMINA,
+    ];
+
     public function __construct(
         HeroMeasurableCalculator $measurableCalculator,
         WarriorMeasurableOperator $measurableOperator)
     {
         parent::__construct($measurableCalculator, $measurableOperator);
-    }
-
-    public function getIconAlt(): string
-    {
-        return 'warrior hero class';
     }
 
     /**

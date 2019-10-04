@@ -9,7 +9,10 @@
 namespace App\Domain\Behaviors\HeroClasses;
 
 
+use App\Domain\Behaviors\MeasurableTypes\Attributes\AttributeBehavior;
 use App\Domain\Behaviors\MeasurableTypes\MeasurableTypeBehavior;
+use App\Domain\Behaviors\MeasurableTypes\Qualities\QualityBehavior;
+use App\Domain\Behaviors\MeasurableTypes\Resources\ResourceBehavior;
 use App\Domain\Interfaces\MeasurableCalculator;
 use App\Domain\Interfaces\MeasurableOperator;
 use App\Domain\Models\CombatPosition;
@@ -20,6 +23,10 @@ use App\Domain\Models\MeasurableType;
 
 abstract class HeroClassBehavior
 {
+    protected $primaryMeasurableTypes = [];
+
+    protected $secondaryMeasurableTypes = [];
+
     /**
      * @var MeasurableCalculator
      */
@@ -78,10 +85,10 @@ abstract class HeroClassBehavior
         return $this->measurableCalculator->getCurrentAmount($measurable, $this->measurableOperator);
     }
 
-    public function getMeasurableStartingAmount(MeasurableTypeBehavior $measurableTypeBehavior)
+    public function getMeasurableStartingAmount(MeasurableTypeBehavior $measurableTypeBehavior): int
     {
         $baseAmount = $this->getMeasurableBaseAmount($measurableTypeBehavior->getTypeName());
-
+        return $baseAmount + $this->getMeasurableBonusAmount($measurableTypeBehavior->getTypeName(), $measurableTypeBehavior->getGroupName());
     }
 
     /**
@@ -111,5 +118,44 @@ abstract class HeroClassBehavior
                 return 400;
         }
         throw new \InvalidArgumentException("Unknown measurable-type name: " . $measurableTypeName);
+    }
+
+    protected function getMeasurableBonusAmount(string $measurableTypeName, string $measurableGroupName): int
+    {
+        $groupMultiplier = $this->getMeasurableAmountGroupMultiplier($measurableGroupName);
+        return (int) $groupMultiplier * $this->getMeasurableAmountOrdinalBonus($measurableTypeName);
+    }
+
+    protected function getMeasurableAmountGroupMultiplier(string $measurableGroupName): int
+    {
+        switch ($measurableGroupName) {
+            case AttributeBehavior::GROUP_NAME:
+                return 1;
+            case QualityBehavior::GROUP_NAME:
+                return 2;
+            case ResourceBehavior::GROUP_NAME:
+                return 4;
+        }
+        throw new \InvalidArgumentException("Unknown measurable-group name: " . $measurableGroupName);
+    }
+
+    protected function getMeasurableAmountOrdinalBonus(string $measurableTypeName): int
+    {
+        if ($this->measurableTypeIsPrimary($measurableTypeName)) {
+            return 40;
+        } else if($this->measurableTypeIsSecondary($measurableTypeName)) {
+            return 20;
+        }
+        return 0;
+    }
+
+    protected function measurableTypeIsPrimary(string $measurableTypeName)
+    {
+        return in_array($measurableTypeName, $this->primaryMeasurableTypes);
+    }
+
+    protected function measurableTypeIsSecondary(string $measurableTypeName)
+    {
+        return in_array($measurableTypeName, $this->secondaryMeasurableTypes);
     }
 }
