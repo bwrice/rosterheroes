@@ -23,9 +23,12 @@ use App\Domain\Models\MeasurableType;
 
 abstract class HeroClassBehavior
 {
+    /** @var array  */
     protected $primaryMeasurableTypes = [];
-
+    /** @var array  */
     protected $secondaryMeasurableTypes = [];
+    /** @var array  */
+    protected $starterItemBlueprintNames = [];
 
     /**
      * @var MeasurableCalculator
@@ -45,7 +48,10 @@ abstract class HeroClassBehavior
     /**
      * @return array
      */
-    abstract protected function getStarterItemBlueprintNames(): array;
+    protected function getStarterItemBlueprintNames()
+    {
+        return $this->starterItemBlueprintNames;
+    }
 
     abstract public function getStartingCombatPosition(): CombatPosition;
 

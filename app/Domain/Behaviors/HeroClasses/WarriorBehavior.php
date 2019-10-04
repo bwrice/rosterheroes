@@ -22,23 +22,17 @@ class WarriorBehavior extends HeroClassBehavior
         MeasurableType::STAMINA,
     ];
 
+    protected $starterItemBlueprintNames = [
+        ItemBlueprint::STARTER_SHIELD,
+        ItemBlueprint::STARTER_SWORD,
+        ItemBlueprint::STARTER_HEAVY_ARMOR
+    ];
+
     public function __construct(
         HeroMeasurableCalculator $measurableCalculator,
         WarriorMeasurableOperator $measurableOperator)
     {
         parent::__construct($measurableCalculator, $measurableOperator);
-    }
-
-    /**
-     * @return array
-     */
-    protected function getStarterItemBlueprintNames(): array
-    {
-        return [
-            ItemBlueprint::STARTER_SHIELD,
-            ItemBlueprint::STARTER_SWORD,
-            ItemBlueprint::STARTER_HEAVY_ARMOR
-        ];
     }
 
     public function getStartingCombatPosition(): CombatPosition

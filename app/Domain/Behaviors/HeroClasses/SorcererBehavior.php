@@ -7,25 +7,31 @@ use App\Domain\Behaviors\HeroClasses\MeasurableOperators\HeroMeasurableCalculato
 use App\Domain\Behaviors\HeroClasses\MeasurableOperators\SorcererMeasurableOperator;
 use App\Domain\Models\CombatPosition;
 use App\Domain\Models\ItemBlueprint;
+use App\Domain\Models\MeasurableType;
 
 class SorcererBehavior extends HeroClassBehavior
 {
+    protected $primaryMeasurableTypes = [
+        MeasurableType::APTITUDE,
+        MeasurableType::INTELLIGENCE,
+        MeasurableType::MANA
+    ];
+
+    protected $secondaryMeasurableTypes = [
+        MeasurableType::FOCUS,
+        MeasurableType::HEALTH,
+    ];
+
+    protected $starterItemBlueprintNames = [
+        ItemBlueprint::STARTER_STAFF,
+        ItemBlueprint::STARTER_ROBES
+    ];
+
     public function __construct(
         HeroMeasurableCalculator $measurableCalculator,
         SorcererMeasurableOperator $measurableOperator)
     {
         parent::__construct($measurableCalculator, $measurableOperator);
-    }
-
-    /**
-     * @return array
-     */
-    protected function getStarterItemBlueprintNames(): array
-    {
-        return [
-            ItemBlueprint::STARTER_STAFF,
-            ItemBlueprint::STARTER_ROBES
-        ];
     }
 
     public function getStartingCombatPosition(): CombatPosition
