@@ -27,11 +27,8 @@ class RangerBehavior extends HeroClassBehavior
         ItemBlueprint::STARTER_LIGHT_ARMOR
     ];
 
-    public function __construct(
-        HeroMeasurableCalculator $measurableCalculator,
-        RangerMeasurableOperator $measurableOperator)
+    public function __construct()
     {
-        parent::__construct($measurableCalculator, $measurableOperator);
         $this->startingCombatPosition = CombatPosition::backLine();
     }
 

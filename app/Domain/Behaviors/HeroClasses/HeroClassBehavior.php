@@ -13,8 +13,6 @@ use App\Domain\Behaviors\MeasurableTypes\Attributes\AttributeBehavior;
 use App\Domain\Behaviors\MeasurableTypes\MeasurableTypeBehavior;
 use App\Domain\Behaviors\MeasurableTypes\Qualities\QualityBehavior;
 use App\Domain\Behaviors\MeasurableTypes\Resources\ResourceBehavior;
-use App\Domain\Interfaces\MeasurableCalculator;
-use App\Domain\Interfaces\MeasurableOperator;
 use App\Domain\Models\CombatPosition;
 use App\Domain\Models\ItemBlueprint;
 use App\Domain\Collections\ItemBlueprintCollection;
@@ -32,21 +30,6 @@ abstract class HeroClassBehavior
 
     /** @var CombatPosition */
     protected $startingCombatPosition;
-
-    /**
-     * @var MeasurableCalculator
-     */
-    private $measurableCalculator;
-    /**
-     * @var MeasurableOperator
-     */
-    private $measurableOperator;
-
-    public function __construct(MeasurableCalculator $measurableCalculator, MeasurableOperator $measurableOperator)
-    {
-        $this->measurableCalculator = $measurableCalculator;
-        $this->measurableOperator = $measurableOperator;
-    }
 
     /**
      * @return array
@@ -73,31 +56,12 @@ abstract class HeroClassBehavior
         return $collection;
     }
 
-    /**
-     * @param Measurable $measurable
-     * @param int $amount
-     * @return int
-     */
-    public function costToRaiseMeasurableOld(Measurable $measurable, int $amount = 1): int
-    {
-        return $this->measurableCalculator->getCostToRaise($measurable, $this->measurableOperator, $amount);
-    }
-
     public function spentOnRaisingMeasurable(MeasurableTypeBehavior $measurableTypeBehavior, int $amountRaised): int
     {
         if ($amountRaised < 1) {
             return 0;
         }
         return $this->sumCostToRaiseMeasurable($measurableTypeBehavior, 1, $amountRaised);
-    }
-
-    /**
-     * @param Measurable $measurable
-     * @return int
-     */
-    public function getCurrentMeasurableAmount(Measurable $measurable): int
-    {
-        return $this->measurableCalculator->getCurrentAmount($measurable, $this->measurableOperator);
     }
 
     public function getMeasurableStartingAmount(MeasurableTypeBehavior $measurableTypeBehavior): int

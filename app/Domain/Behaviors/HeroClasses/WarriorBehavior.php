@@ -28,11 +28,8 @@ class WarriorBehavior extends HeroClassBehavior
         ItemBlueprint::STARTER_HEAVY_ARMOR
     ];
 
-    public function __construct(
-        HeroMeasurableCalculator $measurableCalculator,
-        WarriorMeasurableOperator $measurableOperator)
+    public function __construct()
     {
-        parent::__construct($measurableCalculator, $measurableOperator);
         $this->startingCombatPosition = CombatPosition::frontLine();
     }
 

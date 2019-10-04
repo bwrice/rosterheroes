@@ -27,11 +27,8 @@ class SorcererBehavior extends HeroClassBehavior
         ItemBlueprint::STARTER_ROBES
     ];
 
-    public function __construct(
-        HeroMeasurableCalculator $measurableCalculator,
-        SorcererMeasurableOperator $measurableOperator)
+    public function __construct()
     {
-        parent::__construct($measurableCalculator, $measurableOperator);
         $this->startingCombatPosition = CombatPosition::backLine();
     }
 

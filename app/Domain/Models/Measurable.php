@@ -50,21 +50,6 @@ class Measurable extends EventSourcedModel
         return $this->hasMeasurables->getMeasurableCurrentAmount($this->getMeasurableTypeBehavior(), $this->amount_raised);
     }
 
-//    public function getBaseAmount(): int
-//    {
-//        return $this->measurableType->getBehavior()->getBaseAmount();
-//    }
-//
-//    public function getMeasurableImportanceWeight()
-//    {
-//        return $this->measurableType->getBehavior()->getMeasurableImportanceWeight();
-//    }
-//
-//    public function getMeasurableGroup(): string
-//    {
-//        return $this->measurableType->getBehavior()->getGroupName();
-//    }
-
     public function getMeasurableTypeBehavior()
     {
         return $this->measurableType->getBehavior();
