@@ -23,4 +23,13 @@ class ItemCollection extends Collection
         });
         return $slotCollection;
     }
+
+    public function getEnchantments(): EnchantmentCollection
+    {
+        $enchantmentCollection = new EnchantmentCollection();
+        $this->loadMissing('enchantments')->each(function (Item $item) use (&$enchantmentCollection) {
+            $enchantmentCollection = $enchantmentCollection->unique($item->enchantments);
+        });
+        return $enchantmentCollection;
+    }
 }
