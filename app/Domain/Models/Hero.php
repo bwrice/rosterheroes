@@ -6,7 +6,7 @@ use App\Domain\Actions\AddSpiritToHeroAction;
 use App\Domain\Actions\RemoveSpiritFromHeroAction;
 use App\Domain\Collections\ItemCollection;
 use App\Domain\Collections\MeasurableCollection;
-use App\Domain\Interfaces\RaisesMeasurables;
+use App\Domain\Interfaces\HasMeasurables;
 use App\Domain\Interfaces\UsesItems;
 use App\Domain\Models\Item;
 use App\Domain\QueryBuilders\HeroQueryBuilder;
@@ -62,7 +62,7 @@ use Spatie\Sluggable\SlugOptions;
  *
  * @method static HeroQueryBuilder query();
  */
-class Hero extends EventSourcedModel implements HasSlots, RaisesMeasurables, UsesItems
+class Hero extends EventSourcedModel implements HasSlots, HasMeasurables, UsesItems
 {
     use HasSlug;
 

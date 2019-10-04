@@ -3,7 +3,7 @@
 namespace App\Domain\Models;
 
 use App\Domain\Collections\MeasurableCollection;
-use App\Domain\Interfaces\RaisesMeasurables;
+use App\Domain\Interfaces\HasMeasurables;
 
 /**
  * Class Measurable
@@ -13,7 +13,7 @@ use App\Domain\Interfaces\RaisesMeasurables;
  * @property int $measurable_type_id
  * @property int $amount_raised
  *
- * @property RaisesMeasurables $hasMeasurables
+ * @property HasMeasurables $hasMeasurables
  * @property MeasurableType $measurableType
  */
 class Measurable extends EventSourcedModel
@@ -62,6 +62,6 @@ class Measurable extends EventSourcedModel
 
     public function getMeasurableGroup(): string
     {
-        return $this->measurableType->getBehavior()->getMeasurableGroup();
+        return $this->measurableType->getBehavior()->getGroup();
     }
 }
