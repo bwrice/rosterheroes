@@ -32,11 +32,7 @@ class RangerBehavior extends HeroClassBehavior
         RangerMeasurableOperator $measurableOperator)
     {
         parent::__construct($measurableCalculator, $measurableOperator);
-    }
-
-    public function getStartingCombatPosition(): CombatPosition
-    {
-        return CombatPosition::backLine();
+        $this->startingCombatPosition = CombatPosition::backLine();
     }
 
     public function getIconSVG(): string

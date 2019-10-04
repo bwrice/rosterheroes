@@ -33,11 +33,7 @@ class WarriorBehavior extends HeroClassBehavior
         WarriorMeasurableOperator $measurableOperator)
     {
         parent::__construct($measurableCalculator, $measurableOperator);
-    }
-
-    public function getStartingCombatPosition(): CombatPosition
-    {
-        return CombatPosition::frontLine();
+        $this->startingCombatPosition = CombatPosition::frontLine();
     }
 
     public function getIconSVG(): string

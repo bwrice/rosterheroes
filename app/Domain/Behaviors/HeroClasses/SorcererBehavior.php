@@ -32,11 +32,7 @@ class SorcererBehavior extends HeroClassBehavior
         SorcererMeasurableOperator $measurableOperator)
     {
         parent::__construct($measurableCalculator, $measurableOperator);
-    }
-
-    public function getStartingCombatPosition(): CombatPosition
-    {
-        return CombatPosition::backLine();
+        $this->startingCombatPosition = CombatPosition::backLine();
     }
 
     public function getIconSVG(): string
