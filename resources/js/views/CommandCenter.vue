@@ -109,11 +109,18 @@
 
             ...mapGetters([
                 '_squad',
-                '_currentWeek'
+                '_currentWeek',
+                '_focusedBarracksHero'
             ]),
             toolBarTitle() {
+                switch(this.$route.name) {
+                    case 'barracks-hero':
+                        return this._focusedBarracksHero(this.$route).name;
 
-                return this._squad.name;
+                    case 'barracks-main':
+                    default:
+                        return this._squad.name;
+                }
             }
         }
     }
