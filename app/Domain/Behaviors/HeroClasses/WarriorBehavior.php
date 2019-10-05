@@ -3,8 +3,6 @@
 
 namespace App\Domain\Behaviors\HeroClasses;
 
-use App\Domain\Behaviors\HeroClasses\MeasurableOperators\HeroMeasurableCalculator;
-use App\Domain\Behaviors\HeroClasses\MeasurableOperators\WarriorMeasurableOperator;
 use App\Domain\Models\CombatPosition;
 use App\Domain\Models\ItemBlueprint;
 use App\Domain\Models\MeasurableType;
@@ -28,11 +26,6 @@ class WarriorBehavior extends HeroClassBehavior
         ItemBlueprint::STARTER_HEAVY_ARMOR
     ];
 
-    public function __construct()
-    {
-        $this->startingCombatPosition = CombatPosition::frontLine();
-    }
-
     public function getIconSVG(): string
     {
         return "<svg viewBox=\"0 0 38.4 48\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" style=\"display: block\">
@@ -42,5 +35,10 @@ class WarriorBehavior extends HeroClassBehavior
                     <rect x=\"22.0442\" y=\"23.028\" width=\"4.84615\" height=\"40.972\" fill=\"#474747\"/>
                     <circle cx=\"24.4673\" cy=\"19.2832\" r=\"2.42308\" fill=\"#474747\"/>
                 </svg>";
+    }
+
+    public function getStartingCombatPosition(): CombatPosition
+    {
+        return CombatPosition::frontLine();
     }
 }

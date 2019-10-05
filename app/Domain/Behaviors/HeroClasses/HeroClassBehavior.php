@@ -28,9 +28,6 @@ abstract class HeroClassBehavior
     /** @var array  */
     protected $starterItemBlueprintNames = [];
 
-    /** @var CombatPosition */
-    protected $startingCombatPosition;
-
     /**
      * @return array
      */
@@ -39,10 +36,7 @@ abstract class HeroClassBehavior
         return $this->starterItemBlueprintNames;
     }
 
-    public function getStartingCombatPosition(): CombatPosition
-    {
-        return $this->startingCombatPosition;
-    }
+    abstract public function getStartingCombatPosition(): CombatPosition;
 
     abstract public function getIconSVG(): string;
 
