@@ -1,7 +1,7 @@
 <template>
     <v-card>
         <v-card-title>Heroes</v-card-title>
-        <v-card-text>
+        <v-card-text class="px-2 pb-2">
             <HeroSummaryPanel
                 v-for="(hero, uuid) in heroes"
                 :key="uuid"
