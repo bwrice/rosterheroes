@@ -68,7 +68,21 @@ class HeroMeasurableTest extends TestCase
         $this->assertEquals(0, $warriorStrength->amount_raised);
         $this->assertEquals(0, $sorcererStrength->amount_raised);
 
-        $this->assertGreaterThan($sorcererStrength->getCurrentAmount(), $warriorStrength->getCurrentAmount());
+        $this->assertGreaterThan($sorcererStrength->getPreBuffedAmount(), $warriorStrength->getPreBuffedAmount());
+    }
+
+    /**
+     * @test
+     */
+    public function a_warrior_starting_health_is_higher_than_a_rangers()
+    {
+        $warriorHealth = $this->warrior->getMeasurable(MeasurableType::HEALTH);
+        $rangerHealth = $this->ranger->getMeasurable(MeasurableType::HEALTH);
+
+        $this->assertEquals(0, $warriorHealth->amount_raised);
+        $this->assertEquals(0, $rangerHealth->amount_raised);
+
+        $this->assertGreaterThan($rangerHealth->getPreBuffedAmount(), $warriorHealth->getPreBuffedAmount());
     }
 
     /**
@@ -82,7 +96,7 @@ class HeroMeasurableTest extends TestCase
         $this->assertEquals(0, $sorcererIntelligence->amount_raised);
         $this->assertEquals(0, $rangerIntelligence->amount_raised);
 
-        $this->assertGreaterThan($rangerIntelligence->getCurrentAmount(), $sorcererIntelligence->getCurrentAmount());
+        $this->assertGreaterThan($rangerIntelligence->getPreBuffedAmount(), $sorcererIntelligence->getPreBuffedAmount());
     }
 
     /**
@@ -96,7 +110,7 @@ class HeroMeasurableTest extends TestCase
         $this->assertEquals(0, $rangerFocus->amount_raised);
         $this->assertEquals(0, $warriorFocus->amount_raised);
 
-        $this->assertGreaterThan($warriorFocus->getCurrentAmount(), $rangerFocus->getCurrentAmount());
+        $this->assertGreaterThan($warriorFocus->getPreBuffedAmount(), $rangerFocus->getPreBuffedAmount());
     }
 
     /**
