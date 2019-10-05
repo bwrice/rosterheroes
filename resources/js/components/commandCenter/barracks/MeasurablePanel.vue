@@ -3,7 +3,7 @@
         <v-row no-gutters :align="'center'" :justify="'space-between'">
             <span class="subtitle-2 font-weight-bold">{{measurableName}}</span>
             <div>
-                <v-chip label color="primary" class="mx-1">{{measurable.currentAmount}}</v-chip>
+                <v-chip label color="primary" class="mx-1">{{measurable.buffedAmount}}</v-chip>
                 <v-btn small @click="measurableFocused = true">+</v-btn>
             </div>
         </v-row>
@@ -12,7 +12,7 @@
             max-width="600"
         >
             <v-card>
-                <v-card-title class="headline">{{measurableName}}: {{measurable.currentAmount}}</v-card-title>
+                <v-card-title class="headline">{{measurableName}}: {{measurable.buffedAmount}}</v-card-title>
                 <v-card-actions>
                     <v-container>
                         <v-row no-gutters>
