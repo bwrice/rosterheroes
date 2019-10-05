@@ -19,6 +19,18 @@ export default {
         },
         _mobileStorage(state) {
             return state.mobileStorage;
+        },
+        _focusedBarracksHero: (state) => (route) => {
+            let hero = state.barracksHeroes.find(hero => hero.slug === route.params.heroSlug);
+            return hero ? hero : new BarracksHero({});
+        },
+        _squadHighMeasurable: (state) => (measurableTypeName) => {
+            let measurableAmounts = state.barracksHeroes.map(function (hero) {
+                return hero.getMeasurableByType(measurableTypeName).buffedAmount;
+            });
+            return measurableAmounts.reduce(function(amountA, amountB) {
+                return Math.max(amountA, amountB);
+            }, 0);
         }
     },
     mutations: {
@@ -60,7 +72,7 @@ export default {
 
                 commit('SET_BARRACKS_HEROES', updatedHeroes);
 
-                let text = updatedMeasurable.measurableType.name.toUpperCase() + ' raised to ' + updatedMeasurable.currentAmount;
+                let text = updatedMeasurable.measurableType.name.toUpperCase() + ' raised to ' + updatedMeasurable.buffedAmount;
                 dispatch('snackBarSuccess', {
                     text: text,
                     timeout: 3000
