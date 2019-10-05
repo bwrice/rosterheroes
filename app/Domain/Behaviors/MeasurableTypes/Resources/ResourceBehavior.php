@@ -14,9 +14,4 @@ abstract class ResourceBehavior extends MeasurableTypeBehavior
     {
         $this->group = self::GROUP_NAME;
     }
-
-    public function getBoostMultiplier(BoostsMeasurables $boostsMeasurables): int
-    {
-        return $boostsMeasurables->getResourceBoostMultiplier();
-    }
 }

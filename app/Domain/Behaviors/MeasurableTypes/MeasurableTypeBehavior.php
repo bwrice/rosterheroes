@@ -20,6 +20,4 @@ abstract class MeasurableTypeBehavior
     {
         return $this->group;
     }
-
-    abstract public function getBoostMultiplier(BoostsMeasurables $boostsMeasurables): int;
 }
