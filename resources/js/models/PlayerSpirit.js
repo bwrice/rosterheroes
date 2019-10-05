@@ -3,7 +3,7 @@ import Game from "./Game";
 
 export default class PlayerSpirit {
 
-    constructor({uuid, essenceCost, energy, player, game}) {
+    constructor({uuid, essenceCost = 0, energy, player, game}) {
         this.uuid = uuid;
         this.essenceCost = essenceCost;
         this.energy = energy;
