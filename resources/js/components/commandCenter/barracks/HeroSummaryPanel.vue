@@ -45,12 +45,7 @@
             <v-col cols="8">
                 <v-row no-gutters>
                     <v-col cols="12">
-                        <template v-if="hero.playerSpirit">
-                            <PlayerSpiritSummaryPanel :player-spirit="hero.playerSpirit"></PlayerSpiritSummaryPanel>
-                        </template>
-                        <template v-else>
-                            <span>Empty</span>
-                        </template>
+                        <PlayerSpiritSummaryPanel :player-spirit="hero.playerSpirit"></PlayerSpiritSummaryPanel>
                     </v-col>
                 </v-row>
                 <v-row no-gutters>

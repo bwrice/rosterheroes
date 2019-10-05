@@ -1,11 +1,15 @@
 <template>
     <v-sheet flat color="#706856" class="py-1 px-2 ma-1">
-        <v-row no-gutters :align="'center'" :justify="'space-between'">
-            <span class="subtitle-2 font-weight-bold">{{measurableName}}</span>
-            <div>
-                <v-chip label color="primary" class="mx-1">{{measurable.buffedAmount}}</v-chip>
+        <v-row no-gutters align="center">
+            <v-col cols="4">
+                <span class="subtitle-2 font-weight-bold">{{measurableName}}</span>
+            </v-col>
+            <v-col cols="6" class="px-2">
+                <RelativeMeasurableBar :height="20" :measurable="measurable"></RelativeMeasurableBar>
+            </v-col>
+            <v-col cols="2">
                 <v-btn small @click="measurableFocused = true">+</v-btn>
-            </div>
+            </v-col>
         </v-row>
         <v-dialog
             v-model="measurableFocused"
@@ -96,9 +100,11 @@
 
     import {mapActions} from 'vuex';
     import Measurable from "../../../models/Measurable";
+    import RelativeMeasurableBar from "./RelativeMeasurableBar";
 
     export default {
         name: "MeasurablePanel",
+        components: {RelativeMeasurableBar},
         props: {
             measurable: Measurable,
             required: true
