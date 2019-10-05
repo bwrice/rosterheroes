@@ -55,33 +55,9 @@
                 </v-row>
                 <v-row no-gutters>
                     <v-col cols="12" class="px-1 pb-1">
-                        <v-progress-linear
-                            color="#c26161"
-                            height="10"
-                            :value="healthValue"
-                        >
-                            <template v-slot="{ value }">
-                                <span class="caption font-weight-bold">{{ Math.ceil(value) }}</span>
-                            </template>
-                        </v-progress-linear>
-                        <v-progress-linear
-                            color="#ded337"
-                            height="10"
-                            value="80"
-                        >
-                            <template v-slot="{ value }">
-                                <span class="caption font-weight-bold">{{ Math.ceil(value) }}</span>
-                            </template>
-                        </v-progress-linear>
-                        <v-progress-linear
-                            color="#43a1e8"
-                            height="10"
-                            value="60"
-                        >
-                            <template v-slot="{ value }">
-                                <span class="caption font-weight-bold">{{ Math.ceil(value) }}</span>
-                            </template>
-                        </v-progress-linear>
+                        <RelativeMeasurableBar :color="'#c26161'" :measurable="heroHealth"></RelativeMeasurableBar>
+                        <RelativeMeasurableBar :color="'#ded337'" :measurable="heroStamina"></RelativeMeasurableBar>
+                        <RelativeMeasurableBar :color="'#43a1e8'" :measurable="heroMana"></RelativeMeasurableBar>
                     </v-col>
                 </v-row>
             </v-col>
@@ -96,10 +72,11 @@
     import BarracksHero from "../../../models/BarracksHero";
 
     import {mapGetters} from 'vuex';
+    import RelativeMeasurableBar from "./RelativeMeasurableBar";
 
     export default {
         name: "HeroSummaryPanel",
-        components: {PlayerSpiritSummaryPanel, HeroGearSVG, SvgIconSheet},
+        components: {RelativeMeasurableBar, PlayerSpiritSummaryPanel, HeroGearSVG, SvgIconSheet},
         props: {
             hero: {
                 type: BarracksHero,
@@ -115,14 +92,14 @@
             ...mapGetters([
                 '_squadHighMeasurable'
             ]),
-            healthValue() {
-                let squadHighHealthAmount = this._squadHighMeasurable('health');
-                if (! squadHighHealthAmount) {
-                    return 0;
-                }
-                let heroHealthAmount = this.hero.getMeasurableByType('health').buffedAmount;
-                console.log(heroHealthAmount, squadHighHealthAmount);
-                return Math.ceil((heroHealthAmount/squadHighHealthAmount) * 100);
+            heroHealth() {
+                return this.hero.getMeasurableByType('health')
+            },
+            heroStamina() {
+                return this.hero.getMeasurableByType('stamina')
+            },
+            heroMana() {
+                return this.hero.getMeasurableByType('mana')
             },
             barracksHeroRoute() {
                 let squadSlugParam = this.$route.params.squadSlug;
