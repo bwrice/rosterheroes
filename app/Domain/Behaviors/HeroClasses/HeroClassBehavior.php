@@ -95,8 +95,8 @@ abstract class HeroClassBehavior
 
     protected function getMeasurableBonusAmount(string $measurableTypeName, string $measurableGroupName): int
     {
-        $groupMultiplier = $this->getMeasurableGroupWeight($measurableGroupName);
-        return (int) $groupMultiplier * $this->getMeasurableAmountOrdinalBonus($measurableTypeName);
+        $groupMultiplier = 1 / $this->getMeasurableGroupWeight($measurableGroupName);
+        return (int) ($groupMultiplier * $this->getMeasurableAmountOrdinalBonus($measurableTypeName));
     }
 
     protected function getMeasurableGroupWeight(string $measurableGroupName): float
