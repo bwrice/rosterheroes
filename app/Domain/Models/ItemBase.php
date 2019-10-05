@@ -59,7 +59,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ItemBase extends Model
 {
-
     use HasUniqueNames;
 
     public const DAGGER = 'Dagger';

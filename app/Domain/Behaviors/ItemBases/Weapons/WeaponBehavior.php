@@ -95,7 +95,7 @@ abstract class WeaponBehavior extends ItemBaseBehavior
      */
     public function getCombatSpeedBonus(UsesItems $hasItems = null): float
     {
-        $agilityBonus = $hasItems ? $hasItems->getMeasurableAmount(MeasurableType::AGILITY)/500 : 0;
+        $agilityBonus = $hasItems ? $hasItems->getBuffedMeasurableAmount(MeasurableType::AGILITY)/500 : 0;
         $speedRatingBonus = $this->getSpeedRating()/100;
         return $speedRatingBonus + $agilityBonus;
     }

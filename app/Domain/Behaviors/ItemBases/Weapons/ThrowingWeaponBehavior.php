@@ -68,8 +68,8 @@ class ThrowingWeaponBehavior extends WeaponBehavior
 
     protected function getMeasurablesDamageBonus(UsesItems $usesItems)
     {
-        $strengthBonus = .0125 * $usesItems->getMeasurableAmount(MeasurableType::STRENGTH);
-        $focusBonus = .0125 * $usesItems->getMeasurableAmount(MeasurableType::FOCUS);
+        $strengthBonus = .0125 * $usesItems->getBuffedMeasurableAmount(MeasurableType::STRENGTH);
+        $focusBonus = .0125 * $usesItems->getBuffedMeasurableAmount(MeasurableType::FOCUS);
         return $strengthBonus + $focusBonus;
     }
 

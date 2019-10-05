@@ -52,7 +52,7 @@ class Measurable extends EventSourcedModel
 
     public function getBuffedAmount(): int
     {
-        return $this->hasMeasurables->getBuffedMeasurableAmount($this->getMeasurableTypeBehavior(), $this->amount_raised);
+        return $this->hasMeasurables->calculateMeasurableBuffedAmount($this->getMeasurableTypeBehavior(), $this->amount_raised);
     }
 
     public function getMeasurableTypeBehavior()

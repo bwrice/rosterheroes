@@ -67,9 +67,9 @@ class OrbBehavior extends WeaponBehavior
 
     protected function getMeasurablesDamageBonus(UsesItems $usesItems)
     {
-        $focusBonus = .007 * $usesItems->getMeasurableAmount(MeasurableType::FOCUS);
-        $aptitudeBonus = .007 * $usesItems->getMeasurableAmount(MeasurableType::APTITUDE);
-        $intelligenceBonus = .007 * $usesItems->getMeasurableAmount(MeasurableType::INTELLIGENCE);
+        $focusBonus = .007 * $usesItems->getBuffedMeasurableAmount(MeasurableType::FOCUS);
+        $aptitudeBonus = .007 * $usesItems->getBuffedMeasurableAmount(MeasurableType::APTITUDE);
+        $intelligenceBonus = .007 * $usesItems->getBuffedMeasurableAmount(MeasurableType::INTELLIGENCE);
         return $focusBonus + $aptitudeBonus + $intelligenceBonus;
     }
 

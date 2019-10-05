@@ -67,9 +67,9 @@ class SwordBehavior extends WeaponBehavior
 
     protected function getMeasurablesDamageBonus(UsesItems $usesItems)
     {
-        $strengthBonus = .007 * $usesItems->getMeasurableAmount(MeasurableType::STRENGTH);
-        $valorBonus = .007 * $usesItems->getMeasurableAmount(MeasurableType::VALOR);
-        $agilityBonus = .007 * $usesItems->getMeasurableAmount(MeasurableType::AGILITY);
+        $strengthBonus = .007 * $usesItems->getBuffedMeasurableAmount(MeasurableType::STRENGTH);
+        $valorBonus = .007 * $usesItems->getBuffedMeasurableAmount(MeasurableType::VALOR);
+        $agilityBonus = .007 * $usesItems->getBuffedMeasurableAmount(MeasurableType::AGILITY);
         return $strengthBonus + $valorBonus + $agilityBonus;
     }
 

@@ -67,8 +67,8 @@ class CrossbowBehavior extends WeaponBehavior
 
     protected function getMeasurablesDamageBonus(UsesItems $usesItems)
     {
-        $focusBonus = .0125 * $usesItems->getMeasurableAmount(MeasurableType::FOCUS);
-        $aptitudeBonus = .0125 * $usesItems->getMeasurableAmount(MeasurableType::APTITUDE);
+        $focusBonus = .0125 * $usesItems->getBuffedMeasurableAmount(MeasurableType::FOCUS);
+        $aptitudeBonus = .0125 * $usesItems->getBuffedMeasurableAmount(MeasurableType::APTITUDE);
         return $focusBonus + $aptitudeBonus;
     }
 

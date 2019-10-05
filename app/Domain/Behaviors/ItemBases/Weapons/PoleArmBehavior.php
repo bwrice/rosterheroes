@@ -67,9 +67,9 @@ class PoleArmBehavior extends WeaponBehavior
 
     protected function getMeasurablesDamageBonus(UsesItems $usesItems)
     {
-        $valorBonus = .006 * $usesItems->getMeasurableAmount(MeasurableType::VALOR);
-        $agilityBonus = .012 * $usesItems->getMeasurableAmount(MeasurableType::AGILITY);
-        $focusBonus = .006 * $usesItems->getMeasurableAmount(MeasurableType::APTITUDE);
+        $valorBonus = .006 * $usesItems->getBuffedMeasurableAmount(MeasurableType::VALOR);
+        $agilityBonus = .012 * $usesItems->getBuffedMeasurableAmount(MeasurableType::AGILITY);
+        $focusBonus = .006 * $usesItems->getBuffedMeasurableAmount(MeasurableType::APTITUDE);
         return $valorBonus + $agilityBonus + $focusBonus;
     }
 

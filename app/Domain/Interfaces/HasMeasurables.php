@@ -15,7 +15,7 @@ interface HasMeasurables
 
 //    public function getCurrentMeasurableAmount(Measurable $measurable): int;
 
-    public function getBuffedMeasurableAmount(MeasurableTypeBehavior $measurableTypeBehavior, int $amountRaised): int;
+    public function calculateMeasurableBuffedAmount(MeasurableTypeBehavior $measurableTypeBehavior, int $amountRaised): int;
 
     public function availableExperience(): int;
 

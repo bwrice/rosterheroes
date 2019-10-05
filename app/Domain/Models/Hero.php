@@ -222,11 +222,11 @@ class Hero extends EventSourcedModel implements HasSlots, HasMeasurables, UsesIt
         return $this->getHeroClassBehavior()->spentOnRaisingMeasurable($measurableTypeBehavior, $amountRaised);
     }
 
-    public function getBuffedMeasurableAmount(MeasurableTypeBehavior $measurableTypeBehavior, int $amountRaised): int
+    public function calculateMeasurableBuffedAmount(MeasurableTypeBehavior $measurableTypeBehavior, int $amountRaised): int
     {
-        // TODO: enchantments
-        // TODO: spells
-        return $this->getMeasurableCurrentAmount($measurableTypeBehavior, $amountRaised);
+        $preBuffedAmount = $this->getMeasurablePreBuffedAmount($measurableTypeBehavior, $amountRaised);
+        $enchantmentsBonus = $this->getEnchantments()->getBoostAmount($measurableTypeBehavior->getTypeName());
+        return $preBuffedAmount + $enchantmentsBonus;
     }
 
     public function getEnchantments()
@@ -262,9 +262,9 @@ class Hero extends EventSourcedModel implements HasSlots, HasMeasurables, UsesIt
         return $squadExp - $expSpentOnMeasurables;
     }
 
-    public function getMeasurableAmount(string $measurableTypeName): int
+    public function getBuffedMeasurableAmount(string $measurableTypeName): int
     {
-        return $this->getMeasurable($measurableTypeName)->getCurrentAmount();
+        return $this->getMeasurable($measurableTypeName)->getPreBuffedAmount();
     }
 
     public function getUniqueIdentifier(): string
@@ -272,7 +272,7 @@ class Hero extends EventSourcedModel implements HasSlots, HasMeasurables, UsesIt
         return $this->uuid;
     }
 
-    public function getMeasurableCurrentAmount(MeasurableTypeBehavior $measurableTypeBehavior, int $amountRaised): int
+    public function getMeasurablePreBuffedAmount(MeasurableTypeBehavior $measurableTypeBehavior, int $amountRaised): int
     {
         return $amountRaised + $this->getHeroClassBehavior()->getMeasurableStartingAmount($measurableTypeBehavior);
     }

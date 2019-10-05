@@ -66,9 +66,9 @@ class BowBehavior extends WeaponBehavior
 
     protected function getMeasurablesDamageBonus(UsesItems $usesItems)
     {
-        $strengthBonus = .006 * $usesItems->getMeasurableAmount(MeasurableType::STRENGTH);
-        $agilityBonus = .008 * $usesItems->getMeasurableAmount(MeasurableType::AGILITY);
-        $focusBonus = .008 * $usesItems->getMeasurableAmount(MeasurableType::FOCUS);
+        $strengthBonus = .006 * $usesItems->getBuffedMeasurableAmount(MeasurableType::STRENGTH);
+        $agilityBonus = .008 * $usesItems->getBuffedMeasurableAmount(MeasurableType::AGILITY);
+        $focusBonus = .008 * $usesItems->getBuffedMeasurableAmount(MeasurableType::FOCUS);
         return $strengthBonus + $agilityBonus + $focusBonus;
     }
 
