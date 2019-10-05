@@ -14,6 +14,7 @@ use App\Domain\Support\ItemNameBuilder;
 use App\StorableEvents\ItemCreated;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Facades\Log;
 use Ramsey\Uuid\Uuid;
 
 /**
@@ -40,6 +41,9 @@ class Item extends EventSourcedModel implements Slottable, HasAttacks
     const RELATION_MORPH_MAP = 'items';
 
     protected $guarded = [];
+
+    /** @var UsesItems|null */
+    protected $usesItems;
 
     /**
      * @return BelongsToMany
@@ -142,6 +146,9 @@ class Item extends EventSourcedModel implements Slottable, HasAttacks
 
     public function getUsesItems(): ?UsesItems
     {
+        if ($this->usesItems) {
+            return $this->usesItems;
+        }
         /** @var Slot $slot */
         $slot = $this->slots->first();
         if (! $slot) {
@@ -170,10 +177,11 @@ class Item extends EventSourcedModel implements Slottable, HasAttacks
     {
         $blockChance = 1 + ($this->itemTypeGrade()**.5)/5;
         $blockChance *= $this->itemType->getItemBaseBehavior()->getBlockChanceModifier();
-        if ($this->getUsesItems()) {
-            $agilityAmount = $this->getUsesItems()->getMeasurableAmount(MeasurableType::AGILITY);
+        $usesItems = $this->getUsesItems();
+        if ($usesItems) {
+            $agilityAmount = $usesItems->getMeasurableAmount(MeasurableType::AGILITY);
             $blockChance *= 1 + $agilityAmount**.5/50;
-            $aptitudeAmount = $this->getUsesItems()->getMeasurableAmount(MeasurableType::APTITUDE);
+            $aptitudeAmount = $usesItems->getMeasurableAmount(MeasurableType::APTITUDE);
             $blockChance *= 1 + $aptitudeAmount**.5/50;
         }
         $blockChance *= $this->material->getBlockChanceModifier();
@@ -186,5 +194,15 @@ class Item extends EventSourcedModel implements Slottable, HasAttacks
         $value *= $this->material->getValueModifier();
         $value *= 1 + $this->enchantments->boostLevelSum()**.5/5;
         return (int) ceil($value);
+    }
+
+    /**
+     * @param UsesItems|null $usesItems
+     * @return Item
+     */
+    public function setUsesItems(?UsesItems $usesItems): Item
+    {
+        $this->usesItems = $usesItems;
+        return $this;
     }
 }
