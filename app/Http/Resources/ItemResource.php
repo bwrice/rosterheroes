@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Domain\Interfaces\UsesItems;
 use App\Domain\Models\Item;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -13,6 +14,9 @@ use Illuminate\Http\Resources\Json\JsonResource;
  */
 class ItemResource extends JsonResource
 {
+    /** @var UsesItems|null */
+    protected $usesItems;
+
     /**
      * Transform the resource into an array.
      *
@@ -21,6 +25,10 @@ class ItemResource extends JsonResource
      */
     public function toArray($request)
     {
+        if ($this->usesItems) {
+            /** @var UsesItems $this->resource */
+            $this->resource->setUsesItems($this->usesItems);
+        }
         return [
             'uuid' => $this->uuid,
             'name' => $this->getItemName(),
@@ -36,5 +44,15 @@ class ItemResource extends JsonResource
             'blockChance' => round($this->getBlockChance(), 2),
             'value' => $this->getValue()
         ];
+    }
+
+    /**
+     * @param UsesItems|null $usesItems
+     * @return ItemResource
+     */
+    public function setUsesItems(?UsesItems $usesItems): ItemResource
+    {
+        $this->usesItems = $usesItems;
+        return $this;
     }
 }

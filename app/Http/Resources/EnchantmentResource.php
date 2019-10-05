@@ -23,9 +23,7 @@ class EnchantmentResource extends JsonResource
     {
         return [
             'name' => $this->name,
-            'measurableBoosts' => MeasurableBoostResource::collection($this->measurableBoosts)->collection->each(function (MeasurableBoostResource $boostResource) {
-                $boostResource->setBoostsMeasurables($this->resource);
-            }),
+            'measurableBoosts' => MeasurableBoostResource::collection($this->measurableBoosts),
         ];
     }
 }

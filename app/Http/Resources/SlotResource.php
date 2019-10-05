@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Domain\Interfaces\UsesItems;
 use App\Domain\Models\Item;
 use App\Domain\Models\Slot;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -14,6 +15,9 @@ use Illuminate\Http\Resources\Json\JsonResource;
  */
 class SlotResource extends JsonResource
 {
+    /** @var UsesItems|null */
+    protected $usesItems;
+
     /**
      * Transform the resource into an array.
      *
@@ -24,8 +28,18 @@ class SlotResource extends JsonResource
     {
         return [
             'uuid' => $this->uuid,
-            'item' => new ItemResource($this->item),
+            'item' => (new ItemResource($this->item))->setUsesItems($this->usesItems),
             'slotType' => new SlotTypeResource($this->slotType)
         ];
+    }
+
+    /**
+     * @param UsesItems|null $usesItems
+     * @return SlotResource
+     */
+    public function setUsesItems(?UsesItems $usesItems): SlotResource
+    {
+        $this->usesItems = $usesItems;
+        return $this;
     }
 }

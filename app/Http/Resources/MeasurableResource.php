@@ -26,7 +26,8 @@ class MeasurableResource extends JsonResource
             'amountRaised' => $this->amount_raised,
             'measurableType' => new MeasurableTypeResource($this->measurableType),
             'costToRaise' => $this->getCostToRaise(),
-            'currentAmount' => $this->getCurrentAmount(),
+            'preBuffedAmount' => $this->getPreBuffedAmount(),
+            'buffedAmount' => $this->getBuffedAmount(),
             'spentOnRaising' => $this->spentOnRaising()
         ];
     }
