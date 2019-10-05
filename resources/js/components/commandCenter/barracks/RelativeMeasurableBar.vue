@@ -1,7 +1,7 @@
 <template>
     <v-progress-linear
         :color="color"
-        height="10"
+        :height="height"
         :value="progressBarValue"
     >
         <template v-slot="{ value }">
@@ -23,8 +23,12 @@
             },
             color: {
                 type: String,
-                required: true
-            }
+                default: 'primary'
+            },
+            height: {
+                type: Number,
+                default: 10
+            },
         },
         computed: {
             ...mapGetters([
