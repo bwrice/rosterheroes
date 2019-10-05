@@ -3,11 +3,9 @@
 
 namespace App\Domain\Interfaces;
 
+use App\Domain\Behaviors\MeasurableTypes\MeasurableTypeBehavior;
+
 interface BoostsMeasurables
 {
-    public function getAttributeBoostMultiplier(): int;
-
-    public function getQualityBoostMultiplier(): int;
-
-    public function getResourceBoostMultiplier(): int;
+    public function getMeasurableBoostMultiplier(MeasurableTypeBehavior $measurableTypeBehavior): int;
 }
