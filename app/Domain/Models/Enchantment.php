@@ -2,11 +2,15 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Behaviors\MeasurableTypes\Attributes\AttributeBehavior;
+use App\Domain\Behaviors\MeasurableTypes\MeasurableTypeBehavior;
 use App\Domain\Behaviors\MeasurableTypes\Qualities\QualityBehavior;
+use App\Domain\Behaviors\MeasurableTypes\Resources\ResourceBehavior;
 use App\Domain\Collections\EnchantmentCollection;
 use App\Domain\Collections\MeasurableBoostCollection;
 use App\Domain\Interfaces\BoostsMeasurables;
 use App\Domain\Models\MeasurableBoost;
+use App\Http\Resources\AttackResource;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -39,18 +43,16 @@ class Enchantment extends Model implements BoostsMeasurables
         return $this->measurableBoosts->boostLevelSum();
     }
 
-    public function getAttributeBoostMultiplier(): int
+    public function getMeasurableBoostMultiplier(MeasurableTypeBehavior $measurableTypeBehavior): int
     {
-        return 1;
-    }
-
-    public function getQualityBoostMultiplier(): int
-    {
-        return 2;
-    }
-
-    public function getResourceBoostMultiplier(): int
-    {
-        return 4;
+        switch($measurableTypeBehavior->getGroupName()) {
+            case ResourceBehavior::GROUP_NAME:
+                return 4;
+            case QualityBehavior::GROUP_NAME:
+                return 2;
+            case AttributeBehavior::GROUP_NAME:
+                return 1;
+        }
+        throw new \InvalidArgumentException("Unknown group name: " . $measurableTypeBehavior->getGroupName());
     }
 }

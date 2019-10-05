@@ -45,9 +45,14 @@ class Measurable extends EventSourcedModel
         return $this->hasMeasurables->spentOnRaisingMeasurable($this->getMeasurableTypeBehavior(), $this->amount_raised);
     }
 
-    public function getCurrentAmount(): int
+    public function getPreBuffedAmount(): int
     {
-        return $this->hasMeasurables->getMeasurableCurrentAmount($this->getMeasurableTypeBehavior(), $this->amount_raised);
+        return $this->hasMeasurables->getMeasurablePreBuffedAmount($this->getMeasurableTypeBehavior(), $this->amount_raised);
+    }
+
+    public function getBuffedAmount(): int
+    {
+        return $this->hasMeasurables->getBuffedMeasurableAmount($this->getMeasurableTypeBehavior(), $this->amount_raised);
     }
 
     public function getMeasurableTypeBehavior()

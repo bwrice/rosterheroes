@@ -2,6 +2,7 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Behaviors\MeasurableTypes\MeasurableTypeBehavior;
 use App\Domain\Collections\MeasurableBoostCollection;
 use App\Domain\Interfaces\BoostsMeasurables;
 use Illuminate\Database\Eloquent\Model;
@@ -13,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $boost_level
  *
  * @property MeasurableType $measurableType
+ * @property BoostsMeasurables $booster
  */
 class MeasurableBoost extends Model
 {
@@ -23,22 +25,33 @@ class MeasurableBoost extends Model
         return new MeasurableBoostCollection($models);
     }
 
+    public function booster()
+    {
+        return $this->morphTo();
+    }
+
     public function measurableType()
     {
         return $this->belongsTo(MeasurableType::class);
     }
 
-    public function getBoostAmount(BoostsMeasurables $boostsMeasurables = null): int
+    public function getBoostAmount(): int
     {
-        if (! $boostsMeasurables) {
-            return $this->boost_level;
-        }
-        return $this->boost_level * $this->measurableType->getBehavior()->getBoostMultiplier($boostsMeasurables);
+        $boostMultiplier = $this->booster->getMeasurableBoostMultiplier($this->getMeasurableTypeBehavior());
+        return (int) ($this->boost_level * $boostMultiplier);
     }
 
-    public function getDescription(BoostsMeasurables $boostsMeasurables = null): string
+    public function getDescription(): string
     {
-        $boostAmount = $this->getBoostAmount($boostsMeasurables);
+        $boostAmount = $this->getBoostAmount();
         return "+" . $boostAmount . " " . ucwords($this->measurableType->name);
+    }
+
+    /**
+     * @return MeasurableTypeBehavior
+     */
+    protected function getMeasurableTypeBehavior(): MeasurableTypeBehavior
+    {
+        return $this->measurableType->getBehavior();
     }
 }
