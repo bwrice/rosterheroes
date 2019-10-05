@@ -9,6 +9,7 @@
 namespace App\Domain\Collections;
 
 
+use App\Domain\Behaviors\MeasurableTypes\MeasurableTypeBehavior;
 use App\Domain\Models\Enchantment;
 use App\Domain\Models\Measurable;
 use Illuminate\Database\Eloquent\Collection;
@@ -25,10 +26,19 @@ class EnchantmentCollection extends Collection
         });
     }
 
-    public function getBoostAmount(Measurable $measurable)
+    public function measurableBoosts(): MeasurableBoostCollection
     {
-        return $this->sum(function (Enchantment $enchantment) use ($measurable) {
-            return $measurable->measurableType->getBehavior()->getBoostMultiplier();
+        $boosts = new MeasurableBoostCollection();
+        $this->each(function (Enchantment $enchantment) use (&$boosts) {
+            $boosts = $boosts->union($enchantment->measurableBoosts);
         });
+        return $boosts;
+    }
+
+    public function getBoostAmount(string $measurableTypeName): int
+    {
+        return $this->measurableBoosts()
+            ->filterByMeasurableType($measurableTypeName)
+            ->boostTotal();
     }
 }

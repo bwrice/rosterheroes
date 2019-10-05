@@ -21,4 +21,18 @@ class MeasurableBoostCollection extends Collection
             return $measurableBoost->boost_level;
         });
     }
+
+    public function filterByMeasurableType(string $measurableTypeName)
+    {
+        return $this->filter(function (MeasurableBoost $measurableBoost) use ($measurableTypeName) {
+            return $measurableBoost->measurableType->name === $measurableTypeName;
+        });
+    }
+
+    public function boostTotal()
+    {
+        return $this->sum(function (MeasurableBoost $measurableBoost) {
+            return $measurableBoost->getBoostAmount();
+        });
+    }
 }
