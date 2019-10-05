@@ -33,9 +33,9 @@
         computed: {
             sheetColor() {
                 if (this.playerSpirit) {
-                    return 'rgba(0, 181, 147, .8)';
+                    return 'rgba(43, 140, 122, .85)';
                 }
-                return 'rgba(0, 0, 0, .25)';
+                return 'rgba(0, 0, 0, .2)';
             }
         }
     }
