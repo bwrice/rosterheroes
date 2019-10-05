@@ -20,11 +20,15 @@ export default class BarracksHero {
         this.heroClass = heroClass ? new HeroClass(heroClass) : new HeroClass({});
         this.heroRace = heroRace ? new HeroRace(heroRace) : new HeroRace({});
         this.combatPosition = combatPosition ? new CombatPosition(combatPosition) : new CombatPosition({});
-        this.playerSpirit = playerSpirit ? new PlayerSpirit(playerSpirit) : new PlayerSpirit({});
+        this.playerSpirit = playerSpirit ? new PlayerSpirit(playerSpirit) : null;
     }
 
     getSlot(slotUuid) {
         let matchingSlot = this.slots.find(slot => slot.uuid === slotUuid);
         return matchingSlot ? matchingSlot : new Slot({});
+    }
+
+    getMeasurableByType(measurableType) {
+        return this.measurables.find(measurable => measurable.measurableType.name === measurableType);
     }
 }
