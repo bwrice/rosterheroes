@@ -2,7 +2,9 @@
     <v-card class="my-2">
         <v-card-title>{{storageName}}</v-card-title>
         <v-card-text>
-            <FilledSlotIterator :filled-slots="filledStorageSlots"></FilledSlotIterator>
+            <FilledSlotIterator
+                :filled-slots="filledStorageSlots"
+            ></FilledSlotIterator>
         </v-card-text>
     </v-card>
 </template>

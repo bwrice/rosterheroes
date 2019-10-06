@@ -21,6 +21,7 @@
             <FilledSlotPanel
                 :filled-slot="props.item"
                 :item-name-truncate-extra="itemNameTruncateExtra"
+                :item-card-color="itemCardColor"
             >
                 <template v-slot:before-expand="panelProps">
                     <!-- nested scoped slots -->
@@ -85,6 +86,9 @@
             itemNameTruncateExtra: {
                 type: Number,
                 default: 0
+            },
+            itemCardColor: {
+                type: String
             }
         },
         data() {
