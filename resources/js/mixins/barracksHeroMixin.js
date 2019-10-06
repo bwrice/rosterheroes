@@ -21,7 +21,7 @@ export const barracksHeroMixin = {
             }
             let squadExperience = this._squad.experience;
             return this.barracksHeroFromRoute.measurables.reduce(function (availableExperience, measurable) {
-                return availableExperience - measurable.spent_on_raising;
+                return availableExperience - measurable.spentOnRaising;
             }, squadExperience);
         }
     },
