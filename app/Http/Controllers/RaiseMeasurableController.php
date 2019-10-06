@@ -9,6 +9,7 @@ use App\Exceptions\RaiseMeasurableException;
 use App\Http\Resources\MeasurableResource;
 use App\Policies\MeasurablePolicy;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
 class RaiseMeasurableController extends Controller
@@ -16,8 +17,8 @@ class RaiseMeasurableController extends Controller
     public function show($measurableUuid, Request $request)
     {
         $measurable = Measurable::findUuidOrFail($measurableUuid);
-        $amount = $request->get('amount');
-        $amount = $amount && $amount >= 1 ? (int) $amount : 1;
+        $amount = (int) $request->get('amount');
+        $amount = $amount && ($amount >= 1 && $amount <= 100) ? $amount : 1;
         return $measurable->getCostToRaise($amount);
     }
 
@@ -25,8 +26,9 @@ class RaiseMeasurableController extends Controller
     {
         $measurable = Measurable::findUuidOrFail($measurableUuid);
         $this->authorize(MeasurablePolicy::RAISE, $measurable);
-        $amount = $request->get('amount');
-
+        $amount = (int) $request->get('amount');
+        $amount = $amount && ($amount >= 1 && $amount <= 100) ? $amount : 1;
+        Log::debug($amount);
         try {
             $raiseMeasurableAction->execute($measurable, $amount);
 
