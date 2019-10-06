@@ -8,88 +8,174 @@
                 <RelativeMeasurableBar :height="20" :measurable="measurable"></RelativeMeasurableBar>
             </v-col>
             <v-col cols="2">
-                <v-btn small @click="measurableFocused = true">+</v-btn>
+<!--                <v-btn small @click="measurableFocused = true">-->
+<!--                </v-btn>-->
+                <v-row justify="center" align="center">
+                    <v-btn @click="expanded = ! expanded"
+                           fab
+                           dark
+                           color="rgba(0, 0, 0, .5)"
+                           x-small>
+                        <v-icon v-if="expanded">expand_less</v-icon>
+                        <v-icon v-else>expand_more</v-icon>
+                    </v-btn>
+                </v-row>
             </v-col>
         </v-row>
-        <v-dialog
-            v-model="measurableFocused"
-            max-width="600"
-        >
-            <v-card>
-                <v-card-title class="headline">{{measurableName}}: {{measurable.buffedAmount}}</v-card-title>
-                <v-card-actions>
-                    <v-container>
-                        <v-row no-gutters>
-                            <v-col cols="6">
-                                <v-text-field
-                                    outlined
-                                    solo
-                                    type="number"
-                                    :rules="[raiseAmountRules.positive, raiseAmountRules.tooLarge]"
-                                    v-model="measurableRaiseAmount"
-                                    @update:error="updateRaiseInputErrors"
-                                >
-                                </v-text-field>
-                            </v-col>
-                            <v-col cols="6">
-                                <v-row :justify="'center'">
-                                    <v-btn
-                                        fab
-                                        small
-                                        :disabled="increaseDisabled"
-                                        @click="increaseRaiseAmount"
-                                    >
-                                        <v-icon dark>add</v-icon>
-                                    </v-btn>
-                                    <v-btn
-                                        fab
-                                        small
-                                        :disabled="decreaseDisabled"
-                                        @click="decreaseRaiseAmount"
-                                    >
-                                        <v-icon dark>remove</v-icon>
-                                    </v-btn>
-                                </v-row>
-                            </v-col>
-                        </v-row>
-                        <v-row>
-                            <v-col cols="6">
-                                <v-row :justify="'center'">
-                                    Available: {{availableExperience}}
-                                </v-row>
-                            </v-col>
-                            <v-col cols="6">
-                                <v-row :justify="'center'">
-                                    Cost: {{costToRaise}}
-                                </v-row>
-                            </v-col>
-                        </v-row>
-                        <v-row no gutters>
-                            <v-col cols="4">
-                                <v-btn
-                                    color="error"
-                                    block
-                                    @click="measurableFocused = false"
-                                >
-                                    Cancel
-                                </v-btn>
-                            </v-col>
-                            <v-col cols="8">
-                                <v-btn
-                                    color="primary"
-                                    :disabled="raiseMeasurableDisabled"
-                                    block
-                                    @click="raiseMeasurable"
-                                >
-                                    Raise {{measurableName}}
-                                </v-btn>
-                            </v-col>
-                        </v-row>
-                    </v-container>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
+        <template v-if="expanded">
+            <v-row no-gutters class="pt-3" justify="space-between" align="center">
+                <v-text-field
+                    outlined
+                    solo
+                    type="number"
+                    :rules="[raiseAmountRules.positive, raiseAmountRules.tooLarge]"
+                    v-model="measurableRaiseAmount"
+                    @update:error="updateRaiseInputErrors"
+                >
+                </v-text-field>
+                <v-row class="flipped-orientation" justify="start" align="center">
+                    <v-btn
+                        small
+                        :disabled="increaseDisabled"
+                        @click="increaseRaiseAmount"
+                    >
+                        <v-icon dark>add</v-icon>
+                    </v-btn>
+                    <v-btn
+                        small
+                        :disabled="decreaseDisabled"
+                        @click="decreaseRaiseAmount"
+                    >
+                        <v-icon dark>remove</v-icon>
+                    </v-btn>
+                </v-row>
+            </v-row>
+            <v-row>
+                <v-col cols="6">
+                    <v-row :justify="'center'">
+                        Available: {{availableExperience}}
+                    </v-row>
+                </v-col>
+                <v-col cols="6">
+                    <v-row :justify="'center'">
+                        Cost: {{costToRaise}}
+                    </v-row>
+                </v-col>
+            </v-row>
+            <v-row no gutters>
+                <v-col cols="4">
+                    <v-btn
+                        color="error"
+                        block
+                        @click="measurableFocused = false"
+                    >
+                        Cancel
+                    </v-btn>
+                </v-col>
+                <v-col cols="8">
+                    <v-btn
+                        color="primary"
+                        :disabled="raiseMeasurableDisabled"
+                        block
+                        @click="raiseMeasurable"
+                    >
+                        Raise {{measurableName}}
+                    </v-btn>
+                </v-col>
+            </v-row>
+        </template>
     </v-sheet>
+<!--    <v-sheet flat color="#706856" class="py-1 px-2 ma-1">-->
+<!--        <v-row no-gutters align="center">-->
+<!--            <v-col cols="4">-->
+<!--                <span class="subtitle-2 font-weight-bold">{{measurableName}}</span>-->
+<!--            </v-col>-->
+<!--            <v-col cols="6" class="px-2">-->
+<!--                <RelativeMeasurableBar :height="20" :measurable="measurable"></RelativeMeasurableBar>-->
+<!--            </v-col>-->
+<!--            <v-col cols="2">-->
+<!--                <v-btn small @click="measurableFocused = true">+</v-btn>-->
+<!--            </v-col>-->
+<!--        </v-row>-->
+<!--        <v-dialog-->
+<!--            v-model="measurableFocused"-->
+<!--            max-width="600"-->
+<!--        >-->
+<!--            <v-card>-->
+<!--                <v-card-title class="headline">{{measurableName}}: {{measurable.buffedAmount}}</v-card-title>-->
+<!--                <v-card-actions>-->
+<!--                    <v-container>-->
+<!--                        <v-row no-gutters>-->
+<!--                            <v-col cols="6">-->
+<!--                                <v-text-field-->
+<!--                                    outlined-->
+<!--                                    solo-->
+<!--                                    type="number"-->
+<!--                                    :rules="[raiseAmountRules.positive, raiseAmountRules.tooLarge]"-->
+<!--                                    v-model="measurableRaiseAmount"-->
+<!--                                    @update:error="updateRaiseInputErrors"-->
+<!--                                >-->
+<!--                                </v-text-field>-->
+<!--                            </v-col>-->
+<!--                            <v-col cols="6">-->
+<!--                                <v-row :justify="'center'">-->
+<!--                                    <v-btn-->
+<!--                                        fab-->
+<!--                                        small-->
+<!--                                        :disabled="increaseDisabled"-->
+<!--                                        @click="increaseRaiseAmount"-->
+<!--                                    >-->
+<!--                                        <v-icon dark>add</v-icon>-->
+<!--                                    </v-btn>-->
+<!--                                    <v-btn-->
+<!--                                        fab-->
+<!--                                        small-->
+<!--                                        :disabled="decreaseDisabled"-->
+<!--                                        @click="decreaseRaiseAmount"-->
+<!--                                    >-->
+<!--                                        <v-icon dark>remove</v-icon>-->
+<!--                                    </v-btn>-->
+<!--                                </v-row>-->
+<!--                            </v-col>-->
+<!--                        </v-row>-->
+<!--                        <v-row>-->
+<!--                            <v-col cols="6">-->
+<!--                                <v-row :justify="'center'">-->
+<!--                                    Available: {{availableExperience}}-->
+<!--                                </v-row>-->
+<!--                            </v-col>-->
+<!--                            <v-col cols="6">-->
+<!--                                <v-row :justify="'center'">-->
+<!--                                    Cost: {{costToRaise}}-->
+<!--                                </v-row>-->
+<!--                            </v-col>-->
+<!--                        </v-row>-->
+<!--                        <v-row no gutters>-->
+<!--                            <v-col cols="4">-->
+<!--                                <v-btn-->
+<!--                                    color="error"-->
+<!--                                    block-->
+<!--                                    @click="measurableFocused = false"-->
+<!--                                >-->
+<!--                                    Cancel-->
+<!--                                </v-btn>-->
+<!--                            </v-col>-->
+<!--                            <v-col cols="8">-->
+<!--                                <v-btn-->
+<!--                                    color="primary"-->
+<!--                                    :disabled="raiseMeasurableDisabled"-->
+<!--                                    block-->
+<!--                                    @click="raiseMeasurable"-->
+<!--                                >-->
+<!--                                    Raise {{measurableName}}-->
+<!--                                </v-btn>-->
+<!--                            </v-col>-->
+<!--                        </v-row>-->
+<!--                    </v-container>-->
+<!--                </v-card-actions>-->
+<!--            </v-card>-->
+<!--        </v-dialog>-->
+<!--    </v-sheet>-->
 </template>
 
 <script>
@@ -127,6 +213,7 @@
                 measurableFocused: false,
                 measurableRaiseAmount: 1,
                 costToRaise: 0,
+                expanded: false,
                 raiseAmountRules: {
                     positive: amount => amount > 0 || 'must be a positive number',
                     tooLarge: amount => amount <= 100 || 'amount is too large'
@@ -204,5 +291,7 @@
 </script>
 
 <style scoped>
-
+    .flipped-orientation {
+        flex-direction: column;
+    }
 </style>
