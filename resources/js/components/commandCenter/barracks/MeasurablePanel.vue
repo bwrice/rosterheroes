@@ -23,17 +23,8 @@
             </v-col>
         </v-row>
         <template v-if="expanded">
-            <v-row no-gutters class="pt-3" justify="space-between" align="center">
-                <v-text-field
-                    outlined
-                    solo
-                    type="number"
-                    :rules="[raiseAmountRules.positive, raiseAmountRules.tooLarge]"
-                    v-model="measurableRaiseAmount"
-                    @update:error="updateRaiseInputErrors"
-                >
-                </v-text-field>
-                <v-row class="flipped-orientation" justify="start" align="center">
+            <v-row no-gutters class="pt-3" justify="space-between" align="start">
+                <v-row class="flex-column" justify="end" align="center">
                     <v-btn
                         small
                         :disabled="increaseDisabled"
@@ -49,34 +40,28 @@
                         <v-icon dark>remove</v-icon>
                     </v-btn>
                 </v-row>
+                <v-text-field
+                    outlined
+                    solo
+                    type="number"
+                    :rules="[raiseAmountRules.positive, raiseAmountRules.tooLarge]"
+                    v-model="measurableRaiseAmount"
+                    @update:error="updateRaiseInputErrors"
+                >
+                </v-text-field>
             </v-row>
-            <v-row>
-                <v-col cols="6">
-                    <v-row :justify="'center'">
-                        Available: {{availableExperience}}
+            <v-row no-gutters align="center">
+                <v-col cols="5" class="pl-2 pb-2">
+                    <v-row no-gutters class="flex-column" justify="center" align="start">
+                        <span class="caption">Available: {{availableExperience}}</span>
+                        <span class="caption">Cost: {{costToRaise}}</span>
                     </v-row>
                 </v-col>
-                <v-col cols="6">
-                    <v-row :justify="'center'">
-                        Cost: {{costToRaise}}
-                    </v-row>
-                </v-col>
-            </v-row>
-            <v-row no gutters>
-                <v-col cols="4">
-                    <v-btn
-                        color="error"
-                        block
-                        @click="measurableFocused = false"
-                    >
-                        Cancel
-                    </v-btn>
-                </v-col>
-                <v-col cols="8">
+                <v-col cols="7">
                     <v-btn
                         color="primary"
-                        :disabled="raiseMeasurableDisabled"
                         block
+                        :disabled="raiseMeasurableDisabled"
                         @click="raiseMeasurable"
                     >
                         Raise {{measurableName}}
@@ -243,8 +228,10 @@
             async setCostToRaiseAmount() {
                 if (this.measurableRaiseAmount <= 1) {
                     this.costToRaise = this.measurable.costToRaise;
-                } else {
+                } else if (! this.raiseInputHasErrors) {
                     this.costToRaise = await measurableApi.getCostToRaise(this.measurable.uuid, this.measurableRaiseAmount);
+                } else {
+                    this.costToRaise = "invalid input";
                 }
                 this.pendingMeasurableRaise = false;
             },
@@ -291,7 +278,4 @@
 </script>
 
 <style scoped>
-    .flipped-orientation {
-        flex-direction: column;
-    }
 </style>
