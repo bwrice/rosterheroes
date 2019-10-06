@@ -10,6 +10,6 @@ export default class Game {
     }
 
     get simpleDescription() {
-        return this.awayTeam.abbreviation + " @ " + this.awayTeam.abbreviation;
+        return this.awayTeam.abbreviation + " @ " + this.homeTeam.abbreviation;
     }
 }
