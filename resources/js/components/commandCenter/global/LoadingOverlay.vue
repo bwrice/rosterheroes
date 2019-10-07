@@ -14,7 +14,7 @@
         props: {
             showOverlay: {
                 type: Boolean,
-                default: false
+                required: true
             }
         }
     }
