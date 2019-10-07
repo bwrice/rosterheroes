@@ -2,20 +2,21 @@ import Barracks from "../components/commandCenter/views/barracks/Barracks";
 import BarracksNavigationDrawer from "../components/commandCenter/views/barracks/BarracksNavigationDrawer";
 import BarracksMain from "../components/commandCenter/views/barracks/BarracksMain";
 import BarracksHeroView from "../components/commandCenter/views/barracks/BarracksHeroView";
+import CommandCenter from "../views/CommandCenter";
 
 export const barracksRoutes = {
     path: '/command-center/:squadSlug/barracks',
     meta: {
         footerButton: 'barracks'
     },
-    components: {
-        default: Barracks,
-        drawer: BarracksNavigationDrawer
-    },
+    component: CommandCenter,
     children: [
         {
             path: '',
-            component: BarracksMain,
+            components: {
+                default: BarracksMain,
+                drawer: BarracksNavigationDrawer,
+            },
             name: 'barracks-main',
             meta: {
                 footerButton: 'barracks'
@@ -23,7 +24,10 @@ export const barracksRoutes = {
         },
         {
             path: 'hero/:heroSlug',
-            component: BarracksHeroView,
+            components: {
+                default: BarracksHeroView,
+                drawer: BarracksNavigationDrawer,
+            },
             name: 'barracks-hero',
             meta: {
                 footerButton: 'barracks'
