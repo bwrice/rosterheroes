@@ -1,7 +1,7 @@
 <template>
     <v-container>
         <v-row :no-gutters="noGutters">
-            <router-view></router-view>
+            <slot></slot>
         </v-row>
 <!--        <v-overlay :value="_overlay.show">-->
 <!--            <v-progress-circular-->
