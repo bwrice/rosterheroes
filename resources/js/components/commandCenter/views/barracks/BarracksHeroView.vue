@@ -1,23 +1,25 @@
 <template>
-    <v-col cols="12">
-        <v-row no-gutters>
-            <v-col cols="12">
-                <v-card class="my-2">
-                    <v-card-title>{{ heroName }}</v-card-title>
-                </v-card>
-            </v-col>
-        </v-row>
-        <v-row>
-            <v-col cols="12">
-                <HeroGearCard></HeroGearCard>
-            </v-col>
-        </v-row>
-        <v-row no-gutters>
-            <v-col cols="12">
-                <HeroMeasurablesCard></HeroMeasurablesCard>
-            </v-col>
-        </v-row>
-    </v-col>
+    <TwoColumnView>
+        <template v-slot:first>
+            <v-row>
+                <v-col cols="12">
+                    <v-card>
+                        <v-card-title>{{ heroName }}</v-card-title>
+                    </v-card>
+                </v-col>
+                <v-col cols="12">
+                    <HeroGearCard></HeroGearCard>
+                </v-col>
+            </v-row>
+        </template>
+        <template v-slot:second>
+            <v-row>
+                <v-col cols="12">
+                    <HeroMeasurablesCard></HeroMeasurablesCard>
+                </v-col>
+            </v-row>
+        </template>
+    </TwoColumnView>
 </template>
 
 <script>
@@ -25,10 +27,12 @@
     import MeasurablePanel from "../../barracks/MeasurablePanel";
     import HeroMeasurablesCard from "../../barracks/HeroMeasurablesCard";
     import HeroGearCard from "../../barracks/gear/HeroGearCard";
+    import BaseView from "../BaseView";
+    import TwoColumnView from "../TwoColumnView";
 
     export default {
         name: "BarracksHeroView",
-        components: {HeroGearCard, HeroMeasurablesCard, MeasurablePanel},
+        components: {TwoColumnView, BaseView, HeroGearCard, HeroMeasurablesCard, MeasurablePanel},
         mixins: [
             barracksHeroMixin
         ],
