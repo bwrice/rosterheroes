@@ -1,6 +1,6 @@
 <template>
-    <TwoColumnView>
-        <template v-slot:first>
+    <TwoColumnLayout>
+        <template v-slot:column-one>
             <v-row>
                 <v-col cols="12">
                     <v-card>
@@ -12,14 +12,14 @@
                 </v-col>
             </v-row>
         </template>
-        <template v-slot:second>
+        <template v-slot:column-two>
             <v-row>
                 <v-col cols="12">
                     <HeroMeasurablesCard></HeroMeasurablesCard>
                 </v-col>
             </v-row>
         </template>
-    </TwoColumnView>
+    </TwoColumnLayout>
 </template>
 
 <script>
@@ -28,11 +28,11 @@
     import HeroMeasurablesCard from "../../barracks/HeroMeasurablesCard";
     import HeroGearCard from "../../barracks/gear/HeroGearCard";
     import BaseView from "../BaseView";
-    import TwoColumnView from "../../layouts/TwoColumnLayout";
+    import TwoColumnLayout from "../../layouts/TwoColumnLayout";
 
     export default {
         name: "BarracksHeroView",
-        components: {TwoColumnView, BaseView, HeroGearCard, HeroMeasurablesCard, MeasurablePanel},
+        components: {TwoColumnLayout, BaseView, HeroGearCard, HeroMeasurablesCard, MeasurablePanel},
         mixins: [
             barracksHeroMixin
         ],
