@@ -2,19 +2,19 @@
     <TwoColumnLayout>
         <template v-slot:column-one>
             <v-row>
-                <v-col cols="12">
+                <v-col cols="12" class="pt-0">
                     <v-card>
                         <v-card-title>{{ heroName }}</v-card-title>
                     </v-card>
                 </v-col>
-                <v-col cols="12">
+                <v-col cols="12" class="pb-0">
                     <HeroGearCard></HeroGearCard>
                 </v-col>
             </v-row>
         </template>
         <template v-slot:column-two>
             <v-row>
-                <v-col cols="12">
+                <v-col cols="12" class="pt-0">
                     <HeroMeasurablesCard></HeroMeasurablesCard>
                 </v-col>
             </v-row>
