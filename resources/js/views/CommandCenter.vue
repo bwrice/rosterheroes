@@ -10,16 +10,7 @@
                     class="accent--text"
             ></v-app-bar-nav-icon>
             <v-toolbar-title>
-<!--                <v-col cols="12">-->
-<!--                    <v-row class="pt-2">-->
-<!--                        <span class="title font-weight-regular">{{ _squad.name }}</span>-->
-<!--                    </v-row>-->
-<!--                    <v-row>-->
-<!--                        <span class="overline" style="display: block">Roster</span>-->
-<!--                    </v-row>-->
-<!--                </v-col>-->
                 {{ toolBarTitle }}
-<!--                <span class="caption font-weight-light">(Roster)</span>-->
             </v-toolbar-title>
         </v-app-bar>
         <v-navigation-drawer
