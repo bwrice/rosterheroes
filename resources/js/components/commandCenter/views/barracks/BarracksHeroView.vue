@@ -28,7 +28,7 @@
     import HeroMeasurablesCard from "../../barracks/HeroMeasurablesCard";
     import HeroGearCard from "../../barracks/gear/HeroGearCard";
     import BaseView from "../BaseView";
-    import TwoColumnView from "../TwoColumnView";
+    import TwoColumnView from "../../layouts/TwoColumnLayout";
 
     export default {
         name: "BarracksHeroView",

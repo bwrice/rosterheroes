@@ -10,10 +10,10 @@
 </template>
 
 <script>
-    import BaseView from "./BaseView";
+    import BaseView from "../views/BaseView";
     export default {
         name: "TwoColumnView",
-        components: {BaseView}
+        components: {BaseView},
     }
 </script>
 
