@@ -2,7 +2,7 @@
 
 @section('content')
     <div id="app">
-        <command-center></command-center>
+        <router-view></router-view>
     </div>
 @endsection
 

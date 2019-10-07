@@ -33,8 +33,5 @@ const app = new Vue({
     el: '#app',
     vuetify: new Vuetify(vuetifyOptions),
     store,
-    router,
-    components: {
-        CommandCenter
-    }
+    router
 });
