@@ -1,5 +1,5 @@
 <template>
-    <v-sheet :color="sheetColor" class="ma-1 px-2" style="color: rgba(255, 255, 255, .9)">
+    <v-sheet :color="sheetColor" class="ma-1 px-2" style="color: rgba(255, 255, 255, .85)">
         <template v-if="playerSpirit">
             <v-row no-gutters>
                 <v-col cols="12">
@@ -33,7 +33,7 @@
         computed: {
             sheetColor() {
                 if (this.playerSpirit) {
-                    return 'rgba(43, 140, 122, .85)';
+                    return '#4c4052';
                 }
                 return 'rgba(0, 0, 0, .2)';
             }
