@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class MobileStorageRank extends Model
 {
-    const WAGON = 'wagon';
+    public const WAGON = 'Wagon';
 
     protected $guarded = [];
 
