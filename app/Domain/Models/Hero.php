@@ -47,6 +47,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $hero_race_id
  * @property int $hero_class_id
  * @property int $hero_rank_id
+ * @property int $combat_position_id
  * @property int $player_spirit_id
  * @property int $essence
  * @property string $name
