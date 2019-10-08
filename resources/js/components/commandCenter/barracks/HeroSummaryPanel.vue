@@ -22,8 +22,7 @@
                 </v-row>
             </v-col>
             <v-col cols="2">
-                <SvgIconSheet :svg="hero.combatPosition.svg">
-                </SvgIconSheet>
+                <CombatPositionIcon :combat-position-id="hero.combatPositionID" :attacker-mode="true"></CombatPositionIcon>
             </v-col>
         </v-row>
         <v-row no-gutters align="center">
@@ -60,10 +59,12 @@
     import RelativeMeasurableBar from "./RelativeMeasurableBar";
     import HeroClassIcon from "../global/HeroClassIcon";
     import HeroRaceIcon from "../global/HeroRaceIcon";
+    import CombatPositionIcon from "../global/CombatPositionIcon";
 
     export default {
         name: "HeroSummaryPanel",
         components: {
+            CombatPositionIcon,
             HeroRaceIcon,
             HeroClassIcon, RelativeMeasurableBar, PlayerSpiritSummaryPanel, HeroGearSVG, SvgIconSheet},
         props: {

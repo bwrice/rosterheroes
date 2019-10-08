@@ -12,8 +12,12 @@
                         </v-col>
                     </v-row>
                 </v-col>
-                <v-col cols="6"></v-col>
-                <v-col cols="2"></v-col>
+                <v-col cols="6">
+                    <PlayerSpiritSummaryPanel :player-spirit="hero.playerSpirit"></PlayerSpiritSummaryPanel>
+                </v-col>
+                <v-col cols="2">
+                    <CombatPositionIcon :combat-position-id="hero.combatPositionID" :attacker-mode="true"></CombatPositionIcon>
+                </v-col>
             </v-row>
         </v-card-text>
     </v-card>
@@ -23,10 +27,12 @@
     import BarracksHero from "../../../models/BarracksHero";
     import HeroRaceIcon from "../global/HeroRaceIcon";
     import HeroClassIcon from "../global/HeroClassIcon";
+    import PlayerSpiritSummaryPanel from "../global/PlayerSpiritSummaryPanel";
+    import CombatPositionIcon from "../global/CombatPositionIcon";
 
     export default {
         name: "HeroHeader",
-        components: {HeroClassIcon, HeroRaceIcon},
+        components: {CombatPositionIcon, PlayerSpiritSummaryPanel, HeroClassIcon, HeroRaceIcon},
         props: {
             hero: {
                 type: BarracksHero,
