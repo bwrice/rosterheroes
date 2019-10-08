@@ -4,6 +4,7 @@ use App\Http\Controllers\ContinentController;
 use App\Http\Controllers\EmptyHeroSlotsController;
 use App\Http\Controllers\EquipHeroController;
 use App\Http\Controllers\FastTravelController;
+use App\Http\Controllers\HeroClassController;
 use App\Http\Controllers\HeroController;
 use App\Http\Controllers\MobileStorageController;
 use App\Http\Controllers\ProvinceBorderController;
@@ -50,6 +51,8 @@ Route::prefix('v1')->group(function () {
     Route::get('/provinces/{provinceSlug}/borders', [ProvinceBorderController::class, 'index']);
     Route::get('/territories', [TerritoryController::class, 'index']);
     Route::get('/continents', [ContinentController::class, 'index']);
+
+    Route::get('/hero-classes', [HeroClassController::class, 'index']);
 
     Route::middleware(['auth:api'])->group(function () {
 
