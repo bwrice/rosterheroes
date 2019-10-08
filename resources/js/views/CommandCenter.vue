@@ -77,6 +77,7 @@
             this.updateCurrentLocation(route);
             this.setRealm();
             this.updateHeroClasses();
+            this.updateHeroRaces();
         },
 
         data: function() {
@@ -95,7 +96,8 @@
                 'updatePlayerSpiritsPool',
                 'updateCurrentLocation',
                 'setRealm',
-                'updateHeroClasses'
+                'updateHeroClasses',
+                'updateHeroRaces'
             ])
         },
         computed: {

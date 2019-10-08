@@ -1,7 +1,8 @@
 
 export default class HeroRace {
 
-    constructor({name = '', svg = ''}) {
+    constructor({id, name = '', svg = ''}) {
+        this.id = id;
         this.name = name;
         this.svg = svg;
     }
