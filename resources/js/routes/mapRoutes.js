@@ -1,5 +1,4 @@
 import MapMain from "../components/commandCenter/views/map/MapMain";
-import MapBase from "../components/commandCenter/views/map/MapBase";
 import MapNavigationDrawer from "../components/commandCenter/views/map/MapNavigationDrawer";
 import ContinentView from "../components/commandCenter/views/map/explore/ContinentView";
 import TerritoryView from "../components/commandCenter/views/map/explore/TerritoryView";
@@ -7,22 +6,21 @@ import ProvinceView from "../components/commandCenter/views/map/explore/Province
 import ExploreView from "../components/commandCenter/views/map/explore/ExploreView";
 import RealmView from "../components/commandCenter/views/map/explore/RealmView";
 import TravelView from "../components/commandCenter/views/map/TravelView";
+import CommandCenter from "../views/CommandCenter";
 
 export const mapRoutes = {
     path: '/command-center/:squadSlug/map',
     meta: {
         footerButton: 'map'
     },
-    components: {
-        default: MapBase,
-        drawer: MapNavigationDrawer,
-        meta: {
-            footerButton: 'map'
-        }
-    },
+    component: CommandCenter,
     children: [
         {
             path: '',
+            components: {
+                default: MapMain,
+                drawer: MapNavigationDrawer,
+            },
             component: MapMain,
             name: 'map-main',
             meta: {
@@ -31,7 +29,10 @@ export const mapRoutes = {
         },
         {
             path: 'travel',
-            component: TravelView,
+            components: {
+                default: TravelView,
+                drawer: MapNavigationDrawer,
+            },
             name: 'travel',
             meta: {
                 footerButton: 'map'
@@ -39,7 +40,10 @@ export const mapRoutes = {
         },
         {
             path: 'explore',
-            component: ExploreView,
+            components: {
+                default: ExploreView,
+                drawer: MapNavigationDrawer,
+            },
             meta: {
                 footerButton: 'map'
             },

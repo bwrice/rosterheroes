@@ -1,21 +1,21 @@
-import BaseView from "../components/commandCenter/views/BaseView";
 import RosterNavigationDrawer from "../components/commandCenter/views/roster/RosterNavigationDrawer";
 import RosterMain from "../components/commandCenter/views/roster/RosterMain";
 import HeroRosterView from "../components/commandCenter/views/roster/RosterHeroView";
+import CommandCenter from "../views/CommandCenter";
 
 export const rosterRoutes = {
     path: '/command-center/:squadSlug/roster',
     meta: {
         footerButton: 'roster'
     },
-    components: {
-        default: BaseView,
-        drawer: RosterNavigationDrawer
-    },
+    component: CommandCenter,
     children: [
         {
             path: '',
-            component: RosterMain,
+            components: {
+                default: RosterMain,
+                drawer: RosterNavigationDrawer
+            },
             name: 'roster-main',
             meta: {
                 footerButton: 'roster'
@@ -23,7 +23,10 @@ export const rosterRoutes = {
         },
         {
             path: 'hero/:heroSlug',
-            component: HeroRosterView,
+            components: {
+                default: HeroRosterView,
+                drawer: RosterNavigationDrawer
+            },
             name: 'roster-hero',
             meta: {
                 footerButton: 'roster'
