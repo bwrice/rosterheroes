@@ -1,5 +1,5 @@
 <template>
-    <v-card class="my-2">
+    <v-card>
         <v-card-title>{{storageName}}</v-card-title>
         <v-card-text>
             <FilledSlotIterator
@@ -25,7 +25,7 @@
         },
         computed: {
             storageName() {
-                return this.mobileStorage.mobileStorageRank.name.toUpperCase();
+                return this.mobileStorage.mobileStorageRank.name;
             },
             filledStorageSlots() {
                 return this.mobileStorage.filledSlots;
