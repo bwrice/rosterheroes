@@ -23,6 +23,7 @@ class HeroRaceResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'name' => $this->name,
             'svg' => $this->getBehavior()->getIconSVG(),
             'positions' => PositionResource::collection($this->whenLoaded('positions'))
