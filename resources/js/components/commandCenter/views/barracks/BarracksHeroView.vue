@@ -3,12 +3,10 @@
         <template v-slot:column-one>
             <v-row>
                 <v-col cols="12" class="pt-0">
-                    <v-card>
-                        <v-card-title>{{ heroName }}</v-card-title>
-                    </v-card>
+                    <HeroHeader :hero="hero"></HeroHeader>
                 </v-col>
                 <v-col cols="12" class="pb-0">
-                    <HeroGearCard></HeroGearCard>
+                    <HeroGearCard :hero="hero"></HeroGearCard>
                 </v-col>
             </v-row>
         </template>
@@ -29,19 +27,22 @@
     import HeroGearCard from "../../barracks/gear/HeroGearCard";
     import BaseView from "../BaseView";
     import TwoColumnLayout from "../../layouts/TwoColumnLayout";
+    import HeroHeader from "../../barracks/HeroHeader";
+
+    import {mapGetters} from 'vuex';
 
     export default {
         name: "BarracksHeroView",
-        components: {TwoColumnLayout, BaseView, HeroGearCard, HeroMeasurablesCard, MeasurablePanel},
+        components: {HeroHeader, TwoColumnLayout, BaseView, HeroGearCard, HeroMeasurablesCard, MeasurablePanel},
         mixins: [
             barracksHeroMixin
         ],
         computed: {
-            heroName() {
-                if (this.barracksHeroFromRoute) {
-                    return this.barracksHeroFromRoute.name;
-                }
-                return '';
+            ...mapGetters([
+                '_focusedBarracksHero'
+            ]),
+            hero() {
+                return this._focusedBarracksHero(this.$route);
             }
         }
     }
