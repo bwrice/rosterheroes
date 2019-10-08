@@ -1,7 +1,7 @@
 <template>
     <v-overlay :value="showOverlay">
         <v-progress-circular
-            size="64"
+            size="96"
             indeterminate
             color="primary"
         ></v-progress-circular>
