@@ -1,6 +1,8 @@
 export default class CombatPosition {
-    constructor({name = '', svg = ''}) {
+    constructor({id, name = '', attackerSVG = '', targetSVG = ''}) {
+        this.id = id;
         this.name = name;
-        this.svg = svg;
+        this.attackerSVG = attackerSVG;
+        this.targetSVG = targetSVG;
     }
 }
