@@ -25,8 +25,8 @@ class BarracksHeroResource extends JsonResource
             'uuid' => $this->uuid,
             'slug' => $this->slug,
             'heroClassID' => $this->hero_class_id,
+            'heroRaceID' => $this->hero_race_id,
             'playerSpirit' => new PlayerSpiritResource($this->playerSpirit),
-            'heroRace' => new HeroRaceResource($this->heroRace),
             'combatPosition' => new CombatPositionResource($this->combatPosition),
             'measurables' => MeasurableResource::collection($this->measurables),
             'slots' => SlotResource::collection($this->slots)->collection->each(function (SlotResource $slotResource) {
