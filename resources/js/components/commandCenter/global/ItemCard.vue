@@ -1,7 +1,7 @@
 <template>
     <v-sheet :color="sheetColor">
         <v-row>
-            <v-col cols="12" class="text-center">
+            <v-col cols="12" class="text-center px-3">
                 <span class="headline">{{item.name}}</span>
             </v-col>
         </v-row>
