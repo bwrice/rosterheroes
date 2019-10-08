@@ -1,12 +1,14 @@
 import * as referenceApi from '../../api/referenceApi';
 import HeroClass from "../../models/HeroClass";
 import HeroRace from "../../models/HeroRace";
+import CombatPosition from "../../models/CombatPosition";
 
 export default {
 
     state: {
         heroClasses: [],
-        heroRaces: []
+        heroRaces: [],
+        combatPositions: []
     },
 
     getters: {
@@ -15,6 +17,9 @@ export default {
         },
         _heroRaces(state) {
             return state.heroRaces;
+        },
+        _combatPositions(state) {
+            return state.combatPositions;
         },
         _heroClassByID: (state) => (heroClassID) => {
             let heroClass = state.heroClasses.find(function (heroClass) {
@@ -27,6 +32,12 @@ export default {
                 return heroRace.id === heroRaceID;
             });
             return heroRace ? heroRace : new HeroRace({});
+        },
+        _combatPositionByID: (state) => (combatPositionID) => {
+            let combatPosition = state.combatPositions.find(function (combatPosition) {
+                return combatPosition.id === combatPositionID;
+            });
+            return combatPosition ? combatPosition : new CombatPosition({});
         }
     },
     mutations: {
@@ -35,6 +46,9 @@ export default {
         },
         SET_HERO_RACES(state, payload) {
             state.heroRaces = payload;
+        },
+        SET_COMBAT_POSITIONS(state, payload) {
+            state.combatPositions = payload;
         },
     },
 
@@ -59,6 +73,17 @@ export default {
                 commit('SET_HERO_RACES', heroRaces);
             } catch (e) {
                 console.warn("Failed to update hero races");
+            }
+        },
+        async updateCombatPositions({commit}) {
+            try {
+                let combatPositionsResponse = await referenceApi.getCombatPositions();
+                let combatPositions = combatPositionsResponse.data.map(function (combatPosition) {
+                    return new CombatPosition(combatPosition)
+                });
+                commit('SET_COMBAT_POSITIONS', combatPositions);
+            } catch (e) {
+                console.warn("Failed to update combat positions");
             }
         },
     }

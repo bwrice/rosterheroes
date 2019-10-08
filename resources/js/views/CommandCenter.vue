@@ -78,6 +78,7 @@
             this.setRealm();
             this.updateHeroClasses();
             this.updateHeroRaces();
+            this.updateCombatPositions();
         },
 
         data: function() {
@@ -97,7 +98,8 @@
                 'updateCurrentLocation',
                 'setRealm',
                 'updateHeroClasses',
-                'updateHeroRaces'
+                'updateHeroRaces',
+                'updateCombatPositions'
             ])
         },
         computed: {
