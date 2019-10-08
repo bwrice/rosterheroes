@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CombatPositionController;
 use App\Http\Controllers\ContinentController;
 use App\Http\Controllers\EmptyHeroSlotsController;
 use App\Http\Controllers\EquipHeroController;
@@ -55,6 +56,8 @@ Route::prefix('v1')->group(function () {
 
     Route::get('/hero-classes', [HeroClassController::class, 'index']);
     Route::get('/hero-races', [HeroRaceController::class, 'index']);
+
+    Route::get('/combat-positions', [CombatPositionController::class, 'index']);
 
     Route::middleware(['auth:api'])->group(function () {
 
