@@ -10,7 +10,8 @@ export default {
 
     state: {
         barracksHeroes: [],
-        mobileStorage: new MobileStorage({})
+        mobileStorage: new MobileStorage({}),
+        barracksLoading: true,
     },
 
     getters: {
@@ -19,6 +20,9 @@ export default {
         },
         _mobileStorage(state) {
             return state.mobileStorage;
+        },
+        _barracksLoading(state) {
+            return state.barracksLoading;
         },
         _focusedBarracksHero: (state) => (route) => {
             let hero = state.barracksHeroes.find(hero => hero.slug === route.params.heroSlug);
@@ -40,10 +44,14 @@ export default {
         SET_MOBILE_STORAGE(state, payload) {
             state.mobileStorage = payload;
         },
+        SET_BARRACKS_LOADING(state, payload) {
+            state.barracksLoading = payload;
+        },
     },
 
     actions: {
         async updateBarracks({commit, dispatch}, route) {
+            // TODO separate out API requests break "barracks loading" into separate props for heroes/wagon
             let squadSlug = route.params.squadSlug;
             let heroesResponse = await squadApi.getBarracksHeroes(squadSlug);
             let heroes = heroesResponse.map(function (hero) {
@@ -52,6 +60,7 @@ export default {
             commit('SET_BARRACKS_HEROES', heroes);
             let mobileStorageResponse = await squadApi.getMobileStorage(squadSlug);
             commit('SET_MOBILE_STORAGE', new MobileStorage(mobileStorageResponse));
+            commit('SET_BARRACKS_LOADING', false);
         },
 
         async raiseHeroMeasurable({state, commit, dispatch}, payload) {
