@@ -1,6 +1,6 @@
 <template>
     <v-sheet
-        color="rgba(255, 255, 255, 0.15)"
+        color="#706856"
         class="my-1"
         elevation="5"
         @click="navigateToBarracksHero"
@@ -9,20 +9,10 @@
             <v-col cols="4">
                 <v-row no-gutters>
                     <v-col cols="6" class="py-0">
-                        <SvgIconSheet
-                            :color="'#C8DDE0'"
-                            :svg="hero.heroRace.svg"
-                            :classes-object="{'pa-1': true}"
-                        >
-                        </SvgIconSheet>
+                        <HeroRaceIcon :hero-race-id="hero.heroRaceID"></HeroRaceIcon>
                     </v-col>
                     <v-col cols="6">
-                        <SvgIconSheet
-                            :color="'#C8DDE0'"
-                            :svg="hero.heroClass.svg"
-                            :classes-object="{'pa-1': true}"
-                        >
-                        </SvgIconSheet>
+                        <HeroClassIcon :hero-class-id="hero.heroClassID"></HeroClassIcon>
                     </v-col>
                 </v-row>
             </v-col>
@@ -68,10 +58,14 @@
 
     import {mapGetters} from 'vuex';
     import RelativeMeasurableBar from "./RelativeMeasurableBar";
+    import HeroClassIcon from "../global/HeroClassIcon";
+    import HeroRaceIcon from "../global/HeroRaceIcon";
 
     export default {
         name: "HeroSummaryPanel",
-        components: {RelativeMeasurableBar, PlayerSpiritSummaryPanel, HeroGearSVG, SvgIconSheet},
+        components: {
+            HeroRaceIcon,
+            HeroClassIcon, RelativeMeasurableBar, PlayerSpiritSummaryPanel, HeroGearSVG, SvgIconSheet},
         props: {
             hero: {
                 type: BarracksHero,
