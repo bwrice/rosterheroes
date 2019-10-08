@@ -10,6 +10,12 @@ export default {
     getters: {
         _heroClasses(state) {
             return state.heroClasses;
+        },
+        _heroClassByID: (state) => (heroClassID) => {
+            let heroClass = state.heroClasses.find(function (heroClass) {
+                return heroClass.id === heroClassID;
+            });
+            return heroClass ? heroClass : new HeroClass({});
         }
     },
     mutations: {
