@@ -11,7 +11,7 @@ use App\Http\Controllers\HeroRaceController;
 use App\Http\Controllers\MobileStorageController;
 use App\Http\Controllers\ProvinceBorderController;
 use App\Http\Controllers\ProvinceController;
-use App\Http\Controllers\BarracksHeroesController;
+use App\Http\Controllers\HeroesController;
 use App\Http\Controllers\RaiseMeasurableController;
 use App\Http\Controllers\RosterHeroesController;
 use App\Http\Controllers\SquadCurrentLocationController;
@@ -66,7 +66,7 @@ Route::prefix('v1')->group(function () {
 
         Route::post('/squads/{squadSlug}/fast-travel', FastTravelController::class);
 
-        Route::get('/squads/{squadSlug}/barracks/heroes', BarracksHeroesController::class);
+        Route::get('/squads/{squadSlug}/heroes', HeroesController::class);
         Route::get('/squads/{squadSlug}/roster/heroes', RosterHeroesController::class);
 
         Route::get('/squad/{squadSlug}/hero-classes', SquadHeroClassController::class);

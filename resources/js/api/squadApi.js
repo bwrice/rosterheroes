@@ -5,9 +5,9 @@ export async function getSquad(squadSlug) {
     return response.data;
 }
 
-export async function getBarracksHeroes(squadSlug) {
-    let response = await axios.get('/api/v1/squads/' + squadSlug + '/barracks/heroes');
-    return response.data.data;
+export async function getHeroes(squadSlug) {
+    let response = await axios.get('/api/v1/squads/' + squadSlug + '/heroes');
+    return response.data;
 }
 
 export async function getRosterHeroes(squadSlug) {
