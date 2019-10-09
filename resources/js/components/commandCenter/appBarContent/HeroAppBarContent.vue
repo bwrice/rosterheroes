@@ -15,14 +15,13 @@
 </template>
 
 <script>
-    import BaseAppBar from "./BaseAppBar";
     import {mapGetters} from 'vuex';
     import HeroRaceIcon from "../global/HeroRaceIcon";
     import HeroClassIcon from "../global/HeroClassIcon";
 
     export default {
         name: "HeroAppBar",
-        components: {HeroClassIcon, HeroRaceIcon, BaseAppBar},
+        components: {HeroClassIcon, HeroRaceIcon},
         computed: {
             ...mapGetters([
                 '_focusedBarracksHero'
