@@ -2,7 +2,7 @@
 
 export async function getSquad(squadSlug) {
     let response = await axios.get('/api/v1/squads/' + squadSlug);
-    return response.data.data;
+    return response.data;
 }
 
 export async function getBarracksHeroes(squadSlug) {
