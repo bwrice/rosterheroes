@@ -2,8 +2,8 @@ import RosterNavigationDrawer from "../components/commandCenter/views/roster/Ros
 import RosterMain from "../components/commandCenter/views/roster/RosterMain";
 import HeroRosterView from "../components/commandCenter/views/roster/RosterHeroView";
 import CommandCenter from "../views/CommandCenter";
-import SquadAppBar from "../components/commandCenter/appBar/SquadAppBar";
-import HeroAppBar from "../components/commandCenter/appBar/HeroAppBar";
+import SquadAppBarContent from "../components/commandCenter/appBarContent/SquadAppBarContent";
+import HeroAppBarContent from "../components/commandCenter/appBarContent/HeroAppBarContent";
 
 export const rosterRoutes = {
     path: '/command-center/:squadSlug/roster',
@@ -17,7 +17,7 @@ export const rosterRoutes = {
             components: {
                 default: RosterMain,
                 drawer: RosterNavigationDrawer,
-                appBar: SquadAppBar
+                appBarContent: SquadAppBarContent
             },
             name: 'roster-main',
             meta: {
@@ -29,7 +29,7 @@ export const rosterRoutes = {
             components: {
                 default: HeroRosterView,
                 drawer: RosterNavigationDrawer,
-                appBar: HeroAppBar
+                appBarContent: HeroAppBarContent
             },
             name: 'roster-hero',
             meta: {

@@ -7,7 +7,7 @@ import ExploreView from "../components/commandCenter/views/map/explore/ExploreVi
 import RealmView from "../components/commandCenter/views/map/explore/RealmView";
 import TravelView from "../components/commandCenter/views/map/TravelView";
 import CommandCenter from "../views/CommandCenter";
-import SquadAppBar from "../components/commandCenter/appBar/SquadAppBar";
+import SquadAppBarContent from "../components/commandCenter/appBarContent/SquadAppBarContent";
 
 export const mapRoutes = {
     path: '/command-center/:squadSlug/map',
@@ -21,7 +21,7 @@ export const mapRoutes = {
             components: {
                 default: MapMain,
                 drawer: MapNavigationDrawer,
-                appBar: SquadAppBar
+                appBarContent: SquadAppBarContent
             },
             component: MapMain,
             name: 'map-main',
@@ -34,7 +34,7 @@ export const mapRoutes = {
             components: {
                 default: TravelView,
                 drawer: MapNavigationDrawer,
-                appBar: SquadAppBar
+                appBarContent: SquadAppBarContent
             },
             name: 'travel',
             meta: {
@@ -46,7 +46,7 @@ export const mapRoutes = {
             components: {
                 default: ExploreView,
                 drawer: MapNavigationDrawer,
-                appBar: SquadAppBar
+                appBarContent: SquadAppBarContent
             },
             meta: {
                 footerButton: 'map'
