@@ -1,11 +1,10 @@
 import Slot from "./Slot";
 import Measurable from "./Measurable";
-import CombatPosition from "./CombatPosition";
 import PlayerSpirit from "./PlayerSpirit";
 
 export default class BarracksHero {
 
-    constructor({name = '', uuid, slug, measurables = [], slots = [], heroClassID, heroRaceID, combatPosition, playerSpirit}) {
+    constructor({name = '', uuid, slug, measurables = [], slots = [], heroClassID = 0, heroRaceID = 0, combatPositionID = 0, playerSpirit}) {
         this.name = name;
         this.uuid = uuid;
         this.slug = slug;
@@ -17,7 +16,7 @@ export default class BarracksHero {
         });
         this.heroClassID = heroClassID;
         this.heroRaceID = heroRaceID;
-        this.combatPosition = combatPosition ? new CombatPosition(combatPosition) : new CombatPosition({});
+        this.combatPositionID = combatPositionID;
         this.playerSpirit = playerSpirit ? new PlayerSpirit(playerSpirit) : null;
     }
 
