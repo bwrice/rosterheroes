@@ -1,5 +1,7 @@
 <template>
-    <BaseAppBar :app-bar-title="_squad.name"></BaseAppBar>
+    <v-toolbar-title>
+        {{ _squad.name }}
+    </v-toolbar-title>
 </template>
 
 <script>

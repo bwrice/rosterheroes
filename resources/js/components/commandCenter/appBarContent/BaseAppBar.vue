@@ -1,20 +1,12 @@
 <template>
-    <v-app-bar
-        fixed
-        app
-        elevate-on-scroll
-    >
-        <v-app-bar-nav-icon
-            @click.stop="drawer = !drawer"
-            class="accent--text"
-        ></v-app-bar-nav-icon>
+    <div>
         <slot name="before-title">
             <!-- slot -->
         </slot>
         <v-toolbar-title>
             {{ appBarTitle }}
         </v-toolbar-title>
-    </v-app-bar>
+    </div>
 </template>
 
 <script>

@@ -1,6 +1,16 @@
 <template>
     <v-app>
-        <router-view name="appBar"></router-view>
+        <v-app-bar
+            fixed
+            app
+            elevate-on-scroll
+        >
+            <v-app-bar-nav-icon
+                @click.stop="drawer = !drawer"
+                class="accent--text"
+            ></v-app-bar-nav-icon>
+            <router-view name="appBarContent"></router-view>
+        </v-app-bar>
         <v-navigation-drawer
                 fixed
                 v-model="drawer"
