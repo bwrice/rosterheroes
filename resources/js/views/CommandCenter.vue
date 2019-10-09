@@ -1,18 +1,6 @@
 <template>
     <v-app>
-        <v-app-bar
-                fixed
-                app
-                elevate-on-scroll
-        >
-            <v-app-bar-nav-icon
-                    @click.stop="drawer = !drawer"
-                    class="accent--text"
-            ></v-app-bar-nav-icon>
-            <v-toolbar-title>
-                {{ toolBarTitle }}
-            </v-toolbar-title>
-        </v-app-bar>
+        <router-view name="appBar"></router-view>
         <v-navigation-drawer
                 fixed
                 v-model="drawer"
@@ -51,10 +39,7 @@
     import { mapGetters } from 'vuex'
     import { mapActions } from 'vuex'
 
-    import Squad from "../models/Squad";
-    import Week from "../models/Week";
     import RhSnackBarAlert from "../components/commandCenter/global/SnackBarAlert";
-    import HeroModel from "../models/HeroModel";
 
     export default {
         name: "CommandCenter",
