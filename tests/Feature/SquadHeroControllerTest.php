@@ -216,4 +216,48 @@ class SquadHeroControllerTest extends TestCase
 
         $this->fail("Exception Not Thrown");
     }
+
+    /**
+     * @test
+     */
+    public function it_will_return_a_squads_heroes()
+    {
+        $this->withoutExceptionHandling();
+
+        /** @var Hero $heroOne */
+        $heroOne = factory(Hero::class)->create();
+
+        factory(HeroPost::class)->create([
+            'hero_id' => $heroOne->id
+        ]);
+
+        $squad = $heroOne->heroPost->squad;
+
+
+        /** @var Hero $heroTwo */
+        $heroTwo = factory(Hero::class)->create();
+
+
+        factory(HeroPost::class)->create([
+            'hero_id' => $heroTwo->id,
+            'squad_id' => $squad->id
+        ]);
+
+        Passport::actingAs($squad->user);
+
+        $response = $this->get('/api/v1/squads/' . $squad->slug . '/heroes');
+
+        $response
+            ->assertStatus(200)
+            ->assertJson([
+                'data' => [
+                    [
+                        'uuid' => $heroOne->uuid
+                    ],
+                    [
+                        'uuid' => $heroTwo->uuid
+                    ]
+                ]
+            ]);
+    }
 }
