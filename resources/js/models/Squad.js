@@ -1,38 +1,12 @@
-import Model from './Model'
-import HeroModel from "./HeroModel";
+export default class Squad {
 
-export default class Squad extends Model {
-
-    primaryKey() {
-        return 'slug';
-    }
-
-    get heroes() {
-        let _heroes = [];
-        if (this.heroPosts) {
-            this.heroPosts.forEach(function (heroPost) {
-                if (heroPost.hero) {
-                    _heroes.push(new HeroModel(heroPost.hero));
-                }
-            });
-        }
-        return _heroes;
-    }
-
-    get availableSpiritEssence() {
-        let available = this.spirit_essence;
-        this.heroes.forEach(function(hero) {
-            available -= hero.essenceUsed;
-        });
-        return available;
-    }
-
-    getHero(heroSlug) {
-        this.heroes.forEach(function(hero) {
-            if(hero.slug === heroSlug) {
-                return hero;
-            }
-        });
-        return {};
+    constructor({uuid, name = '', slug = '', spiritEssence = 0, gold = 0, experience = 0, favor = 0}) {
+        this.uuid = uuid;
+        this.name = name;
+        this.slug = slug;
+        this.spiritEssence = spiritEssence;
+        this.gold = gold;
+        this.experience = experience;
+        this.favor = favor;
     }
 }
