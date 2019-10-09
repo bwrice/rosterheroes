@@ -21,6 +21,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property string $name
  * @property int $grade
  * @property int $attacker_position_id
+ * @property int $target_position_id
  * @property float $speed_rating
  * @property float $base_damage_rating
  * @property float $damage_modifier_rating
