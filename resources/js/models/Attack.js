@@ -10,8 +10,8 @@ export default class Attack {
                     combatSpeed,
                     damageMultiplier,
                     grade,
-                    attackerPosition,
-                    targetPosition,
+                    attackerPositionID,
+                    targetPositionID,
                     damageType,
                     targetPriority,
                     resourceCosts = [],
@@ -23,8 +23,8 @@ export default class Attack {
         this.combatSpeed = combatSpeed;
         this.damageMultiplier = damageMultiplier;
         this.grade = grade;
-        this.attackerPosition = new CombatPosition(attackerPosition);
-        this.targetPosition = new CombatPosition(targetPosition);
+        this.attackerPositionID = attackerPositionID;
+        this.targetPositionID = targetPositionID;
         this.damageType = new DamageType(damageType);
         this.targetPriority = new TargetPriority(targetPriority);
         this.resourceCosts = resourceCosts;
