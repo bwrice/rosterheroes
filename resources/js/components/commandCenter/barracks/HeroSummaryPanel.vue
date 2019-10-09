@@ -1,14 +1,14 @@
 <template>
     <v-sheet
-        color="#706856"
-        class="my-1"
+        color="#576269"
+        class="my-2"
         elevation="5"
         @click="navigateToBarracksHero"
     >
         <v-row no-gutters align="center">
             <v-col cols="4">
                 <v-row no-gutters>
-                    <v-col cols="6" class="py-0">
+                    <v-col cols="6">
                         <HeroRaceIcon :hero-race-id="hero.heroRaceID"></HeroRaceIcon>
                     </v-col>
                     <v-col cols="6">

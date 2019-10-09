@@ -1,5 +1,5 @@
 <template>
-    <v-sheet color="rgba(69, 0, 92, .2)" class="px-2 mb-1">
+    <v-sheet color="rgba(60, 46, 92, .75)" class="px-2 mb-1">
         <v-row>
             <v-col cols="7" class="py-1 px-2">
                 <v-row class="no-gutters">
@@ -45,10 +45,10 @@
                 </v-row>
                 <v-row class="no-gutters">
                     <v-col cols="6" class="pa-0">
-                        <SvgIconSheet :svg="attack.attackerPosition.svg"></SvgIconSheet>
+                        <CombatPositionIcon :attacker-mode="true" :combat-position-id="attack.attackerPositionID"></CombatPositionIcon>
                     </v-col>
                     <v-col cols="6" class="pa-0">
-                        <SvgIconSheet :svg="attack.targetPosition.svg"></SvgIconSheet>
+                        <CombatPositionIcon :attacker-mode="false" :combat-position-id="attack.targetPositionID"></CombatPositionIcon>
                     </v-col>
                 </v-row>
 <!--                <v-row class="no-gutters">-->
@@ -67,10 +67,11 @@
 <script>
     import Attack from "../../../models/Attack";
     import SvgIconSheet from "./SvgIconSheet";
+    import CombatPositionIcon from "./CombatPositionIcon";
 
     export default {
         name: "AttackPanel",
-        components: {SvgIconSheet},
+        components: {CombatPositionIcon, SvgIconSheet},
         props: {
             attack: {
                 type: Attack,

@@ -11,11 +11,18 @@
             <v-row align="center" justify="center">
                 <template v-if="focusedHeroSlot.item">
                     <v-col cols="12">
-                        <v-row align="center" justify="center" class="py-2">
-                            <EmptyHeroSlotButton :heroSlot="focusedHeroSlot"
-                                                 :hero="barracksHeroFromRoute"></EmptyHeroSlotButton>
+                        <v-row no-gutters align="center" justify="center">
+                            <EmptyHeroSlotButton
+                                :heroSlot="focusedHeroSlot"
+                                :hero="barracksHeroFromRoute"
+                            >
+                            </EmptyHeroSlotButton>
+                            <v-col cols="12">
+                                <v-sheet color="#456d87" class="my-2">
+                                    <ItemCard :item="focusedHeroSlot.item"></ItemCard>
+                                </v-sheet>
+                            </v-col>
                         </v-row>
-                        <ItemCard :item="focusedHeroSlot.item"></ItemCard>
                     </v-col>
                 </template>
                 <template v-else>

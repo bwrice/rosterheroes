@@ -3,7 +3,7 @@
         small
         @click="emptySlot"
         :disabled="pending"
-        color="warning"
+        color="#c7830e"
     >
         Un-Equip {{itemName}}
     </v-btn>

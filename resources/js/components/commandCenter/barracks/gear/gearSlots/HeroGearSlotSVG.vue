@@ -36,8 +36,6 @@
         },
         methods: {
             emitHeroSlotClicked() {
-                console.log("emitting slot");
-                console.log(this.heroSlot);
                 this.$emit('heroSlotClicked', {
                     heroSlot: this.heroSlot
                 })

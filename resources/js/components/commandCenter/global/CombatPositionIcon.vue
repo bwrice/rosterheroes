@@ -31,7 +31,7 @@
                 if (this.attackerMode) {
                     return this.combatPosition.attackerSVG;
                 }
-                return this.combatPosition.defenderSVG;
+                return this.combatPosition.targetSVG;
             }
         }
     }
