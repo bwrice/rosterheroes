@@ -1,0 +1,9 @@
+
+//$backGroundColor: #332b38;
+$backGroundColor: #f11;
+
+div .theme--dark {
+    .v-application {
+        background-color: $backGroundColor;
+    }
+}
