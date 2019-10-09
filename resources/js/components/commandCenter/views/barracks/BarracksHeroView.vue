@@ -25,7 +25,6 @@
     import MeasurablePanel from "../../barracks/MeasurablePanel";
     import HeroMeasurablesCard from "../../barracks/HeroMeasurablesCard";
     import HeroGearCard from "../../barracks/gear/HeroGearCard";
-    import BaseView from "../BaseView";
     import TwoColumnLayout from "../../layouts/TwoColumnLayout";
     import HeroHeader from "../../barracks/HeroHeader";
 
@@ -33,7 +32,7 @@
 
     export default {
         name: "BarracksHeroView",
-        components: {HeroHeader, TwoColumnLayout, BaseView, HeroGearCard, HeroMeasurablesCard, MeasurablePanel},
+        components: {HeroHeader, TwoColumnLayout, HeroGearCard, HeroMeasurablesCard, MeasurablePanel},
         mixins: [
             barracksHeroMixin
         ],

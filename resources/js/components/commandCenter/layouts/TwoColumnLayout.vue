@@ -17,11 +17,10 @@
 </template>
 
 <script>
-    import BaseView from "../views/BaseView";
     import LoadingOverlay from "../global/LoadingOverlay";
     export default {
         name: "TwoColumnLayout",
-        components: {LoadingOverlay, BaseView},
+        components: {LoadingOverlay},
         props: {
             loading: {
                 type: Boolean,
