@@ -105,7 +105,7 @@
         },
         computed: {
             ...mapGetters([
-                '_barracksHeroes',
+                '_heroes',
                 '_mobileStorage'
             ]),
             focusedHeroSlot() {

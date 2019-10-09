@@ -3,7 +3,7 @@
         <template v-slot:column-one>
             <v-row>
                 <v-col cols="12" class="pt-0 pb-0">
-                    <HeroesCard :heroes="_barracksHeroes"></HeroesCard>
+                    <HeroesCard :heroes="_heroes"></HeroesCard>
                 </v-col>
             </v-row>
         </template>
@@ -32,7 +32,7 @@
         computed: {
             ...mapGetters([
                 '_mobileStorage',
-                '_barracksHeroes',
+                '_heroes',
                 '_barracksLoading'
             ])
         }

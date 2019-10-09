@@ -11,7 +11,7 @@ export default {
 
     state: {
         squad: new Squad({}),
-        barracksHeroes: [],
+        heroes: [],
         mobileStorage: new MobileStorage({}),
         barracksLoading: true,
     },
@@ -20,8 +20,8 @@ export default {
         _squad(state) {
             return state.squad;
         },
-        _barracksHeroes(state) {
-            return state.barracksHeroes;
+        _heroes(state) {
+            return state.heroes;
         },
         _mobileStorage(state) {
             return state.mobileStorage;
@@ -30,11 +30,11 @@ export default {
             return state.barracksLoading;
         },
         _focusedBarracksHero: (state) => (route) => {
-            let hero = state.barracksHeroes.find(hero => hero.slug === route.params.heroSlug);
+            let hero = state.heroes.find(hero => hero.slug === route.params.heroSlug);
             return hero ? hero : new BarracksHero({});
         },
         _squadHighMeasurable: (state) => (measurableTypeName) => {
-            let measurableAmounts = state.barracksHeroes.map(function (hero) {
+            let measurableAmounts = state.heroes.map(function (hero) {
                 return hero.getMeasurableByType(measurableTypeName).buffedAmount;
             });
             return measurableAmounts.reduce(function(amountA, amountB) {
@@ -46,8 +46,8 @@ export default {
         SET_SQUAD(state, payload) {
             state.squad = payload;
         },
-        SET_BARRACKS_HEROES(state, payload) {
-            state.barracksHeroes = payload;
+        SET_HEROES(state, payload) {
+            state.heroes = payload;
         },
         SET_MOBILE_STORAGE(state, payload) {
             state.mobileStorage = payload;
@@ -67,11 +67,11 @@ export default {
         async updateBarracks({commit, dispatch}, route) {
             // TODO separate out API requests break "barracks loading" into separate props for heroes/wagon
             let squadSlug = route.params.squadSlug;
-            let heroesResponse = await squadApi.getBarracksHeroes(squadSlug);
-            let heroes = heroesResponse.map(function (hero) {
+            let heroesResponse = await squadApi.getHeroes(squadSlug);
+            let heroes = heroesResponse.data.map(function (hero) {
                 return new BarracksHero(hero);
             });
-            commit('SET_BARRACKS_HEROES', heroes);
+            commit('SET_HEROES', heroes);
             let mobileStorageResponse = await squadApi.getMobileStorage(squadSlug);
             commit('SET_MOBILE_STORAGE', new MobileStorage(mobileStorageResponse));
             commit('SET_BARRACKS_LOADING', false);
@@ -82,7 +82,7 @@ export default {
             try {
                 let measurableResponse = await measurableApi.raise(payload.measurableUuid, payload.raiseAmount);
                 let updatedMeasurable = new Measurable(measurableResponse);
-                let updatedHeroes = _.cloneDeep(state.barracksHeroes);
+                let updatedHeroes = _.cloneDeep(state.heroes);
                 let matchingHero = updatedHeroes.find(function (hero) {
                     return payload.heroSlug === hero.slug;
                 });
@@ -93,7 +93,7 @@ export default {
 
                 matchingHero.measurables.splice(measurableIndex, 1, updatedMeasurable);
 
-                commit('SET_BARRACKS_HEROES', updatedHeroes);
+                commit('SET_HEROES', updatedHeroes);
 
                 let text = updatedMeasurable.measurableType.name.toUpperCase() + ' raised to ' + updatedMeasurable.buffedAmount;
                 dispatch('snackBarSuccess', {

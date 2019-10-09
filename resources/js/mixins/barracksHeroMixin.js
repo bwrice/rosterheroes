@@ -8,13 +8,13 @@ export const barracksHeroMixin = {
     },
     computed: {
         ...mapGetters([
-            '_barracksHeroes',
+            '_heroes',
             '_squad'
         ]),
         // TODO: replace usages with _focusedBarracksHero
         barracksHeroFromRoute() {
             let slug = this.$route.params.heroSlug;
-            return this._barracksHeroes.find(hero => hero.slug === slug);
+            return this._heroes.find(hero => hero.slug === slug);
         },
         availableExperience() {
             if (! this.barracksHeroFromRoute) {
