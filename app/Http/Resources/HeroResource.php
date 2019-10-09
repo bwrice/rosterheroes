@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * Class Hero
+ * Class BarracksHeroResource
  * @package App\Http\Resources
  *
  * @mixin \App\Domain\Models\Hero
@@ -17,7 +17,6 @@ class HeroResource extends JsonResource
      *
      * @param  \Illuminate\Http\Request  $request
      * @return array
-     *
      */
     public function toArray($request)
     {
@@ -25,11 +24,14 @@ class HeroResource extends JsonResource
             'name' => $this->name,
             'uuid' => $this->uuid,
             'slug' => $this->slug,
-            'playerSpirit' => new PlayerSpiritResource($this->whenLoaded('playerSpirit')),
-            'heroPost' => new HeroPostResource($this->whenLoaded('heroPost')),
-            'heroRace' => new HeroRaceResource($this->whenLoaded('heroRace')),
-            'heroClass' => new HeroClassResource($this->whenLoaded('heroClass')),
-            'measurables' => MeasurableResource::collection($this->whenLoaded('measurables'))
+            'heroClassID' => $this->hero_class_id,
+            'heroRaceID' => $this->hero_race_id,
+            'combatPositionID' => $this->combat_position_id,
+            'playerSpirit' => new PlayerSpiritResource($this->playerSpirit),
+            'measurables' => MeasurableResource::collection($this->measurables),
+            'slots' => SlotResource::collection($this->slots)->collection->each(function (SlotResource $slotResource) {
+                $slotResource->setUsesItems($this->resource);
+            })
         ];
     }
 }
