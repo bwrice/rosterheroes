@@ -1,6 +1,6 @@
 <template>
-    <v-col cols="12">
-        <v-card>
+    <SingleColumnLayout>
+        <template v-slot:column-one><v-card>
             <v-btn :to="rosterPage">
                 <v-icon>arrow_back</v-icon>Back
             </v-btn>
@@ -16,10 +16,10 @@
                 </template>
             </HeroRosterCard>
             <v-data-iterator
-                    :items="filteredSpirits"
-                    :loading="_rosterLoading"
-                    row
-                    no-gutters
+                :items="filteredSpirits"
+                :loading="_rosterLoading"
+                row
+                no-gutters
             >
                 <template v-slot:header>
                     <v-text-field
@@ -33,11 +33,11 @@
                     ></v-text-field>
                 </template>
                 <template v-slot:item="props">
-                        <PlayerSpiritPanel :player-spirit="props.item">
-                            <template v-slot:spirit-actions>
-                                <AddSpiritButton :hero="rosterFocusedHero" :player-spirit="props.item"></AddSpiritButton>
-                            </template>
-                        </PlayerSpiritPanel>
+                    <PlayerSpiritPanel :player-spirit="props.item">
+                        <template v-slot:spirit-actions>
+                            <AddSpiritButton :hero="rosterFocusedHero" :player-spirit="props.item"></AddSpiritButton>
+                        </template>
+                    </PlayerSpiritPanel>
                 </template>
                 <template v-slot:loading>
                     <v-row :justify="'center'" class="py-5">
@@ -46,7 +46,8 @@
                 </template>
             </v-data-iterator>
         </v-card>
-    </v-col>
+        </template>
+    </SingleColumnLayout>
 </template>
 
 <script>
@@ -58,11 +59,13 @@
     import AddSpiritButton from "../../roster/AddSpiritButton";
     import RemoveSpiritButton from "../../roster/RemoveSpiritButton";
     import HeroRosterCard from "../../roster/HeroRosterCard";
+    import SingleColumnLayout from "../../layouts/SingleColumnLayout";
 
     export default {
         name: "RosterHeroView",
 
         components: {
+            SingleColumnLayout,
             HeroRosterCard,
             RemoveSpiritButton,
             AddSpiritButton,
