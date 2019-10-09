@@ -5,16 +5,21 @@ import BarracksHero from "../../models/BarracksHero";
 import Measurable from "../../models/Measurable";
 import MobileStorage from "../../models/MobileStorage";
 import SlotTransaction from "../../models/SlotTransaction";
+import Squad from "../../models/Squad";
 
 export default {
 
     state: {
+        squad: new Squad({}),
         barracksHeroes: [],
         mobileStorage: new MobileStorage({}),
         barracksLoading: true,
     },
 
     getters: {
+        _squad(state) {
+            return state.squad;
+        },
         _barracksHeroes(state) {
             return state.barracksHeroes;
         },
@@ -38,6 +43,9 @@ export default {
         }
     },
     mutations: {
+        SET_SQUAD(state, payload) {
+            state.squad = payload;
+        },
         SET_BARRACKS_HEROES(state, payload) {
             state.barracksHeroes = payload;
         },
@@ -50,6 +58,12 @@ export default {
     },
 
     actions: {
+
+        async updateSquad({commit}, route) {
+            let squadResponse = await squadApi.getSquad(route.params.squadSlug);
+            commit('SET_SQUAD', new Squad(squadResponse.data));
+        },
+
         async updateBarracks({commit, dispatch}, route) {
             // TODO separate out API requests break "barracks loading" into separate props for heroes/wagon
             let squadSlug = route.params.squadSlug;
