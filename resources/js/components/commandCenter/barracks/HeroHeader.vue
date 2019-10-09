@@ -1,25 +1,18 @@
 <template>
     <v-card>
-        <v-card-text>
-            <v-row no-gutters align="center">
-                <v-col cols="4">
-                    <v-row no-gutters>
-                        <v-col cols="6" class="py-0">
-                            <HeroRaceIcon :hero-race-id="hero.heroRaceID"></HeroRaceIcon>
-                        </v-col>
-                        <v-col cols="6">
-                            <HeroClassIcon :hero-class-id="hero.heroClassID"></HeroClassIcon>
-                        </v-col>
-                    </v-row>
-                </v-col>
-                <v-col cols="6">
-                    <PlayerSpiritSummaryPanel :player-spirit="hero.playerSpirit"></PlayerSpiritSummaryPanel>
-                </v-col>
-                <v-col cols="2">
-                    <CombatPositionIcon :combat-position-id="hero.combatPositionID" :attacker-mode="true"></CombatPositionIcon>
-                </v-col>
-            </v-row>
-        </v-card-text>
+        <v-row no-gutters align="center" class="py-2">
+            <v-col cols="9" class="pl-2">
+                <PlayerSpiritSummaryPanel
+                    :player-spirit="hero.playerSpirit"
+                    :clickable="true"
+                    @playerSpiritClicked="goToEditRoster"
+                >
+                </PlayerSpiritSummaryPanel>
+            </v-col>
+            <v-col cols="3" class="px-2">
+                <CombatPositionIcon :combat-position-id="hero.combatPositionID" :attacker-mode="true"></CombatPositionIcon>
+            </v-col>
+        </v-row>
     </v-card>
 </template>
 
@@ -32,11 +25,25 @@
 
     export default {
         name: "HeroHeader",
-        components: {CombatPositionIcon, PlayerSpiritSummaryPanel, HeroClassIcon, HeroRaceIcon},
+        components: {
+            CombatPositionIcon,
+            PlayerSpiritSummaryPanel,
+            HeroClassIcon,
+            HeroRaceIcon
+        },
         props: {
             hero: {
                 type: BarracksHero,
                 required: true
+            }
+        },
+        methods: {
+            goToEditRoster() {
+                this.$router.push({
+                    name: 'roster-hero',
+                    squadSlug: this.$route.params.squadSlug,
+                    heroSlug: this.hero.slug
+                })
             }
         }
     }
