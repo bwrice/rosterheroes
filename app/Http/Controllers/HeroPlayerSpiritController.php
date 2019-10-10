@@ -7,7 +7,7 @@ use App\Domain\Actions\RemoveSpiritFromHeroAction;
 use App\Exceptions\HeroPlayerSpiritException;
 use App\Domain\Models\Hero;
 use App\Domain\Models\PlayerSpirit;
-use App\Http\Resources\HeroResource;
+use App\Http\Resources\SquadCreationHeroResource;
 use Illuminate\Validation\ValidationException;
 
 class HeroPlayerSpiritController extends Controller
@@ -22,7 +22,7 @@ class HeroPlayerSpiritController extends Controller
 
         try {
             $hero = $action->execute($hero, $playerSpirit);
-            return new HeroResource($hero->loadMissing([
+            return new SquadCreationHeroResource($hero->loadMissing([
                 'heroClass',
                 'heroRace.positions',
                 'playerSpirit.game.homeTeam',
@@ -49,7 +49,7 @@ class HeroPlayerSpiritController extends Controller
 
         try {
             $hero = $action->execute($hero, $playerSpirit);
-            return new HeroResource($hero->loadMissing([
+            return new SquadCreationHeroResource($hero->loadMissing([
                 'heroClass',
                 'heroRace.positions'
             ]));

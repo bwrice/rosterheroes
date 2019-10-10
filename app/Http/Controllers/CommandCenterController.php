@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Domain\Models\Squad;
 use App\Http\Resources\HeroClassResource;
 use App\Http\Resources\HeroRaceResource;
-use App\Http\Resources\HeroResource;
+use App\Http\Resources\SquadCreationHeroResource;
 use App\Http\Resources\SquadResource;
 use Illuminate\Http\Request;
 
@@ -23,7 +23,7 @@ class CommandCenterController extends Controller
         if ($squad->inCreationState()) {
             return view('create-squad', [
                 'squad' => json_encode(new SquadResource($squad)),
-                'heroes' => json_encode((HeroResource::collection($squad->getHeroes()))),
+                'heroes' => json_encode((SquadCreationHeroResource::collection($squad->getHeroes()))),
                 'heroClasses' => json_encode(HeroClassResource::collection($squad->getHeroClassAvailability())),
                 'heroRaces' => json_encode(HeroRaceResource::collection($squad->getHeroRaceAvailability()))
             ]);

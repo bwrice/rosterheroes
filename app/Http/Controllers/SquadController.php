@@ -22,7 +22,7 @@ use App\Domain\Models\MobileStorageRank;
 use App\Domain\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Resources\HeroResource;
+use App\Http\Resources\SquadCreationHeroResource;
 use App\Http\Resources\HeroClassResource;
 use App\Http\Resources\HeroRaceResource;
 use Illuminate\Support\Str;

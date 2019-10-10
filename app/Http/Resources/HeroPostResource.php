@@ -23,7 +23,7 @@ class HeroPostResource extends JsonResource
     {
         return [
             'hero_post_type_id' => $this->hero_post_type_id,
-            'hero' => new HeroResource($this->whenLoaded('hero'))
+            'hero' => new SquadCreationHeroResource($this->whenLoaded('hero'))
         ];
     }
 }

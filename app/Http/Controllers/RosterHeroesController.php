@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Domain\Models\Hero;
 use App\Domain\Models\Squad;
-use App\Http\Resources\HeroResource;
+use App\Http\Resources\SquadCreationHeroResource;
 use App\Policies\SquadPolicy;
 use Illuminate\Http\Request;
 
@@ -23,6 +23,6 @@ class RosterHeroesController extends Controller
             'playerSpirit.player.team',
             'playerSpirit.player.positions'
         ]);
-        return HeroResource::collection($heroes);
+        return SquadCreationHeroResource::collection($heroes);
     }
 }
