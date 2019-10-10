@@ -23,6 +23,7 @@ class GameResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'startsAt' => $this->starts_at,
             'description' => $this->getSimpleDescription(),
             'homeTeamID' => $this->home_team_id,
