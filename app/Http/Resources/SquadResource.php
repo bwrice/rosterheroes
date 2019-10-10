@@ -25,12 +25,12 @@ class SquadResource extends JsonResource
             'uuid' => $this->uuid,
             'slug' => $this->slug,
             'name' => $this->name,
-            'spirit_essence' => $this->spirit_essence,
+            'spiritEssence' => $this->spirit_essence,
             'gold' => $this->gold,
             'experience' => $this->experience,
             'favor' => $this->favor,
-            'province' => new CurrentLocationResource($this->whenLoaded('province')),
-            'heroPosts' => HeroPostResource::collection($this->whenLoaded('heroPosts'))
+//            'province' => new CurrentLocationResource($this->whenLoaded('province')),
+//            'heroPosts' => HeroPostResource::collection($this->whenLoaded('heroPosts'))
         ];
     }
 }
