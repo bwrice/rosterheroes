@@ -59,6 +59,10 @@ export default {
                 return combatPosition.id === combatPositionID;
             });
             return combatPosition ? combatPosition : new CombatPosition({});
+        },
+        _teamByID: (state) => (teamID) => {
+            let team = state.teams.find(team => team.id === teamID);
+            return team ? team : new Team({});
         }
     },
     mutations: {
