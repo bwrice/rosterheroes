@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Domain\Models\Player;
+use App\Domain\Models\Position;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
@@ -24,9 +25,10 @@ class PlayerResource extends JsonResource
         return [
             'firstName' => $this->first_name,
             'lastName' => $this->last_name,
-            'full_name' => $this->fullName(),
-            'team' => new TeamResource($this->whenLoaded('team')),
-            'positions' => PositionResource::collection($this->whenLoaded('positions'))
+            'teamID' => $this->team_id,
+            'positionIDs' => $this->positions->map(function (Position $position) {
+                return $position->id;
+            })->values()->toArray()
         ];
     }
 }
