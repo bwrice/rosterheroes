@@ -25,8 +25,8 @@ class PlayerSpiritResource extends JsonResource
             'uuid' => $this->uuid,
             'essenceCost' => $this->essence_cost,
             'energy' => $this->energy,
+            'gameID' => $this->game_id,
             'player' => new PlayerResource($this->player),
-            'game' => new GameResource($this->game)
         ];
     }
 }
