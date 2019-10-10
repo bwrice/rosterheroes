@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Domain\Actions\AddNewHeroToSquadAction;
 use App\Domain\Actions\CreateHeroAction;
+use App\Http\Resources\HeroResource;
+use App\Http\Resources\SquadCreationHeroResource;
 use App\Policies\SquadPolicy;
 use App\StorableEvents\HeroCreated;
 use App\Exceptions\GameStartedException;
@@ -14,14 +16,9 @@ use App\Domain\Models\HeroClass;
 use App\Domain\Models\HeroPost;
 use App\Domain\Models\HeroRace;
 use App\Domain\Models\HeroRank;
-use App\Http\Requests\StoreSquadHero;
 use App\Domain\Models\Squad;
-use App\Squads\HeroClassAvailability;
-use App\Squads\HeroPostAvailability;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
-use App\Http\Resources\HeroResource as HeroResource;
 
 class SquadHeroController extends Controller
 {
@@ -52,7 +49,7 @@ class SquadHeroController extends Controller
         try {
 
             $hero = $domainAction->execute($squad, $request->name, $heroClass, $heroRace);
-            return response()->json(new HeroResource($hero->fresh()), 201);
+            return response()->json(new SquadCreationHeroResource($hero->fresh()), 201);
 
         } catch (HeroPostNotFoundException $exception) {
             throw ValidationException::withMessages([
@@ -63,5 +60,34 @@ class SquadHeroController extends Controller
                 'class' => 'Cannot create hero with hero class of ' . $exception->getHeroClass()->name
             ]);
         }
+    }
+
+    public function index($squadSlug)
+    {
+        $squad = Squad::findSlugOrFail($squadSlug);
+        $this->authorize(SquadPolicy::MANAGE, $squad);
+        $heroes = Hero::query()->amongSquad($squad)->get();
+        $heroes->load([
+            'heroRace',
+            'heroClass',
+            'combatPosition',
+            'playerSpirit.player',
+            'playerSpirit.game.homeTeam',
+            'playerSpirit.game.awayTeam',
+            'measurables.measurableType',
+            'measurables.hasMeasurables',
+            'slots.slotType',
+            'slots.hasSlots',
+            'slots.item.itemType.itemBase',
+            'slots.item.material.materialType',
+            'slots.item.itemClass',
+            'slots.item.attacks.attackerPosition',
+            'slots.item.attacks.targetPosition',
+            'slots.item.attacks.targetPriority',
+            'slots.item.attacks.damageType',
+            'slots.item.enchantments.measurableBoosts.measurableType',
+            'slots.item.enchantments.measurableBoosts.booster',
+        ]);
+        return HeroResource::collection($heroes);
     }
 }
