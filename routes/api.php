@@ -25,6 +25,7 @@ use App\Http\Controllers\SquadHeroController;
 use App\Http\Controllers\SquadCampaignController;
 use App\Http\Controllers\HeroPlayerSpiritController;
 use App\Http\Controllers\CampaignQuestController;
+use App\Http\Controllers\WeekGameController;
 use App\Http\Controllers\WeekPlayerSpiritController;
 use Illuminate\Http\Request;
 
@@ -56,6 +57,7 @@ Route::prefix('v1')->group(function () {
 
         Route::get('{weekUuid}', [WeekController::class, 'show']);
         Route::get('{weekUuid}/player-spirits', [WeekPlayerSpiritController::class, 'index']);
+        Route::get('{weekUuid}/games', [WeekGameController::class, 'index']);
     });
 
     Route::get('/provinces', [ProvinceController::class, 'index']);
