@@ -12,11 +12,7 @@ class ProvinceController extends Controller
     public function index()
     {
         $provinces = Cache::remember('all_provinces', 60 * 60 * 24, function() {
-            return Province::query()->with([
-                'borders' => function(BelongsToMany $builder) {
-                    return $builder->select('uuid');
-                }
-            ])->get();
+            return Province::query()->with(['borders'])->get();
         });
 
         return ProvinceResource::collection($provinces);

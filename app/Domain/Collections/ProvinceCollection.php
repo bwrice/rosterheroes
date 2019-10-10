@@ -9,9 +9,15 @@
 namespace App\Domain\Collections;
 
 
+use App\Domain\Models\Province;
 use Illuminate\Database\Eloquent\Collection;
 
 class ProvinceCollection extends Collection
 {
-
+    public function toUuids()
+    {
+        return $this->map(function(Province $position) {
+            return $position->uuid;
+        })->values()->toArray();
+    }
 }

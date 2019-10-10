@@ -31,7 +31,7 @@ class ProvinceResource extends JsonResource
             'vector_paths' => $this->vector_paths,
             'continent_id' => $this->continent_id,
             'territory_id' => $this->territory_id,
-            'borders' => $this->borders,
+            'borderUuids' => $this->borders->toUuids(),
             'continent' => new ContinentResource($this->whenLoaded('continent')),
             'territory' => new TerritoryResource($this->whenLoaded('territory'))
         ];
