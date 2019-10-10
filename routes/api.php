@@ -15,6 +15,7 @@ use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\RaiseMeasurableController;
 use App\Http\Controllers\RosterHeroesController;
 use App\Http\Controllers\SquadCurrentLocationController;
+use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TerritoryController;
 use App\Http\Controllers\WeekController;
 use App\Http\Controllers\SquadBorderTravelController;
@@ -70,6 +71,7 @@ Route::prefix('v1')->group(function () {
 
     Route::get('/combat-positions', [CombatPositionController::class, 'index']);
     Route::get('/positions', [PositionController::class, 'index']);
+    Route::get('/teams', [TeamController::class, 'index']);
 
     Route::middleware(['auth:api'])->group(function () {
 
