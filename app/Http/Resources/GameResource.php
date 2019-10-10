@@ -25,8 +25,8 @@ class GameResource extends JsonResource
         return [
             'startsAt' => $this->starts_at,
             'description' => $this->getSimpleDescription(),
-            'homeTeam' => new TeamResource($this->homeTeam),
-            'awayTeam' => new TeamResource($this->awayTeam)
+            'homeTeamID' => $this->home_team_id,
+            'awayTeamID' => $this->away_team_id
         ];
     }
 }

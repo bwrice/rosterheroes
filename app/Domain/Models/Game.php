@@ -16,6 +16,8 @@ use Illuminate\Database\Eloquent\Model;
  * @package App
  *
  * @property int $id
+ * @property int $home_team_id
+ * @property int $away_team_id
  * @property string $external_id
  * @property CarbonImmutable $starts_at
  *
