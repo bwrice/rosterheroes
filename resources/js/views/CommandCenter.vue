@@ -73,6 +73,7 @@
             this.setRealm();
             this.updateHeroClasses();
             this.updateHeroRaces();
+            this.updatePositions();
             this.updateCombatPositions();
         },
 
@@ -94,6 +95,7 @@
                 'setRealm',
                 'updateHeroClasses',
                 'updateHeroRaces',
+                'updatePositions',
                 'updateCombatPositions'
             ])
         },

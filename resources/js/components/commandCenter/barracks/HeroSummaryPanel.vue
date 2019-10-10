@@ -53,7 +53,7 @@
     import SvgIconSheet from "../global/SvgIconSheet";
     import HeroGearSVG from "./gear/HeroGearSVG";
     import PlayerSpiritSummaryPanel from "../global/PlayerSpiritSummaryPanel";
-    import BarracksHero from "../../../models/BarracksHero";
+    import Hero from "../../../models/Hero";
 
     import {mapGetters} from 'vuex';
     import RelativeMeasurableBar from "./RelativeMeasurableBar";
@@ -69,7 +69,7 @@
             HeroClassIcon, RelativeMeasurableBar, PlayerSpiritSummaryPanel, HeroGearSVG, SvgIconSheet},
         props: {
             hero: {
-                type: BarracksHero,
+                type: Hero,
                 require: true
             }
         },

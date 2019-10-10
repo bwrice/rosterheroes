@@ -4,12 +4,12 @@
             <v-btn :to="rosterPage">
                 <v-icon>arrow_back</v-icon>Back
             </v-btn>
-            <HeroRosterCard :hero="rosterFocusedHero" v-if="rosterFocusedHero">
+            <HeroRosterCard :hero="hero">
                 <template slot="body">
-                    <template v-if="rosterFocusedHero.playerSpirit">
-                        <PlayerSpiritPanel :player-spirit="rosterFocusedHero.playerSpirit">
+                    <template v-if="hero.playerSpirit">
+                        <PlayerSpiritPanel :player-spirit="hero.playerSpirit">
                             <template v-slot:spirit-actions>
-                                <RemoveSpiritButton :hero="rosterFocusedHero" :player-spirit="rosterFocusedHero.playerSpirit"></RemoveSpiritButton>
+                                <RemoveSpiritButton :hero="hero" :player-spirit="hero.playerSpirit"></RemoveSpiritButton>
                             </template>
                         </PlayerSpiritPanel>
                     </template>
@@ -35,7 +35,7 @@
                 <template v-slot:item="props">
                     <PlayerSpiritPanel :player-spirit="props.item">
                         <template v-slot:spirit-actions>
-                            <AddSpiritButton :hero="rosterFocusedHero" :player-spirit="props.item"></AddSpiritButton>
+                            <AddSpiritButton :hero="hero" :player-spirit="props.item"></AddSpiritButton>
                         </template>
                     </PlayerSpiritPanel>
                 </template>
@@ -89,25 +89,18 @@
             ...mapGetters([
                 '_squad',
                 '_currentWeek',
-                '_rosterHeroes',
+                '_focusedHero',
                 '_playerSpiritsPool',
                 '_rosterLoading'
             ]),
             rosterPage() {
                 return '/command-center/' + this.$route.params.squadSlug + '/roster' ;
             },
-            rosterFocusedHero() {
-                if ('roster-hero' === this.$route.name) {
-                    let hero = this._rosterHeroes.find((hero) => hero.slug === this.$route.params.heroSlug);
-                    if (hero) {
-                        return hero;
-                    }
-                }
-
-                return this.emptyHero;
+            hero() {
+                return this._focusedHero(this.$route);
             },
             playerSpiritsPool() {
-                let heroPositionIDs = this.rosterFocusedHero.heroRace.positions.map(function (position) {
+                let heroPositionIDs = this.hero.heroRace.positions.map(function (position) {
                     return position.id;
                 });
                 return this._playerSpiritsPool.filter(function (playerSpirit) {

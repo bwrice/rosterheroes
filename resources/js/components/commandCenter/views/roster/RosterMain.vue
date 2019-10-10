@@ -2,8 +2,8 @@
     <SingleColumnLayout>
         <template v-slot:column-one>
             <v-card>
-                <span class="display-3 px-1">{{availableSpiritEssence.toLocaleString()}}</span> Spirit Essence Available
-                <HeroRosterCard v-for="(hero, uuid) in _rosterHeroes" :key="uuid" :hero="hero">
+                <span class="display-3 px-1">{{_availableSpiritEssence.toLocaleString()}}</span> Spirit Essence Available
+                <HeroRosterCard v-for="(hero, uuid) in _heroes" :key="uuid" :hero="hero">
                     <template slot="body">
                         <div v-if="hero.playerSpirit">
                             <PlayerSpiritPanel :player-spirit="hero.playerSpirit">
@@ -45,20 +45,9 @@
         },
         computed: {
             ...mapGetters([
-                '_rosterHeroes',
-                '_squad'
-            ]),
-            availableSpiritEssence() {
-
-                let startingSpiritEssence = this._squad.spirit_essence;
-                let usedEssence =  this._rosterHeroes.reduce(function (essence, hero) {
-                    if (hero.playerSpirit) {
-                        return essence + hero.playerSpirit.essence_cost;
-                    }
-                    return essence;
-                }, 0);
-                return startingSpiritEssence - usedEssence;
-            }
+                '_heroes',
+                '_availableSpiritEssence'
+            ])
         },
     }
 </script>

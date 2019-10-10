@@ -11,7 +11,7 @@
 
 <script>
     import Slot from "../../../../models/Slot";
-    import BarracksHero from "../../../../models/BarracksHero";
+    import Hero from "../../../../models/Hero";
     import {mapActions} from 'vuex';
 
     export default {
@@ -22,7 +22,7 @@
                 required: true
             },
             hero: {
-                type: BarracksHero,
+                type: Hero,
                 required: true
             }
         },

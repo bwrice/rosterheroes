@@ -17,7 +17,7 @@
 </template>
 
 <script>
-    import BarracksHero from "../../../models/BarracksHero";
+    import Hero from "../../../models/Hero";
     import HeroRaceIcon from "../global/HeroRaceIcon";
     import HeroClassIcon from "../global/HeroClassIcon";
     import PlayerSpiritSummaryPanel from "../global/PlayerSpiritSummaryPanel";
@@ -33,7 +33,7 @@
         },
         props: {
             hero: {
-                type: BarracksHero,
+                type: Hero,
                 required: true
             }
         },

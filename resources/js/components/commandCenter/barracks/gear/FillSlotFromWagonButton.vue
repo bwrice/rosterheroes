@@ -11,7 +11,7 @@
 </template>
 
 <script>
-    import BarracksHero from "../../../../models/BarracksHero";
+    import Hero from "../../../../models/Hero";
     import Slot from "../../../../models/Slot";
     import Item from "../../../../models/Item";
 
@@ -21,7 +21,7 @@
         name: "FillSlotFromWagonButton",
         props: {
             hero: {
-                type: BarracksHero,
+                type: Hero,
                 required: true
             },
             heroSlot: {

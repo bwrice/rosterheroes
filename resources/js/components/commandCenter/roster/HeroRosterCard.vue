@@ -14,13 +14,21 @@
     import PositionChip from "./PositionChip";
     import PositionChipList from "./PositionChipList";
 
+    import {mapGetters} from 'vuex';
+    import Hero from "../../../models/Hero";
+
     export default {
         name: "HeroRosterCard",
         components: {PositionChipList, PositionChip},
-        props: ['hero'],
+        props: {
+            hero: {
+                type: Hero,
+                required: true
+            }
+        },
 
         computed: {
-            heroPositions: function() {
+            positions: function() {
                 // TODO filter out overlapping positions
                 return this.hero.heroRace.positions;
             }

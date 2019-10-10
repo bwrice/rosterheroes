@@ -2,7 +2,7 @@ import Slot from "./Slot";
 import Measurable from "./Measurable";
 import PlayerSpirit from "./PlayerSpirit";
 
-export default class BarracksHero {
+export default class Hero {
 
     constructor({name = '', uuid, slug, measurables = [], slots = [], heroClassID = 0, heroRaceID = 0, combatPositionID = 0, playerSpirit}) {
         this.name = name;
