@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Domain\Models\HeroRace;
+use App\Domain\Models\Position;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 
@@ -26,7 +27,9 @@ class HeroRaceResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'svg' => $this->getBehavior()->getIconSVG(),
-            'positions' => PositionResource::collection($this->whenLoaded('positions'))
+            'positionIDs' => $this->positions->map(function(Position $position) {
+                return $position->id;
+            })->values()->toArray()
         ];
     }
 }

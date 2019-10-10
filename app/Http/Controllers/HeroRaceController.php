@@ -12,7 +12,7 @@ class HeroRaceController extends Controller
     public function index()
     {
         $heroRaces = Cache::remember('all_hero_races', 60 * 60 * 24, function () {
-            return HeroRace::all();
+            return HeroRace::query()->with(['positions'])->get();
         });
 
         return HeroRaceResource::collection($heroRaces);
