@@ -75,6 +75,7 @@
             this.updateHeroRaces();
             this.updatePositions();
             this.updateCombatPositions();
+            this.updatePlayerSpirits();
         },
 
         data: function() {
@@ -96,7 +97,8 @@
                 'updateHeroClasses',
                 'updateHeroRaces',
                 'updatePositions',
-                'updateCombatPositions'
+                'updateCombatPositions',
+                'updatePlayerSpirits'
             ])
         },
         computed: {
