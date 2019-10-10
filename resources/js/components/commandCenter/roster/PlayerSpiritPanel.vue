@@ -19,7 +19,7 @@
                 </v-row>
                 <v-row no-gutters>
                     <v-col cols="12">
-                        <PositionChipList :positions="playerSpiritPositions"></PositionChipList>
+                        <PositionChipList :positions="positions"></PositionChipList>
                     </v-col>
                 </v-row>
             </v-card-text>
@@ -29,8 +29,10 @@
 
 <script>
     import PositionChipList from "./PositionChipList";
-    import { playerSpiritMixin } from '../../../mixins/playerSpiritMixin';
+    // import { playerSpiritMixin } from '../../../mixins/playerSpiritMixin';
     import PlayerSpirit from "../../../models/PlayerSpirit";
+
+    import {mapGetters} from 'vuex';
 
     export default {
         name: "PlayerSpiritPanel",
@@ -41,9 +43,22 @@
                 required: true
             }
         },
-        mixins: [
-            playerSpiritMixin
-        ]
+        computed: {
+            ...mapGetters([
+                '_gameByID',
+                '_teamByID',
+                '_positionsFilteredByIDs'
+            ]),
+            gameDescription() {
+                let game = this._gameByID(this.playerSpirit.gameID);
+                let homeTeam = this._teamByID(game.homeTeamID);
+                let awayTeam = this._teamByID(game.awayTeamID);
+                return awayTeam.abbreviation + '@' + homeTeam.abbreviation;
+            },
+            positions() {
+                return this._positionsFilteredByIDs(this.playerSpirit.player.positionIDs);
+            }
+        }
     }
 </script>
 
