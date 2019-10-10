@@ -3,6 +3,7 @@ import HeroClass from "../../models/HeroClass";
 import HeroRace from "../../models/HeroRace";
 import CombatPosition from "../../models/CombatPosition";
 import Position from "../../models/Position";
+import Team from "../../models/Team";
 
 export default {
 
@@ -11,6 +12,7 @@ export default {
         heroRaces: [],
         positions: [],
         combatPositions: [],
+        teams: [],
     },
 
     getters: {
@@ -25,6 +27,9 @@ export default {
         },
         _combatPositions(state) {
             return state.combatPositions;
+        },
+        _teams(state) {
+            return state.teams;
         },
         _heroClassByID: (state) => (heroClassID) => {
             let heroClass = state.heroClasses.find(function (heroClass) {
@@ -68,6 +73,9 @@ export default {
         },
         SET_COMBAT_POSITIONS(state, payload) {
             state.combatPositions = payload;
+        },
+        SET_TEAMS(state, payload) {
+            state.teams = payload;
         },
     },
 
@@ -115,6 +123,17 @@ export default {
                 commit('SET_COMBAT_POSITIONS', combatPositions);
             } catch (e) {
                 console.warn("Failed to update combat positions");
+            }
+        },
+        async updateTeams({commit}) {
+            try {
+                let teamsResponse = await referenceApi.getTeams();
+                let teams = teamsResponse.data.map(function (team) {
+                    return new Team(team);
+                });
+                commit('SET_TEAMS', teams);
+            } catch (e) {
+                console.warn("Failed to update teams");
             }
         },
     }

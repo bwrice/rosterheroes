@@ -77,6 +77,7 @@
             this.updateCombatPositions();
             this.updatePlayerSpirits();
             this.updateGames();
+            this.updateTeams();
         },
 
         data: function() {
@@ -100,7 +101,8 @@
                 'updatePositions',
                 'updateCombatPositions',
                 'updatePlayerSpirits',
-                'updateGames'
+                'updateGames',
+                'updateTeams'
             ])
         },
         computed: {

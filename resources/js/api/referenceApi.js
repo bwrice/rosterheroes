@@ -18,3 +18,8 @@ export async function getPositions() {
     let response = await axios.get('/api/v1/positions');
     return response.data;
 }
+
+export async function getTeams() {
+    let response = await axios.get('/api/v1/teams');
+    return response.data;
+}
