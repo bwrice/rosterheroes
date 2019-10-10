@@ -2,7 +2,7 @@
     <v-card class="mx-1 my-1">
         <v-card-title>
             <h3>{{hero.name}}</h3>
-            <PositionChipList :positions="heroPositions"></PositionChipList>
+            <PositionChipList :positions="positions"></PositionChipList>
         </v-card-title>
         <slot name="body">
             <!-- Body Content-->
@@ -28,9 +28,13 @@
         },
 
         computed: {
-            positions: function() {
-                // TODO filter out overlapping positions
-                return this.hero.heroRace.positions;
+            ...mapGetters([
+                '_heroRaceByID',
+                '_positionsFilteredByIDs'
+            ]),
+            positions() {
+                let heroRace = this._heroRaceByID(this.hero.heroRaceID);
+                return this._positionsFilteredByIDs(heroRace.positionIDs);
             }
         }
     }

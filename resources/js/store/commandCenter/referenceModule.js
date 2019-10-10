@@ -44,6 +44,11 @@ export default {
             });
             return position ? position : new Position({});
         },
+        _positionsFilteredByIDs: (state) => (positionIDs) => {
+            return state.positions.filter(function (position) {
+                return positionIDs.includes(position.id);
+            })
+        },
         _combatPositionByID: (state) => (combatPositionID) => {
             let combatPosition = state.combatPositions.find(function (combatPosition) {
                 return combatPosition.id === combatPositionID;
