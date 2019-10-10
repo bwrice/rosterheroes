@@ -1,10 +1,12 @@
 import * as weekApi from '../../api/weekApi';
+import PlayerSpirit from "../../models/PlayerSpirit";
 
 export default {
 
     state: {
         week: null,
         playerSpirits: [],
+        games: [],
     },
 
     getters: {
@@ -36,7 +38,10 @@ export default {
         async updatePlayerSpirits({commit}) {
             try {
                 let playerSpiritsResponse = await weekApi.getCurrentPlayerSpirits();
-                commit('SET_PLAYER_SPIRITS', playerSpiritsResponse.data);
+                let playerSpirits = playerSpiritsResponse.data.map(function (playerSpirit) {
+                    return new PlayerSpirit(playerSpirit);
+                });
+                commit('SET_PLAYER_SPIRITS', playerSpirits);
             } catch (e) {
                 console.warn("Failed to update player spirits");
             }

@@ -38,11 +38,11 @@ export default {
 
             commit('SET_ROSTER_LOADING', true);
 
-            let heroes = await squadApi.getRosterHeroes(route.params.squadSlug);
-            commit('SET_ROSTER_HEROES', heroes);
+            // let heroes = await squadApi.getRosterHeroes(route.params.squadSlug);
+            // commit('SET_ROSTER_HEROES', heroes);
 
-            let playerSpirits = await weekApi.getCurrentPlayerSpirits();
-            commit('SET_PLAYER_SPIRITS_POOL', playerSpirits);
+            // let playerSpirits = await weekApi.getCurrentPlayerSpirits();
+            // commit('SET_PLAYER_SPIRITS_POOL', playerSpirits);
 
             commit('SET_ROSTER_LOADING', false);
         },

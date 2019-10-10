@@ -1,7 +1,7 @@
 import * as squadApi from '../../api/squadApi';
 import * as measurableApi from '../../api/measurableApi';
 import * as heroApi from '../../api/heroApi';
-import BarracksHero from "../../models/BarracksHero";
+import Hero from "../../models/Hero";
 import Measurable from "../../models/Measurable";
 import MobileStorage from "../../models/MobileStorage";
 import SlotTransaction from "../../models/SlotTransaction";
@@ -31,7 +31,7 @@ export default {
         },
         _focusedHero: (state) => (route) => {
             let hero = state.heroes.find(hero => hero.slug === route.params.heroSlug);
-            return hero ? hero : new BarracksHero({});
+            return hero ? hero : new Hero({});
         },
         _squadHighMeasurable: (state) => (measurableTypeName) => {
             let measurableAmounts = state.heroes.map(function (hero) {
@@ -40,6 +40,15 @@ export default {
             return measurableAmounts.reduce(function(amountA, amountB) {
                 return Math.max(amountA, amountB);
             }, 0);
+        },
+        _availableSpiritEssence(state) {
+            let essenceUsed = state.heroes.reduce(function (essence, hero) {
+                if (hero.playerSpirit) {
+                    return essence + hero.playerSpirit.essenceCost;
+                }
+                return essence;
+            }, 0);
+            return state.squad.spiritEssence - essenceUsed;
         }
     },
     mutations: {
@@ -69,7 +78,7 @@ export default {
             let squadSlug = route.params.squadSlug;
             let heroesResponse = await squadApi.getHeroes(squadSlug);
             let heroes = heroesResponse.data.map(function (hero) {
-                return new BarracksHero(hero);
+                return new Hero(hero);
             });
             commit('SET_HEROES', heroes);
             let mobileStorageResponse = await squadApi.getMobileStorage(squadSlug);
