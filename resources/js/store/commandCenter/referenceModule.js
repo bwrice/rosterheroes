@@ -2,13 +2,15 @@ import * as referenceApi from '../../api/referenceApi';
 import HeroClass from "../../models/HeroClass";
 import HeroRace from "../../models/HeroRace";
 import CombatPosition from "../../models/CombatPosition";
+import Position from "../../models/Position";
 
 export default {
 
     state: {
         heroClasses: [],
         heroRaces: [],
-        combatPositions: []
+        positions: [],
+        combatPositions: [],
     },
 
     getters: {
@@ -17,6 +19,9 @@ export default {
         },
         _heroRaces(state) {
             return state.heroRaces;
+        },
+        _positions(state) {
+            return state.positions;
         },
         _combatPositions(state) {
             return state.combatPositions;
@@ -33,6 +38,12 @@ export default {
             });
             return heroRace ? heroRace : new HeroRace({});
         },
+        _positionByID: (state) => (positionID) => {
+            let position = state.positions.find(function (position) {
+                return position.id === positionID;
+            });
+            return position ? position : new Position({});
+        },
         _combatPositionByID: (state) => (combatPositionID) => {
             let combatPosition = state.combatPositions.find(function (combatPosition) {
                 return combatPosition.id === combatPositionID;
@@ -46,6 +57,9 @@ export default {
         },
         SET_HERO_RACES(state, payload) {
             state.heroRaces = payload;
+        },
+        SET_POSITIONS(state, payload) {
+            state.positions = payload;
         },
         SET_COMBAT_POSITIONS(state, payload) {
             state.combatPositions = payload;
@@ -73,6 +87,18 @@ export default {
                 commit('SET_HERO_RACES', heroRaces);
             } catch (e) {
                 console.warn("Failed to update hero races");
+            }
+        },
+        async updatePositions({commit}) {
+            try {
+                console.log("Update Positions");
+                let positionsResponse = await referenceApi.getPositions();
+                let positions = positionsResponse.data.map(function (position) {
+                    return new Position(position);
+                });
+                commit('SET_POSITIONS', positions);
+            } catch (e) {
+                console.warn("Failed to update positions");
             }
         },
         async updateCombatPositions({commit}) {

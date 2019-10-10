@@ -13,3 +13,8 @@ export async function getCombatPositions() {
     let response = await axios.get('/api/v1/combat-positions');
     return response.data;
 }
+
+export async function getPositions() {
+    let response = await axios.get('/api/v1/positions');
+    return response.data;
+}
