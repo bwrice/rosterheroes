@@ -10,4 +10,8 @@ export default class PlayerSpirit {
         this.gameID = gameID;
         this.player = player ? new Player(player) : new Player({});
     }
+
+    get fullName() {
+        return this.player.fullName;
+    }
 }
