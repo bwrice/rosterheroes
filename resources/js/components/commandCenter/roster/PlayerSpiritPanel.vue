@@ -2,14 +2,14 @@
     <transition name="fade">
         <v-card>
             <v-card-title class="primary-title">
-                {{ playerName }}
+                {{ playerSpirit.fullName }}
             </v-card-title>
             <v-card-text>
                 <v-row no-gutters>
                     <v-col cols="8">
                         <p class="ma-0">{{ gameDescription }}</p>
-                        <p class="ma-0">Essence Cost: {{ essenceCost }}</p>
-                        <p class="ma-0">Energy: {{ energy }}</p>
+                        <p class="ma-0">Essence Cost: {{ playerSpirit.essenceCost }}</p>
+                        <p class="ma-0">Energy: {{ playerSpirit.energy }}</p>
                     </v-col>
                     <v-col cols="4">
                         <slot name="spirit-actions">
@@ -30,11 +30,17 @@
 <script>
     import PositionChipList from "./PositionChipList";
     import { playerSpiritMixin } from '../../../mixins/playerSpiritMixin';
+    import PlayerSpirit from "../../../models/PlayerSpirit";
 
     export default {
         name: "PlayerSpiritPanel",
         components: {PositionChipList},
-        props: ['playerSpirit'],
+        props: {
+            playerSpirit: {
+                type: PlayerSpirit,
+                required: true
+            }
+        },
         mixins: [
             playerSpiritMixin
         ]

@@ -74,13 +74,6 @@
 
         data() {
             return {
-                emptyHero: {
-                    name: '',
-                    playerSpirit: null,
-                    heroRace: {
-                        positions: []
-                    }
-                },
                 spiritSearch: ''
             }
         },
@@ -90,7 +83,8 @@
                 '_squad',
                 '_currentWeek',
                 '_focusedHero',
-                '_playerSpiritsPool',
+                '_playerSpirits',
+                '_heroRaceByID',
                 '_rosterLoading'
             ]),
             rosterPage() {
@@ -99,17 +93,23 @@
             hero() {
                 return this._focusedHero(this.$route);
             },
-            playerSpiritsPool() {
-                let heroPositionIDs = this.hero.heroRace.positions.map(function (position) {
-                    return position.id;
+            playerSpiritsForHero() {
+                let heroPositionIDs = this._heroRaceByID(this.hero.heroRaceID).positionIDs;
+                return this._playerSpirits.filter(function (playerSpirit) {
+                    let matchingIDs = playerSpirit.player.positionIDs.filter(playerPositionID => heroPositionIDs.includes(playerPositionID));
+                    return matchingIDs.length > 0;
                 });
-                return this._playerSpiritsPool.filter(function (playerSpirit) {
-                    let spiritPositionIDs = playerSpirit.player.positions.map(function (position) {
-                        return position.id;
-                    });
-                    let filtered = spiritPositionIDs.filter(spiritPosID => heroPositionIDs.includes(spiritPosID));
-                    return filtered.length > 0;
-                });
+                //
+                // let heroPositionIDs = this.hero.heroRace.positions.map(function (position) {
+                //     return position.id;
+                // });
+                // return this._playerSpiritsPool.filter(function (playerSpirit) {
+                //     let spiritPositionIDs = playerSpirit.player.positions.map(function (position) {
+                //         return position.id;
+                //     });
+                //     let filtered = spiritPositionIDs.filter(spiritPosID => heroPositionIDs.includes(spiritPosID));
+                //     return filtered.length > 0;
+                // });
             },
             filteredSpirits() {
                 if (this.spiritSearch && this.spiritSearch.length) {
@@ -117,10 +117,10 @@
                     search.addIndex(['player', 'full_name']);
                     search.addIndex(['game', 'homeTeam', 'name']);
                     search.addIndex(['game', 'awayTeam', 'name']);
-                    search.addDocuments(this.playerSpiritsPool);
+                    search.addDocuments(this.playerSpiritsForHero);
                     return search.search(this.spiritSearch);
                 } else {
-                    return this.playerSpiritsPool;
+                    return this.playerSpiritsForHero;
                 }
             }
         },
