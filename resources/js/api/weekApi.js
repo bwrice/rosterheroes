@@ -4,7 +4,12 @@ export async function getCurrentWeek() {
     return response.data;
 }
 
-export async function getCurrentPlayerSpirits() {
-    let response = await axios.get('/api/v1/weeks/current/player-spirits');
+export async function getPlayerSpirits(weekUuid = 'current') {
+    let response = await axios.get('/api/v1/weeks/' + weekUuid + '/player-spirits');
+    return response.data;
+}
+
+export async function getGames(weekUuid = 'current') {
+    let response = await axios.get('/api/v1/weeks/' + weekUuid + '/games');
     return response.data;
 }

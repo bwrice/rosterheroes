@@ -1,5 +1,6 @@
 import * as weekApi from '../../api/weekApi';
 import PlayerSpirit from "../../models/PlayerSpirit";
+import Game from "../../models/Game";
 
 export default {
 
@@ -15,6 +16,9 @@ export default {
         },
         _playerSpirits(state) {
             return state.playerSpirits;
+        },
+        _games(state) {
+            return state.games;
         }
     },
     mutations: {
@@ -23,6 +27,9 @@ export default {
         },
         SET_PLAYER_SPIRITS(state, payload) {
             state.playerSpirits = payload;
+        },
+        SET_GAMES(state, payload) {
+            state.games = payload;
         }
     },
 
@@ -37,13 +44,24 @@ export default {
         },
         async updatePlayerSpirits({commit}) {
             try {
-                let playerSpiritsResponse = await weekApi.getCurrentPlayerSpirits();
+                let playerSpiritsResponse = await weekApi.getPlayerSpirits('current');
                 let playerSpirits = playerSpiritsResponse.data.map(function (playerSpirit) {
                     return new PlayerSpirit(playerSpirit);
                 });
                 commit('SET_PLAYER_SPIRITS', playerSpirits);
             } catch (e) {
                 console.warn("Failed to update player spirits");
+            }
+        },
+        async updateGames({commit}) {
+            try {
+                let gamesResponse = await weekApi.getGames('current');
+                let games = gamesResponse.data.map(function (game) {
+                    return new Game(game);
+                });
+                commit('SET_GAMES', games);
+            } catch (e) {
+                console.warn("Failed to update games");
             }
         }
     }
