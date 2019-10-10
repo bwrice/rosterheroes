@@ -19,6 +19,12 @@ export default {
         },
         _games(state) {
             return state.games;
+        },
+        _gameByID: (state) => (gameID) => {
+            let game = state.games.find(function (game) {
+                return game.id === gameID;
+            });
+            return game ? game : new Game({});
         }
     },
     mutations: {
