@@ -46,8 +46,17 @@ use Illuminate\Http\Request;
 
 Route::prefix('v1')->group(function () {
 
-    Route::get('/weeks/{weekUuid}', [WeekController::class, 'show']);
-    Route::get('/weeks/{weekUuid}/player-spirits', [WeekPlayerSpiritController::class, 'index']);
+    Route::prefix('weeks')->group(function () {
+
+        /*
+         * WEEKS
+         *
+         * 'api/v1/weeks'
+         */
+
+        Route::get('{weekUuid}', [WeekController::class, 'show']);
+        Route::get('{weekUuid}/player-spirits', [WeekPlayerSpiritController::class, 'index']);
+    });
 
     Route::get('/provinces', [ProvinceController::class, 'index']);
     Route::get('/provinces/{provinceSlug}/borders', [ProvinceBorderController::class, 'index']);
@@ -90,14 +99,14 @@ Route::prefix('v1')->group(function () {
              * 'api/v1/heroes'
              */
 
-            Route::get('/{heroSlug}', [HeroController::class, 'show']);
+            Route::get('{heroSlug}', [HeroController::class, 'show']);
 
-            Route::post('/{heroSlug}/player-spirit/{playerSpiritUuid}', [HeroPlayerSpiritController::class, 'store']);
-            Route::delete('/{heroSlug}/player-spirit/{playerSpiritUuid}', [HeroPlayerSpiritController::class, 'delete']);
+            Route::post('{heroSlug}/player-spirit/{playerSpiritUuid}', [HeroPlayerSpiritController::class, 'store']);
+            Route::delete('{heroSlug}/player-spirit/{playerSpiritUuid}', [HeroPlayerSpiritController::class, 'delete']);
 
-            Route::post('/{heroSlug}/empty-slots', EmptyHeroSlotsController::class);
+            Route::post('{heroSlug}/empty-slots', EmptyHeroSlotsController::class);
 
-            Route::post('/{heroSlug}/equip', EquipHeroController::class);
+            Route::post('{heroSlug}/equip', EquipHeroController::class);
         });
 
         Route::post('/campaign/{campaign}/quest/{questUuid}', [CampaignQuestController::class, 'store']);
