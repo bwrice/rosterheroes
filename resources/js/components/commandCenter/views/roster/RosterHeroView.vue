@@ -114,9 +114,8 @@
             filteredSpirits() {
                 if (this.spiritSearch && this.spiritSearch.length) {
                     let search = new jsSearch.Search('uuid');
-                    search.addIndex(['player', 'full_name']);
-                    search.addIndex(['game', 'homeTeam', 'name']);
-                    search.addIndex(['game', 'awayTeam', 'name']);
+                    search.addIndex(['player', 'firstName']);
+                    search.addIndex(['player', 'lastName']);
                     search.addDocuments(this.playerSpiritsForHero);
                     return search.search(this.spiritSearch);
                 } else {
