@@ -2,14 +2,11 @@ import Team from "./Team";
 
 export default class Game {
 
-    constructor({startsAt, description = '', homeTeam, awayTeam}) {
+    constructor({id, startsAt, description = '', homeTeamID = 0, awayTeamID = 0}) {
+        this.id = id;
         this.startsAt = startsAt;
         this.description = description;
-        this.homeTeam = homeTeam ? new Team(homeTeam) : new Team({});
-        this.awayTeam = awayTeam ? new Team(awayTeam) : new Team({});
-    }
-
-    get simpleDescription() {
-        return this.awayTeam.abbreviation + " @ " + this.homeTeam.abbreviation;
+        this.homeTeamID = homeTeamID;
+        this.awayTeamID = awayTeamID;
     }
 }
