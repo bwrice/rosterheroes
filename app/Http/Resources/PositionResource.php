@@ -25,7 +25,7 @@ class PositionResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'abbreviation' => $this->getBehavior()->getAbbreviation(),
-            'sport_id' => $this->sport_id
+            'sportID' => $this->sport_id
         ];
     }
 }
