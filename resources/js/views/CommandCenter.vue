@@ -102,12 +102,12 @@
             ...mapGetters([
                 '_squad',
                 '_currentWeek',
-                '_focusedBarracksHero'
+                '_focusedHero'
             ]),
             toolBarTitle() {
                 switch(this.$route.name) {
                     case 'barracks-hero':
-                        return this._focusedBarracksHero(this.$route).name;
+                        return this._focusedHero(this.$route).name;
 
                     case 'barracks-main':
                     default:

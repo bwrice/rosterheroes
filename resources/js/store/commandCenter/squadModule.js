@@ -29,7 +29,7 @@ export default {
         _barracksLoading(state) {
             return state.barracksLoading;
         },
-        _focusedBarracksHero: (state) => (route) => {
+        _focusedHero: (state) => (route) => {
             let hero = state.heroes.find(hero => hero.slug === route.params.heroSlug);
             return hero ? hero : new BarracksHero({});
         },

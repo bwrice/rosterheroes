@@ -24,10 +24,10 @@
         components: {HeroClassIcon, HeroRaceIcon},
         computed: {
             ...mapGetters([
-                '_focusedBarracksHero'
+                '_focusedHero'
             ]),
             hero() {
-                return this._focusedBarracksHero(this.$route);
+                return this._focusedHero(this.$route);
             }
         }
     }

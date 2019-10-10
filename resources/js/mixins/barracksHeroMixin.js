@@ -11,7 +11,7 @@ export const barracksHeroMixin = {
             '_heroes',
             '_squad'
         ]),
-        // TODO: replace usages with _focusedBarracksHero
+        // TODO: replace usages with _focusedHero
         barracksHeroFromRoute() {
             let slug = this.$route.params.heroSlug;
             return this._heroes.find(hero => hero.slug === slug);
