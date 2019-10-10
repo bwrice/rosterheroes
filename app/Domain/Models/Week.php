@@ -170,10 +170,10 @@ class Week extends EventSourcedModel
         return CarbonPeriod::create($this->everything_locks_at, $this->ends_at);
     }
 
-    public function getValidGames()
+    public function getValidGames($relations = [])
     {
         /** @var GameCollection $games */
-        $games = Game::query()->withinPeriod($this->getGamesPeriod())->get();
+        $games = Game::query()->withinPeriod($this->getGamesPeriod())->with($relations)->get();
         return $games;
     }
 

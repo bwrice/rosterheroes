@@ -35,16 +35,16 @@ class BuildPlayerSpirits extends Command
             throw new InvalidWeekException($week, $message);
         }
 
-        $games = $week->getValidGames();
+        $games = $week->getValidGames([
+            'homeTeam.players',
+            'awayTeam.players'
+        ]);
 
         if ($games->isEmpty()) {
             throw new InvalidWeekException($week, "Week ID: " . $week->id . " has zero games");
         }
 
-        $games->loadMissing([
-            'homeTeam.players',
-            'awayTeam.players'
-        ])->each(function (Game $game) use ($week) {
+        $games->each(function (Game $game) use ($week) {
             $game->homeTeam->players->each(function (Player $player) use ($week, $game) {
                 CreatePlayerSpiritJob::dispatch($week, $game, $player);
             });
