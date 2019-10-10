@@ -22,6 +22,7 @@ use Illuminate\Support\Carbon;
  * @property string $first_name
  * @property string $last_name
  * @property string $external_id
+ * @property int $team_id
  *
  * @property Team $team
  * @property PositionCollection $positions
