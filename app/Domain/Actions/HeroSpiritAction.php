@@ -11,6 +11,13 @@ use App\Exceptions\HeroPlayerSpiritException;
 
 abstract class HeroSpiritAction
 {
+    /**
+     * @param Hero $hero
+     * @param PlayerSpirit $playerSpirit
+     * @return Hero
+     * @throws HeroPlayerSpiritException
+     */
+    abstract public function execute(Hero $hero, PlayerSpirit $playerSpirit): Hero;
 
     /**
      * @param Hero $hero
