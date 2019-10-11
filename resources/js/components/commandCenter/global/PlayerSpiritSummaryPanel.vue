@@ -12,7 +12,7 @@
                 </v-col>
             </v-row>
             <v-row no-gutters justify="space-between">
-                <span class="caption font-weight-regular">{{playerSpirit.game.simpleDescription}}</span>
+                <span class="caption font-weight-regular">{{gameDescription}}</span>
                 <span class="title font-weight-bold">{{playerSpirit.essenceCost.toLocaleString()}}</span>
             </v-row>
         </template>
@@ -26,6 +26,7 @@
 
 <script>
     import PlayerSpirit from "../../../models/PlayerSpirit";
+    import {mapGetters} from 'vuex';
 
     export default {
         name: "PlayerSpiritSummaryPanel",
@@ -46,6 +47,9 @@
             }
         },
         computed: {
+            ...mapGetters([
+                '_gameDescriptionByGameID'
+            ]),
             sheetColor() {
                 if (this.playerSpirit) {
                     if (this.clickable) {
@@ -67,6 +71,9 @@
                     return 'add spirit';
                 }
                 return '(no spirit)';
+            },
+            gameDescription() {
+                return this._gameDescriptionByGameID(this.playerSpirit.gameID);
             }
         }
     }
