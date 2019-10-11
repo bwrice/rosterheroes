@@ -25,6 +25,12 @@ export default {
                 return game.id === gameID;
             });
             return game ? game : new Game({});
+        },
+        _gameDescriptionByGameID: (state, getters) => (gameID) => {
+            let game = getters._gameByID(gameID);
+            let homeTeam = getters._teamByID(game.homeTeamID);
+            let awayTeam = getters._teamByID(game.awayTeamID);
+            return awayTeam.abbreviation + '@' + homeTeam.abbreviation;
         }
     },
     mutations: {

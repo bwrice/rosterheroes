@@ -50,15 +50,11 @@
         },
         computed: {
             ...mapGetters([
-                '_gameByID',
-                '_teamByID',
+                '_gameDescriptionByGameID',
                 '_positionsFilteredByIDs'
             ]),
             gameDescription() {
-                let game = this._gameByID(this.playerSpirit.gameID);
-                let homeTeam = this._teamByID(game.homeTeamID);
-                let awayTeam = this._teamByID(game.awayTeamID);
-                return awayTeam.abbreviation + '@' + homeTeam.abbreviation;
+                return this._gameDescriptionByGameID(this.playerSpirit.gameID);
             },
             positions() {
                 return this._positionsFilteredByIDs(this.playerSpirit.player.positionIDs);
