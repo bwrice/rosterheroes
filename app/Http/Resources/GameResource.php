@@ -25,7 +25,6 @@ class GameResource extends JsonResource
         return [
             'id' => $this->id,
             'startsAt' => $this->starts_at,
-            'description' => $this->getSimpleDescription(),
             'homeTeamID' => $this->home_team_id,
             'awayTeamID' => $this->away_team_id
         ];
