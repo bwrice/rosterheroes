@@ -1,6 +1,6 @@
 <template>
-    <v-btn v-on:click="addSpirit" class="success" :disabled="this.pending">
-        Add
+    <v-btn @click="addSpirit" small class="ma-1" color="primary" :disabled="this.pending">
+        <v-icon>add</v-icon>
     </v-btn>
 </template>
 
