@@ -157,6 +157,41 @@ export default {
                 console.log(e);
                 dispatch('snackBarError', {})
             }
-        }
+        },
+
+        async addSpiritToHero({state, commit, dispatch}, payload) {
+
+            try {
+
+                let heroResponse = await heroApi.addSpirit(payload.heroSlug, payload.spiritUuid);
+                let updatedHero = new Hero(heroResponse.data);
+                let updatedHeroes = _.cloneDeep(state.heroes);
+
+                let index = updatedHeroes.findIndex(function (hero) {
+                    return hero.uuid === updatedHero.uuid;
+                });
+
+                if (index !== -1) {
+                    updatedHeroes.splice(index, 1, updatedHero);
+                    commit('SET_HEROES', updatedHeroes);
+                    dispatch('snackBarSuccess', {
+                        text: updatedHero.playerSpirit.player.fullName + ' now embodies ' + updatedHero.name,
+                        timeout: 3000
+                    })
+                } else {
+                    console.warn("Didn't update roster heroes when adding spirit");
+                }
+
+            } catch (e) {
+                let errors = e.response.data.errors;
+                let snackBarPayload = {};
+                if (errors && errors.roster) {
+                    snackBarPayload = {
+                        text: errors.roster[0]
+                    }
+                }
+                dispatch('snackBarError', snackBarPayload)
+            }
+        },
     },
 };
