@@ -69,6 +69,10 @@ class Hero extends EventSourcedModel implements HasSlots, HasMeasurables, UsesIt
 {
     use HasSlug;
 
+    const RELATION_MORPH_MAP_KEY = 'heroes';
+
+    protected $guarded = [];
+
     public function getRouteKeyName()
     {
         return 'uuid';
@@ -81,9 +85,30 @@ class Hero extends EventSourcedModel implements HasSlots, HasMeasurables, UsesIt
             ->saveSlugsTo('slug');
     }
 
-    const RELATION_MORPH_MAP_KEY = 'heroes';
-
-    protected $guarded = [];
+    public static function heroResourceRelations()
+    {
+        return [
+            'heroRace',
+            'heroClass',
+            'combatPosition',
+            'playerSpirit.player',
+            'playerSpirit.game.homeTeam',
+            'playerSpirit.game.awayTeam',
+            'measurables.measurableType',
+            'measurables.hasMeasurables',
+            'slots.slotType',
+            'slots.hasSlots',
+            'slots.item.itemType.itemBase',
+            'slots.item.material.materialType',
+            'slots.item.itemClass',
+            'slots.item.attacks.attackerPosition',
+            'slots.item.attacks.targetPosition',
+            'slots.item.attacks.targetPriority',
+            'slots.item.attacks.damageType',
+            'slots.item.enchantments.measurableBoosts.measurableType',
+            'slots.item.enchantments.measurableBoosts.booster',
+        ];
+    }
 
     public function newCollection(array $models = [])
     {

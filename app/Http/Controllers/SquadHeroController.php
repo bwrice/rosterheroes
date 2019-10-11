@@ -67,27 +67,9 @@ class SquadHeroController extends Controller
         $squad = Squad::findSlugOrFail($squadSlug);
         $this->authorize(SquadPolicy::MANAGE, $squad);
         $heroes = Hero::query()->amongSquad($squad)->get();
-        $heroes->load([
-            'heroRace',
-            'heroClass',
-            'combatPosition',
-            'playerSpirit.player',
-            'playerSpirit.game.homeTeam',
-            'playerSpirit.game.awayTeam',
-            'measurables.measurableType',
-            'measurables.hasMeasurables',
-            'slots.slotType',
-            'slots.hasSlots',
-            'slots.item.itemType.itemBase',
-            'slots.item.material.materialType',
-            'slots.item.itemClass',
-            'slots.item.attacks.attackerPosition',
-            'slots.item.attacks.targetPosition',
-            'slots.item.attacks.targetPriority',
-            'slots.item.attacks.damageType',
-            'slots.item.enchantments.measurableBoosts.measurableType',
-            'slots.item.enchantments.measurableBoosts.booster',
-        ]);
+
+        $heroes->load(Hero::heroResourceRelations());
+
         return HeroResource::collection($heroes);
     }
 }
