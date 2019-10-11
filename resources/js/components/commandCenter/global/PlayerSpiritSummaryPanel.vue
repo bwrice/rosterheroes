@@ -52,19 +52,14 @@
             ]),
             sheetColor() {
                 if (this.playerSpirit) {
-                    if (this.clickable) {
-                        return '#32a4a8'
-                    }
-                    return '#228487';
-                } else {
-                    if (this.clickable) {
-                        return 'success';
-                    }
+                    return '#29272b';
+                } else if (this.clickable) {
+                    return 'success';
                 }
                 return 'rgba(0, 0, 0, .2)';
             },
             elevation() {
-                return this.clickable ? 2 : 0;
+                return this.clickable ? 4 : 0;
             },
             emptySpiritText() {
                 if (this.clickable) {
