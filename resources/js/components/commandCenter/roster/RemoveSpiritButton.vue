@@ -1,16 +1,27 @@
 <template>
-    <v-btn v-on:click="removeSpirit" class="error" :disabled="this.pending">
-        Remove
+    <v-btn @click="removeSpirit" small class="ma-1" color="error" :disabled="this.pending">
+        <v-icon>remove</v-icon>
     </v-btn>
 </template>
 
 <script>
 
     import { mapActions } from 'vuex';
+    import PlayerSpirit from "../../../models/PlayerSpirit";
+    import Hero from "../../../models/Hero";
 
     export default {
         name: "RemoveSpiritButton",
-        props: ['playerSpirit', 'hero'],
+        props: {
+            playerSpirit: {
+                type: PlayerSpirit,
+                required: true
+            },
+            hero: {
+                type: Hero,
+                required: true
+            }
+        },
 
         data: function() {
             return {

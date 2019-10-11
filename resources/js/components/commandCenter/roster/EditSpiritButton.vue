@@ -1,5 +1,7 @@
 <template>
-    <v-btn :to="heroRoute" class="primary">Edit</v-btn>
+    <v-btn :to="heroRoute" small class="ma-1" color="accent darken-1">
+        <v-icon>edit</v-icon>
+    </v-btn>
 </template>
 
 <script>
