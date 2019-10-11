@@ -32,33 +32,7 @@
             </FilledSlotPanel>
         </template>
         <template v-slot:footer>
-            <v-row class="mt-2" align="center" justify="center">
-                <div class="flex-grow-1"></div>
-                <span class="mr-4 grey--text">Page {{ page }} of {{ numberOfPages }}</span>
-                <v-btn
-                    fab
-                    dark
-                    x-small
-                    color="primary darken-1"
-                    class="mr-1"
-                    :disabled="formerPageDisabled"
-                    @click="formerPage"
-                >
-                    <v-icon>mdi-chevron-left</v-icon>
-                </v-btn>
-                <v-btn
-                    fab
-                    dark
-                    x-small
-                    color="primary darken-1"
-                    class="ml-1"
-                    :disabled="nextPageDisabled"
-                    @click="nextPage"
-                >
-                    <v-icon>mdi-chevron-right</v-icon>
-                </v-btn>
-                <div class="flex-grow-1"></div>
-            </v-row>
+            <IteratorFooter :page="page" :number-of-pages="numberOfPages" @formerPage="decreasePage" @nextPage="increasePage"></IteratorFooter>
         </template>
     </v-data-iterator>
 </template>
@@ -66,10 +40,11 @@
 <script>
     import * as jsSearch from 'js-search';
     import FilledSlotPanel from "./FilledSlotPanel";
+    import IteratorFooter from "./IteratorFooter";
 
     export default {
         name: "FilledSlotIterator",
-        components: {FilledSlotPanel},
+        components: {IteratorFooter, FilledSlotPanel},
         props: {
             filledSlots: {
                 type: Array,
@@ -98,10 +73,10 @@
             }
         },
         methods: {
-            nextPage () {
+            increasePage () {
                 if (this.page + 1 <= this.numberOfPages) this.page += 1
             },
-            formerPage () {
+            decreasePage () {
                 if (this.page - 1 >= 1) this.page -= 1
             },
         },
