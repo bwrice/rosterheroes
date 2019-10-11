@@ -1,13 +1,13 @@
 <template>
-    <v-card class="mx-1 my-1">
-        <v-card-title>
-            <h3>{{hero.name}}</h3>
-            <PositionChipList :positions="positions"></PositionChipList>
-        </v-card-title>
+    <v-sheet color="#576269" class="mb-1 pt-1">
         <slot name="body">
             <!-- Body Content-->
         </slot>
-    </v-card>
+        <v-row no-gutters justify="space-between" align="center">
+            <span class="subtitle-2 mx-2">{{hero.name}}</span>
+            <PositionChipList :positions="positions"></PositionChipList>
+        </v-row>
+    </v-sheet>
 </template>
 
 <script>
