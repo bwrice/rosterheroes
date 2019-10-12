@@ -5,9 +5,14 @@
         class="ma-1 px-2"
         @click="emitClick"
     >
-        <v-row no-gutters>
-            <v-col cols="12">
+        <v-row no-gutters justify="center" align="center">
+            <v-col cols="8">
                 <span class="subtitle-1 font-weight-regular">{{playerSpirit.player.fullName}}</span>
+            </v-col>
+            <v-col cols="4">
+                <div class="ma-1">
+                    <SpiritEnergyBar :energy="playerSpirit.energy"></SpiritEnergyBar>
+                </div>
             </v-col>
         </v-row>
         <v-row no-gutters justify="space-between">
@@ -20,9 +25,11 @@
 <script>
     import PlayerSpirit from "../../../models/PlayerSpirit";
     import {mapGetters} from 'vuex';
+    import SpiritEnergyBar from "./SpiritEnergyBar";
 
     export default {
         name: "PlayerSpiritSummaryPanel",
+        components: {SpiritEnergyBar},
         props: {
             playerSpirit: {
                 type: PlayerSpirit,
