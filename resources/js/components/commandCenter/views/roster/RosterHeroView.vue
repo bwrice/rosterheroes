@@ -5,14 +5,24 @@
                 <v-card-text class="px-1 py-2">
                     <HeroRosterCard :hero="hero">
                         <template slot="body">
-                            <template v-if="hero.playerSpirit">
-                                <PlayerSpiritPanel :player-spirit="hero.playerSpirit">
-                                    <template v-slot:spirit-actions>
-                                        <RemoveSpiritButton :hero="hero"
-                                                            :player-spirit="hero.playerSpirit"></RemoveSpiritButton>
-                                    </template>
-                                </PlayerSpiritPanel>
-                            </template>
+                            <PlayerSpiritPanel v-if="hero.playerSpirit" :player-spirit="hero.playerSpirit">
+                                <template v-slot:spirit-actions>
+                                    <RemoveSpiritButton
+                                        :hero="hero"
+                                        :player-spirit="hero.playerSpirit"
+                                    >
+                                    </RemoveSpiritButton>
+                                </template>
+                            </PlayerSpiritPanel>
+                            <v-row v-else no-gutters justify="center" align="center">
+                                <v-col cols="12">
+                                    <v-sheet color="rgba(0, 0, 0, .3)" class="mx-2 my-1">
+                                        <v-row no-gutters justify="center" align="center">
+                                            <span class="title pa-2 font-weight-thin">(empty)</span>
+                                        </v-row>
+                                    </v-sheet>
+                                </v-col>
+                            </v-row>
                         </template>
                     </HeroRosterCard>
                     <v-data-iterator
@@ -35,6 +45,7 @@
                                 hide-details
                                 prepend-inner-icon="search"
                                 label="Search Player Spirits"
+                                class="my-1"
                             ></v-text-field>
                         </template>
                         <template v-slot:item="props">
