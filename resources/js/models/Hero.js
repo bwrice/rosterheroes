@@ -4,7 +4,7 @@ import PlayerSpirit from "./PlayerSpirit";
 
 export default class Hero {
 
-    constructor({name = '', uuid, slug, measurables = [], slots = [], heroClassID = 0, heroRaceID = 0, combatPositionID = 0, playerSpirit}) {
+    constructor({name = '', uuid, slug = '', measurables = [], slots = [], heroClassID = 0, heroRaceID = 0, combatPositionID = 0, playerSpirit}) {
         this.name = name;
         this.uuid = uuid;
         this.slug = slug;
