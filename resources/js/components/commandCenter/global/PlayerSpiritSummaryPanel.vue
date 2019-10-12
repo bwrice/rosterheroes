@@ -1,26 +1,19 @@
 <template>
     <v-sheet
-        :color="sheetColor"
+        color="#29272b"
         :elevation="elevation"
         class="ma-1 px-2"
         @click="emitClick"
     >
-        <template v-if="playerSpirit">
-            <v-row no-gutters>
-                <v-col cols="12">
-                    <span class="subtitle-1 font-weight-regular">{{playerSpirit.player.fullName}}</span>
-                </v-col>
-            </v-row>
-            <v-row no-gutters justify="space-between">
-                <span class="caption font-weight-regular">{{gameDescription}}</span>
-                <span class="title font-weight-bold">{{playerSpirit.essenceCost.toLocaleString()}}</span>
-            </v-row>
-        </template>
-        <template v-else>
-            <v-row justify="center" align="center">
-                <span class="subtitle-2 my-4">{{ emptySpiritText }}</span>
-            </v-row>
-        </template>
+        <v-row no-gutters>
+            <v-col cols="12">
+                <span class="subtitle-1 font-weight-regular">{{playerSpirit.player.fullName}}</span>
+            </v-col>
+        </v-row>
+        <v-row no-gutters justify="space-between">
+            <span class="caption font-weight-regular">{{gameDescription}}</span>
+            <span class="title font-weight-bold">{{playerSpirit.essenceCost.toLocaleString()}}</span>
+        </v-row>
     </v-sheet>
 </template>
 
@@ -32,7 +25,8 @@
         name: "PlayerSpiritSummaryPanel",
         props: {
             playerSpirit: {
-                type: PlayerSpirit
+                type: PlayerSpirit,
+                required: true
             },
             clickable: {
                 type: Boolean,
@@ -50,22 +44,8 @@
             ...mapGetters([
                 '_gameDescriptionByGameID'
             ]),
-            sheetColor() {
-                if (this.playerSpirit) {
-                    return '#29272b';
-                } else if (this.clickable) {
-                    return 'success';
-                }
-                return 'rgba(0, 0, 0, .2)';
-            },
             elevation() {
                 return this.clickable ? 4 : 0;
-            },
-            emptySpiritText() {
-                if (this.clickable) {
-                    return 'add spirit';
-                }
-                return '(no spirit)';
             },
             gameDescription() {
                 return this._gameDescriptionByGameID(this.playerSpirit.gameID);
