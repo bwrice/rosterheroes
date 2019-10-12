@@ -1,18 +1,19 @@
 <template>
-    <v-progress-linear
-        height="16"
-        :value="value"
-        background-color="#ccc"
-        background-opacity=".2"
-        class="my-1 energy-bar"
-    >
-        {{energy}}
-    </v-progress-linear>
+    <div class="my-1">
+        <GradientBar
+            :percent="percent"
+            :height="16"
+        >
+            {{energy}}
+        </GradientBar>
+    </div>
 </template>
 
 <script>
+    import GradientBar from "./GradientBar";
     export default {
         name: "SpiritEnergyBar",
+        components: {GradientBar},
         props: {
             energy: {
                 type: Number,
@@ -20,7 +21,7 @@
             }
         },
         computed: {
-            value() {
+            percent() {
                 return Math.ceil( Math.sqrt(this.energy) * 5);
             },
         }
