@@ -45,7 +45,7 @@
 <style scoped>
     .rh-gradient-progress {
         /*background-image: linear-gradient(to right, #333491, #6024ad, #9c13cf, #f500f5);*/
-        background-image: linear-gradient(to right, #cfc07e, #e0a06c, #ed4040, #fc0065);
+        background-image: linear-gradient(to right, #cfc07e, #e0a06c, #ed4040, #fc00c5);
     }
     .rh-progress-missing {
         position: absolute;

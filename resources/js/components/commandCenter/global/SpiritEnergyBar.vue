@@ -4,7 +4,7 @@
             :percent="percent"
             :height="16"
         >
-            {{energy}}
+            <span class="font-weight-bold">{{energy}}</span>
         </GradientBar>
     </div>
 </template>
