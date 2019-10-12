@@ -34,7 +34,18 @@
             <v-col cols="8">
                 <v-row no-gutters>
                     <v-col cols="12">
-                        <PlayerSpiritSummaryPanel :player-spirit="hero.playerSpirit"></PlayerSpiritSummaryPanel>
+                        <PlayerSpiritSummaryPanel
+                            v-if="hero.playerSpirit"
+                            :player-spirit="hero.playerSpirit"
+                        ></PlayerSpiritSummaryPanel>
+                        <v-sheet
+                            v-else
+                            color="rgba(0, 0, 0, .2)"
+                            class="ma-1 px-2">
+                            <v-row justify="center" align="center">
+                                <span class="subtitle-2 my-4">no spirit</span>
+                            </v-row>
+                        </v-sheet>
                     </v-col>
                 </v-row>
                 <v-row no-gutters>
