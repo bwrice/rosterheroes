@@ -3,11 +3,17 @@
         <v-row no-gutters align="center" class="py-2">
             <v-col cols="9" class="pl-2">
                 <PlayerSpiritSummaryPanel
+                    v-if="hero.playerSpirit"
                     :player-spirit="hero.playerSpirit"
                     :clickable="true"
                     @playerSpiritClicked="goToEditRoster"
                 >
                 </PlayerSpiritSummaryPanel>
+                <AddSpiritRouterButton
+                    v-else
+                    :hero-slug="hero.slug"
+                >
+                </AddSpiritRouterButton>
             </v-col>
             <v-col cols="3" class="px-2">
                 <CombatPositionIcon :combat-position-id="hero.combatPositionID" :attacker-mode="true"></CombatPositionIcon>
@@ -22,10 +28,12 @@
     import HeroClassIcon from "../global/HeroClassIcon";
     import PlayerSpiritSummaryPanel from "../global/PlayerSpiritSummaryPanel";
     import CombatPositionIcon from "../global/CombatPositionIcon";
+    import AddSpiritRouterButton from "../global/AddSpiritRouterButton";
 
     export default {
         name: "HeroHeader",
         components: {
+            AddSpiritRouterButton,
             CombatPositionIcon,
             PlayerSpiritSummaryPanel,
             HeroClassIcon,
