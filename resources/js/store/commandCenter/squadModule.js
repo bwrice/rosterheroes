@@ -205,7 +205,6 @@ export default {
                     return hero.uuid === updatedHero.uuid;
                 });
 
-                console.log("Here");
                 if (index !== -1) {
                     heroes.splice(index, 1, updatedHero);
                     commit('SET_HEROES', heroes);
@@ -229,7 +228,6 @@ export default {
                 }
                 dispatch('snackBarError', snackBarPayload)
             }
-            console.log("Here Again");
         }
     },
 };

@@ -70,7 +70,7 @@ export default {
             return team ? team : new Team({});
         },
         _sportByID: (state) => (sportID) => {
-            let sport = state.teams.find(sport => sport.id === sportID);
+            let sport = state.sports.find(sport => sport.id === sportID);
             return sport ? sport : new Sport({});
         }
     },

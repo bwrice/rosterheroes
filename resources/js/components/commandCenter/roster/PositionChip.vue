@@ -3,22 +3,24 @@
 </template>
 
 <script>
+    import Position from "../../../models/Position";
+    import {mapGetters} from 'vuex';
+
     export default {
         name: "PositionChip",
-        props: ['position'],
+        props: {
+            position: {
+                type: Position,
+                required: true
+            },
+        },
         computed: {
-            color: function() {
-                switch(this.position.sport_id) {
-                    case 1:
-                        return 'success';
-                    case 2:
-                        return 'warning';
-                    case 3:
-                        return 'primary';
-                    case 4:
-                    default:
-                        return 'error';
-                }
+            ...mapGetters([
+                '_sportByID'
+            ]),
+            color() {
+                let sport = this._sportByID(this.position.sportID);
+                return sport.color;
             }
         }
     }
