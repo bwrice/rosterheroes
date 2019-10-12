@@ -14,6 +14,7 @@ use App\Http\Controllers\ProvinceBorderController;
 use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\RaiseMeasurableController;
 use App\Http\Controllers\RosterHeroesController;
+use App\Http\Controllers\SportController;
 use App\Http\Controllers\SquadCurrentLocationController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TerritoryController;
@@ -29,6 +30,7 @@ use App\Http\Controllers\CampaignQuestController;
 use App\Http\Controllers\WeekGameController;
 use App\Http\Controllers\WeekPlayerSpiritController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,6 +74,7 @@ Route::prefix('v1')->group(function () {
     Route::get('/combat-positions', [CombatPositionController::class, 'index']);
     Route::get('/positions', [PositionController::class, 'index']);
     Route::get('/teams', [TeamController::class, 'index']);
+    Route::get('/sports', [SportController::class, 'index']);
 
     Route::middleware(['auth:api'])->group(function () {
 
