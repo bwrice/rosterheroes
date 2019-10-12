@@ -34,7 +34,7 @@ use Ramsey\Uuid\Uuid;
 class PlayerSpirit extends EventSourcedModel
 {
     public const ESSENCE_COST_PER_POINT = 400;
-    public const STARTING_ENERGY = 10000;
+    public const STARTING_ENERGY = 100;
     public const MAX_USAGE_BEFORE_ENERGY_ADJUSTMENT = 10;
     public const MIN_MAX_ENERGY_RATIO = 5;
 
