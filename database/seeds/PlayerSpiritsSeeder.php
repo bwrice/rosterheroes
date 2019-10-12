@@ -85,7 +85,7 @@ class PlayerSpiritsSeeder extends Seeder
         $player->positions()->attach($positionsToAttach->pluck('id')->toArray());
 
         $absoluteMinEnergy = PlayerSpirit::STARTING_ENERGY / PlayerSpirit::MIN_MAX_ENERGY_RATIO;
-        $absoluteMaxEnergy = PlayerSpirit::STARTING_ENERGY / PlayerSpirit::MIN_MAX_ENERGY_RATIO;
+        $absoluteMaxEnergy = PlayerSpirit::STARTING_ENERGY * PlayerSpirit::MIN_MAX_ENERGY_RATIO;
         $energy = random_int($absoluteMinEnergy, $absoluteMaxEnergy);
         /** @var PlayerSpirit $playerSpirit */
         $playerSpirit = factory(PlayerSpirit::class)->create([
