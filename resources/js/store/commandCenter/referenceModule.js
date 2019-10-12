@@ -4,6 +4,7 @@ import HeroRace from "../../models/HeroRace";
 import CombatPosition from "../../models/CombatPosition";
 import Position from "../../models/Position";
 import Team from "../../models/Team";
+import Sport from "../../models/Sport";
 
 export default {
 
@@ -13,6 +14,7 @@ export default {
         positions: [],
         combatPositions: [],
         teams: [],
+        sports: []
     },
 
     getters: {
@@ -30,6 +32,9 @@ export default {
         },
         _teams(state) {
             return state.teams;
+        },
+        _sports(state) {
+            return state.sports;
         },
         _heroClassByID: (state) => (heroClassID) => {
             let heroClass = state.heroClasses.find(function (heroClass) {
@@ -63,6 +68,10 @@ export default {
         _teamByID: (state) => (teamID) => {
             let team = state.teams.find(team => team.id === teamID);
             return team ? team : new Team({});
+        },
+        _sportByID: (state) => (sportID) => {
+            let sport = state.teams.find(sport => sport.id === sportID);
+            return sport ? sport : new Sport({});
         }
     },
     mutations: {
@@ -80,6 +89,9 @@ export default {
         },
         SET_TEAMS(state, payload) {
             state.teams = payload;
+        },
+        SET_SPORTS(state, payload) {
+            state.sports = payload;
         },
     },
 
@@ -138,6 +150,17 @@ export default {
                 commit('SET_TEAMS', teams);
             } catch (e) {
                 console.warn("Failed to update teams");
+            }
+        },
+        async updateSports({commit}) {
+            try {
+                let sportsResponse = await referenceApi.getSports();
+                let sports = sportsResponse.data.map(function (sport) {
+                    return new Sport(sport);
+                });
+                commit('SET_SPORTS', sports);
+            } catch (e) {
+                console.warn("Failed to update sports");
             }
         },
     }
