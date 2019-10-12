@@ -6,5 +6,5 @@ namespace App\Domain\Behaviors\Sports;
 
 class FootballBehavior extends SportBehavior
 {
-    protected $color = '#568f6b';
+    protected $color = '#3a9e5a';
 }
