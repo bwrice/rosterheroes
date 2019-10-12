@@ -24,7 +24,7 @@ class PlayerSpiritsSeeder extends Seeder
         /** @var PositionCollection $positions */
         $positions = Position::query()->with('sport')->get();
 
-        foreach(range(1,40) as $gameCount) {
+        foreach(range(1,60) as $gameCount) {
 
             /** @var League $league */
             $league = $leagues->random();
@@ -80,16 +80,20 @@ class PlayerSpiritsSeeder extends Seeder
 
         $mostValuablePosition = $positionsToAttach->sortByPositionValue()->first();
         $minEssenceCost = $mostValuablePosition->getMinimumEssenceCost();
-        $essenceCost = random_int($minEssenceCost, $minEssenceCost * 2.6);
+        $essenceCost = random_int($minEssenceCost, $minEssenceCost * 2.4);
 
         $player->positions()->attach($positionsToAttach->pluck('id')->toArray());
 
+        $absoluteMinEnergy = PlayerSpirit::STARTING_ENERGY / PlayerSpirit::MIN_MAX_ENERGY_RATIO;
+        $absoluteMaxEnergy = PlayerSpirit::STARTING_ENERGY / PlayerSpirit::MIN_MAX_ENERGY_RATIO;
+        $energy = random_int($absoluteMinEnergy, $absoluteMaxEnergy);
         /** @var PlayerSpirit $playerSpirit */
         $playerSpirit = factory(PlayerSpirit::class)->create([
             'week_id' => $week->id,
             'game_id' => $game->id,
             'player_id' => $player->id,
-            'essence_cost' => $essenceCost
+            'essence_cost' => $essenceCost,
+            'energy' => $energy
         ]);
     }
 }
