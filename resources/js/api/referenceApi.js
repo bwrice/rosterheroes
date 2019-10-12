@@ -23,3 +23,8 @@ export async function getTeams() {
     let response = await axios.get('/api/v1/teams');
     return response.data;
 }
+
+export async function getSports() {
+    let response = await axios.get('/api/v1/sports');
+    return response.data;
+}
