@@ -165,15 +165,15 @@ export default {
 
                 let heroResponse = await heroApi.addSpirit(payload.heroSlug, payload.spiritUuid);
                 let updatedHero = new Hero(heroResponse.data);
-                let updatedHeroes = _.cloneDeep(state.heroes);
+                let heroes = _.cloneDeep(state.heroes);
 
-                let index = updatedHeroes.findIndex(function (hero) {
+                let index = heroes.findIndex(function (hero) {
                     return hero.uuid === updatedHero.uuid;
                 });
 
                 if (index !== -1) {
-                    updatedHeroes.splice(index, 1, updatedHero);
-                    commit('SET_HEROES', updatedHeroes);
+                    heroes.splice(index, 1, updatedHero);
+                    commit('SET_HEROES', heroes);
                     dispatch('snackBarSuccess', {
                         text: updatedHero.playerSpirit.player.fullName + ' now embodies ' + updatedHero.name,
                         timeout: 3000
@@ -193,5 +193,43 @@ export default {
                 dispatch('snackBarError', snackBarPayload)
             }
         },
+
+        async removeSpiritFromHero({state, commit, dispatch}, payload) {
+            try {
+
+                let heroResponse = await heroApi.removeSpirit(payload.heroSlug, payload.spiritUuid);
+                let updatedHero = new Hero(heroResponse.data);
+                let heroes = _.cloneDeep(state.heroes);
+
+                let index = heroes.findIndex(function (hero) {
+                    return hero.uuid === updatedHero.uuid;
+                });
+
+                console.log("Here");
+                if (index !== -1) {
+                    heroes.splice(index, 1, updatedHero);
+                    commit('SET_HEROES', heroes);
+                    dispatch('snackBarSuccess', {
+                        text: updatedHero.name + ' saved',
+                        timeout: 1500
+                    })
+                } else {
+                    console.warn("Didn't update roster heroes when removing spirit");
+                }
+
+            } catch (e) {
+                let errors = e.response.data.errors;
+                let snackBarPayload = {};
+                if (errors && errors.roster) {
+
+                    console.log(errors.roster[0]);
+                    snackBarPayload = {
+                        text: errors.roster[0]
+                    }
+                }
+                dispatch('snackBarError', snackBarPayload)
+            }
+            console.log("Here Again");
+        }
     },
 };
