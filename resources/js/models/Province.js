@@ -1,7 +1,7 @@
 
 export default class Province {
 
-    constructor({uuid, name = '', slug = '', color = '', travelCost = 0, viewBox = {}, vectorPaths = '', continentID = 0, territoryID = 0, borderUuids = []}) {
+    constructor({uuid, name = '', slug = '', color = '', travelCost = 0, viewBox, vectorPaths = '', continentID = 0, territoryID = 0, borderUuids = []}) {
         this.uuid = uuid;
         this.name = name;
         this.slug = slug;
