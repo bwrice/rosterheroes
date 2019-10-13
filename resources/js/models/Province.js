@@ -13,4 +13,18 @@ export default class Province {
         this.territoryID = territoryID;
         this.borderUuids = borderUuids;
     }
+
+    goToRoute(router, route) {
+        router.push(this.getRoute(route));
+    }
+
+    getRoute(route) {
+        return {
+            name: 'explore-province',
+            params: {
+                squadSlug: route.params.squadSlug,
+                provinceSlug: this.slug
+            }
+        }
+    }
 }
