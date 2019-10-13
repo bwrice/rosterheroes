@@ -9,10 +9,10 @@ import TravelView from "../components/commandCenter/views/map/TravelView";
 import CommandCenter from "../views/CommandCenter";
 import SquadAppBarContent from "../components/commandCenter/appBarContent/SquadAppBarContent";
 
-export const mapRoutes = {
-    path: '/command-center/:squadSlug/map',
+export const realmRoutes = {
+    path: '/command-center/:squadSlug/realm',
     meta: {
-        footerButton: 'map'
+        footerButton: 'realm'
     },
     component: CommandCenter,
     children: [
@@ -26,7 +26,7 @@ export const mapRoutes = {
             component: MapMain,
             name: 'map-main',
             meta: {
-                footerButton: 'map'
+                footerButton: 'realm'
             }
         },
         {
@@ -38,7 +38,7 @@ export const mapRoutes = {
             },
             name: 'travel',
             meta: {
-                footerButton: 'map'
+                footerButton: 'realm'
             }
         },
         {
@@ -49,7 +49,7 @@ export const mapRoutes = {
                 appBarContent: SquadAppBarContent
             },
             meta: {
-                footerButton: 'map'
+                footerButton: 'realm'
             },
             children: [
                 {
@@ -57,7 +57,7 @@ export const mapRoutes = {
                     component: RealmView,
                     name: 'explore-realm',
                     meta: {
-                        footerButton: 'map'
+                        footerButton: 'realm'
                     }
                 },
                 {
@@ -65,7 +65,7 @@ export const mapRoutes = {
                     component: ContinentView,
                     name: 'explore-continent',
                     meta: {
-                        footerButton: 'map'
+                        footerButton: 'realm'
                     }
                 },
                 {
@@ -73,7 +73,7 @@ export const mapRoutes = {
                     component: TerritoryView,
                     name: 'explore-territory',
                     meta: {
-                        footerButton: 'map'
+                        footerButton: 'realm'
                     }
                 },
                 {
@@ -81,7 +81,7 @@ export const mapRoutes = {
                     component: ProvinceView,
                     name: 'explore-province',
                     meta: {
-                        footerButton: 'map'
+                        footerButton: 'realm'
                     }
                 }
             ]
