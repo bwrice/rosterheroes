@@ -26,14 +26,12 @@ class ProvinceResource extends JsonResource
             'name' => $this->name,
             'slug' => $this->slug,
             'color' => $this->color,
-            'travel_cost' => $this->travel_cost,
-            'view_box' => $this->getViewBox(),
-            'vector_paths' => $this->vector_paths,
-            'continent_id' => $this->continent_id,
-            'territory_id' => $this->territory_id,
-            'borderUuids' => $this->borders->toUuids(),
-            'continent' => new ContinentResource($this->whenLoaded('continent')),
-            'territory' => new TerritoryResource($this->whenLoaded('territory'))
+            'travelCost' => $this->travel_cost,
+            'viewBox' => $this->getViewBox(),
+            'vectorPaths' => $this->vector_paths,
+            'continentID' => $this->continent_id,
+            'territoryID' => $this->territory_id,
+            'borderUuids' => $this->borders->toUuids()
         ];
     }
 }
