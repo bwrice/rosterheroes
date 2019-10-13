@@ -28,19 +28,21 @@ export default {
             return state.realmMapMode;
         },
         _provincesByUuids: (state) => (uuids) => {
-            return state.provinces.filter(function (province) {
-                return uuids.includes(province.uuid);
-            });
+            return state.provinces.filter(province => uuids.includes(province.uuid));
         },
         _provincesByContinentID: (state) => (continentID) => {
-            return state.provinces.filter(function (province) {
-                return province.continentID === continentID;
-            });
+            return state.provinces.filter(province => province.continentID === continentID);
         },
         _provincesByTerritoryID: (state) => (territoryID) => {
-            return state.provinces.filter(function (province) {
-                return province.territoryID === territoryID;
-            });
+            return state.provinces.filter(province => province.territoryID === territoryID);
+        },
+        _continentBySlug: (state) => (slug) => {
+            let continent = state.continents.find(continent => continent.slug === slug);
+            return continent ? continent : new Continent({});
+        },
+        _territoryBySlug: (state) => (slug) => {
+            let territory = state.territories.find(territory => territory.slug === slug);
+            return territory ? territory : new Territory({});
         },
         _realmLoading(state) {
             return state.loading;
