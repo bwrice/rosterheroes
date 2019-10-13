@@ -1,5 +1,5 @@
 <template>
-    <ExploreMapCard :view-box="province.view_box">
+    <ExploreMapCard :view-box="province.viewBox">
         <!-- Borders -->
         <ProvinceVector
             v-for="(province, uuid) in borders"
@@ -16,11 +16,10 @@
 
 <script>
 
-    import {provinceNavigationMixin} from "../../../../../mixins/provinceNavigationMixin";
-    import {bordersMixin} from "../../../../../mixins/bordersMixin";
-
     import ProvinceVector from "../../../map/ProvinceVector";
     import ExploreMapCard from "../../../map/ExploreMapCard";
+
+    import {mapGetters} from 'vuex';
 
     export default {
         name: "ProvinceView",
@@ -29,28 +28,22 @@
             ProvinceVector
         },
 
-        mixins: [
-            provinceNavigationMixin,
-            bordersMixin
-        ],
+        methods: {
+            navigateToProvince(province) {
+                province.goToRoute(this.$router, this.$route);
+            },
+        },
 
         computed: {
+            ...mapGetters([
+                '_provinceBySlug',
+                '_provincesByUuids'
+            ]),
             province() {
-                let slug = this.$route.params.provinceSlug;
-                let province = this._provinces.find((province) => province.slug === slug);
-                if (province) {
-                    return province;
-                }
-                return {
-                    'slug': null,
-                    view_box: {
-                        'pan_x': 0,
-                        'pan_y': 0,
-                        'zoom_x': 315,
-                        'zoom_y': 240,
-                    },
-                    borders: []
-                };
+                return this._provinceBySlug(this.$route.params.provinceSlug);
+            },
+            borders() {
+                return this._provincesByUuids(this.province.borderUuids);
             }
         }
     }
