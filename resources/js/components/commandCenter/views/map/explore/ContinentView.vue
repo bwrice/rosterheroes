@@ -1,7 +1,7 @@
 <template>
-    <ExploreMapCard :view-box="continent.realm_view_box">
+    <ExploreMapCard :view-box="continent.realmViewBox">
         <ProvinceVector
-            v-for="(province, uuid) in provincesForContinent"
+            v-for="(province, uuid) in provinces"
             :key="uuid"
             :province="province"
             @provinceClicked="navigateToProvince"
@@ -13,11 +13,9 @@
 
     import {mapGetters} from 'vuex';
 
-    import {continentMixin} from '../../../../../mixins/continentMixin';
-    import {provinceNavigationMixin} from "../../../../../mixins/provinceNavigationMixin";
-
     import ProvinceVector from "../../../map/ProvinceVector";
     import ExploreMapCard from "../../../map/ExploreMapCard";
+    import Continent from "../../../../../models/Continent";
 
     export default {
         name: "ContinentView",
@@ -25,32 +23,25 @@
             ExploreMapCard,
             ProvinceVector
         },
-        mixins: [
-            continentMixin,
-            provinceNavigationMixin
-        ],
+
+        methods: {
+            navigateToProvince(province) {
+                province.goToRoute(this.$router, this.$route);
+            },
+        },
 
         computed: {
             ...mapGetters([
-                '_provinces',
-                '_continents'
+                '_continentBySlug',
+                '_provincesByContinentID'
             ]),
             continent() {
                 let slug = this.$route.params.continentSlug;
-                let continent = this._continents.find((continent) => continent.slug === slug);
-                if (continent) {
-                    return continent;
-                }
-                return {
-                    'name': '',
-                    'slug': null,
-                    'realm_view_box': {
-                        'pan_x': 0,
-                        'pan_y': 0,
-                        'zoom_x': 315,
-                        'zoom_y': 240
-                    }
-                };
+                let continent = this._continentBySlug(slug);
+                return continent ? continent : new Continent({});
+            },
+            provinces() {
+                return this._provincesByContinentID(this.continent.id);
             }
         }
     }

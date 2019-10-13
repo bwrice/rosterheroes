@@ -1,7 +1,7 @@
 <template>
-    <ExploreMapCard :view-box="territory.realm_view_box">
+    <ExploreMapCard :view-box="territory.realmViewBox">
         <ProvinceVector
-            v-for="(province, uuid) in provincesForTerritory"
+            v-for="(province, uuid) in provinces"
             :key="uuid"
             :province="province"
             @provinceClicked="navigateToProvince"
@@ -12,9 +12,6 @@
 <script>
 
     import {mapGetters} from 'vuex';
-
-    import {territoryMixin} from '../../../../../mixins/territoryMixin';
-    import {provinceNavigationMixin} from "../../../../../mixins/provinceNavigationMixin";
 
     import ProvinceVector from "../../../map/ProvinceVector";
     import ExploreMapCard from "../../../map/ExploreMapCard";
@@ -27,32 +24,22 @@
             ProvinceVector
         },
 
-        mixins: [
-            territoryMixin,
-            provinceNavigationMixin
-        ],
+        methods: {
+            navigateToProvince(province) {
+                province.goToRoute(this.$router, this.$route);
+            },
+        },
 
         computed: {
             ...mapGetters([
-                '_provinces',
-                '_territories'
+                '_territoryBySlug',
+                '_provincesByTerritoryID'
             ]),
             territory() {
-                let slug = this.$route.params.territorySlug;
-                let territory = this._territories.find((territory) => territory.slug === slug);
-                if (territory) {
-                    return territory;
-                }
-                return {
-                    'name': '',
-                    'slug': null,
-                    'realm_view_box': {
-                        'pan_x': 0,
-                        'pan_y': 0,
-                        'zoom_x': 315,
-                        'zoom_y': 240
-                    }
-                };
+                return this._territoryBySlug(this.$route.params.territorySlug);
+            },
+            provinces() {
+                return this._provincesByTerritoryID(this.territory.id);
             }
         }
     }

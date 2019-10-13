@@ -1,7 +1,7 @@
 <template>
     <g @mouseover="setHovered(true)" @mouseleave="setHovered(false)" @click="navigateToTerritory">
         <ProvinceVector
-                v-for="(province, uuid) in provincesForTerritory"
+                v-for="(province, uuid) in provinces"
                 :key="uuid"
                 :province="province"
                 :fill-color="fillColor"
@@ -14,7 +14,6 @@
 <script>
 
     import {mapGetters} from 'vuex';
-    import { territoryMixin } from '../../../mixins/territoryMixin';
     import ProvinceVector from "./ProvinceVector";
     import Territory from "../../../models/Territory";
 
@@ -39,7 +38,7 @@
                 this.hovered = hoveredState;
             },
             navigateToTerritory() {
-                this.$router.push(this.territoryRoute)
+                this.territory.goToRoute(this.$router, this.$route);
             }
         },
 
@@ -56,18 +55,9 @@
                 }
                 return 1;
             },
-            provincesForTerritory() {
+            provinces() {
                 return this._provincesByTerritoryID(this.territory.id);
             },
-            territoryRoute() {
-                return {
-                    name: 'explore-territory',
-                    params: {
-                        squadSlug: this._squad.slug,
-                        territorySlug: this.territory.slug
-                    }
-                }
-            }
         }
     }
 </script>
