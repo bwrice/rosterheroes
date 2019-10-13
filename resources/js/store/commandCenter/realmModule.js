@@ -44,6 +44,10 @@ export default {
             let territory = state.territories.find(territory => territory.slug === slug);
             return territory ? territory : new Territory({});
         },
+        _provinceBySlug: (state) => (slug) => {
+            let province = state.provinces.find(province => province.slug === slug);
+            return province ? province : new Province({});
+        },
         _realmLoading(state) {
             return state.loading;
         }
