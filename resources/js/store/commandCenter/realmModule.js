@@ -27,6 +27,11 @@ export default {
         _realmMapMode(state) {
             return state.realmMapMode;
         },
+        _provincesByUuids: (state) => (uuids) => {
+            return state.provinces.filter(function (province) {
+                return uuids.includes(province.uuid);
+            });
+        },
         _realmLoading(state) {
             return state.loading;
         }
