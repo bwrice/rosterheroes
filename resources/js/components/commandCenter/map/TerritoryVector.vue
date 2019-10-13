@@ -16,14 +16,17 @@
     import {mapGetters} from 'vuex';
     import { territoryMixin } from '../../../mixins/territoryMixin';
     import ProvinceVector from "./ProvinceVector";
+    import Territory from "../../../models/Territory";
 
     export default {
         name: "TerritoryVector",
         components: {ProvinceVector},
-        props: ['territory'],
-        mixins: [
-            territoryMixin
-        ],
+        props: {
+            territory: {
+                type: Territory,
+                required: true
+            }
+        },
 
         data: function() {
             return {
@@ -42,12 +45,10 @@
 
         computed: {
             ...mapGetters([
-                '_squad',
-                '_provinces',
-                '_territories'
+                '_provincesByTerritoryID'
             ]),
             fillColor() {
-                return this.territory.realm_color;
+                return this.territory.realmColor;
             },
             opacity() {
                 if (this.hovered) {
@@ -56,14 +57,7 @@
                 return 1;
             },
             provincesForTerritory() {
-                let territoryProvinces = [];
-                let self = this;
-                this._provinces.forEach(function(province) {
-                    if (province.territory_id === self.territory.id) {
-                        territoryProvinces.push(province);
-                    }
-                });
-                return territoryProvinces;
+                return this._provincesByTerritoryID(this.territory.id);
             },
             territoryRoute() {
                 return {

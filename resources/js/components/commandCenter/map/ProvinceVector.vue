@@ -1,6 +1,6 @@
 <template>
     <g
-        v-html="province.vector_paths"
+        v-html="province.vectorPaths"
         :fill="fill"
         :opacity="opacity"
         :stroke="stroke"

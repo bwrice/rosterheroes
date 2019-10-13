@@ -16,14 +16,20 @@
     import {mapGetters} from 'vuex';
     import { continentMixin } from '../../../mixins/continentMixin';
     import ProvinceVector from "./ProvinceVector";
+    import Continent from "../../../models/Continent";
 
     export default {
         name: "ContinentVector",
         components: {ProvinceVector},
-        props: ['continent'],
-        mixins: [
-            continentMixin
-        ],
+        props: {
+            continent: {
+                type: Continent,
+                required: true
+            }
+        },
+        // mixins: [
+        //     continentMixin
+        // ],
 
         data: function() {
             return {
@@ -42,18 +48,19 @@
 
         computed: {
             ...mapGetters([
-                '_provinces',
-                '_continents',
-                '_squad'
+                '_provincesByContinentID'
             ]),
             fillColor() {
-                return this.continent.realm_color;
+                return this.continent.realmColor;
+            },
+            provincesForContinent() {
+                return this._provincesByContinentID(this.continent.id);
             },
             continentRoute() {
                 return {
                     name: 'explore-continent',
                     params: {
-                        squadSlug: this._squad.slug,
+                        squadSlug: this.$route.params.squadSlug,
                         continentSlug: this.continent.slug
                     }
                 }
