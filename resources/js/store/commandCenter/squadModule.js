@@ -6,6 +6,7 @@ import Measurable from "../../models/Measurable";
 import MobileStorage from "../../models/MobileStorage";
 import SlotTransaction from "../../models/SlotTransaction";
 import Squad from "../../models/Squad";
+import CurrentLocation from "../../models/CurrentLocation";
 
 export default {
 
@@ -14,6 +15,7 @@ export default {
         heroes: [],
         mobileStorage: new MobileStorage({}),
         barracksLoading: true,
+        currentLocation: new CurrentLocation({})
     },
 
     getters: {
@@ -25,6 +27,9 @@ export default {
         },
         _mobileStorage(state) {
             return state.mobileStorage;
+        },
+        _currentLocation(state) {
+            return state.currentLocation;
         },
         _barracksLoading(state) {
             return state.barracksLoading;
@@ -64,6 +69,9 @@ export default {
         SET_BARRACKS_LOADING(state, payload) {
             state.barracksLoading = payload;
         },
+        SET_CURRENT_LOCATION(state, payload) {
+            state.currentLocation = payload;
+        }
     },
 
     actions: {
@@ -71,6 +79,16 @@ export default {
         async updateSquad({commit}, route) {
             let squadResponse = await squadApi.getSquad(route.params.squadSlug);
             commit('SET_SQUAD', new Squad(squadResponse.data));
+        },
+
+        async updateCurrentLocation({commit}, route) {
+            try {
+                let locationResponse = await squadApi.getCurrentLocation(route.params.squadSlug);
+                let currentLocation = new CurrentLocation(locationResponse.data);
+                commit('SET_CURRENT_LOCATION', currentLocation)
+            } catch (e) {
+                console.warn("Failed to update current location");
+            }
         },
 
         async updateBarracks({commit, dispatch}, route) {
