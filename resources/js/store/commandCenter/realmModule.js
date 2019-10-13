@@ -32,6 +32,16 @@ export default {
                 return uuids.includes(province.uuid);
             });
         },
+        _provincesByContinentID: (state) => (continentID) => {
+            return state.provinces.filter(function (province) {
+                return province.continentID === continentID;
+            });
+        },
+        _provincesByTerritoryID: (state) => (territoryID) => {
+            return state.provinces.filter(function (province) {
+                return province.territoryID === territoryID;
+            });
+        },
         _realmLoading(state) {
             return state.loading;
         }
@@ -79,7 +89,7 @@ export default {
         },
         async updateContinents({commit}) {
             try {
-                let continentsResponse = await realmApi.getProvinces();
+                let continentsResponse = await realmApi.getContinents();
                 let continents = continentsResponse.data.map(function (continent) {
                     return new Continent(continent);
                 });
