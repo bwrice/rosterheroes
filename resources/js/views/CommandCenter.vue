@@ -70,7 +70,9 @@
             this.updateBarracks(route);
             this.updateRoster(route);
             this.updateCurrentLocation(route);
-            this.setRealm();
+            this.updateProvinces();
+            this.updateTerritories();
+            this.updateContinents();
             this.updateHeroClasses();
             this.updateHeroRaces();
             this.updatePositions();
@@ -96,7 +98,9 @@
                 'setPlayerSpiritsPool',
                 'updatePlayerSpiritsPool',
                 'updateCurrentLocation',
-                'setRealm',
+                'updateProvinces',
+                'updateTerritories',
+                'updateContinents',
                 'updateHeroClasses',
                 'updateHeroRaces',
                 'updatePositions',

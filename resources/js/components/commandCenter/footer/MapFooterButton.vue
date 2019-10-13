@@ -32,7 +32,7 @@
         ],
         data: function() {
             return {
-                'name': 'map'
+                'name': 'realm'
             }
         },
     }

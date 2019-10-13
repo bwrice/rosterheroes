@@ -1,3 +1,4 @@
+import * as realmApi from '../../api/realmApi';
 import Province from "../../models/Province";
 import Territory from "../../models/Territory";
 import Continent from "../../models/Continent";
@@ -31,13 +32,13 @@ export default {
         }
     },
     mutations: {
-        UPDATE_PROVINCES(state, payload) {
+        SET_PROVINCES(state, payload) {
             state.provinces = payload;
         },
-        UPDATE_TERRITORIES(state, payload) {
+        SET_TERRITORIES(state, payload) {
             state.territories = payload;
         },
-        UPDATE_CONTINENTS(state, payload) {
+        SET_CONTINENTS(state, payload) {
             state.continents = payload;
         },
         SET_REALM_MAP_MODE(state, payload) {
@@ -49,16 +50,49 @@ export default {
     },
 
     actions: {
-        async setRealm({state, commit}) {
-            commit('SET_REALM_LOADING', true);
-            let provinces = await Province.$get();
-            commit('UPDATE_PROVINCES', provinces);
-            let territories = await Territory.$get();
-            commit('UPDATE_TERRITORIES', territories);
-            let continents = await Continent.$get();
-            commit('UPDATE_CONTINENTS', continents);
-            commit('SET_REALM_LOADING', false);
+        async updateProvinces({commit}) {
+            try {
+                let provinceResponse = await realmApi.getProvinces();
+                let provinces = provinceResponse.data.map(function (province) {
+                    return new Province(province);
+                });
+                commit('SET_PROVINCES', provinces);
+            } catch (e) {
+                console.warn("Failed to update provinces");
+            }
         },
+        async updateTerritories({commit}) {
+            try {
+                let territoriesResponse = await realmApi.getTerritories();
+                let territories = territoriesResponse.data.map(function (territory) {
+                    return new Territory(territory);
+                });
+                commit('SET_TERRITORIES', territories);
+            } catch (e) {
+                console.warn("Failed to update territories");
+            }
+        },
+        async updateContinents({commit}) {
+            try {
+                let continentsResponse = await realmApi.getProvinces();
+                let continents = continentsResponse.data.map(function (continent) {
+                    return new Continent(continent);
+                });
+                commit('SET_CONTINENTS', continents);
+            } catch (e) {
+                console.warn("Failed to update continents");
+            }
+        },
+        // async setRealm({state, commit}) {
+        //     commit('SET_REALM_LOADING', true);
+        //     let provinces = await ProvinceApiModel.$get();
+        //     commit('UPDATE_PROVINCES', provinces);
+        //     let territories = await TerritoryApiModel.$get();
+        //     commit('UPDATE_TERRITORIES', territories);
+        //     let continents = await ContinentApiModel.$get();
+        //     commit('UPDATE_CONTINENTS', continents);
+        //     commit('SET_REALM_LOADING', false);
+        // },
         setRealmMapMode({commit}, payload) {
             commit('SET_REALM_MAP_MODE', payload)
         },

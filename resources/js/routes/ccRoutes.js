@@ -1,13 +1,13 @@
 
 import {barracksRoutes} from "./barracksRoutes";
 import {rosterRoutes} from "./rosterRoutes";
-import {mapRoutes} from "./mapRoutes";
+import {realmRoutes} from "./realmRoutes";
 import {campaignRoutes} from "./campaignRoutes";
 import {nationRoutes} from "./nationRoutes";
 
 export const routes = [
     barracksRoutes,
-    mapRoutes,
+    realmRoutes,
     rosterRoutes,
     campaignRoutes,
     nationRoutes
