@@ -3,7 +3,7 @@
         <v-card>
             <v-row no-gutters>
                 <v-col cols="5" class="pa-1">
-                    <MapViewPort :tile="false" :view-box="_currentLocation.view_box">
+                    <MapViewPort :tile="false" :view-box="_currentLocation.viewBox">
 
                         <!-- Borders -->
                         <ProvinceVector
@@ -49,7 +49,7 @@
 
     import { mapGetters } from 'vuex';
 
-    import {bordersMixin} from "../../../../mixins/bordersMixin";
+    // import {bordersMixin} from "../../../../mixins/bordersMixin";
 
     import MapViewPort from "../../map/MapViewPort";
     import ProvinceVector from "../../map/ProvinceVector";
@@ -61,16 +61,20 @@
             MapViewPort
         },
 
-        mixins: [
-            bordersMixin
-        ],
+        // mixins: [
+        //     bordersMixin
+        // ],
 
         computed: {
             ...mapGetters([
-                '_currentLocation'
+                '_currentLocation',
+                '_provincesByUuids'
             ]),
             bordersCount() {
-                return this._currentLocation.borders.length;
+                return this._currentLocation.borderUuids.length;
+            },
+            borders() {
+                return this._provincesByUuids(this._currentLocation.borderUuids);
             },
             exploreRoute() {
                 return {
