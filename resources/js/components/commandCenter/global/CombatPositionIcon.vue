@@ -1,5 +1,5 @@
 <template>
-    <SvgIconSheet :svg="svg">
+    <SvgIconSheet :svg="svg" :elevation="elevation">
     </SvgIconSheet>
 </template>
 
@@ -18,6 +18,10 @@
             attackerMode: {
                 type: Boolean,
                 default: true
+            },
+            clickable: {
+                type: Boolean,
+                default: false
             }
         },
         computed: {
@@ -32,6 +36,9 @@
                     return this.combatPosition.attackerSVG;
                 }
                 return this.combatPosition.targetSVG;
+            },
+            elevation() {
+                return this.clickable ? 4 : undefined;
             }
         }
     }

@@ -1,5 +1,5 @@
 <template>
-    <v-sheet :color="color" class="svg-icon" :class="classesObject" v-html="svg">
+    <v-sheet :elevation="elevation" :color="color" class="svg-icon" :class="classesObject" v-html="svg">
         <!-- SVG rendered through v-html-->
     </v-sheet>
 </template>
@@ -22,6 +22,9 @@
             svg: {
                 type: String,
                 required: true
+            },
+            elevation: {
+                type: Number
             }
         }
     }
