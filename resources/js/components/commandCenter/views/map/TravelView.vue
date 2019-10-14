@@ -154,7 +154,6 @@
 
     import {viewBoxControlsMixin} from "../../../../mixins/viewBoxControlsMixin";
     import {travelMixin} from "../../../../mixins/travelMixin";
-    import {bordersMixin} from "../../../../mixins/bordersMixin";
 
     import MapViewPort from "../../map/MapViewPort";
     import ProvinceVector from "../../map/ProvinceVector";
@@ -173,11 +172,10 @@
         },
         mixins: [
             viewBoxControlsMixin,
-            travelMixin,
-            bordersMixin
+            travelMixin
         ],
         mounted() {
-            this.setViewBox(this._routePosition.view_box);
+            this.setViewBox(this._routePosition.viewBox);
         },
         data: function() {
             return {
@@ -186,7 +184,7 @@
         },
         watch: {
             _routePosition: function(newValue) {
-                this.setViewBox(newValue.view_box);
+                this.setViewBox(newValue.viewBox);
             }
         },
         methods: {
@@ -198,7 +196,7 @@
                 'removeLastRoutePosition',
                 'snackBarError',
                 'snackBarSuccess',
-                'confirmTravel'
+                'confirmTravel',
             ]),
             routeItemColor(province) {
                 if (province.uuid === this._routePosition.uuid) {
@@ -230,6 +228,7 @@
         computed: {
             ...mapGetters([
                 '_squad',
+                '_provincesByUuids'
             ]),
             oceanColor() {
                 return '#000000';
@@ -244,6 +243,9 @@
             // needed for borders mixin
             province() {
                 return this._routePosition;
+            },
+            borders() {
+                return this._provincesByUuids(this._routePosition.borderUuids);
             }
         }
     }

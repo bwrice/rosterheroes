@@ -28,8 +28,8 @@
         },
         computed: {
             travelCost() {
-                if (this.province.travel_cost) {
-                    return this.province.travel_cost
+                if (this.province.travelCost) {
+                    return this.province.travelCost
                 }
                 return 'free';
             }

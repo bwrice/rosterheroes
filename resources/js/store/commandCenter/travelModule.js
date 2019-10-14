@@ -1,4 +1,5 @@
 import * as squadApi from '../../api/squadApi';
+import CurrentLocation from "../../models/CurrentLocation";
 
 export default {
 
@@ -7,13 +8,14 @@ export default {
     },
 
     getters: {
-        _routePosition(state, getters, rootState) {
+        _routePosition(state, getters) {
             let length = state.travelRoute.length;
             if (length) {
                 // Return last element of route
                 return state.travelRoute[length - 1];
             } else {
-                return rootState.currentLocationModule.currentLocation;
+                // route empty, return current location
+                return getters._currentLocation;
             }
         },
         _travelRoute(state) {
@@ -24,7 +26,7 @@ export default {
         ADD_TO_TRAVEL_ROUTE(state, payload) {
             state.travelRoute.push(payload);
         },
-        CLEAR_TRAVEL_ROUTE(state, payload) {
+        CLEAR_TRAVEL_ROUTE(state) {
             state.travelRoute = [];
         },
         REMOVE_LAST_ROUTE_POSITION(state) {
@@ -60,9 +62,10 @@ export default {
 
             try {
 
-                let currentLocation = await squadApi.fastTravel(squadSlug, travelRoute);
-                dispatch('setCurrentLocation', currentLocation);
-                dispatch('clearTravelRoute');
+                let fastTravelResponse = await squadApi.fastTravel(squadSlug, travelRoute);
+                let currentLocation = new CurrentLocation(fastTravelResponse.data);
+                commit('SET_CURRENT_LOCATION', currentLocation);
+                commit('CLEAR_TRAVEL_ROUTE');
                 dispatch('updateSquad', payload.route);
                 dispatch('snackBarSuccess', {
                     'text': 'Welcome to ' + currentLocation.name,

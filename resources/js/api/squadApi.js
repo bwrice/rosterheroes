@@ -24,7 +24,7 @@ export async function fastTravel(squadSlug, provinces) {
     let response = await axios.post('/api/v1/squads/' + squadSlug + '/fast-travel', {
         travelRoute: provinces
     });
-    return response.data.data;
+    return response.data;
 }
 
 export async function getMobileStorage(squadSlug) {
