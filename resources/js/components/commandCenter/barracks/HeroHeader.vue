@@ -23,7 +23,12 @@
                     @combatPositionClicked="combatPositionDialog = true"
                 >
                 </CombatPositionIcon>
-                <v-dialog v-model="combatPositionDialog">
+                <v-dialog v-model="combatPositionDialog" max-width="600">
+                    <CombatPositionDialog
+                        @close="combatPositionDialog = false"
+                        :hero="hero"
+                    >
+                    </CombatPositionDialog>
                 </v-dialog>
             </v-col>
         </v-row>
@@ -37,12 +42,12 @@
     import PlayerSpiritSummaryPanel from "../global/PlayerSpiritSummaryPanel";
     import CombatPositionIcon from "../global/CombatPositionIcon";
     import AddSpiritRouterButton from "../global/AddSpiritRouterButton";
-
-    import {mapGetters} from 'vuex';
+    import CombatPositionDialog from "./CombatPositionDialog";
 
     export default {
         name: "HeroHeader",
         components: {
+            CombatPositionDialog,
             AddSpiritRouterButton,
             CombatPositionIcon,
             PlayerSpiritSummaryPanel,
