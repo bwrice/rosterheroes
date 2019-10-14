@@ -18,9 +18,9 @@ class CombatPosition extends Model
 {
     use HasUniqueNames;
 
-    public const FRONT_LINE = 'front-line';
-    public const BACK_LINE = 'back-line';
-    public const HIGH_GROUND = 'high-ground';
+    public const FRONT_LINE = 'Front Line';
+    public const BACK_LINE = 'Back Line';
+    public const HIGH_GROUND = 'High Ground';
 
     protected $guarded = [];
 
