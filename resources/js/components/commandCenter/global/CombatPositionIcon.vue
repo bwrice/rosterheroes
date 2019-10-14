@@ -1,5 +1,5 @@
 <template>
-    <SvgIconSheet :svg="svg" :elevation="elevation">
+    <SvgIconSheet :svg="svg" :clickable="clickable" @iconClicked="emitClicked">
     </SvgIconSheet>
 </template>
 
@@ -24,6 +24,11 @@
                 default: false
             }
         },
+        methods: {
+            emitClicked() {
+                this.$emit('combatPositionClicked');
+            }
+        },
         computed: {
             ...mapGetters([
                 '_combatPositionByID'
@@ -36,9 +41,6 @@
                     return this.combatPosition.attackerSVG;
                 }
                 return this.combatPosition.targetSVG;
-            },
-            elevation() {
-                return this.clickable ? 4 : undefined;
             }
         }
     }

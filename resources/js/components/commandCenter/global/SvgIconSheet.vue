@@ -1,5 +1,11 @@
 <template>
-    <v-sheet :elevation="elevation" :color="color" class="svg-icon" :class="classesObject" v-html="svg">
+    <v-sheet
+        :elevation="elevation"
+        :color="color"
+        class="svg-icon"
+        :class="classesObject"
+        @click="emitClicked"
+        v-html="svg">
         <!-- SVG rendered through v-html-->
     </v-sheet>
 </template>
@@ -23,8 +29,19 @@
                 type: String,
                 required: true
             },
-            elevation: {
-                type: Number
+            clickable: {
+                type: Boolean,
+                default: false
+            }
+        },
+        methods: {
+            emitClicked() {
+                this.$emit('iconClicked');
+            }
+        },
+        computed: {
+            elevation() {
+                return this.clickable ? 4 : undefined;
             }
         }
     }
