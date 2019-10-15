@@ -75,8 +75,17 @@ class Squad extends EventSourcedModel implements HasSlots, TravelsBorders
     public static function getMobileStorageResourceRelations()
     {
         return [
-            'slots.item.attacks',
-            'slots.item.enchantments',
+            'slots.slotType',
+            'slots.hasSlots',
+            'slots.item.itemType.itemBase',
+            'slots.item.material.materialType',
+            'slots.item.itemClass',
+            'slots.item.attacks.attackerPosition',
+            'slots.item.attacks.targetPosition',
+            'slots.item.attacks.targetPriority',
+            'slots.item.attacks.damageType',
+            'slots.item.enchantments.measurableBoosts.measurableType',
+            'slots.item.enchantments.measurableBoosts.booster',
             'mobileStorageRank'
         ];
     }
