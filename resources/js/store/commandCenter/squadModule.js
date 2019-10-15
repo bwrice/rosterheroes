@@ -184,32 +184,15 @@ export default {
 
                 let heroResponse = await heroApi.addSpirit(payload.heroSlug, payload.spiritUuid);
                 let updatedHero = new Hero(heroResponse.data);
-                let heroes = _.cloneDeep(state.heroes);
+                helpers.syncUpdatedHero(state, commit, updatedHero);
 
-                let index = heroes.findIndex(function (hero) {
-                    return hero.uuid === updatedHero.uuid;
-                });
-
-                if (index !== -1) {
-                    heroes.splice(index, 1, updatedHero);
-                    commit('SET_HEROES', heroes);
-                    dispatch('snackBarSuccess', {
-                        text: updatedHero.playerSpirit.player.fullName + ' now embodies ' + updatedHero.name,
-                        timeout: 3000
-                    })
-                } else {
-                    console.warn("Didn't update roster heroes when adding spirit");
-                }
+                dispatch('snackBarSuccess', {
+                    text: updatedHero.playerSpirit.player.fullName + ' now embodies ' + updatedHero.name,
+                    timeout: 3000
+                })
 
             } catch (e) {
-                let errors = e.response.data.errors;
-                let snackBarPayload = {};
-                if (errors && errors.roster) {
-                    snackBarPayload = {
-                        text: errors.roster[0]
-                    }
-                }
-                dispatch('snackBarError', snackBarPayload)
+                helpers.handleResponseErrors(e, 'roster', dispatch);
             }
         },
 
@@ -218,34 +201,15 @@ export default {
 
                 let heroResponse = await heroApi.removeSpirit(payload.heroSlug, payload.spiritUuid);
                 let updatedHero = new Hero(heroResponse.data);
-                let heroes = _.cloneDeep(state.heroes);
+                helpers.syncUpdatedHero(state, commit, updatedHero);
 
-                let index = heroes.findIndex(function (hero) {
-                    return hero.uuid === updatedHero.uuid;
-                });
-
-                if (index !== -1) {
-                    heroes.splice(index, 1, updatedHero);
-                    commit('SET_HEROES', heroes);
-                    dispatch('snackBarSuccess', {
-                        text: updatedHero.name + ' saved',
-                        timeout: 1500
-                    })
-                } else {
-                    console.warn("Didn't update roster heroes when removing spirit");
-                }
+                dispatch('snackBarSuccess', {
+                    text: 'Player spirit removed from ' + updatedHero.name,
+                    timeout: 1500
+                })
 
             } catch (e) {
-                let errors = e.response.data.errors;
-                let snackBarPayload = {};
-                if (errors && errors.roster) {
-
-                    console.log(errors.roster[0]);
-                    snackBarPayload = {
-                        text: errors.roster[0]
-                    }
-                }
-                dispatch('snackBarError', snackBarPayload)
+                helpers.handleResponseErrors(e, 'roster', dispatch);
             }
         },
 
@@ -256,6 +220,7 @@ export default {
                 let heroResponse = await heroApi.changeCombatPosition(heroSlug, combatPositionID);
                 let updatedHero = new Hero(heroResponse.data);
                 helpers.syncUpdatedHero(state, commit, updatedHero);
+
                 dispatch('snackBarSuccess', {
                     text: updatedHero.name + ' saved',
                     timeout: 1500
