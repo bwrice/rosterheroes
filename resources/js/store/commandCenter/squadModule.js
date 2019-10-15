@@ -33,7 +33,7 @@ export default {
             return state.currentLocation;
         },
         _barracksLoading(state) {
-            return state.barracksLoading;
+            return state.heroes.length <= 0;
         },
         _focusedHero: (state) => (route) => {
             let hero = state.heroes.find(hero => hero.slug === route.params.heroSlug);
@@ -92,17 +92,27 @@ export default {
             }
         },
 
-        async updateBarracks({commit, dispatch}, route) {
-            // TODO separate out API requests break "barracks loading" into separate props for heroes/wagon
-            let squadSlug = route.params.squadSlug;
-            let heroesResponse = await squadApi.getHeroes(squadSlug);
-            let heroes = heroesResponse.data.map(function (hero) {
-                return new Hero(hero);
-            });
-            commit('SET_HEROES', heroes);
-            let mobileStorageResponse = await squadApi.getMobileStorage(squadSlug);
-            commit('SET_MOBILE_STORAGE', new MobileStorage(mobileStorageResponse));
-            commit('SET_BARRACKS_LOADING', false);
+        async updateHeroes({commit}, route) {
+            try {
+                let squadSlug = route.params.squadSlug;
+                let heroesResponse = await squadApi.getHeroes(squadSlug);
+                let heroes = heroesResponse.data.map(function (hero) {
+                    return new Hero(hero);
+                });
+                commit('SET_HEROES', heroes);
+            } catch (e) {
+                console.warn("Failed to update heroes");
+            }
+        },
+
+        async updateMobileStorage({commit}, route) {
+            try {
+                let squadSlug = route.params.squadSlug;
+                let mobileStorageResponse = await squadApi.getMobileStorage(squadSlug);
+                commit('SET_MOBILE_STORAGE', new MobileStorage(mobileStorageResponse));
+            } catch (e) {
+                console.warn("Failed to update mobile storage");
+            }
         },
 
         async raiseHeroMeasurable({state, commit, dispatch}, payload) {

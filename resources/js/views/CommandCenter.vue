@@ -67,7 +67,8 @@
             let route = this.$route;
             this.updateSquad(route);
             this.updateCurrentWeek();
-            this.updateBarracks(route);
+            this.updateHeroes(route);
+            this.updateMobileStorage(route);
             this.updateRoster(route);
             this.updateCurrentLocation(route);
             this.updateProvinces();
@@ -93,7 +94,8 @@
                 'updateSquad',
                 'updateHero',
                 'updateCurrentWeek',
-                'updateBarracks',
+                'updateHeroes',
+                'updateMobileStorage',
                 'updateRoster',
                 'setPlayerSpiritsPool',
                 'updatePlayerSpiritsPool',
