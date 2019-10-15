@@ -22,7 +22,7 @@ export async function emptySlot(heroSlug, slotUuid) {
     let response = await axios.post('/api/v1/heroes/' + heroSlug + '/empty-slot', {
         slot: slotUuid
     });
-    return response.data.data;
+    return response.data;
 }
 
 export async function equipFromWagon({heroSlug, slotUuid, itemUuid}) {
