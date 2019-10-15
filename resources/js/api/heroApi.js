@@ -9,6 +9,13 @@ export async function removeSpirit(heroSlug, spiritUuid) {
     return response.data;
 }
 
+export async function changeCombatPosition(heroSlug, combatPositionID) {
+    let response = await axios.post('/api/v1/heroes/' + heroSlug + '/combat-position', {
+        position: combatPositionID
+    });
+    return response.data;
+}
+
 export async function emptySlot(heroSlug, slotUuid) {
     let response = await axios.post('/api/v1/heroes/' + heroSlug + '/empty-slots', {
         slots: [
