@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Domain\Actions\ChangeHeroCombatPositionAction;
+use App\Domain\Models\CombatPosition;
 use App\Domain\Models\Hero;
+use App\Exceptions\ChangeCombatPositionException;
+use App\Http\Resources\HeroResource;
 use App\Policies\HeroPolicy;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class HeroChangeCombatPositionController extends Controller
 {
@@ -14,6 +18,18 @@ class HeroChangeCombatPositionController extends Controller
         $hero = Hero::findSlugOrFail($heroSlug);
         $this->authorize(HeroPolicy::MANAGE, $hero);
 
+        /** @var CombatPosition $combatPosition */
+        $combatPosition = CombatPosition::query()->findOrFail($request->combat_position_id);
 
+        try {
+            $hero = $domainAction->execute($hero, $combatPosition);
+        } catch (ChangeCombatPositionException $exception) {
+
+            throw ValidationException::withMessages([
+                'combat-position' => $exception->getMessage()
+            ]);
+        }
+
+        return new HeroResource($hero->load(Hero::heroResourceRelations()));
     }
 }
