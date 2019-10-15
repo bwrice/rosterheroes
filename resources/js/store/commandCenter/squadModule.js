@@ -213,17 +213,18 @@ export default {
             }
         },
 
-        async changeHeroCombatPosition({state, commit, dispatch}, {heroSlug, combatPositionID}) {
+        async changeHeroCombatPosition({state, commit, dispatch, getters}, {heroSlug, combatPositionID}) {
 
             try {
 
                 let heroResponse = await heroApi.changeCombatPosition(heroSlug, combatPositionID);
                 let updatedHero = new Hero(heroResponse.data);
                 helpers.syncUpdatedHero(state, commit, updatedHero);
-
+                let combatPosition = getters._combatPositionByID(updatedHero.combatPositionID);
+                let text = updatedHero.name + ' fights from the ' + combatPosition.name + '!';
                 dispatch('snackBarSuccess', {
-                    text: updatedHero.name + ' saved',
-                    timeout: 1500
+                    text: text,
+                    timeout: 3000
                 })
 
             } catch (e) {
