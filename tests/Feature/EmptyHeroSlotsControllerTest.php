@@ -76,7 +76,7 @@ class EmptyHeroSlotsControllerTest extends TestCase
 
         Passport::actingAs($this->squad->user);
 
-        $response = $this->json('POST','api/v1/heroes/' . $this->hero->slug . '/empty-slots', [
+        $response = $this->json('POST','api/v1/heroes/' . $this->hero->slug . '/empty-slot', [
             'slot' => $slot->uuid
         ]);
 

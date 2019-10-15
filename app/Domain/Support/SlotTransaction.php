@@ -9,6 +9,11 @@ use App\Domain\Interfaces\HasSlots;
 use App\Domain\Models\Item;
 use Illuminate\Contracts\Support\Arrayable;
 
+/**
+ * Class SlotTransaction
+ * @package App\Domain\Support
+ * @deprecated
+ */
 class SlotTransaction implements Arrayable
 {
     public const TYPE_EMPTY = 'empty';

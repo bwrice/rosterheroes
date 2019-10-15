@@ -24,7 +24,6 @@ class EquipHeroController extends Controller
         $slot = Slot::findUuidOrFail($request->slot);
         $item = Item::findUuidOrFail($request->item);
 
-
         try {
             $slotTransactionGroup = DB::transaction(function () use ($domainAction, $hero, $slot, $item) {
                 return $domainAction->execute($hero, $slot, $item);

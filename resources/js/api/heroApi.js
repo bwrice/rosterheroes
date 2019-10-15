@@ -19,10 +19,8 @@ export async function changeCombatPosition(heroSlug, combatPositionID) {
 }
 
 export async function emptySlot(heroSlug, slotUuid) {
-    let response = await axios.post('/api/v1/heroes/' + heroSlug + '/empty-slots', {
-        slots: [
-            slotUuid
-        ]
+    let response = await axios.post('/api/v1/heroes/' + heroSlug + '/empty-slot', {
+        slot: slotUuid
     });
     return response.data.data;
 }
