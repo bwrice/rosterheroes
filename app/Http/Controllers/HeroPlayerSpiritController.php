@@ -17,7 +17,7 @@ class HeroPlayerSpiritController extends Controller
     public function store($heroSlug, Request $request, AddSpiritToHeroAction $action)
     {
         try {
-            $hero = $this->executeHeroSpiritAction($heroSlug, $request, $action);
+            $hero = $this->executeHeroSpiritAction($heroSlug, $request->spirit, $action);
             return new HeroResource($hero->fresh(Hero::heroResourceRelations()));
 
         } catch (HeroPlayerSpiritException $exception) {
@@ -28,10 +28,10 @@ class HeroPlayerSpiritController extends Controller
         }
     }
 
-    public function delete($heroSlug, Request $request, RemoveSpiritFromHeroAction $action)
+    public function delete($heroSlug, $spiritUuid, RemoveSpiritFromHeroAction $action)
     {
         try {
-            $hero = $this->executeHeroSpiritAction($heroSlug, $request, $action);
+            $hero = $this->executeHeroSpiritAction($heroSlug, $spiritUuid, $action);
             return new HeroResource($hero->fresh(Hero::heroResourceRelations()));
 
         } catch (HeroPlayerSpiritException $exception) {
@@ -44,15 +44,15 @@ class HeroPlayerSpiritController extends Controller
 
     /**
      * @param $heroSlug
-     * @param Request $request
+     * @param $spiritUuid
      * @param HeroSpiritAction $domainAction
      * @return Hero
      * @throws HeroPlayerSpiritException
      */
-    protected function executeHeroSpiritAction($heroSlug, Request $request, HeroSpiritAction $domainAction): Hero
+    protected function executeHeroSpiritAction($heroSlug, $spiritUuid, HeroSpiritAction $domainAction): Hero
     {
         $hero = Hero::findSlugOrFail($heroSlug);
-        $playerSpirit = PlayerSpirit::findUuidOrFail($request->spirit);
+        $playerSpirit = PlayerSpirit::findUuidOrFail($spiritUuid);
         return $domainAction->execute($hero, $playerSpirit);
     }
 }
