@@ -246,6 +246,44 @@ export default {
                 }
                 dispatch('snackBarError', snackBarPayload)
             }
+        },
+
+        async changeHeroCombatPosition({state, commit, dispatch}, {heroSlug, combatPositionID}) {
+
+            try {
+
+                let heroResponse = await heroApi.changeCombatPosition(heroSlug, combatPositionID);
+                let updatedHero = new Hero(heroResponse.data);
+                let heroes = _.cloneDeep(state.heroes);
+
+                let index = heroes.findIndex(function (hero) {
+                    return hero.uuid === updatedHero.uuid;
+                });
+
+                if (index !== -1) {
+                    heroes.splice(index, 1, updatedHero);
+                    commit('SET_HEROES', heroes);
+                    dispatch('snackBarSuccess', {
+                        text: updatedHero.name + ' saved',
+                        timeout: 1500
+                    })
+                } else {
+                    console.warn("Didn't update heroes when changing combat position");
+                }
+
+            } catch (e) {
+                let errors = e.response.data.errors;
+                let snackBarPayload = {};
+                if (errors && errors.roster) {
+
+                    console.log(errors.roster[0]);
+                    snackBarPayload = {
+                        text: errors.roster[0]
+                    }
+                }
+                dispatch('snackBarError', snackBarPayload)
+            }
         }
     },
+
 };
