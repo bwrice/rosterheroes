@@ -6,6 +6,7 @@ use App\Http\Controllers\EmptyHeroSlotsController;
 use App\Http\Controllers\EquipHeroController;
 use App\Http\Controllers\FastTravelController;
 use App\Http\Controllers\HeroClassController;
+use App\Http\Controllers\HeroChangeCombatPositionController;
 use App\Http\Controllers\HeroController;
 use App\Http\Controllers\HeroRaceController;
 use App\Http\Controllers\MobileStorageController;
@@ -114,6 +115,7 @@ Route::prefix('v1')->group(function () {
             Route::post('{heroSlug}/empty-slots', EmptyHeroSlotsController::class);
 
             Route::post('{heroSlug}/equip', EquipHeroController::class);
+            Route::post('{heroSlug}/combat-position', HeroChangeCombatPositionController::class);
         });
 
         Route::post('/campaign/{campaign}/quest/{questUuid}', [CampaignQuestController::class, 'store']);
