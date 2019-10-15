@@ -7,6 +7,7 @@ use App\Domain\Collections\SlotCollection;
 use App\Domain\Collections\SlotTransactionCollection;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Slot;
+use App\Domain\Support\SlotTransactionGroup;
 use App\Http\Resources\SlotTransactionResource;
 use App\Policies\HeroPolicy;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class EmptyHeroSlotsController extends Controller
      * @param $heroSlug
      * @param Request $request
      * @param EmptyHeroSlotAction $domainAction
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     * @return SlotTransactionGroup
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function __invoke($heroSlug, Request $request, EmptyHeroSlotAction $domainAction)
@@ -27,22 +28,12 @@ class EmptyHeroSlotsController extends Controller
         $hero = Hero::findSlugOrFail($heroSlug);
         $this->authorize(HeroPolicy::MANAGE, $hero);
 
-        $slots = new SlotCollection();
-        foreach($request->slots as $slotUuid) {
-            $singleSlot = Slot::findUuidOrFail($slotUuid);
-            $slots->push($singleSlot);
-        };
-
-        /** @var SlotTransactionCollection $slotTransactions */
-        $slotTransactions = DB::transaction(function () use ($hero, $slots, $domainAction) {
-            $slotTransactions = new SlotTransactionCollection();
-            $slots->each(function (Slot $slot) use ($hero, &$slotTransactions, $domainAction) {
-                $slotTransactions = $slotTransactions->merge($domainAction->execute($slot, $hero));
-            });
-            return $slotTransactions;
+        $slot = Slot::findUuidOrFail($request->slot);
+        /** @var SlotTransactionGroup $slotTransactionGroup */
+        $slotTransactionGroup = DB::transaction(function () use ($hero, $slot, $domainAction) {
+            return $domainAction->execute($slot, $hero);
         });
 
-        $slotTransactions->refresh();
-        return SlotTransactionResource::collection($slotTransactions);
+        return $slotTransactionGroup;
     }
 }
