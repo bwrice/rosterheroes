@@ -59,6 +59,7 @@ class ChangeHeroCombatPositionActionTest extends TestCase
             $this->domainAction->execute($this->hero, $this->combatPosition);
         } catch (ChangeCombatPositionException $exception) {
 
+            $this->assertEquals($exception->getCode(), ChangeCombatPositionException::CODE_WEEK_LOCKED);
             $this->assertNotEquals($this->hero->combat_position_id, $this->combatPosition->id);
             return;
         }
