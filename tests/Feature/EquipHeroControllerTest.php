@@ -110,96 +110,14 @@ class EquipHeroControllerTest extends TestCase
 
         $response->assertJson([
                 'data' => [
-                    [
-                        'type' => SlotTransaction::TYPE_EMPTY,
-                        'item' => [
-                            'uuid' => (string)$this->twoHandSword->uuid,
-                        ],
-                        'hasSlots' => [
-                            'uniqueIdentifier' => (string) $this->squad->uuid
-                        ],
+                    'hero' => [
+                        'uuid' => $this->hero->uuid
+                    ],
+                    'mobileStorage' => [
                         'slots' => [
-                            [
-                                //Assert 2 slots
-                            ],
-                            [
 
-                            ],
                         ]
-                    ],
-                    [
-                        'type' => SlotTransaction::TYPE_EMPTY,
-                        'item' => [
-                            'uuid' => (string)$this->shield->uuid,
-                        ],
-                        'hasSlots' => [
-                            'uniqueIdentifier' => (string) $this->hero->uuid
-                        ],
-                        'slots' => [
-                            [
-                                //Assert 1 slot
-                            ],
-                        ]
-                    ],
-                    [
-                        'type' => SlotTransaction::TYPE_FILL,
-                        'item' => [
-                            'uuid' => (string)$this->shield->uuid,
-                        ],
-                        'hasSlots' => [
-                            'uniqueIdentifier' => (string) $this->squad->uuid
-                        ],
-                        'slots' => [
-                            [
-                                //Assert 1 slot
-                            ],
-                        ]
-                    ],
-                    [
-                        'type' => SlotTransaction::TYPE_EMPTY,
-                        'item' => [
-                            'uuid' => (string)$this->mace->uuid,
-                        ],
-                        'hasSlots' => [
-                            'uniqueIdentifier' => (string) $this->hero->uuid
-                        ],
-                        'slots' => [
-                            [
-                                //Assert 1 slot
-                            ],
-                        ]
-                    ],
-                    [
-                        'type' => SlotTransaction::TYPE_FILL,
-                        'item' => [
-                            'uuid' => (string)$this->mace->uuid,
-                        ],
-                        'hasSlots' => [
-                            'uniqueIdentifier' => (string) $this->squad->uuid
-                        ],
-                        'slots' => [
-                            [
-                                //Assert 1 slot
-                            ],
-                        ]
-                    ],
-                    [
-                        'type' => SlotTransaction::TYPE_FILL,
-                        'item' => [
-                            'uuid' => (string)$this->twoHandSword->uuid,
-                        ],
-                        'hasSlots' => [
-                            'uniqueIdentifier' => (string) $this->hero->uuid
-                        ],
-                        'slots' => [
-                            [
-                                //Assert 2 slots
-                            ],
-                            [
-
-                            ],
-                        ]
-                    ],
+                    ]
                 ]
             ]);
     }

@@ -72,14 +72,12 @@ class EmptyHeroSlotsControllerTest extends TestCase
 
         $this->assertEquals(2, $heroSlotsToFill->count());
 
-        $slotsRequest = $heroSlotsToFill->take(1)->map(function (Slot $slot) {
-            return $slot->uuid;
-        })->values()->toArray();
+        $slot = $heroSlotsToFill->take(1)->first();
 
         Passport::actingAs($this->squad->user);
 
         $response = $this->json('POST','api/v1/heroes/' . $this->hero->slug . '/empty-slots', [
-            'slots' => $slotsRequest
+            'slot' => $slot->uuid
         ]);
 
         $response->assertStatus(200);
@@ -89,40 +87,12 @@ class EmptyHeroSlotsControllerTest extends TestCase
 
         $response->assertJson([
             'data' => [
-                [
-                    'type' => SlotTransaction::TYPE_EMPTY,
-                    'item' => [
-                        'uuid' => (string)$this->item->uuid,
-                    ],
-                    'hasSlots' => [
-                        'uniqueIdentifier' => (string) $this->hero->uuid
-                    ],
-                    'slots' => [
-                        [
-                            //Assert 2 slots
-                        ],
-                        [
-
-                        ],
-                    ]
+                'hero' => [
+                    'uuid' => $this->hero->uuid
                 ],
-                [
-                    'type' => SlotTransaction::TYPE_FILL,
-                    'item' => [
-                        'uuid' => (string)$this->item->uuid,
-                    ],
-                    'hasSlots' => [
-                        'uniqueIdentifier' => (string) $this->squad->uuid
-                    ],
-                    'slots' => [
-                        [
-                            //Assert 2 slots
-                        ],
-                        [
-
-                        ],
-                    ]
-                ],
+                'mobileStorage' => [
+                    'slots' => []
+                ]
             ]
         ]);
     }
