@@ -6,6 +6,7 @@ use App\Domain\Collections\AttackCollection;
 use App\Domain\Collections\EnchantmentCollection;
 use App\Domain\Behaviors\ItemBases\ItemBaseBehaviorInterface;
 use App\Domain\Interfaces\HasAttacks;
+use App\Domain\Interfaces\HasSlots;
 use App\Domain\Interfaces\UsesItems;
 use App\Domain\Models\Slot;
 use App\Domain\Collections\SlotCollection;
@@ -44,6 +45,9 @@ class Item extends EventSourcedModel implements Slottable, HasAttacks
 
     /** @var UsesItems|null */
     protected $usesItems;
+
+    /** @var HasSlots|null */
+    protected $hasSlots;
 
     /**
      * @return BelongsToMany
@@ -149,11 +153,17 @@ class Item extends EventSourcedModel implements Slottable, HasAttacks
         if ($this->usesItems) {
             return $this->usesItems;
         }
+
+        if ($this->hasSlots) {
+            return $this->hasSlots instanceof  UsesItems ? $this->hasSlots : null;
+        }
+
         /** @var Slot $slot */
         $slot = $this->slots->first();
         if (! $slot) {
             return null;
         }
+
         return $slot->hasSlots instanceof UsesItems ? $slot->hasSlots : null;
     }
 
@@ -203,6 +213,16 @@ class Item extends EventSourcedModel implements Slottable, HasAttacks
     public function setUsesItems(?UsesItems $usesItems): Item
     {
         $this->usesItems = $usesItems;
+        return $this;
+    }
+
+    /**
+     * @param HasSlots|null $hasSlots
+     * @return Item
+     */
+    public function setHasSlots(?HasSlots $hasSlots): Item
+    {
+        $this->hasSlots = $hasSlots;
         return $this;
     }
 }

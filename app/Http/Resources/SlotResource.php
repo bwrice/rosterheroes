@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Domain\Interfaces\HasSlots;
 use App\Domain\Interfaces\UsesItems;
 use App\Domain\Models\Item;
 use App\Domain\Models\Slot;
@@ -28,7 +29,7 @@ class SlotResource extends JsonResource
     {
         return [
             'uuid' => $this->uuid,
-            'item' => (new ItemResource($this->item))->setUsesItems($this->usesItems),
+            'item' => (new ItemResource($this->item))->setUsesItems($this->usesItems)->setHasSlots($this->hasSlots),
             'slotType' => new SlotTypeResource($this->slotType)
         ];
     }
