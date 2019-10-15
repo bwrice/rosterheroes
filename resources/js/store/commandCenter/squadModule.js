@@ -262,18 +262,7 @@ export default {
                 })
 
             } catch (e) {
-                let snackBarPayload = {};
-                if (e.response) {
-                    let errors = e.response.data.errors;
-                    if (errors && errors.roster) {
-
-                        console.log(errors.roster[0]);
-                        snackBarPayload = {
-                            text: errors.roster[0]
-                        }
-                    }
-                }
-                dispatch('snackBarError', snackBarPayload)
+                helpers.handleResponseErrors(e, 'combatPosition', dispatch);
             }
         }
     },

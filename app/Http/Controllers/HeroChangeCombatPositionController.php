@@ -26,7 +26,7 @@ class HeroChangeCombatPositionController extends Controller
         } catch (ChangeCombatPositionException $exception) {
 
             throw ValidationException::withMessages([
-                'combat-position' => $exception->getMessage()
+                'combatPosition' => $exception->getMessage()
             ]);
         }
 
