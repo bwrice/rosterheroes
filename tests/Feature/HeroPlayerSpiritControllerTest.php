@@ -65,7 +65,9 @@ class HeroPlayerSpiritControllerTest extends TestCase
 
         Passport::actingAs($heroPost->squad->user);
 
-        $response = $this->json('POST', 'api/v1/heroes/'. $hero->slug . '/player-spirit/' . $playerSpirit->uuid);
+        $response = $this->json('POST', 'api/v1/heroes/'. $hero->slug . '/player-spirit', [
+            'spirit' => $playerSpirit->uuid
+        ]);
         $this->assertEquals(200, $response->getStatusCode());
 
         $hero = $hero->fresh();
@@ -148,7 +150,9 @@ class HeroPlayerSpiritControllerTest extends TestCase
 
         Passport::actingAs($heroPost->squad->user);
 
-        $response = $this->json('POST', 'api/v1/heroes/'. $hero->slug . '/player-spirit/' . $playerSpirit->uuid);
+        $response = $this->json('POST', 'api/v1/heroes/'. $hero->slug . '/player-spirit', [
+            'spirit' => $playerSpirit->uuid
+        ]);
         $this->assertEquals(200, $response->getStatusCode());
 
         $hero = $hero->fresh();
@@ -181,7 +185,10 @@ class HeroPlayerSpiritControllerTest extends TestCase
         // Mock 6 hours before everything locks
         CarbonImmutable::setTestNow(Week::current()->everything_locks_at->copy()->subHours(6));
 
-        $response = $this->json('DELETE', 'api/v1/heroes/'. $hero->slug . '/player-spirit/' . $playerSpirit->uuid);
+        $response = $this->json('DELETE', 'api/v1/heroes/'. $hero->slug . '/player-spirit', [
+            'spirit' => $playerSpirit->uuid
+        ]);
+
         $this->assertEquals(200, $response->getStatusCode());
 
         $hero = $hero->fresh();

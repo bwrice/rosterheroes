@@ -109,8 +109,8 @@ Route::prefix('v1')->group(function () {
 
             Route::get('{heroSlug}', [HeroController::class, 'show']);
 
-            Route::post('{heroSlug}/player-spirit/{playerSpiritUuid}', [HeroPlayerSpiritController::class, 'store']);
-            Route::delete('{heroSlug}/player-spirit/{playerSpiritUuid}', [HeroPlayerSpiritController::class, 'delete']);
+            Route::post('{heroSlug}/player-spirit', [HeroPlayerSpiritController::class, 'store']);
+            Route::delete('{heroSlug}/player-spirit', [HeroPlayerSpiritController::class, 'delete']);
 
             Route::post('{heroSlug}/empty-slots', EmptyHeroSlotsController::class);
 

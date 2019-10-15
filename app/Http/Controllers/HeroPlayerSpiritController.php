@@ -9,15 +9,15 @@ use App\Exceptions\HeroPlayerSpiritException;
 use App\Domain\Models\Hero;
 use App\Domain\Models\PlayerSpirit;
 use App\Http\Resources\HeroResource;
-use App\Http\Resources\SquadCreationHeroResource;
+use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 class HeroPlayerSpiritController extends Controller
 {
-    public function store($heroSlug, $playerSpiritUuid, AddSpiritToHeroAction $action)
+    public function store($heroSlug, Request $request, AddSpiritToHeroAction $action)
     {
         try {
-            $hero = $this->executeHeroSpiritAction($heroSlug, $playerSpiritUuid, $action);
+            $hero = $this->executeHeroSpiritAction($heroSlug, $request, $action);
             return new HeroResource($hero->fresh(Hero::heroResourceRelations()));
 
         } catch (HeroPlayerSpiritException $exception) {
@@ -28,10 +28,10 @@ class HeroPlayerSpiritController extends Controller
         }
     }
 
-    public function delete($heroSlug, $playerSpiritUuid, RemoveSpiritFromHeroAction $action)
+    public function delete($heroSlug, Request $request, RemoveSpiritFromHeroAction $action)
     {
         try {
-            $hero = $this->executeHeroSpiritAction($heroSlug, $playerSpiritUuid, $action);
+            $hero = $this->executeHeroSpiritAction($heroSlug, $request, $action);
             return new HeroResource($hero->fresh(Hero::heroResourceRelations()));
 
         } catch (HeroPlayerSpiritException $exception) {
@@ -44,18 +44,15 @@ class HeroPlayerSpiritController extends Controller
 
     /**
      * @param $heroSlug
-     * @param $playerSpiritUuid
+     * @param Request $request
      * @param HeroSpiritAction $domainAction
      * @return Hero
      * @throws HeroPlayerSpiritException
      */
-    protected function executeHeroSpiritAction($heroSlug, $playerSpiritUuid, HeroSpiritAction $domainAction): Hero
+    protected function executeHeroSpiritAction($heroSlug, Request $request, HeroSpiritAction $domainAction): Hero
     {
         $hero = Hero::findSlugOrFail($heroSlug);
-        $playerSpirit = PlayerSpirit::findUuid($playerSpiritUuid);
-        if (! $playerSpirit) {
-            throw ValidationException::withMessages(['Player could not be found']);
-        }
+        $playerSpirit = PlayerSpirit::findUuidOrFail($request->spirit);
         return $domainAction->execute($hero, $playerSpirit);
     }
 }
