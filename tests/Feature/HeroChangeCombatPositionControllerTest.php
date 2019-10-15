@@ -73,7 +73,7 @@ class HeroChangeCombatPositionControllerTest extends TestCase
         Passport::actingAs($user);
         try {
             $this->json('POST', 'api/v1/heroes/' . $this->hero->slug . '/combat-position', [
-                'combat_position_id' => $this->combatPosition->id
+                'position' => $this->combatPosition->id
             ]);
         } catch (AuthorizationException $exception) {
 
@@ -92,7 +92,7 @@ class HeroChangeCombatPositionControllerTest extends TestCase
 
         Passport::actingAs($this->squad->user);
         $response = $this->json('POST', 'api/v1/heroes/' . $this->hero->slug . '/combat-position', [
-            'combat_position_id' => $this->combatPosition->id
+            'position' => $this->combatPosition->id
         ]);
 
         $hero = $this->hero->fresh();

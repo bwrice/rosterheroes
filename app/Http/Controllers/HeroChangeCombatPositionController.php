@@ -19,7 +19,7 @@ class HeroChangeCombatPositionController extends Controller
         $this->authorize(HeroPolicy::MANAGE, $hero);
 
         /** @var CombatPosition $combatPosition */
-        $combatPosition = CombatPosition::query()->findOrFail($request->combat_position_id);
+        $combatPosition = CombatPosition::query()->findOrFail($request->position);
 
         try {
             $hero = $domainAction->execute($hero, $combatPosition);
