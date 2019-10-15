@@ -21,7 +21,7 @@
             <v-col cols="12">
                 <v-row justify="center" align="center">
                     <v-btn color="error" class="mx-2" @click="emitClose">Cancel</v-btn>
-                    <v-btn :disabled="disabled" color="primary" class="mx-2">Change Position</v-btn>
+                    <v-btn :disabled="disabled" @click="changeCombatPosition" color="primary" class="mx-2">Change Position</v-btn>
                 </v-row>
             </v-col>
         </v-row>
@@ -32,6 +32,7 @@
     import Hero from "../../../models/Hero";
     import CombatPositionIcon from "../global/CombatPositionIcon";
     import {mapGetters} from 'vuex';
+    import {mapActions} from 'vuex';
 
     export default {
         name: "CombatPositionDialog",
@@ -47,12 +48,25 @@
         },
         data() {
             return {
-                selectedCombatPositionID: 0
+                selectedCombatPositionID: 0,
+                pending: false
             }
         },
         methods: {
+            ...mapActions([
+                'changeHeroCombatPosition'
+            ]),
             emitClose() {
                 this.$emit('close')
+            },
+            async changeCombatPosition() {
+                this.pending = true;
+                await this.changeHeroCombatPosition({
+                    heroSlug: this.hero.slug,
+                    combatPositionID: this.selectedCombatPositionID
+                });
+                this.pending = false;
+                this.emitClose();
             }
         },
         computed: {
@@ -61,7 +75,7 @@
                 '_combatPositionByID'
             ]),
             disabled() {
-                return this.hero.combatPositionID === this.selectedCombatPositionID;
+                return this.pending || (this.hero.combatPositionID === this.selectedCombatPositionID);
             },
         }
     }
