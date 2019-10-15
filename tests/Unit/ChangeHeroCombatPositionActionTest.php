@@ -65,4 +65,15 @@ class ChangeHeroCombatPositionActionTest extends TestCase
 
         $this->fail("Exception not thrown");
     }
+
+    /**
+     * @test
+     */
+    public function it_will_update_a_hero_combat_position()
+    {
+        $this->domainAction->execute($this->hero, $this->combatPosition);
+
+        $this->hero = $this->hero->fresh();
+        $this->assertEquals($this->hero->combat_position_id, $this->combatPosition->id);
+    }
 }
