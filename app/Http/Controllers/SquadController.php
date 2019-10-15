@@ -4,28 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Aggregates\SquadAggregate;
 use App\Domain\Actions\CreateSquadAction;
-use App\Domain\Actions\UpdateSquadSlotsAction;
-use App\Domain\Models\HeroPostType;
-use App\Domain\Models\SlotType;
 use App\Policies\SquadPolicy;
-use App\StorableEvents\HeroCreated;
-use App\StorableEvents\SquadCreated;
-use App\Domain\Models\Hero;
-use App\Domain\Models\HeroClass;
-use App\Domain\Models\HeroRace;
-use App\Domain\Models\HeroRank;
 use App\Http\Resources\SquadResource;
-use App\Domain\Models\Province;
 use App\Domain\Models\Squad;
-use App\Domain\Models\SquadRank;
-use App\Domain\Models\MobileStorageRank;
-use App\Domain\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Resources\SquadCreationHeroResource;
-use App\Http\Resources\HeroClassResource;
-use App\Http\Resources\HeroRaceResource;
-use Illuminate\Support\Str;
 
 class SquadController extends Controller
 {
