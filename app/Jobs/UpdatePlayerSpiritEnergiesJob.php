@@ -21,7 +21,7 @@ class UpdatePlayerSpiritEnergiesJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public const ENERGY_COEFFICIENT_CONSTANT = 2000;
+    public const ENERGY_COEFFICIENT_CONSTANT = PlayerSpirit::STARTING_ENERGY/5;
     public const ENERGY_COEFFICIENT_EXPONENT = .5;
 
     /**
