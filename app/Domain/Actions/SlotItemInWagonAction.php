@@ -10,6 +10,7 @@ use App\Domain\Interfaces\HasSlots;
 use App\Domain\Models\Item;
 use App\Domain\Models\Squad;
 use App\Domain\Support\SlotTransaction;
+use App\Domain\Support\SlotTransactionGroup;
 use Illuminate\Support\Collection;
 
 class SlotItemInWagonAction
@@ -20,43 +21,43 @@ class SlotItemInWagonAction
     /** @var Item */
     protected $item;
 
-    /** @var SlotTransactionCollection */
-    protected $slotTransactions;
+    /** @var SlotTransactionGroup */
+    protected $slotTransactionGroup;
 
-    public function execute(Squad $squad, Item $item, SlotTransactionCollection $slotTransactions = null)
+    public function execute(Squad $squad, Item $item, SlotTransactionGroup $slotTransactionGroup = null)
     {
-        $this->setProps($squad, $item, $slotTransactions);
+        $this->setProps($squad, $item, $slotTransactionGroup);
 
         if ($this->slotInWagon()) {
-            return $this->slotTransactions;
+            return $this->slotTransactionGroup;
         }
 
         if ($this->slotInStoreHouse()) {
-            return $this->slotTransactions;
+            return $this->slotTransactionGroup;
         }
 
         $this->slotInStash();
-        return $this->slotTransactions;
+        return $this->slotTransactionGroup;
     }
 
     /**
      * @param Squad $squad
      * @param Item $item
-     * @param SlotTransactionCollection $slotTransactions
+     * @param SlotTransactionGroup|null $slotTransactionGroup
      */
-    protected function setProps(Squad $squad, Item $item, SlotTransactionCollection $slotTransactions = null)
+    protected function setProps(Squad $squad, Item $item, SlotTransactionGroup $slotTransactionGroup = null)
     {
         $this->squad = $squad;
         $this->item = $item;
-        $this->slotTransactions = $slotTransactions ?: new SlotTransactionCollection();
+        $this->slotTransactionGroup = $slotTransactionGroup ?: new SlotTransactionGroup();
     }
-
-    protected function addTransaction(HasSlots $hasSlots, SlotCollection $slotsToFill)
-    {
-        $this->item->slots()->saveMany($slotsToFill);
-        $transaction = new SlotTransaction($slotsToFill->fresh(), $hasSlots, $this->item->fresh(), SlotTransaction::TYPE_FILL);
-        $this->slotTransactions->push($transaction);
-    }
+//
+//    protected function addTransaction(HasSlots $hasSlots, SlotCollection $slotsToFill)
+//    {
+//        $this->item->slots()->saveMany($slotsToFill);
+//        $transaction = new SlotTransaction($slotsToFill->fresh(), $hasSlots, $this->item->fresh(), SlotTransaction::TYPE_FILL);
+//        $this->slotTransactionGroup->push($transaction);
+//    }
 
     /**
      * @return bool
@@ -69,7 +70,8 @@ class SlotItemInWagonAction
             return false;
         }
         $slotsToFill = $emptySquadSlots->take($slotsNeeded);
-        $this->addTransaction($this->squad, $slotsToFill);
+        $this->item->slots()->saveMany($slotsToFill);
+        $this->slotTransactionGroup->setSquad($this->squad);
         return true;
     }
 
@@ -88,7 +90,8 @@ class SlotItemInWagonAction
             return false;
         }
         $slotsToFill = $emptyStoreHouseSlots->take($slotsNeeded);
-        $this->addTransaction($localStoreHouse, $slotsToFill);
+        $this->item->slots()->saveMany($slotsToFill);
+        $this->slotTransactionGroup->setStoreHouse($localStoreHouse);
         return true;
     }
 
@@ -96,7 +99,8 @@ class SlotItemInWagonAction
     {
         $stash = $this->squad->getLocalStash();
         $slotsNeeded = $this->item->getSlotsCount();
-        $slotToFill = $stash->getEmptySlots($slotsNeeded);
-        $this->addTransaction($stash, $slotToFill);
+        $slotsToFill = $stash->getEmptySlots($slotsNeeded);
+        $this->item->slots()->saveMany($slotsToFill);
+        $this->slotTransactionGroup->setStash($stash);
     }
 }
