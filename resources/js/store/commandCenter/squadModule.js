@@ -1,6 +1,7 @@
 import * as squadApi from '../../api/squadApi';
 import * as measurableApi from '../../api/measurableApi';
 import * as heroApi from '../../api/heroApi';
+import * as helpers from '../../helpers/vuexHelpers';
 import Hero from "../../models/Hero";
 import Measurable from "../../models/Measurable";
 import MobileStorage from "../../models/MobileStorage";
@@ -254,7 +255,7 @@ export default {
 
                 let heroResponse = await heroApi.changeCombatPosition(heroSlug, combatPositionID);
                 let updatedHero = new Hero(heroResponse.data);
-                syncUpdatedHero(state, commit, updatedHero);
+                helpers.syncUpdatedHero(state, commit, updatedHero);
                 dispatch('snackBarSuccess', {
                     text: updatedHero.name + ' saved',
                     timeout: 1500
@@ -277,16 +278,3 @@ export default {
         }
     },
 };
-
-function syncUpdatedHero(state, commit, updatedHero) {
-    let heroes = _.cloneDeep(state.heroes);
-
-    let index = heroes.findIndex(function (hero) {
-        return hero.uuid === updatedHero.uuid;
-    });
-    if (index === -1) {
-        throw new Error("Couldn't find matching Hero")
-    }
-    heroes.splice(index, 1, updatedHero);
-    commit('SET_HEROES', heroes);
-}
