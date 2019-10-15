@@ -11,3 +11,16 @@ export function syncUpdatedHero(state, commit, updatedHero) {
     heroes.splice(index, 1, updatedHero);
     commit('SET_HEROES', heroes);
 }
+
+export function handleResponseErrors(e, errorKey, dispatch) {
+    let snackBarPayload = {};
+    if (e.response) {
+        let errors = e.response.data.errors;
+        if (errors && errors[errorKey]) {
+            snackBarPayload = {
+                text: errors[errorKey][0]
+            }
+        }
+    }
+    dispatch('snackBarError', snackBarPayload)
+}
