@@ -24,8 +24,11 @@ class EquipHeroController extends Controller
         $slot = Slot::findUuidOrFail($request->slot);
         $item = Item::findUuidOrFail($request->item);
 
+
         try {
-            $slotTransactions = $domainAction->execute($hero, $slot, $item);
+            $slotTransactionGroup = DB::transaction(function () use ($domainAction, $hero, $slot, $item) {
+                return $domainAction->execute($hero, $slot, $item);
+            });
 
         } catch (SlottingException $exception) {
 
@@ -34,7 +37,6 @@ class EquipHeroController extends Controller
             ]);
         }
 
-        $slotTransactions->refresh();
-        return SlotTransactionResource::collection($slotTransactions);
+        return $slotTransactionGroup;
     }
 }
