@@ -10,6 +10,7 @@ use App\Domain\Models\Item;
 use App\Domain\Models\Slot;
 use App\Domain\Models\Squad;
 use App\Domain\Support\SlotTransaction;
+use App\Domain\Support\SlotTransactionGroup;
 use App\Exceptions\SlottingException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -29,8 +30,8 @@ class EmptyHeroSlotAction
     /** @var Squad */
     protected $squad;
 
-    /** @var SlotTransactionCollection */
-    protected $slotTransactions;
+    /** @var SlotTransactionGroup */
+    protected $slotTransactionGroup;
 
     /** @var SlotItemInWagonAction */
     protected $slotItemInWagonAction;
@@ -43,32 +44,32 @@ class EmptyHeroSlotAction
     /**
      * @param Slot $slot
      * @param Hero $hero
-     * @param SlotTransactionCollection|null $slotTransactions
-     * @return Collection
+     * @param SlotTransactionGroup|null $slotTransactionGroup
+     * @return SlotTransactionGroup
      */
-    public function execute(Slot $slot, Hero $hero, SlotTransactionCollection $slotTransactions = null)
+    public function execute(Slot $slot, Hero $hero, SlotTransactionGroup $slotTransactionGroup = null)
     {
-        $this->setProps($slot, $hero, $slotTransactions);
+        $this->setProps($slot, $hero, $slotTransactionGroup);
         $this->validate();
 
         DB::transaction(function () {
             $this->unEquipItem();
-            $this->slotTransactions = $this->slotItemInWagonAction->execute($this->squad, $this->item, $this->slotTransactions);
+            $this->slotTransactionGroup = $this->slotItemInWagonAction->execute($this->squad, $this->item, $this->slotTransactionGroup);
         });
 
-        return $this->slotTransactions;
+        return $this->slotTransactionGroup;
     }
 
     /**
      * @param Slot $slot
      * @param Hero $hero
-     * @param SlotTransactionCollection|null $slotTransactions
+     * @param SlotTransactionGroup|null $slotTransactionGroup
      */
-    protected function setProps(Slot $slot, Hero $hero, SlotTransactionCollection $slotTransactions = null)
+    protected function setProps(Slot $slot, Hero $hero, SlotTransactionGroup $slotTransactionGroup = null)
     {
         $this->slotToEmpty = $slot;
         $this->hero = $hero;
-        $this->slotTransactions = $slotTransactions ?: new SlotTransactionCollection();
+        $this->slotTransactionGroup = $slotTransactionGroup ?: new SlotTransactionGroup();
     }
 
     protected function validate()
@@ -93,7 +94,6 @@ class EmptyHeroSlotAction
         $filledSlots = $this->item->slots;
         $filledSlots->emptyItems();
 
-        $transaction = new SlotTransaction($filledSlots, $this->hero, $this->item, SlotTransaction::TYPE_EMPTY);
-        $this->slotTransactions->push($transaction);
+        $this->slotTransactionGroup->setHero($this->hero);
     }
 }

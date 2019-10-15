@@ -11,6 +11,7 @@ use App\Domain\Models\Item;
 use App\Domain\Models\Slot;
 use App\Domain\Models\Squad;
 use App\Domain\Support\SlotTransaction;
+use App\Domain\Support\SlotTransactionGroup;
 use App\Exceptions\SlottingException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -30,8 +31,8 @@ class EquipHeroSlotFromWagonAction
     /** @var Item */
     protected $itemToEquip;
 
-    /** @var SlotTransactionCollection */
-    protected $slotTransactions;
+    /** @var SlotTransactionGroup */
+    protected $slotTransactionGroup;
 
     /** @var Squad */
     protected $squad;
@@ -49,25 +50,25 @@ class EquipHeroSlotFromWagonAction
         $this->emptyHeroSlotAction = $emptyHeroSlotAction;
     }
 
-    public function execute(Hero $hero, Slot $slot, Item $item, SlotTransactionCollection $slotTransactions = null)
+    public function execute(Hero $hero, Slot $slot, Item $item, SlotTransactionGroup $slotTransactionGroup = null)
     {
-        $this->setProps($hero, $slot, $item, $slotTransactions);
+        $this->setProps($hero, $slot, $item, $slotTransactionGroup);
         $this->validate();
         DB::transaction(function () {
             $this->removeFromWagon();
             $this->equipHero();
         });
-        return $this->slotTransactions;
+        return $this->slotTransactionGroup;
     }
 
-    protected function setProps(Hero $hero, Slot $slot, Item $item, SlotTransactionCollection $slotTransactions = null)
+    protected function setProps(Hero $hero, Slot $slot, Item $item, SlotTransactionGroup $slotTransactionGroup = null)
     {
         $this->hero = $hero;
         $this->slotToFill = $slot;
         $this->itemToEquip = $item;
         $this->filledWagonSlots = $item->slots;
         $this->heroSlots = $hero->slots;
-        $this->slotTransactions = $slotTransactions ?: new SlotTransactionCollection();
+        $this->slotTransactionGroup = $slotTransactionGroup ?: new SlotTransactionGroup();
     }
 
     protected function validate()
@@ -91,8 +92,7 @@ class EquipHeroSlotFromWagonAction
     protected function removeFromWagon()
     {
         $this->filledWagonSlots->emptyItems();
-        $transaction = new SlotTransaction($this->filledWagonSlots, $this->squad, $this->itemToEquip->fresh(), SlotTransaction::TYPE_EMPTY);
-        $this->slotTransactions->push($transaction);
+        $this->slotTransactionGroup->setSquad($this->squad);
     }
 
     protected function equipHero()
@@ -117,14 +117,12 @@ class EquipHeroSlotFromWagonAction
         $heroSlotsToFill = $heroSlotsToFill->push($this->slotToFill);
         $heroSlotsToEmpty = $heroSlotsToFill->slotFilled()->uniqueByItem();
         $heroSlotsToEmpty->each(function (Slot $slot) {
-            $this->slotTransactions = $this->emptyHeroSlotAction->execute($slot, $this->hero, $this->slotTransactions);
+            $this->slotTransactionGroup = $this->emptyHeroSlotAction->execute($slot, $this->hero, $this->slotTransactionGroup);
         });
 
         $heroSlotsToFill = $heroSlotsToFill->fresh();
 
         $this->itemToEquip->slots()->saveMany($heroSlotsToFill);
-
-        $transaction = new SlotTransaction($heroSlotsToFill, $this->hero, $this->itemToEquip->fresh(), SlotTransaction::TYPE_FILL);
-        $this->slotTransactions->push($transaction);
+        $this->slotTransactionGroup->setHero($this->hero);
     }
 }
