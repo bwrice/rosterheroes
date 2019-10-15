@@ -72,6 +72,15 @@ class Squad extends EventSourcedModel implements HasSlots, TravelsBorders
 
     protected $guarded = [];
 
+    public static function getMobileStorageResourceRelations()
+    {
+        return [
+            'slots.item.attacks',
+            'slots.item.enchantments',
+            'mobileStorageRank'
+        ];
+    }
+
     /**
      * @return SquadAggregate
      */

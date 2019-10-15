@@ -13,11 +13,7 @@ class MobileStorageController extends Controller
     {
         $squad = Squad::findSlugOrFail($squadSlug);
         $this->authorize(SquadPolicy::MANAGE, $squad);
-        $squad->load([
-            'slots.item.attacks',
-            'slots.item.enchantments',
-            'mobileStorageRank'
-        ]);
+        $squad->load(Squad::getMobileStorageResourceRelations());
         return new MobileStorageResource($squad);
     }
 }
