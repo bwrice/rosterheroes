@@ -9,6 +9,7 @@ use App\Domain\Models\Hero;
 use App\Domain\Models\Item;
 use App\Domain\Models\Slot;
 use App\Domain\Models\Squad;
+use App\Domain\Models\Week;
 use App\Domain\Support\SlotTransaction;
 use App\Domain\Support\SlotTransactionGroup;
 use App\Exceptions\SlottingException;
@@ -49,6 +50,10 @@ class EmptyHeroSlotAction
      */
     public function execute(Slot $slot, Hero $hero, SlotTransactionGroup $slotTransactionGroup = null)
     {
+        if (! Week::current()->adventuringOpen()) {
+            throw new SlottingException($slot, $hero, null, "Week is currently locked for that action");
+        }
+
         $this->setProps($slot, $hero, $slotTransactionGroup);
         $this->validate();
 

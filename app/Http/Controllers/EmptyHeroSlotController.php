@@ -8,13 +8,15 @@ use App\Domain\Collections\SlotTransactionCollection;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Slot;
 use App\Domain\Support\SlotTransactionGroup;
+use App\Exceptions\SlottingException;
 use App\Http\Resources\SlotTransactionResource;
 use App\Policies\HeroPolicy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
-class EmptyHeroSlotsController extends Controller
+class EmptyHeroSlotController extends Controller
 {
     /**
      * @param $heroSlug
@@ -29,11 +31,18 @@ class EmptyHeroSlotsController extends Controller
         $this->authorize(HeroPolicy::MANAGE, $hero);
 
         $slot = Slot::findUuidOrFail($request->slot);
-        /** @var SlotTransactionGroup $slotTransactionGroup */
-        $slotTransactionGroup = DB::transaction(function () use ($hero, $slot, $domainAction) {
-            return $domainAction->execute($slot, $hero);
-        });
+        try {
+            /** @var SlotTransactionGroup $slotTransactionGroup */
+            $slotTransactionGroup = DB::transaction(function () use ($hero, $slot, $domainAction) {
+                return $domainAction->execute($slot, $hero);
+            });
 
+        } catch (SlottingException $exception) {
+
+            throw ValidationException::withMessages([
+                'equip' => $exception->getMessage()
+            ]);
+        }
         return $slotTransactionGroup;
     }
 }
