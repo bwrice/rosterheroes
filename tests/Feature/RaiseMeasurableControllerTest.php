@@ -40,12 +40,14 @@ class RaiseMeasurableControllerTest extends TestCase
         $measurable = $this->hero->measurables()->inRandomOrder()->first();
         Passport::actingAs($this->heroPost->squad->user);
 
-        $response = $this->json('GET', 'api/v1/measurables/' . $measurable->uuid . '/raise');
+        $queryVars = "?type=" . $measurable->measurableType->name;
+        $response = $this->json('GET', 'api/v1/heroes/' . $this->hero->slug . '/raise-measurable' . $queryVars);
         $response->assertStatus(200);
         $costOne = (int) $response->getContent();
         $this->assertGreaterThan(0, $costOne);
 
-        $response = $this->json('GET', 'api/v1/measurables/' . $measurable->uuid . '/raise?amount=5');
+        $queryVars = "?type=" . $measurable->measurableType->name . "&amount=5";
+        $response = $this->json('GET', 'api/v1/heroes/' . $this->hero->slug . '/raise-measurable' . $queryVars);
         $response->assertStatus(200);
         $costTwo = (int) $response->getContent();
         $this->assertGreaterThan($costOne, $costTwo);
@@ -68,7 +70,8 @@ class RaiseMeasurableControllerTest extends TestCase
 
         Passport::actingAs($this->heroPost->squad->user);
 
-        $response = $this->json('POST', 'api/v1/measurables/' . $measurable->uuid . '/raise', [
+        $response = $this->json('POST', 'api/v1/heroes/' . $this->hero->slug . '/raise-measurable', [
+            'type' => $measurable->measurableType->name,
             'amount' => $amount
         ]);
 
@@ -76,8 +79,7 @@ class RaiseMeasurableControllerTest extends TestCase
 
         $response->assertJson([
             'data' => [
-                'uuid' => $measurable->uuid,
-                'amountRaised' => $expectedAmountRaised
+                'uuid' => $this->hero->uuid
             ]
         ]);
 
@@ -102,7 +104,8 @@ class RaiseMeasurableControllerTest extends TestCase
         $user = factory(User::class)->create();
         Passport::actingAs($user);
 
-        $response = $this->json('POST', 'api/v1/measurables/' . $measurable->uuid . '/raise', [
+        $response = $this->json('POST', 'api/v1/heroes/' . $this->hero->slug . '/raise-measurable', [
+            'type' => $measurable->measurableType->name,
             'amount' => $amount
         ]);
 
