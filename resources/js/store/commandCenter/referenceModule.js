@@ -59,6 +59,12 @@ export default {
             });
             return measurableType ? measurableType : new MeasurableType({});
         },
+        _measurableTypeByName: (state) => (measurableTypeName) => {
+            let measurableType = state.measurableTypes.find(function (measurableType) {
+                return measurableType.name === measurableTypeName;
+            });
+            return measurableType ? measurableType : new MeasurableType({});
+        },
         _positionByID: (state) => (positionID) => {
             let position = state.positions.find(function (position) {
                 return position.id === positionID;
