@@ -39,9 +39,9 @@ export default {
             let hero = state.heroes.find(hero => hero.slug === route.params.heroSlug);
             return hero ? hero : new Hero({});
         },
-        _squadHighMeasurable: (state) => (measurableTypeName) => {
+        _squadHighMeasurable: (state) => (measurableTypeID) => {
             let measurableAmounts = state.heroes.map(function (hero) {
-                return hero.getMeasurableByType(measurableTypeName).buffedAmount;
+                return hero.getMeasurableByTypeID(measurableTypeID).buffedAmount;
             });
             return measurableAmounts.reduce(function(amountA, amountB) {
                 return Math.max(amountA, amountB);
