@@ -24,7 +24,7 @@ class MeasurableResource extends JsonResource
         return [
             'uuid' => $this->uuid,
             'amountRaised' => $this->amount_raised,
-            'measurableType' => new MeasurableTypeResource($this->measurableType),
+            'measurableTypeID' => $this->measurable_type_id,
             'costToRaise' => $this->getCostToRaise(),
             'preBuffedAmount' => $this->getPreBuffedAmount(),
             'buffedAmount' => $this->getBuffedAmount(),
