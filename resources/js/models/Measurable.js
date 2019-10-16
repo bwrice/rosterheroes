@@ -3,10 +3,10 @@ import MeasurableType from "./MeasurableType";
 
 export default class Measurable {
 
-    constructor({name = '', uuid, measurableType, amountRaised, costToRaise, preBuffedAmount, buffedAmount, spentOnRaising}) {
+    constructor({name = '', uuid, measurableTypeID = 0, amountRaised, costToRaise, preBuffedAmount, buffedAmount, spentOnRaising}) {
         this.name = name;
         this.uuid = uuid;
-        this.measurableType = measurableType ? new MeasurableType(measurableType) : new MeasurableType({});
+        this.measurableTypeID = measurableTypeID;
         this.amountRaised = amountRaised;
         this.costToRaise = costToRaise;
         this._buffedAmount = buffedAmount;
