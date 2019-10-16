@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTitansTable extends Migration
+class CreateMinionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,17 @@ class CreateTitansTable extends Migration
      */
     public function up()
     {
-        Schema::create('titans', function (Blueprint $table) {
+        Schema::create('minions', function (Blueprint $table) {
             $table->increments('id');
             $table->uuid('uuid');
             $table->string('name');
             $table->unsignedInteger('level');
+            $table->integer('combat_position_id')->unsigned();
             $table->timestamps();
+        });
+
+        Schema::table('minions', function (Blueprint $table) {
+            $table->foreign('combat_position_id')->references('id')->on('combat_positions');
         });
     }
 
@@ -29,6 +34,6 @@ class CreateTitansTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('titans');
+        Schema::dropIfExists('minions');
     }
 }
