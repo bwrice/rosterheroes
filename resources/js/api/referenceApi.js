@@ -9,6 +9,11 @@ export async function getHeroRaces() {
     return response.data;
 }
 
+export async function getMeasurableTypes() {
+    let response = await axios.get('/api/v1/measurable-types');
+    return response.data;
+}
+
 export async function getCombatPositions() {
     let response = await axios.get('/api/v1/combat-positions');
     return response.data;
