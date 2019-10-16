@@ -53,6 +53,12 @@ export default {
             });
             return heroRace ? heroRace : new HeroRace({});
         },
+        _measurableTypeByID: (state) => (measurableTypeID) => {
+            let measurableType = state.measurableTypes.find(function (measurableType) {
+                return measurableType.id === measurableTypeID;
+            });
+            return measurableType ? measurableType : new MeasurableType({});
+        },
         _positionByID: (state) => (positionID) => {
             let position = state.positions.find(function (position) {
                 return position.id === positionID;
@@ -87,7 +93,7 @@ export default {
             state.heroRaces = payload;
         },
         SET_MEASURABLE_TYPES(state, payload) {
-            state.measurable = payload;
+            state.measurableTypes = payload;
         },
         SET_POSITIONS(state, payload) {
             state.positions = payload;
