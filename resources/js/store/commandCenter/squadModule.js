@@ -115,32 +115,20 @@ export default {
             }
         },
 
-        async raiseHeroMeasurable({state, commit, dispatch}, payload) {
+        async raiseHeroMeasurable({state, commit, dispatch}, {heroSlug, measurableTypeName, raiseAmount}) {
 
             try {
-                let measurableResponse = await measurableApi.raise(payload.measurableUuid, payload.raiseAmount);
-                let updatedMeasurable = new Measurable(measurableResponse);
-                let updatedHeroes = _.cloneDeep(state.heroes);
-                let matchingHero = updatedHeroes.find(function (hero) {
-                    return payload.heroSlug === hero.slug;
-                });
+                let response = await heroApi.raiseMeasurable(heroSlug, measurableTypeName, raiseAmount);
+                let updatedHero = new Hero(response.data);
+                helpers.syncUpdatedHero(state, commit, updatedHero);
 
-                let measurableIndex = matchingHero.measurables.findIndex(function (measurable) {
-                    return measurable.uuid === updatedMeasurable.uuid;
-                });
-
-                matchingHero.measurables.splice(measurableIndex, 1, updatedMeasurable);
-
-                commit('SET_HEROES', updatedHeroes);
-
-                let text = updatedMeasurable.measurableType.name.toUpperCase() + ' raised to ' + updatedMeasurable.buffedAmount;
+                let text = measurableTypeName.toUpperCase() + ' raised';
                 dispatch('snackBarSuccess', {
                     text: text,
                     timeout: 3000
                 })
-
             } catch(e) {
-                dispatch('snackBarError', {});
+                helpers.handleResponseErrors(e, 'raiseMeasurable', dispatch);
             }
         },
 
@@ -211,7 +199,7 @@ export default {
 
                 dispatch('snackBarSuccess', {
                     text: 'Player spirit removed from ' + updatedHero.name,
-                    timeout: 1500
+                    timeout: 2000
                 })
 
             } catch (e) {

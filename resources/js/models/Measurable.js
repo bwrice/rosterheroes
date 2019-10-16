@@ -1,5 +1,3 @@
-import MaterialType from "./MaterialType";
-import MeasurableType from "./MeasurableType";
 
 export default class Measurable {
 
