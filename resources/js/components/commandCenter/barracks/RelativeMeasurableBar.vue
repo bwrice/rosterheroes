@@ -32,11 +32,11 @@
         },
         computed: {
             ...mapGetters([
-                '_squadHighMeasurable'
+                '_squadHighMeasurable',
+                '_measurableTypeByID'
             ]),
             progressBarValue() {
-                let measurableTypeName = this.measurable.measurableType.name;
-                let squadHighAmount = this._squadHighMeasurable(measurableTypeName);
+                let squadHighAmount = this._squadHighMeasurable(this.measurable.measurableTypeID);
                 if (! squadHighAmount) {
                     return 0;
                 }

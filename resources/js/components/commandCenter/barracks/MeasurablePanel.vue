@@ -83,20 +83,29 @@
 
 <script>
 
-    import * as measurableApi from '../../../api/measurableApi';
+    import * as heroApi from '../../../api/heroApi';
 
     import {barracksHeroMixin} from "../../../mixins/barracksHeroMixin";
 
     import {mapActions} from 'vuex';
+    import {mapGetters} from 'vuex';
+
     import Measurable from "../../../models/Measurable";
     import RelativeMeasurableBar from "./RelativeMeasurableBar";
+    import Hero from "../../../models/Hero";
 
     export default {
         name: "MeasurablePanel",
         components: {RelativeMeasurableBar},
         props: {
-            measurable: Measurable,
-            required: true
+            measurable: {
+                type: Measurable,
+                required: true
+            },
+            hero: {
+                type: Hero,
+                required: true
+            }
         },
         mixins: [
             barracksHeroMixin
@@ -147,7 +156,7 @@
                 if (this.measurableRaiseAmount <= 1) {
                     this.costToRaise = this.measurable.costToRaise;
                 } else if (! this.raiseInputHasErrors) {
-                    this.costToRaise = await measurableApi.getCostToRaise(this.measurable.uuid, this.measurableRaiseAmount);
+                    this.costToRaise = await heroApi.getCostToRaise(this.hero.slug, this.measurableType.name, this.measurableRaiseAmount);
                 } else {
                     this.costToRaise = "invalid input";
                 }
@@ -171,8 +180,14 @@
             }
         },
         computed: {
+            ...mapGetters([
+                '_measurableTypeByID'
+            ]),
+            measurableType() {
+                return this._measurableTypeByID(this.measurable.measurableTypeID);
+            },
             measurableName() {
-                return this.measurable.measurableType.name.toUpperCase();
+                return this.measurableType.name.toUpperCase();
             },
             raiseAmount() {
                 return parseInt(this.measurableRaiseAmount);

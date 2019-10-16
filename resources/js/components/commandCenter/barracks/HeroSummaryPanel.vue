@@ -91,16 +91,20 @@
         },
         computed: {
             ...mapGetters([
-                '_squadHighMeasurable'
+                '_squadHighMeasurable',
+                '_measurableTypeByName'
             ]),
             heroHealth() {
-                return this.hero.getMeasurableByType('health')
+                let measurableType = this._measurableTypeByName('health');
+                return this.hero.getMeasurableByTypeID(measurableType.id)
             },
             heroStamina() {
-                return this.hero.getMeasurableByType('stamina')
+                let measurableType = this._measurableTypeByName('stamina');
+                return this.hero.getMeasurableByTypeID(measurableType.id)
             },
             heroMana() {
-                return this.hero.getMeasurableByType('mana')
+                let measurableType = this._measurableTypeByName('mana');
+                return this.hero.getMeasurableByTypeID(measurableType.id)
             },
             barracksHeroRoute() {
                 let squadSlugParam = this.$route.params.squadSlug;

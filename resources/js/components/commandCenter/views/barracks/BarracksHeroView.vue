@@ -13,7 +13,7 @@
         <template v-slot:column-two>
             <v-row>
                 <v-col cols="12" class="pt-0">
-                    <HeroMeasurablesCard></HeroMeasurablesCard>
+                    <HeroMeasurablesCard :hero="hero"></HeroMeasurablesCard>
                 </v-col>
             </v-row>
         </template>
