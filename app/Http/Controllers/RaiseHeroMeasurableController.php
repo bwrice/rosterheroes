@@ -6,38 +6,42 @@ use App\Domain\Actions\RaiseMeasurableAction;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Measurable;
 use App\Exceptions\RaiseMeasurableException;
+use App\Http\Resources\HeroResource;
 use App\Http\Resources\MeasurableResource;
-use App\Policies\MeasurablePolicy;
+use App\Policies\HeroPolicy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
-class RaiseMeasurableController extends Controller
+class RaiseHeroMeasurableController extends Controller
 {
-    public function show($measurableUuid, Request $request)
+    public function show($heroSlug, Request $request)
     {
-        $measurable = Measurable::findUuidOrFail($measurableUuid);
+        $hero = Hero::findSlugOrFail($heroSlug);
+        $this->authorize(HeroPolicy::MANAGE, $hero);
+        $measurable = $hero->getMeasurable($request->type);
         $amount = (int) $request->get('amount');
         $amount = $amount && ($amount >= 1 && $amount <= 100) ? $amount : 1;
         return $measurable->getCostToRaise($amount);
     }
 
-    public function store($measurableUuid, Request $request, RaiseMeasurableAction $raiseMeasurableAction)
+    public function store($heroSlug, Request $request, RaiseMeasurableAction $raiseMeasurableAction)
     {
-        $measurable = Measurable::findUuidOrFail($measurableUuid);
-        $this->authorize(MeasurablePolicy::RAISE, $measurable);
-        $amount = (int) $request->get('amount');
+        $hero = Hero::findSlugOrFail($heroSlug);
+        $this->authorize(HeroPolicy::MANAGE, $hero);
+        $measurable = $hero->getMeasurable($request->post('type'));
+        $amount = (int) $request->post('amount');
         $amount = $amount && ($amount >= 1 && $amount <= 100) ? $amount : 1;
-        Log::debug($amount);
+
         try {
             $raiseMeasurableAction->execute($measurable, $amount);
 
         } catch (RaiseMeasurableException $exception) {
             throw ValidationException::withMessages([
-                'raise_measurable' => $exception->getMessage()
+                'raiseMeasurable' => $exception->getMessage()
             ]);
         }
 
-        return new MeasurableResource($measurable->fresh());
+        return new HeroResource($hero->fresh(Hero::heroResourceRelations()));
     }
 }
