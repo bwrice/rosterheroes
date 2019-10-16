@@ -149,21 +149,13 @@ export default {
         async equipHeroSlotFromWagon({state, commit, dispatch}, {heroSlug, slotUuid, itemUuid}) {
 
             try {
-                let transactionResponse = await heroApi.equipFromWagon({
-                    heroSlug,
-                    slotUuid,
-                    itemUuid
-                });
-                let slotTransactions = transactionResponse.map(function (transaction) {
-                    return new SlotTransaction(transaction);
-                });
-                slotTransactions.forEach(function (slotTransaction) {
-                    slotTransaction.syncSlots({
-                        state,
-                        commit,
-                        dispatch
-                    })
-                })
+                let response = await heroApi.equipFromWagon(heroSlug, slotUuid, itemUuid);
+                let updatedHero = new Hero(response.data.hero);
+                helpers.syncUpdatedHero(state, commit, updatedHero);
+                if (response.data.mobileStorage) {
+                    let updateMobileStorage = new MobileStorage(response.data.mobileStorage);
+                    commit('SET_MOBILE_STORAGE', updateMobileStorage);
+                }
             } catch (e) {
                 console.log(e);
                 dispatch('snackBarError', {})

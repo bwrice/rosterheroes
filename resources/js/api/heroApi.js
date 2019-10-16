@@ -25,12 +25,12 @@ export async function emptySlot(heroSlug, slotUuid) {
     return response.data;
 }
 
-export async function equipFromWagon({heroSlug, slotUuid, itemUuid}) {
+export async function equipFromWagon(heroSlug, slotUuid, itemUuid) {
     let response = await axios.post('/api/v1/heroes/' + heroSlug + '/equip', {
         slot: slotUuid,
         item: itemUuid
     });
-    return response.data.data;
+    return response.data;
 }
 
 export async function getCostToRaiseMeasurable(heroSlug, measurableType, raiseAmount) {
