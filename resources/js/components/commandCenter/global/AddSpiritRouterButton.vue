@@ -23,7 +23,7 @@
                 return {
                     name: 'roster-hero',
                     params: {
-                        heroSlug: this.heroSlug
+                        heroSlug: this.heroSlug ? this.heroSlug : 'slug' // needed for warning while hero loads
                     }
                 }
             }
