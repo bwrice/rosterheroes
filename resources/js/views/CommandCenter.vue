@@ -76,6 +76,7 @@
             this.updateContinents();
             this.updateHeroClasses();
             this.updateHeroRaces();
+            this.updateMeasurableTypes();
             this.updatePositions();
             this.updateCombatPositions();
             this.updatePlayerSpirits();
@@ -105,6 +106,7 @@
                 'updateContinents',
                 'updateHeroClasses',
                 'updateHeroRaces',
+                'updateMeasurableTypes',
                 'updatePositions',
                 'updateCombatPositions',
                 'updatePlayerSpirits',
