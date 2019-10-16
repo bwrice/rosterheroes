@@ -9,11 +9,12 @@ use App\Http\Controllers\HeroClassController;
 use App\Http\Controllers\HeroChangeCombatPositionController;
 use App\Http\Controllers\HeroController;
 use App\Http\Controllers\HeroRaceController;
+use App\Http\Controllers\MeasurableTypeController;
 use App\Http\Controllers\MobileStorageController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\ProvinceBorderController;
 use App\Http\Controllers\ProvinceController;
-use App\Http\Controllers\RaiseMeasurableController;
+use App\Http\Controllers\RaiseHeroMeasurableController;
 use App\Http\Controllers\RosterHeroesController;
 use App\Http\Controllers\SportController;
 use App\Http\Controllers\SquadCurrentLocationController;
@@ -71,6 +72,7 @@ Route::prefix('v1')->group(function () {
 
     Route::get('/hero-classes', [HeroClassController::class, 'index']);
     Route::get('/hero-races', [HeroRaceController::class, 'index']);
+    Route::get('/measurable-types', [MeasurableTypeController::class, 'index']);
 
     Route::get('/combat-positions', [CombatPositionController::class, 'index']);
     Route::get('/positions', [PositionController::class, 'index']);
@@ -116,13 +118,16 @@ Route::prefix('v1')->group(function () {
 
             Route::post('{heroSlug}/equip', EquipHeroController::class);
             Route::post('{heroSlug}/combat-position', HeroChangeCombatPositionController::class);
+
+            Route::get('{heroSlug}/raise-measurable', [RaiseHeroMeasurableController::class, 'show']);
+            Route::post('{heroSlug}/raise-measurable', [RaiseHeroMeasurableController::class, 'store']);
         });
 
         Route::post('/campaign/{campaign}/quest/{questUuid}', [CampaignQuestController::class, 'store']);
 
-        Route::prefix('measurables')->group(function () {
-            Route::get('/{measurableUuid}/raise', [RaiseMeasurableController::class, 'show']);
-            Route::post('/{measurableUuid}/raise', [RaiseMeasurableController::class, 'store']);
-        });
+//        Route::prefix('measurables')->group(function () {
+//            Route::get('/{measurableUuid}/raise', [RaiseHeroMeasurableController::class, 'show']);
+//            Route::post('/{measurableUuid}/raise', [RaiseHeroMeasurableController::class, 'store']);
+//        });
     });
 });
