@@ -25,7 +25,6 @@
                 :value="true"
                 :height="76"
                 fixed
-                color="#332b38"
                 app
         >
             <BarracksFooterButton></BarracksFooterButton>

@@ -156,7 +156,7 @@
                 if (this.measurableRaiseAmount <= 1) {
                     this.costToRaise = this.measurable.costToRaise;
                 } else if (! this.raiseInputHasErrors) {
-                    this.costToRaise = await heroApi.getCostToRaise(this.hero.slug, this.measurableType.name, this.measurableRaiseAmount);
+                    this.costToRaise = await heroApi.getCostToRaiseMeasurable(this.hero.slug, this.measurableType.name, this.measurableRaiseAmount);
                 } else {
                     this.costToRaise = "invalid input";
                 }
@@ -167,10 +167,10 @@
             },
             async raiseMeasurable() {
                 this.pendingMeasurableRaise = true;
-
+                let measurableType = this._measurableTypeByID(this.measurable.measurableTypeID);
                 await this.raiseHeroMeasurable({
                     heroSlug: this.$route.params.heroSlug,
-                    measurableUuid: this.measurable.uuid,
+                    measurableTypeName: measurableType.name,
                     raiseAmount: this.measurableRaiseAmount
                 });
 
