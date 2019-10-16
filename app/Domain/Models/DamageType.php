@@ -2,6 +2,7 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Behaviors\DamageTypes\DamageTypeBehavior;
 use App\Domain\Behaviors\DamageTypes\DamageTypeBehaviorFactory;
 use App\Domain\Behaviors\DamageTypes\DamageTypeBehaviorInterface;
 use App\Domain\Models\Traits\HasUniqueNames;
@@ -18,17 +19,17 @@ class DamageType extends Model
 {
     use HasUniqueNames;
 
-    public const SINGLE_TARGET = 'single-target';
+    public const FIXED_TARGET = 'Fixed Target';
     public const MULTI_TARGET = 'multi-target';
-    public const AREA_OF_EFFECT = 'area-of-effect';
-    public const DISPERSED = 'dispersed';
+    public const AREA_OF_EFFECT = 'Area of Effect';
+    public const DISPERSED = 'Dispersed';
 
     protected $guarded = [];
 
     /**
-     * @return DamageTypeBehaviorInterface
+     * @return DamageTypeBehavior
      */
-    public function getBehavior(): DamageTypeBehaviorInterface
+    public function getBehavior(): DamageTypeBehavior
     {
         /** @var DamageTypeBehaviorFactory $factory */
         $factory = app(DamageTypeBehaviorFactory::class);
