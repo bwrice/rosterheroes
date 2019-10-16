@@ -5,6 +5,7 @@ import CombatPosition from "../../models/CombatPosition";
 import Position from "../../models/Position";
 import Team from "../../models/Team";
 import Sport from "../../models/Sport";
+import MeasurableType from "../../models/MeasurableType";
 
 export default {
 
@@ -14,7 +15,8 @@ export default {
         positions: [],
         combatPositions: [],
         teams: [],
-        sports: []
+        sports: [],
+        measurableTypes: []
     },
 
     getters: {
@@ -23,6 +25,9 @@ export default {
         },
         _heroRaces(state) {
             return state.heroRaces;
+        },
+        _measurableTypes(state) {
+            return state.measurableTypes;
         },
         _positions(state) {
             return state.positions;
@@ -81,6 +86,9 @@ export default {
         SET_HERO_RACES(state, payload) {
             state.heroRaces = payload;
         },
+        SET_MEASURABLE_TYPES(state, payload) {
+            state.measurable = payload;
+        },
         SET_POSITIONS(state, payload) {
             state.positions = payload;
         },
@@ -116,6 +124,17 @@ export default {
                 commit('SET_HERO_RACES', heroRaces);
             } catch (e) {
                 console.warn("Failed to update hero races");
+            }
+        },
+        async updateMeasurableTypes({commit}) {
+            try {
+                let response = await referenceApi.getMeasurableTypes();
+                let measurableTypes = response.data.map(function (measurableType) {
+                    return new MeasurableType(measurableType);
+                });
+                commit('SET_MEASURABLE_TYPES', measurableTypes);
+            } catch (e) {
+                console.warn("Failed to update measurable types");
             }
         },
         async updatePositions({commit}) {
