@@ -32,3 +32,13 @@ export async function equipFromWagon({heroSlug, slotUuid, itemUuid}) {
     });
     return response.data.data;
 }
+
+export async function getCostToRaise(heroSlug, measurableType, raiseAmount) {
+    let response = await axios.get('/api/v1/heroes/' + heroSlug + '/raise-measurable', {
+        params: {
+            type: measurableType,
+            amount: raiseAmount
+        }
+    });
+    return response.data;
+}
