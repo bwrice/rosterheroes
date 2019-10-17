@@ -2,6 +2,7 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Behaviors\TargetRanges\CombatPositionBehavior;
 use App\Domain\Behaviors\TargetRanges\CombatPositionBehaviorFactory;
 use App\Domain\Behaviors\TargetRanges\CombatPositionBehaviorInterface;
 use App\Domain\Models\Traits\HasUniqueNames;
@@ -25,9 +26,9 @@ class CombatPosition extends Model
     protected $guarded = [];
 
     /**
-     * @return CombatPositionBehaviorInterface
+     * @return CombatPositionBehavior
      */
-    public function getBehavior(): CombatPositionBehaviorInterface
+    public function getBehavior(): CombatPositionBehavior
     {
         /** @var CombatPositionBehaviorFactory $factory */
         $factory = app(CombatPositionBehaviorFactory::class);

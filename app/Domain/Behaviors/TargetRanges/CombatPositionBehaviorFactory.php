@@ -9,7 +9,7 @@ use App\Exceptions\UnknownBehaviorException;
 
 class CombatPositionBehaviorFactory
 {
-    public function getBehavior(string $combatPositionName): CombatPositionBehaviorInterface
+    public function getBehavior(string $combatPositionName): CombatPositionBehavior
     {
         switch ($combatPositionName) {
             case CombatPosition::FRONT_LINE:
@@ -20,6 +20,6 @@ class CombatPositionBehaviorFactory
                 return app(HighGroundBehavior::class);
         }
 
-        throw new UnknownBehaviorException($combatPositionName, CombatPositionBehaviorInterface::class);
+        throw new UnknownBehaviorException($combatPositionName, CombatPositionBehavior::class);
     }
 }

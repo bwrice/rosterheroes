@@ -4,7 +4,7 @@
 namespace App\Domain\Behaviors\TargetRanges;
 
 
-abstract class CombatPositionBehavior implements CombatPositionBehaviorInterface
+abstract class CombatPositionBehavior
 {
     public function getSVG($attacker = true): string
     {
@@ -15,4 +15,10 @@ abstract class CombatPositionBehavior implements CombatPositionBehaviorInterface
     abstract public function getAttackerSVG(): string;
 
     abstract public function getTargetSVG(): string;
+
+    abstract public function getBaseDamageBonus(): float;
+
+    abstract public function getCombatSpeedBonus(): float;
+
+    abstract public function getDamageMultiplierBonus(): float;
 }
