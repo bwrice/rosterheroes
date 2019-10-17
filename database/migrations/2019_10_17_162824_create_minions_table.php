@@ -18,11 +18,16 @@ class CreateMinionsTable extends Migration
             $table->uuid('uuid');
             $table->string('name');
             $table->unsignedInteger('level');
+            $table->smallInteger('damage_rating');
+            $table->smallInteger('health_rating');
+            $table->smallInteger('protection_rating');
+            $table->integer('enemy_type_id')->unsigned();
             $table->integer('combat_position_id')->unsigned();
             $table->timestamps();
         });
 
         Schema::table('minions', function (Blueprint $table) {
+            $table->foreign('enemy_type_id')->references('id')->on('enemy_types');
             $table->foreign('combat_position_id')->references('id')->on('combat_positions');
         });
     }
