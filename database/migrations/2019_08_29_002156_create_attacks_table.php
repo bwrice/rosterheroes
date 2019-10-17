@@ -23,7 +23,8 @@ class CreateAttacksTable extends Migration
             $table->integer('grade')->unsigned();
             $table->float('speed_rating');
             $table->float('base_damage_rating');
-            $table->float('damage_modifier_rating');
+            $table->float('damage_multiplier_rating');
+            $table->integer('fixed_target_count');
             $table->json('resource_costs');
             $table->json('requirements');
             $table->timestamps();

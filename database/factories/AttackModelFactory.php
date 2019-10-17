@@ -22,7 +22,8 @@ $factory->define(\App\Domain\Models\Attack::class, function (Faker $faker) {
         'grade' => 50,
         'speed_rating' => 50,
         'base_damage_rating' => 50,
-        'damage_modifier_rating' => 50,
+        'damage_multiplier_rating' => 50,
+        'fixed_target_count' => 1,
         'resource_costs' => json_encode([]),
         'requirements' => json_encode([])
     ];

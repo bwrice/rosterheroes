@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class SeedAttacksForItems extends Migration
+class SeedAttacks extends Migration
 {
     /**
      * Run the migrations.
@@ -23,14 +23,15 @@ class SeedAttacksForItems extends Migration
         $attacks = [
             [
                 'name' => Attack::BASIC_BLADE_ATTACK_NAME, // Slash
-                'damage_type' => DamageType::SINGLE_TARGET,
+                'damage_type' => DamageType::FIXED_TARGET,
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
+                'fixed_target_count' => 1,
                 'grade' => 5,
                 'speed_rating' => 100/12,
                 'base_damage_rating' => 5.5,
-                'damage_modifier_rating' => 10,
+                'damage_multiplier_rating' => 10,
                 'item_bases' => [
                     ItemBase::DAGGER,
                     ItemBase::SWORD,
@@ -52,14 +53,15 @@ class SeedAttacksForItems extends Migration
             ],
             [
                 'name' => 'Smack',
-                'damage_type' => DamageType::SINGLE_TARGET,
+                'damage_type' => DamageType::FIXED_TARGET,
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
+                'fixed_target_count' => 1,
                 'grade' => 5,
                 'speed_rating' => 100/16,
                 'base_damage_rating' => 6,
-                'damage_modifier_rating' => 13,
+                'damage_multiplier_rating' => 13,
                 'item_bases' => [
                     ItemBase::MACE,
                 ],
@@ -74,14 +76,15 @@ class SeedAttacksForItems extends Migration
             ],
             [
                 'name' => 'Poke',
-                'damage_type' => DamageType::SINGLE_TARGET,
+                'damage_type' => DamageType::FIXED_TARGET,
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
+                'fixed_target_count' => 1,
                 'grade' => 5,
                 'speed_rating' => 100/12,
                 'base_damage_rating' => 4,
-                'damage_modifier_rating' => 11,
+                'damage_multiplier_rating' => 11,
                 'item_bases' => [
                     ItemBase::POLEARM,
                 ],
@@ -96,14 +99,15 @@ class SeedAttacksForItems extends Migration
             ],
             [
                 'name' => Attack::BASIC_BOW_ATTACK_NAME, // Arrow
-                'damage_type' => DamageType::SINGLE_TARGET,
+                'damage_type' => DamageType::FIXED_TARGET,
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
+                'fixed_target_count' => 1,
                 'grade' => 5,
                 'speed_rating' => 100/23,
                 'base_damage_rating' => 10,
-                'damage_modifier_rating' => 10,
+                'damage_multiplier_rating' => 10,
                 'item_bases' => [
                     ItemBase::BOW,
                 ],
@@ -118,14 +122,15 @@ class SeedAttacksForItems extends Migration
             ],
             [
                 'name' => 'Bolt',
-                'damage_type' => DamageType::SINGLE_TARGET,
+                'damage_type' => DamageType::FIXED_TARGET,
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
+                'fixed_target_count' => 1,
                 'grade' => 5,
                 'speed_rating' => 100/30,
                 'base_damage_rating' => 11,
-                'damage_modifier_rating' => 13,
+                'damage_multiplier_rating' => 13,
                 'item_bases' => [
                     ItemBase::CROSSBOW,
                 ],
@@ -140,14 +145,15 @@ class SeedAttacksForItems extends Migration
             ],
             [
                 'name' => 'Chuck',
-                'damage_type' => DamageType::SINGLE_TARGET,
+                'damage_type' => DamageType::FIXED_TARGET,
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
+                'fixed_target_count' => 1,
                 'grade' => 5,
                 'speed_rating' => 100/28,
                 'base_damage_rating' => 9,
-                'damage_modifier_rating' => 11,
+                'damage_multiplier_rating' => 11,
                 'item_bases' => [
                     ItemBase::THROWING_WEAPON,
                 ],
@@ -162,14 +168,15 @@ class SeedAttacksForItems extends Migration
             ],
             [
                 'name' => Attack::BASIC_MAGIC_ATTACK_NAME, // Magic Bolt
-                'damage_type' => DamageType::SINGLE_TARGET,
+                'damage_type' => DamageType::FIXED_TARGET,
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
+                'fixed_target_count' => 1,
                 'grade' => 5,
                 'speed_rating' => 100/18,
                 'base_damage_rating' => 8,
-                'damage_modifier_rating' => 10,
+                'damage_multiplier_rating' => 10,
                 'item_bases' => [
                     ItemBase::STAFF,
                     ItemBase::WAND,
@@ -195,10 +202,11 @@ class SeedAttacksForItems extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
+                'fixed_target_count' => 1,
                 'grade' => 5,
                 'speed_rating' => 100/45,
                 'base_damage_rating' => 8,
-                'damage_modifier_rating' => 10,
+                'damage_multiplier_rating' => 10,
                 'item_bases' => [
                     ItemBase::STAFF,
                     ItemBase::WAND,
@@ -236,7 +244,8 @@ class SeedAttacksForItems extends Migration
                 'grade' => $attackData['grade'],
                 'speed_rating' => $attackData['speed_rating'],
                 'base_damage_rating' => $attackData['base_damage_rating'],
-                'damage_modifier_rating' => $attackData['damage_modifier_rating'],
+                'damage_multiplier_rating' => $attackData['damage_multiplier_rating'],
+                'fixed_target_count' => isset($attackData['fixed_target_count']) ? $attackData['fixed_target_count'] : 1,
                 'resource_costs' => json_encode($attackData['resource_costs']),
                 'requirements' => json_encode($attackData['requirements'])
             ]);
