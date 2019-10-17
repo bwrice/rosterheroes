@@ -15,7 +15,7 @@ class CreateAttacksToMinionsPivot extends Migration
     {
         Schema::create('attack_minion', function (Blueprint $table) {
             $table->integer('attack_id')->unsigned();
-            $table->bigInteger('minion_id')->unsigned();
+            $table->integer('minion_id')->unsigned();
             $table->primary(['attack_id', 'minion_id']);
             $table->timestamps();
         });
