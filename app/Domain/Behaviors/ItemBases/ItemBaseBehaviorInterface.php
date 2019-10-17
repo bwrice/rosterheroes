@@ -25,4 +25,8 @@ interface ItemBaseBehaviorInterface
     public function getProtectionModifier(): float;
 
     public function getBlockChanceModifier(): float;
+
+    public function getResourceCostAmountModifier(): float;
+
+    public function getResourceCostPercentModifier(): float;
 }
