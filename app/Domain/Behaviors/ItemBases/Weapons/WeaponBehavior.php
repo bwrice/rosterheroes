@@ -24,6 +24,18 @@ abstract class WeaponBehavior extends ItemBaseBehavior
     {
         parent::__construct($weaponGroup);
         $this->armBehavior = $armBehavior;
+        $this->setResourceCostAmountModifier();
+        $this->setResourceCostPercentModifier();
+    }
+
+    protected function setResourceCostAmountModifier()
+    {
+        $this->resourceCostAmountModifier = sqrt($this->getSlotsCount());
+    }
+
+    protected function setResourceCostPercentModifier()
+    {
+        $this->resourceCostPercentModifier = $this->getSlotsCount() ** .25;
     }
 
     public function getSlotTypeNames(): array

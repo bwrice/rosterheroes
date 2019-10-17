@@ -225,4 +225,14 @@ class Item extends EventSourcedModel implements Slottable, HasAttacks
         $this->hasSlots = $hasSlots;
         return $this;
     }
+
+    public function adjustResourceCostAmount(float $amount): float
+    {
+        return $amount * $this->getItemBaseBehavior()->getResourceCostAmountModifier();
+    }
+
+    public function adjustResourceCostPercent(float $amount): float
+    {
+        return $amount * $this->getItemBaseBehavior()->getResourceCostPercentModifier();
+    }
 }

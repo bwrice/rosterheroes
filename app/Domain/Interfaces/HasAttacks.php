@@ -4,7 +4,7 @@
 namespace App\Domain\Interfaces;
 
 
-interface HasAttacks extends AdjustsBaseDamage, AdjustsCombatSpeed, AdjustsDamageModifier
+interface HasAttacks extends AdjustsBaseDamage, AdjustsCombatSpeed, AdjustsDamageModifier, AdjustsResourceCostAmounts
 {
 
 }
