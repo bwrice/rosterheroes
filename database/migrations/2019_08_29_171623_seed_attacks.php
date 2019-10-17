@@ -357,7 +357,53 @@ class SeedAttacks extends Migration
                     [
                         'type' => ResourceCost::FIXED,
                         'resource' => MeasurableType::STAMINA,
-                        'amount' => 5
+                        'amount' => 7
+                    ]
+                ],
+                'requirements' => []
+            ],
+            [
+                'name' => 'Double Arrow',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::BACK_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'fixed_target_count' => 2,
+                'grade' => 9,
+                'speed_rating' => 100/23,
+                'base_damage_rating' => 10,
+                'damage_multiplier_rating' => 10,
+                'item_bases' => [
+                    ItemBase::BOW,
+                ],
+                'resource_costs' => [
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::STAMINA,
+                        'amount' => 12
+                    ]
+                ],
+                'requirements' => []
+            ],
+            [
+                'name' => 'Triple Arrow',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::BACK_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'fixed_target_count' => 3,
+                'grade' => 16,
+                'speed_rating' => 100/23,
+                'base_damage_rating' => 10,
+                'damage_multiplier_rating' => 10,
+                'item_bases' => [
+                    ItemBase::BOW,
+                ],
+                'resource_costs' => [
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::STAMINA,
+                        'amount' => 19
                     ]
                 ],
                 'requirements' => []
@@ -380,7 +426,53 @@ class SeedAttacks extends Migration
                     [
                         'type' => ResourceCost::FIXED,
                         'resource' => MeasurableType::STAMINA,
-                        'amount' => 7
+                        'amount' => 8
+                    ]
+                ],
+                'requirements' => []
+            ],
+            [
+                'name' => 'Double Bolt',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::BACK_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'fixed_target_count' => 2,
+                'grade' => 8,
+                'speed_rating' => 100/30,
+                'base_damage_rating' => 11,
+                'damage_multiplier_rating' => 13,
+                'item_bases' => [
+                    ItemBase::CROSSBOW,
+                ],
+                'resource_costs' => [
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::STAMINA,
+                        'amount' => 13
+                    ]
+                ],
+                'requirements' => []
+            ],
+            [
+                'name' => 'Triple Bolt',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::BACK_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'fixed_target_count' => 3,
+                'grade' => 15,
+                'speed_rating' => 100/30,
+                'base_damage_rating' => 11,
+                'damage_multiplier_rating' => 13,
+                'item_bases' => [
+                    ItemBase::CROSSBOW,
+                ],
+                'resource_costs' => [
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::STAMINA,
+                        'amount' => 21
                     ]
                 ],
                 'requirements' => []
@@ -439,13 +531,73 @@ class SeedAttacks extends Migration
                 'requirements' => []
             ],
             [
+                'name' => 'Double Magic Bolt', // Magic Bolt
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::BACK_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'fixed_target_count' => 2,
+                'grade' => 8,
+                'speed_rating' => 100/18,
+                'base_damage_rating' => 8,
+                'damage_multiplier_rating' => 10,
+                'item_bases' => [
+                    ItemBase::STAFF,
+                    ItemBase::WAND,
+                    ItemBase::ORB
+                ],
+                'resource_costs' => [
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::STAMINA,
+                        'amount' => 4
+                    ],
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::MANA,
+                        'amount' => 3
+                    ]
+                ],
+                'requirements' => []
+            ],
+            [
+                'name' => 'Triple Magic Bolt',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::BACK_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'fixed_target_count' => 3,
+                'grade' => 15,
+                'speed_rating' => 100/18,
+                'base_damage_rating' => 8,
+                'damage_multiplier_rating' => 10,
+                'item_bases' => [
+                    ItemBase::STAFF,
+                    ItemBase::WAND,
+                    ItemBase::ORB
+                ],
+                'resource_costs' => [
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::STAMINA,
+                        'amount' => 5
+                    ],
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::MANA,
+                        'amount' => 7
+                    ]
+                ],
+                'requirements' => []
+            ],
+            [
                 'name' => 'Magic Blast',
                 'damage_type' => DamageType::AREA_OF_EFFECT,
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'fixed_target_count' => 1,
-                'grade' => 5,
+                'grade' => 9,
                 'speed_rating' => 100/45,
                 'base_damage_rating' => 8,
                 'damage_multiplier_rating' => 10,
