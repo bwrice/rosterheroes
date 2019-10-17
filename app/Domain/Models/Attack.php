@@ -20,11 +20,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property int $id
  * @property string $name
  * @property int $grade
+ * @property int $fixed_target_count
  * @property int $attacker_position_id
  * @property int $target_position_id
  * @property float $speed_rating
  * @property float $base_damage_rating
- * @property float $damage_modifier_rating
+ * @property float $damage_multiplier_rating
  * @property string $resource_costs
  *
  * @property DamageType $damageType
@@ -100,9 +101,10 @@ class Attack extends Model
 
     public function getBaseDamage(HasAttacks $hasAttacks = null): int
     {
-        $baseDamage = $this->base_damage_rating;
-        $baseDamage = $this->attackerPosition->getBehavior()->adjustBaseDamage($baseDamage);
-        $baseDamage = $this->damageType->getBehavior()->adjustBaseDamage($baseDamage);
+        $baseDamage = 10 * sqrt($this->base_damage_rating);
+        $attackerPositionBonus = $this->attackerPosition->getBehavior()->getBaseDamageBonus();
+        $damageTypeBonus = $this->damageType->getBehavior()->getBaseDamageBonus($this->fixed_target_count);
+        $baseDamage *= (1 + $attackerPositionBonus + $damageTypeBonus);
         if ($hasAttacks) {
             $baseDamage = $hasAttacks->adjustBaseDamage($baseDamage);
         }
@@ -112,8 +114,9 @@ class Attack extends Model
     public function getCombatSpeed(HasAttacks $hasAttacks = null): float
     {
         $combatSpeed = $this->speed_rating;
-        $combatSpeed = $this->attackerPosition->getBehavior()->adjustCombatSpeed($combatSpeed);
-        $combatSpeed = $this->damageType->getBehavior()->adjustCombatSpeed($combatSpeed);
+        $attackerPositionBonus = $this->attackerPosition->getBehavior()->getCombatSpeedBonus();
+        $damageTypeBonus = $this->damageType->getBehavior()->getCombatSpeedBonus($this->fixed_target_count);
+        $combatSpeed *= (1 + $attackerPositionBonus + $damageTypeBonus);
         if ($hasAttacks) {
             $combatSpeed = $hasAttacks->adjustCombatSpeed($combatSpeed);
         }
@@ -122,9 +125,10 @@ class Attack extends Model
 
     public function getDamageMultiplier(HasAttacks $hasAttacks = null): float
     {
-        $damageMultiplier = $this->damage_modifier_rating**.25;
-        $damageMultiplier = $this->attackerPosition->getBehavior()->adjustDamageMultiplier($damageMultiplier);
-        $damageMultiplier = $this->damageType->getBehavior()->adjustDamageMultiplier($damageMultiplier);
+        $damageMultiplier = $this->damage_multiplier_rating**.25;
+        $attackerPositionBonus = $this->attackerPosition->getBehavior()->getDamageMultiplierBonus();
+        $damageTypeBonus = $this->damageType->getBehavior()->getDamageMultiplierBonus($this->fixed_target_count);
+        $damageMultiplier *= (1 + $attackerPositionBonus + $damageTypeBonus);
         if ($hasAttacks) {
             $damageMultiplier = $hasAttacks->adjustDamageMultiplier($damageMultiplier);
         }
