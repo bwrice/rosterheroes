@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use App\Domain\Interfaces\HasAttacks;
 use App\Domain\Models\Attack;
 use App\Domain\Models\DamageType;
+use App\Domain\Models\Item;
 use App\Domain\Models\TargetPriority;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -17,7 +18,10 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class AttackResource extends JsonResource
 {
     /** @var HasAttacks|null */
-    protected $hasAttacks;
+    public $hasAttacks;
+
+    /** @var Attack */
+    public $resource;
 
     /**
      * Transform the resource into an array.
@@ -27,6 +31,8 @@ class AttackResource extends JsonResource
      */
     public function toArray($request)
     {
+        $this->resource->setHasAttacks($this->hasAttacks);
+
         return [
             'name' => $this->name,
             'attackerPositionID' => $this->attacker_position_id,
@@ -34,9 +40,9 @@ class AttackResource extends JsonResource
             'damageType' => new DamageTypeResource($this->damageType),
             'targetPriority' => new TargetPriorityResource($this->targetPriority),
             'grade' => $this->grade,
-            'baseDamage' => $this->getBaseDamage($this->hasAttacks),
-            'damageMultiplier' => round($this->getDamageMultiplier($this->hasAttacks), 2),
-            'combatSpeed' => round($this->getCombatSpeed($this->hasAttacks), 2),
+            'baseDamage' => $this->getBaseDamage(),
+            'damageMultiplier' => round($this->getDamageMultiplier(), 2),
+            'combatSpeed' => round($this->getCombatSpeed(), 2),
             'resourceCosts' => $this->getResourceCosts()
         ];
     }
