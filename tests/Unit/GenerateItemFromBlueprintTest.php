@@ -224,7 +224,8 @@ class GenerateItemFromBlueprintTest extends TestCase
         $this->itemBlueprint->itemBases()->save($swordBase);
         $this->itemBlueprint->save();
 
-        $attacks = Attack::query()->whereIn('name', Attack::STARTER_SWORD_ATTACKS);
+        $attacks = Attack::query()->whereIn('name', Attack::STARTER_SWORD_ATTACKS)->get();
+        $this->itemBlueprint->attacks()->saveMany($attacks);
         $this->assertGreaterThan(0, $attacks->count());
 
         $item = $this->domainAction->execute($this->itemBlueprint->fresh());
