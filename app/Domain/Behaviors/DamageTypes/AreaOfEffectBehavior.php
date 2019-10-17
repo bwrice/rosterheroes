@@ -7,18 +7,18 @@ namespace App\Domain\Behaviors\DamageTypes;
 class AreaOfEffectBehavior extends DamageTypeBehavior
 {
 
-    public function adjustCombatSpeed(float $speed): float
+    public function getCombatSpeedBonus(int $fixedTargetCount)
     {
-        return $speed/2.5;
+        return 0;
     }
 
-    public function adjustBaseDamage(float $baseDamage): float
+    public function getBaseDamageBonus(int $fixedTargetCount)
     {
-        return $baseDamage/2.5;
+        return 0;
     }
 
-    public function adjustDamageMultiplier(float $damageModifier): float
+    public function getDamageMultiplierBonus(int $fixedTargetCount)
     {
-        return $damageModifier/2.5;
+        return 0;
     }
 }

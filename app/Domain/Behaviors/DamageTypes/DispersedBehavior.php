@@ -7,18 +7,18 @@ namespace App\Domain\Behaviors\DamageTypes;
 class DispersedBehavior extends DamageTypeBehavior
 {
 
-    public function adjustCombatSpeed(float $speed): float
+    public function getCombatSpeedBonus(int $fixedTargetCount)
     {
-        return $speed/2.25;
+        return .25;
     }
 
-    public function adjustBaseDamage(float $baseDamage): float
+    public function getBaseDamageBonus(int $fixedTargetCount)
     {
-        return $baseDamage * 1.5;
+        return 1.5;
     }
 
-    public function adjustDamageMultiplier(float $damageModifier): float
+    public function getDamageMultiplierBonus(int $fixedTargetCount)
     {
-        return $damageModifier * 1.5;
+        return 1.5;
     }
 }

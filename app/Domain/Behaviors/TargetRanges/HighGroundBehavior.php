@@ -7,19 +7,19 @@ namespace App\Domain\Behaviors\TargetRanges;
 class HighGroundBehavior extends CombatPositionBehavior
 {
 
-    public function adjustCombatSpeed(float $speed): float
+    public function getCombatSpeedBonus(): float
     {
-        return $speed/1.75;
+        return 0;
     }
 
-    public function adjustBaseDamage(float $baseDamage): float
+    public function getBaseDamageBonus(): float
     {
-        return $baseDamage/1.75;
+        return 0;
     }
 
-    public function adjustDamageMultiplier(float $damageModifier): float
+    public function getDamageMultiplierBonus(): float
     {
-        return $damageModifier/1.75;
+        return 0;
     }
 
     public function getAttackerSVG(): string

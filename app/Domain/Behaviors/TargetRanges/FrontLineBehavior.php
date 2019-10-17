@@ -7,19 +7,19 @@ namespace App\Domain\Behaviors\TargetRanges;
 class FrontLineBehavior extends CombatPositionBehavior
 {
 
-    public function adjustCombatSpeed(float $speed): float
+    public function getCombatSpeedBonus(): float
     {
-        return $speed;
+        return 1;
     }
 
-    public function adjustBaseDamage(float $baseDamage): float
+    public function getBaseDamageBonus(): float
     {
-        return $baseDamage;
+        return 1;
     }
 
-    public function adjustDamageMultiplier(float $damageModifier): float
+    public function getDamageMultiplierBonus(): float
     {
-        return $damageModifier;
+        return 1;
     }
 
     public function getAttackerSVG(): string

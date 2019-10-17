@@ -4,7 +4,11 @@
 namespace App\Domain\Behaviors\DamageTypes;
 
 
-abstract class DamageTypeBehavior implements DamageTypeBehaviorInterface
+abstract class DamageTypeBehavior
 {
+    abstract public function getBaseDamageBonus(int $fixedTargetCount);
 
+    abstract public function getCombatSpeedBonus(int $fixedTargetCount);
+
+    abstract public function getDamageMultiplierBonus(int $fixedTargetCount);
 }

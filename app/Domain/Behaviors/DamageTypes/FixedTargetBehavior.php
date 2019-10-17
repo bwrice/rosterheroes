@@ -7,18 +7,18 @@ namespace App\Domain\Behaviors\DamageTypes;
 class FixedTargetBehavior extends DamageTypeBehavior
 {
 
-    public function getCombatSpeedBonus(int $attackGrade, float $combatSpeedRating, int $fixedTargetCount)
+    public function getCombatSpeedBonus(int $fixedTargetCount)
     {
-        return $speed;
+        return 1/sqrt($fixedTargetCount);
     }
 
-    public function getBaseDamageBonus(int $attackGrade, float $baseDamageRating, int $fixedTargetCount)
+    public function getBaseDamageBonus(int $fixedTargetCount)
     {
-        return $baseDamage;
+        return 1/sqrt($fixedTargetCount);
     }
 
-    public function getDamageMultiplierBonus(int $attackGrade, float $damageMultiplierRating, int $fixedTargetCount)
+    public function getDamageMultiplierBonus(int $fixedTargetCount)
     {
-        return $damageModifier;
+        return 1/sqrt($fixedTargetCount);
     }
 }
