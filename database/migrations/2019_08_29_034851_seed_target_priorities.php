@@ -13,7 +13,9 @@ class SeedTargetPriorities extends ModelNameSeederMigration
     public function getSeedNames(): array
     {
         return [
-            TargetPriority::ANY
+            TargetPriority::ANY,
+            TargetPriority::LOWEST_HEALTH,
+            TargetPriority::HIGHEST_THREAT
         ];
     }
 }

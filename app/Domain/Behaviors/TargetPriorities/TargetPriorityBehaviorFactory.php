@@ -14,6 +14,10 @@ class TargetPriorityBehaviorFactory
         switch ($targetPriorityName) {
             case TargetPriority::ANY:
                 return app(AnyPriorityBehavior::class);
+            case TargetPriority::LOWEST_HEALTH:
+                return app(LowestHealthPriorityBehavior::class);
+            case TargetPriority::HIGHEST_THREAT:
+                return app(HighestThreatPriorityBehavior::class);
         }
 
         throw new UnknownBehaviorException($targetPriorityName, TargetPriorityBehavior::class);

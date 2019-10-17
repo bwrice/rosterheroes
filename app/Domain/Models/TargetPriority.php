@@ -2,8 +2,8 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Behaviors\TargetPriorities\TargetPriorityBehavior;
 use App\Domain\Behaviors\TargetPriorities\TargetPriorityBehaviorFactory;
-use App\Domain\Behaviors\TargetPriorities\TargetPriorityBehaviorInterface;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -14,14 +14,16 @@ use Illuminate\Database\Eloquent\Model;
  */
 class TargetPriority extends Model
 {
-    public const ANY = 'any';
+    public const ANY = 'Any';
+    public const LOWEST_HEALTH = 'Lowest Health';
+    public const HIGHEST_THREAT = 'Highest Threat';
 
     protected $guarded = [];
 
     /**
-     * @return TargetPriorityBehaviorInterface
+     * @return TargetPriorityBehavior
      */
-    public function getBehavior(): TargetPriorityBehaviorInterface
+    public function getBehavior(): TargetPriorityBehavior
     {
         /** @var TargetPriorityBehaviorFactory $factory */
         $factory = app(TargetPriorityBehaviorFactory::class);
