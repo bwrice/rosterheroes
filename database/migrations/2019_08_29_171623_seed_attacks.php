@@ -52,7 +52,157 @@ class SeedAttacks extends Migration
                 'requirements' => []
             ],
             [
-                'name' => 'Smack',
+                'name' => 'Double Slash',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'fixed_target_count' => 2,
+                'grade' => 8,
+                'speed_rating' => 100/12,
+                'base_damage_rating' => 5.5,
+                'damage_multiplier_rating' => 10,
+                'item_bases' => [
+                    ItemBase::DAGGER,
+                    ItemBase::SWORD,
+                    ItemBase::TWO_HAND_SWORD,
+                    ItemBase::AXE,
+                    ItemBase::TWO_HAND_AXE,
+                    ItemBase::POLEARM,
+                    ItemBase::PSIONIC_ONE_HAND,
+                    ItemBase::PSIONIC_TWO_HAND
+                ],
+                'resource_costs' => [
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::STAMINA,
+                        'amount' => 7
+                    ]
+                ],
+                'requirements' => []
+            ],
+            [
+                'name' => 'Triple Slash',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'fixed_target_count' => 3,
+                'grade' => 12,
+                'speed_rating' => 100/12,
+                'base_damage_rating' => 5.5,
+                'damage_multiplier_rating' => 10,
+                'item_bases' => [
+                    ItemBase::DAGGER,
+                    ItemBase::SWORD,
+                    ItemBase::TWO_HAND_SWORD,
+                    ItemBase::AXE,
+                    ItemBase::TWO_HAND_AXE,
+                    ItemBase::POLEARM,
+                    ItemBase::PSIONIC_ONE_HAND,
+                    ItemBase::PSIONIC_TWO_HAND
+                ],
+                'resource_costs' => [
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::STAMINA,
+                        'amount' => 16
+                    ]
+                ],
+                'requirements' => []
+            ],
+            [
+                'name' => 'Slice',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'fixed_target_count' => 1,
+                'grade' => 15,
+                'speed_rating' => 100/15,
+                'base_damage_rating' => 12,
+                'damage_multiplier_rating' => 18,
+                'item_bases' => [
+                    ItemBase::DAGGER,
+                    ItemBase::SWORD,
+                    ItemBase::TWO_HAND_SWORD,
+                    ItemBase::AXE,
+                    ItemBase::TWO_HAND_AXE,
+                    ItemBase::POLEARM,
+                    ItemBase::PSIONIC_ONE_HAND,
+                    ItemBase::PSIONIC_TWO_HAND
+                ],
+                'resource_costs' => [
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::STAMINA,
+                        'amount' => 5
+                    ]
+                ],
+                'requirements' => []
+            ],
+            [
+                'name' => 'Double Slice',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'fixed_target_count' => 2,
+                'grade' => 21,
+                'speed_rating' => 100/15,
+                'base_damage_rating' => 12,
+                'damage_multiplier_rating' => 18,
+                'item_bases' => [
+                    ItemBase::DAGGER,
+                    ItemBase::SWORD,
+                    ItemBase::TWO_HAND_SWORD,
+                    ItemBase::AXE,
+                    ItemBase::TWO_HAND_AXE,
+                    ItemBase::POLEARM,
+                    ItemBase::PSIONIC_ONE_HAND,
+                    ItemBase::PSIONIC_TWO_HAND
+                ],
+                'resource_costs' => [
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::STAMINA,
+                        'amount' => 11
+                    ]
+                ],
+                'requirements' => []
+            ],
+            [
+                'name' => 'Triple Slice',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'fixed_target_count' => 3,
+                'grade' => 28,
+                'speed_rating' => 100/15,
+                'base_damage_rating' => 12,
+                'damage_multiplier_rating' => 18,
+                'item_bases' => [
+                    ItemBase::DAGGER,
+                    ItemBase::SWORD,
+                    ItemBase::TWO_HAND_SWORD,
+                    ItemBase::AXE,
+                    ItemBase::TWO_HAND_AXE,
+                    ItemBase::POLEARM,
+                    ItemBase::PSIONIC_ONE_HAND,
+                    ItemBase::PSIONIC_TWO_HAND
+                ],
+                'resource_costs' => [
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::STAMINA,
+                        'amount' => 23
+                    ]
+                ],
+                'requirements' => []
+            ],
+            [
+                'name' => 'Whack',
                 'damage_type' => DamageType::FIXED_TARGET,
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
@@ -70,6 +220,52 @@ class SeedAttacks extends Migration
                         'type' => ResourceCost::FIXED,
                         'resource' => MeasurableType::STAMINA,
                         'amount' => 5
+                    ]
+                ],
+                'requirements' => []
+            ],
+            [
+                'name' => 'Double Whack',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'fixed_target_count' => 2,
+                'grade' => 8,
+                'speed_rating' => 100/16,
+                'base_damage_rating' => 6,
+                'damage_multiplier_rating' => 13,
+                'item_bases' => [
+                    ItemBase::MACE,
+                ],
+                'resource_costs' => [
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::STAMINA,
+                        'amount' => 9
+                    ]
+                ],
+                'requirements' => []
+            ],
+            [
+                'name' => 'Triple Whack',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'fixed_target_count' => 3,
+                'grade' => 12,
+                'speed_rating' => 100/16,
+                'base_damage_rating' => 6,
+                'damage_multiplier_rating' => 13,
+                'item_bases' => [
+                    ItemBase::MACE,
+                ],
+                'resource_costs' => [
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::STAMINA,
+                        'amount' => 17
                     ]
                 ],
                 'requirements' => []
@@ -93,6 +289,52 @@ class SeedAttacks extends Migration
                         'type' => ResourceCost::FIXED,
                         'resource' => MeasurableType::STAMINA,
                         'amount' => 4
+                    ]
+                ],
+                'requirements' => []
+            ],
+            [
+                'name' => 'Double Poke',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'fixed_target_count' => 2,
+                'grade' => 8,
+                'speed_rating' => 100/12,
+                'base_damage_rating' => 4,
+                'damage_multiplier_rating' => 11,
+                'item_bases' => [
+                    ItemBase::POLEARM,
+                ],
+                'resource_costs' => [
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::STAMINA,
+                        'amount' => 7
+                    ]
+                ],
+                'requirements' => []
+            ],
+            [
+                'name' => 'Triple Poke',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'fixed_target_count' => 3,
+                'grade' => 12,
+                'speed_rating' => 100/12,
+                'base_damage_rating' => 4,
+                'damage_multiplier_rating' => 11,
+                'item_bases' => [
+                    ItemBase::POLEARM,
+                ],
+                'resource_costs' => [
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::STAMINA,
+                        'amount' => 12
                     ]
                 ],
                 'requirements' => []
