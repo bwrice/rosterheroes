@@ -55,7 +55,7 @@
         ],
         data: function() {
             return {
-                'name': 'campaign'
+                name: 'campaign'
             }
         },
     }
