@@ -61,12 +61,14 @@ class WeaponAttackUnitTest extends TestCase
             $measurable->amount_raised = 0;
             $measurable->save();
 
-            $lowMeasurableBaseDamage = $this->attack->getBaseDamage($this->item->fresh());
+            $this->attack->setHasAttacks($this->item->fresh());
+            $lowMeasurableBaseDamage = $this->attack->getBaseDamage();
 
             $measurable->amount_raised = 99;
             $measurable->save();
 
-            $higherMeasurableBaseDamage = $this->attack->getBaseDamage($this->item->fresh());
+            $this->attack->setHasAttacks($this->item->fresh());
+            $higherMeasurableBaseDamage = $this->attack->getBaseDamage();
 
             $diff = $higherMeasurableBaseDamage - $lowMeasurableBaseDamage;
             // Make sure the diff is greater than PHP float error, AKA, a number very close to zero
@@ -214,12 +216,14 @@ class WeaponAttackUnitTest extends TestCase
             $measurable->amount_raised = 0;
             $measurable->save();
 
-            $lowMeasurableBaseDamage = $this->attack->getDamageMultiplier($this->item->fresh());
+            $this->attack->setHasAttacks($this->item->fresh());
+            $lowMeasurableBaseDamage = $this->attack->getDamageMultiplier();
 
             $measurable->amount_raised = 99;
             $measurable->save();
 
-            $higherMeasurableBaseDamage = $this->attack->getDamageMultiplier($this->item->fresh());
+            $this->attack->setHasAttacks($this->item->fresh());
+            $higherMeasurableBaseDamage = $this->attack->getDamageMultiplier();
 
             $diff = $higherMeasurableBaseDamage - $lowMeasurableBaseDamage;
             // Make sure the diff is greater than PHP float error, AKA, a number very close to zero
@@ -364,12 +368,14 @@ class WeaponAttackUnitTest extends TestCase
         $measurable->amount_raised = 0;
         $measurable->save();
 
-        $lowMeasurableBaseDamage = $this->attack->getCombatSpeed($this->item->fresh());
+        $this->attack->setHasAttacks($this->item->fresh());
+        $lowMeasurableBaseDamage = $this->attack->getCombatSpeed();
 
         $measurable->amount_raised = 99;
         $measurable->save();
 
-        $higherMeasurableBaseDamage = $this->attack->getCombatSpeed($this->item->fresh());
+        $this->attack->setHasAttacks($this->item->fresh());
+        $higherMeasurableBaseDamage = $this->attack->getCombatSpeed();
 
         $diff = $higherMeasurableBaseDamage - $lowMeasurableBaseDamage;
         // Make sure the diff is greater than PHP float error, AKA, a number very close to zero

@@ -53,6 +53,9 @@ class Attack extends Model
 
     protected $guarded = [];
 
+    /** @var HasAttacks|null */
+    protected $hasAttacks;
+
     /**
      * @return BelongsToMany
      */
@@ -99,38 +102,38 @@ class Attack extends Model
         return new AttackQueryBuilder($query);
     }
 
-    public function getBaseDamage(HasAttacks $hasAttacks = null): int
+    public function getBaseDamage(): int
     {
         $baseDamage = 10 * sqrt($this->base_damage_rating);
         $attackerPositionBonus = $this->attackerPosition->getBehavior()->getBaseDamageBonus();
         $damageTypeBonus = $this->damageType->getBehavior()->getBaseDamageBonus($this->fixed_target_count);
         $baseDamage *= (1 + $attackerPositionBonus + $damageTypeBonus);
-        if ($hasAttacks) {
-            $baseDamage = $hasAttacks->adjustBaseDamage($baseDamage);
+        if ($this->hasAttacks) {
+            $baseDamage = $this->hasAttacks->adjustBaseDamage($baseDamage);
         }
         return (int) ceil($baseDamage);
     }
 
-    public function getCombatSpeed(HasAttacks $hasAttacks = null): float
+    public function getCombatSpeed(): float
     {
         $combatSpeed = $this->speed_rating;
         $attackerPositionBonus = $this->attackerPosition->getBehavior()->getCombatSpeedBonus();
         $damageTypeBonus = $this->damageType->getBehavior()->getCombatSpeedBonus($this->fixed_target_count);
         $combatSpeed *= (1 + $attackerPositionBonus + $damageTypeBonus);
-        if ($hasAttacks) {
-            $combatSpeed = $hasAttacks->adjustCombatSpeed($combatSpeed);
+        if ($this->hasAttacks) {
+            $combatSpeed = $this->hasAttacks->adjustCombatSpeed($combatSpeed);
         }
         return $combatSpeed;
     }
 
-    public function getDamageMultiplier(HasAttacks $hasAttacks = null): float
+    public function getDamageMultiplier(): float
     {
         $damageMultiplier = $this->damage_multiplier_rating**.25;
         $attackerPositionBonus = $this->attackerPosition->getBehavior()->getDamageMultiplierBonus();
         $damageTypeBonus = $this->damageType->getBehavior()->getDamageMultiplierBonus($this->fixed_target_count);
         $damageMultiplier *= (1 + $attackerPositionBonus + $damageTypeBonus);
-        if ($hasAttacks) {
-            $damageMultiplier = $hasAttacks->adjustDamageMultiplier($damageMultiplier);
+        if ($this->hasAttacks) {
+            $damageMultiplier = $this->hasAttacks->adjustDamageMultiplier($damageMultiplier);
         }
         return $damageMultiplier;
     }
@@ -150,5 +153,15 @@ class Attack extends Model
         }, $resourceCostsArray);
 
         return new ResourceCostsCollection($resourceCosts);
+    }
+
+    /**
+     * @param HasAttacks|null $hasAttacks
+     * @return Attack
+     */
+    public function setHasAttacks(?HasAttacks $hasAttacks): Attack
+    {
+        $this->hasAttacks = $hasAttacks;
+        return $this;
     }
 }
