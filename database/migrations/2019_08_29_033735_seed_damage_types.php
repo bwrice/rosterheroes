@@ -13,8 +13,7 @@ class SeedDamageTypes extends ModelNameSeederMigration
     public function getSeedNames(): array
     {
         return [
-            DamageType::SINGLE_TARGET,
-            DamageType::MULTI_TARGET,
+            DamageType::FIXED_TARGET,
             DamageType::AREA_OF_EFFECT,
             DamageType::DISPERSED
         ];

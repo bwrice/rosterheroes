@@ -34,24 +34,17 @@ class AttackUnitTest extends TestCase
     {
         $damageTypesTested = 0;
 
-        $this->attack->damage_type_id = DamageType::forName(DamageType::SINGLE_TARGET)->id;
+        $this->attack->damage_type_id = DamageType::forName(DamageType::FIXED_TARGET)->id;
         $this->attack->save();
-        $singleTargetSpeed = $this->attack->fresh()->getCombatSpeed();
+        $fixedTargetSpeed = $this->attack->fresh()->getCombatSpeed();
         $damageTypesTested++;
-
-        $this->attack->damage_type_id = DamageType::forName(DamageType::MULTI_TARGET)->id;
-        $this->attack->save();
-        $multiTargetSpeed = $this->attack->fresh()->getCombatSpeed();
-        $damageTypesTested++;
-
-        $this->assertGreaterThan($multiTargetSpeed, $singleTargetSpeed);
 
         $this->attack->damage_type_id = DamageType::forName(DamageType::DISPERSED)->id;
         $this->attack->save();
         $dispersedSpeed = $this->attack->fresh()->getCombatSpeed();
         $damageTypesTested++;
 
-        $this->assertGreaterThan($dispersedSpeed, $multiTargetSpeed);
+        $this->assertGreaterThan($dispersedSpeed, $fixedTargetSpeed);
 
         $this->attack->damage_type_id = DamageType::forName(DamageType::AREA_OF_EFFECT)->id;
         $this->attack->save();
@@ -104,26 +97,19 @@ class AttackUnitTest extends TestCase
         $dispersedBaseDamage = $this->attack->fresh()->getBaseDamage();
         $damageTypesTested++;
 
-        $this->attack->damage_type_id = DamageType::forName(DamageType::SINGLE_TARGET)->id;
+        $this->attack->damage_type_id = DamageType::forName(DamageType::FIXED_TARGET)->id;
         $this->attack->save();
-        $singleTargetBaseDamage = $this->attack->fresh()->getBaseDamage();
+        $fixedTargetBaseDamage = $this->attack->fresh()->getBaseDamage();
         $damageTypesTested++;
 
-        $this->assertGreaterThan($singleTargetBaseDamage, $dispersedBaseDamage);
-
-        $this->attack->damage_type_id = DamageType::forName(DamageType::MULTI_TARGET)->id;
-        $this->attack->save();
-        $multiTargetBaseDamage = $this->attack->fresh()->getBaseDamage();
-        $damageTypesTested++;
-
-        $this->assertGreaterThan($multiTargetBaseDamage, $singleTargetBaseDamage);
+        $this->assertGreaterThan($fixedTargetBaseDamage, $dispersedBaseDamage);
 
         $this->attack->damage_type_id = DamageType::forName(DamageType::AREA_OF_EFFECT)->id;
         $this->attack->save();
         $aoeBaseDamage = $this->attack->fresh()->getBaseDamage();
         $damageTypesTested++;
 
-        $this->assertGreaterThan($aoeBaseDamage, $multiTargetBaseDamage);
+        $this->assertGreaterThan($aoeBaseDamage, $fixedTargetBaseDamage);
 
         $this->assertEquals(DamageType::all()->count(), $damageTypesTested, "All damage types tested");
     }
@@ -169,26 +155,19 @@ class AttackUnitTest extends TestCase
         $dispersedDamageModifier = $this->attack->fresh()->getDamageMultiplier();
         $damageTypesTested++;
 
-        $this->attack->damage_type_id = DamageType::forName(DamageType::SINGLE_TARGET)->id;
+        $this->attack->damage_type_id = DamageType::forName(DamageType::FIXED_TARGET)->id;
         $this->attack->save();
-        $singleTargetDamageModifier = $this->attack->fresh()->getDamageMultiplier();
+        $fixedTargetDamageModifier = $this->attack->fresh()->getDamageMultiplier();
         $damageTypesTested++;
 
-        $this->assertGreaterThan($singleTargetDamageModifier, $dispersedDamageModifier);
-
-        $this->attack->damage_type_id = DamageType::forName(DamageType::MULTI_TARGET)->id;
-        $this->attack->save();
-        $multiTargetDamageModifier = $this->attack->fresh()->getDamageMultiplier();
-        $damageTypesTested++;
-
-        $this->assertGreaterThan($multiTargetDamageModifier, $singleTargetDamageModifier);
+        $this->assertGreaterThan($fixedTargetDamageModifier, $dispersedDamageModifier);
 
         $this->attack->damage_type_id = DamageType::forName(DamageType::AREA_OF_EFFECT)->id;
         $this->attack->save();
         $aoeDamageModifier = $this->attack->fresh()->getDamageMultiplier();
         $damageTypesTested++;
 
-        $this->assertGreaterThan($aoeDamageModifier, $multiTargetDamageModifier);
+        $this->assertGreaterThan($aoeDamageModifier, $fixedTargetDamageModifier);
 
         $this->assertEquals(DamageType::all()->count(), $damageTypesTested, "All damage types tested");
     }
