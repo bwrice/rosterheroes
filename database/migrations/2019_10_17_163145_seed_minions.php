@@ -34,7 +34,7 @@ class SeedMinions extends Migration
                 ]
             ],
             [
-                'name' => 'Skeleton Soldier',
+                'name' => 'Skeleton Guard',
                 'level' => 13,
                 'damage_rating' => 15,
                 'health_rating' => 35,
@@ -64,7 +64,7 @@ class SeedMinions extends Migration
             ],
             [
                 'name' => 'Skeleton Mage',
-                'level' => 22,
+                'level' => 17,
                 'damage_rating' => 75,
                 'health_rating' => 20,
                 'protection_rating' => 5,
@@ -76,6 +76,23 @@ class SeedMinions extends Migration
                     'Triple Magic Bolt',
                     'Magic Burst',
                     'Magic Blast'
+                ]
+            ],
+            [
+                'name' => 'Skeleton Soldier',
+                'level' => 21,
+                'damage_rating' => 20,
+                'health_rating' => 40,
+                'protection_rating' => 40,
+                'enemy_type' => EnemyType::SKELETON,
+                'combat_position' => CombatPosition::BACK_LINE,
+                'attacks' => [
+                    'Slash',
+                    'Double Slash',
+                    'Triple Slash',
+                    'Slice',
+                    'Axe Sweep',
+                    'Blade Spin'
                 ]
             ],
         ]);

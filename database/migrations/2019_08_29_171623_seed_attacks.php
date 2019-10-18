@@ -118,7 +118,7 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'fixed_target_count' => 0,
-                'grade' => 10,
+                'grade' => 13,
                 'speed_rating' => 100/16,
                 'base_damage_rating' => 4,
                 'damage_multiplier_rating' => 15,
@@ -149,7 +149,7 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'fixed_target_count' => 0,
-                'grade' => 10,
+                'grade' => 13,
                 'speed_rating' => 100/17,
                 'base_damage_rating' => 5,
                 'damage_multiplier_rating' => 18,
@@ -168,6 +168,36 @@ class SeedAttacks extends Migration
                         'type' => ResourceCost::FIXED,
                         'resource' => MeasurableType::MANA,
                         'amount' => 3
+                    ]
+                ],
+                'requirements' => []
+            ],
+            [
+                'name' => 'Blade Spin',
+                'damage_type' => DamageType::AREA_OF_EFFECT,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'fixed_target_count' => 0,
+                'grade' => 24,
+                'speed_rating' => 100/33,
+                'base_damage_rating' => 12,
+                'damage_multiplier_rating' => 22,
+                'item_bases' => [
+                    ItemBase::AXE,
+                    ItemBase::TWO_HAND_AXE,
+                    ItemBase::PSIONIC_TWO_HAND
+                ],
+                'resource_costs' => [
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::STAMINA,
+                        'amount' => 43
+                    ],
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::MANA,
+                        'amount' => 9
                     ]
                 ],
                 'requirements' => []
