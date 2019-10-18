@@ -18,12 +18,14 @@ class CreateQuestsTable extends Migration
             $table->uuid('uuid');
             $table->string('name');
             $table->integer('province_id')->unsigned();
+            $table->increments('travel_type_id')->unsigned();
             $table->dateTime('completed_at')->nullable();
             $table->timestamps();
         });
 
         Schema::table('quests', function (Blueprint $table) {
             $table->foreign('province_id')->references('id')->on('provinces');
+            $table->foreign('travel_type_id')->references('id')->on('travel_types');
         });
     }
 
