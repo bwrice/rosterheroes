@@ -112,6 +112,67 @@ class SeedAttacks extends Migration
                 'requirements' => []
             ],
             [
+                'name' => 'Sword Sweep',
+                'damage_type' => DamageType::AREA_OF_EFFECT,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'fixed_target_count' => 0,
+                'grade' => 10,
+                'speed_rating' => 100/16,
+                'base_damage_rating' => 4,
+                'damage_multiplier_rating' => 15,
+                'item_bases' => [
+                    ItemBase::SWORD,
+                    ItemBase::TWO_HAND_SWORD,
+                    ItemBase::PSIONIC_ONE_HAND,
+                    ItemBase::PSIONIC_TWO_HAND
+                ],
+                'resource_costs' => [
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::STAMINA,
+                        'amount' => 16
+                    ],
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::MANA,
+                        'amount' => 2
+                    ]
+                ],
+                'requirements' => []
+            ],
+            [
+                'name' => 'Axe Sweep',
+                'damage_type' => DamageType::AREA_OF_EFFECT,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'fixed_target_count' => 0,
+                'grade' => 10,
+                'speed_rating' => 100/17,
+                'base_damage_rating' => 5,
+                'damage_multiplier_rating' => 18,
+                'item_bases' => [
+                    ItemBase::AXE,
+                    ItemBase::TWO_HAND_AXE,
+                    ItemBase::PSIONIC_TWO_HAND
+                ],
+                'resource_costs' => [
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::STAMINA,
+                        'amount' => 20
+                    ],
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::MANA,
+                        'amount' => 3
+                    ]
+                ],
+                'requirements' => []
+            ],
+            [
                 'name' => 'Slice',
                 'damage_type' => DamageType::FIXED_TARGET,
                 'attacker_position' => CombatPosition::FRONT_LINE,
@@ -357,7 +418,7 @@ class SeedAttacks extends Migration
                     [
                         'type' => ResourceCost::FIXED,
                         'resource' => MeasurableType::STAMINA,
-                        'amount' => 7
+                        'amount' => 14
                     ]
                 ],
                 'requirements' => []
@@ -380,7 +441,7 @@ class SeedAttacks extends Migration
                     [
                         'type' => ResourceCost::FIXED,
                         'resource' => MeasurableType::STAMINA,
-                        'amount' => 12
+                        'amount' => 23
                     ]
                 ],
                 'requirements' => []
@@ -403,7 +464,64 @@ class SeedAttacks extends Migration
                     [
                         'type' => ResourceCost::FIXED,
                         'resource' => MeasurableType::STAMINA,
-                        'amount' => 19
+                        'amount' => 34
+                    ]
+                ],
+                'requirements' => []
+            ],
+            [
+                'name' => 'Arrow Spray',
+                'damage_type' => DamageType::AREA_OF_EFFECT,
+                'attacker_position' => CombatPosition::BACK_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'fixed_target_count' => 0,
+                'grade' => 16,
+                'speed_rating' => 100/32,
+                'base_damage_rating' => 7.5,
+                'damage_multiplier_rating' => 14,
+                'item_bases' => [
+                    ItemBase::BOW,
+                ],
+                'resource_costs' => [
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::STAMINA,
+                        'amount' => 27
+                    ],
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::MANA,
+                        'amount' => 8
+                    ]
+                ],
+                'requirements' => []
+            ],
+            [
+                'name' => 'Deep Shot',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::BACK_LINE,
+                'target_position' => CombatPosition::BACK_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'fixed_target_count' => 1,
+                'grade' => 22,
+                'speed_rating' => 100/26,
+                'base_damage_rating' => 9,
+                'damage_multiplier_rating' => 12,
+                'item_bases' => [
+                    ItemBase::BOW,
+                    ItemBase::CROSSBOW
+                ],
+                'resource_costs' => [
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::STAMINA,
+                        'amount' => 22
+                    ],
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::MANA,
+                        'amount' => 5
                     ]
                 ],
                 'requirements' => []
@@ -531,7 +649,7 @@ class SeedAttacks extends Migration
                 'requirements' => []
             ],
             [
-                'name' => 'Double Magic Bolt', // Magic Bolt
+                'name' => 'Double Magic Bolt',
                 'damage_type' => DamageType::FIXED_TARGET,
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
@@ -585,20 +703,20 @@ class SeedAttacks extends Migration
                     [
                         'type' => ResourceCost::FIXED,
                         'resource' => MeasurableType::MANA,
-                        'amount' => 7
+                        'amount' => 8
                     ]
                 ],
                 'requirements' => []
             ],
             [
-                'name' => 'Magic Blast',
+                'name' => 'Magic Burst',
                 'damage_type' => DamageType::AREA_OF_EFFECT,
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'fixed_target_count' => 1,
-                'grade' => 9,
-                'speed_rating' => 100/45,
+                'fixed_target_count' => 0,
+                'grade' => 11,
+                'speed_rating' => 100/25,
                 'base_damage_rating' => 8,
                 'damage_multiplier_rating' => 10,
                 'item_bases' => [
@@ -616,6 +734,36 @@ class SeedAttacks extends Migration
                         'type' => ResourceCost::FIXED,
                         'resource' => MeasurableType::MANA,
                         'amount' => 10
+                    ]
+                ],
+                'requirements' => []
+            ],
+            [
+                'name' => 'Magic Blast',
+                'damage_type' => DamageType::AREA_OF_EFFECT,
+                'attacker_position' => CombatPosition::BACK_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'fixed_target_count' => 0,
+                'grade' => 26,
+                'speed_rating' => 100/41,
+                'base_damage_rating' => 15,
+                'damage_multiplier_rating' => 20,
+                'item_bases' => [
+                    ItemBase::STAFF,
+                    ItemBase::WAND,
+                    ItemBase::ORB
+                ],
+                'resource_costs' => [
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::STAMINA,
+                        'amount' => 10
+                    ],
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::MANA,
+                        'amount' => 19
                     ]
                 ],
                 'requirements' => []
