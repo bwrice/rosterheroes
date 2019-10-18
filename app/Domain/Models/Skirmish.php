@@ -20,4 +20,9 @@ class Skirmish extends Model
     {
         return $this->belongsToMany(Quest::class);
     }
+
+    public function minions()
+    {
+        return $this->belongsToMany(Minion::class)->withPivot('count');
+    }
 }
