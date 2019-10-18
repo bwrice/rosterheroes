@@ -298,12 +298,12 @@ class Squad extends EventSourcedModel implements HasSlots, TravelsBorders
         return self::QUESTS_PER_WEEK;
     }
 
-    public function addSkirmish(Skirmish $skirmish)
-    {
-        if(! $this->joinedQuestForCurrentWeek($skirmish->quest)) {
-            throw new QuestRequiredException($skirmish->quest);
-        }
-    }
+//    public function addSkirmish(Skirmish $skirmish)
+//    {
+//        if(! $this->joinedQuestForCurrentWeek($skirmish->quest)) {
+//            throw new QuestRequiredException($skirmish->quest);
+//        }
+//    }
 
     /**
      * @param Quest $quest

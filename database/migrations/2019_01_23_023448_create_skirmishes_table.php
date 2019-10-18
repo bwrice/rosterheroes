@@ -16,12 +16,8 @@ class CreateSkirmishesTable extends Migration
         Schema::create('skirmishes', function (Blueprint $table) {
             $table->increments('id');
             $table->uuid('uuid');
-            $table->integer('quest_id')->unsigned();
+            $table->string('name');
             $table->timestamps();
-        });
-
-        Schema::table('skirmishes', function (Blueprint $table) {
-            $table->foreign('quest_id')->references('id')->on('quests');
         });
     }
 
