@@ -798,6 +798,64 @@ class SeedAttacks extends Migration
                 ],
                 'requirements' => []
             ],
+            [
+                'name' => 'Lightning Bolt',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::HIGH_GROUND,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'fixed_target_count' => 1,
+                'grade' => 35,
+                'speed_rating' => 100/25,
+                'base_damage_rating' => 12,
+                'damage_multiplier_rating' => 18,
+                'item_bases' => [
+                    ItemBase::STAFF,
+                    ItemBase::ORB
+                ],
+                'resource_costs' => [
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::STAMINA,
+                        'amount' => 13
+                    ],
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::MANA,
+                        'amount' => 28
+                    ]
+                ],
+                'requirements' => []
+            ],
+            [
+                'name' => 'Lightning Strike',
+                'damage_type' => DamageType::AREA_OF_EFFECT,
+                'attacker_position' => CombatPosition::HIGH_GROUND,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'fixed_target_count' => 0,
+                'grade' => 48,
+                'speed_rating' => 100/47,
+                'base_damage_rating' => 14,
+                'damage_multiplier_rating' => 21,
+                'item_bases' => [
+                    ItemBase::STAFF,
+                    ItemBase::ORB
+                ],
+                'resource_costs' => [
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::STAMINA,
+                        'amount' => 18
+                    ],
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::MANA,
+                        'amount' => 55
+                    ]
+                ],
+                'requirements' => []
+            ],
         ];
 
         $damageTypes = DamageType::all();
