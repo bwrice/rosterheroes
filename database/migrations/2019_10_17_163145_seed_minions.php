@@ -85,7 +85,7 @@ class SeedMinions extends Migration
                 'health_rating' => 40,
                 'protection_rating' => 40,
                 'enemy_type' => EnemyType::SKELETON,
-                'combat_position' => CombatPosition::BACK_LINE,
+                'combat_position' => CombatPosition::FRONT_LINE,
                 'attacks' => [
                     'Slash',
                     'Double Slash',
