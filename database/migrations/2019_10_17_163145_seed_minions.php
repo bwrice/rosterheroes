@@ -95,6 +95,22 @@ class SeedMinions extends Migration
                     'Blade Spin'
                 ]
             ],
+            [
+                'name' => 'Skeleton Marksman',
+                'level' => 23,
+                'damage_rating' => 70,
+                'health_rating' => 25,
+                'protection_rating' => 5,
+                'enemy_type' => EnemyType::SKELETON,
+                'combat_position' => CombatPosition::HIGH_GROUND,
+                'attacks' => [
+                    'Arrow',
+                    'Double Arrow',
+                    'Arrow Spray',
+                    'Long Shot',
+                    'Double Long Shot'
+                ]
+            ],
         ]);
 
         $attacks = Attack::all();
