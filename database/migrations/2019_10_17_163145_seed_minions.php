@@ -29,12 +29,13 @@ class SeedMinions extends Migration
                 'combat_position' => CombatPosition::BACK_LINE,
                 'attacks' => [
                     'Slash',
-                    'Arrow'
+                    'Arrow',
+                    'Arrow Spray'
                 ]
             ],
             [
                 'name' => 'Skeleton Soldier',
-                'level' => 14,
+                'level' => 13,
                 'damage_rating' => 15,
                 'health_rating' => 35,
                 'protection_rating' => 50,
@@ -43,12 +44,12 @@ class SeedMinions extends Migration
                 'attacks' => [
                     'Slash',
                     'Double Slash',
-                    'Slice'
+                    'Sword Sweep',
                 ]
             ],
             [
                 'name' => 'Skeleton Archer',
-                'level' => 8,
+                'level' => 15,
                 'damage_rating' => 60,
                 'health_rating' => 15,
                 'protection_rating' => 25,
@@ -56,7 +57,25 @@ class SeedMinions extends Migration
                 'combat_position' => CombatPosition::BACK_LINE,
                 'attacks' => [
                     'Arrow',
-                    'Double Arrow'
+                    'Double Arrow',
+                    'Arrow Spray',
+                    'Deep Shot'
+                ]
+            ],
+            [
+                'name' => 'Skeleton Mage',
+                'level' => 22,
+                'damage_rating' => 75,
+                'health_rating' => 20,
+                'protection_rating' => 5,
+                'enemy_type' => EnemyType::SKELETON,
+                'combat_position' => CombatPosition::BACK_LINE,
+                'attacks' => [
+                    'Magic Bolt',
+                    'Double Magic Bolt',
+                    'Triple Magic Bolt',
+                    'Magic Burst',
+                    'Magic Blast'
                 ]
             ],
         ]);
