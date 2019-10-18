@@ -557,6 +557,64 @@ class SeedAttacks extends Migration
                 'requirements' => []
             ],
             [
+                'name' => 'Long Shot',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::HIGH_GROUND,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'fixed_target_count' => 1,
+                'grade' => 25,
+                'speed_rating' => 100/26,
+                'base_damage_rating' => 6,
+                'damage_multiplier_rating' => 8,
+                'item_bases' => [
+                    ItemBase::BOW,
+                    ItemBase::CROSSBOW
+                ],
+                'resource_costs' => [
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::STAMINA,
+                        'amount' => 21
+                    ],
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::MANA,
+                        'amount' => 8
+                    ]
+                ],
+                'requirements' => []
+            ],
+            [
+                'name' => 'Double Long Shot',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::HIGH_GROUND,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'fixed_target_count' => 2,
+                'grade' => 43,
+                'speed_rating' => 100/37,
+                'base_damage_rating' => 6,
+                'damage_multiplier_rating' => 8,
+                'item_bases' => [
+                    ItemBase::BOW,
+                    ItemBase::CROSSBOW
+                ],
+                'resource_costs' => [
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::STAMINA,
+                        'amount' => 44
+                    ],
+                    [
+                        'type' => ResourceCost::FIXED,
+                        'resource' => MeasurableType::MANA,
+                        'amount' => 15
+                    ]
+                ],
+                'requirements' => []
+            ],
+            [
                 'name' => 'Bolt',
                 'damage_type' => DamageType::FIXED_TARGET,
                 'attacker_position' => CombatPosition::BACK_LINE,
