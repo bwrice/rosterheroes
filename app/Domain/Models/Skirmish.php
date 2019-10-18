@@ -23,6 +23,6 @@ class Skirmish extends Model
 
     public function minions()
     {
-        return $this->belongsToMany(Minion::class)->withPivot('count');
+        return $this->belongsToMany(Minion::class)->withPivot('count')->withTimestamps();
     }
 }

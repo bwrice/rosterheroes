@@ -21,7 +21,7 @@ class CreateMinionSkirmishPivot extends Migration
             $table->timestamps();
         });
 
-        Schema::table('attack_minion', function (Blueprint $table) {
+        Schema::table('minion_skirmish', function (Blueprint $table) {
             $table->foreign('minion_id')->references('id')->on('minions');
             $table->foreign('skirmish_id')->references('id')->on('skirmishes');
         });

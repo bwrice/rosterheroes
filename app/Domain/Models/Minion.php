@@ -4,12 +4,18 @@ namespace App\Domain\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Minion
+ * @package App\Domain\Models
+ *
+ * @property string $name
+ */
 class Minion extends Model
 {
     protected $guarded = [];
 
     public function attacks()
     {
-        return $this->belongsToMany(Attack::class);
+        return $this->belongsToMany(Attack::class)->withTimestamps();
     }
 }
