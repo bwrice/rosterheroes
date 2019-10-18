@@ -11,15 +11,13 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $quest_id
  * @property string $uuid
- *
- * @property Quest $quest
  */
 class Skirmish extends Model
 {
     protected $guarded = [];
 
-    public function quest()
+    public function quests()
     {
-        return $this->belongsTo(Quest::class);
+        return $this->belongsToMany(Quest::class);
     }
 }
