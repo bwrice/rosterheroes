@@ -81,23 +81,25 @@ Route::prefix('v1')->group(function () {
 
     Route::middleware(['auth:api'])->group(function () {
 
-        Route::post('/squads', [SquadController::class, 'store']);
-        Route::get('/squads/{squadSlug}', [SquadController::class, 'show']);
+        Route::prefix('squads')->group(function() {
 
-        Route::post('/squads/{squadSlug}/fast-travel', FastTravelController::class);
+            Route::post('/', [SquadController::class, 'store']);
+            Route::get('{squadSlug}', [SquadController::class, 'show']);
 
-        Route::get('/squads/{squadSlug}/heroes', [SquadHeroController::class, 'index']);
+            Route::post('{squadSlug}/fast-travel', FastTravelController::class);
+
+            Route::get('{squadSlug}/heroes', [SquadHeroController::class, 'index']);
 //        Route::get('/squads/{squadSlug}/roster/heroes', RosterHeroesController::class);
+            Route::get('{squadSlug}/current-location', SquadCurrentLocationController::class);
+
+            Route::get('{squadSlug}/mobile-storage', MobileStorageController::class);
+
+            Route::post('{squadSlug}/border/{borderSlug}', [SquadBorderTravelController::class, 'store']);
+            Route::get('{squadSlug}/border/{borderSlug}', [SquadBorderTravelController::class, 'show']);
+        });
 
         Route::get('/squad/{squadSlug}/hero-classes', SquadHeroClassController::class);
         Route::get('/squad/{squadSlug}/hero-races', SquadHeroRaceController::class);
-
-        Route::get('/squads/{squadSlug}/current-location', SquadCurrentLocationController::class);
-
-        Route::get('/squads/{squadSlug}/mobile-storage', MobileStorageController::class);
-
-        Route::post('/squads/{squadSlug}/border/{borderSlug}', [SquadBorderTravelController::class, 'store']);
-        Route::get('/squads/{squadSlug}/border/{borderSlug}', [SquadBorderTravelController::class, 'show']);
 
         Route::post('/squad/{squadSlug}/heroes', [SquadHeroController::class, 'store']);
         Route::post('/squad/{squadSlug}/campaigns', [SquadCampaignController::class, 'store']);
