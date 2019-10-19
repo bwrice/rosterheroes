@@ -16,6 +16,7 @@ class CreateQuestMinionsPivot extends Migration
         Schema::create('minion_quest', function (Blueprint $table) {
             $table->integer('minion_id')->unsigned();
             $table->integer('quest_id')->unsigned();
+            $table->smallInteger('percent')->unsigned();
             $table->primary(['minion_id', 'quest_id']);
             $table->timestamps();
         });

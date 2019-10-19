@@ -17,6 +17,7 @@ class CreateQuestsTable extends Migration
             $table->increments('id');
             $table->uuid('uuid');
             $table->string('name');
+            $table->integer('level')->unsigned();
             $table->integer('province_id')->unsigned();
             $table->increments('travel_type_id')->unsigned();
             $table->dateTime('completed_at')->nullable();

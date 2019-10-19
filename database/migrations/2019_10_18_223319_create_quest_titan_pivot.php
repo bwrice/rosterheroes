@@ -16,6 +16,7 @@ class CreateQuestTitanPivot extends Migration
         Schema::create('quest_titan', function (Blueprint $table) {
             $table->integer('quest_id')->unsigned();
             $table->integer('titan_id')->unsigned();
+            $table->integer('count')->unsigned();
             $table->primary(['quest_id', 'titan_id']);
             $table->timestamps();
         });
