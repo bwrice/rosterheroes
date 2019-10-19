@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class TravelType extends Model
 {
-    protected $guarded;
+    protected $guarded = [];
 
     public const STATIONARY = 'Stationary';
     public const BORDER = 'Border';
