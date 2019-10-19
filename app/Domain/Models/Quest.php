@@ -5,6 +5,7 @@ namespace App\Domain\Models;
 use App\Domain\Collections\QuestCollection;
 use App\Domain\Models\EventSourcedModel;
 use App\Domain\Models\Province;
+use App\Domain\Traits\HasNameSlug;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -21,6 +22,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Quest extends EventSourcedModel
 {
+    use HasNameSlug;
+
     protected $guarded = [];
 
     protected $dates = [

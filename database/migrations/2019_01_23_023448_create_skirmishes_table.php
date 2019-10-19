@@ -17,6 +17,7 @@ class CreateSkirmishesTable extends Migration
             $table->increments('id');
             $table->uuid('uuid');
             $table->string('name');
+            $table->string('slug');
             $table->timestamps();
         });
     }

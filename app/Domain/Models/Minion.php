@@ -2,6 +2,7 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Traits\HasNameSlug;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -12,6 +13,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Minion extends Model
 {
+    use HasNameSlug;
+
     protected $guarded = [];
 
     public function attacks()

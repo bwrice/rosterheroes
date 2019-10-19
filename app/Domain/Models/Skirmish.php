@@ -3,6 +3,7 @@
 namespace App\Domain\Models;
 
 use App\Domain\Models\Quest;
+use App\Domain\Traits\HasNameSlug;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -14,6 +15,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Skirmish extends Model
 {
+    use HasNameSlug;
+
     protected $guarded = [];
 
     public function quests()

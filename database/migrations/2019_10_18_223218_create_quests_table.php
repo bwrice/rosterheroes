@@ -17,6 +17,7 @@ class CreateQuestsTable extends Migration
             $table->increments('id');
             $table->uuid('uuid');
             $table->string('name');
+            $table->string('slug');
             $table->integer('level')->unsigned();
             $table->float('percent');
             $table->integer('province_id')->unsigned();

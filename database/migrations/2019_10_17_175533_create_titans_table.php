@@ -17,6 +17,7 @@ class CreateTitansTable extends Migration
             $table->increments('id');
             $table->uuid('uuid');
             $table->string('name');
+            $table->string('slug');
             $table->unsignedInteger('base_level');
             $table->smallInteger('damage_rating');
             $table->smallInteger('health_rating');
