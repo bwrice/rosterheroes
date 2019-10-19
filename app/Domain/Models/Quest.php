@@ -39,6 +39,26 @@ class Quest extends EventSourcedModel
         return $this->belongsTo(Province::class);
     }
 
+    public function travelType()
+    {
+        return $this->belongsTo(TravelType::class);
+    }
+
+    public function minions()
+    {
+        return $this->belongsToMany(Minion::class)->withPivot('weight')->withTimestamps();
+    }
+
+    public function titans()
+    {
+        return $this->belongsToMany(Titan::class)->withPivot('count')->withTimestamps();
+    }
+
+    public function skirmishes()
+    {
+        return $this->belongsToMany(Skirmish::class)->withTimestamps();
+    }
+
     public function isCompleted()
     {
         return $this->completed_at != null;
