@@ -6,7 +6,7 @@ use App\Domain\Behaviors\Map\RealmBehavior;
 use App\Domain\Behaviors\Map\TerritoryBehavior;
 use App\Domain\Behaviors\Map\TerritoryBehaviorFactory;
 use App\Domain\Models\Continent;
-use App\Domain\Traits\HasSlug;
+use App\Domain\Traits\HasNameSlug;
 use App\Exceptions\UnknownBehaviorException;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\SlugOptions;
@@ -21,7 +21,7 @@ use Spatie\Sluggable\SlugOptions;
  */
 class Territory extends Model
 {
-    use HasSlug;
+    use HasNameSlug;
 
     const GARDENS_OF_REDEMPTION = 'Gardens of Redemption';
     const WOODS_OF_THE_WILD = 'Woods of the Wild';
@@ -65,13 +65,6 @@ class Territory extends Model
     public function provinces()
     {
         return $this->hasMany(Province::class);
-    }
-
-    public function getSlugOptions(): SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('name')
-            ->saveSlugsTo('slug');
     }
 
     public function getBehavior(): TerritoryBehavior

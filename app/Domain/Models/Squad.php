@@ -14,7 +14,7 @@ use App\Domain\Collections\HeroCollection;
 use App\Domain\Collections\HeroPostCollection;
 use App\Domain\Interfaces\HasSlots;
 use App\Domain\Collections\SlotCollection;
-use App\Domain\Traits\HasSlug;
+use App\Domain\Traits\HasNameSlug;
 use Illuminate\Support\Str;
 use Spatie\Sluggable\SlugOptions;
 
@@ -45,7 +45,7 @@ use Spatie\Sluggable\SlugOptions;
  */
 class Squad extends EventSourcedModel implements HasSlots, TravelsBorders
 {
-    use HasSlug;
+    use HasNameSlug;
 
     const RELATION_MORPH_MAP_KEY = 'squads';
 
@@ -98,16 +98,6 @@ class Squad extends EventSourcedModel implements HasSlots, TravelsBorders
         /** @var SquadAggregate $aggregate */
         $aggregate = SquadAggregate::retrieve($this->uuid);
         return $aggregate;
-    }
-
-    /**
-     * Get the options for generating the slug.
-     */
-    public function getSlugOptions() : SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('name')
-            ->saveSlugsTo('slug');
     }
 
     public static function getStartingHeroesCount()

@@ -10,10 +10,19 @@ namespace App\Domain\Traits;
 
 
 use Illuminate\Database\Eloquent\Builder;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
-trait HasSlug
+trait HasNameSlug
 {
-    use \Spatie\Sluggable\HasSlug;
+    use HasSlug;
+
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug');
+    }
 
     /**
      * @param $slug

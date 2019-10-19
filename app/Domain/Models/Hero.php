@@ -12,7 +12,7 @@ use App\Domain\Interfaces\HasMeasurables;
 use App\Domain\Interfaces\UsesItems;
 use App\Domain\Models\Item;
 use App\Domain\QueryBuilders\HeroQueryBuilder;
-use App\Domain\Traits\HasSlug;
+use App\Domain\Traits\HasNameSlug;
 use App\StorableEvents\HeroCreated;
 use App\Domain\Models\EventSourcedModel;
 use App\Exceptions\GameStartedException;
@@ -67,7 +67,7 @@ use Spatie\Sluggable\SlugOptions;
  */
 class Hero extends EventSourcedModel implements HasSlots, HasMeasurables, UsesItems
 {
-    use HasSlug;
+    use HasNameSlug;
 
     const RELATION_MORPH_MAP_KEY = 'heroes';
 
@@ -76,13 +76,6 @@ class Hero extends EventSourcedModel implements HasSlots, HasMeasurables, UsesIt
     public function getRouteKeyName()
     {
         return 'uuid';
-    }
-
-    public function getSlugOptions(): SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('name')
-            ->saveSlugsTo('slug');
     }
 
     public static function heroResourceRelations()

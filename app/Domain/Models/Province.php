@@ -3,7 +3,7 @@
 namespace App\Domain\Models;
 
 use App\Domain\Collections\ProvinceCollection;
-use App\Domain\Traits\HasSlug;
+use App\Domain\Traits\HasNameSlug;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Spatie\Sluggable\SlugOptions;
@@ -32,7 +32,7 @@ use Spatie\Sluggable\SlugOptions;
  */
 class Province extends EventSourcedModel
 {
-    use HasSlug;
+    use HasNameSlug;
 
     const STARTING_PROVINCES = [
         'Prasynein',
@@ -48,13 +48,6 @@ class Province extends EventSourcedModel
     public function newCollection(array $models = [])
     {
         return new ProvinceCollection($models);
-    }
-
-    public function getSlugOptions(): SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('name')
-            ->saveSlugsTo('slug');
     }
 
     public function vectorPaths()

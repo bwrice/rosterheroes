@@ -5,7 +5,7 @@ namespace App\Domain\Models;
 use App\Domain\Behaviors\Map\ContinentBehavior;
 use App\Domain\Behaviors\Map\ContinentBehaviorFactory;
 use App\Domain\Behaviors\Map\RealmBehavior;
-use App\Domain\Traits\HasSlug;
+use App\Domain\Traits\HasNameSlug;
 use App\Exceptions\UnknownBehaviorException;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\SlugOptions;
@@ -20,7 +20,7 @@ use Spatie\Sluggable\SlugOptions;
  */
 class Continent extends Model
 {
-    use HasSlug;
+    use HasNameSlug;
 
     const FETROYA = 'Fetroya';
     const EAST_WOZUL = 'East Wozul';
@@ -53,12 +53,5 @@ class Continent extends Model
     public function realmViewBox()
     {
         return $this->getBehavior()->getRealmViewBox();
-    }
-
-    public function getSlugOptions(): SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('name')
-            ->saveSlugsTo('slug');
     }
 }
