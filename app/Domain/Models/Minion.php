@@ -2,6 +2,7 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Behaviors\EnemyTypes\EnemyTypeBehavior;
 use App\Domain\Traits\HasNameSlug;
 use Illuminate\Database\Eloquent\Model;
 
@@ -36,5 +37,23 @@ class Minion extends Model
     {
         return $this->belongsTo(EnemyType::class);
     }
+
+    protected function getEnemyTypeBehavior(): EnemyTypeBehavior
+    {
+        return $this->enemyType->getBehavior();
+    }
+
+    public function getStartingHealth(): int
+    {
+        $enemyTypeBonus = $this->getEnemyTypeBehavior()->getHealthModifierBonus();
+        return (int) ceil(sqrt($this->level) * ($this->level/5) * $this->health_rating * (1 + $enemyTypeBonus));
+    }
+
+    public function getProtection(): int
+    {
+        $enemyTypeBonus = $this->getEnemyTypeBehavior()->getProtectionModifierBonus();
+        return (int) ceil(sqrt($this->level) * ($this->level/5) * $this->protection_rating * (1 + $enemyTypeBonus));
+    }
+
 
 }
