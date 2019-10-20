@@ -1,5 +1,7 @@
 <?php
 
+use App\Domain\Models\MeasurableType;
+use App\Domain\Models\Spell;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -13,13 +15,13 @@ class SeedSpells extends Migration
      */
     public function up()
     {
-        $measurableTypes = \App\Domain\Models\MeasurableType::all();
+        $measurableTypes = MeasurableType::all();
 
         $measurableGroups = [
             [
                 'types' => [
                     [
-                        'name' => \App\Domain\Models\MeasurableType::STRENGTH,
+                        'name' => MeasurableType::STRENGTH,
                         'spells' => [
                             [
                                 'name' => 'Muscle',
@@ -64,7 +66,7 @@ class SeedSpells extends Migration
                         ]
                     ],
                     [
-                        'name' => \App\Domain\Models\MeasurableType::VALOR,
+                        'name' => MeasurableType::VALOR,
                         'spells' => [
                             [
                                 'name' => 'Boldness',
@@ -109,7 +111,7 @@ class SeedSpells extends Migration
                         ]
                     ],
                     [
-                        'name' => \App\Domain\Models\MeasurableType::AGILITY,
+                        'name' => MeasurableType::AGILITY,
                         'spells' => [
                             [
                                 'name' => 'Quickness',
@@ -154,7 +156,7 @@ class SeedSpells extends Migration
                         ]
                     ],
                     [
-                        'name' => \App\Domain\Models\MeasurableType::FOCUS,
+                        'name' => MeasurableType::FOCUS,
                         'spells' => [
                             [
                                 'name' => 'Alertness',
@@ -199,7 +201,7 @@ class SeedSpells extends Migration
                         ]
                     ],
                     [
-                        'name' => \App\Domain\Models\MeasurableType::APTITUDE,
+                        'name' => MeasurableType::APTITUDE,
                         'spells' => [
                             [
                                 'name' => 'Competence',
@@ -244,7 +246,7 @@ class SeedSpells extends Migration
                         ]
                     ],
                     [
-                        'name' => \App\Domain\Models\MeasurableType::INTELLIGENCE,
+                        'name' => MeasurableType::INTELLIGENCE,
                         'spells' => [
                             [
                                 'name' => 'Sense',
@@ -293,7 +295,7 @@ class SeedSpells extends Migration
             [
                 'types' => [
                     [
-                        'name' => \App\Domain\Models\MeasurableType::HEALTH,
+                        'name' => MeasurableType::HEALTH,
                         'spells' => [
                             [
                                 'name' => 'Well-Being',
@@ -338,7 +340,7 @@ class SeedSpells extends Migration
                         ]
                     ],
                     [
-                        'name' => \App\Domain\Models\MeasurableType::STAMINA,
+                        'name' => MeasurableType::STAMINA,
                         'spells' => [
                             [
                                 'name' => 'Resolve',
@@ -387,7 +389,7 @@ class SeedSpells extends Migration
             [
                 'types' => [
                     [
-                        'name' => \App\Domain\Models\MeasurableType::PASSION,
+                        'name' => MeasurableType::PASSION,
                         'spells' => [
                             [
                                 'name' => 'Push',
@@ -472,7 +474,7 @@ class SeedSpells extends Migration
                         ]
                     ],
                     [
-                        'name' => \App\Domain\Models\MeasurableType::BALANCE,
+                        'name' => MeasurableType::BALANCE,
                         'spells' => [
                             [
                                 'name' => 'Calm',
@@ -557,7 +559,7 @@ class SeedSpells extends Migration
                         ]
                     ],
                     [
-                        'name' => \App\Domain\Models\MeasurableType::HONOR,
+                        'name' => MeasurableType::HONOR,
                         'spells' => [
                             [
                                 'name' => 'Decency',
@@ -642,7 +644,7 @@ class SeedSpells extends Migration
                         ]
                     ],
                     [
-                        'name' => \App\Domain\Models\MeasurableType::PRESTIGE,
+                        'name' => MeasurableType::PRESTIGE,
                         'spells' => [
                             [
                                 'name' => 'Leverage',
@@ -727,7 +729,7 @@ class SeedSpells extends Migration
                         ]
                     ],
                     [
-                        'name' => \App\Domain\Models\MeasurableType::WRATH,
+                        'name' => MeasurableType::WRATH,
                         'spells' => [
                             [
                                 'name' => 'Aggression',
@@ -816,15 +818,15 @@ class SeedSpells extends Migration
         ];
 
 
-        foreach ( $measurableGroups as $group ) {
-            foreach ( $group['types'] as $type ) {
-                foreach ( $type['spells'] as $spellArray ) {
+        foreach ($measurableGroups as $group) {
+            foreach ($group['types'] as $type) {
+                foreach ($type['spells'] as $spellArray) {
 
-                    $spell = \App\Domain\Models\Spell::create( [
+                    $spell = Spell::create([
                         'name' => $spellArray['name']
-                    ] );
+                    ]);
 
-                    /** @var \App\Domain\Models\Spell $spell */
+                    /** @var Spell $spell */
                     $spell->measurableBoosts()->create([
                         'measurable_type_id' => $measurableTypes->where( 'name', $type['name'] )->first()->id,
                         'boost_level' => $spellArray['level']
