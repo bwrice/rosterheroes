@@ -25,6 +25,8 @@ class SeedMinions extends Migration
                 'damage_rating' => 35,
                 'health_rating' => 35,
                 'protection_rating' => 30,
+                'attack_speed_rating' => 50,
+                'block_rating' => 50,
                 'enemy_type' => EnemyType::SKELETON,
                 'combat_position' => CombatPosition::BACK_LINE,
                 'attacks' => [
@@ -39,6 +41,8 @@ class SeedMinions extends Migration
                 'damage_rating' => 15,
                 'health_rating' => 35,
                 'protection_rating' => 50,
+                'attack_speed_rating' => 50,
+                'block_rating' => 50,
                 'enemy_type' => EnemyType::SKELETON,
                 'combat_position' => CombatPosition::FRONT_LINE,
                 'attacks' => [
@@ -53,6 +57,8 @@ class SeedMinions extends Migration
                 'damage_rating' => 60,
                 'health_rating' => 15,
                 'protection_rating' => 25,
+                'attack_speed_rating' => 50,
+                'block_rating' => 50,
                 'enemy_type' => EnemyType::SKELETON,
                 'combat_position' => CombatPosition::BACK_LINE,
                 'attacks' => [
@@ -68,6 +74,8 @@ class SeedMinions extends Migration
                 'damage_rating' => 75,
                 'health_rating' => 20,
                 'protection_rating' => 5,
+                'attack_speed_rating' => 50,
+                'block_rating' => 50,
                 'enemy_type' => EnemyType::SKELETON,
                 'combat_position' => CombatPosition::BACK_LINE,
                 'attacks' => [
@@ -84,6 +92,8 @@ class SeedMinions extends Migration
                 'damage_rating' => 20,
                 'health_rating' => 40,
                 'protection_rating' => 40,
+                'attack_speed_rating' => 50,
+                'block_rating' => 50,
                 'enemy_type' => EnemyType::SKELETON,
                 'combat_position' => CombatPosition::FRONT_LINE,
                 'attacks' => [
@@ -101,6 +111,8 @@ class SeedMinions extends Migration
                 'damage_rating' => 70,
                 'health_rating' => 25,
                 'protection_rating' => 5,
+                'attack_speed_rating' => 50,
+                'block_rating' => 50,
                 'enemy_type' => EnemyType::SKELETON,
                 'combat_position' => CombatPosition::HIGH_GROUND,
                 'attacks' => [
@@ -145,6 +157,8 @@ class SeedMinions extends Migration
                 'damage_rating' => $minionData['damage_rating'],
                 'health_rating' => $minionData['health_rating'],
                 'protection_rating' => $minionData['protection_rating'],
+                'attack_speed_rating' => $minionData['attack_speed_rating'],
+                'block_rating' => $minionData['block_rating'],
                 'enemy_type_id' => $enemyTypes->where('name', '=', $minionData['enemy_type'])->first()->id,
                 'combat_position_id' => $combatPositions->where('name', '=', $minionData['combat_position'])->first()->id
             ]);
