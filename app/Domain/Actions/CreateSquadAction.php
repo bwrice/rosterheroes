@@ -13,6 +13,7 @@ use App\Aggregates\SquadAggregate;
 use App\Domain\Models\HeroPostType;
 use App\Domain\Models\MobileStorageRank;
 use App\Domain\Models\Province;
+use App\Domain\Models\Spell;
 use App\Domain\Models\Squad;
 use App\Domain\Models\SquadRank;
 use Illuminate\Support\Str;
@@ -23,10 +24,17 @@ class CreateSquadAction
      * @var UpdateSquadSlotsAction
      */
     private $updateSquadSlotsAction;
+    /**
+     * @var AddSpellToLibraryAction
+     */
+    private $addSpellToLibraryAction;
 
-    public function __construct(UpdateSquadSlotsAction $updateSquadSlotsAction)
+    public function __construct(
+        UpdateSquadSlotsAction $updateSquadSlotsAction,
+        AddSpellToLibraryAction $addSpellToLibraryAction)
     {
         $this->updateSquadSlotsAction = $updateSquadSlotsAction;
+        $this->addSpellToLibraryAction = $addSpellToLibraryAction;
     }
 
     /**
@@ -65,6 +73,11 @@ class CreateSquadAction
         $aggregate->persist();
         $squad = Squad::findUuid($squadUuid);
         $this->updateSquadSlotsAction->execute($squad);
+
+        $startingSpells = Spell::query()->whereIn('name', Squad::STARTING_SPELLS)->get();
+        $startingSpells->each(function (Spell $spell) use ($squad) {
+            $this->addSpellToLibraryAction->execute($squad, $spell);
+        });
 
         return $squad->fresh();
     }
