@@ -45,4 +45,16 @@ class AddSpellToLibraryActionTest extends TestCase
             $this->assertEquals(AddSpellException::CODE_ALREADY_OWNS, $exception->getCode());
         }
     }
+
+    /**
+     * @test
+     */
+    public function it_will_add_a_spell_to_a_squad()
+    {
+        $this->domainAction->execute($this->squad, $this->spell);
+
+        $squad = $this->squad->fresh();
+        $spell = $squad->spells()->where('id', '=', $this->spell->id)->first();
+        $this->assertNotNull($spell);
+    }
 }
