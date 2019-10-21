@@ -23,7 +23,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class SquadFeatureTest extends TestCase
+class SquadControllerTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -34,8 +34,7 @@ class SquadFeatureTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        /** @var User $user */
-        $user = Passport::actingAs(factory(User::class)->create());
+        Passport::actingAs(factory(User::class)->create());
 
         $name = 'TestSquad' . rand(1,999999);
 
@@ -43,25 +42,11 @@ class SquadFeatureTest extends TestCase
            'name' => $name
         ]);
 
-        $response->assertStatus(201);
-
-        /** @var Squad $squad */
-        $squad = Squad::where('name', $name)->first();
-
-        $this->assertEquals($user->squads->first()->id, $squad->id);
-        $this->assertEquals(Squad::STARTING_ESSENCE, $squad->spirit_essence, "Squad has starting spirit essence");
-        $this->assertEquals(Squad::STARTING_GOLD, $squad->gold, "Squad has starting gold");
-        $this->assertEquals(Squad::STARTING_FAVOR, $squad->favor, "Squad has starting favor");
-        $this->assertEquals(Squad::STARTING_EXPERIENCE, $squad->experience, "Squad has starting experience");
-
-        $this->assertEquals($squad->mobileStorageRank->getBehavior()->getSlotsCount(), $squad->slots()->count(), "Squad has it's slots");
-
-        $this->assertEquals(count(Squad::STARTING_HERO_POSTS), $squad->heroPosts->count(), 'Squad has correct number of hero posts');
-
-       foreach(Squad::STARTING_HERO_POST_TYPES as $heroPostTypeName => $count) {
-           $heroPostTypeName = HeroPostType::where('name', '=', $heroPostTypeName)->first();
-           $this->assertEquals($count, $squad->heroPosts->where('hero_post_type_id', '=', $heroPostTypeName->id)->count(), "Correct amount of hero posts by hero post type");
-       }
+        $response->assertStatus(200)->assertJson([
+            'data' => [
+                'name' => $name
+            ]
+        ]);
     }
 
     /**
