@@ -2,6 +2,8 @@
 
 namespace App\Projectors;
 
+use App\Domain\Models\Spell;
+use App\StorableEvents\SpellAddedToLibrary;
 use App\StorableEvents\SquadCreated;
 use App\Domain\Models\Squad;
 use App\StorableEvents\SquadLocationUpdated;
@@ -30,5 +32,12 @@ class SquadProjector implements Projector
         $squad = Squad::findUuid($aggregateUuid);
         $squad->province_id = $event->toProvinceID;
         $squad->save();
+    }
+
+    public function onSpellAddedToLibrary(SpellAddedToLibrary $event, string $aggregateUuid)
+    {
+        $squad = Squad::findUuid($aggregateUuid);
+        $spell = Spell::query()->findOrFail($event->spellID);
+        $squad->spells()->save($spell);
     }
 }
