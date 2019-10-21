@@ -20,7 +20,7 @@ class SquadController extends Controller
 
         $squad = $createSquadAction->execute(auth()->user()->id, $request->name);
 
-        return response()->json(new SquadResource($squad), 201);
+        return new SquadResource($squad);
     }
 
     public function create()
