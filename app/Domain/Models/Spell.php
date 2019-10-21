@@ -15,6 +15,9 @@ use Illuminate\Database\Eloquent\Model;
  * Class Spell
  * @package App\Domain\Models
  *
+ * @property int $id
+ * @property string $name
+ *
  * @property MeasurableBoostCollection $measurableBoosts
  */
 class Spell extends Model implements BoostsMeasurables
@@ -23,9 +26,26 @@ class Spell extends Model implements BoostsMeasurables
 
     protected $guarded = [];
 
+    public static function getResourceRelations()
+    {
+        return [
+            'measurableBoosts.measurableType'
+        ];
+    }
+
     public function measurableBoosts()
     {
         return $this->morphMany(MeasurableBoost::class, 'booster' );
+    }
+
+    public function manaCost(): int
+    {
+        $boosterCount = $this->measurableBoosts->count();
+        if (! $boosterCount) {
+            return 0;
+        }
+        $boostLevelSum = $this->measurableBoosts->boostLevelSum();
+        return ceil(10 * ($boostLevelSum ** .85) * (1/sqrt($boosterCount)));
     }
 
     public function getMeasurableBoostMultiplier(MeasurableTypeBehavior $measurableTypeBehavior): int
