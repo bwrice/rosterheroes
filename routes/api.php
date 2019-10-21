@@ -18,6 +18,7 @@ use App\Http\Controllers\RaiseHeroMeasurableController;
 use App\Http\Controllers\RosterHeroesController;
 use App\Http\Controllers\SportController;
 use App\Http\Controllers\SquadCurrentLocationController;
+use App\Http\Controllers\SquadSpellController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TerritoryController;
 use App\Http\Controllers\WeekController;
@@ -91,11 +92,14 @@ Route::prefix('v1')->group(function () {
             Route::get('{squadSlug}/heroes', [SquadHeroController::class, 'index']);
 //        Route::get('/squads/{squadSlug}/roster/heroes', RosterHeroesController::class);
             Route::get('{squadSlug}/current-location', SquadCurrentLocationController::class);
+            Route::get('{squadSlug}/current-location/quests', SquadCurrentLocationController::class);
 
             Route::get('{squadSlug}/mobile-storage', MobileStorageController::class);
 
             Route::post('{squadSlug}/border/{borderSlug}', [SquadBorderTravelController::class, 'store']);
             Route::get('{squadSlug}/border/{borderSlug}', [SquadBorderTravelController::class, 'show']);
+
+            Route::get('{squadSlug}/spells', [SquadSpellController::class, 'index']);
         });
 
         Route::get('/squad/{squadSlug}/hero-classes', SquadHeroClassController::class);
