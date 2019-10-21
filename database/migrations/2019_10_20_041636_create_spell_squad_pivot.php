@@ -20,7 +20,7 @@ class CreateSpellSquadPivot extends Migration
             $table->timestamps();
         });
 
-        Schema::table('campaign_quest', function (Blueprint $table) {
+        Schema::table('spell_squad', function (Blueprint $table) {
             $table->foreign('spell_id')->references('id')->on('spells');
             $table->foreign('squad_id')->references('id')->on('squads');
         });
