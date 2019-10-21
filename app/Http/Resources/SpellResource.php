@@ -22,6 +22,7 @@ class SpellResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'name' => $this->name,
             'manaCost' => $this->manaCost(),
             'measurableBoosts' => MeasurableBoostResource::collection($this->measurableBoosts)
