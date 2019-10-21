@@ -82,6 +82,7 @@
             this.updateGames();
             this.updateTeams();
             this.updateSports();
+            this.updateSpellLibrary(route);
         },
 
         data: function() {
@@ -111,7 +112,8 @@
                 'updatePlayerSpirits',
                 'updateGames',
                 'updateTeams',
-                'updateSports'
+                'updateSports',
+                'updateSpellLibrary'
             ])
         },
         computed: {

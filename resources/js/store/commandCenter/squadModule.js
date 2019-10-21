@@ -6,6 +6,7 @@ import MobileStorage from "../../models/MobileStorage";
 import SlotTransaction from "../../models/SlotTransaction";
 import Squad from "../../models/Squad";
 import CurrentLocation from "../../models/CurrentLocation";
+import Spell from "../../models/Spell";
 
 export default {
 
@@ -14,12 +15,16 @@ export default {
         heroes: [],
         mobileStorage: new MobileStorage({}),
         barracksLoading: true,
-        currentLocation: new CurrentLocation({})
+        currentLocation: new CurrentLocation({}),
+        spells: []
     },
 
     getters: {
         _squad(state) {
             return state.squad;
+        },
+        _spellLibrary(state) {
+            return state.spells;
         },
         _heroes(state) {
             return state.heroes;
@@ -59,6 +64,9 @@ export default {
         SET_SQUAD(state, payload) {
             state.squad = payload;
         },
+        SET_SPELL_LIBRARY(state, payload) {
+            state.spells = payload;
+        },
         SET_HEROES(state, payload) {
             state.heroes = payload;
         },
@@ -78,6 +86,13 @@ export default {
         async updateSquad({commit}, route) {
             let squadResponse = await squadApi.getSquad(route.params.squadSlug);
             commit('SET_SQUAD', new Squad(squadResponse.data));
+        },
+
+
+        async updateSpellLibrary({commit}, route) {
+            let response = await squadApi.getSpellLibrary(route.params.squadSlug);
+            let spells = response .data.map(spellData => new Spell(spellData));
+            commit('SET_SPELL_LIBRARY', spells);
         },
 
         async updateCurrentLocation({commit}, route) {

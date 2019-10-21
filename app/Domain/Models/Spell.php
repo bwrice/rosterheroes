@@ -29,7 +29,8 @@ class Spell extends Model implements BoostsMeasurables
     public static function getResourceRelations()
     {
         return [
-            'measurableBoosts.measurableType'
+            'measurableBoosts.measurableType',
+            'measurableBoosts.booster'
         ];
     }
 
