@@ -70,6 +70,26 @@ class Squad extends EventSourcedModel implements HasSlots, TravelsBorders
         HeroPostType::ORC => 1
     ];
 
+    public const STARTING_SPELLS = [
+        'Muscle',
+        'Boldness',
+        'Quickness',
+        'Alertness',
+        'Competence',
+        'Sense',
+        'Well-Being',
+        'Fettle',
+        'Vigor',
+        'Resolve',
+        'Tolerance',
+        'Firmness',
+        'Push',
+        'Relaxation',
+        'Decency',
+        'Leverage',
+        'Aggression',
+    ];
+
     protected $guarded = [];
 
     public static function getMobileStorageResourceRelations()
@@ -175,6 +195,11 @@ class Squad extends EventSourcedModel implements HasSlots, TravelsBorders
     public function slots()
     {
         return $this->morphMany(Slot::class, 'has_slots');
+    }
+
+    public function spells()
+    {
+        return $this->belongsToMany(Spell::class);
     }
 
     public function stashes()
