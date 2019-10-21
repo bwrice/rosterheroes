@@ -477,11 +477,11 @@ class SeedSpells extends Migration
                         'name' => MeasurableType::BALANCE,
                         'spells' => [
                             [
-                                'name' => 'Calm',
+                                'name' => 'Relaxation',
                                 'level' => 1
                             ],
                             [
-                                'name' => 'Relaxation',
+                                'name' => 'Calm',
                                 'level' => 2
                             ],
                             [
