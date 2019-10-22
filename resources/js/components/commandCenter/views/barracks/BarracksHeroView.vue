@@ -1,23 +1,23 @@
 <template>
-    <TwoColumnLayout>
-        <template v-slot:column-one>
+    <v-container>
+        <template v-if="_barracksLoading">
+            <LoadingOverlay :show-overlay="_barracksLoading"></LoadingOverlay>
+        </template>
+        <template v-else>
             <v-row>
-                <v-col cols="12" class="pt-0">
+                <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="5" offset-lg="1" xl="4" offset-xl="0">
                     <HeroHeader :hero="hero"></HeroHeader>
-                </v-col>
-                <v-col cols="12" class="pb-0">
                     <HeroGearCard :hero="hero"></HeroGearCard>
                 </v-col>
-            </v-row>
-        </template>
-        <template v-slot:column-two>
-            <v-row>
-                <v-col cols="12" class="pt-0">
+                <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="5" xl="4">
                     <HeroMeasurablesCard :hero="hero"></HeroMeasurablesCard>
                 </v-col>
+<!--                <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="5" offset-lg="1" xl="4" offset-xl="0">-->
+<!--                    <SpellLibraryCard :spells="_spellLibrary"></SpellLibraryCard>-->
+<!--                </v-col>-->
             </v-row>
         </template>
-    </TwoColumnLayout>
+    </v-container>
 </template>
 
 <script>
@@ -29,16 +29,18 @@
     import HeroHeader from "../../barracks/HeroHeader";
 
     import {mapGetters} from 'vuex';
+    import LoadingOverlay from "../../global/LoadingOverlay";
 
     export default {
         name: "BarracksHeroView",
-        components: {HeroHeader, TwoColumnLayout, HeroGearCard, HeroMeasurablesCard, MeasurablePanel},
+        components: {LoadingOverlay, HeroHeader, TwoColumnLayout, HeroGearCard, HeroMeasurablesCard, MeasurablePanel},
         mixins: [
             barracksHeroMixin
         ],
         computed: {
             ...mapGetters([
-                '_focusedHero'
+                '_focusedHero',
+                '_barracksLoading'
             ]),
             hero() {
                 return this._focusedHero(this.$route);
