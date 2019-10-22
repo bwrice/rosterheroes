@@ -1,5 +1,5 @@
 <template>
-    <v-card>
+    <v-card class="mb-3">
         <v-row no-gutters align="center" class="py-2">
             <v-col cols="9" class="pl-2">
                 <PlayerSpiritSummaryPanel
