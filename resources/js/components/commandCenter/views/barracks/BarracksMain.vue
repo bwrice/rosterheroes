@@ -1,7 +1,7 @@
 <template>
     <v-container>
-        <template v-if="loading">
-            <LoadingOverlay :show-overlay="loading"></LoadingOverlay>
+        <template v-if="_barracksLoading">
+            <LoadingOverlay :show-overlay="_barracksLoading"></LoadingOverlay>
         </template>
         <template v-else>
             <v-row>
