@@ -23,8 +23,8 @@ class MeasurableBoostResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'measurableType' => new MeasurableTypeResource($this->measurableType),
-            'boost_level' => $this->boost_level,
+            'measurableTypeID' => $this->measurable_type_id,
+            'boostLevel' => $this->boost_level,
             'boostAmount' => $this->getBoostAmount(),
             'description' => $this->getDescription()
         ];

@@ -1,11 +1,9 @@
-import MeasurableType from "./MeasurableType";
 
 export default class MeasurableBoost {
 
-    constructor({measurableType, boost_level, boostAmount, description}) {
-        this.measurableType = measurableType ?
-            new MeasurableType(measurableType) : new MeasurableType({});
-        this.boostLevel = boost_level;
+    constructor({measurableTypeID = 0, boostLevel, boostAmount, description}) {
+        this.measurableTypeID = measurableTypeID;
+        this.boostLevel = boostLevel;
         this.boostAmount = boostAmount;
         this.description = description;
     }
