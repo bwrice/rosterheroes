@@ -1,5 +1,5 @@
 <template>
-    <span class="subtitle-2 font-weight-regular" style="color: rgba(255, 255, 255, .7)">
+    <span class="subtitle-2 font-weight-bold" style="color: rgba(255, 255, 255, .7)">
         {{description}}
     </span>
 </template>
@@ -22,7 +22,7 @@
                 '_measurableTypeByID'
             ]),
             description() {
-                return '+' + this.measurableBoost.boostAmount + ' ' + this.measurableType.name;
+                return '+' + this.measurableBoost.boostAmount + ' ' + this.measurableType.name.toUpperCase();
             },
             measurableType() {
                 return this._measurableTypeByID(this.measurableBoost.measurableTypeID);
