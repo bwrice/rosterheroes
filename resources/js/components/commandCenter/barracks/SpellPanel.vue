@@ -1,18 +1,52 @@
 <template>
-    <v-sheet color="#564c59">
-        <span class="subtitle-2">{{spell.name}}</span>
+    <v-sheet color="#564c59"
+             tile
+             style="margin: 1px 0 1px 0"
+    >
+        <v-row align="center" justify="center" class="mx-2">
+            <span class="subtitle-2 font-weight-light pa-2">{{spell.name}}</span>
+            <div class="flex-grow-1"></div>
+            <v-btn @click="expanded = ! expanded"
+                   fab
+                   dark
+                   x-small
+                   color="rgba(0, 0, 0, .4)"
+            >
+                <v-icon v-if="expanded">expand_less</v-icon>
+                <v-icon v-else>expand_more</v-icon>
+            </v-btn>
+        </v-row>
+        <v-row v-if="expanded">
+            <v-col cols="12">
+                <v-sheet color="rgba(0, 0, 0, 0.4)" class="mx-3">
+                    <v-row no-gutters class="flex-column" align="start">
+                        <MeasurableBoostDescription v-for="(measurableBoost, measurableTypeID) in spell.measurableBoosts"
+                                                    :key="measurableTypeID"
+                                                    :measurable-boost="measurableBoost"
+                        ></MeasurableBoostDescription>
+                    </v-row>
+                </v-sheet>
+            </v-col>
+        </v-row>
     </v-sheet>
 </template>
 
 <script>
     import Spell from "../../../models/Spell";
+    import MeasurableBoostDescription from "./MeasurableBoostDescription";
 
     export default {
         name: "SpellPanel",
+        components: {MeasurableBoostDescription},
         props: {
             spell: {
                 type: Spell,
                 required: true
+            }
+        },
+        data() {
+            return {
+                expanded: false
             }
         }
     }
