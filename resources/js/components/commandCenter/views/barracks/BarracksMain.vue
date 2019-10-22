@@ -5,13 +5,13 @@
         </template>
         <template v-else>
             <v-row>
-                <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="4" xl="3">
+                <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="5" offset-lg="1" xl="4" offset-xl="0">
                     <HeroesCard :heroes="_heroes"></HeroesCard>
                 </v-col>
-                <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="4" xl="3">
+                <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="5" xl="4">
                     <MobileStorageCard :mobile-storage="_mobileStorage"></MobileStorageCard>
                 </v-col>
-                <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="4" xl="3">
+                <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="5" offset-lg="1" xl="4" offset-xl="0">
                     <SpellLibraryCard :spells="_spellLibrary"></SpellLibraryCard>
                 </v-col>
             </v-row>
