@@ -1,20 +1,22 @@
 <template>
-    <TwoColumnLayout :loading="_barracksLoading">
-        <template v-slot:column-one>
+    <v-container>
+        <template v-if="loading">
+            <LoadingOverlay :show-overlay="loading"></LoadingOverlay>
+        </template>
+        <template v-else>
             <v-row>
-                <v-col cols="12" class="pt-0 pb-0">
+                <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="4" xl="3">
                     <HeroesCard :heroes="_heroes"></HeroesCard>
                 </v-col>
-            </v-row>
-        </template>
-        <template v-slot:column-two>
-            <v-row>
-                <v-col cols="12" class="pt-0">
+                <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="4" xl="3">
                     <MobileStorageCard :mobile-storage="_mobileStorage"></MobileStorageCard>
+                </v-col>
+                <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="4" xl="3">
+                    <SpellLibraryCard :spells="_spellLibrary"></SpellLibraryCard>
                 </v-col>
             </v-row>
         </template>
-    </TwoColumnLayout>
+    </v-container>
 </template>
 
 <script>
@@ -24,16 +26,19 @@
     import MobileStorageCard from "../../barracks/MobileStorageCard";
     import HeroesCard from "../../barracks/HeroesCard";
     import TwoColumnLayout from "../../layouts/TwoColumnLayout";
+    import LoadingOverlay from "../../global/LoadingOverlay";
+    import SpellLibraryCard from "../../barracks/SpellLibraryCard";
 
     export default {
         name: "BarracksMain",
-        components: {TwoColumnLayout, HeroesCard, MobileStorageCard, BarracksHeroCard},
+        components: {SpellLibraryCard, LoadingOverlay, TwoColumnLayout, HeroesCard, MobileStorageCard, BarracksHeroCard},
 
         computed: {
             ...mapGetters([
                 '_mobileStorage',
                 '_heroes',
-                '_barracksLoading'
+                '_barracksLoading',
+                '_spellLibrary'
             ])
         }
     }
