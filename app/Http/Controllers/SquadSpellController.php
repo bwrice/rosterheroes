@@ -15,7 +15,7 @@ class SquadSpellController extends Controller
         $squad = Squad::findSlugOrFail($squadSlug);
         $this->authorize(SquadPolicy::MANAGE, $squad);
 
-        $spells = $squad->spells()->with(Spell::getResourceRelations());
+        $spells = $squad->spells()->with(Spell::getResourceRelations())->get();
         return SpellResource::collection($spells);
     }
 }
