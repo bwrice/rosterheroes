@@ -17,6 +17,8 @@ use App\Domain\Models\HeroPost;
 use App\Domain\Models\HeroRace;
 use App\Domain\Models\HeroRank;
 use App\Domain\Models\Squad;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
@@ -26,9 +28,9 @@ class SquadHeroController extends Controller
      * @param Request $request
      * @param $squadSlug
      * @param AddNewHeroToSquadAction $domainAction
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      * @throws ValidationException
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws AuthorizationException
      */
     public function store(Request $request, $squadSlug, AddNewHeroToSquadAction $domainAction)
     {
