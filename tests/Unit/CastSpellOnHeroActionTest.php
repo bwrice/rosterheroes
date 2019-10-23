@@ -41,6 +41,12 @@ class CastSpellOnHeroActionTest extends TestCase
             'hero_id' => $this->hero->id
         ]);
         $this->spell = Spell::query()->inRandomOrder()->first();
+        $this->squad->spells()->save($this->spell);
+        /** @var Week $week */
+        $week = factory(Week::class)->create();
+        $week->everything_locks_at = Date::now()->addHour();
+        $week->save();
+        Week::setTestCurrent($week);
         $this->domainAction = app(CastSpellOnHeroAction::class);
     }
 
@@ -63,6 +69,21 @@ class CastSpellOnHeroActionTest extends TestCase
             return;
         }
 
+        $this->fail("Exception not thrown");
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_throw_an_exception_if_the_spell_is_not_in_the_squads_library()
+    {
+        $this->squad->spells()->sync([]); // clear spells
+        try {
+            $this->domainAction->execute($this->hero, $this->spell);
+        } catch (SpellCasterException $exception) {
+            $this->assertEquals(SpellCasterException::CODE_SPELL_NOT_OWNED, $exception->getCode());
+            return;
+        }
         $this->fail("Exception not thrown");
     }
 }

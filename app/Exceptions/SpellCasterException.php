@@ -11,6 +11,7 @@ use Throwable;
 class SpellCasterException extends \RuntimeException
 {
     public const CODE_WEEK_LOCKED = 1;
+    public const CODE_SPELL_NOT_OWNED = 2;
 
     /**
      * @var SpellCaster
