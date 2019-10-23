@@ -7,7 +7,9 @@ use App\Domain\Behaviors\MeasurableTypes\MeasurableTypeBehavior;
 use App\Domain\Behaviors\MeasurableTypes\Qualities\QualityBehavior;
 use App\Domain\Behaviors\MeasurableTypes\Resources\ResourceBehavior;
 use App\Domain\Collections\MeasurableBoostCollection;
+use App\Domain\Collections\SpellCollection;
 use App\Domain\Interfaces\BoostsMeasurables;
+use App\Domain\Interfaces\SpellCaster;
 use App\Domain\Models\MeasurableBoost;
 use Illuminate\Database\Eloquent\Model;
 
@@ -24,6 +26,9 @@ class Spell extends Model implements BoostsMeasurables
 {
     const RELATION_MORPH_MAP_KEY = 'spells';
 
+    /** @var SpellCaster|null */
+    protected $spellCaster;
+
     protected $guarded = [];
 
     public static function getResourceRelations()
@@ -37,6 +42,11 @@ class Spell extends Model implements BoostsMeasurables
     public function measurableBoosts()
     {
         return $this->morphMany(MeasurableBoost::class, 'booster' );
+    }
+
+    public function newCollection(array $models = [])
+    {
+        return new SpellCollection($models);
     }
 
     public function manaCost(): int
@@ -60,5 +70,15 @@ class Spell extends Model implements BoostsMeasurables
                 return 2;
         }
         throw new \InvalidArgumentException("Unknown group name: " . $measurableTypeBehavior->getGroupName());
+    }
+
+    /**
+     * @param SpellCaster|null $spellCaster
+     * @return Spell
+     */
+    public function setSpellCaster(?SpellCaster $spellCaster): Spell
+    {
+        $this->spellCaster = $spellCaster;
+        return $this;
     }
 }
