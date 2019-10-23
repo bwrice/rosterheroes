@@ -152,7 +152,7 @@ class Hero extends EventSourcedModel implements HasSlots, HasMeasurables, UsesIt
 
     public function spells()
     {
-        return $this->belongsToMany(Spell::class);
+        return $this->belongsToMany(Spell::class)->withTimestamps();
     }
 
     /**

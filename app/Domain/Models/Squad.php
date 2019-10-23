@@ -199,7 +199,7 @@ class Squad extends EventSourcedModel implements HasSlots, TravelsBorders
 
     public function spells()
     {
-        return $this->belongsToMany(Spell::class);
+        return $this->belongsToMany(Spell::class)->withTimestamps();
     }
 
     public function stashes()
