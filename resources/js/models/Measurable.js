@@ -1,7 +1,7 @@
 
 export default class Measurable {
 
-    constructor({name = '', uuid, measurableTypeID = 0, amountRaised, costToRaise, preBuffedAmount, buffedAmount, spentOnRaising}) {
+    constructor({name = '', uuid, measurableTypeID = 0, amountRaised, costToRaise, preBuffedAmount, buffedAmount, currentAmount, spentOnRaising}) {
         this.name = name;
         this.uuid = uuid;
         this.measurableTypeID = measurableTypeID;
@@ -9,6 +9,7 @@ export default class Measurable {
         this.costToRaise = costToRaise;
         this._buffedAmount = buffedAmount;
         this._preBuffedAmount = preBuffedAmount;
+        this.currentAmount = currentAmount;
         this.spentOnRaising = spentOnRaising;
     }
 
