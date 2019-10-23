@@ -12,6 +12,7 @@ class SpellCasterException extends \RuntimeException
 {
     public const CODE_WEEK_LOCKED = 1;
     public const CODE_SPELL_NOT_OWNED = 2;
+    public const CODE_SPELL_ALREADY_CASTED = 3;
 
     /**
      * @var SpellCaster

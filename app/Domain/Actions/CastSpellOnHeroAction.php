@@ -21,5 +21,9 @@ class CastSpellOnHeroAction
         if (! $squad->spells()->where('id', '=', $spell->id)->first()) {
             throw new SpellCasterException($hero, $spell, "Spell is not in library of " . $squad->name, SpellCasterException::CODE_SPELL_NOT_OWNED);
         }
+
+        if ($hero->spells()->where('id', '=', $spell->id)->first()) {
+            throw new SpellCasterException($hero, $spell, "Hero already has cast " . $spell->name, SpellCasterException::CODE_SPELL_ALREADY_CASTED);
+        }
     }
 }
