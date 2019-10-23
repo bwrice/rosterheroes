@@ -54,8 +54,15 @@ class Measurable extends EventSourcedModel
     public function getBuffedAmount(): int
     {
         $preBuffedAmount = $this->getPreBuffedAmount();
-        $buffsAmount = $this->hero->getBuffsSumAmount($this->getMeasurableTypeBehavior());
+        $buffsAmount = $this->hero->getBuffsSumAmountForMeasurable($this->getMeasurableTypeBehavior());
         return $preBuffedAmount + $buffsAmount;
+    }
+
+    public function getCurrentAmount(): int
+    {
+        $buffedAmount = $this->getBuffedAmount();
+        $amountUsed = $this->hero->getAmountUsedForMeasurable($this->getMeasurableTypeBehavior());
+        return $buffedAmount - $amountUsed;
     }
 
     public function getMeasurableTypeBehavior()
