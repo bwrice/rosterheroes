@@ -33,7 +33,7 @@ class HeroResource extends JsonResource
             'slots' => SlotResource::collection($this->slots)->collection->each(function (SlotResource $slotResource) {
                 $slotResource->setUsesItems($this->resource);
             }),
-            'spells' => $this->spells
+            'spells' => SpellResource::collection($this->spells)
         ];
     }
 }
