@@ -1,10 +1,11 @@
 import Slot from "./Slot";
 import Measurable from "./Measurable";
 import PlayerSpirit from "./PlayerSpirit";
+import Spell from "./Spell";
 
 export default class Hero {
 
-    constructor({name = '', uuid, slug = '', measurables = [], slots = [], heroClassID = 0, heroRaceID = 0, combatPositionID = 0, playerSpirit}) {
+    constructor({name = '', uuid, slug = '', measurables = [], slots = [], heroClassID = 0, heroRaceID = 0, combatPositionID = 0, playerSpirit, spells = []}) {
         this.name = name;
         this.uuid = uuid;
         this.slug = slug;
@@ -18,6 +19,9 @@ export default class Hero {
         this.heroRaceID = heroRaceID;
         this.combatPositionID = combatPositionID;
         this.playerSpirit = playerSpirit ? new PlayerSpirit(playerSpirit) : null;
+        this.spells = spells.map(function (spell) {
+            return new Spell(spell);
+        })
     }
 
     getSlot(slotUuid) {

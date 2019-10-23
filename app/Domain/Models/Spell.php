@@ -10,7 +10,6 @@ use App\Domain\Collections\MeasurableBoostCollection;
 use App\Domain\Collections\SpellCollection;
 use App\Domain\Interfaces\BoostsMeasurables;
 use App\Domain\Interfaces\SpellCaster;
-use App\Domain\Models\MeasurableBoost;
 use Illuminate\Database\Eloquent\Model;
 
 /**

@@ -2,13 +2,14 @@
 
 namespace App\Http\Resources;
 
+use App\Domain\Models\Hero;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
  * Class BarracksHeroResource
  * @package App\Http\Resources
  *
- * @mixin \App\Domain\Models\Hero
+ * @mixin Hero
  */
 class HeroResource extends JsonResource
 {
@@ -31,7 +32,8 @@ class HeroResource extends JsonResource
             'measurables' => MeasurableResource::collection($this->measurables),
             'slots' => SlotResource::collection($this->slots)->collection->each(function (SlotResource $slotResource) {
                 $slotResource->setUsesItems($this->resource);
-            })
+            }),
+            'spells' => $this->spells
         ];
     }
 }
