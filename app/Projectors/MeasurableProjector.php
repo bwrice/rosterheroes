@@ -18,8 +18,7 @@ class MeasurableProjector implements Projector
         Measurable::query()->create([
             'uuid' => $aggregateUuid,
             'measurable_type_id' => $event->measurableTypeID,
-            'has_measurables_type' => $event->hasMeasurablesType,
-            'has_measurables_id' => $event->hasMeasurablesID,
+            'hero_id' => $event->heroID,
             'amount_raised' => $event->amountRaised
         ]);
     }

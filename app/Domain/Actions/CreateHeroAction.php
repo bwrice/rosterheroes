@@ -54,7 +54,7 @@ class CreateHeroAction
             $measurableUuid = Str::uuid();
             /** @var MeasurableAggregate $measurableAggregate */
             $measurableAggregate = MeasurableAggregate::retrieve($measurableUuid);
-            $measurableAggregate->createMeasurable($measurableType->id, Hero::RELATION_MORPH_MAP_KEY, $hero->id, 0)
+            $measurableAggregate->createMeasurable($measurableType->id, $hero->id, 0)
                 ->persist();
         });
 

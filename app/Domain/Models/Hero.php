@@ -10,6 +10,7 @@ use App\Domain\Collections\ItemCollection;
 use App\Domain\Collections\MeasurableCollection;
 use App\Domain\Collections\SpellCollection;
 use App\Domain\Interfaces\HasMeasurables;
+use App\Domain\Interfaces\SpellCaster;
 use App\Domain\Interfaces\UsesItems;
 use App\Domain\Models\Item;
 use App\Domain\QueryBuilders\HeroQueryBuilder;
@@ -67,7 +68,7 @@ use Spatie\Sluggable\SlugOptions;
  *
  * @method static HeroQueryBuilder query();
  */
-class Hero extends EventSourcedModel implements HasSlots, HasMeasurables, UsesItems
+class Hero extends EventSourcedModel implements HasSlots, HasMeasurables, UsesItems, SpellCaster
 {
     use HasNameSlug;
 
@@ -90,7 +91,6 @@ class Hero extends EventSourcedModel implements HasSlots, HasMeasurables, UsesIt
             'playerSpirit.game.homeTeam',
             'playerSpirit.game.awayTeam',
             'measurables.measurableType',
-            'measurables.hasMeasurables',
             'slots.slotType',
             'slots.hasSlots',
             'slots.item.itemType.itemBase',
@@ -102,6 +102,8 @@ class Hero extends EventSourcedModel implements HasSlots, HasMeasurables, UsesIt
             'slots.item.attacks.damageType',
             'slots.item.enchantments.measurableBoosts.measurableType',
             'slots.item.enchantments.measurableBoosts.booster',
+            'spells.measurableBoosts.measurableType',
+            'spells.measurableBoosts.booster'
         ];
     }
 
@@ -122,7 +124,7 @@ class Hero extends EventSourcedModel implements HasSlots, HasMeasurables, UsesIt
 
     public function measurables()
     {
-        return $this->morphMany(Measurable::class, 'has_measurables');
+        return $this->hasMany(Measurable::class);
     }
 
     public function heroClass()
@@ -255,6 +257,12 @@ class Hero extends EventSourcedModel implements HasSlots, HasMeasurables, UsesIt
         return $preBuffedAmount + $enchantmentsBonus;
     }
 
+    public function getBuffsSumAmount(MeasurableTypeBehavior $measurableTypeBehavior): int
+    {
+        $enchantsBonus = $this->getEnchantments()->getBoostAmount($measurableTypeBehavior->getTypeName());
+        return $enchantsBonus;
+    }
+
     public function getEnchantments()
     {
         return $this->getSlots()->getItems()->getEnchantments();
@@ -303,6 +311,11 @@ class Hero extends EventSourcedModel implements HasSlots, HasMeasurables, UsesIt
         return $amountRaised + $this->getHeroClassBehavior()->getMeasurableStartingAmount($measurableTypeBehavior);
     }
 
+    public function getMeasurableStartingAmount(MeasurableTypeBehavior $measurableTypeBehavior): int
+    {
+        return $this->getHeroClassBehavior()->getMeasurableStartingAmount($measurableTypeBehavior);
+    }
+
     /**
      * @return HeroClassBehavior
      */
@@ -313,7 +326,12 @@ class Hero extends EventSourcedModel implements HasSlots, HasMeasurables, UsesIt
 
     public function getSpellPower()
     {
-        $focus = $this->getMeasurable(MeasurableType::FOCUS)->getPreBuffedAmount();
+        $focus = $this->getMeasurable(MeasurableType::FOCUS);
 
+    }
+
+    public function getAvailableMana(): int
+    {
+        // TODO: Implement getAvailableMana() method.
     }
 }

@@ -11,23 +11,18 @@ final class MeasurableCreated implements ShouldBeStored
      */
     public $measurableTypeID;
     /**
-     * @var string
-     */
-    public $hasMeasurablesType;
-    /**
      * @var int
      */
-    public $hasMeasurablesID;
+    public $heroID;
     /**
      * @var int
      */
     public $amountRaised;
 
-    public function __construct(int $measurableTypeID, string $hasMeasurablesType, int $hasMeasurablesID, int $amountRaised = 0)
+    public function __construct(int $measurableTypeID, int $heroID, int $amountRaised = 0)
     {
         $this->measurableTypeID = $measurableTypeID;
-        $this->hasMeasurablesType = $hasMeasurablesType;
-        $this->hasMeasurablesID = $hasMeasurablesID;
+        $this->heroID = $heroID;
         $this->amountRaised = $amountRaised;
     }
 }

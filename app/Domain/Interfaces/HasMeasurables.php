@@ -13,11 +13,13 @@ interface HasMeasurables
 
     public function spentOnRaisingMeasurable(MeasurableTypeBehavior $measurableTypeBehavior, int $amountRaised): int;
 
-//    public function getCurrentMeasurableAmount(Measurable $measurable): int;
-
     public function calculateMeasurableBuffedAmount(MeasurableTypeBehavior $measurableTypeBehavior, int $amountRaised): int;
 
     public function availableExperience(): int;
 
     public function getMeasurablePreBuffedAmount(MeasurableTypeBehavior $measurableTypeBehavior, int $amountRaised): int;
+
+    public function getMeasurableStartingAmount(MeasurableTypeBehavior $measurableTypeBehavior): int;
+
+    public function getBuffsSumAmount(MeasurableTypeBehavior $measurableTypeBehavior): int;
 }

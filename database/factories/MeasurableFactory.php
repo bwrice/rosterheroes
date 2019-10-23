@@ -1,20 +1,23 @@
 <?php
 
-/* @var $factory \Illuminate\Database\Eloquent\Factory */
+/* @var $factory Factory */
 
-use App\Model;
+use App\Domain\Models\Hero;
+use App\Domain\Models\Measurable;
+use App\Domain\Models\MeasurableType;
 use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factory;
+use Illuminate\Support\Str;
 
-$factory->define(\App\Domain\Models\Measurable::class, function (Faker $faker) {
+$factory->define(Measurable::class, function (Faker $faker) {
     return [
-        'uuid' => \Illuminate\Support\Str::uuid(),
+        'uuid' => Str::uuid(),
         'amount_raised' => 0,
         'measurable_type_id' => function() {
-            return \App\Domain\Models\MeasurableType::query()->inRandomOrder()->first()->id;
+            return MeasurableType::query()->inRandomOrder()->first()->id;
         },
-        'has_measurables_type' => \App\Domain\Models\Hero::RELATION_MORPH_MAP_KEY,
-        'has_measurables_id' => function() {
-            return factory(\App\Domain\Models\Hero::class)->create()->id;
+        'hero_id' => function() {
+            return factory(Hero::class)->create()->id;
         }
     ];
 });

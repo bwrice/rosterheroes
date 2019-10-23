@@ -13,7 +13,7 @@ use App\Domain\Interfaces\HasMeasurables;
  * @property int $measurable_type_id
  * @property int $amount_raised
  *
- * @property HasMeasurables $hasMeasurables
+ * @property Hero $hero
  * @property MeasurableType $measurableType
  */
 class Measurable extends EventSourcedModel
@@ -30,33 +30,41 @@ class Measurable extends EventSourcedModel
         return $this->belongsTo(MeasurableType::class);
     }
 
-    public function hasMeasurables()
+    public function hero()
     {
-        return $this->morphTo();
+        return $this->belongsTo(Hero::class);
     }
 
     public function getCostToRaise(int $amountToRaise = 1): int
     {
-        return $this->hasMeasurables->costToRaiseMeasurable($this->getMeasurableTypeBehavior(), $this->amount_raised, $amountToRaise);
+        return $this->hero->costToRaiseMeasurable($this->getMeasurableTypeBehavior(), $this->amount_raised, $amountToRaise);
     }
 
     public function spentOnRaising(): int
     {
-        return $this->hasMeasurables->spentOnRaisingMeasurable($this->getMeasurableTypeBehavior(), $this->amount_raised);
+        return $this->hero->spentOnRaisingMeasurable($this->getMeasurableTypeBehavior(), $this->amount_raised);
     }
 
     public function getPreBuffedAmount(): int
     {
-        return $this->hasMeasurables->getMeasurablePreBuffedAmount($this->getMeasurableTypeBehavior(), $this->amount_raised);
+        $startingAmount = $this->getMeasurableStartingAmount();
+        return $startingAmount + $this->amount_raised;
     }
 
     public function getBuffedAmount(): int
     {
-        return $this->hasMeasurables->calculateMeasurableBuffedAmount($this->getMeasurableTypeBehavior(), $this->amount_raised);
+        $preBuffedAmount = $this->getPreBuffedAmount();
+        $buffsAmount = $this->hero->getBuffsSumAmount($this->getMeasurableTypeBehavior());
+        return $preBuffedAmount + $buffsAmount;
     }
 
     public function getMeasurableTypeBehavior()
     {
         return $this->measurableType->getBehavior();
+    }
+
+    protected function getMeasurableStartingAmount(): int
+    {
+        return $this->hero->getMeasurableStartingAmount($this->getMeasurableTypeBehavior());
     }
 }
