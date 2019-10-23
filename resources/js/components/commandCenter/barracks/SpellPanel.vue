@@ -20,6 +20,9 @@
             <v-col cols="12">
                 <v-sheet color="rgba(0, 0, 0, 0.4)" class="mx-3 px-3 pb-2">
                     <v-row no-gutters class="flex-column" align="start">
+                        <slot name="before-mana-cost" :spell="spell">
+                            <!-- Slot -->
+                        </slot>
                         <span class="subtitle-1 font-weight-bold" style="color: rgba(255, 255, 255, 0.85)">
                             Mana Cost: {{this.spell.manaCost}}
                         </span>

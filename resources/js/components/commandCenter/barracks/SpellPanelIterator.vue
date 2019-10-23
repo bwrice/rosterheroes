@@ -6,7 +6,14 @@
         hide-default-footer
     >
         <template v-slot:item="props">
-            <SpellPanel :spell="props.item"></SpellPanel>
+            <SpellPanel :spell="props.item">
+                <template v-slot:before-mana-cost="panelProps">
+                    <!-- nested scoped slots -->
+                    <slot name="before-mana-cost" :item="panelProps.spell">
+                        <!-- slot:before-mana-cost -->
+                    </slot>
+                </template>
+            </SpellPanel>
         </template>
         <template v-slot:footer>
             <IteratorFooter :page="page" :number-of-pages="numberOfPages" @formerPage="decreasePage" @nextPage="increasePage"></IteratorFooter>
@@ -24,12 +31,15 @@
             spells: {
                 type: Array,
                 required: true
+            },
+            itemsPerPage: {
+                type: Number,
+                default: 10
             }
         },
         data() {
             return {
-                page: 1,
-                itemsPerPage: 10
+                page: 1
             }
         },
         methods: {
