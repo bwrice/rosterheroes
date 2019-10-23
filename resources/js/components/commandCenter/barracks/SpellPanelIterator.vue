@@ -7,10 +7,10 @@
     >
         <template v-slot:item="props">
             <SpellPanel :spell="props.item">
-                <template v-slot:before-mana-cost="panelProps">
+                <template v-slot:after-boosts="panelProps">
                     <!-- nested scoped slots -->
-                    <slot name="before-mana-cost" :item="panelProps.spell">
-                        <!-- slot:before-mana-cost -->
+                    <slot name="after-boosts" :spell="panelProps.spell">
+                        <!-- slot:after-boosts -->
                     </slot>
                 </template>
             </SpellPanel>
