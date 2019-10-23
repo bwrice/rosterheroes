@@ -15,17 +15,12 @@ class MeasurablePolicy
 
     public function raise(User $user, Measurable $measurable)
     {
-        $hasMeasurables = $measurable->hasMeasurables;
-        if ($hasMeasurables instanceof Hero) {
-            $squad = $hasMeasurables->getSquad();
-            if (! $squad) {
-                // TODO: potential to raise measurables for heroes left at homes and not attached to squad's hero post
-                return false;
-            }
-
-            return $squad->user_id === $user->id;
+        $squad = $measurable->hero->getSquad();
+        if (! $squad) {
+            // TODO: potential to raise measurables for heroes left at homes and not attached to squad's hero post
+            return false;
         }
-        // TODO: admin capabilities
-        return false;
+
+        return $squad->user_id === $user->id;
     }
 }
