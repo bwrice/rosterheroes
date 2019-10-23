@@ -1,5 +1,5 @@
 <template>
-    <v-sheet color="#564c59"
+    <v-sheet color="#615769"
              tile
              style="margin: 1px 0 1px 0"
     >
