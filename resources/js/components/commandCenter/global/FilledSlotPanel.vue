@@ -1,34 +1,30 @@
 <template>
-    <v-row no-gutters>
-        <v-col cols="12">
-            <v-sheet color="#576269"
-                     tile
-                     style="margin: 1px 0 1px 0"
+    <v-sheet color="#576269"
+             tile
+             style="margin: 1px 0 1px 0"
+    >
+        <v-row align="center" justify="center" class="mx-2">
+            <span class="subtitle-2 font-weight-light pa-2">{{itemName}}</span>
+            <div class="flex-grow-1"></div>
+            <slot name="before-expand" :item="filledSlot.item">
+                <!-- Slot -->
+            </slot>
+            <v-btn @click="expanded = ! expanded"
+                   fab
+                   dark
+                   x-small
+                   color="rgba(0, 0, 0, .4)"
             >
-                <v-row align="center" justify="center" class="mx-2">
-                    <span class="subtitle-2 font-weight-light pa-2">{{itemName}}</span>
-                    <div class="flex-grow-1"></div>
-                    <slot name="before-expand" :item="filledSlot.item">
-                        <!-- Slot -->
-                    </slot>
-                    <v-btn @click="expanded = ! expanded"
-                           fab
-                           dark
-                           x-small
-                           color="rgba(0, 0, 0, .4)"
-                    >
-                        <v-icon v-if="expanded">expand_less</v-icon>
-                        <v-icon v-else>expand_more</v-icon>
-                    </v-btn>
-                </v-row>
-                <v-row v-if="expanded" no-gutters>
-                    <v-col cols="12">
-                        <ItemCard :item="filledSlot.item" :color="itemCardColor"></ItemCard>
-                    </v-col>
-                </v-row>
-            </v-sheet>
-        </v-col>
-    </v-row>
+                <v-icon v-if="expanded">expand_less</v-icon>
+                <v-icon v-else>expand_more</v-icon>
+            </v-btn>
+        </v-row>
+        <v-row v-if="expanded" no-gutters>
+            <v-col cols="12">
+                <ItemCard :item="filledSlot.item" :color="itemCardColor"></ItemCard>
+            </v-col>
+        </v-row>
+    </v-sheet>
 </template>
 
 <script>
