@@ -17,13 +17,14 @@ class CreateMeasurablesTable extends Migration
             $table->increments('id');
             $table->uuid('uuid');
             $table->integer('measurable_type_id')->unsigned();
-            $table->morphs('has_measurables');
+            $table->integer('hero_id')->unsigned();
             $table->integer('amount_raised')->unsigned();
             $table->timestamps();
         });
 
         Schema::table('measurables', function (Blueprint $table) {
             $table->foreign('measurable_type_id')->references('id')->on('measurable_types');
+            $table->foreign('hero_id')->references('id')->on('heroes');
         });
     }
 
