@@ -2,43 +2,18 @@
 
 namespace App\Domain\Models;
 
-use App\Domain\Actions\AddSpiritToHeroAction;
-use App\Domain\Actions\RemoveSpiritFromHeroAction;
 use App\Domain\Behaviors\HeroClasses\HeroClassBehavior;
 use App\Domain\Behaviors\MeasurableTypes\MeasurableTypeBehavior;
 use App\Domain\Collections\ItemCollection;
 use App\Domain\Collections\MeasurableCollection;
 use App\Domain\Collections\SpellCollection;
-use App\Domain\Interfaces\HasMeasurables;
 use App\Domain\Interfaces\SpellCaster;
 use App\Domain\Interfaces\UsesItems;
-use App\Domain\Models\Item;
 use App\Domain\QueryBuilders\HeroQueryBuilder;
 use App\Domain\Traits\HasNameSlug;
-use App\StorableEvents\HeroCreated;
-use App\Domain\Models\EventSourcedModel;
-use App\Exceptions\GameStartedException;
-use App\Exceptions\InvalidWeekException;
-use App\Exceptions\InvalidPositionsException;
-use App\Exceptions\NotEnoughEssenceException;
-use App\Domain\Models\PlayerSpirit;
-use App\Domain\Models\HeroClass;
 use App\Domain\Collections\HeroCollection;
-use App\Domain\Actions\FillSlotsWithItemAction;
 use App\Domain\Interfaces\HasSlots;
-use App\Domain\Models\Slot;
 use App\Domain\Collections\SlotCollection;
-use App\Domain\Interfaces\Slottable;
-use App\Domain\Models\SlotType;
-use App\Domain\Models\Squad;
-use App\Domain\Models\Week;
-use App\Domain\Collections\WeekCollection;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\Relation;
-use Ramsey\Uuid\Uuid;
-use Spatie\Sluggable\SlugOptions;
 
 /**
  * Class Hero
@@ -68,7 +43,7 @@ use Spatie\Sluggable\SlugOptions;
  *
  * @method static HeroQueryBuilder query();
  */
-class Hero extends EventSourcedModel implements HasSlots, HasMeasurables, UsesItems, SpellCaster
+class Hero extends EventSourcedModel implements HasSlots, UsesItems, SpellCaster
 {
     use HasNameSlug;
 
@@ -250,14 +225,7 @@ class Hero extends EventSourcedModel implements HasSlots, HasMeasurables, UsesIt
         return $this->getHeroClassBehavior()->spentOnRaisingMeasurable($measurableTypeBehavior, $amountRaised);
     }
 
-    public function calculateMeasurableBuffedAmount(MeasurableTypeBehavior $measurableTypeBehavior, int $amountRaised): int
-    {
-        $preBuffedAmount = $this->getMeasurablePreBuffedAmount($measurableTypeBehavior, $amountRaised);
-        $enchantmentsBonus = $this->getEnchantments()->getBoostAmount($measurableTypeBehavior->getTypeName());
-        return $preBuffedAmount + $enchantmentsBonus;
-    }
-
-    public function getBuffsSumAmount(MeasurableTypeBehavior $measurableTypeBehavior): int
+    public function getBuffsSumAmountForMeasurable(MeasurableTypeBehavior $measurableTypeBehavior): int
     {
         $enchantsBonus = $this->getEnchantments()->getBoostAmount($measurableTypeBehavior->getTypeName());
         return $enchantsBonus;
@@ -306,11 +274,6 @@ class Hero extends EventSourcedModel implements HasSlots, HasMeasurables, UsesIt
         return $this->uuid;
     }
 
-    public function getMeasurablePreBuffedAmount(MeasurableTypeBehavior $measurableTypeBehavior, int $amountRaised): int
-    {
-        return $amountRaised + $this->getHeroClassBehavior()->getMeasurableStartingAmount($measurableTypeBehavior);
-    }
-
     public function getMeasurableStartingAmount(MeasurableTypeBehavior $measurableTypeBehavior): int
     {
         return $this->getHeroClassBehavior()->getMeasurableStartingAmount($measurableTypeBehavior);
@@ -327,11 +290,19 @@ class Hero extends EventSourcedModel implements HasSlots, HasMeasurables, UsesIt
     public function getSpellPower()
     {
         $focus = $this->getMeasurable(MeasurableType::FOCUS);
+        //TODO
+    }
 
+    public function getAmountUsedForMeasurable(MeasurableTypeBehavior $measurableTypeBehavior): int
+    {
+        if ($measurableTypeBehavior->getTypeName() === MeasurableType::MANA) {
+            return $this->spells->manaCost();
+        }
+        return 0;
     }
 
     public function getAvailableMana(): int
     {
-        // TODO: Implement getAvailableMana() method.
+        return $this->getMeasurable(MeasurableType::MANA)->getCurrentAmount();
     }
 }
