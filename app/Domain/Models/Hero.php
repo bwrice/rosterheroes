@@ -8,6 +8,7 @@ use App\Domain\Behaviors\HeroClasses\HeroClassBehavior;
 use App\Domain\Behaviors\MeasurableTypes\MeasurableTypeBehavior;
 use App\Domain\Collections\ItemCollection;
 use App\Domain\Collections\MeasurableCollection;
+use App\Domain\Collections\SpellCollection;
 use App\Domain\Interfaces\HasMeasurables;
 use App\Domain\Interfaces\UsesItems;
 use App\Domain\Models\Item;
@@ -62,6 +63,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property SlotCollection $slots
  * @property SlotCollection $slotsThatHaveItems
  * @property MeasurableCollection $measurables
+ * @property SpellCollection $spells
  *
  * @method static HeroQueryBuilder query();
  */
@@ -146,6 +148,11 @@ class Hero extends EventSourcedModel implements HasSlots, HasMeasurables, UsesIt
     public function playerSpirit()
     {
         return $this->belongsTo(PlayerSpirit::class);
+    }
+
+    public function spells()
+    {
+        return $this->belongsToMany(Spell::class);
     }
 
     /**
@@ -302,5 +309,11 @@ class Hero extends EventSourcedModel implements HasSlots, HasMeasurables, UsesIt
     protected function getHeroClassBehavior(): HeroClassBehavior
     {
         return $this->heroClass->getBehavior();
+    }
+
+    public function getSpellPower()
+    {
+        $focus = $this->getMeasurable(MeasurableType::FOCUS)->getPreBuffedAmount();
+
     }
 }

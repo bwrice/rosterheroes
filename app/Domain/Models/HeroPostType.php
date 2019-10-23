@@ -55,7 +55,7 @@ class HeroPostType extends Model
      * Returns a collection of HeroPostTypes with keys for how many
      * should be created for a new Squad
      *
-     * @return \Illuminate\Database\Eloquent\Builder[]|Collection
+     * @return Collection
      */
     public static function squadStarting()
     {

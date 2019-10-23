@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  * @package App\Domain\Models
  *
  * @property int $boost_level
+ * @property int $measurable_type_id
  *
  * @property MeasurableType $measurableType
  * @property BoostsMeasurables $booster
