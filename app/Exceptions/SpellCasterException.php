@@ -14,6 +14,7 @@ class SpellCasterException extends \RuntimeException
     public const CODE_SPELL_NOT_OWNED = 2;
     public const CODE_SPELL_ALREADY_CASTED = 3;
     public const CODE_NOT_ENOUGH_MANA = 4;
+    public const CODE_SPELL_NO_EXISTING_SPELL = 5;
 
     /**
      * @var SpellCaster

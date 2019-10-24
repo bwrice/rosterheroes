@@ -73,4 +73,20 @@ class RemoveSpellFromHeroActionTest extends TestCase
 
         $this->fail("Exception not thrown");
     }
+
+    /**
+     * @test
+     */
+    public function it_will_throw_an_exception_if_the_spell_is_not_already_on_the_hero()
+    {
+        $this->hero->spells()->sync([]); // clear all hero spells
+        try {
+            $this->domainAction->execute($this->hero->fresh(), $this->spell);
+        } catch (SpellCasterException $exception) {
+            $this->assertEquals(SpellCasterException::CODE_SPELL_NO_EXISTING_SPELL, $exception->getCode());
+            return;
+        }
+
+        $this->fail("Exception not thrown");
+    }
 }
