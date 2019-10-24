@@ -60,7 +60,7 @@ class HeroSpellControllerTest extends TestCase
             'spell' => $this->spell->id
         ]);
 
-        $response->assertStatus(401);
+        $response->assertStatus(403);
     }
 
     /**
