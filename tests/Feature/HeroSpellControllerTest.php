@@ -7,9 +7,11 @@ use App\Domain\Models\Hero;
 use App\Domain\Models\HeroPost;
 use App\Domain\Models\Spell;
 use App\Domain\Models\Squad;
+use App\Domain\Models\User;
 use App\Domain\Models\Week;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Date;
+use Laravel\Passport\Passport;
 use Tests\TestCase;
 
 class HeroSpellControllerTest extends TestCase
@@ -51,10 +53,36 @@ class HeroSpellControllerTest extends TestCase
      */
     public function a_user_cannot_cast_a_spell_on_a_hero_it_doesnt_own()
     {
+        $user = factory(User::class)->create();
+        Passport::actingAs($user);
+
         $response = $this->json('POST','/api/v1/heroes/' . $this->hero->slug . '/spells', [
             'spell' => $this->spell->id
         ]);
 
         $response->assertStatus(401);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_return_the_correct_hero_response()
+    {
+        Passport::actingAs($this->squad->user);
+
+        $response = $this->json('POST','/api/v1/heroes/' . $this->hero->slug . '/spells', [
+            'spell' => $this->spell->id
+        ]);
+
+        $response->assertJson([
+            'data' => [
+                'uuid' => $this->hero->uuid,
+                'spells' => [
+                    [
+                        'id' => $this->spell->id
+                    ]
+                ]
+            ]
+        ]);
     }
 }
