@@ -25,5 +25,10 @@ class CastSpellOnHeroAction
         if ($hero->spells()->where('id', '=', $spell->id)->first()) {
             throw new SpellCasterException($hero, $spell, "Hero already has cast " . $spell->name, SpellCasterException::CODE_SPELL_ALREADY_CASTED);
         }
+
+        if ($hero->getAvailableMana() < $spell->manaCost()) {
+            $message = $spell->manaCost() . " mana need, but only " . $hero->getAvailableMana() . " available";
+            throw new SpellCasterException($hero, $spell, $spell->manaCost() . $message, SpellCasterException::CODE_NOT_ENOUGH_MANA);
+        }
     }
 }
