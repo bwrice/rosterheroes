@@ -60,7 +60,7 @@ class Spell extends Model implements BoostsMeasurables
 
     public function getMeasurableBoostMultiplier(MeasurableTypeBehavior $measurableTypeBehavior): float
     {
-        $groupMultiplier = $this->getGroupBoostMultiplier($measurableTypeBehavior);
+        $groupMultiplier = $this->getGroupBoostMultiplier($measurableTypeBehavior->getGroupName());
         $spellCasterModifier = $this->spellCaster ? $this->spellCaster->getSpellBoostMultiplier() : 1;
         return $groupMultiplier * $spellCasterModifier;
     }
