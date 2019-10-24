@@ -14,31 +14,7 @@ use App\Domain\Models\Enchantment;
 use App\Domain\Models\Measurable;
 use Illuminate\Database\Eloquent\Collection;
 
-class EnchantmentCollection extends Collection
+class EnchantmentCollection extends BoostsMeasurablesCollection
 {
-    /**
-     * @return int
-     */
-    public function boostLevelSum()
-    {
-        return (int) $this->loadMissing('measurableBoosts')->sum(function (Enchantment $enchantment) {
-            return $enchantment->boostLevelSum();
-        });
-    }
-
-    public function measurableBoosts(): MeasurableBoostCollection
-    {
-        $boosts = new MeasurableBoostCollection();
-        $this->each(function (Enchantment $enchantment) use (&$boosts) {
-            $boosts = $boosts->union($enchantment->measurableBoosts);
-        });
-        return $boosts;
-    }
-
-    public function getBoostAmount(string $measurableTypeName): int
-    {
-        return $this->measurableBoosts()
-            ->filterByMeasurableType($measurableTypeName)
-            ->boostTotal();
-    }
+    //
 }
