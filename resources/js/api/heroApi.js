@@ -50,3 +50,10 @@ export async function raiseMeasurable(heroSlug, measurableType, raiseAmount) {
     });
     return response.data;
 }
+
+export async function castSpell(heroSlug, spellID) {
+    let response = await axios.post('/api/v1/heroes/' + heroSlug + '/spells', {
+        spell: spellID
+    });
+    return response.data;
+}
