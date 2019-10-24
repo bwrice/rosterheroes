@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Date;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
 
-class HeroSpellControllerTest extends TestCase
+class CastSpellControllerTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -56,7 +56,7 @@ class HeroSpellControllerTest extends TestCase
         $user = factory(User::class)->create();
         Passport::actingAs($user);
 
-        $response = $this->json('POST','/api/v1/heroes/' . $this->hero->slug . '/spells', [
+        $response = $this->json('POST','/api/v1/heroes/' . $this->hero->slug . '/cast-spell', [
             'spell' => $this->spell->id
         ]);
 
@@ -70,7 +70,7 @@ class HeroSpellControllerTest extends TestCase
     {
         Passport::actingAs($this->squad->user);
 
-        $response = $this->json('POST','/api/v1/heroes/' . $this->hero->slug . '/spells', [
+        $response = $this->json('POST','/api/v1/heroes/' . $this->hero->slug . '/cast-spell', [
             'spell' => $this->spell->id
         ]);
 
@@ -103,13 +103,13 @@ class HeroSpellControllerTest extends TestCase
 
         Passport::actingAs($this->squad->user);
 
-        $response = $this->json('POST','/api/v1/heroes/' . $this->hero->slug . '/spells', [
+        $response = $this->json('POST','/api/v1/heroes/' . $this->hero->slug . '/cast-spell', [
             'spell' => $this->spell->id
         ]);
 
         $response->assertStatus(422)->assertJson([
             'errors' => [
-                'spell-caster' => []
+                'spellCaster' => []
             ]
         ]);
     }

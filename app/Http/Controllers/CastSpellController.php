@@ -12,7 +12,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
-class HeroSpellController extends Controller
+class CastSpellController extends Controller
 {
     /**
      * @param $heroSlug
@@ -22,7 +22,7 @@ class HeroSpellController extends Controller
      * @throws AuthorizationException
      * @throws ValidationException
      */
-    public function store($heroSlug, Request $request, CastSpellOnHeroAction $castSpellOnHeroAction)
+    public function __invoke($heroSlug, Request $request, CastSpellOnHeroAction $castSpellOnHeroAction)
     {
         $hero = Hero::findSlugOrFail($heroSlug);
         $this->authorize(HeroPolicy::MANAGE, $hero);
@@ -32,7 +32,7 @@ class HeroSpellController extends Controller
             $castSpellOnHeroAction->execute($hero, $spell);
         } catch (SpellCasterException $exception) {
             throw ValidationException::withMessages([
-                'spell-caster' => $exception->getMessage()
+                'spellCaster' => $exception->getMessage()
             ]);
         }
         return new HeroResource($hero->fresh(Hero::heroResourceRelations()));

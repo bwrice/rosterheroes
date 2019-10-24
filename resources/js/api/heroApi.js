@@ -52,7 +52,7 @@ export async function raiseMeasurable(heroSlug, measurableType, raiseAmount) {
 }
 
 export async function castSpell(heroSlug, spellID) {
-    let response = await axios.post('/api/v1/heroes/' + heroSlug + '/spells', {
+    let response = await axios.post('/api/v1/heroes/' + heroSlug + '/cast-spell', {
         spell: spellID
     });
     return response.data;

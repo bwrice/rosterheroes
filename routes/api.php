@@ -9,7 +9,7 @@ use App\Http\Controllers\HeroClassController;
 use App\Http\Controllers\HeroChangeCombatPositionController;
 use App\Http\Controllers\HeroController;
 use App\Http\Controllers\HeroRaceController;
-use App\Http\Controllers\HeroSpellController;
+use App\Http\Controllers\CastSpellController;
 use App\Http\Controllers\MeasurableTypeController;
 use App\Http\Controllers\MobileStorageController;
 use App\Http\Controllers\PositionController;
@@ -129,7 +129,7 @@ Route::prefix('v1')->group(function () {
             Route::get('{heroSlug}/raise-measurable', [RaiseHeroMeasurableController::class, 'show']);
             Route::post('{heroSlug}/raise-measurable', [RaiseHeroMeasurableController::class, 'store']);
 
-            Route::post('{heroSlug}/spells', [HeroSpellController::class, 'store']);
+            Route::post('{heroSlug}/cast-spell', CastSpellController::class);
         });
 
         Route::post('/campaign/{campaign}/quest/{questUuid}', [CampaignQuestController::class, 'store']);
