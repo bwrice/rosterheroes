@@ -11,7 +11,12 @@ use App\Exceptions\SpellCasterException;
 
 class CastSpellOnHeroAction
 {
-    public function execute(Hero $hero, Spell $spell)
+    /**
+     * @param Hero $hero
+     * @param Spell $spell
+     * @return Hero
+     */
+    public function execute(Hero $hero, Spell $spell): Hero
     {
         if (! Week::current()->adventuringOpen()) {
             throw new SpellCasterException($hero, $spell, "Week is currently locked", SpellCasterException::CODE_WEEK_LOCKED);
@@ -30,5 +35,8 @@ class CastSpellOnHeroAction
             $message = $spell->manaCost() . " mana need, but only " . $hero->getAvailableMana() . " available";
             throw new SpellCasterException($hero, $spell, $spell->manaCost() . $message, SpellCasterException::CODE_NOT_ENOUGH_MANA);
         }
+
+        $hero->spells()->save($spell);
+        return $hero->fresh();
     }
 }
