@@ -12,9 +12,9 @@
                 <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="5" xl="4">
                     <HeroMeasurablesCard :hero="hero"></HeroMeasurablesCard>
                 </v-col>
-<!--                <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="5" offset-lg="1" xl="4" offset-xl="0">-->
-<!--                    <SpellLibraryCard :spells="_spellLibrary"></SpellLibraryCard>-->
-<!--                </v-col>-->
+                <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="5" offset-lg="1" xl="4" offset-xl="0">
+                    <HeroSpellsCard :hero="hero"></HeroSpellsCard>
+                </v-col>
             </v-row>
         </template>
     </v-container>
@@ -30,10 +30,18 @@
 
     import {mapGetters} from 'vuex';
     import LoadingOverlay from "../../global/LoadingOverlay";
+    import HeroSpellsCard from "../../barracks/HeroSpellsCard";
 
     export default {
         name: "BarracksHeroView",
-        components: {LoadingOverlay, HeroHeader, TwoColumnLayout, HeroGearCard, HeroMeasurablesCard, MeasurablePanel},
+        components: {
+            HeroSpellsCard,
+            LoadingOverlay,
+            HeroHeader,
+            HeroGearCard,
+            HeroMeasurablesCard,
+            MeasurablePanel
+        },
         mixins: [
             barracksHeroMixin
         ],
