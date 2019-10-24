@@ -55,7 +55,7 @@ class Spell extends Model implements BoostsMeasurables
             return 0;
         }
         $boostLevelSum = $this->measurableBoosts->boostLevelSum();
-        return ceil(10 * ($boostLevelSum ** .85) * (1/sqrt($boosterCount)));
+        return ceil(50 * ($boostLevelSum ** .85) * (1/sqrt($boosterCount)));
     }
 
     public function getMeasurableBoostMultiplier(MeasurableTypeBehavior $measurableTypeBehavior): int

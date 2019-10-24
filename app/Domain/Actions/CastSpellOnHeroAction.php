@@ -33,7 +33,7 @@ class CastSpellOnHeroAction
 
         if ($hero->getAvailableMana() < $spell->manaCost()) {
             $message = $spell->manaCost() . " mana need, but only " . $hero->getAvailableMana() . " available";
-            throw new SpellCasterException($hero, $spell, $spell->manaCost() . $message, SpellCasterException::CODE_NOT_ENOUGH_MANA);
+            throw new SpellCasterException($hero, $spell, $message, SpellCasterException::CODE_NOT_ENOUGH_MANA);
         }
 
         $hero->spells()->save($spell);
