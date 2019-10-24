@@ -99,4 +99,9 @@ class Spell extends Model implements BoostsMeasurables
         }
         throw new \InvalidArgumentException("Unknown group name: " . $groupName);
     }
+
+    public function getMeasurableBoosts(): MeasurableBoostCollection
+    {
+        return $this->measurableBoosts;
+    }
 }

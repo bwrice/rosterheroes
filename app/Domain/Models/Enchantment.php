@@ -43,7 +43,7 @@ class Enchantment extends Model implements BoostsMeasurables
         return $this->measurableBoosts->boostLevelSum();
     }
 
-    public function getMeasurableBoostMultiplier(MeasurableTypeBehavior $measurableTypeBehavior): int
+    public function getMeasurableBoostMultiplier(MeasurableTypeBehavior $measurableTypeBehavior): float
     {
         switch($measurableTypeBehavior->getGroupName()) {
             case ResourceBehavior::GROUP_NAME:
@@ -54,5 +54,10 @@ class Enchantment extends Model implements BoostsMeasurables
                 return 1;
         }
         throw new \InvalidArgumentException("Unknown group name: " . $measurableTypeBehavior->getGroupName());
+    }
+
+    public function getMeasurableBoosts(): MeasurableBoostCollection
+    {
+        return $this->measurableBoosts;
     }
 }
