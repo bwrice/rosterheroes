@@ -40,7 +40,7 @@ class CastSpellOnHeroActionTest extends TestCase
             'squad_id' => $this->squad->id,
             'hero_id' => $this->hero->id
         ]);
-        $this->spell = Spell::query()->inRandomOrder()->first();
+        $this->spell = Spell::query()->where('name', '=', 'Resolve')->inRandomOrder()->first();
         $this->squad->spells()->save($this->spell);
         /** @var Week $week */
         $week = factory(Week::class)->create();
@@ -85,5 +85,60 @@ class CastSpellOnHeroActionTest extends TestCase
             return;
         }
         $this->fail("Exception not thrown");
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_throw_an_exception_if_the_spell_is_already_on_the_hero()
+    {
+        $this->hero->spells()->save($this->spell);
+        try {
+            $this->domainAction->execute($this->hero->fresh(), $this->spell->fresh());
+        } catch (SpellCasterException $exception) {
+            $this->assertEquals(SpellCasterException::CODE_SPELL_ALREADY_CASTED, $exception->getCode());
+            return;
+        }
+        $this->fail("Exception not thrown");
+
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_throw_an_exception_if_the_hero_does_not_have_enough_mana()
+    {
+        // Get a ton of spells that aren't the one we're trying to cast
+        $spells = Spell::query()
+            ->where('id', '!=', $this->spell->id)
+            ->inRandomOrder()
+            ->take(50)
+            ->get();
+
+        $this->hero->spells()->saveMany($spells);
+        $this->assertLessThan($this->spell->manaCost(), $this->hero->getAvailableMana());
+
+        try {
+            $this->domainAction->execute($this->hero->fresh(), $this->spell);
+        } catch (SpellCasterException $exception) {
+            $this->assertEquals(SpellCasterException::CODE_NOT_ENOUGH_MANA, $exception->getCode());
+            return;
+        }
+        $this->fail("Exception not thrown");
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_cast_a_spell()
+    {
+        $spell = $this->hero->spells()->where('id', '=', $this->spell->id)->first();
+        $this->assertNull($spell);
+
+        $this->domainAction->execute($this->hero, $this->spell);
+        $this->hero = $this->hero->fresh();
+
+        $spell = $this->hero->spells()->where('id', '=', $this->spell->id)->first();
+        $this->assertNotNull($spell);
     }
 }
