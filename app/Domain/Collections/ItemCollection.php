@@ -28,7 +28,7 @@ class ItemCollection extends Collection
     {
         $enchantmentCollection = new EnchantmentCollection();
         $this->loadMissing('enchantments')->each(function (Item $item) use (&$enchantmentCollection) {
-            $enchantmentCollection = $enchantmentCollection->unique($item->enchantments);
+            $enchantmentCollection = $enchantmentCollection->union($item->enchantments);
         });
         return $enchantmentCollection;
     }
