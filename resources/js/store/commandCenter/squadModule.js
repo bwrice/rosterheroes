@@ -246,6 +246,23 @@ export default {
             } catch (e) {
                 helpers.handleResponseErrors(e, 'spellCaster', dispatch);
             }
+        },
+
+        async removeSpellOnHero({state, commit, dispatch}, {hero, spell}) {
+            try {
+
+                let heroResponse = await heroApi.removeSpell(hero.slug, spell.id);
+                let updatedHero = new Hero(heroResponse.data);
+                helpers.syncUpdatedHero(state, commit, updatedHero);
+                let text = spell.name + " removed from " + updatedHero.name;
+                dispatch('snackBarSuccess', {
+                    text: text,
+                    timeout: 3000
+                })
+
+            } catch (e) {
+                helpers.handleResponseErrors(e, 'spellCaster', dispatch);
+            }
         }
     },
 };
