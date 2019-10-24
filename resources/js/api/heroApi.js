@@ -57,3 +57,10 @@ export async function castSpell(heroSlug, spellID) {
     });
     return response.data;
 }
+
+export async function removeSpell(heroSlug, spellID) {
+    let response = await axios.post('/api/v1/heroes/' + heroSlug + '/remove-spell', {
+        spell: spellID
+    });
+    return response.data;
+}
