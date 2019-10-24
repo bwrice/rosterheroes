@@ -287,10 +287,11 @@ class Hero extends EventSourcedModel implements HasSlots, UsesItems, SpellCaster
         return $this->heroClass->getBehavior();
     }
 
-    public function getSpellPower()
+    public function getSpellPower(): float
     {
-        $focus = $this->getMeasurable(MeasurableType::FOCUS);
-        //TODO
+        $focus = $this->getMeasurable(MeasurableType::FOCUS)->getPreBuffedAmount();
+        $aptitude = $this->getMeasurable(MeasurableType::APTITUDE)->getPreBuffedAmount();
+        return  round((($focus + $aptitude) / 20), 2);
     }
 
     public function getAmountUsedForMeasurable(MeasurableTypeBehavior $measurableTypeBehavior): int
