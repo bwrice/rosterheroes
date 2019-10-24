@@ -297,13 +297,23 @@ class Hero extends EventSourcedModel implements HasSlots, UsesItems, SpellCaster
     public function getAmountUsedForMeasurable(MeasurableTypeBehavior $measurableTypeBehavior): int
     {
         if ($measurableTypeBehavior->getTypeName() === MeasurableType::MANA) {
-            return $this->spells->manaCost();
+            return $this->getManaUsed();
         }
         return 0;
+    }
+
+    public function getManaUsed()
+    {
+        return $this->spells->manaCost();
     }
 
     public function getAvailableMana(): int
     {
         return $this->getMeasurable(MeasurableType::MANA)->getCurrentAmount();
+    }
+
+    public function getSpellBoostMultiplier(): float
+    {
+        return 1 + $this->getSpellPower()/10;
     }
 }
