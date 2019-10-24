@@ -145,7 +145,7 @@ class GenerateItemFromBlueprintAction
             $enchantment = Enchantment::query()->inRandomOrder()->first();
             $enchantments->push($enchantment);
 
-            $enchantmentsPower -= $enchantment->boostLevelSum();
+            $enchantmentsPower -= $enchantment->measurableBoosts->boostLevelSum();
         }
 
         return $enchantments;

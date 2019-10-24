@@ -38,11 +38,6 @@ class Enchantment extends Model implements BoostsMeasurables
         return new EnchantmentCollection($models);
     }
 
-    public function boostLevelSum()
-    {
-        return $this->measurableBoosts->boostLevelSum();
-    }
-
     public function getMeasurableBoostMultiplier(MeasurableTypeBehavior $measurableTypeBehavior): float
     {
         switch($measurableTypeBehavior->getGroupName()) {
