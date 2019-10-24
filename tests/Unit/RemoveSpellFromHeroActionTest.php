@@ -89,4 +89,17 @@ class RemoveSpellFromHeroActionTest extends TestCase
 
         $this->fail("Exception not thrown");
     }
+
+    /**
+     * @test
+     */
+    public function it_will_remove_a_spell_from_a_hero()
+    {
+        $spell = $this->hero->spells()->find($this->spell->id);
+        $this->assertNotNull($spell);
+        $hero = $this->domainAction->execute($this->hero, $this->spell);
+        $this->hero = $hero;
+        $spell = $this->hero->spells()->find($this->spell->id);
+        $this->assertNull($spell);
+    }
 }
