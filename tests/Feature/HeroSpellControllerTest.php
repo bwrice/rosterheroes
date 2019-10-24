@@ -85,4 +85,32 @@ class HeroSpellControllerTest extends TestCase
             ]
         ]);
     }
+
+    /**
+     * @test
+     */
+    public function it_will_return_an_error_response_if_a_spell_caster_exception_is_thrown()
+    {
+        // Get a ton of spells that aren't the one we're trying to cast
+        $spells = Spell::query()
+            ->where('id', '!=', $this->spell->id)
+            ->inRandomOrder()
+            ->take(50)
+            ->get();
+
+        $this->hero->spells()->saveMany($spells);
+        $this->assertLessThan($this->spell->manaCost(), $this->hero->getAvailableMana());
+
+        Passport::actingAs($this->squad->user);
+
+        $response = $this->json('POST','/api/v1/heroes/' . $this->hero->slug . '/spells', [
+            'spell' => $this->spell->id
+        ]);
+
+        $response->assertStatus(422)->assertJson([
+            'errors' => [
+                'spell-caster' => []
+            ]
+        ]);
+    }
 }
