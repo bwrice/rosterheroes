@@ -10,6 +10,7 @@ namespace App\Domain\Collections;
 
 
 use App\Domain\Interfaces\Slottable;
+use App\Domain\Models\Enchantment;
 use App\Domain\Models\Item;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -27,8 +28,10 @@ class ItemCollection extends Collection
     public function getEnchantments(): EnchantmentCollection
     {
         $enchantmentCollection = new EnchantmentCollection();
-        $this->loadMissing('enchantments')->each(function (Item $item) use (&$enchantmentCollection) {
-            $enchantmentCollection = $enchantmentCollection->union($item->enchantments);
+        $this->loadMissing('enchantments')->each(function (Item $item) use ($enchantmentCollection) {
+            $item->enchantments->each(function (Enchantment $enchantment) use ($enchantmentCollection) {
+                $enchantmentCollection->push($enchantment);
+            });
         });
         return $enchantmentCollection;
     }

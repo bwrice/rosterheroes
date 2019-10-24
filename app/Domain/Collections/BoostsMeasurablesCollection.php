@@ -6,17 +6,20 @@ namespace App\Domain\Collections;
 
 use App\Domain\Interfaces\BoostsMeasurables;
 use App\Domain\Models\Enchantment;
+use App\Domain\Models\MeasurableBoost;
 use Illuminate\Database\Eloquent\Collection;
 
 abstract class BoostsMeasurablesCollection extends Collection
 {
     public function measurableBoosts(): MeasurableBoostCollection
     {
-        $boosts = new MeasurableBoostCollection();
-        $this->each(function (BoostsMeasurables $boostMeasurables) use (&$boosts) {
-            $boosts = $boosts->union($boostMeasurables->getMeasurableBoosts());
+        $boostsCollection = new MeasurableBoostCollection();
+        $this->each(function (BoostsMeasurables $boostMeasurables) use ($boostsCollection) {
+            $boostMeasurables->getMeasurableBoosts()->each(function (MeasurableBoost $measurableBoost) use ($boostsCollection) {
+                $boostsCollection->push($measurableBoost);
+            });
         });
-        return $boosts;
+        return $boostsCollection;
     }
 
     public function getBoostAmount(string $measurableTypeName): int
