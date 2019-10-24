@@ -5,7 +5,7 @@
         :value="progressBarValue"
     >
         <template v-slot="{ value }">
-            <span class="caption font-weight-bold">{{ measurable.buffedAmount }}</span>
+            <span class="caption font-weight-bold">{{ measurable.currentAmount }}</span>
         </template>
     </v-progress-linear>
 </template>

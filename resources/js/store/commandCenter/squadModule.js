@@ -44,7 +44,7 @@ export default {
         },
         _squadHighMeasurable: (state) => (measurableTypeID) => {
             let measurableAmounts = state.heroes.map(function (hero) {
-                return hero.getMeasurableByTypeID(measurableTypeID).buffedAmount;
+                return hero.getMeasurableByTypeID(measurableTypeID).currentAmount;
             });
             return measurableAmounts.reduce(function(amountA, amountB) {
                 return Math.max(amountA, amountB);
