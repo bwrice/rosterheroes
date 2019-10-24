@@ -228,7 +228,8 @@ class Hero extends EventSourcedModel implements HasSlots, UsesItems, SpellCaster
     public function getBuffsSumAmountForMeasurable(MeasurableTypeBehavior $measurableTypeBehavior): int
     {
         $enchantsBonus = $this->getEnchantments()->getBoostAmount($measurableTypeBehavior->getTypeName());
-        return $enchantsBonus;
+        $spellBonus = $this->spells->setSpellCaster($this)->getBoostAmount($measurableTypeBehavior->getTypeName());
+        return $enchantsBonus + $spellBonus;
     }
 
     public function getEnchantments()
