@@ -16,6 +16,7 @@ use App\Http\Controllers\PositionController;
 use App\Http\Controllers\ProvinceBorderController;
 use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\RaiseHeroMeasurableController;
+use App\Http\Controllers\RemoveSpellController;
 use App\Http\Controllers\RosterHeroesController;
 use App\Http\Controllers\SportController;
 use App\Http\Controllers\SquadCurrentLocationController;
@@ -130,6 +131,7 @@ Route::prefix('v1')->group(function () {
             Route::post('{heroSlug}/raise-measurable', [RaiseHeroMeasurableController::class, 'store']);
 
             Route::post('{heroSlug}/cast-spell', CastSpellController::class);
+            Route::post('{heroSlug}/remove-spell', RemoveSpellController::class);
         });
 
         Route::post('/campaign/{campaign}/quest/{questUuid}', [CampaignQuestController::class, 'store']);
