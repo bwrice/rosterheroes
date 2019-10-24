@@ -11,7 +11,7 @@
             <span class="subtitle-1">Spell Library</span>
             <SpellPanelIterator :spells="availableSpells">
                 <template v-slot:after-boosts="panelProps">
-                    <AddSpellButton :hero="hero" :spell="panelProps.spell"></AddSpellButton>
+                    <CastSpellButton :hero="hero" :spell="panelProps.spell"></CastSpellButton>
                 </template>
             </SpellPanelIterator>
         </v-card-text>
@@ -23,11 +23,11 @@
     import SpellPanelIterator from "./SpellPanelIterator";
     import RemoveSpellButton from "./RemoveSpellButton";
     import {mapGetters} from 'vuex';
-    import AddSpellButton from "./AddSpellButton";
+    import CastSpellButton from "./CastSpellButton";
 
     export default {
         name: "HeroSpellsCard",
-        components: {AddSpellButton, RemoveSpellButton, SpellPanelIterator},
+        components: {CastSpellButton, RemoveSpellButton, SpellPanelIterator},
         props: {
             hero: {
                 type: Hero,
