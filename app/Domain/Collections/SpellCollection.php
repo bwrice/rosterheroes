@@ -8,7 +8,7 @@ use App\Domain\Interfaces\SpellCaster;
 use App\Domain\Models\Spell;
 use Illuminate\Database\Eloquent\Collection;
 
-class SpellCollection extends Collection
+class SpellCollection extends BoostsMeasurablesCollection
 {
     public function manaCost(): int
     {
