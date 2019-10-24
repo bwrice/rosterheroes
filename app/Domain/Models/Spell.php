@@ -58,17 +58,11 @@ class Spell extends Model implements BoostsMeasurables
         return ceil(50 * ($boostLevelSum ** .85) * (1/($boosterCount**.25)));
     }
 
-    public function getMeasurableBoostMultiplier(MeasurableTypeBehavior $measurableTypeBehavior): int
+    public function getMeasurableBoostMultiplier(MeasurableTypeBehavior $measurableTypeBehavior): float
     {
-        switch($measurableTypeBehavior->getGroupName()) {
-            case ResourceBehavior::GROUP_NAME:
-                return 8;
-            case QualityBehavior::GROUP_NAME:
-                return 4;
-            case AttributeBehavior::GROUP_NAME:
-                return 2;
-        }
-        throw new \InvalidArgumentException("Unknown group name: " . $measurableTypeBehavior->getGroupName());
+        $groupMultiplier = $this->getGroupBoostMultiplier($measurableTypeBehavior);
+        $spellCasterModifier = $this->spellCaster ? $this->spellCaster->getSpellBoostMultiplier() : 1;
+        return $groupMultiplier * $spellCasterModifier;
     }
 
     /**
@@ -87,5 +81,22 @@ class Spell extends Model implements BoostsMeasurables
     public function getSpellCaster(): ?SpellCaster
     {
         return $this->spellCaster;
+    }
+
+    /**
+     * @param string $groupName
+     * @return int
+     */
+    protected function getGroupBoostMultiplier(string $groupName): int
+    {
+        switch ($groupName) {
+            case ResourceBehavior::GROUP_NAME:
+                return 8;
+            case QualityBehavior::GROUP_NAME:
+                return 4;
+            case AttributeBehavior::GROUP_NAME:
+                return 2;
+        }
+        throw new \InvalidArgumentException("Unknown group name: " . $groupName);
     }
 }
