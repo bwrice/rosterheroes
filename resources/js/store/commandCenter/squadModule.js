@@ -229,6 +229,23 @@ export default {
             } catch (e) {
                 helpers.handleResponseErrors(e, 'combatPosition', dispatch);
             }
+        },
+
+        async castSpellOnHero({state, commit, dispatch}, {hero, spell}) {
+            try {
+
+                let heroResponse = await heroApi.castSpell(hero.slug, spell.id);
+                let updatedHero = new Hero(heroResponse.data);
+                helpers.syncUpdatedHero(state, commit, updatedHero);
+                let text = spell.name + " cast on " + updatedHero.name;
+                dispatch('snackBarSuccess', {
+                    text: text,
+                    timeout: 3000
+                })
+
+            } catch (e) {
+                helpers.handleResponseErrors(e, 'spellCaster', dispatch);
+            }
         }
     },
 };
