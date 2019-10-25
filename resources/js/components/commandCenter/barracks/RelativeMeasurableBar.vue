@@ -5,7 +5,7 @@
         :value="progressBarValue"
     >
         <template v-slot="{ value }">
-            <span class="caption font-weight-bold">{{ measurable.currentAmount }}</span>
+            <span class="caption font-weight-bold">{{ currentAmount }}</span>
         </template>
     </v-progress-linear>
 </template>
@@ -40,10 +40,10 @@
                 if (! squadHighAmount) {
                     return 0;
                 }
-                return Math.ceil((this.buffedAmount/squadHighAmount) * 100);
+                return Math.ceil((this.currentAmount/squadHighAmount) * 100);
             },
-            buffedAmount() {
-                return this.measurable.buffedAmount;
+            currentAmount() {
+                return this.measurable.currentAmount;
             }
         }
     }
