@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use App\Domain\Models\Hero;
 use Illuminate\Http\Resources\Json\JsonResource;
+use function foo\func;
 
 /**
  * Class BarracksHeroResource
@@ -29,12 +30,17 @@ class HeroResource extends JsonResource
             'heroRaceID' => $this->hero_race_id,
             'combatPositionID' => $this->combat_position_id,
             'playerSpirit' => new PlayerSpiritResource($this->playerSpirit),
-            'measurables' => MeasurableResource::collection($this->measurables),
+            'measurables' => MeasurableResource::collection($this->measurables)->collection->each(function (MeasurableResource $measurableResource) {
+                $measurableResource->resource->hero = $this->resource;
+            }),
             'slots' => SlotResource::collection($this->slots)->collection->each(function (SlotResource $slotResource) {
                 $slotResource->setUsesItems($this->resource);
             }),
-            'spells' => SpellResource::collection($this->spells),
-            'spellPower' => $this->getSpellPower()
+            'spells' => SpellResource::collection($this->spells)->collection->each(function (SpellResource $spellResource) {
+                $spellResource->resource->setSpellCaster($this->resource);
+            }),
+            'spellPower' => $this->getSpellPower(),
+            'manaUsed' => $this->getManaUsed()
         ];
     }
 }
