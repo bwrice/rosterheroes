@@ -3,6 +3,7 @@
 namespace App\Domain\Models;
 
 use App\Domain\Behaviors\EnemyTypes\EnemyTypeBehavior;
+use App\Domain\Collections\AttackCollection;
 use App\Domain\Interfaces\HasAttacks;
 use App\Domain\Traits\HasNameSlug;
 use Illuminate\Database\Eloquent\Model;
@@ -25,6 +26,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $combat_position_id
  *
  * @property EnemyType $enemyType
+ *
+ * @property AttackCollection $attacks
  */
 class Minion extends Model implements HasAttacks
 {
@@ -59,6 +62,11 @@ class Minion extends Model implements HasAttacks
         return (int) ceil(sqrt($this->level) * ($this->level/5) * $this->protection_rating * (1 + $enemyTypeBonus));
     }
 
+    public function getBlockChance(): float
+    {
+        $enemyTypeBonus = $this->getEnemyTypeBehavior()->getProtectionModifierBonus();
+        return ($this->block_rating/4) * (1 + $enemyTypeBonus);
+    }
 
     public function adjustBaseDamage(float $baseDamage): float
     {
