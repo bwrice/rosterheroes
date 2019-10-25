@@ -5,7 +5,6 @@ import Hero from "../../models/Hero";
 import MobileStorage from "../../models/MobileStorage";
 import SlotTransaction from "../../models/SlotTransaction";
 import Squad from "../../models/Squad";
-import CurrentLocation from "../../models/CurrentLocation";
 import Spell from "../../models/Spell";
 
 export default {
@@ -15,7 +14,6 @@ export default {
         heroes: [],
         mobileStorage: new MobileStorage({}),
         barracksLoading: true,
-        currentLocation: new CurrentLocation({}),
         spells: []
     },
 
@@ -31,9 +29,6 @@ export default {
         },
         _mobileStorage(state) {
             return state.mobileStorage;
-        },
-        _currentLocationProvince(state) {
-            return state.currentLocation;
         },
         _barracksLoading(state) {
             return state.heroes.length <= 0;
@@ -75,9 +70,6 @@ export default {
         },
         SET_BARRACKS_LOADING(state, payload) {
             state.barracksLoading = payload;
-        },
-        SET_CURRENT_LOCATION(state, payload) {
-            state.currentLocation = payload;
         }
     },
 
@@ -93,16 +85,6 @@ export default {
             let response = await squadApi.getSpellLibrary(route.params.squadSlug);
             let spells = response .data.map(spellData => new Spell(spellData));
             commit('SET_SPELL_LIBRARY', spells);
-        },
-
-        async updateCurrentLocation({commit}, route) {
-            try {
-                let locationResponse = await squadApi.getCurrentLocation(route.params.squadSlug);
-                let currentLocation = new CurrentLocation(locationResponse.data);
-                commit('SET_CURRENT_LOCATION', currentLocation)
-            } catch (e) {
-                console.warn("Failed to update current location");
-            }
         },
 
         async updateHeroes({commit}, route) {
