@@ -23,7 +23,7 @@ class CreateTitansTable extends Migration
             $table->smallInteger('damage_multiplier_rating');
             $table->smallInteger('health_rating');
             $table->smallInteger('protection_rating');
-            $table->smallInteger('attack_speed_rating');
+            $table->smallInteger('combat_speed_rating');
             $table->smallInteger('block_rating');
             $table->integer('enemy_type_id')->unsigned();
             $table->integer('combat_position_id')->unsigned();
