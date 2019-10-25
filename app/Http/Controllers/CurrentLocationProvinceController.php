@@ -4,23 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Domain\Models\Squad;
 use App\Http\Resources\CurrentLocationResource;
+use App\Http\Resources\ProvinceResource;
 use App\Policies\SquadPolicy;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Http\Request;
 
-class SquadCurrentLocationController extends Controller
+class CurrentLocationProvinceController extends Controller
 {
     public function __invoke($squadSlug)
     {
         $squad = Squad::findSlugOrFail($squadSlug);
         $this->authorize(SquadPolicy::MANAGE, $squad);
 
-        $currentLocation = $squad->province()->with([
+        $currentLocationProvince = $squad->province()->with([
             'borders' => function(BelongsToMany $builder) {
                 return $builder->select('uuid');
             }
         ])->first();
 
-        return new CurrentLocationResource($currentLocation);
+        return new ProvinceResource($currentLocationProvince);
     }
 }
