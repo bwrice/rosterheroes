@@ -8,7 +8,7 @@ export const travelMixin = {
     },
     computed: {
         ...mapGetters([
-            '_currentLocation',
+            '_currentLocationProvince',
             '_routePosition',
             '_provinces',
             '_travelRoute'
@@ -19,7 +19,7 @@ export const travelMixin = {
     },
     methods: {
         minimMapProvinceColor(province) {
-            if (province.uuid === this._currentLocation.uuid) {
+            if (province.uuid === this._currentLocationProvince.uuid) {
                 return '#dd00ff';
             } else if (province.uuid === this._routePosition.uuid) {
                 return '#4ef542';

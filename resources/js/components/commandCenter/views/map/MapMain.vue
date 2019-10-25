@@ -3,7 +3,7 @@
         <v-card>
             <v-row no-gutters>
                 <v-col cols="5" class="pa-1">
-                    <MapViewPort :tile="false" :view-box="_currentLocation.viewBox">
+                    <MapViewPort :tile="false" :view-box="_currentLocationProvince.viewBox">
 
                         <!-- Borders -->
                         <ProvinceVector
@@ -13,17 +13,15 @@
                         >
                         </ProvinceVector>
 
-                        <ProvinceVector :province="_currentLocation" :highlight="true"></ProvinceVector>
+                        <ProvinceVector :province="_currentLocationProvince" :highlight="true"></ProvinceVector>
                     </MapViewPort>
                 </v-col>
                 <v-col cols="7" class="pa-1">
                     <v-row no-gutters>
                         <v-col cols="12">
                             <p>
-                                Current Location: {{_currentLocation.name}} <br>
+                                Current Location: {{_currentLocationProvince.name}} <br>
                                 Borders: {{bordersCount}} <br>
-                                Squads: {{_currentLocation.squads_count}} <br>
-                                Quests: {{_currentLocation.quests_count}}
                             </p>
                         </v-col>
                     </v-row>
@@ -67,14 +65,14 @@
 
         computed: {
             ...mapGetters([
-                '_currentLocation',
+                '_currentLocationProvince',
                 '_provincesByUuids'
             ]),
             bordersCount() {
-                return this._currentLocation.borderUuids.length;
+                return this._currentLocationProvince.borderUuids.length;
             },
             borders() {
-                return this._provincesByUuids(this._currentLocation.borderUuids);
+                return this._provincesByUuids(this._currentLocationProvince.borderUuids);
             },
             exploreRoute() {
                 return {
@@ -94,7 +92,7 @@
             },
             // needed for borders mixin
             province() {
-                return this._currentLocation;
+                return this._currentLocationProvince;
             }
         }
     }

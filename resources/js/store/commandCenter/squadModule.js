@@ -32,7 +32,7 @@ export default {
         _mobileStorage(state) {
             return state.mobileStorage;
         },
-        _currentLocation(state) {
+        _currentLocationProvince(state) {
             return state.currentLocation;
         },
         _barracksLoading(state) {

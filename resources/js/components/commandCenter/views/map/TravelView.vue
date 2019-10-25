@@ -22,7 +22,7 @@
                                         >
                                         </TravelRouteListItem>
                                         <v-sheet tile :color="'#a969b3'" class="pa-1">
-                                            {{this._currentLocation.name}}
+                                            {{this._currentLocationProvince.name}}
                                         </v-sheet>
                                     </v-card>
                                 </div>
@@ -211,7 +211,7 @@
                 return province.color;
             },
             addToRoute(province) {
-                if (province.uuid === this._currentLocation.uuid) {
+                if (province.uuid === this._currentLocationProvince.uuid) {
                     this.snackBarError({
                         text: "You're already in " + province.name
                     });

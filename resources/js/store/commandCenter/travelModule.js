@@ -15,7 +15,7 @@ export default {
                 return state.travelRoute[length - 1];
             } else {
                 // route empty, return current location
-                return getters._currentLocation;
+                return getters._currentLocationProvince;
             }
         },
         _travelRoute(state) {
