@@ -14,8 +14,9 @@ abstract class BoostsMeasurablesCollection extends Collection
     public function measurableBoosts(): MeasurableBoostCollection
     {
         $boostsCollection = new MeasurableBoostCollection();
-        $this->each(function (BoostsMeasurables $boostMeasurables) use ($boostsCollection) {
-            $boostMeasurables->getMeasurableBoosts()->each(function (MeasurableBoost $measurableBoost) use ($boostsCollection) {
+        $this->each(function (BoostsMeasurables $boostsMeasurables) use ($boostsCollection) {
+            $boostsMeasurables->getMeasurableBoosts()->each(function (MeasurableBoost $measurableBoost) use ($boostsMeasurables, $boostsCollection) {
+                $measurableBoost->booster = $boostsMeasurables;
                 $boostsCollection->push($measurableBoost);
             });
         });
