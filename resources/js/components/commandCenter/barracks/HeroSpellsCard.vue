@@ -20,12 +20,17 @@
             </v-row>
         </v-card-title>
         <v-card-text>
-            <span class="subtitle-1">Current Spells on {{hero.name}}</span>
-            <SpellPanelIterator :spells="hero.spells" :items-per-page="4">
-                <template v-slot:after-boosts="panelProps">
-                    <RemoveSpellButton :hero="hero" :spell="panelProps.spell"></RemoveSpellButton>
-                </template>
-            </SpellPanelIterator>
+            <template v-if="hero.spells.length">
+                <span class="subtitle-1">Current Spells on {{hero.name}}</span>
+                <SpellPanelIterator :spells="hero.spells" :items-per-page="4">
+                    <template v-slot:after-boosts="panelProps">
+                        <RemoveSpellButton :hero="hero" :spell="panelProps.spell"></RemoveSpellButton>
+                    </template>
+                </SpellPanelIterator>
+            </template>
+            <template v-else>
+                <span class="subtitle-1">No Spells on {{hero.name}}</span>
+            </template>
             <v-divider class="my-3"></v-divider>
             <span class="subtitle-1">Spell Library</span>
             <SpellPanelIterator :spells="availableSpells">
