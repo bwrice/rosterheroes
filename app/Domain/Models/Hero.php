@@ -277,7 +277,20 @@ class Hero extends EventSourcedModel implements HasSlots, UsesItems, SpellCaster
 
     public function getMeasurableStartingAmount(MeasurableTypeBehavior $measurableTypeBehavior): int
     {
-        return $this->getHeroClassBehavior()->getMeasurableStartingAmount($measurableTypeBehavior);
+        $startingAmount = $this->getHeroClassBehavior()->getMeasurableStartingAmount($measurableTypeBehavior);
+
+        if ($measurableTypeBehavior->getTypeName() === MeasurableType::HEALTH) {
+            $bonus = $this->getMeasurable(MeasurableType::VALOR)->getCurrentAmount() * 5;
+
+        } elseif ($measurableTypeBehavior->getTypeName() === MeasurableType::STAMINA) {
+            $bonus = $this->getMeasurable(MeasurableType::AGILITY)->getCurrentAmount() * 5;
+
+        } elseif ($measurableTypeBehavior->getTypeName() === MeasurableType::MANA) {
+            $bonus = $this->getMeasurable(MeasurableType::INTELLIGENCE)->getCurrentAmount() * 5;
+        } else {
+            $bonus = 0;
+        }
+        return $startingAmount + $bonus;
     }
 
     /**
