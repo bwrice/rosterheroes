@@ -23,9 +23,12 @@ class SeedTitans extends Migration
             [
                 'name' => 'Skeleton Overlord',
                 'base_level' => 93,
-                'damage_rating' => 50,
-                'health_rating' => 30,
-                'protection_rating' => 20,
+                'base_damage_rating' => 75,
+                'damage_multiplier_rating' => 50,
+                'health_rating' => 20,
+                'protection_rating' => 5,
+                'attack_speed_rating' => 50,
+                'block_rating' => 50,
                 'enemy_type' => EnemyType::SKELETON,
                 'combat_position' => CombatPosition::HIGH_GROUND,
                 'attacks' => [
@@ -41,9 +44,12 @@ class SeedTitans extends Migration
             [
                 'name' => 'Skeleton General',
                 'base_level' => 67,
-                'damage_rating' => 35,
+                'base_damage_rating' => 20,
+                'damage_multiplier_rating' => 50,
                 'health_rating' => 40,
-                'protection_rating' => 25,
+                'protection_rating' => 40,
+                'attack_speed_rating' => 50,
+                'block_rating' => 50,
                 'enemy_type' => EnemyType::SKELETON,
                 'combat_position' => CombatPosition::FRONT_LINE,
                 'attacks' => [
@@ -79,9 +85,12 @@ class SeedTitans extends Migration
                 'uuid' => Str::uuid(),
                 'name' => $titanData['name'],
                 'base_level' => $titanData['base_level'],
-                'damage_rating' => $titanData['damage_rating'],
+                'base_damage_rating' => $titanData['base_damage_rating'],
+                'damage_multiplier_rating' => $titanData['damage_multiplier_rating'],
                 'health_rating' => $titanData['health_rating'],
                 'protection_rating' => $titanData['protection_rating'],
+                'attack_speed_rating' => $titanData['attack_speed_rating'],
+                'block_rating' => $titanData['block_rating'],
                 'enemy_type_id' => $enemyTypes->where('name', '=', $titanData['enemy_type'])->first()->id,
                 'combat_position_id' => $combatPositions->where('name', '=', $titanData['combat_position'])->first()->id
             ]);

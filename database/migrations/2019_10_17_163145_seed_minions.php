@@ -22,7 +22,8 @@ class SeedMinions extends Migration
             [
                 'name' => 'Skeleton Scout',
                 'level' => 8,
-                'damage_rating' => 35,
+                'base_damage_rating' => 35,
+                'damage_multiplier_rating' => 50,
                 'health_rating' => 35,
                 'protection_rating' => 30,
                 'attack_speed_rating' => 50,
@@ -38,7 +39,8 @@ class SeedMinions extends Migration
             [
                 'name' => 'Skeleton Guard',
                 'level' => 13,
-                'damage_rating' => 15,
+                'base_damage_rating' => 15,
+                'damage_multiplier_rating' => 50,
                 'health_rating' => 35,
                 'protection_rating' => 50,
                 'attack_speed_rating' => 50,
@@ -54,7 +56,8 @@ class SeedMinions extends Migration
             [
                 'name' => 'Skeleton Archer',
                 'level' => 15,
-                'damage_rating' => 60,
+                'base_damage_rating' => 60,
+                'damage_multiplier_rating' => 50,
                 'health_rating' => 15,
                 'protection_rating' => 25,
                 'attack_speed_rating' => 50,
@@ -71,7 +74,8 @@ class SeedMinions extends Migration
             [
                 'name' => 'Skeleton Mage',
                 'level' => 17,
-                'damage_rating' => 75,
+                'base_damage_rating' => 75,
+                'damage_multiplier_rating' => 50,
                 'health_rating' => 20,
                 'protection_rating' => 5,
                 'attack_speed_rating' => 50,
@@ -89,7 +93,8 @@ class SeedMinions extends Migration
             [
                 'name' => 'Skeleton Soldier',
                 'level' => 21,
-                'damage_rating' => 20,
+                'base_damage_rating' => 20,
+                'damage_multiplier_rating' => 50,
                 'health_rating' => 40,
                 'protection_rating' => 40,
                 'attack_speed_rating' => 50,
@@ -108,7 +113,8 @@ class SeedMinions extends Migration
             [
                 'name' => 'Skeleton Marksman',
                 'level' => 23,
-                'damage_rating' => 70,
+                'base_damage_rating' => 70,
+                'damage_multiplier_rating' => 50,
                 'health_rating' => 25,
                 'protection_rating' => 5,
                 'attack_speed_rating' => 50,
@@ -128,7 +134,8 @@ class SeedMinions extends Migration
         $attacks = Attack::all();
 
         $minions->each(function ($minionData) {
-            $ratingSum = $minionData['damage_rating'] + $minionData['health_rating'] + $minionData['protection_rating'];
+            //TODO update based off new rating values
+            $ratingSum = $minionData['base_damage_rating'] + $minionData['health_rating'] + $minionData['protection_rating'];
             if ($ratingSum != 100 ) {
                 throw new RuntimeException("Rating sum of: " . $ratingSum . " does not equal 100");
             }
@@ -154,7 +161,8 @@ class SeedMinions extends Migration
                 'uuid' => Str::uuid(),
                 'name' => $minionData['name'],
                 'level' => $minionData['level'],
-                'damage_rating' => $minionData['damage_rating'],
+                'base_damage_rating' => $minionData['base_damage_rating'],
+                'damage_multiplier_rating' => $minionData['damage_multiplier_rating'],
                 'health_rating' => $minionData['health_rating'],
                 'protection_rating' => $minionData['protection_rating'],
                 'attack_speed_rating' => $minionData['attack_speed_rating'],
