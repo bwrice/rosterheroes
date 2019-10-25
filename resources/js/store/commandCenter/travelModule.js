@@ -1,5 +1,5 @@
 import * as squadApi from '../../api/squadApi';
-import CurrentLocation from "../../models/CurrentLocation";
+import Province from "../../models/Province";
 
 export default {
 
@@ -51,28 +51,30 @@ export default {
         removeLastRoutePosition({commit}) {
             commit('REMOVE_LAST_ROUTE_POSITION');
         },
-        async confirmTravel({state, commit, dispatch}, payload) {
+        async confirmTravel({state, commit, dispatch}, {route, router}) {
             dispatch('setOverlay', {show: true});
 
             let travelRoute = state.travelRoute.map(function (province) {
                 return province.uuid;
             });
 
-            let squadSlug = payload.route.params.squadSlug;
+            let squadSlug = route.params.squadSlug;
 
             try {
 
                 let fastTravelResponse = await squadApi.fastTravel(squadSlug, travelRoute);
-                let currentLocation = new CurrentLocation(fastTravelResponse.data);
-                commit('SET_CURRENT_LOCATION', currentLocation);
+                let currentLocationProvince = new Province(fastTravelResponse.data);
+                dispatch('updateCurrentLocation', route, {
+                    province: currentLocationProvince
+                });
                 commit('CLEAR_TRAVEL_ROUTE');
-                dispatch('updateSquad', payload.route);
+                dispatch('updateSquad', route);
                 dispatch('snackBarSuccess', {
-                    'text': 'Welcome to ' + currentLocation.name,
+                    'text': 'Welcome to ' + currentLocationProvince.name,
                     timeout: 4000
 
                 });
-                payload.router.push({
+                router.push({
                     name: 'map-main',
                     params: {
                         squadSlug: squadSlug
