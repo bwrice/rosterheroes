@@ -10,11 +10,6 @@ export async function getHeroes(squadSlug) {
     return response.data;
 }
 
-export async function getCurrentLocation(squadSlug) {
-    let response = await axios.get('/api/v1/squads/' + squadSlug + '/current-location');
-    return response.data;
-}
-
 export async function fastTravel(squadSlug, provinces) {
     let response = await axios.post('/api/v1/squads/' + squadSlug + '/fast-travel', {
         travelRoute: provinces
@@ -29,5 +24,10 @@ export async function getMobileStorage(squadSlug) {
 
 export async function getSpellLibrary(squadSlug) {
     let response = await axios.get('/api/v1/squads/' + squadSlug + '/spells');
+    return response.data;
+}
+
+export async function getCurrentLocationProvince(squadSlug) {
+    let response = await axios.get('/api/v1/squads/' + squadSlug + '/current-location/province');
     return response.data;
 }
