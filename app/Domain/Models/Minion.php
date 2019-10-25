@@ -3,6 +3,7 @@
 namespace App\Domain\Models;
 
 use App\Domain\Behaviors\EnemyTypes\EnemyTypeBehavior;
+use App\Domain\Interfaces\HasAttacks;
 use App\Domain\Traits\HasNameSlug;
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,15 +15,18 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $name
  * @property string $slug
  * @property int $level
- * @property int $damage_rating
+ * @property int $base_damage_rating
+ * @property int $damage_multiplier_rating
  * @property int $health_rating
  * @property int $protection_rating
+ * @property int $combat_speed_rating
+ * @property int $block_rating
  * @property int $enemy_type_id
  * @property int $combat_position_id
  *
  * @property EnemyType $enemyType
  */
-class Minion extends Model
+class Minion extends Model implements HasAttacks
 {
     use HasNameSlug;
 
@@ -56,4 +60,31 @@ class Minion extends Model
     }
 
 
+    public function adjustBaseDamage(float $baseDamage): float
+    {
+        $enemyTypeBonus = $this->getEnemyTypeBehavior()->getBaseDamageModifierBonus();
+        return (int) ceil(sqrt($this->level) * ($this->level/5) * $this->base_damage_rating * (1 + $enemyTypeBonus));
+    }
+
+    public function adjustCombatSpeed(float $speed): float
+    {
+        $enemyTypeBonus = $this->getEnemyTypeBehavior()->getCombatSpeedModifierBonus();
+        return (int) ceil(sqrt($this->level) * ($this->level/5) * $this->combat_speed_rating * (1 + $enemyTypeBonus));
+    }
+
+    public function adjustDamageMultiplier(float $damageModifier): float
+    {
+        $enemyTypeBonus = $this->getEnemyTypeBehavior()->getCombatSpeedModifierBonus();
+        return (int) ceil(sqrt($this->level) * ($this->level/5) * $this->damage_multiplier_rating * (1 + $enemyTypeBonus));
+    }
+
+    public function adjustResourceCostAmount(float $amount): float
+    {
+        return 0;
+    }
+
+    public function adjustResourceCostPercent(float $amount): float
+    {
+        return 0;
+    }
 }
