@@ -19,8 +19,9 @@ class CreateMinionsTable extends Migration
             $table->string('name');
             $table->string('slug');
             $table->unsignedInteger('level');
-            $table->smallInteger('damage_rating');
             $table->smallInteger('health_rating');
+            $table->smallInteger('base_damage_rating');
+            $table->smallInteger('damage_multiplier_rating');
             $table->smallInteger('protection_rating');
             $table->smallInteger('attack_speed_rating');
             $table->smallInteger('block_rating');
