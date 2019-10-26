@@ -2,6 +2,7 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Collections\MinionCollection;
 use App\Domain\Models\Quest;
 use App\Domain\Traits\HasNameSlug;
 use Illuminate\Database\Eloquent\Model;
@@ -12,6 +13,10 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $quest_id
  * @property string $uuid
+ * @property string $name
+ * @property string $slug
+ *
+ * @property MinionCollection $minions
  */
 class Skirmish extends Model
 {
