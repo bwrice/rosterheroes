@@ -94,7 +94,7 @@ class Hero extends EventSourcedModel implements HasSlots, UsesItems, SpellCaster
 
     public function slots()
     {
-        return $this->morphMany(Slot::class, 'has_slots');
+        return $this->hasMany(Slot::class);
     }
 
     public function measurables()
