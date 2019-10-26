@@ -57,7 +57,7 @@ class Item extends EventSourcedModel implements Slottable, HasAttacks
         return $this->belongsToMany(Enchantment::class)->withTimestamps();
     }
 
-    public function itemStorage()
+    public function hasItems()
     {
         return $this->morphTo();
     }
