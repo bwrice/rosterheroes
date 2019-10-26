@@ -8,4 +8,5 @@ class SkeletonBehavior extends EnemyTypeBehavior
 {
     protected $healthModifierBonus = .2;
     protected $protectionModifierBonus = .8;
+    protected $baseDamageModifierBonus = .25;
 }
