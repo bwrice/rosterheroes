@@ -2,7 +2,9 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Collections\MinionCollection;
 use App\Domain\Collections\QuestCollection;
+use App\Domain\Collections\SkirmishCollection;
 use App\Domain\Models\EventSourcedModel;
 use App\Domain\Models\Province;
 use App\Domain\Traits\HasNameSlug;
@@ -16,9 +18,15 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property string $name
  * @property string $uuid
+ * @property int $level
+ * @property int $province_id
+ * @property int $travel_type_id
  * @property Carbon $completed_at
  *
  * @property Province $province
+ *
+ * @property SkirmishCollection $skirmishes
+ * @property MinionCollection $minions
  */
 class Quest extends EventSourcedModel
 {
@@ -31,6 +39,15 @@ class Quest extends EventSourcedModel
         'updated_at',
         'completed_at'
     ];
+
+    public static function resourceRelations()
+    {
+        return [
+            'minions',
+            'titans',
+            'skirmishes.minions.attacks'
+        ];
+    }
 
     public function newCollection(array $models = [])
     {
