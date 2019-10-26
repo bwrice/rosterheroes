@@ -4,6 +4,7 @@ namespace App\Domain\Models;
 
 use App\Aggregates\SquadAggregate;
 use App\Domain\Actions\CreateCampaignAction;
+use App\Domain\Collections\ItemCollection;
 use App\Domain\Interfaces\TravelsBorders;
 use App\Domain\Services\Travel\SquadBorderTravelCostExemption;
 use App\Exceptions\CampaignExistsException;
@@ -38,6 +39,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property User $user
  * @property Province $province
  * @property MobileStorageRank $mobileStorageRank
+ * @property ItemCollection $items
  * @property \App\Domain\Collections\SlotCollection $slots
  * @property Campaign|null $currentCampaign
  *
@@ -195,6 +197,11 @@ class Squad extends EventSourcedModel implements HasSlots, TravelsBorders
     public function slots()
     {
         return $this->morphMany(Slot::class, 'has_slots');
+    }
+
+    public function items()
+    {
+        return $this->morphMany(Item::class, 'item_storage');
     }
 
     public function spells()
@@ -426,5 +433,12 @@ class Squad extends EventSourcedModel implements HasSlots, TravelsBorders
     public function getUniqueIdentifier(): string
     {
         return (string) $this->uuid;
+    }
+
+    public function getAvailableWagonWeight(): int
+    {
+        $maxCapacity = $this->mobileStorageRank->getBehavior()->getWeightCapacity();
+        $itemWeightSum = $this->items->sumOfWeight();
+        return $maxCapacity - $itemWeightSum;
     }
 }
