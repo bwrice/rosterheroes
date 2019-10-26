@@ -23,7 +23,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property Item|null $item
  * @property SlotType $slotType
- * @property HasSlots $hasSlots
+ * @property Hero $hero
  */
 class Slot extends EventSourcedModel
 {
@@ -39,9 +39,9 @@ class Slot extends EventSourcedModel
         return $this->belongsTo(SlotType::class);
     }
 
-    public function hasSlots()
+    public function hero()
     {
-        return $this->morphTo();
+        return $this->belongsTo(Hero::class);
     }
 
     public function item()
@@ -51,6 +51,6 @@ class Slot extends EventSourcedModel
 
     public function belongsToHasSlots(HasSlots $hasSlots)
     {
-        return $hasSlots->getUniqueIdentifier() === $this->hasSlots->getUniqueIdentifier();
+        return $hasSlots->getUniqueIdentifier() === $this->hero->getUniqueIdentifier();
     }
 }

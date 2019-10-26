@@ -70,7 +70,7 @@ class SlotItemInWagonTest extends TestCase
         $filledSlots = $this->item->slots;
         $this->assertEquals($this->item->getSlotsCount(), $filledSlots->count());
         $filledSlots->each(function (Slot $slot) {
-            $hasSlots = $slot->hasSlots;
+            $hasSlots = $slot->hero;
             $this->assertInstanceOf(Squad::class, $hasSlots);
             $this->assertEquals($slot->has_slots_id, $hasSlots->id);
         });
@@ -102,7 +102,7 @@ class SlotItemInWagonTest extends TestCase
         $filledSlots = $this->item->slots;
         $this->assertEquals($this->item->getSlotsCount(), $filledSlots->count());
         $filledSlots->each(function (Slot $slot) {
-            $hasSlots = $slot->hasSlots;
+            $hasSlots = $slot->hero;
             $this->assertInstanceOf(Squad::class, $hasSlots);
             $this->assertEquals($slot->has_slots_id, $hasSlots->id);
         });
@@ -113,7 +113,7 @@ class SlotItemInWagonTest extends TestCase
         $filledSlots = $this->itemTwo->slots;
         $this->assertEquals($this->itemTwo->getSlotsCount(), $filledSlots->count());
         $filledSlots->each(function (Slot $slot) use ($localStoreHouse) {
-            $hasSlots = $slot->hasSlots;
+            $hasSlots = $slot->hero;
             $this->assertInstanceOf(StoreHouse::class, $hasSlots);
             $this->assertEquals($slot->has_slots_id, $localStoreHouse->id);
         });
@@ -151,7 +151,7 @@ class SlotItemInWagonTest extends TestCase
         $filledSlots = $this->item->slots;
         $this->assertEquals($this->item->getSlotsCount(), $filledSlots->count());
         $filledSlots->each(function (Slot $slot) {
-            $hasSlots = $slot->hasSlots;
+            $hasSlots = $slot->hero;
             $this->assertInstanceOf(Squad::class, $hasSlots);
             $this->assertEquals($slot->has_slots_id, $this->squad->id);
         });
@@ -162,7 +162,7 @@ class SlotItemInWagonTest extends TestCase
         $filledSlots = $this->itemTwo->slots;
         $this->assertEquals($this->itemTwo->getSlotsCount(), $filledSlots->count());
         $filledSlots->each(function (Slot $slot) use ($localStash) {
-            $hasSlots = $slot->hasSlots;
+            $hasSlots = $slot->hero;
             $this->assertInstanceOf(Stash::class, $hasSlots);
             $this->assertEquals($slot->has_slots_id, $localStash->id);
         });
@@ -203,7 +203,7 @@ class SlotItemInWagonTest extends TestCase
         $filledSlots = $this->item->slots;
         $this->assertEquals($this->item->getSlotsCount(), $filledSlots->count());
         $filledSlots->each(function (Slot $slot) {
-            $hasSlots = $slot->hasSlots;
+            $hasSlots = $slot->hero;
             $this->assertInstanceOf(Squad::class, $hasSlots);
             $this->assertEquals($slot->has_slots_id, $this->squad->id);
         });
@@ -212,7 +212,7 @@ class SlotItemInWagonTest extends TestCase
         $filledSlots = $this->itemTwo->slots;
         $this->assertEquals($this->itemTwo->getSlotsCount(), $filledSlots->count());
         $filledSlots->each(function (Slot $slot){
-            $hasSlots = $slot->hasSlots;
+            $hasSlots = $slot->hero;
             $this->assertInstanceOf(StoreHouse::class, $hasSlots);
             $this->assertEquals($slot->has_slots_id, $this->storeHouse->id);
         });
@@ -223,7 +223,7 @@ class SlotItemInWagonTest extends TestCase
         $filledSlots = $this->itemThree->slots;
         $this->assertEquals($this->itemThree->getSlotsCount(), $filledSlots->count());
         $filledSlots->each(function (Slot $slot) use ($localStash) {
-            $hasSlots = $slot->hasSlots;
+            $hasSlots = $slot->hero;
             $this->assertInstanceOf(Stash::class, $hasSlots);
             $this->assertEquals($slot->has_slots_id, $localStash->id);
         });
@@ -268,7 +268,7 @@ class SlotItemInWagonTest extends TestCase
         $filledSlots = $this->item->slots;
         $this->assertEquals($this->item->getSlotsCount(), $filledSlots->count());
         $filledSlots->each(function (Slot $slot) {
-            $hasSlots = $slot->hasSlots;
+            $hasSlots = $slot->hero;
             $this->assertInstanceOf(Squad::class, $hasSlots);
             $this->assertEquals($slot->has_slots_id, $this->squad->id);
         });
@@ -279,7 +279,7 @@ class SlotItemInWagonTest extends TestCase
         $filledSlots = $this->itemTwo->slots;
         $this->assertEquals($this->itemTwo->getSlotsCount(), $filledSlots->count());
         $filledSlots->each(function (Slot $slot) use ($localStash) {
-            $hasSlots = $slot->hasSlots;
+            $hasSlots = $slot->hero;
             $this->assertInstanceOf(Stash::class, $hasSlots);
             $this->assertEquals($slot->has_slots_id, $localStash->id);
         });
@@ -290,7 +290,7 @@ class SlotItemInWagonTest extends TestCase
         $filledSlots = $this->itemThree->slots;
         $this->assertEquals($this->itemThree->getSlotsCount(), $filledSlots->count());
         $filledSlots->each(function (Slot $slot) use ($localStash) {
-            $hasSlots = $slot->hasSlots;
+            $hasSlots = $slot->hero;
             $this->assertInstanceOf(Stash::class, $hasSlots);
             $this->assertEquals($slot->has_slots_id, $localStash->id);
         });

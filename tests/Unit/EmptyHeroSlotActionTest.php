@@ -85,7 +85,7 @@ class EmptyHeroSlotActionTest extends TestCase
         $filledSlots = $this->item->slots;
         $this->assertEquals($neededSlotsCount, $filledSlots->count());
         $filledSlots->each(function (Slot $slot) {
-            $hasSlots = $slot->hasSlots;
+            $hasSlots = $slot->hero;
             $this->assertInstanceOf(Squad::class, $hasSlots);
             $this->assertEquals($slot->has_slots_id, $this->squad->id);
         });

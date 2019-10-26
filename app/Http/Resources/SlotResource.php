@@ -29,7 +29,7 @@ class SlotResource extends JsonResource
     {
         return [
             'uuid' => $this->uuid,
-            'item' => (new ItemResource($this->item))->setUsesItems($this->usesItems)->setHasSlots($this->hasSlots),
+            'item' => (new ItemResource($this->item))->setUsesItems($this->usesItems)->setHasSlots($this->hero),
             'slotType' => new SlotTypeResource($this->slotType)
         ];
     }

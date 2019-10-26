@@ -77,7 +77,7 @@ class EmptySlotActionTest extends TestCase
         $this->assertEquals(1, $item->slots->count());
         /** @var Slot $squadSlot */
         $squadSlot = $item->slots->first();
-        $this->assertTrue($squadSlot->hasSlots instanceof Squad);
-        $this->assertEquals($squadSlot->hasSlots->id, $this->squad->id);
+        $this->assertTrue($squadSlot->hero instanceof Squad);
+        $this->assertEquals($squadSlot->hero->id, $this->squad->id);
     }
 }
