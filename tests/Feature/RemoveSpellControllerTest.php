@@ -33,7 +33,7 @@ class RemoveSpellControllerTest extends TestCase
     {
         parent::setUp();
         $this->squad = factory(Squad::class)->create();
-        $this->hero = factory(Hero::class)->create();
+        $this->hero = factory(Hero::class)->state('with-measurables')->create();
         factory(HeroPost::class)->create([
             'squad_id' => $this->squad->id,
             'hero_id' => $this->hero->id

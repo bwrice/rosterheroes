@@ -42,7 +42,7 @@ class HeroPlayerSpiritControllerTest extends TestCase
         $position = $heroRace->positions()->inRandomOrder()->first();
 
         /** @var \App\Domain\Models\Hero $hero */
-        $hero = factory(Hero::class)->create([
+        $hero = factory(Hero::class)->state('with-measurables')->create([
             'hero_race_id' => $heroRace->id
         ]);
 
@@ -124,7 +124,7 @@ class HeroPlayerSpiritControllerTest extends TestCase
         $position = $heroRace->positions()->inRandomOrder()->first();
 
         /** @var \App\Domain\Models\Hero $hero */
-        $hero = factory(Hero::class)->create([
+        $hero = factory(Hero::class)->state('with-measurables')->create([
             'hero_race_id' => $heroRace->id
         ]);
 
@@ -169,7 +169,7 @@ class HeroPlayerSpiritControllerTest extends TestCase
         $playerSpirit = factory(PlayerSpirit::class)->create();
 
         /** @var \App\Domain\Models\Hero $hero */
-        $hero = factory(Hero::class)->create([
+        $hero = factory(Hero::class)->state('with-measurables')->create([
             'player_spirit_id' => $playerSpirit->id
         ]);
 

@@ -225,7 +225,7 @@ class SquadHeroControllerTest extends TestCase
         $this->withoutExceptionHandling();
 
         /** @var Hero $heroOne */
-        $heroOne = factory(Hero::class)->create();
+        $heroOne = factory(Hero::class)->state('with-measurables')->create();
 
         factory(HeroPost::class)->create([
             'hero_id' => $heroOne->id
@@ -235,7 +235,7 @@ class SquadHeroControllerTest extends TestCase
 
 
         /** @var Hero $heroTwo */
-        $heroTwo = factory(Hero::class)->create();
+        $heroTwo = factory(Hero::class)->state('with-measurables')->create();
 
 
         factory(HeroPost::class)->create([

@@ -41,7 +41,7 @@ class HeroChangeCombatPositionControllerTest extends TestCase
     {
         parent::setUp();
 
-        $this->hero = factory(Hero::class)->create();
+        $this->hero = factory(Hero::class)->state('with-measurables')->create();
         $this->combatPosition = CombatPosition::query()->where(function (Builder $builder) {
             $builder->where('id', '!=', $this->hero->combat_position_id);
         })->inRandomOrder()->first();
