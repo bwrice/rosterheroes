@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Domain\Actions\SlotItemInWagonAction;
+use App\Domain\Actions\StoreItemForSquadAction;
 use App\Domain\Models\Item;
 use App\Domain\Models\ItemBase;
 use App\Domain\Models\ItemType;
@@ -16,7 +16,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class SlotItemInWagonTest extends TestCase
+class StoreItemForSquadActionTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -35,7 +35,7 @@ class SlotItemInWagonTest extends TestCase
     /** @var StoreHouse */
     protected $storeHouse;
 
-    /** @var SlotItemInWagonAction */
+    /** @var StoreItemForSquadAction */
     protected $domainAction;
 
     public function setUp(): void
@@ -50,7 +50,7 @@ class SlotItemInWagonTest extends TestCase
             'squad_id' => $this->squad->id,
             'province_id' => $this->squad->province_id
         ]);
-        $this->domainAction = app(SlotItemInWagonAction::class);
+        $this->domainAction = app(StoreItemForSquadAction::class);
     }
 
     /**

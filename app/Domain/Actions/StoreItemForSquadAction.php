@@ -13,7 +13,7 @@ use App\Domain\Support\SlotTransaction;
 use App\Domain\Support\ItemTransactionGroup;
 use Illuminate\Support\Collection;
 
-class SlotItemInWagonAction
+class StoreItemForSquadAction
 {
     /** @var Squad */
     protected $squad;
@@ -28,15 +28,15 @@ class SlotItemInWagonAction
     {
         $this->setProps($squad, $item, $itemTransactionGroup);
 
-        if ($this->slotInWagon()) {
+        if ($this->storeInWagon()) {
             return $this->itemTransactionGroup;
         }
 
-        if ($this->slotInStoreHouse()) {
+        if ($this->storeInStoreHouse()) {
             return $this->itemTransactionGroup;
         }
 
-        $this->slotInStash();
+        $this->storeInStash();
         return $this->itemTransactionGroup;
     }
 
@@ -51,18 +51,11 @@ class SlotItemInWagonAction
         $this->item = $item;
         $this->itemTransactionGroup = $itemTransactionGroup ?: new ItemTransactionGroup();
     }
-//
-//    protected function addTransaction(HasSlots $hasSlots, SlotCollection $slotsToFill)
-//    {
-//        $this->item->slots()->saveMany($slotsToFill);
-//        $transaction = new SlotTransaction($slotsToFill->fresh(), $hasSlots, $this->item->fresh(), SlotTransaction::TYPE_FILL);
-//        $this->slotTransactionGroup->push($transaction);
-//    }
 
     /**
      * @return bool
      */
-    protected function slotInWagon()
+    protected function storeInWagon()
     {
         $slotsNeeded = $this->item->getSlotsCount();
         $emptySquadSlots = $this->squad->slots->slotEmpty();
@@ -78,7 +71,7 @@ class SlotItemInWagonAction
     /**
      * @return bool
      */
-    protected function slotInStoreHouse()
+    protected function storeInStoreHouse()
     {
         $localStoreHouse = $this->squad->getLocalStoreHouse();
         if (! $localStoreHouse) {
@@ -95,7 +88,7 @@ class SlotItemInWagonAction
         return true;
     }
 
-    protected function slotInStash()
+    protected function storeInStash()
     {
         $stash = $this->squad->getLocalStash();
         $slotsNeeded = $this->item->getSlotsCount();
