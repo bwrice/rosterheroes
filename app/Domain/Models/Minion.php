@@ -4,6 +4,7 @@ namespace App\Domain\Models;
 
 use App\Domain\Behaviors\EnemyTypes\EnemyTypeBehavior;
 use App\Domain\Collections\AttackCollection;
+use App\Domain\Collections\MinionCollection;
 use App\Domain\Interfaces\HasAttacks;
 use App\Domain\Traits\HasNameSlug;
 use Illuminate\Database\Eloquent\Model;
@@ -34,6 +35,11 @@ class Minion extends Model implements HasAttacks
     use HasNameSlug;
 
     protected $guarded = [];
+
+    public function newCollection(array $models = [])
+    {
+        return new MinionCollection($models);
+    }
 
     public function attacks()
     {
