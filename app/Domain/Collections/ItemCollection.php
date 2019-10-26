@@ -35,4 +35,11 @@ class ItemCollection extends Collection
         });
         return $enchantmentCollection;
     }
+
+    public function sumOfWeight()
+    {
+        return $this->sum(function (Item $item) {
+            return $item->weight();
+        });
+    }
 }

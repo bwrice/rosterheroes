@@ -94,7 +94,7 @@ class SlotCollection extends Collection
             return false;
         }
         $nonMatch = $this->first(function (Slot $slot) use ($hasSlots) {
-            return ! $slot->belongsToHasSlots($hasSlots);
+            return ! $slot->belongsToHero($hasSlots);
         });
         return $nonMatch === null;
     }

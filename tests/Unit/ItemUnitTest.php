@@ -56,11 +56,11 @@ class ItemUnitTest extends TestCase
 
         $this->item->item_type_id = $type1->id;
         $this->item->save();
-        $weight1 = $this->item->fresh()->getBurden();
+        $weight1 = $this->item->fresh()->weight();
 
         $this->item->item_type_id = $type2->id;
         $this->item->save();
-        $weight2 = $this->item->fresh()->getBurden();
+        $weight2 = $this->item->fresh()->weight();
 
         $this->assertGreaterThan($weight1, $weight2);
     }
@@ -83,11 +83,11 @@ class ItemUnitTest extends TestCase
 
         $this->item->material_id = $material1->id;
         $this->item->save();
-        $weight1 = $this->item->fresh()->getBurden();
+        $weight1 = $this->item->fresh()->weight();
 
         $this->item->material_id = $material2->id;
         $this->item->save();
-        $weight2 = $this->item->fresh()->getBurden();
+        $weight2 = $this->item->fresh()->weight();
 
         $this->assertGreaterThan($weight1, $weight2);
     }
@@ -113,11 +113,11 @@ class ItemUnitTest extends TestCase
 
         $this->item->material_id = $firstMaterial->id;
         $this->item->save();
-        $weight1 = $this->item->fresh()->getBurden();
+        $weight1 = $this->item->fresh()->weight();
 
         $this->item->material_id = $secondMaterial->id;
         $this->item->save();
-        $weight2 = $this->item->fresh()->getBurden();
+        $weight2 = $this->item->fresh()->weight();
 
         $this->assertGreaterThan($weight1, $weight2);
     }
@@ -188,13 +188,13 @@ class ItemUnitTest extends TestCase
         $this->item = $this->item->fresh();
         // Set to same grade to compare
         $this->item->itemType->grade = 10;
-        $lighterItemTypeWeight = $this->item->getBurden();
+        $lighterItemTypeWeight = $this->item->weight();
 
         $this->item->item_type_id = $heavierItemType->id;
         $this->item->save();
         $this->item = $this->item->fresh();
         $this->item->itemType->grade = 10;
-        $heavierItemTypeWeight = $this->item->getBurden();
+        $heavierItemTypeWeight = $this->item->weight();
 
         $this->assertGreaterThan($lighterItemTypeWeight, $heavierItemTypeWeight);
     }

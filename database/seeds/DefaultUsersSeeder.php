@@ -4,7 +4,7 @@ use App\Domain\Actions\AddNewHeroToSquadAction;
 use App\Domain\Actions\CreateSquadAction;
 use App\Domain\Actions\CreateUserAction;
 use App\Domain\Actions\GenerateItemFromBlueprintAction;
-use App\Domain\Actions\SlotItemInWagonAction;
+use App\Domain\Actions\StoreItemForSquadAction;
 use App\Domain\Models\HeroClass;
 use App\Domain\Models\HeroRace;
 use Illuminate\Database\Seeder;
@@ -16,7 +16,7 @@ class DefaultUsersSeeder extends Seeder
      * @param CreateSquadAction $createSquadAction
      * @param AddNewHeroToSquadAction $addNewHeroToSquadAction
      * @param GenerateItemFromBlueprintAction $generateItemFromBlueprintAction
-     * @param SlotItemInWagonAction $slotItemInWagonAction
+     * @param StoreItemForSquadAction $slotItemInWagonAction
      * @throws \App\Exceptions\HeroPostNotFoundException
      * @throws \App\Exceptions\InvalidHeroClassException
      */
@@ -25,7 +25,7 @@ class DefaultUsersSeeder extends Seeder
         CreateSquadAction $createSquadAction,
         AddNewHeroToSquadAction $addNewHeroToSquadAction,
         GenerateItemFromBlueprintAction $generateItemFromBlueprintAction,
-        SlotItemInWagonAction $slotItemInWagonAction)
+        StoreItemForSquadAction $slotItemInWagonAction)
     {
         $user = $createUserAction->execute('bwrice83@gmail.com', 'Brian Rice', 'password');
         $squad = $createSquadAction->execute($user->id, 'My Squad');

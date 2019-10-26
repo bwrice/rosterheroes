@@ -49,7 +49,7 @@ class Slot extends EventSourcedModel
         return $this->belongsTo(Item::class);
     }
 
-    public function belongsToHasSlots(HasSlots $hasSlots)
+    public function belongsToHero(Hero $hero)
     {
         return $hasSlots->getUniqueIdentifier() === $this->hero->getUniqueIdentifier();
     }

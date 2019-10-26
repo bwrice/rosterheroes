@@ -34,32 +34,32 @@ class EmptyHeroSlotAction
     /** @var ItemTransactionGroup */
     protected $slotTransactionGroup;
 
-    /** @var SlotItemInWagonAction */
-    protected $slotItemInWagonAction;
+    /** @var StoreItemForSquadAction */
+    protected $storeItemForSquadAction;
 
-    public function __construct(SlotItemInWagonAction $slotItemInSquadAction)
+    public function __construct(StoreItemForSquadAction $storeItemForSquadAction)
     {
-        $this->slotItemInWagonAction = $slotItemInSquadAction;
+        $this->storeItemForSquadAction = $storeItemForSquadAction;
     }
 
     /**
      * @param Slot $slot
      * @param Hero $hero
-     * @param ItemTransactionGroup|null $slotTransactionGroup
+     * @param ItemTransactionGroup|null $itemTransactionGroup
      * @return ItemTransactionGroup
      */
-    public function execute(Slot $slot, Hero $hero, ItemTransactionGroup $slotTransactionGroup = null)
+    public function execute(Slot $slot, Hero $hero, ItemTransactionGroup $itemTransactionGroup = null)
     {
         if (! Week::current()->adventuringOpen()) {
             throw new SlottingException($slot, $hero, null, "Week is currently locked for that action");
         }
 
-        $this->setProps($slot, $hero, $slotTransactionGroup);
+        $this->setProps($slot, $hero, $itemTransactionGroup);
         $this->validate();
 
         DB::transaction(function () {
             $this->unEquipItem();
-            $this->slotTransactionGroup = $this->slotItemInWagonAction->execute($this->squad, $this->item, $this->slotTransactionGroup);
+            $this->slotTransactionGroup = $this->storeItemForSquadAction->execute($this->squad, $this->item, $this->slotTransactionGroup);
         });
 
         return $this->slotTransactionGroup;
@@ -79,7 +79,7 @@ class EmptyHeroSlotAction
 
     protected function validate()
     {
-        if (! $this->slotToEmpty->belongsToHasSlots($this->hero)) {
+        if (! $this->slotToEmpty->belongsToHero($this->hero)) {
             throw new SlottingException($this->slotToEmpty, $this->hero, null,"Slot does not belong to Hero", SlottingException::CODE_INVALID_SLOT_OWNERSHIP);
         }
 
