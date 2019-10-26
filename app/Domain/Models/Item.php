@@ -57,6 +57,11 @@ class Item extends EventSourcedModel implements Slottable, HasAttacks
         return $this->belongsToMany(Enchantment::class)->withTimestamps();
     }
 
+    public function itemStorage()
+    {
+        return $this->morphTo();
+    }
+
     /**
      * @return BelongsToMany
      */
@@ -164,7 +169,7 @@ class Item extends EventSourcedModel implements Slottable, HasAttacks
             return null;
         }
 
-        return $slot->hasSlots instanceof UsesItems ? $slot->hasSlots : null;
+        return $slot->hero instanceof UsesItems ? $slot->hero : null;
     }
 
     public function getBurden(): int
