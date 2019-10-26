@@ -12,7 +12,6 @@ use App\Domain\Interfaces\UsesItems;
 use App\Domain\QueryBuilders\HeroQueryBuilder;
 use App\Domain\Traits\HasNameSlug;
 use App\Domain\Collections\HeroCollection;
-use App\Domain\Interfaces\HasSlots;
 use App\Domain\Collections\SlotCollection;
 
 /**
@@ -43,7 +42,7 @@ use App\Domain\Collections\SlotCollection;
  *
  * @method static HeroQueryBuilder query();
  */
-class Hero extends EventSourcedModel implements HasSlots, UsesItems, SpellCaster
+class Hero extends EventSourcedModel implements UsesItems, SpellCaster
 {
     use HasNameSlug;
 
@@ -90,11 +89,6 @@ class Hero extends EventSourcedModel implements HasSlots, UsesItems, SpellCaster
     public function newEloquentBuilder($query)
     {
         return new HeroQueryBuilder($query);
-    }
-
-    public function slots()
-    {
-        return $this->hasMany(Slot::class);
     }
 
     public function measurables()
@@ -153,43 +147,6 @@ class Hero extends EventSourcedModel implements HasSlots, UsesItems, SpellCaster
         });
 
         return $items->unique();
-    }
-
-    /**
-     * @param int $count
-     * @param array $slotTypeIDs
-     * @return \App\Domain\Collections\SlotCollection
-     */
-    public function getEmptySlots(int $count, array $slotTypeIDs = []): SlotCollection
-    {
-        return $this->slots->slotEmpty()->withSlotTypes($slotTypeIDs)->take($count);
-    }
-
-    /**
-     * @return HasSlots
-     */
-    public function getBackupHasSlots(): ?HasSlots
-    {
-        return $this->getSquad();
-    }
-
-    /**
-     * @param array $with
-     * @return HasSlots
-     *
-     * Wraps Eloquent fresh() method to force HasSlots return type
-     */
-    public function getFresh($with = []): HasSlots
-    {
-        return $this->fresh($with);
-    }
-
-    /**
-     * @return SlotCollection
-     */
-    public function getSlots(): SlotCollection
-    {
-        return $this->slots;
     }
 
     /**

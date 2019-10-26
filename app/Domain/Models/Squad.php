@@ -45,7 +45,7 @@ use Spatie\Sluggable\SlugOptions;
  *
  * @property HeroPostCollection $heroPosts
  */
-class Squad extends EventSourcedModel implements HasSlots, TravelsBorders
+class Squad extends EventSourcedModel implements TravelsBorders
 {
     use HasNameSlug;
 
@@ -194,14 +194,9 @@ class Squad extends EventSourcedModel implements HasSlots, TravelsBorders
         return $heroes;
     }
 
-    public function slots()
-    {
-        return $this->morphMany(Slot::class, 'has_slots');
-    }
-
     public function items()
     {
-        return $this->morphMany(Item::class, 'item_storage');
+        return $this->morphMany(Item::class, 'has_items');
     }
 
     public function spells()
@@ -250,41 +245,6 @@ class Squad extends EventSourcedModel implements HasSlots, TravelsBorders
     public function getLocalStoreHouse(): ?StoreHouse
     {
         return $this->storeHouses()->where('province_id', '=', $this->province_id)->first();
-    }
-
-    /**
-     * @param int $count
-     * @param array $slotTypeIDs
-     * @return SlotCollection
-     */
-    public function getEmptySlots(int $count, array $slotTypeIDs = []): SlotCollection
-    {
-        return $this->slots->slotEmpty()->withSlotTypes($slotTypeIDs);
-    }
-
-    /**
-     * @return \App\Domain\Traits\\App\Domain\Interfaces\HasSlots
-     */
-    public function getBackupHasSlots(): ?HasSlots
-    {
-        return $this->getLocalStash();
-    }
-
-    /**
-     * @param array $with
-     * @return \App\Domain\Traits\\App\Domain\Interfaces\HasSlots
-     */
-    public function getFresh($with = []): HasSlots
-    {
-        return $this->fresh($with);
-    }
-
-    /**
-     * @return \App\Domain\Collections\SlotCollection
-     */
-    public function getSlots(): SlotCollection
-    {
-        return $this->slots;
     }
 
     /**
