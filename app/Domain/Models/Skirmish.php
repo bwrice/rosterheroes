@@ -3,6 +3,7 @@
 namespace App\Domain\Models;
 
 use App\Domain\Collections\MinionCollection;
+use App\Domain\Collections\SkirmishCollection;
 use App\Domain\Models\Quest;
 use App\Domain\Traits\HasNameSlug;
 use Illuminate\Database\Eloquent\Model;
@@ -23,6 +24,11 @@ class Skirmish extends Model
     use HasNameSlug;
 
     protected $guarded = [];
+
+    public function newCollection(array $models = [])
+    {
+        return new SkirmishCollection($models);
+    }
 
     public function quests()
     {
