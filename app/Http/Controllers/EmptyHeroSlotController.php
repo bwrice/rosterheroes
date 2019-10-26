@@ -7,7 +7,7 @@ use App\Domain\Collections\SlotCollection;
 use App\Domain\Collections\SlotTransactionCollection;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Slot;
-use App\Domain\Support\SlotTransactionGroup;
+use App\Domain\Support\ItemTransactionGroup;
 use App\Exceptions\SlottingException;
 use App\Http\Resources\SlotTransactionResource;
 use App\Policies\HeroPolicy;
@@ -22,7 +22,7 @@ class EmptyHeroSlotController extends Controller
      * @param $heroSlug
      * @param Request $request
      * @param EmptyHeroSlotAction $domainAction
-     * @return SlotTransactionGroup
+     * @return ItemTransactionGroup
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function __invoke($heroSlug, Request $request, EmptyHeroSlotAction $domainAction)
@@ -32,7 +32,7 @@ class EmptyHeroSlotController extends Controller
 
         $slot = Slot::findUuidOrFail($request->slot);
         try {
-            /** @var SlotTransactionGroup $slotTransactionGroup */
+            /** @var ItemTransactionGroup $slotTransactionGroup */
             $slotTransactionGroup = DB::transaction(function () use ($hero, $slot, $domainAction) {
                 return $domainAction->execute($slot, $hero);
             });

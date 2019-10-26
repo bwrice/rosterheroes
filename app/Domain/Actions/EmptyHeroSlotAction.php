@@ -11,7 +11,7 @@ use App\Domain\Models\Slot;
 use App\Domain\Models\Squad;
 use App\Domain\Models\Week;
 use App\Domain\Support\SlotTransaction;
-use App\Domain\Support\SlotTransactionGroup;
+use App\Domain\Support\ItemTransactionGroup;
 use App\Exceptions\SlottingException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -31,7 +31,7 @@ class EmptyHeroSlotAction
     /** @var Squad */
     protected $squad;
 
-    /** @var SlotTransactionGroup */
+    /** @var ItemTransactionGroup */
     protected $slotTransactionGroup;
 
     /** @var SlotItemInWagonAction */
@@ -45,10 +45,10 @@ class EmptyHeroSlotAction
     /**
      * @param Slot $slot
      * @param Hero $hero
-     * @param SlotTransactionGroup|null $slotTransactionGroup
-     * @return SlotTransactionGroup
+     * @param ItemTransactionGroup|null $slotTransactionGroup
+     * @return ItemTransactionGroup
      */
-    public function execute(Slot $slot, Hero $hero, SlotTransactionGroup $slotTransactionGroup = null)
+    public function execute(Slot $slot, Hero $hero, ItemTransactionGroup $slotTransactionGroup = null)
     {
         if (! Week::current()->adventuringOpen()) {
             throw new SlottingException($slot, $hero, null, "Week is currently locked for that action");
@@ -68,13 +68,13 @@ class EmptyHeroSlotAction
     /**
      * @param Slot $slot
      * @param Hero $hero
-     * @param SlotTransactionGroup|null $slotTransactionGroup
+     * @param ItemTransactionGroup|null $slotTransactionGroup
      */
-    protected function setProps(Slot $slot, Hero $hero, SlotTransactionGroup $slotTransactionGroup = null)
+    protected function setProps(Slot $slot, Hero $hero, ItemTransactionGroup $slotTransactionGroup = null)
     {
         $this->slotToEmpty = $slot;
         $this->hero = $hero;
-        $this->slotTransactionGroup = $slotTransactionGroup ?: new SlotTransactionGroup();
+        $this->slotTransactionGroup = $slotTransactionGroup ?: new ItemTransactionGroup();
     }
 
     protected function validate()

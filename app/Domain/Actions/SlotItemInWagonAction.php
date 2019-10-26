@@ -10,7 +10,7 @@ use App\Domain\Interfaces\HasSlots;
 use App\Domain\Models\Item;
 use App\Domain\Models\Squad;
 use App\Domain\Support\SlotTransaction;
-use App\Domain\Support\SlotTransactionGroup;
+use App\Domain\Support\ItemTransactionGroup;
 use Illuminate\Support\Collection;
 
 class SlotItemInWagonAction
@@ -21,35 +21,35 @@ class SlotItemInWagonAction
     /** @var Item */
     protected $item;
 
-    /** @var SlotTransactionGroup */
-    protected $slotTransactionGroup;
+    /** @var ItemTransactionGroup */
+    protected $itemTransactionGroup;
 
-    public function execute(Squad $squad, Item $item, SlotTransactionGroup $slotTransactionGroup = null)
+    public function execute(Squad $squad, Item $item, ItemTransactionGroup $itemTransactionGroup = null)
     {
-        $this->setProps($squad, $item, $slotTransactionGroup);
+        $this->setProps($squad, $item, $itemTransactionGroup);
 
         if ($this->slotInWagon()) {
-            return $this->slotTransactionGroup;
+            return $this->itemTransactionGroup;
         }
 
         if ($this->slotInStoreHouse()) {
-            return $this->slotTransactionGroup;
+            return $this->itemTransactionGroup;
         }
 
         $this->slotInStash();
-        return $this->slotTransactionGroup;
+        return $this->itemTransactionGroup;
     }
 
     /**
      * @param Squad $squad
      * @param Item $item
-     * @param SlotTransactionGroup|null $slotTransactionGroup
+     * @param ItemTransactionGroup|null $itemTransactionGroup
      */
-    protected function setProps(Squad $squad, Item $item, SlotTransactionGroup $slotTransactionGroup = null)
+    protected function setProps(Squad $squad, Item $item, ItemTransactionGroup $itemTransactionGroup = null)
     {
         $this->squad = $squad;
         $this->item = $item;
-        $this->slotTransactionGroup = $slotTransactionGroup ?: new SlotTransactionGroup();
+        $this->itemTransactionGroup = $itemTransactionGroup ?: new ItemTransactionGroup();
     }
 //
 //    protected function addTransaction(HasSlots $hasSlots, SlotCollection $slotsToFill)
@@ -71,7 +71,7 @@ class SlotItemInWagonAction
         }
         $slotsToFill = $emptySquadSlots->take($slotsNeeded);
         $this->item->slots()->saveMany($slotsToFill);
-        $this->slotTransactionGroup->setSquad($this->squad);
+        $this->itemTransactionGroup->setSquad($this->squad);
         return true;
     }
 
@@ -91,7 +91,7 @@ class SlotItemInWagonAction
         }
         $slotsToFill = $emptyStoreHouseSlots->take($slotsNeeded);
         $this->item->slots()->saveMany($slotsToFill);
-        $this->slotTransactionGroup->setStoreHouse($localStoreHouse);
+        $this->itemTransactionGroup->setStoreHouse($localStoreHouse);
         return true;
     }
 
@@ -101,6 +101,6 @@ class SlotItemInWagonAction
         $slotsNeeded = $this->item->getSlotsCount();
         $slotsToFill = $stash->getEmptySlots($slotsNeeded);
         $this->item->slots()->saveMany($slotsToFill);
-        $this->slotTransactionGroup->setStash($stash);
+        $this->itemTransactionGroup->setStash($stash);
     }
 }

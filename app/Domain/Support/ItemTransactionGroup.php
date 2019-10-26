@@ -11,7 +11,7 @@ use App\Http\Resources\HeroResource;
 use App\Http\Resources\MobileStorageResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class SlotTransactionGroup extends JsonResource
+class ItemTransactionGroup extends JsonResource
 {
     /** @var Hero|null */
     protected $hero;
@@ -33,7 +33,7 @@ class SlotTransactionGroup extends JsonResource
         parent::__construct([]);
     }
 
-    public function setHero(Hero $hero): SlotTransactionGroup
+    public function setHero(Hero $hero): ItemTransactionGroup
     {
         $this->hero = $hero;
         return $this;
@@ -41,9 +41,9 @@ class SlotTransactionGroup extends JsonResource
 
     /**
      * @param Squad $squad
-     * @return SlotTransactionGroup
+     * @return ItemTransactionGroup
      */
-    public function setSquad(Squad $squad): SlotTransactionGroup
+    public function setSquad(Squad $squad): ItemTransactionGroup
     {
         $this->squad = $squad;
         return $this;
@@ -51,9 +51,9 @@ class SlotTransactionGroup extends JsonResource
 
     /**
      * @param StoreHouse $storeHouse
-     * @return SlotTransactionGroup
+     * @return ItemTransactionGroup
      */
-    public function setStoreHouse(StoreHouse $storeHouse): SlotTransactionGroup
+    public function setStoreHouse(StoreHouse $storeHouse): ItemTransactionGroup
     {
         $this->storeHouse = $storeHouse;
         return $this;
@@ -61,9 +61,9 @@ class SlotTransactionGroup extends JsonResource
 
     /**
      * @param Stash $stash
-     * @return SlotTransactionGroup
+     * @return ItemTransactionGroup
      */
-    public function setStash(Stash $stash): SlotTransactionGroup
+    public function setStash(Stash $stash): ItemTransactionGroup
     {
         $this->stash = $stash;
         return $this;

@@ -35,7 +35,7 @@ class EmptySlotAction
             throw new EmptySlotException($slot, 'Slot is already empty', EmptySlotException::CODE_ALREADY_EMPTY);
         }
 
-        $hasSlots = $slot->hasSlots;
+        $hasSlots = $slot->hero;
         $backup = $hasSlots->getBackupHasSlots();
         if (! $backup) {
             throw new EmptySlotException($slot, 'Cannot empty slot without a backup', EmptySlotException::NO_BACKUP_EXCEPTION);
