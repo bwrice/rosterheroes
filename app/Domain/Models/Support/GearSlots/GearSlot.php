@@ -4,6 +4,7 @@
 namespace App\Domain\Models\Support\GearSlots;
 
 
+use App\Domain\Interfaces\FillsGearSlots;
 use App\Domain\Models\Item;
 
 abstract class GearSlot
@@ -22,29 +23,22 @@ abstract class GearSlot
     public const RING_ONE = 'Ring One';
     public const RING_TWO = 'Ring Two';
 
-    /** @var Item|null */
-    protected $item;
+    /** @var FillsGearSlots|null */
+    protected $filler;
 
     /** @var string */
     protected $type = '';
 
     /**
-     * @param Item|null $item
+     * @param FillsGearSlots|null $fillsGearSlots
      * @return GearSlot
      */
-    public function setItem(?Item $item): GearSlot
+    public function setFiller(?FillsGearSlots $fillsGearSlots): GearSlot
     {
-        $this->item = $item;
+        $this->filler = $fillsGearSlots;
         return $this;
     }
 
-    /**
-     * @return Item|null
-     */
-    public function getItem(): ?Item
-    {
-        return $this->item;
-    }
 
     /**
      * @return string
@@ -52,5 +46,13 @@ abstract class GearSlot
     public function getType(): string
     {
         return $this->type;
+    }
+
+    /**
+     * @return FillsGearSlots|null
+     */
+    public function getFiller(): ?FillsGearSlots
+    {
+        return $this->filler;
     }
 }
