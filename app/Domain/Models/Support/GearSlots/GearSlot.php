@@ -25,6 +25,9 @@ abstract class GearSlot
     /** @var Item|null */
     protected $item;
 
+    /** @var string */
+    protected $type = '';
+
     /**
      * @param Item|null $item
      * @return GearSlot
@@ -33,5 +36,21 @@ abstract class GearSlot
     {
         $this->item = $item;
         return $this;
+    }
+
+    /**
+     * @return Item|null
+     */
+    public function getItem(): ?Item
+    {
+        return $this->item;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
     }
 }
