@@ -8,19 +8,19 @@ use App\Domain\Models\Item;
 
 abstract class GearSlot
 {
-    public const PRIMARY_ARM = 'primary-arm';
-    public const OFF_ARM = 'off-arm';
-    public const HEAD = 'head';
-    public const TORSO = 'torso';
-    public const LEGS = 'legs';
-    public const FEET = 'feet';
-    public const HANDS = 'hands';
-    public const WAIST = 'waist';
-    public const NECK = 'neck';
-    public const PRIMARY_WRIST = 'primary-wrist';
-    public const OFF_WRIST = 'off-wrist';
-    public const RING_ONE = 'ring-one';
-    public const RING_TWO = 'ring-two';
+    public const PRIMARY_ARM = 'Primary Arm';
+    public const OFF_ARM = 'Off-Arm';
+    public const HEAD = 'Head';
+    public const TORSO = 'Torso';
+    public const LEGS = 'Legs';
+    public const FEET = 'Feet';
+    public const HANDS = 'Hands';
+    public const WAIST = 'Waist';
+    public const NECK = 'Neck';
+    public const PRIMARY_WRIST = 'Primary Wrist';
+    public const OFF_WRIST = 'Off-Wrist';
+    public const RING_ONE = 'Ring One';
+    public const RING_TWO = 'Ring Two';
 
     /** @var Item|null */
     protected $item;
