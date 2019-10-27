@@ -9,4 +9,6 @@ interface FillsGearSlots
     public function getValidGearSlotTypes(): array;
 
     public function getGearSlotsNeededCount(): int;
+
+    public function getUuid();
 }
