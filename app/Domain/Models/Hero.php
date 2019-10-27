@@ -4,11 +4,14 @@ namespace App\Domain\Models;
 
 use App\Domain\Behaviors\HeroClasses\HeroClassBehavior;
 use App\Domain\Behaviors\MeasurableTypes\MeasurableTypeBehavior;
+use App\Domain\Collections\GearSlotCollection;
 use App\Domain\Collections\ItemCollection;
 use App\Domain\Collections\MeasurableCollection;
 use App\Domain\Collections\SpellCollection;
 use App\Domain\Interfaces\SpellCaster;
 use App\Domain\Interfaces\UsesItems;
+use App\Domain\Models\Support\GearSlots\GearSlot;
+use App\Domain\Models\Support\GearSlots\GearSlotFactory;
 use App\Domain\QueryBuilders\HeroQueryBuilder;
 use App\Domain\Traits\HasNameSlug;
 use App\Domain\Collections\HeroCollection;
@@ -37,6 +40,8 @@ use App\Domain\Collections\SlotCollection;
  *
  * @property SlotCollection $slots
  * @property SlotCollection $slotsThatHaveItems
+ *
+ * @property ItemCollection $items
  * @property MeasurableCollection $measurables
  * @property SpellCollection $spells
  *
@@ -126,27 +131,17 @@ class Hero extends EventSourcedModel implements UsesItems, SpellCaster
         return $this->belongsToMany(Spell::class)->withTimestamps();
     }
 
+    public function items()
+    {
+        return $this->morphMany(Item::class, 'has_items');
+    }
+
     /**
      * @return Squad|null
      */
     public function getSquad()
     {
         return $this->heroPost ? $this->heroPost->squad : null;
-    }
-
-    /**
-     * @return ItemCollection
-     */
-    public function getItems(): ItemCollection
-    {
-        $items = new ItemCollection();
-        $this->slots->loadMissing('item')->each(function (Slot $slot) use ($items) {
-            if ($slot->item) {
-                $items->push($slot->item);
-            }
-        });
-
-        return $items->unique();
     }
 
     /**
@@ -287,4 +282,34 @@ class Hero extends EventSourcedModel implements UsesItems, SpellCaster
     {
         return 1 + $this->getSpellPower()/10;
     }
+
+    protected function buildSlots(): GearSlotCollection
+    {
+        $slotsTypes = [
+            GearSlot::OFF_ARM,
+            GearSlot::PRIMARY_ARM,
+            GearSlot::NECK,
+            GearSlot::TORSO,
+            GearSlot::FEET,
+            GearSlot::HANDS,
+            GearSlot::HEAD,
+            GearSlot::OFF_WRIST,
+            GearSlot::PRIMARY_WRIST,
+            GearSlot::RING_ONE,
+            GearSlot::RING_TWO,
+            GearSlot::WAIST,
+            GearSlot::LEGS
+        ];
+
+        /** @var GearSlotFactory $factory */
+        $factory = app(GearSlotFactory::class);
+
+        $gearSlots = new GearSlotCollection();
+
+        foreach ($slotsTypes as $type) {
+            $gearSlots->push($factory->build($type));
+        }
+        return $gearSlots;
+    }
+
 }
