@@ -3,7 +3,7 @@
 namespace App\Domain\Models;
 
 use App\Domain\Behaviors\StoreHouses\ShackBehavior;
-use App\Domain\Behaviors\StoreHouses\HouseBehavior;
+use App\Domain\Behaviors\StoreHouses\HouseTypeBehavior;
 use App\Exceptions\UnknownBehaviorException;
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,12 +20,12 @@ class HouseType extends Model
 
     protected $guarded = [];
 
-    public function getBehavior(): HouseBehavior
+    public function getBehavior(): HouseTypeBehavior
     {
         switch ($this->name) {
             case self::SHACK:
                 return app(ShackBehavior::class);
         }
-        throw new UnknownBehaviorException($this->name, HouseBehavior::class);
+        throw new UnknownBehaviorException($this->name, HouseTypeBehavior::class);
     }
 }
