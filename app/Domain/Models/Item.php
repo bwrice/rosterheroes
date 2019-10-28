@@ -8,6 +8,7 @@ use App\Domain\Collections\EnchantmentCollection;
 use App\Domain\Behaviors\ItemBases\ItemBaseBehaviorInterface;
 use App\Domain\Interfaces\FillsGearSlots;
 use App\Domain\Interfaces\HasAttacks;
+use App\Domain\Interfaces\HasItems;
 use App\Domain\Interfaces\HasSlots;
 use App\Domain\Interfaces\UsesItems;
 use App\Domain\Models\SlotOld;
@@ -30,10 +31,14 @@ use Ramsey\Uuid\Uuid;
  * @property string $uuid
  * @property string $name
  *
+ * @property string $has_items_type
+ * @property string $has_items_id
+ *
  * @property ItemType $itemType
  * @property ItemClass $itemClass
  * @property ItemBlueprint $itemBlueprint
  * @property Material $material
+ * @property HasItems $hasItems
  *
  * @property SlotCollection $slots
  * @property EnchantmentCollection $enchantments
