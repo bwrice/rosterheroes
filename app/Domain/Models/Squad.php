@@ -225,9 +225,9 @@ class Squad extends EventSourcedModel implements TravelsBorders, HasItems
         ]);
     }
 
-    public function storeHouses()
+    public function residences()
     {
-        return $this->hasMany(StoreHouse::class);
+        return $this->hasMany(Residence::class);
     }
 
     public function campaigns()
@@ -241,11 +241,11 @@ class Squad extends EventSourcedModel implements TravelsBorders, HasItems
     }
 
     /**
-     * @return StoreHouse|null
+     * @return Residence|null
      */
-    public function getLocalStoreHouse(): ?StoreHouse
+    public function getLocalResidence(): ?Residence
     {
-        return $this->storeHouses()->where('province_id', '=', $this->province_id)->first();
+        return $this->residences()->where('province_id', '=', $this->province_id)->first();
     }
 
     /**
