@@ -3,6 +3,7 @@
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 
+/** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(\App\Domain\Models\Week::class, function (Faker $faker) {
 
     /** @var \App\Domain\Models\Week $weekForNow */
@@ -15,4 +16,14 @@ $factory->define(\App\Domain\Models\Week::class, function (Faker $faker) {
         'everything_locks_at' => $weekForNow->everything_locks_at,
         'ends_at' => $weekForNow->ends_at
     ];
+});
+
+$factory->afterCreatingState(\App\Domain\Models\Week::class, 'adventuring-open', function(\App\Domain\Models\Week $week, Faker $faker) {
+    $week->everything_locks_at = \Illuminate\Support\Facades\Date::now()->addHour();
+    $week->save();
+});
+
+$factory->afterCreatingState(\App\Domain\Models\Week::class, 'adventuring-closed', function(\App\Domain\Models\Week $week, Faker $faker) {
+    $week->everything_locks_at = \Illuminate\Support\Facades\Date::now()->subHour();
+    $week->save();
 });
