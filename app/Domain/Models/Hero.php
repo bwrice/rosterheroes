@@ -8,6 +8,7 @@ use App\Domain\Collections\GearSlotCollection;
 use App\Domain\Collections\ItemCollection;
 use App\Domain\Collections\MeasurableCollection;
 use App\Domain\Collections\SpellCollection;
+use App\Domain\Interfaces\HasItems;
 use App\Domain\Interfaces\SpellCaster;
 use App\Domain\Interfaces\UsesItems;
 use App\Domain\Models\Support\GearSlots\GearSlot;
@@ -47,7 +48,7 @@ use App\Domain\Collections\SlotCollection;
  *
  * @method static HeroQueryBuilder query();
  */
-class Hero extends EventSourcedModel implements UsesItems, SpellCaster
+class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasItems
 {
     use HasNameSlug;
 
@@ -318,4 +319,23 @@ class Hero extends EventSourcedModel implements UsesItems, SpellCaster
         return $gearSlots;
     }
 
+    public function getBackupHasItems(): ?HasItems
+    {
+        return $this->getSquad();
+    }
+
+    public function hasRoomForItem(Item $item): bool
+    {
+        return false;
+    }
+
+    public function getMorphType(): string
+    {
+        return static::RELATION_MORPH_MAP_KEY;
+    }
+
+    public function getMorphID(): int
+    {
+        return $this->id;
+    }
 }
