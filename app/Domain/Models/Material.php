@@ -23,7 +23,7 @@ class Material extends Model
         return $this->belongsTo(MaterialType::class);
     }
 
-    public function getBurdenModifier()
+    public function getWeightModifier()
     {
         $weightModifier = 1 + ($this->grade**.25/5);
         $weightModifier *=  $this->materialType->getWeightModifier();

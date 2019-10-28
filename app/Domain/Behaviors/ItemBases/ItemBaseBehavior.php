@@ -46,7 +46,7 @@ abstract class ItemBaseBehavior
         return $this->validGearSlotTypes;
     }
 
-    public function getBurdenModifier(): float
+    public function getWeightModifier(): float
     {
         return $this->weightModifier;
     }

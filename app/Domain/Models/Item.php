@@ -177,9 +177,9 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
 
     public function weight(): int
     {
-        $weight = $this->itemTypeGrade();
-        $weight *= $this->itemType->getItemBaseBehavior()->getBurdenModifier();
-        $weight *= $this->material->getBurdenModifier();
+        $weight = $this->itemTypeGrade()/10;
+        $weight *= $this->itemType->getItemBaseBehavior()->getWeightModifier();
+        $weight *= $this->material->getWeightModifier();
         return (int) ceil($weight);
     }
 
