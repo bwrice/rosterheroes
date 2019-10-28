@@ -18,11 +18,11 @@ class MoveItemToBackupAction
         if (! $hasItems->getBackupHasItems()) {
             throw new ItemTransactionException($item,"No backup for item found", ItemTransactionException::CODE_NO_BACKUP);
         }
+        if ($originalItemSource) {
+            $hasItemsCollection->push($hasItems);
+        }
         $backup = $hasItems->getBackupHasItems();
         if ($backup->hasRoomForItem($item)) {
-            if ($originalItemSource) {
-                $hasItemsCollection->push($hasItems);
-            }
             $item->has_items_type = $backup->getMorphType();
             $item->has_items_id = $backup->getMorphID();
             $item->save();
