@@ -6,9 +6,6 @@ namespace App\Domain\Behaviors\ItemGroup;
 
 class ArmorGroup extends ItemGroup
 {
+    protected $name = 'armor';
 
-    public function name(): string
-    {
-        return 'armor';
-    }
 }
