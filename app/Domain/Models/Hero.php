@@ -283,7 +283,13 @@ class Hero extends EventSourcedModel implements UsesItems, SpellCaster
         return 1 + $this->getSpellPower()/10;
     }
 
-    protected function buildSlots(): GearSlotCollection
+    public function getGearSlots(): GearSlotCollection
+    {
+        $gearSlotCollection = $this->buildGearSlots();
+        return $gearSlotCollection->setSlotFillers($this->items);
+    }
+
+    protected function buildGearSlots(): GearSlotCollection
     {
         $slotsTypes = [
             GearSlot::OFF_ARM,
