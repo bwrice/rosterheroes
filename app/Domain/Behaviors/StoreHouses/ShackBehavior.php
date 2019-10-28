@@ -4,10 +4,7 @@
 namespace App\Domain\Behaviors\StoreHouses;
 
 
-class ShackBehavior extends HouseTypeBehavior
+class ShackBehavior extends ResidenceTypeBehavior
 {
-    public function __construct()
-    {
-        $this->getTotalSlotsCount = 300;
-    }
+    protected $maxItemCount = 100;
 }

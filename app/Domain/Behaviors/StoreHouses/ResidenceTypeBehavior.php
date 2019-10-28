@@ -6,13 +6,14 @@ namespace App\Domain\Behaviors\StoreHouses;
 
 abstract class ResidenceTypeBehavior
 {
-    protected $getTotalSlotsCount = 0;
+    protected $maxItemCount = 0;
 
     /**
      * @return int
      */
-    public function getGetTotalSlotsCount(): int
+    public function getMaxItemCount(): int
     {
-        return $this->getTotalSlotsCount;
+        return $this->maxItemCount;
     }
+
 }
