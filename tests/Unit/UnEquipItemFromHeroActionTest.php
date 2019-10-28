@@ -3,10 +3,12 @@
 namespace Tests\Unit;
 
 use App\Domain\Actions\UnEquipItemFromHeroAction;
+use App\Domain\Behaviors\MobileStorageRank\WagonBehavior;
 use App\Domain\Interfaces\HasItems;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Item;
 use App\Domain\Models\Squad;
+use App\Domain\Models\Stash;
 use App\Domain\Models\Week;
 use App\Exceptions\ItemTransactionException;
 use Illuminate\Support\Facades\Date;
@@ -119,6 +121,30 @@ class UnEquipItemFromHeroActionTest extends TestCase
 
         $squad = $hasItems->first(function (HasItems $hasItems) use ($squad) {
             return $hasItems->getMorphID() === $squad->id && $hasItems->getMorphType() === Squad::RELATION_MORPH_MAP_KEY;
+        });
+        $this->assertNotNull($squad);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_move_an_item_to_the_stash_if_wagon_full_and_no_house()
+    {
+        $wagonBehaviorMock = \Mockery::mock(WagonBehavior::class);
+        $wagonBehaviorMock->shouldReceive('getWeightCapacity')->andReturn(0);
+        app()->instance(WagonBehavior::class, $wagonBehaviorMock);
+
+        $hasItems = $this->domainAction->execute($this->item, $this->hero);
+        $this->assertEquals(2, $hasItems->count());
+
+        $hero = $hasItems->first(function (HasItems $hasItems) {
+            return $hasItems->getMorphID() === $this->hero->id && $hasItems->getMorphType() === Hero::RELATION_MORPH_MAP_KEY;
+        });
+        $this->assertNotNull($hero);
+
+        $squad = $hasItems->first(function (HasItems $hasItems) {
+            $stash = $this->hero->getSquad()->getLocalStash();
+            return $hasItems->getMorphID() === $stash->id && $hasItems->getMorphType() === Stash::RELATION_MORPH_MAP_KEY;
         });
         $this->assertNotNull($squad);
     }
