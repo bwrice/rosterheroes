@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateStoreHouseTypesTable extends Migration
+class CreateHouseTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateStoreHouseTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('store_house_types', function (Blueprint $table) {
+        Schema::create('house_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->timestamps();

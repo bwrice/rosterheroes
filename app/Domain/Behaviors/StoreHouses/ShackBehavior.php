@@ -4,7 +4,7 @@
 namespace App\Domain\Behaviors\StoreHouses;
 
 
-class DepotBehavior extends StoreHouseBehavior
+class ShackBehavior extends HouseTypeBehavior
 {
     public function __construct()
     {
