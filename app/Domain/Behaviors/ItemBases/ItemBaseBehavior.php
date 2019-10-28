@@ -8,15 +8,17 @@
 
 namespace App\Domain\Behaviors\ItemBases;
 
-use App\Domain\Behaviors\ItemGroup\ItemGroupInterface;
-use App\Domain\Models\SlotType;
+use App\Domain\Behaviors\ItemGroup\ItemGroup;
 
-abstract class ItemBaseBehavior implements ItemBaseBehaviorInterface
+abstract class ItemBaseBehavior
 {
     /**
-     * @var ItemGroupInterface
+     * @var ItemGroup
      */
     private $itemGroup;
+
+    protected $gearSlotsCount = 1;
+    protected $validGearSlotTypes = [];
 
     protected $weightModifier = 1;
     protected $protectionModifier = 1;
@@ -24,7 +26,7 @@ abstract class ItemBaseBehavior implements ItemBaseBehaviorInterface
     protected $resourceCostAmountModifier = 1;
     protected $resourceCostPercentModifier = 1;
 
-    public function __construct(ItemGroupInterface $itemGroup)
+    public function __construct(ItemGroup $itemGroup)
     {
         $this->itemGroup = $itemGroup;
     }
@@ -34,17 +36,14 @@ abstract class ItemBaseBehavior implements ItemBaseBehaviorInterface
         return $this->itemGroup->name();
     }
 
-    abstract public function getSlotTypeNames(): array;
-
-    public function getSlotTypeIDs(): array
+    public function getGearSlotsCount(): int
     {
-        $slotTypes = $this->getSlotTypeNames();
-        $slotTypes[] = SlotType::UNIVERSAL;
+        return $this->gearSlotsCount;
+    }
 
-        return SlotType::query()
-            ->whereIn('name', $slotTypes)
-            ->pluck('id')
-            ->toArray();
+    public function getValidGearSlotTypes(): array
+    {
+        return $this->validGearSlotTypes;
     }
 
     public function getBurdenModifier(): float
