@@ -2,17 +2,17 @@
 
 use App\Helpers\ModelNameSeeding\ModelNameSeederMigration;
 
-class SeedHouseTypes extends ModelNameSeederMigration
+class SeedResidenceTypes extends ModelNameSeederMigration
 {
     protected function getModelClass(): string
     {
-        return \App\Domain\Models\HouseType::class;
+        return \App\Domain\Models\ResidenceType::class;
     }
 
     public function getSeedNames(): array
     {
         return [
-            \App\Domain\Models\HouseType::SHACK
+            \App\Domain\Models\ResidenceType::SHACK
         ];
     }
 }

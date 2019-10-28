@@ -3,7 +3,7 @@
 namespace App\Domain\Models;
 
 use App\Domain\Behaviors\StoreHouses\ShackBehavior;
-use App\Domain\Behaviors\StoreHouses\HouseTypeBehavior;
+use App\Domain\Behaviors\StoreHouses\ResidenceTypeBehavior;
 use App\Exceptions\UnknownBehaviorException;
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,18 +14,18 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property string $name
  */
-class HouseType extends Model
+class ResidenceType extends Model
 {
     const SHACK = 'shack';
 
     protected $guarded = [];
 
-    public function getBehavior(): HouseTypeBehavior
+    public function getBehavior(): ResidenceTypeBehavior
     {
         switch ($this->name) {
             case self::SHACK:
                 return app(ShackBehavior::class);
         }
-        throw new UnknownBehaviorException($this->name, HouseTypeBehavior::class);
+        throw new UnknownBehaviorException($this->name, ResidenceTypeBehavior::class);
     }
 }

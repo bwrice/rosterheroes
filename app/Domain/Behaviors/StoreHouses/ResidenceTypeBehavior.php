@@ -4,7 +4,7 @@
 namespace App\Domain\Behaviors\StoreHouses;
 
 
-abstract class HouseTypeBehavior
+abstract class ResidenceTypeBehavior
 {
     protected $getTotalSlotsCount = 0;
 
