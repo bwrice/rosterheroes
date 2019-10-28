@@ -7,6 +7,7 @@ use App\Domain\Behaviors\MobileStorageRank\WagonBehavior;
 use App\Domain\Interfaces\HasItems;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Item;
+use App\Domain\Models\Residence;
 use App\Domain\Models\Squad;
 use App\Domain\Models\Stash;
 use App\Domain\Models\Week;
@@ -119,10 +120,10 @@ class UnEquipItemFromHeroActionTest extends TestCase
         });
         $this->assertNotNull($hero);
 
-        $squad = $hasItems->first(function (HasItems $hasItems) use ($squad) {
+        $squadHasItems = $hasItems->first(function (HasItems $hasItems) use ($squad) {
             return $hasItems->getMorphID() === $squad->id && $hasItems->getMorphType() === Squad::RELATION_MORPH_MAP_KEY;
         });
-        $this->assertNotNull($squad);
+        $this->assertNotNull($squadHasItems);
     }
 
     /**
@@ -131,7 +132,7 @@ class UnEquipItemFromHeroActionTest extends TestCase
     public function it_will_move_an_item_to_the_stash_if_wagon_full_and_no_house()
     {
         $wagonBehaviorMock = \Mockery::mock(WagonBehavior::class);
-        $wagonBehaviorMock->shouldReceive('getWeightCapacity')->andReturn(0);
+        $wagonBehaviorMock->shouldReceive('getWeightCapacity')->andReturn(-1);
         app()->instance(WagonBehavior::class, $wagonBehaviorMock);
 
         $hasItems = $this->domainAction->execute($this->item, $this->hero);
@@ -142,10 +143,39 @@ class UnEquipItemFromHeroActionTest extends TestCase
         });
         $this->assertNotNull($hero);
 
-        $squad = $hasItems->first(function (HasItems $hasItems) {
+        $stashHasItems = $hasItems->first(function (HasItems $hasItems) {
             $stash = $this->hero->getSquad()->getLocalStash();
             return $hasItems->getMorphID() === $stash->id && $hasItems->getMorphType() === Stash::RELATION_MORPH_MAP_KEY;
         });
-        $this->assertNotNull($squad);
+        $this->assertNotNull($stashHasItems);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_move_an_item_to_a_residence_if_available_and_mobile_storage_is_full()
+    {
+        $wagonBehaviorMock = \Mockery::mock(WagonBehavior::class);
+        $wagonBehaviorMock->shouldReceive('getWeightCapacity')->andReturn(-1);
+        app()->instance(WagonBehavior::class, $wagonBehaviorMock);
+
+        $squad = $this->hero->getSquad();
+        $residence = factory(Residence::class)->create([
+            'squad_id' => $squad->id,
+            'province_id' => $squad->province_id,
+        ]);
+
+        $hasItems = $this->domainAction->execute($this->item, $this->hero);
+        $this->assertEquals(2, $hasItems->count());
+
+        $hero = $hasItems->first(function (HasItems $hasItems) {
+            return $hasItems->getMorphID() === $this->hero->id && $hasItems->getMorphType() === Hero::RELATION_MORPH_MAP_KEY;
+        });
+        $this->assertNotNull($hero);
+
+        $residenceHasItems = $hasItems->first(function (HasItems $hasItems) use ($residence) {
+            return $hasItems->getMorphID() === $residence->id && $hasItems->getMorphType() === Residence::RELATION_MORPH_MAP_KEY;
+        });
+        $this->assertNotNull($residenceHasItems);
     }
 }
