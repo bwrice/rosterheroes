@@ -405,12 +405,14 @@ class Squad extends EventSourcedModel implements TravelsBorders, HasItems
 
     public function getBackupHasItems(): ?HasItems
     {
-        return null;
+        return $this->getLocalStash();
     }
 
     public function hasRoomForItem(Item $item): bool
     {
-        return true;
+        $maxWeightCapacity = $this->mobileStorageRank->getBehavior()->getWeightCapacity();
+        $currentCapacity = $this->items->sumOfWeight();
+        return ($maxWeightCapacity - $currentCapacity) > $item->weight();
     }
 
     public function getMorphType(): string
