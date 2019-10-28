@@ -6,6 +6,7 @@ use App\Domain\Behaviors\ItemBases\ItemBaseBehavior;
 use App\Domain\Collections\AttackCollection;
 use App\Domain\Collections\EnchantmentCollection;
 use App\Domain\Behaviors\ItemBases\ItemBaseBehaviorInterface;
+use App\Domain\Collections\ItemCollection;
 use App\Domain\Interfaces\FillsGearSlots;
 use App\Domain\Interfaces\HasAttacks;
 use App\Domain\Interfaces\HasItems;
@@ -67,6 +68,11 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
     public function hasItems()
     {
         return $this->morphTo();
+    }
+
+    public function newCollection(array $models = [])
+    {
+        return new ItemCollection($models);
     }
 
     /**
