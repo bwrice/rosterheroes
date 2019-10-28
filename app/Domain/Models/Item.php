@@ -46,7 +46,7 @@ use Ramsey\Uuid\Uuid;
  */
 class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
 {
-    const RELATION_MORPH_MAP = 'items';
+    const RELATION_MORPH_MAP_KEY = 'items';
 
     protected $guarded = [];
 

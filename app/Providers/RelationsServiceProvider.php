@@ -8,6 +8,7 @@ use App\Domain\Models\Item;
 use App\Domain\Models\ItemBlueprint;
 use App\Domain\Models\Spell;
 use App\Domain\Models\Squad;
+use App\Domain\Models\Stash;
 use App\Wagons\Wagon;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
@@ -27,7 +28,8 @@ class RelationsServiceProvider extends ServiceProvider
             Hero::RELATION_MORPH_MAP_KEY => Hero::class,
             Spell::RELATION_MORPH_MAP_KEY => Spell::class,
             Enchantment::RELATION_MORPH_MAP_KEY => Enchantment::class,
-            Item::RELATION_MORPH_MAP => Item::class
+            Item::RELATION_MORPH_MAP_KEY => Item::class,
+            Stash::RELATION_MORPH_MAP_KEY => Stash::class,
         ]);
     }
 }
