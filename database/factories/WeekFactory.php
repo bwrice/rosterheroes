@@ -27,3 +27,7 @@ $factory->afterCreatingState(\App\Domain\Models\Week::class, 'adventuring-closed
     $week->everything_locks_at = \Illuminate\Support\Facades\Date::now()->subHour();
     $week->save();
 });
+
+$factory->afterCreatingState(\App\Domain\Models\Week::class, 'as-current', function(\App\Domain\Models\Week $week, Faker $faker) {
+    \App\Domain\Models\Week::setTestCurrent($week);
+});
