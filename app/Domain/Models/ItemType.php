@@ -2,6 +2,7 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Behaviors\ItemBases\ItemBaseBehavior;
 use App\Domain\Behaviors\ItemBases\ItemBaseBehaviorInterface;
 use App\Domain\Interfaces\AdjustsBaseDamage;
 use App\Domain\Interfaces\AdjustsCombatSpeed;
@@ -37,7 +38,7 @@ class ItemType extends Model
         return $this->belongsTo(ItemBase::class);
     }
 
-    public function getItemBaseBehavior(): ItemBaseBehaviorInterface
+    public function getItemBaseBehavior(): ItemBaseBehavior
     {
         return $this->itemBase->getBehavior();
     }

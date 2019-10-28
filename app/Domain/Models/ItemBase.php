@@ -128,18 +128,18 @@ class ItemBase extends Model
      */
     public function getSlotsCount()
     {
-        return $this->getBehavior()->getSlotsCount();
+        return $this->getBehavior()->getGearSlotsCount();
     }
 
     public function getSlotTypeNames()
     {
-        return $this->getBehavior()->getSlotTypeNames();
+        return $this->getBehavior()->getValidGearSlotTypes();
     }
 
     /**
-     * @return ItemBaseBehaviorInterface
+     * @return ItemBaseBehavior
      */
-    public function getBehavior(): ItemBaseBehaviorInterface
+    public function getBehavior(): ItemBaseBehavior
     {
         switch($this->name) {
             case self::DAGGER:
@@ -212,6 +212,6 @@ class ItemBase extends Model
                 return app(CrownBehavior::class);
         }
 
-        throw new UnknownBehaviorException($this->name, ItemBaseBehaviorInterface::class);
+        throw new UnknownBehaviorException($this->name, ItemBaseBehavior::class);
     }
 }
