@@ -2,13 +2,15 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Behaviors\ItemBases\ItemBaseBehavior;
 use App\Domain\Collections\AttackCollection;
 use App\Domain\Collections\EnchantmentCollection;
 use App\Domain\Behaviors\ItemBases\ItemBaseBehaviorInterface;
+use App\Domain\Interfaces\FillsGearSlots;
 use App\Domain\Interfaces\HasAttacks;
 use App\Domain\Interfaces\HasSlots;
 use App\Domain\Interfaces\UsesItems;
-use App\Domain\Models\Slot;
+use App\Domain\Models\SlotOld;
 use App\Domain\Collections\SlotCollection;
 use App\Domain\Interfaces\Slottable;
 use App\Domain\Support\ItemNameBuilder;
@@ -37,7 +39,7 @@ use Ramsey\Uuid\Uuid;
  * @property EnchantmentCollection $enchantments
  * @property AttackCollection $attacks
  */
-class Item extends EventSourcedModel implements Slottable, HasAttacks
+class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
 {
     const RELATION_MORPH_MAP = 'items';
 
@@ -90,11 +92,6 @@ class Item extends EventSourcedModel implements Slottable, HasAttacks
         return $this->belongsTo(Material::class);
     }
 
-    public function slots()
-    {
-        return $this->hasMany(Slot::class);
-    }
-
     public function getSlotTypeIDs(): array
     {
         return $this->getItemBaseBehavior()->getSlotTypeIDs();
@@ -102,12 +99,7 @@ class Item extends EventSourcedModel implements Slottable, HasAttacks
 
     public function getSlotsCount(): int
     {
-        return $this->getItemBaseBehavior()->getSlotsCount();
-    }
-
-    public function getSlots(): SlotCollection
-    {
-        return $this->slots;
+        return $this->getItemBaseBehavior()->getGearSlotsCount();
     }
 
     public function getItemName(): string
@@ -115,7 +107,7 @@ class Item extends EventSourcedModel implements Slottable, HasAttacks
         return $this->name ?: $this->buildItemName();
     }
 
-    public function getItemBaseBehavior(): ItemBaseBehaviorInterface
+    public function getItemBaseBehavior(): ItemBaseBehavior
     {
         return $this->itemType->getItemBaseBehavior();
     }
@@ -163,7 +155,7 @@ class Item extends EventSourcedModel implements Slottable, HasAttacks
             return $this->hasSlots instanceof  UsesItems ? $this->hasSlots : null;
         }
 
-        /** @var Slot $slot */
+        /** @var SlotOld $slot */
         $slot = $this->slots->first();
         if (! $slot) {
             return null;
@@ -239,5 +231,20 @@ class Item extends EventSourcedModel implements Slottable, HasAttacks
     public function adjustResourceCostPercent(float $amount): float
     {
         return $amount * $this->getItemBaseBehavior()->getResourceCostPercentModifier();
+    }
+
+    public function getValidGearSlotTypes(): array
+    {
+        return $this->getItemBaseBehavior()->getValidGearSlotTypes();
+    }
+
+    public function getGearSlotsNeededCount(): int
+    {
+        return $this->getItemBaseBehavior()->getGearSlotsCount();
+    }
+
+    public function getUuid()
+    {
+        return $this->uuid;
     }
 }
