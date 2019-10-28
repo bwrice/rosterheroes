@@ -11,9 +11,6 @@
 |
 */
 
-use App\Domain\Models\SlotType;
-use App\Domain\Models\Slot;
-
 $app = new Illuminate\Foundation\Application(
     dirname(__DIR__)
 );
