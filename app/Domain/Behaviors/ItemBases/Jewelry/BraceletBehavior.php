@@ -11,22 +11,14 @@ namespace App\Domain\Behaviors\ItemBases\Jewelry;
 
 use App\Domain\Behaviors\ItemBases\Jewelry\JewelryBehavior;
 use App\Domain\Models\SlotType;
+use App\Domain\Models\Support\GearSlots\GearSlot;
 
 class BraceletBehavior extends JewelryBehavior
 {
+    protected $validGearSlotTypes = [
+        GearSlot::OFF_WRIST,
+        GearSlot::PRIMARY_WRIST,
+    ];
 
     protected $weightModifier = 1.3;
-
-    public function getSlotsCount(): int
-    {
-        return 1;
-    }
-
-    public function getSlotTypeNames(): array
-    {
-        return [
-            SlotType::OFF_WRIST,
-            SlotType::PRIMARY_WRIST
-        ];
-    }
 }

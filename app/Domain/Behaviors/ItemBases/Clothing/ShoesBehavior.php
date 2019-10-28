@@ -11,21 +11,14 @@ namespace App\Domain\Behaviors\ItemBases\Clothing;
 
 use App\Domain\Behaviors\ItemBases\Clothing\ClothingBehavior;
 use App\Domain\Models\SlotType;
+use App\Domain\Models\Support\GearSlots\GearSlot;
 
 class ShoesBehavior extends ClothingBehavior
 {
+    protected $validGearSlotTypes = [
+        GearSlot::FEET
+    ];
+
     protected $weightModifier = 1.8;
     protected $protectionModifier = 1.1;
-
-    public function getSlotsCount(): int
-    {
-        return 1;
-    }
-
-    public function getSlotTypeNames(): array
-    {
-        return [
-            SlotType::FEET
-        ];
-    }
 }

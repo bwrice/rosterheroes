@@ -13,25 +13,17 @@ use App\Domain\Behaviors\ItemGroup\EyeWearGroup;
 use App\Domain\Behaviors\ItemGroup\ItemGroupInterface;
 use App\Domain\Interfaces\UsesItems;
 use App\Domain\Models\SlotType;
+use App\Domain\Models\Support\GearSlots\GearSlot;
 
 class EyeWearBehavior extends ItemBaseBehavior
 {
-    // TODO: Implement eye-wear
+    protected $validGearSlotTypes = [
+        GearSlot::HEAD
+    ];
+
     public function __construct(EyeWearGroup $eyeWearGroup)
     {
         parent::__construct($eyeWearGroup);
-    }
-
-    public function getSlotsCount(): int
-    {
-        return 1;
-    }
-
-    public function getSlotTypeNames(): array
-    {
-        return [
-            SlotType::HEAD
-        ];
     }
 
     public function getBaseDamageBonus(UsesItems $usesItems = null): float

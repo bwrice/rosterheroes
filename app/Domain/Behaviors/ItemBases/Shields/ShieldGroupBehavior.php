@@ -7,19 +7,17 @@ use App\Domain\Behaviors\ItemBases\ItemBaseBehavior;
 use App\Domain\Behaviors\ItemGroup\ShieldGroup;
 use App\Domain\Interfaces\UsesItems;
 use App\Domain\Models\SlotType;
+use App\Domain\Models\Support\GearSlots\GearSlot;
 
 abstract class ShieldGroupBehavior extends ItemBaseBehavior
 {
+    protected $validGearSlotTypes = [
+        GearSlot::OFF_ARM
+    ];
+
     public function __construct(ShieldGroup $shieldGroup)
     {
         parent::__construct($shieldGroup);
-    }
-
-    public function getSlotTypeNames(): array
-    {
-        return [
-            SlotType::OFF_ARM
-        ];
     }
 
     public function getDamageMultiplierBonus(UsesItems $usesItems = null): float

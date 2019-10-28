@@ -10,9 +10,15 @@ use App\Domain\Behaviors\ItemGroup\WeaponGroup;
 use App\Domain\Interfaces\UsesItems;
 use App\Domain\Models\MeasurableType;
 use App\Domain\Models\SlotType;
+use App\Domain\Models\Support\GearSlots\GearSlot;
 
 abstract class WeaponBehavior extends ItemBaseBehavior
 {
+    protected $validGearSlotTypes = [
+        GearSlot::PRIMARY_ARM,
+        GearSlot::OFF_ARM,
+    ];
+
     /**
      * @var ArmBehaviorInterface
      */
@@ -26,29 +32,22 @@ abstract class WeaponBehavior extends ItemBaseBehavior
         $this->armBehavior = $armBehavior;
         $this->setResourceCostAmountModifier();
         $this->setResourceCostPercentModifier();
+        $this->setGearSlotsCount();
     }
 
     protected function setResourceCostAmountModifier()
     {
-        $this->resourceCostAmountModifier = sqrt($this->getSlotsCount());
+        $this->resourceCostAmountModifier = sqrt($this->getGearSlotsCount());
     }
 
     protected function setResourceCostPercentModifier()
     {
-        $this->resourceCostPercentModifier = $this->getSlotsCount() ** .25;
+        $this->resourceCostPercentModifier = $this->getGearSlotsCount() ** .25;
     }
 
-    public function getSlotTypeNames(): array
+    public function setGearSlotsCount(): int
     {
-        return [
-            SlotType::OFF_ARM,
-            SlotType::PRIMARY_ARM
-        ];
-    }
-
-    public function getSlotsCount(): int
-    {
-        return $this->armBehavior->getSlotsCount();
+        return $this->gearSlotsCount = $this->armBehavior->getSlotsCount();
     }
 
     /**

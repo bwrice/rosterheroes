@@ -11,21 +11,14 @@ namespace App\Domain\Behaviors\ItemBases\Armor;
 
 use App\Domain\Behaviors\ItemBases\Armor\ArmorBehavior;
 use App\Domain\Models\SlotType;
+use App\Domain\Models\Support\GearSlots\GearSlot;
 
 class BeltBehavior extends ArmorBehavior
 {
+    protected $validGearSlotTypes = [
+        GearSlot::WAIST
+    ];
+
     protected $weightModifier = 2.4;
     protected $protectionModifier = 1.5;
-
-    public function getSlotsCount(): int
-    {
-        return 1;
-    }
-
-    public function getSlotTypeNames(): array
-    {
-        return [
-            SlotType::WAIST
-        ];
-    }
 }

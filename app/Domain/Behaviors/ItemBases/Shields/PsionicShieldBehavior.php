@@ -18,7 +18,7 @@ class PsionicShieldBehavior extends ShieldGroupBehavior
     protected $protectionModifier = 15;
     protected $blockChanceModifier = 2.8;
 
-    public function getSlotsCount(): int
+    public function getGearSlotsCount(): int
     {
         return 1;
     }

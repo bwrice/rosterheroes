@@ -16,7 +16,7 @@ class ShieldBehavior extends ShieldGroupBehavior
     protected $protectionModifier = 26;
     protected $blockChanceModifier = 3;
 
-    public function getSlotsCount(): int
+    public function getGearSlotsCount(): int
     {
         return 1;
     }
