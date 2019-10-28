@@ -6,6 +6,7 @@ use App\Domain\Models\Enchantment;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Item;
 use App\Domain\Models\ItemBlueprint;
+use App\Domain\Models\Residence;
 use App\Domain\Models\Spell;
 use App\Domain\Models\Squad;
 use App\Domain\Models\Stash;
@@ -30,6 +31,7 @@ class RelationsServiceProvider extends ServiceProvider
             Enchantment::RELATION_MORPH_MAP_KEY => Enchantment::class,
             Item::RELATION_MORPH_MAP_KEY => Item::class,
             Stash::RELATION_MORPH_MAP_KEY => Stash::class,
+            Residence::RELATION_MORPH_MAP_KEY => Residence::class
         ]);
     }
 }
