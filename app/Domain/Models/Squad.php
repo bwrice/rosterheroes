@@ -405,7 +405,7 @@ class Squad extends EventSourcedModel implements TravelsBorders, HasItems
 
     public function getBackupHasItems(): ?HasItems
     {
-        return $this->getLocalStash();
+        return $this->getLocalResidence() ?: $this->getLocalStash();
     }
 
     public function hasRoomForItem(Item $item): bool
