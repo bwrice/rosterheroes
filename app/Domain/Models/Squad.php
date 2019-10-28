@@ -5,6 +5,7 @@ namespace App\Domain\Models;
 use App\Aggregates\SquadAggregate;
 use App\Domain\Actions\CreateCampaignAction;
 use App\Domain\Collections\ItemCollection;
+use App\Domain\Interfaces\HasItems;
 use App\Domain\Interfaces\TravelsBorders;
 use App\Domain\Services\Travel\SquadBorderTravelCostExemption;
 use App\Exceptions\CampaignExistsException;
@@ -45,7 +46,7 @@ use Spatie\Sluggable\SlugOptions;
  *
  * @property HeroPostCollection $heroPosts
  */
-class Squad extends EventSourcedModel implements TravelsBorders
+class Squad extends EventSourcedModel implements TravelsBorders, HasItems
 {
     use HasNameSlug;
 
@@ -400,5 +401,25 @@ class Squad extends EventSourcedModel implements TravelsBorders
         $maxCapacity = $this->mobileStorageRank->getBehavior()->getWeightCapacity();
         $itemWeightSum = $this->items->sumOfWeight();
         return $maxCapacity - $itemWeightSum;
+    }
+
+    public function getBackupHasItems(): ?HasItems
+    {
+        return null;
+    }
+
+    public function hasRoomForItem(Item $item): bool
+    {
+        return true;
+    }
+
+    public function getMorphType(): string
+    {
+        return static::RELATION_MORPH_MAP_KEY;
+    }
+
+    public function getMorphID(): int
+    {
+        return $this->id;
     }
 }
