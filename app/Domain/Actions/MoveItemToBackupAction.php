@@ -13,6 +13,8 @@ class MoveItemToBackupAction
 {
     public function execute(Item $item, HasItems $hasItems, Collection $hasItemsCollection = null, $originalItemSource = true): Collection
     {
+        $hasItemsCollection = $hasItemsCollection ?: collect();
+
         if (! $hasItems->getBackupHasItems()) {
             throw new ItemTransactionException($item,"No backup for item found", ItemTransactionException::CODE_NO_BACKUP);
         }
