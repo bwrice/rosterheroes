@@ -15,7 +15,7 @@ class CreateResidencesTable extends Migration
     {
         Schema::create('residences', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('store_house_type_id')->unsigned();
+            $table->integer('residence_type_id')->unsigned();
             $table->integer('squad_id')->unsigned();
             $table->integer('province_id')->unsigned();
             $table->timestamps();
