@@ -16,11 +16,11 @@ use Illuminate\Support\Str;
  *
  * @property Squad $squad
  * @property Province $province
- * @property StoreHouseType $storeHouseType
+ * @property ResidenceType $residenceType
  *
  * @property SlotCollection $slots
  */
-class StoreHouse extends Model
+class Residence extends Model
 {
     protected $guarded = [];
 
@@ -34,8 +34,8 @@ class StoreHouse extends Model
         return $this->belongsTo(Province::class);
     }
 
-    public function storeHouseType()
+    public function residenceType()
     {
-        return $this->belongsTo(StoreHouseType::class);
+        return $this->belongsTo(ResidenceType::class);
     }
 }

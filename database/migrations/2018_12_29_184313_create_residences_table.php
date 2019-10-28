@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateStoreHousesTable extends Migration
+class CreateResidencesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateStoreHousesTable extends Migration
      */
     public function up()
     {
-        Schema::create('store_houses', function (Blueprint $table) {
+        Schema::create('residences', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('store_house_type_id')->unsigned();
             $table->integer('squad_id')->unsigned();
@@ -22,8 +22,8 @@ class CreateStoreHousesTable extends Migration
         });
 
 
-        Schema::table('store_houses', function (Blueprint $table) {
-            $table->foreign('store_house_type_id')->references('id')->on('store_house_types');
+        Schema::table('residences', function (Blueprint $table) {
+            $table->foreign('residence_type_id')->references('id')->on('residence_types');
             $table->foreign('squad_id')->references('id')->on('squads');
             $table->foreign('province_id')->references('id')->on('provinces');
         });
@@ -36,6 +36,6 @@ class CreateStoreHousesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('store_houses');
+        Schema::dropIfExists('residences');
     }
 }

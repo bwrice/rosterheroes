@@ -2,12 +2,12 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(\App\Domain\Models\StoreHouse::class, function (Faker $faker) {
+$factory->define(\App\Domain\Models\Residence::class, function (Faker $faker) {
 
     /** @var \App\Domain\Models\Squad $squad */
     $squad = factory(\App\Domain\Models\Squad::class)->create();
-    /** @var \App\Domain\Models\HouseType $storeHouseType */
-    $storeHouseType = \App\Domain\Models\HouseType::where('name', '=', \App\Domain\Models\HouseType::SHACK)->first();
+    /** @var \App\Domain\Models\ResidenceType $storeHouseType */
+    $storeHouseType = \App\Domain\Models\ResidenceType::where('name', '=', \App\Domain\Models\ResidenceType::SHACK)->first();
 
     return [
         'squad_id' => $squad->id,
@@ -16,6 +16,6 @@ $factory->define(\App\Domain\Models\StoreHouse::class, function (Faker $faker) {
     ];
 });
 
-$factory->afterCreatingState(\App\Domain\Models\StoreHouse::class, 'with-slots', function (\App\Domain\Models\StoreHouse $storeHouse, $faker) {
+$factory->afterCreatingState(\App\Domain\Models\Residence::class, 'with-slots', function (\App\Domain\Models\Residence $storeHouse, $faker) {
     $storeHouse->addSlots();
 });
