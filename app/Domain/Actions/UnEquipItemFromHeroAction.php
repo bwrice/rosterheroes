@@ -6,6 +6,7 @@ namespace App\Domain\Actions;
 
 use App\Domain\Models\Hero;
 use App\Domain\Models\Item;
+use App\Domain\Models\Week;
 use App\Exceptions\ItemTransactionException;
 use Illuminate\Support\Collection;
 
@@ -32,6 +33,9 @@ class UnEquipItemFromHeroAction
         if (is_null($item->hasItems) ||
             ($item->hasItems->getMorphType() !== Hero::RELATION_MORPH_MAP_KEY || $item->hasItems->getMorphID() !== $hero->id)) {
             throw new ItemTransactionException($item, "Item does not belong to hero", ItemTransactionException::CODE_INVALID_OWNERSHIP);
+        }
+        if (! Week::current()->adventuringOpen()) {
+            throw new ItemTransactionException($item, "Current week is locked'", ItemTransactionException::CODE_TRANSACTION_DISABLED);
         }
         return $this->moveItemToBackupAction->execute($item, $hero, $hasSlots);
     }

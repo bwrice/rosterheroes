@@ -7,7 +7,9 @@ use App\Domain\Interfaces\HasItems;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Item;
 use App\Domain\Models\Squad;
+use App\Domain\Models\Week;
 use App\Exceptions\ItemTransactionException;
+use Illuminate\Support\Facades\Date;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -31,6 +33,11 @@ class UnEquipItemFromHeroActionTest extends TestCase
             'has_items_type' => Hero::RELATION_MORPH_MAP_KEY,
             'has_items_id' => $this->hero->id
         ]);
+        /** @var Week $week */
+        $week = factory(Week::class)->states('adventuring-open', 'as-current')->create();
+        $week->everything_locks_at = Date::now()->addHour();
+        $week->save();
+        Week::setTestCurrent($week);
         $this->domainAction = app(UnEquipItemFromHeroAction::class);
     }
 
@@ -48,6 +55,23 @@ class UnEquipItemFromHeroActionTest extends TestCase
 
         } catch (ItemTransactionException $exception) {
             $this->assertEquals(ItemTransactionException::CODE_INVALID_OWNERSHIP, $exception->getCode());
+            return;
+        }
+        $this->fail("Exception not thrown");
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_throw_an_exception_if_the_current_week_is_locked_for_adventuring()
+    {
+        factory(Week::class)->states('adventuring-closed', 'as-current')->create();
+
+        try {
+            $this->domainAction->execute($this->item->fresh(), $this->hero);
+
+        } catch (ItemTransactionException $exception) {
+            $this->assertEquals(ItemTransactionException::CODE_TRANSACTION_DISABLED, $exception->getCode());
             return;
         }
         $this->fail("Exception not thrown");
