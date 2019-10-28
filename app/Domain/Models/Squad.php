@@ -412,7 +412,7 @@ class Squad extends EventSourcedModel implements TravelsBorders, HasItems
     {
         $maxWeightCapacity = $this->mobileStorageRank->getBehavior()->getWeightCapacity();
         $currentCapacity = $this->items->sumOfWeight();
-        return ($maxWeightCapacity - $currentCapacity) > $item->weight();
+        return ($maxWeightCapacity - $currentCapacity) >= $item->weight();
     }
 
     public function getMorphType(): string
