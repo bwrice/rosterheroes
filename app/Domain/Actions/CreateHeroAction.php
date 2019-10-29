@@ -35,13 +35,13 @@ class CreateHeroAction
         $heroUuid = Str::uuid();
         /** @var HeroAggregate $heroAggregate */
         $heroAggregate = HeroAggregate::retrieve($heroUuid);
-        $heroAggregate->recordThat(new HeroCreated(
+        $heroAggregate->createHero(
             $name,
             $heroClass->id,
             $heroRace->id,
             $heroRank->id,
             $heroClass->getBehavior()->getStartingCombatPosition()->id
-        ));
+        );
 
         /*
          * Persist aggregate because we need an hero in the DB
@@ -56,10 +56,6 @@ class CreateHeroAction
             $measurableAggregate = MeasurableAggregate::retrieve($measurableUuid);
             $measurableAggregate->createMeasurable($measurableType->id, $hero->id, 0)
                 ->persist();
-        });
-
-        SlotType::heroTypes()->each(function (SlotType $slotType) use ($heroAggregate) {
-            $heroAggregate->createHeroSlot($slotType->id);
         });
 
         // Persist slots
