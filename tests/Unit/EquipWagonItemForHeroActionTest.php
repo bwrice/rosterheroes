@@ -27,7 +27,7 @@ class EquipWagonItemForHeroActionTest extends TestCase
     protected $squad;
 
     /** @var Item */
-    protected $item;
+    protected $randomItem;
 
     /** @var EquipWagonItemForHeroAction */
     protected $domainAction;
@@ -37,10 +37,11 @@ class EquipWagonItemForHeroActionTest extends TestCase
         parent::setUp();
         $this->hero = factory(Hero::class)->states('with-measurables', 'with-squad')->create();
         $this->squad = $this->hero->getSquad();
-        $this->item = factory(Item::class)->create([
+        $this->randomItem = factory(Item::class)->create([
             'has_items_type' => Squad::RELATION_MORPH_MAP_KEY,
             'has_items_id' => $this->squad->id
         ]);
+
         /** @var Week $week */
         $week = factory(Week::class)->states('adventuring-open', 'as-current')->create();
         $week->everything_locks_at = Date::now()->addHour();
@@ -54,10 +55,10 @@ class EquipWagonItemForHeroActionTest extends TestCase
      */
     public function it_will_throw_an_exception_if_the_item_does_not_belong_to_anyone()
     {
-        $this->item = $this->item->clearHasItems();
+        $this->randomItem = $this->randomItem->clearHasItems();
 
         try {
-            $this->domainAction->execute($this->item->fresh(), $this->hero);
+            $this->domainAction->execute($this->randomItem->fresh(), $this->hero);
 
         } catch (ItemTransactionException $exception) {
             $this->assertEquals(ItemTransactionException::CODE_INVALID_OWNERSHIP, $exception->getCode());
@@ -71,10 +72,10 @@ class EquipWagonItemForHeroActionTest extends TestCase
     public function it_will_throw_an_exception_if_the_item_does_not_belong_to_the_wagon_of_the_hero()
     {
         $squad = factory(Squad::class)->create();
-        $this->item = $this->item->attachToHasItems($squad);
+        $this->randomItem = $this->randomItem->attachToHasItems($squad);
 
         try {
-            $this->domainAction->execute($this->item->fresh(), $this->hero);
+            $this->domainAction->execute($this->randomItem->fresh(), $this->hero);
 
         } catch (ItemTransactionException $exception) {
             $this->assertEquals(ItemTransactionException::CODE_INVALID_OWNERSHIP, $exception->getCode());
@@ -91,7 +92,7 @@ class EquipWagonItemForHeroActionTest extends TestCase
         factory(Week::class)->states('adventuring-closed', 'as-current')->create();
 
         try {
-            $this->domainAction->execute($this->item, $this->hero);
+            $this->domainAction->execute($this->randomItem, $this->hero);
 
         } catch (ItemTransactionException $exception) {
             $this->assertEquals(ItemTransactionException::CODE_TRANSACTION_DISABLED, $exception->getCode());
@@ -105,7 +106,7 @@ class EquipWagonItemForHeroActionTest extends TestCase
      */
     public function it_will_equip_an_item_on_an_empty_hero()
     {
-        $hasItemsCollection = $this->domainAction->execute($this->item, $this->hero);
+        $hasItemsCollection = $this->domainAction->execute($this->randomItem, $this->hero);
         $this->assertEquals(2, $hasItemsCollection->count());
 
         $hero = $hasItemsCollection->first(function (HasItems $hasItems) {
