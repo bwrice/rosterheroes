@@ -29,6 +29,9 @@ abstract class GearSlot
     /** @var string */
     protected $type = '';
 
+    /** @var int  */
+    protected $priority = 1;
+
     /**
      * @param FillsGearSlots|null $fillsGearSlots
      * @return GearSlot
@@ -54,5 +57,13 @@ abstract class GearSlot
     public function getFiller(): ?FillsGearSlots
     {
         return $this->filler;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPriority(): int
+    {
+        return $this->priority;
     }
 }
