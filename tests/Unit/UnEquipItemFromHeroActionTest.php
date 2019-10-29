@@ -75,7 +75,7 @@ class UnEquipItemFromHeroActionTest extends TestCase
         factory(Week::class)->states('adventuring-closed', 'as-current')->create();
 
         try {
-            $this->domainAction->execute($this->item->fresh(), $this->hero);
+            $this->domainAction->execute($this->item, $this->hero);
 
         } catch (ItemTransactionException $exception) {
             $this->assertEquals(ItemTransactionException::CODE_TRANSACTION_DISABLED, $exception->getCode());
