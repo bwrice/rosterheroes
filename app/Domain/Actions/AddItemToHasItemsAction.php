@@ -31,9 +31,7 @@ class AddItemToHasItemsAction
         if ($item->hasItems) {
             // Add original owner to collection then remove relationship
             $hasItemsCollection->push($item->hasItems);
-            $item->item_type_id = null;
-            $item->has_items_id = null;
-            $item->save();
+            $item = $item->clearHasItems();
         }
 
         if (! $hasItems->hasRoomForItem($item)) {
@@ -46,9 +44,7 @@ class AddItemToHasItemsAction
         }
 
         // Attach new item
-        $item->has_items_id = $hasItems->getMorphID();
-        $item->has_items_type = $hasItems->getMorphType();
-        $item->save();
+        $item->attachToHasItems($hasItems);
         $hasItemsCollection->push($hasItems);
         return $hasItemsCollection;
     }
