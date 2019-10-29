@@ -57,6 +57,11 @@ class Residence extends Model implements HasItems
         return $this->items()->count() < $this->residenceType->getBehavior()->getMaxItemCount();
     }
 
+    public function itemsToMoveForNewItem(Item $item): ItemCollection
+    {
+        // TODO: Implement itemsToMoveForNewItem() method.
+    }
+
     public function getMorphType(): string
     {
         return static::RELATION_MORPH_MAP_KEY;

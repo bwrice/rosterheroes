@@ -2,6 +2,7 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Collections\ItemCollection;
 use App\Domain\Interfaces\HasItems;
 use App\Domain\Interfaces\HasSlots;
 use App\Domain\Models\Province;
@@ -45,6 +46,12 @@ class Stash extends Model implements HasItems
     {
         // Stash is last resort for Squad storing items. Always true.
         return true;
+    }
+
+    public function itemsToMoveForNewItem(Item $item): ItemCollection
+    {
+        // We won't ever have to move items for a stash. They're unlimited.
+        return new ItemCollection();
     }
 
     public function getMorphType(): string

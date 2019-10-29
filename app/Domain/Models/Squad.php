@@ -415,6 +415,11 @@ class Squad extends EventSourcedModel implements TravelsBorders, HasItems
         return ($maxWeightCapacity - $currentCapacity) >= $item->weight();
     }
 
+    public function itemsToMoveForNewItem(Item $item): ItemCollection
+    {
+        // TODO: Implement itemsToMoveForNewItem() method.
+    }
+
     public function getMorphType(): string
     {
         return static::RELATION_MORPH_MAP_KEY;

@@ -326,7 +326,12 @@ class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasItems
 
     public function hasRoomForItem(Item $item): bool
     {
-        return false;
+        return true;
+    }
+
+    public function itemsToMoveForNewItem(Item $item): ItemCollection
+    {
+        //TODO
     }
 
     public function getMorphType(): string
