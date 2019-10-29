@@ -22,7 +22,6 @@ return [
         \App\Projectors\SquadExperienceProjector::class,
         \App\Projectors\SquadFavorProjector::class,
         \App\Projectors\SquadHeroPostsProjector::class,
-        \App\Projectors\SquadSlotsProjector::class,
         \App\Projectors\HeroProjector::class,
         \App\Projectors\ItemProjector::class,
         \App\Projectors\MeasurableProjector::class,
