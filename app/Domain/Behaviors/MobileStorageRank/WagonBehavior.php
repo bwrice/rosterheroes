@@ -11,10 +11,5 @@ namespace App\Domain\Behaviors\MobileStorageRank;
 
 class WagonBehavior extends MobileStorageRankBehavior
 {
-    protected $weightCapacity = 500;
-
-    public function getSlotsCount()
-    {
-        return 50;
-    }
+    protected $weightCapacity = 1000;
 }

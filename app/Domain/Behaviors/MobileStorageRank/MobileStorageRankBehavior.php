@@ -13,8 +13,6 @@ abstract class MobileStorageRankBehavior
 {
     protected $weightCapacity;
 
-    abstract public function getSlotsCount();
-
     /**
      * @return int
      */
