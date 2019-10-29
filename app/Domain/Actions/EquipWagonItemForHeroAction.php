@@ -12,7 +12,17 @@ use App\Exceptions\ItemTransactionException;
 
 class EquipWagonItemForHeroAction
 {
-    public function execute(Item $item, Hero $hero, HasItemsCollection $hasItemsCollection = null)
+    /**
+     * @var AddItemToHasItemsAction
+     */
+    private $addItemToHasItemsAction;
+
+    public function __construct(AddItemToHasItemsAction $addItemToHasItemsAction)
+    {
+        $this->addItemToHasItemsAction = $addItemToHasItemsAction;
+    }
+
+    public function execute(Item $item, Hero $hero, HasItemsCollection $hasItemsCollection = null): HasItemsCollection
     {
         $hasItemsCollection = $hasItemsCollection ?: new HasItemsCollection();
         $squad = $hero->getSquad();
@@ -25,6 +35,6 @@ class EquipWagonItemForHeroAction
             throw new ItemTransactionException($item, "Week is currently locked", ItemTransactionException::CODE_TRANSACTION_DISABLED);
         }
 
-        $item = $item->clearHasItems();
+        return $this->addItemToHasItemsAction->execute($item, $hero, $hasItemsCollection);
     }
 }
