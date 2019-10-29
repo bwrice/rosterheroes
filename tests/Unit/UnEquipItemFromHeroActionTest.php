@@ -109,7 +109,7 @@ class UnEquipItemFromHeroActionTest extends TestCase
      */
     public function it_will_move_an_item_to_the_squads_wagon()
     {
-        $hasItems = $this->domainAction->execute($this->item, $this->hero);
+        $hasItemsCollection = $this->domainAction->execute($this->item, $this->hero);
 
         $this->item = $this->item->fresh();
         $this->assertEquals(Squad::RELATION_MORPH_MAP_KEY, $this->item->has_items_type);
@@ -117,14 +117,14 @@ class UnEquipItemFromHeroActionTest extends TestCase
         $squad = $this->hero->getSquad();
         $this->assertEquals($squad->id, $this->item->has_items_id);
 
-        $this->assertEquals(2, $hasItems->count());
+        $this->assertEquals(2, $hasItemsCollection->count());
 
-        $hero = $hasItems->first(function (HasItems $hasItems) {
+        $hero = $hasItemsCollection->first(function (HasItems $hasItems) {
             return $hasItems->getMorphID() === $this->hero->id && $hasItems->getMorphType() === Hero::RELATION_MORPH_MAP_KEY;
         });
         $this->assertNotNull($hero);
 
-        $squadHasItems = $hasItems->first(function (HasItems $hasItems) use ($squad) {
+        $squadHasItems = $hasItemsCollection->first(function (HasItems $hasItems) use ($squad) {
             return $hasItems->getMorphID() === $squad->id && $hasItems->getMorphType() === Squad::RELATION_MORPH_MAP_KEY;
         });
         $this->assertNotNull($squadHasItems);
@@ -139,15 +139,15 @@ class UnEquipItemFromHeroActionTest extends TestCase
         $wagonBehaviorMock->shouldReceive('getWeightCapacity')->andReturn(-1);
         app()->instance(WagonBehavior::class, $wagonBehaviorMock);
 
-        $hasItems = $this->domainAction->execute($this->item, $this->hero);
-        $this->assertEquals(2, $hasItems->count());
+        $hasItemsCollection = $this->domainAction->execute($this->item, $this->hero);
+        $this->assertEquals(2, $hasItemsCollection->count());
 
-        $hero = $hasItems->first(function (HasItems $hasItems) {
+        $hero = $hasItemsCollection->first(function (HasItems $hasItems) {
             return $hasItems->getMorphID() === $this->hero->id && $hasItems->getMorphType() === Hero::RELATION_MORPH_MAP_KEY;
         });
         $this->assertNotNull($hero);
 
-        $stashHasItems = $hasItems->first(function (HasItems $hasItems) {
+        $stashHasItems = $hasItemsCollection->first(function (HasItems $hasItems) {
             $stash = $this->hero->getSquad()->getLocalStash();
             return $hasItems->getMorphID() === $stash->id && $hasItems->getMorphType() === Stash::RELATION_MORPH_MAP_KEY;
         });
@@ -169,15 +169,15 @@ class UnEquipItemFromHeroActionTest extends TestCase
             'province_id' => $squad->province_id,
         ]);
 
-        $hasItems = $this->domainAction->execute($this->item, $this->hero);
-        $this->assertEquals(2, $hasItems->count());
+        $hasItemsCollection = $this->domainAction->execute($this->item, $this->hero);
+        $this->assertEquals(2, $hasItemsCollection->count());
 
-        $hero = $hasItems->first(function (HasItems $hasItems) {
+        $hero = $hasItemsCollection->first(function (HasItems $hasItems) {
             return $hasItems->getMorphID() === $this->hero->id && $hasItems->getMorphType() === Hero::RELATION_MORPH_MAP_KEY;
         });
         $this->assertNotNull($hero);
 
-        $residenceHasItems = $hasItems->first(function (HasItems $hasItems) use ($residence) {
+        $residenceHasItems = $hasItemsCollection->first(function (HasItems $hasItems) use ($residence) {
             return $hasItems->getMorphID() === $residence->id && $hasItems->getMorphType() === Residence::RELATION_MORPH_MAP_KEY;
         });
         $this->assertNotNull($residenceHasItems);
@@ -202,15 +202,15 @@ class UnEquipItemFromHeroActionTest extends TestCase
             'province_id' => $squad->province_id,
         ]);
 
-        $hasItems = $this->domainAction->execute($this->item, $this->hero);
-        $this->assertEquals(2, $hasItems->count());
+        $hasItemsCollection = $this->domainAction->execute($this->item, $this->hero);
+        $this->assertEquals(2, $hasItemsCollection->count());
 
-        $hero = $hasItems->first(function (HasItems $hasItems) {
+        $hero = $hasItemsCollection->first(function (HasItems $hasItems) {
             return $hasItems->getMorphID() === $this->hero->id && $hasItems->getMorphType() === Hero::RELATION_MORPH_MAP_KEY;
         });
         $this->assertNotNull($hero);
 
-        $stashHasItems = $hasItems->first(function (HasItems $hasItems) use ($squad) {
+        $stashHasItems = $hasItemsCollection->first(function (HasItems $hasItems) use ($squad) {
             $stash = $squad->getLocalStash();
             return $hasItems->getMorphID() === $stash->id && $hasItems->getMorphType() === Stash::RELATION_MORPH_MAP_KEY;
         });
