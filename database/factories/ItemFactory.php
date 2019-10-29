@@ -18,3 +18,36 @@ $factory->define(\App\Domain\Models\Item::class, function (Faker $faker) {
         }
     ];
 });
+
+$factory->state(\App\Domain\Models\Item::class, 'two-handed', function ($faker) {
+
+    $itemType = \App\Domain\Models\ItemType::query()->whereHas('itemBase', function (\Illuminate\Database\Eloquent\Builder $builder) {
+        return $builder->whereIn('name', [
+            \App\Domain\Models\ItemBase::CROSSBOW,
+            \App\Domain\Models\ItemBase::TWO_HAND_SWORD,
+            \App\Domain\Models\ItemBase::TWO_HAND_AXE,
+            \App\Domain\Models\ItemBase::PSIONIC_TWO_HAND,
+            \App\Domain\Models\ItemBase::BOW,
+            \App\Domain\Models\ItemBase::STAFF,
+            \App\Domain\Models\ItemBase::POLEARM,
+        ]);
+    })->inRandomOrder()->first();
+
+    return [
+        'item_type_id' => $itemType->id,
+    ];
+});
+
+$factory->state(\App\Domain\Models\Item::class, 'shield', function ($faker) {
+
+    $itemType = \App\Domain\Models\ItemType::query()->whereHas('itemBase', function (\Illuminate\Database\Eloquent\Builder $builder) {
+        return $builder->whereIn('name', [
+            \App\Domain\Models\ItemBase::SHIELD,
+            \App\Domain\Models\ItemBase::PSIONIC_SHIELD,
+        ]);
+    })->inRandomOrder()->first();
+
+    return [
+        'item_type_id' => $itemType->id,
+    ];
+});
