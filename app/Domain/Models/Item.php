@@ -278,6 +278,6 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
     public function belongsToHasItems(HasItems $hasItems)
     {
         return $this->has_items_type === $hasItems->getMorphType()
-            && $this->has_items_id === $this->has_items_id;
+            && $this->has_items_id === $hasItems->getMorphID();
     }
 }
