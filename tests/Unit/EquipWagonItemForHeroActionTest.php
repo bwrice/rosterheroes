@@ -28,6 +28,14 @@ class EquipWagonItemForHeroActionTest extends TestCase
 
     /** @var Item */
     protected $randomItem;
+    /** @var Item */
+    protected $singleHandedItem;
+    /** @var Item */
+    protected $twoHandedItem;
+    /** @var Item */
+    protected $shield;
+    /** @var Item */
+    protected $headItem;
 
     /** @var EquipWagonItemForHeroAction */
     protected $domainAction;
@@ -38,6 +46,22 @@ class EquipWagonItemForHeroActionTest extends TestCase
         $this->hero = factory(Hero::class)->states('with-measurables', 'with-squad')->create();
         $this->squad = $this->hero->getSquad();
         $this->randomItem = factory(Item::class)->create([
+            'has_items_type' => Squad::RELATION_MORPH_MAP_KEY,
+            'has_items_id' => $this->squad->id
+        ]);
+        $this->singleHandedItem = factory(Item::class)->state('single-handed')->create([
+            'has_items_type' => Squad::RELATION_MORPH_MAP_KEY,
+            'has_items_id' => $this->squad->id
+        ]);
+        $this->twoHandedItem = factory(Item::class)->state('two-handed')->create([
+            'has_items_type' => Squad::RELATION_MORPH_MAP_KEY,
+            'has_items_id' => $this->squad->id
+        ]);
+        $this->shield = factory(Item::class)->state('shield')->create([
+            'has_items_type' => Squad::RELATION_MORPH_MAP_KEY,
+            'has_items_id' => $this->squad->id
+        ]);
+        $this->headItem = factory(Item::class)->state('head')->create([
             'has_items_type' => Squad::RELATION_MORPH_MAP_KEY,
             'has_items_id' => $this->squad->id
         ]);

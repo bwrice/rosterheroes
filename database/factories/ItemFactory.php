@@ -71,3 +71,18 @@ $factory->state(\App\Domain\Models\Item::class, 'shield', function ($faker) {
         'item_type_id' => $itemType->id,
     ];
 });
+
+$factory->state(\App\Domain\Models\Item::class, 'head', function ($faker) {
+
+    $itemType = \App\Domain\Models\ItemType::query()->whereHas('itemBase', function (\Illuminate\Database\Eloquent\Builder $builder) {
+        return $builder->whereIn('name', [
+            \App\Domain\Models\ItemBase::CAP,
+            \App\Domain\Models\ItemBase::HELMET,
+            \App\Domain\Models\ItemBase::CROWN,
+        ]);
+    })->inRandomOrder()->first();
+
+    return [
+        'item_type_id' => $itemType->id,
+    ];
+});
