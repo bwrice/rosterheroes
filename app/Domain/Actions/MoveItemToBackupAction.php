@@ -4,16 +4,16 @@
 namespace App\Domain\Actions;
 
 
+use App\Domain\Collections\HasItemsCollection;
 use App\Domain\Interfaces\HasItems;
 use App\Domain\Models\Item;
 use App\Exceptions\ItemTransactionException;
-use Illuminate\Support\Collection;
 
 class MoveItemToBackupAction
 {
-    public function execute(Item $item, HasItems $hasItems, Collection $hasItemsCollection = null, $originalItemSource = true): Collection
+    public function execute(Item $item, HasItems $hasItems, HasItemsCollection $hasItemsCollection = null, $originalItemSource = true): HasItemsCollection
     {
-        $hasItemsCollection = $hasItemsCollection ?: collect();
+        $hasItemsCollection = $hasItemsCollection ?: new HasItemsCollection();
 
         if (! $hasItems->getBackupHasItems()) {
             throw new ItemTransactionException($item,"No backup for item found", ItemTransactionException::CODE_NO_BACKUP);

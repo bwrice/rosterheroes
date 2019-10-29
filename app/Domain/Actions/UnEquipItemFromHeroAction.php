@@ -4,6 +4,7 @@
 namespace App\Domain\Actions;
 
 
+use App\Domain\Collections\HasItemsCollection;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Item;
 use App\Domain\Models\Week;
@@ -28,7 +29,7 @@ class UnEquipItemFromHeroAction
      * @param Collection|null $hasSlots
      * @return Collection
      */
-    public function execute(Item $item, Hero $hero, Collection $hasSlots = null): Collection
+    public function execute(Item $item, Hero $hero, HasItemsCollection $hasSlots = null): HasItemsCollection
     {
         if (is_null($item->hasItems) ||
             ($item->hasItems->getMorphType() !== Hero::RELATION_MORPH_MAP_KEY || $item->hasItems->getMorphID() !== $hero->id)) {

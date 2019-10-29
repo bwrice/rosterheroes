@@ -4,9 +4,9 @@
 namespace App\Domain\Actions;
 
 
+use App\Domain\Collections\HasItemsCollection;
 use App\Domain\Interfaces\HasItems;
 use App\Domain\Models\Item;
-use Illuminate\Support\Collection;
 
 class AddItemToHasItemsAction
 {
@@ -24,9 +24,9 @@ class AddItemToHasItemsAction
         $this->moveItemToBackupAction = $moveItemToBackupAction;
     }
 
-    public function execute(Item $item, HasItems $hasItems, Collection $hasItemsCollection = null): Collection
+    public function execute(Item $item, HasItems $hasItems, HasItemsCollection $hasItemsCollection = null): HasItemsCollection
     {
-        $hasItemsCollection = $hasItemsCollection ?: collect();
+        $hasItemsCollection = $hasItemsCollection ?: new HasItemsCollection();
 
         if ($item->hasItems) {
             // Add original owner to collection then remove relationship
