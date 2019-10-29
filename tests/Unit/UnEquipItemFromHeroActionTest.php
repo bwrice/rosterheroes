@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\Domain\Actions\UnEquipItemFromHeroAction;
 use App\Domain\Behaviors\MobileStorageRank\WagonBehavior;
+use App\Domain\Behaviors\StoreHouses\ShackBehavior;
 use App\Domain\Interfaces\HasItems;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Item;
@@ -12,6 +13,7 @@ use App\Domain\Models\Squad;
 use App\Domain\Models\Stash;
 use App\Domain\Models\Week;
 use App\Exceptions\ItemTransactionException;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Date;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -19,6 +21,8 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UnEquipItemFromHeroActionTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /** @var Hero */
     protected $hero;
 
@@ -177,5 +181,39 @@ class UnEquipItemFromHeroActionTest extends TestCase
             return $hasItems->getMorphID() === $residence->id && $hasItems->getMorphType() === Residence::RELATION_MORPH_MAP_KEY;
         });
         $this->assertNotNull($residenceHasItems);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_move_an_item_to_stash_if_mobile_storage_is_full_and_available_residence_is_full()
+    {
+        $wagonBehaviorMock = \Mockery::mock(WagonBehavior::class);
+        $wagonBehaviorMock->shouldReceive('getWeightCapacity')->andReturn(-1);
+        app()->instance(WagonBehavior::class, $wagonBehaviorMock);
+
+        $shackBehaviorMock = \Mockery::mock(ShackBehavior::class);
+        $shackBehaviorMock->shouldReceive('getMaxItemCount')->andReturn(0);
+        app()->instance(ShackBehavior::class, $shackBehaviorMock);
+
+        $squad = $this->hero->getSquad();
+        $residence = factory(Residence::class)->create([
+            'squad_id' => $squad->id,
+            'province_id' => $squad->province_id,
+        ]);
+
+        $hasItems = $this->domainAction->execute($this->item, $this->hero);
+        $this->assertEquals(2, $hasItems->count());
+
+        $hero = $hasItems->first(function (HasItems $hasItems) {
+            return $hasItems->getMorphID() === $this->hero->id && $hasItems->getMorphType() === Hero::RELATION_MORPH_MAP_KEY;
+        });
+        $this->assertNotNull($hero);
+
+        $stashHasItems = $hasItems->first(function (HasItems $hasItems) use ($squad) {
+            $stash = $squad->getLocalStash();
+            return $hasItems->getMorphID() === $stash->id && $hasItems->getMorphType() === Stash::RELATION_MORPH_MAP_KEY;
+        });
+        $this->assertNotNull($stashHasItems);
     }
 }
