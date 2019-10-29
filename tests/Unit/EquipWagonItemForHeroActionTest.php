@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Domain\Actions\EquipWagonItemForHeroAction;
+use App\Domain\Interfaces\HasItems;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Item;
 use App\Domain\Models\Squad;
@@ -97,5 +98,24 @@ class EquipWagonItemForHeroActionTest extends TestCase
             return;
         }
         $this->fail("Exception not thrown");
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_equip_an_item_on_an_empty_hero()
+    {
+        $hasItemsCollection = $this->domainAction->execute($this->item, $this->hero);
+        $this->assertEquals(2, $hasItemsCollection->count());
+
+        $hero = $hasItemsCollection->first(function (HasItems $hasItems) {
+            return $hasItems->getMorphID() === $this->hero->id && $hasItems->getMorphType() === Hero::RELATION_MORPH_MAP_KEY;
+        });
+        $this->assertNotNull($hero);
+
+        $squadHasItems = $hasItemsCollection->first(function (HasItems $hasItems) {
+            return $hasItems->getMorphID() === $this->squad->id && $hasItems->getMorphType() === Squad::RELATION_MORPH_MAP_KEY;
+        });
+        $this->assertNotNull($squadHasItems);
     }
 }
