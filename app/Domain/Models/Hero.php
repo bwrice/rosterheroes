@@ -316,7 +316,7 @@ class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasItems
         foreach ($slotsTypes as $type) {
             $gearSlots->push($factory->build($type));
         }
-        return $gearSlots;
+        return $gearSlots->sortedByPriority();
     }
 
     public function getBackupHasItems(): ?HasItems

@@ -38,4 +38,11 @@ class GearSlotCollection extends Collection
             return in_array($gearSlot->getType(), $gearSlotTypes);
         });
     }
+
+    public function sortedByPriority()
+    {
+        return $this->sortBy(function (GearSlot $gearSlot) {
+            return $gearSlot->getPriority();
+        });
+    }
 }
