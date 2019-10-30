@@ -23,12 +23,11 @@ class MoveItemToBackupAction
         }
         $backup = $hasItems->getBackupHasItems();
         if ($backup->hasRoomForItem($item)) {
-            $item->has_items_type = $backup->getMorphType();
-            $item->has_items_id = $backup->getMorphID();
-            $item->save();
+            $item->attachToHasItems($backup);
             $hasItemsCollection->push($backup);
             return $hasItemsCollection;
         } else {
+            // Call execute recursively to try to attach to the backup's backup
             return $this->execute($item, $backup, $hasItemsCollection, false);
         }
     }
