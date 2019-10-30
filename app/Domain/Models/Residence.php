@@ -5,7 +5,9 @@ namespace App\Domain\Models;
 use App\Domain\Collections\ItemCollection;
 use App\Domain\Interfaces\HasItems;
 use App\Domain\Collections\SlotCollection;
+use App\Http\Resources\ResidenceResource;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Str;
 
 /**
@@ -83,5 +85,15 @@ class Residence extends Model implements HasItems
     public function getUniqueIdentifier(): string
     {
         return $this->uuid;
+    }
+
+    public function getHasItemsResource(): JsonResource
+    {
+        return new ResidenceResource($this);
+    }
+
+    public function getHasItemsType()
+    {
+        return 'residence';
     }
 }

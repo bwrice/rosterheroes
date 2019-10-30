@@ -17,6 +17,8 @@ use App\Domain\QueryBuilders\HeroQueryBuilder;
 use App\Domain\Traits\HasNameSlug;
 use App\Domain\Collections\HeroCollection;
 use App\Domain\Collections\SlotCollection;
+use App\Http\Resources\HeroResource;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
  * Class Hero
@@ -339,5 +341,15 @@ class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasItems
     public function getMorphID(): int
     {
         return $this->id;
+    }
+
+    public function getHasItemsResource(): JsonResource
+    {
+        return new HeroResource($this->load(static::heroResourceRelations()));
+    }
+
+    public function getHasItemsType()
+    {
+        return 'hero';
     }
 }

@@ -17,6 +17,8 @@ use App\Domain\Collections\HeroPostCollection;
 use App\Domain\Interfaces\HasSlots;
 use App\Domain\Collections\SlotCollection;
 use App\Domain\Traits\HasNameSlug;
+use App\Http\Resources\SquadResource;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Str;
 use Spatie\Sluggable\SlugOptions;
 
@@ -444,5 +446,15 @@ class Squad extends EventSourcedModel implements TravelsBorders, HasItems
     public function getMorphID(): int
     {
         return $this->id;
+    }
+
+    public function getHasItemsResource(): JsonResource
+    {
+        return new SquadResource($this);
+    }
+
+    public function getHasItemsType()
+    {
+        return 'squad';
     }
 }

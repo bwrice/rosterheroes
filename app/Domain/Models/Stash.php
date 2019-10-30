@@ -10,7 +10,9 @@ use App\Domain\Models\SlotType;
 use App\Domain\Models\Squad;
 use App\Domain\Models\SlotOld;
 use App\Domain\Collections\SlotCollection;
+use App\Http\Resources\StashResource;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Str;
 
 /**
@@ -71,5 +73,15 @@ class Stash extends Model implements HasItems
     public function getUniqueIdentifier(): string
     {
         return $this->uuid;
+    }
+
+    public function getHasItemsResource(): JsonResource
+    {
+        return new StashResource($this);
+    }
+
+    public function getHasItemsType()
+    {
+        // TODO: Implement getHasItemsType() method.
     }
 }
