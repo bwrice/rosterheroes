@@ -70,18 +70,15 @@ class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasItems
             'playerSpirit.player',
             'playerSpirit.game.homeTeam',
             'playerSpirit.game.awayTeam',
-            'measurables.measurableType',
-            'slots.slotType',
-            'slots.hasSlots',
-            'slots.item.itemType.itemBase',
-            'slots.item.material.materialType',
-            'slots.item.itemClass',
-            'slots.item.attacks.attackerPosition',
-            'slots.item.attacks.targetPosition',
-            'slots.item.attacks.targetPriority',
-            'slots.item.attacks.damageType',
-            'slots.item.enchantments.measurableBoosts.measurableType',
-            'slots.item.enchantments.measurableBoosts.booster',
+            'items.itemType.itemBase',
+            'items.material.materialType',
+            'items.itemClass',
+            'items.attacks.attackerPosition',
+            'items.attacks.targetPosition',
+            'items.attacks.targetPriority',
+            'items.attacks.damageType',
+            'items.enchantments.measurableBoosts.measurableType',
+            'items.enchantments.measurableBoosts.booster',
             'spells.measurableBoosts.measurableType',
             'spells.measurableBoosts.booster'
         ];
@@ -187,7 +184,7 @@ class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasItems
 
     public function getEnchantments()
     {
-        return $this->getSlots()->getItems()->getEnchantments();
+        return $this->items->getEnchantments();
     }
 
     /**
