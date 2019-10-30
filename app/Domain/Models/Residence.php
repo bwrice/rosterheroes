@@ -79,4 +79,9 @@ class Residence extends Model implements HasItems
     {
         return $this->id;
     }
+
+    public function getUniqueIdentifier(): string
+    {
+        return $this->uuid;
+    }
 }

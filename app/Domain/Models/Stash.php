@@ -70,6 +70,6 @@ class Stash extends Model implements HasItems
 
     public function getUniqueIdentifier(): string
     {
-        // TODO: Implement getUniqueIdentifier() method.
+        return $this->uuid;
     }
 }
