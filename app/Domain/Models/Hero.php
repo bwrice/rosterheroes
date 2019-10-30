@@ -316,7 +316,7 @@ class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasItems
         foreach ($slotsTypes as $type) {
             $gearSlots->push($factory->build($type));
         }
-        return $gearSlots->sortedByPriority();
+        return $gearSlots;
     }
 
     public function getBackupHasItems(): ?HasItems
@@ -326,12 +326,12 @@ class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasItems
 
     public function hasRoomForItem(Item $item): bool
     {
-        return true;
+        return $this->getGearSlots()->itemsToUnEquipToEquipNewItem($item->getItemBaseBehavior())->isEmpty();
     }
 
     public function itemsToMoveForNewItem(Item $item): ItemCollection
     {
-        //TODO
+        return $this->getGearSlots()->itemsToUnEquipToEquipNewItem($item->getItemBaseBehavior());
     }
 
     public function getMorphType(): string
