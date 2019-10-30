@@ -12,6 +12,7 @@ $factory->define(\App\Domain\Models\Residence::class, function (Faker $faker) {
 
     return [
         'squad_id' => $squad->id,
+        'uuid' => \Illuminate\Support\Str::uuid(),
         'residence_type_id' => $residenceType->id,
         'province_id' => $squad->province_id
     ];

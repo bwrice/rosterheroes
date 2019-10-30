@@ -222,6 +222,8 @@ class Squad extends EventSourcedModel implements TravelsBorders, HasItems
     {
         return $this->stashes()->firstOrCreate([
             'province_id' => $this->province_id
+        ], [
+            'uuid' => Str::uuid(),
         ]);
     }
 

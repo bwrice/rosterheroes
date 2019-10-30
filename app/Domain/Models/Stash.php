@@ -18,6 +18,7 @@ use Illuminate\Support\Str;
  * @package App
  *
  * @property int $id
+ * @property string $uuid;
  *
  * @property SlotCollection $slots
  */
@@ -50,7 +51,10 @@ class Stash extends Model implements HasItems
 
     public function itemsToMoveForNewItem(Item $item): ItemCollection
     {
-        // We won't ever have to move items for a stash. They're unlimited.
+        /*
+         * We won't ever have to move items for a stash.
+         * They're unlimited, so we'll return any empty collection
+         */
         return new ItemCollection();
     }
 
@@ -62,5 +66,10 @@ class Stash extends Model implements HasItems
     public function getMorphID(): int
     {
         return $this->id;
+    }
+
+    public function getUniqueIdentifier(): string
+    {
+        // TODO: Implement getUniqueIdentifier() method.
     }
 }

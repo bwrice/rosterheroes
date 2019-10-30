@@ -13,6 +13,7 @@ use Illuminate\Support\Str;
  * @package App
  *
  * @property int $id
+ * @property string $uuid
  * @property int $province_id
  *
  * @property Squad $squad
