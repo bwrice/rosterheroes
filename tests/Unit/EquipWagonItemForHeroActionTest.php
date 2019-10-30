@@ -143,4 +143,31 @@ class EquipWagonItemForHeroActionTest extends TestCase
         });
         $this->assertNotNull($squadHasItems);
     }
+
+    /**
+     * @test
+     */
+    public function it_will_replace_a_head_item_with_another_head_item()
+    {
+        /** @var Item $itemPreviouslyOnHero */
+        $itemPreviouslyOnHero = factory(Item::class)->state('head')->create();
+        $itemPreviouslyOnHero = $itemPreviouslyOnHero->attachToHasItems($this->hero);
+
+        $hasItemsCollection = $this->domainAction->execute($this->headItem, $this->hero);
+//        $this->assertEquals(2, $hasItemsCollection->count());
+
+        $squad = $itemPreviouslyOnHero->fresh()->hasItems;
+        $this->assertEquals($squad->getMorphID(), $this->squad->getMorphID());
+        $this->assertEquals($squad->getMorphType(), $this->squad->getMorphType());
+
+        $hero = $hasItemsCollection->first(function (HasItems $hasItems) {
+            return $hasItems->getMorphID() === $this->hero->id && $hasItems->getMorphType() === Hero::RELATION_MORPH_MAP_KEY;
+        });
+        $this->assertNotNull($hero);
+
+        $squadHasItems = $hasItemsCollection->first(function (HasItems $hasItems) {
+            return $hasItems->getMorphID() === $this->squad->id && $hasItems->getMorphType() === Squad::RELATION_MORPH_MAP_KEY;
+        });
+        $this->assertNotNull($squadHasItems);
+    }
 }

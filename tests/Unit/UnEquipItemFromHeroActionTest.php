@@ -53,9 +53,7 @@ class UnEquipItemFromHeroActionTest extends TestCase
      */
     public function it_will_throw_an_exception_if_the_item_does_not_belong_to_anyone()
     {
-        $this->item->has_items_id = null;
-        $this->item->has_items_type = null;
-        $this->item->save();
+        $this->item = $this->item->clearHasItems();
 
         try {
             $this->domainAction->execute($this->item->fresh(), $this->hero);
@@ -90,9 +88,7 @@ class UnEquipItemFromHeroActionTest extends TestCase
     public function it_will_throw_an_exception_if_the_item_does_not_belong_to_the_hero()
     {
         $hero = factory(Hero::class)->create();
-        $this->item->has_items_id = $hero->id;
-        $this->item->has_items_type = Hero::RELATION_MORPH_MAP_KEY;
-        $this->item->save();
+        $this->item = $this->item->attachToHasItems($hero);
 
         try {
             $this->domainAction->execute($this->item->fresh(), $this->hero);
