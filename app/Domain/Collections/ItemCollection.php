@@ -14,6 +14,12 @@ use App\Domain\Models\Enchantment;
 use App\Domain\Models\Item;
 use Illuminate\Database\Eloquent\Collection;
 
+/**
+ * Class ItemCollection
+ * @package App\Domain\Collections
+ *
+ * @method Item shift()
+ */
 class ItemCollection extends Collection
 {
     public function getSlots(): SlotCollection

@@ -410,14 +410,28 @@ class Squad extends EventSourcedModel implements TravelsBorders, HasItems
 
     public function hasRoomForItem(Item $item): bool
     {
-        $maxWeightCapacity = $this->mobileStorageRank->getBehavior()->getWeightCapacity();
-        $currentCapacity = $this->items->sumOfWeight();
-        return ($maxWeightCapacity - $currentCapacity) >= $item->weight();
+        return $this->getOverCapacityAmount($item) < 0;
     }
 
     public function itemsToMoveForNewItem(Item $item): ItemCollection
     {
-        // TODO: Implement itemsToMoveForNewItem() method.
+        $overCapacityAmount = $this->getOverCapacityAmount($item);
+        $currentItems = $this->items;
+        $itemsToMove = new ItemCollection();
+        while($overCapacityAmount >= 0) {
+            /** @var Item $singleItemToMove */
+            $singleItemToMove = $currentItems->shift();
+            $itemsToMove->push($singleItemToMove);
+            $overCapacityAmount -= $singleItemToMove->weight();
+        }
+        return $itemsToMove;
+    }
+
+    protected function getOverCapacityAmount(Item $item): int
+    {
+        $maxWeightCapacity = $this->mobileStorageRank->getBehavior()->getWeightCapacity();
+        $currentCapacity = $this->items->sumOfWeight();
+        return ($currentCapacity + $item->weight()) - $maxWeightCapacity;
     }
 
     public function getMorphType(): string

@@ -326,7 +326,7 @@ class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasItems
 
     public function hasRoomForItem(Item $item): bool
     {
-        return $this->getGearSlots()->itemsToUnEquipToEquipNewItem($item->getItemBaseBehavior())->isEmpty();
+        return $this->itemsToMoveForNewItem($item)->isEmpty();
     }
 
     public function itemsToMoveForNewItem(Item $item): ItemCollection
