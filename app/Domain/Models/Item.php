@@ -162,17 +162,7 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
             return $this->usesItems;
         }
 
-        if ($this->hasSlots) {
-            return $this->hasSlots instanceof  UsesItems ? $this->hasSlots : null;
-        }
-
-        /** @var SlotOld $slot */
-        $slot = $this->slots->first();
-        if (! $slot) {
-            return null;
-        }
-
-        return $slot->hero instanceof UsesItems ? $slot->hero : null;
+        return $this->hasItems instanceof  UsesItems ? $this->hasItems : null;
     }
 
     public function weight(): int
