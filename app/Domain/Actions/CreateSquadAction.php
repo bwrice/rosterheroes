@@ -21,19 +21,13 @@ use Illuminate\Support\Str;
 class CreateSquadAction
 {
     /**
-     * @var UpdateSquadSlotsAction
-     */
-    private $updateSquadSlotsAction;
-    /**
      * @var AddSpellToLibraryAction
      */
     private $addSpellToLibraryAction;
 
     public function __construct(
-        UpdateSquadSlotsAction $updateSquadSlotsAction,
         AddSpellToLibraryAction $addSpellToLibraryAction)
     {
-        $this->updateSquadSlotsAction = $updateSquadSlotsAction;
         $this->addSpellToLibraryAction = $addSpellToLibraryAction;
     }
 
@@ -67,12 +61,11 @@ class CreateSquadAction
         });
 
         /*
-         * We need to persist before we can update the slots,
+         * We need to persist before we can add spells,
          * because that action will query the DB
          */
         $aggregate->persist();
         $squad = Squad::findUuid($squadUuid);
-        $this->updateSquadSlotsAction->execute($squad);
 
         $startingSpells = Spell::query()->whereIn('name', Squad::STARTING_SPELLS)->get();
         $startingSpells->each(function (Spell $spell) use ($squad) {

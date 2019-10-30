@@ -60,18 +60,6 @@ class CreateSquadActionTest extends TestCase
     /**
      * @test
      */
-    public function the_squad_will_have_its_mobile_storage()
-    {
-        $this->domainAction->execute($this->user->id, $this->squadName);
-
-        /** @var Squad $squad */
-        $squad = Squad::query()->where('name', '=', $this->squadName)->first();
-        $this->assertEquals($squad->mobileStorageRank->getBehavior()->getSlotsCount(), $squad->slots()->count(), "Squad has it's slots");
-    }
-
-    /**
-     * @test
-     */
     public function it_will_have_the_correct_hero_posts()
     {
         $this->domainAction->execute($this->user->id, $this->squadName);
