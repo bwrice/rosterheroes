@@ -11,6 +11,7 @@ class ItemTransactionException extends \RuntimeException
 {
     public const CODE_NO_BACKUP = 1;
     public const CODE_INVALID_OWNERSHIP = 2;
+    public const CODE_TRANSACTION_DISABLED = 3;
 
     /**
      * @var Item

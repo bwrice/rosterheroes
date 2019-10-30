@@ -33,10 +33,9 @@ class WeaponAttackUnitTest extends TestCase
         parent::setUp();
 
         $this->attack = factory(Attack::class)->create();
-        $this->hero = factory(Hero::class)->states('with-slots', 'with-measurables')->create();
-        $anySlot = $this->hero->slots->random();
+        $this->hero = factory(Hero::class)->states('with-measurables')->create();
         $this->item = factory(Item::class)->create();
-        $this->item->slots()->save($anySlot);
+        $this->item->attachToHasItems($this->hero);
     }
 
     /**
