@@ -224,4 +224,155 @@ class EquipWagonItemForHeroActionTest extends TestCase
         });
         $this->assertNotNull($squadHasItems);
     }
+
+    /**
+     * @test
+     */
+    public function it_will_replace_single_hand_item_with_two_hand_item()
+    {
+        /** @var Item $itemPreviouslyOnHero */
+        $itemPreviouslyOnHero = factory(Item::class)->state('single-handed')->create();
+        $itemPreviouslyOnHero = $itemPreviouslyOnHero->attachToHasItems($this->hero);
+
+        $hasItemsCollection = $this->domainAction->execute($this->twoHandedItem, $this->hero);
+        $this->assertEquals(2, $hasItemsCollection->count());
+
+        $squad = $itemPreviouslyOnHero->fresh()->hasItems;
+        $this->assertEquals($squad->getMorphID(), $this->squad->getMorphID());
+        $this->assertEquals($squad->getMorphType(), $this->squad->getMorphType());
+
+        $heroHasItems = $hasItemsCollection->first(function (HasItems $hasItems) {
+            return $hasItems->getMorphID() === $this->hero->id && $hasItems->getMorphType() === Hero::RELATION_MORPH_MAP_KEY;
+        });
+        $this->assertNotNull($heroHasItems);
+
+        $squadHasItems = $hasItemsCollection->first(function (HasItems $hasItems) {
+            return $hasItems->getMorphID() === $this->squad->id && $hasItems->getMorphType() === Squad::RELATION_MORPH_MAP_KEY;
+        });
+        $this->assertNotNull($squadHasItems);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_replace_both_single_hand_items_with_two_hand_item()
+    {
+        /** @var Item $itemPreviouslyOnHero */
+        $itemPreviouslyOnHero = factory(Item::class)->state('single-handed')->create();
+        $itemPreviouslyOnHero = $itemPreviouslyOnHero->attachToHasItems($this->hero);
+
+        /** @var Item $itemPreviouslyOnHeroTwo */
+        $itemPreviouslyOnHeroTwo = factory(Item::class)->state('single-handed')->create();
+        $itemPreviouslyOnHeroTwo = $itemPreviouslyOnHeroTwo->attachToHasItems($this->hero);
+
+        $hasItemsCollection = $this->domainAction->execute($this->twoHandedItem, $this->hero);
+        $this->assertEquals(2, $hasItemsCollection->count());
+
+        $squad = $itemPreviouslyOnHero->fresh()->hasItems;
+        $this->assertEquals($squad->getMorphID(), $this->squad->getMorphID());
+        $this->assertEquals($squad->getMorphType(), $this->squad->getMorphType());
+
+        $squad = $itemPreviouslyOnHeroTwo->fresh()->hasItems;
+        $this->assertEquals($squad->getMorphID(), $this->squad->getMorphID());
+        $this->assertEquals($squad->getMorphType(), $this->squad->getMorphType());
+
+        $heroHasItems = $hasItemsCollection->first(function (HasItems $hasItems) {
+            return $hasItems->getMorphID() === $this->hero->id && $hasItems->getMorphType() === Hero::RELATION_MORPH_MAP_KEY;
+        });
+        $this->assertNotNull($heroHasItems);
+
+        $squadHasItems = $hasItemsCollection->first(function (HasItems $hasItems) {
+            return $hasItems->getMorphID() === $this->squad->id && $hasItems->getMorphType() === Squad::RELATION_MORPH_MAP_KEY;
+        });
+        $this->assertNotNull($squadHasItems);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_replace_only_on_single_hand_items_with_shield()
+    {
+        /** @var Item $itemPreviouslyOnHero */
+        $itemPreviouslyOnHero = factory(Item::class)->state('single-handed')->create();
+        $itemPreviouslyOnHero = $itemPreviouslyOnHero->attachToHasItems($this->hero);
+
+        /** @var Item $itemPreviouslyOnHeroTwo */
+        $itemPreviouslyOnHeroTwo = factory(Item::class)->state('single-handed')->create();
+        $itemPreviouslyOnHeroTwo = $itemPreviouslyOnHeroTwo->attachToHasItems($this->hero);
+
+        $hasItemsCollection = $this->domainAction->execute($this->shield, $this->hero);
+        $this->assertEquals(2, $hasItemsCollection->count());
+
+        $hero = $itemPreviouslyOnHero->fresh()->hasItems;
+        $this->assertEquals($hero->getMorphID(), $this->hero->getMorphID());
+        $this->assertEquals($hero->getMorphType(), $this->hero->getMorphType());
+
+        $squad = $itemPreviouslyOnHeroTwo->fresh()->hasItems;
+        $this->assertEquals($squad->getMorphID(), $this->squad->getMorphID());
+        $this->assertEquals($squad->getMorphType(), $this->squad->getMorphType());
+
+        $heroHasItems = $hasItemsCollection->first(function (HasItems $hasItems) {
+            return $hasItems->getMorphID() === $this->hero->id && $hasItems->getMorphType() === Hero::RELATION_MORPH_MAP_KEY;
+        });
+        $this->assertNotNull($heroHasItems);
+
+        $squadHasItems = $hasItemsCollection->first(function (HasItems $hasItems) {
+            return $hasItems->getMorphID() === $this->squad->id && $hasItems->getMorphType() === Squad::RELATION_MORPH_MAP_KEY;
+        });
+        $this->assertNotNull($squadHasItems);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_replace_two_hand_item_with_another_two_hand_item()
+    {
+        /** @var Item $itemPreviouslyOnHero */
+        $itemPreviouslyOnHero = factory(Item::class)->state('two-handed')->create();
+        $itemPreviouslyOnHero = $itemPreviouslyOnHero->attachToHasItems($this->hero);
+
+        $hasItemsCollection = $this->domainAction->execute($this->twoHandedItem, $this->hero);
+        $this->assertEquals(2, $hasItemsCollection->count());
+
+        $squad = $itemPreviouslyOnHero->fresh()->hasItems;
+        $this->assertEquals($squad->getMorphID(), $this->squad->getMorphID());
+        $this->assertEquals($squad->getMorphType(), $this->squad->getMorphType());
+
+        $heroHasItems = $hasItemsCollection->first(function (HasItems $hasItems) {
+            return $hasItems->getMorphID() === $this->hero->id && $hasItems->getMorphType() === Hero::RELATION_MORPH_MAP_KEY;
+        });
+        $this->assertNotNull($heroHasItems);
+
+        $squadHasItems = $hasItemsCollection->first(function (HasItems $hasItems) {
+            return $hasItems->getMorphID() === $this->squad->id && $hasItems->getMorphType() === Squad::RELATION_MORPH_MAP_KEY;
+        });
+        $this->assertNotNull($squadHasItems);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_replace_two_hand_item_with_a_shield()
+    {
+        /** @var Item $itemPreviouslyOnHero */
+        $itemPreviouslyOnHero = factory(Item::class)->state('two-handed')->create();
+        $itemPreviouslyOnHero = $itemPreviouslyOnHero->attachToHasItems($this->hero);
+
+        $hasItemsCollection = $this->domainAction->execute($this->shield, $this->hero);
+        $this->assertEquals(2, $hasItemsCollection->count());
+
+        $squad = $itemPreviouslyOnHero->fresh()->hasItems;
+        $this->assertEquals($squad->getMorphID(), $this->squad->getMorphID());
+        $this->assertEquals($squad->getMorphType(), $this->squad->getMorphType());
+
+        $heroHasItems = $hasItemsCollection->first(function (HasItems $hasItems) {
+            return $hasItems->getMorphID() === $this->hero->id && $hasItems->getMorphType() === Hero::RELATION_MORPH_MAP_KEY;
+        });
+        $this->assertNotNull($heroHasItems);
+
+        $squadHasItems = $hasItemsCollection->first(function (HasItems $hasItems) {
+            return $hasItems->getMorphID() === $this->squad->id && $hasItems->getMorphType() === Squad::RELATION_MORPH_MAP_KEY;
+        });
+        $this->assertNotNull($squadHasItems);
+    }
 }
