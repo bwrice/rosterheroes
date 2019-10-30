@@ -37,9 +37,8 @@ class AddItemToHasItemsAction
         if (! $hasItems->hasRoomForItem($item)) {
             // Make room for new item
             $items = $hasItems->itemsToMoveForNewItem($item);
-            $backup = $hasItems->getBackupHasItems();
-            $items->each(function (Item $item) use ($backup, &$hasItemsCollection) {
-                $hasItemsCollection = $this->moveItemToBackupAction->execute($item, $backup, $hasItemsCollection);
+            $items->each(function (Item $item) use ($hasItems, &$hasItemsCollection) {
+                $hasItemsCollection = $this->moveItemToBackupAction->execute($item, $hasItems, $hasItemsCollection);
             });
         }
 
