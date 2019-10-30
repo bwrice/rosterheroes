@@ -7,11 +7,12 @@ use App\Domain\Models\Hero;
 use App\Domain\Models\HeroClass;
 use App\Domain\Models\HeroPost;
 use App\Domain\Models\HeroRace;
+use App\Domain\Models\ItemBlueprint;
 use App\Domain\Models\Measurable;
 use App\Domain\Models\MeasurableType;
 use App\Domain\Models\Player;
 use App\Domain\Models\PlayerSpirit;
-use App\Domain\Models\Slot;
+use App\Domain\Models\SlotOld;
 use App\Domain\Models\SlotType;
 use App\Domain\Models\Squad;
 use App\Domain\Models\User;
@@ -62,18 +63,10 @@ class SquadHeroControllerTest extends TestCase
         $this->assertEquals($heroRace, $hero->heroRace->name);
 
         /*
-         * Assert hero has slots
+         * Assert hero has starting items
          */
-        $heroSlotTypes = SlotType::heroTypes();
-        $heroSlots = $hero->slots;
-        $this->assertEquals($heroSlotTypes->count(), $heroSlots->count());
-        $heroSlotTypes->each(function(SlotType $slotType) use ($heroSlots) {
-            $filtered = $heroSlots->filter(function(Slot $slot) use ($slotType) {
-                return $slot->slot_type_id == $slotType->id;
-            });
-
-            $this->assertEquals(1, $filtered->count());
-        });
+        $items = $hero->items;
+        $this->assertEquals($hero->heroClass->getBehavior()->getStartItemBlueprints()->count(), $items->count());
 
         /*
          * Assert hero has measurables
@@ -88,6 +81,7 @@ class SquadHeroControllerTest extends TestCase
 
             $this->assertEquals(1, $filtered->count());
         });
+
     }
 
 

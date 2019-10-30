@@ -29,18 +29,18 @@ class AddNewHeroToSquadAction
      */
     private $generateItemFromBlueprintAction;
     /**
-     * @var FillSlotsWithItemAction
+     * @var AddItemToHasItemsAction
      */
-    private $fillSlotAction;
+    private $addItemToHasItemsAction;
 
     public function __construct(
         CreateHeroAction $createHeroAction,
         GenerateItemFromBlueprintAction $generateItemFromBlueprintAction,
-        FillSlotsWithItemAction $fillSlotAction)
+        AddItemToHasItemsAction $addItemToHasItemsAction)
     {
         $this->createHeroAction = $createHeroAction;
         $this->generateItemFromBlueprintAction = $generateItemFromBlueprintAction;
-        $this->fillSlotAction = $fillSlotAction;
+        $this->addItemToHasItemsAction = $addItemToHasItemsAction;
     }
 
     /**
@@ -74,7 +74,7 @@ class AddNewHeroToSquadAction
         $heroClass->getBehavior()->getStartItemBlueprints()->each(function (ItemBlueprint $itemBlueprint) use ($hero) {
             $hero = $hero->fresh();
             $item = $this->generateItemFromBlueprintAction->execute($itemBlueprint);
-            $this->fillSlotAction->execute($hero, $item);
+            $this->addItemToHasItemsAction->execute($item, $hero);
         });
 
         return $hero->fresh();
