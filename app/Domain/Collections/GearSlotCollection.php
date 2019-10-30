@@ -16,7 +16,7 @@ class GearSlotCollection extends Collection
     public function setSlotFillers(Collection $slotFillers)
     {
         $slotFillers->each(function (FillsGearSlots $fillsGearSlots) {
-            $availableGearSlots = $this->slotEmpty()->forGearSlotTypes($fillsGearSlots->getValidGearSlotTypes());
+            $availableGearSlots = $this->slotEmpty()->byPriority()->forGearSlotTypes($fillsGearSlots->getValidGearSlotTypes());
             $slotsNeededCount = $fillsGearSlots->getGearSlotsNeededCount();
             if ($availableGearSlots->count() < $slotsNeededCount) {
                 Log::warning("Available gear slots less than needed when filling for: " . $fillsGearSlots->getUuid());
@@ -47,6 +47,13 @@ class GearSlotCollection extends Collection
         return $this->sortBy(function (GearSlot $gearSlot) {
             $emptyPriority = is_null($gearSlot->getFiller()) ? 0 : 99;
             return $gearSlot->getPriority() + $emptyPriority;
+        });
+    }
+
+    public function byPriority()
+    {
+        return $this->sortBy(function (GearSlot $gearSlot) {
+            return $gearSlot->getPriority();
         });
     }
 
