@@ -15,6 +15,7 @@ class CreateResidencesTable extends Migration
     {
         Schema::create('residences', function (Blueprint $table) {
             $table->increments('id');
+            $table->uuid('uuid');
             $table->integer('residence_type_id')->unsigned();
             $table->integer('squad_id')->unsigned();
             $table->integer('province_id')->unsigned();
