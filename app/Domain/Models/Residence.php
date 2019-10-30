@@ -54,12 +54,19 @@ class Residence extends Model implements HasItems
 
     public function hasRoomForItem(Item $item): bool
     {
-        return $this->items()->count() < $this->residenceType->getBehavior()->getMaxItemCount();
+        return $this->getOverCapacityCount() < 0;
     }
 
     public function itemsToMoveForNewItem(Item $item): ItemCollection
     {
-        // TODO: Implement itemsToMoveForNewItem() method.
+        $overCapacityCount = $this->getOverCapacityCount();
+        return $overCapacityCount >= 0 ?
+            $this->items()->inRandomOrder()->take($overCapacityCount + 1) : new ItemCollection();
+    }
+
+    protected function getOverCapacityCount(): int
+    {
+        return $this->items()->count() - $this->residenceType->getBehavior()->getMaxItemCount();
     }
 
     public function getMorphType(): string
