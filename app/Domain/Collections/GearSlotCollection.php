@@ -25,6 +25,7 @@ class GearSlotCollection extends Collection
                 $gearSlot->setFiller($fillsGearSlots);
             });
         });
+        return $this;
     }
 
     public function slotEmpty()
@@ -68,7 +69,12 @@ class GearSlotCollection extends Collection
     {
         $validSlotTypes = $itemBaseBehavior->getValidGearSlotTypes();
         $slotsNeededCount = $itemBaseBehavior->getGearSlotsCount();
-        $filtered = $this->sortedByEquipPriority()->withItemOrEmpty()->take($slotsNeededCount);
+
+        $filtered = $this->forGearSlotTypes($validSlotTypes)
+            ->sortedByEquipPriority()
+            ->withItemOrEmpty()
+            ->take($slotsNeededCount);
+
         if ($filtered->count() < $slotsNeededCount) {
             throw new \RuntimeException("Not enough valid gear slots for item");
         }
