@@ -35,6 +35,6 @@ class EquipWagonItemForHeroAction
             throw new ItemTransactionException($item, "Week is currently locked", ItemTransactionException::CODE_TRANSACTION_DISABLED);
         }
 
-        return $this->addItemToHasItemsAction->execute($item, $hero, $hasItemsCollection);
+        return $this->addItemToHasItemsAction->execute($item, $hero, $hasItemsCollection)->removeDuplicates();
     }
 }

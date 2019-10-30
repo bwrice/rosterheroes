@@ -154,7 +154,7 @@ class EquipWagonItemForHeroActionTest extends TestCase
         $itemPreviouslyOnHero = $itemPreviouslyOnHero->attachToHasItems($this->hero);
 
         $hasItemsCollection = $this->domainAction->execute($this->headItem, $this->hero);
-//        $this->assertEquals(2, $hasItemsCollection->count());
+        $this->assertEquals(2, $hasItemsCollection->count());
 
         $squad = $itemPreviouslyOnHero->fresh()->hasItems;
         $this->assertEquals($squad->getMorphID(), $this->squad->getMorphID());
