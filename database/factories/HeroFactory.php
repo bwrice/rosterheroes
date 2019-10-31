@@ -24,16 +24,6 @@ $factory->define(\App\Domain\Models\Hero::class, function (Faker $faker) {
     ];
 });
 
-$factory->afterCreatingState(\App\Domain\Models\Hero::class, 'with-slots', function(\App\Domain\Models\Hero $hero, Faker $faker) {
-    $heroSlotTypes = \App\Domain\Models\SlotType::heroTypes()->get();
-    $heroSlotTypes->each(function (\App\Domain\Models\SlotType $slotType) use ($hero) {
-        $hero->slots()->create([
-            'uuid' => \Illuminate\Support\Str::uuid(),
-            'slot_type_id' => $slotType->id,
-        ]);
-    });
-});
-
 $factory->afterCreatingState(\App\Domain\Models\Hero::class, 'with-measurables', function(\App\Domain\Models\Hero $hero, Faker $faker) {
     $measurableTypes = \App\Domain\Models\MeasurableType::heroTypes()->get();
     $measurableTypes->each(function (\App\Domain\Models\MeasurableType $measurableType) use ($hero) {
