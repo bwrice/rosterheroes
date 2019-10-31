@@ -7,7 +7,7 @@ use App\Domain\Models\HeroPost;
 use App\Domain\Models\Item;
 use App\Domain\Models\ItemBase;
 use App\Domain\Models\ItemType;
-use App\Domain\Models\Slot;
+use App\Domain\Models\SlotOld;
 use App\Domain\Models\SlotType;
 use App\Domain\Models\Squad;
 use App\Domain\Models\User;
@@ -26,10 +26,10 @@ class EquipHeroControllerTest extends TestCase
     protected $shield;
 
     /** @var Item */
-    protected $mace;
+    protected $singleHandWeapon;
 
     /** @var Item */
-    protected $twoHandSword;
+    protected $twoHandedWeapon;
 
     /** @var Hero */
     protected $hero;
@@ -37,61 +37,19 @@ class EquipHeroControllerTest extends TestCase
     /** @var Squad */
     protected $squad;
 
-    /** @var Slot */
-    protected $primaryArm;
-
-    /** @var Slot */
-    protected $offArm;
-
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->squad = factory(Squad::class)->states('with-slots')->create();
-        $this->hero = factory(\App\Domain\Models\Hero::class)->states('with-slots', 'with-measurables')->create();
+        $this->hero = factory(\App\Domain\Models\Hero::class)->states('with-measurables', 'with-squad')->create();
+        $this->squad = $this->hero->getSquad();
+        $this->shield = factory(Item::class)->state('shield')->create();
+        $this->shield->attachToHasItems($this->hero);
+        $this->singleHandWeapon = factory(Item::class)->state('single-handed')->create();
+        $this->singleHandWeapon->attachToHasItems($this->hero);
+        $this->twoHandedWeapon = factory(Item::class)->state('two-handed')->create();
+        $this->twoHandedWeapon->attachToHasItems($this->squad);
 
-        factory(HeroPost::class)->create([
-            'hero_id' => $this->hero->id,
-            'squad_id' => $this->squad->id
-        ]);
-
-        $shieldType = ItemType::query()->whereHas('itemBase', function (Builder $builder) {
-            return $builder->where('name', '=', ItemBase::SHIELD);
-        })->first();
-        $this->shield = factory(Item::class)->create([
-            'item_type_id' => $shieldType->id
-        ]);
-
-        $maceType = ItemType::query()->whereHas('itemBase', function (Builder $builder) {
-            return $builder->where('name', '=', ItemBase::MACE);
-        })->first();
-        $this->mace = factory(Item::class)->create([
-            'item_type_id' => $maceType->id
-        ]);
-
-        $twoHandSwordType = ItemType::query()->whereHas('itemBase', function (Builder $builder) {
-            return $builder->where('name', '=', ItemBase::TWO_HAND_SWORD);
-        })->first();
-        $this->twoHandSword = factory(Item::class)->create([
-            'item_type_id' => $twoHandSwordType->id
-        ]);
-
-        $this->primaryArm = $this->hero->slots->first(function (Slot $slot) {
-            return $slot->slotType->name === SlotType::PRIMARY_ARM;
-        });
-
-        $this->offArm = $this->hero->slots->first(function (Slot $slot) {
-            return $slot->slotType->name === SlotType::OFF_ARM;
-        });
-
-        $squadSlots = $this->squad->slots()->take($this->twoHandSword->getSlotsCount())->get();
-        $this->twoHandSword->slots()->saveMany($squadSlots);
-
-        $this->offArm->item_id = $this->shield->id;
-        $this->offArm->save();
-
-        $this->primaryArm->item_id = $this->mace->id;
-        $this->primaryArm->save();
     }
 
     /**
@@ -104,20 +62,23 @@ class EquipHeroControllerTest extends TestCase
         Passport::actingAs($this->squad->user);
 
         $response = $this->json('POST','api/v1/heroes/' . $this->hero->slug . '/equip', [
-            'slot' => $this->primaryArm->uuid,
-            'item' => $this->twoHandSword->uuid
+            'item' => $this->twoHandedWeapon->uuid
         ]);
 
         $response->assertJson([
                 'data' => [
-                    'hero' => [
-                        'uuid' => $this->hero->uuid
+                    [
+                        'hasItems' => [
+                            'uuid' => $this->squad->uuid
+                        ],
+                        'type' => 'squad'
                     ],
-                    'mobileStorage' => [
-                        'slots' => [
-
-                        ]
-                    ]
+                    [
+                        'hasItems' => [
+                            'uuid' => $this->hero->uuid
+                        ],
+                        'type' => 'hero'
+                    ],
                 ]
             ]);
     }
@@ -131,8 +92,7 @@ class EquipHeroControllerTest extends TestCase
         Passport::actingAs($differentUser);
 
         $response = $this->json('POST','api/v1/heroes/' . $this->hero->slug . '/equip', [
-            'slot' => $this->primaryArm->uuid,
-            'item' => $this->twoHandSword->uuid
+            'item' => $this->twoHandedWeapon->uuid
         ]);
 
         $response->assertStatus(403);

@@ -24,7 +24,7 @@ class HasItemsResource extends JsonResource
     {
         /** @var HasItems $this */
         return [
-            'resource' => $this->getHasItemsResource(),
+            'hasItems' => $this->getHasItemsResource(),
             'type' => $this->getHasItemsType()
         ];
     }
