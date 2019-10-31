@@ -6,6 +6,7 @@ namespace App\Domain\Collections;
 
 use App\Domain\Behaviors\ItemBases\ItemBaseBehavior;
 use App\Domain\Interfaces\FillsGearSlots;
+use App\Domain\Models\Hero;
 use App\Domain\Models\Item;
 use App\Domain\Models\Support\GearSlots\GearSlot;
 use Illuminate\Support\Collection;
@@ -13,6 +14,19 @@ use Illuminate\Support\Facades\Log;
 
 class GearSlotCollection extends Collection
 {
+    /** @var Hero|null */
+    protected $hero;
+
+    /**
+     * @param Hero|null $hero
+     * @return GearSlotCollection
+     */
+    public function setHero(?Hero $hero): GearSlotCollection
+    {
+        $this->hero = $hero;
+        return $this;
+    }
+
     public function setSlotFillers(Collection $slotFillers)
     {
         $slotFillers->each(function (FillsGearSlots $fillsGearSlots) {
