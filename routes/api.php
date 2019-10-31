@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\CombatPositionController;
 use App\Http\Controllers\ContinentController;
-use App\Http\Controllers\EmptyHeroSlotController;
+use App\Http\Controllers\UnEquipHeroController;
 use App\Http\Controllers\EquipHeroController;
 use App\Http\Controllers\FastTravelController;
 use App\Http\Controllers\HeroClassController;
@@ -126,7 +126,7 @@ Route::prefix('v1')->group(function () {
             Route::post('{heroSlug}/player-spirit', [HeroPlayerSpiritController::class, 'store']);
             Route::delete('{heroSlug}/player-spirit/{spiritUuid}', [HeroPlayerSpiritController::class, 'delete']);
 
-            Route::post('{heroSlug}/empty-slot', EmptyHeroSlotController::class);
+            Route::post('{heroSlug}/unequip', UnEquipHeroController::class);
 
             Route::post('{heroSlug}/equip', EquipHeroController::class);
             Route::post('{heroSlug}/combat-position', HeroChangeCombatPositionController::class);
