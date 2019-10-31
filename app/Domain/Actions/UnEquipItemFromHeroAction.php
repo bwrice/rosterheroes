@@ -26,8 +26,8 @@ class UnEquipItemFromHeroAction
     /**
      * @param Item $item
      * @param Hero $hero
-     * @param Collection|null $hasSlots
-     * @return Collection
+     * @param HasItemsCollection|null $hasSlots
+     * @return HasItemsCollection
      */
     public function execute(Item $item, Hero $hero, HasItemsCollection $hasSlots = null): HasItemsCollection
     {

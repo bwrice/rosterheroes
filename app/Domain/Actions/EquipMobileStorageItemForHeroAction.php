@@ -11,7 +11,7 @@ use App\Domain\Models\Week;
 use App\Exceptions\ItemTransactionException;
 use Illuminate\Support\Facades\DB;
 
-class EquipWagonItemForHeroAction
+class EquipMobileStorageItemForHeroAction
 {
     /**
      * @var AddItemToHasItemsAction

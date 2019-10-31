@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Domain\Actions\EquipWagonItemForHeroAction;
+use App\Domain\Actions\EquipMobileStorageItemForHeroAction;
 use App\Domain\Interfaces\HasItems;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Item;
@@ -15,7 +15,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class EquipWagonItemForHeroActionTest extends TestCase
+class EquipMobileStorageItemForHeroActionTest extends TestCase
 {
 
     use DatabaseTransactions;
@@ -37,7 +37,7 @@ class EquipWagonItemForHeroActionTest extends TestCase
     /** @var Item */
     protected $headItem;
 
-    /** @var EquipWagonItemForHeroAction */
+    /** @var EquipMobileStorageItemForHeroAction */
     protected $domainAction;
 
     public function setUp(): void
@@ -71,7 +71,7 @@ class EquipWagonItemForHeroActionTest extends TestCase
         $week->everything_locks_at = Date::now()->addHour();
         $week->save();
         Week::setTestCurrent($week);
-        $this->domainAction = app(EquipWagonItemForHeroAction::class);
+        $this->domainAction = app(EquipMobileStorageItemForHeroAction::class);
     }
 
     /**

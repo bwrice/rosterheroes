@@ -2,22 +2,13 @@
 
 namespace Tests\Feature;
 
-use App\Domain\Models\Game;
 use App\Domain\Models\Hero;
 use App\Domain\Models\HeroClass;
 use App\Domain\Models\HeroPost;
 use App\Domain\Models\HeroRace;
-use App\Domain\Models\ItemBlueprint;
 use App\Domain\Models\Measurable;
 use App\Domain\Models\MeasurableType;
-use App\Domain\Models\Player;
-use App\Domain\Models\PlayerSpirit;
-use App\Domain\Models\SlotOld;
-use App\Domain\Models\SlotType;
 use App\Domain\Models\Squad;
-use App\Domain\Models\User;
-use App\Domain\Models\Week;
-use App\Exceptions\HeroPostNotFoundException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Validation\ValidationException;
 use Laravel\Passport\Passport;
