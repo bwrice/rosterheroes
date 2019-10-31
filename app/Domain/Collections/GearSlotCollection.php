@@ -14,19 +14,6 @@ use Illuminate\Support\Facades\Log;
 
 class GearSlotCollection extends Collection
 {
-    /** @var Hero|null */
-    protected $hero;
-
-    /**
-     * @param Hero|null $hero
-     * @return GearSlotCollection
-     */
-    public function setHero(?Hero $hero): GearSlotCollection
-    {
-        $this->hero = $hero;
-        return $this;
-    }
-
     public function setItems(ItemCollection $items)
     {
         $items->each(function (Item $item) {
