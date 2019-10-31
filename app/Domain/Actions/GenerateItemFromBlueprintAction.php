@@ -148,27 +148,7 @@ class GenerateItemFromBlueprintAction
             $enchantmentsPower -= $enchantment->measurableBoosts->boostLevelSum();
         }
 
-        return $enchantments;
-    }
-
-
-    /**
-     * @param Item $item
-     * @param ItemType $itemType
-     * @param $attacks
-     * @param $attacksPower
-     * @return Item
-     */
-    protected function attachAttacks(Item $item, ItemType $itemType, Collection $attacks, $attacksPower)
-    {
-
-        if ($attacks->count() == 0) {
-            $attacks = $this->getAttacks($itemType, $attacksPower);
-        }
-
-        $item->attacks()->saveMany($attacks);
-
-        return $item;
+        return $enchantments->unique();
     }
 
     /**
