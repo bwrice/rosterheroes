@@ -4,7 +4,6 @@ use App\Domain\Actions\AddNewHeroToSquadAction;
 use App\Domain\Actions\CreateSquadAction;
 use App\Domain\Actions\CreateUserAction;
 use App\Domain\Actions\GenerateItemFromBlueprintAction;
-use App\Domain\Actions\StoreItemForSquadAction;
 use App\Domain\Models\HeroClass;
 use App\Domain\Models\HeroRace;
 use Illuminate\Database\Seeder;
@@ -16,7 +15,6 @@ class DefaultUsersSeeder extends Seeder
      * @param CreateSquadAction $createSquadAction
      * @param AddNewHeroToSquadAction $addNewHeroToSquadAction
      * @param GenerateItemFromBlueprintAction $generateItemFromBlueprintAction
-     * @param StoreItemForSquadAction $slotItemInWagonAction
      * @throws \App\Exceptions\HeroPostNotFoundException
      * @throws \App\Exceptions\InvalidHeroClassException
      */
@@ -24,8 +22,7 @@ class DefaultUsersSeeder extends Seeder
         CreateUserAction $createUserAction,
         CreateSquadAction $createSquadAction,
         AddNewHeroToSquadAction $addNewHeroToSquadAction,
-        GenerateItemFromBlueprintAction $generateItemFromBlueprintAction,
-        StoreItemForSquadAction $slotItemInWagonAction)
+        GenerateItemFromBlueprintAction $generateItemFromBlueprintAction)
     {
         $user = $createUserAction->execute('bwrice83@gmail.com', 'Brian Rice', 'password');
         $squad = $createSquadAction->execute($user->id, 'My Squad');
@@ -62,7 +59,7 @@ class DefaultUsersSeeder extends Seeder
 
         foreach (range(1,20) as $count) {
             $item = $generateItemFromBlueprintAction->execute($blueprint);
-            $slotItemInWagonAction->execute($squad, $item);
+            $item->attachToHasItems($squad);
         }
 
 
@@ -98,7 +95,7 @@ class DefaultUsersSeeder extends Seeder
 
         foreach (range(1,20) as $count) {
             $item = $generateItemFromBlueprintAction->execute($blueprint);
-            $slotItemInWagonAction->execute($squad, $item);
+            $item->attachToHasItems($squad);
         }
     }
 }
