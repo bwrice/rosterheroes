@@ -23,8 +23,8 @@ abstract class GearSlot
     public const RING_ONE = 'Ring One';
     public const RING_TWO = 'Ring Two';
 
-    /** @var FillsGearSlots|null */
-    protected $filler;
+    /** @var Item|null */
+    protected $item;
 
     /** @var string */
     protected $type = '';
@@ -33,12 +33,12 @@ abstract class GearSlot
     protected $priority = 1;
 
     /**
-     * @param FillsGearSlots|null $fillsGearSlots
+     * @param Item|null $item
      * @return GearSlot
      */
-    public function setFiller(?FillsGearSlots $fillsGearSlots): GearSlot
+    public function setItem(?Item $item): GearSlot
     {
-        $this->filler = $fillsGearSlots;
+        $this->item = $item;
         return $this;
     }
 
@@ -52,11 +52,11 @@ abstract class GearSlot
     }
 
     /**
-     * @return FillsGearSlots|null
+     * @return Item|null
      */
-    public function getFiller(): ?FillsGearSlots
+    public function getItem(): ?Item
     {
-        return $this->filler;
+        return $this->item;
     }
 
     /**

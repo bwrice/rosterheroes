@@ -27,16 +27,16 @@ class GearSlotCollection extends Collection
         return $this;
     }
 
-    public function setSlotFillers(Collection $slotFillers)
+    public function setItems(ItemCollection $items)
     {
-        $slotFillers->each(function (FillsGearSlots $fillsGearSlots) {
-            $availableGearSlots = $this->slotEmpty()->byPriority()->forGearSlotTypes($fillsGearSlots->getValidGearSlotTypes());
-            $slotsNeededCount = $fillsGearSlots->getGearSlotsNeededCount();
+        $items->each(function (Item $item) {
+            $availableGearSlots = $this->slotEmpty()->byPriority()->forGearSlotTypes($item->getValidGearSlotTypes());
+            $slotsNeededCount = $item->getGearSlotsNeededCount();
             if ($availableGearSlots->count() < $slotsNeededCount) {
-                Log::warning("Available gear slots less than needed when filling for: " . $fillsGearSlots->getUuid());
+                Log::warning("Available gear slots less than needed when filling for: " . $item->getUuid());
             }
-            $availableGearSlots->take($slotsNeededCount)->each(function (GearSlot $gearSlot) use ($fillsGearSlots) {
-                $gearSlot->setFiller($fillsGearSlots);
+            $availableGearSlots->take($slotsNeededCount)->each(function (GearSlot $gearSlot) use ($item) {
+                $gearSlot->setItem($item);
             });
         });
         return $this;
@@ -45,7 +45,7 @@ class GearSlotCollection extends Collection
     public function slotEmpty()
     {
         return $this->filter(function (GearSlot $gearSlot) {
-            return is_null($gearSlot->getFiller());
+            return is_null($gearSlot->getItem());
         });
     }
 
@@ -59,7 +59,7 @@ class GearSlotCollection extends Collection
     public function sortedByEquipPriority()
     {
         return $this->sortBy(function (GearSlot $gearSlot) {
-            $emptyPriority = is_null($gearSlot->getFiller()) ? 0 : 99;
+            $emptyPriority = is_null($gearSlot->getItem()) ? 0 : 99;
             return $gearSlot->getPriority() + $emptyPriority;
         });
     }
@@ -74,14 +74,14 @@ class GearSlotCollection extends Collection
     public function withItem()
     {
         return $this->filter(function (GearSlot $gearSlot) {
-            return $gearSlot->getFiller() instanceof Item;
+            return $gearSlot->getItem() instanceof Item;
         });
     }
 
     public function withItemOrEmpty()
     {
         return $this->filter(function (GearSlot $gearSlot) {
-            $filler = $gearSlot->getFiller();
+            $filler = $gearSlot->getItem();
             return is_null($filler) || $filler instanceof Item;
         });
     }
@@ -106,7 +106,7 @@ class GearSlotCollection extends Collection
     {
         $items = new ItemCollection();
         $this->withItem()->each(function (GearSlot $gearSlot) use ($items) {
-            $items->push($gearSlot->getFiller());
+            $items->push($gearSlot->getItem());
         });
         return $items;
     }
