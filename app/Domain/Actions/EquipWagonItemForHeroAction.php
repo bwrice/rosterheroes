@@ -9,6 +9,7 @@ use App\Domain\Models\Hero;
 use App\Domain\Models\Item;
 use App\Domain\Models\Week;
 use App\Exceptions\ItemTransactionException;
+use Illuminate\Support\Facades\DB;
 
 class EquipWagonItemForHeroAction
 {
@@ -35,6 +36,8 @@ class EquipWagonItemForHeroAction
             throw new ItemTransactionException($item, "Week is currently locked", ItemTransactionException::CODE_TRANSACTION_DISABLED);
         }
 
-        return $this->addItemToHasItemsAction->execute($item, $hero, $hasItemsCollection)->removeDuplicates();
+        return DB::transaction(function () use ($item, $hero, $hasItemsCollection) {
+            return $this->addItemToHasItemsAction->execute($item, $hero, $hasItemsCollection)->removeDuplicates();
+        });
     }
 }
