@@ -16,7 +16,6 @@ use App\Domain\Models\Support\GearSlots\GearSlotFactory;
 use App\Domain\QueryBuilders\HeroQueryBuilder;
 use App\Domain\Traits\HasNameSlug;
 use App\Domain\Collections\HeroCollection;
-use App\Domain\Collections\SlotCollection;
 use App\Http\Resources\HeroResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -40,9 +39,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property HeroRace $heroRace
  * @property CombatPosition $combatPosition
  * @property PlayerSpirit|null $playerSpirit
- *
- * @property SlotCollection $slots
- * @property SlotCollection $slotsThatHaveItems
  *
  * @property ItemCollection $items
  * @property MeasurableCollection $measurables
