@@ -2,18 +2,10 @@
 
 namespace Tests\Feature;
 
-use App\Domain\Actions\EquipHeroSlotFromWagonAction;
-use App\Domain\Models\HeroPost;
 use App\Domain\Models\Item;
-use App\Domain\Models\ItemBase;
-use App\Domain\Models\ItemType;
-use App\Domain\Models\SlotOld;
-use App\Domain\Models\SlotType;
 use App\Domain\Models\Squad;
 use App\Domain\Models\User;
-use App\Domain\Support\SlotTransaction;
 use App\Nova\Hero;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
@@ -64,6 +56,9 @@ class EquipHeroControllerTest extends TestCase
         $response = $this->json('POST','api/v1/heroes/' . $this->hero->slug . '/equip', [
             'item' => $this->twoHandedWeapon->uuid
         ]);
+
+        $responseArray = json_decode($response->content(), true);
+        $this->assertEquals(2, count($responseArray['data']));
 
         $response->assertJson([
                 'data' => [

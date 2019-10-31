@@ -40,19 +40,4 @@ class ItemBaseTest extends TestCase
             $this->assertGreaterThan(0, $count, 'Slots count greater zero');
         });
     }
-
-    /**
-     * @test
-     */
-    public function it_belongs_to_at_least_one_hero_type()
-    {
-        $bases = ItemBase::all();
-        $heroSlotTypeIDs = SlotType::query()->heroTypes()->pluck('id')->values()->toArray();
-
-        $bases->each(function (ItemBase $itemBase) use ($heroSlotTypeIDs) {
-            $slotTypeIDs = $itemBase->getBehavior()->getSlotTypeIDs();
-            $intersectingIDs = array_intersect($slotTypeIDs, $heroSlotTypeIDs);
-            $this->assertGreaterThan(0, count($intersectingIDs), $itemBase->name . " belongs to at least 1 hero slot type");
-        });
-    }
 }

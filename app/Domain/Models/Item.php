@@ -5,22 +5,13 @@ namespace App\Domain\Models;
 use App\Domain\Behaviors\ItemBases\ItemBaseBehavior;
 use App\Domain\Collections\AttackCollection;
 use App\Domain\Collections\EnchantmentCollection;
-use App\Domain\Behaviors\ItemBases\ItemBaseBehaviorInterface;
 use App\Domain\Collections\ItemCollection;
 use App\Domain\Interfaces\FillsGearSlots;
 use App\Domain\Interfaces\HasAttacks;
 use App\Domain\Interfaces\HasItems;
-use App\Domain\Interfaces\HasSlots;
 use App\Domain\Interfaces\UsesItems;
-use App\Domain\Models\SlotOld;
-use App\Domain\Collections\SlotCollection;
-use App\Domain\Interfaces\Slottable;
 use App\Domain\Support\ItemNameBuilder;
-use App\StorableEvents\ItemCreated;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Support\Facades\Log;
-use Ramsey\Uuid\Uuid;
 
 /**
  * Class Item
@@ -41,7 +32,6 @@ use Ramsey\Uuid\Uuid;
  * @property Material $material
  * @property HasItems $hasItems
  *
- * @property SlotCollection $slots
  * @property EnchantmentCollection $enchantments
  * @property AttackCollection $attacks
  */
@@ -267,6 +257,9 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
 
     public function belongsToHasItems(HasItems $hasItems)
     {
+        if (is_null($this->hasItems)) {
+            return false;
+        }
         return $this->has_items_type === $hasItems->getMorphType()
             && $this->has_items_id === $hasItems->getMorphID();
     }

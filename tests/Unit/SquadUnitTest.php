@@ -9,7 +9,7 @@ use App\Exceptions\WeekLockedException;
 use App\Domain\Models\Province;
 use App\Domain\Models\Squad;
 use App\Domain\Models\Stash;
-use App\Domain\Models\StoreHouse;
+use App\Domain\Models\Residence;
 use App\Domain\Models\Week;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
@@ -31,14 +31,14 @@ class SquadUnitTest extends TestCase
         /** @var Squad $squad */
         $squad = factory(Squad::class)->create();
 
-        /** @var \App\Domain\Models\StoreHouse $storeHouse */
-        $storeHouse = factory(StoreHouse::class)->create([
+        /** @var \App\Domain\Models\Residence $storeHouse */
+        $storeHouse = factory(Residence::class)->create([
             'squad_id' => $squad->id,
             'province_id' => $squad->province_id
         ]);
 
-        /** @var StoreHouse $storeHouseFound */
-        $storeHouseFound = $squad->getLocalStoreHouse();
+        /** @var Residence $storeHouseFound */
+        $storeHouseFound = $squad->getLocalResidence();
 
         $this->assertEquals($storeHouse->id, $storeHouseFound->id, "The store house was found");
     }
@@ -51,8 +51,8 @@ class SquadUnitTest extends TestCase
         /** @var \App\Domain\Models\Squad $squad */
         $squad = factory(Squad::class)->create();
 
-        /** @var StoreHouse $storeHouse */
-        $storeHouse = factory(StoreHouse::class)->create([
+        /** @var Residence $storeHouse */
+        $storeHouse = factory(Residence::class)->create([
             'squad_id' => $squad->id,
             'province_id' => $squad->province_id
         ]);
@@ -62,9 +62,9 @@ class SquadUnitTest extends TestCase
         $squad->province_id = $province->id;
         $squad->save();
 
-        $this->assertEquals($storeHouse->id, $squad->storeHouses()->first()->id, "Squad still owns the store house");
+        $this->assertEquals($storeHouse->id, $squad->residences()->first()->id, "Squad still owns the store house");
 
-        $storeHouseFound = $squad->getLocalStoreHouse();
+        $storeHouseFound = $squad->getLocalResidence();
 
         $this->assertEquals(null, $storeHouseFound, "The store house was not found");
     }

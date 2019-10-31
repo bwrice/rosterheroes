@@ -22,14 +22,6 @@ use Illuminate\Database\Eloquent\Collection;
  */
 class ItemCollection extends Collection
 {
-    public function getSlots(): SlotCollection
-    {
-        $slotCollection = new SlotCollection();
-        $this->loadMissing('slots')->each(function (Item $item) use (&$slotCollection) {
-            $slotCollection = $slotCollection->merge($item->getSlots());
-        });
-        return $slotCollection;
-    }
 
     public function getEnchantments(): EnchantmentCollection
     {

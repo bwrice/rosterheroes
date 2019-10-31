@@ -63,7 +63,7 @@ class AddNewHeroToSquadActionTest extends TestCase
         $this->assertGreaterThan(0, $blueprints->count());
 
         $hero = $this->domainAction->execute($this->squad, $heroName, $heroClass, $heroRace);
-        $items = $hero->getItems();
+        $items = $hero->items();
 
         $this->assertEquals($blueprints->count(), $items->count());
 

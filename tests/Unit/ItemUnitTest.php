@@ -32,10 +32,8 @@ class ItemUnitTest extends TestCase
     {
         parent::setUp();
         $this->item = factory(Item::class)->create();
-        $this->hero = factory(Hero::class)->states('with-slots', 'with-measurables')->create();
-        $anySlot = $this->hero->slots->random();
-        $this->item = factory(Item::class)->create();
-        $this->item->slots()->save($anySlot);
+        $this->hero = factory(Hero::class)->state('with-measurables')->create();
+        $this->item->attachToHasItems($this->hero);
     }
 
     /**
