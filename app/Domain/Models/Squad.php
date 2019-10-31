@@ -43,7 +43,6 @@ use Spatie\Sluggable\SlugOptions;
  * @property Province $province
  * @property MobileStorageRank $mobileStorageRank
  * @property ItemCollection $items
- * @property \App\Domain\Collections\SlotCollection $slots
  * @property Campaign|null $currentCampaign
  *
  * @property HeroPostCollection $heroPosts
@@ -100,17 +99,15 @@ class Squad extends EventSourcedModel implements TravelsBorders, HasItems
     public static function getMobileStorageResourceRelations()
     {
         return [
-            'slots.slotType',
-            'slots.hasSlots',
-            'slots.item.itemType.itemBase',
-            'slots.item.material.materialType',
-            'slots.item.itemClass',
-            'slots.item.attacks.attackerPosition',
-            'slots.item.attacks.targetPosition',
-            'slots.item.attacks.targetPriority',
-            'slots.item.attacks.damageType',
-            'slots.item.enchantments.measurableBoosts.measurableType',
-            'slots.item.enchantments.measurableBoosts.booster',
+            'items.itemType.itemBase',
+            'items.material.materialType',
+            'items.itemClass',
+            'items.attacks.attackerPosition',
+            'items.attacks.targetPosition',
+            'items.attacks.targetPriority',
+            'items.attacks.damageType',
+            'items.enchantments.measurableBoosts.measurableType',
+            'items.enchantments.measurableBoosts.booster',
             'mobileStorageRank'
         ];
     }

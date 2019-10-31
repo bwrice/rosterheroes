@@ -23,7 +23,7 @@ class MobileStorageResource extends JsonResource
     {
         return [
             'mobileStorageRank' => new MobileStorageRankResource($this->mobileStorageRank),
-            'slots' => SlotResource::collection($this->slots)
+            'items' => ItemResource::collection($this->items)
         ];
     }
 }
