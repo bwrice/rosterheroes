@@ -33,9 +33,7 @@ class HeroResource extends JsonResource
             'measurables' => MeasurableResource::collection($this->measurables)->collection->each(function (MeasurableResource $measurableResource) {
                 $measurableResource->resource->hero = $this->resource;
             }),
-            'items' => ItemResource::collection($this->items)->collection->each(function (ItemResource $itemResource) {
-                $itemResource->setUsesItems($this->resource);
-            }),
+            'gearSlots' => GearSlotResource::collection($this->getGearSlots()),
             'spells' => SpellResource::collection($this->spells)->collection->each(function (SpellResource $spellResource) {
                 $spellResource->resource->setSpellCaster($this->resource);
             }),
