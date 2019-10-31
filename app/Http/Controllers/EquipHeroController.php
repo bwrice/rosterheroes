@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Domain\Actions\EquipHeroSlotFromWagonAction;
+use App\Domain\Actions\EquipWagonItemForHeroAction;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Item;
-use App\Domain\Models\Slot;
-use App\Domain\Support\SlotTransaction;
-use App\Exceptions\SlottingException;
+use App\Exceptions\ItemTransactionException;
+use App\Http\Resources\HasItemsResource;
 use App\Http\Resources\SlotTransactionResource;
 use App\Policies\HeroPolicy;
 use Illuminate\Http\Request;
@@ -16,24 +16,31 @@ use Illuminate\Validation\ValidationException;
 
 class EquipHeroController extends Controller
 {
-    public function __invoke($heroSlug, Request $request, EquipHeroSlotFromWagonAction $domainAction)
+    /**
+     * @param $heroSlug
+     * @param Request $request
+     * @param EquipWagonItemForHeroAction $domainAction
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     * @throws ValidationException
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function __invoke($heroSlug, Request $request, EquipWagonItemForHeroAction $domainAction)
     {
         $hero = Hero::findSlugOrFail($heroSlug);
         $this->authorize(HeroPolicy::MANAGE, $hero);
 
-        $slot = Slot::findUuidOrFail($request->slot);
         $item = Item::findUuidOrFail($request->item);
 
         try {
-            $slotTransactionGroup = $domainAction->execute($hero, $slot, $item);
+            $hasItemsCollection = $domainAction->execute($item, $hero);
 
-        } catch (SlottingException $exception) {
+        } catch (ItemTransactionException $exception) {
 
             throw ValidationException::withMessages([
                 'equip' => $exception->getMessage()
             ]);
         }
 
-        return $slotTransactionGroup;
+        return HasItemsResource::collection($hasItemsCollection);
     }
 }
