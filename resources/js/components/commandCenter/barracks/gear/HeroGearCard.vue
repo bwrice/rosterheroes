@@ -1,26 +1,26 @@
 <template>
     <div id="hero-gear-card">
-        <v-card v-if="focusedSlotUuid">
+        <v-card v-if="focusedSlotType">
             <v-card-title class="pb-0">
                 <v-row align="center" justify="center" class="px-2">
-                    <span>{{focusedHeroSlot.slotType.displayName}}</span>
+                    <span>{{gearSlot.type}}</span>
                     <div class="flex-grow-1"></div>
-                    <v-icon @click="focusedSlotUuid = null">close</v-icon>
+                    <v-icon @click="focusedSlotType = null">close</v-icon>
                 </v-row>
             </v-card-title>
             <v-card-text class="px-2">
                 <v-row align="center" justify="center">
-                    <template v-if="focusedHeroSlot.item">
+                    <template v-if="gearSlot.item">
                         <v-col cols="12">
                             <v-row no-gutters align="center" justify="center">
                                 <EmptyHeroSlotButton
-                                    :heroSlot="focusedHeroSlot"
-                                    :hero="barracksHeroFromRoute"
+                                    :heroSlot="gearSlot"
+                                    :hero="hero"
                                 >
                                 </EmptyHeroSlotButton>
                                 <v-col cols="12">
                                     <v-sheet color="#456d87" class="my-2">
-                                        <ItemCard :item="focusedHeroSlot.item"></ItemCard>
+                                        <ItemCard :item="gearSlot.item"></ItemCard>
                                     </v-sheet>
                                 </v-col>
                             </v-row>
@@ -37,14 +37,14 @@
                             :filled-slots="mobileStorageSlots"
                             :items-per-page="6"
                             :search-label="'Search Wagon'"
-                            :key="this.focusedHeroSlot.uuid"
+                            :key="this.gearSlot.type"
                             :item-name-truncate-extra="4"
                         >
                             <template v-slot:before-expand="props">
                                 <div class="px-2">
                                     <FillSlotFromWagonButton
-                                        :hero="barracksHeroFromRoute"
-                                        :hero-slot="focusedHeroSlot"
+                                        :hero="hero"
+                                        :hero-slot="gearSlot"
                                         :item="props.item"
                                     >
                                     </FillSlotFromWagonButton>
@@ -55,14 +55,14 @@
                 </v-row>
             </v-card-text>
             <v-card-actions>
-                <v-btn href="#hero-gear-card" @click="focusedSlotUuid = null" block>Close</v-btn>
+                <v-btn href="#hero-gear-card" @click="focusedSlotType = null" block>Close</v-btn>
             </v-card-actions>
         </v-card>
         <v-card v-else>
             <v-sheet class="py-5"
                      style="background-image: linear-gradient(to bottom right, #524c59, #7c7287 , #524c59)">
                 <HeroGearSVG
-                    :hero="focusedHero"
+                    :hero="hero"
                     @heroSlotClicked="handleHeroSlotClicked"
                 ></HeroGearSVG>
             </v-sheet>
@@ -71,8 +71,6 @@
 </template>
 
 <script>
-    import Slot from "../../../../models/Slot";
-
     import {mapGetters} from 'vuex';
     import {barracksHeroMixin} from "../../../../mixins/barracksHeroMixin";
 
@@ -81,6 +79,7 @@
     import EmptyHeroSlotButton from "./EmptyHeroSlotButton";
     import FilledSlotIterator from "../../global/FilledSlotIterator";
     import FillSlotFromWagonButton from "./FillSlotFromWagonButton";
+    import GearSlot from "../../../../models/GearSlot";
 
     export default {
         name: "HeroGearCard",
@@ -96,12 +95,12 @@
         ],
         data() {
             return {
-                focusedSlotUuid: null
+                focusedSlotType: null
             }
         },
         methods: {
-            handleHeroSlotClicked(slotUuid) {
-                this.focusedSlotUuid = slotUuid;
+            handleHeroSlotClicked(slotType) {
+                this.focusedSlotType = slotType;
             },
         },
         computed: {
@@ -110,18 +109,18 @@
                 '_mobileStorage',
                 '_focusedHero'
             ]),
-            focusedHero() {
+            hero() {
                 return this._focusedHero(this.$route);
             },
-            focusedHeroSlot() {
-                if (! this.focusedSlotUuid) {
-                    return new Slot({});
+            gearSlot() {
+                if (! this.focusedSlotType) {
+                    return new GearSlot({});
                 }
-                let focusedSlot = this.barracksHeroFromRoute.getSlot(this.focusedSlotUuid);
-                return focusedSlot ? focusedSlot : new Slot({});
+                let focusedGearSlot = this.hero.getGearSlotByType(this.focusedSlotType);
+                return focusedGearSlot ? focusedGearSlot : new GearSlot({});
             },
             mobileStorageSlots() {
-                let focusedSlot = this.focusedHeroSlot;
+                let focusedSlot = this.gearSlot;
                 return this._mobileStorage.filledSlots.filter(function (filledSlot) {
                     let itemBaseSlotTypeNames = filledSlot.item.itemType.itemBase.slotTypeNames;
                     return itemBaseSlotTypeNames.find(function (slotTypeName) {

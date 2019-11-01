@@ -175,8 +175,8 @@
             }
         },
         methods: {
-            emitHeroSlotClicked({heroSlot}) {
-                this.$emit('heroSlotClicked', heroSlot.uuid);
+            emitHeroSlotClicked({gearSlot}) {
+                this.$emit('heroSlotClicked', gearSlot.type);
             }
         }
     }

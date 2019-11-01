@@ -20,7 +20,7 @@
 </template>
 
 <script>
-    import Slot from "../../../../../models/Slot";
+    import GearSlot from "../../../../../models/GearSlot";
 
     export default {
         name: "HeroGearSlotSVG",
@@ -43,8 +43,8 @@
         },
         computed: {
             gearSlot() {
-                let heroSlot = this.gearSlots.find(gearSlot => gearSlot.type === this.gearSlotType);
-                return heroSlot ? new Slot(heroSlot) : new Slot({});
+                let gearSlot = this.gearSlots.find(gearSlot => gearSlot.type === this.gearSlotType);
+                return gearSlot ? gearSlot : new GearSlot({});
             },
             empty() {
                 return ! this.gearSlot.item;
