@@ -25,11 +25,11 @@
     export default {
         name: "HeroGearSlotSVG",
         props: {
-            heroSlots: {
+            gearSlots: {
                 type: Array,
                 default: []
             },
-            name: {
+            gearSlotType: {
                 type: String,
                 required: true
             }
@@ -37,17 +37,17 @@
         methods: {
             emitHeroSlotClicked() {
                 this.$emit('heroSlotClicked', {
-                    heroSlot: this.heroSlot
+                    gearSlot: this.gearSlot
                 })
             }
         },
         computed: {
-            heroSlot() {
-                let heroSlot = this.heroSlots.find(slot => slot.slotType.name === this.name);
+            gearSlot() {
+                let heroSlot = this.gearSlots.find(gearSlot => gearSlot.type === this.gearSlotType);
                 return heroSlot ? new Slot(heroSlot) : new Slot({});
             },
             empty() {
-                return ! this.heroSlot.item;
+                return ! this.gearSlot.item;
             },
             svgFill() {
                 if (this.empty) {
