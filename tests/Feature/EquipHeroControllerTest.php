@@ -64,7 +64,7 @@ class EquipHeroControllerTest extends TestCase
                 'data' => [
                     [
                         'hasItems' => [
-                            'uuid' => $this->squad->uuid
+                            'mobileStorageRank' => []
                         ],
                         'type' => 'squad'
                     ],
