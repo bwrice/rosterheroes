@@ -30,6 +30,20 @@
                         <span class="subtitle-1 font-weight-light">(empty)</span>
                     </template>
                 </v-row>
+            </v-card-text>
+            <v-card-actions>
+                <v-btn href="#hero-gear-card" @click="focusedSlotType = null" block>Close</v-btn>
+            </v-card-actions>
+        </v-card>
+        <v-card v-else>
+            <v-card-text>
+                <v-sheet class="py-5"
+                         style="background-image: linear-gradient(to bottom right, #524c59, #7c7287 , #524c59)">
+                    <HeroGearSVG
+                        :hero="hero"
+                        @heroSlotClicked="handleHeroSlotClicked"
+                    ></HeroGearSVG>
+                </v-sheet>
                 <v-row justify="center" no-gutters>
                     <v-col cols="12">
                         <!-- key on FilledSlotIterator prevents pagination persisting -->
@@ -37,35 +51,23 @@
                             :items="_mobileStorage.items"
                             :items-per-page="6"
                             :search-label="'Search Wagon'"
-                            :key="item.uuid"
+                            :key="'uuid'"
                             :item-name-truncate-extra="4"
                         >
                             <template v-slot:before-expand="props">
                                 <div class="px-2">
-                                    <FillSlotFromWagonButton
+                                    <EquipFromMobileStorageButton
                                         :hero="hero"
                                         :hero-slot="gearSlot"
                                         :item="props.item"
                                     >
-                                    </FillSlotFromWagonButton>
+                                    </EquipFromMobileStorageButton>
                                 </div>
                             </template>
                         </ItemIterator>
                     </v-col>
                 </v-row>
             </v-card-text>
-            <v-card-actions>
-                <v-btn href="#hero-gear-card" @click="focusedSlotType = null" block>Close</v-btn>
-            </v-card-actions>
-        </v-card>
-        <v-card v-else>
-            <v-sheet class="py-5"
-                     style="background-image: linear-gradient(to bottom right, #524c59, #7c7287 , #524c59)">
-                <HeroGearSVG
-                    :hero="hero"
-                    @heroSlotClicked="handleHeroSlotClicked"
-                ></HeroGearSVG>
-            </v-sheet>
         </v-card>
     </div>
 </template>
@@ -78,13 +80,13 @@
     import ItemCard from "../../global/ItemCard";
     import EmptyHeroSlotButton from "./EmptyHeroSlotButton";
     import ItemIterator from "../../global/ItemIterator";
-    import FillSlotFromWagonButton from "./FillSlotFromWagonButton";
+    import EquipFromMobileStorageButton from "./EquipFromMobileStorageButton";
     import GearSlot from "../../../../models/GearSlot";
 
     export default {
         name: "HeroGearCard",
         components: {
-            FillSlotFromWagonButton,
+            EquipFromMobileStorageButton,
             ItemIterator,
             EmptyHeroSlotButton,
             ItemCard,

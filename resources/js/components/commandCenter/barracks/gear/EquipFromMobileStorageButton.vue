@@ -18,7 +18,7 @@
     import {mapActions} from 'vuex';
 
     export default {
-        name: "FillSlotFromWagonButton",
+        name: "EquipFromMobileStorageButton",
         props: {
             hero: {
                 type: Hero,
