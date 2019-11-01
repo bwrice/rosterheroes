@@ -34,10 +34,10 @@
                     <v-col cols="12">
                         <!-- key on FilledSlotIterator prevents pagination persisting -->
                         <ItemIterator
-                            :filled-slots="mobileStorageSlots"
+                            :items="_mobileStorage.items"
                             :items-per-page="6"
                             :search-label="'Search Wagon'"
-                            :key="this.gearSlot.type"
+                            :key="item.uuid"
                             :item-name-truncate-extra="4"
                         >
                             <template v-slot:before-expand="props">

@@ -32,7 +32,7 @@
     import Slot from "../../../models/Slot";
     import Item from "../../../models/Item";
     export default {
-        name: "FilledSlotPanel",
+        name: "ItemExpandPanel",
         components: {ItemCard},
         props: {
             item: {

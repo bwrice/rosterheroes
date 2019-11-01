@@ -2,21 +2,20 @@
     <v-card>
         <v-card-title>{{storageName}}</v-card-title>
         <v-card-text>
-            <FilledSlotIterator
-                :filled-slots="filledStorageSlots"
-            ></FilledSlotIterator>
+            <ItemIterator
+                :items="mobileStorage.items"
+            ></ItemIterator>
         </v-card-text>
     </v-card>
 </template>
 
 <script>
     import MobileStorage from "../../../models/MobileStorage";
-    import FilledSlotPanel from "../global/FilledSlotPanel";
-    import FilledSlotIterator from "../global/ItemIterator";
+    import ItemIterator from "../global/ItemIterator";
 
     export default {
         name: "MobileStorageCard",
-        components: {FilledSlotIterator, FilledSlotPanel},
+        components: {ItemIterator},
         props: {
             mobileStorage: {
                 type: MobileStorage,
@@ -26,9 +25,6 @@
         computed: {
             storageName() {
                 return this.mobileStorage.mobileStorageRank.name;
-            },
-            filledStorageSlots() {
-                return this.mobileStorage.filledSlots;
             }
         }
     }
