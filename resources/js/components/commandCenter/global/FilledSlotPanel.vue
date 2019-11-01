@@ -6,7 +6,7 @@
         <v-row align="center" justify="center" class="mx-2">
             <span class="subtitle-2 font-weight-light pa-2">{{itemName}}</span>
             <div class="flex-grow-1"></div>
-            <slot name="before-expand" :item="filledSlot.item">
+            <slot name="before-expand" :item="item">
                 <!-- Slot -->
             </slot>
             <v-btn @click="expanded = ! expanded"
@@ -21,7 +21,7 @@
         </v-row>
         <v-row v-if="expanded" no-gutters>
             <v-col cols="12">
-                <ItemCard :item="filledSlot.item" :color="itemCardColor"></ItemCard>
+                <ItemCard :item="item" :color="itemCardColor"></ItemCard>
             </v-col>
         </v-row>
     </v-sheet>
@@ -30,12 +30,13 @@
 <script>
     import ItemCard from "./ItemCard";
     import Slot from "../../../models/Slot";
+    import Item from "../../../models/Item";
     export default {
         name: "FilledSlotPanel",
         components: {ItemCard},
         props: {
-            filledSlot: {
-                type: Slot,
+            item: {
+                type: Item,
                 required: true
             },
             itemNameTruncateExtra: {
@@ -57,7 +58,7 @@
                 let maxLength = Math.floor(windowWidth/12);
                 maxLength -= this.itemNameTruncateExtra;
                 maxLength = Math.min(maxLength, 40);
-                return _.truncate(this.filledSlot.item.name, {
+                return _.truncate(this.item.name, {
                     length: maxLength
                 })
             }

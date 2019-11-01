@@ -1,6 +1,6 @@
 <template>
     <v-data-iterator
-        :items="filteredStorageSlots"
+        :items="items"
         :items-per-page="itemsPerPage"
         :page="page"
         hide-default-footer
@@ -43,10 +43,14 @@
     import IteratorFooter from "./IteratorFooter";
 
     export default {
-        name: "FilledSlotIterator",
+        name: "ItemIterator",
         components: {IteratorFooter, FilledSlotPanel},
         props: {
             filledSlots: {
+                type: Array,
+                required: true
+            },
+            items: {
                 type: Array,
                 required: true
             },

@@ -33,7 +33,7 @@
                 <v-row justify="center" no-gutters>
                     <v-col cols="12">
                         <!-- key on FilledSlotIterator prevents pagination persisting -->
-                        <FilledSlotIterator
+                        <ItemIterator
                             :filled-slots="mobileStorageSlots"
                             :items-per-page="6"
                             :search-label="'Search Wagon'"
@@ -50,7 +50,7 @@
                                     </FillSlotFromWagonButton>
                                 </div>
                             </template>
-                        </FilledSlotIterator>
+                        </ItemIterator>
                     </v-col>
                 </v-row>
             </v-card-text>
@@ -77,7 +77,7 @@
     import HeroGearSVG from "./HeroGearSVG";
     import ItemCard from "../../global/ItemCard";
     import EmptyHeroSlotButton from "./EmptyHeroSlotButton";
-    import FilledSlotIterator from "../../global/FilledSlotIterator";
+    import ItemIterator from "../../global/ItemIterator";
     import FillSlotFromWagonButton from "./FillSlotFromWagonButton";
     import GearSlot from "../../../../models/GearSlot";
 
@@ -85,7 +85,7 @@
         name: "HeroGearCard",
         components: {
             FillSlotFromWagonButton,
-            FilledSlotIterator,
+            ItemIterator,
             EmptyHeroSlotButton,
             ItemCard,
             HeroGearSVG

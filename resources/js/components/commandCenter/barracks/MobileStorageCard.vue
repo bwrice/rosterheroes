@@ -12,7 +12,7 @@
 <script>
     import MobileStorage from "../../../models/MobileStorage";
     import FilledSlotPanel from "../global/FilledSlotPanel";
-    import FilledSlotIterator from "../global/FilledSlotIterator";
+    import FilledSlotIterator from "../global/ItemIterator";
 
     export default {
         name: "MobileStorageCard",
