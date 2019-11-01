@@ -58,7 +58,6 @@
                                 <div class="px-2">
                                     <EquipFromMobileStorageButton
                                         :hero="hero"
-                                        :hero-slot="gearSlot"
                                         :item="props.item"
                                     >
                                     </EquipFromMobileStorageButton>

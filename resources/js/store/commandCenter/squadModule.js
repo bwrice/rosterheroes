@@ -143,16 +143,11 @@ export default {
             }
         },
 
-        async equipHeroSlotFromWagon({state, commit, dispatch}, {heroSlug, slotUuid, itemUuid}) {
+        async equipHeroFromMobileStorage({state, commit, dispatch}, {heroSlug, itemUuid}) {
 
             try {
-                let response = await heroApi.equipFromWagon(heroSlug, slotUuid, itemUuid);
-                let updatedHero = new Hero(response.data.hero);
-                helpers.syncUpdatedHero(state, commit, updatedHero);
-                if (response.data.mobileStorage) {
-                    let updateMobileStorage = new MobileStorage(response.data.mobileStorage);
-                    commit('SET_MOBILE_STORAGE', updateMobileStorage);
-                }
+                let response = await heroApi.equipFromWagon(heroSlug, itemUuid);
+                helpers.syncHasItemsResponse(state, commit, response);
             } catch (e) {
                 console.log(e);
                 dispatch('snackBarError', {})

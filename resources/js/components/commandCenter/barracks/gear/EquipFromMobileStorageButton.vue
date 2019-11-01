@@ -24,10 +24,6 @@
                 type: Hero,
                 required: true
             },
-            heroSlot: {
-                type: Slot,
-                required: true
-            },
             item: {
                 type: Item,
                 required: true
@@ -40,13 +36,12 @@
         },
         methods: {
             ...mapActions([
-                'equipHeroSlotFromWagon'
+                'equipHeroFromMobileStorage'
             ]),
             async equip() {
                 this.pending = true;
-                await this.equipHeroSlotFromWagon({
+                await this.equipHeroFromMobileStorage({
                     heroSlug: this.hero.slug,
-                    slotUuid: this.heroSlot.uuid,
                     itemUuid: this.item.uuid
                 });
                 this.pending = false;
