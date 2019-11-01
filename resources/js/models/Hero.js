@@ -32,6 +32,11 @@ export default class Hero {
         return matchingSlot ? matchingSlot : new Slot({});
     }
 
+    getGearSlotByType(slotType) {
+        let matchingGearSlot = this.gearSlots.find(gearSlot => gearSlot.type === slotType);
+        return matchingGearSlot ? matchingGearSlot : new GearSlot({});
+    }
+
     getMeasurableByTypeID(measurableTypeID) {
         let measurable = this.measurables.find(measurable => measurable.measurableTypeID === measurableTypeID);
         return measurable ? measurable : new Measurable({});
