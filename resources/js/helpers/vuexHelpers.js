@@ -1,3 +1,5 @@
+import Hero from "../models/Hero";
+import MobileStorage from "../models/MobileStorage";
 
 export function syncUpdatedHero(state, commit, updatedHero) {
     let heroes = _.cloneDeep(state.heroes);
@@ -10,6 +12,22 @@ export function syncUpdatedHero(state, commit, updatedHero) {
     }
     heroes.splice(index, 1, updatedHero);
     commit('SET_HEROES', heroes);
+}
+
+export function syncHasItemsResponse(state, commit, response) {
+    response.data.forEach(function (hasItemsResponse) {
+        if (hasItemsResponse.type === 'hero') {
+            let updatedHero = new Hero(hasItemsResponse.hasItems);
+            syncUpdatedHero(state, commit, updatedHero);
+        }
+    });
+    let mobileStorageResponse = response.data.find(function (hasItemsResponse) {
+        return hasItemsResponse.type === 'squad';
+    });
+    if (mobileStorageResponse) {
+        let updateMobileStorage = new MobileStorage(mobileStorageResponse.hasItems);
+        commit('SET_MOBILE_STORAGE', updateMobileStorage);
+    }
 }
 
 export function handleResponseErrors(e, errorKey, dispatch) {
