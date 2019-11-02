@@ -8,8 +8,8 @@
                     <v-icon @click="focusedSlotType = null">close</v-icon>
                 </v-row>
             </v-card-title>
-            <v-card-text class="px-2">
-                <v-row align="center" justify="center">
+            <v-card-text class="px-2 pb-0">
+                <v-row no-gutters align="center" justify="center">
                     <template v-if="gearSlot.item">
                         <v-col cols="12">
                             <v-row no-gutters align="center" justify="center">
