@@ -11,13 +11,13 @@
             <v-card-text class="px-2 pb-0">
                 <v-row no-gutters align="center" justify="center">
                     <template v-if="gearSlot.item">
-                        <v-col cols="12">
+                        <v-col cols="12" class="pt-2">
                             <v-row no-gutters align="center" justify="center">
-                                <EmptyHeroSlotButton
-                                    :heroSlot="gearSlot"
+                                <UnequipItemButton
+                                    :item="gearSlot.item"
                                     :hero="hero"
                                 >
-                                </EmptyHeroSlotButton>
+                                </UnequipItemButton>
                                 <v-col cols="12">
                                     <v-sheet color="#456d87" class="my-2">
                                         <ItemCard :item="gearSlot.item"></ItemCard>
@@ -77,7 +77,7 @@
 
     import HeroGearSVG from "./HeroGearSVG";
     import ItemCard from "../../global/ItemCard";
-    import EmptyHeroSlotButton from "./EmptyHeroSlotButton";
+    import UnequipItemButton from "./UnequipItemButton";
     import ItemIterator from "../../global/ItemIterator";
     import EquipFromMobileStorageButton from "./EquipFromMobileStorageButton";
     import GearSlot from "../../../../models/GearSlot";
@@ -87,7 +87,7 @@
         components: {
             EquipFromMobileStorageButton,
             ItemIterator,
-            EmptyHeroSlotButton,
+            UnequipItemButton,
             ItemCard,
             HeroGearSVG
         },
