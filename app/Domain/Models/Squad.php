@@ -128,24 +128,6 @@ class Squad extends EventSourcedModel implements TravelsBorders, HasItems
         return collect(self::STARTING_HERO_POST_TYPES)->sum();
     }
 
-    public function addSlots()
-    {
-        $slotsNeededCount = $this->mobileStorageRank->getBehavior()->getSlotsCount();
-        $currentSlotsCount = $this->slots()->count();
-        $diff = $slotsNeededCount - $currentSlotsCount;
-
-        if($diff > 0) {
-            /** @var SlotType $slotType */
-            $slotType = SlotType::where('name', '=', SlotType::UNIVERSAL)->first();
-            for($i = 1; $i <= $diff; $i++) {
-                $this->slots()->create([
-                    'uuid' => Str::uuid(),
-                    'slot_type_id' => $slotType->id
-                ]);
-            }
-        }
-    }
-
     public function addStartingHeroPosts()
     {
         collect(self::STARTING_HERO_POST_TYPES)->each(function ($count, $postTypeName) {
