@@ -21,9 +21,15 @@ class CommandCenterController extends Controller
         $squad = Squad::findSlugOrFail($squadSlug);
 
         if ($squad->inCreationState()) {
+
+            $squad->load([
+                'heroes',
+                'heroPosts.heroPostType.heroRaces'
+            ]);
+
             return view('create-squad', [
                 'squad' => json_encode(new SquadResource($squad)),
-                'heroes' => json_encode((SquadCreationHeroResource::collection($squad->getHeroes()))),
+                'heroes' => json_encode((SquadCreationHeroResource::collection($squad->heroes))),
                 'heroClasses' => json_encode(HeroClassResource::collection($squad->getHeroClassAvailability())),
                 'heroRaces' => json_encode(HeroRaceResource::collection($squad->getHeroRaceAvailability()))
             ]);
