@@ -17,7 +17,6 @@ class CreateHeroPostsTable extends Migration
             $table->increments('id');
             $table->integer('hero_post_type_id')->unsigned();
             $table->integer('squad_id')->unsigned();
-            $table->integer('hero_id')->unsigned()->nullable();
             $table->timestamps();
         });
 
@@ -25,7 +24,6 @@ class CreateHeroPostsTable extends Migration
         Schema::table('hero_posts', function (Blueprint $table) {
             $table->foreign('hero_post_type_id')->references('id')->on('hero_post_types');
             $table->foreign('squad_id')->references('id')->on('squads');
-            $table->foreign('hero_id')->references('id')->on('heroes');
         });
     }
 
