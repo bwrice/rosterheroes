@@ -36,7 +36,7 @@
             </v-card-actions>
         </v-card>
         <v-card v-else>
-            <v-card-text>
+            <v-card-text class="pa-2">
                 <v-sheet class="py-5"
                          style="background-image: linear-gradient(to bottom right, #524c59, #7c7287 , #524c59)">
                     <HeroGearSVG

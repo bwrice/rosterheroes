@@ -143,10 +143,14 @@ export default {
             }
         },
 
-        async equipHeroFromMobileStorage({state, commit, dispatch}, {heroSlug, itemUuid}) {
+        async equipHeroFromMobileStorage({state, commit, dispatch}, {heroSlug, item}) {
 
             try {
-                let response = await heroApi.equipFromWagon(heroSlug, itemUuid);
+                let response = await heroApi.equipFromWagon(heroSlug, item.uuid);
+                dispatch('snackBarSuccess', {
+                    text: item.name + ' equipped',
+                    timeout: 3000
+                });
                 helpers.syncHasItemsResponse(state, commit, response);
             } catch (e) {
                 console.log(e);

@@ -42,7 +42,7 @@
                 this.pending = true;
                 await this.equipHeroFromMobileStorage({
                     heroSlug: this.hero.slug,
-                    itemUuid: this.item.uuid
+                    item: this.item
                 });
                 this.pending = false;
             }
