@@ -43,9 +43,10 @@ use Spatie\Sluggable\SlugOptions;
  * @property User $user
  * @property Province $province
  * @property MobileStorageRank $mobileStorageRank
- * @property ItemCollection $items
  * @property Campaign|null $currentCampaign
  *
+ * @property HeroCollection $heroes
+ * @property ItemCollection $items
  * @property HeroPostCollection $heroPosts
  */
 class Squad extends EventSourcedModel implements TravelsBorders, HasItems
@@ -145,6 +146,11 @@ class Squad extends EventSourcedModel implements TravelsBorders, HasItems
         $this->heroPosts()->create([
             'hero_post_type_id' => $heroPostType->id
         ]);
+    }
+
+    public function heroes()
+    {
+        return $this->hasMany(Hero::class);
     }
 
     public function mobileStorageRank()
