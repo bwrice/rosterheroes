@@ -35,7 +35,7 @@ class UnEquipItemFromHeroActionTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->hero = factory(Hero::class)->states('with-measurables', 'with-squad')->create();
+        $this->hero = factory(Hero::class)->states('with-measurables')->create();
         $this->item = factory(Item::class)->create([
             'has_items_type' => Hero::RELATION_MORPH_MAP_KEY,
             'has_items_id' => $this->hero->id

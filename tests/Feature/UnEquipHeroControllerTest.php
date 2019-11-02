@@ -29,7 +29,7 @@ class UnEquipHeroControllerTest extends TestCase
         parent::setUp();
 
         $this->item = factory(Item::class)->create();
-        $this->hero = factory(\App\Domain\Models\Hero::class)->states( 'with-measurables', 'with-squad')->create();
+        $this->hero = factory(\App\Domain\Models\Hero::class)->states( 'with-measurables')->create();
         $this->squad = $this->hero->squad;
         $this->item->attachToHasItems($this->hero);
     }
