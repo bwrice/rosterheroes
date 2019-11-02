@@ -44,9 +44,9 @@ class SquadHeroController extends Controller
         ]);
 
         /** @var HeroClass $heroClass */
-        $heroClass = HeroClass::query()->where('name', '=', $request->class)->first();
+        $heroClass = HeroClass::query()->where('name', '=', $request->class)->firstOrFail();
         /** @var HeroRace $heroRace */
-        $heroRace = HeroRace::query()->where('name', '=', $request->race)->first();
+        $heroRace = HeroRace::query()->where('name', '=', $request->race)->firstOrFail();
 
         try {
 
@@ -68,10 +68,7 @@ class SquadHeroController extends Controller
     {
         $squad = Squad::findSlugOrFail($squadSlug);
         $this->authorize(SquadPolicy::MANAGE, $squad);
-        $heroes = Hero::query()->amongSquad($squad)->get();
-
-        $heroes->load(Hero::heroResourceRelations());
-
+        $heroes = $squad->heroes()->with(Hero::heroResourceRelations())->get();
         return HeroResource::collection($heroes);
     }
 }

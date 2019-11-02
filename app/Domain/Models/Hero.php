@@ -158,7 +158,7 @@ class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasItems
          * Add current hero essence used back,
          * because availableSpiritEssence() on squad is subtracting it out
          */
-        return $this->heroPost->squad->availableSpiritEssence() + $this->essenceUsed();
+        return $this->squad->availableSpiritEssence() + $this->essenceUsed();
     }
 
     public function costToRaiseMeasurable(MeasurableTypeBehavior $measurableTypeBehavior, int $amountAlreadyRaised, int $amountToRaise = 1): int

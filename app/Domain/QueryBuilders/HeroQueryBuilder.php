@@ -18,11 +18,4 @@ class HeroQueryBuilder extends Builder
     {
         return $this->whereHas('playerSpirit');
     }
-
-    public function amongSquad(Squad $squad)
-    {
-        return $this->whereHas('heroPost', function(Builder $builder) use ($squad) {
-            return $builder->where('squad_id', '=', $squad->id);
-        });
-    }
 }
