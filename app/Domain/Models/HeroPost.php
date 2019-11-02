@@ -37,11 +37,6 @@ class HeroPost extends Model
         return $this->belongsTo(Squad::class);
     }
 
-    public function hero()
-    {
-        return $this->belongsTo(Hero::class);
-    }
-
     public function heroPostType()
     {
         return $this->belongsTo(HeroPostType::class);
