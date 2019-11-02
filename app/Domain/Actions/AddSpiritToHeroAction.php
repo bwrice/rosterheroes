@@ -8,6 +8,7 @@ use App\Aggregates\HeroAggregate;
 use App\Domain\Models\Hero;
 use App\Domain\Models\PlayerSpirit;
 use App\Exceptions\HeroPlayerSpiritException;
+use Illuminate\Database\Eloquent\Builder;
 
 class AddSpiritToHeroAction extends HeroSpiritAction
 {
@@ -101,9 +102,7 @@ class AddSpiritToHeroAction extends HeroSpiritAction
      */
     protected function validateSquadUse(Hero $hero, PlayerSpirit $playerSpirit): void
     {
-        $squadHeroUsingSpirit = $hero->heroPost->squad->getHeroes()->first(function (Hero $hero) use ($playerSpirit) {
-            return $hero->player_spirit_id === $playerSpirit->id;
-        });
+        $squadHeroUsingSpirit = $hero->squad->heroes()->where('player_spirit_id', '=', $playerSpirit->id)->first();
 
         /** @var Hero $squadHeroUsingSpirit */
         if ($squadHeroUsingSpirit) {
