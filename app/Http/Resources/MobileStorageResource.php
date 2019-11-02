@@ -23,7 +23,9 @@ class MobileStorageResource extends JsonResource
     {
         return [
             'mobileStorageRank' => new MobileStorageRankResource($this->mobileStorageRank),
-            'items' => ItemResource::collection($this->items)
+            'items' => ItemResource::collection($this->items)->collection->each(function (ItemResource $itemResource) {
+                $itemResource->setHasItems($this->resource);
+            })
         ];
     }
 }

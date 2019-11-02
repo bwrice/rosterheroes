@@ -12,6 +12,7 @@ use App\Domain\Interfaces\HasItems;
 use App\Domain\Interfaces\UsesItems;
 use App\Domain\Support\ItemNameBuilder;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use phpDocumentor\Reflection\Types\Static_;
 
 /**
  * Class Item
@@ -204,13 +205,9 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
         return $this;
     }
 
-    /**
-     * @param HasSlots|null $hasSlots
-     * @return Item
-     */
-    public function setHasSlots(?HasSlots $hasSlots): Item
+    public function setHasItems(?HasItems $hasItems)
     {
-        $this->hasSlots = $hasSlots;
+        $this->hasItems = $hasItems;
         return $this;
     }
 
