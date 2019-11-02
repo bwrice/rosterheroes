@@ -34,7 +34,7 @@ class EquipHeroControllerTest extends TestCase
         parent::setUp();
 
         $this->hero = factory(\App\Domain\Models\Hero::class)->states('with-measurables', 'with-squad')->create();
-        $this->squad = $this->hero->getSquad();
+        $this->squad = $this->hero->squad;
         $this->shield = factory(Item::class)->state('shield')->create();
         $this->shield->attachToHasItems($this->hero);
         $this->singleHandWeapon = factory(Item::class)->state('single-handed')->create();

@@ -44,7 +44,7 @@ class EquipMobileStorageItemForHeroActionTest extends TestCase
     {
         parent::setUp();
         $this->hero = factory(Hero::class)->states('with-measurables', 'with-squad')->create();
-        $this->squad = $this->hero->getSquad();
+        $this->squad = $this->hero->squad;
         $this->randomItem = factory(Item::class)->create([
             'has_items_type' => Squad::RELATION_MORPH_MAP_KEY,
             'has_items_id' => $this->squad->id

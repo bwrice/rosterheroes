@@ -42,7 +42,7 @@ class AddNewHeroToSquadActionTest extends TestCase
         /** @var HeroRace $heroRace */
         $heroRace = HeroRace::query()->inRandomOrder()->first();
         $hero = $this->domainAction->execute($this->squad, $heroName, $heroClass, $heroRace);
-        $this->assertEquals($hero->getSquad()->id, $this->squad->id);
+        $this->assertEquals($hero->squad->id, $this->squad->id);
     }
 
     /**

@@ -26,7 +26,7 @@ class EquipMobileStorageItemForHeroAction
     public function execute(Item $item, Hero $hero, HasItemsCollection $hasItemsCollection = null): HasItemsCollection
     {
         $hasItemsCollection = $hasItemsCollection ?: new HasItemsCollection();
-        $squad = $hero->getSquad();
+        $squad = $hero->squad;
 
         if(! $item->belongsToHasItems($squad)) {
             throw new ItemTransactionException($item, "Item does not belong to wagon", ItemTransactionException::CODE_INVALID_OWNERSHIP);

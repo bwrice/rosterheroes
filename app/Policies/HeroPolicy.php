@@ -24,10 +24,6 @@ class HeroPolicy
 
     public function manage(User $user, Hero $hero)
     {
-        $squad = $hero->getSquad();
-        if (! $squad) {
-            return false;
-        }
-        return $this->squadPolicy->manage($user, $squad);
+        return $this->squadPolicy->manage($user, $hero->squad);
     }
 }

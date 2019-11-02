@@ -22,7 +22,7 @@ class CastSpellOnHeroAction
             throw new SpellCasterException($hero, $spell, "Week is currently locked", SpellCasterException::CODE_WEEK_LOCKED);
         }
 
-        $squad = $hero->getSquad();
+        $squad = $hero->squad;
         if (! $squad->spells()->where('id', '=', $spell->id)->first()) {
             throw new SpellCasterException($hero, $spell, "Spell is not in library of " . $squad->name, SpellCasterException::CODE_SPELL_NOT_OWNED);
         }

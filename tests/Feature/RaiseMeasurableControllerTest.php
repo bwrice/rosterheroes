@@ -63,7 +63,7 @@ class RaiseMeasurableControllerTest extends TestCase
         /** @var Measurable $measurable */
         $measurable = $this->hero->measurables()->inRandomOrder()->first();
         $startingAmount = $measurable->amount_raised;
-        $squad = $this->hero->getSquad();
+        $squad = $this->hero->squad;
         $squad->experience = 999999;
         $squad->save();
         $amount = 5;
@@ -95,7 +95,7 @@ class RaiseMeasurableControllerTest extends TestCase
         /** @var Measurable $measurable */
         $measurable = $this->hero->measurables()->inRandomOrder()->first();
         $startingAmount = $measurable->amount_raised;
-        $squad = $this->hero->getSquad();
+        $squad = $this->hero->squad;
         $squad->experience = 999999;
         $squad->save();
         $amount = 5;

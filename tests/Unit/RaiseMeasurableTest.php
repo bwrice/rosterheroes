@@ -66,7 +66,7 @@ class RaiseMeasurableTest extends TestCase
         $staminaMeasurable = $this->hero->getMeasurable(MeasurableType::STAMINA);
         $startingAmount = $staminaMeasurable->amount_raised;
 
-        $squad = $this->hero->getSquad();
+        $squad = $this->hero->squad;
         $squad->experience = $squadTotalExperience = 100;
         $squad->save();
 
@@ -92,7 +92,7 @@ class RaiseMeasurableTest extends TestCase
     public function it_will_raise_a_measurable_for_a_hero()
     {
         // Give squad plenty of experience
-        $squad = $this->hero->getSquad();
+        $squad = $this->hero->squad;
         $squad->experience = 999999;
         $squad->save();
 

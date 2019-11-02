@@ -110,7 +110,7 @@ class UnEquipItemFromHeroActionTest extends TestCase
         $this->item = $this->item->fresh();
         $this->assertEquals(Squad::RELATION_MORPH_MAP_KEY, $this->item->has_items_type);
 
-        $squad = $this->hero->getSquad();
+        $squad = $this->hero->squad;
         $this->assertEquals($squad->id, $this->item->has_items_id);
 
         $this->assertEquals(2, $hasItemsCollection->count());
@@ -144,7 +144,7 @@ class UnEquipItemFromHeroActionTest extends TestCase
         $this->assertNotNull($hero);
 
         $stashHasItems = $hasItemsCollection->first(function (HasItems $hasItems) {
-            $stash = $this->hero->getSquad()->getLocalStash();
+            $stash = $this->hero->squad->getLocalStash();
             return $hasItems->getMorphID() === $stash->id && $hasItems->getMorphType() === Stash::RELATION_MORPH_MAP_KEY;
         });
         $this->assertNotNull($stashHasItems);
@@ -159,7 +159,7 @@ class UnEquipItemFromHeroActionTest extends TestCase
         $wagonBehaviorMock->shouldReceive('getWeightCapacity')->andReturn(-1);
         app()->instance(WagonBehavior::class, $wagonBehaviorMock);
 
-        $squad = $this->hero->getSquad();
+        $squad = $this->hero->squad;
         $residence = factory(Residence::class)->create([
             'squad_id' => $squad->id,
             'province_id' => $squad->province_id,
@@ -192,7 +192,7 @@ class UnEquipItemFromHeroActionTest extends TestCase
         $shackBehaviorMock->shouldReceive('getMaxItemCount')->andReturn(0);
         app()->instance(ShackBehavior::class, $shackBehaviorMock);
 
-        $squad = $this->hero->getSquad();
+        $squad = $this->hero->squad;
         $residence = factory(Residence::class)->create([
             'squad_id' => $squad->id,
             'province_id' => $squad->province_id,
