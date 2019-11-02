@@ -243,7 +243,7 @@ class Squad extends EventSourcedModel implements TravelsBorders, HasItems
      */
     public function availableSpiritEssence()
     {
-        return $this->spirit_essence - $this->getHeroes()->totalEssenceCost();
+        return $this->spirit_essence - $this->heroes()->with('playerSpirit')->get()->totalEssenceCost();
     }
 
     public function borderTravel(Province $border)
@@ -305,7 +305,7 @@ class Squad extends EventSourcedModel implements TravelsBorders, HasItems
      */
     public function inCreationState()
     {
-        return $this->getHeroes()->count() < self::getStartingHeroesCount();
+        return $this->heroes()->count() < self::getStartingHeroesCount();
     }
 
     public function getHeroRaceAvailability()
