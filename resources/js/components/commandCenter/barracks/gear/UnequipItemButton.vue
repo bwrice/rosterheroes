@@ -10,15 +10,15 @@
 </template>
 
 <script>
-    import Slot from "../../../../models/Slot";
     import Hero from "../../../../models/Hero";
     import {mapActions} from 'vuex';
+    import Item from "../../../../models/Item";
 
     export default {
-        name: "EmptyHeroSlotButton",
+        name: "UnequipItemButton",
         props: {
-            heroSlot: {
-                type: Slot,
+            item: {
+                type: Item,
                 required: true
             },
             hero: {
@@ -35,24 +35,24 @@
 
         methods: {
             ...mapActions([
-                'emptyHeroSlot'
+                'unequipItem'
             ]),
             async emptySlot() {
                 this.pending = true;
-                await this.emptyHeroSlot({
+                await this.unequipItem({
                     heroSlug: this.hero.slug,
-                    slotUuid: this.heroSlot.uuid
+                    item: this.item
                 });
                 this.pending = false;
             }
         },
         computed: {
             itemName() {
-                if (this.heroSlot.item) {
+                if (this.item) {
                     let windowWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
                     let maxLength = Math.floor(windowWidth/18);
                     maxLength = Math.min(maxLength, 26);
-                    return _.truncate(this.heroSlot.item.name, {
+                    return _.truncate(this.item.name, {
                         length: maxLength
                     });
                 }
