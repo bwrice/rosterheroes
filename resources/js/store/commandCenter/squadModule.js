@@ -127,15 +127,20 @@ export default {
             }
         },
 
-        async emptyHeroSlot({state, commit, dispatch}, {heroSlug, slotUuid}) {
+        async unequipItem({state, commit, dispatch}, {heroSlug, item}) {
 
             try {
-                let response = await heroApi.emptySlot(heroSlug, slotUuid);
-                let updatedHero = new Hero(response.data.hero);
-                helpers.syncUpdatedHero(state, commit, updatedHero);
-                if (response.data.mobileStorage) {
-                    let updateMobileStorage = new MobileStorage(response.data.mobileStorage);
-                    commit('SET_MOBILE_STORAGE', updateMobileStorage);
+                let response = await heroApi.unequipItem(heroSlug, item.uuid);
+                helpers.syncHasItemsResponse(state, commit, response);
+                let mobileStorageResponse = response.data.find(function (hasItemsResponse) {
+                    return hasItemsResponse.type === 'squad';
+                });
+                if (mobileStorageResponse) {
+                    let mobileStorage = new MobileStorage(mobileStorageResponse.hasItems);
+                    dispatch('snackBarSuccess', {
+                        text: mobileStorage.getItemMovedToText(item),
+                        timeout: 3000
+                    });
                 }
             } catch (e) {
                 console.log(e);
@@ -147,11 +152,11 @@ export default {
 
             try {
                 let response = await heroApi.equipFromWagon(heroSlug, item.uuid);
+                helpers.syncHasItemsResponse(state, commit, response);
                 dispatch('snackBarSuccess', {
                     text: item.name + ' equipped',
                     timeout: 3000
                 });
-                helpers.syncHasItemsResponse(state, commit, response);
             } catch (e) {
                 console.log(e);
                 dispatch('snackBarError', {})
