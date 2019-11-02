@@ -34,6 +34,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property string $name
  * @property string $slug
  *
+ * @property Squad $squad
  * @property HeroClass $heroClass
  * @property HeroPost $heroPost
  * @property HeroRace $heroRace
@@ -92,6 +93,11 @@ class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasItems
         return new HeroQueryBuilder($query);
     }
 
+    public function squad()
+    {
+        return $this->belongsTo(Squad::class);
+    }
+
     public function measurables()
     {
         return $this->hasMany(Measurable::class);
@@ -130,14 +136,6 @@ class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasItems
     public function items()
     {
         return $this->morphMany(Item::class, 'has_items');
-    }
-
-    /**
-     * @return Squad|null
-     */
-    public function getSquad()
-    {
-        return $this->heroPost ? $this->heroPost->squad : null;
     }
 
     /**
@@ -203,12 +201,7 @@ class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasItems
 
     public function availableExperience(): int
     {
-        $squad = $this->getSquad();
-        if (!$squad) {
-            return 0;
-        }
-
-        $squadExp = $squad->experience;
+        $squadExp = $this->squad->experience;
         $expSpentOnMeasurables = $this->measurables->experienceSpentOnRaising();
         return $squadExp - $expSpentOnMeasurables;
     }
@@ -319,7 +312,7 @@ class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasItems
 
     public function getBackupHasItems(): ?HasItems
     {
-        return $this->getSquad();
+        return $this->squad;
     }
 
     public function hasRoomForItem(Item $item): bool
