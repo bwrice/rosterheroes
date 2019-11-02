@@ -18,6 +18,7 @@ class CreateHeroesTable extends Migration
             $table->uuid('uuid');
             $table->string('name');
             $table->string('slug');
+            $table->integer('squad_id')->unsigned();
             $table->integer('hero_class_id')->unsigned();
             $table->integer('hero_rank_id')->unsigned();
             $table->integer('hero_race_id')->unsigned();
@@ -27,6 +28,7 @@ class CreateHeroesTable extends Migration
         });
 
         Schema::table('heroes', function (Blueprint $table) {
+            $table->foreign('squad_id')->references('id')->on('squads');
             $table->foreign('hero_class_id')->references('id')->on('hero_classes');
             $table->foreign('hero_rank_id')->references('id')->on('hero_ranks');
             $table->foreign('hero_race_id')->references('id')->on('hero_races');
