@@ -432,6 +432,10 @@ class Squad extends EventSourcedModel implements TravelsBorders, HasItems
     protected function getOverCapacityAmount(Item $item): int
     {
         $maxWeightCapacity = $this->mobileStorageRank->getBehavior()->getWeightCapacity();
+        $this->loadMissing([
+            'items.itemType.itemBase',
+            'items.material.materialType'
+        ]);
         $currentCapacity = $this->items->sumOfWeight();
         return ($currentCapacity + $item->weight()) - $maxWeightCapacity;
     }
@@ -448,7 +452,7 @@ class Squad extends EventSourcedModel implements TravelsBorders, HasItems
 
     public function getHasItemsResource(): JsonResource
     {
-        return new MobileStorageResource($this);
+        return new MobileStorageResource($this->load(static::getMobileStorageResourceRelations()));
     }
 
     public function getHasItemsType()

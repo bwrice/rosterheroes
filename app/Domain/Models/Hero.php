@@ -282,7 +282,7 @@ class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasItems
     public function getGearSlots(): GearSlotCollection
     {
         $gearSlotCollection = $this->buildGearSlots();
-        $this->items->each(function (Item $item) {
+        $this->loadMissing('items.itemType.itemBase')->items->each(function (Item $item) {
             $item->setUsesItems($this);
         });
         return $gearSlotCollection->setItems($this->items);
@@ -329,6 +329,7 @@ class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasItems
 
     public function itemsToMoveForNewItem(Item $item): ItemCollection
     {
+        $item->loadMissing('itemType.itemBase');
         return $this->getGearSlots()->itemsToUnEquipToEquipNewItem($item->getItemBaseBehavior());
     }
 
