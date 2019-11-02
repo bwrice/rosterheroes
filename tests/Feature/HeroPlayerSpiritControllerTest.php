@@ -46,11 +46,6 @@ class HeroPlayerSpiritControllerTest extends TestCase
             'hero_race_id' => $heroRace->id
         ]);
 
-        /** @var HeroPost $heroPost */
-        $heroPost = factory(HeroPost::class)->create([
-            'hero_id' => $hero->id
-        ]);
-
         /** @var PlayerSpirit $playerSpirit */
         $playerSpirit = factory(PlayerSpirit::class)->create();
 
@@ -63,7 +58,7 @@ class HeroPlayerSpiritControllerTest extends TestCase
         $playerSpirit->game->starts_at = Week::current()->everything_locks_at->addHours(2);
         $playerSpirit->game->save();
 
-        Passport::actingAs($heroPost->squad->user);
+        Passport::actingAs($hero->squad->user);
 
         $response = $this->json('POST', 'api/v1/heroes/'. $hero->slug . '/player-spirit', [
             'spirit' => $playerSpirit->uuid
@@ -109,11 +104,7 @@ class HeroPlayerSpiritControllerTest extends TestCase
         ]);
 
         $alreadyFilledHero = factory(Hero::class)->create([
-            'player_spirit_id' => $alreadyFilledPlayerSpirit->id
-        ]);
-
-        $alreadyFilledHeroPost = factory(HeroPost::class)->create([
-            'hero_id' => $alreadyFilledHero->id,
+            'player_spirit_id' => $alreadyFilledPlayerSpirit->id,
             'squad_id' => $squad->id
         ]);
 
@@ -125,12 +116,7 @@ class HeroPlayerSpiritControllerTest extends TestCase
 
         /** @var \App\Domain\Models\Hero $hero */
         $hero = factory(Hero::class)->state('with-measurables')->create([
-            'hero_race_id' => $heroRace->id
-        ]);
-
-        /** @var HeroPost $heroPost */
-        $heroPost = factory(HeroPost::class)->create([
-            'hero_id' => $hero->id,
+            'hero_race_id' => $heroRace->id,
             'squad_id' => $squad->id
         ]);
 
@@ -148,7 +134,7 @@ class HeroPlayerSpiritControllerTest extends TestCase
         $playerSpirit->game->starts_at = Week::current()->everything_locks_at->addHours(2);
         $playerSpirit->game->save();
 
-        Passport::actingAs($heroPost->squad->user);
+        Passport::actingAs($hero->squad->user);
 
         $response = $this->json('POST', 'api/v1/heroes/'. $hero->slug . '/player-spirit', [
             'spirit' => $playerSpirit->uuid
@@ -173,14 +159,9 @@ class HeroPlayerSpiritControllerTest extends TestCase
             'player_spirit_id' => $playerSpirit->id
         ]);
 
-        /** @var \App\Domain\Models\Hero $hero */
-        $heroPost = factory(HeroPost::class)->create([
-            'hero_id' => $hero->id
-        ]);
-
         Week::setTestCurrent($playerSpirit->week);
 
-        Passport::actingAs($heroPost->squad->user);
+        Passport::actingAs($hero->squad->user);
 
         // Mock 6 hours before everything locks
         CarbonImmutable::setTestNow(Week::current()->everything_locks_at->copy()->subHours(6));

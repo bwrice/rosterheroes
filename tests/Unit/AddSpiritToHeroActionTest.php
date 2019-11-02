@@ -35,17 +35,10 @@ class AddSpiritToHeroActionTest extends TestCase
         $heroRace = HeroRace::query()->inRandomOrder()->first();
 
         /*
-         * Create Hero
+         * Create Hero of specific Hero Race
          */
         $this->hero = factory(Hero::class)->create([
             'hero_race_id' => $heroRace->id
-        ]);
-
-        /*
-         * Attach Hero to Hero Post
-         */
-        factory(HeroPost::class)->create([
-            'hero_id' => $this->hero
         ]);
 
         /*
@@ -142,7 +135,7 @@ class AddSpiritToHeroActionTest extends TestCase
     {
 
         $squadEssence = 9000;
-        $squad = $this->hero->heroPost->squad;
+        $squad = $this->hero->squad;
         $squad->spirit_essence = $squadEssence;
         $squad->save();
 
@@ -242,13 +235,8 @@ class AddSpiritToHeroActionTest extends TestCase
         // Attach the player spirit to our other squad hero
         /** @var Hero $otherSquadHero */
         $otherSquadHero = factory(Hero::class)->create([
-            'player_spirit_id' => $this->playerSpirit->id
-        ]);
-
-        // attach hero to hero post and then the hero post to our squad
-        factory(HeroPost::class)->create([
-            'hero_id' => $otherSquadHero->id,
-            'squad_id' => $this->hero->heroPost->squad->id
+            'player_spirit_id' => $this->playerSpirit->id,
+            'squad_id' => $this->hero->squad->id
         ]);
 
         try {
@@ -269,6 +257,5 @@ class AddSpiritToHeroActionTest extends TestCase
 
         $this->fail("Exception not thrown");
     }
-
 
 }

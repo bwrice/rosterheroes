@@ -19,16 +19,10 @@ class RaiseMeasurableControllerTest extends TestCase
     /** @var Hero */
     protected $hero;
 
-    /** @var HeroPost */
-    protected $heroPost;
-
     public function setUp(): void
     {
         parent::setUp();
         $this->hero = factory(Hero::class)->state('with-measurables')->create();
-        $this->heroPost = factory(HeroPost::class)->create();
-        $this->heroPost->hero_id = $this->hero->id;
-        $this->heroPost->save();
     }
 
     /**
@@ -38,7 +32,7 @@ class RaiseMeasurableControllerTest extends TestCase
     {
         /** @var Measurable $measurable */
         $measurable = $this->hero->measurables()->inRandomOrder()->first();
-        Passport::actingAs($this->heroPost->squad->user);
+        Passport::actingAs($this->hero->squad->user);
 
         $queryVars = "?type=" . $measurable->measurableType->name;
         $response = $this->json('GET', 'api/v1/heroes/' . $this->hero->slug . '/raise-measurable' . $queryVars);
@@ -68,7 +62,7 @@ class RaiseMeasurableControllerTest extends TestCase
         $squad->save();
         $amount = 5;
 
-        Passport::actingAs($this->heroPost->squad->user);
+        Passport::actingAs($this->hero->squad->user);
 
         $response = $this->json('POST', 'api/v1/heroes/' . $this->hero->slug . '/raise-measurable', [
             'type' => $measurable->measurableType->name,

@@ -22,12 +22,8 @@ class HeroUnitTest extends TestCase
     {
         /** @var Hero $hero */
         $hero = factory(Hero::class)->create();
-        /** @var HeroPost $heroPost */
-        $heroPost = factory(HeroPost::class)->create([
-            'hero_id' => $hero->id
-        ]);
 
-        $squad = $heroPost->squad;
+        $squad = $hero->squad;
         $squad->spirit_essence = 30000;
         $squad->save();
 
@@ -38,11 +34,7 @@ class HeroUnitTest extends TestCase
 
         /** @var Hero $otherHero */
         $otherHero = factory(Hero::class)->create([
-            'player_spirit_id' => $playerSpirit->id
-        ]);
-        /** @var HeroPost $otherHeroPost */
-        $otherHeroPost = factory(HeroPost::class)->create([
-            'hero_id' => $otherHero->id,
+            'player_spirit_id' => $playerSpirit->id,
             'squad_id' => $squad->id
         ]);
 
@@ -64,12 +56,7 @@ class HeroUnitTest extends TestCase
             'player_spirit_id' => $playerSpirit->id
         ]);
 
-        /** @var HeroPost $heroPost */
-        $heroPost = factory(HeroPost::class)->create([
-            'hero_id' => $hero->id
-        ]);
-
-        $squad = $heroPost->squad;
+        $squad = $hero->squad;
         $squad->spirit_essence = 30000;
         $squad->save();
 

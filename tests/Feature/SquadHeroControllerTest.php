@@ -212,19 +212,11 @@ class SquadHeroControllerTest extends TestCase
         /** @var Hero $heroOne */
         $heroOne = factory(Hero::class)->state('with-measurables')->create();
 
-        factory(HeroPost::class)->create([
-            'hero_id' => $heroOne->id
-        ]);
-
-        $squad = $heroOne->heroPost->squad;
+        $squad = $heroOne->squad;
 
 
         /** @var Hero $heroTwo */
-        $heroTwo = factory(Hero::class)->state('with-measurables')->create();
-
-
-        factory(HeroPost::class)->create([
-            'hero_id' => $heroTwo->id,
+        $heroTwo = factory(Hero::class)->state('with-measurables')->create([
             'squad_id' => $squad->id
         ]);
 

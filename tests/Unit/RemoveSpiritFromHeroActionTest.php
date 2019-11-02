@@ -40,11 +40,6 @@ class RemoveSpiritFromHeroActionTest extends TestCase
             'player_spirit_id' => $playerSpirit->id
         ]);
 
-        /** @var HeroPost $heroPost */
-        factory(HeroPost::class)->create([
-            'hero_id' => $hero->id
-        ]);
-
         /** @var RemoveSpiritFromHeroAction $removeAction */
         $removeAction = app(RemoveSpiritFromHeroAction::class);
 
@@ -76,11 +71,6 @@ class RemoveSpiritFromHeroActionTest extends TestCase
         /** @var Hero $hero */
         $hero = factory(Hero::class)->create([
             'player_spirit_id' => $playerSpirit->id
-        ]);
-
-        /** @var HeroPost $heroPost */
-        factory(HeroPost::class)->create([
-            'hero_id' => $hero->id
         ]);
 
         /** @var RemoveSpiritFromHeroAction $removeAction */
