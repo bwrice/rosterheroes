@@ -20,6 +20,10 @@ final class HeroCreated implements ShouldBeStored
     /**
      * @var int
      */
+    public $squadID;
+    /**
+     * @var int
+     */
     public $heroClassID;
     /**
      * @var int
@@ -34,9 +38,10 @@ final class HeroCreated implements ShouldBeStored
      */
     public $combatPositionID;
 
-    public function __construct(string $name, int $heroClassID, int $heroRaceID, int $heroRankID, int $combatPositionID)
+    public function __construct(string $name, int $squadID, int $heroClassID, int $heroRaceID, int $heroRankID, int $combatPositionID)
     {
         $this->name = $name;
+        $this->squadID = $squadID;
         $this->heroClassID = $heroClassID;
         $this->heroRaceID = $heroRaceID;
         $this->heroRankID = $heroRankID;

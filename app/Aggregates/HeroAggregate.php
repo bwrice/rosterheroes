@@ -10,9 +10,9 @@ use Spatie\EventProjector\AggregateRoot;
 
 final class HeroAggregate extends AggregateRoot
 {
-    public function createHero(string $name, int $heroClassID, int $heroRaceID, int $heroRankID, int $combatPositionID)
+    public function createHero(string $name, int $squadID, int $heroClassID, int $heroRaceID, int $heroRankID, int $combatPositionID)
     {
-        $this->recordThat(new HeroCreated($name, $heroClassID, $heroRaceID, $heroRankID, $combatPositionID));
+        $this->recordThat(new HeroCreated($name, $squadID, $heroClassID, $heroRaceID, $heroRankID, $combatPositionID));
 
         return $this;
     }

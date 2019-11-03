@@ -19,6 +19,7 @@ class HeroProjector implements Projector
         Hero::query()->create([
             'uuid' => $aggregateUuid,
             'name' => $event->name,
+            'squad_id' => $event->squadID,
             'hero_class_id' => $event->heroClassID,
             'hero_race_id' => $event->heroRaceID,
             'hero_rank_id' => $event->heroRankID,

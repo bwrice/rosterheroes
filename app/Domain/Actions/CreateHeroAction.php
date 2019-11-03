@@ -17,6 +17,7 @@ use App\Domain\Models\HeroRace;
 use App\Domain\Models\HeroRank;
 use App\Domain\Models\MeasurableType;
 use App\Domain\Models\SlotType;
+use App\Domain\Models\Squad;
 use App\StorableEvents\HeroCreated;
 use Illuminate\Support\Str;
 
@@ -24,13 +25,13 @@ class CreateHeroAction
 {
     /**
      * @param string $name
+     * @param Squad $squad
      * @param HeroClass $heroClass
      * @param HeroRace $heroRace
      * @param HeroRank $heroRank
-     *
-     * @return Hero|null
+     * @return Hero
      */
-    public function execute(string $name, HeroClass $heroClass, HeroRace $heroRace, HeroRank $heroRank): Hero
+    public function execute(string $name, Squad $squad, HeroClass $heroClass, HeroRace $heroRace, HeroRank $heroRank): Hero
     {
         $heroUuid = Str::uuid();
         /** @var HeroAggregate $heroAggregate */
