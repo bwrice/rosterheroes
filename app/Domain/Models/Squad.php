@@ -310,7 +310,7 @@ class Squad extends EventSourcedModel implements TravelsBorders, HasItems
 
     public function getHeroRaceAvailability()
     {
-        $availableHeroPosts = $this->getHeroPostAvailability();
+        $availableHeroPosts = $this->getEmptyHeroPosts();
         $heroRaces = collect();
         $availableHeroPosts->each(function(HeroPost $heroPost) use ($heroRaces) {
             return $heroRaces->push($heroPost->getHeroRaces());
@@ -319,25 +319,28 @@ class Squad extends EventSourcedModel implements TravelsBorders, HasItems
         return $heroRaces->flatten()->unique();
     }
 
-    public function getHeroPostAvailability()
+    public function getEmptyHeroPosts()
     {
-        return $this->heroPosts->postFilled(false);
+        return $this->heroPosts->fillHeroes($this->heroes)->postEmpty();
     }
 
     public function getHeroClassAvailability()
     {
         if ($this->inCreationState()) {
 
-            $emptyHeroPosts = $this->heroPosts->postFilled(false);
+            // Filter any required starting classes that we currently don't have a hero for
             $requiredClasses = HeroClass::requiredStarting()->get();
-            $heroes = $this->getHeroes();
-
-            $missingClasses = $requiredClasses->filter(function (HeroClass $heroClass) use ($heroes) {
-                $heroWithClass = $heroes->filterByClass($heroClass)->first();
-                return $heroWithClass === null;
+            $missingClasses = $requiredClasses->filter(function (HeroClass $heroClass) {
+                $heroWithClass = $this->heroes->filterByClass($heroClass)->first();
+                return is_null($heroWithClass);
             });
 
-            if ($missingClasses->count() >= $emptyHeroPosts->count()) {
+            /*
+             * If we don't have more empty hero posts than missing classes, the
+             * missing hero classes ARE the squad's available classes
+             */
+            $emptyHeroPosts = $this-$this->getEmptyHeroPosts();
+            if ($emptyHeroPosts->count() <= $missingClasses->count()) {
                 return $missingClasses;
             }
         }

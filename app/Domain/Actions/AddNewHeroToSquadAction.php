@@ -54,7 +54,7 @@ class AddNewHeroToSquadAction
      */
     public function execute(Squad $squad, string $heroName, HeroClass $heroClass, HeroRace $heroRace): Hero
     {
-        $heroPost= $squad->getHeroPostAvailability()->heroRace($heroRace)->first();
+        $heroPost = $squad->getEmptyHeroPosts()->filterByHeroRace($heroRace)->first();
         if (! $heroPost) {
             throw new HeroPostNotFoundException($heroRace);
         }
