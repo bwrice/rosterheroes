@@ -9,9 +9,11 @@
 namespace App\Domain\Collections;
 
 
+use App\Domain\Models\Hero;
 use App\Domain\Models\HeroPost;
 use App\Domain\Models\HeroRace;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Log;
 
 class HeroPostCollection extends Collection
 {
@@ -20,7 +22,7 @@ class HeroPostCollection extends Collection
      * @param HeroRace $heroRace
      * @return HeroPostCollection
      */
-    public function heroRace(HeroRace $heroRace)
+    public function filterByHeroRace(HeroRace $heroRace)
     {
         return $this->loadMissing('heroPostType.heroRaces')->filter(function (HeroPost $heroPost) use ($heroRace) {
             return in_array($heroRace->id, $heroPost->heroPostType->heroRaces->pluck('id')->toArray());
@@ -47,5 +49,33 @@ class HeroPostCollection extends Collection
         });
 
         return $heroRaces;
+    }
+
+    public function postEmpty()
+    {
+        return $this->filter(function (HeroPost $heroPost) {
+            return is_null($heroPost->getHero());
+        });
+    }
+
+    public function fillHeroes(HeroCollection $heroes)
+    {
+        return $this->loadMissing('heroPostType.heroRaces')->sortByDesc(function (HeroPost $heroPost) {
+            return $heroPost->heroPostType->heroRaces->count();
+        })->setHeroes($heroes);
+    }
+
+    protected function setHeroes(HeroCollection $heroes)
+    {
+        $heroes->each(function (Hero $hero) {
+            /** @var HeroPost $heroPost */
+            $heroPost = $this->postEmpty()->filterByHeroRace($hero->heroRace)->first();
+            if (! $heroPost) {
+                Log::warning("Couldn't fill hero post for hero: " . $hero->uuid);
+            } else {
+                $heroPost->setHero($hero);
+            }
+        });
+        return $this;
     }
 }
