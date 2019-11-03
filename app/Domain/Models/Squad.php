@@ -339,7 +339,7 @@ class Squad extends EventSourcedModel implements TravelsBorders, HasItems
              * If we don't have more empty hero posts than missing classes, the
              * missing hero classes ARE the squad's available classes
              */
-            $emptyHeroPosts = $this-$this->getEmptyHeroPosts();
+            $emptyHeroPosts = $this->getEmptyHeroPosts();
             if ($emptyHeroPosts->count() <= $missingClasses->count()) {
                 return $missingClasses;
             }
