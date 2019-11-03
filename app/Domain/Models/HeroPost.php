@@ -2,13 +2,7 @@
 
 namespace App\Domain\Models;
 
-use App\Domain\Models\Hero;
-use App\Domain\Models\HeroRace;
-use App\Domain\Models\Player;
 use App\Domain\Collections\HeroPostCollection;
-use App\Domain\Models\Squad;
-use App\Domain\Models\HeroPostType;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -26,6 +20,9 @@ use Illuminate\Database\Eloquent\Model;
 class HeroPost extends Model
 {
     protected $guarded = [];
+
+    /** @var Hero|null */
+    public $hero;
 
     public function newCollection(array $models = [])
     {
@@ -45,5 +42,23 @@ class HeroPost extends Model
     public function getHeroRaces()
     {
         return $this->heroPostType->heroRaces;
+    }
+
+    /**
+     * @param Hero|null $hero
+     * @return HeroPost
+     */
+    public function setHero(?Hero $hero): HeroPost
+    {
+        $this->hero = $hero;
+        return $this;
+    }
+
+    /**
+     * @return Hero|null
+     */
+    public function getHero(): ?Hero
+    {
+        return $this->hero;
     }
 }
