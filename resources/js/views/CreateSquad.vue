@@ -5,8 +5,8 @@
                 <v-row align="center" no-gutters style="height: 500px">
                     <v-col cols="12" offset-md="2" md="8" offset-lg="3" lg="6">
                         <div class="flex align-center">
-                            <v-stepper v-model="progress">
-                                <v-stepper-header>
+                            <v-stepper v-model="progress" style="background: none; box-shadow: none">
+                                <v-stepper-header style="box-shadow:none">
                                     <v-stepper-step :complete="progress > 1" step="1"></v-stepper-step>
 
                                     <v-divider></v-divider>
