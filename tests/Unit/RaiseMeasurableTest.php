@@ -32,9 +32,6 @@ class RaiseMeasurableTest extends TestCase
     {
         parent::setUp();
         $this->hero = factory(Hero::class)->state('with-measurables')->create();
-        $this->heroPost = factory(HeroPost::class)->create([
-            'hero_id' => $this->hero->id
-        ]);
         $this->raiseMeasurableAction = app(RaiseMeasurableAction::class);
     }
 

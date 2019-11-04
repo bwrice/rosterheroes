@@ -33,12 +33,8 @@ class CastSpellControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->squad = factory(Squad::class)->create();
         $this->hero = factory(Hero::class)->state('with-measurables')->create();
-        factory(HeroPost::class)->create([
-            'squad_id' => $this->squad->id,
-            'hero_id' => $this->hero->id
-        ]);
+        $this->squad = $this->hero->squad;
         $this->spell = Spell::query()->where('name', '=', 'Resolve')->inRandomOrder()->first();
         $this->squad->spells()->save($this->spell);
         /** @var Week $week */
