@@ -29,7 +29,7 @@
     import Squad from "../../models/Squad";
 
     export default {
-        name: "SquadCreationStepper",
+        name: "SquadNameStepper",
 
         props: {
             squad: {

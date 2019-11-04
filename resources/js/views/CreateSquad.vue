@@ -27,8 +27,8 @@
 
                                 <v-stepper-items>
 
-                                    <SquadCreationStepper :squad="squadClone"
-                                                          @squad-created="handleSquadNameCreated"></SquadCreationStepper>
+                                    <SquadNameStepper :squad="squadClone"
+                                                          @squad-created="handleSquadNameCreated"></SquadNameStepper>
 
                                     <HeroCreationStepper
                                         v-for="heroStep in heroSteps"
@@ -65,7 +65,7 @@
 
 <script>
 
-    import SquadCreationStepper from '../components/squadCreation/SquadCreationStepper'
+    import SquadNameStepper from '../components/squadCreation/SquadNameStepper'
     import HeroCreationStepper from '../components/squadCreation/HeroCreationStepper'
 
     export default {
@@ -120,7 +120,7 @@
         },
 
         components: {
-            SquadCreationStepper,
+            SquadNameStepper,
             HeroCreationStepper
         },
 
