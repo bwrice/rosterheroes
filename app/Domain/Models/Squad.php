@@ -306,7 +306,12 @@ class Squad extends EventSourcedModel implements TravelsBorders, HasItems
 
     public function getEmptyHeroPosts()
     {
-        return $this->heroPosts->fillHeroes($this->heroes)->postEmpty();
+        return $this->buildHeroPosts()->postEmpty();
+    }
+
+    public function buildHeroPosts()
+    {
+        return $this->heroPosts->fillHeroes($this->heroes);
     }
 
     public function getHeroClassAvailability()

@@ -44,10 +44,10 @@ class SquadHeroControllerTest extends TestCase
         $squad = $squad->fresh();
 
         $response->assertStatus(201);
-        $this->assertEquals(1, $squad->getHeroes()->count());
+        $this->assertEquals(1, $squad->heroes->count());
 
         /** @var \App\Domain\Models\Hero $hero */
-        $hero = $squad->getHeroes()->first();
+        $hero = $squad->heroes->first();
 
         $this->assertEquals($heroName, $hero->name);
         $this->assertEquals($heroClass, $hero->heroClass->name);
@@ -103,7 +103,7 @@ class SquadHeroControllerTest extends TestCase
         } catch (ValidationException $exception) {
             $heroRaceErrors = $exception->validator->errors()->get('race');
             $this->assertNotEmpty($heroRaceErrors);
-            $this->assertEquals(0, $squad->getHeroes()->count());
+            $this->assertEquals(0, $squad->heroes->count());
             return;
         }
 
@@ -139,7 +139,7 @@ class SquadHeroControllerTest extends TestCase
         } catch (ValidationException $exception) {
             $heroRaceErrors = $exception->validator->errors()->get('race');
             $this->assertNotEmpty($heroRaceErrors);
-            $this->assertEquals(0, $squad->getHeroes()->count());
+            $this->assertEquals(0, $squad->heroes->count());
             return;
         }
 
@@ -165,20 +165,27 @@ class SquadHeroControllerTest extends TestCase
         $sameHeroClassCountToAdd = (Squad::getStartingHeroesCount() - HeroClass::requiredStarting()->count()) + 1;
         /** @var HeroClass $overloadedHeroClass */
         $overloadedHeroClass = HeroClass::requiredStarting()->inRandomOrder()->first();
+        $usedHeroRaceIDs = [];
 
         foreach(range(1, $sameHeroClassCountToAdd) as $heroToAddCount) {
+
+            /*
+             * We have to make sure we're using a difference race when testing hero class, otherwise
+             * the hero posts won't be filled correctly, potentially throwing off the available empty hero posts
+             */
+            $heroRace = HeroRace::query()->whereNotIn('id', $usedHeroRaceIDs)->inRandomOrder()->first();
+            $usedHeroRaceIDs[] = $heroRace->id;
+
             /** @var Hero $hero */
             $hero = factory(Hero::class)->create([
-                'hero_class_id' => $overloadedHeroClass->id
+                'hero_class_id' => $overloadedHeroClass->id,
+                'hero_race_id' => $heroRace->id,
+                'squad_id' => $squad->id
             ]);
-            /** @var \App\Domain\Models\HeroPost $emptyPost */
-            $emptyPost = $heroPosts->postFilled(false)->first();
-            $emptyPost->hero_id = $hero->id;
-            $emptyPost->save();
         }
 
         $squad = $squad->fresh();
-        $heroesWithOverloadedHeroClass = $squad->getHeroes()->filterByClass($overloadedHeroClass);
+        $heroesWithOverloadedHeroClass = $squad->heroes->filterByClass($overloadedHeroClass);
         $this->assertEquals($sameHeroClassCountToAdd, $heroesWithOverloadedHeroClass->count());
         $this->assertTrue($squad->inCreationState());
 
@@ -186,16 +193,18 @@ class SquadHeroControllerTest extends TestCase
         $heroName = 'TestHero' . rand(1,999999);
 
         try {
+            // Once again make sure to use a unique hero race
+            $heroRaceForNewHero = HeroRace::query()->whereNotIn('id', $usedHeroRaceIDs)->inRandomOrder()->first();
             $response = $this->json('POST','api/v1/squad/' . $squad->slug .  '/heroes', [
                 'name' => $heroName,
-                'race' => HeroRace::DWARF,
+                'race' => $heroRaceForNewHero->name,
                 'class' => $overloadedHeroClass->name
             ]);
         } catch (ValidationException $exception) {
             $heroRaceErrors = $exception->validator->errors()->get('class');
             $this->assertNotEmpty($heroRaceErrors);
             // We should only have the original heroes for the overloaded hero class
-            $this->assertEquals($sameHeroClassCountToAdd, $squad->getHeroes()->count());
+            $this->assertEquals($sameHeroClassCountToAdd, $squad->heroes->count());
             return;
         }
 

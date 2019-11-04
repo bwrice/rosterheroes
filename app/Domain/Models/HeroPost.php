@@ -21,6 +21,8 @@ class HeroPost extends Model
 {
     protected $guarded = [];
 
+    protected $appends = ['hero'];
+
     /** @var Hero|null */
     public $hero;
 
@@ -42,6 +44,11 @@ class HeroPost extends Model
     public function getHeroRaces()
     {
         return $this->heroPostType->heroRaces;
+    }
+
+    public function getHeroAttribute()
+    {
+        return $this->hero;
     }
 
     /**
