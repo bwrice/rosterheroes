@@ -168,21 +168,6 @@ class Squad extends EventSourcedModel implements TravelsBorders, HasItems
         return $this->hasMany(HeroPost::class);
     }
 
-    /**
-     * @param array $relations
-     * @return HeroCollection
-     */
-    public function getHeroes($relations = ['hero'])
-    {
-        $heroes = new HeroCollection();
-        $this->heroPosts->load($relations)->each(function (HeroPost $heroPost) use ($heroes) {
-            if ($heroPost->hero) {
-                $heroes->push($heroPost->hero);
-            }
-        });
-        return $heroes;
-    }
-
     public function items()
     {
         return $this->morphMany(Item::class, 'has_items');
@@ -387,13 +372,6 @@ class Squad extends EventSourcedModel implements TravelsBorders, HasItems
     public function getUniqueIdentifier(): string
     {
         return (string) $this->uuid;
-    }
-
-    public function getAvailableWagonWeight(): int
-    {
-        $maxCapacity = $this->mobileStorageRank->getBehavior()->getWeightCapacity();
-        $itemWeightSum = $this->items->sumOfWeight();
-        return $maxCapacity - $itemWeightSum;
     }
 
     public function getBackupHasItems(): ?HasItems
