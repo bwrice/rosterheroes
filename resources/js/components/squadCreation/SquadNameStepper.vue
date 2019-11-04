@@ -1,25 +1,33 @@
 <template>
-    <v-stepper-content step="1">
-        <v-text-field
-            name="squad-name"
-            label="Squad Name"
-            outline
-            v-model="name"
-            @blur="$v.name.$touch()"
-            @input="serverErrors.flush()"
-            :error-messages="nameErrors"
-            messages="Letters, numbers and spaces allowed"
-        ></v-text-field>
-
-        <v-btn
-            name="squad-submit"
-            color="primary"
-            @click="createSquad"
-            :disabled="buttonDisabled"
-        >
-            Continue
-        </v-btn>
-    </v-stepper-content>
+    <SquadCreationStep :step="1">
+        <v-row no-gutters>
+            <v-text-field
+                name="squad-name"
+                label="Squad Name"
+                outlined
+                v-model="name"
+                @blur="$v.name.$touch()"
+                @input="serverErrors.flush()"
+                :error-messages="nameErrors"
+                messages="Letters, numbers and spaces allowed"
+            ></v-text-field>
+        </v-row>
+        <v-row no-gutters>
+            <v-col cols="10" offset="1" md="8" offset-md="2" lg="4" offset-lg="4">
+                <v-btn
+                    block
+                    large
+                    name="squad-submit"
+                    color="primary"
+                    @click="createSquad"
+                    :disabled="buttonDisabled"
+                    class="mt-6"
+                >
+                    Continue
+                </v-btn>
+            </v-col>
+        </v-row>
+    </SquadCreationStep>
 </template>
 
 <script>
@@ -27,10 +35,11 @@
     import { required, minLength, maxLength, helpers } from 'vuelidate/lib/validators'
     import Errors from '../../classes/errors'
     import Squad from "../../models/Squad";
+    import SquadCreationStep from "./SquadCreationStep";
 
     export default {
         name: "SquadNameStepper",
-
+        components: {SquadCreationStep},
         props: {
             squad: {
                 type: Object,
