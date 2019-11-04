@@ -1,29 +1,25 @@
 <template>
-    <div>
-        <v-stepper-content step="1">
-            <v-flex xs12>
-                <v-text-field
-                    name="squad-name"
-                    label="Squad Name"
-                    outline
-                    v-model="name"
-                    @blur="$v.name.$touch()"
-                    @input="serverErrors.flush()"
-                    :error-messages="nameErrors"
-                    messages="Letters, numbers and spaces allowed"
-                ></v-text-field>
-            </v-flex>
+    <v-stepper-content step="1">
+        <v-text-field
+            name="squad-name"
+            label="Squad Name"
+            outline
+            v-model="name"
+            @blur="$v.name.$touch()"
+            @input="serverErrors.flush()"
+            :error-messages="nameErrors"
+            messages="Letters, numbers and spaces allowed"
+        ></v-text-field>
 
-            <v-btn
-                name="squad-submit"
-                color="primary"
-                @click="createSquad"
-                :disabled="buttonDisabled"
-            >
-                Continue
-            </v-btn>
-        </v-stepper-content>
-    </div>
+        <v-btn
+            name="squad-submit"
+            color="primary"
+            @click="createSquad"
+            :disabled="buttonDisabled"
+        >
+            Continue
+        </v-btn>
+    </v-stepper-content>
 </template>
 
 <script>
