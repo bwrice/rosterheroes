@@ -1,38 +1,36 @@
 <template>
     <v-app dark>
-        <v-app-bar fixed app>
-            <v-toolbar-title>Create Your Squad</v-toolbar-title>
-        </v-app-bar>
-        <v-content>
-            <v-container fluid>
-                <v-layout fill-height align-center justify-center>
-                    <v-flex offset-md-1 offset-lg-2>
-                        <v-stepper v-model="progress">
-                            <v-stepper-header>
-                                <v-stepper-step :complete="progress > 1" step="1">Squad Name</v-stepper-step>
+        <v-content style="background-image: linear-gradient(#236161, #2f3838);">
+            <v-container>
+                <v-row align="center" no-gutters style="height: 500px">
+                    <v-col cols="12" offset-md="2" md="8" offset-lg="3" lg="6">
+                        <div class="flex align-center">
+                            <v-stepper v-model="progress">
+                                <v-stepper-header>
+                                    <v-stepper-step :complete="progress > 1" step="1"></v-stepper-step>
 
-                                <v-divider></v-divider>
+                                    <v-divider></v-divider>
+                                    <v-stepper-step :complete="progress > 2" step="2"></v-stepper-step>
 
-                                <v-stepper-step :complete="progress > 2" step="2">Hero One</v-stepper-step>
+                                    <v-divider></v-divider>
 
-                                <v-divider></v-divider>
+                                    <v-stepper-step :complete="progress > 3" step="3"></v-stepper-step>
 
-                                <v-stepper-step :complete="progress > 3" step="3">Hero Two</v-stepper-step>
+                                    <v-divider></v-divider>
 
-                                <v-divider></v-divider>
+                                    <v-stepper-step :complete="progress > 4" step="4"></v-stepper-step>
 
-                                <v-stepper-step :complete="progress > 4" step="4">Hero Three</v-stepper-step>
+                                    <v-divider></v-divider>
 
-                                <v-divider></v-divider>
+                                    <v-stepper-step :complete="progress > 5" step="5"></v-stepper-step>
+                                </v-stepper-header>
 
-                                <v-stepper-step :complete="progress > 5" step="5">Hero Four</v-stepper-step>
-                            </v-stepper-header>
+                                <v-stepper-items>
 
-                            <v-stepper-items>
+                                    <SquadCreationStepper :squad="squadClone"
+                                                          @squad-created="handleSquadNameCreated"></SquadCreationStepper>
 
-                                <SquadCreationStepper :squad="squadClone" @squad-created="handleSquadNameCreated"></SquadCreationStepper>
-
-                                <HeroCreationStepper
+                                    <HeroCreationStepper
                                         v-for="heroStep in heroSteps"
                                         :heroStep="heroStep"
                                         :key="heroStep.id"
@@ -40,25 +38,26 @@
                                         :allowed-hero-classes="allowedHeroClasses"
                                         :allowed-hero-races="allowedHeroRaces"
                                         @hero-created="handleHeroCreated"
-                                >
-                                    Create Your First Hero
-                                </HeroCreationStepper>
+                                    >
+                                        Create Your First Hero
+                                    </HeroCreationStepper>
 
-                                <v-stepper-content :step="6">
-                                    <p>Congrats!!! Your squad,<br>
-                                        <span class="headline text-xs-center">{{ squadClone.name }}</span>
-                                    <p>is all set up. You can now head over to the <br>
-                                        command center to begin your journey
-                                    </p>
-                                    <v-btn :href="'/command-center/' + this.squadClone.slug" color="primary">
-                                        Go to Command Center
-                                    </v-btn>
-                                </v-stepper-content>
+                                    <v-stepper-content :step="6">
+                                        <p>Congrats!!! Your squad,<br>
+                                            <span class="headline text-xs-center">{{ squadClone.name }}</span>
+                                        <p>is all set up. You can now head over to the <br>
+                                            command center to begin your journey
+                                        </p>
+                                        <v-btn :href="'/command-center/' + this.squadClone.slug" color="primary">
+                                            Go to Command Center
+                                        </v-btn>
+                                    </v-stepper-content>
 
-                            </v-stepper-items>
-                        </v-stepper>
-                    </v-flex>
-                </v-layout>
+                                </v-stepper-items>
+                            </v-stepper>
+                        </div>
+                    </v-col>
+                </v-row>
             </v-container>
         </v-content>
     </v-app>
