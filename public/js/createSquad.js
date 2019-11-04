@@ -2028,6 +2028,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _classes_errors__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../classes/errors */ "./resources/js/classes/errors.js");
+/* harmony import */ var _models_Squad__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../models/Squad */ "./resources/js/models/Squad.js");
 //
 //
 //
@@ -2056,6 +2057,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2088,7 +2090,8 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('/api/v1/squads', {
         name: this.name
       }).then(function (response) {
-        self.$emit('squad-created', response.data);
+        var squad = new _models_Squad__WEBPACK_IMPORTED_MODULE_2__["default"](response.data.data);
+        self.$emit('squad-created', squad);
         self.pendingResponse = false;
       })["catch"](function (error) {
         self.serverErrors.fill(error.response.data.errors);
@@ -85135,6 +85138,48 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     CreateSquad: _views_CreateSquad__WEBPACK_IMPORTED_MODULE_5__["default"]
   }
 });
+
+/***/ }),
+
+/***/ "./resources/js/models/Squad.js":
+/*!**************************************!*\
+  !*** ./resources/js/models/Squad.js ***!
+  \**************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Squad; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Squad = function Squad(_ref) {
+  var uuid = _ref.uuid,
+      _ref$name = _ref.name,
+      name = _ref$name === void 0 ? '' : _ref$name,
+      _ref$slug = _ref.slug,
+      slug = _ref$slug === void 0 ? '' : _ref$slug,
+      _ref$spiritEssence = _ref.spiritEssence,
+      spiritEssence = _ref$spiritEssence === void 0 ? 0 : _ref$spiritEssence,
+      _ref$gold = _ref.gold,
+      gold = _ref$gold === void 0 ? 0 : _ref$gold,
+      _ref$experience = _ref.experience,
+      experience = _ref$experience === void 0 ? 0 : _ref$experience,
+      _ref$favor = _ref.favor,
+      favor = _ref$favor === void 0 ? 0 : _ref$favor;
+
+  _classCallCheck(this, Squad);
+
+  this.name = name;
+  this.uuid = uuid;
+  this.slug = slug;
+  this.spiritEssence = spiritEssence;
+  this.gold = gold;
+  this.experience = experience;
+  this.favor = favor;
+};
+
+
 
 /***/ }),
 

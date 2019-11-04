@@ -30,6 +30,7 @@
 
     import { required, minLength, maxLength, helpers } from 'vuelidate/lib/validators'
     import Errors from '../../classes/errors'
+    import Squad from "../../models/Squad";
 
     export default {
         name: "SquadCreationStepper",
@@ -65,7 +66,8 @@
                 axios.post('/api/v1/squads', {
                     name: this.name
                 }).then(function (response) {
-                    self.$emit('squad-created', response.data);
+                    let squad = new Squad(response.data.data);
+                    self.$emit('squad-created', squad);
                     self.pendingResponse = false;
                 }).catch(function (error) {
                     self.serverErrors.fill(error.response.data.errors);
