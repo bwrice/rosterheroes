@@ -64,11 +64,7 @@ class AddNewHeroToSquadAction
         }
 
         // Create hero
-        $hero = $this->createHeroAction->execute($heroName, $heroClass, $heroRace, HeroRank::getStarting());
-
-        // Attach hero to hero post
-        $heroPost->hero_id = $hero->id;
-        $heroPost->save();
+        $hero = $this->createHeroAction->execute($heroName, $squad, $heroClass, $heroRace, HeroRank::getStarting());
 
         // Create new hero items and slot them
         $heroClass->getBehavior()->getStartItemBlueprints()->each(function (ItemBlueprint $itemBlueprint) use ($hero) {

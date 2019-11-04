@@ -38,6 +38,7 @@ class CreateHeroAction
         $heroAggregate = HeroAggregate::retrieve($heroUuid);
         $heroAggregate->createHero(
             $name,
+            $squad->id,
             $heroClass->id,
             $heroRace->id,
             $heroRank->id,
