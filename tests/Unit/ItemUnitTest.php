@@ -77,6 +77,16 @@ class ItemUnitTest extends TestCase
         /** @var Material $material2 */
         $material2 = $materials->shift();
 
+        /*
+         * Set item to a high grade shield because weight is rounded, because sometimes, for lighter items,
+         * the material doesn't make enough difference to get a different integer
+         */
+        $itemType = ItemType::query()->whereHas('itemBase', function (Builder $builder) {
+            $builder->where('name', '=', ItemBase::SHIELD);
+        })->orderByDesc('grade')->first();
+        $this->item->item_type_id = $itemType->id;
+        $this->item->save();
+
         $this->assertGreaterThan($material1->grade, $material2->grade);
 
         $this->item->material_id = $material1->id;
@@ -108,6 +118,16 @@ class ItemUnitTest extends TestCase
         /** @var Material $secondMaterial */
 
         $this->assertNotNull($secondMaterial);
+
+        /*
+         * Set item to a high grade shield because weight is rounded, because sometimes, for lighter items,
+         * the material doesn't make enough difference to get a different integer
+         */
+        $itemType = ItemType::query()->whereHas('itemBase', function (Builder $builder) {
+            $builder->where('name', '=', ItemBase::SHIELD);
+        })->orderByDesc('grade')->first();
+        $this->item->item_type_id = $itemType->id;
+        $this->item->save();
 
         $this->item->material_id = $firstMaterial->id;
         $this->item->save();
