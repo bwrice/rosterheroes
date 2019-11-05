@@ -27,10 +27,10 @@
 
                                 <v-stepper-items>
 
-                                    <SquadNameStepper :squad="squadClone"
-                                                          @squad-created="handleSquadNameCreated"></SquadNameStepper>
+                                    <NameSquadStep :squad="squadClone"
+                                                          @squad-created="handleSquadNameCreated"></NameSquadStep>
 
-                                    <HeroCreationStepper
+                                    <CreateHeroStep
                                         v-for="heroStep in heroSteps"
                                         :heroStep="heroStep"
                                         :key="heroStep.id"
@@ -40,7 +40,7 @@
                                         @hero-created="handleHeroCreated"
                                     >
                                         Create Your First Hero
-                                    </HeroCreationStepper>
+                                    </CreateHeroStep>
 
                                     <v-stepper-content :step="6">
                                         <p>Congrats!!! Your squad,<br>
@@ -65,8 +65,8 @@
 
 <script>
 
-    import SquadNameStepper from '../components/squadCreation/SquadNameStepper'
-    import HeroCreationStepper from '../components/squadCreation/HeroCreationStepper'
+    import NameSquadStep from '../components/squadCreation/NameSquadStep'
+    import CreateHeroStep from '../components/squadCreation/CreateHeroStep'
 
     export default {
 
@@ -120,18 +120,18 @@
         },
 
         components: {
-            SquadNameStepper,
-            HeroCreationStepper
+            NameSquadStep,
+            CreateHeroStep
         },
 
         methods: {
             handleSquadNameCreated: function(squad) {
                 this.squadClone = squad;
                 this.squadCreated = true;
-                this.updateDependencies();
-                // this.updateProgress();
+                this.updateAllowedHeroClasses();
+                this.updateAllowedHeroRaces();
             },
-            updateHeroClasses: function() {
+            updateAllowedHeroClasses: function() {
                 let self = this;
                 axios.get('/api/v1/squad/' + this.squadClone.slug + '/hero-classes').
                 then(function (response) {
@@ -140,7 +140,7 @@
                     console.log(error);
                 });
             },
-            updateHeroRaces: function() {
+            updateAllowedHeroRaces: function() {
                 let self = this;
                 axios.get('/api/v1/squad/' + this.squadClone.slug + '/hero-races').
                 then(function (response) {
@@ -152,13 +152,10 @@
             handleHeroCreated: function(hero, step) {
                 this.heroesClone.push(hero);
                 if (step < 5) {
-                    this.updateDependencies();
+                    this.updateAllowedHeroClasses();
+                    this.updateAllowedHeroRaces();
                 }
             },
-            updateDependencies: function() {
-                this.updateHeroClasses();
-                this.updateHeroRaces();
-            }
         },
         computed: {
             progress: {

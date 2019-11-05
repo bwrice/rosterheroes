@@ -106,7 +106,7 @@
     import SquadCreationStep from "./SquadCreationStep";
 
     export default {
-        name: "HeroCreationStepper",
+        name: "CreateHeroStep",
         components: {SquadCreationStep},
         props: {
             heroStep: {
