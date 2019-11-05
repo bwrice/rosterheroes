@@ -9,7 +9,7 @@
                     <span class="subtitle-1 font-weight-bold" style="color: rgba(255, 255, 255, 0.8)">Hero Race</span>
                     <v-radio-group
                         :name="'hero-race-' + heroNumber"
-                        v-model="heroRace"
+                        v-model="heroRaceSelection"
                         @blur="$v.heroRace.$touch()"
                         @click="serverErrors.flush()"
                         :error-messages="raceErrors"
@@ -44,7 +44,7 @@
                     <span class="subtitle-1 font-weight-bold" style="color: rgba(255, 255, 255, 0.8)">Hero Class</span>
                     <v-radio-group
                         :name="'hero-class-' + heroNumber"
-                        v-model="heroClass"
+                        v-model="heroClassSelection"
                         @blur="$v.heroClass.$touch()"
                         @click="serverErrors.flush()"
                         :error-messages="classErrors"
@@ -72,16 +72,27 @@
         </v-row>
         <v-row no-gutters>
             <v-col cols="12" class="mt-1">
-                <v-text-field
-                    label="Hero Name"
-                    :name="'hero-name-' + heroNumber"
-                    outlined
-                    v-model="name"
-                    @blur="$v.name.$touch()"
-                    @input="serverErrors.flush()"
-                    :error-messages="nameErrors"
-                    messages="Letters, numbers and spaces allowed"
-                ></v-text-field>
+                <v-row no-gutters justify="center">
+                    <div v-if="heroRaceSelection" class="hero-type-icon">
+                        <HeroRaceIcon :hero-race="heroRace"></HeroRaceIcon>
+                    </div>
+                    <div v-else class="empty-hero-type"></div>
+                    <div v-if="heroClassSelection" class="hero-type-icon">
+                        <HeroClassIcon :hero-class="heroClass"></HeroClassIcon>
+                    </div>
+                    <div v-else class="empty-hero-type"></div>
+                    <v-text-field
+                        label="Hero Name"
+                        :name="'hero-name-' + heroNumber"
+                        outlined
+                        v-model="name"
+                        @blur="$v.name.$touch()"
+                        @input="serverErrors.flush()"
+                        :error-messages="nameErrors"
+                        messages="Letters, numbers and spaces allowed"
+                        class="mx-2"
+                    ></v-text-field>
+                </v-row>
             </v-col>
             <v-col cols="10" offset="1" md="8" offset-md="2" lg="4" offset-lg="4" class="mt-2">
                 <v-btn
@@ -104,10 +115,14 @@
     import { required, minLength, maxLength, helpers } from 'vuelidate/lib/validators'
     import Errors from '../../classes/errors'
     import SquadCreationStep from "./SquadCreationStep";
+    import HeroClass from "../../models/HeroClass";
+    import HeroRace from "../../models/HeroRace";
+    import HeroClassIcon from "../icons/HeroClassIcon";
+    import HeroRaceIcon from "../icons/HeroRaceIcon";
 
     export default {
         name: "CreateHeroStep",
-        components: {SquadCreationStep},
+        components: {HeroRaceIcon, HeroClassIcon, SquadCreationStep},
         props: {
             heroStep: {
                 type: Object,
@@ -142,14 +157,14 @@
                 maxLength: maxLength(20),
                 format: helpers.regex('format', /^[\w\s]+$/)
             },
-            heroClass: { required },
-            heroRace: { required }
+            heroClassSelection: { required },
+            heroRaceSelection: { required }
         },
 
         data () {
             return {
-                heroClass: null,
-                heroRace: null,
+                heroClassSelection: null,
+                heroRaceSelection: null,
                 name: '',
                 buttonDisabled: false,
                 serverErrors: new Errors()
@@ -162,8 +177,8 @@
                 self.buttonDisabled = true;
                 axios.post('/api/v1/squad/' + this.squadSlug + '/heroes', {
                     name: this.name,
-                    race: this.heroRace,
-                    class: this.heroClass
+                    race: this.heroRaceSelection,
+                    class: this.heroClassSelection
                 }).then(function (response) {
                     self.buttonDisabled = false;
                     self.$emit('hero-created', response.data, self.heroStep.step)
@@ -245,11 +260,39 @@
                         break;
                 }
                 return "Create " + positionText + " Hero";
+            },
+            heroClass() {
+                let heroClassSelection = this.heroClassSelection;
+                let heroClass = null;
+                if (heroClassSelection) {
+                    heroClass = this.heroClasses.find(heroClass => heroClass.name === heroClassSelection);
+                }
+                return heroClass ? heroClass : new HeroClass({});
+            },
+            heroRace() {
+                let heroRaceSelection = this.heroRaceSelection;
+                let heroRace = null;
+                if (heroRaceSelection) {
+                    heroRace = this.heroRaces.find(heroRace => heroRace.name === heroRaceSelection);
+                }
+                return heroRace ? heroRace : new HeroRace({});
             }
         }
     }
 </script>
 
 <style scoped>
-
+    .empty-hero-type {
+        height: 53px;
+        width: 44px;
+        border-radius: 4px;
+        border-style: dotted;
+        border-color: rgba(168, 168, 168, 0.8);
+        border-width: thin;
+        margin: 2px;
+    }
+    .hero-type-icon {
+        height: 60px;
+        width: 48px;
+    }
 </style>
