@@ -3,7 +3,7 @@
         <v-app-bar
             fixed
             app
-            elevate-on-scroll
+            color="#3a4142"
         >
             <v-app-bar-nav-icon
                 @click.stop="drawer = !drawer"
@@ -18,7 +18,7 @@
         >
             <router-view name="drawer"></router-view>
         </v-navigation-drawer>
-        <v-content>
+        <v-content style="background-image: linear-gradient(#236161, #2f3838); background-attachment: fixed">
             <router-view></router-view>
         </v-content>
         <v-bottom-navigation
@@ -26,6 +26,7 @@
                 :height="76"
                 fixed
                 app
+                style="background-color: #3a4142"
         >
             <BarracksFooterButton></BarracksFooterButton>
             <RosterFooterButton></RosterFooterButton>
