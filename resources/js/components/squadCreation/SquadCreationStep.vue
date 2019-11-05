@@ -23,7 +23,7 @@
             stepStyles() {
                 return {
                     // 200 px is enough to account for other element heights plus chrome bar at bottom of screens
-                    height: window.innerHeight - 200 + 'px'
+                    height: window.innerHeight - 120 + 'px'
                 }
             }
         },
