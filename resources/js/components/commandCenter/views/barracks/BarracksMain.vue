@@ -10,7 +10,7 @@
                 </v-col>
                 <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="5" xl="8">
                     <v-row no-gutters>
-                        <v-col cols="12" class="pb-3">
+                        <v-col cols="12" class="pb-3 pt-xl-3">
                             <MobileStorageCard :mobile-storage="_mobileStorage"></MobileStorageCard>
                         </v-col>
                         <v-col cols="12" class="pt-3">
