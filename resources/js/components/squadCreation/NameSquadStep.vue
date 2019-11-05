@@ -13,7 +13,7 @@
             ></v-text-field>
         </v-row>
         <v-row no-gutters>
-            <v-col cols="10" offset="1" md="8" offset-md="2" lg="4" offset-lg="4">
+            <v-col cols="10" offset="1" md="8" offset-md="2" lg="4" offset-lg="4" class="mt-6">
                 <v-btn
                     block
                     large
@@ -21,7 +21,6 @@
                     color="primary"
                     @click="createSquad"
                     :disabled="buttonDisabled"
-                    class="mt-6"
                 >
                     Continue
                 </v-btn>
@@ -38,7 +37,7 @@
     import SquadCreationStep from "./SquadCreationStep";
 
     export default {
-        name: "SquadNameStepper",
+        name: "NameSquadStep",
         components: {SquadCreationStep},
         props: {
             squad: {
