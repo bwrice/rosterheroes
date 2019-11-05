@@ -1,6 +1,6 @@
 <template>
     <v-app dark>
-        <v-content style="background-image: linear-gradient(#236161, #2f3838); overflow-y: hidden">
+        <v-content style="background-image: linear-gradient(#236161, #2f3838)">
             <v-container>
                 <v-row align="center" no-gutters>
                     <v-col cols="12" offset-md="2" md="8" offset-lg="3" lg="6">
