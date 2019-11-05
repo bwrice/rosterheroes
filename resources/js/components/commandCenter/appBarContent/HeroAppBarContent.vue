@@ -1,10 +1,10 @@
 <template>
     <div style="display: flex; flex-direction: row">
         <div style="width: 36px">
-            <HeroRaceIcon :hero-race-id="hero.heroRaceID"></HeroRaceIcon>
+            <HeroRaceIcon :hero-race="heroRace"></HeroRaceIcon>
         </div>
         <div style="width: 36px; margin-right: 10px">
-            <HeroClassIcon :hero-class-id="hero.heroClassID"></HeroClassIcon>
+            <HeroClassIcon :hero-class="heroClass"></HeroClassIcon>
         </div>
         <div style="display: flex; align-items: center">
             <v-toolbar-title>
@@ -24,10 +24,18 @@
         components: {HeroClassIcon, HeroRaceIcon},
         computed: {
             ...mapGetters([
-                '_focusedHero'
+                '_focusedHero',
+                '_heroRaceByID',
+                '_heroClassByID'
             ]),
             hero() {
                 return this._focusedHero(this.$route);
+            },
+            heroRace() {
+                return this._heroRaceByID(this.hero.heroRaceID);
+            },
+            heroClass() {
+                return this._heroClassByID(this.hero.heroClassID);
             }
         }
     }

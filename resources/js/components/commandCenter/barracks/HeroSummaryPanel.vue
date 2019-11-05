@@ -9,10 +9,10 @@
             <v-col cols="4">
                 <v-row no-gutters>
                     <v-col cols="6">
-                        <HeroRaceIcon :hero-race-id="hero.heroRaceID"></HeroRaceIcon>
+                        <HeroRaceIcon :hero-race="heroRace"></HeroRaceIcon>
                     </v-col>
                     <v-col cols="6">
-                        <HeroClassIcon :hero-class-id="hero.heroClassID"></HeroClassIcon>
+                        <HeroClassIcon :hero-class="heroClass"></HeroClassIcon>
                     </v-col>
                 </v-row>
             </v-col>
@@ -92,7 +92,9 @@
         computed: {
             ...mapGetters([
                 '_squadHighMeasurable',
-                '_measurableTypeByName'
+                '_measurableTypeByName',
+                '_heroRaceByID',
+                '_heroClassByID'
             ]),
             heroHealth() {
                 let measurableType = this._measurableTypeByName('health');
@@ -116,6 +118,12 @@
                     }
                 }
             },
+            heroRace() {
+                return this._heroRaceByID(this.hero.heroRaceID);
+            },
+            heroClass() {
+                return this._heroClassByID(this.hero.heroClassID);
+            }
         }
     }
 </script>
