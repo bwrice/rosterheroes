@@ -8,11 +8,15 @@
                 <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="5" offset-lg="1" xl="4" offset-xl="0">
                     <HeroesCard :heroes="_heroes"></HeroesCard>
                 </v-col>
-                <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="5" xl="4">
-                    <MobileStorageCard :mobile-storage="_mobileStorage"></MobileStorageCard>
-                </v-col>
-                <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="5" offset-lg="1" xl="4" offset-xl="0">
-                    <SpellLibraryCard :spells="_spellLibrary"></SpellLibraryCard>
+                <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="5" xl="8">
+                    <v-row no-gutters>
+                        <v-col cols="12" class="pb-3">
+                            <MobileStorageCard :mobile-storage="_mobileStorage"></MobileStorageCard>
+                        </v-col>
+                        <v-col cols="12" class="pt-3">
+                            <SpellLibraryCard :spells="_spellLibrary"></SpellLibraryCard>
+                        </v-col>
+                    </v-row>
                 </v-col>
             </v-row>
         </template>
