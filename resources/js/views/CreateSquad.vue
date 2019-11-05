@@ -37,6 +37,8 @@
                                         :squad-slug="squadClone.slug"
                                         :allowed-hero-classes="allowedHeroClasses"
                                         :allowed-hero-races="allowedHeroRaces"
+                                        :hero-classes="heroClasses"
+                                        :hero-races="heroRaces"
                                         @hero-created="handleHeroCreated"
                                     >
                                         Create Your First Hero
@@ -69,6 +71,8 @@
     import CreateHeroStep from '../components/squadCreation/CreateHeroStep'
 
     import * as referenceApi from '../api/referenceApi';
+    import HeroRace from "../models/HeroRace";
+    import HeroClass from "../models/HeroClass";
 
     export default {
 
@@ -102,6 +106,8 @@
             this.heroesClone = _.cloneDeep(this.heroes);
             this.allowedHeroClasses = _.cloneDeep(this.allowedHeroClasses);
             this.allowedHeroRaces = _.cloneDeep(this.allowedHeroRaces);
+            this.setHeroClasses();
+            this.setHeroRaces();
         },
 
         data () {
@@ -160,8 +166,25 @@
                     this.updateAllowedHeroRaces();
                 }
             },
+            async setHeroRaces() {
+                try {
+                    let response = await referenceApi.getHeroRaces();
+                    this.heroRaces = response.data.map(function (heroRaceResponse) {
+                        return new HeroRace(heroRaceResponse);
+                    });
+                } catch (e) {
+                    console.log(e);
+                }
+            },
             async setHeroClasses() {
-
+                try {
+                    let response = await referenceApi.getHeroClasses();
+                    this.heroClasses = response.data.map(function (heroClassResponse) {
+                        return new HeroClass(heroClassResponse)
+                    });
+                } catch (e) {
+                    console.log(e);
+                }
             }
         },
         computed: {

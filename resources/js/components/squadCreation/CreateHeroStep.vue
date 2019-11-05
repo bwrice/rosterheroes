@@ -124,6 +124,14 @@
             allowedHeroRaces: {
                 type: Array,
                 required: true
+            },
+            heroRaces: {
+                type: Array,
+                required: true
+            },
+            heroClasses: {
+                type: Array,
+                required: true
             }
         },
 
