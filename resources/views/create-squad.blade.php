@@ -3,7 +3,7 @@
 @section('content')
     <div id="app">
         @if($squad)
-            <create-squad :squad="{{$squad}}" :heroes="{{$heroes}}" :allowed-hero-classes="{{$heroClasses}}" :allowed-hero-races="{{$heroRaces}}"></create-squad>
+            <create-squad :squad="{{$squad}}" :heroes="{{$heroes}}" :allowed-hero-classes-prop="{{$heroClasses}}" :allowed-hero-races-prop="{{$heroRaces}}"></create-squad>
         @else
             <create-squad></create-squad>
         @endif
