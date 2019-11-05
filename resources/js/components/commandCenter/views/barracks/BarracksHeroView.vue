@@ -10,10 +10,14 @@
                     <HeroGearCard :hero="hero"></HeroGearCard>
                 </v-col>
                 <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="5" xl="4">
-                    <HeroMeasurablesCard :hero="hero"></HeroMeasurablesCard>
-                </v-col>
-                <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="5" offset-lg="1" xl="4" offset-xl="0">
-                    <HeroSpellsCard :hero="hero"></HeroSpellsCard>
+                    <v-row no-gutters>
+                        <v-col cols="12" class="pb-3">
+                            <HeroMeasurablesCard :hero="hero"></HeroMeasurablesCard>
+                        </v-col>
+                        <v-col cols="12" class="pt-3">
+                            <HeroSpellsCard :hero="hero"></HeroSpellsCard>
+                        </v-col>
+                    </v-row>
                 </v-col>
             </v-row>
         </template>
