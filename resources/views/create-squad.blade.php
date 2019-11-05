@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    <body>
     <div id="app">
         @if($squad)
             <create-squad :squad="{{$squad}}" :heroes="{{$heroes}}" :allowed-hero-classes-prop="{{$heroClasses}}" :allowed-hero-races-prop="{{$heroRaces}}"></create-squad>
@@ -8,8 +9,6 @@
             <create-squad></create-squad>
         @endif
     </div>
-@endsection
-
-@section('scripts')
+    </body>
     <script src="{{ mix('/js/createSquad.js') }}"></script>
 @endsection
