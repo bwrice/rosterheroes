@@ -1,33 +1,35 @@
 <template>
-    <v-card class="py-1">
-        <v-row no-gutters align="center">
-            <span class="title font-weight-light px-3">Attributes</span>
-        </v-row>
-        <MeasurablePanel
-            v-for="(attribute, uuid) in attributes"
-            :measurable="attribute"
-            :key="attribute.uuid"
-            :hero="hero"
-        ></MeasurablePanel>
-        <v-row no-gutters align="center">
-            <span class="title font-weight-light px-3">Resources</span>
-        </v-row>
-        <MeasurablePanel
-            v-for="(resource, uuid) in resources"
-            :measurable="resource"
-            :key="resource.uuid"
-            :hero="hero"
-        ></MeasurablePanel>
-        <v-row no-gutters align="center">
-            <span class="title font-weight-light px-3">Qualities</span>
-        </v-row>
-        <MeasurablePanel
-            v-for="(quality, uuid) in qualities"
-            :measurable="quality"
-            :key="quality.uuid"
-            :hero="hero"
-        ></MeasurablePanel>
-    </v-card>
+    <v-row no-gutters>
+        <v-col cols="12">
+            <v-row no-gutters align="center">
+                <span class="title font-weight-thin">ATTRIBUTES</span>
+            </v-row>
+            <MeasurablePanel
+                v-for="(attribute, uuid) in attributes"
+                :measurable="attribute"
+                :key="attribute.uuid"
+                :hero="hero"
+            ></MeasurablePanel>
+            <v-row no-gutters align="center">
+                <span class="title font-weight-thin">RESOURCES</span>
+            </v-row>
+            <MeasurablePanel
+                v-for="(resource, uuid) in resources"
+                :measurable="resource"
+                :key="resource.uuid"
+                :hero="hero"
+            ></MeasurablePanel>
+            <v-row no-gutters align="center">
+                <span class="title font-weight-thin">QUALITIES</span>
+            </v-row>
+            <MeasurablePanel
+                v-for="(quality, uuid) in qualities"
+                :measurable="quality"
+                :key="quality.uuid"
+                :hero="hero"
+            ></MeasurablePanel>
+        </v-col>
+    </v-row>
 </template>
 
 <script>

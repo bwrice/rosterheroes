@@ -1,74 +1,81 @@
 <template>
-    <div id="hero-gear-card">
-        <v-card v-if="focusedSlotType">
-            <v-card-title class="pb-0">
-                <v-row align="center" justify="center" class="px-2">
-                    <span>{{gearSlot.type}}</span>
-                    <div class="flex-grow-1"></div>
-                    <v-icon @click="focusedSlotType = null">close</v-icon>
-                </v-row>
-            </v-card-title>
-            <v-card-text class="px-2 pb-0">
-                <v-row no-gutters align="center" justify="center">
-                    <template v-if="gearSlot.item">
-                        <v-col cols="12" class="pt-2">
-                            <v-row no-gutters align="center" justify="center">
-                                <UnequipItemButton
-                                    :item="gearSlot.item"
-                                    :hero="hero"
-                                >
-                                </UnequipItemButton>
-                                <v-col cols="12">
-                                    <v-sheet color="#456d87" class="my-2">
-                                        <ItemCard :item="gearSlot.item"></ItemCard>
-                                    </v-sheet>
-                                </v-col>
-                            </v-row>
-                        </v-col>
-                    </template>
-                    <template v-else>
-                        <span class="subtitle-1 font-weight-light">(empty)</span>
-                    </template>
-                </v-row>
-            </v-card-text>
-            <v-card-actions>
-                <v-btn href="#hero-gear-card" @click="focusedSlotType = null" block>Close</v-btn>
-            </v-card-actions>
-        </v-card>
-        <v-card v-else>
-            <v-card-text class="pa-2">
-                <v-sheet class="py-5"
-                         style="background-image: linear-gradient(to bottom right, #524c59, #7c7287 , #524c59)">
-                    <HeroGearSVG
-                        :hero="hero"
-                        @heroSlotClicked="handleHeroSlotClicked"
-                    ></HeroGearSVG>
-                </v-sheet>
-                <v-row justify="center" no-gutters>
-                    <v-col cols="12">
-                        <!-- key on FilledSlotIterator prevents pagination persisting -->
-                        <ItemIterator
-                            :items="_mobileStorage.items"
-                            :items-per-page="6"
-                            :search-label="'Search Wagon'"
-                            :key="'uuid'"
-                            :item-name-truncate-extra="4"
-                        >
-                            <template v-slot:before-expand="props">
-                                <div class="px-2">
-                                    <EquipFromMobileStorageButton
+    <v-row no-gutters>
+        <v-col cols="12" class="pt-3">
+            <span class="title font-weight-thin">GEAR</span>
+        </v-col>
+        <v-col cols="12" v-if="focusedSlotType">
+            <v-card>
+                <v-card-title class="pb-0">
+                    <v-row align="center" justify="center" class="px-2">
+                        <span>{{gearSlot.type}}</span>
+                        <div class="flex-grow-1"></div>
+                        <v-icon @click="focusedSlotType = null">close</v-icon>
+                    </v-row>
+                </v-card-title>
+                <v-card-text class="px-2 pb-0">
+                    <v-row no-gutters align="center" justify="center">
+                        <template v-if="gearSlot.item">
+                            <v-col cols="12" class="pt-2">
+                                <v-row no-gutters align="center" justify="center">
+                                    <UnequipItemButton
+                                        :item="gearSlot.item"
                                         :hero="hero"
-                                        :item="props.item"
                                     >
-                                    </EquipFromMobileStorageButton>
-                                </div>
-                            </template>
-                        </ItemIterator>
-                    </v-col>
-                </v-row>
-            </v-card-text>
-        </v-card>
-    </div>
+                                    </UnequipItemButton>
+                                    <v-col cols="12">
+                                        <v-sheet color="#456d87" class="my-2">
+                                            <ItemCard :item="gearSlot.item"></ItemCard>
+                                        </v-sheet>
+                                    </v-col>
+                                </v-row>
+                            </v-col>
+                        </template>
+                        <template v-else>
+                            <span class="subtitle-1 font-weight-light">(empty)</span>
+                        </template>
+                    </v-row>
+                </v-card-text>
+                <v-card-actions>
+                    <v-btn href="#hero-gear-card" @click="focusedSlotType = null" block>Close</v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-col>
+        <v-col cols="12" v-else>
+            <v-row no-gutters>
+                <v-col cols="12">
+                    <v-sheet class="py-5"
+                             style="background-image: linear-gradient(to bottom right, #524c59, #7c7287 , #524c59)">
+                        <HeroGearSVG
+                            :hero="hero"
+                            @heroSlotClicked="handleHeroSlotClicked"
+                        ></HeroGearSVG>
+                    </v-sheet>
+                </v-col>
+            </v-row>
+            <v-row justify="center" no-gutters>
+                <v-col cols="12">
+                    <!-- key on FilledSlotIterator prevents pagination persisting -->
+                    <ItemIterator
+                        :items="_mobileStorage.items"
+                        :items-per-page="6"
+                        :search-label="'Search Wagon'"
+                        :key="'uuid'"
+                        :item-name-truncate-extra="4"
+                    >
+                        <template v-slot:before-expand="props">
+                            <div class="px-2">
+                                <EquipFromMobileStorageButton
+                                    :hero="hero"
+                                    :item="props.item"
+                                >
+                                </EquipFromMobileStorageButton>
+                            </div>
+                        </template>
+                    </ItemIterator>
+                </v-col>
+            </v-row>
+        </v-col>
+    </v-row>
 </template>
 
 <script>
