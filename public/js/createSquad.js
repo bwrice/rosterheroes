@@ -35586,7 +35586,8 @@ var render = function() {
         "v-content",
         {
           staticStyle: {
-            "background-image": "linear-gradient(#236161, #2f3838)"
+            "background-image": "linear-gradient(#236161, #2f3838)",
+            "overflow-y": "hidden"
           }
         },
         [
