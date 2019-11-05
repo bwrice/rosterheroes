@@ -1,22 +1,22 @@
 <template>
     <SvgIconSheet
         :color="'#C8DDE0'"
-        :svg="heroClass.svg"
+        :svg="heroRace.svg"
         :classes-object="{'pa-1': true}"
     >
     </SvgIconSheet>
 </template>
 
 <script>
-    import SvgIconSheet from "./SvgIconSheet";
-    import HeroClass from "../../../models/HeroClass";
+    import SvgIconSheet from "../commandCenter/global/SvgIconSheet";
+    import HeroRace from "../../models/HeroRace";
 
     export default {
-        name: "HeroClassIcon",
+        name: "HeroRaceIcon",
         components: {SvgIconSheet},
         props: {
-            heroClass: {
-                type: HeroClass,
+            heroRace: {
+                type: HeroRace,
                 required: true
             }
         }
