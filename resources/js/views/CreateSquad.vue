@@ -45,14 +45,25 @@
                                     </CreateHeroStep>
 
                                     <v-stepper-content :step="6">
-                                        <p>Congrats!!! Your squad,<br>
-                                            <span class="headline text-xs-center">{{ squadClone.name }}</span>
-                                        <p>is all set up. You can now head over to the <br>
-                                            command center to begin your journey
-                                        </p>
-                                        <v-btn :href="'/command-center/' + this.squadClone.slug" color="primary">
-                                            Go to Command Center
-                                        </v-btn>
+                                        <v-row no-gutters class="flex-column pt-6" align="center" justify="center">
+                                            <span class="subtitle-2" style="color: rgba(255, 255, 255, .85)">
+                                                Congrats!!!, Your squad,
+                                            </span>
+                                            <span class="title font-weight-bold py-4">
+                                                {{ squadClone.name }}
+                                            </span>
+                                            <span class="subtitle-2 px-4 text-center" style="color: rgba(255, 255, 255, .85)">
+                                                is all set up. You can now head over to the
+                                                command center to begin your journey.
+                                            </span>
+                                            <v-btn
+                                                :href="'/command-center/' + this.squadClone.slug"
+                                                color="primary"
+                                                class="mt-6"
+                                            >
+                                                Go to Command Center
+                                            </v-btn>
+                                        </v-row>
                                     </v-stepper-content>
 
                                 </v-stepper-items>
@@ -89,12 +100,12 @@
                     return [];
                 }
             },
-            allowedHeroClasses: {
+            allowedHeroClassesProp: {
                 default: function() {
                     return [];
                 }
             },
-            allowedHeroRaces: {
+            allowedHeroRacesProp: {
                 default: function() {
                     return [];
                 }
@@ -104,8 +115,8 @@
         created: function() {
             this.squadClone = _.cloneDeep(this.squad);
             this.heroesClone = _.cloneDeep(this.heroes);
-            this.allowedHeroClasses = _.cloneDeep(this.allowedHeroClasses);
-            this.allowedHeroRaces = _.cloneDeep(this.allowedHeroRaces);
+            this.allowedHeroClasses = _.cloneDeep(this.allowedHeroClassesProp);
+            this.allowedHeroRaces = _.cloneDeep(this.allowedHeroRacesProp);
             this.setHeroClasses();
             this.setHeroRaces();
         },
