@@ -11,22 +11,15 @@
     import SvgIconSheet from "./SvgIconSheet";
 
     import {mapGetters} from 'vuex';
+    import HeroClass from "../../../models/HeroClass";
 
     export default {
         name: "HeroClassIcon",
         components: {SvgIconSheet},
         props: {
-            heroClassId: {
-                type: Number,
+            heroClass: {
+                type: HeroClass,
                 required: true
-            }
-        },
-        computed: {
-            ...mapGetters([
-                '_heroClassByID'
-            ]),
-            heroClass() {
-                return this._heroClassByID(this.heroClassId);
             }
         }
     }

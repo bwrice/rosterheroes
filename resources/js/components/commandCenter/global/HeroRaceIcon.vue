@@ -10,22 +10,15 @@
 <script>
     import SvgIconSheet from "./SvgIconSheet";
     import {mapGetters} from 'vuex';
+    import HeroRace from "../../../models/HeroRace";
 
     export default {
         name: "HeroRaceIcon",
         components: {SvgIconSheet},
         props: {
-            heroRaceId: {
-                type: Number,
+            heroRace: {
+                type: HeroRace,
                 required: true
-            }
-        },
-        computed: {
-            ...mapGetters([
-                '_heroRaceByID'
-            ]),
-            heroRace() {
-                return this._heroRaceByID(this.heroRaceId);
             }
         }
     }
