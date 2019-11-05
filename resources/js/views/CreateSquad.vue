@@ -68,6 +68,8 @@
     import NameSquadStep from '../components/squadCreation/NameSquadStep'
     import CreateHeroStep from '../components/squadCreation/CreateHeroStep'
 
+    import * as referenceApi from '../api/referenceApi';
+
     export default {
 
         props: {
@@ -83,12 +85,12 @@
                     return [];
                 }
             },
-            heroClasses: {
+            allowedHeroClasses: {
                 default: function() {
                     return [];
                 }
             },
-            heroRaces: {
+            allowedHeroRaces: {
                 default: function() {
                     return [];
                 }
@@ -98,14 +100,16 @@
         created: function() {
             this.squadClone = _.cloneDeep(this.squad);
             this.heroesClone = _.cloneDeep(this.heroes);
-            this.allowedHeroClasses = _.cloneDeep(this.heroClasses);
-            this.allowedHeroRaces = _.cloneDeep(this.heroRaces);
+            this.allowedHeroClasses = _.cloneDeep(this.allowedHeroClasses);
+            this.allowedHeroRaces = _.cloneDeep(this.allowedHeroRaces);
         },
 
         data () {
             return {
                 squadClone: {},
                 heroesClone: [],
+                heroClasses: [],
+                heroRaces: [],
                 allowedHeroClasses: [],
                 allowedHeroRaces: [],
                 squadCreated: false,
@@ -156,6 +160,9 @@
                     this.updateAllowedHeroRaces();
                 }
             },
+            async setHeroClasses() {
+
+            }
         },
         computed: {
             progress: {
