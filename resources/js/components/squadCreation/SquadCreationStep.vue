@@ -1,5 +1,5 @@
 <template>
-    <v-stepper-content :step="step">
+    <v-stepper-content :step="step" class="pa-1">
         <v-row no-gutters align="center" v-bind:style="stepStyles">
             <v-col cols="12">
                 <slot>

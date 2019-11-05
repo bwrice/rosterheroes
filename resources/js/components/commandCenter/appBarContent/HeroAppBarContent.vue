@@ -16,8 +16,8 @@
 
 <script>
     import {mapGetters} from 'vuex';
-    import HeroRaceIcon from "../global/HeroRaceIcon";
-    import HeroClassIcon from "../global/HeroClassIcon";
+    import HeroRaceIcon from "../../icons/HeroRaceIcon";
+    import HeroClassIcon from "../../icons/HeroClassIcon";
 
     export default {
         name: "HeroAppBar",
