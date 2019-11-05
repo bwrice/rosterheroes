@@ -1,95 +1,88 @@
 <template>
-    <v-stepper-content :step="heroStep.step">
-        <v-layout wrap justify-center>
-            <v-flex xs12 md8>
-                <p class="text-xs-center title">
-                    {{heroStep.title}}
-                </p>
-                <p class="body-1">
-                    Choose a hero class and a hero race. Then give you hero a name.
-                    You must create a hero for each hero race (you will create four in total),
-                    and you are required to have at least
-                    one hero of each class.
-                </p>
-            </v-flex>
-        </v-layout>
-        <v-layout wrap justify-center align-center>
-            <v-flex xs12 md8>
-                <v-layout wrap>
-                    <v-flex xs6>
-                        <v-radio-group
-                            ripple="false"
-                            :name="'hero-class-' + heroNumber"
-                            v-model="heroClass"
-                            label="Hero Class"
-                            @blur="$v.heroClass.$touch()"
-                            @click="serverErrors.flush()"
-                            :error-messages="classErrors"
-                            column
-                        >
-                            <v-radio
-                                :disabled="! validClass('warrior')"
-                                label="Warrior"
-                                value="warrior">
-                            </v-radio>
-                            <v-radio
-                                :disabled="! validClass('ranger')"
-                                label="Ranger"
-                                value="ranger">
-                            </v-radio>
-                            <v-radio
-                                :disabled="! validClass('sorcerer')"
-                                label="Sorcerer"
-                                value="sorcerer">
-                            </v-radio>
-                        </v-radio-group>
-                    </v-flex>
-                    <v-flex xs6>
-                        <v-radio-group
-                            :name="'hero-race-' + heroNumber"
-                            v-model="heroRace"
-                            label="Hero Race"
-                            @blur="$v.heroRace.$touch()"
-                            @click="serverErrors.flush()"
-                            :error-messages="raceErrors"
-                            column
-                        >
-                            <v-radio
-                                :disabled="! validRace('human')"
-                                label="Human"
-                                value="human">
-                            </v-radio>
-                            <v-radio
-                                :disabled="! validRace('elf')"
-                                label="Elf"
-                                value="elf">
-                            </v-radio>
-                            <v-radio
-                                :disabled="! validRace('dwarf')"
-                                label="Dwarf"
-                                value="dwarf">
-                            </v-radio>
-                            <v-radio
-                                :disabled="! validRace('orc')"
-                                label="Orc"
-                                value="orc">
-                            </v-radio>
-                        </v-radio-group>
-                    </v-flex>
-                </v-layout>
-            </v-flex>
-            <v-flex xs12 md4>
+    <SquadCreationStep :step="heroStep.step">
+        <v-row no-gutters>
+            <v-col cols="6" class="px-2">
+                <v-row no-gutters align="center" class="flex-column">
+                    <span class="subtitle-1 font-weight-bold" style="color: rgba(255, 255, 255, 0.8)">Hero Race</span>
+                    <v-radio-group
+                        :name="'hero-race-' + heroNumber"
+                        v-model="heroRace"
+                        @blur="$v.heroRace.$touch()"
+                        @click="serverErrors.flush()"
+                        :error-messages="raceErrors"
+                        column
+                    >
+                        <v-radio
+                            :disabled="! validRace('human')"
+                            label="Human"
+                            value="human">
+                        </v-radio>
+                        <v-radio
+                            :disabled="! validRace('elf')"
+                            label="Elf"
+                            value="elf">
+                        </v-radio>
+                        <v-radio
+                            :disabled="! validRace('dwarf')"
+                            label="Dwarf"
+                            value="dwarf">
+                        </v-radio>
+                        <v-radio
+                            :disabled="! validRace('orc')"
+                            label="Orc"
+                            value="orc">
+                        </v-radio>
+                    </v-radio-group>
+                </v-row>
+            </v-col>
+            <v-col cols="6" class="px-2">
+                <v-row no-gutters align="center" class="flex-column">
+                    <span class="subtitle-1 font-weight-bold" style="color: rgba(255, 255, 255, 0.8)">Hero Class</span>
+                    <v-radio-group
+                        ripple="false"
+                        :name="'hero-class-' + heroNumber"
+                        v-model="heroClass"
+                        @blur="$v.heroClass.$touch()"
+                        @click="serverErrors.flush()"
+                        :error-messages="classErrors"
+                        column
+                    >
+                        <v-radio
+                            :disabled="! validClass('warrior')"
+                            label="Warrior"
+                            value="warrior">
+                        </v-radio>
+                        <v-radio
+                            :disabled="! validClass('ranger')"
+                            label="Ranger"
+                            value="ranger">
+                        </v-radio>
+                        <v-radio
+                            :disabled="! validClass('sorcerer')"
+                            label="Sorcerer"
+                            value="sorcerer">
+                        </v-radio>
+                    </v-radio-group>
+                </v-row>
+            </v-col>
+        </v-row>
+        <v-row no-gutters>
+            <v-col cols="12" class="mt-3">
                 <v-text-field
                     label="Hero Name"
                     :name="'hero-name-' + heroNumber"
-                    outline
+                    outlined
                     v-model="name"
                     @blur="$v.name.$touch()"
                     @input="serverErrors.flush()"
                     :error-messages="nameErrors"
                     messages="Letters, numbers and spaces allowed"
                 ></v-text-field>
+            </v-col>
+            <v-col cols="10" offset="1" md="8" offset-md="2" lg="4" offset-lg="4" class="mt-6">
                 <v-btn
+                    block
+                    large
                     :name="'hero-submit-' + heroNumber"
                     color="primary"
                     @click="createHero"
@@ -97,19 +90,20 @@
                 >
                     Continue
                 </v-btn>
-            </v-flex>
-        </v-layout>
-    </v-stepper-content>
+            </v-col>
+        </v-row>
+    </SquadCreationStep>
 </template>
 
 <script>
 
     import { required, minLength, maxLength, helpers } from 'vuelidate/lib/validators'
     import Errors from '../../classes/errors'
+    import SquadCreationStep from "./SquadCreationStep";
 
     export default {
         name: "HeroCreationStepper",
-
+        components: {SquadCreationStep},
         props: {
             heroStep: {
                 type: Object,
