@@ -9,7 +9,6 @@
 
 <script>
     import SvgIconSheet from "./SvgIconSheet";
-    import {mapGetters} from 'vuex';
     import HeroRace from "../../../models/HeroRace";
 
     export default {
