@@ -37,8 +37,6 @@
 
 <script>
     import Hero from "../../../models/Hero";
-    import HeroRaceIcon from "../global/HeroRaceIcon";
-    import HeroClassIcon from "../global/HeroClassIcon";
     import PlayerSpiritSummaryPanel from "../global/PlayerSpiritSummaryPanel";
     import CombatPositionIcon from "../global/CombatPositionIcon";
     import AddSpiritRouterButton from "../global/AddSpiritRouterButton";
@@ -50,9 +48,7 @@
             CombatPositionDialog,
             AddSpiritRouterButton,
             CombatPositionIcon,
-            PlayerSpiritSummaryPanel,
-            HeroClassIcon,
-            HeroRaceIcon
+            PlayerSpiritSummaryPanel
         },
         props: {
             hero: {
