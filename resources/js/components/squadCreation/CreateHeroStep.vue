@@ -1,5 +1,8 @@
 <template>
     <SquadCreationStep :step="heroStep.step">
+        <v-row no-gutters justify="center">
+            <span class="title font-weight-thin my-1">{{titleText}}</span>
+        </v-row>
         <v-row no-gutters>
             <v-col cols="6" class="px-2">
                 <v-row no-gutters align="center" class="flex-column">
@@ -11,6 +14,7 @@
                         @click="serverErrors.flush()"
                         :error-messages="raceErrors"
                         column
+                        class="mt-0"
                     >
                         <v-radio
                             :disabled="! validRace('human')"
@@ -39,13 +43,13 @@
                 <v-row no-gutters align="center" class="flex-column">
                     <span class="subtitle-1 font-weight-bold" style="color: rgba(255, 255, 255, 0.8)">Hero Class</span>
                     <v-radio-group
-                        ripple="false"
                         :name="'hero-class-' + heroNumber"
                         v-model="heroClass"
                         @blur="$v.heroClass.$touch()"
                         @click="serverErrors.flush()"
                         :error-messages="classErrors"
                         column
+                        class="mt-0"
                     >
                         <v-radio
                             :disabled="! validClass('warrior')"
@@ -67,7 +71,7 @@
             </v-col>
         </v-row>
         <v-row no-gutters>
-            <v-col cols="12" class="mt-3">
+            <v-col cols="12" class="mt-1">
                 <v-text-field
                     label="Hero Name"
                     :name="'hero-name-' + heroNumber"
@@ -79,7 +83,7 @@
                     messages="Letters, numbers and spaces allowed"
                 ></v-text-field>
             </v-col>
-            <v-col cols="10" offset="1" md="8" offset-md="2" lg="4" offset-lg="4" class="mt-6">
+            <v-col cols="10" offset="1" md="8" offset-md="2" lg="4" offset-lg="4" class="mt-2">
                 <v-btn
                     block
                     large
@@ -215,6 +219,24 @@
             },
             heroNumber() {
                 return this.heroStep.step - 1;
+            },
+            titleText() {
+                let positionText = '';
+                switch(this.heroNumber) {
+                    case 1:
+                        positionText = 'First';
+                        break;
+                    case 2:
+                        positionText = 'Second';
+                        break;
+                    case 3:
+                        positionText = 'Third';
+                        break;
+                    case 4:
+                        positionText = 'Fourth';
+                        break;
+                }
+                return "Create " + positionText + " Hero";
             }
         }
     }
