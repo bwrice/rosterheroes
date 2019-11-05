@@ -233,7 +233,7 @@
                         positionText = 'Third';
                         break;
                     case 4:
-                        positionText = 'Fourth';
+                        positionText = 'Final';
                         break;
                 }
                 return "Create " + positionText + " Hero";
