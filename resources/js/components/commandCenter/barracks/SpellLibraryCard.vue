@@ -1,10 +1,12 @@
 <template>
-    <v-card>
-        <v-card-title>Spell Library</v-card-title>
-        <v-card-text>
+    <v-row no-gutters>
+        <v-col cols="12">
+            <span class="title font-weight-thin">SPELL LIBRARY</span>
+        </v-col>
+        <v-col cols="12">
             <SpellPanelIterator :spells="spells"></SpellPanelIterator>
-        </v-card-text>
-    </v-card>
+        </v-col>
+    </v-row>
 </template>
 
 <script>

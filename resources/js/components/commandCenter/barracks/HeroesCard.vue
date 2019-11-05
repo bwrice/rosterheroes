@@ -1,15 +1,19 @@
 <template>
-    <v-card>
-        <v-card-title>Heroes</v-card-title>
-        <v-card-text class="px-2 pb-2">
+    <v-row no-gutters>
+        <v-col cols="12">
+            <span class="title font-weight-thin">HEROES</span>
+        </v-col>
+        <v-col
+            cols="12"
+            v-for="(hero, uuid) in heroes"
+            :key="uuid"
+        >
             <HeroSummaryPanel
-                v-for="(hero, uuid) in heroes"
-                :key="uuid"
                 :hero="hero"
             >
             </HeroSummaryPanel>
-        </v-card-text>
-    </v-card>
+        </v-col>
+    </v-row>
 </template>
 
 <script>
