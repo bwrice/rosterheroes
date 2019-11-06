@@ -47,8 +47,6 @@
 
     import { mapGetters } from 'vuex';
 
-    // import {bordersMixin} from "../../../../mixins/bordersMixin";
-
     import MapViewPort from "../../map/MapViewPort";
     import ProvinceVector from "../../map/ProvinceVector";
 
@@ -58,10 +56,6 @@
             ProvinceVector,
             MapViewPort
         },
-
-        // mixins: [
-        //     bordersMixin
-        // ],
 
         computed: {
             ...mapGetters([
