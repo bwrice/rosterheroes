@@ -3,7 +3,6 @@ import MapNavigationDrawer from "../components/commandCenter/views/realm/MapNavi
 import ContinentView from "../components/commandCenter/views/realm/explore/ContinentView";
 import TerritoryView from "../components/commandCenter/views/realm/explore/TerritoryView";
 import ProvinceView from "../components/commandCenter/views/realm/explore/ProvinceView";
-import ExploreView from "../components/commandCenter/views/realm/explore/ExploreView";
 import RealmView from "../components/commandCenter/views/realm/explore/RealmView";
 import TravelView from "../components/commandCenter/views/realm/TravelView";
 import CommandCenter from "../views/CommandCenter";
