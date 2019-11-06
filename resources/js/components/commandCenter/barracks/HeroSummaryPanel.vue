@@ -1,12 +1,12 @@
 <template>
     <v-sheet
-        color="#576269"
+        color="#5c707d"
         class="my-2"
         elevation="5"
         @click="navigateToBarracksHero"
     >
         <v-row no-gutters align="center">
-            <v-col cols="4">
+            <v-col cols="4" class="pt-1 px-1">
                 <v-row no-gutters>
                     <v-col cols="6">
                         <HeroRaceIcon :hero-race="heroRace"></HeroRaceIcon>
