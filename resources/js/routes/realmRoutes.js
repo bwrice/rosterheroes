@@ -44,47 +44,50 @@ export const realmRoutes = {
         {
             path: 'explore',
             components: {
-                default: ExploreView,
+                default: RealmView,
                 drawer: MapNavigationDrawer,
                 appBarContent: SquadAppBarContent
             },
+            name: 'explore-realm',
             meta: {
                 footerButton: 'realm'
-            },
-            children: [
-                {
-                    path: '',
-                    component: RealmView,
-                    name: 'explore-realm',
-                    meta: {
-                        footerButton: 'realm'
-                    }
-                },
-                {
-                    path: 'continents/:continentSlug',
-                    component: ContinentView,
-                    name: 'explore-continent',
-                    meta: {
-                        footerButton: 'realm'
-                    }
-                },
-                {
-                    path: 'territories/:territorySlug',
-                    component: TerritoryView,
-                    name: 'explore-territory',
-                    meta: {
-                        footerButton: 'realm'
-                    }
-                },
-                {
-                    path: 'provinces/:provinceSlug',
-                    component: ProvinceView,
-                    name: 'explore-province',
-                    meta: {
-                        footerButton: 'realm'
-                    }
-                }
-            ]
+            }
         },
+        {
+            path: 'explore/continents/:continentSlug',
+            components: {
+                default: ContinentView,
+                drawer: MapNavigationDrawer,
+                appBarContent: SquadAppBarContent
+            },
+            name: 'explore-continent',
+            meta: {
+                footerButton: 'realm'
+            }
+        },
+        {
+            path: 'explore/territories/:territorySlug',
+            components: {
+                default: TerritoryView,
+                drawer: MapNavigationDrawer,
+                appBarContent: SquadAppBarContent
+            },
+            name: 'explore-territory',
+            meta: {
+                footerButton: 'realm'
+            }
+        },
+        {
+            path: 'explore/provinces/:provinceSlug',
+            components: {
+                default: ProvinceView,
+                drawer: MapNavigationDrawer,
+                appBarContent: SquadAppBarContent
+            },
+            name: 'explore-province',
+            meta: {
+                footerButton: 'realm'
+            }
+        }
     ]
 };
