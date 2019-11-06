@@ -3,7 +3,7 @@
         <v-app-bar
             fixed
             app
-            color="#3a4142"
+            color="#3a474a"
         >
             <v-app-bar-nav-icon
                 @click.stop="drawer = !drawer"
@@ -26,7 +26,7 @@
                 :height="76"
                 fixed
                 app
-                style="background-color: #3a4142"
+                style="background-color: #3a474a"
         >
             <BarracksFooterButton></BarracksFooterButton>
             <RosterFooterButton></RosterFooterButton>
