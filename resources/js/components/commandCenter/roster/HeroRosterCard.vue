@@ -1,5 +1,5 @@
 <template>
-    <v-sheet color="#576269" class="mb-1 pt-1">
+    <v-sheet color="#576269" class="mb-2 pt-1">
         <slot name="body">
             <!-- Body Content-->
         </slot>

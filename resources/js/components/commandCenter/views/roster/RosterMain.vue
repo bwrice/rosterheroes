@@ -1,22 +1,32 @@
 <template>
     <SingleColumnLayout>
         <template v-slot:column-one>
-            <v-card>
-                <span class="display-3 px-1">{{_availableSpiritEssence.toLocaleString()}}</span> Spirit Essence Available
-                <HeroRosterCard v-for="(hero, uuid) in _heroes" :key="uuid" :hero="hero">
-                    <template slot="body">
-                        <PlayerSpiritPanel v-if="hero.playerSpirit" :player-spirit="hero.playerSpirit">
-                            <template v-slot:spirit-actions>
-                                <EditSpiritButton :hero="hero"></EditSpiritButton>
-                                <RemoveSpiritButton :hero="hero" :player-spirit="hero.playerSpirit"></RemoveSpiritButton>
-                            </template>
-                        </PlayerSpiritPanel>
-                        <v-row v-else justify="center" align="center" no-gutters class="mx-2">
-                            <AddSpiritRouterButton :hero-slug="hero.slug" :btn-classes="{'mx-2': true}"></AddSpiritRouterButton>
-                        </v-row>
-                    </template>
-                </HeroRosterCard>
-            </v-card>
+            <v-row class="no-gutters">
+                <v-col cols="12" class="py-2">
+                    <v-row no-gutters align="end">
+                        <span class="display-3 font-weight-bold" style="color: rgba(255, 255, 255, .75)">{{_availableSpiritEssence.toLocaleString()}}</span>
+                        <span class="subtitle-1 px-2" style="color: rgba(255, 255, 255, .75)">Spirit Essence</span>
+                    </v-row>
+                </v-col>
+                <v-col cols="12" class="py-2">
+                    <span class="title font-weight-thin">ROSTER</span>
+                </v-col>
+                <v-col cols="12" v-for="(hero, uuid) in _heroes" :key="uuid">
+                    <HeroRosterCard :hero="hero">
+                        <template slot="body">
+                            <PlayerSpiritPanel v-if="hero.playerSpirit" :player-spirit="hero.playerSpirit">
+                                <template v-slot:spirit-actions>
+                                    <EditSpiritButton :hero="hero"></EditSpiritButton>
+                                    <RemoveSpiritButton :hero="hero" :player-spirit="hero.playerSpirit"></RemoveSpiritButton>
+                                </template>
+                            </PlayerSpiritPanel>
+                            <v-row v-else justify="center" align="center" no-gutters class="mx-2">
+                                <AddSpiritRouterButton :hero-slug="hero.slug" :btn-classes="{'mx-2': true}"></AddSpiritRouterButton>
+                            </v-row>
+                        </template>
+                    </HeroRosterCard>
+                </v-col>
+            </v-row>
         </template>
     </SingleColumnLayout>
 </template>
