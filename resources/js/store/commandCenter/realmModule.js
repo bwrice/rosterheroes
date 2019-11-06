@@ -8,10 +8,7 @@ export default {
     state: {
         provinces: [],
         territories: [],
-        continents: [],
-        realmMapMode: 'continent',
-        borders: [],
-        loading: false
+        continents: []
     },
 
     getters: {
@@ -23,9 +20,6 @@ export default {
         },
         _continents(state) {
             return state.continents;
-        },
-        _realmMapMode(state) {
-            return state.realmMapMode;
         },
         _provincesByUuids: (state) => (uuids) => {
             return state.provinces.filter(province => uuids.includes(province.uuid));
@@ -47,9 +41,6 @@ export default {
         _provinceBySlug: (state) => (slug) => {
             let province = state.provinces.find(province => province.slug === slug);
             return province ? province : new Province({});
-        },
-        _realmLoading(state) {
-            return state.loading;
         }
     },
     mutations: {
@@ -61,9 +52,6 @@ export default {
         },
         SET_CONTINENTS(state, payload) {
             state.continents = payload;
-        },
-        SET_REALM_MAP_MODE(state, payload) {
-            state.realmMapMode = payload;
         },
         SET_REALM_LOADING(state, payload) {
             state.loading = payload;
@@ -103,19 +91,6 @@ export default {
             } catch (e) {
                 console.warn("Failed to update continents");
             }
-        },
-        // async setRealm({state, commit}) {
-        //     commit('SET_REALM_LOADING', true);
-        //     let provinces = await ProvinceApiModel.$get();
-        //     commit('UPDATE_PROVINCES', provinces);
-        //     let territories = await TerritoryApiModel.$get();
-        //     commit('UPDATE_TERRITORIES', territories);
-        //     let continents = await ContinentApiModel.$get();
-        //     commit('UPDATE_CONTINENTS', continents);
-        //     commit('SET_REALM_LOADING', false);
-        // },
-        setRealmMapMode({commit}, payload) {
-            commit('SET_REALM_MAP_MODE', payload)
-        },
+        }
     }
 };
