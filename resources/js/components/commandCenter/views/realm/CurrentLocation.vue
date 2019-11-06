@@ -1,46 +1,44 @@
 <template>
-    <v-col cols="12">
-        <v-card>
-            <v-row no-gutters>
-                <v-col cols="5" class="pa-1">
-                    <MapViewPort :tile="false" :view-box="_currentLocationProvince.viewBox">
+    <v-container>
+        <v-row>
+            <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="5" offset-lg="1" xl="4" offset-xl="0">
+                <v-row no-gutters justify="space-around">
+                    <v-col cols="6" class="px-2">
+                        <v-btn
+                            block
+                            large
+                            :color="'primary'"
+                            :to="travelRoute"
+                        >Travel</v-btn>
+                    </v-col>
+                    <v-col cols="6" class="px-2">
+                        <v-btn
+                            block
+                            large
+                            :color="'primary'"
+                            :to="exploreRoute"
+                        >Explore</v-btn>
+                    </v-col>
+                </v-row>
+                <v-row no-gutters>
+                    <v-col cols="12" class="py-3">
+                        <MapViewPort :tile="false" :view-box="_currentLocationProvince.viewBox">
 
-                        <!-- Borders -->
-                        <ProvinceVector
-                            v-for="(province, uuid) in borders"
-                            :key="uuid"
-                            :province="province"
-                        >
-                        </ProvinceVector>
+                            <!-- Borders -->
+                            <ProvinceVector
+                                v-for="(province, uuid) in borders"
+                                :key="uuid"
+                                :province="province"
+                            >
+                            </ProvinceVector>
 
-                        <ProvinceVector :province="_currentLocationProvince" :highlight="true"></ProvinceVector>
-                    </MapViewPort>
-                </v-col>
-                <v-col cols="7" class="pa-1">
-                    <v-row no-gutters>
-                        <v-col cols="12">
-                            <p>
-                                Current Location: {{_currentLocationProvince.name}} <br>
-                                Borders: {{bordersCount}} <br>
-                            </p>
-                        </v-col>
-                    </v-row>
-                    <v-row no-gutters>
-                        <v-col cols="12">
-                            <v-btn
-                                :color="'primary'"
-                                :to="travelRoute"
-                            >Travel</v-btn>
-                            <v-btn
-                                :color="'primary'"
-                                :to="exploreRoute"
-                            >Explore</v-btn>
-                        </v-col>
-                    </v-row>
-                </v-col>
-            </v-row>
-        </v-card>
-    </v-col>
+                            <ProvinceVector :province="_currentLocationProvince" :highlight="true"></ProvinceVector>
+                        </MapViewPort>
+                    </v-col>
+                </v-row>
+            </v-col>
+        </v-row>
+    </v-container>
 </template>
 
 <script>
@@ -51,7 +49,7 @@
     import ProvinceVector from "../../map/ProvinceVector";
 
     export default {
-        name: "MapMain",
+        name: "CurrentLocation",
         components: {
             ProvinceVector,
             MapViewPort
