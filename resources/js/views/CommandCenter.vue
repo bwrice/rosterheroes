@@ -18,7 +18,7 @@
         >
             <router-view name="drawer"></router-view>
         </v-navigation-drawer>
-        <v-content style="background-image: linear-gradient(#236161, #2f3838); background-attachment: fixed">
+        <v-content style="background-image: linear-gradient(#234a4a, #222626); background-attachment: fixed">
             <router-view></router-view>
         </v-content>
         <v-bottom-navigation
