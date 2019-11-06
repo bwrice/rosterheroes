@@ -14,12 +14,14 @@
                 <v-col cols="12" v-for="(hero, uuid) in _heroes" :key="uuid">
                     <HeroRosterCard :hero="hero">
                         <template slot="body">
-                            <PlayerSpiritPanel v-if="hero.playerSpirit" :player-spirit="hero.playerSpirit">
-                                <template v-slot:spirit-actions>
-                                    <EditSpiritButton :hero="hero"></EditSpiritButton>
-                                    <RemoveSpiritButton :hero="hero" :player-spirit="hero.playerSpirit"></RemoveSpiritButton>
-                                </template>
-                            </PlayerSpiritPanel>
+                            <div class="mx-1" v-if="hero.playerSpirit">
+                                <PlayerSpiritPanel :player-spirit="hero.playerSpirit">
+                                    <template v-slot:spirit-actions>
+                                        <EditSpiritButton :hero="hero"></EditSpiritButton>
+                                        <RemoveSpiritButton :hero="hero" :player-spirit="hero.playerSpirit"></RemoveSpiritButton>
+                                    </template>
+                                </PlayerSpiritPanel>
+                            </div>
                             <v-row v-else justify="center" align="center" no-gutters class="mx-2">
                                 <AddSpiritRouterButton :hero-slug="hero.slug" :btn-classes="{'mx-2': true}"></AddSpiritRouterButton>
                             </v-row>

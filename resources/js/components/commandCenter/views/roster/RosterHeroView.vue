@@ -1,19 +1,21 @@
 <template>
     <SingleColumnLayout>
         <template v-slot:column-one>
-            <v-card>
-                <v-card-text class="px-1 py-2">
+            <v-row no-gutters>
+                <v-col cols="12">
                     <HeroRosterCard :hero="hero">
                         <template slot="body">
-                            <PlayerSpiritPanel v-if="hero.playerSpirit" :player-spirit="hero.playerSpirit">
-                                <template v-slot:spirit-actions>
-                                    <RemoveSpiritButton
-                                        :hero="hero"
-                                        :player-spirit="hero.playerSpirit"
-                                    >
-                                    </RemoveSpiritButton>
-                                </template>
-                            </PlayerSpiritPanel>
+                            <div class="mx-1" v-if="hero.playerSpirit">
+                                <PlayerSpiritPanel :player-spirit="hero.playerSpirit">
+                                    <template v-slot:spirit-actions>
+                                        <RemoveSpiritButton
+                                            :hero="hero"
+                                            :player-spirit="hero.playerSpirit"
+                                        >
+                                        </RemoveSpiritButton>
+                                    </template>
+                                </PlayerSpiritPanel>
+                            </div>
                             <v-row v-else no-gutters justify="center" align="center">
                                 <v-col cols="12">
                                     <v-sheet color="rgba(0, 0, 0, .3)" class="mx-2 my-1">
@@ -25,6 +27,10 @@
                             </v-row>
                         </template>
                     </HeroRosterCard>
+                </v-col>
+            </v-row>
+            <v-row no-gutters>
+                <v-col cols="12">
                     <v-data-iterator
                         :items="filteredSpirits"
                         :items-per-page="itemsPerPage"
@@ -65,8 +71,8 @@
                             </IteratorFooter>
                         </template>
                     </v-data-iterator>
-                </v-card-text>
-            </v-card>
+                </v-col>
+            </v-row>
         </template>
     </SingleColumnLayout>
 </template>
