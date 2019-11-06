@@ -1,4 +1,4 @@
-import MapMain from "../components/commandCenter/views/realm/MapMain";
+import CurrentLocation from "../components/commandCenter/views/realm/CurrentLocation";
 import MapNavigationDrawer from "../components/commandCenter/views/realm/MapNavigationDrawer";
 import ContinentView from "../components/commandCenter/views/realm/explore/ContinentView";
 import TerritoryView from "../components/commandCenter/views/realm/explore/TerritoryView";
@@ -19,11 +19,11 @@ export const realmRoutes = {
         {
             path: '',
             components: {
-                default: MapMain,
+                default: CurrentLocation,
                 drawer: MapNavigationDrawer,
                 appBarContent: SquadAppBarContent
             },
-            component: MapMain,
+            component: CurrentLocation,
             name: 'map-main',
             meta: {
                 footerButton: 'realm'
