@@ -24,7 +24,9 @@ Vue.use(Vuetify);
 import Vuex from 'vuex';
 Vue.use(Vuex);
 
-import CommandCenter from './views/CommandCenter';
+import VDragged from "v-dragged";
+Vue.use(VDragged);
+
 import { store } from "./store/commandCenter/ccStore";
 
 import { vuetifyOptions } from "./vuetifyOptions";
