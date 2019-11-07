@@ -1,52 +1,106 @@
 <template>
-    <ExploreMapCard>
-        <template v-if="inContinentMode">
-            <ContinentVector v-for="(continent, id) in this._continents" :key="id" :continent="continent"></ContinentVector>
-        </template>
-        <template v-else>
-            <TerritoryVector v-for="(territory, id) in this._territories" :key="id" :territory="territory"></TerritoryVector>
-        </template>
-        <template slot="footer-content">
-            <v-row no-gutters>
-                <v-col cols="12">
-                    <v-chip class="ma-1"
-                            :input-value="inContinentMode"
-                            @click="setRealmMapMode('continent')"
-                            filter
-                            filter-icon="mdi-eye"
-                            label
-                    >
-                        Continents
-                    </v-chip>
-                    <v-chip class="ma-1"
-                            :input-value="inTerritoryMode"
-                            @click="setRealmMapMode('territory')"
-                            filter
-                            filter-icon="mdi-eye"
-                            label
-                    >
-                        Territories
-                    </v-chip>
-                </v-col>
-            </v-row>
-        </template>
-    </ExploreMapCard>
+    <v-container>
+        <v-row>
+            <v-col cols="12" lg="8" offset-lg="2">
+                <v-row no-gutters>
+                    <v-col cols="12">
+                        <MapViewPort :view-box="viewBox" :tile="false">
+                            <template v-if="mode === 'continents'">
+                                <ContinentVector v-for="(continent, id) in this._continents" :key="id" :continent="continent"></ContinentVector>
+                            </template>
+                            <template v-else-if="mode === 'territories'">
+                                <TerritoryVector v-for="(territory, id) in this._territories" :key="id" :territory="territory"></TerritoryVector>
+                            </template>
+                            <template v-else-if="mode === 'provinces'">
+                                <ProvinceVector v-for="(province, uuid) in this._provinces" :key="uuid" :province="province"></ProvinceVector>
+                            </template>
+                        </MapViewPort>
+                    </v-col>
+                </v-row>
+                <v-row no-gutters class="py-2">
+                    <v-col cols="6">
+                        <v-row no-gutters>
+                            <v-col cols="12" md="4" class="pa-1">
+                                <v-btn
+                                    block
+                                    @click="mode = 'continents'"
+                                    :color="mode === 'continents' ? 'accent darken-1' : 'primary'"
+                                    :depressed="mode === 'continents'"
+                                >
+                                    Continents
+                                </v-btn>
+                            </v-col>
+                            <v-col cols="12" md="4" class="pa-1">
+                                <v-btn
+                                    block
+                                    @click="mode = 'territories'"
+                                    :color="mode === 'territories' ? 'accent darken-1' : 'primary'"
+                                    :depressed="mode === 'territories'"
+                                >
+                                    Territories
+                                </v-btn>
+                            </v-col>
+                            <v-col cols="12" md="4" class="pa-1">
+                                <v-btn
+                                    block
+                                    @click="mode = 'provinces'"
+                                    :color="mode === 'provinces' ? 'accent darken-1' : 'primary'"
+                                    :depressed="mode === 'provinces'"
+                                >
+                                    Provinces
+                                </v-btn>
+                            </v-col>
+                        </v-row>
+                    </v-col>
+                    <v-col cols="6">
+
+                    </v-col>
+                </v-row>
+            </v-col>
+        </v-row>
+    </v-container>
+<!--    <ExploreMapCard>-->
+<!--        <template slot="footer-content">-->
+<!--            <v-row no-gutters>-->
+<!--                <v-col cols="12">-->
+<!--                    <v-chip class="ma-1"-->
+<!--                            :input-value="inContinentMode"-->
+<!--                            @click="setRealmMapMode('continent')"-->
+<!--                            filter-->
+<!--                            filter-icon="mdi-eye"-->
+<!--                            label-->
+<!--                    >-->
+<!--                        Continents-->
+<!--                    </v-chip>-->
+<!--                    <v-chip class="ma-1"-->
+<!--                            :input-value="inTerritoryMode"-->
+<!--                            @click="setRealmMapMode('territory')"-->
+<!--                            filter-->
+<!--                            filter-icon="mdi-eye"-->
+<!--                            label-->
+<!--                    >-->
+<!--                        Territories-->
+<!--                    </v-chip>-->
+<!--                </v-col>-->
+<!--            </v-row>-->
+<!--        </template>-->
+<!--    </ExploreMapCard>-->
 </template>
 
 <script>
 
     import {mapGetters} from 'vuex';
-    import {mapActions} from 'vuex';
-
     import ContinentVector from "../../../map/ContinentVector";
     import TerritoryVector from "../../../map/TerritoryVector";
     import MapViewPort from "../../../map/MapViewPort";
     import MapControls from "../../../map/MapControls";
     import ExploreMapCard from "../../../map/ExploreMapCard";
+    import ProvinceVector from "../../../map/ProvinceVector";
 
     export default {
         name: "RealmView",
         components: {
+            ProvinceVector,
             ExploreMapCard,
             MapControls,
             MapViewPort,
@@ -56,29 +110,22 @@
 
         data: function() {
             return {
-                mode: 'continent'
+                mode: 'continents',
+                viewBox: {
+                    pan_x: 0,
+                    pan_y: 0,
+                    zoom_x: 315,
+                    zoom_y: 240,
+                }
             }
-        },
-
-        methods: {
-            ...mapActions([
-                'setRealmMapMode',
-            ])
         },
 
         computed: {
             ...mapGetters([
                 '_provinces',
                 '_territories',
-                '_continents',
-                '_realmMapMode'
-            ]),
-            inContinentMode: function() {
-                return this._realmMapMode === 'continent';
-            },
-            inTerritoryMode: function() {
-                return this._realmMapMode === 'territory';
-            }
+                '_continents'
+            ])
         }
     }
 </script>
