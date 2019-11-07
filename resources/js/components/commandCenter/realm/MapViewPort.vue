@@ -1,15 +1,31 @@
 <template>
-    <v-sheet id="map-sheet" :tile="tile" :color="oceanColor">
-        <svg xmlns="http://www.w3.org/2000/svg"
-             version="1.1"
-             :viewBox="viewBoxString"
-             v-dragged="onDragged"
-        >
-            <slot>
-                <!-- Default Slot: ProvinceVector components slotted here -->
-            </slot>
-        </svg>
-    </v-sheet>
+    <v-row no-gutters>
+        <v-col cols="12">
+            <v-sheet
+                id="map-sheet"
+                :tile="tile"
+                :color="oceanColor"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     version="1.1"
+                     display="block"
+                     :viewBox="viewBoxString"
+                     v-dragged="onDragged"
+                >
+                    <slot>
+                        <!-- Default Slot: ProvinceVector components slotted here -->
+                    </slot>
+                </svg>
+            </v-sheet>
+        </v-col>
+        <v-col cols="12" style="margin-top: -32px">
+            <v-row no-gutters justify="end" class="mx-1">
+                <v-btn small>
+                    reset
+                </v-btn>
+            </v-row>
+        </v-col>
+    </v-row>
 </template>
 
 <script>
