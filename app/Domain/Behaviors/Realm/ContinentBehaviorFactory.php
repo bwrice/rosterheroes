@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Domain\Behaviors\Map;
+namespace App\Domain\Behaviors\Realm;
 
 
 use App\Domain\Models\Continent;

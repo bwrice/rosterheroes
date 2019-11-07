@@ -2,9 +2,9 @@
 
 namespace App\Domain\Models;
 
-use App\Domain\Behaviors\Map\RealmBehavior;
-use App\Domain\Behaviors\Map\TerritoryBehavior;
-use App\Domain\Behaviors\Map\TerritoryBehaviorFactory;
+use App\Domain\Behaviors\Realm\RealmBehavior;
+use App\Domain\Behaviors\Realm\TerritoryBehavior;
+use App\Domain\Behaviors\Realm\TerritoryBehaviorFactory;
 use App\Domain\Models\Continent;
 use App\Domain\Traits\HasNameSlug;
 use App\Exceptions\UnknownBehaviorException;
@@ -81,6 +81,6 @@ class Territory extends Model
 
     public function realmViewBox()
     {
-        return $this->getBehavior()->getRealmViewBox();
+        return $this->getBehavior()->getViewBox();
     }
 }

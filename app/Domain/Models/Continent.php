@@ -2,9 +2,9 @@
 
 namespace App\Domain\Models;
 
-use App\Domain\Behaviors\Map\ContinentBehavior;
-use App\Domain\Behaviors\Map\ContinentBehaviorFactory;
-use App\Domain\Behaviors\Map\RealmBehavior;
+use App\Domain\Behaviors\Realm\ContinentBehavior;
+use App\Domain\Behaviors\Realm\ContinentBehaviorFactory;
+use App\Domain\Behaviors\Realm\RealmBehavior;
 use App\Domain\Traits\HasNameSlug;
 use App\Exceptions\UnknownBehaviorException;
 use Illuminate\Database\Eloquent\Model;

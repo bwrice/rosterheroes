@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Domain\Behaviors\Map;
+namespace App\Domain\Behaviors\Realm;
 
 
 class ContinentBehavior extends MapBehavior
