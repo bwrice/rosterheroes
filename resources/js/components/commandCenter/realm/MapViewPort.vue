@@ -62,9 +62,30 @@
         },
         mounted() {
             let mapSheet = document.getElementById('map-sheet');
-            mapSheet.addEventListener('touchmove', function(e) {
-                e.preventDefault();
-            }, false);
+
+            // mapSheet.onwheel = function (e) {
+            //     _.debounce(function() {
+            //         console.log(e);
+            //     }, {
+            //         leading: true
+            //     });
+            //     return false;
+            // };
+
+            mapSheet.onwheel = _.throttle(function(e) {
+                console.log(e);
+                return false;
+            }, 100);
+
+            // mapSheet.addEventListener('wheel scroll touchmove mousewheel', function(e) {
+            //     e.preventDefault();
+            //     e.stopPropagation();
+            // }, false);
+
+            // mapSheet.addEventListener("scroll", function(e) {
+            //     console.log("SCROLLING");
+            //     e.preventDefault();
+            // });
         },
         data() {
             return {
@@ -90,7 +111,7 @@
             onDragged({ el, deltaX, deltaY, offsetX, offsetY, clientX, clientY, first, last }) {
                 if (first) {
                     this.isDragging = true;
-                    return
+                    return;
                 }
                 if (last) {
                     this.isDragging = false;
@@ -98,6 +119,10 @@
                 }
                 this.currentPanX -= deltaX;
                 this.currentPanY -= deltaY;
+            },
+            onScrolled(e) {
+                e.preventDefault();
+                console.log(e);
             }
         }
     }
