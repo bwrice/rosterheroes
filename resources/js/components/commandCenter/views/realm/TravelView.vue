@@ -155,11 +155,11 @@
     import {viewBoxControlsMixin} from "../../../../mixins/viewBoxControlsMixin";
     import {travelMixin} from "../../../../mixins/travelMixin";
 
-    import MapViewPort from "../../map/MapViewPort";
-    import ProvinceVector from "../../map/ProvinceVector";
-    import TravelRouteListItem from "../../map/TravelRouteListItem";
-    import MapControls from "../../map/MapControls";
-    import TravelRouteMap from "../../map/TravelRouteMap";
+    import MapViewPort from "../../realm/MapViewPort";
+    import ProvinceVector from "../../realm/ProvinceVector";
+    import TravelRouteListItem from "../../realm/TravelRouteListItem";
+    import MapControls from "../../realm/MapControls";
+    import TravelRouteMap from "../../realm/TravelRouteMap";
 
     export default {
         name: "TravelView",

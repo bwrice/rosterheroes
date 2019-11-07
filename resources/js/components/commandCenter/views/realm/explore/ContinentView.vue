@@ -13,8 +13,8 @@
 
     import {mapGetters} from 'vuex';
 
-    import ProvinceVector from "../../../map/ProvinceVector";
-    import ExploreMapCard from "../../../map/ExploreMapCard";
+    import ProvinceVector from "../../../realm/ProvinceVector";
+    import ExploreMapCard from "../../../realm/ExploreMapCard";
     import Continent from "../../../../../models/Continent";
 
     export default {

@@ -90,12 +90,12 @@
 <script>
 
     import {mapGetters} from 'vuex';
-    import ContinentVector from "../../../map/ContinentVector";
-    import TerritoryVector from "../../../map/TerritoryVector";
-    import MapViewPort from "../../../map/MapViewPort";
-    import MapControls from "../../../map/MapControls";
-    import ExploreMapCard from "../../../map/ExploreMapCard";
-    import ProvinceVector from "../../../map/ProvinceVector";
+    import ContinentVector from "../../../realm/ContinentVector";
+    import TerritoryVector from "../../../realm/TerritoryVector";
+    import MapViewPort from "../../../realm/MapViewPort";
+    import MapControls from "../../../realm/MapControls";
+    import ExploreMapCard from "../../../realm/ExploreMapCard";
+    import ProvinceVector from "../../../realm/ProvinceVector";
 
     export default {
         name: "RealmView",

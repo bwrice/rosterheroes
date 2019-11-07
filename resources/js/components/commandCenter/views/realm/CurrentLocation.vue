@@ -45,8 +45,8 @@
 
     import { mapGetters } from 'vuex';
 
-    import MapViewPort from "../../map/MapViewPort";
-    import ProvinceVector from "../../map/ProvinceVector";
+    import MapViewPort from "../../realm/MapViewPort";
+    import ProvinceVector from "../../realm/ProvinceVector";
 
     export default {
         name: "CurrentLocation",
