@@ -3,6 +3,7 @@
 namespace App\Domain\Models;
 
 use App\Domain\Collections\ProvinceCollection;
+use App\Domain\Models\Support\ViewBox;
 use App\Domain\Traits\HasNameSlug;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -98,9 +99,15 @@ class Province extends EventSourcedModel
         return in_array($province->id, $this->borderedBy()->pluck('id')->toArray());
     }
 
-    public function getViewBox()
+    public function getViewBox(): ViewBox
     {
-        return json_decode($this->view_box, true);
+        $viewBoxArray = json_decode($this->view_box, true);
+        return new ViewBox(
+            $viewBoxArray['pan_x'],
+            $viewBoxArray['pan_y'],
+            $viewBoxArray['zoom_x'],
+            $viewBoxArray['zoom_y']
+        );
     }
 
     /**
