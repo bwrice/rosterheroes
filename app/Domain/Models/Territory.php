@@ -74,12 +74,12 @@ class Territory extends Model
        return $behaviorFactory->getBehavior($this->name);
     }
 
-    public function realmColor()
+    public function getRealmColor()
     {
         return $this->getBehavior()->getRealmColor();
     }
 
-    public function realmViewBox()
+    public function getViewBox()
     {
         return $this->getBehavior()->getViewBox();
     }

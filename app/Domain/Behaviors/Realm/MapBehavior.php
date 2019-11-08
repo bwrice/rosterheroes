@@ -4,6 +4,8 @@
 namespace App\Domain\Behaviors\Realm;
 
 
+use App\Domain\Models\Support\ViewBox;
+
 abstract class MapBehavior
 {
     protected $realmColor = '#000';
@@ -18,11 +20,16 @@ abstract class MapBehavior
     }
 
     /**
-     * @return array
+     * @return ViewBox
      */
-    public function getViewBox(): array
+    public function getViewBox(): ViewBox
     {
-        return $this->viewBox;
+        return new ViewBox(
+            $this->viewBox['pan_x'],
+            $this->viewBox['pan_y'],
+            $this->viewBox['zoom_x'],
+            $this->viewBox['zoom_y']
+        );
     }
 
 }
