@@ -5,12 +5,12 @@
                 id="map-sheet"
                 :tile="tile"
                 :color="oceanColor"
+                v-dragged="onDragged"
             >
                 <svg xmlns="http://www.w3.org/2000/svg"
                      version="1.1"
                      display="block"
                      :viewBox="viewBoxString"
-                     v-dragged="onDragged"
                 >
                     <slot>
                         <!-- Default Slot: ProvinceVector components slotted here -->
@@ -64,16 +64,6 @@
         },
         mounted() {
             let mapSheet = document.getElementById('map-sheet');
-
-            // mapSheet.onwheel = function (e) {
-            //     _.debounce(function() {
-            //         console.log(e);
-            //     }, {
-            //         leading: true
-            //     });
-            //     return false;
-            // };
-
             let self = this;
             mapSheet.onwheel = _.throttle(function(e) {
                 if (e.deltaY > 0) {
@@ -87,15 +77,9 @@
                 return false;
             }, 125);
 
-            // mapSheet.addEventListener('wheel scroll touchmove mousewheel', function(e) {
-            //     e.preventDefault();
-            //     e.stopPropagation();
-            // }, false);
-
-            // mapSheet.addEventListener("scroll", function(e) {
-            //     console.log("SCROLLING");
-            //     e.preventDefault();
-            // });
+            mapSheet.addEventListener('touchmove', function(e) {
+                e.preventDefault();
+            }, false);
         },
         data() {
             return {
