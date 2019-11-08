@@ -47,7 +47,7 @@
                 '_provincesByTerritoryID'
             ]),
             fillColor() {
-                return this.territory.realmColor;
+                return this.territory.color;
             },
             opacity() {
                 if (this.hovered) {

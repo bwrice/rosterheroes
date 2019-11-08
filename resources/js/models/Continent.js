@@ -14,7 +14,7 @@ export default class Continent {
         return this._color;
     }
 
-    get realmViewBox() {
+    get viewBox() {
         return this._viewBox;
     }
 
