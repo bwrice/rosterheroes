@@ -77,30 +77,9 @@
                 return false;
             }, 125);
 
-            mapSheet.addEventListener('mousedown', function(e) {
-                self.touchPositions.touched = true;
-                self.touchPositions.xStart = self.touchPositions.xCurrent = e.clientX;
-                self.touchPositions.yStart = self.touchPositions.yCurrent = e.clientY;
-            });
-
-            mapSheet.addEventListener('mousemove', function(e) {
-                if (! self.touchPositions.touched) {
-                    return;
-                }
-                e.preventDefault();
-                console.log(e.clientX, e.clientY, self.touchPositions.xCurrent, self.touchPositions.yCurrent);
-                let deltaX = e.clientX - self.touchPositions.xCurrent;
-                let deltaY = e.clientY - self.touchPositions.yCurrent;
-                self.currentViewBox.pan(deltaX, deltaY);
-                self.currentViewBox = _.cloneDeep(self.currentViewBox);
-                self.touchPositions.xCurrent = e.clientX;
-                self.touchPositions.yCurrent = e.clientY;
-            })
-
-            // mapSheet.addEventListener('touchmove', function(e) {
-            //     console.log(e);
-            //     e.preventDefault();
-            // }, false);
+            mapSheet.addEventListener('mousedown', this.handlePointerStartEvent);
+            mapSheet.addEventListener('mousemove', this.handlePointerMoveEvent);
+            window.document.addEventListener('mouseup', this.handlePointEndEvent);
         },
         data() {
             return {
@@ -144,6 +123,28 @@
                 }
                 this.currentViewBox.pan(deltaX, deltaY);
                 this.currentViewBox = _.cloneDeep(this.currentViewBox);
+            },
+            handlePointerStartEvent(e) {
+                let touchPositions = this.touchPositions;
+                touchPositions.touched = true;
+                touchPositions.xCurrent = e.clientX;
+                touchPositions.yCurrent = e.clientY;
+            },
+            handlePointerMoveEvent(e) {
+                let touchPositions = this.touchPositions;
+                if (! touchPositions.touched) {
+                    return;
+                }
+                e.preventDefault();
+                let deltaX = e.clientX - touchPositions.xCurrent;
+                let deltaY = e.clientY - touchPositions.yCurrent;
+                this.currentViewBox.pan(deltaX, deltaY);
+                this.currentViewBox = _.cloneDeep(this.currentViewBox);
+                touchPositions.xCurrent = e.clientX;
+                touchPositions.yCurrent = e.clientY;
+            },
+            handlePointEndEvent(e) {
+                this.touchPositions.touched = false;
             }
         }
     }
