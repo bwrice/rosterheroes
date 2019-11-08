@@ -4,7 +4,7 @@
 namespace App\Domain\Behaviors\Realm\Territories;
 
 
-class TwistingIslesOfIllusionsBehavior
+class TwistingIslesOfIllusionsBehavior extends TerritoryBehavior
 {
     protected $realmColor = '#7950c4';
     protected $viewBox = [

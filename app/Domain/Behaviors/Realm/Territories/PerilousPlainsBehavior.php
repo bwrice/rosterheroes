@@ -4,7 +4,7 @@
 namespace App\Domain\Behaviors\Realm\Territories;
 
 
-class PerilousPlainsBehavior
+class PerilousPlainsBehavior extends TerritoryBehavior
 {
     protected $realmColor = '#4e56ce';
     protected $viewBox = [

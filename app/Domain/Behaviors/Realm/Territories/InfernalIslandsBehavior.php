@@ -4,7 +4,7 @@
 namespace App\Domain\Behaviors\Realm\Territories;
 
 
-class InfernalIslandsBehavior
+class InfernalIslandsBehavior extends TerritoryBehavior
 {
     protected $realmColor = '#c95a00';
     protected $viewBox = [

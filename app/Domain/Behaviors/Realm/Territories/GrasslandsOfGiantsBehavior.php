@@ -4,7 +4,7 @@
 namespace App\Domain\Behaviors\Realm\Territories;
 
 
-class GrasslandsOfGiantsBehavior
+class GrasslandsOfGiantsBehavior extends TerritoryBehavior
 {
 
     protected $realmColor = '#af9003';

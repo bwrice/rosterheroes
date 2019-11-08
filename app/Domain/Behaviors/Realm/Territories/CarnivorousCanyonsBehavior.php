@@ -4,7 +4,7 @@
 namespace App\Domain\Behaviors\Realm\Territories;
 
 
-class CarnivorousCanyonsBehavior
+class CarnivorousCanyonsBehavior extends TerritoryBehavior
 {
     protected $realmColor = '#8e2964';
     protected $viewBox = [

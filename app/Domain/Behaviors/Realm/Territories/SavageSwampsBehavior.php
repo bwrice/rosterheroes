@@ -4,7 +4,7 @@
 namespace App\Domain\Behaviors\Realm\Territories;
 
 
-class SavageSwampsBehavior
+class SavageSwampsBehavior extends TerritoryBehavior
 {
     protected $realmColor = '#a56517';
     protected $viewBox = [

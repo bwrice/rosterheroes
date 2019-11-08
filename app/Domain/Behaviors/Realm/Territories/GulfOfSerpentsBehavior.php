@@ -4,7 +4,7 @@
 namespace App\Domain\Behaviors\Realm\Territories;
 
 
-class GulfOfSerpentsBehavior
+class GulfOfSerpentsBehavior extends TerritoryBehavior
 {
     protected $realmColor = '#5b9621';
     protected $viewBox = [

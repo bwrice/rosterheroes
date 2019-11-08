@@ -4,7 +4,7 @@
 namespace App\Domain\Behaviors\Realm\Territories;
 
 
-class TropicsOfTrepidationBehavior
+class TropicsOfTrepidationBehavior extends TerritoryBehavior
 {
     protected $realmColor = '#869619';
     protected $viewBox = [

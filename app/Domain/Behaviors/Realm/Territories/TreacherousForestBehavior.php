@@ -4,7 +4,7 @@
 namespace App\Domain\Behaviors\Realm\Territories;
 
 
-class TreacherousForestBehavior
+class TreacherousForestBehavior extends TerritoryBehavior
 {
     protected $realmColor = '#b73583';
     protected $viewBox = [

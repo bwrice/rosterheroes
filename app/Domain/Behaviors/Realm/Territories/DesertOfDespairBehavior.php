@@ -4,7 +4,7 @@
 namespace App\Domain\Behaviors\Realm\Territories;
 
 
-class DesertOfDespairBehavior
+class DesertOfDespairBehavior extends TerritoryBehavior
 {
     protected $realmColor = '#99844a';
     protected $viewBox = [

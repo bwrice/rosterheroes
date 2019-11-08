@@ -4,7 +4,7 @@
 namespace App\Domain\Behaviors\Realm\Territories;
 
 
-class MenacingMarchesBehavior
+class MenacingMarchesBehavior extends TerritoryBehavior
 {
     protected $realmColor = '#1c8a9e';
     protected $viewBox = [

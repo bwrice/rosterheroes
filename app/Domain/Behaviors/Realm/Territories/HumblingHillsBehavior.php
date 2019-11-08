@@ -4,7 +4,7 @@
 namespace App\Domain\Behaviors\Realm\Territories;
 
 
-class HumblingHillsBehavior
+class HumblingHillsBehavior extends TerritoryBehavior
 {
     protected $realmColor = '#0ab5a1';
     protected $viewBox = [
