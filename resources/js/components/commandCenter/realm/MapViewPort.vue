@@ -20,7 +20,7 @@
         </v-col>
         <v-col cols="12" style="margin-top: -32px">
             <v-row no-gutters justify="end" class="mx-1">
-                <v-btn small>
+                <v-btn small @click="resetViewPort">
                     reset
                 </v-btn>
             </v-row>
@@ -115,10 +115,12 @@
         },
         methods: {
             initializeViewBox() {
-                this.originalViewBox = this.viewBox;
-                this.currentViewBox = this.viewBox;
+                this.originalViewBox =  _.cloneDeep(this.viewBox);
+                this.currentViewBox = _.cloneDeep(this.viewBox);
             },
-
+            resetViewPort() {
+                this.currentViewBox = _.cloneDeep(this.originalViewBox);
+            },
             onDragged({ el, deltaX, deltaY, offsetX, offsetY, clientX, clientY, first, last }) {
                 if (first) {
                     this.isDragging = true;
