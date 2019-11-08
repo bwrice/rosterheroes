@@ -5,7 +5,6 @@
                 id="map-sheet"
                 :tile="tile"
                 :color="oceanColor"
-                v-dragged="onDragged"
             >
                 <svg xmlns="http://www.w3.org/2000/svg"
                      version="1.1"
@@ -63,8 +62,9 @@
             this.initializeViewBox();
         },
         mounted() {
-            let mapSheet = document.getElementById('map-sheet');
             let self = this;
+
+            let mapSheet = document.getElementById('map-sheet');
             mapSheet.onwheel = _.throttle(function(e) {
                 if (e.deltaY > 0) {
                     self.currentViewBox.zoomIn();
@@ -77,14 +77,42 @@
                 return false;
             }, 125);
 
-            mapSheet.addEventListener('touchmove', function(e) {
+            mapSheet.addEventListener('mousedown', function(e) {
+                self.touchPositions.touched = true;
+                self.touchPositions.xStart = self.touchPositions.xCurrent = e.clientX;
+                self.touchPositions.yStart = self.touchPositions.yCurrent = e.clientY;
+            });
+
+            mapSheet.addEventListener('mousemove', function(e) {
+                if (! self.touchPositions.touched) {
+                    return;
+                }
                 e.preventDefault();
-            }, false);
+                console.log(e.clientX, e.clientY, self.touchPositions.xCurrent, self.touchPositions.yCurrent);
+                let deltaX = e.clientX - self.touchPositions.xCurrent;
+                let deltaY = e.clientY - self.touchPositions.yCurrent;
+                self.currentViewBox.pan(deltaX, deltaY);
+                self.currentViewBox = _.cloneDeep(self.currentViewBox);
+                self.touchPositions.xCurrent = e.clientX;
+                self.touchPositions.yCurrent = e.clientY;
+            })
+
+            // mapSheet.addEventListener('touchmove', function(e) {
+            //     console.log(e);
+            //     e.preventDefault();
+            // }, false);
         },
         data() {
             return {
                 originalViewBox: new ViewBox({}),
-                currentViewBox: new ViewBox({})
+                currentViewBox: new ViewBox({}),
+                touchPositions: {
+                    touched: false,
+                    xStart: 0,
+                    yStart: 0,
+                    xCurrent: 0,
+                    yCurrent: 0,
+                }
             }
         },
         watch: {
