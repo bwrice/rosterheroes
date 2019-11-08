@@ -3,7 +3,7 @@
 namespace App\Domain\Models;
 
 use App\Domain\Behaviors\Realm\RealmBehavior;
-use App\Domain\Behaviors\Realm\TerritoryBehavior;
+use App\Domain\Behaviors\Realm\Territories\TerritoryBehavior;
 use App\Domain\Behaviors\Realm\TerritoryBehaviorFactory;
 use App\Domain\Models\Continent;
 use App\Domain\Traits\HasNameSlug;
@@ -29,7 +29,7 @@ class Territory extends Model
     const GRASSLANDS_OF_GIANTS = 'Grasslands of Giants';
     const MENACING_MARCHES = 'Menacing Marshes';
     const TROPICS_OF_TREPIDATION = 'Tropics of Trepidation';
-    const PERILOUS_PLANS = 'Perilous Plains';
+    const PERILOUS_PLAINS = 'Perilous Plains';
     const TREACHEROUS_FOREST = 'Treacherous Forest';
     const SAVAGE_SWAMPS = 'Savage Swamps';
     const DESERT_OF_DESPAIR = 'Desert of Despair';
