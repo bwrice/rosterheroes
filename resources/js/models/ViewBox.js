@@ -5,11 +5,12 @@ export default class ViewBox {
         this.panY = panY;
         this.zoomX = zoomX;
         this.zoomY = zoomY;
+        this.zoomRatio = 1;
     }
 
     pan(deltaX, deltaY) {
-        this.panX -= deltaX;
-        this.panY -= deltaY;
+        this.panX -= deltaX/this.zoomRatio;
+        this.panY -= deltaY/this.zoomRatio;
     }
 
     panUp() {
@@ -36,6 +37,7 @@ export default class ViewBox {
         this.panDown();
         this.zoomX *= .8;
         this.zoomY *= .8;
+        this.zoomRatio /= .8;
     }
 
     zoomOut() {
@@ -46,5 +48,6 @@ export default class ViewBox {
         this.zoomY /= .8;
         this.panLeft();
         this.panUp();
+        this.zoomRatio *= .8;
     }
 }
