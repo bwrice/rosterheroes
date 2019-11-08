@@ -1,5 +1,5 @@
 <template>
-    <ExploreMapCard :view-box="continent.realmViewBox">
+    <ExploreMapCard :view-box="continent.viewBox">
         <ProvinceVector
             v-for="(province, uuid) in provinces"
             :key="uuid"

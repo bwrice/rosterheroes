@@ -51,7 +51,7 @@
                 '_provincesByContinentID'
             ]),
             fillColor() {
-                return this.continent.realmColor;
+                return this.continent.color;
             },
             provincesForContinent() {
                 return this._provincesByContinentID(this.continent.id);
