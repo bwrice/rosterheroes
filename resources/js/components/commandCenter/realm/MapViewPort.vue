@@ -103,6 +103,11 @@
                 currentViewBox: new ViewBox({})
             }
         },
+        watch: {
+            viewBox: function() {
+                this.initializeViewBox();
+            }
+        },
         computed: {
             viewBoxString() {
                 return this.currentViewBox.panX + ' ' + this.currentViewBox.panY + ' ' + this.currentViewBox.zoomX + ' ' + this.currentViewBox.zoomY;
