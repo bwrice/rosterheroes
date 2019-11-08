@@ -1388,7 +1388,7 @@ class SeedProvinces extends Migration
                 ]
             ],
             [
-                'name' => \App\Domain\Models\Territory::PERILOUS_PLANS,
+                'name' => \App\Domain\Models\Territory::PERILOUS_PLAINS,
                 'provinces' => [
                     [
                         'name' => 'Nyspia',

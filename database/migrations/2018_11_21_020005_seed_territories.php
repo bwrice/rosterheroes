@@ -56,7 +56,7 @@ class SeedTerritories extends Migration
             ]
         ],
         [
-            'name' => \App\Domain\Models\Territory::PERILOUS_PLANS,
+            'name' => \App\Domain\Models\Territory::PERILOUS_PLAINS,
             'continents' => [
                 \App\Domain\Models\Continent::EAST_WOZUL,
                 \App\Domain\Models\Continent::WEST_WOZUL,
