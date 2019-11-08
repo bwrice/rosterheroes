@@ -2,7 +2,7 @@
 
 namespace App\Domain\Models;
 
-use App\Domain\Behaviors\Realm\ContinentBehavior;
+use App\Domain\Behaviors\Realm\Continents\ContinentBehavior;
 use App\Domain\Behaviors\Realm\ContinentBehaviorFactory;
 use App\Domain\Behaviors\Realm\RealmBehavior;
 use App\Domain\Traits\HasNameSlug;
