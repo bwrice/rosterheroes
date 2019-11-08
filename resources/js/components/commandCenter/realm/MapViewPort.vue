@@ -74,10 +74,18 @@
             //     return false;
             // };
 
+            let self = this;
             mapSheet.onwheel = _.throttle(function(e) {
-                console.log(e);
+                if (e.deltaY > 0) {
+                    self.currentViewBox.zoomIn();
+                }
+
+                if (e.deltaY < 0 ) {
+                    self.currentViewBox.zoomOut();
+                }
+                self.currentViewBox = _.cloneDeep(self.currentViewBox);
                 return false;
-            }, 100);
+            }, 125);
 
             // mapSheet.addEventListener('wheel scroll touchmove mousewheel', function(e) {
             //     e.preventDefault();
@@ -117,10 +125,6 @@
                 }
                 this.currentViewBox.pan(deltaX, deltaY);
                 this.currentViewBox = _.cloneDeep(this.currentViewBox);
-            },
-            onScrolled(e) {
-                e.preventDefault();
-                console.log(e);
             }
         }
     }
