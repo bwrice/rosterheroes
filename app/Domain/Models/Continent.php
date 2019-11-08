@@ -50,8 +50,8 @@ class Continent extends Model
         return $this->getBehavior()->getRealmColor();
     }
 
-    public function realmViewBox()
+    public function getViewBox()
     {
-        return $this->getBehavior()->getRealmViewBox();
+        return $this->getBehavior()->getViewBox();
     }
 }
