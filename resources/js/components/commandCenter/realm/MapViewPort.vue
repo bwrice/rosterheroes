@@ -30,18 +30,20 @@
 
 <script>
 
+    import ViewBox from "../../../models/ViewBox";
+
     export default {
         name: "MapViewPort",
         props: {
             viewBox: {
-                type: Object,
+                type: ViewBox,
                 default: function() {
-                    return {
-                        pan_x: 0,
-                        pan_y: 0,
-                        zoom_x: 315,
-                        zoom_y: 240,
-                    };
+                    return new ViewBox({
+                        panX: 0,
+                        panY: 0,
+                        zoomX: 315,
+                        zoomY: 240,
+                    });
                 }
             },
             oceanColor: {
@@ -89,23 +91,19 @@
         },
         data() {
             return {
-                currentPanX: 0,
-                currentPanY: 0,
-                currentZoomX: 315,
-                currentZoomY: 240
+                originalViewBox: new ViewBox({}),
+                currentViewBox: new ViewBox({})
             }
         },
         computed: {
             viewBoxString() {
-                return this.currentPanX + ' ' + this.currentPanY+ ' ' + this.currentZoomX + ' ' + this.currentZoomY;
+                return this.currentViewBox.panX + ' ' + this.currentViewBox.panY + ' ' + this.currentViewBox.zoomX + ' ' + this.currentViewBox.zoomY;
             }
         },
         methods: {
             initializeViewBox() {
-                this.currentPanX = this.viewBox.pan_x;
-                this.currentPanY = this.viewBox.pan_y;
-                this.currentZoomX = this.viewBox.zoom_x;
-                this.currentZoomY = this.viewBox.zoom_y;
+                this.originalViewBox = this.viewBox;
+                this.currentViewBox = this.viewBox;
             },
 
             onDragged({ el, deltaX, deltaY, offsetX, offsetY, clientX, clientY, first, last }) {
