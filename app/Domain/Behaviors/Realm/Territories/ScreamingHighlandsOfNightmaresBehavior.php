@@ -4,7 +4,7 @@
 namespace App\Domain\Behaviors\Realm\Territories;
 
 
-class ScreamingHighlandsOfNightmaresBehavior
+class ScreamingHighlandsOfNightmaresBehavior extends TerritoryBehavior
 {
     protected $realmColor = '#74367f';
     protected $viewBox = [
