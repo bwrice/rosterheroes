@@ -1,6 +1,6 @@
 export default class ViewBox {
 
-    constructor({panX = 0, panY = 0, zoomX = 100, zoomY = 100}) {
+    constructor({panX = 0, panY = 0, zoomX = 315, zoomY = 240}) {
         this.panX = panX;
         this.panY = panY;
         this.zoomX = zoomX;
