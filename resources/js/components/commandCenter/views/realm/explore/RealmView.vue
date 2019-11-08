@@ -96,6 +96,7 @@
     import MapControls from "../../../realm/MapControls";
     import ExploreMapCard from "../../../realm/ExploreMapCard";
     import ProvinceVector from "../../../realm/ProvinceVector";
+    import ViewBox from "../../../../../models/ViewBox";
 
     export default {
         name: "RealmView",
@@ -111,12 +112,12 @@
         data: function() {
             return {
                 mode: 'continents',
-                viewBox: {
-                    pan_x: 0,
-                    pan_y: 0,
-                    zoom_x: 315,
-                    zoom_y: 240,
-                }
+                viewBox: new ViewBox({
+                    panX: 0,
+                    panY: 0,
+                    zoomX: 315,
+                    zoomY: 240
+                })
             }
         },
 
