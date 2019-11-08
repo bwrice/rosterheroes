@@ -115,8 +115,8 @@
                     this.isDragging = false;
                     return;
                 }
-                this.currentPanX -= deltaX;
-                this.currentPanY -= deltaY;
+                this.currentViewBox.pan(deltaX, deltaY);
+                this.currentViewBox = _.cloneDeep(this.currentViewBox);
             },
             onScrolled(e) {
                 e.preventDefault();

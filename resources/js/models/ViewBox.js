@@ -7,6 +7,11 @@ export default class ViewBox {
         this.zoomY = zoomY;
     }
 
+    pan(deltaX, deltaY) {
+        this.panX -= deltaX;
+        this.panY -= deltaY;
+    }
+
     panUp() {
         this.panY -= (.1 * this.zoomY);
     }
