@@ -1,3 +1,4 @@
+import ViewBox from "./ViewBox";
 
 export default class Province {
 
@@ -7,7 +8,7 @@ export default class Province {
         this.slug = slug;
         this.color = color;
         this.travelCost = travelCost;
-        this.viewBox = viewBox;
+        this.viewBox = viewBox ? new ViewBox(viewBox) : new ViewBox({});
         this.vectorPaths = vectorPaths;
         this.continentID = continentID;
         this.territoryID = territoryID;
