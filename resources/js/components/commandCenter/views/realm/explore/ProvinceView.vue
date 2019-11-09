@@ -10,6 +10,7 @@
                                 v-for="(province, uuid) in borders"
                                 :key="uuid"
                                 :province="province"
+                                :hoverable="true"
                                 @provinceClicked="navigateToProvince"
                             >
                             </ProvinceVector>

@@ -27,7 +27,7 @@
                 type: Boolean,
                 default: false
             },
-            routeLink: {
+            hoverable: {
                 type: Boolean,
                 default: false
             },
@@ -44,10 +44,10 @@
         },
 
         methods: {
-            setHovered: function(hoveredState) {
+            setHovered (hoveredState) {
                 this.hovered = hoveredState;
             },
-            clicked: function(event) {
+            clicked (event) {
                 this.$emit('provinceClicked', this.province, event);
             }
         },
@@ -61,7 +61,7 @@
             },
 
             opacity() {
-                if (this.parentHovered || (this.routeLink && this.hovered)) {
+                if (this.parentHovered || (this.hoverable && this.hovered)) {
                     return .6;
                 }
                 return 1;

@@ -9,6 +9,7 @@
                                 v-for="(province, uuid) in provinces"
                                 :key="uuid"
                                 :province="province"
+                                :hoverable="true"
                                 @provinceClicked="navigateToProvince"
                             ></ProvinceVector>
                         </MapViewPortWithControls>
