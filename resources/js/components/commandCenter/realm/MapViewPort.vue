@@ -18,7 +18,9 @@
                     </svg>
                 </v-sheet>
             </v-col>
-            <v-col cols="12" md="8" offset-md="2" lg="6" offset-lg="3" class="my-2">
+        </v-row>
+        <v-row no-gutters class="py-2">
+            <v-col cols="12" md="8" offset-md="2" lg="6" offset-lg="3">
                 <v-row no-gutters justify="center" align="center">
                     <v-col cols="3">
                         <v-row no-gutters class="flex-column" align="center">
