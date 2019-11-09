@@ -18,7 +18,7 @@
                     </v-col>
                 </v-row>
                 <v-row no-gutters class="py-2">
-                    <v-col cols="6">
+                    <v-col cols="8" offset="2" md="12" offset-md="0">
                         <v-row no-gutters>
                             <v-col cols="12" md="4" class="pa-1">
                                 <v-btn
@@ -51,9 +51,6 @@
                                 </v-btn>
                             </v-col>
                         </v-row>
-                    </v-col>
-                    <v-col cols="6">
-
                     </v-col>
                 </v-row>
             </v-col>
