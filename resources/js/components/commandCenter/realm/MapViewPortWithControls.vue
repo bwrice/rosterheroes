@@ -1,24 +1,10 @@
 <template>
     <v-sheet color="#3a474a">
-        <v-row no-gutters>
-            <v-col cols="12">
-                <v-sheet
-                    id="map-sheet"
-                    :tile="tile"
-                    :color="oceanColor"
-                >
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                         version="1.1"
-                         display="block"
-                         :viewBox="viewBoxString"
-                    >
-                        <slot>
-                            <!-- Default Slot: ProvinceVector components slotted here -->
-                        </slot>
-                    </svg>
-                </v-sheet>
-            </v-col>
-        </v-row>
+        <MapViewPort :view-box="currentViewBox">
+            <slot>
+                <!-- Default Slot: Passed down to MapViewPort default slot -->
+            </slot>
+        </MapViewPort>
         <v-row no-gutters class="py-2">
             <v-col cols="12" md="8" offset-md="2" lg="6" offset-lg="3">
                 <v-row no-gutters justify="center" align="center">
@@ -69,9 +55,11 @@
 
     import ViewBox from "../../../models/ViewBox";
     import Hammer from 'hammerjs';
+    import MapViewPort from "./MapViewPort";
 
     export default {
-        name: "MapViewPort",
+        name: "MapViewPortWithControls",
+        components: {MapViewPort},
         props: {
             viewBox: {
                 type: ViewBox,
@@ -89,10 +77,6 @@
                 default: '#d5f5f5'
             },
             tile: {
-                type: Boolean,
-                default: true
-            },
-            requiresRealm: {
                 type: Boolean,
                 default: true
             }
@@ -131,11 +115,6 @@
         watch: {
             viewBox: function() {
                 this.initializeViewBox();
-            }
-        },
-        computed: {
-            viewBoxString() {
-                return this.currentViewBox.panX + ' ' + this.currentViewBox.panY + ' ' + this.currentViewBox.zoomX + ' ' + this.currentViewBox.zoomY;
             }
         },
         methods: {

@@ -1,0 +1,52 @@
+<template>
+    <v-row no-gutters>
+        <v-col cols="12">
+            <v-sheet
+                id="map-sheet"
+                :tile="tile"
+                :color="oceanColor"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     version="1.1"
+                     display="block"
+                     :viewBox="viewBoxString"
+                >
+                    <slot>
+                        <!-- Default Slot: ProvinceVector components slotted here -->
+                    </slot>
+                </svg>
+            </v-sheet>
+        </v-col>
+    </v-row>
+</template>
+
+<script>
+    import ViewBox from "../../../models/ViewBox";
+
+    export default {
+        name: "MapViewPort",
+        props: {
+            viewBox: {
+                type: ViewBox,
+                required: true
+            },
+            oceanColor: {
+                type: String,
+                default: '#d5f5f5'
+            },
+            tile: {
+                type: Boolean,
+                default: true
+            }
+        },
+        computed: {
+            viewBoxString() {
+                return this.viewBox.panX + ' ' + this.viewBox.panY + ' ' + this.viewBox.zoomX + ' ' + this.viewBox.zoomY;
+            }
+        },
+    }
+</script>
+
+<style scoped>
+
+</style>
