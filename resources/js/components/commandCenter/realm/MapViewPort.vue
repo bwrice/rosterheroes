@@ -63,24 +63,8 @@
             this.initializeViewBox();
         },
         mounted() {
-            let self = this;
-
             let mapSheet = document.getElementById('map-sheet');
-
-            mapSheet.onwheel = _.throttle(function(e) {
-                if (e.deltaY > 0) {
-                    // zoom twice
-                    self.currentViewBox.zoomIn();
-                    self.currentViewBox.zoomIn();
-                }
-
-                if (e.deltaY < 0 ) {
-                    self.currentViewBox.zoomOut();
-                    self.currentViewBox.zoomOut();
-                }
-                self.currentViewBox = _.cloneDeep(self.currentViewBox);
-                return false;
-            }, 50);
+            mapSheet.onwheel = _.throttle((e) => this.handleMouseWheel(e), 50);
 
             let hammer = new Hammer(mapSheet);
             hammer.add( new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 0 }) );
@@ -152,6 +136,20 @@
                     this.currentViewBox.zoomOut();
                 }
                 this.currentViewBox = _.cloneDeep(this.currentViewBox);
+            },
+            handleMouseWheel(ev) {
+                if (ev.deltaY > 0) {
+                    // zoom twice so it's slightly faster
+                    this.currentViewBox.zoomIn();
+                    this.currentViewBox.zoomIn();
+                }
+
+                if (ev.deltaY < 0 ) {
+                    this.currentViewBox.zoomOut();
+                    this.currentViewBox.zoomOut();
+                }
+                this.currentViewBox = _.cloneDeep(this.currentViewBox);
+                return false;
             }
         }
     }
