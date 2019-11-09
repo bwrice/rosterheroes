@@ -87,13 +87,6 @@
             hammer.on("pan", this.handleDrag);
             hammer.get("pinch").set({ enable: true });
             hammer.on("pinch", this.handlePinch, 200);
-
-            // mapSheet.addEventListener('mousedown', this.handleMouseDown);
-            // mapSheet.addEventListener('touchstart', this.handleTouchStart);
-            // mapSheet.addEventListener('mousemove', this.handleMouseMove);
-            // mapSheet.addEventListener('touchmove', this.handleTouchMove);
-            // window.document.addEventListener('mouseup', this.endPointerEvents);
-            // window.document.addEventListener('touchend', this.endPointerEvents);
         },
         data() {
             return {
@@ -130,55 +123,6 @@
             },
             resetViewPort() {
                 this.currentViewBox = _.cloneDeep(this.originalViewBox);
-            },
-            handleMouseDown(e) {
-                this.handleDragStart(e);
-            },
-            handleMouseMove(e) {
-                if (! this.dragging) {
-                    return;
-                }
-                e.preventDefault();
-                this.handleDragMove(e);
-            },
-            handleTouchStart(e) {
-                console.log("Touch Start");
-                console.log(e);
-                if (e.touches.length === 1) {
-                    this.handleDragStart(e.touches[0]);
-                }
-            },
-            handleTouchMove(e) {
-                if (! this.dragging) {
-                    return;
-                }
-                console.log("Touch Move");
-                console.log(e);
-                e.preventDefault();
-                if (e.touches.length === 1) {
-                    this.handleDragMove(e.touches[0])
-                }
-            },
-            handleDragStart({clientX, clientY}) {
-                this.dragging = true;
-                this.dragPosition = {
-                    xCurrent: clientX,
-                    yCurrent: clientY
-                }
-            },
-            handleDragMove({clientX, clientY}) {
-                let dragPosition = this.dragPosition;
-                let deltaX = clientX - dragPosition.xCurrent;
-                let deltaY = clientY - dragPosition.yCurrent;
-                this.currentViewBox.pan(deltaX, deltaY);
-                this.currentViewBox = _.cloneDeep(this.currentViewBox);
-                this.dragPosition = {
-                    xCurrent: clientX,
-                    yCurrent: clientY
-                }
-            },
-            endPointerEvents() {
-                this.dragging = false;
             },
             handleDrag(ev) {
                 if ( ! this.dragging ) {
