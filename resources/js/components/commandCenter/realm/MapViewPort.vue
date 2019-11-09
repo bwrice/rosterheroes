@@ -178,16 +178,26 @@
             handleMouseWheel(ev) {
                 if (ev.deltaY > 0) {
                     // zoom twice so it's slightly faster
-                    this.currentViewBox.zoomIn();
-                    this.currentViewBox.zoomIn();
+                    this.zoomIn(2);
                 }
 
                 if (ev.deltaY < 0 ) {
-                    this.currentViewBox.zoomOut();
-                    this.currentViewBox.zoomOut();
+                    this.zoomOut(2);
                 }
                 this.currentViewBox = _.cloneDeep(this.currentViewBox);
                 return false;
+            },
+            zoomIn(amount = 1) {
+                for(let i = 1; i <= amount; i++) {
+                    this.currentViewBox.zoomIn();
+                }
+                this.currentViewBox = _.cloneDeep(this.currentViewBox);
+            },
+            zoomOut(amount = 1) {
+                for(let i = 1; i <= amount; i++) {
+                    this.currentViewBox.zoomOut();
+                }
+                this.currentViewBox = _.cloneDeep(this.currentViewBox);
             }
         }
     }
