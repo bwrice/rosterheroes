@@ -190,6 +190,10 @@
 
                 if (ev.isFinal) {
                     this.dragging = false;
+                    this.dragPosition = {
+                        currentDeltaX: 0,
+                        currentDeltaY: 0
+                    }
                 }
             }
         }
