@@ -11,7 +11,7 @@
 </template>
 
 <script>
-    import MapViewPort from "./MapViewPort";
+    import MapViewPort from "./MapViewPortWithControls";
     import ProvinceVector from "./ProvinceVector";
     import {travelMixin} from "../../../mixins/travelMixin";
 

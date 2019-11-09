@@ -37,7 +37,7 @@
 <script>
     import {viewBoxControlsMixin} from "../../../mixins/viewBoxControlsMixin";
     import MapControls from "./MapControls";
-    import MapViewPort from "./MapViewPort";
+    import MapViewPort from "./MapViewPortWithControls";
 
     export default {
         name: "ExploreMapCard",

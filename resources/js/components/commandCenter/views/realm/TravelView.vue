@@ -155,7 +155,7 @@
     import {viewBoxControlsMixin} from "../../../../mixins/viewBoxControlsMixin";
     import {travelMixin} from "../../../../mixins/travelMixin";
 
-    import MapViewPort from "../../realm/MapViewPort";
+    import MapViewPort from "../../realm/MapViewPortWithControls";
     import ProvinceVector from "../../realm/ProvinceVector";
     import TravelRouteListItem from "../../realm/TravelRouteListItem";
     import MapControls from "../../realm/MapControls";

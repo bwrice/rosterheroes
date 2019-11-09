@@ -4,7 +4,7 @@
             <v-col cols="12" lg="8" offset-lg="2">
                 <v-row no-gutters>
                     <v-col cols="12">
-                        <MapViewPort :view-box="viewBox" :tile="false">
+                        <MapViewPortWithControls :view-box="viewBox" :tile="false">
                             <template v-if="mode === 'continents'">
                                 <ContinentVector v-for="(continent, id) in this._continents" :key="id" :continent="continent"></ContinentVector>
                             </template>
@@ -14,7 +14,7 @@
                             <template v-else-if="mode === 'provinces'">
                                 <ProvinceVector v-for="(province, uuid) in this._provinces" :key="uuid" :province="province"></ProvinceVector>
                             </template>
-                        </MapViewPort>
+                        </MapViewPortWithControls>
                     </v-col>
                 </v-row>
                 <v-row no-gutters class="py-2">
@@ -92,7 +92,7 @@
     import {mapGetters} from 'vuex';
     import ContinentVector from "../../../realm/ContinentVector";
     import TerritoryVector from "../../../realm/TerritoryVector";
-    import MapViewPort from "../../../realm/MapViewPort";
+    import MapViewPortWithControls from "../../../realm/MapViewPortWithControls";
     import MapControls from "../../../realm/MapControls";
     import ExploreMapCard from "../../../realm/ExploreMapCard";
     import ProvinceVector from "../../../realm/ProvinceVector";
@@ -104,7 +104,7 @@
             ProvinceVector,
             ExploreMapCard,
             MapControls,
-            MapViewPort,
+            MapViewPortWithControls,
             TerritoryVector,
             ContinentVector
         },

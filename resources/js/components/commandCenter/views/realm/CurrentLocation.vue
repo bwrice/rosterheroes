@@ -45,7 +45,7 @@
 
     import { mapGetters } from 'vuex';
 
-    import MapViewPort from "../../realm/MapViewPort";
+    import MapViewPort from "../../realm/MapViewPortWithControls";
     import ProvinceVector from "../../realm/ProvinceVector";
 
     export default {

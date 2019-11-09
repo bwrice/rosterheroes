@@ -4,14 +4,14 @@
             <v-col cols="12" lg="8" offset-lg="2">
                 <v-row no-gutters>
                     <v-col cols="12">
-                        <MapViewPort :view-box="continent.viewBox" :tile="false">
+                        <MapViewPortWithControls :view-box="continent.viewBox" :tile="false">
                             <ProvinceVector
                                 v-for="(province, uuid) in provinces"
                                 :key="uuid"
                                 :province="province"
                                 @provinceClicked="navigateToProvince"
                             ></ProvinceVector>
-                        </MapViewPort>
+                        </MapViewPortWithControls>
                     </v-col>
                 </v-row>
             </v-col>
@@ -25,12 +25,12 @@
 
     import ProvinceVector from "../../../realm/ProvinceVector";
     import Continent from "../../../../../models/Continent";
-    import MapViewPort from "../../../realm/MapViewPort";
+    import MapViewPortWithControls from "../../../realm/MapViewPortWithControls";
 
     export default {
         name: "ContinentView",
         components: {
-            MapViewPort,
+            MapViewPortWithControls,
             ProvinceVector
         },
 
