@@ -198,6 +198,22 @@
                     this.currentViewBox.zoomOut();
                 }
                 this.currentViewBox = _.cloneDeep(this.currentViewBox);
+            },
+            panUp() {
+                this.currentViewBox.panUp();
+                this.currentViewBox = _.cloneDeep(this.currentViewBox);
+            },
+            panDown() {
+                this.currentViewBox.panDown();
+                this.currentViewBox = _.cloneDeep(this.currentViewBox);
+            },
+            panLeft() {
+                this.currentViewBox.panLeft();
+                this.currentViewBox = _.cloneDeep(this.currentViewBox);
+            },
+            panRight() {
+                this.currentViewBox.panRight();
+                this.currentViewBox = _.cloneDeep(this.currentViewBox);
             }
         }
     }
