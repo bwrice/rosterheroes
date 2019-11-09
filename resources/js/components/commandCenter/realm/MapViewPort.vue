@@ -30,6 +30,7 @@
 <script>
 
     import ViewBox from "../../../models/ViewBox";
+    import Hammer from 'hammerjs';
 
     export default {
         name: "MapViewPort",
@@ -65,6 +66,7 @@
             let self = this;
 
             let mapSheet = document.getElementById('map-sheet');
+
             mapSheet.onwheel = _.throttle(function(e) {
                 if (e.deltaY > 0) {
                     self.currentViewBox.zoomIn();
@@ -77,12 +79,16 @@
                 return false;
             }, 125);
 
-            mapSheet.addEventListener('mousedown', this.handleMouseDown);
-            mapSheet.addEventListener('touchstart', this.handleTouchStart);
-            mapSheet.addEventListener('mousemove', this.handleMouseMove);
-            mapSheet.addEventListener('touchmove', this.handleTouchMove);
-            window.document.addEventListener('mouseup', this.endPointerEvents);
-            window.document.addEventListener('touchend', this.endPointerEvents);
+            let hammer = new Hammer(mapSheet);
+            hammer.add( new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 0 }) );
+            hammer.on("pan", this.handleDrag);
+
+            // mapSheet.addEventListener('mousedown', this.handleMouseDown);
+            // mapSheet.addEventListener('touchstart', this.handleTouchStart);
+            // mapSheet.addEventListener('mousemove', this.handleMouseMove);
+            // mapSheet.addEventListener('touchmove', this.handleTouchMove);
+            // window.document.addEventListener('mouseup', this.endPointerEvents);
+            // window.document.addEventListener('touchend', this.endPointerEvents);
         },
         data() {
             return {
@@ -90,8 +96,8 @@
                 currentViewBox: new ViewBox({}),
                 dragging: false,
                 dragPosition: {
-                    xCurrent: 0,
-                    yCurrent: 0
+                    currentDeltaX: 0,
+                    currentDeltaY: 0
                 },
                 touchPositions: {
                     touched: false,
@@ -131,6 +137,8 @@
                 this.handleDragMove(e);
             },
             handleTouchStart(e) {
+                console.log("Touch Start");
+                console.log(e);
                 if (e.touches.length === 1) {
                     this.handleDragStart(e.touches[0]);
                 }
@@ -139,6 +147,8 @@
                 if (! this.dragging) {
                     return;
                 }
+                console.log("Touch Move");
+                console.log(e);
                 e.preventDefault();
                 if (e.touches.length === 1) {
                     this.handleDragMove(e.touches[0])
@@ -164,6 +174,23 @@
             },
             endPointerEvents() {
                 this.dragging = false;
+            },
+            handleDrag(ev) {
+                if ( ! this.dragging ) {
+                    this.dragging = true;
+                }
+
+                let changeInDeltaX = ev.deltaX - this.dragPosition.currentDeltaX;
+                let changeInDeltaY = ev.deltaY - this.dragPosition.currentDeltaY;
+                this.currentViewBox.pan(changeInDeltaX, changeInDeltaY);
+                this.currentViewBox = _.cloneDeep(this.currentViewBox);
+
+                this.dragPosition.currentDeltaX = ev.deltaX;
+                this.dragPosition.currentDeltaY = ev.deltaY;
+
+                if (ev.isFinal) {
+                    this.dragging = false;
+                }
             }
         }
     }
