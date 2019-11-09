@@ -14,37 +14,37 @@ export default class ViewBox {
     }
 
     panUp() {
-        this.panY -= (.1 * this.zoomY);
+        this.panY -= (.025 * this.zoomY);
     }
 
     panDown() {
-        this.panY += (.1 * this.zoomY);
+        this.panY += (.025 * this.zoomY);
     }
 
     panLeft() {
-        this.panX -= (.1 * this.zoomX);
+        this.panX -= (.025 * this.zoomX);
     }
 
     panRight() {
-        this.panX += (.1 * this.zoomX);
+        this.panX += (.025 * this.zoomX);
     }
 
     zoomIn() {
         /*
-        By panning 10% but zooming 80% (instead of 90), we zoom the center of the SVG
+        By panning 2.5% but zooming 95% (instead of 97.5), we zoom the center of the SVG
          */
         this.panRight();
         this.panDown();
-        this.zoomX *= .8;
-        this.zoomY *= .8;
+        this.zoomX *= .95;
+        this.zoomY *= .95;
     }
 
     zoomOut() {
         /*
         We have to pan after we adjust the zoom to reverse zoomIn() effect
          */
-        this.zoomX /= .8;
-        this.zoomY /= .8;
+        this.zoomX /= .95;
+        this.zoomY /= .95;
         this.panLeft();
         this.panUp();
     }
