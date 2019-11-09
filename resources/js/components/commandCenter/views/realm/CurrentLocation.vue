@@ -1,12 +1,11 @@
 <template>
     <v-container>
         <v-row>
-            <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="5" offset-lg="1" xl="4" offset-xl="0">
+            <v-col cols="8" offset="2" sm="6" offset-sm="3" offset-md="4" md="4">
                 <v-row no-gutters justify="space-around">
                     <v-col cols="6" class="px-2">
                         <v-btn
                             block
-                            large
                             :color="'primary'"
                             :to="travelRoute"
                         >Travel</v-btn>
@@ -14,28 +13,43 @@
                     <v-col cols="6" class="px-2">
                         <v-btn
                             block
-                            large
                             :color="'primary'"
                             :to="exploreRoute"
                         >Explore</v-btn>
                     </v-col>
                 </v-row>
-                <v-row no-gutters>
-                    <v-col cols="12" class="py-3">
-                        <MapViewPort :tile="false" :view-box="_currentLocationProvince.viewBox">
+            </v-col>
+        </v-row>
+        <v-row no-gutters>
+            <v-col cols="6" class="pa-1">
+                <MapViewPort :view-box="_currentLocationProvince.viewBox">
 
-                            <!-- Borders -->
-                            <ProvinceVector
-                                v-for="(province, uuid) in borders"
-                                :key="uuid"
-                                :province="province"
-                            >
-                            </ProvinceVector>
+                    <!-- Borders -->
+                    <ProvinceVector
+                        v-for="(province, uuid) in borders"
+                        :key="uuid"
+                        :province="province"
+                    >
+                    </ProvinceVector>
 
-                            <ProvinceVector :province="_currentLocationProvince" :highlight="true"></ProvinceVector>
-                        </MapViewPort>
-                    </v-col>
-                </v-row>
+                    <ProvinceVector :province="_currentLocationProvince" :highlight="true"></ProvinceVector>
+                </MapViewPort>
+            </v-col>
+            <v-col cols="6" class="pa-1">
+                <MapViewPort :ocean-color="'#000'">
+
+                    <!-- Borders -->
+                    <ProvinceVector
+                        v-for="(province, uuid) in provinces"
+                        :key="uuid"
+                        :province="province"
+                        :fill-color="'#808080'"
+                    >
+                    </ProvinceVector>
+
+                    <ProvinceVector :province="_currentLocationProvince" :fill-color="'#28bf5b'"></ProvinceVector>
+                    <MapWindow :view-box="_currentLocationProvince.viewBox"></MapWindow>
+                </MapViewPort>
             </v-col>
         </v-row>
     </v-container>
@@ -45,26 +59,32 @@
 
     import { mapGetters } from 'vuex';
 
-    import MapViewPort from "../../realm/MapViewPortWithControls";
     import ProvinceVector from "../../realm/ProvinceVector";
+    import MapViewPort from "../../realm/MapViewPort";
+    import MapWindow from "../../realm/MapWindow";
 
     export default {
         name: "CurrentLocation",
         components: {
+            MapWindow,
+            MapViewPort,
             ProvinceVector,
-            MapViewPort
         },
 
         computed: {
             ...mapGetters([
                 '_currentLocationProvince',
-                '_provincesByUuids'
+                '_provincesByUuids',
+                '_provinces'
             ]),
             bordersCount() {
                 return this._currentLocationProvince.borderUuids.length;
             },
             borders() {
                 return this._provincesByUuids(this._currentLocationProvince.borderUuids);
+            },
+            provinces() {
+                return this._provinces.filter((province) => province.uuid !== this._currentLocationProvince.uuid);
             },
             exploreRoute() {
                 return {
