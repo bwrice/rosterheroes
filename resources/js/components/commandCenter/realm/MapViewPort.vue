@@ -1,30 +1,66 @@
 <template>
-    <v-row no-gutters>
-        <v-col cols="12">
-            <v-sheet
-                id="map-sheet"
-                :tile="tile"
-                :color="oceanColor"
-            >
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     version="1.1"
-                     display="block"
-                     :viewBox="viewBoxString"
+    <v-sheet color="#3a474a">
+        <v-row no-gutters>
+            <v-col cols="12">
+                <v-sheet
+                    id="map-sheet"
+                    :tile="tile"
+                    :color="oceanColor"
                 >
-                    <slot>
-                        <!-- Default Slot: ProvinceVector components slotted here -->
-                    </slot>
-                </svg>
-            </v-sheet>
-        </v-col>
-        <v-col cols="12" style="margin-top: -32px">
-            <v-row no-gutters justify="end" class="mx-1">
-                <v-btn small @click="resetViewPort">
-                    reset
-                </v-btn>
-            </v-row>
-        </v-col>
-    </v-row>
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         version="1.1"
+                         display="block"
+                         :viewBox="viewBoxString"
+                    >
+                        <slot>
+                            <!-- Default Slot: ProvinceVector components slotted here -->
+                        </slot>
+                    </svg>
+                </v-sheet>
+            </v-col>
+            <v-col cols="12" md="8" offset-md="2" lg="6" offset-lg="3" class="my-2">
+                <v-row no-gutters justify="center" align="center">
+                    <v-col cols="3">
+                        <v-row no-gutters class="flex-column" align="center">
+                            <v-btn small outlined color="#bababa">
+                                <v-icon dark>add</v-icon>
+                            </v-btn>
+                            <v-btn small outlined color="#bababa">
+                                <v-icon dark>remove</v-icon>
+                            </v-btn>
+                        </v-row>
+                    </v-col>
+                    <v-col cols="4">
+                        <v-row justify="center">
+                            <v-btn outlined color="#bababa" @click="resetViewPort">
+                                reset
+                            </v-btn>
+                        </v-row>
+                    </v-col>
+                    <v-col cols="5">
+                        <v-row no-gutters justify="center">
+                            <v-btn small outlined color="#bababa">
+                                <v-icon dark>arrow_drop_up</v-icon>
+                            </v-btn>
+                        </v-row>
+                        <v-row no-gutters justify="center">
+                            <v-btn small outlined color="#bababa">
+                                <v-icon dark>arrow_left</v-icon>
+                            </v-btn>
+                            <v-btn small outlined color="#bababa">
+                                <v-icon dark>arrow_right</v-icon>
+                            </v-btn>
+                        </v-row>
+                        <v-row no-gutters justify="center">
+                            <v-btn small outlined color="#bababa">
+                                <v-icon dark>arrow_drop_down</v-icon>
+                            </v-btn>
+                        </v-row>
+                    </v-col>
+                </v-row>
+            </v-col>
+        </v-row>
+    </v-sheet>
 </template>
 
 <script>
