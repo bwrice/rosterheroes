@@ -28,7 +28,14 @@
         props: {
             viewBox: {
                 type: ViewBox,
-                required: true
+                default: function() {
+                    return new ViewBox({
+                        panX: 0,
+                        panY: 0,
+                        zoomX: 315,
+                        zoomY: 240,
+                    });
+                }
             },
             oceanColor: {
                 type: String,
@@ -36,7 +43,7 @@
             },
             tile: {
                 type: Boolean,
-                default: true
+                default: false
             }
         },
         computed: {
