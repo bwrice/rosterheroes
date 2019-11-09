@@ -120,40 +120,9 @@
             resetViewPort() {
                 this.currentViewBox = _.cloneDeep(this.originalViewBox);
             },
-            // onDragged({ el, deltaX, deltaY, offsetX, offsetY, clientX, clientY, first, last }) {
-            //     if (first) {
-            //         this.isDragging = true;
-            //         return;
-            //     }
-            //     if (last) {
-            //         this.isDragging = false;
-            //         return;
-            //     }
-            //     this.currentViewBox.pan(deltaX, deltaY);
-            //     this.currentViewBox = _.cloneDeep(this.currentViewBox);
-            // },
             handleMouseDown(e) {
                 this.handleDragStart(e);
             },
-            // handlePointerMoveEvent(e) {
-            //     let touchPositions = this.touchPositions;
-            //     let deltaX = e.clientX - touchPositions.xCurrent;
-            //     let deltaY = e.clientY - touchPositions.yCurrent;
-            //     if (! (isNaN(deltaX) || isNaN(deltaY))) {
-            //         this.currentViewBox.pan(deltaX, deltaY);
-            //         this.currentViewBox = _.cloneDeep(this.currentViewBox);
-            //     } else {
-            //         // console.log(e.clientX);
-            //         // console.log(e.clientY);
-            //         // console.log(touchPositions.xCurrent);
-            //         // console.log(touchPositions.yCurrent);
-            //         // let deltaX = e.clientX - touchPositions.xCurrent;
-            //         // let deltaY = e.clientY - touchPositions.yCurrent;
-            //         // console.log(e.clientX, e.clientX, deltaX, deltaY, touchPositions);
-            //     }
-            //     touchPositions.xCurrent = e.clientX;
-            //     touchPositions.yCurrent = e.clientY;
-            // },
             handleMouseMove(e) {
                 if (! this.dragging) {
                     return;
@@ -174,9 +143,6 @@
                 if (e.touches.length === 1) {
                     this.handleDragMove(e.touches[0])
                 }
-            },
-            handlePointEndEvent(e) {
-                this.handleDragEnd();
             },
             handleDragStart({clientX, clientY}) {
                 this.dragging = true;
