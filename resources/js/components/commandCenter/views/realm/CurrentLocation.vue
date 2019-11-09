@@ -21,21 +21,7 @@
             </v-col>
         </v-row>
         <v-row no-gutters>
-            <v-col cols="6" class="pa-1">
-                <MapViewPort :view-box="_currentLocationProvince.viewBox">
-
-                    <!-- Borders -->
-                    <ProvinceVector
-                        v-for="(province, uuid) in borders"
-                        :key="uuid"
-                        :province="province"
-                    >
-                    </ProvinceVector>
-
-                    <ProvinceVector :province="_currentLocationProvince" :highlight="true"></ProvinceVector>
-                </MapViewPort>
-            </v-col>
-            <v-col cols="6" class="pa-1">
+            <v-col cols="12" md="6" class="pa-1">
                 <MapViewPort :ocean-color="'#000'">
 
                     <!-- Borders -->
@@ -49,6 +35,20 @@
 
                     <ProvinceVector :province="_currentLocationProvince" :fill-color="'#28bf5b'"></ProvinceVector>
                     <MapWindow :view-box="_currentLocationProvince.viewBox"></MapWindow>
+                </MapViewPort>
+            </v-col>
+            <v-col cols="12" md="6" class="pa-1">
+                <MapViewPort :view-box="_currentLocationProvince.viewBox">
+
+                    <!-- Borders -->
+                    <ProvinceVector
+                        v-for="(province, uuid) in borders"
+                        :key="uuid"
+                        :province="province"
+                    >
+                    </ProvinceVector>
+
+                    <ProvinceVector :province="_currentLocationProvince" :highlight="true"></ProvinceVector>
                 </MapViewPort>
             </v-col>
         </v-row>
