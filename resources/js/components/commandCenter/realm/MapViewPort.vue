@@ -69,19 +69,24 @@
 
             mapSheet.onwheel = _.throttle(function(e) {
                 if (e.deltaY > 0) {
+                    // zoom twice
+                    self.currentViewBox.zoomIn();
                     self.currentViewBox.zoomIn();
                 }
 
                 if (e.deltaY < 0 ) {
                     self.currentViewBox.zoomOut();
+                    self.currentViewBox.zoomOut();
                 }
                 self.currentViewBox = _.cloneDeep(self.currentViewBox);
                 return false;
-            }, 125);
+            }, 50);
 
             let hammer = new Hammer(mapSheet);
             hammer.add( new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 0 }) );
             hammer.on("pan", this.handleDrag);
+            hammer.get("pinch").set({ enable: true });
+            hammer.on("pinch", this.handlePinch, 200);
 
             // mapSheet.addEventListener('mousedown', this.handleMouseDown);
             // mapSheet.addEventListener('touchstart', this.handleTouchStart);
@@ -195,6 +200,14 @@
                         currentDeltaY: 0
                     }
                 }
+            },
+            handlePinch(ev) {
+                if (ev.scale > 1) {
+                    this.currentViewBox.zoomIn();
+                } else {
+                    this.currentViewBox.zoomOut();
+                }
+                this.currentViewBox = _.cloneDeep(this.currentViewBox);
             }
         }
     }
