@@ -10,11 +10,11 @@
                 <v-row no-gutters justify="center" align="center">
                     <v-col cols="3">
                         <v-row no-gutters class="flex-column" align="center">
-                            <v-btn small outlined color="#bababa" @click="zoomIn()">
-                                <v-icon dark>add</v-icon>
+                            <v-btn small outlined color="#bababa" @click="zoomIn()" class="my-1">
+                                <v-icon dark>zoom_in</v-icon>
                             </v-btn>
-                            <v-btn small outlined color="#bababa" @click="zoomOut()">
-                                <v-icon dark>remove</v-icon>
+                            <v-btn small outlined color="#bababa" @click="zoomOut()" class="my-1">
+                                <v-icon dark>zoom_out</v-icon>
                             </v-btn>
                         </v-row>
                     </v-col>
