@@ -24,10 +24,10 @@
                 <v-row no-gutters justify="center" align="center">
                     <v-col cols="3">
                         <v-row no-gutters class="flex-column" align="center">
-                            <v-btn small outlined color="#bababa">
+                            <v-btn small outlined color="#bababa" @click="zoomIn()">
                                 <v-icon dark>add</v-icon>
                             </v-btn>
-                            <v-btn small outlined color="#bababa">
+                            <v-btn small outlined color="#bababa" @click="zoomOut()">
                                 <v-icon dark>remove</v-icon>
                             </v-btn>
                         </v-row>
@@ -41,20 +41,20 @@
                     </v-col>
                     <v-col cols="5">
                         <v-row no-gutters justify="center">
-                            <v-btn small outlined color="#bababa">
+                            <v-btn small outlined color="#bababa" @click="panUp">
                                 <v-icon dark>arrow_drop_up</v-icon>
                             </v-btn>
                         </v-row>
                         <v-row no-gutters justify="center">
-                            <v-btn small outlined color="#bababa">
+                            <v-btn small outlined color="#bababa" @click="panLeft">
                                 <v-icon dark>arrow_left</v-icon>
                             </v-btn>
-                            <v-btn small outlined color="#bababa">
+                            <v-btn small outlined color="#bababa" @click="panRight">
                                 <v-icon dark>arrow_right</v-icon>
                             </v-btn>
                         </v-row>
                         <v-row no-gutters justify="center">
-                            <v-btn small outlined color="#bababa">
+                            <v-btn small outlined color="#bababa" @click="panDown">
                                 <v-icon dark>arrow_drop_down</v-icon>
                             </v-btn>
                         </v-row>
