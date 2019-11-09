@@ -77,14 +77,22 @@
                 return false;
             }, 125);
 
-            mapSheet.addEventListener('mousedown', this.handlePointerStartEvent);
-            mapSheet.addEventListener('mousemove', this.handlePointerMoveEvent);
-            window.document.addEventListener('mouseup', this.handlePointEndEvent);
+            mapSheet.addEventListener('mousedown', this.handleMouseDown);
+            mapSheet.addEventListener('touchstart', this.handleTouchStart);
+            mapSheet.addEventListener('mousemove', this.handleMouseMove);
+            mapSheet.addEventListener('touchmove', this.handleTouchMove);
+            window.document.addEventListener('mouseup', this.endPointerEvents);
+            window.document.addEventListener('touchend', this.endPointerEvents);
         },
         data() {
             return {
                 originalViewBox: new ViewBox({}),
                 currentViewBox: new ViewBox({}),
+                dragging: false,
+                dragPosition: {
+                    xCurrent: 0,
+                    yCurrent: 0
+                },
                 touchPositions: {
                     touched: false,
                     xStart: 0,
@@ -112,39 +120,84 @@
             resetViewPort() {
                 this.currentViewBox = _.cloneDeep(this.originalViewBox);
             },
-            onDragged({ el, deltaX, deltaY, offsetX, offsetY, clientX, clientY, first, last }) {
-                if (first) {
-                    this.isDragging = true;
-                    return;
-                }
-                if (last) {
-                    this.isDragging = false;
-                    return;
-                }
-                this.currentViewBox.pan(deltaX, deltaY);
-                this.currentViewBox = _.cloneDeep(this.currentViewBox);
+            // onDragged({ el, deltaX, deltaY, offsetX, offsetY, clientX, clientY, first, last }) {
+            //     if (first) {
+            //         this.isDragging = true;
+            //         return;
+            //     }
+            //     if (last) {
+            //         this.isDragging = false;
+            //         return;
+            //     }
+            //     this.currentViewBox.pan(deltaX, deltaY);
+            //     this.currentViewBox = _.cloneDeep(this.currentViewBox);
+            // },
+            handleMouseDown(e) {
+                this.handleDragStart(e);
             },
-            handlePointerStartEvent(e) {
-                let touchPositions = this.touchPositions;
-                touchPositions.touched = true;
-                touchPositions.xCurrent = e.clientX;
-                touchPositions.yCurrent = e.clientY;
-            },
-            handlePointerMoveEvent(e) {
-                let touchPositions = this.touchPositions;
-                if (! touchPositions.touched) {
+            // handlePointerMoveEvent(e) {
+            //     let touchPositions = this.touchPositions;
+            //     let deltaX = e.clientX - touchPositions.xCurrent;
+            //     let deltaY = e.clientY - touchPositions.yCurrent;
+            //     if (! (isNaN(deltaX) || isNaN(deltaY))) {
+            //         this.currentViewBox.pan(deltaX, deltaY);
+            //         this.currentViewBox = _.cloneDeep(this.currentViewBox);
+            //     } else {
+            //         // console.log(e.clientX);
+            //         // console.log(e.clientY);
+            //         // console.log(touchPositions.xCurrent);
+            //         // console.log(touchPositions.yCurrent);
+            //         // let deltaX = e.clientX - touchPositions.xCurrent;
+            //         // let deltaY = e.clientY - touchPositions.yCurrent;
+            //         // console.log(e.clientX, e.clientX, deltaX, deltaY, touchPositions);
+            //     }
+            //     touchPositions.xCurrent = e.clientX;
+            //     touchPositions.yCurrent = e.clientY;
+            // },
+            handleMouseMove(e) {
+                if (! this.dragging) {
                     return;
                 }
                 e.preventDefault();
-                let deltaX = e.clientX - touchPositions.xCurrent;
-                let deltaY = e.clientY - touchPositions.yCurrent;
-                this.currentViewBox.pan(deltaX, deltaY);
-                this.currentViewBox = _.cloneDeep(this.currentViewBox);
-                touchPositions.xCurrent = e.clientX;
-                touchPositions.yCurrent = e.clientY;
+                this.handleDragMove(e);
+            },
+            handleTouchStart(e) {
+                if (e.touches.length === 1) {
+                    this.handleDragStart(e.touches[0]);
+                }
+            },
+            handleTouchMove(e) {
+                if (! this.dragging) {
+                    return;
+                }
+                e.preventDefault();
+                if (e.touches.length === 1) {
+                    this.handleDragMove(e.touches[0])
+                }
             },
             handlePointEndEvent(e) {
-                this.touchPositions.touched = false;
+                this.handleDragEnd();
+            },
+            handleDragStart({clientX, clientY}) {
+                this.dragging = true;
+                this.dragPosition = {
+                    xCurrent: clientX,
+                    yCurrent: clientY
+                }
+            },
+            handleDragMove({clientX, clientY}) {
+                let dragPosition = this.dragPosition;
+                let deltaX = clientX - dragPosition.xCurrent;
+                let deltaY = clientY - dragPosition.yCurrent;
+                this.currentViewBox.pan(deltaX, deltaY);
+                this.currentViewBox = _.cloneDeep(this.currentViewBox);
+                this.dragPosition = {
+                    xCurrent: clientX,
+                    yCurrent: clientY
+                }
+            },
+            endPointerEvents() {
+                this.dragging = false;
             }
         }
     }
