@@ -12,7 +12,13 @@
                                 <TerritoryVector v-for="(territory, id) in this._territories" :key="id" :territory="territory"></TerritoryVector>
                             </template>
                             <template v-else-if="mode === 'provinces'">
-                                <ProvinceVector v-for="(province, uuid) in this._provinces" :key="uuid" :province="province"></ProvinceVector>
+                                <ProvinceVector
+                                    v-for="(province, uuid) in this._provinces"
+                                    :key="uuid"
+                                    :province="province"
+                                    :hoverable="true"
+                                    @provinceClicked="province.goToRoute($router, $route)"
+                                ></ProvinceVector>
                             </template>
                         </MapViewPortWithControls>
                     </v-col>
