@@ -39,7 +39,7 @@ export default {
             try {
                 let squad = rootState.squadModule.squad;
                 let response = await axios.get('/api/v1/squads/' + squad.slug + '/border/' + payload.slug);
-                let routeProvince = response.data;
+                let routeProvince = new Province(response.data);
                 commit('ADD_TO_TRAVEL_ROUTE', routeProvince);
             } catch (error) {
                 //
