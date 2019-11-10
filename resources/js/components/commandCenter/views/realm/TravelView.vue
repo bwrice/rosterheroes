@@ -1,150 +1,192 @@
 <template>
-    <v-col cols="12" md="8" offset-md="2">
-        <v-card>
-            <v-container class="pa-0">
+    <v-container>
+        <v-row>
+            <v-col cols="12">
                 <v-row no-gutters>
-                    <v-col cols="5" class="pa-1">
-                        <v-row no-gutters>
-                            <v-col cols="12">
-                                <TravelRouteMap></TravelRouteMap>
-                            </v-col>
-                        </v-row>
-                        <v-row no-gutters>
-                            <v-col cols="12">
-                                <h5 class="text-center">Current Route</h5>
-                                <div style="min-height:150px; max-height:150px; overflow-y:auto">
-                                    <v-card class="pa-1" flat>
-                                        <TravelRouteListItem
-                                            v-for="(province, uuid) in routeList"
-                                            :province="province"
-                                            :key="uuid"
-                                            :color="routeItemColor(province)"
-                                        >
-                                        </TravelRouteListItem>
-                                        <v-sheet tile :color="'#a969b3'" class="pa-1">
-                                            {{this._currentLocationProvince.name}}
-                                        </v-sheet>
-                                    </v-card>
-                                </div>
-                            </v-col>
-                        </v-row>
-                        <v-row no-gutters>
-                            <v-col cols="12">
-                                <v-sheet class="pa-1">
-                                    <v-btn
-                                        :disabled="emptyRoute"
-                                        color="warning"
-                                        block
-                                        @click="removeLastRoutePosition"
-                                    >
-                                        Undo
-                                    </v-btn>
-                                </v-sheet>
-                            </v-col>
-                            <v-col cols="12">
-                                <v-sheet class="pa-1">
-                                    <v-btn
-                                        :disabled="emptyRoute"
-                                        color="error"
-                                        block
-                                        @click="clearTravelRoute"
-                                    >
-                                        Clear Route
-                                    </v-btn>
-                                </v-sheet>
-                            </v-col>
-                        </v-row>
-                    </v-col>
-                    <v-col cols="7" class="pa-1">
-                        <v-row no-gutters>
-                            <v-col class="xs12">
-                                <MapViewPort :tile="true" :view-box="currentViewBox">
+                    <v-col cols="12">
+                        <MapViewPort :view-box="positionViewBox">
+                            <!-- Borders -->
+                            <ProvinceVector
+                                v-for="(province, uuid) in borders"
+                                :key="uuid"
+                                :province="province"
+                                @provinceClicked="addToRoute"
+                                :fill-color="borderColor(province)"
+                                :highlight="provinceInRoute(province)"
+                            >
+                            </ProvinceVector>
 
-                                    <!-- Borders -->
-                                    <ProvinceVector
-                                        v-for="(province, uuid) in borders"
-                                        :key="uuid"
-                                        :province="province"
-                                        @provinceClicked="addToRoute"
-                                        :fill-color="borderColor(province)"
-                                        :highlight="provinceInRoute(province)"
-                                    >
-                                    </ProvinceVector>
-
-                                    <ProvinceVector
-                                        :province="_routePosition"
-                                        :highlight="true"
-                                        @provinceClicked="snackBarError({text: 'Click on a border to add to your route'})"
-                                    >
-                                    </ProvinceVector>
-                                </MapViewPort>
-                            </v-col>
-                        </v-row>
-                        <v-row no-gutters>
-                            <v-col cols="12">
-                                <v-card flat class="pa-3">
-                                    <MapControls
-                                        @panUp="panUp"
-                                        @panDown="panDown"
-                                        @panLeft="panLeft"
-                                        @panRight="panRight"
-                                        @zoomIn="zoomIn"
-                                        @zoomOut="zoomOut"
-                                        @reset="restViewBox"
-                                    ></MapControls>
-                                </v-card>
-                            </v-col>
-                        </v-row>
-                        <v-row no-gutters>
-                            <v-col cols="12">
-                                <v-sheet class="pa-2">
-                                    <v-btn
-                                        :disabled="emptyRoute"
-                                        color="success"
-                                        x-large
-                                        block
-                                        @click="travelDialog = true"
-                                    >
-                                        Travel
-                                    </v-btn>
-                                </v-sheet>
-                            </v-col>
-                        </v-row>
+                            <ProvinceVector
+                                :province="_routePosition"
+                                :highlight="true"
+                                @provinceClicked="snackBarError({text: 'Click on a border to add to your route'})"
+                            >
+                            </ProvinceVector>
+                        </MapViewPort>
                     </v-col>
                 </v-row>
-            </v-container>
-        </v-card>
-        <v-dialog
-            v-model="travelDialog"
-            max-width="600"
-        >
-            <v-card>
-                <v-card-title class="headline">Travel to {{_routePosition.name}}?</v-card-title>
-                <TravelRouteMap></TravelRouteMap>
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn
-                        color="red darken-1"
-                        text
-                        @click="travelDialog = false"
-                    >
-                        Cancel
-                    </v-btn>
+                <v-row no-gutters class="py-2">
+                    <v-col cols="6">
+                        <MapViewPort :ocean-color="'#000'">
+                            <ProvinceVector
+                                v-for="(province, uuid) in this._provinces"
+                                :key="uuid"
+                                :province="province"
+                                :fill-color="minimMapProvinceColor(province)"
+                            >
+                            </ProvinceVector>
+                        </MapViewPort>
+                    </v-col>
+                </v-row>
+            </v-col>
+        </v-row>
+    </v-container>
+<!--    <v-col cols="12" md="8" offset-md="2">-->
+<!--        <v-card>-->
+<!--            <v-container class="pa-0">-->
+<!--                <v-row no-gutters>-->
+<!--                    <v-col cols="5" class="pa-1">-->
+<!--                        <v-row no-gutters>-->
+<!--                            <v-col cols="12">-->
+<!--                                <TravelRouteMap></TravelRouteMap>-->
+<!--                            </v-col>-->
+<!--                        </v-row>-->
+<!--                        <v-row no-gutters>-->
+<!--                            <v-col cols="12">-->
+<!--                                <h5 class="text-center">Current Route</h5>-->
+<!--                                <div style="min-height:150px; max-height:150px; overflow-y:auto">-->
+<!--                                    <v-card class="pa-1" flat>-->
+<!--                                        <TravelRouteListItem-->
+<!--                                            v-for="(province, uuid) in routeList"-->
+<!--                                            :province="province"-->
+<!--                                            :key="uuid"-->
+<!--                                            :color="routeItemColor(province)"-->
+<!--                                        >-->
+<!--                                        </TravelRouteListItem>-->
+<!--                                        <v-sheet tile :color="'#a969b3'" class="pa-1">-->
+<!--                                            {{this._currentLocationProvince.name}}-->
+<!--                                        </v-sheet>-->
+<!--                                    </v-card>-->
+<!--                                </div>-->
+<!--                            </v-col>-->
+<!--                        </v-row>-->
+<!--                        <v-row no-gutters>-->
+<!--                            <v-col cols="12">-->
+<!--                                <v-sheet class="pa-1">-->
+<!--                                    <v-btn-->
+<!--                                        :disabled="emptyRoute"-->
+<!--                                        color="warning"-->
+<!--                                        block-->
+<!--                                        @click="removeLastRoutePosition"-->
+<!--                                    >-->
+<!--                                        Undo-->
+<!--                                    </v-btn>-->
+<!--                                </v-sheet>-->
+<!--                            </v-col>-->
+<!--                            <v-col cols="12">-->
+<!--                                <v-sheet class="pa-1">-->
+<!--                                    <v-btn-->
+<!--                                        :disabled="emptyRoute"-->
+<!--                                        color="error"-->
+<!--                                        block-->
+<!--                                        @click="clearTravelRoute"-->
+<!--                                    >-->
+<!--                                        Clear Route-->
+<!--                                    </v-btn>-->
+<!--                                </v-sheet>-->
+<!--                            </v-col>-->
+<!--                        </v-row>-->
+<!--                    </v-col>-->
+<!--                    <v-col cols="7" class="pa-1">-->
+<!--                        <v-row no-gutters>-->
+<!--                            <v-col class="xs12">-->
+<!--                                <MapViewPort :tile="true" :view-box="currentViewBox">-->
 
-                    <v-btn
-                        color="green darken-1"
-                        text
-                        @click="confirmTravel({
-                            route: $route,
-                            router: $router
-                        })"
-                    >
-                        Confirm Travel
-                    </v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
-    </v-col>
+<!--                                    &lt;!&ndash; Borders &ndash;&gt;-->
+<!--                                    <ProvinceVector-->
+<!--                                        v-for="(province, uuid) in borders"-->
+<!--                                        :key="uuid"-->
+<!--                                        :province="province"-->
+<!--                                        @provinceClicked="addToRoute"-->
+<!--                                        :fill-color="borderColor(province)"-->
+<!--                                        :highlight="provinceInRoute(province)"-->
+<!--                                    >-->
+<!--                                    </ProvinceVector>-->
+
+<!--                                    <ProvinceVector-->
+<!--                                        :province="_routePosition"-->
+<!--                                        :highlight="true"-->
+<!--                                        @provinceClicked="snackBarError({text: 'Click on a border to add to your route'})"-->
+<!--                                    >-->
+<!--                                    </ProvinceVector>-->
+<!--                                </MapViewPort>-->
+<!--                            </v-col>-->
+<!--                        </v-row>-->
+<!--                        <v-row no-gutters>-->
+<!--                            <v-col cols="12">-->
+<!--                                <v-card flat class="pa-3">-->
+<!--                                    <MapControls-->
+<!--                                        @panUp="panUp"-->
+<!--                                        @panDown="panDown"-->
+<!--                                        @panLeft="panLeft"-->
+<!--                                        @panRight="panRight"-->
+<!--                                        @zoomIn="zoomIn"-->
+<!--                                        @zoomOut="zoomOut"-->
+<!--                                        @reset="restViewBox"-->
+<!--                                    ></MapControls>-->
+<!--                                </v-card>-->
+<!--                            </v-col>-->
+<!--                        </v-row>-->
+<!--                        <v-row no-gutters>-->
+<!--                            <v-col cols="12">-->
+<!--                                <v-sheet class="pa-2">-->
+<!--                                    <v-btn-->
+<!--                                        :disabled="emptyRoute"-->
+<!--                                        color="success"-->
+<!--                                        x-large-->
+<!--                                        block-->
+<!--                                        @click="travelDialog = true"-->
+<!--                                    >-->
+<!--                                        Travel-->
+<!--                                    </v-btn>-->
+<!--                                </v-sheet>-->
+<!--                            </v-col>-->
+<!--                        </v-row>-->
+<!--                    </v-col>-->
+<!--                </v-row>-->
+<!--            </v-container>-->
+<!--        </v-card>-->
+<!--        <v-dialog-->
+<!--            v-model="travelDialog"-->
+<!--            max-width="600"-->
+<!--        >-->
+<!--            <v-card>-->
+<!--                <v-card-title class="headline">Travel to {{_routePosition.name}}?</v-card-title>-->
+<!--                <TravelRouteMap></TravelRouteMap>-->
+<!--                <v-card-actions>-->
+<!--                    <v-spacer></v-spacer>-->
+<!--                    <v-btn-->
+<!--                        color="red darken-1"-->
+<!--                        text-->
+<!--                        @click="travelDialog = false"-->
+<!--                    >-->
+<!--                        Cancel-->
+<!--                    </v-btn>-->
+
+<!--                    <v-btn-->
+<!--                        color="green darken-1"-->
+<!--                        text-->
+<!--                        @click="confirmTravel({-->
+<!--                            route: $route,-->
+<!--                            router: $router-->
+<!--                        })"-->
+<!--                    >-->
+<!--                        Confirm Travel-->
+<!--                    </v-btn>-->
+<!--                </v-card-actions>-->
+<!--            </v-card>-->
+<!--        </v-dialog>-->
+<!--    </v-col>-->
 </template>
 
 <script>
@@ -152,39 +194,34 @@
     import {mapActions} from 'vuex';
     import {mapGetters} from 'vuex';
 
-    import {viewBoxControlsMixin} from "../../../../mixins/viewBoxControlsMixin";
-    import {travelMixin} from "../../../../mixins/travelMixin";
-
-    import MapViewPort from "../../realm/MapViewPortWithControls";
     import ProvinceVector from "../../realm/ProvinceVector";
     import TravelRouteListItem from "../../realm/TravelRouteListItem";
     import MapControls from "../../realm/MapControls";
     import TravelRouteMap from "../../realm/TravelRouteMap";
+    import ViewBox from "../../../../models/ViewBox";
+    import MapViewPort from "../../realm/MapViewPort";
 
     export default {
         name: "TravelView",
         components: {
+            MapViewPort,
             TravelRouteMap,
             MapControls,
             TravelRouteListItem,
-            ProvinceVector,
-            MapViewPort
+            ProvinceVector
         },
-        mixins: [
-            viewBoxControlsMixin,
-            travelMixin
-        ],
         mounted() {
-            this.setViewBox(this._routePosition.viewBox);
+            this.setPositionViewBox(this._routePosition.viewBox);
         },
         data: function() {
             return {
-                travelDialog: false
+                travelDialog: false,
+                positionViewBox: new ViewBox({}),
             }
         },
         watch: {
             _routePosition: function(newValue) {
-                this.setViewBox(newValue.viewBox);
+                this.setPositionViewBox(newValue.viewBox);
             }
         },
         methods: {
@@ -198,6 +235,9 @@
                 'snackBarSuccess',
                 'confirmTravel',
             ]),
+            setPositionViewBox(viewBox) {
+                this.positionViewBox = viewBox;
+            },
             routeItemColor(province) {
                 if (province.uuid === this._routePosition.uuid) {
                     return 'success';
@@ -223,12 +263,35 @@
                     this.extendTravelRoute(province);
                 }
             },
+            minimMapProvinceColor(province) {
+                if (province.uuid === this._currentLocationProvince.uuid) {
+                    return '#dd00ff';
+                } else if (province.uuid === this._routePosition.uuid) {
+                    return '#4ef542';
+                } else if (this.provinceInRoute(province)) {
+                    return '#035afc'
+                }
+                return '#dedede';
+            },
+            provinceInRoute(province) {
+                let value = false;
+                this._travelRoute.forEach(function (routeProvince) {
+                    if (routeProvince.uuid === province.uuid) {
+                        value = true;
+                    }
+                });
+                return value;
+            },
         },
 
         computed: {
             ...mapGetters([
                 '_squad',
-                '_provincesByUuids'
+                '_provincesByUuids',
+                '_currentLocationProvince',
+                '_routePosition',
+                '_provinces',
+                '_travelRoute'
             ]),
             oceanColor() {
                 return '#000000';
