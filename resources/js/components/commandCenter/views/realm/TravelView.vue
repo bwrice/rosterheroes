@@ -35,7 +35,30 @@
                                 :fill-color="minimMapProvinceColor(province)"
                             >
                             </ProvinceVector>
+                            <MapWindow :view-box="positionViewBox"></MapWindow>
                         </MapViewPort>
+                    </v-col>
+                    <v-col cols="6">
+                        <v-row no-gutters class="pa-1">
+                            <v-btn
+                                :disabled="emptyRoute"
+                                color="warning"
+                                block
+                                @click="removeLastRoutePosition"
+                            >
+                                Undo
+                            </v-btn>
+                        </v-row>
+                        <v-row no-gutters class="pa-1">
+                            <v-btn
+                                :disabled="emptyRoute"
+                                color="error"
+                                block
+                                @click="clearTravelRoute"
+                            >
+                                Clear Route
+                            </v-btn>
+                        </v-row>
                     </v-col>
                 </v-row>
             </v-col>
@@ -200,10 +223,12 @@
     import TravelRouteMap from "../../realm/TravelRouteMap";
     import ViewBox from "../../../../models/ViewBox";
     import MapViewPort from "../../realm/MapViewPort";
+    import MapWindow from "../../realm/MapWindow";
 
     export default {
         name: "TravelView",
         components: {
+            MapWindow,
             MapViewPort,
             TravelRouteMap,
             MapControls,
