@@ -59,6 +59,16 @@
                                 Clear Route
                             </v-btn>
                         </v-row>
+                        <v-row no-gutters class="pa-1">
+                            <v-btn
+                                :disabled="emptyRoute"
+                                color="success"
+                                block
+                                @click="travelDialog = true"
+                            >
+                                Travel
+                            </v-btn>
+                        </v-row>
                     </v-col>
                 </v-row>
             </v-col>
