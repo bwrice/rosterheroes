@@ -73,6 +73,50 @@
                 </v-row>
             </v-col>
         </v-row>
+        <v-dialog
+            v-model="travelDialog"
+            max-width="600"
+        >
+            <v-sheet>
+                <v-row no-gutters>
+                    <v-col cols="12">
+                        <v-row no-gutters justify="center" class="py-2">
+                            <span class="title font-weight-thin">
+                                Travel to {{_routePosition.name}}?
+                            </span>
+                        </v-row>
+                        <v-row no-gutters class="pa-1">
+                            <v-col cols="12">
+                                <MapViewPort :ocean-color="'#000'">
+                                    <ProvinceVector
+                                        v-for="(province, uuid) in this._provinces"
+                                        :key="uuid"
+                                        :province="province"
+                                        :fill-color="minimMapProvinceColor(province)"
+                                    >
+                                    </ProvinceVector>
+                                </MapViewPort>
+                            </v-col>
+                        </v-row>
+                        <v-row no-gutters justify="space-around" align="center" class="py-1">
+                            <v-btn
+                                outlined
+                                color="error"
+                                @click="travelDialog = false"
+                            >
+                                Cancel
+                            </v-btn>
+                            <v-btn
+                                color="success"
+                                @click="confirmTravel({route: $route,router: $router})"
+                            >
+                                Confirm Travel
+                            </v-btn>
+                        </v-row>
+                    </v-col>
+                </v-row>
+            </v-sheet>
+        </v-dialog>
     </v-container>
 <!--    <v-col cols="12" md="8" offset-md="2">-->
 <!--        <v-card>-->
