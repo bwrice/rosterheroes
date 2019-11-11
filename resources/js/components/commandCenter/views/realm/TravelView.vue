@@ -1,7 +1,7 @@
 <template>
     <v-container>
         <v-row>
-            <v-col cols="12">
+            <v-col cols="12" md="6" lg="4" offset-lg="2">
                 <v-row no-gutters>
                     <v-col cols="12">
                         <MapViewPort :view-box="positionViewBox">
@@ -71,6 +71,15 @@
                         </v-row>
                     </v-col>
                 </v-row>
+            </v-col>
+            <v-col cols="12" md="6" lg="4">
+                <TravelRouteListItem
+                    v-for="(province, uuid) in routeList"
+                    :province="province"
+                    :key="uuid"
+                    :color="routeItemColor(province)"
+                >
+                </TravelRouteListItem>
             </v-col>
         </v-row>
         <v-dialog
