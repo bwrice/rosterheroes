@@ -1,8 +1,10 @@
 <template>
     <v-sheet
-        color="#5c707d"
-        class="my-2"
-        elevation="5"
+        :color="sheetColor"
+        class="my-1"
+        :elevation="elevation"
+        @mouseenter="hovered = true"
+        @mouseleave="hovered = false"
         @click="navigateToBarracksHero"
     >
         <v-row no-gutters align="center">
@@ -84,6 +86,11 @@
                 require: true
             }
         },
+        data() {
+            return {
+                hovered: false
+            }
+        },
         methods: {
             navigateToBarracksHero() {
                 this.$router.push(this.barracksHeroRoute);
@@ -123,6 +130,12 @@
             },
             heroClass() {
                 return this._heroClassByID(this.hero.heroClassID);
+            },
+            elevation() {
+                return this.hovered ? 24 : 4;
+            },
+            sheetColor() {
+                return this.hovered ? '#6f808c' : '#5c707d';
             }
         }
     }
