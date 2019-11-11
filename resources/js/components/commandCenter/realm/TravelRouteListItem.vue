@@ -1,15 +1,13 @@
 <template>
-    <v-sheet tile :color="color" class="pa-1">
-        <v-layout>
-            <v-flex class="xs8">
+    <v-sheet tile :color="color" class="mt-1 py-1 px-3">
+        <v-row no-gutters justify="space-between" align="center">
+            <span class="subtitle-2 opacity-75">
                 {{province.name}}
-            </v-flex>
-            <v-flex class="xs4">
-                <v-chip small>
-                    {{travelCost}}
-                </v-chip>
-            </v-flex>
-        </v-layout>
+            </span>
+            <v-chip>
+                {{travelCost}}
+            </v-chip>
+        </v-row>
     </v-sheet>
 </template>
 
