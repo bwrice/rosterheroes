@@ -73,6 +73,14 @@
                 </v-row>
             </v-col>
             <v-col cols="12" md="6" lg="4">
+                <v-row no-gutters>
+                    <span class="title font-weight-thin">TRAVEL ROUTE</span>
+                </v-row>
+                <v-sheet style="background-color: hsla(0,0%,100%,.12); color: hsla(0,0%,100%,.6)">
+                <v-row v-if="! routeList.length" no-gutters justify="center">
+                    <span class="title font-weight-thin">(empty)</span>
+                </v-row>
+                </v-sheet>
                 <TravelRouteListItem
                     v-for="(province, uuid) in routeList"
                     :province="province"
