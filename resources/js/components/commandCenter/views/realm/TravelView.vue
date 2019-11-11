@@ -27,7 +27,7 @@
                 </v-row>
                 <v-row no-gutters class="py-2">
                     <v-col cols="6">
-                        <MapViewPort :ocean-color="'#000'">
+                        <MapViewPort :ocean-color="'#000'" @click="travelDialog = true">
                             <ProvinceVector
                                 v-for="(province, uuid) in this._provinces"
                                 :key="uuid"
@@ -125,6 +125,7 @@
                             </v-btn>
                             <v-btn
                                 color="success"
+                                :disabled="_travelRoute.length <= 0"
                                 @click="confirmTravel({route: $route,router: $router})"
                             >
                                 Confirm Travel

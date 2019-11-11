@@ -5,6 +5,7 @@
                 id="map-sheet"
                 :tile="tile"
                 :color="oceanColor"
+                @click="click"
             >
                 <svg xmlns="http://www.w3.org/2000/svg"
                      version="1.1"
@@ -51,6 +52,11 @@
                 return this.viewBox.panX + ' ' + this.viewBox.panY + ' ' + this.viewBox.zoomX + ' ' + this.viewBox.zoomY;
             }
         },
+        methods: {
+            click(e) {
+                this.$emit('click', e);
+            }
+        }
     }
 </script>
 
