@@ -143,8 +143,7 @@ export default {
                     });
                 }
             } catch (e) {
-                console.log(e);
-                dispatch('snackBarError', {});
+                helpers.handleResponseErrors(e, 'equip', dispatch);
             }
         },
 
@@ -158,8 +157,7 @@ export default {
                     timeout: 3000
                 });
             } catch (e) {
-                console.log(e);
-                dispatch('snackBarError', {})
+                helpers.handleResponseErrors(e, 'equip', dispatch);
             }
         },
 

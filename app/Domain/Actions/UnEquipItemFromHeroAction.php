@@ -35,7 +35,7 @@ class UnEquipItemFromHeroAction
             throw new ItemTransactionException($item, "Item does not belong to hero", ItemTransactionException::CODE_INVALID_OWNERSHIP);
         }
         if (! Week::current()->adventuringOpen()) {
-            throw new ItemTransactionException($item, "Current week is locked'", ItemTransactionException::CODE_TRANSACTION_DISABLED);
+            throw new ItemTransactionException($item, "Current week is locked", ItemTransactionException::CODE_TRANSACTION_DISABLED);
         }
         return $this->moveItemToBackupAction->execute($item, $hero, $hasSlots);
     }
