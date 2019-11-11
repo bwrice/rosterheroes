@@ -44,6 +44,7 @@
                                 :disabled="emptyRoute"
                                 color="warning"
                                 block
+                                outlined
                                 @click="removeLastRoutePosition"
                             >
                                 Undo
@@ -54,6 +55,7 @@
                                 :disabled="emptyRoute"
                                 color="error"
                                 block
+                                outlined
                                 @click="clearTravelRoute"
                             >
                                 Clear Route
@@ -97,9 +99,13 @@
             <v-sheet>
                 <v-row no-gutters>
                     <v-col cols="12">
-                        <v-row no-gutters justify="center" class="py-2">
-                            <span class="title font-weight-thin">
-                                Travel to {{_routePosition.name}}?
+                        <v-row no-gutters justify="center" align="end" class="py-2">
+                            <span class="subtitle-1 font-weight-thin">
+                                DESTINATION:
+                            </span>
+                            &nbsp;
+                            <span class="title font-weight-bold">
+                                {{_routePosition.name}}
                             </span>
                         </v-row>
                         <v-row no-gutters class="pa-1">
@@ -115,17 +121,19 @@
                                 </MapViewPort>
                             </v-col>
                         </v-row>
-                        <v-row no-gutters justify="space-around" align="center" class="py-1">
+                        <v-row no-gutters justify="end" align="center" class="pa-2">
                             <v-btn
                                 outlined
                                 color="error"
                                 @click="travelDialog = false"
+                                class="mx-1"
                             >
                                 Cancel
                             </v-btn>
                             <v-btn
                                 color="success"
                                 :disabled="_travelRoute.length <= 0"
+                                class="mx-1"
                                 @click="confirmTravel({route: $route,router: $router})"
                             >
                                 Confirm Travel
