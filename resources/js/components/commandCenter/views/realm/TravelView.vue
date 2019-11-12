@@ -4,7 +4,7 @@
             <v-col cols="12" md="6" lg="4" offset-lg="2">
                 <v-row no-gutters>
                     <v-col cols="12">
-                        <MapViewPort :view-box="positionViewBox">
+                        <MapViewPort :view-box="focusedProvince.viewBox">
                             <!-- Borders -->
                             <ProvinceVector
                                 v-for="(province, uuid) in borders"
@@ -17,7 +17,7 @@
                             </ProvinceVector>
 
                             <ProvinceVector
-                                :province="_routePosition"
+                                :province="focusedProvince"
                                 :highlight="true"
                                 @provinceClicked="snackBarError({text: 'Click on a border to add to your route'})"
                             >
@@ -35,7 +35,7 @@
                                 :fill-color="minimMapProvinceColor(province)"
                             >
                             </ProvinceVector>
-                            <MapWindow :view-box="positionViewBox"></MapWindow>
+                            <MapWindow :view-box="focusedProvince.viewBox"></MapWindow>
                         </MapViewPort>
                     </v-col>
                     <v-col cols="6">
@@ -84,10 +84,10 @@
                 </v-row>
                 </v-sheet>
                 <TravelRouteListItem
-                    v-for="(province, uuid) in routeList"
-                    :province="province"
-                    :key="uuid"
-                    :color="routeItemColor(province)"
+                    v-for="(destination, id) in routeList"
+                    :key="id"
+                    :travel-destination="destination"
+                    :color="routeItemColor(destination)"
                 >
                 </TravelRouteListItem>
             </v-col>
@@ -105,7 +105,7 @@
                             </span>
                             &nbsp;
                             <span class="title font-weight-bold">
-                                {{_routePosition.name}}
+                                {{focusedProvince.name}}
                             </span>
                         </v-row>
                         <v-row no-gutters class="pa-1">
@@ -169,18 +169,10 @@
             TravelRouteListItem,
             ProvinceVector
         },
-        mounted() {
-            this.setPositionViewBox(this._routePosition.viewBox);
-        },
         data: function() {
             return {
                 travelDialog: false,
                 positionViewBox: new ViewBox({}),
-            }
-        },
-        watch: {
-            _routePosition: function(newValue) {
-                this.setPositionViewBox(newValue.viewBox);
             }
         },
         methods: {
@@ -194,11 +186,8 @@
                 'snackBarSuccess',
                 'confirmTravel',
             ]),
-            setPositionViewBox(viewBox) {
-                this.positionViewBox = viewBox;
-            },
-            routeItemColor(province) {
-                if (province.uuid === this._routePosition.uuid) {
+            routeItemColor(travelRouteDestination) {
+                if (travelRouteDestination.province.uuid === this.focusedProvince.uuid) {
                     return 'success';
                 }
                 return 'primary';
@@ -225,7 +214,7 @@
             minimMapProvinceColor(province) {
                 if (province.uuid === this._currentLocationProvince.uuid) {
                     return '#dd00ff';
-                } else if (province.uuid === this._routePosition.uuid) {
+                } else if (province.uuid === this.focusedProvince.uuid) {
                     return '#4ef542';
                 } else if (this.provinceInRoute(province)) {
                     return '#035afc'
@@ -234,8 +223,8 @@
             },
             provinceInRoute(province) {
                 let value = false;
-                this._travelRoute.forEach(function (routeProvince) {
-                    if (routeProvince.uuid === province.uuid) {
+                this._travelRoute.forEach(function (travelDestination) {
+                    if (travelDestination.province.uuid === province.uuid) {
                         value = true;
                     }
                 });
@@ -248,13 +237,10 @@
                 '_squad',
                 '_provincesByUuids',
                 '_currentLocationProvince',
-                '_routePosition',
+                '_finalDestination',
                 '_provinces',
                 '_travelRoute'
             ]),
-            oceanColor() {
-                return '#000000';
-            },
             routeList() {
                 let travelRoute = _.cloneDeep(this._travelRoute);
                 return travelRoute.reverse();
@@ -262,12 +248,14 @@
             emptyRoute() {
                 return ! this._travelRoute.length;
             },
-            // needed for borders mixin
-            province() {
-                return this._routePosition;
-            },
             borders() {
-                return this._provincesByUuids(this._routePosition.borderUuids);
+                return this._provincesByUuids(this.focusedProvince.borderUuids);
+            },
+            focusedProvince() {
+                if (this._finalDestination) {
+                    return this._finalDestination.province;
+                }
+                return this._currentLocationProvince;
             }
         }
     }
