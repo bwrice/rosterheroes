@@ -5,7 +5,7 @@ namespace Tests\Unit;
 use App\Domain\Actions\BorderTravelAction;
 use App\Domain\Models\Province;
 use App\Domain\Models\Squad;
-use App\Domain\Services\Travel\BorderTravelCostCalculator;
+use App\Domain\Services\Travel\CalculateBorderTravelCostForSquadAction;
 use App\Domain\Services\Travel\SquadBorderTravelCostExemption;
 use App\Exceptions\BorderTravelException;
 use Illuminate\Database\Eloquent\Builder;
@@ -55,10 +55,10 @@ class SquadBorderTravelActionTest extends TestCase
         $availableGold = $this->squad->getAvailableGold();
         $this->assertGreaterThan(0, $availableGold);
         $cost = $availableGold - 1;
-        $costCalculatorMock = \Mockery::mock(BorderTravelCostCalculator::class);
+        $costCalculatorMock = \Mockery::mock(CalculateBorderTravelCostForSquadAction::class);
         $costCalculatorMock->shouldReceive('goldCost')->andReturn($cost);
         // put the mock into the container
-        app()->instance(BorderTravelCostCalculator::class, $costCalculatorMock);
+        app()->instance(CalculateBorderTravelCostForSquadAction::class, $costCalculatorMock);
 
         /** @var BorderTravelAction  $borderTravelAction */
         $borderTravelAction = app(BorderTravelAction::class);
@@ -116,10 +116,10 @@ class SquadBorderTravelActionTest extends TestCase
          */
         $availableGold = $this->squad->getAvailableGold();
         $cost = $availableGold + 1;
-        $costCalculatorMock = \Mockery::mock(BorderTravelCostCalculator::class);
+        $costCalculatorMock = \Mockery::mock(CalculateBorderTravelCostForSquadAction::class);
         $costCalculatorMock->shouldReceive('goldCost')->andReturn($cost);
         // put the mock into the container
-        app()->instance(BorderTravelCostCalculator::class, $costCalculatorMock);
+        app()->instance(CalculateBorderTravelCostForSquadAction::class, $costCalculatorMock);
 
 
         try {

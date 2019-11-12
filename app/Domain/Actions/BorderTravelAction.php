@@ -6,17 +6,17 @@ namespace App\Domain\Actions;
 
 use App\Domain\Interfaces\TravelsBorders;
 use App\Domain\Models\Province;
-use App\Domain\Services\Travel\BorderTravelCostCalculator;
+use App\Domain\Services\Travel\CalculateBorderTravelCostForSquadAction;
 use App\Exceptions\BorderTravelException;
 
 class BorderTravelAction
 {
     /**
-     * @var BorderTravelCostCalculator
+     * @var CalculateBorderTravelCostForSquadAction
      */
     private $costCalculator;
 
-    public function __construct(BorderTravelCostCalculator $costCalculator)
+    public function __construct(CalculateBorderTravelCostForSquadAction $costCalculator)
     {
         $this->costCalculator = $costCalculator;
     }

@@ -6,7 +6,7 @@ use App\Domain\Actions\FastTravelAction;
 use App\Domain\Collections\ProvinceCollection;
 use App\Domain\Models\Province;
 use App\Domain\Models\Squad;
-use App\Domain\Services\Travel\BorderTravelCostCalculator;
+use App\Domain\Services\Travel\CalculateBorderTravelCostForSquadAction;
 use App\Domain\Services\Travel\SquadBorderTravelCostExemption;
 use App\Exceptions\BorderTravelException;
 use Illuminate\Database\Eloquent\Builder;
@@ -74,10 +74,10 @@ class SquadFastTravelActionTest extends TestCase
         $this->assertGreaterThan(0, $availableGold);
         $bordersCount = $this->travelRoute->count();
         $individualBorderCost = (int) round($availableGold/$bordersCount) - 1;
-        $costCalculatorMock = \Mockery::mock(BorderTravelCostCalculator::class);
+        $costCalculatorMock = \Mockery::mock(CalculateBorderTravelCostForSquadAction::class);
         $costCalculatorMock->shouldReceive('goldCost')->andReturn($individualBorderCost);
         // put the mock into the container
-        app()->instance(BorderTravelCostCalculator::class, $costCalculatorMock);
+        app()->instance(CalculateBorderTravelCostForSquadAction::class, $costCalculatorMock);
 
         /** @var FastTravelAction $fastTravelAction */
         $fastTravelAction = app(FastTravelAction::class);
@@ -120,10 +120,10 @@ class SquadFastTravelActionTest extends TestCase
         $this->assertGreaterThan(0, $availableGold);
         $bordersCount = $this->travelRoute->count();
         $individualBorderCost = (int) round($availableGold/$bordersCount) - 1;
-        $costCalculatorMock = \Mockery::mock(BorderTravelCostCalculator::class);
+        $costCalculatorMock = \Mockery::mock(CalculateBorderTravelCostForSquadAction::class);
         $costCalculatorMock->shouldReceive('goldCost')->andReturn($individualBorderCost);
         // put the mock into the container
-        app()->instance(BorderTravelCostCalculator::class, $costCalculatorMock);
+        app()->instance(CalculateBorderTravelCostForSquadAction::class, $costCalculatorMock);
 
         try {
 

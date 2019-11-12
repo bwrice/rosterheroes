@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Domain\Services\Travel\BorderTravelCostCalculator;
+use App\Domain\Services\Travel\CalculateBorderTravelCostForSquadAction;
 use App\Exceptions\NotBorderedByException;
 use App\Domain\Models\Province;
 use App\Domain\Models\Squad;
@@ -31,7 +31,7 @@ class SquadBorderTravelController extends Controller
         }
     }
 
-    public function show($squadSlug, $borderSlug, BorderTravelCostCalculator $costCalculator)
+    public function show($squadSlug, $borderSlug, CalculateBorderTravelCostForSquadAction $costCalculator)
     {
         $squad = Squad::findSlugOrFail($squadSlug);
         $this->authorize(SquadPolicy::MANAGE, $squad);

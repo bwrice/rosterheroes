@@ -7,7 +7,7 @@ namespace App\Domain\Services\Travel;
 use App\Domain\Interfaces\TravelsBorders;
 use App\Domain\Models\Province;
 
-class BorderTravelCostCalculator
+class CalculateBorderTravelCostForSquadAction
 {
     public function goldCost(TravelsBorders $travelsBorders, Province $border)
     {
