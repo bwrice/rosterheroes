@@ -9,14 +9,13 @@ export default {
     },
 
     getters: {
-        _routePosition(state, getters) {
+        _finalDestination(state, getters) {
             let length = state.travelRoute.length;
             if (length) {
                 // Return last element of route
                 return state.travelRoute[length - 1];
             } else {
-                // route empty, return current location
-                return getters._currentLocationProvince;
+                return null;
             }
         },
         _travelRoute(state) {
@@ -55,10 +54,9 @@ export default {
             commit('REMOVE_LAST_ROUTE_POSITION');
         },
         async confirmTravel({state, commit, dispatch}, {route, router}) {
-            dispatch('setOverlay', {show: true});
 
-            let travelRoute = state.travelRoute.map(function (province) {
-                return province.uuid;
+            let travelRoute = state.travelRoute.map(function (travelDestination) {
+                return travelDestination.province.uuid;
             });
 
             let squadSlug = route.params.squadSlug;
