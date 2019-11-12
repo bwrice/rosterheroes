@@ -2,7 +2,7 @@
     <v-sheet tile :color="color" class="mt-1 py-1 px-3">
         <v-row no-gutters justify="space-between" align="center">
             <span class="subtitle-2 opacity-75">
-                {{province.name}}
+                {{travelDestination.province.name}}
             </span>
             <v-chip>
                 {{travelCost}}
@@ -12,11 +12,13 @@
 </template>
 
 <script>
+    import TravelRouteDestination from "../../../models/TravelRouteDestination";
+
     export default {
         name: "TravelRouteListItem",
         props: {
-            province: {
-                type: Object,
+            travelDestination: {
+                type: TravelRouteDestination,
                 required: true
             },
             color: {
@@ -26,10 +28,8 @@
         },
         computed: {
             travelCost() {
-                if (this.province.travelCost) {
-                    return this.province.travelCost
-                }
-                return 'free';
+                let cost = this.travelDestination.cost;
+                return cost ? cost : 'free';
             }
         }
     }
