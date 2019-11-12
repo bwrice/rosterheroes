@@ -1,5 +1,6 @@
 import * as squadApi from '../../api/squadApi';
 import Province from "../../models/Province";
+import TravelRouteDestination from "../../models/TravelRouteDestination";
 
 export default {
 
@@ -35,12 +36,14 @@ export default {
     },
 
     actions: {
-        async extendTravelRoute({commit, rootState}, payload) {
+        async extendTravelRoute({commit, rootState}, border) {
             try {
                 let squad = rootState.squadModule.squad;
-                let response = await axios.get('/api/v1/squads/' + squad.slug + '/border/' + payload.slug);
-                let routeProvince = new Province(response.data);
-                commit('ADD_TO_TRAVEL_ROUTE', routeProvince);
+                let response = await squadApi.getBorderTravelCost(squad.slug, border.slug);
+                commit('ADD_TO_TRAVEL_ROUTE', new TravelRouteDestination({
+                    cost: response.data.cost,
+                    province: border
+                }));
             } catch (error) {
                 //
             }
