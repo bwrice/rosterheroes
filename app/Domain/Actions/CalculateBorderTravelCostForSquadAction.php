@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Domain\Services\Travel;
+namespace App\Domain\Actions;
 
 
 use App\Domain\Interfaces\TravelsBorders;
@@ -9,7 +9,7 @@ use App\Domain\Models\Province;
 
 class CalculateBorderTravelCostForSquadAction
 {
-    public function goldCost(TravelsBorders $travelsBorders, Province $border)
+    public function execute(TravelsBorders $travelsBorders, Province $border)
     {
         if ($travelsBorders->hasBorderTravelCostExemption($border)) {
             return 0;
