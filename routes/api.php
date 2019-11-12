@@ -96,8 +96,8 @@ Route::prefix('v1')->group(function () {
 
             Route::get('{squadSlug}/mobile-storage', MobileStorageController::class);
 
-            Route::post('{squadSlug}/border/{borderSlug}', [SquadBorderTravelController::class, 'store']);
-            Route::get('{squadSlug}/border/{borderSlug}', [SquadBorderTravelController::class, 'show']);
+            Route::post('{squadSlug}/border-travel/{borderSlug}', [SquadBorderTravelController::class, 'store']);
+            Route::get('{squadSlug}/border-travel/{borderSlug}', [SquadBorderTravelController::class, 'show']);
 
             Route::get('{squadSlug}/spells', [SquadSpellController::class, 'index']);
 
