@@ -41,6 +41,10 @@ export default {
         _provinceBySlug: (state) => (slug) => {
             let province = state.provinces.find(province => province.slug === slug);
             return province ? province : new Province({});
+        },
+        _provinceByUuid: (state) => (uuid) => {
+            let province = state.provinces.find(province => province.uuid === uuid);
+            return province ? province : new Province({});
         }
     },
     mutations: {
