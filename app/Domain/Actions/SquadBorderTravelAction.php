@@ -8,7 +8,7 @@ use App\Domain\Models\Squad;
 use App\Domain\Models\Support\Squads\SquadBorderTravelCostCalculator;
 use App\Exceptions\SquadTravelException;
 
-class BorderTravelAction
+class SquadBorderTravelAction
 {
     /**
      * @var SquadBorderTravelCostCalculator
