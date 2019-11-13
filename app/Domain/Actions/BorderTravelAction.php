@@ -3,68 +3,69 @@
 
 namespace App\Domain\Actions;
 
-
-use App\Domain\Interfaces\TravelsBorders;
 use App\Domain\Models\Province;
-use App\Domain\Services\Travel\CalculateBorderTravelCostForSquadAction;
-use App\Exceptions\BorderTravelException;
+use App\Domain\Models\Squad;
+use App\Domain\Models\Support\Squads\SquadBorderTravelCostCalculator;
+use App\Exceptions\SquadTravelException;
 
 class BorderTravelAction
 {
     /**
-     * @var CalculateBorderTravelCostForSquadAction
+     * @var SquadBorderTravelCostCalculator
      */
     private $costCalculator;
 
-    public function __construct(CalculateBorderTravelCostForSquadAction $costCalculator)
+    public function __construct(SquadBorderTravelCostCalculator $costCalculator)
     {
         $this->costCalculator = $costCalculator;
     }
 
     /**
-     * @param TravelsBorders $travelsBorders
+     * @param Squad $squad
      * @param Province $border
-     * @throws BorderTravelException
+     * @throws SquadTravelException
      */
-    public function execute(TravelsBorders $travelsBorders, Province $border)
+    public function execute(Squad $squad, Province $border)
     {
-        $this->validateBorder($travelsBorders, $border);
+        $this->validateBorder($squad, $border);
 
-        $availableGold = $travelsBorders->getAvailableGold();
-        $costToTravel = $this->costCalculator->goldCost($travelsBorders, $border);
+        $availableGold = $squad->getAvailableGold();
+        $costToTravel = $this->costCalculator->calculateGoldCost($squad, $border);
 
-        $this->validateTravelCost($travelsBorders, $border, $availableGold, $costToTravel);
+        $this->validateTravelCost($squad, $border, $availableGold, $costToTravel);
 
-        $travelsBorders->decreaseGold($costToTravel);
-        $travelsBorders->updateLocation($border);
+        if ($costToTravel > 0) {
+            $squad->decreaseGold($costToTravel);
+        }
+        $squad->updateLocation($border);
     }
 
     /**
-     * @param TravelsBorders $travelsBorders
+     * @param Squad $squad
      * @param Province $border
-     * @throws BorderTravelException
+     * @throws SquadTravelException
      */
-    protected function validateBorder(TravelsBorders $travelsBorders, Province $border): void
+    protected function validateBorder(Squad $squad, Province $border): void
     {
-        $currentLocation = $travelsBorders->getCurrentLocation();
+        $currentLocation = $squad->province;
         if (!$currentLocation->isBorderedBy($border)) {
             $message = $currentLocation->name . ' is not bordered by ' . $border->name;
-            throw new BorderTravelException($travelsBorders, $border, $message, BorderTravelException::NOT_BORDERED_BY);
+            throw new SquadTravelException($squad, $border, $message, SquadTravelException::NOT_BORDERED_BY);
         }
     }
 
     /**
-     * @param TravelsBorders $travelsBorders
+     * @param Squad $squad
      * @param Province $border
      * @param int $availableGold
      * @param int $costToTravel
-     * @throws BorderTravelException
+     * @throws SquadTravelException
      */
-    protected function validateTravelCost(TravelsBorders $travelsBorders, Province $border, int $availableGold, int $costToTravel): void
+    protected function validateTravelCost(Squad $squad, Province $border, int $availableGold, int $costToTravel): void
     {
         if ($availableGold < $costToTravel) {
             $message = $costToTravel . " gold is needed, but only " . $availableGold . " gold available";
-            throw new BorderTravelException($travelsBorders, $border, $message, BorderTravelException::NOT_ENOUGH_GOLD);
+            throw new SquadTravelException($squad, $border, $message, SquadTravelException::NOT_ENOUGH_GOLD);
         }
     }
 }
