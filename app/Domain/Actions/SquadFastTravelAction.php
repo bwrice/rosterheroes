@@ -9,7 +9,7 @@ use App\Domain\Models\Province;
 use App\Domain\Models\Squad;
 use Illuminate\Support\Facades\DB;
 
-class FastTravelAction
+class SquadFastTravelAction
 {
     /**
      * @var SquadBorderTravelAction
