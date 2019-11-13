@@ -4,6 +4,7 @@ namespace App\Domain\Models;
 
 use App\Domain\Collections\ProvinceCollection;
 use App\Domain\Models\Support\ViewBox;
+use App\Domain\QueryBuilders\ProvinceQueryBuilder;
 use App\Domain\Traits\HasNameSlug;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -51,9 +52,9 @@ class Province extends EventSourcedModel
         return new ProvinceCollection($models);
     }
 
-    public function vectorPaths()
+    public function newEloquentBuilder($query)
     {
-        return $this->morphMany(VectorPath::class, 'has_paths');
+        return new ProvinceQueryBuilder($query);
     }
 
     public function continent()
