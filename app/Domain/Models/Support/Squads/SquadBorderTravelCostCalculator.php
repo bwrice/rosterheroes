@@ -17,6 +17,6 @@ class SquadBorderTravelCostCalculator
         }
 
         // TODO calculate based on mobile storage weight + level
-        return 10;
+        return $level;
     }
 }
