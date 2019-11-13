@@ -157,11 +157,11 @@
             handleMouseWheel(ev) {
                 if (ev.deltaY > 0) {
                     // zoom twice so it's slightly faster
-                    this.zoomIn(2);
+                    this.zoomOut(2);
                 }
 
                 if (ev.deltaY < 0 ) {
-                    this.zoomOut(2);
+                    this.zoomIn(2);
                 }
                 this.currentViewBox = _.cloneDeep(this.currentViewBox);
                 return false;
