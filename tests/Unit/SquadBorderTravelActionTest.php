@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Domain\Actions\SquadBorderTravelAction;
+use App\Domain\Models\Continent;
 use App\Domain\Models\Province;
 use App\Domain\Models\Squad;
 use App\Domain\Models\Support\Squads\SquadBorderTravelCostCalculator;
@@ -120,8 +121,88 @@ class SquadBorderTravelActionTest extends TestCase
         $this->fail("Exception not thrown");
     }
 
-    public function a_squad_cannot_travel_into_certain_continents_until_the_min_level_is_reached()
+    /**
+     * @param $continentName
+     * @test
+     * @dataProvider provides_a_squad_cannot_travel_into_certain_continents_until_the_min_level_is_reached
+     */
+    public function a_squad_can_travel_into_certain_continents_only_when_the_min_level_requirement_is_reached($continentName)
     {
+        /** @var Continent $continent */
+        $continent = Continent::forName($continentName);
+        $continentID = $continent->id;
+        $minLevel = $continent->getBehavior()->getMinLevelRequirement();
 
+        /** @var Province $provinceInContinent */
+        $provinceInContinent = Province::query()->ofContinent($continentID)->inRandomOrder()->first();
+        $this->squad->province_id = $provinceInContinent->id;
+        $this->squad->save();
+
+        /** @var Province $borderOfSameContinent */
+        $borderOfSameContinent = $provinceInContinent->borders()->ofContinent($continentID)->inRandomOrder()->first();
+
+        /*
+         * Mock the squad so that it returns a level under the minimum level requirement of the continent
+         */
+        /** @var Squad $mockedSquad */
+        $mockedSquad = \Mockery::mock($this->squad->fresh())->shouldReceive('getLevel')->andReturn($minLevel - 1)->getMock();
+
+        $exceptionThrown = false;
+        try {
+            $this->domainAction->execute($mockedSquad, $borderOfSameContinent);
+        } catch (SquadTravelException $exception) {
+            $this->assertEquals(SquadTravelException::MIN_LEVEL_NOT_MET, $exception->getCode());
+            $this->assertEquals($provinceInContinent->id, $this->squad->fresh()->province_id);
+            $exceptionThrown = true;
+        }
+        $this->assertTrue($exceptionThrown, "Exception not thrown");
+
+        /*
+         * Try again and test it succeeds by mocking getLevel to return THE minimum level
+         * requirement and forcing the travel cost to be zero
+         */
+        /** @var Squad $mockedSquad */
+        $mockedSquad = \Mockery::mock($this->squad->fresh())->shouldReceive('getLevel')->andReturn($minLevel)->getMock();
+        $costCalculatorMock = \Mockery::mock(SquadBorderTravelCostCalculator::class);
+        $costCalculatorMock->shouldReceive('calculateGoldCost')->andReturn(0);
+        // put the mock into the container
+        app()->instance(SquadBorderTravelCostCalculator::class, $costCalculatorMock);
+
+        // need to pull out of the container against since we injected a mock dependency
+        /** @var SquadBorderTravelAction domainAction */
+        $domainAction = app(SquadBorderTravelAction::class);
+        $domainAction->execute($mockedSquad, $borderOfSameContinent);
+
+        $this->assertEquals($borderOfSameContinent->id, $this->squad->fresh()->province_id);
+    }
+
+    public function provides_a_squad_cannot_travel_into_certain_continents_until_the_min_level_is_reached()
+    {
+        /*
+         * Note: Fetroya (starting continent) has no level requirement an thus doesn't need to be tested
+         */
+        return [
+            [
+                'continentName' => Continent::NORTH_JAGONETH
+            ],
+            [
+                'continentName' => Continent::EAST_WOZUL
+            ],
+            [
+                'continentName' => Continent::CENTRAL_JAGONETH
+            ],
+            [
+                'continentName' => Continent::WEST_WOZUL
+            ],
+            [
+                'continentName' => Continent::SOUTH_JAGONETH
+            ],
+            [
+                'continentName' => Continent::VINDOBERON
+            ],
+            [
+                'continentName' => Continent::DEMAUXOR
+            ]
+        ];
     }
 }
