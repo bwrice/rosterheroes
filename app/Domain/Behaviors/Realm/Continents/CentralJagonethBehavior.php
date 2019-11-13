@@ -13,4 +13,5 @@ class CentralJagonethBehavior extends ContinentBehavior
         'zoom_x' => 130,
         'zoom_y' => 99
     ];
+    protected $minLevelRequirement = 20;
 }

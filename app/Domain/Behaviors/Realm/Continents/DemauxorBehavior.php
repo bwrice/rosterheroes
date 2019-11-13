@@ -13,4 +13,5 @@ class DemauxorBehavior extends ContinentBehavior
         'zoom_x' => 160,
         'zoom_y' => 121
     ];
+    protected $minLevelRequirement = 40;
 }

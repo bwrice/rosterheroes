@@ -13,4 +13,5 @@ class SouthJagonethBehavior extends ContinentBehavior
         'zoom_x' => 172,
         'zoom_y' => 131
     ];
+    protected $minLevelRequirement = 30;
 }

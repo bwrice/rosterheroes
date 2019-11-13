@@ -13,4 +13,5 @@ class VindoberonBehavior extends ContinentBehavior
         'zoom_x' => 184,
         'zoom_y' => 141
     ];
+    protected $minLevelRequirement = 35;
 }

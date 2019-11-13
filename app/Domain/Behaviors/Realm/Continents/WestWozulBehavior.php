@@ -13,4 +13,5 @@ class WestWozulBehavior extends ContinentBehavior
         'zoom_x' => 150,
         'zoom_y' => 114
     ];
+    protected $minLevelRequirement = 25;
 }
