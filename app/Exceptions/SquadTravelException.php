@@ -16,6 +16,7 @@ class SquadTravelException extends \Exception
     public const NOT_BORDERED_BY = 1;
     public const NOT_ENOUGH_GOLD = 2;
     public const WEEK_LOCKED = 3;
+    public const MIN_LEVEL_NOT_MET = 4;
 
     /**
      * @var Squad
