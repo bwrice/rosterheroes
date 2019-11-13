@@ -49,7 +49,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property ItemCollection $items
  * @property HeroPostCollection $heroPosts
  */
-class Squad extends EventSourcedModel implements TravelsBorders, HasItems
+class Squad extends EventSourcedModel implements HasItems
 {
     use HasNameSlug;
 
@@ -343,17 +343,17 @@ class Squad extends EventSourcedModel implements TravelsBorders, HasItems
         return $this->gold;
     }
 
-    public function hasBorderTravelCostExemption(Province $border): bool
-    {
-        /** @var SquadBorderTravelCostExemption $costExemption */
-        $costExemption = app(SquadBorderTravelCostExemption::class);
-        return $costExemption->isExempt($this, $border);
-    }
+//    public function hasBorderTravelCostExemption(Province $border): bool
+//    {
+//        /** @var SquadBorderTravelCostExemption $costExemption */
+//        $costExemption = app(SquadBorderTravelCostExemption::class);
+//        return $costExemption->isExempt($this, $border);
+//    }
 
-    public function getCurrentLocation(): Province
-    {
-        return $this->province;
-    }
+//    public function getCurrentLocation(): Province
+//    {
+//        return $this->province;
+//    }
 
     public function increaseGold(int $amount)
     {
@@ -432,5 +432,11 @@ class Squad extends EventSourcedModel implements TravelsBorders, HasItems
     public function getHasItemsType()
     {
         return 'squad';
+    }
+
+    public function getLevel(): int
+    {
+        $exp = $this->experience;
+        return (int) floor((($exp - static::STARTING_EXPERIENCE)/200) ** (.5) + 1);
     }
 }
