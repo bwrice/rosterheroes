@@ -24,6 +24,9 @@ class SquadBorderTravelActionTest extends TestCase
     /** @var Province */
     protected $border;
 
+    /** @var SquadBorderTravelAction  */
+    protected $domainAction;
+
     public function setUp(): void
     {
         parent::setUp();
@@ -31,6 +34,7 @@ class SquadBorderTravelActionTest extends TestCase
         $this->squad = factory(Squad::class)->create();
         $this->startingProvince = $this->squad->province;
         $this->border = $this->squad->province->borders()->inRandomOrder()->first();
+        $this->domainAction = app(SquadBorderTravelAction::class);
     }
 
     /**
@@ -49,9 +53,9 @@ class SquadBorderTravelActionTest extends TestCase
         // put the mock into the container
         app()->instance(SquadBorderTravelCostCalculator::class, $costCalculatorMock);
 
-        /** @var SquadBorderTravelAction  $borderTravelAction */
-        $borderTravelAction = app(SquadBorderTravelAction::class);
-        $borderTravelAction->execute($this->squad, $this->border);
+        // need to pull out of the container against since we injected a mock dependency
+        $this->domainAction = app(SquadBorderTravelAction::class);
+        $this->domainAction->execute($this->squad, $this->border);
 
         $squad = $this->squad->fresh();
 
@@ -70,9 +74,8 @@ class SquadBorderTravelActionTest extends TestCase
         })->first();
 
         try {
-            /** @var SquadBorderTravelAction  $borderTravelAction */
-            $borderTravelAction = app(SquadBorderTravelAction::class);
-            $borderTravelAction->execute($this->squad, $nonBorder);
+
+            $this->domainAction->execute($this->squad, $nonBorder);
 
         } catch (SquadTravelException $exception) {
 
@@ -101,9 +104,9 @@ class SquadBorderTravelActionTest extends TestCase
         app()->instance(SquadBorderTravelCostCalculator::class, $costCalculatorMock);
 
         try {
-            /** @var SquadBorderTravelAction  $borderTravelAction */
-            $borderTravelAction = app(SquadBorderTravelAction::class);
-            $borderTravelAction->execute($this->squad, $this->border);
+            // need to pull out of the container against since we injected a mock dependency
+            $this->domainAction = app(SquadBorderTravelAction::class);
+            $this->domainAction->execute($this->squad, $this->border);
 
         } catch (SquadTravelException $exception) {
 
@@ -117,7 +120,7 @@ class SquadBorderTravelActionTest extends TestCase
         $this->fail("Exception not thrown");
     }
 
-    public function a_squad_cannot_travel_outside_Fetroya_until_level_10()
+    public function a_squad_cannot_travel_into_certain_continents_until_the_min_level_is_reached()
     {
 
     }
