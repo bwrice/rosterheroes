@@ -7,13 +7,16 @@ namespace App\Domain\Models\Support\Squads;
 use App\Domain\Models\Province;
 use App\Domain\Models\Squad;
 
-class CalculateBorderTravelCostForSquadAction
+class SquadBorderTravelCostCalculator
 {
-    public function execute(Squad $squad, Province $border)
+    public function calculateGoldCost(Squad $squad, Province $border)
     {
+        $level = $squad->getLevel();
+        if ($level < 10) {
+            return 0;
+        }
 
-
-        // TODO expense calculation
+        // TODO calculate based on mobile storage weight + level
         return 10;
     }
 }
