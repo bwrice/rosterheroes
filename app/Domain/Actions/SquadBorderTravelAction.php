@@ -81,7 +81,7 @@ class SquadBorderTravelAction
         $minLevelRequirement = $continent->getBehavior()->getMinLevelRequirement();
         $squadLevel = $squad->getLevel();
         if ($squadLevel < $minLevelRequirement) {
-            $exceptionMessage = $squad->name . "has a level of " . $squadLevel . ", but level ";
+            $exceptionMessage = $squad->name . " has a level of " . $squadLevel . ", but level ";
             $exceptionMessage .= $minLevelRequirement . " required to enter the continent of " . $continent->name;
             throw new SquadTravelException($squad, $border, $exceptionMessage, SquadTravelException::MIN_LEVEL_NOT_MET);
         }
