@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Domain\Actions\FastTravelAction;
+use App\Domain\Actions\SquadFastTravelAction;
 use App\Domain\Collections\ProvinceCollection;
 use App\Domain\Models\Squad;
-use App\Exceptions\BorderTravelException;
+use App\Exceptions\SquadTravelException;
 use App\Http\Resources\CurrentLocationResource;
 use App\Http\Resources\SquadResource;
 use App\Nova\Province;
@@ -20,11 +20,11 @@ class FastTravelController extends Controller
     /**
      * @param $squadSlug
      * @param Request $request
-     * @param FastTravelAction $fastTravelAction
+     * @param SquadFastTravelAction $fastTravelAction
      * @return CurrentLocationResource
      * @throws AuthorizationException
      */
-    public function __invoke($squadSlug, Request $request, FastTravelAction $fastTravelAction)
+    public function __invoke($squadSlug, Request $request, SquadFastTravelAction $fastTravelAction)
     {
         $squad = Squad::findSlugOrFail($squadSlug);
         $this->authorize(SquadPolicy::MANAGE, $squad);
@@ -38,7 +38,7 @@ class FastTravelController extends Controller
         try {
             $fastTravelAction->execute($squad, $travelRoute);
 
-        } catch (BorderTravelException $exception) {
+        } catch (SquadTravelException $exception) {
 
             throw ValidationException::withMessages([
                 'travel' => $exception->getMessage()
