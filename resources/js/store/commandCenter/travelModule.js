@@ -1,6 +1,7 @@
 import * as squadApi from '../../api/squadApi';
 import Province from "../../models/Province";
 import TravelRouteDestination from "../../models/TravelRouteDestination";
+import * as helpers from "../../helpers/vuexHelpers";
 
 export default {
 
@@ -82,17 +83,8 @@ export default {
                     }});
 
             } catch (e) {
-                let errors = e.response.data.errors;
-                let snackBarPayload = {};
-                if (errors && errors.travel) {
-                    snackBarPayload = {
-                        text: errors.travel[0]
-                    }
-                }
-                dispatch('snackBarError', snackBarPayload)
+                helpers.handleResponseErrors(e, 'travel', dispatch);
             }
-
-            dispatch('stopOverlay');
         }
 
     }

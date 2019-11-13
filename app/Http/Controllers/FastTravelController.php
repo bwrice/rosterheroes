@@ -23,6 +23,7 @@ class FastTravelController extends Controller
      * @param SquadFastTravelAction $fastTravelAction
      * @return CurrentLocationResource
      * @throws AuthorizationException
+     * @throws ValidationException
      */
     public function __invoke($squadSlug, Request $request, SquadFastTravelAction $fastTravelAction)
     {
