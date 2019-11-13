@@ -28,6 +28,7 @@ class SquadBorderTravelAction
     public function execute(Squad $squad, Province $border)
     {
         $this->validateBorder($squad, $border);
+        $this->validateLevelRequirement($squad, $border);
 
         $availableGold = $squad->getAvailableGold();
         $costToTravel = $this->costCalculator->calculateGoldCost($squad, $border);
@@ -66,6 +67,23 @@ class SquadBorderTravelAction
         if ($availableGold < $costToTravel) {
             $message = $costToTravel . " gold is needed, but only " . $availableGold . " gold available";
             throw new SquadTravelException($squad, $border, $message, SquadTravelException::NOT_ENOUGH_GOLD);
+        }
+    }
+
+    /**
+     * @param Squad $squad
+     * @param Province $border
+     * @throws SquadTravelException
+     */
+    protected function validateLevelRequirement(Squad $squad, Province $border)
+    {
+        $continent = $border->continent;
+        $minLevelRequirement = $continent->getBehavior()->getMinLevelRequirement();
+        $squadLevel = $squad->getLevel();
+        if ($squadLevel < $minLevelRequirement) {
+            $exceptionMessage = $squad->name . "has a level of " . $squadLevel . ", but level ";
+            $exceptionMessage .= $minLevelRequirement . " required to enter the continent of " . $continent->name;
+            throw new SquadTravelException($squad, $border, $exceptionMessage, SquadTravelException::MIN_LEVEL_NOT_MET);
         }
     }
 }

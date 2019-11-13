@@ -5,6 +5,7 @@ namespace App\Domain\Models;
 use App\Domain\Behaviors\Realm\Continents\ContinentBehavior;
 use App\Domain\Behaviors\Realm\ContinentBehaviorFactory;
 use App\Domain\Behaviors\Realm\RealmBehavior;
+use App\Domain\Models\Traits\HasUniqueNames;
 use App\Domain\Traits\HasNameSlug;
 use App\Exceptions\UnknownBehaviorException;
 use Illuminate\Database\Eloquent\Model;
@@ -21,6 +22,7 @@ use Spatie\Sluggable\SlugOptions;
 class Continent extends Model
 {
     use HasNameSlug;
+    use HasUniqueNames;
 
     const FETROYA = 'Fetroya';
     const EAST_WOZUL = 'East Wozul';
