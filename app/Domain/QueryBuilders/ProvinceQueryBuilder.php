@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class ProvinceQueryBuilder extends Builder
 {
-    public function withContinent(int $continentID)
+    public function ofContinent(int $continentID)
     {
         return $this->where('continent_id', '=', $continentID);
     }

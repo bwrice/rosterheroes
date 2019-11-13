@@ -31,6 +31,7 @@ use Spatie\Sluggable\SlugOptions;
  *
  * @method static Builder bordersCount(int $count)
  * @method static Builder starting
+ * @method static ProvinceQueryBuilder query()
  */
 class Province extends EventSourcedModel
 {
@@ -78,7 +79,7 @@ class Province extends EventSourcedModel
     }
 
     /**
-     * @return BelongsToMany
+     * @return BelongsToMany|ProvinceQueryBuilder
      */
     public function borders()
     {
