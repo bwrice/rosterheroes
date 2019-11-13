@@ -62,14 +62,22 @@ Route::prefix('v1')->group(function () {
          *
          * 'api/v1/weeks'
          */
-
         Route::get('{weekUuid}', [WeekController::class, 'show']);
         Route::get('{weekUuid}/player-spirits', [WeekPlayerSpiritController::class, 'index']);
         Route::get('{weekUuid}/games', [WeekGameController::class, 'index']);
     });
 
-    Route::get('/provinces', [ProvinceController::class, 'index']);
-    Route::get('/provinces/{provinceSlug}/borders', [ProvinceBorderController::class, 'index']);
+    Route::prefix('provinces')->group(function () {
+
+        /*
+         * PROVINCES
+         *
+         * 'api/v1/provinces'
+         */
+        Route::get('/', [ProvinceController::class, 'index']);
+        Route::get('/{provinceSlug}/borders', [ProvinceBorderController::class, 'index']);
+    });
+
     Route::get('/territories', [TerritoryController::class, 'index']);
     Route::get('/continents', [ContinentController::class, 'index']);
 
