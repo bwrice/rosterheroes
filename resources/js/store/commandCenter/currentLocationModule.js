@@ -46,12 +46,14 @@ export default {
             }
         },
         updateCurrentLocation({commit, dispatch}, route, alreadyUpdated = {}) {
+
             let {
                 province,
                 quests,
             } = alreadyUpdated;
+
             province ? commit('SET_CURRENT_LOCATION_PROVINCE', province) : dispatch('updateCurrentLocationProvince', route);
-            quests ? commit('SET_CURRENT_LOCATION_QUESTS', province) : dispatch('updateCurrentLocationProvince', route);
+            quests ? commit('SET_CURRENT_LOCATION_QUESTS', quests) : dispatch('updateCurrentLocationQuests', route);
         },
     }
 };
