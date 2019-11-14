@@ -17,7 +17,6 @@ use App\Http\Controllers\ProvinceBorderController;
 use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\RaiseHeroMeasurableController;
 use App\Http\Controllers\RemoveSpellController;
-use App\Http\Controllers\RosterHeroesController;
 use App\Http\Controllers\SportController;
 use App\Http\Controllers\CurrentLocationProvinceController;
 use App\Http\Controllers\SquadSpellController;
@@ -100,8 +99,6 @@ Route::prefix('v1')->group(function () {
             Route::post('{squadSlug}/fast-travel', FastTravelController::class);
 
             Route::get('{squadSlug}/heroes', [SquadHeroController::class, 'index']);
-//        Route::get('/squads/{squadSlug}/roster/heroes', RosterHeroesController::class);
-
             Route::get('{squadSlug}/mobile-storage', MobileStorageController::class);
 
             Route::post('{squadSlug}/border-travel/{borderSlug}', [SquadBorderTravelController::class, 'store']);
@@ -109,6 +106,9 @@ Route::prefix('v1')->group(function () {
 
             Route::get('{squadSlug}/spells', [SquadSpellController::class, 'index']);
 
+            /*
+             * CURRENT LOCATION
+             */
             Route::prefix('{squadSlug}/current-location')->group(function () {
 
                 Route::get('province', CurrentLocationProvinceController::class);
@@ -147,10 +147,5 @@ Route::prefix('v1')->group(function () {
         });
 
         Route::post('/campaign/{campaign}/quest/{questUuid}', [CampaignQuestController::class, 'store']);
-
-//        Route::prefix('measurables')->group(function () {
-//            Route::get('/{measurableUuid}/raise', [RaiseHeroMeasurableController::class, 'show']);
-//            Route::post('/{measurableUuid}/raise', [RaiseHeroMeasurableController::class, 'store']);
-//        });
     });
 });
