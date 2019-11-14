@@ -22,6 +22,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $level
  * @property int $province_id
  * @property int $travel_type_id
+ * @property int $squad_level_sum
+ * @property int $squad_count
+ * @property float $percent
  * @property Carbon $completed_at
  *
  * @property Province $province
@@ -84,5 +87,14 @@ class Quest extends EventSourcedModel
     public function isCompleted()
     {
         return $this->completed_at != null;
+    }
+
+    public function getMinionCount(float $weight): int
+    {
+        $multiplier = ($weight/100) * ($this->percent/100) * ($this->level/100) ** 2;
+        $baseCount = ceil($multiplier * 100);
+        $squadCountBonus = ceil($multiplier * $this->squad_count);
+        $squadLevelSumBonus = ceil($multiplier * $this->squad_level_sum/20);
+        return (int) ($baseCount + $squadCountBonus + $squadLevelSumBonus);
     }
 }
