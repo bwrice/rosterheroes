@@ -17,6 +17,11 @@ class MinionResource extends JsonResource
     public $resource;
 
     /**
+     * @var int|null
+     */
+    protected $count;
+
+    /**
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -34,6 +39,17 @@ class MinionResource extends JsonResource
             'attacks' => AttackResource::collection($this->attacks)->collection->each(function (AttackResource $attackResource) {
                 $attackResource->setHasAttacks($this->resource);
             }),
+            'count' => $this->when(! is_null($this->count), $this->count)
         ];
+    }
+
+    /**
+     * @param int $count
+     * @return $this
+     */
+    public function setCount(int $count)
+    {
+        $this->count = $count;
+        return $this;
     }
 }
