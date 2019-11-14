@@ -24,8 +24,10 @@ class QuestResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'uuid' => $this->uuid,
             'name' => $this->name,
             'level' => $this->level,
+            'provinceID' => $this->province_id,
             'skirmishes' => SkirmishResource::collection($this->skirmishes),
             'titans' => TitanResource::collection($this->titans),
             'minions' => $this->minions->map(function (Minion $minion) {
@@ -34,7 +36,6 @@ class QuestResource extends JsonResource
                 $resource->setCount($minionCount);
                 return $resource;
             }),
-            'provinceID' => $this->province_id
         ];
     }
 }
