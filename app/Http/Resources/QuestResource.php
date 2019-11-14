@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Domain\Collections\SkirmishCollection;
+use App\Domain\Models\Minion;
 use App\Domain\Models\Quest;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -27,6 +28,12 @@ class QuestResource extends JsonResource
             'level' => $this->level,
             'skirmishes' => SkirmishResource::collection($this->skirmishes),
             'titans' => TitanResource::collection($this->titans),
+            'minions' => $this->minions->map(function (Minion $minion) {
+                $resource = new MinionResource($minion);
+                $minionCount = $this->getMinionCount($minion->pivot->weight);
+                $resource->setCount($minionCount);
+                return $resource;
+            }),
             'provinceID' => $this->province_id
         ];
     }
