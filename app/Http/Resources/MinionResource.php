@@ -30,8 +30,10 @@ class MinionResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'uuid' => $this->uuid,
             'name' => $this->name,
             'slug' => $this->slug,
+            'combatPositionID' => $this->combat_position_id,
             'level' => $this->level,
             'startingHealth' => $this->getStartingHealth(),
             'protection' => $this->getProtection(),

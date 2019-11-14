@@ -25,7 +25,7 @@ class TitanResource extends JsonResource
             'uuid' => $this->uuid,
             'slug' => $this->slug,
             'name' => $this->name,
-            'combat_position_id' => $this->combat_position_id
+            'combatPositionID' => $this->combat_position_id
         ];
     }
 }
