@@ -20,6 +20,8 @@ class CreateQuestsTable extends Migration
             $table->string('slug');
             $table->integer('level')->unsigned();
             $table->float('percent');
+            $table->integer('squad_level_sum')->default(0);
+            $table->integer('squad_count')->default(0);
             $table->integer('province_id')->unsigned();
             $table->integer('travel_type_id')->unsigned();
             $table->dateTime('completed_at')->nullable();
