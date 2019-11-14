@@ -28,6 +28,7 @@ class QuestResource extends JsonResource
             'name' => $this->name,
             'level' => $this->level,
             'provinceID' => $this->province_id,
+            'percent' => round($this->percent, 2),
             'skirmishes' => SkirmishResource::collection($this->skirmishes),
             'titans' => TitanResource::collection($this->titans),
             'minions' => $this->minions->map(function (Minion $minion) {
