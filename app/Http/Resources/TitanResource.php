@@ -2,8 +2,15 @@
 
 namespace App\Http\Resources;
 
+use App\Domain\Models\Titan;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * Class TitanResource
+ * @package App\Http\Resources
+ *
+ * @mixin Titan
+ */
 class TitanResource extends JsonResource
 {
     /**
@@ -14,6 +21,11 @@ class TitanResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'uuid' => $this->uuid,
+            'slug' => $this->slug,
+            'name' => $this->name,
+            'combat_position_id' => $this->combat_position_id
+        ];
     }
 }
