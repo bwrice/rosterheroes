@@ -48,9 +48,17 @@ class Quest extends EventSourcedModel
     public static function resourceRelations()
     {
         return [
-            'minions',
+            'minions.enemyType',
+            'minions.attacks.attackerPosition',
+            'minions.attacks.targetPosition',
+            'minions.attacks.targetPriority',
+            'minions.attacks.damageType',
             'titans',
-            'skirmishes.minions.attacks'
+            'skirmishes.minions.enemyType',
+            'skirmishes.minions.attacks.attackerPosition',
+            'skirmishes.minions.attacks.targetPosition',
+            'skirmishes.minions.attacks.targetPriority',
+            'skirmishes.minions.attacks.damageType',
         ];
     }
 
