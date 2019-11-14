@@ -3,7 +3,7 @@
 namespace App\Domain\Models;
 
 use App\Domain\Collections\ProvinceCollection;
-use App\Domain\Models\Support\ViewBox;
+use App\Domain\Models\Json\ViewBox;
 use App\Domain\QueryBuilders\ProvinceQueryBuilder;
 use App\Domain\Traits\HasNameSlug;
 use Illuminate\Database\Eloquent\Builder;

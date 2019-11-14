@@ -10,7 +10,7 @@ use App\Domain\Interfaces\FillsGearSlots;
 use App\Domain\Interfaces\HasAttacks;
 use App\Domain\Interfaces\HasItems;
 use App\Domain\Interfaces\UsesItems;
-use App\Domain\Support\ItemNameBuilder;
+use App\Domain\Models\Support\Items\ItemNameBuilder;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use phpDocumentor\Reflection\Types\Static_;
 

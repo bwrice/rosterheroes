@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Domain\Models\Support;
+namespace App\Domain\Models\Json;
 
 
 class ViewBox

@@ -4,7 +4,7 @@
 namespace App\Domain\Behaviors\Realm;
 
 
-use App\Domain\Models\Support\ViewBox;
+use App\Domain\Models\Json\ViewBox;
 
 abstract class MapBehavior
 {
