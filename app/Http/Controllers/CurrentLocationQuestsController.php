@@ -14,7 +14,7 @@ class CurrentLocationQuestsController extends Controller
     {
         $squad = Squad::findSlugOrFail($squadSlug);
         $this->authorize(SquadPolicy::MANAGE, $squad);
-        $quests = $squad->province->quests()->with(Quest::resourceRelations());
+        $quests = $squad->province->quests()->with(Quest::resourceRelations())->get();
         return QuestResource::collection($quests);
     }
 }
