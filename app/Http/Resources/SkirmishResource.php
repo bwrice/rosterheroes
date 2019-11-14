@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Domain\Models\Minion;
 use App\Domain\Models\Skirmish;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -24,7 +25,11 @@ class SkirmishResource extends JsonResource
         return [
             'name' => $this->name,
             'slug' => $this->slug,
-            'minions' => MinionResource::collection($this->minions)
+            'minions' => $this->minions->map(function (Minion $minion) {
+                $resource = new MinionResource($minion);
+                $resource->setCount($minion->pivot->count);
+                return $resource;
+            }),
         ];
     }
 }
