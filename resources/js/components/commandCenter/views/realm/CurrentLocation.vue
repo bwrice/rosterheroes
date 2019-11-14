@@ -52,6 +52,16 @@
                 </MapViewPort>
             </v-col>
         </v-row>
+        <v-row>
+            <v-col cols="12" md="6">
+                <v-row no-gutters>
+                    <v-col cols="12">
+                        <span class="title font-weight-thin">QUESTS</span>
+                    </v-col>
+                </v-row>
+                <QuestSummaryPanel v-for="(quest, uuid) in _currentLocationQuests" :key="uuid" :quest="quest"></QuestSummaryPanel>
+            </v-col>
+        </v-row>
     </v-container>
 </template>
 
@@ -62,10 +72,12 @@
     import ProvinceVector from "../../realm/ProvinceVector";
     import MapViewPort from "../../realm/MapViewPort";
     import MapWindow from "../../realm/MapWindow";
+    import QuestSummaryPanel from "../../realm/QuestSummaryPanel";
 
     export default {
         name: "CurrentLocation",
         components: {
+            QuestSummaryPanel,
             MapWindow,
             MapViewPort,
             ProvinceVector,
@@ -74,6 +86,7 @@
         computed: {
             ...mapGetters([
                 '_currentLocationProvince',
+                '_currentLocationQuests',
                 '_provincesByUuids',
                 '_provinces'
             ]),
