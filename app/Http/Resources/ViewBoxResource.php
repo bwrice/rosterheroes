@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources;
 
-use App\Domain\Models\Support\ViewBox;
+use App\Domain\Models\Json\ViewBox;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**

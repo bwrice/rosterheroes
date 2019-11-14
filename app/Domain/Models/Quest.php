@@ -5,6 +5,7 @@ namespace App\Domain\Models;
 use App\Domain\Collections\MinionCollection;
 use App\Domain\Collections\QuestCollection;
 use App\Domain\Collections\SkirmishCollection;
+use App\Domain\Collections\TitanCollection;
 use App\Domain\Models\EventSourcedModel;
 use App\Domain\Models\Province;
 use App\Domain\Traits\HasNameSlug;
@@ -27,6 +28,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property SkirmishCollection $skirmishes
  * @property MinionCollection $minions
+ * @property TitanCollection $titans
  */
 class Quest extends EventSourcedModel
 {

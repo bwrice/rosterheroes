@@ -26,6 +26,7 @@ class QuestResource extends JsonResource
             'name' => $this->name,
             'level' => $this->level,
             'skirmishes' => SkirmishResource::collection($this->skirmishes),
+            'titans' => TitanResource::collection($this->titans),
             'provinceID' => $this->province_id
         ];
     }
