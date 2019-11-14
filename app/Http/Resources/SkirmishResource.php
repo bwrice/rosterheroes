@@ -23,8 +23,9 @@ class SkirmishResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'name' => $this->name,
+            'uuid' => $this->uuid,
             'slug' => $this->slug,
+            'name' => $this->name,
             'minions' => $this->minions->map(function (Minion $minion) {
                 $resource = new MinionResource($minion);
                 $resource->setCount($minion->pivot->count);
