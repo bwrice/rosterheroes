@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CombatPositionController;
 use App\Http\Controllers\ContinentController;
+use App\Http\Controllers\CurrentLocationQuestsController;
 use App\Http\Controllers\UnEquipHeroController;
 use App\Http\Controllers\EquipHeroController;
 use App\Http\Controllers\FastTravelController;
@@ -112,7 +113,7 @@ Route::prefix('v1')->group(function () {
             Route::prefix('{squadSlug}/current-location')->group(function () {
 
                 Route::get('province', CurrentLocationProvinceController::class);
-                Route::get('quests', CurrentLocationProvinceController::class);
+                Route::get('quests', CurrentLocationQuestsController::class);
             });
         });
 
