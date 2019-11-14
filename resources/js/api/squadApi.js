@@ -33,6 +33,11 @@ export async function getCurrentLocationProvince(squadSlug) {
     return response.data;
 }
 
+export async function getCurrentLocationQuests(squadSlug) {
+    let response = await axios.get('/api/v1/squads/' + squadSlug + '/current-location/quests');
+    return response.data;
+}
+
 export async function getBorderTravelCost(squadSlug, borderSlug) {
     let response = await axios.get('/api/v1/squads/' + squadSlug + '/border-travel/' + borderSlug);
     return response.data;
