@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Domain\Support;
+namespace App\Domain\Models\Support\Items;
 
 
 use App\Domain\Models\Item;
