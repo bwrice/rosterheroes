@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('styles')
+    <link href="{{ mix('/css/commandCenter.css') }}" rel="stylesheet">
+@endsection
+
 @section('content')
     <body>
     <div id="app">

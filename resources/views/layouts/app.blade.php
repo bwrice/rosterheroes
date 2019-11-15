@@ -10,8 +10,7 @@
 
     <title>{{ config('app.name', 'Roster Heroes') }}</title>
 
-    <!-- Styles -->
-{{--    <link href="{{ mix('/css/commandCenter.css') }}" rel="stylesheet">--}}
+    @yield('styles')
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:100,100i,300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
