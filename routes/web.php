@@ -41,9 +41,11 @@ Route::post('password/reset', [ForgotPasswordController::class, 'reset'])->name(
 
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index']);
 
-//Auth::routes();
+/*
+ * Squad Creation
+ */
 Route::get('/squads/create', [SquadController::class, 'create'])->name('create-squad')->middleware('auth');
+/*
+ * Command Center
+ */
 Route::get('/command-center/{squadSlug}/{any?}', [CommandCenterController::class, 'show'])->middleware('auth')->where('any', '.*')->name('command-center');
-
-//Route::get('/{any}', 'SpaController@index')->where('any', '^(?!nova).*$');
-//Route::get('/{any}', 'SpaController@index')->where('any', '.*');
