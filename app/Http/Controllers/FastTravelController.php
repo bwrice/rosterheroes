@@ -4,11 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Domain\Actions\SquadFastTravelAction;
 use App\Domain\Collections\ProvinceCollection;
+use App\Domain\Models\Province;
 use App\Domain\Models\Squad;
 use App\Exceptions\SquadTravelException;
 use App\Http\Resources\CurrentLocationResource;
-use App\Http\Resources\SquadResource;
-use App\Nova\Province;
 use App\Policies\SquadPolicy;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
@@ -32,7 +31,7 @@ class FastTravelController extends Controller
 
         $travelRoute = new ProvinceCollection();
         foreach($request->travelRoute as $provinceUuid) {
-            $province = \App\Domain\Models\Province::findUuidOrFail($provinceUuid);
+            $province = Province::findUuidOrFail($provinceUuid);
             $travelRoute->push($province);
         };
 
