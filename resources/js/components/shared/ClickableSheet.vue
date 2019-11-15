@@ -1,8 +1,8 @@
 <template>
     <v-sheet
-        :color="computedColor"
+        :color="color"
         :elevation="elevation"
-        :class="classesObject"
+        :class="classes"
         @mouseenter="hovered = true"
         @mouseleave="hovered = false"
         @click="emitClick"
@@ -17,13 +17,11 @@
     export default {
         name: "ClickableSheet",
         props: {
-            color: {
-                type: String,
-                default: 'none'
-            },
-            hoveredColor: {
-                type: String,
-                default: null
+            panelOverrides: {
+                type: Object,
+                default: function () {
+                    return {};
+                }
             },
             classesObject: {
                 type: Object,
@@ -34,7 +32,13 @@
         },
         data() {
             return {
-                hovered: false
+                hovered: false,
+                panelObject: {
+                    color: '#5c707d',
+                    hoveredColor: '#6f808c',
+                    elevation: 4,
+                    hoveredElevation: 12,
+                }
             }
         },
         methods: {
@@ -43,13 +47,21 @@
             }
         },
         computed: {
-            computedColor() {
-                let hoveredColor = this.hoveredColor ? this.hoveredColor : this.color;
-                return this.hovered ? hoveredColor : this.color;
+            panel() {
+                return _.merge(this.panelObject, this.panelOverrides);
+            },
+            color() {
+                return this.hovered ? this.panel.hoveredColor : this.panel.color;
             },
             elevation() {
-                return this.hovered ? 24 : 4;
+                return this.hovered ? this.panel.hoveredElevation : this.panel.elevation;
             },
+            classes() {
+                let classes = {
+                    'rh-clickable' : true
+                };
+                return _.merge(classes, this.classesObject);
+            }
         }
     }
 </script>
