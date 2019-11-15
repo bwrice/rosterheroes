@@ -3,13 +3,23 @@ $rhBlueGrey: #5c707d;
 $rhLightBlueGrey: #6f808c;
 
 .rh-panel {
-    background-color: $rhBlueGrey !important;
+    background-color: $rhBlueGrey;
 }
 
 .rh-panel-hovered {
-    background-color: $rhLightBlueGrey !important;
+    background-color: $rhLightBlueGrey;
 }
 
 .rh-clickable {
     cursor: pointer;
 }
+
+@mixin rh-op-x {
+    @for $i from 1 through 19 {
+        .rh-op-#{$i * 5} {
+            opacity: .05 * $i !important;
+        }
+    }
+}
+
+@include rh-op-x
