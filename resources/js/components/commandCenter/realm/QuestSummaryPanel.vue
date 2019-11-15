@@ -1,8 +1,7 @@
 <template>
     <ClickableSheet
-        :color="'#5c707d'"
-        :hovered-color="'#6f808c'"
         :classes-object="{'ma-1': true}"
+        @click="routeToQuestView"
     >
         <v-row no-gutters>
             <v-col cols="12">
@@ -37,6 +36,19 @@
             quest: {
                 type: Quest,
                 required: true
+            }
+        },
+        methods: {
+            routeToQuestView() {
+                let squadSlug = this.$route.params.squadSlug;
+                let questSlug = this.quest.slug;
+                this.$router.push({
+                    name: 'campaign-quest',
+                    params: {
+                        squadSlug,
+                        questSlug
+                    }
+                })
             }
         }
     }
