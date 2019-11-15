@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property string $name
+ * @property string $slug
  * @property string $uuid
  * @property int $level
  * @property int $province_id

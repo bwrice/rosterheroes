@@ -4,9 +4,10 @@ import Minion from "./Minion";
 
 export default class Quest {
 
-    constructor({uuid, name = '', level, provinceID, percent, skirmishes = [], titans = [], minions = []}) {
+    constructor({uuid, name = '', slug = '', level, provinceID, percent, skirmishes = [], titans = [], minions = []}) {
         this.uuid = uuid;
         this.name = name;
+        this.slug = slug;
         this.level = level;
         this.provinceID = provinceID;
         this.percent = percent;

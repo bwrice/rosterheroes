@@ -26,6 +26,7 @@ class QuestResource extends JsonResource
         return [
             'uuid' => $this->uuid,
             'name' => $this->name,
+            'slug' => $this->slug,
             'level' => $this->level,
             'provinceID' => $this->province_id,
             'percent' => round($this->percent, 2),
