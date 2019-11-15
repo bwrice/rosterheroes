@@ -154,7 +154,6 @@
     import ProvinceVector from "../../realm/ProvinceVector";
     import TravelRouteListItem from "../../realm/TravelRouteListItem";
     import MapControls from "../../realm/MapControls";
-    import TravelRouteMap from "../../realm/TravelRouteMap";
     import ViewBox from "../../../../models/ViewBox";
     import MapViewPort from "../../realm/MapViewPort";
     import MapWindow from "../../realm/MapWindow";
@@ -164,7 +163,6 @@
         components: {
             MapWindow,
             MapViewPort,
-            TravelRouteMap,
             MapControls,
             TravelRouteListItem,
             ProvinceVector
