@@ -16,6 +16,10 @@ export default {
         _currentLocationProvince(state) {
             return state.province;
         },
+        _questBySlug: (state) => (slug) => {
+            let quest = state.quests.find(quest => quest.slug === slug);
+            return quest ? quest : new Quest({});
+        },
     },
     mutations: {
         SET_CURRENT_LOCATION_QUESTS(state, payload) {
