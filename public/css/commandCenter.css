@@ -1,4 +1,12 @@
-div .theme--dark .v-application {
-  background-color: #f11;
+.rh-panel {
+  background-color: #5c707d !important;
+}
+
+.rh-panel-hovered {
+  background-color: #6f808c !important;
+}
+
+.rh-clickable {
+  cursor: pointer;
 }
 
