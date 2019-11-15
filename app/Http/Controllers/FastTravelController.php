@@ -7,7 +7,6 @@ use App\Domain\Collections\ProvinceCollection;
 use App\Domain\Models\Province;
 use App\Domain\Models\Squad;
 use App\Exceptions\SquadTravelException;
-use App\Http\Resources\CurrentLocationResource;
 use App\Http\Resources\ProvinceResource;
 use App\Policies\SquadPolicy;
 use Illuminate\Auth\Access\AuthorizationException;

@@ -31,8 +31,7 @@ class SquadFastTravelAction
 
             $travelRoute->each(function(Province $border) use ($squad) {
 
-                $travelsBorders = $squad->fresh();
-                $this->borderTravelAction->execute($travelsBorders, $border);
+                $this->borderTravelAction->execute($squad->fresh(), $border);
             });
         });
     }
