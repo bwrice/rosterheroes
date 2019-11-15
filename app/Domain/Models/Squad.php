@@ -343,21 +343,11 @@ class Squad extends EventSourcedModel implements HasItems
         return $this->gold;
     }
 
-//    public function hasBorderTravelCostExemption(Province $border): bool
-//    {
-//        /** @var SquadBorderTravelCostExemption $costExemption */
-//        $costExemption = app(SquadBorderTravelCostExemption::class);
-//        return $costExemption->isExempt($this, $border);
-//    }
-
-//    public function getCurrentLocation(): Province
-//    {
-//        return $this->province;
-//    }
-
     public function increaseGold(int $amount)
     {
-        $this->getAggregate()->increaseGold($amount);
+        $this->getAggregate()
+            ->increaseGold($amount)
+            ->persist();
     }
 
     public function decreaseGold(int $amount)
