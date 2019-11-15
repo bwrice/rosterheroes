@@ -1,9 +1,15 @@
 
-//$backGroundColor: #332b38;
-$backGroundColor: #f11;
+$rhBlueGrey: #5c707d;
+$rhLightBlueGrey: #6f808c;
 
-div .theme--dark {
-    .v-application {
-        background-color: $backGroundColor;
-    }
+.rh-panel {
+    background-color: $rhBlueGrey !important;
+}
+
+.rh-panel-hovered {
+    background-color: $rhLightBlueGrey !important;
+}
+
+.rh-clickable {
+    cursor: pointer;
 }
