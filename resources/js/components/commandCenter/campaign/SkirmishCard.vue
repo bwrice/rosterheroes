@@ -1,9 +1,9 @@
 <template>
-    <v-card>
-        <v-card-title class="rh-op-85">{{skirmish.name}}</v-card-title>
+    <v-card color="#5c707d">
+        <v-card-title class="rh-op-85 font-weight-regular">{{skirmish.name}}</v-card-title>
         <v-card-text>
             <v-carousel
-                height="200"
+                height="300"
             >
                 <v-carousel-item
                     v-for="(minion, uuid) in skirmish.minions"
