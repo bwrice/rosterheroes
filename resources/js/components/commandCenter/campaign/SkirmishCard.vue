@@ -5,6 +5,7 @@
             <v-carousel
                 :height="height"
                 hide-delimiter-background
+                show-arrows-on-hover
             >
                 <v-carousel-item
                     v-for="(minion, uuid) in skirmish.minions"
