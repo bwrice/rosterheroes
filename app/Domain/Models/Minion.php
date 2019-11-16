@@ -71,7 +71,7 @@ class Minion extends Model implements HasAttacks
     public function getBlockChance(): float
     {
         $enemyTypeBonus = $this->getEnemyTypeBehavior()->getProtectionModifierBonus();
-        return ($this->block_rating/4) * (1 + $enemyTypeBonus);
+        return ($this->block_rating/4) * (1 + $enemyTypeBonus + (sqrt($this->level)/25));
     }
 
     public function adjustBaseDamage(float $baseDamage): float
