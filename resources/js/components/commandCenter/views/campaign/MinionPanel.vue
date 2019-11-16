@@ -1,5 +1,5 @@
 <template>
-    <v-sheet color="#3a474a" class="pa-1">
+    <v-sheet color="#3a474a" class="pa-1" :style="sheetStyles">
         <v-row no-gutters justify="center" align="center">
             <v-chip
                 label
@@ -33,6 +33,7 @@
                 </v-row>
             </v-col>
         </v-row>
+        <div v-if="height" style="height: 40px"></div>
     </v-sheet>
 </template>
 
@@ -48,11 +49,25 @@
             minion: {
                 type: Minion,
                 required: true
+            },
+            height: {
+                type: Number,
+                default: null
             }
         },
         computed: {
             title() {
                 return this.minion.name + ' (x' + this.minion.count + ')';
+            },
+            sheetStyles() {
+                if (this.height) {
+                    return {
+                        'height' : this.height + 'px',
+                        'overflow-y': 'scroll',
+                        'overflow-x': 'hidden'
+                    }
+                }
+                return {};
             }
         }
     }
