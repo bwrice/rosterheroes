@@ -3,13 +3,14 @@
         <v-card-title class="rh-op-85 font-weight-regular">{{skirmish.name}}</v-card-title>
         <v-card-text>
             <v-carousel
-                height="300"
+                :height="height"
+                hide-delimiter-background
             >
                 <v-carousel-item
                     v-for="(minion, uuid) in skirmish.minions"
                     :key="uuid"
                 >
-                    <MinionPanel :minion="minion"></MinionPanel>
+                    <MinionPanel :minion="minion" :height="height"></MinionPanel>
                 </v-carousel-item>
             </v-carousel>
         </v-card-text>
@@ -27,6 +28,10 @@
             skirmish: {
                 type: Skirmish,
                 required: true
+            },
+            height: {
+                type: Number,
+                default: 300
             }
         }
     }
