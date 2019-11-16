@@ -37,7 +37,7 @@ class MinionResource extends JsonResource
             'level' => $this->level,
             'startingHealth' => $this->getStartingHealth(),
             'protection' => $this->getProtection(),
-            'blockChance' => $this->getBlockChance(),
+            'blockChance' => round($this->getBlockChance(), 2),
             'attacks' => AttackResource::collection($this->attacks)->collection->each(function (AttackResource $attackResource) {
                 $attackResource->setHasAttacks($this->resource);
             }),
