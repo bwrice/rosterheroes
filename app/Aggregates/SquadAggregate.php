@@ -2,8 +2,6 @@
 
 namespace App\Aggregates;
 
-use App\Domain\Models\HeroPostType;
-use App\Domain\Models\SlotType;
 use App\StorableEvents\SpellAddedToLibrary;
 use App\StorableEvents\SquadCreated;
 use App\StorableEvents\SquadEssenceIncreased;
