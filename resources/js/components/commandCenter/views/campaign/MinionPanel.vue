@@ -13,43 +13,22 @@
         </v-row>
         <v-row no-gutters>
             <v-col cols="12">
-                <v-row no-gutters align="center">
-                    <v-col cols="9">
-                        <v-row no-gutters align="center" class="pa-1">
-                            <v-progress-linear
-                                :value="45"
-                                color="error"
-                                height="15"
-                            >
-                                1184
-                            </v-progress-linear>
-                        </v-row>
-                        <v-row no-gutters align="center" class="pa-1">
-                            <v-progress-linear
-                                :value="78"
-                                color="primary"
-                                height="15"
-                            >
-                                663
-                            </v-progress-linear>
-                        </v-row>
-                        <v-row no-gutters align="center" class="pa-1">
-
-                            <v-progress-linear
-                                :value="24"
-                                color="accent"
-                                height="15"
-                            >
-                                24%
-                            </v-progress-linear>
-                        </v-row>
-                    </v-col>
-                    <v-col cols="3">
-                        <v-row no-gutters justify="center">
-                            <div style="width: 70px">
-                                <CombatPositionIcon :combat-position-id="minion.combatPositionID" :attacker-mode="false"></CombatPositionIcon>
-                            </div>
-                        </v-row>
+                <v-row no-gutters justify="space-between" align="center">
+                    <v-row no-gutters class="flex-column">
+                        <span class="subtitle-2 rh-op-75">HEALTH: {{minion.startingHealth}}</span>
+                        <span class="subtitle-2 rh-op-75">PROTECTION: {{minion.protection}}</span>
+                        <span class="subtitle-2 rh-op-75">BLOCK: {{minion.blockChance}}%</span>
+                    </v-row>
+                    <v-row no-gutters justify="end">
+                        <div style="width: 70px">
+                            <CombatPositionIcon :combat-position-id="minion.combatPositionID" :attacker-mode="false"></CombatPositionIcon>
+                        </div>
+                    </v-row>
+                </v-row>
+                <v-row class="no-gutters">
+                    <v-col cols="12" class="px-1">
+                        <span class="subtitle-2 rh-op-75">ATTACKS:</span>
+                        <AttackPanel v-for="attack in minion.attacks" v-bind:key="attack.name" :attack="attack"></AttackPanel>
                     </v-col>
                 </v-row>
             </v-col>
@@ -60,10 +39,11 @@
 <script>
     import Minion from "../../../../models/Minion";
     import CombatPositionIcon from "../../global/CombatPositionIcon";
+    import AttackPanel from "../../global/AttackPanel";
 
     export default {
         name: "MinionPanel",
-        components: {CombatPositionIcon},
+        components: {AttackPanel, CombatPositionIcon},
         props: {
             minion: {
                 type: Minion,
