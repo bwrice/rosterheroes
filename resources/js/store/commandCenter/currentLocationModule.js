@@ -16,7 +16,7 @@ export default {
         _currentLocationProvince(state) {
             return state.province;
         },
-        _questBySlug: (state) => (slug) => {
+        _currentLocationQuestBySlug: (state) => (slug) => {
             let quest = state.quests.find(quest => quest.slug === slug);
             return quest ? quest : new Quest({});
         },

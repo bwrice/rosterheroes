@@ -21,11 +21,11 @@
         components: {SkirmishCard},
         computed: {
             ...mapGetters([
-                '_questBySlug'
+                '_currentLocationQuestBySlug'
             ]),
             quest() {
                 let slug = this.$route.params.questSlug;
-                return this._questBySlug(slug);
+                return this._currentLocationQuestBySlug(slug);
             }
         }
     }
