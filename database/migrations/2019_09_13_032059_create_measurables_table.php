@@ -14,10 +14,10 @@ class CreateMeasurablesTable extends Migration
     public function up()
     {
         Schema::create('measurables', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->uuid('uuid');
             $table->integer('measurable_type_id')->unsigned();
-            $table->integer('hero_id')->unsigned();
+            $table->bigInteger('hero_id')->unsigned();
             $table->integer('amount_raised')->unsigned();
             $table->timestamps();
         });

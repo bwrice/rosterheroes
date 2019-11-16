@@ -14,7 +14,7 @@ class CreateHeroSpellPivot extends Migration
     public function up()
     {
         Schema::create('hero_spell', function (Blueprint $table) {
-            $table->integer('hero_id')->unsigned();
+            $table->bigInteger('hero_id')->unsigned();
             $table->integer('spell_id')->unsigned();
             $table->primary(['hero_id', 'spell_id']);
             $table->timestamps();

@@ -14,16 +14,16 @@ class CreateHeroesTable extends Migration
     public function up()
     {
         Schema::create('heroes', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->uuid('uuid');
             $table->string('name');
             $table->string('slug');
-            $table->integer('squad_id')->unsigned();
+            $table->bigInteger('squad_id')->unsigned();
             $table->integer('hero_class_id')->unsigned();
             $table->integer('hero_rank_id')->unsigned();
             $table->integer('hero_race_id')->unsigned();
             $table->integer('combat_position_id')->unsigned();
-            $table->integer('player_spirit_id')->unsigned()->nullable();
+            $table->bigInteger('player_spirit_id')->unsigned()->nullable();
             $table->timestamps();
         });
 

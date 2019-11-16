@@ -14,9 +14,9 @@ class CreateStashesTable extends Migration
     public function up()
     {
         Schema::create('stashes', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->uuid('uuid');
-            $table->integer('squad_id')->unsigned();
+            $table->bigInteger('squad_id')->unsigned();
             $table->integer('province_id')->unsigned();
             $table->timestamps();
         });

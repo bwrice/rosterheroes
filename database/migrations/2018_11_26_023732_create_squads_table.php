@@ -14,11 +14,11 @@ class CreateSquadsTable extends Migration
     public function up()
     {
         Schema::create('squads', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->uuid('uuid');
             $table->string('slug');
             $table->string('name')->unique();
-            $table->integer('user_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned();
             $table->integer('squad_rank_id')->unsigned();
             $table->tinyInteger('mobile_storage_rank_id')->unsigned();
             $table->integer('province_id')->unsigned();

@@ -14,12 +14,12 @@ class CreatePlayerSpiritsTable extends Migration
     public function up()
     {
         Schema::create('player_spirits', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->uuid('uuid');
             $table->integer('week_id')->unsigned();
             $table->integer('player_id')->unsigned();
             $table->integer('game_id')->unsigned();
-            $table->integer('player_game_log_id')->unsigned()->nullable();
+            $table->bigInteger('player_game_log_id')->unsigned()->nullable();
             $table->integer('essence_cost');
             $table->integer('energy');
             $table->timestamps();

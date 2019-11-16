@@ -14,10 +14,10 @@ class CreateResidencesTable extends Migration
     public function up()
     {
         Schema::create('residences', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->uuid('uuid');
             $table->integer('residence_type_id')->unsigned();
-            $table->integer('squad_id')->unsigned();
+            $table->bigInteger('squad_id')->unsigned();
             $table->integer('province_id')->unsigned();
             $table->timestamps();
         });

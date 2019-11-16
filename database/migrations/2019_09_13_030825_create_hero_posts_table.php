@@ -14,9 +14,9 @@ class CreateHeroPostsTable extends Migration
     public function up()
     {
         Schema::create('hero_posts', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->integer('hero_post_type_id')->unsigned();
-            $table->integer('squad_id')->unsigned();
+            $table->bigInteger('squad_id')->unsigned();
             $table->timestamps();
         });
 

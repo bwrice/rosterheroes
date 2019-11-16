@@ -14,7 +14,7 @@ class CreatePlayerGameLogsTable extends Migration
     public function up()
     {
         Schema::create('player_game_logs', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->integer('player_id')->unsigned();
             $table->integer('game_id')->unsigned();
             $table->integer('team_id')->unsigned();

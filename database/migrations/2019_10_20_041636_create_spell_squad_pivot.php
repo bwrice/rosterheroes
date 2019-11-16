@@ -15,7 +15,7 @@ class CreateSpellSquadPivot extends Migration
     {
         Schema::create('spell_squad', function (Blueprint $table) {
             $table->integer('spell_id')->unsigned();
-            $table->integer('squad_id')->unsigned();
+            $table->bigInteger('squad_id')->unsigned();
             $table->primary(['spell_id', 'squad_id']);
             $table->timestamps();
         });
