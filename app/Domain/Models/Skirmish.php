@@ -17,6 +17,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $name
  * @property string $slug
  *
+ * @property Quest $quest
+ *
  * @property MinionCollection $minions
  */
 class Skirmish extends Model
@@ -28,9 +30,9 @@ class Skirmish extends Model
         return new SkirmishCollection($models);
     }
 
-    public function quests()
+    public function quest()
     {
-        return $this->belongsToMany(Quest::class);
+        return $this->belongsTo(Quest::class);
     }
 
     public function minions()
