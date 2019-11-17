@@ -16,6 +16,7 @@ use App\Exceptions\WeekLockedException;
 use App\Domain\Models\Week;
 use App\Domain\Models\Squad;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Ramsey\Uuid\Uuid;
 
@@ -34,6 +35,7 @@ use Ramsey\Uuid\Uuid;
  * @property Continent $continent
  *
  * @property \App\Domain\Collections\QuestCollection $quests
+ * @property Collection $campaignStops
  *
  * @method static Builder forSquadWeek(Squad $squad, Week $week)
  */
@@ -70,6 +72,11 @@ class Campaign extends EventSourcedModel
     public function quests()
     {
         return $this->belongsToMany(Quest::class);
+    }
+
+    public function campaignStops()
+    {
+        return $this->hasMany(CampaignStop::class);
     }
 
     public function continent()
