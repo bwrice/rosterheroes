@@ -59,9 +59,9 @@ class SeedQuests extends Migration
                     ],
                 ],
                 'skirmishes' => [
-                    'Small Skeleton Pack',
-                    'Medium Skeleton Pack',
-                    'Large Skeleton Pack'
+//                    'Small Skeleton Pack',
+//                    'Medium Skeleton Pack',
+//                    'Large Skeleton Pack'
                 ]
 
             ]
