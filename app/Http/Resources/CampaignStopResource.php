@@ -23,9 +23,11 @@ class CampaignStopResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'uuid' => $this->uuid,
             'name' => $this->quest->name,
             'questID' => $this->quest->id,
             'provinceID' => $this->province->id,
+            'campaignID' => $this->campaign->id,
             'skirmishUuids' => $this->skirmishes->map(function (Skirmish $skirmish) {
                 return $skirmish->uuid;
             })->values()->toArray()
