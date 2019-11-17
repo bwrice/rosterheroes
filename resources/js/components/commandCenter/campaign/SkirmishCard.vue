@@ -1,7 +1,11 @@
 <template>
-    <v-card color="#5c707d">
-        <v-card-title class="rh-op-85 font-weight-regular">{{skirmish.name}}</v-card-title>
-        <v-card-text>
+    <v-sheet color="#5c707d" class="pa-2">
+        <v-row no-gutters class="py-2" justify="space-between" align="center">
+            <span class="title rh-op-85 font-weight-regular">
+                {{skirmish.name}}
+            </span>
+        </v-row>
+        <v-row no-gutters>
             <v-carousel
                 :height="height"
                 hide-delimiter-background
@@ -14,8 +18,8 @@
                     <MinionPanel :minion="minion" :height="height"></MinionPanel>
                 </v-carousel-item>
             </v-carousel>
-        </v-card-text>
-    </v-card>
+        </v-row>
+    </v-sheet>
 </template>
 
 <script>
