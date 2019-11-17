@@ -18,6 +18,7 @@ class CreateCampaignStopsTable extends Migration
             $table->string('uuid');
             $table->bigInteger('campaign_id')->unsigned();
             $table->integer('quest_id')->unsigned();
+            $table->integer('province_id')->unsigned();
             $table->timestamps();
         });
 
@@ -25,6 +26,7 @@ class CreateCampaignStopsTable extends Migration
         Schema::table('campaign_stops', function (Blueprint $table) {
             $table->foreign('campaign_id')->references('id')->on('campaigns');
             $table->foreign('quest_id')->references('id')->on('quests');
+            $table->foreign('province_id')->references('id')->on('provinces');
         });
     }
 
