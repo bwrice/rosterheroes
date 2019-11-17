@@ -92,6 +92,14 @@ class Campaign extends EventSourcedModel
         return new CampaignQueryBuilder($query);
     }
 
+    public static function campaignResourceRelations()
+    {
+        return [
+            'campaignStops.quest',
+            'campaignStops.skirmishes'
+        ];
+    }
+
     /**
      * @param Quest $quest
      * @throws MaxQuestsException
