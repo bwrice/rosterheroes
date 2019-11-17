@@ -19,6 +19,7 @@ class SkirmishBlueprint extends Model
 
     public function minions()
     {
-        return $this->belongsToMany(Minion::class, 'minion_skirmish_blueprint', 'blueprint_id');
+        return $this->belongsToMany(Minion::class, 'minion_skirmish_blueprint', 'blueprint_id')
+            ->withPivot('count');
     }
 }
