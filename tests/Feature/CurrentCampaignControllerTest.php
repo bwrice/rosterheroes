@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Domain\Models\Squad;
+use App\Domain\Models\User;
 use App\Domain\Models\Week;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Laravel\Passport\Passport;
@@ -42,5 +43,16 @@ class CurrentCampaignControllerTest extends TestCase
             ->assertJson([
                 'data' => null
             ]);
+    }
+
+    /**
+     * @test
+     */
+    public function user_must_own_squad_to_be_authorized()
+    {
+        Passport::actingAs(factory(User::class)->create());
+
+        $response = $this->get('/api/v1/squads/' . $this->squad->slug . '/current-campaign');
+        $response->assertStatus(403);
     }
 }
