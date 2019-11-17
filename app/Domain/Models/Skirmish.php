@@ -21,8 +21,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Skirmish extends Model
 {
-    use HasNameSlug;
-
     protected $guarded = [];
 
     public function newCollection(array $models = [])
