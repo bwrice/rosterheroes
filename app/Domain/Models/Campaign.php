@@ -5,6 +5,7 @@ namespace App\Domain\Models;
 use App\Domain\Models\Quest;
 use App\Domain\Collections\QuestCollection;
 use App\Domain\Models\Continent;
+use App\Domain\QueryBuilders\CampaignQueryBuilder;
 use App\StorableEvents\CampaignCreated;
 use App\Domain\Models\EventSourcedModel;
 use App\Exceptions\InvalidContinentException;
@@ -84,9 +85,9 @@ class Campaign extends EventSourcedModel
         return $this->belongsTo(Continent::class);
     }
 
-    public function scopeForSquadWeek(Builder $builder, Squad $squad, Week $week)
+    public function newEloquentBuilder($query)
     {
-        return $builder->where('squad_id', '=', $squad->id)->where('week_id', '=', $week->id);
+        return new CampaignQueryBuilder($query);
     }
 
     /**
