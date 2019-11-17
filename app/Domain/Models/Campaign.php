@@ -39,6 +39,8 @@ use Ramsey\Uuid\Uuid;
  * @property Collection $campaignStops
  *
  * @method static Builder forSquadWeek(Squad $squad, Week $week)
+ *
+ * @method static CampaignQueryBuilder query()
  */
 class Campaign extends EventSourcedModel
 {
