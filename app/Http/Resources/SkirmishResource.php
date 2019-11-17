@@ -31,6 +31,7 @@ class SkirmishResource extends JsonResource
                 $resource->setCount($minion->pivot->count);
                 return $resource;
             }),
+            'difficulty' => $this->difficulty()
         ];
     }
 }
