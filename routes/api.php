@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CombatPositionController;
 use App\Http\Controllers\ContinentController;
+use App\Http\Controllers\CurrentCampaignController;
 use App\Http\Controllers\CurrentLocationQuestsController;
 use App\Http\Controllers\UnEquipHeroController;
 use App\Http\Controllers\EquipHeroController;
@@ -115,6 +116,11 @@ Route::prefix('v1')->group(function () {
                 Route::get('province', CurrentLocationProvinceController::class);
                 Route::get('quests', CurrentLocationQuestsController::class);
             });
+
+            /*
+             * CURRENT CAMPAIGN
+             */
+            Route::get('{squadSlug}/current-campaign', CurrentCampaignController::class);
         });
 
         Route::get('/squad/{squadSlug}/hero-classes', SquadHeroClassController::class);
