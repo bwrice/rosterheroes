@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Domain\Models\Campaign;
+use App\Domain\Models\CampaignStop;
 use App\Domain\Models\Squad;
 use App\Domain\Models\User;
 use App\Domain\Models\Week;
@@ -55,4 +57,40 @@ class CurrentCampaignControllerTest extends TestCase
         $response = $this->get('/api/v1/squads/' . $this->squad->slug . '/current-campaign');
         $response->assertStatus(403);
     }
+
+    /**
+     * @test
+     */
+    public function it_will_return_an_existing_current_campaign()
+    {
+        $this->withoutExceptionHandling();
+
+        /** @var Campaign $campaign */
+        $campaign = factory(Campaign::class)->create([
+            'week_id' => $this->week->id,
+            'squad_id' => $this->squad->id
+        ]);
+
+        /** @var CampaignStop $campaignStop */
+        $campaignStop = factory(CampaignStop::class)->create([
+            'campaign_id' => $campaign->id
+        ]);
+
+        Passport::actingAs($this->squad->user);
+
+        $response = $this->get('/api/v1/squads/' . $this->squad->slug . '/current-campaign');
+        $response->assertStatus(200)->assertJson([
+            'data' => [
+                'uuid' => (string) $campaign->uuid,
+                'continentID' => $campaign->continent_id,
+                'campaignStops' => [
+                    [
+                        'uuid' => (string) $campaignStop->uuid,
+                        'campaignID' => $campaign->id
+                    ]
+                ]
+            ]
+        ]);
+    }
+
 }
