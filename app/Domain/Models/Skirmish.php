@@ -39,4 +39,11 @@ class Skirmish extends Model
     {
         return $this->belongsToMany(Minion::class)->withPivot('count')->withTimestamps();
     }
+
+    public function difficulty(): int
+    {
+        return (int) ceil($this->minions->sum(function (Minion $minion) {
+            return ((($minion->level ** 1.4)/100) + $minion->level/20) * $minion->pivot->count;
+        }));
+    }
 }
