@@ -56,12 +56,8 @@ class SeedSkirmishBlueprints extends Migration
                 'name' => 'Large Skeleton Pack',
                 'minions' => [
                     [
-                        'name' => 'Skeleton Scout',
-                        'count' => 1
-                    ],
-                    [
                         'name' => 'Skeleton Guard',
-                        'count' => 2
+                        'count' => 4
                     ],
                     [
                         'name' => 'Skeleton Soldier',
