@@ -23,6 +23,11 @@ export async function getMobileStorage(squadSlug) {
     return response.data.data;
 }
 
+export async function getCurrentCampaign(squadSlug) {
+    let response = await axios.get('/api/v1/squads/' + squadSlug + '/current-campaign');
+    return response.data.data;
+}
+
 export async function getSpellLibrary(squadSlug) {
     let response = await axios.get('/api/v1/squads/' + squadSlug + '/spells');
     return response.data;
