@@ -14,7 +14,7 @@ class CreateCampaignStopSkirmishPivot extends Migration
     public function up()
     {
         Schema::create('campaign_stop_skirmish', function (Blueprint $table) {
-            $table->integer('stop_id')->unsigned();
+            $table->bigInteger('stop_id')->unsigned();
             $table->integer('skirmish_id')->unsigned();
             $table->primary(['stop_id', 'skirmish_id']);
             $table->timestamps();
