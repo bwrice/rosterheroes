@@ -2,12 +2,13 @@
 
 use App\Domain\Models\Minion;
 use App\Domain\Models\Skirmish;
+use App\Domain\Models\SkirmishBlueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Str;
 
-class SeedSkirmishes extends Migration
+class SeedSkirmishBlueprints extends Migration
 {
     /**
      * Run the migrations.
@@ -16,7 +17,7 @@ class SeedSkirmishes extends Migration
      */
     public function up()
     {
-        $skirmishes = collect([
+        $skirmishBlueprints = collect([
             [
                 'name' => 'Small Skeleton Pack',
                 'minions' => [
@@ -80,7 +81,7 @@ class SeedSkirmishes extends Migration
 
         $minions = Minion::all();
 
-        $skirmishes->each(function ($skirmishData) use ($minions) {
+        $skirmishBlueprints->each(function ($skirmishData) use ($minions) {
             $minionNames = collect($skirmishData['minions'])->map(function ($skirmishMinion) {
                 return $skirmishMinion['name'];
             });
@@ -90,10 +91,9 @@ class SeedSkirmishes extends Migration
             }
         });
 
-        $skirmishes->each(function ($skirmishData) use ($minions) {
+        $skirmishBlueprints->each(function ($skirmishData) use ($minions) {
             /** @var Skirmish $skirmish */
-            $skirmish = Skirmish::query()->create([
-                'uuid' => Str::uuid(),
+            $skirmish = SkirmishBlueprint::query()->create([
                 'name' => $skirmishData['name']
             ]);
             $minionAttachArrays = collect($skirmishData['minions'])->map(function ($skirmishMinion) use ($minions) {
