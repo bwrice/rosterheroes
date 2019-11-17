@@ -6,7 +6,7 @@
             </span>
             <v-chip
                 label
-                color="primary"
+                color="rgba(0,0,0,.25)"
             >
                 {{skirmish.difficulty}}
             </v-chip>
