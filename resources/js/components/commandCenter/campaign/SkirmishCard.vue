@@ -4,6 +4,12 @@
             <span class="title rh-op-85 font-weight-regular">
                 {{skirmish.name}}
             </span>
+            <v-chip
+                label
+                color="primary"
+            >
+                {{skirmish.difficulty}}
+            </v-chip>
         </v-row>
         <v-row no-gutters>
             <v-carousel
