@@ -20,12 +20,12 @@ export async function fastTravel(squadSlug, provinces) {
 
 export async function getMobileStorage(squadSlug) {
     let response = await axios.get('/api/v1/squads/' + squadSlug + '/mobile-storage');
-    return response.data.data;
+    return response.data;
 }
 
 export async function getCurrentCampaign(squadSlug) {
     let response = await axios.get('/api/v1/squads/' + squadSlug + '/current-campaign');
-    return response.data.data;
+    return response.data;
 }
 
 export async function getSpellLibrary(squadSlug) {
