@@ -2,6 +2,7 @@
 
 namespace App\Aggregates;
 
+use App\StorableEvents\CampaignCreated;
 use App\StorableEvents\SpellAddedToLibrary;
 use App\StorableEvents\SquadCreated;
 use App\StorableEvents\SquadEssenceIncreased;
@@ -90,6 +91,13 @@ final class SquadAggregate extends AggregateRoot
     public function addSpellToLibrary(int $spellID)
     {
         $this->recordThat(new SpellAddedToLibrary($spellID));
+
+        return $this;
+    }
+
+    public function createCampaign(int $squadID, int $weekID, int $continentID)
+    {
+        $this->recordThat(new CampaignCreated($squadID, $weekID, $continentID));
 
         return $this;
     }
