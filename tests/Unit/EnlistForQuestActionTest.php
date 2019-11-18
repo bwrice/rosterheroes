@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\Domain\Actions\EnlistForQuestAction;
 use App\Domain\Models\Campaign;
+use App\Domain\Models\CampaignStop;
 use App\Domain\Models\Continent;
 use App\Domain\Models\Province;
 use App\Domain\Models\Quest;
@@ -106,5 +107,73 @@ class EnlistForQuestActionTest extends TestCase
         }
 
         $this->fail("Exception not thrown");
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_throw_an_exception_if_quests_per_week_limit_reached()
+    {
+        $continentID = $this->quest->province->continent_id;
+        factory(Campaign::class)->create([
+            'continent_id' => $continentID,
+            'squad_id' => $this->squad
+        ]);
+
+        /** @var Squad $squad */
+        $squad = \Mockery::mock($this->squad->fresh())->shouldReceive('getQuestsPerWeek')->andReturn(0)->getMock();
+
+        try {
+            /** @var EnlistForQuestAction $domainAction */
+            $domainAction = app(EnlistForQuestAction::class);
+            $domainAction->execute($squad, $this->quest);
+        } catch (CampaignException $exception) {
+            $this->assertEquals($exception->getCode(), CampaignException::CODE_MAX_QUESTS_REACHED);
+            return;
+        }
+
+        $this->fail("Exception not thrown");
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_throw_a_campaign_stop_already_exists_for_that_quest()
+    {
+        $continentID = $this->quest->province->continent_id;
+        $campaign = factory(Campaign::class)->create([
+            'continent_id' => $continentID,
+            'squad_id' => $this->squad
+        ]);
+
+        factory(CampaignStop::class)->create([
+            'campaign_id' => $campaign->id,
+            'quest_id' => $this->quest->id
+        ]);
+
+        try {
+            /** @var EnlistForQuestAction $domainAction */
+            $domainAction = app(EnlistForQuestAction::class);
+            $domainAction->execute($this->squad->fresh(), $this->quest);
+        } catch (CampaignException $exception) {
+            $this->assertEquals($exception->getCode(), CampaignException::CODE_ALREADY_ENLISTED);
+            return;
+        }
+
+        $this->fail("Exception not thrown");
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_create_a_campaign_if_none_exists()
+    {
+        $this->assertNull($this->squad->getCurrentCampaign());
+
+        /** @var EnlistForQuestAction $domainAction */
+        $domainAction = app(EnlistForQuestAction::class);
+        $domainAction->execute($this->squad, $this->quest);
+
+        $this->assertNotNull($this->squad->getCurrentCampaign());
     }
 }
