@@ -10,14 +10,4 @@ use Spatie\EventProjector\Projectors\ProjectsEvents;
 class CampaignProjector implements Projector
 {
     use ProjectsEvents;
-
-    public function onCampaignCreated(CampaignCreated $event, string $aggregateUuid)
-    {
-        Campaign::query()->create([
-            'uuid' => $aggregateUuid,
-            'squad_id' => $event->squadID,
-            'week_id' => $event->weekID,
-            'continent_id' => $event->continentID
-        ]);
-    }
 }

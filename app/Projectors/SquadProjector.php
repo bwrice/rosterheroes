@@ -2,11 +2,14 @@
 
 namespace App\Projectors;
 
+use App\Domain\Models\Campaign;
 use App\Domain\Models\Spell;
+use App\StorableEvents\CampaignCreated;
 use App\StorableEvents\SpellAddedToLibrary;
 use App\StorableEvents\SquadCreated;
 use App\Domain\Models\Squad;
 use App\StorableEvents\SquadLocationUpdated;
+use Illuminate\Support\Str;
 use Spatie\EventProjector\Projectors\Projector;
 use Spatie\EventProjector\Projectors\ProjectsEvents;
 
@@ -40,4 +43,16 @@ class SquadProjector implements Projector
         $spell = Spell::query()->findOrFail($event->spellID);
         $squad->spells()->save($spell);
     }
+
+    public function onCampaignCreated(CampaignCreated $event, string $aggregateUuid)
+    {
+        $squad = Squad::findUuid($aggregateUuid);
+        Campaign::query()->create([
+            'uuid' => Str::uuid(),
+            'squad_id' => $squad->uuid,
+            'week_id' => $event->weekID,
+            'continent_id' => $event->continentID
+        ]);
+    }
+
 }
