@@ -3,11 +3,11 @@
 namespace Tests\Unit;
 
 use App\Domain\Actions\EnlistForQuestAction;
+use App\Domain\Models\Province;
 use App\Domain\Models\Quest;
 use App\Domain\Models\Squad;
 use App\Domain\Models\Week;
 use App\Exceptions\CampaignException;
-use App\Nova\Province;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Date;
 use Tests\TestCase;
@@ -55,6 +55,27 @@ class EnlistForQuestActionTest extends TestCase
             $domainAction->execute($this->squad, $this->quest);
         } catch (CampaignException $exception) {
             $this->assertEquals($exception->getCode(), CampaignException::CODE_WEEK_LOCKED);
+            return;
+        }
+
+        $this->fail("Exception not thrown");
+    }
+
+    /**
+     * @test
+     */
+    public function enlist_action_will_throw_an_exception_if_the_squad_is_not_at_the_quest_province()
+    {
+        $differentProvince = Province::query()->where('id', '!=', $this->quest->province_id)->inRandomOrder()->first();
+        $this->squad->province_id = $differentProvince->id;
+        $this->squad->save();
+
+        try {
+            /** @var EnlistForQuestAction $domainAction */
+            $domainAction = app(EnlistForQuestAction::class);
+            $domainAction->execute($this->squad->fresh(), $this->quest);
+        } catch (CampaignException $exception) {
+            $this->assertEquals($exception->getCode(), CampaignException::CODE_SQUAD_NOT_IN_QUEST_PROVINCE);
             return;
         }
 
