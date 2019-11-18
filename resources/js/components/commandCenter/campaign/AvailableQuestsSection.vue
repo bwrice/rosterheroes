@@ -12,6 +12,11 @@
                     <span class="rh-op-70 subtitle-1">{{noQuestsMessage}}</span>
                 </v-row>
             </v-sheet>
+            <v-row no-gutters>
+                <v-col cols="8" offset="2">
+                    <v-btn :to="travelRoute" block color="primary" class="my-2">Travel to find Quests</v-btn>
+                </v-col>
+            </v-row>
         </v-col>
     </v-row>
 </template>
@@ -34,7 +39,15 @@
             },
             noQuestsMessage() {
                 return 'No quests in ' + this._currentLocationProvince.name;
-            }
+            },
+            travelRoute() {
+                return {
+                    name: 'travel',
+                    params: {
+                        squadSlug: this.$route.params.squadSlug
+                    }
+                }
+            },
         }
     }
 </script>
