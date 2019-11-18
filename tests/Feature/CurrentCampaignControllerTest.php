@@ -82,11 +82,9 @@ class CurrentCampaignControllerTest extends TestCase
         $response->assertStatus(200)->assertJson([
             'data' => [
                 'uuid' => (string) $campaign->uuid,
-                'continentID' => $campaign->continent_id,
                 'campaignStops' => [
                     [
-                        'uuid' => (string) $campaignStop->uuid,
-                        'campaignID' => $campaign->id
+                        'uuid' => (string) $campaignStop->uuid
                     ]
                 ]
             ]
