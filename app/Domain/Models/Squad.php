@@ -429,4 +429,14 @@ class Squad extends EventSourcedModel implements HasItems
         $exp = $this->experience;
         return (int) floor((($exp - static::STARTING_EXPERIENCE)/200) ** (.5) + 1);
     }
+
+    public function getQuestsPerWeek(): int
+    {
+        return static::QUESTS_PER_WEEK;
+    }
+
+    public function getSkirmishesPerQuest(): int
+    {
+        return static::SKIRMISHES_PER_QUEST;
+    }
 }

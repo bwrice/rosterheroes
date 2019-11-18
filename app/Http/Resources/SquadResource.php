@@ -29,8 +29,8 @@ class SquadResource extends JsonResource
             'gold' => $this->gold,
             'experience' => $this->experience,
             'favor' => $this->favor,
-//            'province' => new CurrentLocationResource($this->whenLoaded('province')),
-//            'heroPosts' => HeroPostResource::collection($this->whenLoaded('heroPosts'))
+            'questsPerWeek' => $this->getQuestsPerWeek(),
+            'skirmishesPerQuest' => $this->getSkirmishesPerQuest()
         ];
     }
 }
