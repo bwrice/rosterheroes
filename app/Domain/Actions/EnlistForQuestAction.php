@@ -78,5 +78,22 @@ class EnlistForQuestAction
                 ->setSquad($this->squad)
                 ->setQuest($this->quest);
         }
+
+        if (! ($this->campaign->campaignStops->count() < $this->squad->getQuestsPerWeek())) {
+            $message = "Max quests per week reached";
+            throw (new CampaignException($message, CampaignException::CODE_MAX_QUESTS_REACHED))
+                ->setSquad($this->squad)
+                ->setQuest($this->quest);
+        }
+
+        $matchingQuest = $this->campaign->campaignStops->first(function (CampaignStop $campaignStop) {
+            return $campaignStop->quest_id === $this->quest->id;
+        });
+        if ($matchingQuest) {
+            $message = $this->squad->name . " has already enlisted for " . $this->quest->name;
+            throw (new CampaignException($message, CampaignException::CODE_ALREADY_ENLISTED))
+                ->setSquad($this->squad)
+                ->setQuest($this->quest);
+        }
     }
 }
