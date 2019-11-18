@@ -6,6 +6,7 @@ import MobileStorage from "../../models/MobileStorage";
 import SlotTransaction from "../../models/SlotTransaction";
 import Squad from "../../models/Squad";
 import Spell from "../../models/Spell";
+import Campaign from "../../models/Campaign";
 
 export default {
 
@@ -14,6 +15,7 @@ export default {
         heroes: [],
         mobileStorage: new MobileStorage({}),
         barracksLoading: true,
+        currentCampaign: null,
         spells: []
     },
 
@@ -26,6 +28,9 @@ export default {
         },
         _heroes(state) {
             return state.heroes;
+        },
+        _currentCampaign(state) {
+            return state.currentCampaign;
         },
         _mobileStorage(state) {
             return state.mobileStorage;
@@ -68,6 +73,9 @@ export default {
         SET_MOBILE_STORAGE(state, payload) {
             state.mobileStorage = payload;
         },
+        SET_CURRENT_CAMPAIGN(state, payload) {
+            state.currentCampaign = payload;
+        },
         SET_BARRACKS_LOADING(state, payload) {
             state.barracksLoading = payload;
         }
@@ -104,9 +112,20 @@ export default {
             try {
                 let squadSlug = route.params.squadSlug;
                 let mobileStorageResponse = await squadApi.getMobileStorage(squadSlug);
-                commit('SET_MOBILE_STORAGE', new MobileStorage(mobileStorageResponse));
+                commit('SET_MOBILE_STORAGE', new MobileStorage(mobileStorageResponse.data));
             } catch (e) {
                 console.warn("Failed to update mobile storage");
+            }
+        },
+
+        async updateCurrentCampaign({commit}, route) {
+            try {
+                let squadSlug = route.params.squadSlug;
+                let currentCampaignResponse = await squadApi.getCurrentCampaign(squadSlug);
+                let currentCampaign = currentCampaignResponse.data ? new Campaign(currentCampaignResponse.data) : null;
+                commit('SET_CURRENT_CAMPAIGN', currentCampaign);
+            } catch (e) {
+                console.warn("Failed to update current campaign");
             }
         },
 
