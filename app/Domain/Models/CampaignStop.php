@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property string $uuid
+ * @property int $province_id
+ * @property int $campaign_id
  *
  * @property Campaign $campaign
  * @property Quest $quest
