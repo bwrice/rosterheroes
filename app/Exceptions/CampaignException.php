@@ -11,6 +11,9 @@ class CampaignException extends \RuntimeException
 {
     public const CODE_WEEK_LOCKED = 1;
     public const CODE_SQUAD_NOT_IN_QUEST_PROVINCE = 2;
+    public const CODE_DIFFERENT_CONTINENT = 3;
+    public const CODE_MAX_QUESTS_REACHED = 4;
+    public const CODE_ALREADY_ENLISTED = 5;
 
     /** @var Squad|null */
     protected $squad;
