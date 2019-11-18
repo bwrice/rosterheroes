@@ -3,6 +3,8 @@
 namespace Tests\Unit;
 
 use App\Domain\Actions\EnlistForQuestAction;
+use App\Domain\Models\Campaign;
+use App\Domain\Models\Continent;
 use App\Domain\Models\Province;
 use App\Domain\Models\Quest;
 use App\Domain\Models\Squad;
@@ -76,6 +78,30 @@ class EnlistForQuestActionTest extends TestCase
             $domainAction->execute($this->squad->fresh(), $this->quest);
         } catch (CampaignException $exception) {
             $this->assertEquals($exception->getCode(), CampaignException::CODE_SQUAD_NOT_IN_QUEST_PROVINCE);
+            return;
+        }
+
+        $this->fail("Exception not thrown");
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_throw_an_exception_if_the_current_campaign_is_for_a_different_continent()
+    {
+        $continentID = $this->quest->province->continent_id;
+        $differentContinent = Continent::query()->where('id', '!=', $continentID)->inRandomOrder()->first();
+        factory(Campaign::class)->create([
+            'continent_id' => $differentContinent->id,
+            'squad_id' => $this->squad
+        ]);
+
+        try {
+            /** @var EnlistForQuestAction $domainAction */
+            $domainAction = app(EnlistForQuestAction::class);
+            $domainAction->execute($this->squad->fresh(), $this->quest);
+        } catch (CampaignException $exception) {
+            $this->assertEquals($exception->getCode(), CampaignException::CODE_DIFFERENT_CONTINENT);
             return;
         }
 
