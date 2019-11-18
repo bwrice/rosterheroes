@@ -58,6 +58,13 @@ export default {
                 return essence;
             }, 0);
             return state.squad.spiritEssence - essenceUsed;
+        },
+        _enlistedForQuest: (state) => (questID) => {
+            if (! state.currentCampaign) {
+                return false;
+            }
+            let match = state.currentCampaign.campaignStops.find(campaignStop => campaignStop.questID === questID);
+            return match !== undefined;
         }
     },
     mutations: {
