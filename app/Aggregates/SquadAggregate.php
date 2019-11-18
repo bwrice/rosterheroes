@@ -3,6 +3,7 @@
 namespace App\Aggregates;
 
 use App\StorableEvents\CampaignCreated;
+use App\StorableEvents\CampaignStopCreated;
 use App\StorableEvents\SpellAddedToLibrary;
 use App\StorableEvents\SquadCreated;
 use App\StorableEvents\SquadEssenceIncreased;
@@ -98,6 +99,13 @@ final class SquadAggregate extends AggregateRoot
     public function createCampaign(int $weekID, int $continentID, string $campaignUuid)
     {
         $this->recordThat(new CampaignCreated($weekID, $continentID, $campaignUuid));
+
+        return $this;
+    }
+
+    public function createCampaignStop(int $campaignID, int $questID, int $provinceID, string $campaignUuid)
+    {
+        $this->recordThat(New CampaignStopCreated($campaignID, $questID, $provinceID, $campaignUuid));
 
         return $this;
     }

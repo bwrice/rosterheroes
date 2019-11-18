@@ -3,8 +3,10 @@
 namespace App\Projectors;
 
 use App\Domain\Models\Campaign;
+use App\Domain\Models\CampaignStop;
 use App\Domain\Models\Spell;
 use App\StorableEvents\CampaignCreated;
+use App\StorableEvents\CampaignStopCreated;
 use App\StorableEvents\SpellAddedToLibrary;
 use App\StorableEvents\SquadCreated;
 use App\Domain\Models\Squad;
@@ -52,6 +54,16 @@ class SquadProjector implements Projector
             'squad_id' => $squad->id,
             'week_id' => $event->weekID,
             'continent_id' => $event->continentID
+        ]);
+    }
+
+    public function onCampaignStopCreated(CampaignStopCreated $event, string $aggregateUuid)
+    {
+        CampaignStop::query()->create([
+            'uuid' => $event->campaignStopUuid,
+            'campaign_id' => $event->campaignID,
+            'quest_id' => $event->questID,
+            'province_id' => $event->provinceID
         ]);
     }
 
