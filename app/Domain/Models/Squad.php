@@ -7,6 +7,7 @@ use App\Domain\Actions\CreateCampaignAction;
 use App\Domain\Collections\ItemCollection;
 use App\Domain\Interfaces\HasItems;
 use App\Domain\Interfaces\TravelsBorders;
+use App\Domain\QueryBuilders\CampaignQueryBuilder;
 use App\Domain\Services\Travel\SquadBorderTravelCostExemption;
 use App\Exceptions\CampaignExistsException;
 use App\Exceptions\NotBorderedByException;
@@ -19,6 +20,7 @@ use App\Domain\Collections\SlotCollection;
 use App\Domain\Traits\HasNameSlug;
 use App\Http\Resources\MobileStorageResource;
 use App\Http\Resources\SquadResource;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Str;
 use Spatie\Sluggable\SlugOptions;
@@ -43,7 +45,6 @@ use Spatie\Sluggable\SlugOptions;
  * @property User $user
  * @property Province $province
  * @property MobileStorageRank $mobileStorageRank
- * @property Campaign|null $currentCampaign
  *
  * @property HeroCollection $heroes
  * @property ItemCollection $items
@@ -205,14 +206,12 @@ class Squad extends EventSourcedModel implements HasItems
         return $this->hasMany(Residence::class);
     }
 
+    /**
+     * @return HasMany|CampaignQueryBuilder
+     */
     public function campaigns()
     {
         return $this->hasMany(Campaign::class);
-    }
-
-    public function currentCampaign()
-    {
-        return $this->hasOne(Campaign::class)->where('week_id', '=', Week::current()->id);
     }
 
     /**
@@ -241,6 +240,15 @@ class Squad extends EventSourcedModel implements HasItems
     }
 
     /**
+     * @param array $relations
+     * @return Campaign|null
+     */
+    public function getCurrentCampaign($relations = [])
+    {
+        return $this->campaigns()->forCurrentWeek()->with($relations)->first();
+    }
+
+    /**
      * @return Campaign|null
      */
     public function getThisWeeksCampaign()
@@ -262,16 +270,16 @@ class Squad extends EventSourcedModel implements HasItems
 //            throw new QuestRequiredException($skirmish->quest);
 //        }
 //    }
-
-    /**
-     * @param Quest $quest
-     * @return bool
-     */
-    public function joinedQuestForCurrentWeek(Quest $quest)
-    {
-        $campaign = $this->getThisWeeksCampaign();
-        return $campaign ? in_array($quest->id, $campaign->quests->pluck('id')->toArray()) : false;
-    }
+//
+//    /**
+//     * @param Quest $quest
+//     * @return bool
+//     */
+//    public function joinedQuestForCurrentWeek(Quest $quest)
+//    {
+//        $campaign = $this->getThisWeeksCampaign();
+//        return $campaign ? in_array($quest->id, $campaign->quests->pluck('id')->toArray()) : false;
+//    }
 
     /**
      * @return Campaign

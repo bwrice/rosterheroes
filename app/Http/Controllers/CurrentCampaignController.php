@@ -15,7 +15,7 @@ class CurrentCampaignController extends Controller
         $squad = Squad::findSlugOrFail($squadSlug);
         $this->authorize(SquadPolicy::MANAGE, $squad);
 
-        $campaign = Campaign::query()->currentForSquad($squad->id)->with(Campaign::campaignResourceRelations())->first();
+        $campaign = $squad->getCurrentCampaign(Campaign::campaignResourceRelations());
 
         if (! $campaign) {
             return response()->json([
