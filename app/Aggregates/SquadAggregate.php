@@ -95,9 +95,9 @@ final class SquadAggregate extends AggregateRoot
         return $this;
     }
 
-    public function createCampaign(int $weekID, int $continentID)
+    public function createCampaign(int $weekID, int $continentID, string $campaignUuid)
     {
-        $this->recordThat(new CampaignCreated($weekID, $continentID));
+        $this->recordThat(new CampaignCreated($weekID, $continentID, $campaignUuid));
 
         return $this;
     }

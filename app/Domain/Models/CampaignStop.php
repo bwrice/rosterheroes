@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $uuid
  * @property int $province_id
  * @property int $campaign_id
+ * @property int $quest_id
  *
  * @property Campaign $campaign
  * @property Quest $quest

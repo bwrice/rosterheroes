@@ -21,10 +21,15 @@ final class CampaignCreated implements ShouldBeStored
      * @var int
      */
     public $continentID;
+    /**
+     * @var string
+     */
+    public $campaignUuid;
 
-    public function __construct(int $weekID, int $continentID)
+    public function __construct(int $weekID, int $continentID, string $campaignUuid)
     {
         $this->weekID = $weekID;
         $this->continentID = $continentID;
+        $this->campaignUuid = $campaignUuid;
     }
 }

@@ -48,8 +48,8 @@ class SquadProjector implements Projector
     {
         $squad = Squad::findUuid($aggregateUuid);
         Campaign::query()->create([
-            'uuid' => Str::uuid(),
-            'squad_id' => $squad->uuid,
+            'uuid' => $event->campaignUuid,
+            'squad_id' => $squad->id,
             'week_id' => $event->weekID,
             'continent_id' => $event->continentID
         ]);
