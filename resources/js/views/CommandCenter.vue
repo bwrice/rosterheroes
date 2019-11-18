@@ -69,6 +69,7 @@
             this.updateCurrentWeek();
             this.updateHeroes(route);
             this.updateMobileStorage(route);
+            this.updateCurrentCampaign(route);
             this.updateRoster(route);
             this.updateCurrentLocation(route);
             this.updateProvinces();
@@ -98,6 +99,7 @@
                 'updateCurrentWeek',
                 'updateHeroes',
                 'updateMobileStorage',
+                'updateCurrentCampaign',
                 'updateRoster',
                 'setPlayerSpiritsPool',
                 'updatePlayerSpiritsPool',
