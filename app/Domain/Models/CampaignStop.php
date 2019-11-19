@@ -21,9 +21,8 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property SkirmishCollection $skirmishes
  */
-class CampaignStop extends Model
+class CampaignStop extends EventSourcedModel
 {
-    protected $guarded = [];
 
     public function campaign()
     {
