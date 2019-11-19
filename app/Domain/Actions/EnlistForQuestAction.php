@@ -5,6 +5,7 @@ namespace App\Domain\Actions;
 
 
 use App\Aggregates\CampaignAggregate;
+use App\Aggregates\CampaignStopAggregate;
 use App\Aggregates\SquadAggregate;
 use App\Domain\Models\Campaign;
 use App\Domain\Models\CampaignStop;
@@ -29,7 +30,7 @@ class EnlistForQuestAction
     /** @var Campaign */
     protected $campaign;
 
-    public function execute(Squad $squad, Quest $quest)
+    public function execute(Squad $squad, Quest $quest): CampaignStop
     {
         $this->setProperties($squad, $quest);
         $this->validateWeek();
@@ -47,7 +48,12 @@ class EnlistForQuestAction
             $campaign = $this->createCampaign();
         }
 
-
+        $uuid = Str::uuid();
+        /** @var CampaignStopAggregate $campaignStopAggregate */
+        $campaignStopAggregate = CampaignStopAggregate::retrieve($uuid);
+        $campaignStopAggregate->createCampaignStop($campaign->id, $this->quest->id, $this->quest->province_id)
+            ->persist();
+        return CampaignStop::findUuid($uuid);
     }
 
     /**
