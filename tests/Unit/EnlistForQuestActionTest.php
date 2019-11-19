@@ -187,4 +187,32 @@ class EnlistForQuestActionTest extends TestCase
         $this->assertEquals($this->quest->province_id, $campaignStop->province_id);
         $this->assertEquals($currentCampaign->id, $campaignStop->campaign_id);
     }
+
+    /**
+     * @test
+     */
+    public function it_will_add_to_the_current_campaign_if_it_exists()
+    {
+        $campaignCreated = factory(Campaign::class)->create([
+            'squad_id' => $this->squad->id,
+            'week_id' => $this->week->id,
+            'continent_id' => $this->quest->province->continent_id
+        ]);
+
+        /** @var EnlistForQuestAction $domainAction */
+        $domainAction = app(EnlistForQuestAction::class);
+        $this->squad = $this->squad->fresh();
+        $domainAction->execute($this->squad, $this->quest);
+
+        $currentCampaign = $this->squad->getCurrentCampaign();
+        $this->assertEquals($campaignCreated->id, $currentCampaign->id);
+
+        $campaignStops = $currentCampaign->campaignStops;
+        $this->assertEquals(1, $campaignStops->count());
+        /** @var CampaignStop $campaignStop */
+        $campaignStop = $campaignStops->first();
+        $this->assertEquals($this->quest->id, $campaignStop->quest_id);
+        $this->assertEquals($this->quest->province_id, $campaignStop->province_id);
+        $this->assertEquals($currentCampaign->id, $campaignStop->campaign_id);
+    }
 }
