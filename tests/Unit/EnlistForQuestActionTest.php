@@ -174,6 +174,17 @@ class EnlistForQuestActionTest extends TestCase
         $domainAction = app(EnlistForQuestAction::class);
         $domainAction->execute($this->squad, $this->quest);
 
-        $this->assertNotNull($this->squad->getCurrentCampaign());
+        $currentCampaign = $this->squad->getCurrentCampaign();
+        $this->assertNotNull($currentCampaign);
+        $this->assertEquals($this->squad->id, $currentCampaign->squad_id);
+        $this->assertEquals($this->week->id, $currentCampaign->week_id);
+
+        $campaignStops = $currentCampaign->campaignStops;
+        $this->assertEquals(1, $campaignStops->count());
+        /** @var CampaignStop $campaignStop */
+        $campaignStop = $campaignStops->first();
+        $this->assertEquals($this->quest->id, $campaignStop->quest_id);
+        $this->assertEquals($this->quest->province_id, $campaignStop->province_id);
+        $this->assertEquals($currentCampaign->id, $campaignStop->campaign_id);
     }
 }
