@@ -12,6 +12,7 @@ use App\Domain\Models\Quest;
 use App\Domain\Models\Squad;
 use App\Domain\Models\Week;
 use App\Exceptions\CampaignException;
+use App\StorableEvents\CampaignCreated;
 use Illuminate\Support\Str;
 
 class EnlistForQuestAction
@@ -43,15 +44,7 @@ class EnlistForQuestAction
             $this->campaign = $campaign;
             $this->validateCampaign();
         } else {
-            /*
-             * We need to create a campaign for this week
-             */
-            $campaignUuid = Str::uuid();
-            /** @var SquadAggregate $squadAggregate */
-            $squadAggregate = SquadAggregate::retrieve($this->squad->uuid);
-            $squadAggregate->createCampaign($this->week->id, $this->quest->province->continent_id, $campaignUuid)
-                ->persist();
-            $campaign = Campaign::findUuid($campaignUuid);
+            $campaign = $this->createCampaign();
         }
 
 
@@ -111,5 +104,15 @@ class EnlistForQuestAction
                 ->setSquad($this->squad)
                 ->setQuest($this->quest);
         }
+    }
+
+    protected function createCampaign(): Campaign
+    {
+        $campaignUuid = Str::uuid();
+        /** @var CampaignAggregate $campaignAggregate */
+        $campaignAggregate = CampaignAggregate::retrieve($campaignUuid);
+        $campaignAggregate->createCampaign($this->squad->id, $this->week->id, $this->quest->province->continent_id)
+            ->persist();
+        return Campaign::findUuid($campaignUuid);
     }
 }
