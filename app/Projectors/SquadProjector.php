@@ -46,14 +46,4 @@ class SquadProjector implements Projector
         $squad->spells()->save($spell);
     }
 
-    public function onCampaignStopCreated(CampaignStopCreated $event, string $aggregateUuid)
-    {
-        CampaignStop::query()->create([
-            'uuid' => $event->campaignStopUuid,
-            'campaign_id' => $event->campaignID,
-            'quest_id' => $event->questID,
-            'province_id' => $event->provinceID
-        ]);
-    }
-
 }
