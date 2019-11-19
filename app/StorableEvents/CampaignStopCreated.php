@@ -18,16 +18,11 @@ final class CampaignStopCreated implements ShouldBeStored
      * @var int
      */
     public $provinceID;
-    /**
-     * @var string
-     */
-    public $campaignStopUuid;
 
-    public function __construct(int $campaignID, int $questID, int $provinceID, string $campaignStopUuid)
+    public function __construct(int $campaignID, int $questID, int $provinceID)
     {
         $this->campaignID = $campaignID;
         $this->questID = $questID;
         $this->provinceID = $provinceID;
-        $this->campaignStopUuid = $campaignStopUuid;
     }
 }
