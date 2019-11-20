@@ -2,12 +2,15 @@
 
 namespace Laravel\Nova\Fields;
 
+use Closure;
 use Illuminate\Support\Facades\Storage;
-use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Contracts\Deletable as DeletableContract;
+use Laravel\Nova\Contracts\Storable as StorableContract;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
-class File extends Field implements DeletableContract
+class File extends Field implements StorableContract, DeletableContract
 {
+    use Storable;
     use Deletable;
 
     /**
@@ -51,20 +54,6 @@ class File extends Field implements DeletableContract
      * @var bool
      */
     public $downloadsAreEnabled = true;
-
-    /**
-     * The name of the disk the file uses by default.
-     *
-     * @var string
-     */
-    public $disk;
-
-    /**
-     * The file storage path.
-     *
-     * @var string
-     */
-    public $storagePath = '/';
 
     /**
      * The callback that should be used to determine the file's storage name.
@@ -114,7 +103,7 @@ class File extends Field implements DeletableContract
     {
         parent::__construct($name, $attribute);
 
-        $this->disk = $disk;
+        $this->disk($disk);
 
         $this->prepareStorageCallback($storageCallback);
 
@@ -125,10 +114,10 @@ class File extends Field implements DeletableContract
         })->download(function ($request, $model) {
             $name = $this->originalNameColumn ? $model->{$this->originalNameColumn} : null;
 
-            return Storage::disk($this->disk)->download($this->value, $name);
+            return Storage::disk($this->getStorageDisk())->download($this->value, $name);
         })->delete(function () {
             if ($this->value) {
-                Storage::disk($this->disk)->delete($this->value);
+                Storage::disk($this->getStorageDisk())->delete($this->value);
 
                 return $this->columnsThatShouldBeDeleted();
             }
@@ -143,9 +132,9 @@ class File extends Field implements DeletableContract
      */
     protected function prepareStorageCallback($storageCallback)
     {
-        $this->storageCallback = $storageCallback ?? function ($request, $model) {
+        $this->storageCallback = $storageCallback ?? function ($request, $model, $attribute, $requestAttribute) {
             return $this->mergeExtraStorageColumns($request, [
-                $this->attribute => $this->storeFile($request),
+                $this->attribute => $this->storeFile($request, $requestAttribute),
             ]);
         };
     }
@@ -154,16 +143,17 @@ class File extends Field implements DeletableContract
      * Store the file on disk.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  string  $requestAttribute
      * @return string
      */
-    protected function storeFile($request)
+    protected function storeFile($request, $requestAttribute)
     {
         if (! $this->storeAsCallback) {
-            return $request->file($this->attribute)->store($this->storagePath, $this->disk);
+            return $request->file($requestAttribute)->store($this->getStorageDir(), $this->getStorageDisk());
         }
 
-        return $request->file($this->attribute)->storeAs(
-            $this->storagePath, call_user_func($this->storeAsCallback, $request), $this->disk
+        return $request->file($requestAttribute)->storeAs(
+            $this->getStorageDir(), call_user_func($this->storeAsCallback, $request), $this->getStorageDisk()
         );
     }
 
@@ -210,19 +200,6 @@ class File extends Field implements DeletableContract
     }
 
     /**
-     * Set the name of the disk the file is stored on by default.
-     *
-     * @param  string  $disk
-     * @return $this
-     */
-    public function disk($disk)
-    {
-        $this->disk = $disk;
-
-        return $this;
-    }
-
-    /**
      * Specify the callback that should be used to store the file.
      *
      * @param  callable  $storageCallback
@@ -231,19 +208,6 @@ class File extends Field implements DeletableContract
     public function store(callable $storageCallback)
     {
         $this->storageCallback = $storageCallback;
-
-        return $this;
-    }
-
-    /**
-     * Set the file's storage path.
-     *
-     * @param  string  $path
-     * @return $this
-     */
-    public function path($path)
-    {
-        $this->storagePath = $path;
 
         return $this;
     }
@@ -281,7 +245,7 @@ class File extends Field implements DeletableContract
      */
     public function resolveThumbnailUrl()
     {
-        return call_user_func($this->thumbnailUrlCallback, $this->value, $this->disk);
+        return call_user_func($this->thumbnailUrlCallback, $this->value, $this->getStorageDisk());
     }
 
     /**
@@ -291,7 +255,7 @@ class File extends Field implements DeletableContract
      */
     public function resolvePreviewUrl()
     {
-        return call_user_func($this->previewUrlCallback, $this->value, $this->disk);
+        return call_user_func($this->previewUrlCallback, $this->value, $this->getStorageDisk());
     }
 
     /**
@@ -375,10 +339,22 @@ class File extends Field implements DeletableContract
             return;
         }
 
-        $result = call_user_func($this->storageCallback, $request, $model);
+        $result = call_user_func(
+            $this->storageCallback,
+            $request,
+            $model,
+            $attribute,
+            $requestAttribute,
+            $this->disk,
+            $this->storagePath
+        );
 
         if ($result === true) {
             return;
+        }
+
+        if ($result instanceof Closure) {
+            return $result;
         }
 
         if (! is_array($result)) {
@@ -419,7 +395,7 @@ class File extends Field implements DeletableContract
     /**
      * Disable downloading the file.
      *
-     * @param bool $disabled
+     * @return $this
      */
     public function disableDownload()
     {
@@ -429,17 +405,7 @@ class File extends Field implements DeletableContract
     }
 
     /**
-     * Get the disk that the field is stored on.
-     *
-     * @return string|null
-     */
-    public function getStorageDisk()
-    {
-        return $this->disk;
-    }
-
-    /**
-     * Get the path that the field is stored at on disk.
+     * Get the full path that the field is stored at on disk.
      *
      * @return string|null
      */

@@ -2,13 +2,13 @@
 
 namespace Laravel\Nova\Tests\Controller;
 
-use Laravel\Nova\Fields\Text;
 use Illuminate\Support\Facades\Gate;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Tests\Fixtures\Post;
 use Laravel\Nova\Tests\Fixtures\Role;
 use Laravel\Nova\Tests\Fixtures\User;
-use Laravel\Nova\Tests\IntegrationTest;
 use Laravel\Nova\Tests\Fixtures\UserPolicy;
+use Laravel\Nova\Tests\IntegrationTest;
 
 class FieldControllerTest extends IntegrationTest
 {
@@ -42,7 +42,7 @@ class FieldControllerTest extends IntegrationTest
         $response = $this->withExceptionHandling()
                         ->get('/nova-api/users/creation-fields');
 
-        $fields = collect($response->original);
+        $fields = collect($response->original['fields']);
 
         $response->assertStatus(200);
         $this->assertCount(0, $fields->where('attribute', 'id'));
@@ -74,11 +74,10 @@ class FieldControllerTest extends IntegrationTest
         $user = factory(User::class)->create();
 
         $response = $this->withExceptionHandling()
-                        ->get('/nova-api/users/'.$user->id.'/update-fields');
+                        ->get('/nova-api/users/'.$user->id.'/update-fields')
+                        ->assertOk();
 
-        $fields = collect($response->original);
-
-        $response->assertStatus(200);
+        $fields = collect($response->original['fields']);
         $this->assertCount(0, $fields->where('attribute', 'id'));
         $this->assertCount(1, $fields->where('attribute', 'name'));
         $this->assertCount(1, $fields->where('attribute', 'email'));

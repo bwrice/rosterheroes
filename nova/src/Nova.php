@@ -2,22 +2,37 @@
 
 namespace Laravel\Nova;
 
-use ReflectionClass;
 use BadMethodCallException;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Laravel\Nova\Events\ServingNova;
-use Symfony\Component\Finder\Finder;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
-use Laravel\Nova\Http\Requests\NovaRequest;
+use Illuminate\Support\Str;
+use Laravel\Nova\Actions\ActionResource;
+use Laravel\Nova\Events\ServingNova;
 use Laravel\Nova\Http\Middleware\RedirectIfAuthenticated;
+use Laravel\Nova\Http\Requests\NovaRequest;
+use ReflectionClass;
+use Symfony\Component\Finder\Finder;
 
 class Nova
 {
     use AuthorizesRequests;
+
+    /**
+     * The registered dashboard names.
+     *
+     * @var array
+     */
+    public static $dashboards = [];
+
+    /**
+     * The registered cards for the default dashboard.
+     *
+     * @var array
+     */
+    public static $defaultDashboardCards = [];
 
     /**
      * The registered resource names.
@@ -90,11 +105,25 @@ class Nova
     public static $styles = [];
 
     /**
+     * The theme CSS files applied to Nova.
+     *
+     * @var array
+     */
+    public static $themes = [];
+
+    /**
      * The variables that should be made available on the Nova JavaScript object.
      *
      * @var array
      */
     public static $jsonVariables = [];
+
+    /**
+     * The callback used to report Nova's exceptions.
+     *
+     * @var \Closure
+     */
+    public static $reportCallback;
 
     /**
      * Indicates if Nova should register its migrations.
@@ -104,13 +133,20 @@ class Nova
     public static $runsMigrations = true;
 
     /**
+     * The translations that should be made available on the Nova JavaScript object.
+     *
+     * @var array
+     */
+    public static $translations = [];
+
+    /**
      * Get the current Nova version.
      *
      * @return string
      */
     public static function version()
     {
-        return '2.0.5';
+        return '2.7.1';
     }
 
     /**
@@ -171,6 +207,7 @@ class Nova
                 'singularLabel' => $resource::singularLabel(),
                 'authorizedToCreate' => $resource::authorizedToCreate($request),
                 'searchable' => $resource::searchable(),
+                'perPageOptions' => $resource::perPageOptions(),
             ], $resource::additionalInformation($request));
         })->values()->all();
     }
@@ -193,7 +230,7 @@ class Nova
      * Get the resources available for the given request.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @return \Illuminate\Support\Collection
      */
     public static function globallySearchableResources(Request $request)
     {
@@ -264,7 +301,8 @@ class Nova
             );
 
             if (is_subclass_of($resource, Resource::class) &&
-                ! (new ReflectionClass($resource))->isAbstract()) {
+                ! (new ReflectionClass($resource))->isAbstract() &&
+                ! (is_subclass_of($resource, ActionResource::class))) {
                 $resources[] = $resource;
             }
         }
@@ -347,17 +385,6 @@ class Nova
         $resource = static::resourceForKey($key);
 
         return $resource ? $resource::newModel() : null;
-    }
-
-    /**
-     * Get the available dashboard cards for the given request.
-     *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
-     * @return \Illuminate\Support\Collection
-     */
-    public static function availableDashboardCards(NovaRequest $request)
-    {
-        return collect(static::$cards)->filter->authorize($request)->values();
     }
 
     /**
@@ -551,6 +578,78 @@ class Nova
     }
 
     /**
+     * Copy the cards to cards to the default dashboard.
+     *
+     * @return static
+     */
+    public static function copyDefaultDashboardCards()
+    {
+        static::$defaultDashboardCards = static::$cards;
+
+        return new static;
+    }
+
+    /**
+     * Get the dashboards registered with Nova.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public static function availableDashboards(Request $request)
+    {
+        return collect(static::$dashboards)->filter->authorize($request)->all();
+    }
+
+    /**
+     * Register the dashboards.
+     *
+     * @param  array  $dashboards
+     * @return static
+     */
+    public static function dashboards(array $dashboards)
+    {
+        static::$dashboards = array_merge(static::$dashboards, $dashboards);
+
+        return new static;
+    }
+
+    /**
+     * Get the available dashboard cards for the given request.
+     *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @return \Illuminate\Support\Collection
+     */
+    public static function allAvailableDashboardCards(NovaRequest $request)
+    {
+        return collect(static::$dashboards)
+            ->filter
+            ->authorize($request)
+            ->flatMap(function ($dashboard) {
+                return $dashboard->cards();
+            })->merge(static::$cards)
+            ->unique()
+            ->filter
+            ->authorize($request)
+            ->values();
+    }
+
+    /**
+     * Get the available dashboard cards for the given request.
+     *
+     * @param  string  $dashboard
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @return \Illuminate\Support\Collection
+     */
+    public static function availableDashboardCardsForDashboard($dashboard, NovaRequest $request)
+    {
+        return collect(static::$dashboards)->filter->authorize($request)->filter(function ($dash) use ($dashboard) {
+            return $dash->uriKey() === $dashboard;
+        })->flatMap(function ($dashboard) {
+            return $dashboard->cards();
+        })->filter->authorize($request)->values();
+    }
+
+    /**
      * Get all of the additional scripts that should be registered.
      *
      * @return array
@@ -593,6 +692,16 @@ class Nova
     }
 
     /**
+     * Get all of the theme stylesheets that should be registered.
+     *
+     * @return array
+     */
+    public static function themeStyles()
+    {
+        return static::$themes;
+    }
+
+    /**
      * Register the given script file with Nova.
      *
      * @param  string  $name
@@ -631,6 +740,48 @@ class Nova
         static::$styles[$name] = $path;
 
         return new static;
+    }
+
+    /**
+     * Register the given theme CSS file with Nova.
+     *
+     * @param string $publicPath
+     * @return static
+     */
+    public static function theme($publicPath)
+    {
+        static::$themes[] = $publicPath;
+    }
+
+    /**
+     * Register the given translations with Nova.
+     *
+     * @param  array|string  $translations
+     * @return static
+     */
+    public static function translations($translations)
+    {
+        if (is_string($translations)) {
+            if (! is_readable($translations)) {
+                return new static;
+            }
+
+            $translations = json_decode(file_get_contents($translations), true);
+        }
+
+        static::$translations = array_merge(static::$translations, $translations);
+
+        return new static;
+    }
+
+    /**
+     * Get all of the additional translations that should be loaded.
+     *
+     * @return array
+     */
+    public static function allTranslations()
+    {
+        return static::$translations;
     }
 
     /**
@@ -694,6 +845,21 @@ class Nova
     }
 
     /**
+     * Register the callback used to set a custom Nova error reporter.
+     *
+     * @var \Closure
+     *
+     * @param \Closure $callback
+     * @return static
+     */
+    public static function report($callback)
+    {
+        static::$reportCallback = $callback;
+
+        return new static;
+    }
+
+    /**
      * Dynamically proxy static method calls.
      *
      * @param  string  $method
@@ -707,5 +873,17 @@ class Nova
         }
 
         return static::${$method};
+    }
+
+    /**
+     * Return a new instance of the configured ActionEvent.
+     *
+     * @return \Laravel\Nova\Actions\ActionEvent
+     */
+    public static function actionEvent()
+    {
+        return with(config('nova.actions.resource'), function ($class) {
+            return $class::newModel();
+        });
     }
 }
