@@ -52,4 +52,26 @@ class EnlistForQuestControllerTest extends TestCase
 
         $response->assertStatus(403);
     }
+
+    /**
+     * @test
+     */
+    public function it_will_return_the_squads_updated_campaign_response()
+    {
+        Passport::actingAs($this->squad->user);
+
+        $response = $this->post('/api/v1/squads/' . $this->squad->slug . '/enlist', [
+            'quest' => $this->quest->uuid
+        ]);
+
+        $currentCampaign = $this->squad->fresh()->getCurrentCampaign();
+
+        $response->assertStatus(200)
+            ->assertJson([
+                'data' => [
+                    'uuid' => $currentCampaign->uuid
+                ]
+            ]);
+    }
+
 }
