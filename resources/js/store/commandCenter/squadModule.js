@@ -3,7 +3,6 @@ import * as heroApi from '../../api/heroApi';
 import * as helpers from '../../helpers/vuexHelpers';
 import Hero from "../../models/Hero";
 import MobileStorage from "../../models/MobileStorage";
-import SlotTransaction from "../../models/SlotTransaction";
 import Squad from "../../models/Squad";
 import Spell from "../../models/Spell";
 import Campaign from "../../models/Campaign";
@@ -272,6 +271,23 @@ export default {
 
             } catch (e) {
                 helpers.handleResponseErrors(e, 'spellCaster', dispatch);
+            }
+        },
+
+        async enlistForQuest({state, commit, dispatch}, {quest}) {
+            try {
+
+                let campaignResponse = await squadApi.enlistForQuest(state.squad.slug, quest.uuid);
+                let updateCampaign = new Campaign(campaignResponse.data);
+                commit('SET_CURRENT_CAMPAIGN', updateCampaign);
+                let text = quest.name + ' added to campaign';
+                dispatch('snackBarSuccess', {
+                    text: text,
+                    timeout: 3000
+                })
+
+            } catch (e) {
+                helpers.handleResponseErrors(e, 'campaign', dispatch);
             }
         }
     },
