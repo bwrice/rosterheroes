@@ -4,6 +4,7 @@
 namespace App\Exceptions;
 
 
+use App\Domain\Models\Campaign;
 use App\Domain\Models\Quest;
 use App\Domain\Models\Squad;
 
@@ -20,6 +21,9 @@ class CampaignException extends \RuntimeException
 
     /** @var Quest|null */
     protected $quest;
+
+    /** @var Campaign */
+    protected $campaign;
 
     /**
      * @param Squad|null $squad
@@ -55,6 +59,16 @@ class CampaignException extends \RuntimeException
     public function getQuest(): ?Quest
     {
         return $this->quest;
+    }
+
+    /**
+     * @param Campaign $campaign
+     * @return CampaignException
+     */
+    public function setCampaign(Campaign $campaign): CampaignException
+    {
+        $this->campaign = $campaign;
+        return $this;
     }
 
 
