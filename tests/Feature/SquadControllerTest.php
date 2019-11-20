@@ -37,31 +37,4 @@ class SquadControllerTest extends TestCase
             ]
         ]);
     }
-
-    /**
-     * @test
-     */
-    public function a_squad_can_create_a_campaign()
-    {
-        $this->withoutExceptionHandling();
-
-        /** @var \App\Domain\Models\Week $week */
-        $week = factory(Week::class)->create();
-        Week::setTestCurrent($week);
-        CarbonImmutable::setTestNow($week->everything_locks_at->copy()->subDays(1));
-
-        /** @var Squad $squad */
-        $squad = factory(Squad::class)->create();
-        /** @var User $user */
-        $user = Passport::actingAs($squad->user);
-
-        $response = $this->json('POST','api/v1/squad/' . $squad->slug . '/campaigns');
-        $response->assertStatus(201);
-
-        /** @var \App\Domain\Models\Campaign $campaign */
-        $campaign = $squad->campaigns()->first();
-        $this->assertEquals($squad->id, $campaign->squad_id);
-        $this->assertEquals($week->id, $campaign->week_id);
-        $this->assertEquals($squad->province->continent_id, $campaign->continent_id);
-    }
 }
