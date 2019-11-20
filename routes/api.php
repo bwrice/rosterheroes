@@ -130,7 +130,6 @@ Route::prefix('v1')->group(function () {
         Route::get('/squad/{squadSlug}/hero-races', SquadHeroRaceController::class);
 
         Route::post('/squad/{squadSlug}/heroes', [SquadHeroController::class, 'store']);
-        Route::post('/squad/{squadSlug}/campaigns', [SquadCampaignController::class, 'store']);
 
         Route::prefix('heroes')->group(function () {
             /*
