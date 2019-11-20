@@ -151,7 +151,6 @@ export default {
         },
         async updatePositions({commit}) {
             try {
-                console.log("Update Positions");
                 let positionsResponse = await referenceApi.getPositions();
                 let positions = positionsResponse.data.map(function (position) {
                     return new Position(position);

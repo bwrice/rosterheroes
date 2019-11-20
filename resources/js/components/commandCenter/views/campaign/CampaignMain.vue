@@ -13,9 +13,6 @@
     export default {
         name: "CampaignMain",
         components: {AvailableQuestsSection},
-        created: () => {
-            console.log("Campaign Created!");
-        }
     }
 </script>
 
