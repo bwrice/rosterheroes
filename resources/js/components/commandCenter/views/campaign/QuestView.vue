@@ -63,15 +63,13 @@
                 return this._currentLocationQuestBySlug(slug);
             },
             enlisted() {
-                return this._enlistedForQuest(this.quest)
+                return this._enlistedForQuest(this.quest.uuid)
             },
             canEnlist() {
                 if (! this._currentCampaign) {
                     return true;
                 }
-                let campaignStops = this._currentCampaign.campaignStops;
-                let matchingQuest = campaignStops.find(campaignStop => campaignStop.questUuid === this.quest.uuid);
-                if (matchingQuest !== undefined) {
+                if (this.enlisted) {
                     return false;
                 }
                 return this._currentCampaign.campaignStops.length < this._squad.questsPerWeek;

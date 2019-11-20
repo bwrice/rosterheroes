@@ -58,11 +58,11 @@ export default {
             }, 0);
             return state.squad.spiritEssence - essenceUsed;
         },
-        _enlistedForQuest: (state) => (questID) => {
+        _enlistedForQuest: (state) => (questUuid) => {
             if (! state.currentCampaign) {
                 return false;
             }
-            let match = state.currentCampaign.campaignStops.find(campaignStop => campaignStop.questID === questID);
+            let match = state.currentCampaign.campaignStops.find(campaignStop => campaignStop.questUuid === questUuid);
             return match !== undefined;
         }
     },
