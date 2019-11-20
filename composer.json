@@ -19,7 +19,7 @@
         "laravel/tinker": "^1.0",
         "markrogoyski/math-php": "0.*",
         "spatie/enum": "^2.1",
-        "spatie/laravel-event-projector": "^3.0",
+        "spatie/laravel-event-sourcing": "^1.0",
         "spatie/laravel-permission": "^3.0",
         "spatie/laravel-query-builder": "^2.0",
         "spatie/laravel-sluggable": "^2.1"
