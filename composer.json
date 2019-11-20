@@ -10,7 +10,7 @@
         "doctrine/dbal": "^2.9",
         "fideloper/proxy": "^4.0",
         "guzzlehttp/guzzle": "^6.3",
-        "laravel/framework": "5.8.*",
+        "laravel/framework": "^6.0",
         "laravel/horizon": "^3.2",
         "laravel/nova": "*",
         "laravel/passport": "^7.0",
@@ -19,7 +19,7 @@
         "laravel/tinker": "^1.0",
         "markrogoyski/math-php": "0.*",
         "spatie/enum": "^2.1",
-        "spatie/laravel-event-projector": "^2.0.0",
+        "spatie/laravel-event-projector": "^3.0",
         "spatie/laravel-permission": "^3.0",
         "spatie/laravel-query-builder": "^2.0",
         "spatie/laravel-sluggable": "^2.1"
