@@ -2,12 +2,15 @@
 
 namespace Tests\Feature;
 
+use App\Domain\Actions\AddSkirmishToCampaignStopAction;
 use App\Domain\Models\Campaign;
 use App\Domain\Models\CampaignStop;
 use App\Domain\Models\Quest;
 use App\Domain\Models\Skirmish;
 use App\Domain\Models\Squad;
 use App\Domain\Models\Week;
+use App\Exceptions\CampaignException;
+use App\Exceptions\CampaignStopException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -45,7 +48,7 @@ class AddSkirmishToCampaignStopActionTest extends TestCase
         Week::setTestCurrent($this->week);
         $this->squad = factory(Squad::class)->create();
         $this->quest = factory(Quest::class)->create([
-            'province_id' => $this->quest->province_id
+            'province_id' => $this->squad->province_id
         ]);
         $this->skirmish = factory(Skirmish::class)->create([
             'quest_id' => $this->quest->id
@@ -61,5 +64,37 @@ class AddSkirmishToCampaignStopActionTest extends TestCase
             'province_id' => $this->quest->province_id,
             'campaign_id' => $this->campaign->id
         ]);
+    }
+
+    /**
+     * @test
+     */
+    public function adding_a_skirmish_will_throw_an_exception_if_the_week_is_locked()
+    {
+        $this->week->everything_locks_at = Date::now()->subHour();
+        $this->week->save();
+        Week::setTestCurrent($this->week);
+
+        try {
+
+            /** @var AddSkirmishToCampaignStopAction $domainAction */
+            $domainAction = app(AddSkirmishToCampaignStopAction::class);
+            $domainAction->execute($this->campaignStop, $this->skirmish);
+
+        } catch (CampaignStopException $exception) {
+
+            $this->assertEquals(CampaignException::CODE_WEEK_LOCKED, $exception->getCode());
+            return;
+        }
+
+        $this->fail("Exception not thrown");
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_throw_an_exception_if_the_skirmish_does_not_belong_to_the_quest()
+    {
+
     }
 }
