@@ -47,3 +47,10 @@ export async function getBorderTravelCost(squadSlug, borderSlug) {
     let response = await axios.get('/api/v1/squads/' + squadSlug + '/border-travel/' + borderSlug);
     return response.data;
 }
+
+export async function enlistForQuest(squadSlug, questUuid) {
+    let response = await axios.post('/api/v1/squads/' + squadSlug + '/enlist', {
+        quest: questUuid
+    });
+    return response.data;
+}
