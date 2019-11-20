@@ -21,7 +21,7 @@
         "spatie/enum": "^2.1",
         "spatie/laravel-event-projector": "^2.0.0",
         "spatie/laravel-permission": "^2.37",
-        "spatie/laravel-query-builder": "^1.17",
+        "spatie/laravel-query-builder": "^2.0",
         "spatie/laravel-sluggable": "^2.1"
     },
     "require-dev": {
