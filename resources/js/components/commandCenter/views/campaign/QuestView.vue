@@ -17,6 +17,7 @@
                            color="primary"
                            block
                            :disabled="! canEnlist"
+                           @click="enlist"
                         >
                         Enlist for Quest
                     </v-btn>
@@ -34,11 +35,22 @@
 <script>
 
     import {mapGetters} from 'vuex';
+    import {mapActions} from 'vuex';
     import SkirmishCard from "../../campaign/SkirmishCard";
 
     export default {
         name: "QuestView",
         components: {SkirmishCard},
+        methods: {
+            ...mapActions([
+                'enlistForQuest'
+            ]),
+            enlist() {
+                this.enlistForQuest({
+                    quest: this.quest
+                });
+            }
+        },
         computed: {
             ...mapGetters([
                 '_currentLocationQuestBySlug',
@@ -54,6 +66,14 @@
                 return this._enlistedForQuest(this.quest)
             },
             canEnlist() {
+                if (! this._currentCampaign) {
+                    return true;
+                }
+                let campaignStops = this._currentCampaign.campaignStops;
+                let matchingQuest = campaignStops.find(campaignStop => campaignStop.questUuid === this.quest.uuid);
+                if (matchingQuest !== undefined) {
+                    return false;
+                }
                 return this._currentCampaign.campaignStops.length < this._squad.questsPerWeek;
             }
         }
