@@ -12,8 +12,8 @@ use App\StorableEvents\SquadCreated;
 use App\Domain\Models\Squad;
 use App\StorableEvents\SquadLocationUpdated;
 use Illuminate\Support\Str;
-use Spatie\EventProjector\Projectors\Projector;
-use Spatie\EventProjector\Projectors\ProjectsEvents;
+use Spatie\EventSourcing\Projectors\Projector;
+use Spatie\EventSourcing\Projectors\ProjectsEvents;
 
 class SquadProjector implements Projector
 {

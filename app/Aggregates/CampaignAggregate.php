@@ -3,7 +3,7 @@
 namespace App\Aggregates;
 
 use App\StorableEvents\CampaignCreated;
-use Spatie\EventProjector\AggregateRoot;
+use Spatie\EventSourcing\AggregateRoot;
 
 final class CampaignAggregate extends AggregateRoot
 {

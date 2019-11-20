@@ -2,7 +2,7 @@
 
 namespace App\StorableEvents;
 
-use Spatie\EventProjector\ShouldBeStored;
+use Spatie\EventSourcing\ShouldBeStored;
 
 final class MeasurableRaised implements ShouldBeStored
 {

@@ -4,7 +4,7 @@ namespace App\Aggregates;
 
 use App\Domain\Models\PlayerSpirit;
 use App\StorableEvents\PlayerSpiritCreated;
-use Spatie\EventProjector\AggregateRoot;
+use Spatie\EventSourcing\AggregateRoot;
 
 final class PlayerSpiritAggregate extends AggregateRoot
 {

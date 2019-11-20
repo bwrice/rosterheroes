@@ -5,7 +5,7 @@ namespace App\Aggregates;
 use App\StorableEvents\AttackAttachedToItem;
 use App\StorableEvents\ItemCreated;
 use App\StorableEvents\EnchantmentAttachedToItem;
-use Spatie\EventProjector\AggregateRoot;
+use Spatie\EventSourcing\AggregateRoot;
 
 final class ItemAggregate extends AggregateRoot
 {

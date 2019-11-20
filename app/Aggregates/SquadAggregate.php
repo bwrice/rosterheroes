@@ -14,7 +14,7 @@ use App\StorableEvents\SquadGoldIncreased;
 use App\StorableEvents\SquadHeroPostAdded;
 use App\StorableEvents\SquadLocationUpdated;
 use App\StorableEvents\SquadSlotsAdded;
-use Spatie\EventProjector\AggregateRoot;
+use Spatie\EventSourcing\AggregateRoot;
 
 final class SquadAggregate extends AggregateRoot
 {

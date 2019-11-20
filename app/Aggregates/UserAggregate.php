@@ -4,7 +4,7 @@ namespace App\Aggregates;
 
 use App\StorableEvents\UserCreated;
 use Illuminate\Support\Facades\Hash;
-use Spatie\EventProjector\AggregateRoot;
+use Spatie\EventSourcing\AggregateRoot;
 
 final class UserAggregate extends AggregateRoot
 {

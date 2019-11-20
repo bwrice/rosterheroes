@@ -3,7 +3,7 @@
 namespace App\StorableEvents;
 
 use App\Domain\Models\SlotType;
-use Spatie\EventProjector\ShouldBeStored;
+use Spatie\EventSourcing\ShouldBeStored;
 
 final class SquadSlotsAdded implements ShouldBeStored
 {

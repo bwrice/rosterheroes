@@ -4,8 +4,8 @@ namespace App\Projectors;
 
 use App\StorableEvents\SquadEssenceIncreased;
 use App\Domain\Models\Squad;
-use Spatie\EventProjector\Projectors\Projector;
-use Spatie\EventProjector\Projectors\ProjectsEvents;
+use Spatie\EventSourcing\Projectors\Projector;
+use Spatie\EventSourcing\Projectors\ProjectsEvents;
 
 class SquadEssenceProjector implements Projector
 {

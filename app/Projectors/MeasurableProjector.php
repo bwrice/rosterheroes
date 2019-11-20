@@ -6,8 +6,8 @@ use App\Events\MeasurableCreationRequested;
 use App\Domain\Models\Measurable;
 use App\StorableEvents\MeasurableCreated;
 use App\StorableEvents\MeasurableRaised;
-use Spatie\EventProjector\Projectors\Projector;
-use Spatie\EventProjector\Projectors\ProjectsEvents;
+use Spatie\EventSourcing\Projectors\Projector;
+use Spatie\EventSourcing\Projectors\ProjectsEvents;
 
 class MeasurableProjector implements Projector
 {

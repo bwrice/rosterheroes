@@ -5,8 +5,8 @@ namespace App\Projectors;
 use App\Domain\Models\PlayerSpirit;
 use App\Events\PlayerSpiritCreationRequested;
 use App\StorableEvents\PlayerSpiritCreated;
-use Spatie\EventProjector\Projectors\Projector;
-use Spatie\EventProjector\Projectors\ProjectsEvents;
+use Spatie\EventSourcing\Projectors\Projector;
+use Spatie\EventSourcing\Projectors\ProjectsEvents;
 
 class PlayerSpiritProjector implements Projector
 {

@@ -3,7 +3,7 @@
 namespace App\StorableEvents;
 
 use App\Domain\Models\HeroPostType;
-use Spatie\EventProjector\ShouldBeStored;
+use Spatie\EventSourcing\ShouldBeStored;
 
 final class SquadHeroPostAdded implements ShouldBeStored
 {

@@ -4,9 +4,8 @@ namespace App\Aggregates;
 
 use App\Domain\Models\Hero;
 use App\StorableEvents\HeroCreated;
-use App\StorableEvents\HeroSlotCreated;
 use App\StorableEvents\UpdateHeroPlayerSpirit;
-use Spatie\EventProjector\AggregateRoot;
+use Spatie\EventSourcing\AggregateRoot;
 
 final class HeroAggregate extends AggregateRoot
 {

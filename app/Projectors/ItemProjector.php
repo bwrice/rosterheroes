@@ -6,8 +6,8 @@ use App\StorableEvents\AttackAttachedToItem;
 use App\StorableEvents\ItemCreated;
 use App\Domain\Models\Item;
 use App\StorableEvents\EnchantmentAttachedToItem;
-use Spatie\EventProjector\Projectors\Projector;
-use Spatie\EventProjector\Projectors\ProjectsEvents;
+use Spatie\EventSourcing\Projectors\Projector;
+use Spatie\EventSourcing\Projectors\ProjectsEvents;
 
 class ItemProjector implements Projector
 {

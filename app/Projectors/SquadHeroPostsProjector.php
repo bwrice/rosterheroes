@@ -5,8 +5,8 @@ namespace App\Projectors;
 use App\Domain\Models\HeroPostType;
 use App\Domain\Models\Squad;
 use App\StorableEvents\SquadHeroPostAdded;
-use Spatie\EventProjector\Projectors\Projector;
-use Spatie\EventProjector\Projectors\ProjectsEvents;
+use Spatie\EventSourcing\Projectors\Projector;
+use Spatie\EventSourcing\Projectors\ProjectsEvents;
 
 class SquadHeroPostsProjector implements Projector
 {

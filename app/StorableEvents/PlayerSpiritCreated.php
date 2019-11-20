@@ -3,7 +3,7 @@
 namespace App\StorableEvents;
 
 use App\Domain\Models\PlayerSpirit;
-use Spatie\EventProjector\ShouldBeStored;
+use Spatie\EventSourcing\ShouldBeStored;
 
 final class PlayerSpiritCreated implements ShouldBeStored
 {

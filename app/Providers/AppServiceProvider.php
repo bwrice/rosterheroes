@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
-use Spatie\EventProjector\Projectionist;
+use Spatie\EventSourcing\Projectionist;
 
 class AppServiceProvider extends ServiceProvider
 {

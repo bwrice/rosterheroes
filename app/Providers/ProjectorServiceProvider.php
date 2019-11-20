@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use App\Projectors\ItemBlueprintProjector;
 use Illuminate\Support\ServiceProvider;
-use Spatie\EventProjector\Projectionist;
+use Spatie\EventSourcing\Projectionist;
 
 class ProjectorServiceProvider extends ServiceProvider
 {

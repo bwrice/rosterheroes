@@ -4,8 +4,8 @@ namespace App\Projectors;
 
 use App\Domain\Models\Province;
 use App\StorableEvents\ProvinceCreated;
-use Spatie\EventProjector\Projectors\Projector;
-use Spatie\EventProjector\Projectors\ProjectsEvents;
+use Spatie\EventSourcing\Projectors\Projector;
+use Spatie\EventSourcing\Projectors\ProjectsEvents;
 
 final class ProvinceProjector implements Projector
 {

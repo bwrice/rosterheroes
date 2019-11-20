@@ -7,8 +7,8 @@ use App\Domain\Models\Hero;
 use App\StorableEvents\HeroSlotCreated;
 use App\StorableEvents\UpdateHeroPlayerSpirit;
 use Illuminate\Support\Str;
-use Spatie\EventProjector\Projectors\Projector;
-use Spatie\EventProjector\Projectors\ProjectsEvents;
+use Spatie\EventSourcing\Projectors\Projector;
+use Spatie\EventSourcing\Projectors\ProjectsEvents;
 
 class HeroProjector implements Projector
 {

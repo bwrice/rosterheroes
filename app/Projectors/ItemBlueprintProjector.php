@@ -4,9 +4,9 @@ namespace App\Projectors;
 
 use App\Events\ItemBlueprintCreated;
 use App\Domain\Models\ItemBlueprint;
-use Spatie\EventProjector\Projectors\Projector;
-use Spatie\EventProjector\Projectors\ProjectsEvents;
-use Spatie\EventProjector\Projectors\QueuedProjector;
+use Spatie\EventSourcing\Projectors\Projector;
+use Spatie\EventSourcing\Projectors\ProjectsEvents;
+use Spatie\EventSourcing\Projectors\QueuedProjector;
 
 class ItemBlueprintProjector implements QueuedProjector
 {

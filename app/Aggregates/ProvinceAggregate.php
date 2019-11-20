@@ -5,7 +5,7 @@ namespace App\Aggregates;
 use App\Domain\Models\Continent;
 use App\Domain\Models\Territory;
 use App\StorableEvents\ProvinceCreated;
-use Spatie\EventProjector\AggregateRoot;
+use Spatie\EventSourcing\AggregateRoot;
 
 final class ProvinceAggregate extends AggregateRoot
 {

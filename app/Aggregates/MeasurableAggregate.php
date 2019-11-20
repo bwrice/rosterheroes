@@ -4,7 +4,7 @@ namespace App\Aggregates;
 
 use App\StorableEvents\MeasurableCreated;
 use App\StorableEvents\MeasurableRaised;
-use Spatie\EventProjector\AggregateRoot;
+use Spatie\EventSourcing\AggregateRoot;
 
 final class MeasurableAggregate extends AggregateRoot
 {

@@ -3,7 +3,7 @@
 namespace App\Aggregates;
 
 use App\StorableEvents\CampaignStopCreated;
-use Spatie\EventProjector\AggregateRoot;
+use Spatie\EventSourcing\AggregateRoot;
 
 final class CampaignStopAggregate extends AggregateRoot
 {

@@ -5,8 +5,8 @@ namespace App\Projectors;
 use App\StorableEvents\SquadGoldDecreased;
 use App\StorableEvents\SquadGoldIncreased;
 use App\Domain\Models\Squad;
-use Spatie\EventProjector\Projectors\Projector;
-use Spatie\EventProjector\Projectors\ProjectsEvents;
+use Spatie\EventSourcing\Projectors\Projector;
+use Spatie\EventSourcing\Projectors\ProjectsEvents;
 
 class SquadGoldProjector implements Projector
 {
