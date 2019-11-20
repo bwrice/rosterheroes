@@ -58,7 +58,7 @@ return [
      * can change this to a class of your own. The only restriction is that
      * it should extend \Spatie\EventProjector\Models\StoredEvent.
      */
-    'stored_event_model' => \Spatie\EventProjector\Models\StoredEvent::class,
+    'stored_event_model' => \Spatie\EventProjector\Models\EloquentStoredEvent::class,
 
     /*
      * This class is responsible for handle stored events. To add extra behaviour you
@@ -80,4 +80,6 @@ return [
      * a chuncked way. You can specify the chunk size here.
      */
     'replay_chunk_size' => 1000,
+
+    'stored_event_repository' => \Spatie\EventProjector\EloquentStoredEventRepository::class
 ];
