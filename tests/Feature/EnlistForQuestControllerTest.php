@@ -2,10 +2,13 @@
 
 namespace Tests\Feature;
 
+use App\Domain\Actions\EnlistForQuestAction;
 use App\Domain\Models\Quest;
 use App\Domain\Models\Squad;
 use App\Domain\Models\User;
 use App\Domain\Models\Week;
+use App\Exceptions\CampaignException;
+use App\External\Stats\MySportsFeed\MSFClient;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Date;
 use Laravel\Passport\Passport;
@@ -73,5 +76,25 @@ class EnlistForQuestControllerTest extends TestCase
                 ]
             ]);
     }
+    /**
+     * @test
+     */
+    public function it_will_return_a_validation_error_if_a_campaign_exception_is_thrown()
+    {
+        Passport::actingAs($this->squad->user);
+
+        $message = "exception test";
+        $actionMock = \Mockery::mock(EnlistForQuestAction::class)
+            ->shouldReceive('execute')->andThrow(new CampaignException($message))->getMock();
+        // put the mock into the container
+        app()->instance(EnlistForQuestAction::class, $actionMock);
+
+        $response = $this->json('POST','/api/v1/squads/' . $this->squad->slug . '/enlist', [
+            'quest' => $this->quest->uuid
+        ]);
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors(['campaign']);
+    }
+
 
 }
