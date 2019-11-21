@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Domain\Actions\AddSkirmishToCampaignStopAction;
 use App\Domain\Models\Campaign;
 use App\Domain\Models\CampaignStop;
+use App\Domain\Models\Province;
 use App\Domain\Models\Quest;
 use App\Domain\Models\Skirmish;
 use App\Domain\Models\Squad;
@@ -109,6 +110,58 @@ class AddSkirmishToCampaignStopActionTest extends TestCase
         } catch (CampaignStopException $exception) {
 
             $this->assertEquals(CampaignStopException::CODE_INVALID_SKIRMISH, $exception->getCode());
+            return;
+        }
+
+        $this->fail("Exception not thrown");
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_throw_an_exception_if_the_squad_is_not_at_the_skirmish_province()
+    {
+        $diffProvince = Province::query()->where('id', '!=', $this->quest->id)->inRandomOrder()->first();
+        $this->squad->province_id = $diffProvince->id;
+        $this->squad->save();
+        $this->squad = $this->squad->fresh();
+
+        try {
+
+            /** @var AddSkirmishToCampaignStopAction $domainAction */
+            $domainAction = app(AddSkirmishToCampaignStopAction::class);
+            $domainAction->execute($this->campaignStop, $this->skirmish);
+
+        } catch (CampaignStopException $exception) {
+
+            $this->assertEquals(CampaignStopException::CODE_SQUAD_NOT_IN_QUEST_PROVINCE, $exception->getCode());
+            return;
+        }
+
+        $this->fail("Exception not thrown");
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_throw_an_exception_if_the_max_skirmish_count_has_already_been_reached()
+    {
+        try {
+
+            $squadMock = \Mockery::mock($this->squad)
+                ->shouldReceive('getSkirmishesPerQuest')
+                ->andReturn(0)->getMock();
+
+            // set the relation prop to the mock
+            $this->campaignStop->campaign->squad = $squadMock;
+
+            /** @var AddSkirmishToCampaignStopAction $domainAction */
+            $domainAction = app(AddSkirmishToCampaignStopAction::class);
+            $domainAction->execute($this->campaignStop, $this->skirmish);
+
+        } catch (CampaignStopException $exception) {
+
+            $this->assertEquals(CampaignStopException::CODE_SKIRMISH_LIMIT_REACHED, $exception->getCode());
             return;
         }
 
