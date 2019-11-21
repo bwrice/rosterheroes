@@ -4,6 +4,7 @@ namespace App\Projectors;
 
 use App\Domain\Models\CampaignStop;
 use App\StorableEvents\CampaignStopCreated;
+use App\StorableEvents\SkirmishAddedToCampaignStop;
 use Spatie\EventSourcing\Projectors\Projector;
 use Spatie\EventSourcing\Projectors\ProjectsEvents;
 
@@ -19,5 +20,11 @@ final class CampaignStopProjector implements Projector
             'quest_id' => $event->questID,
             'province_id' => $event->provinceID
         ]);
+    }
+
+    public function onSkirmishAddedToCampaignStop(SkirmishAddedToCampaignStop $event, string $aggregateUuid)
+    {
+        $campaignStop = CampaignStop::findUuidOrFail($aggregateUuid);
+        $campaignStop->skirmishes()->attach($event->skirmishID);
     }
 }
