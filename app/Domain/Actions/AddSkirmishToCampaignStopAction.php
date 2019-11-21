@@ -29,7 +29,8 @@ class AddSkirmishToCampaignStopAction
         $this->skirmish = $skirmish;
         $this->validateWeek();
         $this->validateQuestMatches();
-        $this->validateSquadLocation();;
+        $this->validateSquadLocation();
+        $this->validateMaxSkirmishCount();
     }
 
     protected function validateWeek()
@@ -57,6 +58,16 @@ class AddSkirmishToCampaignStopAction
         if ($this->campaignStop->campaign->squad->province_id !== $this->skirmish->quest->province_id) {
             $message = $squad->name . " must be at province: " . $quest->province->name . " to add skirmish";
             throw (new CampaignStopException($message, CampaignStopException::CODE_SQUAD_NOT_IN_QUEST_PROVINCE))
+                ->setCampaignStop($this->campaignStop)
+                ->setSkirmish($this->skirmish);
+        }
+    }
+
+    protected function validateMaxSkirmishCount()
+    {
+        if ($this->campaignStop->skirmishes()->count() >= $this->campaignStop->campaign->squad->getSkirmishesPerQuest()) {
+            $message = "Skirmish limit reached for " . $this->campaignStop->quest->name;
+            throw (new CampaignStopException($message, CampaignStopException::CODE_SKIRMISH_LIMIT_REACHED))
                 ->setCampaignStop($this->campaignStop)
                 ->setSkirmish($this->skirmish);
         }
