@@ -83,7 +83,7 @@ class AddSkirmishToCampaignStopActionTest extends TestCase
 
         } catch (CampaignStopException $exception) {
 
-            $this->assertEquals(CampaignException::CODE_WEEK_LOCKED, $exception->getCode());
+            $this->assertEquals(CampaignStopException::CODE_WEEK_LOCKED, $exception->getCode());
             return;
         }
 
@@ -95,6 +95,23 @@ class AddSkirmishToCampaignStopActionTest extends TestCase
      */
     public function it_will_throw_an_exception_if_the_skirmish_does_not_belong_to_the_quest()
     {
+        $quest = factory(Quest::class)->create();
+        $this->skirmish->quest_id = $quest->id;
+        $this->skirmish->save();
+        $this->skirmish = $this->skirmish->fresh();
 
+        try {
+
+            /** @var AddSkirmishToCampaignStopAction $domainAction */
+            $domainAction = app(AddSkirmishToCampaignStopAction::class);
+            $domainAction->execute($this->campaignStop, $this->skirmish);
+
+        } catch (CampaignStopException $exception) {
+
+            $this->assertEquals(CampaignStopException::CODE_INVALID_SKIRMISH, $exception->getCode());
+            return;
+        }
+
+        $this->fail("Exception not thrown");
     }
 }
