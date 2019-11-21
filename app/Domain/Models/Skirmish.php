@@ -6,6 +6,7 @@ use App\Domain\Collections\MinionCollection;
 use App\Domain\Collections\SkirmishCollection;
 use App\Domain\Models\Quest;
 use App\Domain\Traits\HasNameSlug;
+use App\Domain\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -25,6 +26,8 @@ use Illuminate\Database\Eloquent\Model;
 class Skirmish extends Model
 {
     protected $guarded = [];
+
+    use HasUuid;
 
     public function newCollection(array $models = [])
     {
