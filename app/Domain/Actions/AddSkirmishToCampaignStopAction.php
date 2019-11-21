@@ -29,6 +29,7 @@ class AddSkirmishToCampaignStopAction
         $this->skirmish = $skirmish;
         $this->validateWeek();
         $this->validateQuestMatches();
+        $this->validateSquadLocation();;
     }
 
     protected function validateWeek()
@@ -44,6 +45,18 @@ class AddSkirmishToCampaignStopAction
     {
         if ($this->skirmish->quest_id !== $this->campaignStop->quest_id) {
             throw (new CampaignStopException("Skirmish does not belong to the quest", CampaignStopException::CODE_INVALID_SKIRMISH))
+                ->setCampaignStop($this->campaignStop)
+                ->setSkirmish($this->skirmish);
+        }
+    }
+
+    protected function validateSquadLocation()
+    {
+        $squad = $this->campaignStop->campaign->squad;
+        $quest = $this->skirmish->quest;
+        if ($this->campaignStop->campaign->squad->province_id !== $this->skirmish->quest->province_id) {
+            $message = $squad->name . " must be at province: " . $quest->province->name . " to add skirmish";
+            throw (new CampaignStopException($message, CampaignStopException::CODE_SQUAD_NOT_IN_QUEST_PROVINCE))
                 ->setCampaignStop($this->campaignStop)
                 ->setSkirmish($this->skirmish);
         }
