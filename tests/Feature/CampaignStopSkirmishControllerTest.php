@@ -80,4 +80,36 @@ class CampaignStopSkirmishControllerTest extends TestCase
         ]);
         $response->assertStatus(403);
     }
+
+    /**
+     * @test
+     */
+    public function it_will_return_an_updated_campaign_response_with_skirmish_for_campaign_stop()
+    {
+        $this->withoutExceptionHandling();
+
+        Passport::actingAs($this->squad->user);
+
+        $campaignStopUuid = $this->campaignStop->uuid;
+        $skirmishUuid = $this->skirmish->uuid;
+
+        $response = $this->json('POST', 'api/v1/campaign-stops/' . $campaignStopUuid . '/skirmishes', [
+            'skirmishUuid' => $skirmishUuid
+        ]);
+
+        $response->assertStatus(200)
+            ->assertJson([
+                'data' => [
+                    'uuid' => $this->campaign->uuid,
+                    'campaignStops' => [
+                        [
+                            'uuid' => $this->campaignStop->uuid,
+                            'skirmishUuids' => [
+                                $this->skirmish->uuid
+                            ]
+                        ]
+                    ]
+                ]
+            ]);
+    }
 }
