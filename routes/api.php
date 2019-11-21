@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CampaignStopSkirmishController;
 use App\Http\Controllers\CombatPositionController;
 use App\Http\Controllers\ContinentController;
 use App\Http\Controllers\CurrentCampaignController;
@@ -155,6 +156,8 @@ Route::prefix('v1')->group(function () {
             Route::post('{heroSlug}/remove-spell', RemoveSpellController::class);
         });
 
-        Route::post('/campaign/{campaign}/quest/{questUuid}', [CampaignQuestController::class, 'store']);
+        Route::prefix('campaign-stops')->group(function () {
+            Route::post('{stopUuid}/skirmishes', [CampaignStopSkirmishController::class, 'store']);
+        });
     });
 });
