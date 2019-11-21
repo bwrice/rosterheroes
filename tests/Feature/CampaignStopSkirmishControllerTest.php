@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Domain\Actions\AddSkirmishToCampaignStopAction;
 use App\Domain\Models\Campaign;
 use App\Domain\Models\CampaignStop;
 use App\Domain\Models\Quest;
@@ -9,6 +10,7 @@ use App\Domain\Models\Skirmish;
 use App\Domain\Models\Squad;
 use App\Domain\Models\User;
 use App\Domain\Models\Week;
+use App\Exceptions\CampaignStopException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -84,10 +86,33 @@ class CampaignStopSkirmishControllerTest extends TestCase
     /**
      * @test
      */
+    public function it_will_throw_a_validation_error_if_a_campaign_stop_exception_is_caught()
+    {
+        Passport::actingAs($this->squad->user);
+
+        $campaignStopUuid = $this->campaignStop->uuid;
+        $skirmishUuid = $this->skirmish->uuid;
+
+        $mock = \Mockery::mock(app(AddSkirmishToCampaignStopAction::class))
+            ->shouldReceive('execute')
+            ->andThrow(new CampaignStopException())->getMock();
+
+        // Use the mock when retrieving from the container
+        app()->instance(AddSkirmishToCampaignStopAction::class, $mock);
+
+        $response = $this->json('POST', 'api/v1/campaign-stops/' . $campaignStopUuid . '/skirmishes', [
+            'skirmishUuid' => $skirmishUuid
+        ]);
+        $response->assertStatus(422)->assertJsonValidationErrors([
+            'campaign'
+        ]);
+    }
+
+    /**
+     * @test
+     */
     public function it_will_return_an_updated_campaign_response_with_skirmish_for_campaign_stop()
     {
-        $this->withoutExceptionHandling();
-
         Passport::actingAs($this->squad->user);
 
         $campaignStopUuid = $this->campaignStop->uuid;
