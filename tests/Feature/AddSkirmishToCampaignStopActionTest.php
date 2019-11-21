@@ -167,4 +167,20 @@ class AddSkirmishToCampaignStopActionTest extends TestCase
 
         $this->fail("Exception not thrown");
     }
+
+    /**
+     * @test
+     */
+    public function it_will_add_a_skirmish_to_a_campaign_stop_with_no_skirmishes()
+    {
+        $this->assertEquals(0, $this->campaignStop->skirmishes()->count());
+
+        /** @var AddSkirmishToCampaignStopAction $domainAction */
+        $domainAction = app(AddSkirmishToCampaignStopAction::class);
+        $domainAction->execute($this->campaignStop, $this->skirmish);
+
+        $skirmishes = $this->campaignStop->fresh()->skirmishes;
+        $this->assertEquals(1, $skirmishes->count());
+    }
+
 }
