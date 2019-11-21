@@ -28,12 +28,22 @@ class AddSkirmishToCampaignStopAction
         $this->campaignStop = $campaignStop;
         $this->skirmish = $skirmish;
         $this->validateWeek();
+        $this->validateSkirmish();
     }
 
     protected function validateWeek()
     {
         if (! $this->week->adventuringOpen()) {
-            throw (new CampaignStopException("Week is currently locked", CampaignException::CODE_WEEK_LOCKED))
+            throw (new CampaignStopException("Week is currently locked", CampaignStopException::CODE_WEEK_LOCKED))
+                ->setCampaignStop($this->campaignStop)
+                ->setSkirmish($this->skirmish);
+        }
+    }
+
+    protected function validateSkirmish()
+    {
+        if ($this->skirmish->quest_id !== $this->campaignStop->quest_id) {
+            throw (new CampaignStopException("Skirmish does not belong to Quest", CampaignStopException::CODE_INVALID_SKIRMISH))
                 ->setCampaignStop($this->campaignStop)
                 ->setSkirmish($this->skirmish);
         }

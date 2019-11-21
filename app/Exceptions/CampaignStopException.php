@@ -9,6 +9,8 @@ use App\Domain\Models\Skirmish;
 
 class CampaignStopException extends CampaignException
 {
+    public const CODE_INVALID_SKIRMISH = 21;
+
     /** @var CampaignStop */
     protected $campaignStop;
 
