@@ -4,6 +4,7 @@
 namespace App\Domain\Actions;
 
 
+use App\Aggregates\CampaignStopAggregate;
 use App\Domain\Models\Campaign;
 use App\Domain\Models\CampaignStop;
 use App\Domain\Models\Skirmish;
@@ -27,10 +28,15 @@ class AddSkirmishToCampaignStopAction
         $this->week = Week::current();
         $this->campaignStop = $campaignStop;
         $this->skirmish = $skirmish;
+
         $this->validateWeek();
         $this->validateQuestMatches();
         $this->validateSquadLocation();
         $this->validateMaxSkirmishCount();
+
+        /** @var CampaignStopAggregate $aggregate */
+        $aggregate = CampaignStopAggregate::retrieve($campaignStop->uuid);
+        $aggregate->addSkirmish($skirmish->id)->persist();
     }
 
     protected function validateWeek()

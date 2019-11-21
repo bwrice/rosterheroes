@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  * Class Skirmish
  * @package App
  *
+ * @property int $id
  * @property int $quest_id
  * @property string $uuid
  * @property string $name
