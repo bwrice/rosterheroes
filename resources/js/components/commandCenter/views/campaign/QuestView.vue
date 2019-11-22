@@ -26,7 +26,7 @@
         </v-row>
         <v-row>
             <v-col v-for="(skirmish, uuid) in quest.skirmishes" :key="uuid" cols="12" sm="6" lg="4" xl="3">
-                <SkirmishCard :skirmish="skirmish"></SkirmishCard>
+                <SkirmishCard :skirmish="skirmish" :quest="quest"></SkirmishCard>
             </v-col>
         </v-row>
     </v-container>

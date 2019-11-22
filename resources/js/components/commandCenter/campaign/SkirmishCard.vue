@@ -25,12 +25,25 @@
                 </v-carousel-item>
             </v-carousel>
         </v-row>
+        <v-row no-gutters justify="end">
+            <v-btn
+                color="primary"
+                class="mt-2"
+            >
+                Add Skirmish
+            </v-btn>
+        </v-row>
     </v-sheet>
 </template>
 
 <script>
+
+    import {mapGetters} from 'vuex';
+    import {mapActions} from 'vuex';
+
     import Skirmish from "../../../models/Skirmish";
     import MinionPanel from "../views/campaign/MinionPanel";
+    import Quest from "../../../models/Quest";
 
     export default {
         name: "SkirmishCard",
@@ -40,9 +53,27 @@
                 type: Skirmish,
                 required: true
             },
+            quest: {
+                type: Quest,
+                required: true
+            },
             height: {
                 type: Number,
                 default: 300
+            }
+        },
+        computed: {
+            ...mapGetters([
+                '_enlistedForQuest',
+                '_squadSkirmishes'
+            ]),
+            canAddSkirmish() {
+
+            },
+            hasSkirmish() {
+                let localSkirmish = this.skirmish;
+                let match = this._squadSkirmishes.find(skirmish => skirmish.uuid === localSkirmish.uuid);
+                return match !== undefined;
             }
         }
     }
