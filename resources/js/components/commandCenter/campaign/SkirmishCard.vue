@@ -27,8 +27,17 @@
         </v-row>
         <v-row no-gutters justify="end">
             <v-btn
+                v-if="hasSkirmish"
+                color="error"
+                class="mt-2"
+            >
+                Remove Skirmish
+            </v-btn>
+            <v-btn
+                v-else
                 color="primary"
                 class="mt-2"
+                :disabled="! canAddSkirmish"
             >
                 Add Skirmish
             </v-btn>
@@ -64,16 +73,19 @@
         },
         computed: {
             ...mapGetters([
-                '_enlistedForQuest',
+                '_matchingCampaignStop',
                 '_squadSkirmishes'
             ]),
             canAddSkirmish() {
-
+                return (this.campaignStop !== undefined && ! this.hasSkirmish);
+            },
+            campaignStop() {
+                return this._matchingCampaignStop(this.quest.uuid);
             },
             hasSkirmish() {
                 let localSkirmish = this.skirmish;
-                let match = this._squadSkirmishes.find(skirmish => skirmish.uuid === localSkirmish.uuid);
-                return match !== undefined;
+                let matchingSkirmish = this._squadSkirmishes.find(skirmish => skirmish.uuid === localSkirmish.uuid);
+                return matchingSkirmish !== undefined;
             }
         }
     }
