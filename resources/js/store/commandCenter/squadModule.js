@@ -59,12 +59,11 @@ export default {
             }, 0);
             return state.squad.spiritEssence - essenceUsed;
         },
-        _enlistedForQuest: (state) => (questUuid) => {
+        _matchingCampaignStop: (state) => (questUuid) => {
             if (! state.currentCampaign) {
                 return false;
             }
-            let match = state.currentCampaign.campaignStops.find(campaignStop => campaignStop.questUuid === questUuid);
-            return match !== undefined;
+            return state.currentCampaign.campaignStops.find(campaignStop => campaignStop.questUuid === questUuid);
         },
         _squadSkirmishes(state) {
             let campaign = state.currentCampaign;
@@ -72,7 +71,8 @@ export default {
             if (! campaign) {
                 return skirmishes;
             }
-            return campaign.campaignStops.forEach(campaignStop => _.merge(skirmishes, campaignStop.skirmishes));
+            campaign.campaignStops.forEach(campaignStop => _.merge(skirmishes, campaignStop.skirmishes));
+            return skirmishes;
         }
     },
     mutations: {

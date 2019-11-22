@@ -55,7 +55,7 @@
             ...mapGetters([
                 '_currentLocationQuestBySlug',
                 '_currentCampaign',
-                '_enlistedForQuest',
+                '_matchingCampaignStop',
                 '_squad'
             ]),
             quest() {
@@ -63,7 +63,7 @@
                 return this._currentLocationQuestBySlug(slug);
             },
             enlisted() {
-                return this._enlistedForQuest(this.quest.uuid)
+                return (this._matchingCampaignStop(this.quest.uuid) !== undefined);
             },
             canEnlist() {
                 if (! this._currentCampaign) {
