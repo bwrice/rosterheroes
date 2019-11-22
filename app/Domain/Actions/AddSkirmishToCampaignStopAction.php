@@ -30,7 +30,7 @@ class AddSkirmishToCampaignStopAction
         $this->skirmish = $skirmish;
 
         $this->validateWeek();
-        $this->validateQuestMatches();
+        $this->validateSkirmish();
         $this->validateSquadLocation();
         $this->validateMaxSkirmishCount();
 
@@ -48,10 +48,20 @@ class AddSkirmishToCampaignStopAction
         }
     }
 
-    protected function validateQuestMatches()
+    protected function validateSkirmish()
     {
         if ($this->skirmish->quest_id !== $this->campaignStop->quest_id) {
             throw (new CampaignStopException("Skirmish does not belong to the quest", CampaignStopException::CODE_INVALID_SKIRMISH))
+                ->setCampaignStop($this->campaignStop)
+                ->setSkirmish($this->skirmish);
+        }
+
+        $skirmishIDs = $this->campaignStop->skirmishes->map(function (Skirmish $skirmish) {
+            return $skirmish->id;
+        })->values()->toArray();
+
+        if (in_array($this->skirmish->id, $skirmishIDs)) {
+            throw (new CampaignStopException("Skirmish already added", CampaignStopException::CODE_SKIRMISH_ALREADY_ADDED))
                 ->setCampaignStop($this->campaignStop)
                 ->setSkirmish($this->skirmish);
         }
