@@ -65,6 +65,14 @@ export default {
             }
             let match = state.currentCampaign.campaignStops.find(campaignStop => campaignStop.questUuid === questUuid);
             return match !== undefined;
+        },
+        _squadSkirmishes(state) {
+            let campaign = state.currentCampaign;
+            let skirmishes = [];
+            if (! campaign) {
+                return skirmishes;
+            }
+            return campaign.campaignStops.forEach(campaignStop => _.merge(skirmishes, campaignStop.skirmishes));
         }
     },
     mutations: {
