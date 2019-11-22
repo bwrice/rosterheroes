@@ -171,6 +171,28 @@ class AddSkirmishToCampaignStopActionTest extends TestCase
     /**
      * @test
      */
+    public function it_will_throw_an_exception_if_the_campaign_stop_already_has_the_skirmish()
+    {
+        try {
+
+            $this->campaignStop->skirmishes()->attach($this->skirmish->id);
+
+            /** @var AddSkirmishToCampaignStopAction $domainAction */
+            $domainAction = app(AddSkirmishToCampaignStopAction::class);
+            $domainAction->execute($this->campaignStop->fresh(), $this->skirmish->fresh());
+
+        } catch (CampaignStopException $exception) {
+
+            $this->assertEquals(CampaignStopException::CODE_SKIRMISH_ALREADY_ADDED, $exception->getCode());
+            return;
+        }
+
+        $this->fail("Exception not thrown");
+    }
+
+    /**
+     * @test
+     */
     public function it_will_add_a_skirmish_to_a_campaign_stop_with_no_skirmishes()
     {
         $this->assertEquals(0, $this->campaignStop->skirmishes()->count());
