@@ -38,6 +38,7 @@
                 color="primary"
                 class="mt-2"
                 :disabled="! canAddSkirmish"
+                @click="addSkirmish"
             >
                 Add Skirmish
             </v-btn>
@@ -71,13 +72,18 @@
                 default: 300
             }
         },
+        data() {
+            return {
+                pending: false
+            }
+        },
         computed: {
             ...mapGetters([
                 '_matchingCampaignStop',
                 '_squadSkirmishes'
             ]),
             canAddSkirmish() {
-                return (this.campaignStop !== undefined && ! this.hasSkirmish);
+                return (this.campaignStop !== undefined && ! this.hasSkirmish && ! this.pending);
             },
             campaignStop() {
                 return this._matchingCampaignStop(this.quest.uuid);
@@ -86,6 +92,19 @@
                 let localSkirmish = this.skirmish;
                 let matchingSkirmish = this._squadSkirmishes.find(skirmish => skirmish.uuid === localSkirmish.uuid);
                 return matchingSkirmish !== undefined;
+            }
+        },
+        methods: {
+            ...mapActions([
+                'addSkirmishToCampaignStop'
+            ]),
+            async addSkirmish() {
+                this.pending = true;
+                await this.addSkirmishToCampaignStop({
+                    campaignStop: this.campaignStop,
+                    skirmish: this.skirmish
+                });
+                this.pending = false;
             }
         }
     }

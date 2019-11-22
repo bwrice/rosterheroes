@@ -33,7 +33,7 @@ class CampaignStopSkirmishController extends Controller
         $this->authorize(SquadPolicy::MANAGE, $campaignStop->campaign->squad);
 
         /** @var Skirmish $skirmish */
-        $skirmish = Skirmish::uuid($request->skirmishUuid)->with([
+        $skirmish = Skirmish::uuid($request->skirmish)->with([
             'quest'
         ])->firstOrFail();
 
