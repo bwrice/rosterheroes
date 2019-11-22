@@ -1,5 +1,6 @@
 import * as squadApi from '../../api/squadApi';
 import * as heroApi from '../../api/heroApi';
+import * as campaignStopApi from '../../api/campaignStopApi';
 import * as helpers from '../../helpers/vuexHelpers';
 import Hero from "../../models/Hero";
 import MobileStorage from "../../models/MobileStorage";
@@ -281,6 +282,22 @@ export default {
                 let updateCampaign = new Campaign(campaignResponse.data);
                 commit('SET_CURRENT_CAMPAIGN', updateCampaign);
                 let text = quest.name + ' added to campaign';
+                dispatch('snackBarSuccess', {
+                    text: text,
+                    timeout: 3000
+                })
+
+            } catch (e) {
+                helpers.handleResponseErrors(e, 'campaign', dispatch);
+            }
+        },
+
+        async addSkirmishToCampaignStop({state, commit, dispatch}, {campaignStop, skirmish}) {
+            try {
+                let campaignResponse = await campaignStopApi.addSkirmish(campaignStop.uuid, skirmish.uuid);
+                let updateCampaign = new Campaign(campaignResponse.data);
+                commit('SET_CURRENT_CAMPAIGN', updateCampaign);
+                let text = skirmish.name + ' added to campaign';
                 dispatch('snackBarSuccess', {
                     text: text,
                     timeout: 3000
