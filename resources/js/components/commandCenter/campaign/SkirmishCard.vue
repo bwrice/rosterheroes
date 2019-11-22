@@ -80,7 +80,7 @@
         computed: {
             ...mapGetters([
                 '_matchingCampaignStop',
-                '_squadSkirmishes'
+                '_squadSkirmishUuids'
             ]),
             canAddSkirmish() {
                 return (this.campaignStop !== undefined && ! this.hasSkirmish && ! this.pending);
@@ -90,7 +90,7 @@
             },
             hasSkirmish() {
                 let localSkirmish = this.skirmish;
-                let matchingSkirmish = this._squadSkirmishes.find(skirmish => skirmish.uuid === localSkirmish.uuid);
+                let matchingSkirmish = this._squadSkirmishUuids.find(uuid => uuid === localSkirmish.uuid);
                 return matchingSkirmish !== undefined;
             }
         },
