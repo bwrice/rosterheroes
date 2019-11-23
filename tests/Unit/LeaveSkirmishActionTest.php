@@ -125,5 +125,19 @@ class LeaveSkirmishActionTest extends TestCase
         $this->fail("Exception not thrown");
     }
 
+    /**
+     * @test
+     */
+    public function it_will_leave_a_skirmish()
+    {
+        $this->assertEquals(1, $this->campaignStop->skirmishes()->count());
+
+        /** @var LeaveSkirmishAction $domainAction */
+        $domainAction = app(LeaveSkirmishAction::class);
+        $domainAction->execute($this->campaignStop->fresh(), $this->skirmish);
+
+        $this->assertEquals(0, $this->campaignStop->fresh()->skirmishes()->count());
+    }
+
 
 }
