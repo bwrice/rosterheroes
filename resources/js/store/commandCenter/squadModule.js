@@ -316,6 +316,22 @@ export default {
             } catch (e) {
                 helpers.handleResponseErrors(e, 'campaign', dispatch);
             }
+        },
+
+        async removeSkirmishFromCampaignStop({state, commit, dispatch}, {campaignStop, skirmish}) {
+            try {
+                let campaignResponse = await campaignStopApi.leaveSkirmish(campaignStop.uuid, skirmish.uuid);
+                let updateCampaign = new Campaign(campaignResponse.data);
+                commit('SET_CURRENT_CAMPAIGN', updateCampaign);
+                let text = skirmish.name + ' removed from campaign';
+                dispatch('snackBarSuccess', {
+                    text: text,
+                    timeout: 3000
+                })
+
+            } catch (e) {
+                helpers.handleResponseErrors(e, 'campaign', dispatch);
+            }
         }
     },
 };
