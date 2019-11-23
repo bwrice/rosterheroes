@@ -12,7 +12,7 @@ use App\Domain\Models\Week;
 use App\Exceptions\CampaignException;
 use App\Exceptions\CampaignStopException;
 
-class AddSkirmishToCampaignStopAction
+class AddSkirmishToCampaignStopAction extends CampaignStopAction
 {
     /** @var Week */
     protected $week;
@@ -25,10 +25,7 @@ class AddSkirmishToCampaignStopAction
 
     public function execute(CampaignStop $campaignStop, Skirmish $skirmish)
     {
-        $this->week = Week::current();
-        $this->campaignStop = $campaignStop;
-        $this->skirmish = $skirmish;
-
+        $this->setProperties($campaignStop, $skirmish);
         $this->validateWeek();
         $this->validateSkirmish();
         $this->validateSquadLocation();
@@ -37,15 +34,6 @@ class AddSkirmishToCampaignStopAction
         /** @var CampaignStopAggregate $aggregate */
         $aggregate = CampaignStopAggregate::retrieve($campaignStop->uuid);
         $aggregate->addSkirmish($skirmish->id)->persist();
-    }
-
-    protected function validateWeek()
-    {
-        if (! $this->week->adventuringOpen()) {
-            throw (new CampaignStopException("Week is currently locked", CampaignStopException::CODE_WEEK_LOCKED))
-                ->setCampaignStop($this->campaignStop)
-                ->setSkirmish($this->skirmish);
-        }
     }
 
     protected function validateSkirmish()
