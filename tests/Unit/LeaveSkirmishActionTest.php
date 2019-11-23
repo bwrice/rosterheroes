@@ -106,4 +106,24 @@ class LeaveSkirmishActionTest extends TestCase
         }
         $this->fail("Exception not thrown");
     }
+
+    /**
+     * @test
+     */
+    public function it_will_throw_an_exception_if_the_skirmish_does_not_belong_to_the_campaign_stop()
+    {
+        $this->campaignStop->skirmishes()->sync([]);
+
+        try {
+            /** @var LeaveSkirmishAction $domainAction */
+            $domainAction = app(LeaveSkirmishAction::class);
+            $domainAction->execute($this->campaignStop->fresh(), $this->skirmish);
+        } catch (CampaignStopException $exception) {
+            $this->assertEquals(CampaignStopException::CODE_SKIRMISH_NOT_ADDED, $exception->getCode());
+            return;
+        }
+        $this->fail("Exception not thrown");
+    }
+
+
 }
