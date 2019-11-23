@@ -158,6 +158,7 @@ Route::prefix('v1')->group(function () {
 
         Route::prefix('campaign-stops')->group(function () {
             Route::post('{stopUuid}/skirmishes', [CampaignStopSkirmishController::class, 'store']);
+            Route::delete('{stopUuid}/skirmishes', [CampaignStopSkirmishController::class, 'delete']);
         });
     });
 });
