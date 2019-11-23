@@ -78,7 +78,7 @@ class CampaignStopSkirmishControllerTest extends TestCase
         $skirmishUuid = $this->skirmish->uuid;
 
         $response = $this->json('POST', 'api/v1/campaign-stops/' . $campaignStopUuid . '/skirmishes', [
-            'skirmishUuid' => $skirmishUuid
+            'skirmish' => $skirmishUuid
         ]);
         $response->assertStatus(403);
     }
@@ -101,7 +101,7 @@ class CampaignStopSkirmishControllerTest extends TestCase
         app()->instance(AddSkirmishToCampaignStopAction::class, $mock);
 
         $response = $this->json('POST', 'api/v1/campaign-stops/' . $campaignStopUuid . '/skirmishes', [
-            'skirmishUuid' => $skirmishUuid
+            'skirmish' => $skirmishUuid
         ]);
         $response->assertStatus(422)->assertJsonValidationErrors([
             'campaign'
@@ -111,7 +111,7 @@ class CampaignStopSkirmishControllerTest extends TestCase
     /**
      * @test
      */
-    public function it_will_return_an_updated_campaign_response_with_skirmish_for_campaign_stop()
+    public function it_will_add_a_skirmish_and_return_an_updated_campaign_stop()
     {
         Passport::actingAs($this->squad->user);
 
@@ -119,7 +119,7 @@ class CampaignStopSkirmishControllerTest extends TestCase
         $skirmishUuid = $this->skirmish->uuid;
 
         $response = $this->json('POST', 'api/v1/campaign-stops/' . $campaignStopUuid . '/skirmishes', [
-            'skirmishUuid' => $skirmishUuid
+            'skirmish' => $skirmishUuid
         ]);
 
         $response->assertStatus(200)
@@ -136,5 +136,39 @@ class CampaignStopSkirmishControllerTest extends TestCase
                     ]
                 ]
             ]);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_leave_a_skirmish_and_return_an_updated_campaign_stop()
+    {
+        $this->campaignStop->skirmishes()->attach($this->skirmish->id);
+
+        Passport::actingAs($this->squad->user);
+
+        $campaignStopUuid = $this->campaignStop->uuid;
+        $skirmishUuid = $this->skirmish->uuid;
+
+        $response = $this->json('DELETE', 'api/v1/campaign-stops/' . $campaignStopUuid . '/skirmishes', [
+            'skirmish' => $skirmishUuid
+        ]);
+
+        $response->assertStatus(200)
+            ->assertJson([
+                'data' => [
+                    'uuid' => $this->campaign->uuid,
+                    'campaignStops' => [
+                        [
+                            'uuid' => $this->campaignStop->uuid,
+                            'skirmishUuids' => [
+                                // No skirmishes left
+                            ]
+                        ]
+                    ]
+                ]
+            ]);
+
+        $this->assertEquals(0, $this->campaignStop->fresh()->skirmishes()->count());
     }
 }
