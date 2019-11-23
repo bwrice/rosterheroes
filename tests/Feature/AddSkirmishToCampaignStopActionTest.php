@@ -109,7 +109,7 @@ class AddSkirmishToCampaignStopActionTest extends TestCase
 
         } catch (CampaignStopException $exception) {
 
-            $this->assertEquals(CampaignStopException::CODE_INVALID_SKIRMISH, $exception->getCode());
+            $this->assertEquals(CampaignStopException::CODE_QUEST_NON_MATCH, $exception->getCode());
             return;
         }
 

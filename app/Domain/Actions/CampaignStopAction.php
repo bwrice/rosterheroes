@@ -35,4 +35,13 @@ abstract class CampaignStopAction
                 ->setSkirmish($this->skirmish);
         }
     }
+
+    protected function validateQuestMatches()
+    {
+        if ($this->skirmish->quest_id !== $this->campaignStop->quest_id) {
+            throw (new CampaignStopException("Skirmish does not belong to the quest", CampaignStopException::CODE_QUEST_NON_MATCH))
+                ->setCampaignStop($this->campaignStop)
+                ->setSkirmish($this->skirmish);
+        }
+    }
 }
