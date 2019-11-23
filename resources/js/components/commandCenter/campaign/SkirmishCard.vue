@@ -30,6 +30,7 @@
                 v-if="hasSkirmish"
                 color="error"
                 class="mt-2"
+                @click="leaveSkirmish"
             >
                 Remove Skirmish
             </v-btn>
@@ -96,11 +97,20 @@
         },
         methods: {
             ...mapActions([
-                'addSkirmishToCampaignStop'
+                'addSkirmishToCampaignStop',
+                'removeSkirmishFromCampaignStop'
             ]),
             async addSkirmish() {
                 this.pending = true;
                 await this.addSkirmishToCampaignStop({
+                    campaignStop: this.campaignStop,
+                    skirmish: this.skirmish
+                });
+                this.pending = false;
+            },
+            async leaveSkirmish() {
+                this.pending = true;
+                await this.removeSkirmishFromCampaignStop({
                     campaignStop: this.campaignStop,
                     skirmish: this.skirmish
                 });
