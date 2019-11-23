@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Domain\Actions\AddSkirmishToCampaignStopAction;
+use App\Domain\Actions\LeaveSkirmishAction;
 use App\Domain\Models\CampaignStop;
 use App\Domain\Models\Skirmish;
 use App\Exceptions\CampaignStopException;
@@ -23,6 +24,37 @@ class CampaignStopSkirmishController extends Controller
      */
     public function store($stopUuid, Request $request, AddSkirmishToCampaignStopAction $domainAction)
     {
+        return $this->handleRequest($stopUuid, $request, function (CampaignStop $campaignStop, Skirmish $skirmish) use ($domainAction) {
+            $domainAction->execute($campaignStop, $skirmish);
+        });
+    }
+
+    /**
+     * @param $stopUuid
+     * @param Request $request
+     * @param LeaveSkirmishAction $domainAction
+     * @return CampaignResource
+     * @throws ValidationException
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function delete($stopUuid, Request $request, LeaveSkirmishAction $domainAction)
+    {
+        return $this->handleRequest($stopUuid, $request, function (CampaignStop $campaignStop, Skirmish $skirmish) use ($domainAction) {
+            $domainAction->execute($campaignStop, $skirmish);
+        });
+    }
+
+
+    /**
+     * @param string $stopUuid
+     * @param Request $request
+     * @param callable $callable
+     * @return CampaignResource
+     * @throws ValidationException
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    protected function handleRequest(string $stopUuid, Request $request, callable $callable)
+    {
         /** @var CampaignStop $campaignStop */
         $campaignStop = CampaignStop::uuid($stopUuid)->with([
             'campaign.squad',
@@ -38,7 +70,7 @@ class CampaignStopSkirmishController extends Controller
         ])->firstOrFail();
 
         try {
-            $domainAction->execute($campaignStop, $skirmish);
+            $callable($campaignStop, $skirmish);
         } catch (CampaignStopException $exception) {
             throw ValidationException::withMessages([
                 'campaign' => $exception->getMessage()
