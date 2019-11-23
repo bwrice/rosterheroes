@@ -4,6 +4,7 @@ namespace App\Projectors;
 
 use App\Domain\Models\CampaignStop;
 use App\StorableEvents\CampaignStopCreated;
+use App\StorableEvents\SkirmishRemovedFromCampaignStop;
 use App\StorableEvents\SkirmishAddedToCampaignStop;
 use Spatie\EventSourcing\Projectors\Projector;
 use Spatie\EventSourcing\Projectors\ProjectsEvents;
@@ -26,5 +27,11 @@ final class CampaignStopProjector implements Projector
     {
         $campaignStop = CampaignStop::findUuidOrFail($aggregateUuid);
         $campaignStop->skirmishes()->attach($event->skirmishID);
+    }
+
+    public function onSkirmishRemovedFromCampaignStop(SkirmishRemovedFromCampaignStop $event, string $aggregateUuid)
+    {
+        $campaignStop = CampaignStop::findUuidOrFail($aggregateUuid);
+        $campaignStop->skirmishes()->detach($event->skirmishID);
     }
 }
