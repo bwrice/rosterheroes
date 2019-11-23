@@ -9,7 +9,7 @@ use App\Domain\Models\Skirmish;
 
 class CampaignStopException extends CampaignException
 {
-    public const CODE_INVALID_SKIRMISH = 21;
+    public const CODE_QUEST_NON_MATCH = 21;
     public const CODE_SKIRMISH_LIMIT_REACHED = 22;
     public const CODE_SKIRMISH_ALREADY_ADDED = 23;
 

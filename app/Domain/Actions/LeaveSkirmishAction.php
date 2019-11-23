@@ -14,5 +14,6 @@ class LeaveSkirmishAction extends CampaignStopAction
         $this->setProperties($campaignStop, $skirmish);
 
         $this->validateWeek();
+        $this->validateQuestMatches();
     }
 }

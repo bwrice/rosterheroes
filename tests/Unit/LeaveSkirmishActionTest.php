@@ -86,4 +86,24 @@ class LeaveSkirmishActionTest extends TestCase
         }
         $this->fail("Exception not thrown");
     }
+
+    /**
+     * @test
+     */
+    public function the_skirmish_must_belong_to_the_same_quest_as_the_campaign_stop()
+    {
+        $quest = factory(Quest::class)->create();
+        $this->campaignStop->quest_id = $quest->id;
+        $this->campaignStop->save();
+
+        try {
+            /** @var LeaveSkirmishAction $domainAction */
+            $domainAction = app(LeaveSkirmishAction::class);
+            $domainAction->execute($this->campaignStop->fresh(), $this->skirmish);
+        } catch (CampaignStopException $exception) {
+            $this->assertEquals(CampaignStopException::CODE_QUEST_NON_MATCH, $exception->getCode());
+            return;
+        }
+        $this->fail("Exception not thrown");
+    }
 }
