@@ -64,7 +64,8 @@
                 return this._currentLocationQuestBySlug(slug);
             },
             enlisted() {
-                return (this._matchingCampaignStop(this.quest.uuid) !== undefined);
+                let match = this._matchingCampaignStop(this.quest.uuid);
+                return match;
             },
             canEnlist() {
                 if (! this._currentCampaign) {

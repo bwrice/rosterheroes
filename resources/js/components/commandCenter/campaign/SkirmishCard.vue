@@ -84,7 +84,7 @@
                 '_squadSkirmishUuids'
             ]),
             canAddSkirmish() {
-                return (this.campaignStop !== undefined && ! this.hasSkirmish && ! this.pending);
+                return (this.campaignStop && ! this.hasSkirmish && ! this.pending);
             },
             campaignStop() {
                 return this._matchingCampaignStop(this.quest.uuid);
