@@ -2,6 +2,7 @@
 
 namespace App\Domain\Models;
 
+use App\Aggregates\CampaignStopAggregate;
 use App\Domain\Collections\SkirmishCollection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -42,5 +43,12 @@ class CampaignStop extends EventSourcedModel
     public function skirmishes()
     {
         return $this->belongsToMany(Skirmish::class, 'campaign_stop_skirmish', 'stop_id')->withTimestamps();
+    }
+
+    public function getAggregate()
+    {
+        /** @var CampaignStopAggregate $aggregate */
+        $aggregate = CampaignStopAggregate::retrieve($this->uuid);
+        return $aggregate;
     }
 }
