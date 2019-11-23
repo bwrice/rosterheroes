@@ -5,22 +5,23 @@
                 <v-row no-gutters justify="center" align="center">
                     <span class="display-1 rh-op-85 font-weight-bold mx-3 text-center">{{quest.name}}</span>
                 </v-row>
-                <v-row no-gutters justify="center" align="center">
-
-                    <v-btn v-if="enlisted"
-                           block
-                           color="error"
+                <v-row no-gutters align="center" class="mt-2">
+                    <v-col cols="12" md="6" offset-md="3" lg="4" offset-lg="4">
+                        <v-btn v-if="enlisted"
+                               block
+                               color="error"
                         >
-                        Leave Quest
-                    </v-btn>
-                    <v-btn v-else
-                           color="primary"
-                           block
-                           :disabled="! canEnlist"
-                           @click="enlist"
+                            Leave Quest
+                        </v-btn>
+                        <v-btn v-else
+                               color="primary"
+                               block
+                               :disabled="! canEnlist"
+                               @click="enlist"
                         >
-                        Enlist for Quest
-                    </v-btn>
+                            Enlist for Quest
+                        </v-btn>
+                    </v-col>
                 </v-row>
             </v-col>
         </v-row>
