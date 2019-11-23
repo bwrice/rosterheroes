@@ -17,6 +17,8 @@ class LeaveSkirmishAction extends CampaignStopAction
         $this->validateWeek();
         $this->validateQuestMatches();
         $this->validateCampaignStopHasSkirmish();
+
+        $campaignStop->getAggregate()->removeSkirmish($skirmish->id)->persist();
     }
 
     protected function validateCampaignStopHasSkirmish()
