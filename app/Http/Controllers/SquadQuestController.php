@@ -12,7 +12,7 @@ use App\Policies\SquadPolicy;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
-class EnlistForQuestController extends Controller
+class SquadQuestController extends Controller
 {
     /**
      * @param $squadSlug
@@ -22,7 +22,7 @@ class EnlistForQuestController extends Controller
      * @throws ValidationException
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function __invoke($squadSlug, Request $request, EnlistForQuestAction $domainAction)
+    public function store($squadSlug, Request $request, EnlistForQuestAction $domainAction)
     {
         $squad = Squad::findSlugOrFail($squadSlug);
         $this->authorize(SquadPolicy::MANAGE, $squad);
