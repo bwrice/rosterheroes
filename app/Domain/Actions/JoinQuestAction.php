@@ -14,16 +14,8 @@ use App\Domain\Models\Week;
 use App\Exceptions\CampaignException;
 use Illuminate\Support\Str;
 
-class JoinQuestAction
+class JoinQuestAction extends SquadQuestAction
 {
-    /** @var Squad */
-    protected $squad;
-
-    /** @var Quest */
-    protected $quest;
-
-    /** @var Week */
-    protected $week;
 
     /** @var Campaign */
     protected $campaign;
@@ -52,25 +44,6 @@ class JoinQuestAction
         $campaignStopAggregate->createCampaignStop($campaign->id, $this->quest->id, $this->quest->province_id)
             ->persist();
         return CampaignStop::findUuid($uuid);
-    }
-
-    /**
-     * @param Squad $squad
-     * @param Quest $quest
-     */
-    protected function setProperties(Squad $squad, Quest $quest): void
-    {
-        $this->squad = $squad;
-        $this->quest = $quest;
-        $this->week = Week::current();
-    }
-
-    protected function validateWeek(): void
-    {
-        if (!$this->week->adventuringOpen()) {
-            throw (new CampaignException("Week is currently locked", CampaignException::CODE_WEEK_LOCKED))
-                ->setSquad($this->squad);
-        }
     }
 
     protected function validateQuestLocation(): void
