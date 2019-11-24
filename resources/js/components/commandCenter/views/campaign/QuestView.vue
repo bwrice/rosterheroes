@@ -7,7 +7,7 @@
                 </v-row>
                 <v-row no-gutters align="center" class="mt-2">
                     <v-col cols="12" md="6" offset-md="3" lg="4" offset-lg="4">
-                        <v-btn v-if="enlisted"
+                        <v-btn v-if="joined"
                                block
                                color="error"
                         >
@@ -16,10 +16,10 @@
                         <v-btn v-else
                                color="primary"
                                block
-                               :disabled="! canEnlist"
-                               @click="enlist"
+                               :disabled="! canJoin"
+                               @click="join"
                         >
-                            Enlist for Quest
+                            Join Quest
                         </v-btn>
                     </v-col>
                 </v-row>
@@ -44,10 +44,10 @@
         components: {SkirmishCard},
         methods: {
             ...mapActions([
-                'enlistForQuest'
+                'joinQuest'
             ]),
-            enlist() {
-                this.enlistForQuest({
+            join() {
+                this.joinQuest({
                     quest: this.quest
                 });
             }
@@ -63,15 +63,14 @@
                 let slug = this.$route.params.questSlug;
                 return this._currentLocationQuestBySlug(slug);
             },
-            enlisted() {
-                let match = this._matchingCampaignStop(this.quest.uuid);
-                return match;
+            joined() {
+                return this._matchingCampaignStop(this.quest.uuid);
             },
-            canEnlist() {
+            canJoin() {
                 if (! this._currentCampaign) {
                     return true;
                 }
-                if (this.enlisted) {
+                if (this.joined) {
                     return false;
                 }
                 return this._currentCampaign.campaignStops.length < this._squad.questsPerWeek;

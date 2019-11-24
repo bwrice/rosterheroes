@@ -285,10 +285,10 @@ export default {
             }
         },
 
-        async enlistForQuest({state, commit, dispatch}, {quest}) {
+        async joinQuest({state, commit, dispatch}, {quest}) {
             try {
 
-                let campaignResponse = await squadApi.enlistForQuest(state.squad.slug, quest.uuid);
+                let campaignResponse = await squadApi.joinQuest(state.squad.slug, quest.uuid);
                 let updateCampaign = new Campaign(campaignResponse.data);
                 commit('SET_CURRENT_CAMPAIGN', updateCampaign);
                 let text = quest.name + ' added to campaign';
