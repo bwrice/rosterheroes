@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Domain\Actions\EnlistForQuestAction;
+use App\Domain\Actions\JoinQuestAction;
 use App\Domain\Models\Campaign;
 use App\Domain\Models\Quest;
 use App\Domain\Models\Squad;
@@ -17,12 +17,12 @@ class SquadQuestController extends Controller
     /**
      * @param $squadSlug
      * @param Request $request
-     * @param EnlistForQuestAction $domainAction
+     * @param JoinQuestAction $domainAction
      * @return CampaignResource
      * @throws ValidationException
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function store($squadSlug, Request $request, EnlistForQuestAction $domainAction)
+    public function store($squadSlug, Request $request, JoinQuestAction $domainAction)
     {
         $squad = Squad::findSlugOrFail($squadSlug);
         $this->authorize(SquadPolicy::MANAGE, $squad);

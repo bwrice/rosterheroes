@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Domain\Actions\EnlistForQuestAction;
+use App\Domain\Actions\JoinQuestAction;
 use App\Domain\Models\Quest;
 use App\Domain\Models\Squad;
 use App\Domain\Models\User;
@@ -16,7 +16,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class EnlistForQuestControllerTest extends TestCase
+class SquadQuestControllerTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -84,10 +84,10 @@ class EnlistForQuestControllerTest extends TestCase
         Passport::actingAs($this->squad->user);
 
         $message = "exception test";
-        $actionMock = \Mockery::mock(EnlistForQuestAction::class)
+        $actionMock = \Mockery::mock(JoinQuestAction::class)
             ->shouldReceive('execute')->andThrow(new CampaignException($message))->getMock();
         // put the mock into the container
-        app()->instance(EnlistForQuestAction::class, $actionMock);
+        app()->instance(JoinQuestAction::class, $actionMock);
 
         $response = $this->json('POST','/api/v1/squads/' . $this->squad->slug . '/enlist', [
             'quest' => $this->quest->uuid
