@@ -16,10 +16,6 @@ use Illuminate\Support\Str;
 
 class JoinQuestAction extends SquadQuestAction
 {
-
-    /** @var Campaign */
-    protected $campaign;
-
     public function execute(Squad $squad, Quest $quest): CampaignStop
     {
         $this->setProperties($squad, $quest);

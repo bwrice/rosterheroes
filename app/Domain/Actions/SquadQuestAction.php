@@ -4,6 +4,7 @@
 namespace App\Domain\Actions;
 
 
+use App\Domain\Models\Campaign;
 use App\Domain\Models\Quest;
 use App\Domain\Models\Squad;
 use App\Domain\Models\Week;
@@ -19,6 +20,10 @@ abstract class SquadQuestAction
 
     /** @var Week */
     protected $week;
+
+    /** @var Campaign */
+    protected $campaign;
+
 
     /**
      * @param Squad $squad
