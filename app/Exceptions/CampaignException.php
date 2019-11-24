@@ -15,6 +15,8 @@ class CampaignException extends \RuntimeException
     public const CODE_DIFFERENT_CONTINENT = 3;
     public const CODE_MAX_QUESTS_REACHED = 4;
     public const CODE_ALREADY_ENLISTED = 5;
+    public const CODE_NO_CURRENT_CAMPAIGN = 6;
+    public const CODE_QUEST_NOT_IN_CAMPAIGN = 7;
 
     /** @var Squad|null */
     protected $squad;
