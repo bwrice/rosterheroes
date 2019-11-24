@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Domain\Actions\EnlistForQuestAction;
+use App\Domain\Actions\JoinQuestAction;
 use App\Domain\Models\Campaign;
 use App\Domain\Models\CampaignStop;
 use App\Domain\Models\Continent;
@@ -17,7 +17,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class EnlistForQuestActionTest extends TestCase
+class JoinQuestActionTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -53,8 +53,8 @@ class EnlistForQuestActionTest extends TestCase
         Week::setTestCurrent($this->week);
 
         try {
-            /** @var EnlistForQuestAction $domainAction */
-            $domainAction = app(EnlistForQuestAction::class);
+            /** @var JoinQuestAction $domainAction */
+            $domainAction = app(JoinQuestAction::class);
             $domainAction->execute($this->squad, $this->quest);
         } catch (CampaignException $exception) {
             $this->assertEquals($exception->getCode(), CampaignException::CODE_WEEK_LOCKED);
@@ -74,8 +74,8 @@ class EnlistForQuestActionTest extends TestCase
         $this->squad->save();
 
         try {
-            /** @var EnlistForQuestAction $domainAction */
-            $domainAction = app(EnlistForQuestAction::class);
+            /** @var JoinQuestAction $domainAction */
+            $domainAction = app(JoinQuestAction::class);
             $domainAction->execute($this->squad->fresh(), $this->quest);
         } catch (CampaignException $exception) {
             $this->assertEquals($exception->getCode(), CampaignException::CODE_SQUAD_NOT_IN_QUEST_PROVINCE);
@@ -98,8 +98,8 @@ class EnlistForQuestActionTest extends TestCase
         ]);
 
         try {
-            /** @var EnlistForQuestAction $domainAction */
-            $domainAction = app(EnlistForQuestAction::class);
+            /** @var JoinQuestAction $domainAction */
+            $domainAction = app(JoinQuestAction::class);
             $domainAction->execute($this->squad->fresh(), $this->quest);
         } catch (CampaignException $exception) {
             $this->assertEquals($exception->getCode(), CampaignException::CODE_DIFFERENT_CONTINENT);
@@ -124,8 +124,8 @@ class EnlistForQuestActionTest extends TestCase
         $squad = \Mockery::mock($this->squad->fresh())->shouldReceive('getQuestsPerWeek')->andReturn(0)->getMock();
 
         try {
-            /** @var EnlistForQuestAction $domainAction */
-            $domainAction = app(EnlistForQuestAction::class);
+            /** @var JoinQuestAction $domainAction */
+            $domainAction = app(JoinQuestAction::class);
             $domainAction->execute($squad, $this->quest);
         } catch (CampaignException $exception) {
             $this->assertEquals($exception->getCode(), CampaignException::CODE_MAX_QUESTS_REACHED);
@@ -152,8 +152,8 @@ class EnlistForQuestActionTest extends TestCase
         ]);
 
         try {
-            /** @var EnlistForQuestAction $domainAction */
-            $domainAction = app(EnlistForQuestAction::class);
+            /** @var JoinQuestAction $domainAction */
+            $domainAction = app(JoinQuestAction::class);
             $domainAction->execute($this->squad->fresh(), $this->quest);
         } catch (CampaignException $exception) {
             $this->assertEquals($exception->getCode(), CampaignException::CODE_ALREADY_ENLISTED);
@@ -170,8 +170,8 @@ class EnlistForQuestActionTest extends TestCase
     {
         $this->assertNull($this->squad->getCurrentCampaign());
 
-        /** @var EnlistForQuestAction $domainAction */
-        $domainAction = app(EnlistForQuestAction::class);
+        /** @var JoinQuestAction $domainAction */
+        $domainAction = app(JoinQuestAction::class);
         $domainAction->execute($this->squad, $this->quest);
 
         $currentCampaign = $this->squad->getCurrentCampaign();
@@ -199,8 +199,8 @@ class EnlistForQuestActionTest extends TestCase
             'continent_id' => $this->quest->province->continent_id
         ]);
 
-        /** @var EnlistForQuestAction $domainAction */
-        $domainAction = app(EnlistForQuestAction::class);
+        /** @var JoinQuestAction $domainAction */
+        $domainAction = app(JoinQuestAction::class);
         $this->squad = $this->squad->fresh();
         $domainAction->execute($this->squad, $this->quest);
 

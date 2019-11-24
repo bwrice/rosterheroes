@@ -6,17 +6,15 @@ namespace App\Domain\Actions;
 
 use App\Aggregates\CampaignAggregate;
 use App\Aggregates\CampaignStopAggregate;
-use App\Aggregates\SquadAggregate;
 use App\Domain\Models\Campaign;
 use App\Domain\Models\CampaignStop;
 use App\Domain\Models\Quest;
 use App\Domain\Models\Squad;
 use App\Domain\Models\Week;
 use App\Exceptions\CampaignException;
-use App\StorableEvents\CampaignCreated;
 use Illuminate\Support\Str;
 
-class EnlistForQuestAction
+class JoinQuestAction
 {
     /** @var Squad */
     protected $squad;
