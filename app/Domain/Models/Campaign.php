@@ -46,22 +46,6 @@ class Campaign extends EventSourcedModel
 {
     protected $guarded = [];
 
-//    /**
-//     * @param array $attributes
-//     * @return Campaign|null
-//     * @throws \Exception
-//     */
-//    public static function createWithAttributes(array $attributes)
-//    {
-//        $uuid = (string) Uuid::uuid4();
-//
-//        $attributes['uuid'] = $uuid;
-//
-//        event(new CampaignCreated($attributes));
-//
-//        return self::uuid($uuid);
-//    }
-
     public function week()
     {
         return $this->belongsTo(Week::class);
@@ -98,37 +82,5 @@ class Campaign extends EventSourcedModel
             'campaignStops.quest',
             'campaignStops.skirmishes'
         ];
-    }
-
-    /**
-     * @param Quest $quest
-     * @throws MaxQuestsException
-     * @throws WeekLockedException
-     * @throws QuestCompletedException
-     * @throws InvalidProvinceException
-     * @throws QuestExistsException
-     */
-    public function addQuest(Quest $quest)
-    {
-        if ($quest->isCompleted()) {
-            throw new QuestCompletedException($quest);
-        } elseif ($this->hasQuest($quest)) {
-            throw new QuestExistsException($quest);
-        } elseif ($this->continent->id != $quest->province->continent->id){
-            throw new InvalidContinentException($this->continent);
-        } elseif ( $quest->province->id != $this->squad->province_id ) {
-            throw new InvalidProvinceException($this->squad->province);
-        } elseif ($this->quests->count() >= $this->squad->getQuestsPerWeekAllowed() ) {
-            throw new MaxQuestsException($this->squad->getQuestsPerWeekAllowed());
-        } elseif (! Week::current()->adventuringOpen()) {
-            throw new WeekLockedException(Week::current());
-        }
-
-        $this->quests()->attach($quest->id);
-    }
-
-    public function hasQuest(Quest $quest)
-    {
-        return in_array($quest->id, $this->quests->pluck('id')->toArray());
     }
 }
