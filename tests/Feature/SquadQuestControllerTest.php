@@ -49,7 +49,7 @@ class SquadQuestControllerTest extends TestCase
     {
         Passport::actingAs(factory(User::class)->create());
 
-        $response = $this->post('/api/v1/squads/' . $this->squad->slug . '/enlist', [
+            $response = $this->post('/api/v1/squads/' . $this->squad->slug . '/quests', [
             'quest' => $this->quest->uuid
         ]);
 
@@ -63,7 +63,7 @@ class SquadQuestControllerTest extends TestCase
     {
         Passport::actingAs($this->squad->user);
 
-        $response = $this->post('/api/v1/squads/' . $this->squad->slug . '/enlist', [
+        $response = $this->post('/api/v1/squads/' . $this->squad->slug . '/quests', [
             'quest' => $this->quest->uuid
         ]);
 
@@ -89,7 +89,7 @@ class SquadQuestControllerTest extends TestCase
         // put the mock into the container
         app()->instance(JoinQuestAction::class, $actionMock);
 
-        $response = $this->json('POST','/api/v1/squads/' . $this->squad->slug . '/enlist', [
+        $response = $this->json('POST','/api/v1/squads/' . $this->squad->slug . '/quests', [
             'quest' => $this->quest->uuid
         ]);
         $response->assertStatus(422)
