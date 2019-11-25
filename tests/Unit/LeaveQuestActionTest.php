@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use App\Domain\Actions\LeaveQuestAction;
 use App\Domain\Models\Campaign;
 use App\Domain\Models\CampaignStop;
+use App\Domain\Models\Province;
 use App\Domain\Models\Quest;
 use App\Domain\Models\Skirmish;
 use App\Domain\Models\Squad;
@@ -140,6 +141,41 @@ class LeaveQuestActionTest extends TestCase
      */
     public function leaving_a_quest_will_remove_skirmishes_from_the_campaign_stop()
     {
+        $skirmish = factory(Skirmish::class)->create([
+            'quest_id' => $this->quest->id
+        ]);
+
+        $this->campaignStop->skirmishes()->attach($skirmish->id);
+        $stopUuid = $this->campaignStop->uuid;
+
+        /** @var LeaveQuestAction $domainAction */
+        $domainAction = app(LeaveQuestAction::class);
+        $domainAction->execute($this->squad, $this->quest);
+
+        /*
+         * We need to retrieve the trashed campaign stop to verify it's pivot relations are gone
+         */
+        /** @var CampaignStop $campaignStop */
+        $campaignStop = CampaignStop::withTrashed()->where('uuid', '=', $stopUuid)->first();
+        $this->assertEquals(0, $campaignStop->skirmishes()->count());
+
+        $campaignStop = CampaignStop::findUuid($stopUuid);
+        $this->assertNull($campaignStop);
+    }
+
+    /**
+     * @test
+     */
+    public function you_can_leave_a_quest_and_skirmishes_when_at_a_different_province()
+    {
+        $this->squad->province_id = Province::query()
+            ->where('id', '!=', $this->campaignStop->province_id)
+            ->inRandomOrder()
+            ->first()->id;
+
+        $this->squad->save();
+        $this->squad = $this->squad->fresh();
+
         $skirmish = factory(Skirmish::class)->create([
             'quest_id' => $this->quest->id
         ]);
