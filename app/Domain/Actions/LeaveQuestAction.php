@@ -8,6 +8,7 @@ use App\Domain\Models\CampaignStop;
 use App\Domain\Models\Quest;
 use App\Domain\Models\Squad;
 use App\Exceptions\CampaignException;
+use Illuminate\Support\Facades\DB;
 
 class LeaveQuestAction extends SquadQuestAction
 {
@@ -20,6 +21,10 @@ class LeaveQuestAction extends SquadQuestAction
         $this->validateWeek();
         $this->campaign = $this->squad->getCurrentCampaign();
         $this->validateCampaign();
+
+        return DB::transaction(function () {
+            $this->campaignStop->getAggregate()->deleteCampaignStop()->persist();
+        });
     }
 
     protected function validateCampaign(): void
