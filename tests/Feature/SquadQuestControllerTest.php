@@ -111,6 +111,57 @@ class SquadQuestControllerTest extends TestCase
                 'data' => null
             ]);
     }
+    /**
+     * @test
+     */
+    public function it_will_return_an_updated_campaign_when_leaving_quest_of_multi_quest_campaign()
+    {
+        // Create campaign
+        /** @var Campaign $campaign */
+        $campaign = factory(Campaign::class)->create([
+            'squad_id' => $this->squad->id,
+            'week_id' => $this->week->id,
+            'continent_id' => $this->quest->province->continent_id
+        ]);
+
+        // create campaign stop for quest and campaign
+        factory(CampaignStop::class)->create([
+            'campaign_id' => $campaign->id,
+            'quest_id' => $this->quest->id
+        ]);
+
+        // create campaign stop for different quest but same campaign
+        /** @var CampaignStop $otherCampaignStop */
+        $otherCampaignStop = factory(CampaignStop::class)->create([
+            'campaign_id' => $campaign->id,
+        ]);
+
+        Passport::actingAs($this->squad->user);
+
+        $currentCampaign = $this->squad->fresh()->getCurrentCampaign();
+        $this->assertEquals(2, $currentCampaign->fresh()->campaignStops()->count());
+
+        $response = $this->json('DELETE','/api/v1/squads/' . $this->squad->slug . '/quests', [
+            'quest' => $this->quest->uuid
+        ]);
+
+        $currentCampaign = $this->squad->fresh()->getCurrentCampaign();
+        $this->assertNotNull($currentCampaign);
+
+        $this->assertEquals(1, $currentCampaign->fresh()->campaignStops()->count());
+
+        $response->assertStatus(200)
+            ->assertJson([
+                'data' => [
+                    'uuid' => $campaign->uuid,
+                    'campaignStops' => [
+                        [
+                            'uuid' => $otherCampaignStop->uuid
+                        ]
+                    ]
+                ]
+            ]);
+    }
 
     /**
      * @test
