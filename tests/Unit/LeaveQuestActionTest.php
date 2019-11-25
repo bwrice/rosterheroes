@@ -6,6 +6,7 @@ use App\Domain\Actions\LeaveQuestAction;
 use App\Domain\Models\Campaign;
 use App\Domain\Models\CampaignStop;
 use App\Domain\Models\Quest;
+use App\Domain\Models\Skirmish;
 use App\Domain\Models\Squad;
 use App\Domain\Models\Week;
 use App\Exceptions\CampaignException;
@@ -129,6 +130,33 @@ class LeaveQuestActionTest extends TestCase
         /** @var LeaveQuestAction $domainAction */
         $domainAction = app(LeaveQuestAction::class);
         $domainAction->execute($this->squad, $this->quest);
+
+        $campaignStop = CampaignStop::findUuid($stopUuid);
+        $this->assertNull($campaignStop);
+    }
+
+    /**
+     * @test
+     */
+    public function leaving_a_quest_will_remove_skirmishes_from_the_campaign_stop()
+    {
+        $skirmish = factory(Skirmish::class)->create([
+            'quest_id' => $this->quest->id
+        ]);
+
+        $this->campaignStop->skirmishes()->attach($skirmish->id);
+        $stopUuid = $this->campaignStop->uuid;
+
+        /** @var LeaveQuestAction $domainAction */
+        $domainAction = app(LeaveQuestAction::class);
+        $domainAction->execute($this->squad, $this->quest);
+
+        /*
+         * We need to retrieve the trashed campaign stop to verify it's pivot relations are gone
+         */
+        /** @var CampaignStop $campaignStop */
+        $campaignStop = CampaignStop::withTrashed()->where('uuid', '=', $stopUuid)->first();
+        $this->assertEquals(0, $campaignStop->skirmishes()->count());
 
         $campaignStop = CampaignStop::findUuid($stopUuid);
         $this->assertNull($campaignStop);
