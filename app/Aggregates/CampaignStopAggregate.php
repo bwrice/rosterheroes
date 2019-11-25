@@ -2,7 +2,9 @@
 
 namespace App\Aggregates;
 
+use App\Domain\Models\CampaignStop;
 use App\StorableEvents\CampaignStopCreated;
+use App\StorableEvents\CampaignStopDeleted;
 use App\StorableEvents\SkirmishRemovedFromCampaignStop;
 use App\StorableEvents\SkirmishAddedToCampaignStop;
 use Spatie\EventSourcing\AggregateRoot;
@@ -25,6 +27,12 @@ final class CampaignStopAggregate extends AggregateRoot
     public function removeSkirmish(int $skirmishID)
     {
         $this->recordThat(new SkirmishRemovedFromCampaignStop($skirmishID));
+        return $this;
+    }
+
+    public function deleteCampaignStop()
+    {
+        $this->recordThat(new CampaignStopDeleted());
         return $this;
     }
 }
