@@ -2,6 +2,7 @@
 
 namespace App\Domain\Models;
 
+use App\Aggregates\CampaignAggregate;
 use App\Domain\Models\Quest;
 use App\Domain\Collections\QuestCollection;
 use App\Domain\Models\Continent;
@@ -90,5 +91,10 @@ class Campaign extends EventSourcedModel
             'campaignStops.quest',
             'campaignStops.skirmishes'
         ];
+    }
+
+    public function getAggregate()
+    {
+        return CampaignAggregate::retrieve($this->uuid);
     }
 }
