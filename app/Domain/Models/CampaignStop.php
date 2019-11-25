@@ -6,6 +6,7 @@ use App\Aggregates\CampaignStopAggregate;
 use App\Domain\Collections\SkirmishCollection;
 use App\Domain\QueryBuilders\CampaignStopQueryBuilder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class CampaignStop
@@ -25,6 +26,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class CampaignStop extends EventSourcedModel
 {
+    use SoftDeletes;
 
     public function campaign()
     {

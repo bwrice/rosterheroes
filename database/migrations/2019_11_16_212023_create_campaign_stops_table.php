@@ -19,6 +19,7 @@ class CreateCampaignStopsTable extends Migration
             $table->bigInteger('campaign_id')->unsigned();
             $table->integer('quest_id')->unsigned();
             $table->integer('province_id')->unsigned();
+            $table->softDeletes();
             $table->timestamps();
         });
 
