@@ -10,6 +10,8 @@
                         <v-btn v-if="joined"
                                block
                                color="error"
+                               :disabled="! canLeave"
+                               @click="leave"
                         >
                             Leave Quest
                         </v-btn>
@@ -42,14 +44,29 @@
     export default {
         name: "QuestView",
         components: {SkirmishCard},
+        data() {
+            return {
+                pending: false
+            }
+        },
         methods: {
             ...mapActions([
-                'joinQuest'
+                'joinQuest',
+                'leaveQuest'
             ]),
-            join() {
-                this.joinQuest({
+            async join() {
+                this.pending = true;
+                await this.joinQuest({
                     quest: this.quest
                 });
+                this.pending = false;
+            },
+            async leave() {
+                this.pending = true;
+                await this.leaveQuest({
+                    quest: this.quest
+                });
+                this.pending = false;
             }
         },
         computed: {
@@ -67,6 +84,9 @@
                 return this._matchingCampaignStop(this.quest.uuid);
             },
             canJoin() {
+                if (this.pending) {
+                    return false;
+                }
                 if (! this._currentCampaign) {
                     return true;
                 }
@@ -74,6 +94,9 @@
                     return false;
                 }
                 return this._currentCampaign.campaignStops.length < this._squad.questsPerWeek;
+            },
+            canLeave() {
+                return this.joined && (! this.pending);
             }
         }
     }
