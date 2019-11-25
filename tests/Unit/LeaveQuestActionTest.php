@@ -211,4 +211,26 @@ class LeaveQuestActionTest extends TestCase
         $this->assertNull($campaign);
     }
 
+    /**
+     * @test
+     */
+    public function leaving_a_quest_of_a_campaign_with_multiple_quests_will_NOT_delete_the_campaign()
+    {
+        /*
+         * Join a different quest, ie create another campaign stop
+         */
+        factory(CampaignStop::class)->create([
+            'campaign_id' => $this->campaign->id
+        ]);
+
+        $campaignUuid = $this->campaign->uuid;
+
+        /** @var LeaveQuestAction $domainAction */
+        $domainAction = app(LeaveQuestAction::class);
+        $domainAction->execute($this->squad, $this->quest);
+
+        $campaign = Campaign::findUuid($campaignUuid);
+        $this->assertNotNull($campaign);
+    }
+
 }
