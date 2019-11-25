@@ -13,7 +13,9 @@ use Illuminate\Support\Facades\DB;
 
 class LeaveQuestAction extends SquadQuestAction
 {
-    /** @var CampaignStop */
+    /**
+     * @var CampaignStop
+     */
     protected $campaignStop;
     /**
      * @var LeaveSkirmishAction
@@ -39,6 +41,10 @@ class LeaveQuestAction extends SquadQuestAction
             });
 
             $this->campaignStop->getAggregate()->deleteCampaignStop()->persist();
+
+            if (! $this->campaign->campaignStops()->count()) {
+                $this->campaign->getAggregate()->deleteCampaign()->persist();
+            }
         });
     }
 

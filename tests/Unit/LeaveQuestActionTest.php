@@ -207,7 +207,7 @@ class LeaveQuestActionTest extends TestCase
         $domainAction = app(LeaveQuestAction::class);
         $domainAction->execute($this->squad, $this->quest);
 
-        $campaign = CampaignStop::findUuid($campaignUuid);
+        $campaign = Campaign::findUuid($campaignUuid);
         $this->assertNull($campaign);
     }
 
