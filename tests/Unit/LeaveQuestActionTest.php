@@ -118,4 +118,19 @@ class LeaveQuestActionTest extends TestCase
 
         $this->fail("Exception not thrown");
     }
+
+    /**
+     * @test
+     */
+    public function leaving_a_quest_will_delete_a_campaign_stop_without_skirmishes()
+    {
+        $stopUuid = $this->campaignStop->uuid;
+
+        /** @var LeaveQuestAction $domainAction */
+        $domainAction = app(LeaveQuestAction::class);
+        $domainAction->execute($this->squad, $this->quest);
+
+        $campaignStop = CampaignStop::findUuid($stopUuid);
+        $this->assertNull($campaignStop);
+    }
 }
