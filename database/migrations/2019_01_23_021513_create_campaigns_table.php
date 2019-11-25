@@ -19,6 +19,7 @@ class CreateCampaignsTable extends Migration
             $table->bigInteger('squad_id')->unsigned();
             $table->integer('continent_id')->unsigned();
             $table->integer('week_id')->unsigned();
+            $table->softDeletes();
             $table->timestamps();
         });
 
