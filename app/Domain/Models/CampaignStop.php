@@ -4,6 +4,7 @@ namespace App\Domain\Models;
 
 use App\Aggregates\CampaignStopAggregate;
 use App\Domain\Collections\SkirmishCollection;
+use App\Domain\QueryBuilders\CampaignStopQueryBuilder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -50,5 +51,10 @@ class CampaignStop extends EventSourcedModel
         /** @var CampaignStopAggregate $aggregate */
         $aggregate = CampaignStopAggregate::retrieve($this->uuid);
         return $aggregate;
+    }
+
+    public function newEloquentBuilder($query)
+    {
+        return new CampaignStopQueryBuilder($query);
     }
 }

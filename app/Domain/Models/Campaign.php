@@ -6,6 +6,7 @@ use App\Domain\Models\Quest;
 use App\Domain\Collections\QuestCollection;
 use App\Domain\Models\Continent;
 use App\Domain\QueryBuilders\CampaignQueryBuilder;
+use App\Domain\QueryBuilders\CampaignStopQueryBuilder;
 use App\StorableEvents\CampaignCreated;
 use App\Domain\Models\EventSourcedModel;
 use App\Exceptions\InvalidContinentException;
@@ -19,6 +20,7 @@ use App\Domain\Models\Squad;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Ramsey\Uuid\Uuid;
 
 /**
@@ -61,6 +63,9 @@ class Campaign extends EventSourcedModel
         return $this->belongsToMany(Quest::class);
     }
 
+    /**
+     * @return HasMany|CampaignStopQueryBuilder
+     */
     public function campaignStops()
     {
         return $this->hasMany(CampaignStop::class);
