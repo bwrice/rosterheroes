@@ -21,6 +21,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Ramsey\Uuid\Uuid;
 
 /**
@@ -46,6 +47,8 @@ use Ramsey\Uuid\Uuid;
  */
 class Campaign extends EventSourcedModel
 {
+    use SoftDeletes;
+
     protected $guarded = [];
 
     public function week()

@@ -36,6 +36,9 @@ class LeaveQuestActionTest extends TestCase
     /** @var CampaignStop */
     protected $campaignStop;
 
+    /** @var Skirmish */
+    protected $skirmish;
+
     public function setUp(): void
     {
         parent::setUp();
@@ -56,6 +59,10 @@ class LeaveQuestActionTest extends TestCase
 
         $this->campaignStop = factory(CampaignStop::class)->create([
             'campaign_id' => $this->campaign->id,
+            'quest_id' => $this->quest->id
+        ]);
+
+        $this->skirmish = factory(Skirmish::class)->create([
             'quest_id' => $this->quest->id
         ]);
     }
@@ -86,6 +93,7 @@ class LeaveQuestActionTest extends TestCase
      */
     public function leaving_a_quest_without_a_current_campaign_will_throw_an_exception()
     {
+        $this->campaignStop->skirmishes()->sync([]);
         $this->campaignStop->delete();
         $this->campaign->delete();
 
@@ -124,7 +132,7 @@ class LeaveQuestActionTest extends TestCase
     /**
      * @test
      */
-    public function leaving_a_quest_will_delete_a_campaign_stop_without_skirmishes()
+    public function leaving_a_quest_will_delete_the_associated_campaign_stop()
     {
         $stopUuid = $this->campaignStop->uuid;
 
@@ -141,11 +149,6 @@ class LeaveQuestActionTest extends TestCase
      */
     public function leaving_a_quest_will_remove_skirmishes_from_the_campaign_stop()
     {
-        $skirmish = factory(Skirmish::class)->create([
-            'quest_id' => $this->quest->id
-        ]);
-
-        $this->campaignStop->skirmishes()->attach($skirmish->id);
         $stopUuid = $this->campaignStop->uuid;
 
         /** @var LeaveQuestAction $domainAction */
@@ -176,11 +179,6 @@ class LeaveQuestActionTest extends TestCase
         $this->squad->save();
         $this->squad = $this->squad->fresh();
 
-        $skirmish = factory(Skirmish::class)->create([
-            'quest_id' => $this->quest->id
-        ]);
-
-        $this->campaignStop->skirmishes()->attach($skirmish->id);
         $stopUuid = $this->campaignStop->uuid;
 
         /** @var LeaveQuestAction $domainAction */
@@ -197,4 +195,20 @@ class LeaveQuestActionTest extends TestCase
         $campaignStop = CampaignStop::findUuid($stopUuid);
         $this->assertNull($campaignStop);
     }
+
+    /**
+     * @test
+     */
+    public function leaving_the_only_quest_of_a_campaign_will_delete_the_entire_campaign()
+    {
+        $campaignUuid = $this->campaign->uuid;
+
+        /** @var LeaveQuestAction $domainAction */
+        $domainAction = app(LeaveQuestAction::class);
+        $domainAction->execute($this->squad, $this->quest);
+
+        $campaign = CampaignStop::findUuid($campaignUuid);
+        $this->assertNull($campaign);
+    }
+
 }
