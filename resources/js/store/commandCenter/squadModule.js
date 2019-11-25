@@ -302,6 +302,26 @@ export default {
             }
         },
 
+        async leaveQuest({state, commit, dispatch}, {quest}) {
+            try {
+
+                let campaignResponse = await squadApi.leaveQuest(state.squad.slug, quest.uuid);
+                let updatedCampaign = null;
+                if (campaignResponse.data) {
+                    updatedCampaign = new Campaign(campaignResponse.data);
+                }
+                commit('SET_CURRENT_CAMPAIGN', updatedCampaign);
+                let text = quest.name + ' removed from campaign';
+                dispatch('snackBarSuccess', {
+                    text: text,
+                    timeout: 3000
+                })
+
+            } catch (e) {
+                helpers.handleResponseErrors(e, 'campaign', dispatch);
+            }
+        },
+
         async addSkirmishToCampaignStop({state, commit, dispatch}, {campaignStop, skirmish}) {
             try {
                 let campaignResponse = await campaignStopApi.addSkirmish(campaignStop.uuid, skirmish.uuid);
