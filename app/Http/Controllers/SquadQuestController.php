@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Domain\Actions\JoinQuestAction;
+use App\Domain\Actions\LeaveQuestAction;
 use App\Domain\Models\Campaign;
 use App\Domain\Models\CampaignStop;
 use App\Domain\Models\Quest;
@@ -33,6 +34,21 @@ class SquadQuestController extends Controller
     /**
      * @param $squadSlug
      * @param Request $request
+     * @param LeaveQuestAction $domainAction
+     * @return CampaignResource
+     * @throws ValidationException
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function delete($squadSlug, Request $request, LeaveQuestAction $domainAction)
+    {
+        return $this->handleRequest($squadSlug, $request, function(Squad $squad, Quest $quest) use ($domainAction) {
+            $domainAction->execute($squad, $quest);
+        });
+    }
+
+    /**
+     * @param $squadSlug
+     * @param Request $request
      * @param callable $callable
      * @return CampaignResource
      * @throws ValidationException
@@ -53,6 +69,14 @@ class SquadQuestController extends Controller
             ]);
         }
 
-        return new CampaignResource($squad->fresh()->getCurrentCampaign(Campaign::campaignResourceRelations()));
+        $campaign = $squad->fresh()->getCurrentCampaign(Campaign::campaignResourceRelations());
+
+        if ($campaign) {
+            return new CampaignResource($campaign);
+        } else {
+            return response()->json([
+                'data' => null
+            ]);
+        }
     }
 }
