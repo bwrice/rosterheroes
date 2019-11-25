@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Domain\Actions\JoinQuestAction;
 use App\Domain\Models\Campaign;
+use App\Domain\Models\CampaignStop;
 use App\Domain\Models\Quest;
 use App\Domain\Models\Squad;
 use App\Exceptions\CampaignException;
@@ -24,13 +25,27 @@ class SquadQuestController extends Controller
      */
     public function store($squadSlug, Request $request, JoinQuestAction $domainAction)
     {
+        return $this->handleRequest($squadSlug, $request, function(Squad $squad, Quest $quest) use ($domainAction) {
+            $domainAction->execute($squad, $quest);
+        });
+    }
+
+    /**
+     * @param $squadSlug
+     * @param Request $request
+     * @param callable $callable
+     * @return CampaignResource
+     * @throws ValidationException
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    protected function handleRequest($squadSlug, Request $request, callable $callable)
+    {
         $squad = Squad::findSlugOrFail($squadSlug);
         $this->authorize(SquadPolicy::MANAGE, $squad);
         $quest = Quest::findUuidOrFail($request->quest);
 
         try {
-
-            $domainAction->execute($squad, $quest);
+            $callable($squad, $quest);
 
         } catch (CampaignException $exception) {
             throw ValidationException::withMessages([
