@@ -6,6 +6,7 @@ namespace App\Domain\Actions;
 
 use App\Domain\Models\CampaignStop;
 use App\Domain\Models\Quest;
+use App\Domain\Models\Skirmish;
 use App\Domain\Models\Squad;
 use App\Exceptions\CampaignException;
 use Illuminate\Support\Facades\DB;
@@ -14,6 +15,15 @@ class LeaveQuestAction extends SquadQuestAction
 {
     /** @var CampaignStop */
     protected $campaignStop;
+    /**
+     * @var LeaveSkirmishAction
+     */
+    private $leaveSkirmishAction;
+
+    public function __construct(LeaveSkirmishAction $leaveSkirmishAction)
+    {
+        $this->leaveSkirmishAction = $leaveSkirmishAction;
+    }
 
     public function execute(Squad $squad, Quest $quest)
     {
@@ -22,7 +32,12 @@ class LeaveQuestAction extends SquadQuestAction
         $this->campaign = $this->squad->getCurrentCampaign();
         $this->validateCampaign();
 
-        return DB::transaction(function () {
+        DB::transaction(function () {
+
+            $this->campaignStop->skirmishes->each(function (Skirmish $skirmish) {
+                $this->leaveSkirmishAction->execute($this->campaignStop, $skirmish);
+            });
+
             $this->campaignStop->getAggregate()->deleteCampaignStop()->persist();
         });
     }
