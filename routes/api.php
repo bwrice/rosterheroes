@@ -125,6 +125,7 @@ Route::prefix('v1')->group(function () {
             Route::get('{squadSlug}/current-campaign', CurrentCampaignController::class);
 
             Route::post('{squadSlug}/quests', [SquadQuestController::class, 'store']);
+            Route::delete('{squadSlug}/quests', [SquadQuestController::class, 'delete']);
         });
 
         Route::get('/squad/{squadSlug}/hero-classes', SquadHeroClassController::class);
