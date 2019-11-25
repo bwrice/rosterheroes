@@ -3,6 +3,8 @@
 namespace Tests\Feature;
 
 use App\Domain\Actions\JoinQuestAction;
+use App\Domain\Models\Campaign;
+use App\Domain\Models\CampaignStop;
 use App\Domain\Models\Quest;
 use App\Domain\Models\Squad;
 use App\Domain\Models\User;
@@ -49,7 +51,7 @@ class SquadQuestControllerTest extends TestCase
     {
         Passport::actingAs(factory(User::class)->create());
 
-            $response = $this->post('/api/v1/squads/' . $this->squad->slug . '/quests', [
+            $response = $this->json('POST','/api/v1/squads/' . $this->squad->slug . '/quests', [
             'quest' => $this->quest->uuid
         ]);
 
@@ -59,11 +61,11 @@ class SquadQuestControllerTest extends TestCase
     /**
      * @test
      */
-    public function it_will_return_the_squads_updated_campaign_response()
+    public function it_will_return_the_squads_updated_campaign_response_when_joining_quest()
     {
         Passport::actingAs($this->squad->user);
 
-        $response = $this->post('/api/v1/squads/' . $this->squad->slug . '/quests', [
+        $response = $this->json('POST','/api/v1/squads/' . $this->squad->slug . '/quests', [
             'quest' => $this->quest->uuid
         ]);
 
@@ -76,6 +78,40 @@ class SquadQuestControllerTest extends TestCase
                 ]
             ]);
     }
+
+    /**
+     * @test
+     */
+    public function it_will_return_null_when_leaving_quest_of_single_quest_campaign()
+    {
+        // Create campaign
+        $campaign = factory(Campaign::class)->create([
+            'squad_id' => $this->squad->id,
+            'week_id' => $this->week->id,
+            'continent_id' => $this->quest->province->continent_id
+        ]);
+
+        // create campaign stop for quest and campaign
+        factory(CampaignStop::class)->create([
+            'campaign_id' => $campaign->id,
+            'quest_id' => $this->quest->id
+        ]);
+
+        Passport::actingAs($this->squad->user);
+
+        $response = $this->json('DELETE','/api/v1/squads/' . $this->squad->slug . '/quests', [
+            'quest' => $this->quest->uuid
+        ]);
+
+        $currentCampaign = $this->squad->fresh()->getCurrentCampaign();
+        $this->assertNull($currentCampaign);
+
+        $response->assertStatus(200)
+            ->assertJson([
+                'data' => null
+            ]);
+    }
+
     /**
      * @test
      */
@@ -95,6 +131,7 @@ class SquadQuestControllerTest extends TestCase
         $response->assertStatus(422)
             ->assertJsonValidationErrors(['campaign']);
     }
+
 
 
 }
