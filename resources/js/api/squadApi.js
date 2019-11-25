@@ -54,3 +54,12 @@ export async function joinQuest(squadSlug, questUuid) {
     });
     return response.data;
 }
+
+export async function leaveQuest(squadSlug, questUuid) {
+    let response = await axios.delete('/api/v1/squads/' + squadSlug + '/quests', {
+        data: {
+            quest: questUuid
+        }
+    });
+    return response.data;
+}
