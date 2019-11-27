@@ -4,12 +4,12 @@
 namespace App\Domain\Combat;
 
 
-use App\Domain\Collections\CombatActionCollection;
-use App\Domain\Collections\CombatantCollection;
+use App\Domain\Collections\CombatAttacksCollection;
+use App\Domain\Collections\CombatEventCollection;
 
 interface CombatGroup
 {
-    public function getCombatActions(int $moment): CombatActionCollection;
+    public function getCombatActions(int $moment): CombatAttacksCollection;
 
-    public function getCombatantsForPosition(CombatPosition $combatPosition): CombatantCollection;
+    public function receiveAttack(CombatAttack $combatAttack): CombatEventCollection;
 }
