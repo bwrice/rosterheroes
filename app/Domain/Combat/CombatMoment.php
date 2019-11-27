@@ -26,9 +26,14 @@ class CombatMoment
         return $this->count;
     }
 
-    public function toggleSide()
+    public function setSideA()
     {
-        $this->side = ($this->side == self::SIDE_A) ? self::SIDE_B : self::SIDE_A;
+        $this->side = self::SIDE_A;
+    }
+
+    public function setSideB()
+    {
+        $this->side = self::SIDE_B;
     }
 
     public function getSide(): string
