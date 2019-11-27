@@ -6,7 +6,7 @@ namespace App\Domain\Collections;
 
 use Illuminate\Support\Collection;
 
-class CombatActionCollection extends Collection
+class CombatAttacksCollection extends Collection
 {
 
 }

@@ -4,7 +4,7 @@
 namespace App\Domain\Combat;
 
 
-interface CombatAction
+interface CombatAttack
 {
     public function getTargetPosition(): CombatPosition;
 }
