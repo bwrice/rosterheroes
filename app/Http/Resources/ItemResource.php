@@ -3,7 +3,6 @@
 namespace App\Http\Resources;
 
 use App\Domain\Interfaces\HasItems;
-use App\Domain\Interfaces\HasSlots;
 use App\Domain\Interfaces\UsesItems;
 use App\Domain\Models\Item;
 use Illuminate\Http\Resources\Json\JsonResource;
