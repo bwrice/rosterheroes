@@ -23,23 +23,48 @@ class CombatRunner
         $this->combatMoment = $combatMoment;
     }
 
-    public function execute(CombatGroup $sideA, CombatGroup $sideB, $maxMoments = 5000)
+    public function execute(CombatGroup $sideA, CombatGroup $sideB)
     {
-        while($this->combatMoment->getCount() <= $maxMoments) {
+        while(true) {
 
-            $combatActions = $sideA->getCombatActions($this->combatMoment->getCount());
-            $combatActions->each(function (CombatAttack $combatAttack) use ($sideB) {
-                $combatEvents = $sideB->receiveAttack($combatAttack);
-                $combatEvents->each(function (CombatEvent $combatEvent) {
-                    $this->notifyEventOccurred($combatEvent);
-                });
-            });
+            $this->combatMoment->setSideA();
+            $defeated = $this->handleSingleSide($sideA, $sideB);
+
+            if ($defeated) {
+                // create combat end event
+                continue;
+            }
+
+            $this->combatMoment->setSideB();
+            $defeated = $this->handleSingleSide($sideB, $sideA);
+
+            if ($defeated) {
+                // create combat end event
+                continue;
+            }
 
             $this->combatMoment->tick();;
         }
     }
 
-    protected function notifyEventOccurred(CombatEvent $combatEvent)
+    protected function handleSingleSide(CombatGroup $attackers, CombatGroup $defenders)
+    {
+        $combatActions = $attackers->getCombatActions($this->combatMoment->getCount());
+
+        $combatActions->each(function (CombatAttack $combatAttack) use ($defenders) {
+
+            if (! $defenders->isDefeated($this->combatMoment)) {
+                $combatEvents = $defenders->receiveAttack($combatAttack);
+                $combatEvents->each(function (CombatEvent $combatEvent) {
+                    $this->notifyEventHandlers($combatEvent);
+                });
+            }
+        });
+
+        return $defenders->isDefeated($this->combatMoment);
+    }
+
+    protected function notifyEventHandlers(CombatEvent $combatEvent)
     {
         $this->eventHandlers->each(function (CombatEventHandler $eventHandler) use ($combatEvent) {
             $eventHandler->handleCombatEvent($combatEvent, $this->combatMoment);
