@@ -31,7 +31,7 @@ class CombatRunner
             $defeated = $this->handleSingleSide($sideA, $sideB);
 
             if ($defeated) {
-                // create combat end event
+                //TODO: handle combat finished
                 continue;
             }
 
@@ -39,11 +39,11 @@ class CombatRunner
             $defeated = $this->handleSingleSide($sideB, $sideA);
 
             if ($defeated) {
-                // create combat end event
+                //TODO: handle combat finished
                 continue;
             }
 
-            $this->combatMoment->tick();;
+            $this->combatMoment->tick();
         }
     }
 
@@ -62,6 +62,11 @@ class CombatRunner
         });
 
         return $defenders->isDefeated($this->combatMoment);
+    }
+
+    protected function handleCombatFinished()
+    {
+
     }
 
     protected function notifyEventHandlers(CombatEvent $combatEvent)
