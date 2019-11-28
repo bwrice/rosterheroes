@@ -13,8 +13,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
  */
 class CombatPositionResource extends JsonResource
 {
-    protected $attacker = true;
-
     /**
      * Transform the resource into an array.
      *
@@ -29,15 +27,5 @@ class CombatPositionResource extends JsonResource
             'attackerSVG' => $this->getSVG(true),
             'targetSVG' => $this->getSVG(false)
         ];
-    }
-
-    /**
-     * @param bool $attacker
-     * @return CombatPositionResource
-     */
-    public function setAttacker(bool $attacker): CombatPositionResource
-    {
-        $this->attacker = $attacker;
-        return $this;
     }
 }
