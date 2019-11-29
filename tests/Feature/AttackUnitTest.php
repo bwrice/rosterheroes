@@ -8,12 +8,15 @@ use App\Domain\Models\DamageType;
 use App\Domain\Models\Item;
 use App\Domain\Models\ItemBase;
 use App\Domain\Models\CombatPosition;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AttackUnitTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /** @var Attack */
     protected $attack;
 

@@ -3,10 +3,13 @@
 namespace Tests\Feature;
 
 use App\Domain\Models\Week;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
 class WeekControllerTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /**
      * @test
      */

@@ -11,10 +11,13 @@ use App\Domain\Models\StatType;
 use App\External\Stats\MockIntegration;
 use App\External\Stats\StatsIntegration;
 use App\Jobs\UpdatePlayerGameLogsJob;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
 class UpdatePlayerGameLogsJobTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /**
      * @test
      */

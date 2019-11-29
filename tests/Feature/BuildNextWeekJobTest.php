@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Domain\Models\Week;
 use App\Jobs\BuildNextWeekJob;
 use Carbon\CarbonPeriod;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Date;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -12,6 +13,8 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class BuildNextWeekJobTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /**
      * @test
      */
