@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Domain\Actions\AddSkirmishToCampaignStopAction;
+use App\Domain\Actions\JoinSkirmishAction;
 use App\Domain\Models\Campaign;
 use App\Domain\Models\CampaignStop;
 use App\Domain\Models\Quest;
@@ -93,12 +93,12 @@ class CampaignStopSkirmishControllerTest extends TestCase
         $campaignStopUuid = $this->campaignStop->uuid;
         $skirmishUuid = $this->skirmish->uuid;
 
-        $mock = \Mockery::mock(app(AddSkirmishToCampaignStopAction::class))
+        $mock = \Mockery::mock(app(JoinSkirmishAction::class))
             ->shouldReceive('execute')
             ->andThrow(new CampaignStopException())->getMock();
 
         // Use the mock when retrieving from the container
-        app()->instance(AddSkirmishToCampaignStopAction::class, $mock);
+        app()->instance(JoinSkirmishAction::class, $mock);
 
         $response = $this->json('POST', 'api/v1/campaign-stops/' . $campaignStopUuid . '/skirmishes', [
             'skirmish' => $skirmishUuid
