@@ -5,12 +5,14 @@ namespace App\Domain\Actions;
 
 
 use App\Aggregates\CampaignStopAggregate;
+use App\Aggregates\CampaignStopSkirmishAggregate;
 use App\Domain\Models\Campaign;
 use App\Domain\Models\CampaignStop;
 use App\Domain\Models\Skirmish;
 use App\Domain\Models\Week;
 use App\Exceptions\CampaignException;
 use App\Exceptions\CampaignStopException;
+use Illuminate\Support\Str;
 
 class JoinSkirmishAction extends CampaignStopAction
 {
@@ -32,9 +34,10 @@ class JoinSkirmishAction extends CampaignStopAction
         $this->validateSquadLocation();
         $this->validateMaxSkirmishCount();
 
-        /** @var CampaignStopAggregate $aggregate */
-        $aggregate = CampaignStopAggregate::retrieve($campaignStop->uuid);
-        $aggregate->addSkirmish($skirmish->id)->persist();
+        $uuid = Str::uuid();
+        CampaignStopSkirmishAggregate::retrieve($uuid)
+            ->createCampaignStopSkirmish($campaignStop->id, $skirmish->id)
+            ->persist();
     }
 
     protected function validateNonDuplicateSkirmish()
