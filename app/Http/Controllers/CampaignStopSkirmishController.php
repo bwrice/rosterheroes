@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Domain\Actions\AddSkirmishToCampaignStopAction;
+use App\Domain\Actions\JoinSkirmishAction;
 use App\Domain\Actions\LeaveSkirmishAction;
 use App\Domain\Models\CampaignStop;
 use App\Domain\Models\Skirmish;
@@ -17,12 +17,12 @@ class CampaignStopSkirmishController extends Controller
     /**
      * @param $stopUuid
      * @param Request $request
-     * @param AddSkirmishToCampaignStopAction $domainAction
+     * @param JoinSkirmishAction $domainAction
      * @return CampaignResource
      * @throws ValidationException
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function store($stopUuid, Request $request, AddSkirmishToCampaignStopAction $domainAction)
+    public function store($stopUuid, Request $request, JoinSkirmishAction $domainAction)
     {
         return $this->handleRequest($stopUuid, $request, function (CampaignStop $campaignStop, Skirmish $skirmish) use ($domainAction) {
             $domainAction->execute($campaignStop, $skirmish);
