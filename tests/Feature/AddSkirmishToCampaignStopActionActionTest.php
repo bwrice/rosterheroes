@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Domain\Actions\AddSkirmishToCampaignStopAction;
+use App\Domain\Actions\JoinSkirmishAction;
 use App\Domain\Models\Campaign;
 use App\Domain\Models\CampaignStop;
 use App\Domain\Models\Province;
@@ -18,7 +18,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Date;
 use Tests\TestCase;
 
-class AddSkirmishToCampaignStopActionTest extends TestCase
+class JoinSkirmishActionTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -78,8 +78,8 @@ class AddSkirmishToCampaignStopActionTest extends TestCase
 
         try {
 
-            /** @var AddSkirmishToCampaignStopAction $domainAction */
-            $domainAction = app(AddSkirmishToCampaignStopAction::class);
+            /** @var JoinSkirmishAction $domainAction */
+            $domainAction = app(JoinSkirmishAction::class);
             $domainAction->execute($this->campaignStop, $this->skirmish);
 
         } catch (CampaignStopException $exception) {
@@ -103,8 +103,8 @@ class AddSkirmishToCampaignStopActionTest extends TestCase
 
         try {
 
-            /** @var AddSkirmishToCampaignStopAction $domainAction */
-            $domainAction = app(AddSkirmishToCampaignStopAction::class);
+            /** @var JoinSkirmishAction $domainAction */
+            $domainAction = app(JoinSkirmishAction::class);
             $domainAction->execute($this->campaignStop, $this->skirmish);
 
         } catch (CampaignStopException $exception) {
@@ -128,8 +128,8 @@ class AddSkirmishToCampaignStopActionTest extends TestCase
 
         try {
 
-            /** @var AddSkirmishToCampaignStopAction $domainAction */
-            $domainAction = app(AddSkirmishToCampaignStopAction::class);
+            /** @var JoinSkirmishAction $domainAction */
+            $domainAction = app(JoinSkirmishAction::class);
             $domainAction->execute($this->campaignStop, $this->skirmish);
 
         } catch (CampaignStopException $exception) {
@@ -155,8 +155,8 @@ class AddSkirmishToCampaignStopActionTest extends TestCase
             // set the relation prop to the mock
             $this->campaignStop->campaign->squad = $squadMock;
 
-            /** @var AddSkirmishToCampaignStopAction $domainAction */
-            $domainAction = app(AddSkirmishToCampaignStopAction::class);
+            /** @var JoinSkirmishAction $domainAction */
+            $domainAction = app(JoinSkirmishAction::class);
             $domainAction->execute($this->campaignStop, $this->skirmish);
 
         } catch (CampaignStopException $exception) {
@@ -177,8 +177,8 @@ class AddSkirmishToCampaignStopActionTest extends TestCase
 
             $this->campaignStop->skirmishes()->attach($this->skirmish->id);
 
-            /** @var AddSkirmishToCampaignStopAction $domainAction */
-            $domainAction = app(AddSkirmishToCampaignStopAction::class);
+            /** @var JoinSkirmishAction $domainAction */
+            $domainAction = app(JoinSkirmishAction::class);
             $domainAction->execute($this->campaignStop->fresh(), $this->skirmish->fresh());
 
         } catch (CampaignStopException $exception) {
@@ -197,8 +197,8 @@ class AddSkirmishToCampaignStopActionTest extends TestCase
     {
         $this->assertEquals(0, $this->campaignStop->skirmishes()->count());
 
-        /** @var AddSkirmishToCampaignStopAction $domainAction */
-        $domainAction = app(AddSkirmishToCampaignStopAction::class);
+        /** @var JoinSkirmishAction $domainAction */
+        $domainAction = app(JoinSkirmishAction::class);
         $domainAction->execute($this->campaignStop, $this->skirmish);
 
         $skirmishes = $this->campaignStop->fresh()->skirmishes;

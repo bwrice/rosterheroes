@@ -12,7 +12,7 @@ use App\Domain\Models\Week;
 use App\Exceptions\CampaignException;
 use App\Exceptions\CampaignStopException;
 
-class AddSkirmishToCampaignStopAction extends CampaignStopAction
+class JoinSkirmishAction extends CampaignStopAction
 {
     /** @var Week */
     protected $week;
