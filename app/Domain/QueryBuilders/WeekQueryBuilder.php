@@ -20,5 +20,11 @@ use Illuminate\Database\Eloquent\Builder;
  */
 class WeekQueryBuilder extends Builder
 {
-
+    /**
+     * @return Week|null
+     */
+    public function current()
+    {
+        return $this->whereNotNull('made_current_at')->orderBy('made_current_at')->first();
+    }
 }

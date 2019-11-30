@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
     protected function setTheCurrentWeek()
     {
         if (Schema::hasTable('weeks')) {
-            Week::setCurrent(Week::query()->orderBy('ends_at')->whereNull('finalized_at')->first());
+            Week::setCurrent(Week::query()->current());
         }
     }
 
