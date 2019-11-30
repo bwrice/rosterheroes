@@ -18,7 +18,6 @@ class CreateWeeksTable extends Migration
             $table->uuid('uuid');
             $table->dateTime('made_current_at')->nullable();
             $table->dateTime('adventuring_locks_at');
-            $table->dateTime('ends_at');
             $table->timestamps();
         });
     }
