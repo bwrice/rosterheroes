@@ -4,6 +4,7 @@ use Faker\Generator as Faker;
 
 $factory->define(\App\Domain\Models\Game::class, function (Faker $faker) {
 
+    /** @var \App\Domain\Models\Week $week */
     $week = factory(\App\Domain\Models\Week::class)->create();
 
     /** @var \App\Domain\Models\Team $homeTeam */
@@ -17,7 +18,7 @@ $factory->define(\App\Domain\Models\Game::class, function (Faker $faker) {
     return [
         'home_team_id' => $homeTeam->id,
         'away_team_id' => $awayTeam->id,
-        'starts_at' => $week->everything_locks_at->copy()->addHours(6),
+        'starts_at' => $week->adventuring_locks_at->copy()->addHours(6),
         'external_id' => $faker->randomNumber()
     ];
 });

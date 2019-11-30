@@ -47,9 +47,7 @@ class HeroChangeCombatPositionControllerTest extends TestCase
             $builder->where('id', '!=', $this->hero->combat_position_id);
         })->inRandomOrder()->first();
 
-        $this->week = factory(Week::class)->create([
-            'everything_locks_at' => Date::now()->addHour()
-        ]);
+        $this->week = factory(Week::class)->state('adventuring-open')->create();
 
         Week::setTestCurrent($this->week);
         $this->domainAction = app(ChangeHeroCombatPositionAction::class);
