@@ -8,6 +8,7 @@ use App\Domain\Models\Game;
 use App\Domain\Collections\WeekCollection;
 use App\Domain\QueryBuilders\WeekQueryBuilder;
 use Carbon\CarbonImmutable;
+use Carbon\CarbonInterface;
 use Carbon\CarbonPeriod;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Date;
@@ -215,5 +216,13 @@ class Week extends EventSourcedModel
             'everything_locks_at' => $sunday,
             'ends_at' => $monday
         ]);
+    }
+
+    public static function computeAdventuringLocksAt(CarbonInterface $fromDate = null)
+    {
+        $fromDate = $fromDate ? $fromDate->toImmutable() : Date::now();
+        $sunday = $fromDate->next(CarbonInterface::SUNDAY)->setTimezone('America/New_York');
+        $offset = $sunday->getOffset();
+        return $sunday->addHours(13)->subSeconds($offset)->setTimezone('UTC');
     }
 }
