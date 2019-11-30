@@ -21,14 +21,18 @@ use phpDocumentor\Reflection\Types\Self_;
  * @property int $id
  * @property string $uuid
  * @property string $name
+ *
  * @property CarbonImmutable $proposals_scheduled_to_lock_at
  * @property CarbonImmutable $diplomacy_scheduled_to_lock_at
- * @property CarbonImmutable $adventuring_locks_at
  * @property CarbonImmutable $ends_at
  * @property CarbonImmutable|null $player_spirits_queued_at
  * @property CarbonImmutable|null $proposals_processed_at
  * @property CarbonImmutable|null $diplomacy_processed_at
  * @property CarbonImmutable|null $finalized_at
+ *
+ *
+ * @property CarbonImmutable made_current_at
+ * @property CarbonImmutable $adventuring_locks_at
  *
  * @property PlayerSpiritCollection $playerSpirits
  * @property GameCollection $games
@@ -50,14 +54,8 @@ class Week extends EventSourcedModel
     protected $dates = [
         'created_at',
         'updated_at',
-        'player_spirits_queued_at',
-        'proposals_scheduled_to_lock_at',
-        'proposals_processed_at',
-        'diplomacy_scheduled_to_lock_at',
-        'diplomacy_processed_at',
-        'everything_locks_at',
-        'ends_at',
-        'finalized_at'
+        'made_current_at',
+        'adventuring_locks_at'
     ];
 
     public function newCollection(array $models = [])
