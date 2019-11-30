@@ -43,4 +43,17 @@ class BuildWeekActionTest extends TestCase
 
         $this->assertEquals($followingSunday->dayOfYear, $week->adventuring_locks_at->dayOfYear);
     }
+
+    /**
+    * @test
+    */
+    public function adventuring_locks_at_will_be_sunday_at_1pm_new_york_time()
+    {
+        /** @var BuildWeekAction $domainAction */
+        $domainAction = app(BuildWeekAction::class);
+        $week = $domainAction->execute(Date::now());
+
+        $adventuringLocksAt = $week->adventuring_locks_at;
+        $this->assertEquals('13:00:00', $adventuringLocksAt->setTimezone('America/New_York')->format('H:i:s') );
+    }
 }
