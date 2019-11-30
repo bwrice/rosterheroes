@@ -28,5 +28,7 @@ $factory->afterCreatingState(Week::class, 'adventuring-closed', function(Week $w
 });
 
 $factory->afterCreatingState(Week::class, 'as-current', function(Week $week, Faker $faker) {
+    $week->made_current_at = Date::now();
+    $week->save();
     Week::setTestCurrent($week);
 });
