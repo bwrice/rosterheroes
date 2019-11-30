@@ -17,11 +17,7 @@ use App\Domain\Models\Player;
 use App\Domain\Models\Position;
 use App\Domain\Models\Week;
 use App\Domain\Models\PlayerSpirit;
-use App\Exceptions\InvalidGameException;
-use App\Exceptions\InvalidPlayerException;
-use Carbon\CarbonImmutable;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Date;
+use App\Exceptions\CreatePlayerSpiritException;
 use Illuminate\Support\Str;
 
 class CreatePlayerSpiritAction
@@ -29,40 +25,35 @@ class CreatePlayerSpiritAction
     /**
      * @var Week
      */
-    private $week;
+    protected $week;
     /**
      * @var Game
      */
-    private $game;
+    protected $game;
     /**
      * @var Player
      */
-    private $player;
+    protected $player;
     /**
      * @var Position
      */
-    private $position;
-
-    public function __construct(
-        Week $week,
-        Game $game,
-        Player $player,
-        Position $position)
-    {
-        $this->week = $week;
-        $this->game = $game;
-        $this->player = $player;
-        $this->position = $position;
-    }
+    protected $position;
 
     /**
+     * @param Week $week
+     * @param Game $game
+     * @param Player $player
      * @return PlayerSpirit
-     * @throws \Exception
+     * @throws \MathPHP\Exception\BadDataException|CreatePlayerSpiritException
      */
-    public function __invoke(): PlayerSpirit
+    public function execute(Week $week, Game $game, Player $player): PlayerSpirit
     {
-        $essenceCost = $this->getEssenceCost();
+        $this->setProperties($week, $game, $player);
+        $this->validateGame();
+        $this->validateTeam();
+        $this->position = $this->validatePosition();
 
+        $essenceCost = $this->calculateEssenceCost();
         $playerSpiritUuid = Str::uuid();
 
         /** @var PlayerSpiritAggregate $aggregate */
@@ -73,6 +64,38 @@ class CreatePlayerSpiritAction
 
         return PlayerSpirit::findUuid($playerSpiritUuid);
     }
+
+    protected function setProperties(Week $week, Game $game, Player $player)
+    {
+        $this->week = $week;
+        $this->game = $game;
+        $this->player = $player;
+    }
+
+    protected function validateGame()
+    {
+        $adventuringLocksAt = $this->week->adventuring_locks_at;
+        if ( ! $this->game->starts_at->isBetween($adventuringLocksAt, $adventuringLocksAt->addHours(12))) {
+            throw new CreatePlayerSpiritException("Game has invalid starting time", CreatePlayerSpiritException::CODE_INVALID_GAME_TIME);
+        }
+    }
+
+    protected function validateTeam()
+    {
+        if (! $this->game->hasTeam($this->player->team)) {
+            throw new CreatePlayerSpiritException("Team doesn't belong to game", CreatePlayerSpiritException::CODE_TEAM_NOT_PART_OF_GAME);
+        }
+    }
+
+    protected function validatePosition()
+    {
+        $position = $this->player->positions->withHighestPositionValue();
+        if (!$position) {
+            throw new CreatePlayerSpiritException("No position found for player", CreatePlayerSpiritException::CODE_PLAYER_HAS_INVALID_POSITIONS);
+        }
+        return $position;
+    }
+
 
     /**
      * @return PlayerGameLogCollection
@@ -92,7 +115,7 @@ class CreatePlayerSpiritAction
      * @return int
      * @throws \MathPHP\Exception\BadDataException
      */
-    protected function getEssenceCost()
+    protected function calculateEssenceCost()
     {
         $weightedValues = $this->getPlayerGameLogs()->toWeightedValues();
 
