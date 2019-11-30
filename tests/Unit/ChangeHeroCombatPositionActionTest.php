@@ -53,7 +53,7 @@ class ChangeHeroCombatPositionActionTest extends TestCase
      */
     public function it_will_throw_an_exception_if_the_week_is_locked()
     {
-        $this->week->everything_locks_at = Date::now()->subHour();
+        $this->week->adventuring_locks_at = Date::now()->subHour();
 
         try {
             $this->domainAction->execute($this->hero, $this->combatPosition);

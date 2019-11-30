@@ -53,9 +53,9 @@ class HeroPlayerSpiritControllerTest extends TestCase
 
         Week::setTestCurrent($playerSpirit->week);
         // Mock 6 hours before everything locks
-        Date::setTestNow(Week::current()->everything_locks_at->subHours(6));
+        Date::setTestNow(Week::current()->adventuring_locks_at->subHours(6));
         // Set game time
-        $playerSpirit->game->starts_at = Week::current()->everything_locks_at->addHours(2);
+        $playerSpirit->game->starts_at = Week::current()->adventuring_locks_at->addHours(2);
         $playerSpirit->game->save();
 
         Passport::actingAs($hero->squad->user);
@@ -129,9 +129,9 @@ class HeroPlayerSpiritControllerTest extends TestCase
 
         Week::setTestCurrent($playerSpirit->week);
         // Mock 6 hours before everything locks
-        Date::setTestNow(Week::current()->everything_locks_at->subHours(6));
+        Date::setTestNow(Week::current()->adventuring_locks_at->subHours(6));
         // Set game time
-        $playerSpirit->game->starts_at = Week::current()->everything_locks_at->addHours(2);
+        $playerSpirit->game->starts_at = Week::current()->adventuring_locks_at->addHours(2);
         $playerSpirit->game->save();
 
         Passport::actingAs($hero->squad->user);
@@ -164,7 +164,7 @@ class HeroPlayerSpiritControllerTest extends TestCase
         Passport::actingAs($hero->squad->user);
 
         // Mock 6 hours before everything locks
-        CarbonImmutable::setTestNow(Week::current()->everything_locks_at->copy()->subHours(6));
+        CarbonImmutable::setTestNow(Week::current()->adventuring_locks_at->copy()->subHours(6));
 
         $response = $this->json('DELETE', 'api/v1/heroes/'. $hero->slug . '/player-spirit/' . $playerSpirit->uuid);
 

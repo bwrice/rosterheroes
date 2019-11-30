@@ -38,7 +38,7 @@ class JoinQuestActionTest extends TestCase
             'province_id' => $this->quest->province_id
         ]);
         $this->week = factory(Week::class)->create();
-        $this->week->everything_locks_at = Date::now()->addHour();
+        $this->week->adventuring_locks_at = Date::now()->addHour();
         $this->week->save();
         Week::setTestCurrent($this->week);
     }
@@ -48,7 +48,7 @@ class JoinQuestActionTest extends TestCase
      */
     public function enlist_action_will_throw_an_exception_if_the_week_is_locked()
     {
-        $this->week->everything_locks_at = Date::now()->subHour();
+        $this->week->adventuring_locks_at = Date::now()->subHour();
         $this->week->save();
         Week::setTestCurrent($this->week);
 

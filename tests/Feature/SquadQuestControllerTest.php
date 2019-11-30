@@ -39,7 +39,7 @@ class SquadQuestControllerTest extends TestCase
             'province_id' => $this->quest->province_id
         ]);
         $this->week = factory(Week::class)->create();
-        $this->week->everything_locks_at = Date::now()->addHour();
+        $this->week->adventuring_locks_at = Date::now()->addHour();
         $this->week->save();
         Week::setTestCurrent($this->week);
     }

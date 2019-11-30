@@ -68,7 +68,7 @@ class EquipMobileStorageItemForHeroActionTest extends TestCase
 
         /** @var Week $week */
         $week = factory(Week::class)->states('adventuring-open', 'as-current')->create();
-        $week->everything_locks_at = Date::now()->addHour();
+        $week->adventuring_locks_at = Date::now()->addHour();
         $week->save();
         Week::setTestCurrent($week);
         $this->domainAction = app(EquipMobileStorageItemForHeroAction::class);

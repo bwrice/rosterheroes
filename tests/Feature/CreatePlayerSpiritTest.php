@@ -40,7 +40,7 @@ class CreatePlayerSpiritTest extends TestCase
         $week = factory(Week::class)->create();
         /** @var Game $game */
         $game = factory(Game::class)->create([
-            'starts_at' => $week->everything_locks_at->subMinutes(15)
+            'starts_at' => $week->adventuring_locks_at->subMinutes(15)
         ]);
         $player = factory(Player::class)->create([
             'team_id' => $game->homeTeam->id
@@ -72,7 +72,7 @@ class CreatePlayerSpiritTest extends TestCase
         $week = factory(Week::class)->create();
         /** @var Game $game */
         $game = factory(Game::class)->create([
-            'starts_at' => $week->everything_locks_at->addMinutes(30)
+            'starts_at' => $week->adventuring_locks_at->addMinutes(30)
         ]);
         $player = factory(Player::class)->create(); //random team should be created in factory
 
@@ -102,7 +102,7 @@ class CreatePlayerSpiritTest extends TestCase
         $week = factory(Week::class)->create();
         /** @var Game $game */
         $game = factory(Game::class)->create([
-            'starts_at' => $week->everything_locks_at->addMinutes(30)
+            'starts_at' => $week->adventuring_locks_at->addMinutes(30)
         ]);
         /** @var Player $player */
         $player = factory(Player::class)->create([

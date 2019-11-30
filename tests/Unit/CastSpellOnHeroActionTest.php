@@ -40,7 +40,7 @@ class CastSpellOnHeroActionTest extends TestCase
         $this->squad->spells()->save($this->spell);
         /** @var Week $week */
         $week = factory(Week::class)->create();
-        $week->everything_locks_at = Date::now()->addHour();
+        $week->adventuring_locks_at = Date::now()->addHour();
         $week->save();
         Week::setTestCurrent($week);
         $this->domainAction = app(CastSpellOnHeroAction::class);
@@ -53,7 +53,7 @@ class CastSpellOnHeroActionTest extends TestCase
     {
         /** @var Week $week */
         $week = factory(Week::class)->create();
-        $week->everything_locks_at = Date::now()->subHour();
+        $week->adventuring_locks_at = Date::now()->subHour();
         $week->save();
 
         Week::setTestCurrent($week);

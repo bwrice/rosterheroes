@@ -2,19 +2,24 @@
 
 namespace Tests\Unit;
 
+use App\Domain\Models\Week;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class SetupNextWeekActionTest extends TestCase
 {
-    /**
-     * A basic unit test example.
-     *
-     * @return void
-     */
-    public function testExample()
+    use DatabaseTransactions;
+
+    /** @var Week */
+    protected $previousWeek;
+
+    public function setUp(): void
     {
-        $this->assertTrue(true);
+        parent::setUp();
+        $this->previousWeek = factory(Week::class)->create();
+
     }
+
 }

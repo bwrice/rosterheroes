@@ -25,7 +25,7 @@ class BuildNextWeekJob implements ShouldQueue
                 'uuid' => (string) \Ramsey\Uuid\Uuid::uuid4(),
                 'proposals_scheduled_to_lock_at' => $week->proposals_scheduled_to_lock_at->addWeek(),
                 'diplomacy_scheduled_to_lock_at' => $week->diplomacy_scheduled_to_lock_at->addWeek(),
-                'everything_locks_at' => $week->everything_locks_at->addWeek(),
+                'everything_locks_at' => $week->adventuring_locks_at->addWeek(),
                 'ends_at' => $week->ends_at->addWeek()
             ]);
         } else {

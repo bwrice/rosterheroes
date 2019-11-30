@@ -40,7 +40,7 @@ class RemoveSpellControllerTest extends TestCase
         $this->hero->spells()->save($this->spell);
         /** @var Week $week */
         $week = factory(Week::class)->create();
-        $week->everything_locks_at = Date::now()->addHour();
+        $week->adventuring_locks_at = Date::now()->addHour();
         $week->save();
         Week::setTestCurrent($week);
     }

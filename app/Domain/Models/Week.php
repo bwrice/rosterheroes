@@ -23,7 +23,7 @@ use phpDocumentor\Reflection\Types\Self_;
  * @property string $name
  * @property CarbonImmutable $proposals_scheduled_to_lock_at
  * @property CarbonImmutable $diplomacy_scheduled_to_lock_at
- * @property CarbonImmutable $everything_locks_at
+ * @property CarbonImmutable $adventuring_locks_at
  * @property CarbonImmutable $ends_at
  * @property CarbonImmutable|null $player_spirits_queued_at
  * @property CarbonImmutable|null $proposals_processed_at
@@ -125,7 +125,7 @@ class Week extends EventSourcedModel
 
     public function proposalsOpen()
     {
-        if ($this->everything_locks_at->isPast()) {
+        if ($this->adventuring_locks_at->isPast()) {
             return false;
         }
 
@@ -145,7 +145,7 @@ class Week extends EventSourcedModel
 
     public function diplomacyOpen()
     {
-        if ($this->everything_locks_at->isPast() || ! $this->proposals_processed_at ) {
+        if ($this->adventuring_locks_at->isPast() || ! $this->proposals_processed_at ) {
             return false;
         }
 
@@ -154,7 +154,7 @@ class Week extends EventSourcedModel
 
     public function adventuringOpen()
     {
-        return $this->everything_locks_at->isFuture();
+        return $this->adventuring_locks_at->isFuture();
     }
 
     public function gamePlayersQueued()
@@ -167,7 +167,7 @@ class Week extends EventSourcedModel
      */
     public function getGamesPeriod()
     {
-        return CarbonPeriod::create($this->everything_locks_at, $this->ends_at);
+        return CarbonPeriod::create($this->adventuring_locks_at, $this->ends_at);
     }
 
     public function getValidGames($relations = [])

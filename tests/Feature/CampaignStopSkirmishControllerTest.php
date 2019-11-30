@@ -44,7 +44,7 @@ class CampaignStopSkirmishControllerTest extends TestCase
     {
         parent::setUp();
         $this->week = factory(Week::class)->create();
-        $this->week->everything_locks_at = Date::now()->addHour();
+        $this->week->adventuring_locks_at = Date::now()->addHour();
         $this->week->save();
         Week::setTestCurrent($this->week);
         $this->squad = factory(Squad::class)->create();

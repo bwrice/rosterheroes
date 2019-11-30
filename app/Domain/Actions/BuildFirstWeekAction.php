@@ -9,7 +9,7 @@ use App\Exceptions\BuildWeekException;
 
 class BuildFirstWeekAction
 {
-    public function execute()
+    public function execute(): Week
     {
         $currentWeek = Week::current();
         if ($currentWeek) {

@@ -47,7 +47,7 @@ class LeaveQuestActionTest extends TestCase
             'province_id' => $this->quest->province_id
         ]);
         $this->week = factory(Week::class)->create();
-        $this->week->everything_locks_at = Date::now()->addHour();
+        $this->week->adventuring_locks_at = Date::now()->addHour();
         $this->week->save();
         Week::setTestCurrent($this->week);
 
@@ -72,7 +72,7 @@ class LeaveQuestActionTest extends TestCase
      */
     public function leaving_a_quest_when_the_week_is_locked_will_throw_an_exception()
     {
-        $this->week->everything_locks_at = Date::now()->subHour();
+        $this->week->adventuring_locks_at = Date::now()->subHour();
         $this->week->save();
         Week::setTestCurrent($this->week);
 

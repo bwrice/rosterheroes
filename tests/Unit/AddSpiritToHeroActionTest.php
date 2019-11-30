@@ -60,12 +60,12 @@ class AddSpiritToHeroActionTest extends TestCase
         /*
          * Set current time to Before the week ends
          */
-        Date::setTestNow(Week::current()->everything_locks_at->subHours(6));
+        Date::setTestNow(Week::current()->adventuring_locks_at->subHours(6));
 
         /*
          * Set game start time to AFTER the week ends
          */
-        $this->playerSpirit->game->starts_at = Week::current()->everything_locks_at->addHours(2);
+        $this->playerSpirit->game->starts_at = Week::current()->adventuring_locks_at->addHours(2);
         $this->playerSpirit->game->save();
 
     }

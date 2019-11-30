@@ -42,7 +42,7 @@ class LeaveSkirmishActionTest extends TestCase
     {
         parent::setUp();
         $this->week = factory(Week::class)->create();
-        $this->week->everything_locks_at = Date::now()->addHour();
+        $this->week->adventuring_locks_at = Date::now()->addHour();
         $this->week->save();
         Week::setTestCurrent($this->week);
         $this->squad = factory(Squad::class)->create();
@@ -72,7 +72,7 @@ class LeaveSkirmishActionTest extends TestCase
      */
     public function leaving_a_skirmish_will_throw_an_exception_if_the_week_is_locked()
     {
-        $this->week->everything_locks_at = Date::now()->subHour();
+        $this->week->adventuring_locks_at = Date::now()->subHour();
         $this->week->save();
         Week::setTestCurrent($this->week);
 

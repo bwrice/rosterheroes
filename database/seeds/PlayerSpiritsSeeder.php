@@ -39,7 +39,7 @@ class PlayerSpiritsSeeder extends Seeder
             ]);
 
             $hoursToAdd = random_int(0, 12);
-            $gameStartsAt = $week->everything_locks_at->addHours($hoursToAdd);
+            $gameStartsAt = $week->adventuring_locks_at->addHours($hoursToAdd);
 
             $game = factory(Game::class)->create([
                 'home_team_id' => $homeTeam->id,

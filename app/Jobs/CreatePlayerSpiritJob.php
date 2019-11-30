@@ -49,7 +49,7 @@ class CreatePlayerSpiritJob implements ShouldQueue
      */
     public function handle()
     {
-        if ( ! $this->game->starts_at->isBetween($this->week->everything_locks_at, $this->week->ends_at)) {
+        if ( ! $this->game->starts_at->isBetween($this->week->adventuring_locks_at, $this->week->ends_at)) {
             throw new InvalidGameException($this->game);
         }
 
