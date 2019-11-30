@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Domain\Actions\BuildFirstWeekAction;
+use App\Domain\Actions\BuildInitialWeekAction;
 use App\Domain\Models\Week;
 use App\Exceptions\BuildWeekException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class BuildFirstWeekActionTest extends TestCase
+class BuildInitialWeekActionTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -22,8 +22,8 @@ class BuildFirstWeekActionTest extends TestCase
         $week = factory(Week::class)->state('as-current')->create();
 
         try {
-            /** @var BuildFirstWeekAction $domainAction */
-            $domainAction = app(BuildFirstWeekAction::class);
+            /** @var BuildInitialWeekAction $domainAction */
+            $domainAction = app(BuildInitialWeekAction::class);
             $domainAction->execute();
         } catch (BuildWeekException $exception) {
             $this->assertEquals(BuildWeekException::CODE_INVALID_CURRENT_WEEK, $exception->getCode());
@@ -41,8 +41,8 @@ class BuildFirstWeekActionTest extends TestCase
     {
         Week::setTestCurrent(null);
 
-        /** @var BuildFirstWeekAction $domainAction */
-        $domainAction = app(BuildFirstWeekAction::class);
+        /** @var BuildInitialWeekAction $domainAction */
+        $domainAction = app(BuildInitialWeekAction::class);
         $week = $domainAction->execute();
 
         $queriedCurrentWeek = Week::query()->current();

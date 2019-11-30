@@ -8,7 +8,7 @@ use App\Domain\Models\Week;
 use App\Exceptions\BuildWeekException;
 use Illuminate\Support\Facades\Date;
 
-class BuildFirstWeekAction
+class BuildInitialWeekAction
 {
     /**
      * @var BuildWeekAction
