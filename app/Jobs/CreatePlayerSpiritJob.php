@@ -19,15 +19,10 @@ class CreatePlayerSpiritJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-
     /**
      * @var Week
      */
     private $week;
-    /**
-     * @var League
-     */
-    private $league;
     /**
      * @var Game
      */
@@ -45,24 +40,11 @@ class CreatePlayerSpiritJob implements ShouldQueue
     }
 
     /**
-     * @throws \Exception
+     * @param CreatePlayerSpiritAction $createPlayerSpiritAction
+     * @throws \MathPHP\Exception\BadDataException
      */
-    public function handle()
+    public function handle(CreatePlayerSpiritAction $createPlayerSpiritAction)
     {
-        if ( ! $this->game->starts_at->isBetween($this->week->adventuring_locks_at, $this->week->ends_at)) {
-            throw new InvalidGameException($this->game);
-        }
-
-        if ( ! $this->game->hasTeam($this->player->team) ) {
-            throw new InvalidPlayerException($this->player);
-        }
-
-        $position = $this->player->positions->withHighestPositionValue();
-        if (!$position) {
-            throw new InvalidPlayerException($this->player, $this->player->fullName() . " has zero positions");
-        }
-
-        $action = new CreatePlayerSpiritAction($this->week, $this->game, $this->player, $position);
-        $action();
+        $createPlayerSpiritAction->execute($this->week, $this->game, $this->player);
     }
 }
