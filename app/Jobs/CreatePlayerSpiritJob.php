@@ -22,15 +22,15 @@ class CreatePlayerSpiritJob implements ShouldQueue
     /**
      * @var Week
      */
-    private $week;
+    public $week;
     /**
      * @var Game
      */
-    private $game;
+    public $game;
     /**
      * @var Player
      */
-    private $player;
+    public $player;
 
     public function __construct(Week $week, Game $game, Player $player)
     {
