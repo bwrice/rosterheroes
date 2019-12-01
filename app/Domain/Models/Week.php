@@ -166,7 +166,9 @@ class Week extends EventSourcedModel
      */
     public function getGamesPeriod()
     {
-        return CarbonPeriod::create($this->adventuring_locks_at, $this->ends_at);
+        $start = $this->adventuring_locks_at;
+        $end = $this->adventuring_locks_at->addHours(12);
+        return CarbonPeriod::create($start, $end);
     }
 
     public function getValidGames($relations = [])
@@ -176,15 +178,15 @@ class Week extends EventSourcedModel
         return $games;
     }
 
-    public static function getLatest(): ?Week
-    {
-        if (self::$useNullTestLatest) {
-            return null;
-        } elseif (self::$testLatest) {
-            return self::$testLatest;
-        }
-        return self::query()->orderByDesc('ends_at')->first();
-    }
+//    public static function getLatest(): ?Week
+//    {
+//        if (self::$useNullTestLatest) {
+//            return null;
+//        } elseif (self::$testLatest) {
+//            return self::$testLatest;
+//        }
+//        return self::query()->orderByDesc('ends_at')->first();
+//    }
 
     /**
      * @return Week
