@@ -15,6 +15,7 @@ use App\Domain\Models\StatType;
 use App\Domain\Models\Team;
 use App\Domain\Models\Week;
 use App\Domain\Models\PlayerSpirit;
+use App\Exceptions\CreatePlayerSpiritException;
 use App\Exceptions\InvalidGameException;
 use App\Exceptions\InvalidPlayerException;
 use App\Jobs\CreatePlayerSpiritJob;
@@ -27,37 +28,46 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class CreatePlayerSpiritTest extends TestCase
+class CreatePlayerSpiritActionTest extends TestCase
 {
     use DatabaseTransactions;
 
+    /** @var Week */
+    protected $week;
+    /** @var Game */
+    protected $game;
+    /** @var Player */
+    protected $player;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->week = factory(Week::class)->create();
+        $this->game = factory(Game::class)->create([
+            'starts_at' => $this->week->adventuring_locks_at->addHour()
+        ]);
+        $this->player = factory(Player::class)->state('with-positions')->create([
+            'team_id' => $this->game->homeTeam->id
+        ]);
+    }
+
     /**
      * @test
      */
-    public function the_job_will_throw_an_exception_if_the_game_starts_before_the_week_locks()
+    public function it_will_throw_an_exception_if_the_game_starts_before_the_week_locks()
     {
-        /** @var Week $week */
-        $week = factory(Week::class)->create();
-        /** @var Game $game */
-        $game = factory(Game::class)->create([
-            'starts_at' => $week->adventuring_locks_at->subMinutes(15)
-        ]);
-        $player = factory(Player::class)->create([
-            'team_id' => $game->homeTeam->id
-        ]);
+        $this->game->starts_at = $this->week->adventuring_locks_at->subMinutes(15);
+        $this->game->save();
+        $this->game = $this->game->fresh();
 
         try {
+            /** @var CreatePlayerSpiritAction $domainAction */
+            $domainAction = app(CreatePlayerSpiritAction::class);
+            $domainAction->execute($this->week, $this->game, $this->player);
 
-            CreatePlayerSpiritJob::dispatchNow($week, $game, $player);
+        } catch (CreatePlayerSpiritException $exception) {
 
-        } catch (InvalidGameException $exception) {
-
-            $playerSpirit = PlayerSpirit::query()
-                ->where('game_id', '=', $game->id)
-                ->where('player_id', '=', $player->id)
-                ->where('week_id', '=', $week->id)->first();
-
-            $this->assertNull($playerSpirit);
+            $this->assertEquals(CreatePlayerSpiritException::CODE_INVALID_GAME_TIME, $exception->getCode());
             return;
         }
         $this->fail("Exception not thrown");
@@ -66,28 +76,18 @@ class CreatePlayerSpiritTest extends TestCase
     /**
      * @test
      */
-    public function the_job_will_throw_an_exception_if_the_player_isnt_a_part_of_the_game()
+    public function it_will_throw_an_exception_if_the_players_team_is_not_part_of_the_game()
     {
-        /** @var Week $week */
-        $week = factory(Week::class)->create();
-        /** @var Game $game */
-        $game = factory(Game::class)->create([
-            'starts_at' => $week->adventuring_locks_at->addMinutes(30)
-        ]);
-        $player = factory(Player::class)->create(); //random team should be created in factory
+        $this->player = factory(Player::class)->create(); //random team should be created in factory
 
         try {
+            /** @var CreatePlayerSpiritAction $domainAction */
+            $domainAction = app(CreatePlayerSpiritAction::class);
+            $domainAction->execute($this->week, $this->game, $this->player);
 
-            CreatePlayerSpiritJob::dispatchNow($week, $game, $player);
+        } catch (CreatePlayerSpiritException $exception) {
 
-        } catch (InvalidPlayerException $exception) {
-
-            $playerSpirit = PlayerSpirit::query()
-                ->where('game_id', '=', $game->id)
-                ->where('player_id', '=', $player->id)
-                ->where('week_id', '=', $week->id)->first();
-
-            $this->assertNull($playerSpirit);
+            $this->assertEquals(CreatePlayerSpiritException::CODE_TEAM_NOT_PART_OF_GAME, $exception->getCode());
             return;
         }
         $this->fail("Exception not thrown");
@@ -96,34 +96,19 @@ class CreatePlayerSpiritTest extends TestCase
     /**
      * @test
      */
-    public function it_will_throw_an_exception_if_the_player_doesnt_have_any_positions_or_game_logs()
+    public function it_will_throw_an_exception_if_the_player_doesnt_have_any_positions()
     {
-        /** @var Week $week */
-        $week = factory(Week::class)->create();
-        /** @var Game $game */
-        $game = factory(Game::class)->create([
-            'starts_at' => $week->adventuring_locks_at->addMinutes(30)
-        ]);
-        /** @var Player $player */
-        $player = factory(Player::class)->create([
-            'team_id' => $game->awayTeam->id
-        ]);
-
-        $this->assertTrue($player->positions->isEmpty());
-        $this->assertTrue($player->playerGameLogs->isEmpty());
+        $this->player->positions()->sync([]);
+        $this->player = $this->player->fresh();
 
         try {
+            /** @var CreatePlayerSpiritAction $domainAction */
+            $domainAction = app(CreatePlayerSpiritAction::class);
+            $domainAction->execute($this->week, $this->game, $this->player);
 
-            CreatePlayerSpiritJob::dispatchNow($week, $game, $player);
+        } catch (CreatePlayerSpiritException $exception) {
 
-        } catch (InvalidPlayerException $exception) {
-
-            $playerSpirit = PlayerSpirit::query()
-                ->where('game_id', '=', $game->id)
-                ->where('player_id', '=', $player->id)
-                ->where('week_id', '=', $week->id)->first();
-
-            $this->assertNull($playerSpirit);
+            $this->assertEquals(CreatePlayerSpiritException::CODE_INVALID_PLAYER_POSITIONS, $exception->getCode());
             return;
         }
         $this->fail("Exception not thrown");
@@ -134,13 +119,6 @@ class CreatePlayerSpiritTest extends TestCase
      */
     public function the_action_will_set_the_essence_cost_to_the_position_default_if_no_game_logs()
     {
-        /** @var Week $week */
-        $week = factory(Week::class)->create();
-        /** @var Game $game */
-        $game = factory(Game::class)->create();
-        /** @var Player $player */
-        $player = factory(Player::class)->create();
-
         /** @var PositionCollection $positions */
         $positions = Position::query()->whereIn('name', [
             Position::QUARTERBACK,
@@ -149,14 +127,15 @@ class CreatePlayerSpiritTest extends TestCase
 
         $position = $positions->withHighestPositionValue();
 
-        $player->positions()->saveMany($positions);
+        $this->player->positions()->sync([]); // clear positions created by setup first
+        $this->player->positions()->saveMany($positions);
 
-        $this->assertEquals(2, $player->positions->count());
-        $this->assertTrue($player->playerGameLogs->isEmpty());
+        $this->assertEquals(2, $this->player->positions->count());
+        $this->assertTrue($this->player->playerGameLogs->isEmpty());
 
-        $action = new CreatePlayerSpiritAction($week, $game, $player, $position);
-
-        $playerSpirit = $action(); //invoke
+        /** @var CreatePlayerSpiritAction $domainAction */
+        $domainAction = app(CreatePlayerSpiritAction::class);
+        $playerSpirit = $domainAction->execute($this->week, $this->game, $this->player);
 
         $this->assertEquals($position->getDefaultEssenceCost(), $playerSpirit->essence_cost);
     }
@@ -166,14 +145,10 @@ class CreatePlayerSpiritTest extends TestCase
      */
     public function the_action_will_raise_the_essence_cost_if_player_game_logs_have_high_total_points()
     {
-        /** @var Week $week */
-        $week = factory(Week::class)->create();
-        /** @var Game $game */
-        $game = factory(Game::class)->create();
-        /** @var Player $player */
-        $player = factory(Player::class)->create();
-
         $shortStop = Position::forName(Position::SHORTSTOP);
+
+        $this->player->positions()->sync([]);
+        $this->player->positions()->save($shortStop);
 
         $homeRuns = factory(PlayerStat::class)->make([
             'amount' => 4,
@@ -187,17 +162,19 @@ class CreatePlayerSpiritTest extends TestCase
 
         /** @var PlayerGameLog $playerGameLog */
         $playerGameLog = factory(PlayerGameLog::class)->create([
-            'player_id' => $player->id
+            'player_id' => $this->player->id
         ]);
+
+        $this->player = $this->player->fresh();
 
         $playerGameLog->playerStats()->saveMany([$homeRuns, $runsBattedIn]);
 
         $this->assertEquals(2, $playerGameLog->playerStats->count());
-        $this->assertEquals(1, $player->playerGameLogs->count());
+        $this->assertEquals(1, $this->player->playerGameLogs->count());
 
-        $action = new CreatePlayerSpiritAction($week, $game, $player, $shortStop);
-
-        $playerSpirit = $action(); //invoke
+        /** @var CreatePlayerSpiritAction $domainAction */
+        $domainAction = app(CreatePlayerSpiritAction::class);
+        $playerSpirit = $domainAction->execute($this->week, $this->game, $this->player);
 
         $this->assertGreaterThan($shortStop->getBehavior()->getDefaultEssenceCost(), $playerSpirit->essence_cost);
     }
@@ -207,14 +184,10 @@ class CreatePlayerSpiritTest extends TestCase
      */
     public function the_action_will_lower_the_essence_cost_if_player_game_logs_have_low_total_points()
     {
-        /** @var Week $week */
-        $week = factory(Week::class)->create();
-        /** @var Game $game */
-        $game = factory(Game::class)->create();
-        /** @var Player $player */
-        $player = factory(Player::class)->create();
-
         $pointGuard = Position::forName(Position::POINT_GUARD);
+
+        $this->player->positions()->sync([]);
+        $this->player->positions()->save($pointGuard);
 
         $pointsMade = factory(PlayerStat::class)->make([
             'amount' => 5,
@@ -223,17 +196,17 @@ class CreatePlayerSpiritTest extends TestCase
 
         /** @var PlayerGameLog $playerGameLog */
         $playerGameLog = factory(PlayerGameLog::class)->create([
-            'player_id' => $player->id
+            'player_id' => $this->player->id
         ]);
 
         $playerGameLog->playerStats()->save($pointsMade);
 
         $this->assertEquals(1, $playerGameLog->playerStats->count());
-        $this->assertEquals(1, $player->playerGameLogs->count());
+        $this->assertEquals(1, $this->player->playerGameLogs->count());
 
-        $action = new CreatePlayerSpiritAction($week, $game, $player, $pointGuard);
-
-        $playerSpirit = $action(); //invoke
+        /** @var CreatePlayerSpiritAction $domainAction */
+        $domainAction = app(CreatePlayerSpiritAction::class);
+        $playerSpirit = $domainAction->execute($this->week, $this->game, $this->player);
 
         $this->assertLessThan($pointGuard->getBehavior()->getDefaultEssenceCost(), $playerSpirit->essence_cost);
     }
@@ -243,15 +216,10 @@ class CreatePlayerSpiritTest extends TestCase
      */
     public function the_action_will_raise_the_essence_cost_even_more_with_more_high_total_game_logs()
     {
-        /** @var Week $week */
-        $week = factory(Week::class)->create();
-        /** @var Game $game */
-        $game = factory(Game::class)->create();
-
-        /** @var Player $player */
-        $player = factory(Player::class)->create();
-
         $leftWing = Position::forName(Position::LEFT_WING);
+
+        $this->player->positions()->sync([]);
+        $this->player->positions()->save($leftWing);
 
         $goals = factory(PlayerStat::class)->make([
             'amount' => 3,
@@ -265,24 +233,24 @@ class CreatePlayerSpiritTest extends TestCase
 
         /** @var PlayerGameLog $playerGameLog */
         $playerGameLog = factory(PlayerGameLog::class)->create([
-            'player_id' => $player->id
+            'player_id' => $this->player->id
         ]);
 
         $playerGameLog->playerStats()->saveMany([$goals, $shotsOnGoal]);
 
         $this->assertEquals(2, $playerGameLog->playerStats->count());
-        $this->assertEquals(1, $player->playerGameLogs->count());
+        $this->assertEquals(1, $this->player->playerGameLogs->count());
 
-        $action = new CreatePlayerSpiritAction($week, $game, $player, $leftWing);
-
-        $firstPlayerSpirit = $action(); //invoke
+        /** @var CreatePlayerSpiritAction $domainAction */
+        $domainAction = app(CreatePlayerSpiritAction::class);
+        $firstPlayerSpirit = $domainAction->execute($this->week, $this->game, $this->player->fresh());
 
         $this->assertGreaterThan($leftWing->getBehavior()->getDefaultEssenceCost(), $firstPlayerSpirit->essence_cost);
 
         // Add another player game log with loaded stats and create a new player spirit
         /** @var PlayerGameLog $playerGameLog */
         $newPlayerGameLog = factory(PlayerGameLog::class)->create([
-            'player_id' => $player->id
+            'player_id' => $this->player->id
         ]);
 
         $moreGoals = factory(PlayerStat::class)->make([
@@ -299,9 +267,11 @@ class CreatePlayerSpiritTest extends TestCase
         $newPlayerGameLog->playerStats()->saveMany([$moreGoals, $evenMoreShotsOnGoal]);
         $this->assertEquals(2, $newPlayerGameLog->playerStats->count());
 
-        $action = new CreatePlayerSpiritAction($week, $game, $player->fresh(), $leftWing);
 
-        $secondPlayerSpirit = $action(); //invoke
+        /** @var CreatePlayerSpiritAction $domainAction */
+        $domainAction = app(CreatePlayerSpiritAction::class);
+        $secondPlayerSpirit = $domainAction->execute($this->week, $this->game, $this->player->fresh());
+
         $this->assertGreaterThan($firstPlayerSpirit->essence_cost, $secondPlayerSpirit->essence_cost);
     }
 
@@ -310,14 +280,11 @@ class CreatePlayerSpiritTest extends TestCase
      */
     public function the_action_will_lower_the_essence_cost_even_more_with_more_low_total_game_logs()
     {
-        /** @var Week $week */
-        $week = factory(Week::class)->create();
-        /** @var Game $game */
-        $game = factory(Game::class)->create();
-        /** @var Player $player */
-        $player = factory(Player::class)->create();
 
         $runningBack = Position::forName(Position::RUNNING_BACK);
+
+        $this->player->positions()->sync([]);
+        $this->player->positions()->save($runningBack);
 
         $rushingYards = factory(PlayerStat::class)->make([
             'amount' => 20,
@@ -326,24 +293,24 @@ class CreatePlayerSpiritTest extends TestCase
 
         /** @var PlayerGameLog $playerGameLog */
         $playerGameLog = factory(PlayerGameLog::class)->create([
-            'player_id' => $player->id
+            'player_id' => $this->player->id
         ]);
 
         $playerGameLog->playerStats()->save($rushingYards);
 
         $this->assertEquals(1, $playerGameLog->playerStats->count());
-        $this->assertEquals(1, $player->playerGameLogs->count());
+        $this->assertEquals(1, $this->player->playerGameLogs->count());
 
-        $action = new CreatePlayerSpiritAction($week, $game, $player, $runningBack);
-
-        $firstPlayerSpirit = $action(); //invoke
+        /** @var CreatePlayerSpiritAction $domainAction */
+        $domainAction = app(CreatePlayerSpiritAction::class);
+        $firstPlayerSpirit = $domainAction->execute($this->week, $this->game, $this->player->fresh());
 
         $this->assertLessThan($runningBack->getBehavior()->getDefaultEssenceCost(), $firstPlayerSpirit->essence_cost);
 
         // Add another player game log with terrible stats and create a new player spirit
         /** @var PlayerGameLog $playerGameLog */
         $newPlayerGameLog = factory(PlayerGameLog::class)->create([
-            'player_id' => $player->id
+            'player_id' => $this->player->id
         ]);
 
         $moreBadRushingYards = factory(PlayerStat::class)->make([
@@ -354,25 +321,22 @@ class CreatePlayerSpiritTest extends TestCase
         $newPlayerGameLog->playerStats()->save($moreBadRushingYards);
         $this->assertEquals(1, $newPlayerGameLog->playerStats->count());
 
-        $action = new CreatePlayerSpiritAction($week, $game, $player->fresh(), $runningBack);
 
-        $secondPlayerSpirit = $action(); //invoke
+        /** @var CreatePlayerSpiritAction $domainAction */
+        $domainAction = app(CreatePlayerSpiritAction::class);
+        $secondPlayerSpirit = $domainAction->execute($this->week, $this->game, $this->player->fresh());
         $this->assertLessThan($firstPlayerSpirit->essence_cost, $secondPlayerSpirit->essence_cost);
     }
 
     /**
      * @test
      */
-    public function the_action_will_weigh_more_recent_game_logs_heavier_towards_essence_cost_calculation()
+    public function it_will_weigh_more_recent_game_logs_heavier_towards_essence_cost_calculation()
     {
-        /** @var Week $week */
-        $week = factory(Week::class)->create();
-        /** @var Game $game */
-        $game = factory(Game::class)->create();
-        /** @var Player $playerWithBadRecentGame */
-        $playerWithBadRecentGame = factory(Player::class)->create();
-
         $runningBack = Position::forName(Position::RUNNING_BACK);
+
+        $this->player->positions()->sync([]);
+        $this->player->positions()->save($runningBack);
 
         $goodRushingYards = factory(PlayerStat::class)->make([
             'amount' => 250,
@@ -381,7 +345,7 @@ class CreatePlayerSpiritTest extends TestCase
 
         /** @var PlayerGameLog $goodAndOldGameLog */
         $goodAndOldGameLog = factory(PlayerGameLog::class)->create([
-            'player_id' => $playerWithBadRecentGame->id,
+            'player_id' => $this->player->id,
             'game_id' => factory(Game::class)->create([
                 'starts_at' => Date::now()->subWeeks(5)
             ])
@@ -396,25 +360,28 @@ class CreatePlayerSpiritTest extends TestCase
 
         /** @var PlayerGameLog $badAndRecentGameLog */
         $badAndRecentGameLog = factory(PlayerGameLog::class)->create([
-            'player_id' => $playerWithBadRecentGame->id,
+            'player_id' => $this->player->id,
             'game_id' => factory(Game::class)->create([
                 'starts_at' => Date::now()->subWeeks(1)
             ])
         ]);
 
         $badAndRecentGameLog->playerStats()->save($badRushingYards);
-        $this->assertEquals(2, $playerWithBadRecentGame->playerGameLogs->count());
+        $this->assertEquals(2, $this->player->playerGameLogs->count());
 
-        $action = new CreatePlayerSpiritAction($week, $game, $playerWithBadRecentGame, $runningBack);
+        /** @var CreatePlayerSpiritAction $domainAction */
+        $domainAction = app(CreatePlayerSpiritAction::class);
+        $badRecentGamePlayerSpirit = $domainAction->execute($this->week, $this->game, $this->player->fresh());
 
-        $badRecentPlayerSpirit = $action(); //invoke
-
-        /** @var Player $player */
-        $playerWithGoodRecentGame = factory(Player::class)->create();
+        // clean-up old stats
+        $goodAndOldGameLog->playerStats()->delete();
+        $goodAndOldGameLog->delete();
+        $badAndRecentGameLog->playerStats()->delete();
+        $badAndRecentGameLog->delete();
 
         /** @var PlayerGameLog $goodAndOldGameLog */
         $badAndOldGameLog = factory(PlayerGameLog::class)->create([
-            'player_id' => $playerWithGoodRecentGame->id,
+            'player_id' => $this->player->id,
             'game_id' => factory(Game::class)->create([
                 'starts_at' => Date::now()->subWeeks(5)
             ])
@@ -429,7 +396,7 @@ class CreatePlayerSpiritTest extends TestCase
 
         /** @var PlayerGameLog $badAndRecentGameLog */
         $goodAndRecentGameLog = factory(PlayerGameLog::class)->create([
-            'player_id' => $playerWithGoodRecentGame->id,
+            'player_id' => $this->player->id,
             'game_id' => factory(Game::class)->create([
                 'starts_at' => Date::now()->subWeeks(1)
             ])
@@ -442,64 +409,65 @@ class CreatePlayerSpiritTest extends TestCase
 
         $goodAndRecentGameLog->playerStats()->save($goodRushingYards);
 
-        $this->assertEquals(2, $playerWithGoodRecentGame->playerGameLogs->count());
+        $this->assertEquals(2, $this->player->playerGameLogs->count());
 
-        $action = new CreatePlayerSpiritAction($week, $game, $playerWithGoodRecentGame, $runningBack);
+        /** @var CreatePlayerSpiritAction $domainAction */
+        $domainAction = app(CreatePlayerSpiritAction::class);
+        $goodRecentPlayerSpirit = $domainAction->execute($this->week, $this->game, $this->player->fresh());
 
-        $goodRecentPlayerSpirit = $action(); //invoke
-        $this->assertGreaterThan($badRecentPlayerSpirit->essence_cost, $goodRecentPlayerSpirit->essence_cost);
+        $this->assertGreaterThan($badRecentGamePlayerSpirit->essence_cost, $goodRecentPlayerSpirit->essence_cost);
     }
-
-    /**
-     * @test
-     */
-    public function the_build_command_will_dispatch_jobs()
-    {
-        // set test now to year in future to prevent overlap with real games
-        Date::setTestNow(now()->addYear());
-
-        /** @var Week $week */
-        $week = factory(Week::class)->create();
-
-        Week::setTestCurrent($week);
-
-        $gameOneHomeTeam = factory(Team::class)->create();
-        $gameOneAwayTeam = factory(Team::class)->create();
-        $gameTwoHomeTeam = factory(Team::class)->create();
-        $gameTwoAwayTeam = factory(Team::class)->create();
-
-        $gameOne = factory(Game::class)->create([
-            'home_team_id' => $gameOneHomeTeam->id,
-            'away_team_id' => $gameOneAwayTeam->id,
-            'starts_at' => $week->getGamesPeriod()->getStartDate()->addMinutes(15)
-        ]);
-
-        $gameTwo = factory(Game::class)->create([
-            'home_team_id' => $gameTwoHomeTeam->id,
-            'away_team_id' => $gameTwoAwayTeam->id,
-            'starts_at' => $week->getGamesPeriod()->getStartDate()->addMinutes(15)
-        ]);
-
-        $playerOne = factory(Player::class)->create([
-            'team_id' => $gameOneHomeTeam->id
-        ]);
-        $playerTwo = factory(Player::class)->create([
-            'team_id' => $gameOneAwayTeam->id
-        ]);
-        $playerThree = factory(Player::class)->create([
-            'team_id' => $gameTwoHomeTeam->id
-        ]);
-        $playerFour = factory(Player::class)->create([
-            'team_id' => $gameTwoAwayTeam->id
-        ]);
-
-        Queue::fake();
-
-        Queue::assertNothingPushed();
-
-        Artisan::call('week:build-player-spirits');
-
-
-        Queue::assertPushed(CreatePlayerSpiritJob::class, 4);
-    }
+//
+//    /**
+//     * @test
+//     */
+//    public function the_build_command_will_dispatch_jobs()
+//    {
+//        // set test now to year in future to prevent overlap with real games
+//        Date::setTestNow(now()->addYear());
+//
+//        /** @var Week $week */
+//        $week = factory(Week::class)->create();
+//
+//        Week::setTestCurrent($week);
+//
+//        $gameOneHomeTeam = factory(Team::class)->create();
+//        $gameOneAwayTeam = factory(Team::class)->create();
+//        $gameTwoHomeTeam = factory(Team::class)->create();
+//        $gameTwoAwayTeam = factory(Team::class)->create();
+//
+//        $gameOne = factory(Game::class)->create([
+//            'home_team_id' => $gameOneHomeTeam->id,
+//            'away_team_id' => $gameOneAwayTeam->id,
+//            'starts_at' => $week->getGamesPeriod()->getStartDate()->addMinutes(15)
+//        ]);
+//
+//        $gameTwo = factory(Game::class)->create([
+//            'home_team_id' => $gameTwoHomeTeam->id,
+//            'away_team_id' => $gameTwoAwayTeam->id,
+//            'starts_at' => $week->getGamesPeriod()->getStartDate()->addMinutes(15)
+//        ]);
+//
+//        $playerOne = factory(Player::class)->create([
+//            'team_id' => $gameOneHomeTeam->id
+//        ]);
+//        $playerTwo = factory(Player::class)->create([
+//            'team_id' => $gameOneAwayTeam->id
+//        ]);
+//        $playerThree = factory(Player::class)->create([
+//            'team_id' => $gameTwoHomeTeam->id
+//        ]);
+//        $playerFour = factory(Player::class)->create([
+//            'team_id' => $gameTwoAwayTeam->id
+//        ]);
+//
+//        Queue::fake();
+//
+//        Queue::assertNothingPushed();
+//
+//        Artisan::call('week:build-player-spirits');
+//
+//
+//        Queue::assertPushed(CreatePlayerSpiritJob::class, 4);
+//    }
 }
