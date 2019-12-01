@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Domain\Actions\BuildWeeklyPlayerSpiritsAction;
 use App\Domain\Models\Game;
 use App\Domain\Models\Player;
 use App\Domain\Models\Week;
@@ -26,32 +27,10 @@ class BuildPlayerSpirits extends Command
      */
     protected $description = 'Build player spirits';
 
-    public function handle()
+    public function handle(BuildWeeklyPlayerSpiritsAction $action)
     {
         $week = $this->getWeek();
-
-        if ($week->gamePlayersQueued()) {
-            $message = "PlayerSpirits already queued for week with ID: " . $week->id;
-            throw new InvalidWeekException($week, $message);
-        }
-
-        $games = $week->getValidGames([
-            'homeTeam.players',
-            'awayTeam.players'
-        ]);
-
-        if ($games->isEmpty()) {
-            throw new InvalidWeekException($week, "Week ID: " . $week->id . " has zero games");
-        }
-
-        $games->each(function (Game $game) use ($week) {
-            $game->homeTeam->players->each(function (Player $player) use ($week, $game) {
-                CreatePlayerSpiritJob::dispatch($week, $game, $player);
-            });
-            $game->awayTeam->players->each(function (Player $player) use ($week, $game) {
-                CreatePlayerSpiritJob::dispatch($week, $game, $player);
-            });
-        });
+        $action->execute($week);
     }
 
     /**
