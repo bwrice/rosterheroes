@@ -91,7 +91,7 @@ class CreatePlayerSpiritAction
     {
         $position = $this->player->positions->withHighestPositionValue();
         if (!$position) {
-            throw new CreatePlayerSpiritException("No position found for player", CreatePlayerSpiritException::CODE_PLAYER_HAS_INVALID_POSITIONS);
+            throw new CreatePlayerSpiritException("No position found for player", CreatePlayerSpiritException::CODE_INVALID_PLAYER_POSITIONS);
         }
         return $position;
     }
