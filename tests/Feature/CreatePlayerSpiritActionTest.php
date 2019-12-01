@@ -2,24 +2,16 @@
 
 namespace Tests\Feature;
 
-use App\Console\Commands\BuildPlayerSpirits;
 use App\Domain\Actions\CreatePlayerSpiritAction;
 use App\Domain\Collections\PositionCollection;
 use App\Domain\Models\Game;
-use App\Domain\Models\League;
 use App\Domain\Models\Player;
 use App\Domain\Models\PlayerGameLog;
 use App\Domain\Models\PlayerStat;
 use App\Domain\Models\Position;
 use App\Domain\Models\StatType;
-use App\Domain\Models\Team;
 use App\Domain\Models\Week;
-use App\Domain\Models\PlayerSpirit;
 use App\Exceptions\CreatePlayerSpiritException;
-use App\Exceptions\InvalidGameException;
-use App\Exceptions\InvalidPlayerException;
-use App\Jobs\CreatePlayerSpiritJob;
-use Carbon\Exceptions\InvalidDateException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Date;
@@ -417,57 +409,4 @@ class CreatePlayerSpiritActionTest extends TestCase
 
         $this->assertGreaterThan($badRecentGamePlayerSpirit->essence_cost, $goodRecentPlayerSpirit->essence_cost);
     }
-//
-//    /**
-//     * @test
-//     */
-//    public function the_build_command_will_dispatch_jobs()
-//    {
-//        // set test now to year in future to prevent overlap with real games
-//        Date::setTestNow(now()->addYear());
-//
-//        /** @var Week $week */
-//        $week = factory(Week::class)->create();
-//
-//        Week::setTestCurrent($week);
-//
-//        $gameOneHomeTeam = factory(Team::class)->create();
-//        $gameOneAwayTeam = factory(Team::class)->create();
-//        $gameTwoHomeTeam = factory(Team::class)->create();
-//        $gameTwoAwayTeam = factory(Team::class)->create();
-//
-//        $gameOne = factory(Game::class)->create([
-//            'home_team_id' => $gameOneHomeTeam->id,
-//            'away_team_id' => $gameOneAwayTeam->id,
-//            'starts_at' => $week->getGamesPeriod()->getStartDate()->addMinutes(15)
-//        ]);
-//
-//        $gameTwo = factory(Game::class)->create([
-//            'home_team_id' => $gameTwoHomeTeam->id,
-//            'away_team_id' => $gameTwoAwayTeam->id,
-//            'starts_at' => $week->getGamesPeriod()->getStartDate()->addMinutes(15)
-//        ]);
-//
-//        $playerOne = factory(Player::class)->create([
-//            'team_id' => $gameOneHomeTeam->id
-//        ]);
-//        $playerTwo = factory(Player::class)->create([
-//            'team_id' => $gameOneAwayTeam->id
-//        ]);
-//        $playerThree = factory(Player::class)->create([
-//            'team_id' => $gameTwoHomeTeam->id
-//        ]);
-//        $playerFour = factory(Player::class)->create([
-//            'team_id' => $gameTwoAwayTeam->id
-//        ]);
-//
-//        Queue::fake();
-//
-//        Queue::assertNothingPushed();
-//
-//        Artisan::call('week:build-player-spirits');
-//
-//
-//        Queue::assertPushed(CreatePlayerSpiritJob::class, 4);
-//    }
 }

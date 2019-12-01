@@ -11,7 +11,7 @@ use App\Jobs\CreatePlayerSpiritJob;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Date;
 
-class BuildPlayerSpirits extends Command
+class BuildWeeklyPlayerSpiritsCommand extends Command
 {
     /**
      * The name and signature of the console command.
