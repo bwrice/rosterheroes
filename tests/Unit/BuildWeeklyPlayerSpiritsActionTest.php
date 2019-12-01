@@ -124,4 +124,44 @@ class BuildWeeklyPlayerSpiritsActionTest extends TestCase
                 && $job->week->id === $this->week->id;
         });
     }
+
+    /**
+    * @test
+    */
+    public function it_will_not_queue_jobs_for_games_more_than_12_hours_after_adventuring_locks()
+    {
+        /** @var Player $playerOne */
+        $playerOne = factory(Player::class)->create();
+        /** @var Player $playerTwo */
+        $playerTwo = factory(Player::class)->create([
+            'team_id' => factory(Team::class)->create([
+                'league_id' => $playerOne->team->league->id
+            ])
+        ]);
+
+        $game = factory(Game::class)->create([
+            'home_team_id' => $playerOne->team->id,
+            'away_team_id' => $playerTwo->team->id,
+            'starts_at' => $this->week->adventuring_locks_at->addHours(13)
+        ]);
+
+        Queue::fake();
+        Queue::assertNothingPushed();
+
+        /** @var BuildWeeklyPlayerSpiritsAction $domainAction */
+        $domainAction = app(BuildWeeklyPlayerSpiritsAction::class);
+        $domainAction->execute($this->week);
+
+        Queue::assertNotPushed(CreatePlayerSpiritJob::class, function (CreatePlayerSpiritJob $job) use ($playerOne, $game) {
+            return $job->player->id === $playerOne->id
+                && $job->game->id === $game->id
+                && $job->week->id === $this->week->id;
+        });
+
+        Queue::assertNotPushed(CreatePlayerSpiritJob::class, function (CreatePlayerSpiritJob $job) use ($playerTwo, $game) {
+            return $job->player->id === $playerTwo->id
+                && $job->game->id === $game->id
+                && $job->week->id === $this->week->id;
+        });
+    }
 }
