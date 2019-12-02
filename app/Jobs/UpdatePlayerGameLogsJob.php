@@ -12,6 +12,10 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Redis\Connections\Connection;
+use Illuminate\Redis\Limiters\ConcurrencyLimiterBuilder;
+use Illuminate\Redis\Limiters\DurationLimiterBuilder;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
 
@@ -48,17 +52,19 @@ class UpdatePlayerGameLogsJob implements ShouldQueue
 
     /**
      * @param StatsIntegration $statsIntegration
+     * @throws \Illuminate\Contracts\Redis\LimiterTimeoutException
      */
     public function handle(StatsIntegration $statsIntegration)
     {
+        /** @var ConcurrencyLimiterBuilder $concurrencyLimiterBuilder */
+        $concurrencyLimiterBuilder = Redis::funnel(self::REDIS_THROTTLE_KEY);
         // Game log API has rate limit of 1 request per 10 seconds, we add another 5 seconds for buffer
-        Redis::throttle(self::REDIS_THROTTLE_KEY)->allow(1)->every(15)->then(function () use ($statsIntegration) {
+        $concurrencyLimiterBuilder->limit(1)->then(function () use ($statsIntegration) {
             // Job logic...
             $this->performJob($statsIntegration);
-        }, function () {
+        }, function (\Exception $exception) {
             // Could not obtain lock...
-
-            return $this->release(1);
+            $this->release(30);
         });
     }
 
@@ -67,7 +73,8 @@ class UpdatePlayerGameLogsJob implements ShouldQueue
         $start = microtime(true);
         $playerGameLogDTOs = $statsIntegration->getPlayerGameLogDTOs($this->team, $this->yearDelta);
         $end = microtime(true);
-        Log::debug("Get player DTOs elapsed time: " . ($start - $end) . " seconds for team: " . $this->team->name);
+        $diff = $end - $start;
+        Log::debug("Get player DTOs elapsed time: " . $diff . " seconds for team: " . $this->team->name);
 
 
         $start = microtime(true);
