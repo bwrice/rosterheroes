@@ -10,6 +10,7 @@ namespace App\External\Stats\MySportsFeed;
 
 
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Log;
 
 class MSFClient
 {
@@ -38,7 +39,9 @@ class MSFClient
     {
         $fullURL = self::BASE_URL . $url;
         $response = $this->getResponse($fullURL);
-        return json_decode($response->getBody(), true);
+        $body = $response->getBody();
+        Log::debug("Bytes: " . strlen($body));
+        return json_decode($body, true);
     }
 
     protected function getResponse(string $fullURL)
