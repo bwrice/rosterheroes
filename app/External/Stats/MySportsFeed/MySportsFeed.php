@@ -255,7 +255,11 @@ class MySportsFeed implements StatsIntegration
 
     public function getPlayerGameLogDTOs(Team $team, int $yearDelta = 0): Collection
     {
+        $start = microtime(true);
         $data = $this->gameLogAPI->getData($team, $yearDelta);
+        $end = microtime(true);
+        $elapsed = $end - $start;
+        Log::debug("Get data from API for game logs: " . $elapsed . " seconds for team: " . $team->name);
         $games = $team->allGames();
         $players = $team->players;
         $statTypes = StatType::all();
@@ -267,17 +271,10 @@ class MySportsFeed implements StatsIntegration
 
             } catch (MySportsFeedsException $exception) {
 
-                Log::warning($exception->getMessage(), [
-                    'game_log_data' => $gameLogData,
-                    'team' => $team->toArray()
-                ]);
+                Log::warning($exception->getMessage());
 
             } catch (\Throwable $error) {
-                Log::error("Error while getting game log DTOs", [
-                    'error' => $error->getMessage(),
-                    'game_log_data' => $gameLogData,
-                    'team' => $team->toArray()
-                ]);
+                Log::error("Error while getting game log DTOs");
             }
 
             return null;
