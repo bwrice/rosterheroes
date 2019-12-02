@@ -90,6 +90,11 @@ class BuildWeeklyPlayerSpiritsActionTest extends TestCase
     */
     public function it_will_not_queue_jobs_for_games_before_adventuring_locks_at()
     {
+        // needed so exception of zero games not thrown
+        $validGame = factory(Game::class)->create([
+            'starts_at' => $this->week->adventuring_locks_at->addHour()
+        ]);
+
         /** @var Player $playerOne */
         $playerOne = factory(Player::class)->create();
         /** @var Player $playerTwo */
@@ -130,6 +135,11 @@ class BuildWeeklyPlayerSpiritsActionTest extends TestCase
     */
     public function it_will_not_queue_jobs_for_games_more_than_12_hours_after_adventuring_locks()
     {
+        // needed so exception of zero games not thrown
+        $validGame = factory(Game::class)->create([
+            'starts_at' => $this->week->adventuring_locks_at->addHour()
+        ]);
+
         /** @var Player $playerOne */
         $playerOne = factory(Player::class)->create();
         /** @var Player $playerTwo */
