@@ -127,11 +127,7 @@ class MySportsFeed implements StatsIntegration
         $filteredPositions = $positions->whereIn('name', $positionNames);
 
         if ($filteredPositions->isEmpty()) {
-            Log::warning("MySportsFeed player couldn't find valid positions", [
-                'playerData' => $playerData,
-                'positions' => $positions->toArray(),
-                '$filteredPositions' => $filteredPositions->toArray()
-            ]);
+            Log::warning("MySportsFeed player couldn't find valid positions");
         }
 
         return $filteredPositions;
@@ -271,7 +267,7 @@ class MySportsFeed implements StatsIntegration
 
             } catch (MySportsFeedsException $exception) {
 
-                Log::warning($exception->getMessage());
+//                Log::warning($exception->getMessage());
 
             } catch (\Throwable $error) {
                 Log::error("Error while getting game log DTOs");
