@@ -15,7 +15,7 @@ class UpdateHistoricPlayerGameLogsCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'stats-int::update-game-logs {leagues?} {yearsAgo=0}';
+    protected $signature = 'stats:update-game-logs {leagues?} {yearsAgo=0}';
 
     /**
      * The console command description.
