@@ -47,7 +47,7 @@ class UpdatePlayerGameLogsCommand extends Command
 
                 $league->teams->each(function(Team $team) use ($yearDelta, &$count) {
                     if ($team->players()->count() > 0) {
-                        UpdatePlayerGameLogsJob::dispatch($team, $yearDelta)->onQueue('my_sports_feeds')->delay($count * 30);
+                        UpdatePlayerGameLogsJob::dispatch($team, $yearDelta)->onQueue('my_sports_feeds')->delay($count * 15);
                         $count++;
                     } else {
                         $message = "Team: " . $team->name . " has zero players.";
