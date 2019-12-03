@@ -80,30 +80,20 @@ class UpdatePlayerGameLogsJob implements ShouldQueue
             $gameID = $dto->getGame()->id;
             $teamID = $dto->getTeam()->id;
 
-            $playerGameLogs = PlayerGameLog::query()->where('player_id', '=', $playerID)
-                ->where('game_id', '=', $gameID)
-                ->where('team_id', '=', $teamID)->get();
+            /** @var PlayerGameLog $playerGameLog */
+            $playerGameLog = PlayerGameLog::query()->firstOrCreate([
+                'player_id' => $playerID,
+                'game_id' => $gameID,
+                'team_id' => $teamID
+            ]);
 
-            // TODO remove warning and allow for stat updates
-            if ($playerGameLogs->isNotEmpty()) {
-                Log::warning("Player, Game, Team combination already exists when attempting to create PlayerGameLog",
-                    $playerGameLogs->loadMissing('playerStats')->toArray());
-            } else {
-                /** @var PlayerGameLog $playerGameLog */
-                $playerGameLog = PlayerGameLog::query()->create([
-                    'player_id' => $dto->getPlayer()->id,
-                    'game_id' => $dto->getGame()->id,
-                    'team_id' => $dto->getTeam()->id
-                ]);
-
-                $dto->getStatAmountDTOs()->each(function (StatAmountDTO $statAmountDTO) use ($playerGameLog) {
-                    $playerGameLog->playerStats()->updateOrCreate([
-                        'stat_type_id' => $statAmountDTO->getStatType()->id],
-                        [
-                            'amount' => $statAmountDTO->getAmount()
-                        ]);
-                });
-            }
+            $dto->getStatAmountDTOs()->each(function (StatAmountDTO $statAmountDTO) use ($playerGameLog) {
+                $playerGameLog->playerStats()->updateOrCreate([
+                    'stat_type_id' => $statAmountDTO->getStatType()->id],
+                    [
+                        'amount' => $statAmountDTO->getAmount()
+                    ]);
+            });
         });
         $end = microtime(true);
         Log::debug("Convert player DTOs elapsed time: " . ($start - $end) . " seconds for team: " . $this->team->name);
