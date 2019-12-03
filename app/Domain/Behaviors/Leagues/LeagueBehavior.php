@@ -89,12 +89,4 @@ class LeagueBehavior
     {
         return $this->dayOfYearEnd;
     }
-
-    /**
-     * @return int
-     */
-    public function getTotalTeams(): int
-    {
-        return $this->totalTeams;
-    }
 }
