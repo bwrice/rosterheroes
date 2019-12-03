@@ -44,7 +44,7 @@ class UpdateHistoricPlayerGameLogsCommand extends Command
         $this->getLeagues()->each(function (League $league) use (&$count, $yearDelta) {
             // loop through teams
             $league->teams->each(function(Team $team) use ($yearDelta, &$count) {
-                UpdateHistoricPlayerGameLogsJob::dispatch($team, $yearDelta)->onQueue('my_sports_feeds')->delay($count * 15);
+                UpdateHistoricPlayerGameLogsJob::dispatch($team, $yearDelta)->onQueue('stats-integration')->delay($count * 15);
                 $count++;
             });
         });

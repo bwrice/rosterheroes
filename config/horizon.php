@@ -154,7 +154,7 @@ return [
                 'connection' => 'redis-medium',
                 'queue' => [
                     'medium',
-                    'my_sports_feeds'
+                    'stats-integration'
                 ],
                 'balance' => 'simple',
                 'processes' => 10,
@@ -188,7 +188,7 @@ return [
                 'connection' => 'redis-medium',
                 'queue' => [
                     'medium',
-                    'my_sports_feeds'
+                    'stats-integration'
                 ],
                 'balance' => 'simple',
                 'processes' => 10,

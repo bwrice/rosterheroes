@@ -42,7 +42,7 @@ class UpdatePlayersCommand extends Command
 
         $this->getLeagues()->each(function (League $league) use (&$count) {
 
-            UpdatePlayersJob::dispatch($league)->onQueue('my_sports_feeds');
+            UpdatePlayersJob::dispatch($league)->onQueue('stats-integration');
             $count++;
         });
         return $count;
