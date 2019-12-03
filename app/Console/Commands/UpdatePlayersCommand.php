@@ -17,7 +17,7 @@ class UpdatePlayersCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'integration:update-players {leagues?}';
+    protected $signature = 'stats-int:update-players {leagues?}';
 
     /**
      * The console command description.
