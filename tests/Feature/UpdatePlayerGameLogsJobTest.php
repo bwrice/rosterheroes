@@ -10,7 +10,7 @@ use App\Domain\Models\PlayerGameLog;
 use App\Domain\Models\StatType;
 use App\External\Stats\MockIntegration;
 use App\External\Stats\StatsIntegration;
-use App\Jobs\UpdatePlayerGameLogsJob;
+use App\Jobs\UpdateHistoricPlayerGameLogsJob;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
@@ -74,7 +74,7 @@ class UpdatePlayerGameLogsJobTest extends TestCase
         $mockIntegration = new MockIntegration(null,null,null, $playerGameDTOs);
         app()->instance(StatsIntegration::class, $mockIntegration);
 
-        UpdatePlayerGameLogsJob::dispatch($homeTeam);
+        UpdateHistoricPlayerGameLogsJob::dispatch($homeTeam);
 
         $playerGameLogs = PlayerGameLog::query()->with('playerStats')->where('game_id', '=', $game->id)->get();
         $this->assertEquals(3, $playerGameLogs->count());

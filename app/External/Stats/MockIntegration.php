@@ -59,7 +59,7 @@ class MockIntegration implements StatsIntegration
         return $this->gameDTOs ?: collect();
     }
 
-    public function getPlayerGameLogDTOs(Team $team, int $yearDelta): Collection
+    public function getHistoricPlayerGameLogDTOs(Team $team, int $yearDelta): Collection
     {
         return $this->playerGameLogDTOs ?: collect();
     }

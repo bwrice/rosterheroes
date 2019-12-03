@@ -380,7 +380,7 @@ class MySportsFeedTest extends TestCase
 
         /** @var MySportsFeed $msfIntegration */
         $msfIntegration = app(MySportsFeed::class);
-        $playerGameLogDTOs = $msfIntegration->getPlayerGameLogDTOs($teamWeCareAbout);
+        $playerGameLogDTOs = $msfIntegration->getHistoricPlayerGameLogDTOs($teamWeCareAbout);
 
         $this->assertEquals(3, $playerGameLogDTOs->count());
 
@@ -571,7 +571,7 @@ class MySportsFeedTest extends TestCase
 
         /** @var MySportsFeed $msfIntegration */
         $msfIntegration = app(MySportsFeed::class);
-        $playerGameLogDTOs = $msfIntegration->getPlayerGameLogDTOs($teamWeCareAbout);
+        $playerGameLogDTOs = $msfIntegration->getHistoricPlayerGameLogDTOs($teamWeCareAbout);
 
         $this->assertEquals(3, $playerGameLogDTOs->count());
 
@@ -751,7 +751,7 @@ class MySportsFeedTest extends TestCase
 
         /** @var MySportsFeed $msfIntegration */
         $msfIntegration = app(MySportsFeed::class);
-        $playerGameLogDTOs = $msfIntegration->getPlayerGameLogDTOs($teamWeCareAbout);
+        $playerGameLogDTOs = $msfIntegration->getHistoricPlayerGameLogDTOs($teamWeCareAbout);
 
         $this->assertEquals(3, $playerGameLogDTOs->count());
 
@@ -962,7 +962,7 @@ class MySportsFeedTest extends TestCase
 
         /** @var MySportsFeed $msfIntegration */
         $msfIntegration = app(MySportsFeed::class);
-        $playerGameLogDTOs = $msfIntegration->getPlayerGameLogDTOs($teamWeCareAbout);
+        $playerGameLogDTOs = $msfIntegration->getHistoricPlayerGameLogDTOs($teamWeCareAbout);
 
         $this->assertEquals(3, $playerGameLogDTOs->count());
 

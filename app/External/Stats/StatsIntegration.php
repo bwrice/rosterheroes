@@ -20,5 +20,5 @@ interface StatsIntegration
 
     public function getGameDTOs(League $league, int $yearDelta): Collection;
 
-    public function getPlayerGameLogDTOs(Team $team, int $yearDelta): Collection;
+    public function getHistoricPlayerGameLogDTOs(Team $team, int $yearDelta): Collection;
 }

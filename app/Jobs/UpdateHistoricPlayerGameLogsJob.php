@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
 
-class UpdatePlayerGameLogsJob implements ShouldQueue
+class UpdateHistoricPlayerGameLogsJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -67,7 +67,7 @@ class UpdatePlayerGameLogsJob implements ShouldQueue
     public function performJob(StatsIntegration $statsIntegration)
     {
         $start = microtime(true);
-        $playerGameLogDTOs = $statsIntegration->getPlayerGameLogDTOs($this->team, $this->yearDelta);
+        $playerGameLogDTOs = $statsIntegration->getHistoricPlayerGameLogDTOs($this->team, $this->yearDelta);
         $end = microtime(true);
         $diff = $end - $start;
         Log::debug("Get player DTOs elapsed time: " . $diff . " seconds for team: " . $this->team->name);

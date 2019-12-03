@@ -249,7 +249,7 @@ class MySportsFeed implements StatsIntegration
         ];
     }
 
-    public function getPlayerGameLogDTOs(Team $team, int $yearDelta = 0): Collection
+    public function getHistoricPlayerGameLogDTOs(Team $team, int $yearDelta = 0): Collection
     {
         $start = microtime(true);
         $data = $this->gameLogAPI->getData($team, $yearDelta);

@@ -4,11 +4,11 @@ namespace App\Console\Commands;
 
 use App\Domain\Models\League;
 use App\Domain\Models\Team;
-use App\Jobs\UpdatePlayerGameLogsJob;
+use App\Jobs\UpdateHistoricPlayerGameLogsJob;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 
-class UpdatePlayerGameLogsCommand extends Command
+class UpdateHistoricPlayerGameLogsCommand extends Command
 {
     /**
      * The name and signature of the console command.
@@ -47,7 +47,7 @@ class UpdatePlayerGameLogsCommand extends Command
 
                 $league->teams->each(function(Team $team) use ($yearDelta, &$count) {
                     if ($team->players()->count() > 0) {
-                        UpdatePlayerGameLogsJob::dispatch($team, $yearDelta)->onQueue('my_sports_feeds')->delay($count * 15);
+                        UpdateHistoricPlayerGameLogsJob::dispatch($team, $yearDelta)->onQueue('my_sports_feeds')->delay($count * 15);
                         $count++;
                     } else {
                         $message = "Team: " . $team->name . " has zero players.";
