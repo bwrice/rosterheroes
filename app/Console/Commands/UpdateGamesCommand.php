@@ -26,7 +26,7 @@ class UpdateGamesCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'statsupdate-games {leagues?} {yearsAgo=0}';
+    protected $signature = 'stats:update-games {leagues?} {yearsAgo=0}';
 
     /**
      * The console command description.
