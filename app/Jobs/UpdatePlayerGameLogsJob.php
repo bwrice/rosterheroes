@@ -7,6 +7,7 @@ use App\Domain\DataTransferObjects\StatAmountDTO;
 use App\Domain\Models\PlayerGameLog;
 use App\Domain\Models\Team;
 use App\External\Stats\StatsIntegration;
+use GuzzleHttp\Exception\ClientException;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -27,9 +28,9 @@ class UpdatePlayerGameLogsJob implements ShouldQueue
 
     public $timeout = 60 * 5; // Allow 5 minutes before timing out
 
-    public $retry_after = 60 * 6;
+    public $retry_after = 30;
 
-    public $tries = 5;
+    public $tries = 3;
 
 
     /**
@@ -56,22 +57,10 @@ class UpdatePlayerGameLogsJob implements ShouldQueue
      */
     public function handle(StatsIntegration $statsIntegration)
     {
-//        /** @var ConcurrencyLimiterBuilder $concurrencyLimiterBuilder */
-//        $concurrencyLimiterBuilder = Redis::funnel(self::REDIS_THROTTLE_KEY);
-//        // Game log API has rate limit of 1 request per 10 seconds, we add another 5 seconds for buffer
-//        $concurrencyLimiterBuilder->limit(1)->then(function () use ($statsIntegration) {
-//            // Job logic...
-//            $this->performJob($statsIntegration);
-//        }, function (\Exception $exception) {
-//            // Could not obtain lock...
-//            $this->release(30);
-//        });
-//
         try {
             $this->performJob($statsIntegration);
-        } catch (\Exception $exception) {
-            Log::debug("Exception caught: " . $exception->getMessage());
-            throw $exception;
+        } catch (ClientException $exception) {
+            $this->release(60);
         }
     }
 
