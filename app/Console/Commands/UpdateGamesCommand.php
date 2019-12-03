@@ -56,17 +56,8 @@ class UpdateGamesCommand extends Command
         $yearDelta = - (int) $this->argument('yearsAgo');
         $this->getLeagues()->each(function (League $league) use (&$count, $yearDelta) {
 
-            if ($league->teams()->count() === $league->getBehavior()->getTotalTeams()) {
-                UpdateGamesJob::dispatch($league, $yearDelta)->onQueue('my_sports_feeds');
-                $count++;
-            } else {
-                $message = "League: " . $league->abbreviation . " has teams count mismatch.";
-                $message .= " Skipping update of games";
-                Log::critical($message, [
-                    'league' => $league->toArray(),
-                    'teams_count' => $league->teams()->count(),
-                ]);
-            }
+            UpdateGamesJob::dispatch($league, $yearDelta)->onQueue('my_sports_feeds');
+            $count++;
         });
 
         return $count;

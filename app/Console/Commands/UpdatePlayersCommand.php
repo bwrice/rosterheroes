@@ -42,19 +42,8 @@ class UpdatePlayersCommand extends Command
 
         $this->getLeagues()->each(function (League $league) use (&$count) {
 
-            if ($league->teams()->count() === $league->getBehavior()->getTotalTeams()) {
-
-                UpdatePlayersJob::dispatch($league)->onQueue('my_sports_feeds');
-                $count++;
-
-            } else {
-                $message = "League: " . $league->abbreviation . " has teams count mismatch.";
-                $message .= " Skipping update of games";
-                Log::critical($message, [
-                    'league' => $league->toArray(),
-                    'teams_count' => $league->teams()->count(),
-                ]);
-            }
+            UpdatePlayersJob::dispatch($league)->onQueue('my_sports_feeds');
+            $count++;
         });
         return $count;
     }

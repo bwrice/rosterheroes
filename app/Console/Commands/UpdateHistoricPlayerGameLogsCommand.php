@@ -43,29 +43,10 @@ class UpdateHistoricPlayerGameLogsCommand extends Command
         // loop through leagues
         $this->getLeagues()->each(function (League $league) use (&$count, $yearDelta) {
             // loop through teams
-            if ($league->teams()->count() === $league->getBehavior()->getTotalTeams()) {
-
-                $league->teams->each(function(Team $team) use ($yearDelta, &$count) {
-                    if ($team->players()->count() > 0) {
-                        UpdateHistoricPlayerGameLogsJob::dispatch($team, $yearDelta)->onQueue('my_sports_feeds')->delay($count * 15);
-                        $count++;
-                    } else {
-                        $message = "Team: " . $team->name . " has zero players.";
-                        $message .= " Skipping update of player game logs";
-                        Log::critical($message, [
-                            'league' => $team->toArray(),
-                            'teams_count' => $team->players()->count(),
-                        ]);
-                    }
-                });
-            } else {
-                $message = "League: " . $league->abbreviation . " has teams count mismatch.";
-                $message .= " Skipping update of games";
-                Log::critical($message, [
-                    'league' => $league->toArray(),
-                    'teams_count' => $league->teams()->count(),
-                ]);
-            }
+            $league->teams->each(function(Team $team) use ($yearDelta, &$count) {
+                UpdateHistoricPlayerGameLogsJob::dispatch($team, $yearDelta)->onQueue('my_sports_feeds')->delay($count * 15);
+                $count++;
+            });
         });
 
         return $count;
