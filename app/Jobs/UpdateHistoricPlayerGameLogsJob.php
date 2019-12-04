@@ -26,7 +26,7 @@ class UpdateHistoricPlayerGameLogsJob implements ShouldQueue
 
     public const REDIS_THROTTLE_KEY = 'msf_update_player_game_logs';
 
-    public $timeout = 60 * 5; // Allow 5 minutes before timing out
+    public $timeout = 60;
 
     public $retry_after = 30;
 
@@ -60,6 +60,8 @@ class UpdateHistoricPlayerGameLogsJob implements ShouldQueue
         try {
             $this->performJob($statsIntegration);
         } catch (ClientException $exception) {
+            Log::debug("Client exception caught: " . $exception->getMessage());
+            Log::debug("Releasing update historic game logs for team: " . $this->team->name);
             $this->release(60);
         }
     }
