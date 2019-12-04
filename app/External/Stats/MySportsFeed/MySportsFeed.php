@@ -124,13 +124,7 @@ class MySportsFeed implements StatsIntegration
             return $this->convertAbbreviateToPositionName($positionAbbreviation, $league);
         });
 
-        $filteredPositions = $positions->whereIn('name', $positionNames);
-
-        if ($filteredPositions->isEmpty()) {
-            Log::warning("MySportsFeed player couldn't find valid positions");
-        }
-
-        return $filteredPositions;
+        return $positions->whereIn('name', $positionNames);
     }
 
     protected function convertAbbreviateToPositionName(string $abbreviation, League $league)
