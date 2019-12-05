@@ -51,16 +51,32 @@ class UpdatePlayersJob implements ShouldQueue
      */
     public function performJob(StatsIntegration $integration)
     {
+        $integrationType = $integration->getIntegrationType();
+
         $playerDTOs = $integration->getPlayerDTOs($this->league);
-        $playerDTOs->each(function (PlayerDTO $playerDTO) {
-            /** @var Player $player */
-            $player = Player::updateOrCreate([
-                'external_id' => $playerDTO->getExternalID()
-            ], [
-                'team_id' => $playerDTO->getTeam()->id,
-                'first_name' => $playerDTO->getFirstName(),
-                'last_name' => $playerDTO->getLastName()
-            ]);
+        $playerDTOs->each(function (PlayerDTO $playerDTO) use ($integrationType) {
+
+            $player = Player::query()->forIntegration($integrationType->id, $playerDTO->getExternalID())->first();
+
+            if ($player) {
+                // TODO: logging of player changes (especially name changes)
+                $player->first_name = $playerDTO->getFirstName();
+                $player->last_name = $playerDTO->getLastName();
+                $player->team_id = $playerDTO->getTeam()->id;
+                $player->save();
+            } else {
+                /** @var Player $player */
+                $player = Player::query()->firstOrCreate([
+                    'team_id' => $playerDTO->getTeam()->id,
+                    'first_name' => $playerDTO->getFirstName(),
+                    'last_name' => $playerDTO->getLastName()
+                ]);
+
+                $player->externalPlayers()->create([
+                    'int_type_id' => $integrationType->id,
+                    'external_id' => $playerDTO->getExternalID()
+                ]);
+            }
             $player->positions()->syncWithoutDetaching($playerDTO->getPositions()->pluck('id')->toArray());
         });
     }
