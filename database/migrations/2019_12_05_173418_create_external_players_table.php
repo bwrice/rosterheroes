@@ -18,12 +18,12 @@ class CreateExternalPlayersTable extends Migration
             $table->integer('integration_type_id')->unsigned();
             $table->integer('player_id')->unsigned();
             $table->string('external_id');
-            $table->unique(['integration_type_id', 'player_id', 'external_id']);
+            $table->unique(['int_type_id', 'player_id', 'external_id']);
             $table->timestamps();
         });
 
         Schema::table('external_teams', function (Blueprint $table) {
-            $table->foreign('integration_type_id')->references('id')->on('stats_integration_types');
+            $table->foreign('int_type_id')->references('id')->on('stats_integration_types');
             $table->foreign('player_id')->references('id')->on('players');
         });
     }

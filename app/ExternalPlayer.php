@@ -11,7 +11,7 @@ class ExternalPlayer extends Model
 
     public function statsIntegrationType()
     {
-        return $this->belongsTo(StatsIntegrationType::class, 'integration_type_id');
+        return $this->belongsTo(StatsIntegrationType::class, 'int_type_id');
     }
 
     public function player()
