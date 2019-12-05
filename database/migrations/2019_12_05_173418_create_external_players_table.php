@@ -22,7 +22,7 @@ class CreateExternalPlayersTable extends Migration
             $table->timestamps();
         });
 
-        Schema::table('external_teams', function (Blueprint $table) {
+        Schema::table('external_players', function (Blueprint $table) {
             $table->foreign('int_type_id')->references('id')->on('stats_integration_types');
             $table->foreign('player_id')->references('id')->on('players');
         });
