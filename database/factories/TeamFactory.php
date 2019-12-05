@@ -12,7 +12,6 @@ $factory->define(\App\Domain\Models\Team::class, function (Faker $faker) {
         'league_id' => $league->id,
         'location' => $location,
         'name' => $faker->colorName,
-        'abbreviation' => strtoupper($faker->randomLetter . $faker->randomLetter . $faker->randomLetter),
-        'external_id' => $faker->uuid
+        'abbreviation' => strtoupper($faker->randomLetter . $faker->randomLetter . $faker->randomLetter)
     ];
 });
