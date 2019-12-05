@@ -24,4 +24,11 @@ trait HasUniqueNames
         $model = self::query()->where('name', '=', $name)->first();
         return $model;
     }
+
+    public static function forNameOrFail(string $name): ?self
+    {
+        /** @var self $model */
+        $model = self::query()->where('name', '=', $name)->firstOrFail();
+        return $model;
+    }
 }
