@@ -11,6 +11,7 @@ namespace App\External\Stats;
 use App\Domain\Models\Game;
 use App\Domain\Models\League;
 use App\Domain\Models\Team;
+use App\StatsIntegrationType;
 use Illuminate\Support\Collection;
 
 class MockIntegration implements StatsIntegration
@@ -67,8 +68,12 @@ class MockIntegration implements StatsIntegration
         return $this->playerGameLogDTOs ?: collect();
     }
 
-    public function getIntegrationName(): string
+    public function getIntegrationType(): StatsIntegrationType
     {
-        return self::INTEGRATION_NAME;
+        /** @var StatsIntegrationType $integrationType */
+        $integrationType = StatsIntegrationType::query()->firstOrCreate([
+            'name' => self::INTEGRATION_NAME
+        ]);
+        return $integrationType;
     }
 }

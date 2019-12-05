@@ -27,6 +27,7 @@ use App\Domain\Models\League;
 use App\Domain\Models\Position;
 use App\Domain\Collections\PositionCollection;
 use App\Domain\Models\Week;
+use App\StatsIntegrationType;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Collection;
@@ -291,8 +292,8 @@ class MySportsFeed implements StatsIntegration
         return new PlayerGameLogDTO($player, $game, $team, $statAmountDTOs);
     }
 
-    public function getIntegrationName(): string
+    public function getIntegrationType(): StatsIntegrationType
     {
-        return self::INTEGRATION_NAME;
+        return StatsIntegrationType::forNameOrFail(self::INTEGRATION_NAME);
     }
 }
