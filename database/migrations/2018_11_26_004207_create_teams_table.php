@@ -19,7 +19,6 @@ class CreateTeamsTable extends Migration
             $table->string('name');
             $table->string('location');
             $table->string('abbreviation');
-            $table->string('external_id')->nullable();
             $table->timestamps();
         });
 
