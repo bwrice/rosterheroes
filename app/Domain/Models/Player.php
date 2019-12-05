@@ -9,6 +9,7 @@ use App\Domain\Models\Position;
 use App\Domain\Collections\PositionCollection;
 use App\Domain\Models\Team;
 use App\Domain\QueryBuilders\PlayerQueryBuilder;
+use App\ExternalPlayer;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -57,6 +58,11 @@ class Player extends Model
     public function team()
     {
         return $this->belongsTo(Team::class);
+    }
+
+    public function externalPlayers()
+    {
+        return $this->hasMany(ExternalPlayer::class);
     }
 
     public function fullName()
