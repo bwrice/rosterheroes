@@ -13,10 +13,6 @@ class RegisterStatsIntegrations extends Migration
      */
     public function up()
     {
-        // Testing
-        \App\StatsIntegrationType::query()->create([
-            'name' => \App\External\Stats\MockIntegration::INTEGRATION_NAME
-        ]);
         // My Sports Feed
         \App\StatsIntegrationType::query()->create([
             'name' => \App\External\Stats\MySportsFeed\MySportsFeed::INTEGRATION_NAME
