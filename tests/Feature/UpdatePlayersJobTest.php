@@ -50,11 +50,15 @@ class UpdatePlayersJobTest extends TestCase
 
         UpdatePlayersJob::dispatchNow($league);
 
-        $playerOne = Player::where('external_id', '=', $externalID1)->first();
+        $integrationType = $integration->getIntegrationType();
+
+        $playerOne = Player::query()->forIntegration($integrationType->id, $externalID1)->first();
         $this->assertNotNull($playerOne);
         // Verify positions match
         $this->assertEquals($playerOne->positions->pluck('id')->intersect($positions1->pluck('id'))->count(), $positions1->count());
-        $playerTwo = Player::where('external_id', '=', $externalID2)->first();
+
+
+        $playerTwo = Player::query()->forIntegration($integrationType->id, $externalID2)->first();
         $this->assertNotNull($playerTwo);
         // Verify positions match
         $this->assertEquals($playerTwo->positions->pluck('id')->intersect($positions2->pluck('id'))->count(), $positions2->count());
