@@ -6,6 +6,7 @@ use App\Domain\Models\League;
 use App\Domain\Models\Team;
 use App\Domain\DataTransferObjects\TeamDTO;
 use App\External\Stats\StatsIntegration;
+use App\StatsIntegrationType;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -44,17 +45,25 @@ class UpdateTeamsJob implements ShouldQueue
      */
     public function handle(StatsIntegration $integration)
     {
-        Log::notice("Beginning teams update for League: " . $this->league->abbreviation);
+        $integrationType = $integration->getIntegrationType();
 
         $teamDTOs = $integration->getTeamDTOs($this->league, $this->yearDelta);
-        $teamDTOs->each(function (TeamDTO $teamDTO) {
-            Team::updateOrCreate([
-                'external_id' => $teamDTO->getExternalID()
-            ], [
+        $teamDTOs->each(function (TeamDTO $teamDTO) use ($integrationType) {
+
+            /** @var Team $team */
+            $team = Team::updateOrCreate([
                 'league_id' => $teamDTO->getLeague()->id,
                 'name' => $teamDTO->getName(),
+            ], [
                 'location' => $teamDTO->getLocation(),
                 'abbreviation' => $teamDTO->getAbbreviation()
+            ]);
+
+            $team->externalTeams()->updateOrCreate([
+                'integration_type_id' => $integrationType->id,
+                'team_id' => $team->id,
+            ], [
+                'external_id' => $teamDTO->getExternalID()
             ]);
         });
     }
