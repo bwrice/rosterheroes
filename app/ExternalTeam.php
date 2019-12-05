@@ -9,9 +9,9 @@ class ExternalTeam extends Model
 {
     protected $guarded = [];
 
-    public function statsIntegration()
+    public function statsIntegrationType()
     {
-        return $this->belongsTo(StatsIntegration::class);
+        return $this->belongsTo(StatsIntegrationType::class, 'integration_type_id');
     }
 
     public function team()

@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class StatsIntegration extends Model
+class StatsIntegrationType extends Model
 {
     protected $guarded = [];
 }

@@ -15,15 +15,15 @@ class CreateExternalTeamsTable extends Migration
     {
         Schema::create('external_teams', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('stats_integration_id')->unsigned();
+            $table->integer('integration_type_id')->unsigned();
             $table->integer('team_id')->unsigned();
             $table->string('external_id');
-            $table->unique(['stats_integration_id', 'team_id', 'external_id']);
+            $table->unique(['integration_type_id', 'team_id', 'external_id']);
             $table->timestamps();
         });
 
         Schema::table('external_teams', function (Blueprint $table) {
-            $table->foreign('stats_integration_id')->references('id')->on('stats_integrations');
+            $table->foreign('integration_type_id')->references('id')->on('stats_integration_types');
             $table->foreign('team_id')->references('id')->on('teams');
         });
     }

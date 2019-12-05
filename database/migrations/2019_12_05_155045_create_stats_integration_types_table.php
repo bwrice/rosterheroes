@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStatsIntegrationsTable extends Migration
+class CreateStatsIntegrationTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateStatsIntegrationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('stats_integrations', function (Blueprint $table) {
+        Schema::create('stats_integration_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->timestamps();
@@ -27,6 +27,6 @@ class CreateStatsIntegrationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stats_integrations');
+        Schema::dropIfExists('stats_integration_types');
     }
 }

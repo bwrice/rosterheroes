@@ -13,7 +13,7 @@ class RegisterMsfStatsIntegration extends Migration
      */
     public function up()
     {
-        \App\StatsIntegration::query()->create([
+        \App\StatsIntegrationType::query()->create([
             'name' => \App\External\Stats\MySportsFeed\MySportsFeed::INTEGRATION_NAME
         ]);
     }
