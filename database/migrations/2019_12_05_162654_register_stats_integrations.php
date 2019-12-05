@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class RegisterMsfStatsIntegration extends Migration
+class RegisterStatsIntegrations extends Migration
 {
     /**
      * Run the migrations.
@@ -13,6 +13,11 @@ class RegisterMsfStatsIntegration extends Migration
      */
     public function up()
     {
+        // Testing
+        \App\StatsIntegrationType::query()->create([
+            'name' => \App\External\Stats\MockIntegration::INTEGRATION_NAME
+        ]);
+        // My Sports Feed
         \App\StatsIntegrationType::query()->create([
             'name' => \App\External\Stats\MySportsFeed\MySportsFeed::INTEGRATION_NAME
         ]);
