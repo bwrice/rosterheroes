@@ -6,11 +6,13 @@ use App\Domain\Models\League;
 use App\Domain\Models\Player;
 use App\Domain\DataTransferObjects\PlayerDTO;
 use App\External\Stats\StatsIntegration;
+use GuzzleHttp\Exception\ClientException;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
 
 class UpdatePlayersJob implements ShouldQueue
@@ -31,16 +33,13 @@ class UpdatePlayersJob implements ShouldQueue
 
     public function handle(StatsIntegration $statsIntegration)
     {
-
-        // Game log API has rate limit of 1 request per 10 seconds, we add another 5 seconds for buffer
-        Redis::throttle(self::REDIS_THROTTLE_KEY)->allow(10)->every(60)->then(function () use ($statsIntegration) {
-            // Job logic...
+        try {
             $this->performJob($statsIntegration);
-        }, function () {
-            // Could not obtain lock...
-
-            return $this->release(10);
-        });
+        } catch (ClientException $exception) {
+            Log::debug("Client exception caught: " . $exception->getMessage());
+            Log::debug("Releasing update players for league: " . $this->league->abbreviation);
+            $this->release(60);
+        }
     }
 
     /**
