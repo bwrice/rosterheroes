@@ -8,12 +8,15 @@
 
 namespace App\External\Stats;
 
+use App\Domain\Models\Game;
 use App\Domain\Models\League;
 use App\Domain\Models\Team;
 use Illuminate\Support\Collection;
 
 class MockIntegration implements StatsIntegration
 {
+    public const INTEGRATION_NAME = 'mock-integration';
+
     /**
      * @var Collection
      */
@@ -59,8 +62,13 @@ class MockIntegration implements StatsIntegration
         return $this->gameDTOs ?: collect();
     }
 
-    public function getHistoricPlayerGameLogDTOs(Team $team, int $yearDelta): Collection
+    public function getPlayerGameLogDTOs(Game $game, int $yearDelta): Collection
     {
         return $this->playerGameLogDTOs ?: collect();
+    }
+
+    public function getIntegrationName(): string
+    {
+        return self::INTEGRATION_NAME;
     }
 }

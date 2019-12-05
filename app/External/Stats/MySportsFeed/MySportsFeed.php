@@ -35,6 +35,8 @@ use Illuminate\Support\Facades\Log;
 
 class MySportsFeed implements StatsIntegration
 {
+    public const INTEGRATION_NAME = 'my-sports-feed';
+
     /**
      * @var PlayerAPI
      */
@@ -243,7 +245,7 @@ class MySportsFeed implements StatsIntegration
         ];
     }
 
-    public function getHistoricPlayerGameLogDTOs(Team $team, int $yearDelta = 0): Collection
+    public function getPlayerGameLogDTOs(Game $game, int $yearDelta): Collection
     {
         $start = microtime(true);
         $data = $this->gameLogAPI->getData($team, $yearDelta);
@@ -287,5 +289,10 @@ class MySportsFeed implements StatsIntegration
         $statAmountDTOBuilder = $this->statAmountDTOBuilderFactory->getStatAmountDTOBuilder($team->league);
         $statAmountDTOs = $statAmountDTOBuilder->getStatAmountDTOs($statTypes, $gameLogData['stats']);
         return new PlayerGameLogDTO($player, $game, $team, $statAmountDTOs);
+    }
+
+    public function getIntegrationName(): string
+    {
+        return self::INTEGRATION_NAME;
     }
 }
