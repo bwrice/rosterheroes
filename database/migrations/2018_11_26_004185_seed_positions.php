@@ -26,10 +26,6 @@ class SeedPositions extends Migration
                     \App\Domain\Models\Position::RUNNING_BACK,
                     \App\Domain\Models\Position::WIDE_RECEIVER,
                     \App\Domain\Models\Position::TIGHT_END
-//                    ['Quarterback', 'QB'],
-//                    ['Running Back', 'RB'],
-//                    ['Wide Receiver', 'WR'],
-//                    ['Tight End', 'TE']
                 ],
             ],
             [
@@ -42,13 +38,6 @@ class SeedPositions extends Migration
                     \App\Domain\Models\Position::SHORTSTOP,
                     \App\Domain\Models\Position::PITCHER,
                     \App\Domain\Models\Position::OUTFIELD
-//                    ['Catcher', 'C'],
-//                    ['First Base', '1B'],
-//                    ['Second Base', '2B'],
-//                    ['Third Base', '3B'],
-//                    ['Shortstop', 'SS'],
-//                    ['Pitcher', 'P'],
-//                    ['Outfield', 'OF']
                 ],
             ],
             [
@@ -59,11 +48,6 @@ class SeedPositions extends Migration
                     \App\Domain\Models\Position::SMALL_FORWARD,
                     \App\Domain\Models\Position::POWER_FORWARD,
                     \App\Domain\Models\Position::BASKETBALL_CENTER
-//                    ['Point Guard', 'PG'],
-//                    ['Shooting Guard', 'SG'],
-//                    ['Small Forward', 'SF'],
-//                    ['Power Forward', 'PF'],
-//                    ['Center', 'C']
                 ],
             ],
             [
@@ -74,11 +58,6 @@ class SeedPositions extends Migration
                     \App\Domain\Models\Position::DEFENSEMAN,
                     \App\Domain\Models\Position::GOALIE,
                     \App\Domain\Models\Position::HOCKEY_CENTER
-//                    ['Center', 'C'],
-//                    ['Left Wing', 'LW'],
-//                    ['Right Wing', 'RW'],
-//                    ['Defenseman', 'D'],
-//                    ['Goalie', 'G']
                 ]
             ]
         ];
