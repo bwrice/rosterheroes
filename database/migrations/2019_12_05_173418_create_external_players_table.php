@@ -15,7 +15,7 @@ class CreateExternalPlayersTable extends Migration
     {
         Schema::create('external_players', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('integration_type_id')->unsigned();
+            $table->integer('int_type_id')->unsigned();
             $table->integer('player_id')->unsigned();
             $table->string('external_id');
             $table->unique(['int_type_id', 'player_id', 'external_id']);
