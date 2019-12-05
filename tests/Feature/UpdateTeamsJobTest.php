@@ -8,6 +8,7 @@ use App\External\Stats\MockIntegration;
 use App\External\Stats\StatsIntegration;
 use App\Jobs\UpdateTeamsJob;
 use App\Domain\Models\League;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -20,7 +21,7 @@ class UpdateTeamsJobTest extends TestCase
     /**
      * @test
      */
-    public function it_will_update_teams()
+    public function the_job_will_update_teams()
     {
         $mlb = League::mlb();
 
@@ -36,10 +37,15 @@ class UpdateTeamsJobTest extends TestCase
 
         UpdateTeamsJob::dispatchNow($mlb);
 
+        $integrationType = $integration->getIntegrationType();
 
-        $team = Team::where('external_id', '=', $externalID1)->first();
+        $team = Team::query()->whereHas('externalTeams', function (Builder $builder) use ($integrationType) {
+            return $builder->where('integration_type_id', '=', $integrationType->id);
+        })->first();
         $this->assertNotNull($team);
-        $team = Team::where('external_id', '=', $externalID2)->first();
+        $team = Team::query()->whereHas('externalTeams', function (Builder $builder) use ($integrationType) {
+            return $builder->where('integration_type_id', '=', $integrationType->id);
+        })->first();
         $this->assertNotNull($team);
     }
 }
