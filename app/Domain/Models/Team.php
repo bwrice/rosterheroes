@@ -8,6 +8,7 @@ use App\Domain\Collections\TeamCollection;
 use App\Domain\Models\Game;
 use App\Domain\Models\League;
 use App\Domain\Models\Week;
+use App\ExternalTeam;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -55,6 +56,11 @@ class Team extends Model
     public function awayGames()
     {
         return $this->hasMany(Game::class, 'away_team_id');
+    }
+
+    public function externalTeams()
+    {
+        return $this->hasMany(ExternalTeam::class);
     }
 
     /**
