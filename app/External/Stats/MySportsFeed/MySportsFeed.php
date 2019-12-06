@@ -58,19 +58,25 @@ class MySportsFeed implements StatsIntegration
      * @var StatAmountDTOBuilderFactory
      */
     private $statAmountDTOBuilderFactory;
+    /**
+     * @var PositionConverter
+     */
+    private $positionConverter;
 
     public function __construct(
         PlayerAPI $playerAPI,
         TeamAPI $teamAPI,
         GameAPI $gameAPI,
         GameLogAPI $gameLogAPI,
-        StatAmountDTOBuilderFactory $statAmountDTOBuilderFactory)
+        StatAmountDTOBuilderFactory $statAmountDTOBuilderFactory,
+        PositionConverter $positionConverter)
     {
         $this->playerAPI = $playerAPI;
         $this->teamAPI = $teamAPI;
         $this->gameAPI = $gameAPI;
         $this->gameLogAPI = $gameLogAPI;
         $this->statAmountDTOBuilderFactory = $statAmountDTOBuilderFactory;
+        $this->positionConverter = $positionConverter;
     }
 
     protected function getAPIKey()
@@ -124,63 +130,10 @@ class MySportsFeed implements StatsIntegration
 
         $positionNames = collect($totalPositions)->map(function ($positionAbbreviation) use ($league) {
             // We only use outfield (OF) for all outfield positions
-            return $this->convertAbbreviateToPositionName($positionAbbreviation, $league);
+            return $this->positionConverter->convertAbbreviationToPositionName($positionAbbreviation, $league->abbreviation);
         });
 
         return $positions->whereIn('name', $positionNames);
-    }
-
-    protected function convertAbbreviateToPositionName(string $abbreviation, League $league)
-    {
-        switch ($abbreviation) {
-            case 'QB':
-                return Position::QUARTERBACK;
-            case 'RB':
-                return Position::RUNNING_BACK;
-            case 'WR':
-                return Position::WIDE_RECEIVER;
-            case 'TE':
-                return Position::TIGHT_END;
-            case 'P':
-                return Position::PITCHER;
-            case '1B':
-                return Position::FIRST_BASE;
-            case '2B':
-                return Position::SECOND_BASE;
-            case '3B':
-                return Position::THIRD_BASE;
-            case 'SS':
-                return Position::SHORTSTOP;
-            case 'LF':
-            case 'RF':
-            case 'CF':
-                return Position::OUTFIELD;
-            case 'SF':
-                return Position::SMALL_FORWARD;
-            case 'PF':
-                return Position::POWER_FORWARD;
-            case 'SG':
-                return Position::SHOOTING_GUARD;
-            case 'PG':
-                return Position::POINT_GUARD;
-            case 'LW':
-                return Position::LEFT_WING;
-            case 'RW':
-                return Position::RIGHT_WING;
-            case 'D':
-                return Position::DEFENSEMAN;
-            case 'G':
-                return Position::GOALIE;
-            case 'C':
-                if ($league->abbreviation === League::MLB) {
-                    return Position::CATCHER;
-                } elseif ($league->abbreviation === League::NHL) {
-                    return Position::HOCKEY_CENTER;
-                } else {
-                    return Position::BASKETBALL_CENTER;
-                }
-        }
-        return '';
     }
 
     /**

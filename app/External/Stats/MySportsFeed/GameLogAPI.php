@@ -24,11 +24,16 @@ class GameLogAPI
      * @var LeagueSeasonConverter
      */
     private $leagueSeasonConverter;
+    /**
+     * @var PositionConverter
+     */
+    private $positionConverter;
 
-    public function __construct(MSFClient $client, LeagueSeasonConverter $leagueSeasonConverter)
+    public function __construct(MSFClient $client, LeagueSeasonConverter $leagueSeasonConverter, PositionConverter $positionConverter)
     {
         $this->client = $client;
         $this->leagueSeasonConverter = $leagueSeasonConverter;
+        $this->positionConverter = $positionConverter;
     }
 
     public function getData(Team $team, PositionCollection $positions, int $yearDelta = 0)
@@ -43,50 +48,7 @@ class GameLogAPI
     protected function convertPositions(PositionCollection $positions)
     {
         return $positions->map(function (Position $position) {
-            switch($position->name) {
-                case Position::QUARTERBACK:
-                    return 'QB';
-                case Position::RUNNING_BACK:
-                    return 'RB';
-                case Position::WIDE_RECEIVER:
-                    return 'WR';
-                case Position::TIGHT_END:
-                    return 'TE';
-                case Position::FIRST_BASE:
-                    return '1B';
-                case Position::SECOND_BASE:
-                    return '2B';
-                case Position::THIRD_BASE:
-                    return '3B';
-                case Position::SHORTSTOP:
-                    return 'SS';
-                case Position::PITCHER:
-                    return 'P';
-                case Position::OUTFIELD:
-                    return ['LF', 'RF', 'CF'];
-                case Position::POINT_GUARD:
-                    return 'PG';
-                case Position::SHOOTING_GUARD:
-                    return 'SG';
-                case Position::SMALL_FORWARD:
-                    return 'SF';
-                case Position::POWER_FORWARD:
-                    return 'PF';
-                case Position::LEFT_WING:
-                    return 'LW';
-                case Position::RIGHT_WING:
-                    return 'RW';
-                case Position::DEFENSEMAN:
-                    return 'D';
-                case Position::GOALIE:
-                    return 'G';
-                case Position::CATCHER:
-                case Position::HOCKEY_CENTER:
-                case Position::BASKETBALL_CENTER:
-                    return 'C';
-                default:
-                    return '';
-            }
+            return $this->positionConverter->convertPositionNameIntoAbbreviations($position->name);
         })->flatten();
     }
 }
