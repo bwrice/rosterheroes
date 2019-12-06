@@ -8,6 +8,7 @@
 
 namespace App\External\Stats;
 
+use App\Domain\Collections\PositionCollection;
 use App\Domain\Models\Game;
 use App\Domain\Models\League;
 use App\Domain\Models\Team;
@@ -63,7 +64,7 @@ class MockIntegration implements StatsIntegration
         return $this->gameDTOs ?: collect();
     }
 
-    public function getPlayerGameLogDTOs(Game $game, int $yearDelta): Collection
+    public function getPlayerGameLogDTOs(Game $game, PositionCollection $positions, int $yearDelta): Collection
     {
         return $this->playerGameLogDTOs ?: collect();
     }
