@@ -12,6 +12,7 @@ use App\External\Stats\MockIntegration;
 use App\External\Stats\StatsIntegration;
 use App\Jobs\UpdateGamesJob;
 use Carbon\CarbonImmutable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -43,15 +44,11 @@ class UpdateGamesJobTest extends TestCase
         $gameDTOs = collect();
 
         foreach($gameIDs as $externalGameID) {
-            $homeTeamID = uniqid();
             $homeTeam = factory(Team::class)->create([
-                'league_id' => $nfl->id,
-                'external_id' => $homeTeamID
+                'league_id' => $nfl->id
             ]);
-            $awayTeamID = uniqid();
             $awayTeam = factory(Team::class)->create([
-                'league_id' => $nfl->id,
-                'external_id' => $awayTeamID
+                'league_id' => $nfl->id
             ]);
             $gameDTO = new GameDTO($startsAt, $homeTeam, $awayTeam, $externalGameID);
             $gameDTOs->push($gameDTO);
@@ -62,7 +59,10 @@ class UpdateGamesJobTest extends TestCase
 
         UpdateGamesJob::dispatchNow($nfl);
 
-        $games = Game::query()->whereIn('external_id', $gameIDs)->get();
+        $games = Game::query()->whereHas('externalGames', function (Builder $builder) use ($integration, $gameIDs) {
+            return $builder->where('integration_type_id', '=', $integration->getIntegrationType()->id)
+                ->whereIn('external_id', $gameIDs);
+        });
 
         $this->assertEquals(3, $games->count());
         $games->each(function (Game $game) use ($nfl, $startsAt) {
@@ -78,33 +78,40 @@ class UpdateGamesJobTest extends TestCase
      */
     public function it_will_update_games_that_change()
     {
-        factory(Game::class)->create([
-            'external_id' => $gameID = uniqid(),
+        /** @var Game $game */
+        $game = factory(Game::class)->create([
             'starts_at' => $now = CarbonImmutable::now()
         ]);
 
-        $games = Game::query()->where('external_id', '=', $gameID)->get();
+        $externalID = uniqid();
+        $fourHoursLater = $now->addHours(4);
+        $gameDTO = new GameDTO(
+            $fourHoursLater,
+            factory(Team::class)->create(),
+            factory(Team::class)->create(),
+            $externalID
+        );
+
+        $integration = new MockIntegration(null, null, collect([$gameDTO]));
+
+        $game->externalGames()->create([
+            'integration_type_id' => $integration->getIntegrationType()->id,
+            'external_id' => $externalID
+        ]);
+
+        app()->instance(StatsIntegration::class, $integration);
+
+        $games = Game::query()->forIntegration($integration->getIntegrationType()->id, $externalID);
         $this->assertEquals(1, $games->count());
 
         /** @var Game $game */
         $game = $games->first();
         $this->assertEquals($now->timestamp, $game->starts_at->timestamp);
 
-        $fourHoursLater = $now->addHours(4);
-        $gameDTO = new GameDTO(
-            $fourHoursLater,
-            factory(Team::class)->create(),
-            factory(Team::class)->create(),
-            $gameID
-        );
-
-        $integration = new MockIntegration(null, null, collect([$gameDTO]));
-        app()->instance(StatsIntegration::class, $integration);
-
         // any league should work since we're mocking the integration response
         UpdateGamesJob::dispatchNow(League::query()->inRandomOrder()->first());
 
-        $games = Game::query()->where('external_id', '=', $gameID)->get();
+        $games = Game::query()->forIntegration($integration->getIntegrationType()->id, $externalID);
         $this->assertEquals(1, $games->count());
 
         /** @var Game $game */
