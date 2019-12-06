@@ -61,14 +61,36 @@ class UpdateGamesJob implements ShouldQueue
         Log::notice("Beginning games update for League: " . $this->league->abbreviation);
 
         $gameDTOs = $integration->getGameDTOs($this->league, $this->yearDelta);
-        $gameDTOs->each(function (GameDTO $gameDTO) {
-            Game::query()->updateOrCreate([
-                'external_id' => $gameDTO->getExternalID()
-            ], [
-                'starts_at' => $gameDTO->getStartsAt(),
-                'home_team_id' => $gameDTO->getHomeTeam()->id,
-                'away_team_id' => $gameDTO->getAwayTeam()->id,
-            ]);
+        $integrationType = $integration->getIntegrationType();
+        $gameDTOs->each(function (GameDTO $gameDTO) use ($integrationType) {
+
+            $game = Game::query()->forIntegration($integrationType->id, $gameDTO->getExternalID())->first();
+
+            if ($game) {
+                $this->updateGame($game, $gameDTO);
+
+            } else {
+                /** @var Game $game */
+                $game = Game::query()->create([
+                    'starts_at' => $gameDTO->getStartsAt(),
+                    'home_team_id' => $gameDTO->getHomeTeam()->id,
+                    'away_team_id' => $gameDTO->getAwayTeam()->id,
+                ]);
+
+                $game->externalGames()->create([
+                    'integration_type_id' => $integrationType->id,
+                    'external_id' => $gameDTO->getExternalID()
+                ]);
+            }
         });
+    }
+
+    protected function updateGame(Game $game, GameDTO $gameDTO)
+    {
+        if ($game->starts_at->timestamp !== $gameDTO->getStartsAt()->timestamp) {
+            $game->starts_at = $gameDTO->getStartsAt();
+            $game->save();
+        }
+        return $game;
     }
 }
