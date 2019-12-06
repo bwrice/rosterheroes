@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Domain\DataTransferObjects\PlayerGameLogDTO;
 use App\Domain\DataTransferObjects\StatAmountDTO;
+use App\Domain\Models\Game;
 use App\Domain\Models\PlayerGameLog;
 use App\Domain\Models\Team;
 use App\External\Stats\StatsIntegration;
@@ -19,6 +20,7 @@ use Illuminate\Redis\Limiters\DurationLimiterBuilder;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
+use Laravel\Telescope\Telescope;
 
 class UpdateHistoricPlayerGameLogsJob implements ShouldQueue
 {
@@ -34,20 +36,20 @@ class UpdateHistoricPlayerGameLogsJob implements ShouldQueue
 
 
     /**
-     * @var Team
+     * @var Game
      */
-    private $team;
+    private $game;
     /**
      * @var int
      */
     private $yearDelta;
 
-    public function __construct(Team $team, int $yearDelta = 0)
+    public function __construct(Game $game, int $yearDelta = 0)
     {
         if ( $yearDelta > 0 ) {
             throw new \RuntimeException("Year delta must be negative, " . $yearDelta . " was passed");
         }
-        $this->team = $team;
+        $this->game = $game;
         $this->yearDelta = $yearDelta;
     }
 
@@ -57,23 +59,23 @@ class UpdateHistoricPlayerGameLogsJob implements ShouldQueue
      */
     public function handle(StatsIntegration $statsIntegration)
     {
-        try {
-            $this->performJob($statsIntegration);
-        } catch (ClientException $exception) {
-            Log::debug("Client exception caught: " . $exception->getMessage());
-            Log::debug("Releasing update historic game logs for team: " . $this->team->name);
-            $this->release(60);
-        }
+        $this->performJob($statsIntegration);
+//        try {
+//            $this->performJob($statsIntegration);
+//        } catch (ClientException $exception) {
+//            Log::debug("Client exception caught: " . $exception->getMessage());
+//            Log::debug("Releasing update historic game logs for team: " . $this->team->name);
+//            $this->release(60);
+//        }
     }
 
     public function performJob(StatsIntegration $statsIntegration)
     {
         $start = microtime(true);
-        $playerGameLogDTOs = $statsIntegration->getHistoricPlayerGameLogDTOs($this->team, $this->yearDelta);
+        $playerGameLogDTOs = $statsIntegration->getPlayerGameLogDTOs($this->game, $this->yearDelta);
         $end = microtime(true);
         $diff = $end - $start;
-        Log::debug("Get player DTOs elapsed time: " . $diff . " seconds for team: " . $this->team->name);
-
+        Log::debug("Get player DTOs elapsed time: " . $diff . " seconds for team: " . $this->game->name);
 
         $start = microtime(true);
         $playerGameLogDTOs->each(function (PlayerGameLogDTO $dto) {
@@ -98,6 +100,6 @@ class UpdateHistoricPlayerGameLogsJob implements ShouldQueue
             });
         });
         $end = microtime(true);
-        Log::debug("Convert player DTOs elapsed time: " . ($start - $end) . " seconds for team: " . $this->team->name);
+        Log::debug("Convert player DTOs elapsed time: " . ($start - $end) . " seconds for team: " . $this->game->name);
     }
 }
