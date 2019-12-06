@@ -27,6 +27,7 @@ use App\Domain\Models\League;
 use App\Domain\Models\Position;
 use App\Domain\Collections\PositionCollection;
 use App\Domain\Models\Week;
+use App\ExternalPlayer;
 use App\StatsIntegrationType;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
@@ -77,11 +78,6 @@ class MySportsFeed implements StatsIntegration
         $this->gameLogAPI = $gameLogAPI;
         $this->statAmountDTOBuilderFactory = $statAmountDTOBuilderFactory;
         $this->positionConverter = $positionConverter;
-    }
-
-    protected function getAPIKey()
-    {
-        return config('services.mysportsfeed')['key'];
     }
 
     public function getPlayerDTOs(League $league): Collection
@@ -201,43 +197,66 @@ class MySportsFeed implements StatsIntegration
 
     public function getPlayerGameLogDTOs(Game $game, PositionCollection $positions, int $yearDelta): Collection
     {
-        $data = $this->gameLogAPI->getData($game, $positions, $yearDelta);
+        $data = $this->gameLogAPI->getData($game, $yearDelta);
+        $awayPlayersData = $data['away']['players'];
+        $homePlayersData = $data['away']['players'];
+        $players = $this->getPlayers(array_merge($awayPlayersData, $homePlayersData));
         $statTypes = StatType::all();
-        return collect($data)->map(function ($gameLogData) use ($team, $games, $players, $statTypes) {
+        $awayTeamDTOs = $this->buildGameLogDTOs($game, $game->awayTeam, $players, $statTypes, $awayPlayersData);
+        $homeTeamDTOs = $this->buildGameLogDTOs($game, $game->homeTeam, $players, $statTypes, $homePlayersData);
+        return $awayTeamDTOs->merge($homeTeamDTOs);
+    }
 
-            try {
+    protected function getPlayers(array $playerResponseData)
+    {
+        $externalIDs = collect($playerResponseData)->map(function ($playerData) {
+            return $playerData['player']['id'];
+        });
+        return Player::query()->forIntegration($this->getIntegrationType()->id, $externalIDs)->with('externalPlayers')->get();
+    }
 
-                return $this->buildPlayerGameLogDTO($team, $games, $players, $statTypes, $gameLogData);
+    protected function buildGameLogDTOs(Game $game, Team $team, PlayerCollection $players, StatTypeCollection $statTypes, array $playersResponseData)
+    {
+        $integrationTypeID = $this->getIntegrationType()->id;
+        return collect($playersResponseData)->map(function ($playerData) use ($game, $team, $players, $statTypes, $integrationTypeID) {
 
-            } catch (MySportsFeedsException $exception) {
+            $matchingPlayer = $players->first(function (Player $player) use ($integrationTypeID, $playerData) {
+                $matchingExternalPlayer = $player->externalPlayers->first(function (ExternalPlayer $externalPlayer) use ($integrationTypeID, $playerData) {
+                    return $externalPlayer->int_type_id === $integrationTypeID && $externalPlayer->external_id === (string) $playerData['player']['id'];
+                });
+                return ! is_null($matchingExternalPlayer);
+            });
 
-//                Log::warning($exception->getMessage());
+            if ($matchingPlayer) {
 
-            } catch (\Throwable $error) {
-                Log::error("Error while getting game log DTOs");
+                $statAmountDTOBuilder = $this->statAmountDTOBuilderFactory->getStatAmountDTOBuilder($team->league);
+                $statAmountDTOs = $statAmountDTOBuilder->getStatAmountDTOs($statTypes, $playerData['playerStats']);
+
+                return new PlayerGameLogDTO($matchingPlayer, $game, $team, $statAmountDTOs);
+            } else {
+                // TODO: Handle non-matching player
+                return null;
             }
-
-            return null;
         })->filter(); // filter nulls
     }
 
-    protected function buildPlayerGameLogDTO(Team $team, GameCollection $games, PlayerCollection $players, StatTypeCollection $statTypes, array $gameLogData)
-    {
-        $game = $games->where('external_id', '=', $gameLogData['game']['id'])->first();
-        if (! $game) {
-            throw new MySportsFeedsException("Couldn't find game when building game log DTO");
-        }
-        if (! ($game->homeTeam->id === $team->id || $game->awayTeam->id === $team->id ) ) {
-            throw new MySportsFeedsException("Team doesn't belong to game");
-        }
-        $player = $players->where('external_id' ,$gameLogData['player']['id'])->first();
-        if (! $player) {
-            throw new MySportsFeedsException("Couldn't find player when building game log DTO");
-        }
-        $statAmountDTOBuilder = $this->statAmountDTOBuilderFactory->getStatAmountDTOBuilder($team->league);
-        $statAmountDTOs = $statAmountDTOBuilder->getStatAmountDTOs($statTypes, $gameLogData['stats']);
-        return new PlayerGameLogDTO($player, $game, $team, $statAmountDTOs);
-    }
+//    protected function buildPlayerGameLogDTO(Team $team, GameCollection $games, PlayerCollection $players, StatTypeCollection $statTypes, array $gameLogData)
+//    {
+//        $game = $games->where('external_id', '=', $gameLogData['game']['id'])->first();
+//        if (! $game) {
+//            throw new MySportsFeedsException("Couldn't find game when building game log DTO");
+//        }
+//        if (! ($game->homeTeam->id === $team->id || $game->awayTeam->id === $team->id ) ) {
+//            throw new MySportsFeedsException("Team doesn't belong to game");
+//        }
+//        $player = $players->where('external_id' ,$gameLogData['player']['id'])->first();
+//        if (! $player) {
+//            throw new MySportsFeedsException("Couldn't find player when building game log DTO");
+//        }
+//        $statAmountDTOBuilder = $this->statAmountDTOBuilderFactory->getStatAmountDTOBuilder($team->league);
+//        $statAmountDTOs = $statAmountDTOBuilder->getStatAmountDTOs($statTypes, $gameLogData['stats']);
+//        return new PlayerGameLogDTO($player, $game, $team, $statAmountDTOs);
+//    }
 
     public function getIntegrationType(): StatsIntegrationType
     {
