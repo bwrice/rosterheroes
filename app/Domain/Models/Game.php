@@ -6,6 +6,7 @@ use App\Domain\Collections\GameCollection;
 use App\Domain\Models\Team;
 use App\Domain\Models\Week;
 use App\Domain\QueryBuilders\GameQueryBuilder;
+use App\ExternalGame;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Builder;
@@ -74,5 +75,10 @@ class Game extends Model
     public function playerGameLogs()
     {
         return $this->hasMany(PlayerGameLog::class);
+    }
+
+    public function externalGames()
+    {
+        return $this->hasMany(ExternalGame::class);
     }
 }
