@@ -10,8 +10,10 @@ namespace App\External\Stats\MySportsFeed;
 
 
 use App\Domain\Collections\PositionCollection;
+use App\Domain\Models\Game;
 use App\Domain\Models\League;
 use App\Domain\Models\Position;
+use App\Domain\Models\StatType;
 use App\Domain\Models\Team;
 
 class GameLogAPI
@@ -36,19 +38,81 @@ class GameLogAPI
         $this->positionConverter = $positionConverter;
     }
 
-    public function getData(Team $team, PositionCollection $positions, int $yearDelta = 0)
+    public function getData(Game $game, int $yearDelta = 0)
     {
-        $positionArgs = $this->convertPositions($positions)->implode(',');
-        $season = $this->leagueSeasonConverter->getSeason($team->league, $yearDelta);
-        $subURL = strtolower($team->league->abbreviation) . '/'. $season . '-regular/player_gamelogs.json?team=' . strtolower($team->abbreviation);
+        $league = $game->homeTeam->league;
+        $queryArgs['playerStats'] = $this->statTypeArgs($league);
+        $queryArgs['teamStats'] = 'none';
+        $season = $this->leagueSeasonConverter->getSeason($league, $yearDelta);
+        $subURL = strtolower($league->abbreviation) . '/'. $season . '-regular/player_gamelogs.json?team=' . strtolower($team->abbreviation);
         $responseData = $this->client->getData($subURL);
-        return $responseData['gamelogs'];
+        return $responseData['stats'];
     }
 
-    protected function convertPositions(PositionCollection $positions)
+    protected function statTypeArgs(League $league)
     {
-        return $positions->map(function (Position $position) {
-            return $this->positionConverter->convertPositionNameIntoAbbreviations($position->name);
-        })->flatten();
+        $args = [];
+        switch ($league->abbreviation) {
+            case League::NFL:
+                $args = [
+                    'passYards',
+                    'passTD',
+                    'passInt',
+                    'rushYards',
+                    'rushTD',
+                    'recYards',
+                    'recTD',
+                    'receptions',
+                    'fumLost',
+                ];
+                break;
+            case League::MLB:
+                $args = [
+                    'runs',
+                    'hits',
+                    'secondBaseHits',
+                    'thirdBaseHits',
+                    'homeruns',
+                    'stolenBases',
+                    'runsBattedIn',
+                    'batterWalks',
+                    'hitByPitch',
+                    'wins',
+                    'saves',
+                    'inningsPitched',
+                    'pitcherStrikeouts',
+                    'hitsAllowed',
+                    'earnedRunsAllowed',
+                    'completedGames',
+                    'shutouts',
+                    'battersHit',
+                    'pitcherWalks',
+                ];
+                break;
+            case League::NBA:
+                $args = [
+                    'fg3PtMade',
+                    'reb',
+                    'ast',
+                    'pts',
+                    'tov',
+                    'stl',
+                    'blk',
+                ];
+                break;
+            case League::NHL:
+                $args = [
+                    'goals',
+                    'assists',
+                    'hatTricks',
+                    'shots',
+                    'blockedShots',
+                    'wins',
+                    'saves',
+                    'goalsAgainst',
+                ];
+                break;
+        }
+        return implode(',', $args);
     }
 }
