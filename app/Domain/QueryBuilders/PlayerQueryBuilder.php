@@ -9,6 +9,7 @@
 namespace App\Domain\QueryBuilders;
 
 
+use App\Domain\Collections\PlayerCollection;
 use App\Domain\Interfaces\PositionQueryable;
 use App\Domain\Models\Player;
 use Illuminate\Database\Eloquent\Builder;
@@ -18,6 +19,7 @@ use Illuminate\Database\Eloquent\Builder;
  * @package App\Domain\QueryBuilders
  *
  * @method Player|object|static|null first($columns = ['*'])
+ * @method PlayerCollection get($columns = ['*'])
  */
 class PlayerQueryBuilder extends Builder implements PositionQueryable
 {
@@ -29,7 +31,7 @@ class PlayerQueryBuilder extends Builder implements PositionQueryable
         });
     }
 
-    public function forIntegrationWithExternalID(int $integrationTypeID, $externalIDs)
+    public function forIntegration(int $integrationTypeID, $externalIDs)
     {
         $externalIDs = (array) $externalIDs;
         return $this->whereHas('externalPlayers', function (Builder $builder) use ($integrationTypeID, $externalIDs) {
