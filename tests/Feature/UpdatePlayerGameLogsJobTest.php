@@ -7,6 +7,7 @@ use App\Domain\DataTransferObjects\StatAmountDTO;
 use App\Domain\Models\Game;
 use App\Domain\Models\Player;
 use App\Domain\Models\PlayerGameLog;
+use App\Domain\Models\Position;
 use App\Domain\Models\StatType;
 use App\External\Stats\MockIntegration;
 use App\External\Stats\StatsIntegration;
@@ -74,7 +75,7 @@ class UpdatePlayerGameLogsJobTest extends TestCase
         $mockIntegration = new MockIntegration(null,null,null, $playerGameDTOs);
         app()->instance(StatsIntegration::class, $mockIntegration);
 
-        UpdateHistoricPlayerGameLogsJob::dispatch($homeTeam);
+        UpdateHistoricPlayerGameLogsJob::dispatchNow($game, Position::all());
 
         $playerGameLogs = PlayerGameLog::query()->with('playerStats')->where('game_id', '=', $game->id)->get();
         $this->assertEquals(3, $playerGameLogs->count());
