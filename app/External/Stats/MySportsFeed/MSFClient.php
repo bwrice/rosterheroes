@@ -33,21 +33,24 @@ class MSFClient
 
     /**
      * @param $url
+     * @param array $queryArgs
      * @return mixed
      */
-    public function getData($url)
+    public function getData($url, $queryArgs = [])
     {
         $fullURL = self::BASE_URL . $url;
-        $response = $this->getResponse($fullURL);
+        $response = $this->getResponse($fullURL, $queryArgs);
         $body = $response->getBody();
         Log::debug("Bytes: " . strlen($body));
         return json_decode($body, true);
     }
 
-    protected function getResponse(string $fullURL)
+    protected function getResponse(string $fullURL, $queryArgs)
     {
-        return $this->client->get($fullURL, [
-            'auth' => $this->authorization->getAuthorization()
-        ]);
+        $args['auth'] = $this->authorization->getAuthorization();
+        if ($queryArgs) {
+            $args['query'] = $queryArgs;
+        }
+        return $this->client->get($fullURL, $args);
     }
 }
