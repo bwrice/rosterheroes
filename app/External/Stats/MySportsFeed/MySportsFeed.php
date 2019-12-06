@@ -248,13 +248,7 @@ class MySportsFeed implements StatsIntegration
 
     public function getPlayerGameLogDTOs(Game $game, PositionCollection $positions, int $yearDelta): Collection
     {
-        $start = microtime(true);
-        $data = $this->gameLogAPI->getData($team, $yearDelta);
-        $end = microtime(true);
-        $elapsed = $end - $start;
-        Log::debug("Get data from API for game logs: " . $elapsed . " seconds for team: " . $team->name);
-        $games = $team->allGames();
-        $players = $team->players;
+        $data = $this->gameLogAPI->getData($game, $positions, $yearDelta);
         $statTypes = StatType::all();
         return collect($data)->map(function ($gameLogData) use ($team, $games, $players, $statTypes) {
 
