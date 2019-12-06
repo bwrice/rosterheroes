@@ -5,6 +5,13 @@ namespace App;
 use App\Domain\Models\Player;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class ExternalPlayer
+ * @package App
+ *
+ * @property string $external_id
+ * @property int $int_type_id
+ */
 class ExternalPlayer extends Model
 {
     protected $guarded = [];
