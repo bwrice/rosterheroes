@@ -13,6 +13,7 @@ use App\Domain\Models\Team;
 use App\Domain\Models\Game;
 use App\StatsIntegrationType;
 use Illuminate\Support\Collection;
+use App\Domain\Collections\PositionCollection;
 
 interface StatsIntegration
 {
@@ -22,7 +23,7 @@ interface StatsIntegration
 
     public function getGameDTOs(League $league, int $yearDelta): Collection;
 
-    public function getPlayerGameLogDTOs(Game $game, int $yearDelta): Collection;
+    public function getPlayerGameLogDTOs(Game $game, PositionCollection $positions, int $yearDelta): Collection;
 
     public function getIntegrationType(): StatsIntegrationType;
 }
