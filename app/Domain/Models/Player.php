@@ -28,6 +28,7 @@ use Illuminate\Support\Carbon;
  * @property Team $team
  * @property PositionCollection $positions
  * @property PlayerGameLogCollection $playerGameLogs
+ * @property Collection $externalPlayers
  *
  * @method static PlayerQueryBuilder query()
  */
