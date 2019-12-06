@@ -85,7 +85,7 @@ class UpdatePlayersJobTest extends TestCase
 
         UpdatePlayersJob::dispatchNow($nbaLeague);
 
-        $player = Player::where('external_id', '=', $externalID)->first();
+        $player = Player::query()->forIntegration($integration->getIntegrationType()->id, $externalID)->first();
         $this->assertEquals($originalTeam->id, $player->team->id, "Original team matches");
 
         /** @var Team $newTeam */
@@ -96,7 +96,7 @@ class UpdatePlayersJobTest extends TestCase
 
         UpdatePlayersJob::dispatchNow($nbaLeague);
 
-        $player = Player::where('external_id', '=', $externalID)->first();
+        $player = Player::query()->forIntegration($integration->getIntegrationType()->id, $externalID)->first();
         $this->assertEquals($newTeam->id, $player->team->id, "New team matches");
     }
 
@@ -123,7 +123,7 @@ class UpdatePlayersJobTest extends TestCase
         UpdatePlayersJob::dispatchNow($league);
 
         /** @var Player $player */
-        $player = Player::where('external_id', '=', $externalID)->first();
+        $player = Player::query()->forIntegration($integration->getIntegrationType()->id, $externalID)->first();
         $this->assertEquals(2, $player->positions->count());
 
         /** @var PositionCollection $newPositions */
@@ -138,7 +138,7 @@ class UpdatePlayersJobTest extends TestCase
         UpdatePlayersJob::dispatchNow($league);
 
         /** @var Collection $players */
-        $players = Player::where('external_id', '=', $externalID)->get();
+        $players = Player::query()->forIntegration($integration->getIntegrationType()->id, $externalID)->get();
         $this->assertEquals(1, $players->count());
         /** @var Player $player */
         $updatedPlayer = $players->first();
