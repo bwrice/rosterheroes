@@ -43,4 +43,12 @@ class GameQueryBuilder extends Builder
             $period->getEndDate()
         ]);
     }
+
+    public function forIntegration(int $integrationTypeID, string $externalID)
+    {
+        return $this->whereHas('externalGames', function (Builder $builder) use ($integrationTypeID, $externalID) {
+            return $builder->where('integration_type_id', '=', $integrationTypeID)
+                ->where('external_id', '=', $externalID);
+        });
+    }
 }
