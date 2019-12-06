@@ -21,14 +21,6 @@ use Illuminate\Database\Eloquent\Builder;
  */
 class PlayerQueryBuilder extends Builder implements PositionQueryable
 {
-    /**
-     * @param string $externalID
-     * @return PlayerQueryBuilder
-     */
-    public function externalID(string $externalID)
-    {
-        return $this->where('external_id', '=', $externalID);
-    }
 
     public function withPositions(array $positions): Builder
     {
@@ -37,11 +29,12 @@ class PlayerQueryBuilder extends Builder implements PositionQueryable
         });
     }
 
-    public function forIntegration(int $integrationTypeID, string $externalID)
+    public function forIntegrationWithExternalID(int $integrationTypeID, $externalIDs)
     {
-        return $this->whereHas('externalPlayers', function (Builder $builder) use ($integrationTypeID, $externalID) {
+        $externalIDs = (array) $externalIDs;
+        return $this->whereHas('externalPlayers', function (Builder $builder) use ($integrationTypeID, $externalIDs) {
             return $builder->where('int_type_id', '=', $integrationTypeID)
-                ->where('external_id', '=', $externalID);
+                ->whereIn('external_id', $externalIDs);
         });
     }
 }

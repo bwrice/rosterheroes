@@ -56,7 +56,7 @@ class UpdatePlayersJob implements ShouldQueue
         $playerDTOs = $integration->getPlayerDTOs($this->league);
         $playerDTOs->each(function (PlayerDTO $playerDTO) use ($integrationType) {
 
-            $player = Player::query()->forIntegration($integrationType->id, $playerDTO->getExternalID())->first();
+            $player = Player::query()->forIntegrationWithExternalID($integrationType->id, $playerDTO->getExternalID())->first();
 
             if ($player) {
                 // TODO: logging of player changes (especially name changes)
