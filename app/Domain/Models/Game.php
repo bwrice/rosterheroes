@@ -21,6 +21,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $away_team_id
  * @property string $external_id
  * @property CarbonImmutable $starts_at
+ * @property CarbonImmutable|null $finalized_at
  *
  * @property \App\Domain\Models\Team $homeTeam
  * @property \App\Domain\Models\Team $awayTeam

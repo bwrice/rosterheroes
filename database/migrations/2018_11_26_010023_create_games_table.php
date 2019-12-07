@@ -18,6 +18,7 @@ class CreateGamesTable extends Migration
             $table->integer('home_team_id')->unsigned();
             $table->integer('away_team_id')->unsigned();
             $table->dateTime('starts_at');
+            $table->dateTime('finalized_at')->nullable();
             $table->timestamps();
         });
 
