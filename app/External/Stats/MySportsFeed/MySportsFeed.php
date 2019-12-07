@@ -268,24 +268,6 @@ class MySportsFeed implements StatsIntegration
         })->filter(); // filter nulls
     }
 
-//    protected function buildPlayerGameLogDTO(Team $team, GameCollection $games, PlayerCollection $players, StatTypeCollection $statTypes, array $gameLogData)
-//    {
-//        $game = $games->where('external_id', '=', $gameLogData['game']['id'])->first();
-//        if (! $game) {
-//            throw new MySportsFeedsException("Couldn't find game when building game log DTO");
-//        }
-//        if (! ($game->homeTeam->id === $team->id || $game->awayTeam->id === $team->id ) ) {
-//            throw new MySportsFeedsException("Team doesn't belong to game");
-//        }
-//        $player = $players->where('external_id' ,$gameLogData['player']['id'])->first();
-//        if (! $player) {
-//            throw new MySportsFeedsException("Couldn't find player when building game log DTO");
-//        }
-//        $statAmountDTOBuilder = $this->statAmountDTOBuilderFactory->getStatAmountDTOBuilder($team->league);
-//        $statAmountDTOs = $statAmountDTOBuilder->getStatAmountDTOs($statTypes, $gameLogData['stats']);
-//        return new PlayerGameLogDTO($player, $game, $team, $statAmountDTOs);
-//    }
-
     public function getIntegrationType(): StatsIntegrationType
     {
         return StatsIntegrationType::forNameOrFail(self::INTEGRATION_NAME);
