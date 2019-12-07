@@ -2,10 +2,14 @@
 
 namespace App\Console\Commands;
 
+use App\Domain\Actions\UpdateHistoricGameLogsAction;
+use App\Domain\Collections\GameCollection;
+use App\Domain\Models\Game;
 use App\Domain\Models\League;
 use App\Domain\Models\Team;
-use App\Jobs\UpdateHistoricPlayerGameLogsJob;
+use App\Jobs\BuildPlayerGameLogsJob;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Log;
 
 class UpdateHistoricPlayerGameLogsCommand extends Command
@@ -24,34 +28,20 @@ class UpdateHistoricPlayerGameLogsCommand extends Command
      */
     protected $description = 'Updates Player Game Logs for live or given leagues';
 
-    public function handle()
+    public function handle(UpdateHistoricGameLogsAction $domainAction)
     {
         $this->info('Update Games command triggered');
 
         foreach($this->arguments() as $key => $argument) {
             $this->info($key . ': ' . $argument );
         }
-        $count = $this->dispatchJobs();
-        $this->info($count . " jobs dispatched");
-    }
-
-    protected function dispatchJobs()
-    {
-        $count = 0;
         // convert positive years-ago to negative
         $yearDelta = - (int) $this->argument('yearsAgo');
-        // loop through leagues
-        $this->getLeagues()->each(function (League $league) use (&$count, $yearDelta) {
-            // loop through teams
-            $league->teams->each(function(Team $team) use ($yearDelta, &$count) {
-                UpdateHistoricPlayerGameLogsJob::dispatch($team, $yearDelta)->onQueue('stats-integration')->delay($count * 15);
-                $count++;
-            });
-        });
+        $leagues = $this->getLeagues();
 
-        return $count;
+        $count = $domainAction->execute($leagues, false, $yearDelta);
+        $this->info($count . " jobs dispatched");
     }
-
 
     protected function getLeagues()
     {
