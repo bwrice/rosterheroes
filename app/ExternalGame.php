@@ -5,6 +5,13 @@ namespace App;
 use App\Domain\Models\Game;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class ExternalGame
+ * @package App
+ *
+ * @property string $external_id
+ * @property int $integration_type_id
+ */
 class ExternalGame extends Model
 {
     protected $guarded = [];
