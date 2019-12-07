@@ -5,6 +5,13 @@ namespace App;
 use App\Domain\Models\Team;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class ExternalTeam
+ * @package App
+ *
+ * @property string $external_id
+ * @property int $integration_type_id
+ */
 class ExternalTeam extends Model
 {
     protected $guarded = [];
