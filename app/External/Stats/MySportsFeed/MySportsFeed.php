@@ -197,9 +197,9 @@ class MySportsFeed implements StatsIntegration
 
     public function getPlayerGameLogDTOs(Game $game, int $yearDelta): Collection
     {
-        $data = $this->gameLogAPI->getData($game, $yearDelta);
+        $data = $this->gameLogAPI->getData($game, $this->getIntegrationType()->id, $yearDelta);
         $awayPlayersData = $data['away']['players'];
-        $homePlayersData = $data['away']['players'];
+        $homePlayersData = $data['home']['players'];
         $players = $this->getPlayers(array_merge($awayPlayersData, $homePlayersData));
         $statTypes = StatType::all();
         $awayTeamDTOs = $this->buildGameLogDTOs($game, $game->awayTeam, $players, $statTypes, $awayPlayersData);
@@ -211,7 +211,7 @@ class MySportsFeed implements StatsIntegration
     {
         $externalIDs = collect($playerResponseData)->map(function ($playerData) {
             return $playerData['player']['id'];
-        });
+        })->values()->toArray();
         return Player::query()->forIntegration($this->getIntegrationType()->id, $externalIDs)->with('externalPlayers')->get();
     }
 
