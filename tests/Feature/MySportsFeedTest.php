@@ -174,6 +174,9 @@ class MySportsFeedTest extends TestCase
      */
     public function it_will_return_game_DTOs()
     {
+        /** @var MySportsFeed $msfIntegration */
+        $msfIntegration = app(MySportsFeed::class);
+        $integrationType = $msfIntegration->getIntegrationType();
         $nba = League::nba();
 
         /** @var Team $homeTeamOne */
@@ -181,9 +184,19 @@ class MySportsFeedTest extends TestCase
             'league_id' => $nba->id
         ]);
 
+        $homeTeamOne->externalTeams()->create([
+            'integration_type_id' => $integrationType->id,
+            'external_id' => $homeTeamOneExternalID = uniqid()
+        ]);
+
         /** @var Team $awayTeamOne */
         $awayTeamOne = factory(Team::class)->create([
             'league_id' => $nba->id
+        ]);
+
+        $awayTeamOne->externalTeams()->create([
+            'integration_type_id' => $integrationType->id,
+            'external_id' => $awayTeamOneExternalID = uniqid()
         ]);
 
         /** @var Team $homeTeamTwo */
@@ -191,13 +204,23 @@ class MySportsFeedTest extends TestCase
             'league_id' => $nba->id
         ]);
 
+        $homeTeamTwo->externalTeams()->create([
+            'integration_type_id' => $integrationType->id,
+            'external_id' => $homeTeamTwoExternalID = uniqid()
+        ]);
+
         /** @var Team $awayTeamTwo */
         $awayTeamTwo = factory(Team::class)->create([
             'league_id' => $nba->id
         ]);
 
-        $gameOneID = '123abc';
-        $gameTwoID = '456def';
+        $awayTeamTwo->externalTeams()->create([
+            'integration_type_id' => $integrationType->id,
+            'external_id' => $awayTeamTwoExternalID = uniqid()
+        ]);
+
+        $gameOneID = uniqid();
+        $gameTwoID = uniqid();
 
         $clientMock = \Mockery::mock(MSFClient::class);
         $clientMock->shouldReceive('getData')->andReturn([
@@ -205,10 +228,10 @@ class MySportsFeedTest extends TestCase
                 [
                     'schedule' => [
                         'homeTeam' => [
-                            'id' => $homeTeamOne->external_id
+                            'id' => $homeTeamOneExternalID
                         ],
                         'awayTeam' => [
-                            'id' => $awayTeamOne->external_id
+                            'id' => $awayTeamOneExternalID
                         ],
                         'startTime' => '2019-5-10 16:40:00',
                         'id' => $gameOneID
@@ -217,10 +240,10 @@ class MySportsFeedTest extends TestCase
                 [
                     'schedule' => [
                         'homeTeam' => [
-                            'id' => $homeTeamTwo->external_id
+                            'id' => $homeTeamTwoExternalID
                         ],
                         'awayTeam' => [
-                            'id' => $awayTeamTwo->external_id
+                            'id' => $awayTeamTwoExternalID
                         ],
                         'startTime' => '2019-5-12 13:15:00',
                         'id' => $gameTwoID
@@ -231,7 +254,6 @@ class MySportsFeedTest extends TestCase
 
         // put the mock into the container
         app()->instance(MSFClient::class, $clientMock);
-
 
         /** @var MySportsFeed $msfIntegration */
         $msfIntegration = app(MySportsFeed::class);
