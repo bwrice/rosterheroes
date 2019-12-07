@@ -15,6 +15,7 @@ use App\Domain\Models\League;
 use App\Domain\Models\Position;
 use App\Domain\Models\StatType;
 use App\Domain\Models\Team;
+use App\ExternalGame;
 
 class GameLogAPI
 {
@@ -38,14 +39,16 @@ class GameLogAPI
         $this->positionConverter = $positionConverter;
     }
 
-    public function getData(Game $game, int $yearDelta = 0)
+    public function getData(Game $game, int $integrationTypeID, int $yearDelta = 0)
     {
+        /** @var ExternalGame $externalGame */
+        $externalGame = $game->externalGames()->where('integration_type_id', '=', $integrationTypeID)->firstOrFail();
         $league = $game->homeTeam->league;
         $queryArgs['playerStats'] = $this->statTypeArgs($league);
         $queryArgs['teamStats'] = 'none';
         $season = $this->leagueSeasonConverter->getSeason($league, $yearDelta);
-        $subURL = strtolower($league->abbreviation) . '/'. $season . '-regular/player_gamelogs.json?team=' . strtolower($team->abbreviation);
-        $responseData = $this->client->getData($subURL);
+        $subURL = strtolower($league->abbreviation) . '/'. $season . '-regular/games/' . $externalGame->external_id . '/boxscore.json';
+        $responseData = $this->client->getData($subURL, $queryArgs);
         return $responseData['stats'];
     }
 
