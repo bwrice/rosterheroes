@@ -2,18 +2,16 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Model;
 use Faker\Generator as Faker;
 
 $factory->define(\App\ExternalGame::class, function (Faker $faker, $args) {
     $integrationTypeID = $args['integration_type_id'];
-    $leagueID = $args['league_id'] ?? null;
     return [
         'external_id' => uniqid(),
         'integration_type_id' => $integrationTypeID,
-        'game_id' => function() use ($leagueID, $integrationTypeID) {
+        'game_id' => function() use ($integrationTypeID) {
 
-            $leagueID = $leagueID ?: \App\Domain\Models\League::query()->inRandomOrder()->first()->id;
+            $leagueID = \App\Domain\Models\League::query()->inRandomOrder()->first()->id;
 
             /** @var \App\ExternalTeam $externalHomeTeam */
             $externalHomeTeam = factory(\App\ExternalTeam::class)->create([
