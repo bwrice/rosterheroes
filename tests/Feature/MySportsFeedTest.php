@@ -70,6 +70,7 @@ class MySportsFeedTest extends TestCase
         // put the mock into the container
         app()->instance(MSFClient::class, $clientMock);
 
+        // Any league will work since we are mocking the response
         $league = League::first();
 
         /** @var MySportsFeed $msfIntegration */
@@ -259,16 +260,29 @@ class MySportsFeedTest extends TestCase
     public function it_will_return_game_log_DTOs_for_NFL()
     {
         $league = League::nfl();
-        $team = uniqid();
-        $teamWeCareAbout = factory(Team::class)->create([
-            'league_id' => $league->id,
-            'external_id' => $team
+        /** @var MySportsFeed $msfIntegration */
+        $msfIntegration = app(MySportsFeed::class);
+        $integrationType = $msfIntegration->getIntegrationType();
+
+        /** @var Team $homeTeam */
+        $homeTeam = factory(Team::class)->create([
+            'league_id' => $league->id
+        ]);
+
+        /** @var Team $awayTeam */
+        $awayTeam = factory(Team::class)->create([
+            'league_id' => $league->id
         ]);
 
         $playerOneExternalID = uniqid();
         /** @var Player $playerOne */
         $playerOne = factory(Player::class)->create([
-            'team_id' => $teamWeCareAbout->id,
+            'team_id' => $homeTeam->id,
+        ]);
+
+        // Create external player for MSF integration
+        $playerOne->externalPlayers()->create([
+            'int_type_id' => $integrationType->id,
             'external_id' => $playerOneExternalID
         ]);
 
@@ -276,175 +290,143 @@ class MySportsFeedTest extends TestCase
         // Note: not setting team ID, as it shouldn't matter if a player switches teams
         /** @var Player $playerTwo */
         $playerTwo = factory(Player::class)->create([
-            'team_id' => $teamWeCareAbout->id,
+            'team_id' => $awayTeam->id
+        ]);
+
+        // Create external player for MSF integration
+        $playerTwo->externalPlayers()->create([
+            'int_type_id' => $integrationType->id,
             'external_id' => $playerTwoExternalID
         ]);
 
-        $gameOneExternalID = uniqid();
-        /** @var Game $gameOne */
-        $gameOne = factory(Game::class)->create([
-            'home_team_id' => $teamWeCareAbout->id,
-            'external_id' => $gameOneExternalID
+        $gameExternalID = uniqid();
+        /** @var Game $game */
+        $game = factory(Game::class)->create([
+            'home_team_id' => $homeTeam->id,
+            'away_team_id' => $awayTeam->id
         ]);
 
-        $gameTwoExternalID = uniqid();
-        /** @var Game $gameTwo */
-        $gameTwo = factory(Game::class)->create([
-            'away_team_id' => $teamWeCareAbout->id,
-            'external_id' => $gameTwoExternalID
+        // Create external game for MSF integration
+        $game->externalGames()->create([
+            'integration_type_id' => $integrationType->id,
+            'external_id' => $gameExternalID
         ]);
 
-        $gameLogsResponseArray = [
-            [
-                'game' => [
-                    'id' => $gameOneExternalID
+        $responseArray = [
+            'stats' => [
+                'away' => [
+                    'players' => [
+                        [
+                            'player' => [
+                                'id' => $playerTwoExternalID
+                            ],
+                            'playerStats' => [
+                                'passing' => [
+                                    'passYards' => $playerTwoPassYards = 335,
+                                    'passTD' => $playerTwoPassTDs = 4,
+                                    'passInt' => $playerTwoInts = 1
+                                ],
+                                'rushing' => [
+                                    'rushYards' => $playerTwoRushYards = 12,
+                                    'rushTD' => 0,
+                                ],
+                                'fumbles' => [
+                                    'fumLost' => $playerTwoFumblesLost = 1
+                                ]
+                            ]
+                        ]
+                    ]
                 ],
-                'player' => [
-                    'id' => $playerOneExternalID
-                ],
-                'stats' => [
-                    'passing' => [
-                        'passYards' => 335,
-                        'passTD' => 4,
-                        'passInt' => 1
-                    ],
-                    'rushing' => [
-                        'rushYards' => 12,
-                        'rushTD' => 0,
-                    ],
-                    'fumbles' => [
-                        'fumLost' => 1
+                'home' => [
+                    'players' => [
+                        [
+                            'player' => [
+                                'id' => $playerOneExternalID
+                            ],
+                            'playerStats' => [
+                                'passing' => [
+                                    'passYards' => $playerOnePassYards = 43,
+                                    'passTD' => $playerOnePassTDs = 1,
+                                    'passInt' => 0
+                                ],
+                                'rushing' => [
+                                    'rushYards' => $playerOneRushYards = 85,
+                                    'rushTD' => $playerOneRushTDs = 1,
+                                ],
+                                'receiving' => [
+                                    'receptions' => $playerOneReceptions = 2,
+                                    'recYards' => $playerOneReceivingYards = -7,
+                                    'recTD' => $playerOneReceivingTDs = 1
+                                ],
+                                'fumbles' => [
+                                    'fumLost' => $playerOneFumblesLost = 1
+                                ]
+                            ]
+                        ]
                     ]
                 ]
-            ],
-            [
-                'game' => [
-                    'id' => $gameOneExternalID
-                ],
-                'player' => [
-                    'id' => $playerTwoExternalID
-                ],
-                'stats' => [
-                    'passing' => [
-                        'passYards' => 43,
-                        'passTD' => 1,
-                        'passInt' => 0
-                    ],
-                    'rushing' => [
-                        'rushYards' => 85,
-                        'rushTD' => 1,
-                    ],
-                    'receiving' => [
-                        'receptions' => 2,
-                        'recYards' => -7,
-                        'recTD' => 0
-
-                    ],
-                    'fumbles' => [
-                        'fumLost' => 1
-                    ]
-                ]
-            ],
-            [
-                'game' => [
-                    'id' => $gameTwoExternalID
-                ],
-                'player' => [
-                    'id' => $playerTwoExternalID
-                ],
-                'stats' => [
-                    'rushing' => [
-                        'rushYards' => 43,
-                        'rushTD' => 0,
-                    ],
-                    'receiving' => [
-                        'receptions' => 5,
-                        'recYards' => 77,
-                        'recTD' => 2
-
-                    ],
-                    'fumbles' => [
-                        'fumLost' => 0
-                    ]
-                ]
-            ],
+            ]
         ];
 
         $clientMock = \Mockery::mock(MSFClient::class);
-        $clientMock->shouldReceive('getData')->andReturn([
-            'gamelogs' => $gameLogsResponseArray
-        ]);
+        $clientMock->shouldReceive('getData')->andReturn($responseArray);
 
         // put the mock into the container
         app()->instance(MSFClient::class, $clientMock);
 
-        /** @var MySportsFeed $msfIntegration */
+        // Pull the integration back out of the container
         $msfIntegration = app(MySportsFeed::class);
-        $playerGameLogDTOs = $msfIntegration->getHistoricPlayerGameLogDTOs($teamWeCareAbout);
+        $playerGameLogDTOs = $msfIntegration->getPlayerGameLogDTOs($game, 0);
 
-        $this->assertEquals(3, $playerGameLogDTOs->count());
-
-        /** @var NFLStatNameConverter $nflStatNameConverter */
-        $nflStatNameConverter = app(NFLStatNameConverter::class);
-        $statTypes = StatType::all();
-
-        collect($gameLogsResponseArray)->each(function ($gameLogArray) use ($playerGameLogDTOs, $nflStatNameConverter, $statTypes) {
-
-            /** @var PlayerGameLogDTO $playerGameLogDTO */
-            $playerGameLogDTO = $playerGameLogDTOs->first(function (PlayerGameLogDTO $playerGameLogDTO) use ($gameLogArray) {
-                return $playerGameLogDTO->getGame()->external_id === $gameLogArray['game']['id'] &&
-                    $playerGameLogDTO->getPlayer()->external_id === $gameLogArray['player']['id'];
+        $this->assertEquals(2, $playerGameLogDTOs->count());
+        /** @var PlayerGameLogDTO $playerOneGameLog */
+        $playerOneGameLog = $playerGameLogDTOs->first(function (PlayerGameLogDTO $playerGameLogDTO) use ($playerOne) {
+            return $playerGameLogDTO->getPlayer()->id === $playerOne->id;
+        });
+        $this->assertNotNull($playerOneGameLog);
+        $playerOneStatAmountDTOs = $playerOneGameLog->getStatAmountDTOs();
+        $statTypeAmounts = [
+            StatType::PASS_YARD => $playerOnePassYards,
+            StatType::PASS_TD => $playerOnePassTDs,
+            StatType::RUSH_YARD => $playerOneRushYards,
+            StatType::RUSH_TD => $playerOneRushTDs,
+            StatType::RECEPTION => $playerOneReceptions,
+            StatType::REC_YARD => $playerOneReceivingYards,
+            StatType::REC_TD => $playerOneReceivingTDs,
+            StatType::FUMBLE_LOST => $playerOneFumblesLost
+        ];
+        $this->assertEquals(count($statTypeAmounts), $playerOneStatAmountDTOs->count());
+        foreach($statTypeAmounts as $statTypeName => $amount) {
+            /** @var StatAmountDTO $matchingStat */
+            $matchingStat = $playerOneStatAmountDTOs->first(function (StatAmountDTO $statAmountDTO) use ($statTypeName) {
+                return $statAmountDTO->getStatType()->name === $statTypeName;
             });
+            $this->assertNotNull($matchingStat);
+            $this->assertEquals($amount, $matchingStat->getAmount());
+        }
 
-            $this->assertNotNull($playerGameLogDTO);
-
-            $combinedStats = [];
-            if (isset($gameLogArray['stats']['passing'])) {
-                $combinedStats = array_merge($gameLogArray['stats']['passing'], $combinedStats);
-            }
-            if (isset($gameLogArray['stats']['rushing'])) {
-                $combinedStats = array_merge($gameLogArray['stats']['rushing'], $combinedStats);
-            }
-            if (isset($gameLogArray['stats']['receiving'])) {
-                $combinedStats = array_merge($gameLogArray['stats']['receiving'], $combinedStats);
-            }
-            if (isset($gameLogArray['stats']['fumbles'])) {
-                $combinedStats = array_merge($gameLogArray['stats']['fumbles'], $combinedStats);
-            }
-
-            collect($combinedStats)->each(function ($amount, $name) use ($playerGameLogDTO, $nflStatNameConverter) {
-
-                $convertedName = $nflStatNameConverter->convert($name);
-                /** @var StatAmountDTO $statAmountDTO */
-                $statAmountDTO = $playerGameLogDTO->getStatAmountDTOs()->first(function (StatAmountDTO $statAmountDTO) use ($convertedName) {
-                    return $statAmountDTO->getStatType()->name === $convertedName;
-                });
-
-                if ((int) round(abs($amount),2) > 0) {
-                    $this->assertEquals($amount, $statAmountDTO->getAmount());
-                } else {
-                    $this->assertNull($statAmountDTO);
-                }
+        /** @var PlayerGameLogDTO $playerTwoGameLog */
+        $playerTwoGameLog = $playerGameLogDTOs->first(function (PlayerGameLogDTO $playerGameLogDTO) use ($playerTwo) {
+            return $playerGameLogDTO->getPlayer()->id === $playerTwo->id;
+        });
+        $this->assertNotNull($playerTwoGameLog);
+        $playerTwoStatAmountDTOs = $playerTwoGameLog->getStatAmountDTOs();
+        $statTypeAmounts = [
+            StatType::PASS_YARD => $playerTwoPassYards,
+            StatType::PASS_TD => $playerTwoPassTDs,
+            StatType::INTERCEPTION => $playerTwoInts,
+            StatType::RUSH_YARD => $playerTwoRushYards,
+            StatType::FUMBLE_LOST => $playerTwoFumblesLost
+        ];
+        $this->assertEquals(count($statTypeAmounts), $playerTwoStatAmountDTOs->count());
+        foreach($statTypeAmounts as $statTypeName => $amount) {
+            /** @var StatAmountDTO $matchingStat */
+            $matchingStat = $playerTwoStatAmountDTOs->first(function (StatAmountDTO $statAmountDTO) use ($statTypeName) {
+                return $statAmountDTO->getStatType()->name === $statTypeName;
             });
-        });
-
-        $playerOneFirstGameDTO = $playerGameLogDTOs->first(function (PlayerGameLogDTO $playerGameLogDTO) use ($playerOneExternalID, $gameOneExternalID) {
-            return $playerGameLogDTO->getPlayer()->external_id === $playerOneExternalID
-                && $playerGameLogDTO->getGame()->external_id === $gameOneExternalID;
-        });
-        $this->assertNotNull($playerOneFirstGameDTO);
-
-        $playerTwoFirstGameDTO = $playerGameLogDTOs->first(function (PlayerGameLogDTO $playerGameLogDTO) use ($playerTwoExternalID, $gameOneExternalID) {
-            return $playerGameLogDTO->getPlayer()->external_id === $playerTwoExternalID
-                && $playerGameLogDTO->getGame()->external_id === $gameOneExternalID;
-        });
-        $this->assertNotNull($playerTwoFirstGameDTO);
-
-        $playerTwoFirstSecondGame = $playerGameLogDTOs->first(function (PlayerGameLogDTO $playerGameLogDTO) use ($playerTwoExternalID, $gameTwoExternalID) {
-            return $playerGameLogDTO->getPlayer()->external_id === $playerTwoExternalID
-                && $playerGameLogDTO->getGame()->external_id === $gameTwoExternalID;
-        });
-        $this->assertNotNull($playerTwoFirstSecondGame);
+            $this->assertNotNull($matchingStat);
+            $this->assertEquals($amount, $matchingStat->getAmount());
+        }
     }
 
     /**
