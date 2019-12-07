@@ -81,7 +81,41 @@ class UpdateHistoricGameLogsActionTest extends TestCase
      */
     public function it_will_only_create_jobs_for_the_leagues_passed_as_argument()
     {
+        /** @var League $differentLeague */
+        $differentLeague = League::query()->where('id', '!=', $this->league->id)->inRandomOrder()->first();
 
+        /** @var ExternalGame $differentLeagueGame */
+        $differentLeagueGame = factory(ExternalGame::class)->create([
+            'integration_type_id' => $this->statsIntegration->getIntegrationType()->id
+        ]);
+
+        $game = $differentLeagueGame->game;
+        $game->starts_at = Date::now()->subWeeks(2);
+        $game->save();
+
+        $homeTeam = $game->homeTeam;
+        $homeTeam->league_id = $differentLeague->id;
+        $homeTeam->save();
+
+        $awayTeam = $game->awayTeam;
+        $awayTeam->league_id = $differentLeague->id;
+        $awayTeam->save();
+
+        $leagues = (new LeagueCollection())->push($this->league);
+
+        Queue::fake();
+
+        /** @var UpdateHistoricGameLogsAction $domainAction */
+        $domainAction = app(UpdateHistoricGameLogsAction::class);
+        $domainAction->execute($leagues);
+
+        Queue::assertPushed(UpdateHistoricPlayerGameLogsJob::class, function (UpdateHistoricPlayerGameLogsJob $job){
+            return $this->externalGame->game->id === $job->getGame()->id;
+        });
+
+        Queue::assertNotPushed(UpdateHistoricPlayerGameLogsJob::class, function (UpdateHistoricPlayerGameLogsJob $job) use ($differentLeagueGame) {
+            return $differentLeagueGame->id === $job->getGame()->id;
+        });
     }
 
     /**
