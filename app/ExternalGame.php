@@ -11,6 +11,9 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property string $external_id
  * @property int $integration_type_id
+ *
+ * @property StatsIntegrationType $statsIntegrationType
+ * @property Game $game
  */
 class ExternalGame extends Model
 {
