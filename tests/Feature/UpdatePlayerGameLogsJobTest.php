@@ -75,7 +75,7 @@ class UpdatePlayerGameLogsJobTest extends TestCase
         $mockIntegration = new MockIntegration(null,null,null, $playerGameDTOs);
         app()->instance(StatsIntegration::class, $mockIntegration);
 
-        UpdateHistoricPlayerGameLogsJob::dispatchNow($game, Position::all());
+        UpdateHistoricPlayerGameLogsJob::dispatchNow($game);
 
         $playerGameLogs = PlayerGameLog::query()->with('playerStats')->where('game_id', '=', $game->id)->get();
         $this->assertEquals(3, $playerGameLogs->count());
