@@ -11,6 +11,7 @@ use App\Domain\Models\Week;
 use App\ExternalTeam;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 /**
  * Class Team
@@ -28,6 +29,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property PlayerCollection $players
  * @property GameCollection $homeGames
  * @property GameCollection $awayGames
+ * @property Collection $externalTeams
  */
 class Team extends Model
 {
