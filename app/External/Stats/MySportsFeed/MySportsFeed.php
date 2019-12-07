@@ -28,6 +28,7 @@ use App\Domain\Models\Position;
 use App\Domain\Collections\PositionCollection;
 use App\Domain\Models\Week;
 use App\ExternalPlayer;
+use App\ExternalTeam;
 use App\StatsIntegrationType;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
@@ -154,12 +155,14 @@ class MySportsFeed implements StatsIntegration
 
     public function getGameDTOs(League $league, int $yearDelta = 0): Collection
     {
-        $teams = $league->teams;
+        /** @var TeamCollection $teams */
+        $teams = $league->teams()->with('externalTeams')->get();
         $data = $this->gameAPI->getData($league, $yearDelta);
-        return collect($data)->map(function ($gameData) use ($teams) {
+        $integrationType = $this->getIntegrationType();
+        return collect($data)->map(function ($gameData) use ($teams, $integrationType) {
             try {
                 $scheduleData = $gameData['schedule'];
-                $homeAndAwayTeams = $this->getTeamsFromSchedule($scheduleData, $teams);
+                $homeAndAwayTeams = $this->getTeamsFromSchedule($scheduleData, $teams, $integrationType);
                 $startsAt = Date::parse($scheduleData['startTime']);
                 return new GameDTO(
                     $startsAt,
@@ -179,13 +182,27 @@ class MySportsFeed implements StatsIntegration
         })->filter(); // filter nulls
     }
 
-    protected function getTeamsFromSchedule(array $scheduleData, TeamCollection $teams)
+    protected function getTeamsFromSchedule(array $scheduleData, TeamCollection $teams, StatsIntegrationType $integrationType)
     {
-        $awayTeam = $teams->where('external_id', '=', $scheduleData['awayTeam']['id'])->first();
+        $awayTeamExternalID = $scheduleData['awayTeam']['id'];
+        $awayTeam = $teams->first(function(Team $team) use ($awayTeamExternalID, $integrationType) {
+            $match = $team->externalTeams->first(function (ExternalTeam $externalTeam) use ($awayTeamExternalID, $integrationType) {
+                return $externalTeam->external_id === (string) $awayTeamExternalID
+                    && $externalTeam->integration_type_id === $integrationType->id;
+            });
+            return ! is_null($match);
+        });
         if (! $awayTeam) {
             throw new \RuntimeException("Couldn't find Away Team");
         }
-        $homeTeam = $teams->where('external_id', '=', $scheduleData['homeTeam']['id'])->first();
+        $homeTeamExternalID = $scheduleData['homeTeam']['id'];
+        $homeTeam = $teams->first(function(Team $team) use ($homeTeamExternalID, $integrationType) {
+            $match = $team->externalTeams->first(function (ExternalTeam $externalTeam) use ($homeTeamExternalID, $integrationType) {
+                return $externalTeam->external_id === (string) $homeTeamExternalID
+                    && $externalTeam->integration_type_id === $integrationType->id;
+            });
+            return ! is_null($match);
+        });
         if (! $homeTeam) {
             throw new \RuntimeException("Couldn't find Home Team");
         }
