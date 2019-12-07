@@ -83,12 +83,14 @@ class MySportsFeed implements StatsIntegration
 
     public function getPlayerDTOs(League $league): Collection
     {
-        $teams = $league->teams;
+        /** @var TeamCollection $teams */
+        $teams = $league->teams()->with('externalTeams')->get();
         $positions = $league->sport->positions;
         $data = $this->playerAPI->getData($league);
-        return collect($data)->map(function ($playerArray) use ($teams, $positions, $league) {
+        $integrationType = $this->getIntegrationType();
+        return collect($data)->map(function ($playerArray) use ($teams, $positions, $league, $integrationType) {
 
-            $team = $this->getTeamForPlayerDTO($teams, $playerArray);
+            $team = $this->getTeamForPlayerDTO($teams, $playerArray, $integrationType);
             $playerData = $playerArray['player'];
             $playerPositions = $this->getPositionsForPlayerDTO($positions, $league, $playerData);
 
@@ -105,10 +107,19 @@ class MySportsFeed implements StatsIntegration
         })->filter(); // filter nulls
     }
 
-    public function getTeamForPlayerDTO(Collection $teams, array $playerData): ?Team
+    public function getTeamForPlayerDTO(Collection $teams, array $playerData, StatsIntegrationType $integrationType): ?Team
     {
         if (! empty($playerData['teamAsOfDate']['id'])) {
-            $team = $teams->where('external_id', '=', $playerData['teamAsOfDate']['id'])->first();
+
+            $externalTeamID = $playerData['teamAsOfDate']['id'];
+            $team = $teams->first(function (Team $team) use ($externalTeamID, $integrationType) {
+                $match = $team->externalTeams->first(function (ExternalTeam $externalTeam) use ($externalTeamID, $integrationType) {
+                    return $externalTeam->external_id === (string) $externalTeamID
+                        && $externalTeam->integration_type_id === $integrationType->id;
+                });
+                return ! is_null($match);
+            });
+
             if ($team) {
                 return $team;
             } else {
