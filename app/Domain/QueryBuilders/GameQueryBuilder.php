@@ -51,4 +51,11 @@ class GameQueryBuilder extends Builder
                 ->where('external_id', '=', $externalID);
         });
     }
+
+    public function forLeagues(array $leagueIDs)
+    {
+        return $this->whereHas('homeTeam', function (Builder $builder) use ($leagueIDs) {
+            return $builder->whereIn('league_id', $leagueIDs);
+        });
+    }
 }
