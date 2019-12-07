@@ -8,6 +8,7 @@ use App\Domain\Models\League;
 use App\External\Stats\StatsIntegration;
 use App\ExternalGame;
 use App\Jobs\UpdateHistoricPlayerGameLogsJob;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Date;
@@ -16,6 +17,8 @@ use Tests\TestCase;
 
 class UpdateHistoricGameLogsActionTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /** @var ExternalGame */
     protected $externalGame;
 
@@ -63,9 +66,7 @@ class UpdateHistoricGameLogsActionTest extends TestCase
         /** @var UpdateHistoricGameLogsAction $domainAction */
         $domainAction = app(UpdateHistoricGameLogsAction::class);
 
-        /** @var LeagueCollection $leagues */
-        $leagues = League::all();
-        $domainAction->execute($leagues);
+        $domainAction->execute();
 
         Queue::assertPushed(UpdateHistoricPlayerGameLogsJob::class, function (UpdateHistoricPlayerGameLogsJob $job){
             return $this->externalGame->game->id === $job->getGame()->id;
@@ -84,12 +85,12 @@ class UpdateHistoricGameLogsActionTest extends TestCase
         /** @var League $differentLeague */
         $differentLeague = League::query()->where('id', '!=', $this->league->id)->inRandomOrder()->first();
 
-        /** @var ExternalGame $differentLeagueGame */
-        $differentLeagueGame = factory(ExternalGame::class)->create([
+        /** @var ExternalGame $differentLeagueExternalGame */
+        $differentLeagueExternalGame = factory(ExternalGame::class)->create([
             'integration_type_id' => $this->statsIntegration->getIntegrationType()->id
         ]);
 
-        $game = $differentLeagueGame->game;
+        $game = $differentLeagueExternalGame->game;
         $game->starts_at = Date::now()->subWeeks(2);
         $game->save();
 
@@ -113,16 +114,40 @@ class UpdateHistoricGameLogsActionTest extends TestCase
             return $this->externalGame->game->id === $job->getGame()->id;
         });
 
-        Queue::assertNotPushed(UpdateHistoricPlayerGameLogsJob::class, function (UpdateHistoricPlayerGameLogsJob $job) use ($differentLeagueGame) {
-            return $differentLeagueGame->id === $job->getGame()->id;
+        Queue::assertNotPushed(UpdateHistoricPlayerGameLogsJob::class, function (UpdateHistoricPlayerGameLogsJob $job) use ($differentLeagueExternalGame) {
+            return $differentLeagueExternalGame->game->id === $job->getGame()->id;
         });
     }
 
     /**
     * @test
     */
-    public function it_will_not_create_jobs_for_finalized_games_if_force_is_false()
+    public function it_will_not_create_jobs_for_finalized_games_if_force_is_not_set_to_true()
     {
+        /** @var ExternalGame $finalizedExternalGame */
+        $finalizedExternalGame = factory(ExternalGame::class)->create([
+            'integration_type_id' => $this->statsIntegration->getIntegrationType()->id
+        ]);
 
+        $game = $finalizedExternalGame->game;
+        $game->starts_at = Date::now()->subWeeks(2);
+
+        //Finalize game
+        $game->finalized_at = Date::now()->subHours(12);
+        $game->save();
+
+        Queue::fake();
+
+        /** @var UpdateHistoricGameLogsAction $domainAction */
+        $domainAction = app(UpdateHistoricGameLogsAction::class);
+        $domainAction->execute();
+
+        Queue::assertPushed(UpdateHistoricPlayerGameLogsJob::class, function (UpdateHistoricPlayerGameLogsJob $job){
+            return $this->externalGame->game->id === $job->getGame()->id;
+        });
+
+        Queue::assertNotPushed(UpdateHistoricPlayerGameLogsJob::class, function (UpdateHistoricPlayerGameLogsJob $job) use ($finalizedExternalGame) {
+            return $finalizedExternalGame->game->id === $job->getGame()->id;
+        });
     }
 }
