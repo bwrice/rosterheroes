@@ -19,7 +19,7 @@ class UpdateHistoricGameLogsAction
      * @param int $yearDelta
      * @return int
      */
-    public function execute(LeagueCollection $leagues, int $yearDelta = 0): int
+    public function execute(LeagueCollection $leagues = null, int $yearDelta = 0): int
     {
         $count = 0;
         $this->getGameQuery($leagues)->chunk(100, function (GameCollection $games) use (&$count, $yearDelta) {
@@ -33,9 +33,12 @@ class UpdateHistoricGameLogsAction
         return $count;
     }
 
-    protected function getGameQuery(LeagueCollection $leagueCollection)
+    protected function getGameQuery(LeagueCollection $leagues = null)
     {
-        return Game::query()->whereDate('starts_at', '<', Date::now()->subDays(self::DAYS_BEFORE_QUERY_ARG))
-            ->forLeagues($leagueCollection->pluck('id')->toArray());
+        $query = Game::query()->whereDate('starts_at', '<', Date::now()->subDays(self::DAYS_BEFORE_QUERY_ARG));
+        if ($leagues) {
+            $query = $query->forLeagues($leagues->pluck('id')->toArray());
+        }
+        return $query;
     }
 }
