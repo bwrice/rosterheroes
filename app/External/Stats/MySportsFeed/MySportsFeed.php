@@ -258,7 +258,8 @@ class MySportsFeed implements StatsIntegration
             if ($matchingPlayer) {
 
                 $statAmountDTOBuilder = $this->statAmountDTOBuilderFactory->getStatAmountDTOBuilder($team->league);
-                $statAmountDTOs = $statAmountDTOBuilder->getStatAmountDTOs($statTypes, $playerData['playerStats']);
+                // Poorly formatted JSON from MySportsFeeds means we need first value of array
+                $statAmountDTOs = $statAmountDTOBuilder->getStatAmountDTOs($statTypes, $playerData['playerStats'][0]);
 
                 return new PlayerGameLogDTO($matchingPlayer, $game, $team, $statAmountDTOs);
             } else {

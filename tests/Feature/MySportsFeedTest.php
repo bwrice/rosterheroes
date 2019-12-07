@@ -355,17 +355,20 @@ class MySportsFeedTest extends TestCase
                                 'id' => $playerTwoExternalID
                             ],
                             'playerStats' => [
-                                'passing' => [
-                                    'passYards' => $playerTwoPassYards = 335,
-                                    'passTD' => $playerTwoPassTDs = 4,
-                                    'passInt' => $playerTwoInts = 1
-                                ],
-                                'rushing' => [
-                                    'rushYards' => $playerTwoRushYards = 12,
-                                    'rushTD' => 0,
-                                ],
-                                'fumbles' => [
-                                    'fumLost' => $playerTwoFumblesLost = 1
+                                // player stats are double nested array from MSF
+                                [
+                                    'passing' => [
+                                        'passYards' => $playerTwoPassYards = 335,
+                                        'passTD' => $playerTwoPassTDs = 4,
+                                        'passInt' => $playerTwoInts = 1
+                                    ],
+                                    'rushing' => [
+                                        'rushYards' => $playerTwoRushYards = 12,
+                                        'rushTD' => 0,
+                                    ],
+                                    'fumbles' => [
+                                        'fumLost' => $playerTwoFumblesLost = 1
+                                    ]
                                 ]
                             ]
                         ]
@@ -378,22 +381,25 @@ class MySportsFeedTest extends TestCase
                                 'id' => $playerOneExternalID
                             ],
                             'playerStats' => [
-                                'passing' => [
-                                    'passYards' => $playerOnePassYards = 43,
-                                    'passTD' => $playerOnePassTDs = 1,
-                                    'passInt' => 0
-                                ],
-                                'rushing' => [
-                                    'rushYards' => $playerOneRushYards = 85,
-                                    'rushTD' => $playerOneRushTDs = 1,
-                                ],
-                                'receiving' => [
-                                    'receptions' => $playerOneReceptions = 2,
-                                    'recYards' => $playerOneReceivingYards = -7,
-                                    'recTD' => $playerOneReceivingTDs = 1
-                                ],
-                                'fumbles' => [
-                                    'fumLost' => $playerOneFumblesLost = 1
+                                // player stats are double nested array from MSF
+                                [
+                                    'passing' => [
+                                        'passYards' => $playerOnePassYards = 43,
+                                        'passTD' => $playerOnePassTDs = 1,
+                                        'passInt' => 0
+                                    ],
+                                    'rushing' => [
+                                        'rushYards' => $playerOneRushYards = 85,
+                                        'rushTD' => $playerOneRushTDs = 1,
+                                    ],
+                                    'receiving' => [
+                                        'receptions' => $playerOneReceptions = 2,
+                                        'recYards' => $playerOneReceivingYards = -7,
+                                        'recTD' => $playerOneReceivingTDs = 1
+                                    ],
+                                    'fumbles' => [
+                                        'fumLost' => $playerOneFumblesLost = 1
+                                    ]
                                 ]
                             ]
                         ]
@@ -530,20 +536,23 @@ class MySportsFeedTest extends TestCase
                                 'id' => $playerTwoExternalID
                             ],
                             'playerStats' => [
-                                'fieldGoals' => [
-                                    'fg3PtMade' => $playerTwo3ptMade = 3
-                                ],
-                                'rebounds' => [
-                                    'reb' => $playerTwoRebounds = 9
-                                ],
-                                'offense' => [
-                                    'ast' => $playerTwoAssists = 6,
-                                    'pts' => $playerTwoPoints = 26
-                                ],
-                                'defense' => [
-                                    'tov' => $playerTwoTurnovers = 2,
-                                    'stl' => $playerTwoSteals = 3,
-                                    'blk' => 0
+                                // player stats are double nested array from MSF
+                                [
+                                    'fieldGoals' => [
+                                        'fg3PtMade' => $playerTwo3ptMade = 3
+                                    ],
+                                    'rebounds' => [
+                                        'reb' => $playerTwoRebounds = 9
+                                    ],
+                                    'offense' => [
+                                        'ast' => $playerTwoAssists = 6,
+                                        'pts' => $playerTwoPoints = 26
+                                    ],
+                                    'defense' => [
+                                        'tov' => $playerTwoTurnovers = 2,
+                                        'stl' => $playerTwoSteals = 3,
+                                        'blk' => 0
+                                    ]
                                 ]
                             ]
                         ]
@@ -556,20 +565,23 @@ class MySportsFeedTest extends TestCase
                                 'id' => $playerOneExternalID
                             ],
                             'playerStats' => [
-                                'fieldGoals' => [
-                                    'fg3PtMade' => $playerOne3ptMade = 2
-                                ],
-                                'rebounds' => [
-                                    'reb' => $playerOneRebounds = 11
-                                ],
-                                'offense' => [
-                                    'ast' => $playerOneAssists = 7,
-                                    'pts' => $playerOnePoints = 16
-                                ],
-                                'defense' => [
-                                    'tov' => $playerOneTurnovers = 1,
-                                    'stl' => $playerOneSteals = 1,
-                                    'blk' => $playerOneBlocks = 2
+                                // player stats are double nested array from MSF
+                                [
+                                    'fieldGoals' => [
+                                        'fg3PtMade' => $playerOne3ptMade = 2
+                                    ],
+                                    'rebounds' => [
+                                        'reb' => $playerOneRebounds = 11
+                                    ],
+                                    'offense' => [
+                                        'ast' => $playerOneAssists = 7,
+                                        'pts' => $playerOnePoints = 16
+                                    ],
+                                    'defense' => [
+                                        'tov' => $playerOneTurnovers = 1,
+                                        'stl' => $playerOneSteals = 1,
+                                        'blk' => $playerOneBlocks = 2
+                                    ]
                                 ]
                             ]
                         ]
