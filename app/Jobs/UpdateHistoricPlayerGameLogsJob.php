@@ -44,18 +44,13 @@ class UpdateHistoricPlayerGameLogsJob implements ShouldQueue
      * @var int
      */
     private $yearDelta;
-    /**
-     * @var PositionCollection
-     */
-    private $positions;
 
-    public function __construct(Game $game, PositionCollection $positions, int $yearDelta = 0)
+    public function __construct(Game $game, int $yearDelta = 0)
     {
         if ( $yearDelta > 0 ) {
             throw new \RuntimeException("Year delta must be negative, " . $yearDelta . " was passed");
         }
         $this->game = $game;
-        $this->positions = $positions;
         $this->yearDelta = $yearDelta;
     }
 
@@ -78,7 +73,7 @@ class UpdateHistoricPlayerGameLogsJob implements ShouldQueue
     public function performJob(StatsIntegration $statsIntegration)
     {
         $start = microtime(true);
-        $playerGameLogDTOs = $statsIntegration->getPlayerGameLogDTOs($this->game, $this->positions, $this->yearDelta);
+        $playerGameLogDTOs = $statsIntegration->getPlayerGameLogDTOs($this->game, $this->yearDelta);
         $end = microtime(true);
         $diff = $end - $start;
         Log::debug("Get player DTOs elapsed time: " . $diff . " seconds for team: " . $this->game->name);
@@ -107,5 +102,21 @@ class UpdateHistoricPlayerGameLogsJob implements ShouldQueue
         });
         $end = microtime(true);
         Log::debug("Convert player DTOs elapsed time: " . ($start - $end) . " seconds for team: " . $this->game->name);
+    }
+
+    /**
+     * @return Game
+     */
+    public function getGame(): Game
+    {
+        return $this->game;
+    }
+
+    /**
+     * @return int
+     */
+    public function getYearDelta(): int
+    {
+        return $this->yearDelta;
     }
 }
