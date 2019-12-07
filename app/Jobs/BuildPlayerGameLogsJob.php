@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
 use Laravel\Telescope\Telescope;
 
-class UpdateHistoricPlayerGameLogsJob implements ShouldQueue
+class BuildPlayerGameLogsJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -61,13 +61,6 @@ class UpdateHistoricPlayerGameLogsJob implements ShouldQueue
     public function handle(StatsIntegration $statsIntegration)
     {
         $this->performJob($statsIntegration);
-//        try {
-//            $this->performJob($statsIntegration);
-//        } catch (ClientException $exception) {
-//            Log::debug("Client exception caught: " . $exception->getMessage());
-//            Log::debug("Releasing update historic game logs for team: " . $this->team->name);
-//            $this->release(60);
-//        }
     }
 
     public function performJob(StatsIntegration $statsIntegration)
