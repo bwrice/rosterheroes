@@ -7,7 +7,7 @@ use App\Domain\Collections\LeagueCollection;
 use App\Domain\Models\League;
 use App\External\Stats\StatsIntegration;
 use App\ExternalGame;
-use App\Jobs\UpdateHistoricPlayerGameLogsJob;
+use App\Jobs\BuildPlayerGameLogsJob;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -68,11 +68,11 @@ class UpdateHistoricGameLogsActionTest extends TestCase
 
         $domainAction->execute();
 
-        Queue::assertPushed(UpdateHistoricPlayerGameLogsJob::class, function (UpdateHistoricPlayerGameLogsJob $job){
+        Queue::assertPushed(BuildPlayerGameLogsJob::class, function (BuildPlayerGameLogsJob $job){
             return $this->externalGame->game->id === $job->getGame()->id;
         });
 
-        Queue::assertNotPushed(UpdateHistoricPlayerGameLogsJob::class, function (UpdateHistoricPlayerGameLogsJob $job) use ($nearFutureGame) {
+        Queue::assertNotPushed(BuildPlayerGameLogsJob::class, function (BuildPlayerGameLogsJob $job) use ($nearFutureGame) {
             return $nearFutureGame->id === $job->getGame()->id;
         });
     }
@@ -110,11 +110,11 @@ class UpdateHistoricGameLogsActionTest extends TestCase
         $domainAction = app(UpdateHistoricGameLogsAction::class);
         $domainAction->execute($leagues);
 
-        Queue::assertPushed(UpdateHistoricPlayerGameLogsJob::class, function (UpdateHistoricPlayerGameLogsJob $job){
+        Queue::assertPushed(BuildPlayerGameLogsJob::class, function (BuildPlayerGameLogsJob $job){
             return $this->externalGame->game->id === $job->getGame()->id;
         });
 
-        Queue::assertNotPushed(UpdateHistoricPlayerGameLogsJob::class, function (UpdateHistoricPlayerGameLogsJob $job) use ($differentLeagueExternalGame) {
+        Queue::assertNotPushed(BuildPlayerGameLogsJob::class, function (BuildPlayerGameLogsJob $job) use ($differentLeagueExternalGame) {
             return $differentLeagueExternalGame->game->id === $job->getGame()->id;
         });
     }
@@ -142,11 +142,11 @@ class UpdateHistoricGameLogsActionTest extends TestCase
         $domainAction = app(UpdateHistoricGameLogsAction::class);
         $domainAction->execute();
 
-        Queue::assertPushed(UpdateHistoricPlayerGameLogsJob::class, function (UpdateHistoricPlayerGameLogsJob $job){
+        Queue::assertPushed(BuildPlayerGameLogsJob::class, function (BuildPlayerGameLogsJob $job){
             return $this->externalGame->game->id === $job->getGame()->id;
         });
 
-        Queue::assertNotPushed(UpdateHistoricPlayerGameLogsJob::class, function (UpdateHistoricPlayerGameLogsJob $job) use ($finalizedExternalGame) {
+        Queue::assertNotPushed(BuildPlayerGameLogsJob::class, function (BuildPlayerGameLogsJob $job) use ($finalizedExternalGame) {
             return $finalizedExternalGame->game->id === $job->getGame()->id;
         });
     }
@@ -174,11 +174,11 @@ class UpdateHistoricGameLogsActionTest extends TestCase
         $domainAction = app(UpdateHistoricGameLogsAction::class);
         $domainAction->execute(null, true);
 
-        Queue::assertPushed(UpdateHistoricPlayerGameLogsJob::class, function (UpdateHistoricPlayerGameLogsJob $job){
+        Queue::assertPushed(BuildPlayerGameLogsJob::class, function (BuildPlayerGameLogsJob $job){
             return $this->externalGame->game->id === $job->getGame()->id;
         });
 
-        Queue::assertPushed(UpdateHistoricPlayerGameLogsJob::class, function (UpdateHistoricPlayerGameLogsJob $job) use ($finalizedExternalGame) {
+        Queue::assertPushed(BuildPlayerGameLogsJob::class, function (BuildPlayerGameLogsJob $job) use ($finalizedExternalGame) {
             return $finalizedExternalGame->game->id === $job->getGame()->id;
         });
     }
