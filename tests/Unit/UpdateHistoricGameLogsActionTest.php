@@ -150,4 +150,36 @@ class UpdateHistoricGameLogsActionTest extends TestCase
             return $finalizedExternalGame->game->id === $job->getGame()->id;
         });
     }
+
+    /**
+    * @test
+    */
+    public function it_will_create_jobs_for_finalized_games_if_force_is_true()
+    {
+        /** @var ExternalGame $finalizedExternalGame */
+        $finalizedExternalGame = factory(ExternalGame::class)->create([
+            'integration_type_id' => $this->statsIntegration->getIntegrationType()->id
+        ]);
+
+        $game = $finalizedExternalGame->game;
+        $game->starts_at = Date::now()->subWeeks(2);
+
+        //Finalize game
+        $game->finalized_at = Date::now()->subHours(12);
+        $game->save();
+
+        Queue::fake();
+
+        /** @var UpdateHistoricGameLogsAction $domainAction */
+        $domainAction = app(UpdateHistoricGameLogsAction::class);
+        $domainAction->execute(null, true);
+
+        Queue::assertPushed(UpdateHistoricPlayerGameLogsJob::class, function (UpdateHistoricPlayerGameLogsJob $job){
+            return $this->externalGame->game->id === $job->getGame()->id;
+        });
+
+        Queue::assertPushed(UpdateHistoricPlayerGameLogsJob::class, function (UpdateHistoricPlayerGameLogsJob $job) use ($finalizedExternalGame) {
+            return $finalizedExternalGame->game->id === $job->getGame()->id;
+        });
+    }
 }
