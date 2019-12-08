@@ -8,16 +8,11 @@
 
 namespace App\External\Stats\MySportsFeed;
 
-
-use App\Domain\Collections\PositionCollection;
 use App\Domain\Models\Game;
 use App\Domain\Models\League;
-use App\Domain\Models\Position;
-use App\Domain\Models\StatType;
-use App\Domain\Models\Team;
 use App\ExternalGame;
 
-class GameLogAPI
+class BoxScoreAPI
 {
     /**
      * @var MSFClient

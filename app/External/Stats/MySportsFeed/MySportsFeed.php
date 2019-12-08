@@ -54,7 +54,7 @@ class MySportsFeed implements StatsIntegration
      */
     private $gameAPI;
     /**
-     * @var GameLogAPI
+     * @var BoxScoreAPI
      */
     private $gameLogAPI;
     /**
@@ -70,7 +70,7 @@ class MySportsFeed implements StatsIntegration
         PlayerAPI $playerAPI,
         TeamAPI $teamAPI,
         GameAPI $gameAPI,
-        GameLogAPI $gameLogAPI,
+        BoxScoreAPI $gameLogAPI,
         StatAmountDTOBuilderFactory $statAmountDTOBuilderFactory,
         PositionConverter $positionConverter)
     {
