@@ -24,6 +24,10 @@ class BuildPlayerGameLogsForGameAction
 
     public function execute(Game $game, int $yearDelta = 0)
     {
+        if ( $yearDelta > 0 ) {
+            throw new \RuntimeException("Year delta must be negative, " . $yearDelta . " was passed");
+        }
+
         $playerGameLogDTOs = $this->statsIntegration->getPlayerGameLogDTOs($game, $yearDelta);
 
         $playerGameLogDTOs->each(function (PlayerGameLogDTO $dto) {
