@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Domain\Actions\BuildPlayerGameLogsForGameAction;
 use App\Domain\Collections\PositionCollection;
 use App\Domain\DataTransferObjects\PlayerGameLogDTO;
 use App\Domain\DataTransferObjects\StatAmountDTO;
@@ -55,46 +56,11 @@ class BuildPlayerGameLogsJob implements ShouldQueue
     }
 
     /**
-     * @param StatsIntegration $statsIntegration
-     * @throws \Exception
+     * @param BuildPlayerGameLogsForGameAction $domainAction
      */
-    public function handle(StatsIntegration $statsIntegration)
+    public function handle(BuildPlayerGameLogsForGameAction $domainAction)
     {
-        $this->performJob($statsIntegration);
-    }
-
-    public function performJob(StatsIntegration $statsIntegration)
-    {
-        $start = microtime(true);
-        $playerGameLogDTOs = $statsIntegration->getPlayerGameLogDTOs($this->game, $this->yearDelta);
-        $end = microtime(true);
-        $diff = $end - $start;
-        Log::debug("Get player DTOs elapsed time: " . $diff . " seconds for team: " . $this->game->name);
-
-        $start = microtime(true);
-        $playerGameLogDTOs->each(function (PlayerGameLogDTO $dto) {
-
-            $playerID = $dto->getPlayer()->id;
-            $gameID = $dto->getGame()->id;
-            $teamID = $dto->getTeam()->id;
-
-            /** @var PlayerGameLog $playerGameLog */
-            $playerGameLog = PlayerGameLog::query()->firstOrCreate([
-                'player_id' => $playerID,
-                'game_id' => $gameID,
-                'team_id' => $teamID
-            ]);
-
-            $dto->getStatAmountDTOs()->each(function (StatAmountDTO $statAmountDTO) use ($playerGameLog) {
-                $playerGameLog->playerStats()->updateOrCreate([
-                    'stat_type_id' => $statAmountDTO->getStatType()->id],
-                    [
-                        'amount' => $statAmountDTO->getAmount()
-                    ]);
-            });
-        });
-        $end = microtime(true);
-        Log::debug("Convert player DTOs elapsed time: " . ($start - $end) . " seconds for team: " . $this->game->name);
+        $domainAction->execute($this->game, $this->yearDelta);
     }
 
     /**
