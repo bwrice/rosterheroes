@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Domain\Actions\BuildPlayerGameLogsForGameAction;
+use App\Domain\Collections\GameLogDTOCollection;
 use App\Domain\DataTransferObjects\PlayerGameLogDTO;
 use App\Domain\DataTransferObjects\StatAmountDTO;
 use App\Domain\Models\Game;
@@ -67,7 +68,7 @@ class BuildPlayerGameLogsForGameActionTest extends TestCase
 
         $thirdPlayerDTO = new PlayerGameLogDTO($player, $game, $homeTeam, $statAmountDTOs);
 
-        $playerGameDTOs = collect([
+        $playerGameDTOs = new GameLogDTOCollection([
             $firstPlayerDTO,
             $secondPlayerDTO,
             $thirdPlayerDTO
@@ -91,8 +92,37 @@ class BuildPlayerGameLogsForGameActionTest extends TestCase
     /**
     * @test
     */
-    public function it_will_finalize_a_game()
+    public function it_will_finalize_a_game_if_the_game_is_over()
     {
+        /** @var Game $game */
+        $game = factory(Game::class)->create();
+        $homeTeam = $game->homeTeam;
 
+        $player = factory(Player::class)->create([
+            'team_id' => $homeTeam->id
+        ]);
+
+        $sport = $homeTeam->league->sport;
+
+        $statTypes = $sport->statTypes()->inRandomOrder()->take(rand(1,5))->get();
+
+        $statAmountDTOs = $statTypes->map(function (StatType $statType) {
+            return new StatAmountDTO($statType,rand(1,50)/2);
+        });
+
+        $playerDTO = new PlayerGameLogDTO($player, $game, $homeTeam, $statAmountDTOs);
+
+        $gameLogDTOs = new GameLogDTOCollection([$playerDTO]);
+        $gameLogDTOs->setGameOver(true);
+
+        $mockIntegration = new MockIntegration(null,null,null, $gameLogDTOs);
+        app()->instance(StatsIntegration::class, $mockIntegration);
+
+        /** @var BuildPlayerGameLogsForGameAction $domainAction */
+        $domainAction = app(BuildPlayerGameLogsForGameAction::class);
+        $domainAction->execute($game);
+
+        $game = $game->fresh();
+        $this->assertNotNull($game->finalized_at);
     }
 }
