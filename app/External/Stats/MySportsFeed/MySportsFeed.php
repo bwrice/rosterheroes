@@ -232,10 +232,16 @@ class MySportsFeed implements StatsIntegration
         $players = $this->getPlayers(array_merge($awayPlayerStatsData, $homePlayerStatsData));
         $statTypes = StatType::all();
         $gameLogs = new GameLogDTOCollection();
+
         $awayTeamDTOs = $this->buildGameLogDTOs($game, $game->awayTeam, $players, $statTypes, $awayPlayerStatsData);
         $gameLogs = $gameLogs->merge($awayTeamDTOs);
         $homeTeamDTOs = $this->buildGameLogDTOs($game, $game->homeTeam, $players, $statTypes, $homePlayerStatsData);
         $gameLogs = $gameLogs->merge($homeTeamDTOs);
+
+        $playedStatus = $data['game']['playedStatus'] ?? null;
+        if ($playedStatus === 'COMPLETED') {
+            $gameLogs->setGameOver(true);
+        }
         return $gameLogs;
     }
 
