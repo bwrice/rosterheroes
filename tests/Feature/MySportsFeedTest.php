@@ -316,7 +316,7 @@ class MySportsFeedTest extends TestCase
 
         // Create external player for MSF integration
         $playerOne->externalPlayers()->create([
-            'int_type_id' => $integrationType->id,
+            'integration_type_id' => $integrationType->id,
             'external_id' => $playerOneExternalID
         ]);
 
@@ -329,7 +329,7 @@ class MySportsFeedTest extends TestCase
 
         // Create external player for MSF integration
         $playerTwo->externalPlayers()->create([
-            'int_type_id' => $integrationType->id,
+            'integration_type_id' => $integrationType->id,
             'external_id' => $playerTwoExternalID
         ]);
 
@@ -497,7 +497,7 @@ class MySportsFeedTest extends TestCase
 
         // Create external player for MSF integration
         $playerOne->externalPlayers()->create([
-            'int_type_id' => $integrationType->id,
+            'integration_type_id' => $integrationType->id,
             'external_id' => $playerOneExternalID
         ]);
 
@@ -510,7 +510,7 @@ class MySportsFeedTest extends TestCase
 
         // Create external player for MSF integration
         $playerTwo->externalPlayers()->create([
-            'int_type_id' => $integrationType->id,
+            'integration_type_id' => $integrationType->id,
             'external_id' => $playerTwoExternalID
         ]);
 

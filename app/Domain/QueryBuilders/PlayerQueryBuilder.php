@@ -35,7 +35,7 @@ class PlayerQueryBuilder extends Builder implements PositionQueryable
     {
         $externalIDs = (array) $externalIDs;
         return $this->whereHas('externalPlayers', function (Builder $builder) use ($integrationTypeID, $externalIDs) {
-            return $builder->where('int_type_id', '=', $integrationTypeID)
+            return $builder->where('integration_type_id', '=', $integrationTypeID)
                 ->whereIn('external_id', $externalIDs);
         });
     }

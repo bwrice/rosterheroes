@@ -250,7 +250,7 @@ class MySportsFeed implements StatsIntegration
 
             $matchingPlayer = $players->first(function (Player $player) use ($integrationTypeID, $playerData) {
                 $matchingExternalPlayer = $player->externalPlayers->first(function (ExternalPlayer $externalPlayer) use ($integrationTypeID, $playerData) {
-                    return $externalPlayer->int_type_id === $integrationTypeID && $externalPlayer->external_id === (string) $playerData['player']['id'];
+                    return $externalPlayer->integration_type_id === $integrationTypeID && $externalPlayer->external_id === (string) $playerData['player']['id'];
                 });
                 return ! is_null($matchingExternalPlayer);
             });

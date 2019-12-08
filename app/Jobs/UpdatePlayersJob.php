@@ -73,7 +73,7 @@ class UpdatePlayersJob implements ShouldQueue
                 ]);
 
                 $player->externalPlayers()->create([
-                    'int_type_id' => $integrationType->id,
+                    'integration_type_id' => $integrationType->id,
                     'external_id' => $playerDTO->getExternalID()
                 ]);
             }
