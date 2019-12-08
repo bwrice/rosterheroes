@@ -41,7 +41,7 @@ class MockIntegration implements StatsIntegration
         Collection $teamDTOs = null,
         Collection $playerDTOs = null,
         Collection $gameDTOs = null,
-        Collection $playerGameLogDTOs = null)
+        GameLogDTOCollection $playerGameLogDTOs = null)
     {
         $this->teamDTOs = $teamDTOs;
         $this->playerDTOs = $playerDTOs;
@@ -67,7 +67,7 @@ class MockIntegration implements StatsIntegration
 
     public function getGameLogDTOs(Game $game, int $yearDelta): GameLogDTOCollection
     {
-        return $this->playerGameLogDTOs ? (new GameLogDTOCollection($this->playerGameLogDTOs)) : new GameLogDTOCollection();
+        return $this->playerGameLogDTOs ?: new GameLogDTOCollection();
     }
 
     public function getIntegrationType(): StatsIntegrationType
