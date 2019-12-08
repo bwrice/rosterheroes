@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Domain\Actions\BuildPlayerGameLogsForGameAction;
 use App\Domain\DataTransferObjects\PlayerGameLogDTO;
 use App\Domain\DataTransferObjects\StatAmountDTO;
 use App\Domain\Models\Game;
@@ -15,7 +16,7 @@ use App\Jobs\BuildPlayerGameLogsJob;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
-class BuildPlayerGameLogsJobTest extends TestCase
+class BuildPlayerGameLogsForGameActionTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -75,7 +76,9 @@ class BuildPlayerGameLogsJobTest extends TestCase
         $mockIntegration = new MockIntegration(null,null,null, $playerGameDTOs);
         app()->instance(StatsIntegration::class, $mockIntegration);
 
-        BuildPlayerGameLogsJob::dispatchNow($game);
+        /** @var BuildPlayerGameLogsForGameAction $domainAction */
+        $domainAction = app(BuildPlayerGameLogsForGameAction::class);
+        $domainAction->execute($game);
 
         $playerGameLogs = PlayerGameLog::query()->with('playerStats')->where('game_id', '=', $game->id)->get();
         $this->assertEquals(3, $playerGameLogs->count());
