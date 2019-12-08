@@ -49,7 +49,7 @@ class GameLogAPI
         $season = $this->leagueSeasonConverter->getSeason($league, $yearDelta);
         $subURL = strtolower($league->abbreviation) . '/'. $season . '-regular/games/' . $externalGame->external_id . '/boxscore.json';
         $responseData = $this->client->getData($subURL, $queryArgs);
-        return $responseData['stats'];
+        return $responseData;
     }
 
     protected function statTypeArgs(League $league)

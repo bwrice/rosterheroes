@@ -227,14 +227,14 @@ class MySportsFeed implements StatsIntegration
     public function getGameLogDTOs(Game $game, int $yearDelta): GameLogDTOCollection
     {
         $data = $this->gameLogAPI->getData($game, $this->getIntegrationType()->id, $yearDelta);
-        $awayPlayersData = $data['away']['players'];
-        $homePlayersData = $data['home']['players'];
-        $players = $this->getPlayers(array_merge($awayPlayersData, $homePlayersData));
+        $awayPlayerStatsData = $data['stats']['away']['players'];
+        $homePlayerStatsData = $data['stats']['home']['players'];
+        $players = $this->getPlayers(array_merge($awayPlayerStatsData, $homePlayerStatsData));
         $statTypes = StatType::all();
         $gameLogs = new GameLogDTOCollection();
-        $awayTeamDTOs = $this->buildGameLogDTOs($game, $game->awayTeam, $players, $statTypes, $awayPlayersData);
+        $awayTeamDTOs = $this->buildGameLogDTOs($game, $game->awayTeam, $players, $statTypes, $awayPlayerStatsData);
         $gameLogs = $gameLogs->merge($awayTeamDTOs);
-        $homeTeamDTOs = $this->buildGameLogDTOs($game, $game->homeTeam, $players, $statTypes, $homePlayersData);
+        $homeTeamDTOs = $this->buildGameLogDTOs($game, $game->homeTeam, $players, $statTypes, $homePlayerStatsData);
         $gameLogs = $gameLogs->merge($homeTeamDTOs);
         return $gameLogs;
     }
