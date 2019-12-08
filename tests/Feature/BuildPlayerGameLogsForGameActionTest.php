@@ -87,4 +87,12 @@ class BuildPlayerGameLogsForGameActionTest extends TestCase
             $this->assertGreaterThan(0, $playerGameLog->playerStats->count());
         });
     }
+
+    /**
+    * @test
+    */
+    public function it_will_finalize_a_game()
+    {
+
+    }
 }

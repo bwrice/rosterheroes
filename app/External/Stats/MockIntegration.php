@@ -8,7 +8,7 @@
 
 namespace App\External\Stats;
 
-use App\Domain\Collections\BoxScoreGameLogCollection;
+use App\Domain\Collections\GameLogDTOCollection;
 use App\Domain\Collections\PositionCollection;
 use App\Domain\Models\Game;
 use App\Domain\Models\League;
@@ -65,9 +65,9 @@ class MockIntegration implements StatsIntegration
         return $this->gameDTOs ?: collect();
     }
 
-    public function getBoxScoreGameLogs(Game $game, int $yearDelta): BoxScoreGameLogCollection
+    public function getGameLogDTOs(Game $game, int $yearDelta): GameLogDTOCollection
     {
-        return $this->playerGameLogDTOs ? (new BoxScoreGameLogCollection($this->playerGameLogDTOs)) : new BoxScoreGameLogCollection();
+        return $this->playerGameLogDTOs ? (new GameLogDTOCollection($this->playerGameLogDTOs)) : new GameLogDTOCollection();
     }
 
     public function getIntegrationType(): StatsIntegrationType

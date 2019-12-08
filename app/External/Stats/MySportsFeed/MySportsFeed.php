@@ -8,6 +8,7 @@
 
 namespace App\External\Stats\MySportsFeed;
 
+use App\Domain\Collections\GameLogDTOCollection;
 use App\Domain\Collections\GameCollection;
 use App\Domain\Collections\PlayerCollection;
 use App\Domain\Collections\StatTypeCollection;
@@ -223,16 +224,19 @@ class MySportsFeed implements StatsIntegration
         ];
     }
 
-    public function getPlayerGameLogDTOs(Game $game, int $yearDelta): Collection
+    public function getGameLogDTOs(Game $game, int $yearDelta): GameLogDTOCollection
     {
         $data = $this->gameLogAPI->getData($game, $this->getIntegrationType()->id, $yearDelta);
         $awayPlayersData = $data['away']['players'];
         $homePlayersData = $data['home']['players'];
         $players = $this->getPlayers(array_merge($awayPlayersData, $homePlayersData));
         $statTypes = StatType::all();
+        $gameLogs = new GameLogDTOCollection();
         $awayTeamDTOs = $this->buildGameLogDTOs($game, $game->awayTeam, $players, $statTypes, $awayPlayersData);
+        $gameLogs = $gameLogs->merge($awayTeamDTOs);
         $homeTeamDTOs = $this->buildGameLogDTOs($game, $game->homeTeam, $players, $statTypes, $homePlayersData);
-        return $awayTeamDTOs->merge($homeTeamDTOs);
+        $gameLogs = $gameLogs->merge($homeTeamDTOs);
+        return $gameLogs;
     }
 
     protected function getPlayers(array $playerResponseData)

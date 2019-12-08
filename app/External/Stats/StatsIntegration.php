@@ -8,6 +8,7 @@
 
 namespace App\External\Stats;
 
+use App\Domain\Collections\GameLogDTOCollection;
 use App\Domain\Models\League;
 use App\Domain\Models\Team;
 use App\Domain\Models\Game;
@@ -23,7 +24,7 @@ interface StatsIntegration
 
     public function getGameDTOs(League $league, int $yearDelta): Collection;
 
-    public function getPlayerGameLogDTOs(Game $game, int $yearDelta): Collection;
+    public function getGameLogDTOs(Game $game, int $yearDelta): GameLogDTOCollection;
 
     public function getIntegrationType(): StatsIntegrationType;
 }
