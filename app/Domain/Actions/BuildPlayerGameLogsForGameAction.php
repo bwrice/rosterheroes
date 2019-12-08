@@ -9,6 +9,7 @@ use App\Domain\DataTransferObjects\StatAmountDTO;
 use App\Domain\Models\Game;
 use App\Domain\Models\PlayerGameLog;
 use App\External\Stats\StatsIntegration;
+use Illuminate\Support\Facades\Date;
 
 class BuildPlayerGameLogsForGameAction
 {
@@ -28,9 +29,9 @@ class BuildPlayerGameLogsForGameAction
             throw new \RuntimeException("Year delta must be negative, " . $yearDelta . " was passed");
         }
 
-        $playerGameLogDTOs = $this->statsIntegration->getGameLogDTOs($game, $yearDelta);
+        $gameLogDTOs = $this->statsIntegration->getGameLogDTOs($game, $yearDelta);
 
-        $playerGameLogDTOs->each(function (PlayerGameLogDTO $dto) {
+        $gameLogDTOs->each(function (PlayerGameLogDTO $dto) {
 
             $playerID = $dto->getPlayer()->id;
             $gameID = $dto->getGame()->id;
@@ -51,5 +52,10 @@ class BuildPlayerGameLogsForGameAction
                     ]);
             });
         });
+
+        if ($gameLogDTOs->isGameOver())  {
+            $game->finalized_at = Date::now();
+            $game->save();
+        }
     }
 }
