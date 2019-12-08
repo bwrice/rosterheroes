@@ -1020,4 +1020,66 @@ class MySportsFeedTest extends TestCase
             $this->assertEquals($amount, $matchingStat->getAmount());
         }
     }
+
+    /**
+    * @test
+    */
+    public function it_will_set_a_game_over_if_game_is_completed()
+    {
+        /** @var League $league */
+        $league = League::query()->inRandomOrder()->first();
+
+        /** @var MySportsFeed $msfIntegration */
+        $msfIntegration = app(MySportsFeed::class);
+        $integrationType = $msfIntegration->getIntegrationType();
+
+        /** @var Team $homeTeam */
+        $homeTeam = factory(Team::class)->create([
+            'league_id' => $league->id
+        ]);
+
+        /** @var Team $awayTeam */
+        $awayTeam = factory(Team::class)->create([
+            'league_id' => $league->id
+        ]);
+
+        /** @var Game $game */
+        $game = factory(Game::class)->create([
+            'home_team_id' => $homeTeam->id,
+            'away_team_id' => $awayTeam->id
+        ]);
+        $gameExternalID = uniqid();
+
+        // Create external game for MSF integration
+        $game->externalGames()->create([
+            'integration_type_id' => $integrationType->id,
+            'external_id' => $gameExternalID
+        ]);
+
+        $responseArray = [
+            'game' => [
+                'playedStatus' => 'COMPLETED'
+            ],
+            'stats' => [
+                'away' => [
+                    'players' => []
+                ],
+                'home' => [
+                    'players' => []
+                ]
+            ]
+        ];
+
+        $clientMock = \Mockery::mock(MSFClient::class);
+        $clientMock->shouldReceive('getData')->andReturn($responseArray);
+
+        // put the mock into the container
+        app()->instance(MSFClient::class, $clientMock);
+
+        // Pull the integration back out of the container
+        $msfIntegration = app(MySportsFeed::class);
+        $playerGameLogDTOs = $msfIntegration->getGameLogDTOs($game, 0);
+
+        $this->assertTrue($playerGameLogDTOs->isGameOver());
+    }
 }
