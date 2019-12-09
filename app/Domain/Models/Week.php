@@ -225,6 +225,6 @@ class Week extends EventSourcedModel
         $fromDate = $fromDate ? $fromDate->toImmutable() : Date::now();
         $sunday = $fromDate->next(CarbonInterface::SUNDAY)->setTimezone('America/New_York');
         $offset = $sunday->getOffset();
-        return $sunday->addHours(13)->subSeconds($offset)->setTimezone('UTC');
+        return $sunday->addHours(12)->subSeconds($offset)->setTimezone('UTC');
     }
 }

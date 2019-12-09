@@ -54,6 +54,6 @@ class BuildWeekActionTest extends TestCase
         $week = $domainAction->execute(Date::now());
 
         $adventuringLocksAt = $week->adventuring_locks_at;
-        $this->assertEquals('13:00:00', $adventuringLocksAt->setTimezone('America/New_York')->format('H:i:s') );
+        $this->assertEquals('12:00:00', $adventuringLocksAt->setTimezone('America/New_York')->format('H:i:s') );
     }
 }
