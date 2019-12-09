@@ -65,8 +65,8 @@ class BuildNextWeekActionTest extends TestCase
 
         try {
             $domainAction->execute();
-        } catch (BuildWeekException $exception) {
-            $this->assertEquals(BuildWeekException::CODE_GAMES_NOT_FINALIZED, $exception->getCode());
+        } catch (BuildNextWeekException $exception) {
+            $this->assertEquals(BuildNextWeekException::CODE_GAMES_NOT_FINALIZED, $exception->getCode());
             return;
         }
         $this->fail("Exception not thrown");
