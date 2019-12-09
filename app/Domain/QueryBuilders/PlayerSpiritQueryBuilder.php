@@ -35,6 +35,11 @@ class PlayerSpiritQueryBuilder extends Builder implements PositionQueryable, Ess
         return $this->where('week_id', '=', $week->id);
     }
 
+    public function forWeeks(array $weekIDs)
+    {
+        return $this->whereIn('week_id', $weekIDs);
+    }
+
     public function withPositions(array $positions): Builder
     {
         return $this->whereHas('player', function (PlayerQueryBuilder $builder) use ($positions) {

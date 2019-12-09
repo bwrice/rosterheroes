@@ -58,4 +58,19 @@ class GameQueryBuilder extends Builder
             return $builder->whereIn('league_id', $leagueIDs);
         });
     }
+
+    public function withPlayerSpiritsForWeeks(array $weekIDs)
+    {
+        return $this->whereHas('playerSpirits', function (PlayerSpiritQueryBuilder $builder) use ($weekIDs) {
+            return $builder->forWeeks($weekIDs);
+        });
+    }
+
+    public function isFinalized($finalized = true)
+    {
+        if ($finalized) {
+            return $this->whereNotNull('finalized_at');
+        }
+        return $this->whereNull('finalized_at');
+    }
 }
