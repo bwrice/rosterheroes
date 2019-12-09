@@ -73,6 +73,11 @@ class Game extends Model
         return $this->homeTeam->id === $team->id || $this->awayTeam->id === $team->id;
     }
 
+    public function playerSpirits()
+    {
+        return $this->hasMany(PlayerSpirit::class);
+    }
+
     public function playerGameLogs()
     {
         return $this->hasMany(PlayerGameLog::class);
