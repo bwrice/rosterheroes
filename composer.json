@@ -7,6 +7,7 @@
     "require": {
         "php": "^7.3",
         "ext-json": "*",
+        "bwrice/laravel-job-chain-groups": "dev-master",
         "doctrine/dbal": "^2.9",
         "fideloper/proxy": "^4.0",
         "guzzlehttp/guzzle": "^6.3",
@@ -39,6 +40,10 @@
         {
             "type": "path",
             "url": "./nova"
+        },
+        {
+            "type": "path",
+            "url": "../laravel-job-chain-groups"
         }
     ],
     "autoload": {

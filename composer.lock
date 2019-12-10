@@ -4,8 +4,41 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cf41a6372b54794006a57750ebc827f2",
+    "content-hash": "ad9b0d4df3e4dd4b6d0cf78762f03c84",
     "packages": [
+        {
+            "name": "bwrice/laravel-job-chain-groups",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "../laravel-job-chain-groups",
+                "reference": "1d8936195f338d232deb8ef5295ccbf0a89b45aa"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Bwrice\\LaravelJobChainGroups\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Bwrice\\LaravelJobChainGroups\\Tests\\": "tests"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Brian Rice",
+                    "email": "bwrice83@gmail.com"
+                }
+            ],
+            "description": "Chain groups of jobs that can be dispatched asynchronously before the next job in the chain is queued"
+        },
         {
             "name": "cakephp/chronos",
             "version": "1.2.8",
@@ -7881,7 +7914,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "bwrice/laravel-job-chain-groups": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
