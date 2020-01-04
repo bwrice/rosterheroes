@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Domain\Actions\BuildNextWeekAction;
+use App\Domain\Actions\SetupNextWeekAction;
 use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\Week;
 use App\Exceptions\BuildNextWeekException;
@@ -13,7 +13,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Date;
 use Tests\TestCase;
 
-class BuildNextWeekActionTest extends TestCase
+class SetupNextWeekActionTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -36,8 +36,8 @@ class BuildNextWeekActionTest extends TestCase
     {
         Week::setTestCurrent(null);
 
-        /** @var BuildNextWeekAction $domainAction */
-        $domainAction = app(BuildNextWeekAction::class);
+        /** @var SetupNextWeekAction $domainAction */
+        $domainAction = app(SetupNextWeekAction::class);
 
         try {
             $domainAction->execute();
@@ -60,8 +60,8 @@ class BuildNextWeekActionTest extends TestCase
 
         $this->assertNull($playerSpirit->game->finalized_at);
 
-        /** @var BuildNextWeekAction $domainAction */
-        $domainAction = app(BuildNextWeekAction::class);
+        /** @var SetupNextWeekAction $domainAction */
+        $domainAction = app(SetupNextWeekAction::class);
 
         try {
             $domainAction->execute();

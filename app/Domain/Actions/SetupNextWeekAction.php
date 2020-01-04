@@ -9,7 +9,7 @@ use App\Domain\Models\Week;
 use App\Exceptions\BuildNextWeekException;
 use App\Exceptions\BuildWeekException;
 
-class BuildNextWeekAction
+class SetupNextWeekAction
 {
     /**
      * @var BuildWeekAction
