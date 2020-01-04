@@ -11,6 +11,16 @@ use App\Exceptions\BuildWeekException;
 
 class BuildNextWeekAction
 {
+    /**
+     * @var BuildWeekAction
+     */
+    private $buildWeekAction;
+
+    public function __construct(BuildWeekAction $buildWeekAction)
+    {
+        $this->buildWeekAction = $buildWeekAction;
+    }
+
     public function execute()
     {
         $currentWeek = Week::current();
@@ -22,5 +32,6 @@ class BuildNextWeekAction
         if ($count) {
             throw new BuildNextWeekException($count . " games have player spirits and are not finalized", BuildNextWeekException::CODE_GAMES_NOT_FINALIZED);
         }
+        $nextWeek = $this->buildWeekAction->execute($currentWeek->adventuring_locks_at);
     }
 }
