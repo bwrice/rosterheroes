@@ -8,7 +8,7 @@ use App\Domain\Collections\GameCollection;
 use App\Domain\Collections\LeagueCollection;
 use App\Domain\Models\Game;
 use App\Domain\QueryBuilders\GameQueryBuilder;
-use App\Jobs\BuildPlayerGameLogsJob;
+use App\Jobs\UpdatePlayerGameLogsJob;
 use Illuminate\Support\Facades\Date;
 
 class UpdateHistoricGameLogsAction
@@ -28,7 +28,7 @@ class UpdateHistoricGameLogsAction
 
             $games->each(function (Game $game) use (&$count, $yearDelta) {
 
-                BuildPlayerGameLogsJob::dispatch($game, $yearDelta)->onQueue('stats-integration')->delay($count * 4);
+                UpdatePlayerGameLogsJob::dispatch($game, $yearDelta)->onQueue('stats-integration')->delay($count * 4);
                 $count++;
             });
         });

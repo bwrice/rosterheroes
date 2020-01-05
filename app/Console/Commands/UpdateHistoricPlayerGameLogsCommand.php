@@ -7,7 +7,7 @@ use App\Domain\Collections\GameCollection;
 use App\Domain\Models\Game;
 use App\Domain\Models\League;
 use App\Domain\Models\Team;
-use App\Jobs\BuildPlayerGameLogsJob;
+use App\Jobs\UpdatePlayerGameLogsJob;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Log;
