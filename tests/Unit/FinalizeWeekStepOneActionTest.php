@@ -6,7 +6,7 @@ use App\Domain\Actions\FinalizeWeekStepOneAction;
 use App\Domain\Models\Game;
 use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\Week;
-use App\Exceptions\StepOneException;
+use App\Exceptions\FinalizeWeekException;
 use App\Jobs\FinalizeWeekStepTwoJob;
 use Bwrice\LaravelJobChainGroups\Jobs\AsyncChainedJob;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -70,8 +70,8 @@ class FinalizeWeekStepOneActionTest extends TestCase
 
         try {
             $this->domainAction->execute($this->week);
-        } catch (StepOneException $exception) {
-            $this->assertEquals(StepOneException::INVALID_TIME_TO_FINALIZE, $exception->getCode());
+        } catch (FinalizeWeekException $exception) {
+            $this->assertEquals(FinalizeWeekException::INVALID_TIME_TO_FINALIZE, $exception->getCode());
             return;
         }
 

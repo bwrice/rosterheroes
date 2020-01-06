@@ -6,6 +6,7 @@ namespace App\Domain\Actions;
 
 use App\Domain\Models\Game;
 use App\Domain\Models\Week;
+use App\Exceptions\FinalizeWeekException;
 use App\Exceptions\StepOneException;
 use App\Jobs\FinalizeWeekStepTwoJob;
 use App\Jobs\UpdateGamesJob;
@@ -26,7 +27,7 @@ class FinalizeWeekStepOneAction
     protected function validateTime(Week $week)
     {
         if (Date::now()->isBefore($week->adventuring_locks_at->addHours(Week::FINALIZE_AFTER_ADVENTURING_CLOSED_HOURS))) {
-            throw new StepOneException($week, "Week is not ready to be finalized", StepOneException::INVALID_TIME_TO_FINALIZE);
+            throw new FinalizeWeekException($week, "Week is not ready to be finalized", FinalizeWeekException::INVALID_TIME_TO_FINALIZE);
         }
     }
 

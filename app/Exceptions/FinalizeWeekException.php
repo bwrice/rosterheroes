@@ -9,6 +9,9 @@ use Throwable;
 
 class FinalizeWeekException extends \RuntimeException
 {
+    public const INVALID_TIME_TO_FINALIZE = 1;
+    public const CODE_GAMES_NOT_FINALIZED = 2;
+
     /**
      * @var Week
      */
