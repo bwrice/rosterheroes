@@ -2,6 +2,7 @@
 
 use Faker\Generator as Faker;
 
+/* @var $factory \Illuminate\Database\Eloquent\Factory */
 $factory->define(\App\Domain\Models\Campaign::class, function (Faker $faker) {
     return [
         'uuid' => (string) \Ramsey\Uuid\Uuid::uuid4(),

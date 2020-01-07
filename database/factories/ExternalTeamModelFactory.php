@@ -2,7 +2,6 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Model;
 use Faker\Generator as Faker;
 
 $factory->define(\App\ExternalTeam::class, function (Faker $faker, $args) {

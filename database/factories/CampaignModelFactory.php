@@ -2,7 +2,6 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use App\Model;
 use Faker\Generator as Faker;
 
 $factory->define(\App\Domain\Models\Campaign::class, function (Faker $faker) {
