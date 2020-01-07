@@ -8,10 +8,13 @@ use App\Domain\Models\Game;
 use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\Week;
 use App\Exceptions\FinalizeWeekException;
+use App\Jobs\FinalizeWeekStepThreeJob;
+use App\Jobs\UpdatePlayerSpiritEnergiesJob;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
 class FinalizeWeekStepTwoActionTest extends TestCase
@@ -69,11 +72,25 @@ class FinalizeWeekStepTwoActionTest extends TestCase
         $this->gameOne->save();
 
         try {
-            $this->domainAction->execute($this->week);
+            $this->domainAction->execute();
         } catch (FinalizeWeekException $exception) {
             $this->assertEquals(FinalizeWeekException::CODE_GAMES_NOT_FINALIZED, $exception->getCode());
             return;
         }
         $this->fail("Exception not thrown");
+    }
+
+    /**
+    * @test
+    */
+    public function it_will_queue_update_spirits_and_step_three_jobs_in_a_chain()
+    {
+        Queue::fake();
+
+        $this->domainAction->execute();
+
+        Queue::assertPushedWithChain(UpdatePlayerSpiritEnergiesJob::class, [
+            FinalizeWeekStepThreeJob::class
+        ]);
     }
 }
