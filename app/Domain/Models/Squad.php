@@ -8,6 +8,7 @@ use App\Domain\Collections\ItemCollection;
 use App\Domain\Interfaces\HasItems;
 use App\Domain\Interfaces\TravelsBorders;
 use App\Domain\QueryBuilders\CampaignQueryBuilder;
+use App\Domain\QueryBuilders\SquadQueryBuilder;
 use App\Domain\Services\Travel\SquadBorderTravelCostExemption;
 use App\Exceptions\CampaignExistsException;
 use App\Exceptions\NotBorderedByException;
@@ -49,6 +50,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property HeroCollection $heroes
  * @property ItemCollection $items
  * @property HeroPostCollection $heroPosts
+ *
+ * @method static SquadQueryBuilder query()
  */
 class Squad extends EventSourcedModel implements HasItems
 {
@@ -98,6 +101,11 @@ class Squad extends EventSourcedModel implements HasItems
     ];
 
     protected $guarded = [];
+
+    public function newEloquentBuilder($query)
+    {
+        return new SquadQueryBuilder($query);
+    }
 
     public static function getMobileStorageResourceRelations()
     {
