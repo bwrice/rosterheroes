@@ -13,20 +13,6 @@ use Illuminate\Queue\SerializesModels;
 class FinalizeWeekStepTwoJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    /**
-     * @var Week
-     */
-    public $week;
-
-    /**
-     * Create a new job instance.
-     *
-     * @return void
-     */
-    public function __construct(Week $week)
-    {
-        $this->week = $week;
-    }
 
     /**
      * Execute the job.
@@ -35,6 +21,6 @@ class FinalizeWeekStepTwoJob implements ShouldQueue
      */
     public function handle(FinalizeWeekStepTwoAction $domainAction)
     {
-        $domainAction->execute($this->week);
+        $domainAction->execute();
     }
 }

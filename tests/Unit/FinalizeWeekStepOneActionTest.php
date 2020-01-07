@@ -69,7 +69,7 @@ class FinalizeWeekStepOneActionTest extends TestCase
         Date::setTestNow($this->week->adventuring_locks_at->addHours(Week::FINALIZE_AFTER_ADVENTURING_CLOSED_HOURS - 1));
 
         try {
-            $this->domainAction->execute($this->week);
+            $this->domainAction->execute();
         } catch (FinalizeWeekException $exception) {
             $this->assertEquals(FinalizeWeekException::INVALID_TIME_TO_FINALIZE, $exception->getCode());
             return;
@@ -85,7 +85,7 @@ class FinalizeWeekStepOneActionTest extends TestCase
     {
         \Illuminate\Support\Facades\Queue::fake();
 
-        $this->domainAction->execute($this->week);
+        $this->domainAction->execute();
 
         foreach ([
             $this->playerSpiritOne,

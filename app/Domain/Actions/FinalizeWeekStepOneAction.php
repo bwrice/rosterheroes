@@ -16,8 +16,9 @@ use Illuminate\Support\Facades\Date;
 
 class FinalizeWeekStepOneAction
 {
-    public function execute(Week $week)
+    public function execute()
     {
+        $week = Week::current();
         $this->validateTime($week);
         ChainGroup::create($this->getUpdatePlayerGameLogsForGameJobs($week), [
             new FinalizeWeekStepTwoJob($week)
