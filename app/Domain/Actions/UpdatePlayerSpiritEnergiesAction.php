@@ -16,8 +16,9 @@ class UpdatePlayerSpiritEnergiesAction
     public const ENERGY_COEFFICIENT_CONSTANT = PlayerSpirit::STARTING_ENERGY/5;
     public const ENERGY_COEFFICIENT_EXPONENT = .5;
 
-    public function execute(Week $week)
+    public function execute()
     {
+        $week = Week::current();
         $spiritsInUseCount = $this->getSpiritsInUseCount($week);
         $spiritsInUseOverEnergyAdjustmentMin = $spiritsInUseCount - PlayerSpirit::MAX_USAGE_BEFORE_ENERGY_ADJUSTMENT;
 
@@ -34,7 +35,7 @@ class UpdatePlayerSpiritEnergiesAction
             }
 
             $query->withCount('heroes')->chunkById(100, function(PlayerSpiritCollection $playerSpirits) use ($globalSpiritEssenceCost, $globalEssencePaidFor, $spiritsInUseOverEnergyAdjustmentMin) {
-                
+
                 $playerSpirits->each(function (PlayerSpirit $playerSpirit) use ($globalSpiritEssenceCost, $globalEssencePaidFor, $spiritsInUseOverEnergyAdjustmentMin) {
 
                     $playerSpirit->energy = $this->getUpdatedEnergy($playerSpirit, $globalSpiritEssenceCost, $globalEssencePaidFor, $spiritsInUseOverEnergyAdjustmentMin);

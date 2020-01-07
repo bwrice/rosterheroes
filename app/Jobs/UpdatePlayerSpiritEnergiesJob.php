@@ -23,20 +23,10 @@ class UpdatePlayerSpiritEnergiesJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * @var Week
-     */
-    private $week;
-
-    public function __construct(Week $week)
-    {
-        $this->week = $week;
-    }
-
-    /**
      * @param UpdatePlayerSpiritEnergiesAction $domainAction
      */
     public function handle(UpdatePlayerSpiritEnergiesAction $domainAction)
     {
-        $domainAction->execute($this->week);
+        $domainAction->execute();
     }
 }
