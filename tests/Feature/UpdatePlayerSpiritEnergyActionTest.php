@@ -2,34 +2,46 @@
 
 namespace Tests\Feature;
 
+use App\Domain\Actions\UpdatePlayerSpiritEnergiesAction;
 use App\Domain\Models\Hero;
 use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\Week;
 use App\Domain\QueryBuilders\PlayerSpiritQueryBuilder;
 use App\Jobs\UpdatePlayerSpiritEnergiesJob;
-use App\Nova\Player;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use function Psy\debug;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class UpdatePlayerSpiritEnergyJobTest extends TestCase
+class UpdatePlayerSpiritEnergyActionTest extends TestCase
 {
     use DatabaseTransactions;
+
+    /** @var Week */
+    protected $week;
+
+    /** @var UpdatePlayerSpiritEnergiesAction */
+    protected $domainAction;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->week = factory(Week::class)->create();
+        Week::setTestCurrent($this->week);
+
+        $this->domainAction = app(UpdatePlayerSpiritEnergiesAction::class);
+    }
 
     /**
      * @test
      */
     public function it_wont_adjust_energies_if_below_min_usage()
     {
-        $week = factory(Week::class)->create();
-        Week::setTestCurrent($week);
 
         /** @var PlayerSpirit $playerSpirit */
         $playerSpirit = factory(PlayerSpirit::class)->create([
-            'week_id' => $week->id
+            'week_id' => $this->week->id
         ]);
 
         $beforeAdjustmentEnergy = $playerSpirit->energy;
@@ -40,13 +52,13 @@ class UpdatePlayerSpiritEnergyJobTest extends TestCase
             'player_spirit_id' => $playerSpirit->id
         ]);
 
-        $playerSpiritUsedForWeekCount = Hero::query()->whereHas('playerSpirit', function (PlayerSpiritQueryBuilder $builder) use ($week) {
-            return $builder->forWeek($week);
+        $playerSpiritUsedForWeekCount = Hero::query()->whereHas('playerSpirit', function (PlayerSpiritQueryBuilder $builder) {
+            return $builder->forWeek($this->week);
         })->count();
 
         $this->assertEquals($heroesToAssignSpiritsTo, $playerSpiritUsedForWeekCount);
 
-        UpdatePlayerSpiritEnergiesJob::dispatchNow();
+        $this->domainAction->execute();
 
         $playerSpirit = $playerSpirit->fresh();
 
@@ -58,17 +70,14 @@ class UpdatePlayerSpiritEnergyJobTest extends TestCase
      */
     public function it_will_lower_the_energy_of_a_player_spirit_used_a_lot()
     {
-        $week = factory(Week::class)->create();
-        Week::setTestCurrent($week);
-
         /** @var PlayerSpirit $playerSpirit */
         $playerSpirit = factory(PlayerSpirit::class)->create([
-            'week_id' => $week->id
+            'week_id' => $this->week->id
         ]);
 
         // create another PlayerSpirit with a high essence cost
         factory(PlayerSpirit::class)->create([
-            'week_id' => $week->id
+            'week_id' => $this->week->id
         ]);
 
         $beforeAdjustmentEnergy = $playerSpirit->energy;
@@ -79,13 +88,13 @@ class UpdatePlayerSpiritEnergyJobTest extends TestCase
             'player_spirit_id' => $playerSpirit->id
         ]);
 
-        $playerSpiritUsedForWeekCount = Hero::query()->whereHas('playerSpirit', function (PlayerSpiritQueryBuilder $builder) use ($week) {
-            return $builder->forWeek($week);
+        $playerSpiritUsedForWeekCount = Hero::query()->whereHas('playerSpirit', function (PlayerSpiritQueryBuilder $builder) {
+            return $builder->forWeek($this->week);
         })->count();
 
         $this->assertEquals($heroesToAssignSpiritsTo, $playerSpiritUsedForWeekCount);
 
-        UpdatePlayerSpiritEnergiesJob::dispatchNow();
+        $this->domainAction->execute();
 
         $playerSpirit = $playerSpirit->fresh();
 
@@ -97,17 +106,14 @@ class UpdatePlayerSpiritEnergyJobTest extends TestCase
      */
     public function it_will_raise_the_energy_of_a_player_spirit_not_used()
     {
-        $week = factory(Week::class)->create();
-        Week::setTestCurrent($week);
-
         /** @var PlayerSpirit $playerSpirit */
         $playerSpirit = factory(PlayerSpirit::class)->create([
-            'week_id' => $week->id
+            'week_id' => $this->week->id
         ]);
 
         /** @var PlayerSpirit $notUsedPlayerSpirit */
         $notUsedPlayerSpirit = factory(PlayerSpirit::class)->create([
-            'week_id' => $week->id
+            'week_id' => $this->week->id
         ]);
 
         $beforeAdjustmentEnergy = $notUsedPlayerSpirit->energy;
@@ -118,13 +124,13 @@ class UpdatePlayerSpiritEnergyJobTest extends TestCase
             'player_spirit_id' => $playerSpirit->id
         ]);
 
-        $playerSpiritUsedForWeekCount = Hero::query()->whereHas('playerSpirit', function (PlayerSpiritQueryBuilder $builder) use ($week) {
-            return $builder->forWeek($week);
+        $playerSpiritUsedForWeekCount = Hero::query()->whereHas('playerSpirit', function (PlayerSpiritQueryBuilder $builder) {
+            return $builder->forWeek($this->week);
         })->count();
 
         $this->assertEquals($heroesToAssignSpiritsTo, $playerSpiritUsedForWeekCount);
 
-        UpdatePlayerSpiritEnergiesJob::dispatchNow();
+        $this->domainAction->execute();
 
         $notUsedPlayerSpirit = $notUsedPlayerSpirit->fresh();
 
@@ -136,17 +142,14 @@ class UpdatePlayerSpiritEnergyJobTest extends TestCase
      */
     public function higher_essence_cost_player_spirits_will_have_a_larger_energy_adjustment()
     {
-        $week = factory(Week::class)->create();
-        Week::setTestCurrent($week);
-
         /** @var PlayerSpirit $playerSpirit */
         $playerSpirit = factory(PlayerSpirit::class)->create([
-            'week_id' => $week->id
+            'week_id' => $this->week->id
         ]);
 
         /** @var PlayerSpirit $higherEssenceCostSpirit */
         $higherEssenceCostSpirit = factory(PlayerSpirit::class)->create([
-            'week_id' => $week->id,
+            'week_id' => $this->week->id,
             'essence_cost' => 15000
         ]);
 
@@ -154,7 +157,7 @@ class UpdatePlayerSpiritEnergyJobTest extends TestCase
 
         /** @var PlayerSpirit $lowerEssenceCostSpirit */
         $lowerEssenceCostSpirit = factory(PlayerSpirit::class)->create([
-            'week_id' => $week->id,
+            'week_id' => $this->week->id,
             'essence_cost' => 3000
         ]);
 
@@ -166,13 +169,13 @@ class UpdatePlayerSpiritEnergyJobTest extends TestCase
             'player_spirit_id' => $playerSpirit->id
         ]);
 
-        $playerSpiritUsedForWeekCount = Hero::query()->whereHas('playerSpirit', function (PlayerSpiritQueryBuilder $builder) use ($week) {
-            return $builder->forWeek($week);
+        $playerSpiritUsedForWeekCount = Hero::query()->whereHas('playerSpirit', function (PlayerSpiritQueryBuilder $builder) {
+            return $builder->forWeek($this->week);
         })->count();
 
         $this->assertEquals($heroesToAssignSpiritsTo, $playerSpiritUsedForWeekCount);
 
-        UpdatePlayerSpiritEnergiesJob::dispatchNow();
+        $this->domainAction->execute();
 
         $higherEssenceCostSpirit = $higherEssenceCostSpirit->fresh();
         $lowerEssenceCostSpirit = $lowerEssenceCostSpirit->fresh();
@@ -188,18 +191,15 @@ class UpdatePlayerSpiritEnergyJobTest extends TestCase
      */
     public function energy_will_never_be_adjusted_below_the_minimum()
     {
-        $week = factory(Week::class)->create();
-        Week::setTestCurrent($week);
-
         /** @var PlayerSpirit $playerSpirit */
         $playerSpirit = factory(PlayerSpirit::class)->create([
-            'week_id' => $week->id,
+            'week_id' => $this->week->id,
             'essence_cost' => 1 // Super cheap to help exaggerate the condition
         ]);
 
         // create another PlayerSpirit with a high essence cost
         factory(PlayerSpirit::class)->create([
-            'week_id' => $week->id,
+            'week_id' => $this->week->id,
             'essence_cost' => 99999 // Super expensive to help exaggerate the condition
         ]);
 
@@ -209,13 +209,13 @@ class UpdatePlayerSpiritEnergyJobTest extends TestCase
             'player_spirit_id' => $playerSpirit->id
         ]);
 
-        $playerSpiritUsedForWeekCount = Hero::query()->whereHas('playerSpirit', function (PlayerSpiritQueryBuilder $builder) use ($week) {
-            return $builder->forWeek($week);
+        $playerSpiritUsedForWeekCount = Hero::query()->whereHas('playerSpirit', function (PlayerSpiritQueryBuilder $builder) {
+            return $builder->forWeek($this->week);
         })->count();
 
         $this->assertEquals($heroesToAssignSpiritsTo, $playerSpiritUsedForWeekCount);
 
-        UpdatePlayerSpiritEnergiesJob::dispatchNow();
+        $this->domainAction->execute();
 
         $playerSpirit = $playerSpirit->fresh();
 
@@ -230,18 +230,15 @@ class UpdatePlayerSpiritEnergyJobTest extends TestCase
      */
     public function energy_will_never_be_adjusted_above_the_maximum()
     {
-        $week = factory(Week::class)->create();
-        Week::setTestCurrent($week);
-
         /** @var PlayerSpirit $playerSpirit */
         $playerSpirit = factory(PlayerSpirit::class)->create([
-            'week_id' => $week->id,
+            'week_id' => $this->week->id,
             'essence_cost' => 1 // Super cheap to help exaggerate the condition
         ]);
 
         // create another PlayerSpirit with a high essence cost
         $notUsedPlayerSpirit = factory(PlayerSpirit::class)->create([
-            'week_id' => $week->id,
+            'week_id' => $this->week->id,
             'essence_cost' => 99999 // Super expensive to help exaggerate the condition
         ]);
 
@@ -251,13 +248,13 @@ class UpdatePlayerSpiritEnergyJobTest extends TestCase
             'player_spirit_id' => $playerSpirit->id
         ]);
 
-        $playerSpiritUsedForWeekCount = Hero::query()->whereHas('playerSpirit', function (PlayerSpiritQueryBuilder $builder) use ($week) {
-            return $builder->forWeek($week);
+        $playerSpiritUsedForWeekCount = Hero::query()->whereHas('playerSpirit', function (PlayerSpiritQueryBuilder $builder) {
+            return $builder->forWeek($this->week);
         })->count();
 
         $this->assertEquals($heroesToAssignSpiritsTo, $playerSpiritUsedForWeekCount);
 
-        UpdatePlayerSpiritEnergiesJob::dispatchNow();
+        $this->domainAction->execute();
 
         $notUsedPlayerSpirit = $notUsedPlayerSpirit->fresh();
 
@@ -271,12 +268,9 @@ class UpdatePlayerSpiritEnergyJobTest extends TestCase
      */
     public function energy_will_be_set_to_default_if_adjustment_usage_requirements_not_met()
     {
-        $week = factory(Week::class)->create();
-        Week::setTestCurrent($week);
-
         /** @var PlayerSpirit $playerSpirit */
         $playerSpirit = factory(PlayerSpirit::class)->create([
-            'week_id' => $week->id,
+            'week_id' => $this->week->id,
             'energy' => 12345 // energy is not the starting energy
         ]);
 
@@ -286,13 +280,13 @@ class UpdatePlayerSpiritEnergyJobTest extends TestCase
             'player_spirit_id' => $playerSpirit->id
         ]);
 
-        $playerSpiritUsedForWeekCount = Hero::query()->whereHas('playerSpirit', function (PlayerSpiritQueryBuilder $builder) use ($week) {
-            return $builder->forWeek($week);
+        $playerSpiritUsedForWeekCount = Hero::query()->whereHas('playerSpirit', function (PlayerSpiritQueryBuilder $builder) {
+            return $builder->forWeek($this->week);
         })->count();
 
         $this->assertEquals($heroesToAssignSpiritsTo, $playerSpiritUsedForWeekCount);
 
-        UpdatePlayerSpiritEnergiesJob::dispatchNow();
+        $this->domainAction->execute();
 
         $playerSpirit = $playerSpirit->fresh();
 
@@ -305,13 +299,9 @@ class UpdatePlayerSpiritEnergyJobTest extends TestCase
     public function an_energy_increase_will_be_the_inverse_of_the_equivalent_energy_decrease()
     {
         // ie a 20% decrease in energy 4/5 will be a 25% increase in energy 5/4
-
-        $week = factory(Week::class)->create();
-        Week::setTestCurrent($week);
-
         /** @var PlayerSpirit $playerSpiritOne */
         $playerSpiritOne = factory(PlayerSpirit::class)->create([
-            'week_id' => $week->id,
+            'week_id' => $this->week->id,
             'essence_cost' => 4000
         ]);
 
@@ -319,7 +309,7 @@ class UpdatePlayerSpiritEnergyJobTest extends TestCase
 
         /** @var PlayerSpirit $playerSpiritTwo */
         $playerSpiritTwo = factory(PlayerSpirit::class)->create([
-            'week_id' => $week->id,
+            'week_id' => $this->week->id,
             'essence_cost' => 9000
         ]);
 
@@ -331,13 +321,13 @@ class UpdatePlayerSpiritEnergyJobTest extends TestCase
             'player_spirit_id' => $playerSpiritOne->id
         ]);
 
-        $playerSpiritUsedForWeekCount = Hero::query()->whereHas('playerSpirit', function (PlayerSpiritQueryBuilder $builder) use ($week) {
-            return $builder->forWeek($week);
+        $playerSpiritUsedForWeekCount = Hero::query()->whereHas('playerSpirit', function (PlayerSpiritQueryBuilder $builder) {
+            return $builder->forWeek($this->week);
         })->count();
 
         $this->assertEquals($heroesToAssignSpiritsTo, $playerSpiritUsedForWeekCount);
 
-        UpdatePlayerSpiritEnergiesJob::dispatchNow();
+        $this->domainAction->execute();
 
         $playerSpiritOne = $playerSpiritOne->fresh();
         $playerSpiritTwo = $playerSpiritTwo->fresh();
