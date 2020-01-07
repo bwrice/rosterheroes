@@ -42,6 +42,8 @@ use phpDocumentor\Reflection\Types\Self_;
  */
 class Week extends EventSourcedModel
 {
+    public const FINALIZE_AFTER_ADVENTURING_CLOSED_HOURS = 15;
+
     protected static $current = null;
 
     protected static $testCurrent = null;
