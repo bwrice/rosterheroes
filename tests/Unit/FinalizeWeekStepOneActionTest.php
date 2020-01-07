@@ -12,8 +12,8 @@ use Bwrice\LaravelJobChainGroups\Jobs\AsyncChainedJob;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Queue\Queue;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
 class FinalizeWeekStepOneActionTest extends TestCase
@@ -83,7 +83,7 @@ class FinalizeWeekStepOneActionTest extends TestCase
     */
     public function it_will_queue_jobs_to_finalize_stats_for_games_chained_with_step_two()
     {
-        \Illuminate\Support\Facades\Queue::fake();
+        Queue::fake();
 
         $this->domainAction->execute();
 
@@ -92,9 +92,7 @@ class FinalizeWeekStepOneActionTest extends TestCase
             $this->playerSpiritTwo
                  ] as $playerSpirit) {
 
-            \Illuminate\Support\Facades\Queue::assertPushed(AsyncChainedJob::class);
-
-            \Illuminate\Support\Facades\Queue::assertPushedWithChain(AsyncChainedJob::class, [
+            Queue::assertPushedWithChain(AsyncChainedJob::class, [
                 FinalizeWeekStepTwoJob::class
             ], function (AsyncChainedJob $chainedJob) use ($playerSpirit) {
                 return $chainedJob->getDecoratedJob()->getGame()->id === $playerSpirit->game_id;
