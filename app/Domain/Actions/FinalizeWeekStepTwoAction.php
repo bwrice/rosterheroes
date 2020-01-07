@@ -5,9 +5,9 @@ namespace App\Domain\Actions;
 
 
 use App\Domain\Models\Game;
-use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\Week;
 use App\Exceptions\FinalizeWeekException;
+use App\Jobs\FinalizeWeekStepThreeJob;
 use App\Jobs\UpdatePlayerSpiritEnergiesJob;
 
 class FinalizeWeekStepTwoAction
@@ -20,6 +20,8 @@ class FinalizeWeekStepTwoAction
             throw new FinalizeWeekException($week, "There are " . $count . " games not finalized", FinalizeWeekException::CODE_GAMES_NOT_FINALIZED);
         }
 
-
+        UpdatePlayerSpiritEnergiesJob::withChain([
+            new FinalizeWeekStepThreeJob()
+        ])->dispatch();
     }
 }
