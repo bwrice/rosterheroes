@@ -74,7 +74,7 @@ class Week extends EventSourcedModel
      */
     public static function current()
     {
-        return self::$testCurrent ?: self::$current;
+        return self::$testCurrent ?: self::query()->current();
     }
 
     public static function setCurrent(Week $week = null)
