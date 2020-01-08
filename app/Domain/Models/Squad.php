@@ -455,4 +455,12 @@ class Squad extends EventSourcedModel implements HasItems
     {
         return static::SKIRMISHES_PER_QUEST;
     }
+
+    public function combatReady()
+    {
+        $readyHero = $this->heroes->first(function (Hero $hero) {
+            return $hero->combatReady();
+        });
+        return ! is_null($readyHero);
+    }
 }
