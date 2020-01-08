@@ -7,9 +7,7 @@ namespace App\Domain\Actions;
 use App\Domain\Models\Game;
 use App\Domain\Models\Week;
 use App\Exceptions\FinalizeWeekException;
-use App\Exceptions\StepOneException;
 use App\Jobs\FinalizeWeekStepTwoJob;
-use App\Jobs\UpdateGamesJob;
 use App\Jobs\UpdatePlayerGameLogsJob;
 use Bwrice\LaravelJobChainGroups\Jobs\ChainGroup;
 use Illuminate\Support\Facades\Date;
@@ -21,8 +19,8 @@ class FinalizeWeekStepOneAction
         $week = Week::current();
         $this->validateTime($week);
         ChainGroup::create($this->getUpdatePlayerGameLogsForGameJobs($week), [
-            new FinalizeWeekStepTwoJob($week)
-        ]);
+            new FinalizeWeekStepTwoJob()
+        ])->dispatch();
     }
 
     protected function validateTime(Week $week)
