@@ -64,4 +64,9 @@ class PlayerSpiritQueryBuilder extends Builder implements PositionQueryable, Ess
     {
         return $this->where('essence_cost', '<=', $amount);
     }
+
+    public function withHeroes()
+    {
+        return $this->whereHas('heroes');
+    }
 }
