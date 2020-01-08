@@ -17,6 +17,7 @@ class CreateHeroSnapshotsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('hero_id')->unsigned();
             $table->bigInteger('squad_snapshot_id')->unsigned();
+            $table->unique(['hero_id', 'squad_snapshot_id']);
             $table->json('data');
             $table->timestamps();
         });
