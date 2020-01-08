@@ -3,6 +3,8 @@
 namespace Tests\Unit;
 
 use App\Domain\Models\Campaign;
+use App\Domain\Models\Hero;
+use App\Domain\Models\PlayerSpirit;
 use App\Exceptions\CampaignExistsException;
 use App\Exceptions\NotBorderedByException;
 use App\Exceptions\WeekLockedException;
@@ -161,5 +163,26 @@ class SquadUnitTest extends TestCase
         $squad = factory(Squad::class)->create();
         $this->assertEquals(0, $squad->heroes->count());
         $this->assertFalse($squad->combatReady());
+    }
+
+    /**
+    * @test
+    */
+    public function it_is_combat_ready_if_only_one_hero_is_ready()
+    {
+        /** @var Squad $squad */
+        $squad = factory(Squad::class)->create();
+        /** @var Hero $heroOne */
+        $heroOne = factory(Hero::class)->create([
+            'squad_id' => $squad->id
+        ]);
+        $this->assertFalse($heroOne->combatReady());
+        /** @var Hero $heroTwo */
+        $heroTwo = factory(Hero::class)->create([
+            'squad_id' => $squad->id,
+            'player_spirit_id' => factory(PlayerSpirit::class)->create()->id
+        ]);
+        $this->assertTrue($heroTwo->combatReady());
+        $this->assertTrue($squad->combatReady());
     }
 }
