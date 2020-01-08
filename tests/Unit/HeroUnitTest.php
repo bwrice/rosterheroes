@@ -62,4 +62,16 @@ class HeroUnitTest extends TestCase
 
         $this->assertEquals($squad->spirit_essence, $hero->availableEssence());
     }
+
+    /**
+    * @test
+    */
+    public function it_is_not_ready_for_combat_without_a_player_spirit()
+    {
+        /** @var Hero $hero */
+        $hero = factory(Hero::class)->create();
+        $this->assertNull($hero->playerSpirit);
+        $this->assertArrayHasKey('player_spirit', $hero->notCombatReadyReasons());
+        $this->assertFalse($hero->combatReady());
+    }
 }
