@@ -151,4 +151,15 @@ class SquadUnitTest extends TestCase
 
         $this->fail("Exception was not thrown");
     }
+
+    /**
+    * @test
+    */
+    public function it_is_not_combat_ready_if_there_are_no_heroes()
+    {
+        /** @var Squad $squad */
+        $squad = factory(Squad::class)->create();
+        $this->assertEquals(0, $squad->heroes->count());
+        $this->assertFalse($squad->combatReady());
+    }
 }
