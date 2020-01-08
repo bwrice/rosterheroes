@@ -345,4 +345,18 @@ class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasItems
     {
         return 'hero';
     }
+
+    public function notCombatReadyReasons(): array
+    {
+        $reasons = [];
+        if (! $this->playerSpirit) {
+            $reasons['player_spirit'] = "No player spirit";
+        }
+        return $reasons;
+    }
+
+    public function combatReady()
+    {
+        return count($this->notCombatReadyReasons()) === 0;
+    }
 }
