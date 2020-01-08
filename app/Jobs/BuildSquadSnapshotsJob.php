@@ -15,7 +15,7 @@ class BuildSquadSnapshotsJob implements ShouldQueue
     /**
      * @var Squad
      */
-    private $squad;
+    public $squad;
 
     /**
      * BuildSquadSnapshotsJob constructor.
