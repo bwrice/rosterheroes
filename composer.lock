@@ -12,7 +12,7 @@
             "dist": {
                 "type": "path",
                 "url": "../laravel-job-chain-groups",
-                "reference": "c5352e16d6c055a31e520863d5eb84631b9ead6f"
+                "reference": "3bfa0438aeff2b97947aa2ecb7769b72968b412d"
             },
             "require": {
                 "illuminate/support": "^6.0",
