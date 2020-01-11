@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Domain\Actions\FinalizeWeekStepFourAction;
+use App\Domain\Actions\WeekFinalizing\FinalizeWeekStepFourAction;
 use App\Domain\Models\Minion;
 use App\Jobs\BuildMinionSnapshotJob;
 use App\Jobs\FinalizeWeekStepFiveJob;

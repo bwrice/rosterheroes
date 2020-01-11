@@ -2,8 +2,8 @@
 
 namespace Tests\Unit;
 
-use App\Domain\Actions\FinalizeWeekStepOneAction;
-use App\Domain\Actions\FinalizeWeekStepTwoAction;
+use App\Domain\Actions\WeekFinalizing\FinalizeWeekStepOneAction;
+use App\Domain\Actions\WeekFinalizing\FinalizeWeekStepTwoAction;
 use App\Domain\Models\Game;
 use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\Week;

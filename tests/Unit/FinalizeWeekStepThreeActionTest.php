@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Domain\Actions\FinalizeWeekStepThreeAction;
+use App\Domain\Actions\WeekFinalizing\FinalizeWeekStepThreeAction;
 use App\Domain\Models\Hero;
 use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\Week;
