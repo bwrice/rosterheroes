@@ -22,12 +22,13 @@ class InningsPitchedCalculator implements PointsCalculator
     }
 
     /**
+     * @param $pointsPer
      * @param $amount
      * @return int|float
      */
-    public function total($amount): float
+    public function total($pointsPer, $amount): float
     {
-        return $this->multiplierCalculator->total($this->getTrueInnings($amount));
+        return $this->multiplierCalculator->total($pointsPer, $this->getTrueInnings($amount));
     }
 
     /**
@@ -42,13 +43,5 @@ class InningsPitchedCalculator implements PointsCalculator
         // convert .1 to .333, .2 to .667
         $partialInnings = $fraction * (10/3);
         return $fullInnings + $partialInnings;
-    }
-
-    /**
-     * @return float
-     */
-    public function pointsPer(): float
-    {
-        return $this->multiplierCalculator->pointsPer();
     }
 }

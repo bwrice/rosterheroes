@@ -12,27 +12,13 @@ namespace App\Domain\Behaviors\StatTypes;
 class MultiplierCalculator implements PointsCalculator
 {
 
-    private $pointsPer;
-
-    public function __construct(float $pointsPer)
-    {
-        $this->pointsPer = $pointsPer;
-    }
-
     /**
+     * @param $pointsPer
      * @param $amount
      * @return int|float
      */
-    public function total($amount): float
+    public function total($pointsPer, $amount): float
     {
-        return round($this->pointsPer * $amount, 2);
-    }
-
-    /**
-     * @return float
-     */
-    public function pointsPer(): float
-    {
-        return $this->pointsPer;
+        return round($pointsPer * $amount, 2);
     }
 }

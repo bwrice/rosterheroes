@@ -12,13 +12,9 @@ namespace App\Domain\Behaviors\StatTypes;
 interface PointsCalculator
 {
     /**
+     * @param $pointsPer
      * @param $amount
      * @return int|float
      */
-    public function total($amount): float;
-
-    /**
-     * @return float
-     */
-    public function pointsPer(): float;
+    public function total($pointsPer, $amount): float;
 }
