@@ -3,9 +3,6 @@
 namespace Tests\Unit;
 
 use App\Domain\Behaviors\StatTypes\Baseball\InningPitchedBehavior;
-use App\Domain\Behaviors\StatTypes\InningsPitchedCalculator;
-use App\Domain\Behaviors\StatTypes\MultiplierCalculator;
-use Illuminate\Validation\Rules\In;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
