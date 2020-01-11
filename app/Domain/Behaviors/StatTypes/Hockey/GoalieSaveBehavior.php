@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Domain\Behaviors\StatTypes\Baseball;
+namespace App\Domain\Behaviors\StatTypes\Hockey;
 
 
 use App\Domain\Behaviors\StatTypes\StatTypeBehavior;
