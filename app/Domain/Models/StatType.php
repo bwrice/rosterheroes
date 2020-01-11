@@ -2,8 +2,49 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Behaviors\StatTypes\Baseball\BaseOnBallsAgainstBehavior;
+use App\Domain\Behaviors\StatTypes\Baseball\BaseOnBallsBehavior;
+use App\Domain\Behaviors\StatTypes\Baseball\BasketballAssistBehavior;
+use App\Domain\Behaviors\StatTypes\Baseball\BasketballBlockBehavior;
+use App\Domain\Behaviors\StatTypes\Baseball\CompleteGameBehavior;
+use App\Domain\Behaviors\StatTypes\Baseball\CompleteGameShutoutBehavior;
+use App\Domain\Behaviors\StatTypes\Baseball\DoubleBehavior;
+use App\Domain\Behaviors\StatTypes\Baseball\EarnedRunAllowedBehavior;
+use App\Domain\Behaviors\StatTypes\Baseball\GoalAgainstBehavior;
+use App\Domain\Behaviors\StatTypes\Baseball\GoalBehavior;
+use App\Domain\Behaviors\StatTypes\Baseball\GoalieSaveBehavior;
+use App\Domain\Behaviors\StatTypes\Baseball\GoalieWinBehavior;
+use App\Domain\Behaviors\StatTypes\Baseball\HatTrickBehavior;
+use App\Domain\Behaviors\StatTypes\Baseball\HitAgainstBehavior;
+use App\Domain\Behaviors\StatTypes\Baseball\HitBatsmenBehavior;
+use App\Domain\Behaviors\StatTypes\Baseball\HitBehavior;
+use App\Domain\Behaviors\StatTypes\Baseball\HitByPitchBehavior;
+use App\Domain\Behaviors\StatTypes\Baseball\HockeyAssistBehavior;
+use App\Domain\Behaviors\StatTypes\Baseball\HockeyBlockedShotBehavior;
+use App\Domain\Behaviors\StatTypes\Baseball\HomeRunBehavior;
+use App\Domain\Behaviors\StatTypes\Baseball\PitchingSaveBehavior;
+use App\Domain\Behaviors\StatTypes\Baseball\PitchingWinBehavior;
+use App\Domain\Behaviors\StatTypes\Baseball\PointMadeBehavior;
+use App\Domain\Behaviors\StatTypes\Baseball\RBIBehavior;
+use App\Domain\Behaviors\StatTypes\Baseball\ReboundBehavior;
+use App\Domain\Behaviors\StatTypes\Baseball\RunScoredBehavior;
+use App\Domain\Behaviors\StatTypes\Baseball\ShotOnGoalBehavior;
+use App\Domain\Behaviors\StatTypes\Baseball\StealBehavior;
+use App\Domain\Behaviors\StatTypes\Baseball\StolenBaseBehavior;
+use App\Domain\Behaviors\StatTypes\Baseball\StrikeoutBehavior;
+use App\Domain\Behaviors\StatTypes\Baseball\ThreePointerBehavior;
+use App\Domain\Behaviors\StatTypes\Baseball\TripleBehavior;
+use App\Domain\Behaviors\StatTypes\Baseball\TurnoverBehavior;
+use App\Domain\Behaviors\StatTypes\Football\FumbleLostBehavior;
+use App\Domain\Behaviors\StatTypes\Football\InterceptionBehavior;
+use App\Domain\Behaviors\StatTypes\Football\PassTDBehavior;
+use App\Domain\Behaviors\StatTypes\Football\PassYardBehavior;
+use App\Domain\Behaviors\StatTypes\Football\ReceptionBehavior;
+use App\Domain\Behaviors\StatTypes\Football\RecTDBehavior;
+use App\Domain\Behaviors\StatTypes\Football\RecYardBehavior;
+use App\Domain\Behaviors\StatTypes\Football\RushTDBehavior;
+use App\Domain\Behaviors\StatTypes\Football\RushYardBehavior;
 use App\Domain\Behaviors\StatTypes\InningsPitchedCalculator;
-use App\Domain\Behaviors\StatTypes\MultiplierCalculator;
 use App\Domain\Behaviors\StatTypes\StatTypeBehavior;
 use App\Domain\Collections\StatTypeCollection;
 use App\Domain\Models\Traits\HasUniqueNames;
@@ -83,97 +124,97 @@ class StatType extends Model
         switch ($this->name) {
             // Football
             case self::PASS_TD:
-                return new StatTypeBehavior(new MultiplierCalculator(4));
+                return app(PassTDBehavior::class);
             case self::RUSH_TD:
-                return new StatTypeBehavior(new MultiplierCalculator(6));
+                return app(RushTDBehavior::class);
             case self::REC_TD:
-                return new StatTypeBehavior(new MultiplierCalculator(6));
+                return app(RecTDBehavior::class);
             case self::PASS_YARD:
-                return new StatTypeBehavior(new MultiplierCalculator(.04));
+                return app(PassYardBehavior::class);
             case self::RUSH_YARD:
-                return new StatTypeBehavior(new MultiplierCalculator(0.1));
+                return app(RushYardBehavior::class);
             case self::REC_YARD:
-                return new StatTypeBehavior(new MultiplierCalculator(0.1));
+                return app(RecYardBehavior::class);
             case self::RECEPTION:
-                return new StatTypeBehavior(new MultiplierCalculator(.5));
+                return app(ReceptionBehavior::class);
             case self::INTERCEPTION:
-                return new StatTypeBehavior(new MultiplierCalculator(-1));
+                return app(InterceptionBehavior::class);
             case self::FUMBLE_LOST:
-                return new StatTypeBehavior(new MultiplierCalculator(-2));
+                return app(FumbleLostBehavior::class);
 
             // Baseball
             case self::HIT:
-                return new StatTypeBehavior(new MultiplierCalculator(5));
+                return app(HitBehavior::class);
             case self::DOUBLE:
-                return new StatTypeBehavior(new MultiplierCalculator(3));
+                return app(DoubleBehavior::class);
             case self::TRIPLE:
-                return new StatTypeBehavior(new MultiplierCalculator(5));
+                return app(TripleBehavior::class);
             case self::HOME_RUN:
-                return new StatTypeBehavior(new MultiplierCalculator(8));
+                return app(HomeRunBehavior::class);
             case self::RUN_BATTED_IN:
-                return new StatTypeBehavior(new MultiplierCalculator(3));
+                return app(RBIBehavior::class);
             case self::RUN_SCORED:
-                return new StatTypeBehavior(new MultiplierCalculator(3));
+                return app(RunScoredBehavior::class);
             case self::BASE_ON_BALLS:
-                return new StatTypeBehavior(new MultiplierCalculator(2));
+                return app(BaseOnBallsBehavior::class);
             case self::HIT_BY_PITCH:
-                return new StatTypeBehavior(new MultiplierCalculator(2));
+                return app(HitByPitchBehavior::class);
             case self::STOLEN_BASE:
-                return new StatTypeBehavior(new MultiplierCalculator(5));
+                return app(StolenBaseBehavior::class);
             case self::INNING_PITCHED:
-                return new StatTypeBehavior(new InningsPitchedCalculator(new MultiplierCalculator(3)));
+                return app(InningsPitchedCalculator::class);
             case self::STRIKEOUT:
-                return new StatTypeBehavior(new MultiplierCalculator(2.5));
+                return app(StrikeoutBehavior::class);
             case self::PITCHING_WIN:
-                return new StatTypeBehavior(new MultiplierCalculator(5));
+                return app(PitchingWinBehavior::class);
             case self::PITCHING_SAVE:
-                return new StatTypeBehavior(new MultiplierCalculator(3.5));
+                return app(PitchingSaveBehavior::class);
             case self::EARNED_RUN_ALLOWED:
-                return new StatTypeBehavior(new MultiplierCalculator(-2));
+                return app(EarnedRunAllowedBehavior::class);
             case self::HIT_AGAINST:
-                return new StatTypeBehavior(new MultiplierCalculator(-.75));
+                return app(HitAgainstBehavior::class);
             case self::BASE_ON_BALLS_AGAINST:
-                return new StatTypeBehavior(new MultiplierCalculator(-.75));
+                return app(BaseOnBallsAgainstBehavior::class);
             case self::HIT_BATSMAN:
-                return new StatTypeBehavior(new MultiplierCalculator(-.75));
+                return app(HitBatsmenBehavior::class);
             case self::COMPLETE_GAME:
-                return new StatTypeBehavior(new MultiplierCalculator(3));
+                return app(CompleteGameBehavior::class);
             case self::COMPLETE_GAME_SHUTOUT:
-                return new StatTypeBehavior(new MultiplierCalculator(5));
+                return app(CompleteGameShutoutBehavior::class);
 
             // Hockey
             case self::GOAL:
-                return new StatTypeBehavior(new MultiplierCalculator(12));
+                return app(GoalBehavior::class);
             case self::HOCKEY_ASSIST:
-                return new StatTypeBehavior(new MultiplierCalculator(7));
+                return app(HockeyAssistBehavior::class);
             case self::SHOT_ON_GOAL:
-                return new StatTypeBehavior(new MultiplierCalculator(3));
+                return app(ShotOnGoalBehavior::class);
             case self::HOCKEY_BLOCKED_SHOT:
-                return new StatTypeBehavior(new MultiplierCalculator(1.5));
+                return app(HockeyBlockedShotBehavior::class);
             case self::GOALIE_WIN:
-                return new StatTypeBehavior(new MultiplierCalculator(7));
+                return app(GoalieWinBehavior::class);
             case self::GOALIE_SAVE:
-                return new StatTypeBehavior(new MultiplierCalculator(.75));
+                return app(GoalieSaveBehavior::class);
             case self::GOAL_AGAINST:
-                return new StatTypeBehavior(new MultiplierCalculator(-1.5));
+                return app(GoalAgainstBehavior::class);
             case self::HAT_TRICK:
-                return new StatTypeBehavior(new MultiplierCalculator(5));
+                return app(HatTrickBehavior::class);
 
             // Basketball
             case self::POINT_MADE:
-                return new StatTypeBehavior(new MultiplierCalculator(.6));
+                return app(PointMadeBehavior::class);
             case self::THREE_POINTER:
-                return new StatTypeBehavior(new MultiplierCalculator(.25));
+                return app(ThreePointerBehavior::class);
             case self::REBOUND:
-                return new StatTypeBehavior(new MultiplierCalculator(.8));
+                return app(ReboundBehavior::class);
             case self::BASKETBALL_ASSIST:
-                return new StatTypeBehavior(new MultiplierCalculator(.8));
+                return app(BasketballAssistBehavior::class);
             case self::STEAL:
-                return new StatTypeBehavior(new MultiplierCalculator(1));
+                return app(StealBehavior::class);
             case self::BASKETBALL_BLOCK:
-                return new StatTypeBehavior(new MultiplierCalculator(1));
+                return app(BasketballBlockBehavior::class);
             case self::TURNOVER:
-                return new StatTypeBehavior(new MultiplierCalculator(-.2));
+                return app(TurnoverBehavior::class);
         }
 
         throw new UnknownBehaviorException($this->name, StatTypeBehavior::class);
