@@ -11,6 +11,7 @@ namespace App\Domain\Behaviors\StatTypes;
 
 class StatTypeBehavior
 {
+    protected $pointsPer;
 
     /**
      * @var PointsCalculator
@@ -28,7 +29,7 @@ class StatTypeBehavior
      */
     public function getTotalPoints($statAmount): float
     {
-        return $this->pointsCalculator->total($statAmount);
+        return $this->pointsCalculator->total($this->pointsPer, $statAmount);
     }
 
     /**
@@ -36,6 +37,6 @@ class StatTypeBehavior
      */
     public function getPointsPer()
     {
-        return $this->pointsCalculator->pointsPer();
+        return $this->pointsPer;
     }
 }
