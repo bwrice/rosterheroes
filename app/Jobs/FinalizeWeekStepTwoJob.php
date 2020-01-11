@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Domain\Actions\FinalizeWeekStepTwoAction;
+use App\Domain\Actions\WeekFinalizing\FinalizeWeekStepTwoAction;
 use App\Domain\Models\Week;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;

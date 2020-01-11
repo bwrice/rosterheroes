@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Domain\Actions\FinalizeWeekStepThreeAction;
+use App\Domain\Actions\WeekFinalizing\FinalizeWeekStepThreeAction;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
