@@ -1,0 +1,27 @@
+<?php
+
+
+namespace App\Domain\Actions\WeekFinalizing;
+
+
+use App\Domain\Models\Titan;
+use App\Jobs\BuildTitanSnapshotJob;
+use App\Jobs\FinalizeWeekStepSixJob;
+use Bwrice\LaravelJobChainGroups\Jobs\ChainGroup;
+use Illuminate\Database\Eloquent\Collection;
+
+class FinalizeWeekStepFiveAction
+{
+    public function execute()
+    {
+        $buildSnapshotJobs = collect();
+        Titan::query()->chunk(100, function (Collection $titans) use (&$buildSnapshotJobs) {
+            $buildSnapshotJobs = $buildSnapshotJobs->merge($titans->map(function (Titan $titan) {
+                return new BuildTitanSnapshotJob($titan);
+            }));
+        });
+        ChainGroup::create($buildSnapshotJobs->toArray(), [
+            new FinalizeWeekStepSixJob()
+        ])->dispatch();
+    }
+}
