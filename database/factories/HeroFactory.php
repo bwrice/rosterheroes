@@ -1,10 +1,12 @@
 <?php
 
+use App\Domain\Models\Hero;
 use App\Domain\Models\HeroPost;
+use App\Domain\Models\MeasurableType;
 use Faker\Generator as Faker;
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(\App\Domain\Models\Hero::class, function (Faker $faker) {
+$factory->define(Hero::class, function (Faker $faker) {
 
     return [
         'name' => 'TestHero_' . random_int(1,999999999),
@@ -27,9 +29,9 @@ $factory->define(\App\Domain\Models\Hero::class, function (Faker $faker) {
     ];
 });
 
-$factory->afterCreatingState(\App\Domain\Models\Hero::class, 'with-measurables', function(\App\Domain\Models\Hero $hero, Faker $faker) {
-    $measurableTypes = \App\Domain\Models\MeasurableType::heroTypes()->get();
-    $measurableTypes->each(function (\App\Domain\Models\MeasurableType $measurableType) use ($hero) {
+$factory->afterCreatingState(Hero::class, 'with-measurables', function(Hero $hero, Faker $faker) {
+    $measurableTypes = MeasurableType::heroTypes()->get();
+    $measurableTypes->each(function (MeasurableType $measurableType) use ($hero) {
        $hero->measurables()->create([
            'uuid' => \Illuminate\Support\Str::uuid(),
            'measurable_type_id' => $measurableType->id,
