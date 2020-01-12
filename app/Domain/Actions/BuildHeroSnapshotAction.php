@@ -28,6 +28,7 @@ class BuildHeroSnapshotAction
         $this->currentWeek = Week::current();
         $this->validateHero();
         $this->validateSpirit();
+        $this->validateSquadSnapshot();
 
         /** @var HeroSnapshot $heroSnapshot */
         $heroSnapshot = HeroSnapshot::query()->create([
@@ -54,6 +55,13 @@ class BuildHeroSnapshotAction
         }
         if ($playerSpirit->week_id !== $this->currentWeek->id) {
             throw new BuildHeroSnapshotException($this->squadSnapshot, $this->hero, "Player spirit not part of current week", BuildHeroSnapshotException::CODE_INVALID_PLAYER_SPIRIT);
+        }
+    }
+
+    protected function validateSquadSnapshot()
+    {
+        if ($this->squadSnapshot->week_id !== $this->currentWeek->id) {
+            throw new BuildHeroSnapshotException($this->squadSnapshot, $this->hero, "SquadSnapshot is not for the current week", BuildHeroSnapshotException::CODE_INVALID_SQUAD_SNAPSHOT);
         }
     }
 }
