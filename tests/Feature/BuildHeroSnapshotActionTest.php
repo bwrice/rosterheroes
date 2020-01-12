@@ -8,14 +8,21 @@ use App\Domain\Models\Hero;
 use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\Week;
 use App\Exceptions\BuildHeroSnapshotException;
+use App\SquadSnapshot;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class BuildHeroSnapshotActionTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /** @var Hero */
     protected $hero;
+
+    /** @var SquadSnapshot */
+    protected $squadSnapshot;
 
     /** @var PlayerSpirit */
     protected $playerSpirit;
@@ -33,7 +40,10 @@ class BuildHeroSnapshotActionTest extends TestCase
     {
         parent::setUp();
 
-        $this->hero = factory(Hero::class)->create();
+        $this->squadSnapshot = factory(SquadSnapshot::class)->create();
+        $this->hero = factory(Hero::class)->create([
+            'squad_id' => $this->squadSnapshot->squad_id
+        ]);
         $this->week = factory(Week::class)->create();
         Week::setTestCurrent($this->week);
         $this->playerSpirit = factory(PlayerSpirit::class)->state('with-stats')->create([
@@ -54,7 +64,7 @@ class BuildHeroSnapshotActionTest extends TestCase
         $this->hero->save();
 
         try {
-            $this->domainAction->execute($this->hero->fresh());
+            $this->domainAction->execute($this->squadSnapshot, $this->hero->fresh());
         } catch (BuildHeroSnapshotException $exception) {
             $this->assertEquals(BuildHeroSnapshotException::CODE_INVALID_PLAYER_SPIRIT, $exception->getCode());
             return;
@@ -72,11 +82,23 @@ class BuildHeroSnapshotActionTest extends TestCase
         $this->playerSpirit->save();
 
         try {
-            $this->domainAction->execute($this->hero->fresh());
+            $this->domainAction->execute($this->squadSnapshot, $this->hero->fresh());
         } catch (BuildHeroSnapshotException $exception) {
             $this->assertEquals(BuildHeroSnapshotException::CODE_INVALID_PLAYER_SPIRIT, $exception->getCode());
             return;
         }
         $this->fail("Exception not thrown");
+    }
+
+    /**
+    * @test
+    */
+    public function it_will_create_a_hero_snapshot_for_the_hero_and_squad_snapshot()
+    {
+        $heroSnapshot = $this->domainAction->execute($this->squadSnapshot, $this->hero->fresh());
+        $squadSnapshot = $heroSnapshot->squadSnapshot;
+        $this->assertEquals($this->squadSnapshot->id, $squadSnapshot->id);
+        $hero = $heroSnapshot->hero;
+        $this->assertEquals($this->hero->id, $hero->id);
     }
 }
