@@ -67,6 +67,16 @@ class BuildHeroSnapshotActionTest extends TestCase
     */
     public function it_will_throw_an_exception_if_the_current_week_doesnt_match_the_player_spirit()
     {
+        $diffWeek = factory(Week::class)->create();
+        $this->playerSpirit->week_id = $diffWeek->id;
+        $this->playerSpirit->save();
 
+        try {
+            $this->domainAction->execute($this->hero->fresh());
+        } catch (BuildHeroSnapshotException $exception) {
+            $this->assertEquals(BuildHeroSnapshotException::CODE_INVALID_PLAYER_SPIRIT, $exception->getCode());
+            return;
+        }
+        $this->fail("Exception not thrown");
     }
 }
