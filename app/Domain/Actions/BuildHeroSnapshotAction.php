@@ -7,20 +7,35 @@ namespace App\Domain\Actions;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Week;
 use App\Exceptions\BuildHeroSnapshotException;
+use App\HeroSnapshot;
+use App\SquadSnapshot;
 
 class BuildHeroSnapshotAction
 {
+    /** @var SquadSnapshot */
+    protected $squadSnapshot;
+
     /** @var Hero */
     protected $hero;
 
     /** @var Week */
     protected $currentWeek;
 
-    public function execute(Hero $hero)
+    public function execute(SquadSnapshot $squadSnapshot, Hero $hero): HeroSnapshot
     {
+        $this->squadSnapshot = $squadSnapshot;
         $this->hero = $hero->loadMissing(Hero::heroResourceRelations());
         $this->currentWeek = Week::current();
         $this->validateSpirit();
+
+        /** @var HeroSnapshot $heroSnapshot */
+        $heroSnapshot = HeroSnapshot::query()->create([
+            'squad_snapshot_id' => $this->squadSnapshot->id,
+            'hero_id' => $this->hero->id,
+            'data' => []
+        ]);
+
+        return $heroSnapshot;
     }
 
     protected function validateSpirit()
