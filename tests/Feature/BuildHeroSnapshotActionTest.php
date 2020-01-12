@@ -58,6 +58,22 @@ class BuildHeroSnapshotActionTest extends TestCase
     /**
     * @test
     */
+    public function it_will_throw_an_exception_if_the_hero_does_not_belong_to_the_squad_of_the_squad_snapshot()
+    {
+        $squadSnapshot = factory(SquadSnapshot::class)->create();
+
+        try {
+            $this->domainAction->execute($squadSnapshot, $this->hero->fresh());
+        } catch (BuildHeroSnapshotException $exception) {
+            $this->assertEquals(BuildHeroSnapshotException::CODE_INVALID_HERO, $exception->getCode());
+            return;
+        }
+        $this->fail("Exception not thrown");
+    }
+
+    /**
+    * @test
+    */
     public function it_will_throw_an_exception_if_there_is_no_player_spirit()
     {
         $this->hero->player_spirit_id = null;
