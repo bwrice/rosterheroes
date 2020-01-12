@@ -12,6 +12,7 @@ class BuildHeroSnapshotException extends \RuntimeException
 {
     public const CODE_INVALID_HERO = 1;
     public const CODE_INVALID_PLAYER_SPIRIT = 2;
+    public const CODE_INVALID_SQUAD_SNAPSHOT = 3;
 
     /**
      * @var Hero
