@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @package App
  *
  * @property Hero $hero
+ * @property SquadSnapshot $squadSnapshot
  */
 class HeroSnapshot extends Model
 {
@@ -22,5 +23,10 @@ class HeroSnapshot extends Model
     public function hero()
     {
         return $this->belongsTo(Hero::class);
+    }
+
+    public function squadSnapshot()
+    {
+        return $this->belongsTo(SquadSnapshot::class);
     }
 }
