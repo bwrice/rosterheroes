@@ -15,6 +15,9 @@ use Illuminate\Database\Eloquent\Model;
 class HeroSnapshot extends Model
 {
     protected $guarded = [];
+    protected $casts = [
+        'data' => 'array'
+    ];
 
     public function hero()
     {

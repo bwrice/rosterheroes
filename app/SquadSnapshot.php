@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * Class SquadSnapshot
  * @package App
  *
+ * @property int $id
  * @property int $squad_id
  * @property int $week_id
  *
@@ -19,6 +20,9 @@ use Illuminate\Database\Eloquent\Model;
 class SquadSnapshot extends Model
 {
     protected $guarded = [];
+    protected $casts = [
+        'data' => 'array'
+    ];
 
     public function squad()
     {
