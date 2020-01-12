@@ -13,7 +13,7 @@ use App\Domain\Models\Position;
 use App\Domain\Models\StatType;
 use App\External\Stats\MockIntegration;
 use App\External\Stats\StatsIntegration;
-use App\Jobs\BuildPlayerGameLogsJob;
+use App\Jobs\UpdatePlayerGameLogsJob;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
