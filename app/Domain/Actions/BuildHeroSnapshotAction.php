@@ -26,6 +26,7 @@ class BuildHeroSnapshotAction
         $this->squadSnapshot = $squadSnapshot;
         $this->hero = $hero->loadMissing(Hero::heroResourceRelations());
         $this->currentWeek = Week::current();
+        $this->validateHero();
         $this->validateSpirit();
 
         /** @var HeroSnapshot $heroSnapshot */
@@ -38,14 +39,21 @@ class BuildHeroSnapshotAction
         return $heroSnapshot;
     }
 
+    protected function validateHero()
+    {
+        if ($this->squadSnapshot->squad_id !== $this->hero->squad_id) {
+            throw new BuildHeroSnapshotException($this->squadSnapshot, $this->hero,"Hero and SquadSnapshot do not belong to the same squad", BuildHeroSnapshotException::CODE_INVALID_HERO);
+        }
+    }
+
     protected function validateSpirit()
     {
         $playerSpirit = $this->hero->playerSpirit;
         if (! $playerSpirit) {
-            throw new BuildHeroSnapshotException($this->hero, "No player spirit", BuildHeroSnapshotException::CODE_INVALID_PLAYER_SPIRIT);
+            throw new BuildHeroSnapshotException($this->squadSnapshot, $this->hero, "No player spirit", BuildHeroSnapshotException::CODE_INVALID_PLAYER_SPIRIT);
         }
         if ($playerSpirit->week_id !== $this->currentWeek->id) {
-            throw new BuildHeroSnapshotException($this->hero, "Player spirit not part of current week", BuildHeroSnapshotException::CODE_INVALID_PLAYER_SPIRIT);
+            throw new BuildHeroSnapshotException($this->squadSnapshot, $this->hero, "Player spirit not part of current week", BuildHeroSnapshotException::CODE_INVALID_PLAYER_SPIRIT);
         }
     }
 }
