@@ -4,6 +4,7 @@ namespace App\Domain\Models;
 
 use App\Domain\Behaviors\StatTypes\Baseball\BaseOnBallsAgainstBehavior;
 use App\Domain\Behaviors\StatTypes\Baseball\BaseOnBallsBehavior;
+use App\Domain\Behaviors\StatTypes\Baseball\InningPitchedBehavior;
 use App\Domain\Behaviors\StatTypes\Basketball\BasketballAssistBehavior;
 use App\Domain\Behaviors\StatTypes\Basketball\BasketballBlockBehavior;
 use App\Domain\Behaviors\StatTypes\Baseball\CompleteGameBehavior;
@@ -162,7 +163,7 @@ class StatType extends Model
             case self::STOLEN_BASE:
                 return app(StolenBaseBehavior::class);
             case self::INNING_PITCHED:
-                return app(InningsPitchedCalculator::class);
+                return app(InningPitchedBehavior::class);
             case self::STRIKEOUT:
                 return app(StrikeoutBehavior::class);
             case self::PITCHING_WIN:
