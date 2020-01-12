@@ -21,6 +21,9 @@ use Ramsey\Uuid\Uuid;
  * @property int $essence_cost
  * @property int $energy
  * @property int $game_id
+ * @property int $player_id
+ * @property int $player_game_log_id
+ * @property int $week_id
  *
  * @property Week $week
  * @property Player $player
