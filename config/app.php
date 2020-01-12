@@ -183,6 +183,7 @@ return [
          */
         \App\Providers\RelationsServiceProvider::class,
         \App\Providers\StatsIntegrationServiceProvider::class,
+        \App\Providers\PointsCalculatorServiceProvider::class,
         \App\Providers\EnumServiceProvider::class,
 //        \App\Providers\ProjectorServiceProvider::class
     ],
