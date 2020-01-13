@@ -1,6 +1,7 @@
 <?php
 
 use App\Domain\Models\Week;
+use App\Facades\CurrentWeek;
 use Faker\Generator as Faker;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Str;
@@ -30,5 +31,5 @@ $factory->afterCreatingState(Week::class, 'adventuring-closed', function(Week $w
 $factory->afterCreatingState(Week::class, 'as-current', function(Week $week, Faker $faker) {
     $week->made_current_at = Date::now();
     $week->save();
-    Week::setTestCurrent($week);
+    CurrentWeek::setTestCurrent($week);
 });
