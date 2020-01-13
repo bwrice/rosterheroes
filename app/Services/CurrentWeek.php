@@ -11,9 +11,16 @@ class CurrentWeek
 {
     public const FINALIZE_AFTER_ADVENTURING_CLOSED_HOURS = 15;
 
+    protected static $testCurrent = null;
+
     public function get()
     {
-        return Week::query()->current();
+        return self::$testCurrent ?? Week::query()->current();
+    }
+
+    public function setTestCurrent(Week $week)
+    {
+        self::$testCurrent = $week;
     }
 
     public function finalizing()
