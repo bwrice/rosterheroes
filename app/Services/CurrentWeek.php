@@ -21,6 +21,13 @@ class CurrentWeek
     public function setTestCurrent(Week $week)
     {
         self::$testCurrent = $week;
+
+        return $this;
+    }
+
+    public function id()
+    {
+        return $this->get()->id;
     }
 
     public function finalizing()

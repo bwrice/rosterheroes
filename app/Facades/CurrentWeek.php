@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Facade;
  * @package App\Facades
  *
  * @method static Week get()
+ * @method static bool finalizing()
+ * @method static int id()
+ * @method static CurrentWeek setTestCurrent(Week $week)
  */
 class CurrentWeek extends Facade
 {
