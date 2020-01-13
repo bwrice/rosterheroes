@@ -7,6 +7,7 @@ use App\Domain\Models\Game;
 use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\Week;
 use App\Exceptions\FinalizeWeekException;
+use App\Facades\CurrentWeek;
 use App\Jobs\FinalizeWeekStepTwoJob;
 use Bwrice\LaravelJobChainGroups\Jobs\AsyncChainedJob;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -42,7 +43,7 @@ class FinalizeWeekStepOneActionTest extends TestCase
     {
         parent::setUp();
         $this->week = factory(Week::class)->create();
-        Week::setTestCurrent($this->week);
+        CurrentWeek::setTestCurrent($this->week);
         $this->gameOne = factory(Game::class)->create([
             'starts_at' => $this->week->adventuring_locks_at->addHour()
         ]);
@@ -66,7 +67,7 @@ class FinalizeWeekStepOneActionTest extends TestCase
     */
     public function it_will_throw_an_exception_if_not_long_enough_after_adventuring_ends()
     {
-        Date::setTestNow($this->week->adventuring_locks_at->addHours(Week::FINALIZE_AFTER_ADVENTURING_CLOSED_HOURS - 1));
+        CurrentWeek::partialMock()->shouldReceive('finalizing')->andReturn(false);
 
         try {
             $this->domainAction->execute();
