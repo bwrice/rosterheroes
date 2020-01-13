@@ -4,13 +4,7 @@ namespace App\Domain\Models;
 
 use App\Domain\Collections\HeroCollection;
 use App\Domain\Collections\PlayerSpiritCollection;
-use App\Domain\Models\EventSourcedModel;
-use App\Domain\Models\Game;
-use App\Domain\Models\Player;
 use App\Domain\QueryBuilders\PlayerSpiritQueryBuilder;
-use App\Events\PlayerSpiritCreationRequested;
-use Illuminate\Database\Eloquent\Model;
-use Ramsey\Uuid\Uuid;
 
 /**
  * Class PlayerWeek
