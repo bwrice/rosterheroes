@@ -10,6 +10,7 @@ use App\Domain\Models\Game;
 use App\Domain\Models\PlayerGameLog;
 use App\External\Stats\StatsIntegration;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\DB;
 
 class BuildPlayerGameLogsForGameAction
 {
@@ -31,31 +32,34 @@ class BuildPlayerGameLogsForGameAction
 
         $gameLogDTOs = $this->statsIntegration->getGameLogDTOs($game, $yearDelta);
 
-        $gameLogDTOs->each(function (PlayerGameLogDTO $dto) {
+        DB::transaction(function () use ($gameLogDTOs, $game) {
+            
+            $gameLogDTOs->each(function (PlayerGameLogDTO $dto) {
 
-            $playerID = $dto->getPlayer()->id;
-            $gameID = $dto->getGame()->id;
-            $teamID = $dto->getTeam()->id;
+                $playerID = $dto->getPlayer()->id;
+                $gameID = $dto->getGame()->id;
+                $teamID = $dto->getTeam()->id;
 
-            /** @var PlayerGameLog $playerGameLog */
-            $playerGameLog = PlayerGameLog::query()->firstOrCreate([
-                'player_id' => $playerID,
-                'game_id' => $gameID,
-                'team_id' => $teamID
-            ]);
+                /** @var PlayerGameLog $playerGameLog */
+                $playerGameLog = PlayerGameLog::query()->firstOrCreate([
+                    'player_id' => $playerID,
+                    'game_id' => $gameID,
+                    'team_id' => $teamID
+                ]);
 
-            $dto->getStatAmountDTOs()->each(function (StatAmountDTO $statAmountDTO) use ($playerGameLog) {
-                $playerGameLog->playerStats()->updateOrCreate([
-                    'stat_type_id' => $statAmountDTO->getStatType()->id],
-                    [
-                        'amount' => $statAmountDTO->getAmount()
-                    ]);
+                $dto->getStatAmountDTOs()->each(function (StatAmountDTO $statAmountDTO) use ($playerGameLog) {
+                    $playerGameLog->playerStats()->updateOrCreate([
+                        'stat_type_id' => $statAmountDTO->getStatType()->id],
+                        [
+                            'amount' => $statAmountDTO->getAmount()
+                        ]);
+                });
             });
-        });
 
-        if ($gameLogDTOs->isGameOver())  {
-            $game->finalized_at = Date::now();
-            $game->save();
-        }
+            if ($gameLogDTOs->isGameOver())  {
+                $game->finalized_at = Date::now();
+                $game->save();
+            }
+        });
     }
 }
