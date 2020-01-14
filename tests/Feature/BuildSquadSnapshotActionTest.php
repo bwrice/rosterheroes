@@ -2,12 +2,15 @@
 
 namespace Tests\Feature;
 
+use App\Domain\Actions\BuildHeroSnapshotAction;
 use App\Domain\Actions\BuildSquadSnapshotAction;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Squad;
 use App\Domain\Models\Week;
 use App\Exceptions\BuildSquadSnapshotException;
 use App\Facades\CurrentWeek;
+use App\Facades\HeroCombat;
+use App\SquadSnapshot;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -27,6 +30,9 @@ class BuildSquadSnapshotActionTest extends TestCase
     /** @var Hero */
     protected $heroTwo;
 
+    /** @var Hero */
+    protected $heroThree;
+
     /** @var Week */
     protected $week;
 
@@ -43,6 +49,9 @@ class BuildSquadSnapshotActionTest extends TestCase
             'squad_id' => $this->squad->id
         ]);
         $this->heroTwo = factory(Hero::class)->create([
+            'squad_id' => $this->squad->id
+        ]);
+        $this->heroThree = factory(Hero::class)->create([
             'squad_id' => $this->squad->id
         ]);
 
@@ -73,5 +82,28 @@ class BuildSquadSnapshotActionTest extends TestCase
         $squadSnapshot = $this->domainAction->execute($this->squad->fresh());
         $this->assertEquals($this->squad->id, $squadSnapshot->squad_id);
         $this->assertEquals($this->week->id, $squadSnapshot->week_id);
+    }
+
+    /**
+    * @test
+    */
+    public function it_will_execute_build_hero_snapshot_action_for_combat_ready_heroes()
+    {
+        CurrentWeek::partialMock()->shouldReceive('finalizing')->andReturn(true);
+        // Mock only heroOne to be combat ready
+        HeroCombat::partialMock()->shouldReceive('ready')->times(3)->andReturnUsing(function (Hero $hero) {
+            if ($hero->id === $this->heroOne->id) {
+                return true;
+            } else {
+                return false;
+            }
+        });
+        // execute should only be called once for heroOne
+        $mock = \Mockery::mock(BuildHeroSnapshotAction::class)->shouldReceive('execute')->times(1)->getMock();
+        app()->instance(BuildHeroSnapshotAction::class, $mock);
+        // We have to pull it back out of the container to use our mocked BuildHeroSnapshotAction
+        /** @var BuildSquadSnapshotAction $domainAction */
+        $domainAction = app(BuildSquadSnapshotAction::class);
+        $domainAction->execute($this->squad);
     }
 }
