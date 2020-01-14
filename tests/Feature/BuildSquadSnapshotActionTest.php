@@ -63,4 +63,15 @@ class BuildSquadSnapshotActionTest extends TestCase
         }
         $this->fail("Exception not thrown");
     }
+
+    /**
+    * @test
+    */
+    public function it_will_create_a_squad_snapshot()
+    {
+        CurrentWeek::partialMock()->shouldReceive('finalizing')->andReturn(true);
+        $squadSnapshot = $this->domainAction->execute($this->squad->fresh());
+        $this->assertEquals($this->squad->id, $squadSnapshot->squad_id);
+        $this->assertEquals($this->week->id, $squadSnapshot->week_id);
+    }
 }
