@@ -10,6 +10,7 @@ use Throwable;
 class BuildSquadSnapshotException extends \RuntimeException
 {
     public const CODE_WEEK_NOT_FINALIZED = 1;
+    public const CODE_NO_COMBAT_READY_HEROES = 2;
 
     /**
      * @var Squad

@@ -33,7 +33,12 @@ class BuildSquadSnapshotAction
             throw new BuildSquadSnapshotException($this->squad, "Week not in finalizing state", BuildSquadSnapshotException::CODE_WEEK_NOT_FINALIZED);
         }
 
-        return DB::transaction(function () {
+        $combatReadyHeroes = $this->getCombatReadyHeroes();
+        if ($combatReadyHeroes->isEmpty()) {
+            throw new BuildSquadSnapshotException($this->squad, 'No heroes ready for combat', BuildSquadSnapshotException::CODE_NO_COMBAT_READY_HEROES);
+        }
+
+        return DB::transaction(function () use ($combatReadyHeroes) {
             /** @var SquadSnapshot $squadSnapshot */
             $squadSnapshot = SquadSnapshot::query()->create([
                 'squad_id' => $this->squad->id,
@@ -41,13 +46,18 @@ class BuildSquadSnapshotAction
                 'data' => []
             ]);
 
-            $this->squad->heroes->filter(function (Hero $hero) {
-                return HeroCombat::ready($hero);
-            })->each(function (Hero $hero) use ($squadSnapshot) {
+            $combatReadyHeroes->each(function (Hero $hero) use ($squadSnapshot) {
                 $this->buildHeroSnapshotAction->execute($squadSnapshot, $hero);
             });
 
             return $squadSnapshot->fresh();
+        });
+    }
+
+    protected function getCombatReadyHeroes()
+    {
+        return $this->squad->heroes->filter(function (Hero $hero) {
+            return HeroCombat::ready($hero);
         });
     }
 }
