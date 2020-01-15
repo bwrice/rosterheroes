@@ -14,7 +14,7 @@ $factory->define(\App\Domain\Models\Squad::class, function (Faker $faker) {
         'spirit_essence' => \App\Domain\Models\Squad::STARTING_ESSENCE,
         'gold' => \App\Domain\Models\Squad::STARTING_GOLD,
         'favor' => \App\Domain\Models\Squad::STARTING_FAVOR,
-        'name' => $faker->company,
+        'name' => $faker->colorName . ' ' . $faker->word(),
     ];
 });
 
