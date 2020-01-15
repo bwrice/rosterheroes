@@ -11,11 +11,11 @@ use Illuminate\Support\Facades\Date;
 class BuildInitialWeekAction
 {
     /**
-     * @var BuildWeekAction
+     * @var BuildNewCurrentWeekAction
      */
     private $buildWeekAction;
 
-    public function __construct(BuildWeekAction $buildWeekAction)
+    public function __construct(BuildNewCurrentWeekAction $buildWeekAction)
     {
         $this->buildWeekAction = $buildWeekAction;
     }
@@ -26,10 +26,7 @@ class BuildInitialWeekAction
         if ($currentWeek) {
             throw new BuildWeekException("There should be no current week when building the first week", BuildWeekException::CODE_INVALID_CURRENT_WEEK);
         }
-        $now = Date::now();
-        $week = $this->buildWeekAction->execute($now);
-        $week->made_current_at = $now;
-        $week->save();
+        $week = $this->buildWeekAction->execute();
         return $week;
     }
 }

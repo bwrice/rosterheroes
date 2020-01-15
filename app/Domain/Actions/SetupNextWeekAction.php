@@ -12,11 +12,11 @@ use App\Exceptions\BuildWeekException;
 class SetupNextWeekAction
 {
     /**
-     * @var BuildWeekAction
+     * @var BuildNewCurrentWeekAction
      */
     private $buildWeekAction;
 
-    public function __construct(BuildWeekAction $buildWeekAction)
+    public function __construct(BuildNewCurrentWeekAction $buildWeekAction)
     {
         $this->buildWeekAction = $buildWeekAction;
     }
