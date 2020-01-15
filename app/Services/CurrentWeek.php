@@ -63,4 +63,20 @@ class CurrentWeek
     {
         return ! is_null($this->get());
     }
+
+    /**
+     * @return bool
+     */
+    public function adventuringOpen()
+    {
+        return Date::now()->isBefore($this->get()->adventuring_locks_at);
+    }
+
+    /**
+     * @return bool
+     */
+    public function adventuringLocked()
+    {
+        return ! $this->adventuringOpen();
+    }
 }
