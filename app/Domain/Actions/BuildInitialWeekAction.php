@@ -6,7 +6,7 @@ namespace App\Domain\Actions;
 
 use App\Domain\Models\Week;
 use App\Exceptions\BuildWeekException;
-use Illuminate\Support\Facades\Date;
+use App\Facades\CurrentWeek;
 
 class BuildInitialWeekAction
 {
@@ -22,8 +22,7 @@ class BuildInitialWeekAction
 
     public function execute(): Week
     {
-        $currentWeek = Week::current();
-        if ($currentWeek) {
+        if (CurrentWeek::exists()) {
             throw new BuildWeekException("There should be no current week when building the first week", BuildWeekException::CODE_INVALID_CURRENT_WEEK);
         }
         $week = $this->buildWeekAction->execute();
