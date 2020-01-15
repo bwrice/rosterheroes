@@ -4,16 +4,24 @@ namespace Tests\Unit;
 
 use App\Domain\Actions\BuildNewCurrentWeekAction;
 use App\Facades\CurrentWeek;
+use App\Jobs\FinalizeWeekStepOneJob;
 use Carbon\CarbonInterface;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
 class BuildNewCurrentWeekActionTest extends TestCase
 {
     use DatabaseTransactions;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        Queue::fake();
+    }
 
     /**
     * @test
@@ -70,5 +78,21 @@ class BuildNewCurrentWeekActionTest extends TestCase
         $week = $domainAction->execute();
 
         $this->assertEquals($week->id, CurrentWeek::id());
+    }
+
+    /**
+    * @test
+    */
+    public function it_will_dispatch_finalize_week_step_on_correctly_delayed()
+    {
+        /** @var BuildNewCurrentWeekAction $domainAction */
+        $domainAction = app(BuildNewCurrentWeekAction::class);
+        $domainAction->execute();
+        Queue::assertPushed(FinalizeWeekStepOneJob::class, 1);
+        Queue::assertPushed(FinalizeWeekStepOneJob::class, function (FinalizeWeekStepOneJob $job) {
+            /** @var CarbonInterface $delay */
+            $delay = $job->delay;
+            return $delay->timestamp === CurrentWeek::finalizingStartsAt()->timestamp;
+        });
     }
 }
