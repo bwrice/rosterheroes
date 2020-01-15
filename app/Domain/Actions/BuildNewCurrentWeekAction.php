@@ -5,6 +5,8 @@ namespace App\Domain\Actions;
 
 
 use App\Domain\Models\Week;
+use App\Facades\CurrentWeek;
+use App\Jobs\FinalizeWeekStepOneJob;
 use Carbon\CarbonInterface;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Str;
@@ -21,12 +23,14 @@ class BuildNewCurrentWeekAction
         }
 
         $adventuringLocksAt = Week::computeAdventuringLocksAt($startingPoint);
-        /** @var Week $week */
-        $week = Week::query()->create([
+        /** @var Week $newCurrentWeek */
+        $newCurrentWeek = Week::query()->create([
             'uuid' => Str::uuid(),
             'adventuring_locks_at' => $adventuringLocksAt,
             'made_current_at' => $now
         ]);
-        return $week;
+
+        FinalizeWeekStepOneJob::dispatch()->delay(CurrentWeek::finalizingStartsAt());
+        return $newCurrentWeek;
     }
 }
