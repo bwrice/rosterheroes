@@ -55,4 +55,12 @@ class CurrentWeek
     {
         return $this->get()->adventuring_locks_at->addHours(self::FINALIZE_AFTER_ADVENTURING_CLOSED_HOURS);
     }
+
+    /**
+     * @return bool
+     */
+    public function exists()
+    {
+        return ! is_null($this->get());
+    }
 }

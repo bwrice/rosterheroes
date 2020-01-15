@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static int id()
  * @method static CurrentWeek setTestCurrent(Week $week)
  * @method static CarbonImmutable finalizingStartsAt()
+ * @method static bool exists()
  */
 class CurrentWeek extends Facade
 {
