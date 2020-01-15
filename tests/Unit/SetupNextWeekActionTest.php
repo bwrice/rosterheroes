@@ -2,11 +2,13 @@
 
 namespace Tests\Unit;
 
+use App\Domain\Actions\BuildNewCurrentWeekAction;
 use App\Domain\Actions\SetupNextWeekAction;
 use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\Week;
 use App\Exceptions\BuildNextWeekException;
 use App\Exceptions\BuildWeekException;
+use App\Facades\CurrentWeek;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -17,24 +19,12 @@ class SetupNextWeekActionTest extends TestCase
 {
     use DatabaseTransactions;
 
-    /** @var Week */
-    protected $currentWeek;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->currentWeek = factory(Week::class)->create([
-            'adventuring_locks_at' => Date::now()->subHours(16)
-        ]);
-        Week::setTestCurrent($this->currentWeek);
-    }
-
     /**
     * @test
     */
     public function it_will_throw_an_exception_if_there_is_no_current_week()
     {
-        Week::setTestCurrent(null);
+        CurrentWeek::partialMock()->shouldReceive('exists')->andReturn(false);
 
         /** @var SetupNextWeekAction $domainAction */
         $domainAction = app(SetupNextWeekAction::class);
@@ -51,25 +41,15 @@ class SetupNextWeekActionTest extends TestCase
     /**
     * @test
     */
-    public function it_will_throw_an_exception_if_player_spirit_games_are_not_finalized()
+    public function it_will_execute_build_new_current_week_action()
     {
-        /** @var PlayerSpirit $playerSpirit */
-        $playerSpirit = factory(PlayerSpirit::class)->create([
-            'week_id' => $this->currentWeek->id
-        ]);
+        CurrentWeek::partialMock()->shouldReceive('exists')->andReturn(true);
 
-        $this->assertNull($playerSpirit->game->finalized_at);
+        $mock = \Mockery::mock(BuildNewCurrentWeekAction::class)->shouldReceive('execute', 1)->getMock();
+        app()->instance(BuildNewCurrentWeekAction::class, $mock);
 
         /** @var SetupNextWeekAction $domainAction */
         $domainAction = app(SetupNextWeekAction::class);
-
-        try {
-            $domainAction->execute();
-        } catch (BuildNextWeekException $exception) {
-            $this->assertEquals(BuildNextWeekException::CODE_GAMES_NOT_FINALIZED, $exception->getCode());
-            return;
-        }
-        $this->fail("Exception not thrown");
+        $domainAction->execute();
     }
-
 }
