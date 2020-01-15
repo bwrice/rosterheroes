@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Domain\Actions\WeekFinalizing\FinalizeWeekStepFiveAction;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -12,23 +13,8 @@ class FinalizeWeekStepFiveJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    /**
-     * Create a new job instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public function handle(FinalizeWeekStepFiveAction $domainAction)
     {
-        //
-    }
-
-    /**
-     * Execute the job.
-     *
-     * @return void
-     */
-    public function handle()
-    {
-        //
+        $domainAction->execute();
     }
 }
