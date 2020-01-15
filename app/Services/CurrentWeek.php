@@ -13,11 +13,18 @@ class CurrentWeek
 
     protected static $testCurrent = null;
 
+    /**
+     * @return Week|null
+     */
     public function get()
     {
         return self::$testCurrent ?? Week::query()->current();
     }
 
+    /**
+     * @param Week $week
+     * @return $this
+     */
     public function setTestCurrent(Week $week)
     {
         self::$testCurrent = $week;
@@ -25,13 +32,27 @@ class CurrentWeek
         return $this;
     }
 
+    /**
+     * @return int
+     */
     public function id()
     {
         return $this->get()->id;
     }
 
+    /**
+     * @return bool
+     */
     public function finalizing()
     {
-        return Date::now()->isAfter($this->get()->adventuring_locks_at->addHours(self::FINALIZE_AFTER_ADVENTURING_CLOSED_HOURS));
+        return Date::now()->isAfter($this->finalizingStartsAt());
+    }
+
+    /**
+     * @return \Carbon\CarbonImmutable
+     */
+    public function finalizingStartsAt()
+    {
+        return $this->get()->adventuring_locks_at->addHours(self::FINALIZE_AFTER_ADVENTURING_CLOSED_HOURS);
     }
 }
