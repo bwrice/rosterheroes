@@ -6,7 +6,7 @@ namespace App\Domain\Actions\WeekFinalizing;
 
 use App\Domain\Models\Titan;
 use App\Jobs\BuildTitanSnapshotJob;
-use App\Jobs\FinalizeWeekStepSixJob;
+use App\Jobs\SetupNextWeekJob;
 use Bwrice\LaravelJobChainGroups\Jobs\ChainGroup;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -21,7 +21,7 @@ class FinalizeWeekStepFiveAction
             }));
         });
         ChainGroup::create($buildSnapshotJobs->toArray(), [
-            new FinalizeWeekStepSixJob()
+            new SetupNextWeekJob()
         ])->dispatch();
     }
 }

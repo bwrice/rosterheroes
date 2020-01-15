@@ -7,7 +7,7 @@ use App\Domain\Actions\WeekFinalizing\FinalizeWeekStepFourAction;
 use App\Domain\Models\Minion;
 use App\Domain\Models\Titan;
 use App\Jobs\FinalizeWeekStepFiveJob;
-use App\Jobs\FinalizeWeekStepSixJob;
+use App\Jobs\SetupNextWeekJob;
 use Bwrice\LaravelJobChainGroups\Jobs\AsyncChainedJob;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Queue;
@@ -38,7 +38,7 @@ class FinalizeWeekStepFiveActionTest extends TestCase
         Queue::assertPushed(AsyncChainedJob::class, Titan::query()->count());
 
         Queue::assertPushedWithChain(AsyncChainedJob::class, [
-            FinalizeWeekStepSixJob::class
+            SetupNextWeekJob::class
         ]);
     }
 }
