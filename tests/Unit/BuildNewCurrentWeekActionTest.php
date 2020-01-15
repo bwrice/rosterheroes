@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Domain\Actions\BuildNewCurrentWeekAction;
+use App\Facades\CurrentWeek;
 use Carbon\CarbonInterface;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -57,5 +58,17 @@ class BuildNewCurrentWeekActionTest extends TestCase
 
         $adventuringLocksAt = $week->adventuring_locks_at;
         $this->assertEquals('12:00:00', $adventuringLocksAt->setTimezone('America/New_York')->format('H:i:s') );
+    }
+
+    /**
+    * @test
+    */
+    public function the_week_returned_will_be_the_new_current_week()
+    {
+        /** @var BuildNewCurrentWeekAction $domainAction */
+        $domainAction = app(BuildNewCurrentWeekAction::class);
+        $week = $domainAction->execute();
+
+        $this->assertEquals($week->id, CurrentWeek::id());
     }
 }
