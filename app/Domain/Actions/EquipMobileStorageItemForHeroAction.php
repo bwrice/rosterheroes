@@ -9,6 +9,7 @@ use App\Domain\Models\Hero;
 use App\Domain\Models\Item;
 use App\Domain\Models\Week;
 use App\Exceptions\ItemTransactionException;
+use App\Facades\CurrentWeek;
 use Illuminate\Support\Facades\DB;
 
 class EquipMobileStorageItemForHeroAction
@@ -32,7 +33,7 @@ class EquipMobileStorageItemForHeroAction
             throw new ItemTransactionException($item, "Item does not belong to wagon", ItemTransactionException::CODE_INVALID_OWNERSHIP);
         }
 
-        if(! Week::current()->adventuringOpen()) {
+        if(CurrentWeek::adventuringLocked()) {
             throw new ItemTransactionException($item, "Week is currently locked", ItemTransactionException::CODE_TRANSACTION_DISABLED);
         }
 
