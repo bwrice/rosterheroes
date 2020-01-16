@@ -11,6 +11,13 @@ use App\Exceptions\ItemTransactionException;
 
 class MoveItemToBackupAction
 {
+    /**
+     * @param Item $item
+     * @param HasItems $hasItems
+     * @param HasItemsCollection|null $hasItemsCollection
+     * @param bool $originalItemSource
+     * @return HasItemsCollection
+     */
     public function execute(Item $item, HasItems $hasItems, HasItemsCollection $hasItemsCollection = null, $originalItemSource = true): HasItemsCollection
     {
         $hasItemsCollection = $hasItemsCollection ?: new HasItemsCollection();
