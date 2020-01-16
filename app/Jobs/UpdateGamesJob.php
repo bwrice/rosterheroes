@@ -17,9 +17,7 @@ use Illuminate\Support\Facades\Redis;
 class UpdateGamesJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-    public const REDIS_THROTTLE_KEY = 'msf_update_games';
-
+    
     /**
      * @var League
      */
@@ -40,28 +38,8 @@ class UpdateGamesJob implements ShouldQueue
 
     public function handle(StatsIntegration $statsIntegration)
     {
-
-        // Game log API has rate limit of 1 request per 10 seconds, we add another 5 seconds for buffer
-        Redis::throttle(self::REDIS_THROTTLE_KEY)->allow(10)->every(60)->then(function () use ($statsIntegration) {
-            // Job logic...
-            $this->performJob($statsIntegration);
-        }, function () {
-            // Could not obtain lock...
-
-            return $this->release(10);
-        });
-    }
-
-
-    /**
-     * @param StatsIntegration $integration
-     */
-    public function performJob(StatsIntegration $integration)
-    {
-        Log::notice("Beginning games update for League: " . $this->league->abbreviation);
-
-        $gameDTOs = $integration->getGameDTOs($this->league, $this->yearDelta);
-        $integrationType = $integration->getIntegrationType();
+        $gameDTOs = $statsIntegration->getGameDTOs($this->league, $this->yearDelta);
+        $integrationType = $statsIntegration->getIntegrationType();
         $gameDTOs->each(function (GameDTO $gameDTO) use ($integrationType) {
 
             $game = Game::query()->forIntegration($integrationType->id, $gameDTO->getExternalID())->first();
