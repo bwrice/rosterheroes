@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Domain\Actions\UpdatePlayerSpiritEnergiesAction;
 use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\Week;
 use Illuminate\Console\Command;
@@ -33,13 +34,10 @@ class UpdatePlayerSpiritEnergiesCommand extends Command
     }
 
     /**
-     * Execute the console command.
-     *
-     * @return mixed
+     * @param UpdatePlayerSpiritEnergiesAction $domainAction
      */
-    public function handle()
+    public function handle(UpdatePlayerSpiritEnergiesAction $domainAction)
     {
-        $week = Week::current();;
-        $query = PlayerSpirit::query()->forWeek($week);
+        $domainAction->execute();
     }
 }
