@@ -9,6 +9,7 @@ use App\Domain\Models\Item;
 use App\Domain\Models\Squad;
 use App\Domain\Models\Week;
 use App\Exceptions\ItemTransactionException;
+use App\Facades\CurrentWeek;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Date;
 use Tests\TestCase;
@@ -68,9 +69,6 @@ class EquipMobileStorageItemForHeroActionTest extends TestCase
 
         /** @var Week $week */
         $week = factory(Week::class)->states('adventuring-open', 'as-current')->create();
-        $week->adventuring_locks_at = Date::now()->addHour();
-        $week->save();
-        Week::setTestCurrent($week);
         $this->domainAction = app(EquipMobileStorageItemForHeroAction::class);
     }
 
@@ -113,7 +111,7 @@ class EquipMobileStorageItemForHeroActionTest extends TestCase
      */
     public function it_will_throw_an_exception_if_the_current_week_is_locked_for_adventuring()
     {
-        factory(Week::class)->states('adventuring-closed', 'as-current')->create();
+        CurrentWeek::partialMock()->shouldReceive('adventuringLocked')->andReturn(true);
 
         try {
             $this->domainAction->execute($this->randomItem, $this->hero);
