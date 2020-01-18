@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Services;
+namespace App\Services\ModelServices;
 
 
 use App\Domain\Models\Week;
@@ -20,5 +20,10 @@ class WeekService
         $start = $week->adventuring_locks_at;
         $end = $start->addHours(self::FINALIZE_AFTER_ADVENTURING_CLOSED_HOURS - 4);
         return new CarbonPeriod($start, $end);
+    }
+
+    public function finalizingStartsAt(Week $week)
+    {
+        return $week->adventuring_locks_at->addHours(self::FINALIZE_AFTER_ADVENTURING_CLOSED_HOURS);
     }
 }

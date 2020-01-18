@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use App\Services\CurrentWeek;
 use App\Services\HeroCombat;
-use App\Services\WeekService;
+use App\Services\ModelServices\WeekService;
 use Illuminate\Support\ServiceProvider;
 
 class FacadeServiceProvider extends ServiceProvider

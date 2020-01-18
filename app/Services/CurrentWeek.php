@@ -5,6 +5,7 @@ namespace App\Services;
 
 
 use App\Domain\Models\Week;
+use App\Facades\WeekService;
 use Carbon\CarbonPeriod;
 use Illuminate\Support\Facades\Date;
 
@@ -62,7 +63,7 @@ class CurrentWeek
      */
     public function finalizingStartsAt()
     {
-        return $this->get()->adventuring_locks_at->addHours(self::FINALIZE_AFTER_ADVENTURING_CLOSED_HOURS);
+        return WeekService::finalizingStartsAt($this->get());
     }
 
     /**
@@ -94,8 +95,6 @@ class CurrentWeek
      */
     public function validGamePeriod()
     {
-        $start = $this->adventuringLocksAt();
-        $end = $start->addHours(self::FINALIZE_AFTER_ADVENTURING_CLOSED_HOURS - 4);
-        return new CarbonPeriod($start, $end);
+        return WeekService::getValidGamePeriod($this->get());
     }
 }
