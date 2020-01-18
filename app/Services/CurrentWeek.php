@@ -5,11 +5,12 @@ namespace App\Services;
 
 
 use App\Domain\Models\Week;
+use Carbon\CarbonPeriod;
 use Illuminate\Support\Facades\Date;
 
 class CurrentWeek
 {
-    public const FINALIZE_AFTER_ADVENTURING_CLOSED_HOURS = 15;
+    public const FINALIZE_AFTER_ADVENTURING_CLOSED_HOURS = 16;
 
     protected static $testCurrent = null;
 
@@ -86,5 +87,15 @@ class CurrentWeek
     public function adventuringLocked()
     {
         return ! $this->adventuringOpen();
+    }
+
+    /**
+     * @return CarbonPeriod
+     */
+    public function validGamePeriod()
+    {
+        $start = $this->adventuringLocksAt();
+        $end = $start->addHours(self::FINALIZE_AFTER_ADVENTURING_CLOSED_HOURS - 4);
+        return new CarbonPeriod($start, $end);
     }
 }

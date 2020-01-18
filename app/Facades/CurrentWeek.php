@@ -6,6 +6,7 @@ namespace App\Facades;
 
 use App\Domain\Models\Week;
 use Carbon\CarbonImmutable;
+use Carbon\CarbonPeriod;
 use Illuminate\Support\Facades\Facade;
 
 /**
@@ -18,6 +19,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static CurrentWeek setTestCurrent(Week $week)
  * @method static CarbonImmutable adventuringLocksAt()
  * @method static CarbonImmutable finalizingStartsAt()
+ * @method static CarbonPeriod validGamePeriod()
  * @method static bool exists()
  * @method static bool adventuringOpen()
  * @method static bool adventuringLocked()
