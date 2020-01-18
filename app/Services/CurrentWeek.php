@@ -51,6 +51,14 @@ class CurrentWeek
     /**
      * @return \Carbon\CarbonImmutable
      */
+    public function adventuringLocksAt()
+    {
+        return $this->get()->adventuring_locks_at;
+    }
+
+    /**
+     * @return \Carbon\CarbonImmutable
+     */
     public function finalizingStartsAt()
     {
         return $this->get()->adventuring_locks_at->addHours(self::FINALIZE_AFTER_ADVENTURING_CLOSED_HOURS);
@@ -69,7 +77,7 @@ class CurrentWeek
      */
     public function adventuringOpen()
     {
-        return Date::now()->isBefore($this->get()->adventuring_locks_at);
+        return Date::now()->isBefore($this->adventuringLocksAt());
     }
 
     /**
