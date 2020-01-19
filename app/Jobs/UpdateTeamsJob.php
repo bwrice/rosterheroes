@@ -45,19 +45,31 @@ class UpdateTeamsJob implements ShouldQueue
      */
     public function handle(StatsIntegration $integration)
     {
+        // TODO: convert into domain action
         $integrationType = $integration->getIntegrationType();
+        $count = 0;
 
         $teamDTOs = $integration->getTeamDTOs($this->league, $this->yearDelta);
-        $teamDTOs->each(function (TeamDTO $teamDTO) use ($integrationType) {
+        $teamDTOs->each(function (TeamDTO $teamDTO) use ($integrationType, &$count) {
 
             /** @var Team $team */
-            $team = Team::updateOrCreate([
-                'league_id' => $teamDTO->getLeague()->id,
-                'name' => $teamDTO->getName(),
-            ], [
-                'location' => $teamDTO->getLocation(),
-                'abbreviation' => $teamDTO->getAbbreviation()
-            ]);
+            $team = Team::query()->where('league_id', '=', $teamDTO->getLeague()->id)
+                ->where('name', '=', $teamDTO->getName())->first();
+
+            if (! $team) {
+                $team = Team::query()->create([
+                    'league_id' => $teamDTO->getLeague()->id,
+                    'name' => $teamDTO->getName(),
+                    'location' => $teamDTO->getLocation(),
+                    'abbreviation' => $teamDTO->getAbbreviation()
+                ]);
+                $count++;
+            } else {
+                $team = $team->update([
+                    'location' => $teamDTO->getLocation(),
+                    'abbreviation' => $teamDTO->getAbbreviation()
+                ]);
+            }
 
             $team->externalTeams()->updateOrCreate([
                 'integration_type_id' => $integrationType->id,
@@ -66,5 +78,8 @@ class UpdateTeamsJob implements ShouldQueue
                 'external_id' => $teamDTO->getExternalID()
             ]);
         });
+        if ($count > 0) {
+            Log::alert($count . " new teams created for league: " . $this->league->abbreviation);
+        }
     }
 }
