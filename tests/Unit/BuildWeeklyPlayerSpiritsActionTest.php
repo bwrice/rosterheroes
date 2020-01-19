@@ -148,4 +148,44 @@ class BuildWeeklyPlayerSpiritsActionTest extends TestCase
                 && $job->week->id === $this->week->id;
         });
     }
+
+    /**
+    * @test
+    */
+    public function it_will_not_dispatch_a_job_if_the_player_spirit_already_exists_for_the_player_and_game()
+    {
+        /** @var Game $game */
+        $game = factory(Game::class)->create([
+            'starts_at' => $this->week->adventuring_locks_at->addHours(2)
+        ]);
+
+        /** @var PlayerSpirit $alreadyExistingPlayerSpirit */
+        $alreadyExistingPlayerSpirit = factory(PlayerSpirit::class)->create([
+            'week_id' => $this->week->id,
+            'game_id' => $game->id
+        ]);
+
+        /** @var Player $diffPlayer */
+        $diffPlayer = factory(Player::class)->create([
+            'team_id' => $game->home_team_id
+        ]);
+
+        Queue::fake();
+
+        /** @var BuildWeeklyPlayerSpiritsAction $domainAction */
+        $domainAction = app(BuildWeeklyPlayerSpiritsAction::class);
+        $domainAction->execute($this->week);
+
+        // assert existing spirit job not pushed
+        Queue::assertNotPushed(CreatePlayerSpiritJob::class, function (CreatePlayerSpiritJob $job) use ($alreadyExistingPlayerSpirit) {
+            return $job->player->id === $alreadyExistingPlayerSpirit->player_id
+                && $job->game->id === $alreadyExistingPlayerSpirit->game_id;
+        });
+
+        // assert missing spirit job still pushed
+        Queue::assertPushed(CreatePlayerSpiritJob::class, function (CreatePlayerSpiritJob $job) use ($diffPlayer, $game) {
+            return $job->player->id === $diffPlayer->id
+                && $job->game->id === $game->id;
+        });
+    }
 }
