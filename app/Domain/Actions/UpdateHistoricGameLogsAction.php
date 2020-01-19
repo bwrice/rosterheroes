@@ -10,6 +10,7 @@ use App\Domain\Models\Game;
 use App\Domain\QueryBuilders\GameQueryBuilder;
 use App\Jobs\UpdatePlayerGameLogsJob;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\Log;
 
 class UpdateHistoricGameLogsAction
 {
@@ -32,6 +33,8 @@ class UpdateHistoricGameLogsAction
                 $count++;
             });
         });
+
+        Log::alert($count . " " . UpdatePlayerGameLogsJob::class . " jobs dispatched");
         return $count;
     }
 
