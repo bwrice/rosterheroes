@@ -14,14 +14,7 @@ class BuildWeeklyPlayerSpiritsAction
 {
     public function execute(Week $week)
     {
-        $games = $week->getValidGames([
-            'homeTeam.players',
-            'awayTeam.players'
-        ]);
-
-        if ($games->isEmpty()) {
-            throw new InvalidWeekException($week, "Week ID: " . $week->id . " has zero games");
-        }
+        $games = Game::query()->validForWeek($week);
 
         $games->each(function (Game $game) use ($week) {
             $game->homeTeam->players->each(function (Player $player) use ($week, $game) {
