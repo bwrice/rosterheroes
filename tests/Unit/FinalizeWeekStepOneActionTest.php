@@ -58,7 +58,7 @@ class FinalizeWeekStepOneActionTest extends TestCase
             'game_id' => $this->gameTwo->id,
             'week_id' => $this->week->id,
         ]);
-        Date::setTestNow($this->week->adventuring_locks_at->addHours(Week::FINALIZE_AFTER_ADVENTURING_CLOSED_HOURS + 1));
+        Date::setTestNow(CurrentWeek::finalizingStartsAt()->addMinutes(10));
         $this->domainAction = app(FinalizeWeekStepOneAction::class);
     }
 
