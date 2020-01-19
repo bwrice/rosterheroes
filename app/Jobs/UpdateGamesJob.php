@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Redis;
 class UpdateGamesJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    
+
     /**
      * @var League
      */
@@ -40,7 +40,8 @@ class UpdateGamesJob implements ShouldQueue
     {
         $gameDTOs = $statsIntegration->getGameDTOs($this->league, $this->yearDelta);
         $integrationType = $statsIntegration->getIntegrationType();
-        $gameDTOs->each(function (GameDTO $gameDTO) use ($integrationType) {
+        $count = 0;
+        $gameDTOs->each(function (GameDTO $gameDTO) use ($integrationType, &$count) {
 
             $game = Game::query()->forIntegration($integrationType->id, $gameDTO->getExternalID())->first();
 
@@ -59,8 +60,13 @@ class UpdateGamesJob implements ShouldQueue
                     'integration_type_id' => $integrationType->id,
                     'external_id' => $gameDTO->getExternalID()
                 ]);
+
+                $count++;
             }
         });
+        if ($count > 0) {
+            Log::alert($count . " new games created for league: " . $this->league->abbreviation);
+        }
     }
 
     protected function updateGame(Game $game, GameDTO $gameDTO)

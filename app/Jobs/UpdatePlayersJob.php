@@ -53,8 +53,9 @@ class UpdatePlayersJob implements ShouldQueue
     {
         $integrationType = $integration->getIntegrationType();
 
+        $count = 0;
         $playerDTOs = $integration->getPlayerDTOs($this->league);
-        $playerDTOs->each(function (PlayerDTO $playerDTO) use ($integrationType) {
+        $playerDTOs->each(function (PlayerDTO $playerDTO) use ($integrationType, &$count) {
 
             $player = Player::query()->forIntegration($integrationType->id, $playerDTO->getExternalID())->first();
 
@@ -79,5 +80,9 @@ class UpdatePlayersJob implements ShouldQueue
             }
             $player->positions()->syncWithoutDetaching($playerDTO->getPositions()->pluck('id')->toArray());
         });
+
+        if ($count > 0) {
+            Log::alert($count . " new players created for integration for league: " . $this->league->abbreviation);
+        }
     }
 }
