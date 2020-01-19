@@ -188,4 +188,41 @@ class BuildWeeklyPlayerSpiritsActionTest extends TestCase
                 && $job->game->id === $game->id;
         });
     }
+
+    /**
+    * @test
+    */
+    public function it_will_push_multiple_jobs_for_the_same_player_if_they_have_multiple_valid_games()
+    {
+        /** @var Player $player */
+        $player = factory(Player::class)->create();
+        /** @var Game $gameOne */
+        $gameOne = factory(Game::class)->create([
+            'starts_at' => $this->week->adventuring_locks_at->addHours(1),
+            'home_team_id' => $player->team_id
+        ]);
+        /** @var Game $gameOne */
+        $gameTwo = factory(Game::class)->create([
+            'starts_at' => $this->week->adventuring_locks_at->addHours(5),
+            'home_team_id' => $player->team_id
+        ]);
+
+        Queue::fake();
+
+        /** @var BuildWeeklyPlayerSpiritsAction $domainAction */
+        $domainAction = app(BuildWeeklyPlayerSpiritsAction::class);
+        $domainAction->execute($this->week);
+
+        // first game of double header
+        Queue::assertPushed(CreatePlayerSpiritJob::class, function (CreatePlayerSpiritJob $job) use ($player, $gameOne) {
+            return $job->player->id === $player->id
+                && $job->game->id === $gameOne->id;
+        });
+
+        // second game of double header
+        Queue::assertPushed(CreatePlayerSpiritJob::class, function (CreatePlayerSpiritJob $job) use ($player, $gameTwo) {
+            return $job->player->id === $player->id
+                && $job->game->id === $gameTwo->id;
+        });
+    }
 }
