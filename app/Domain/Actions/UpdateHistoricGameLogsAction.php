@@ -28,7 +28,7 @@ class UpdateHistoricGameLogsAction
 
             $games->each(function (Game $game) use (&$count, $yearDelta) {
 
-                UpdatePlayerGameLogsJob::dispatch($game, $yearDelta)->onQueue('stats-integration')->delay($count * 4);
+                UpdatePlayerGameLogsJob::dispatch($game, $yearDelta)->onQueue('stats-integration')->delay($count * 10);
                 $count++;
             });
         });
