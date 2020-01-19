@@ -9,6 +9,7 @@ use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\Team;
 use App\Domain\Models\Week;
 use App\Jobs\CreatePlayerSpiritJob;
+use App\Services\ModelServices\WeekService;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -26,24 +27,6 @@ class BuildWeeklyPlayerSpiritsActionTest extends TestCase
     {
         parent::setUp();
         $this->week = factory(Week::class)->state('as-current')->create();
-    }
-
-    /**
-    * @test
-    */
-    public function it_will_throw_an_exception_if_there_are_no_valid_games()
-    {
-        try {
-            /** @var BuildWeeklyPlayerSpiritsAction $domainAction */
-            $domainAction = app(BuildWeeklyPlayerSpiritsAction::class);
-            $domainAction->execute($this->week);
-        } catch (\Exception $exception) {
-            // so we don't get a warning
-            $this->assertTrue(true);
-            return;
-        }
-
-        $this->fail("Exception not throw");
     }
 
     /**
@@ -90,11 +73,6 @@ class BuildWeeklyPlayerSpiritsActionTest extends TestCase
     */
     public function it_will_not_queue_jobs_for_games_before_adventuring_locks_at()
     {
-        // needed so exception of zero games not thrown
-        $validGame = factory(Game::class)->create([
-            'starts_at' => $this->week->adventuring_locks_at->addHour()
-        ]);
-
         /** @var Player $playerOne */
         $playerOne = factory(Player::class)->create();
         /** @var Player $playerTwo */
@@ -135,10 +113,6 @@ class BuildWeeklyPlayerSpiritsActionTest extends TestCase
     */
     public function it_will_not_queue_jobs_for_games_more_than_12_hours_after_adventuring_locks()
     {
-        // needed so exception of zero games not thrown
-        $validGame = factory(Game::class)->create([
-            'starts_at' => $this->week->adventuring_locks_at->addHour()
-        ]);
 
         /** @var Player $playerOne */
         $playerOne = factory(Player::class)->create();
