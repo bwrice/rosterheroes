@@ -4,6 +4,7 @@ namespace App\Domain\Models;
 
 use App\Domain\Collections\PlayerCollection;
 use App\Domain\Collections\PlayerGameLogCollection;
+use App\Domain\Collections\PlayerSpiritCollection;
 use App\Domain\Models\Game;
 use App\Domain\Models\Position;
 use App\Domain\Collections\PositionCollection;
@@ -29,6 +30,7 @@ use Illuminate\Support\Carbon;
  * @property PositionCollection $positions
  * @property PlayerGameLogCollection $playerGameLogs
  * @property Collection $externalPlayers
+ * @property PlayerSpiritCollection $playerSpirits
  *
  * @method static PlayerQueryBuilder query()
  */
@@ -49,6 +51,11 @@ class Player extends Model
     public function positions()
     {
         return $this->belongsToMany(Position::class)->withTimestamps();
+    }
+
+    public function playerSpirits()
+    {
+        return $this->hasMany(PlayerSpirit::class);
     }
 
     public function playerGameLogs()
