@@ -42,16 +42,13 @@ class PlayerQueryBuilder extends Builder implements PositionQueryable
         });
     }
 
-    public function withNoSpiritForGame(int $gameID, int $homeTeamID, int $awayTeamID)
+    public function withNoSpiritForGame(Game $game)
     {
-        $teamIDs = [
-            $homeTeamID,
-            $awayTeamID
-        ];
-
-        return $this->forTeams($teamIDs)
-            ->whereDoesntHave('playerSpirits', function (PlayerSpiritQueryBuilder $builder) use ($gameID) {
-                return $builder->where('game_id', '=', $gameID);
+        return $this->forTeams([
+            $game->home_team_id,
+            $game->away_team_id
+        ])->whereDoesntHave('playerSpirits', function (PlayerSpiritQueryBuilder $builder) use ($game) {
+            return $builder->where('game_id', '=', $game->id);
         });
     }
 
