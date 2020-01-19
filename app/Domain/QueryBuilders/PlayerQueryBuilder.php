@@ -54,6 +54,6 @@ class PlayerQueryBuilder extends Builder implements PositionQueryable
 
     public function forTeams(array $teamIDs)
     {
-        return $this->whereIn('team_id', $this);
+        return $this->whereIn('team_id', $teamIDs);
     }
 }
