@@ -17,10 +17,7 @@ class BuildWeeklyPlayerSpiritsAction
         $games = Game::query()->validForWeek($week);
 
         $games->each(function (Game $game) use ($week) {
-            $game->homeTeam->players->each(function (Player $player) use ($week, $game) {
-                CreatePlayerSpiritJob::dispatch($week, $game, $player);
-            });
-            $game->awayTeam->players->each(function (Player $player) use ($week, $game) {
+            Player::query()->withNoSpiritForGame($game)->get()->each(function (Player $player) use ($game, $week) {
                 CreatePlayerSpiritJob::dispatch($week, $game, $player);
             });
         });
