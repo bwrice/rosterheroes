@@ -10,7 +10,9 @@ namespace App\Domain\QueryBuilders;
 
 
 use App\Domain\Collections\PlayerCollection;
+use App\Domain\Collections\TeamCollection;
 use App\Domain\Interfaces\PositionQueryable;
+use App\Domain\Models\Game;
 use App\Domain\Models\Player;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -38,5 +40,23 @@ class PlayerQueryBuilder extends Builder implements PositionQueryable
             return $builder->where('integration_type_id', '=', $integrationTypeID)
                 ->whereIn('external_id', $externalIDs);
         });
+    }
+
+    public function withNoSpiritForGame(int $gameID, int $homeTeamID, int $awayTeamID)
+    {
+        $teamIDs = [
+            $homeTeamID,
+            $awayTeamID
+        ];
+
+        return $this->forTeams($teamIDs)
+            ->whereDoesntHave('playerSpirits', function (PlayerSpiritQueryBuilder $builder) use ($gameID) {
+                return $builder->where('game_id', '=', $gameID);
+        });
+    }
+
+    public function forTeams(array $teamIDs)
+    {
+        return $this->whereIn('team_id', $this);
     }
 }
