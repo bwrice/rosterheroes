@@ -15,9 +15,7 @@ class FinalizeWeekStepTwoJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * Execute the job.
-     *
-     * @return void
+     * @param FinalizeWeekStepTwoAction $domainAction
      */
     public function handle(FinalizeWeekStepTwoAction $domainAction)
     {
