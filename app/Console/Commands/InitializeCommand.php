@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Domain\Actions\BuildInitialWeekAction;
+use App\Facades\WeekService;
 use Illuminate\Console\Command;
 
 class InitializeCommand extends Command
@@ -36,6 +37,11 @@ class InitializeCommand extends Command
      */
     public function handle(BuildInitialWeekAction $buildInitialWeekAction)
     {
-        $buildInitialWeekAction->execute();
+        $week = $buildInitialWeekAction->execute();
+        $this->info("Initial Week Created!");
+        $adventuringLocksDescription = $week->adventuring_locks_at->setTimezone('America/New_York')->shortRelativeDiffForHumans();
+        $this->info("Adventuring Locks: " . $adventuringLocksDescription);
+        $finalizingStartsAtDescription = WeekService::finalizingStartsAt($week)->setTimezone('America/New_York')->shortRelativeDiffForHumans();
+        $this->info("Adventuring Locks: " . $finalizingStartsAtDescription);
     }
 }
