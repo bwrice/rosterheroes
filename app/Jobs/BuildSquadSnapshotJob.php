@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Domain\Actions\BuildSquadSnapshotAction;
 use App\Domain\Models\Squad;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -27,12 +28,10 @@ class BuildSquadSnapshotJob implements ShouldQueue
     }
 
     /**
-     * Execute the job.
-     *
-     * @return void
+     * @param BuildSquadSnapshotAction $domainAction
      */
-    public function handle()
+    public function handle(BuildSquadSnapshotAction $domainAction)
     {
-        //
+        $domainAction->execute($this->squad);
     }
 }
