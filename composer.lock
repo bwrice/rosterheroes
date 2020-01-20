@@ -4,15 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ad9b0d4df3e4dd4b6d0cf78762f03c84",
+    "content-hash": "655ff8b8779fd507cc6d1a916c24047f",
     "packages": [
         {
             "name": "bwrice/laravel-job-chain-groups",
             "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bwrice/laravel-job-chain-groups.git",
+                "reference": "3bbff8e7d6f4762c0e02194e29b1bf4e7510b6ef"
+            },
             "dist": {
-                "type": "path",
-                "url": "../laravel-job-chain-groups",
-                "reference": "3bfa0438aeff2b97947aa2ecb7769b72968b412d"
+                "type": "zip",
+                "url": "https://api.github.com/repos/bwrice/laravel-job-chain-groups/zipball/3bbff8e7d6f4762c0e02194e29b1bf4e7510b6ef",
+                "reference": "3bbff8e7d6f4762c0e02194e29b1bf4e7510b6ef",
+                "shasum": ""
             },
             "require": {
                 "illuminate/support": "^6.0",
@@ -38,19 +44,7 @@
                     "Bwrice\\LaravelJobChainGroups\\": "src"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Bwrice\\LaravelJobChainGroups\\Tests\\": "tests"
-                }
-            },
-            "scripts": {
-                "test": [
-                    "vendor/bin/phpunit"
-                ],
-                "test-coverage": [
-                    "vendor/bin/phpunit --coverage-html coverage"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -65,7 +59,8 @@
             "keywords": [
                 "bwrice",
                 "laravel-job-chain-groups"
-            ]
+            ],
+            "time": "2020-01-19T21:46:26+00:00"
         },
         {
             "name": "cakephp/chronos",
@@ -6022,6 +6017,7 @@
                 "selenium",
                 "webdriver"
             ],
+            "abandoned": "php-webdriver/webdriver",
             "time": "2019-06-13T08:02:18+00:00"
         },
         {

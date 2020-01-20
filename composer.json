@@ -40,10 +40,6 @@
         {
             "type": "path",
             "url": "./nova"
-        },
-        {
-            "type": "path",
-            "url": "../laravel-job-chain-groups"
         }
     ],
     "autoload": {
