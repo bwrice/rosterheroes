@@ -4,7 +4,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(\App\ExternalTeam::class, function (Faker $faker, $args) {
+$factory->define(\App\Domain\Models\ExternalTeam::class, function (Faker $faker, $args) {
     $integrationTypeID = $args['integration_type_id'];
     $leagueID = $args['league_id'] ?? null;
     return [

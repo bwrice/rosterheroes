@@ -6,7 +6,7 @@ use App\Domain\Actions\UpdateHistoricGameLogsAction;
 use App\Domain\Collections\LeagueCollection;
 use App\Domain\Models\League;
 use App\External\Stats\StatsIntegration;
-use App\ExternalGame;
+use App\Domain\Models\ExternalGame;
 use App\Jobs\UpdatePlayerGameLogsJob;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;

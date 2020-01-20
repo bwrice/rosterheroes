@@ -10,7 +10,7 @@ use App\Domain\Models\Position;
 use App\Domain\Collections\PositionCollection;
 use App\Domain\Models\Team;
 use App\Domain\QueryBuilders\PlayerQueryBuilder;
-use App\ExternalPlayer;
+use App\Domain\Models\ExternalPlayer;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;

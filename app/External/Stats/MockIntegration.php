@@ -13,7 +13,7 @@ use App\Domain\Collections\PositionCollection;
 use App\Domain\Models\Game;
 use App\Domain\Models\League;
 use App\Domain\Models\Team;
-use App\StatsIntegrationType;
+use App\Domain\Models\StatsIntegrationType;
 use Illuminate\Support\Collection;
 
 class MockIntegration implements StatsIntegration

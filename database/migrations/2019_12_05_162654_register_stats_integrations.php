@@ -14,7 +14,7 @@ class RegisterStatsIntegrations extends Migration
     public function up()
     {
         // My Sports Feed
-        \App\StatsIntegrationType::query()->create([
+        \App\Domain\Models\StatsIntegrationType::query()->create([
             'name' => \App\External\Stats\MySportsFeed\MySportsFeed::INTEGRATION_NAME
         ]);
     }

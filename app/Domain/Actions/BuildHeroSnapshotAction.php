@@ -7,8 +7,8 @@ namespace App\Domain\Actions;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Week;
 use App\Exceptions\BuildHeroSnapshotException;
-use App\HeroSnapshot;
-use App\SquadSnapshot;
+use App\Domain\Models\HeroSnapshot;
+use App\Domain\Models\SquadSnapshot;
 
 class BuildHeroSnapshotAction
 {

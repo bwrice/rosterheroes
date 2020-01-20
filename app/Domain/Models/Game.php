@@ -6,7 +6,7 @@ use App\Domain\Collections\GameCollection;
 use App\Domain\Models\Team;
 use App\Domain\Models\Week;
 use App\Domain\QueryBuilders\GameQueryBuilder;
-use App\ExternalGame;
+use App\Domain\Models\ExternalGame;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Builder;

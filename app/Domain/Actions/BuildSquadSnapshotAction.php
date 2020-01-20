@@ -9,7 +9,7 @@ use App\Domain\Models\Squad;
 use App\Exceptions\BuildSquadSnapshotException;
 use App\Facades\CurrentWeek;
 use App\Facades\HeroCombat;
-use App\SquadSnapshot;
+use App\Domain\Models\SquadSnapshot;
 use Illuminate\Support\Facades\DB;
 
 class BuildSquadSnapshotAction

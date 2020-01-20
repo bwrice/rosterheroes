@@ -10,7 +10,7 @@ use App\Domain\Models\Week;
 use App\Exceptions\BuildSquadSnapshotException;
 use App\Facades\CurrentWeek;
 use App\Facades\HeroCombat;
-use App\SquadSnapshot;
+use App\Domain\Models\SquadSnapshot;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;

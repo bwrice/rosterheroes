@@ -5,7 +5,7 @@ namespace App\Exceptions;
 
 
 use App\Domain\Models\Hero;
-use App\SquadSnapshot;
+use App\Domain\Models\SquadSnapshot;
 use Throwable;
 
 class BuildHeroSnapshotException extends \RuntimeException

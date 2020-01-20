@@ -10,7 +10,7 @@ namespace App\External\Stats\MySportsFeed;
 
 use App\Domain\Models\Game;
 use App\Domain\Models\League;
-use App\ExternalGame;
+use App\Domain\Models\ExternalGame;
 
 class BoxScoreAPI
 {

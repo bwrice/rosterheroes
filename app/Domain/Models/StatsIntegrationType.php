@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Domain\Models;
 
 use App\Domain\Models\Traits\HasUniqueNames;
 use Illuminate\Database\Eloquent\Model;

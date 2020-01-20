@@ -9,7 +9,7 @@ use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\Squad;
 use App\Domain\Models\Week;
 use App\Exceptions\BuildHeroSnapshotException;
-use App\SquadSnapshot;
+use App\Domain\Models\SquadSnapshot;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;

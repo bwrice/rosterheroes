@@ -4,7 +4,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(\App\ExternalGame::class, function (Faker $faker, $args) {
+$factory->define(\App\Domain\Models\ExternalGame::class, function (Faker $faker, $args) {
     $integrationTypeID = $args['integration_type_id'];
     return [
         'external_id' => uniqid(),
@@ -13,15 +13,15 @@ $factory->define(\App\ExternalGame::class, function (Faker $faker, $args) {
 
             $leagueID = \App\Domain\Models\League::query()->inRandomOrder()->first()->id;
 
-            /** @var \App\ExternalTeam $externalHomeTeam */
-            $externalHomeTeam = factory(\App\ExternalTeam::class)->create([
+            /** @var \App\Domain\Models\ExternalTeam $externalHomeTeam */
+            $externalHomeTeam = factory(\App\Domain\Models\ExternalTeam::class)->create([
                 'integration_type_id' => $integrationTypeID,
                 'team_id' => factory(\App\Domain\Models\Team::class)->create([
                     'league_id' => $leagueID
                 ])
             ]);
-            /** @var \App\ExternalTeam $externalAwayTeam */
-            $externalAwayTeam = factory(\App\ExternalTeam::class)->create([
+            /** @var \App\Domain\Models\ExternalTeam $externalAwayTeam */
+            $externalAwayTeam = factory(\App\Domain\Models\ExternalTeam::class)->create([
                 'integration_type_id' => $integrationTypeID,
                 'team_id' => factory(\App\Domain\Models\Team::class)->create([
                     'league_id' => $leagueID

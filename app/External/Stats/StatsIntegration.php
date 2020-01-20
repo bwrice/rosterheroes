@@ -12,7 +12,7 @@ use App\Domain\Collections\GameLogDTOCollection;
 use App\Domain\Models\League;
 use App\Domain\Models\Team;
 use App\Domain\Models\Game;
-use App\StatsIntegrationType;
+use App\Domain\Models\StatsIntegrationType;
 use Illuminate\Support\Collection;
 use App\Domain\Collections\PositionCollection;
 

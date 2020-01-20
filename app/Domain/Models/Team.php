@@ -9,7 +9,7 @@ use App\Domain\Models\Game;
 use App\Domain\Models\League;
 use App\Domain\Models\Week;
 use App\Domain\QueryBuilders\TeamQueryBuilder;
-use App\ExternalTeam;
+use App\Domain\Models\ExternalTeam;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;

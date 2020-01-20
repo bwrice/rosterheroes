@@ -4,7 +4,7 @@
 
 use App\Domain\Models\Squad;
 use App\Domain\Models\Week;
-use App\SquadSnapshot;
+use App\Domain\Models\SquadSnapshot;
 use Faker\Generator as Faker;
 
 $factory->define(SquadSnapshot::class, function (Faker $faker) {

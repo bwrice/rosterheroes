@@ -1,9 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Domain\Models;
 
 use App\Domain\Models\Hero;
 use App\Domain\Models\Week;
+use App\Domain\Models\SquadSnapshot;
 use Illuminate\Database\Eloquent\Model;
 
 /**

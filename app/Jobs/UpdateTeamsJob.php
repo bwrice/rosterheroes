@@ -6,7 +6,7 @@ use App\Domain\Models\League;
 use App\Domain\Models\Team;
 use App\Domain\DataTransferObjects\TeamDTO;
 use App\External\Stats\StatsIntegration;
-use App\StatsIntegrationType;
+use App\Domain\Models\StatsIntegrationType;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;

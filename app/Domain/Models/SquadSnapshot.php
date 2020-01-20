@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Domain\Models;
 
 use App\Domain\Models\Squad;
 use App\Domain\Models\Week;

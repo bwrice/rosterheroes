@@ -1,8 +1,9 @@
 <?php
 
-namespace App;
+namespace App\Domain\Models;
 
 use App\Domain\Models\Game;
+use App\Domain\Models\StatsIntegrationType;
 use Illuminate\Database\Eloquent\Model;
 
 /**
