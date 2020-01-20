@@ -35,7 +35,7 @@ class HorizonServiceProvider extends HorizonApplicationServiceProvider
     {
         Gate::define('viewHorizon', function ($user) {
             return in_array($user->email, [
-                'bwrice83@gmail.com'
+                config('admin.email')
             ]);
         });
     }
