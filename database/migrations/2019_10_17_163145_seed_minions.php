@@ -21,13 +21,7 @@ class SeedMinions extends Migration
         $minions = collect([
             [
                 'name' => 'Skeleton Scout',
-                'level' => 8,
-                'base_damage_rating' => 35,
-                'damage_multiplier_rating' => 50,
-                'health_rating' => 35,
-                'protection_rating' => 30,
-                'combat_speed_rating' => 50,
-                'block_rating' => 50,
+                'config_path' => '/Yaml/Minions/skeleton_scout.yaml',
                 'enemy_type' => EnemyType::SKELETON,
                 'combat_position' => CombatPosition::BACK_LINE,
                 'attacks' => [
@@ -38,13 +32,7 @@ class SeedMinions extends Migration
             ],
             [
                 'name' => 'Skeleton Guard',
-                'level' => 13,
-                'base_damage_rating' => 15,
-                'damage_multiplier_rating' => 50,
-                'health_rating' => 35,
-                'protection_rating' => 50,
-                'combat_speed_rating' => 50,
-                'block_rating' => 50,
+                'config_path' => '/Yaml/Minions/skeleton_guard.yaml',
                 'enemy_type' => EnemyType::SKELETON,
                 'combat_position' => CombatPosition::FRONT_LINE,
                 'attacks' => [
@@ -55,13 +43,7 @@ class SeedMinions extends Migration
             ],
             [
                 'name' => 'Skeleton Archer',
-                'level' => 15,
-                'base_damage_rating' => 60,
-                'damage_multiplier_rating' => 50,
-                'health_rating' => 15,
-                'protection_rating' => 25,
-                'combat_speed_rating' => 50,
-                'block_rating' => 50,
+                'config_path' => '/Yaml/Minions/skeleton_archer.yaml',
                 'enemy_type' => EnemyType::SKELETON,
                 'combat_position' => CombatPosition::BACK_LINE,
                 'attacks' => [
@@ -73,13 +55,7 @@ class SeedMinions extends Migration
             ],
             [
                 'name' => 'Skeleton Mage',
-                'level' => 17,
-                'base_damage_rating' => 75,
-                'damage_multiplier_rating' => 50,
-                'health_rating' => 20,
-                'protection_rating' => 5,
-                'combat_speed_rating' => 50,
-                'block_rating' => 50,
+                'config_path' => '/Yaml/Minions/skeleton_mage.yaml',
                 'enemy_type' => EnemyType::SKELETON,
                 'combat_position' => CombatPosition::BACK_LINE,
                 'attacks' => [
@@ -92,13 +68,7 @@ class SeedMinions extends Migration
             ],
             [
                 'name' => 'Skeleton Soldier',
-                'level' => 21,
-                'base_damage_rating' => 20,
-                'damage_multiplier_rating' => 50,
-                'health_rating' => 40,
-                'protection_rating' => 40,
-                'combat_speed_rating' => 50,
-                'block_rating' => 50,
+                'config_path' => '/Yaml/Minions/skeleton_solider.yaml',
                 'enemy_type' => EnemyType::SKELETON,
                 'combat_position' => CombatPosition::FRONT_LINE,
                 'attacks' => [
@@ -112,13 +82,7 @@ class SeedMinions extends Migration
             ],
             [
                 'name' => 'Skeleton Marksman',
-                'level' => 23,
-                'base_damage_rating' => 70,
-                'damage_multiplier_rating' => 50,
-                'health_rating' => 25,
-                'protection_rating' => 5,
-                'combat_speed_rating' => 50,
-                'block_rating' => 50,
+                'config_path' => '/Yaml/Minions/skeleton_marksman.yaml',
                 'enemy_type' => EnemyType::SKELETON,
                 'combat_position' => CombatPosition::HIGH_GROUND,
                 'attacks' => [
@@ -132,14 +96,6 @@ class SeedMinions extends Migration
         ]);
 
         $attacks = Attack::all();
-
-        $minions->each(function ($minionData) {
-            //TODO update based off new rating values
-            $ratingSum = $minionData['base_damage_rating'] + $minionData['health_rating'] + $minionData['protection_rating'];
-            if ($ratingSum != 100 ) {
-                throw new RuntimeException("Rating sum of: " . $ratingSum . " does not equal 100");
-            }
-        });
 
         $minions->each(function ($minionData) use ($attacks) {
             $count = count($minionData['attacks']);
@@ -160,13 +116,7 @@ class SeedMinions extends Migration
             $minion = Minion::query()->create([
                 'uuid' => Str::uuid(),
                 'name' => $minionData['name'],
-                'level' => $minionData['level'],
-                'base_damage_rating' => $minionData['base_damage_rating'],
-                'damage_multiplier_rating' => $minionData['damage_multiplier_rating'],
-                'health_rating' => $minionData['health_rating'],
-                'protection_rating' => $minionData['protection_rating'],
-                'combat_speed_rating' => $minionData['combat_speed_rating'],
-                'block_rating' => $minionData['block_rating'],
+                'config_path' => app_path() . $minionData['config_path'],
                 'enemy_type_id' => $enemyTypes->where('name', '=', $minionData['enemy_type'])->first()->id,
                 'combat_position_id' => $combatPositions->where('name', '=', $minionData['combat_position'])->first()->id
             ]);
