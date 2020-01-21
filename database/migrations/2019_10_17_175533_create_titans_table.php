@@ -18,6 +18,7 @@ class CreateTitansTable extends Migration
             $table->uuid('uuid');
             $table->string('name');
             $table->string('slug');
+            $table->string('config_path');
             $table->integer('enemy_type_id')->unsigned();
             $table->integer('combat_position_id')->unsigned();
             $table->timestamps();
