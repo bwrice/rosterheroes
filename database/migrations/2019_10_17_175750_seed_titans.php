@@ -22,13 +22,7 @@ class SeedTitans extends Migration
         $titans = collect([
             [
                 'name' => 'Skeleton Overlord',
-                'base_level' => 93,
-                'base_damage_rating' => 75,
-                'damage_multiplier_rating' => 50,
-                'health_rating' => 20,
-                'protection_rating' => 5,
-                'combat_speed_rating' => 50,
-                'block_rating' => 50,
+                'config_path' => '/Yaml/Titans/skeleton_overlord.yaml',
                 'enemy_type' => EnemyType::SKELETON,
                 'combat_position' => CombatPosition::HIGH_GROUND,
                 'attacks' => [
@@ -43,13 +37,7 @@ class SeedTitans extends Migration
             ],
             [
                 'name' => 'Skeleton General',
-                'base_level' => 67,
-                'base_damage_rating' => 20,
-                'damage_multiplier_rating' => 50,
-                'health_rating' => 40,
-                'protection_rating' => 40,
-                'combat_speed_rating' => 50,
-                'block_rating' => 50,
+                'config_path' => '/Yaml/Titans/skeleton_general.yaml',
                 'enemy_type' => EnemyType::SKELETON,
                 'combat_position' => CombatPosition::FRONT_LINE,
                 'attacks' => [
@@ -84,13 +72,7 @@ class SeedTitans extends Migration
             $titan = Titan::query()->create([
                 'uuid' => Str::uuid(),
                 'name' => $titanData['name'],
-                'base_level' => $titanData['base_level'],
-                'base_damage_rating' => $titanData['base_damage_rating'],
-                'damage_multiplier_rating' => $titanData['damage_multiplier_rating'],
-                'health_rating' => $titanData['health_rating'],
-                'protection_rating' => $titanData['protection_rating'],
-                'combat_speed_rating' => $titanData['combat_speed_rating'],
-                'block_rating' => $titanData['block_rating'],
+                'config_path' => app_path() . $titanData['config_path'],
                 'enemy_type_id' => $enemyTypes->where('name', '=', $titanData['enemy_type'])->first()->id,
                 'combat_position_id' => $combatPositions->where('name', '=', $titanData['combat_position'])->first()->id
             ]);
