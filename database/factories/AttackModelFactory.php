@@ -19,12 +19,6 @@ $factory->define(\App\Domain\Models\Attack::class, function (Faker $faker) {
         'target_priority_id' => function() {
             return \App\Domain\Models\TargetPriority::query()->inRandomOrder()->first()->id;
         },
-        'grade' => 50,
-        'speed_rating' => 50,
-        'base_damage_rating' => 50,
-        'damage_multiplier_rating' => 50,
-        'fixed_target_count' => 1,
-        'resource_costs' => json_encode([]),
-        'requirements' => json_encode([])
+        'config_path' => ''
     ];
 });
