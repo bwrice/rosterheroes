@@ -19,16 +19,6 @@ $factory->define(\App\Domain\Models\Attack::class, function (Faker $faker) {
         'target_priority_id' => function() {
             return \App\Domain\Models\TargetPriority::query()->inRandomOrder()->first()->id;
         },
-        'config_path' => ''
+        'config_path' => '/Yaml/Attacks/test_attack.yaml'
     ];
-});
-
-$factory->afterCreatingState(\App\Domain\Models\Attack::class, 'with-config', function (\App\Domain\Models\Attack $attack, Faker $faker) {
-    $attack->setGrade(10)
-        ->setSpeedRating(5)
-        ->setBaseDamageRating(10)
-        ->setDamageMultiplierRating(10)
-        ->setFixedTargetCount(1)
-        ->setResourceCosts([])
-        ->setRequirements([]);
 });
