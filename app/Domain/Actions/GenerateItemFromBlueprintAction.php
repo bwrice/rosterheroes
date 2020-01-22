@@ -174,7 +174,7 @@ class GenerateItemFromBlueprintAction
             $attack = $attacksPool->shift();
             $attacksToAttach->push($attack);
 
-            $attackPower -= $attack->grade;
+            $attackPower -= $attack->getGrade();
         }
 
         return $attacksToAttach;
