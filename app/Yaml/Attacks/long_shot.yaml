@@ -1,0 +1,15 @@
+fixed_target_count: 1
+grade: 25
+speed_rating: 4
+base_damage_rating: 6
+damage_multiplier_rating: 8
+resource_costs:
+    -
+        type: fixed
+        resource: stamina
+        amount: 21
+    -
+        type: fixed
+        resource: mana
+        amount: 8
+requirements: []
