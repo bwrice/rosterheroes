@@ -65,10 +65,12 @@ class UpdateTeamsJob implements ShouldQueue
                 ]);
                 $count++;
             } else {
-                $team = $team->update([
+                $team->update([
                     'location' => $teamDTO->getLocation(),
                     'abbreviation' => $teamDTO->getAbbreviation()
                 ]);
+
+                $team = $team->fresh();
             }
 
             $team->externalTeams()->updateOrCreate([
