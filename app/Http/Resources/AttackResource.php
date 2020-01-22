@@ -39,11 +39,11 @@ class AttackResource extends JsonResource
             'targetPositionID' => $this->target_position_id,
             'damageType' => new DamageTypeResource($this->damageType),
             'targetPriority' => new TargetPriorityResource($this->targetPriority),
-            'grade' => $this->grade,
+            'grade' => $this->getGrade(),
             'baseDamage' => $this->getBaseDamage(),
             'damageMultiplier' => round($this->getDamageMultiplier(), 2),
             'combatSpeed' => round($this->getCombatSpeed(), 2),
-            'resourceCosts' => $this->getResourceCosts()
+            'resourceCosts' => $this->getResourceCostCollection()
         ];
     }
 
