@@ -1,0 +1,11 @@
+fixed_target_count: 3
+grade: 12
+speed_rating: 9
+base_damage_rating: 4
+damage_multiplier_rating: 11
+resource_costs:
+    -
+        type: fixed
+        resource: stamina
+        amount: 12
+requirements: []
