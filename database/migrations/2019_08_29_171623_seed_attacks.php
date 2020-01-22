@@ -27,11 +27,7 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'fixed_target_count' => 1,
-                'grade' => 5,
-                'speed_rating' => 100/12,
-                'base_damage_rating' => 5.5,
-                'damage_multiplier_rating' => 10,
+                'config_path' => '/Yaml/Attacks/slash.yaml',
                 'item_bases' => [
                     ItemBase::DAGGER,
                     ItemBase::SWORD,
@@ -41,15 +37,7 @@ class SeedAttacks extends Migration
                     ItemBase::POLEARM,
                     ItemBase::PSIONIC_ONE_HAND,
                     ItemBase::PSIONIC_TWO_HAND
-                ],
-                'resource_costs' => [
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::STAMINA,
-                        'amount' => 3
-                    ]
-                ],
-                'requirements' => []
+                ]
             ],
             [
                 'name' => 'Double Slash',
@@ -57,11 +45,7 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'fixed_target_count' => 2,
-                'grade' => 8,
-                'speed_rating' => 100/12,
-                'base_damage_rating' => 5.5,
-                'damage_multiplier_rating' => 10,
+                'config_path' => '/Yaml/Attacks/double_slash.yaml',
                 'item_bases' => [
                     ItemBase::DAGGER,
                     ItemBase::SWORD,
@@ -71,15 +55,7 @@ class SeedAttacks extends Migration
                     ItemBase::POLEARM,
                     ItemBase::PSIONIC_ONE_HAND,
                     ItemBase::PSIONIC_TWO_HAND
-                ],
-                'resource_costs' => [
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::STAMINA,
-                        'amount' => 7
-                    ]
-                ],
-                'requirements' => []
+                ]
             ],
             [
                 'name' => 'Triple Slash',
@@ -87,11 +63,7 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'fixed_target_count' => 3,
-                'grade' => 12,
-                'speed_rating' => 100/12,
-                'base_damage_rating' => 5.5,
-                'damage_multiplier_rating' => 10,
+                'config_path' => '/Yaml/Attacks/triple_slash.yaml',
                 'item_bases' => [
                     ItemBase::DAGGER,
                     ItemBase::SWORD,
@@ -101,15 +73,7 @@ class SeedAttacks extends Migration
                     ItemBase::POLEARM,
                     ItemBase::PSIONIC_ONE_HAND,
                     ItemBase::PSIONIC_TWO_HAND
-                ],
-                'resource_costs' => [
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::STAMINA,
-                        'amount' => 16
-                    ]
-                ],
-                'requirements' => []
+                ]
             ],
             [
                 'name' => 'Sword Sweep',
@@ -117,30 +81,13 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'fixed_target_count' => 0,
-                'grade' => 13,
-                'speed_rating' => 100/16,
-                'base_damage_rating' => 4,
-                'damage_multiplier_rating' => 15,
+                'config_path' => '/Yaml/Attacks/sword_sweep.yaml',
                 'item_bases' => [
                     ItemBase::SWORD,
                     ItemBase::TWO_HAND_SWORD,
                     ItemBase::PSIONIC_ONE_HAND,
                     ItemBase::PSIONIC_TWO_HAND
                 ],
-                'resource_costs' => [
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::STAMINA,
-                        'amount' => 16
-                    ],
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::MANA,
-                        'amount' => 2
-                    ]
-                ],
-                'requirements' => []
             ],
             [
                 'name' => 'Axe Sweep',
@@ -148,29 +95,12 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'fixed_target_count' => 0,
-                'grade' => 13,
-                'speed_rating' => 100/17,
-                'base_damage_rating' => 5,
-                'damage_multiplier_rating' => 18,
+                'config_path' => '/Yaml/Attacks/axe_sweep.yaml',
                 'item_bases' => [
                     ItemBase::AXE,
                     ItemBase::TWO_HAND_AXE,
                     ItemBase::PSIONIC_TWO_HAND
-                ],
-                'resource_costs' => [
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::STAMINA,
-                        'amount' => 20
-                    ],
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::MANA,
-                        'amount' => 3
-                    ]
-                ],
-                'requirements' => []
+                ]
             ],
             [
                 'name' => 'Blade Spin',
@@ -178,29 +108,12 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'fixed_target_count' => 0,
-                'grade' => 24,
-                'speed_rating' => 100/33,
-                'base_damage_rating' => 12,
-                'damage_multiplier_rating' => 22,
+                'config_path' => '/Yaml/Attacks/blade_spin.yaml',
                 'item_bases' => [
                     ItemBase::AXE,
                     ItemBase::TWO_HAND_AXE,
                     ItemBase::PSIONIC_TWO_HAND
-                ],
-                'resource_costs' => [
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::STAMINA,
-                        'amount' => 43
-                    ],
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::MANA,
-                        'amount' => 9
-                    ]
-                ],
-                'requirements' => []
+                ]
             ],
             [
                 'name' => 'Slice',
@@ -208,11 +121,7 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'fixed_target_count' => 1,
-                'grade' => 15,
-                'speed_rating' => 100/15,
-                'base_damage_rating' => 12,
-                'damage_multiplier_rating' => 18,
+                'config_path' => '/Yaml/Attacks/slice.yaml',
                 'item_bases' => [
                     ItemBase::DAGGER,
                     ItemBase::SWORD,
@@ -222,15 +131,7 @@ class SeedAttacks extends Migration
                     ItemBase::POLEARM,
                     ItemBase::PSIONIC_ONE_HAND,
                     ItemBase::PSIONIC_TWO_HAND
-                ],
-                'resource_costs' => [
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::STAMINA,
-                        'amount' => 5
-                    ]
-                ],
-                'requirements' => []
+                ]
             ],
             [
                 'name' => 'Double Slice',
@@ -238,11 +139,7 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'fixed_target_count' => 2,
-                'grade' => 21,
-                'speed_rating' => 100/15,
-                'base_damage_rating' => 12,
-                'damage_multiplier_rating' => 18,
+                'config_path' => '/Yaml/Attacks/double_slice.yaml',
                 'item_bases' => [
                     ItemBase::DAGGER,
                     ItemBase::SWORD,
@@ -252,15 +149,7 @@ class SeedAttacks extends Migration
                     ItemBase::POLEARM,
                     ItemBase::PSIONIC_ONE_HAND,
                     ItemBase::PSIONIC_TWO_HAND
-                ],
-                'resource_costs' => [
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::STAMINA,
-                        'amount' => 11
-                    ]
-                ],
-                'requirements' => []
+                ]
             ],
             [
                 'name' => 'Triple Slice',
@@ -268,11 +157,7 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'fixed_target_count' => 3,
-                'grade' => 28,
-                'speed_rating' => 100/15,
-                'base_damage_rating' => 12,
-                'damage_multiplier_rating' => 18,
+                'config_path' => '/Yaml/Attacks/triple_slice.yaml',
                 'item_bases' => [
                     ItemBase::DAGGER,
                     ItemBase::SWORD,
@@ -282,15 +167,7 @@ class SeedAttacks extends Migration
                     ItemBase::POLEARM,
                     ItemBase::PSIONIC_ONE_HAND,
                     ItemBase::PSIONIC_TWO_HAND
-                ],
-                'resource_costs' => [
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::STAMINA,
-                        'amount' => 23
-                    ]
-                ],
-                'requirements' => []
+                ]
             ],
             [
                 'name' => 'Whack',
@@ -298,22 +175,10 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'fixed_target_count' => 1,
-                'grade' => 5,
-                'speed_rating' => 100/16,
-                'base_damage_rating' => 6,
-                'damage_multiplier_rating' => 13,
+                'config_path' => '/Yaml/Attacks/whack.yaml',
                 'item_bases' => [
                     ItemBase::MACE,
                 ],
-                'resource_costs' => [
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::STAMINA,
-                        'amount' => 5
-                    ]
-                ],
-                'requirements' => []
             ],
             [
                 'name' => 'Double Whack',
@@ -321,22 +186,10 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'fixed_target_count' => 2,
-                'grade' => 8,
-                'speed_rating' => 100/16,
-                'base_damage_rating' => 6,
-                'damage_multiplier_rating' => 13,
+                'config_path' => '/Yaml/Attacks/double_whack.yaml',
                 'item_bases' => [
                     ItemBase::MACE,
-                ],
-                'resource_costs' => [
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::STAMINA,
-                        'amount' => 9
-                    ]
-                ],
-                'requirements' => []
+                ]
             ],
             [
                 'name' => 'Triple Whack',
@@ -344,22 +197,10 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'fixed_target_count' => 3,
-                'grade' => 12,
-                'speed_rating' => 100/16,
-                'base_damage_rating' => 6,
-                'damage_multiplier_rating' => 13,
+                'config_path' => '/Yaml/Attacks/triple_whack.yaml',
                 'item_bases' => [
                     ItemBase::MACE,
-                ],
-                'resource_costs' => [
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::STAMINA,
-                        'amount' => 17
-                    ]
-                ],
-                'requirements' => []
+                ]
             ],
             [
                 'name' => 'Poke',
@@ -367,22 +208,10 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'fixed_target_count' => 1,
-                'grade' => 5,
-                'speed_rating' => 100/12,
-                'base_damage_rating' => 4,
-                'damage_multiplier_rating' => 11,
+                'config_path' => '/Yaml/Attacks/poke.yaml',
                 'item_bases' => [
                     ItemBase::POLEARM,
-                ],
-                'resource_costs' => [
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::STAMINA,
-                        'amount' => 4
-                    ]
-                ],
-                'requirements' => []
+                ]
             ],
             [
                 'name' => 'Double Poke',
@@ -390,22 +219,10 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'fixed_target_count' => 2,
-                'grade' => 8,
-                'speed_rating' => 100/12,
-                'base_damage_rating' => 4,
-                'damage_multiplier_rating' => 11,
+                'config_path' => '/Yaml/Attacks/double_poke.yaml',
                 'item_bases' => [
                     ItemBase::POLEARM,
-                ],
-                'resource_costs' => [
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::STAMINA,
-                        'amount' => 7
-                    ]
-                ],
-                'requirements' => []
+                ]
             ],
             [
                 'name' => 'Triple Poke',
@@ -413,22 +230,10 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'fixed_target_count' => 3,
-                'grade' => 12,
-                'speed_rating' => 100/12,
-                'base_damage_rating' => 4,
-                'damage_multiplier_rating' => 11,
+                'config_path' => '/Yaml/Attacks/triple_poke.yaml',
                 'item_bases' => [
                     ItemBase::POLEARM,
-                ],
-                'resource_costs' => [
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::STAMINA,
-                        'amount' => 12
-                    ]
-                ],
-                'requirements' => []
+                ]
             ],
             [
                 'name' => Attack::BASIC_BOW_ATTACK_NAME, // Arrow
@@ -436,22 +241,10 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'fixed_target_count' => 1,
-                'grade' => 5,
-                'speed_rating' => 100/23,
-                'base_damage_rating' => 10,
-                'damage_multiplier_rating' => 10,
+                'config_path' => '/Yaml/Attacks/arrow.yaml',
                 'item_bases' => [
                     ItemBase::BOW,
-                ],
-                'resource_costs' => [
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::STAMINA,
-                        'amount' => 14
-                    ]
-                ],
-                'requirements' => []
+                ]
             ],
             [
                 'name' => 'Double Arrow',
@@ -459,22 +252,10 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'fixed_target_count' => 2,
-                'grade' => 9,
-                'speed_rating' => 100/23,
-                'base_damage_rating' => 10,
-                'damage_multiplier_rating' => 10,
+                'config_path' => '/Yaml/Attacks/double_arrow.yaml',
                 'item_bases' => [
                     ItemBase::BOW,
-                ],
-                'resource_costs' => [
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::STAMINA,
-                        'amount' => 23
-                    ]
-                ],
-                'requirements' => []
+                ]
             ],
             [
                 'name' => 'Triple Arrow',
@@ -482,22 +263,10 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'fixed_target_count' => 3,
-                'grade' => 16,
-                'speed_rating' => 100/23,
-                'base_damage_rating' => 10,
-                'damage_multiplier_rating' => 10,
+                'config_path' => '/Yaml/Attacks/triple_arrow.yaml',
                 'item_bases' => [
                     ItemBase::BOW,
-                ],
-                'resource_costs' => [
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::STAMINA,
-                        'amount' => 34
-                    ]
-                ],
-                'requirements' => []
+                ]
             ],
             [
                 'name' => 'Arrow Spray',
@@ -505,27 +274,10 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'fixed_target_count' => 0,
-                'grade' => 16,
-                'speed_rating' => 100/32,
-                'base_damage_rating' => 7.5,
-                'damage_multiplier_rating' => 14,
+                'config_path' => '/Yaml/Attacks/arrow_spray.yaml',
                 'item_bases' => [
                     ItemBase::BOW,
-                ],
-                'resource_costs' => [
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::STAMINA,
-                        'amount' => 27
-                    ],
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::MANA,
-                        'amount' => 8
-                    ]
-                ],
-                'requirements' => []
+                ]
             ],
             [
                 'name' => 'Deep Shot',
@@ -533,28 +285,11 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'fixed_target_count' => 1,
-                'grade' => 22,
-                'speed_rating' => 100/26,
-                'base_damage_rating' => 9,
-                'damage_multiplier_rating' => 12,
+                'config_path' => '/Yaml/Attacks/deep_shot.yaml',
                 'item_bases' => [
                     ItemBase::BOW,
                     ItemBase::CROSSBOW
-                ],
-                'resource_costs' => [
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::STAMINA,
-                        'amount' => 22
-                    ],
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::MANA,
-                        'amount' => 5
-                    ]
-                ],
-                'requirements' => []
+                ]
             ],
             [
                 'name' => 'Long Shot',
@@ -562,28 +297,11 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::HIGH_GROUND,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'fixed_target_count' => 1,
-                'grade' => 25,
-                'speed_rating' => 100/26,
-                'base_damage_rating' => 6,
-                'damage_multiplier_rating' => 8,
+                'config_path' => '/Yaml/Attacks/long_shot.yaml',
                 'item_bases' => [
                     ItemBase::BOW,
                     ItemBase::CROSSBOW
-                ],
-                'resource_costs' => [
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::STAMINA,
-                        'amount' => 21
-                    ],
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::MANA,
-                        'amount' => 8
-                    ]
-                ],
-                'requirements' => []
+                ]
             ],
             [
                 'name' => 'Double Long Shot',
@@ -591,28 +309,11 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::HIGH_GROUND,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'fixed_target_count' => 2,
-                'grade' => 43,
-                'speed_rating' => 100/37,
-                'base_damage_rating' => 6,
-                'damage_multiplier_rating' => 8,
+                'config_path' => '/Yaml/Attacks/double_long_shot.yaml',
                 'item_bases' => [
                     ItemBase::BOW,
                     ItemBase::CROSSBOW
-                ],
-                'resource_costs' => [
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::STAMINA,
-                        'amount' => 44
-                    ],
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::MANA,
-                        'amount' => 15
-                    ]
-                ],
-                'requirements' => []
+                ]
             ],
             [
                 'name' => 'Bolt',
@@ -620,22 +321,10 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'fixed_target_count' => 1,
-                'grade' => 5,
-                'speed_rating' => 100/30,
-                'base_damage_rating' => 11,
-                'damage_multiplier_rating' => 13,
+                'config_path' => '/Yaml/Attacks/bolt.yaml',
                 'item_bases' => [
                     ItemBase::CROSSBOW,
-                ],
-                'resource_costs' => [
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::STAMINA,
-                        'amount' => 8
-                    ]
-                ],
-                'requirements' => []
+                ]
             ],
             [
                 'name' => 'Double Bolt',
@@ -643,22 +332,10 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'fixed_target_count' => 2,
-                'grade' => 8,
-                'speed_rating' => 100/30,
-                'base_damage_rating' => 11,
-                'damage_multiplier_rating' => 13,
+                'config_path' => '/Yaml/Attacks/double_bolt.yaml',
                 'item_bases' => [
                     ItemBase::CROSSBOW,
-                ],
-                'resource_costs' => [
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::STAMINA,
-                        'amount' => 13
-                    ]
-                ],
-                'requirements' => []
+                ]
             ],
             [
                 'name' => 'Triple Bolt',
@@ -666,22 +343,10 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'fixed_target_count' => 3,
-                'grade' => 15,
-                'speed_rating' => 100/30,
-                'base_damage_rating' => 11,
-                'damage_multiplier_rating' => 13,
+                'config_path' => '/Yaml/Attacks/triple_bolt.yaml',
                 'item_bases' => [
                     ItemBase::CROSSBOW,
-                ],
-                'resource_costs' => [
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::STAMINA,
-                        'amount' => 21
-                    ]
-                ],
-                'requirements' => []
+                ]
             ],
             [
                 'name' => 'Chuck',
@@ -689,22 +354,10 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'fixed_target_count' => 1,
-                'grade' => 5,
-                'speed_rating' => 100/28,
-                'base_damage_rating' => 9,
-                'damage_multiplier_rating' => 11,
+                'config_path' => '/Yaml/Attacks/chuck.yaml',
                 'item_bases' => [
                     ItemBase::THROWING_WEAPON,
-                ],
-                'resource_costs' => [
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::STAMINA,
-                        'amount' => 6
-                    ]
-                ],
-                'requirements' => []
+                ]
             ],
             [
                 'name' => Attack::BASIC_MAGIC_ATTACK_NAME, // Magic Bolt
@@ -712,29 +365,12 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'fixed_target_count' => 1,
-                'grade' => 5,
-                'speed_rating' => 100/18,
-                'base_damage_rating' => 8,
-                'damage_multiplier_rating' => 10,
+                'config_path' => '/Yaml/Attacks/magic_bolt.yaml',
                 'item_bases' => [
                     ItemBase::STAFF,
                     ItemBase::WAND,
                     ItemBase::ORB
-                ],
-                'resource_costs' => [
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::STAMINA,
-                        'amount' => 2
-                    ],
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::MANA,
-                        'amount' => 1
-                    ]
-                ],
-                'requirements' => []
+                ]
             ],
             [
                 'name' => 'Double Magic Bolt',
@@ -742,29 +378,12 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'fixed_target_count' => 2,
-                'grade' => 8,
-                'speed_rating' => 100/18,
-                'base_damage_rating' => 8,
-                'damage_multiplier_rating' => 10,
+                'config_path' => '/Yaml/Attacks/magic_bolt.yaml',
                 'item_bases' => [
                     ItemBase::STAFF,
                     ItemBase::WAND,
                     ItemBase::ORB
-                ],
-                'resource_costs' => [
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::STAMINA,
-                        'amount' => 4
-                    ],
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::MANA,
-                        'amount' => 3
-                    ]
-                ],
-                'requirements' => []
+                ]
             ],
             [
                 'name' => 'Triple Magic Bolt',
@@ -772,29 +391,12 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'fixed_target_count' => 3,
-                'grade' => 15,
-                'speed_rating' => 100/18,
-                'base_damage_rating' => 8,
-                'damage_multiplier_rating' => 10,
+                'config_path' => '/Yaml/Attacks/magic_bolt.yaml',
                 'item_bases' => [
                     ItemBase::STAFF,
                     ItemBase::WAND,
                     ItemBase::ORB
-                ],
-                'resource_costs' => [
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::STAMINA,
-                        'amount' => 5
-                    ],
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::MANA,
-                        'amount' => 8
-                    ]
-                ],
-                'requirements' => []
+                ]
             ],
             [
                 'name' => 'Magic Burst',
@@ -802,29 +404,12 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'fixed_target_count' => 0,
-                'grade' => 11,
-                'speed_rating' => 100/25,
-                'base_damage_rating' => 8,
-                'damage_multiplier_rating' => 10,
+                'config_path' => '/Yaml/Attacks/magic_burst.yaml',
                 'item_bases' => [
                     ItemBase::STAFF,
                     ItemBase::WAND,
                     ItemBase::ORB
-                ],
-                'resource_costs' => [
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::STAMINA,
-                        'amount' => 6
-                    ],
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::MANA,
-                        'amount' => 10
-                    ]
-                ],
-                'requirements' => []
+                ]
             ],
             [
                 'name' => 'Magic Blast',
@@ -832,29 +417,12 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'fixed_target_count' => 0,
-                'grade' => 26,
-                'speed_rating' => 100/41,
-                'base_damage_rating' => 15,
-                'damage_multiplier_rating' => 20,
+                'config_path' => '/Yaml/Attacks/magic_blast.yaml',
                 'item_bases' => [
                     ItemBase::STAFF,
                     ItemBase::WAND,
                     ItemBase::ORB
-                ],
-                'resource_costs' => [
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::STAMINA,
-                        'amount' => 10
-                    ],
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::MANA,
-                        'amount' => 19
-                    ]
-                ],
-                'requirements' => []
+                ]
             ],
             [
                 'name' => 'Lightning Bolt',
@@ -862,28 +430,11 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::HIGH_GROUND,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'fixed_target_count' => 1,
-                'grade' => 35,
-                'speed_rating' => 100/25,
-                'base_damage_rating' => 12,
-                'damage_multiplier_rating' => 18,
+                'config_path' => '/Yaml/Attacks/lightning_bolt.yaml',
                 'item_bases' => [
                     ItemBase::STAFF,
                     ItemBase::ORB
-                ],
-                'resource_costs' => [
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::STAMINA,
-                        'amount' => 13
-                    ],
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::MANA,
-                        'amount' => 28
-                    ]
-                ],
-                'requirements' => []
+                ]
             ],
             [
                 'name' => 'Lightning Strike',
@@ -891,28 +442,11 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::HIGH_GROUND,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'fixed_target_count' => 0,
-                'grade' => 48,
-                'speed_rating' => 100/47,
-                'base_damage_rating' => 14,
-                'damage_multiplier_rating' => 21,
+                'config_path' => '/Yaml/Attacks/lightning_strike.yaml',
                 'item_bases' => [
                     ItemBase::STAFF,
                     ItemBase::ORB
-                ],
-                'resource_costs' => [
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::STAMINA,
-                        'amount' => 18
-                    ],
-                    [
-                        'type' => ResourceCost::FIXED,
-                        'resource' => MeasurableType::MANA,
-                        'amount' => 55
-                    ]
-                ],
-                'requirements' => []
+                ]
             ],
         ];
 
@@ -929,13 +463,7 @@ class SeedAttacks extends Migration
                 'attacker_position_id' => $combatPositions->firstWhere('name', '=', $attackData['attacker_position'])->id,
                 'target_position_id' => $combatPositions->firstWhere('name', '=', $attackData['target_position'])->id,
                 'target_priority_id' => $targetPriorities->firstWhere('name', '=', $attackData['target_priority'])->id,
-                'grade' => $attackData['grade'],
-                'speed_rating' => $attackData['speed_rating'],
-                'base_damage_rating' => $attackData['base_damage_rating'],
-                'damage_multiplier_rating' => $attackData['damage_multiplier_rating'],
-                'fixed_target_count' => isset($attackData['fixed_target_count']) ? $attackData['fixed_target_count'] : 1,
-                'resource_costs' => json_encode($attackData['resource_costs']),
-                'requirements' => json_encode($attackData['requirements'])
+                'config_path' => $attackData['config_path'],
             ]);
 
             $basesToAttach = $itemBases->whereIn('name', $attackData['item_bases']);
