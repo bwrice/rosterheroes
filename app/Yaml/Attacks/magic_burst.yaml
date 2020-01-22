@@ -1,0 +1,14 @@
+grade: 11
+speed_rating: 4
+base_damage_rating: 8
+damage_multiplier_rating: 10
+resource_costs:
+    -
+        type: fixed
+        resource: stamina
+        amount: 6
+    -
+        type: fixed
+        resource: mana
+        amount: 10
+requirements: []
