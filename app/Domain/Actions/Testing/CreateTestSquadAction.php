@@ -39,7 +39,7 @@ class CreateTestSquadAction
         foreach (range(1, $amount) as $count) {
             $testID = $offset + $count;
             $user = $this->createUserAction->execute('testUser' . $testID . '@test.com', 'TestUser' . $testID, 'password');
-            $squad = $this->createSquadAction->execute($user->id, 'ActiveTestSquad' . $testID);
+            $squad = $this->createSquadAction->execute($user->id, 'TestSquad' . $testID);
 
             HeroRace::starting()->get()->each(function (HeroRace $heroRace) use ($squad, $testID) {
                 AddTestHeroToTestSquadJob::dispatch($squad, $heroRace, $testID);
