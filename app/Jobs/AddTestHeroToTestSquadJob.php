@@ -42,9 +42,11 @@ class AddTestHeroToTestSquadJob implements ShouldQueue
 
     /**
      * @param AddTestHeroToTestSquadAction $domainAction
+     * @throws \App\Exceptions\HeroPostNotFoundException
+     * @throws \App\Exceptions\InvalidHeroClassException
      */
     public function handle(AddTestHeroToTestSquadAction $domainAction)
     {
-        $domainAction->execute();
+        $domainAction->execute($this->squad, $this->heroRace, $this->testID);
     }
 }
