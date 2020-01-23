@@ -14,7 +14,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
-class CreateActiveTestSquadActionTest extends TestCase
+class CreateTestSquadActionTest extends TestCase
 {
     use DatabaseTransactions;
 
