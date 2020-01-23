@@ -1,9 +1,12 @@
 <?php
 
 
-namespace App\Domain\Actions;
+namespace App\Domain\Actions\Testing;
 
 
+use App\Domain\Actions\AddNewHeroToSquadAction;
+use App\Domain\Actions\CreateSquadAction;
+use App\Domain\Actions\CreateUserAction;
 use App\Domain\Collections\SquadCollection;
 use App\Domain\Models\HeroClass;
 use App\Domain\Models\HeroRace;
