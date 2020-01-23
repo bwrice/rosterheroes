@@ -10,6 +10,7 @@ use App\Domain\Behaviors\HeroRace\OrcBehavior;
 use App\Domain\Collections\HeroRaceCollection;
 use App\Domain\Collections\PositionCollection;
 use App\Exceptions\UnknownBehaviorException;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -23,6 +24,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  *
  * @property PositionCollection $positions
  * @property Collection $heroPostTypes
+ *
+ * @method static Builder starting()
  */
 class HeroRace extends Model
 {
@@ -80,6 +83,16 @@ class HeroRace extends Model
     public static function orc()
     {
         return self::where('name', '=', self::ORC)->first();
+    }
+
+    public function scopeStarting(Builder $builder)
+    {
+        return $builder->whereIn('name', [
+            self::HUMAN,
+            self::ELF,
+            self::DWARF,
+            self::ORC
+        ]);
     }
 
     public function toArray()
