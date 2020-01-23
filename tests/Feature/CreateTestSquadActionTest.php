@@ -21,24 +21,29 @@ class CreateTestSquadActionTest extends TestCase
     /**
     * @test
     */
-    public function it_will_create_squads_with_heroes_of_each_race_for_amount_given()
+    public function it_will_create_squads_for_the_amount_given()
     {
+        Queue::fake();
         /** @var CreateTestSquadAction $domainAction */
         $domainAction = app(CreateTestSquadAction::class);
-        $count = 3;
+        $count = 2;
         $squads = $domainAction->execute($count);
         $this->assertEquals($count, $squads->count());
+    }
 
-        $heroRaces = HeroRace::all();
-
-        $squads->load('heroes')->each(function (Squad $squad) use ($heroRaces) {
-            $heroRaces->each(function (HeroRace $heroRace) use ($squad) {
-                $match = $squad->heroes->first(function (Hero $hero) use ($heroRace) {
-                    return $hero->hero_race_id === $heroRace->id;
-                });
-                $this->assertNotNull($match, $heroRace->name . " hero not found");
-            });
-        });
+    /**
+    * @test
+    */
+    public function it_will_give_the_squad_and_user_test_names()
+    {
+        Queue::fake();
+        /** @var CreateTestSquadAction $domainAction */
+        $domainAction = app(CreateTestSquadAction::class);
+        $squads = $domainAction->execute(1);
+        /** @var Squad $squad */
+        $squad = $squads->first();
+        $this->assertTrue(strpos($squad->name, "TestSquad") === 0);
+        $this->assertTrue(strpos($squad->user->name, "TestUser") === 0);
     }
 
     /**
@@ -50,7 +55,7 @@ class CreateTestSquadActionTest extends TestCase
 
         /** @var CreateTestSquadAction $domainAction */
         $domainAction = app(CreateTestSquadAction::class);
-        $squadsCount = 3;
+        $squadsCount = 2;
         $heroRaces = HeroRace::starting()->get();
         $squads = $domainAction->execute($squadsCount);
 
