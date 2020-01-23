@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Domain\Actions\Testing\AddTestHeroToTestSquadAction;
+use App\Domain\Models\HeroClass;
 use App\Domain\Models\HeroRace;
 use App\Domain\Models\Squad;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -48,5 +49,46 @@ class AddTestHeroToTestSquadActionTest extends TestCase
         $hero = $this->domainAction->execute($this->squad, $this->heroRace, $this->testID);
         $this->assertEquals($this->squad->id, $hero->squad_id);
         $this->assertEquals($this->heroRace->id, $hero->hero_race_id);
+    }
+
+    /**
+     * @param $heroRaceName
+     * @param $heroClassName
+     * @test
+     * @dataProvider provides_it_will_create_a_hero_of_the_appropriate_class
+     */
+    public function it_will_create_a_hero_of_the_appropriate_class($heroRaceName, $heroClassName)
+    {
+        /** @var HeroRace $heroRace */
+        $heroRace = HeroRace::query()->where('name', '=', $heroRaceName)->first();
+        /** @var HeroClass $heroClass */
+        $heroClass = HeroClass::query()->where('name', '=', $heroClassName)->first();
+        $hero = $this->domainAction->execute($this->squad, $heroRace, $this->testID);
+        $this->assertEquals($hero->hero_class_id, $heroClass->id);
+    }
+
+    /**
+     *
+     */
+    public function provides_it_will_create_a_hero_of_the_appropriate_class()
+    {
+        return [
+            HeroRace::HUMAN => [
+                'heroRaceName' => HeroRace::HUMAN,
+                'heroClassName' => HeroClass::RANGER
+            ],
+            HeroRace::ELF => [
+                'heroRaceName' => HeroRace::ELF,
+                'heroClassName' => HeroClass::SORCERER
+            ],
+            HeroRace::DWARF => [
+                'heroRaceName' => HeroRace::DWARF,
+                'heroClassName' => HeroClass::WARRIOR
+            ],
+            HeroRace::ORC => [
+                'heroRaceName' => HeroRace::ORC,
+                'heroClassName' => HeroClass::WARRIOR
+            ],
+        ];
     }
 }
