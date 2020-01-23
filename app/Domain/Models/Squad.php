@@ -5,6 +5,7 @@ namespace App\Domain\Models;
 use App\Aggregates\SquadAggregate;
 use App\Domain\Actions\CreateCampaignAction;
 use App\Domain\Collections\ItemCollection;
+use App\Domain\Collections\SquadCollection;
 use App\Domain\Interfaces\HasItems;
 use App\Domain\Interfaces\TravelsBorders;
 use App\Domain\QueryBuilders\CampaignQueryBuilder;
@@ -105,6 +106,11 @@ class Squad extends EventSourcedModel implements HasItems
     public function newEloquentBuilder($query)
     {
         return new SquadQueryBuilder($query);
+    }
+
+    public function newCollection(array $models = [])
+    {
+        return new SquadCollection($models);
     }
 
     public static function getMobileStorageResourceRelations()
