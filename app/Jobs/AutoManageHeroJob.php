@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Domain\Actions\Testing\AutoManageHeroAction;
 use App\Domain\Models\Hero;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -24,12 +25,10 @@ class AutoManageHeroJob implements ShouldQueue
     }
 
     /**
-     * Execute the job.
-     *
-     * @return void
+     * @param AutoManageHeroAction $domainAction
      */
-    public function handle()
+    public function handle(AutoManageHeroAction $domainAction)
     {
-        //
+        $domainAction->execute($this->hero);
     }
 }
