@@ -6,6 +6,7 @@ use App\Domain\Actions\Testing\InitiateTestSquadManagementAction;
 use App\Domain\Models\Squad;
 use App\Domain\Models\User;
 use App\Jobs\AutoManageSquadJob;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Queue;
@@ -13,6 +14,8 @@ use Tests\TestCase;
 
 class InitiateTestSquadManagementActionTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /**
      * @var Squad
      */
