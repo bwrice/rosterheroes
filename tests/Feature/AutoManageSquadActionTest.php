@@ -79,4 +79,27 @@ class AutoManageSquadActionTest extends TestCase
 
         $this->fail("Exception not thrown");
     }
+
+    /**
+    * @test
+    */
+    public function it_will_dispatch_auto_manage_jobs_correctly()
+    {
+        CurrentWeek::partialMock()->shouldReceive('get')->andReturn(true);
+        CurrentWeek::partialMock()->shouldReceive('adventuringLocksAt')->andReturn(Date::now()->addDays(6));
+        Queue::fake();
+        $this->domainAction->execute($this->squad);
+
+        foreach ([
+                     $this->heroOne,
+                     $this->heroTwo
+                 ] as $hero) {
+
+            Queue::assertPushedWithChain(AsyncChainedJob::class, [
+                new AutoJoinQuestsJob($this->squad)
+            ], function (AsyncChainedJob $chainedJob) use ($hero) {
+                return $chainedJob->getDecoratedJob()->hero->id === $hero->id;
+            });
+        }
+    }
 }
