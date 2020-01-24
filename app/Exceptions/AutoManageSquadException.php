@@ -10,7 +10,7 @@ use Throwable;
 class AutoManageSquadException extends \Exception
 {
     public const CODE_NO_CURRENT_WEEK = 1;
-    public const CODE_CURRENT_WEEK_LOCKS_SOON = 1;
+    public const CODE_CURRENT_WEEK_LOCKS_SOON = 2;
     /**
      * @var Squad
      */
