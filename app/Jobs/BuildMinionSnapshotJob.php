@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Domain\Actions\BuildMinionSnapshotAction;
 use App\Domain\Models\Minion;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -24,12 +25,10 @@ class BuildMinionSnapshotJob implements ShouldQueue
     }
 
     /**
-     * Execute the job.
-     *
-     * @return void
+     * @param BuildMinionSnapshotAction $domainAction
      */
-    public function handle()
+    public function handle(BuildMinionSnapshotAction $domainAction)
     {
-        //
+        $domainAction->execute($this->minion);
     }
 }
