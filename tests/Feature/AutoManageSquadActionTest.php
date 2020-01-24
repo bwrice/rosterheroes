@@ -68,7 +68,8 @@ class AutoManageSquadActionTest extends TestCase
     */
     public function it_will_throw_an_exception_if_the_current_week_locks_soon()
     {
-        CurrentWeek::partialMock()->shouldReceive('adventuringLocksAt')->andReturn(Date::now()->addMinutes(10));
+        CurrentWeek::partialMock()->shouldReceive('get')->andReturn(true);
+        CurrentWeek::partialMock()->shouldReceive('adventuringLocksAt')->andReturn(Date::now()->addMinutes(30));
         try {
             $this->domainAction->execute($this->squad);
         } catch (AutoManageSquadException $exception) {
