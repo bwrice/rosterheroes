@@ -15,6 +15,7 @@ use App\Domain\Interfaces\EssenceCostQueryable;
 use App\Domain\Models\HeroRace;
 use App\Domain\Models\Week;
 use App\Domain\Models\PlayerSpirit;
+use App\Facades\CurrentWeek;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
@@ -29,10 +30,14 @@ class PlayerSpiritQueryBuilder extends Builder implements PositionQueryable, Ess
      * @param Week|null $week
      * @return PlayerSpiritQueryBuilder
      */
-    public function forWeek(Week $week = null)
+    public function forWeek(Week $week)
     {
-        $week = $week ?? Week::current();
         return $this->where('week_id', '=', $week->id);
+    }
+
+    public function forCurrentWeek()
+    {
+        return $this->forWeek(CurrentWeek::get());
     }
 
     public function forWeeks(array $weekIDs)
