@@ -16,7 +16,7 @@ class AutoManageSquadAction
         if (! CurrentWeek::get()) {
             throw new AutoManageSquadException($squad, 'No current week', AutoManageSquadException::CODE_NO_CURRENT_WEEK);
         }
-        if (! CurrentWeek::adventuringLocksAt()->isBefore(Date::now()->addHours(4))) {
+        if (CurrentWeek::adventuringLocksAt()->isBefore(Date::now()->addHours(4))) {
             throw new AutoManageSquadException($squad, 'Current week locks too soon', AutoManageSquadException::CODE_CURRENT_WEEK_LOCKS_SOON);
         }
     }
