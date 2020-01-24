@@ -14,4 +14,12 @@ class SquadQueryBuilder extends Builder
             return $builder->hasPlayerSpirit();
         });
     }
+
+    public function isTest()
+    {
+        return $this->where('name', 'like', 'TestSquad%')
+            ->whereHas('user', function (Builder $builder) {
+                return $builder->where('email', 'like', '%@test.com');
+        });
+    }
 }
