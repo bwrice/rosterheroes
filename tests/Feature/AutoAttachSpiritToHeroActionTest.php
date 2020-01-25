@@ -174,4 +174,35 @@ class AutoAttachSpiritToHeroActionTest extends TestCase
         $domainAction->execute($this->hero);
         $spy->shouldNotHaveReceived('execute');
     }
+
+    /**
+    * @test
+    */
+    public function it_will_not_execute_add_spirit_action_if_hero_already_has_player_spirit()
+    {
+        $this->hero->player_spirit_id = factory(PlayerSpirit::class)->create([
+            'week_id' => $this->currentWeek->id
+        ])->id;
+        $this->hero->save();
+        $this->hero = $this->hero->fresh();
+
+        $validPositions = $this->hero->heroRace->positions;
+
+        /** @var Player $validPositionPlayer */
+        $validPositionPlayer = factory(Player::class)->create();
+        $validPositionPlayer->positions()->attach($validPositions->random()->id);
+        $validPositionPlayerSpirit = factory(PlayerSpirit::class)->create([
+            'player_id' => $validPositionPlayer->id,
+            'essence_cost' => $this->essencePerHero, // Make essence cost less appealing than invalid position spirit
+            'week_id' => $this->currentWeek->id
+        ]);
+
+        $spy = \Mockery::spy(AddSpiritToHeroAction::class);
+        app()->instance(AddSpiritToHeroAction::class, $spy);
+
+        /** @var AutoAttachSpiritToHeroAction $domainAction */
+        $domainAction = app(AutoAttachSpiritToHeroAction::class);
+        $domainAction->execute($this->hero);
+        $spy->shouldNotHaveReceived('execute');
+    }
 }

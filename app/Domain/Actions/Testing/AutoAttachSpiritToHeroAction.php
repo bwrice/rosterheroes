@@ -28,6 +28,10 @@ class AutoAttachSpiritToHeroAction
      */
     public function execute(Hero $hero)
     {
+        if ($hero->player_spirit_id) {
+            return $hero;
+        }
+
         $squad = $hero->squad;
         $maxEssenceCost = (int) floor($squad->spirit_essence/$squad->heroes()->count());
         $validPositionNames = $hero->heroRace->positions->pluck('name')->toArray();
