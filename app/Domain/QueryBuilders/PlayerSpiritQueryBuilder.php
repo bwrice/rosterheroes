@@ -13,6 +13,7 @@ use App\Domain\Interfaces\HeroRaceQueryable;
 use App\Domain\Interfaces\PositionQueryable;
 use App\Domain\Interfaces\EssenceCostQueryable;
 use App\Domain\Models\HeroRace;
+use App\Domain\Models\Squad;
 use App\Domain\Models\Week;
 use App\Domain\Models\PlayerSpirit;
 use App\Facades\CurrentWeek;
@@ -45,10 +46,10 @@ class PlayerSpiritQueryBuilder extends Builder implements PositionQueryable, Ess
         return $this->whereIn('week_id', $weekIDs);
     }
 
-    public function withPositions(array $positions): Builder
+    public function withPositions(array $positionNames): Builder
     {
-        return $this->whereHas('player', function (PlayerQueryBuilder $builder) use ($positions) {
-            return $builder->withPositions($positions);
+        return $this->whereHas('player', function (PlayerQueryBuilder $builder) use ($positionNames) {
+            return $builder->withPositions($positionNames);
         });
     }
 
@@ -73,5 +74,12 @@ class PlayerSpiritQueryBuilder extends Builder implements PositionQueryable, Ess
     public function withHeroes()
     {
         return $this->whereHas('heroes');
+    }
+    
+    public function availableForSquad(Squad $squad)
+    {
+        return $this->whereDoesntHave('heroes', function (Builder $builder) use ($squad) {
+            return $builder->where('squad_id', '=', $squad->id);
+        });
     }
 }
