@@ -148,4 +148,30 @@ class AutoAttachSpiritToHeroActionTest extends TestCase
         $domainAction->execute($this->hero);
         $spy->shouldHaveReceived('execute')->with(EloquentMatcher::withExpected($this->hero), EloquentMatcher::withExpected($optimalEssencePlayerSpirit));
     }
+
+    /**
+    * @test
+    */
+    public function it_will_not_execute_add_spirit_action_if_no_valid_player_spirits()
+    {
+        $validPositions = $this->hero->heroRace->positions;
+        $invalidPositions = Position::query()->whereNotIn('id', $validPositions->pluck('id')->toArray())->get();
+
+        /** @var Player $invalidPlayer */
+        $invalidPlayer = factory(Player::class)->create();
+        $invalidPlayer->positions()->attach($invalidPositions->random()->id);
+        $invalidPositionPlayerSpirit = factory(PlayerSpirit::class)->create([
+            'player_id' => $invalidPlayer->id,
+            'essence_cost' => $this->essencePerHero,
+            'week_id' => $this->currentWeek->id
+        ]);
+
+        $spy = \Mockery::spy(AddSpiritToHeroAction::class);
+        app()->instance(AddSpiritToHeroAction::class, $spy);
+
+        /** @var AutoAttachSpiritToHeroAction $domainAction */
+        $domainAction = app(AutoAttachSpiritToHeroAction::class);
+        $domainAction->execute($this->hero);
+        $spy->shouldNotHaveReceived('execute');
+    }
 }
