@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Domain\Actions\Testing\AutoManageSquadAction;
 use App\Domain\Models\Squad;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -27,12 +28,11 @@ class AutoManageSquadJob implements ShouldQueue
     }
 
     /**
-     * Execute the job.
-     *
-     * @return void
+     * @param AutoManageSquadAction $domainAction
+     * @throws \App\Exceptions\AutoManageSquadException
      */
-    public function handle()
+    public function handle(AutoManageSquadAction $domainAction)
     {
-        //
+        $domainAction->execute($this->squad);
     }
 }
