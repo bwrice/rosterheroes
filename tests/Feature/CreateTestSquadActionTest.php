@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use App\Domain\Actions\Testing\AddTestHeroToTestSquadAction;
-use App\Domain\Actions\Testing\CreateTestSquadAction;
+use App\Domain\Actions\Testing\CreateTestSquadsAction;
 use App\Domain\Models\Hero;
 use App\Domain\Models\HeroRace;
 use App\Domain\Models\Squad;
@@ -24,8 +24,8 @@ class CreateTestSquadActionTest extends TestCase
     public function it_will_create_squads_for_the_amount_given()
     {
         Queue::fake();
-        /** @var CreateTestSquadAction $domainAction */
-        $domainAction = app(CreateTestSquadAction::class);
+        /** @var CreateTestSquadsAction $domainAction */
+        $domainAction = app(CreateTestSquadsAction::class);
         $count = 2;
         $squads = $domainAction->execute($count);
         $this->assertEquals($count, $squads->count());
@@ -37,8 +37,8 @@ class CreateTestSquadActionTest extends TestCase
     public function it_will_give_the_squad_and_user_test_names()
     {
         Queue::fake();
-        /** @var CreateTestSquadAction $domainAction */
-        $domainAction = app(CreateTestSquadAction::class);
+        /** @var CreateTestSquadsAction $domainAction */
+        $domainAction = app(CreateTestSquadsAction::class);
         $squads = $domainAction->execute(1);
         /** @var Squad $squad */
         $squad = $squads->first();
@@ -53,8 +53,8 @@ class CreateTestSquadActionTest extends TestCase
     {
         Queue::fake();
 
-        /** @var CreateTestSquadAction $domainAction */
-        $domainAction = app(CreateTestSquadAction::class);
+        /** @var CreateTestSquadsAction $domainAction */
+        $domainAction = app(CreateTestSquadsAction::class);
         $squadsCount = 2;
         $heroRaces = HeroRace::starting()->get();
         $squads = $domainAction->execute($squadsCount);
