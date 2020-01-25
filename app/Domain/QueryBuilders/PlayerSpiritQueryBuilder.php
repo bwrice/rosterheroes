@@ -25,7 +25,7 @@ use Illuminate\Database\Eloquent\Builder;
  *
  * @method  PlayerSpirit|object|static|null first($columns = ['*'])
  */
-class PlayerSpiritQueryBuilder extends Builder implements EssenceCostQueryable, HeroRaceQueryable
+class PlayerSpiritQueryBuilder extends Builder
 {
     /**
      * @param Week|null $week
