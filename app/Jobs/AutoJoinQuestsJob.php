@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Domain\Actions\Testing\AutoJoinQuestAction;
 use App\Domain\Models\Squad;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -24,12 +25,12 @@ class AutoJoinQuestsJob implements ShouldQueue
     }
 
     /**
-     * Execute the job.
-     *
-     * @return void
+     * @param AutoJoinQuestAction $domainAction
      */
-    public function handle()
+    public function handle(AutoJoinQuestAction $domainAction)
     {
-        //
+        foreach (range (1, $this->squad->getQuestsPerWeek()) as $count) {
+            $domainAction->execute($this->squad);
+        }
     }
 }
