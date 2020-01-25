@@ -23,13 +23,13 @@ use Illuminate\Database\Eloquent\Builder;
  * @method Player|object|static|null first($columns = ['*'])
  * @method PlayerCollection get($columns = ['*'])
  */
-class PlayerQueryBuilder extends Builder implements PositionQueryable
+class PlayerQueryBuilder extends Builder
 {
 
-    public function withPositions(array $positions): Builder
+    public function withPositions(array $positionNames)
     {
-        return $this->whereHas('positions', function (Builder $builder) use ($positions) {
-            return $builder->whereIn('name', $positions);
+        return $this->whereHas('positions', function (Builder $builder) use ($positionNames) {
+            return $builder->whereIn('name', $positionNames);
         });
     }
 

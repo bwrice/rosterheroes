@@ -25,7 +25,7 @@ use Illuminate\Database\Eloquent\Builder;
  *
  * @method  PlayerSpirit|object|static|null first($columns = ['*'])
  */
-class PlayerSpiritQueryBuilder extends Builder implements PositionQueryable, EssenceCostQueryable, HeroRaceQueryable
+class PlayerSpiritQueryBuilder extends Builder implements EssenceCostQueryable, HeroRaceQueryable
 {
     /**
      * @param Week|null $week
@@ -46,7 +46,7 @@ class PlayerSpiritQueryBuilder extends Builder implements PositionQueryable, Ess
         return $this->whereIn('week_id', $weekIDs);
     }
 
-    public function withPositions(array $positionNames): Builder
+    public function withPositions(array $positionNames)
     {
         return $this->whereHas('player', function (PlayerQueryBuilder $builder) use ($positionNames) {
             return $builder->withPositions($positionNames);
@@ -75,7 +75,11 @@ class PlayerSpiritQueryBuilder extends Builder implements PositionQueryable, Ess
     {
         return $this->whereHas('heroes');
     }
-    
+
+    /**
+     * @param Squad $squad
+     * @return PlayerSpiritQueryBuilder
+     */
     public function availableForSquad(Squad $squad)
     {
         return $this->whereDoesntHave('heroes', function (Builder $builder) use ($squad) {
