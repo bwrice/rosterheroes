@@ -8,10 +8,6 @@
 
 namespace App\Domain\QueryBuilders;
 
-
-use App\Domain\Interfaces\HeroRaceQueryable;
-use App\Domain\Interfaces\PositionQueryable;
-use App\Domain\Interfaces\EssenceCostQueryable;
 use App\Domain\Models\HeroRace;
 use App\Domain\Models\Squad;
 use App\Domain\Models\Week;
@@ -53,7 +49,7 @@ class PlayerSpiritQueryBuilder extends Builder
         });
     }
 
-    public function forHeroRace(string $heroRaceName): Builder
+    public function forHeroRace(string $heroRaceName)
     {
         /** @var HeroRace $heroRace */
         $heroRace = HeroRace::query()->where('name','=', $heroRaceName)->first();
@@ -61,12 +57,12 @@ class PlayerSpiritQueryBuilder extends Builder
         return $this->withPositions($positionNames);
     }
 
-    public function minEssenceCost(int $amount): Builder
+    public function minEssenceCost(int $amount)
     {
         return $this->where('essence_cost', '>=', $amount);
     }
 
-    public function maxEssenceCost(int $amount): Builder
+    public function maxEssenceCost(int $amount)
     {
         return $this->where('essence_cost', '<=', $amount);
     }
