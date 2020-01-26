@@ -30,6 +30,9 @@ class AutoJoinQuestsJob implements ShouldQueue
     public function handle(AutoJoinQuestAction $domainAction)
     {
         foreach (range (1, $this->squad->getQuestsPerWeek()) as $count) {
+            if ($count > 1) {
+                $this->squad = $this->squad->fresh();
+            }
             $domainAction->execute($this->squad);
         }
     }
