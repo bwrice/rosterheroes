@@ -5,8 +5,6 @@ namespace App\Domain\Actions\Testing;
 
 
 use App\Domain\Actions\AddSpiritToHeroAction;
-use App\Domain\Collections\HeroCollection;
-use App\Domain\Collections\PlayerSpiritCollection;
 use App\Domain\Models\Hero;
 use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\Squad;
