@@ -2,8 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Domain\Actions\WeekFinalizing\FinalizeWeekStepOneAction;
-use App\Domain\Actions\WeekFinalizing\FinalizeWeekStepTwoAction;
+use App\Domain\Actions\WeekFinalizing\FinalizeCurrentWeekSpiritEnergiesAction;
 use App\Domain\Models\Game;
 use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\Week;
@@ -17,14 +16,14 @@ use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
-class FinalizeWeekStepTwoActionTest extends TestCase
+class FinalizeCurrentWeekSpiritEnergiesActionTest extends TestCase
 {
     use DatabaseTransactions;
 
     /** @var Week */
     protected $week;
 
-    /** @var FinalizeWeekStepOneAction */
+    /** @var FinalizeCurrentWeekSpiritEnergiesAction */
     protected $domainAction;
 
     /** @var PlayerSpirit */
@@ -61,7 +60,7 @@ class FinalizeWeekStepTwoActionTest extends TestCase
             'week_id' => $this->week->id
         ]);
         Date::setTestNow($this->week->adventuring_locks_at->addHours(Week::FINALIZE_AFTER_ADVENTURING_CLOSED_HOURS + 1));
-        $this->domainAction = app(FinalizeWeekStepTwoAction::class);
+        $this->domainAction = app(FinalizeCurrentWeekSpiritEnergiesAction::class);
     }
     /**
     * @test

@@ -10,7 +10,7 @@ use App\Exceptions\FinalizeWeekException;
 use App\Jobs\FinalizeWeekStepThreeJob;
 use App\Jobs\UpdatePlayerSpiritEnergiesJob;
 
-class FinalizeWeekStepTwoAction
+class FinalizeCurrentWeekSpiritEnergiesAction
 {
     public function execute()
     {

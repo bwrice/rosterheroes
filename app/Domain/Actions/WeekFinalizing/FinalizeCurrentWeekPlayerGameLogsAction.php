@@ -11,7 +11,7 @@ use App\Jobs\FinalizeWeekStepTwoJob;
 use App\Jobs\UpdatePlayerGameLogsJob;
 use Bwrice\LaravelJobChainGroups\Jobs\ChainGroup;
 
-class FinalizeWeekStepOneAction
+class FinalizeCurrentWeekPlayerGameLogsAction
 {
     public function execute()
     {

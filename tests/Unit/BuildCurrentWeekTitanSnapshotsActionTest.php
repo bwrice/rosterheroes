@@ -2,8 +2,8 @@
 
 namespace Tests\Unit;
 
-use App\Domain\Actions\WeekFinalizing\FinalizeWeekStepFiveAction;
-use App\Domain\Actions\WeekFinalizing\FinalizeWeekStepFourAction;
+use App\Domain\Actions\WeekFinalizing\BuildCurrentWeekTitanSnapshotsAction;
+use App\Domain\Actions\WeekFinalizing\BuildCurrentWeekMinionSnapshotsAction;
 use App\Domain\Models\Minion;
 use App\Domain\Models\Titan;
 use App\Jobs\FinalizeWeekStepFiveJob;
@@ -13,17 +13,17 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
-class FinalizeWeekStepFiveActionTest extends TestCase
+class BuildCurrentWeekTitanSnapshotsActionTest extends TestCase
 {
     use DatabaseTransactions;
 
-    /** @var FinalizeWeekStepFourAction */
+    /** @var BuildCurrentWeekTitanSnapshotsAction */
     protected $domainAction;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->domainAction = app(FinalizeWeekStepFiveAction::class);
+        $this->domainAction = app(BuildCurrentWeekTitanSnapshotsAction::class);
     }
 
     /**

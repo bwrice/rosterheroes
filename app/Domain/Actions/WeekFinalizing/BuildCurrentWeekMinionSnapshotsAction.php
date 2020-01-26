@@ -10,7 +10,7 @@ use App\Jobs\FinalizeWeekStepFiveJob;
 use Bwrice\LaravelJobChainGroups\Jobs\ChainGroup;
 use Illuminate\Database\Eloquent\Collection;
 
-class FinalizeWeekStepFourAction
+class BuildCurrentWeekMinionSnapshotsAction
 {
     public function execute()
     {

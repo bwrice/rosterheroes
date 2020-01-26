@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Domain\Actions\WeekFinalizing\FinalizeWeekStepOneAction;
+use App\Domain\Actions\WeekFinalizing\FinalizeCurrentWeekPlayerGameLogsAction;
 use App\Domain\Models\Game;
 use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\Week;
@@ -17,14 +17,14 @@ use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
-class FinalizeWeekStepOneActionTest extends TestCase
+class FinalizeCurrentWeekPlayerGameLogsActionTest extends TestCase
 {
     use DatabaseTransactions;
 
     /** @var Week */
     protected $week;
 
-    /** @var FinalizeWeekStepOneAction */
+    /** @var FinalizeCurrentWeekPlayerGameLogsAction */
     protected $domainAction;
 
     /** @var PlayerSpirit */
@@ -59,7 +59,7 @@ class FinalizeWeekStepOneActionTest extends TestCase
             'week_id' => $this->week->id,
         ]);
         Date::setTestNow(CurrentWeek::finalizingStartsAt()->addMinutes(10));
-        $this->domainAction = app(FinalizeWeekStepOneAction::class);
+        $this->domainAction = app(FinalizeCurrentWeekPlayerGameLogsAction::class);
     }
 
     /**

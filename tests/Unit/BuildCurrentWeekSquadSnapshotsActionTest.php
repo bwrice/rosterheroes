@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Domain\Actions\WeekFinalizing\FinalizeWeekStepThreeAction;
+use App\Domain\Actions\WeekFinalizing\BuildCurrentWeekSquadSnapshotsAction;
 use App\Domain\Models\Hero;
 use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\Week;
@@ -14,7 +14,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
-class FinalizeWeekStepThreeActionTest extends TestCase
+class BuildCurrentWeekSquadSnapshotsActionTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -27,7 +27,7 @@ class FinalizeWeekStepThreeActionTest extends TestCase
     /** @var Hero */
     protected $heroTwo;
 
-    /** @var FinalizeWeekStepThreeAction */
+    /** @var BuildCurrentWeekSquadSnapshotsAction */
     protected $domainAction;
 
     public function setUp(): void
@@ -49,7 +49,7 @@ class FinalizeWeekStepThreeActionTest extends TestCase
             ])
         ]);
 
-        $this->domainAction = app(FinalizeWeekStepThreeAction::class);
+        $this->domainAction = app(BuildCurrentWeekSquadSnapshotsAction::class);
     }
 
     /**
