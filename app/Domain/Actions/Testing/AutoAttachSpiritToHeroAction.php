@@ -37,12 +37,14 @@ class AutoAttachSpiritToHeroAction
         $validPositionNames = $hero->heroRace->positions->pluck('name')->toArray();
 
         $validPlayerSpirits = $this->getValidPlayerSpirits($validPositionNames, $squad->heroes()->count(), $squad->spirit_essence);
-        $playerSpirit = $this->filterInUsePlayerSpirits($validPlayerSpirits, $squad)->first();
+        $filtered = $this->filterInUsePlayerSpirits($validPlayerSpirits, $squad);
 
-        if ($playerSpirit) {
+        if ($filtered->isNotEmpty()) {
+            $playerSpirit = $filtered->random();
             return $this->addSpiritToHeroAction->execute($hero, $playerSpirit);
+        } else {
+            return $hero;
         }
-        return $hero;
     }
 
     /**
@@ -56,11 +58,12 @@ class AutoAttachSpiritToHeroAction
         $maxEssenceCost = (int) floor($totalEssence/$heroesCount);
 
         return PlayerSpirit::query()
+            ->availableForSquad()
             ->forCurrentWeek()
             ->withPositions($validPositionNames)
             ->maxEssenceCost($maxEssenceCost)
             ->orderByDesc('essence_cost')
-            ->take($heroesCount)->get();
+            ->take(40)->get(); // Take 40 to pick randomly from
     }
 
     /**
