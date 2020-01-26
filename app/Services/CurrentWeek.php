@@ -63,7 +63,7 @@ class CurrentWeek
      */
     public function finalizingStartsAt()
     {
-        return WeekService::finalizingStartsAt($this->get());
+        return WeekService::finalizingStartsAt($this->adventuringLocksAt());
     }
 
     /**
@@ -95,6 +95,6 @@ class CurrentWeek
      */
     public function validGamePeriod()
     {
-        return WeekService::getValidGamePeriod($this->get());
+        return WeekService::getValidGamePeriod($this->adventuringLocksAt());
     }
 }

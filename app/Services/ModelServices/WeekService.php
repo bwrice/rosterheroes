@@ -5,6 +5,8 @@ namespace App\Services\ModelServices;
 
 
 use App\Domain\Models\Week;
+use Carbon\CarbonImmutable;
+use Carbon\CarbonInterface;
 use Carbon\CarbonPeriod;
 
 class WeekService
@@ -12,18 +14,22 @@ class WeekService
     public const FINALIZE_AFTER_ADVENTURING_CLOSED_HOURS = 16;
 
     /**
-     * @param Week $week
+     * @param CarbonInterface $adventuringLocksAt
      * @return CarbonPeriod
      */
-    public function getValidGamePeriod(Week $week)
+    public function getValidGamePeriod(CarbonInterface $adventuringLocksAt)
     {
-        $start = $week->adventuring_locks_at;
+        $start = $adventuringLocksAt->clone();
         $end = $start->addHours(self::FINALIZE_AFTER_ADVENTURING_CLOSED_HOURS - 4);
         return new CarbonPeriod($start, $end);
     }
 
-    public function finalizingStartsAt(Week $week)
+    /**
+     * @param CarbonInterface $adventuringLocksAt
+     * @return CarbonInterface
+     */
+    public function finalizingStartsAt(CarbonInterface $adventuringLocksAt)
     {
-        return $week->adventuring_locks_at->addHours(self::FINALIZE_AFTER_ADVENTURING_CLOSED_HOURS);
+        return $adventuringLocksAt->clone()->addHours(self::FINALIZE_AFTER_ADVENTURING_CLOSED_HOURS);
     }
 }

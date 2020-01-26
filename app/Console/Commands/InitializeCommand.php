@@ -41,7 +41,7 @@ class InitializeCommand extends Command
         $this->info("Initial Week Created!");
         $adventuringLocksDescription = $week->adventuring_locks_at->setTimezone('America/New_York')->shortRelativeDiffForHumans();
         $this->info("Adventuring Locks: " . $adventuringLocksDescription);
-        $finalizingStartsAtDescription = WeekService::finalizingStartsAt($week)->setTimezone('America/New_York')->shortRelativeDiffForHumans();
+        $finalizingStartsAtDescription = WeekService::finalizingStartsAt($week->adventuring_locks_at)->setTimezone('America/New_York')->shortRelativeDiffForHumans();
         $this->info("Adventuring Locks: " . $finalizingStartsAtDescription);
     }
 }

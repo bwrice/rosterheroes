@@ -78,7 +78,7 @@ class GameQueryBuilder extends Builder
 
     public function validForWeek(Week $week)
     {
-        return $this->withinPeriod(WeekService::getValidGamePeriod($week));
+        return $this->withinPeriod(WeekService::getValidGamePeriod($week->adventuring_locks_at));
     }
 
     public function validForCurrentWeek()
