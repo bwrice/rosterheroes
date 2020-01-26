@@ -13,7 +13,7 @@ use App\Domain\Models\HeroRace;
 use App\Domain\Models\Squad;
 use App\Jobs\AddTestHeroToTestSquadJob;
 
-class CreateTestSquadAction
+class CreateTestSquadsAction
 {
     /**
      * @var CreateUserAction

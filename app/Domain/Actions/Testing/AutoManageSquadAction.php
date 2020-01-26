@@ -38,6 +38,6 @@ class AutoManageSquadAction
     {
         return $squad->heroes->map(function (Hero $hero) {
             return new AutoManageHeroJob($hero);
-        });
+        })->shuffle(); // Shuffle to dispatch them in random order to increase variance is player spirits
     }
 }
