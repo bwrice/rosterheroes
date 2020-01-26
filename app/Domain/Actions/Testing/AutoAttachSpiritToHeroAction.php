@@ -5,13 +5,18 @@ namespace App\Domain\Actions\Testing;
 
 
 use App\Domain\Actions\AddSpiritToHeroAction;
+use App\Domain\Collections\HeroCollection;
 use App\Domain\Collections\PlayerSpiritCollection;
 use App\Domain\Models\Hero;
 use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\Squad;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
 
 class AutoAttachSpiritToHeroAction
 {
+    public const TOP_SPIRITS_TO_CONSIDER_COUNT = 40;
+
     /**
      * @var AddSpiritToHeroAction
      */
@@ -34,51 +39,63 @@ class AutoAttachSpiritToHeroAction
         }
 
         $squad = $hero->squad;
+        $squadHeroes = $squad->heroes()->with('playerSpirit')->get();
+        $maxEssenceCost = $this->getMaxEssenceCost($squadHeroes, $squad->spirit_essence);
+
         $validPositionNames = $hero->heroRace->positions->pluck('name')->toArray();
+        $baseQuery = $this->buildBaseQuery($squad, $validPositionNames, $maxEssenceCost);
 
-        $validPlayerSpirits = $this->getValidPlayerSpirits($validPositionNames, $squad->heroes()->count(), $squad->spirit_essence);
-        $filtered = $this->filterInUsePlayerSpirits($validPlayerSpirits, $squad);
+        if ($this->onlyLastHeroNeedsSpirit($squadHeroes)) {
+            // Get the highest essence cost spirit we can afford
+            $playerSpirit = $baseQuery->first();
+        } else {
+            $playerSpirit = $this->getRandomSpiritFromTopChoices($baseQuery);
+        }
 
-        if ($filtered->isNotEmpty()) {
-            $playerSpirit = $filtered->random();
+        if ($playerSpirit) {
             return $this->addSpiritToHeroAction->execute($hero, $playerSpirit);
         } else {
             return $hero;
         }
     }
 
-    /**
-     * @param array $validPositionNames
-     * @param int $heroesCount
-     * @param int $totalEssence
-     * @return PlayerSpiritCollection
-     */
-    protected function getValidPlayerSpirits(array $validPositionNames, int $heroesCount, int $totalEssence)
+    protected function getMaxEssenceCost(Collection $squadHeroes, int $squadSpiritEssence)
     {
-        $maxEssenceCost = (int) floor($totalEssence/$heroesCount);
+        if ($this->onlyLastHeroNeedsSpirit($squadHeroes)) {
+            // If last hero, return essence remaining for squad
+            $essenceUsed = $squadHeroes->sum(function (Hero $hero) {
+                if ($hero->player_spirit_id) {
+                    return $hero->playerSpirit->essence_cost;
+                }
+                return 0;
+            });
+            return $squadSpiritEssence - $essenceUsed;
+        } else {
+            // If multiple heroes need player spirits, divide essence cost evenly among heroes
+            return (int) floor($squadSpiritEssence / $squadHeroes->count());
+        }
+    }
 
+    protected function onlyLastHeroNeedsSpirit(Collection $squadHeroes)
+    {
+        $heroesMissingSpirits = $squadHeroes->filter(function (Hero $hero) {
+            return is_null($hero->player_spirit_id);
+        });
+        return 1 === $heroesMissingSpirits->count();
+    }
+
+    protected function buildBaseQuery(Squad $squad, array $validPositionNames, int $maxEssenceCost)
+    {
         return PlayerSpirit::query()
-            ->availableForSquad()
+            ->availableForSquad($squad)
             ->forCurrentWeek()
             ->withPositions($validPositionNames)
             ->maxEssenceCost($maxEssenceCost)
-            ->orderByDesc('essence_cost')
-            ->take(40)->get(); // Take 40 to pick randomly from
+            ->orderByDesc('essence_cost');
     }
 
-    /**
-     * @param PlayerSpiritCollection $playerSpirits
-     * @param Squad $squad
-     * @return PlayerSpiritCollection
-     */
-    protected function filterInUsePlayerSpirits(PlayerSpiritCollection $playerSpirits, Squad $squad)
+    protected function getRandomSpiritFromTopChoices(Builder $baseQuery)
     {
-        $heroes = $squad->heroes;
-        return $playerSpirits->filter(function (PlayerSpirit $playerSpirit) use ($heroes) {
-            $inUse = $heroes->first(function (Hero $hero) use ($playerSpirit) {
-                return $hero->player_spirit_id === $playerSpirit->id;
-            });
-            return is_null($inUse);
-        });
+        return $baseQuery->take(self::TOP_SPIRITS_TO_CONSIDER_COUNT)->inRandomOrder()->first();
     }
 }
