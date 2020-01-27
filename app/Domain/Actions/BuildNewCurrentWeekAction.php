@@ -12,13 +12,12 @@ use Carbon\CarbonInterface;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Str;
 
-class BuildNewCurrentWeekAction implements FinalizeWeekDomainAction
+class BuildNewCurrentWeekAction
 {
     /**
-     * @param int|null $step
      * @return Week
      */
-    public function execute(?int $step)
+    public function execute(): Week
     {
         $now = Date::now();
         if ($now->dayOfWeek >= CarbonInterface::WEDNESDAY) {
