@@ -10,9 +10,9 @@ use App\Exceptions\FinalizeWeekException;
 use App\Jobs\FinalizeWeekStepThreeJob;
 use App\Jobs\UpdatePlayerSpiritEnergiesJob;
 
-class FinalizeCurrentWeekSpiritEnergiesAction
+class FinalizeCurrentWeekSpiritEnergiesAction implements FinalizeWeekDomainAction
 {
-    public function execute()
+    public function execute(int $step)
     {
         $week = Week::current();
         $count = Game::query()->withPlayerSpiritsForWeeks([$week->id])->isFinalized(false)->count();

@@ -10,9 +10,9 @@ use App\Jobs\SetupNextWeekJob;
 use Bwrice\LaravelJobChainGroups\Jobs\ChainGroup;
 use Illuminate\Database\Eloquent\Collection;
 
-class BuildCurrentWeekTitanSnapshotsAction
+class BuildCurrentWeekTitanSnapshotsAction implements FinalizeWeekDomainAction
 {
-    public function execute()
+    public function execute(int $step)
     {
         $buildSnapshotJobs = collect();
         Titan::query()->chunk(100, function (Collection $titans) use (&$buildSnapshotJobs) {

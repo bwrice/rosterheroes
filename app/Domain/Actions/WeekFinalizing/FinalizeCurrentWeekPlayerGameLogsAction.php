@@ -11,9 +11,9 @@ use App\Jobs\FinalizeWeekStepTwoJob;
 use App\Jobs\UpdatePlayerGameLogsJob;
 use Bwrice\LaravelJobChainGroups\Jobs\ChainGroup;
 
-class FinalizeCurrentWeekPlayerGameLogsAction
+class FinalizeCurrentWeekPlayerGameLogsAction implements FinalizeWeekDomainAction
 {
-    public function execute()
+    public function execute(int $step)
     {
         if (! CurrentWeek::finalizing()) {
             throw new FinalizeWeekException(CurrentWeek::get(), "Week is not ready to be finalized", FinalizeWeekException::INVALID_TIME_TO_FINALIZE);

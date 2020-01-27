@@ -10,9 +10,9 @@ use App\Jobs\FinalizeWeekStepFourJob;
 use Bwrice\LaravelJobChainGroups\Jobs\ChainGroup;
 use Illuminate\Database\Eloquent\Collection;
 
-class BuildCurrentWeekSquadSnapshotsAction
+class BuildCurrentWeekSquadSnapshotsAction implements FinalizeWeekDomainAction
 {
-    public function execute()
+    public function execute(int $step)
     {
         $chainGroup = ChainGroup::create([], [
             new FinalizeWeekStepFourJob()
