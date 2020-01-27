@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use App\Domain\Actions\WeekFinalizing\BuildCurrentWeekMinionSnapshotsAction;
 use App\Domain\Models\Minion;
 use App\Jobs\BuildMinionSnapshotJob;
+use App\Jobs\FinalizeWeekJob;
 use App\Jobs\FinalizeWeekStepFiveJob;
 use Bwrice\LaravelJobChainGroups\Jobs\AsyncChainedJob;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -33,12 +34,14 @@ class BuildCurrentWeekMinionSnapshotsActionTest extends TestCase
     {
         Queue::fake();
 
-        $this->domainAction->execute();
+        $step = random_int(1, 10);
+        $nextStep = $step + 1;
+        $this->domainAction->execute($step);
 
         Queue::assertPushed(AsyncChainedJob::class, Minion::query()->count());
 
         Queue::assertPushedWithChain(AsyncChainedJob::class, [
-            FinalizeWeekStepFiveJob::class
+            new FinalizeWeekJob($nextStep)
         ]);
     }
 }

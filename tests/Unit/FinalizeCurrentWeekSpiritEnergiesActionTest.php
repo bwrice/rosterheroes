@@ -7,7 +7,7 @@ use App\Domain\Models\Game;
 use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\Week;
 use App\Exceptions\FinalizeWeekException;
-use App\Jobs\FinalizeWeekStepThreeJob;
+use App\Jobs\FinalizeWeekJob;
 use App\Jobs\UpdatePlayerSpiritEnergiesJob;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -71,7 +71,8 @@ class FinalizeCurrentWeekSpiritEnergiesActionTest extends TestCase
         $this->gameOne->save();
 
         try {
-            $this->domainAction->execute();
+            $step = random_int(1, 10);
+            $this->domainAction->execute($step);
         } catch (FinalizeWeekException $exception) {
             $this->assertEquals(FinalizeWeekException::CODE_GAMES_NOT_FINALIZED, $exception->getCode());
             return;
@@ -86,10 +87,13 @@ class FinalizeCurrentWeekSpiritEnergiesActionTest extends TestCase
     {
         Queue::fake();
 
-        $this->domainAction->execute();
+        $step = random_int(1, 10);
+        $nextStep = $step + 1;
+
+        $this->domainAction->execute($step);
 
         Queue::assertPushedWithChain(UpdatePlayerSpiritEnergiesJob::class, [
-            FinalizeWeekStepThreeJob::class
+            new FinalizeWeekJob($nextStep)
         ]);
     }
 }

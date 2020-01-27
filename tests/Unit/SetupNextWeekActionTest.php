@@ -28,9 +28,10 @@ class SetupNextWeekActionTest extends TestCase
 
         /** @var SetupNextWeekAction $domainAction */
         $domainAction = app(SetupNextWeekAction::class);
+        $step = random_int(1,10); //setup next week is final step, so current step doesn't matter
 
         try {
-            $domainAction->execute();
+            $domainAction->execute($step);
         } catch (BuildNextWeekException $exception) {
             $this->assertEquals(BuildNextWeekException::CODE_INVALID_CURRENT_WEEK, $exception->getCode());
             return;
@@ -50,6 +51,7 @@ class SetupNextWeekActionTest extends TestCase
 
         /** @var SetupNextWeekAction $domainAction */
         $domainAction = app(SetupNextWeekAction::class);
-        $domainAction->execute();
+        $step = random_int(1,10); //setup next week is final step, so current step doesn't matter
+        $domainAction->execute($step);
     }
 }

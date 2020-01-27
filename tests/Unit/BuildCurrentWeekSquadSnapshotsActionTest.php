@@ -6,7 +6,7 @@ use App\Domain\Actions\WeekFinalizing\BuildCurrentWeekSquadSnapshotsAction;
 use App\Domain\Models\Hero;
 use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\Week;
-use App\Jobs\FinalizeWeekStepFourJob;
+use App\Jobs\FinalizeWeekJob;
 use Bwrice\LaravelJobChainGroups\Jobs\AsyncChainedJob;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -59,7 +59,10 @@ class BuildCurrentWeekSquadSnapshotsActionTest extends TestCase
     {
         Queue::fake();
 
-        $this->domainAction->execute();
+        $step = random_int(1, 10);
+        $nextStep = $step + 1;
+
+        $this->domainAction->execute($step);
 
         foreach ([
                      $this->heroOne,
@@ -67,7 +70,7 @@ class BuildCurrentWeekSquadSnapshotsActionTest extends TestCase
                  ] as $hero) {
 
             Queue::assertPushedWithChain(AsyncChainedJob::class, [
-                FinalizeWeekStepFourJob::class
+                new FinalizeWeekJob($nextStep)
             ], function (AsyncChainedJob $chainedJob) use ($hero) {
                 return $chainedJob->getDecoratedJob()->squad->id === $hero->squad_id;
             });

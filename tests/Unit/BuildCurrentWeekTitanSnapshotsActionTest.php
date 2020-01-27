@@ -6,6 +6,7 @@ use App\Domain\Actions\WeekFinalizing\BuildCurrentWeekTitanSnapshotsAction;
 use App\Domain\Actions\WeekFinalizing\BuildCurrentWeekMinionSnapshotsAction;
 use App\Domain\Models\Minion;
 use App\Domain\Models\Titan;
+use App\Jobs\FinalizeWeekJob;
 use App\Jobs\FinalizeWeekStepFiveJob;
 use App\Jobs\SetupNextWeekJob;
 use Bwrice\LaravelJobChainGroups\Jobs\AsyncChainedJob;
@@ -33,12 +34,15 @@ class BuildCurrentWeekTitanSnapshotsActionTest extends TestCase
     {
         Queue::fake();
 
-        $this->domainAction->execute();
+        $step = random_int(1, 10);
+        $nextStep = $step + 1;
+
+        $this->domainAction->execute($step);
 
         Queue::assertPushed(AsyncChainedJob::class, Titan::query()->count());
 
         Queue::assertPushedWithChain(AsyncChainedJob::class, [
-            SetupNextWeekJob::class
+            new FinalizeWeekJob($nextStep)
         ]);
     }
 }

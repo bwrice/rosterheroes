@@ -8,6 +8,7 @@ use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\Week;
 use App\Exceptions\FinalizeWeekException;
 use App\Facades\CurrentWeek;
+use App\Jobs\FinalizeWeekJob;
 use App\Jobs\FinalizeWeekStepTwoJob;
 use Bwrice\LaravelJobChainGroups\Jobs\AsyncChainedJob;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -70,7 +71,8 @@ class FinalizeCurrentWeekPlayerGameLogsActionTest extends TestCase
         CurrentWeek::partialMock()->shouldReceive('finalizing')->andReturn(false);
 
         try {
-            $this->domainAction->execute();
+            $step = random_int(1, 10);
+            $this->domainAction->execute($step);
         } catch (FinalizeWeekException $exception) {
             $this->assertEquals(FinalizeWeekException::INVALID_TIME_TO_FINALIZE, $exception->getCode());
             return;
@@ -86,7 +88,10 @@ class FinalizeCurrentWeekPlayerGameLogsActionTest extends TestCase
     {
         Queue::fake();
 
-        $this->domainAction->execute();
+        $step = random_int(1, 10);
+        $nextStep = $step + 1;
+
+        $this->domainAction->execute($step);
 
         foreach ([
             $this->playerSpiritOne,
@@ -94,7 +99,7 @@ class FinalizeCurrentWeekPlayerGameLogsActionTest extends TestCase
                  ] as $playerSpirit) {
 
             Queue::assertPushedWithChain(AsyncChainedJob::class, [
-                FinalizeWeekStepTwoJob::class
+                new FinalizeWeekJob($nextStep)
             ], function (AsyncChainedJob $chainedJob) use ($playerSpirit) {
                 return $chainedJob->getDecoratedJob()->getGame()->id === $playerSpirit->game_id;
             });
