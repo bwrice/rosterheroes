@@ -7,6 +7,7 @@ namespace App\Domain\Actions\WeekFinalizing;
 use App\Domain\Models\Game;
 use App\Domain\Models\Week;
 use App\Exceptions\FinalizeWeekException;
+use App\Jobs\FinalizeWeekJob;
 use App\Jobs\FinalizeWeekStepThreeJob;
 use App\Jobs\UpdatePlayerSpiritEnergiesJob;
 
@@ -21,7 +22,7 @@ class FinalizeCurrentWeekSpiritEnergiesAction implements FinalizeWeekDomainActio
         }
 
         UpdatePlayerSpiritEnergiesJob::withChain([
-            new FinalizeWeekStepThreeJob()
+            new FinalizeWeekJob($step + 1)
         ])->dispatch();
     }
 }
