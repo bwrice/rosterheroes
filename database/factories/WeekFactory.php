@@ -37,7 +37,7 @@ $factory->afterCreatingState(Week::class, 'as-current', function(Week $week, Fak
 $factory->afterCreatingState(Week::class, 'finalizing', function (Week $week, Faker $faker) {
     $now = Date::now();
     $finalizingStartsAt =  \App\Facades\WeekService::finalizingStartsAt($now);
-    $diffHours = $now->hoursUntil($finalizingStartsAt);
+    $diffHours = $now->diffInHours($finalizingStartsAt);
     $week->adventuring_locks_at = $now->subHours($diffHours + 1);
     $week->save();
 });
