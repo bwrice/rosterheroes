@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static array notReadyReasons(Hero $hero)
  * @method static bool combatUnReadyReasons(Hero $hero)
  *
- * @see \App\Services\HeroService
+ * @see \App\Services\ModelServices\HeroService
  */
 class HeroService extends Facade
 {

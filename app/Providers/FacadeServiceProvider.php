@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use App\Services\CurrentWeek;
-use App\Services\HeroService;
+use App\Services\ModelServices\HeroService;
 use App\Services\ModelServices\WeekService;
 use Illuminate\Support\ServiceProvider;
 
