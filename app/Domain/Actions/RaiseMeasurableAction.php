@@ -7,6 +7,7 @@ namespace App\Domain\Actions;
 use App\Aggregates\MeasurableAggregate;
 use App\Domain\Models\Measurable;
 use App\Exceptions\RaiseMeasurableException;
+use App\Facades\CurrentWeek;
 
 class RaiseMeasurableAction
 {
@@ -19,6 +20,10 @@ class RaiseMeasurableAction
      */
     public function execute(Measurable $measurable, int $amount): Measurable
     {
+        if (CurrentWeek::adventuringLocked()) {
+            $code = RaiseMeasurableException::CODE_WEEK_LOCKED;
+            throw new RaiseMeasurableException($measurable, $amount, "Week is currently locked", $code);
+        }
         if ($amount < 1) {
             $message =  "Raise amount must be positive. " . $amount . " given.";
             $code = RaiseMeasurableException::CODE_NON_POSITIVE_NUMBER;
