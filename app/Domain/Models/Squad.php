@@ -20,6 +20,7 @@ use App\Domain\Collections\HeroPostCollection;
 use App\Domain\Interfaces\HasSlots;
 use App\Domain\Collections\SlotCollection;
 use App\Domain\Traits\HasNameSlug;
+use App\Facades\SquadService;
 use App\Http\Resources\MobileStorageResource;
 use App\Http\Resources\SquadResource;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -464,9 +465,6 @@ class Squad extends EventSourcedModel implements HasItems
 
     public function combatReady()
     {
-        $readyHero = $this->heroes->first(function (Hero $hero) {
-            return $hero->combatReady();
-        });
-        return ! is_null($readyHero);
+        return SquadService::combatReady($this);
     }
 }
