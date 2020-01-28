@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Facade;
  * Class HeroCombat
  * @package App\Facades
  *
- * @method static bool ready(Hero $hero)
+ * @method static array notReadyReasons(Hero $hero)
  */
 class HeroCombat extends Facade
 {

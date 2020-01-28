@@ -16,6 +16,7 @@ use App\Domain\Models\Support\GearSlots\GearSlotFactory;
 use App\Domain\QueryBuilders\HeroQueryBuilder;
 use App\Domain\Traits\HasNameSlug;
 use App\Domain\Collections\HeroCollection;
+use App\Facades\HeroCombat;
 use App\Http\Resources\HeroResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -348,11 +349,7 @@ class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasItems
 
     public function notCombatReadyReasons(): array
     {
-        $reasons = [];
-        if (! $this->playerSpirit) {
-            $reasons['player_spirit'] = "No player spirit";
-        }
-        return $reasons;
+        return HeroCombat::notReadyReasons($this);
     }
 
     public function combatReady()
