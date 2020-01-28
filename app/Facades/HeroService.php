@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Facade;
  * @package App\Facades
  *
  * @method static array notReadyReasons(Hero $hero)
- * @method static bool readyForCombat(Hero $hero)
+ * @method static bool combatUnReadyReasons(Hero $hero)
  *
  * @see \App\Services\HeroService
  */

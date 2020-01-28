@@ -354,7 +354,6 @@ class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasItems
 
     public function combatReady()
     {
-        $count = count($this->notCombatReadyReasons());
-        return  $count === 0;
+        return HeroService::combatUnReadyReasons($this);
     }
 }
