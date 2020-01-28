@@ -9,8 +9,9 @@ use Throwable;
 
 class RaiseMeasurableException extends \Exception
 {
-    public const CODE_NON_POSITIVE_NUMBER = 1;
-    public const INSUFFICIENT_EXPERIENCE = 2;
+    public const CODE_WEEK_LOCKED = 1;
+    public const CODE_NON_POSITIVE_NUMBER = 2;
+    public const INSUFFICIENT_EXPERIENCE = 3;
 
     /**
      * @var Measurable
