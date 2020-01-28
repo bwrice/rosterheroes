@@ -9,13 +9,14 @@ use App\Domain\Models\HeroPost;
 use App\Domain\Models\Measurable;
 use App\Domain\Models\MeasurableType;
 use App\Exceptions\RaiseMeasurableException;
+use App\Facades\CurrentWeek;
 use App\Nova\HeroClass;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class RaiseMeasurableTest extends TestCase
+class RaiseMeasurableActionTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -38,8 +39,28 @@ class RaiseMeasurableTest extends TestCase
     /**
      * @test
      */
+    public function raising_measurable_when_week_is_locked_will_throw_an_exception()
+    {
+        CurrentWeek::partialMock()->shouldReceive('adventuringLocked')->andReturn(true);
+        /** @var Measurable $measurable */
+        $measurable = $this->hero->measurables()->inRandomOrder()->first();
+        try {
+            /** @var RaiseMeasurableAction $domainAction */
+            $domainAction = app(RaiseMeasurableAction::class);
+            $domainAction->execute($measurable, 1);
+        } catch (RaiseMeasurableException $exception) {
+            $this->assertEquals(RaiseMeasurableException::CODE_WEEK_LOCKED, $exception->getCode());
+            return;
+        }
+        $this->fail("Exception not thrown");
+    }
+
+    /**
+     * @test
+     */
     public function it_will_throw_an_exception_if_the_amount_is_not_positive()
     {
+        CurrentWeek::partialMock()->shouldReceive('adventuringLocked')->andReturn(false);
         $agilityMeasurable = $this->hero->getMeasurable(MeasurableType::AGILITY);
         $startingAmount = $agilityMeasurable->amount_raised;
         foreach ([-5, 0] as $amount) {
@@ -55,11 +76,13 @@ class RaiseMeasurableTest extends TestCase
             $this->fail("Exception not thrown");
         }
     }
+
     /**
      * @test
      */
     public function it_will_throw_an_exception_if_the_experience_cost_is_too_high()
     {
+        CurrentWeek::partialMock()->shouldReceive('adventuringLocked')->andReturn(false);
         $staminaMeasurable = $this->hero->getMeasurable(MeasurableType::STAMINA);
         $startingAmount = $staminaMeasurable->amount_raised;
 
@@ -88,6 +111,7 @@ class RaiseMeasurableTest extends TestCase
      */
     public function it_will_raise_a_measurable_for_a_hero()
     {
+        CurrentWeek::partialMock()->shouldReceive('adventuringLocked')->andReturn(false);
         // Give squad plenty of experience
         $squad = $this->hero->squad;
         $squad->experience = 999999;
