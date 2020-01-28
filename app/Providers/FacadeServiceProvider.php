@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Services\CurrentWeek;
 use App\Services\ModelServices\HeroService;
+use App\Services\ModelServices\SquadService;
 use App\Services\ModelServices\WeekService;
 use Illuminate\Support\ServiceProvider;
 
@@ -18,6 +19,9 @@ class FacadeServiceProvider extends ServiceProvider
     {
         $this->app->bind('current-week', function () {
             return new CurrentWeek();
+        });
+        $this->app->bind('squad-service', function () {
+            return new SquadService();
         });
         $this->app->bind('hero-service', function () {
             return new HeroService();
