@@ -16,8 +16,8 @@ use App\Domain\Models\Support\GearSlots\GearSlotFactory;
 use App\Domain\QueryBuilders\HeroQueryBuilder;
 use App\Domain\Traits\HasNameSlug;
 use App\Domain\Collections\HeroCollection;
-use App\Facades\HeroCombat;
 use App\Http\Resources\HeroResource;
+use App\Facades\HeroService;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
@@ -349,11 +349,12 @@ class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasItems
 
     public function notCombatReadyReasons(): array
     {
-        return HeroCombat::notReadyReasons($this);
+        return HeroService::notReadyReasons($this);
     }
 
     public function combatReady()
     {
-        return count($this->notCombatReadyReasons()) === 0;
+        $count = count($this->notCombatReadyReasons());
+        return  $count === 0;
     }
 }

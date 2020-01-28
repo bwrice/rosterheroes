@@ -12,8 +12,11 @@ use Illuminate\Support\Facades\Facade;
  * @package App\Facades
  *
  * @method static array notReadyReasons(Hero $hero)
+ * @method static bool readyForCombat(Hero $hero)
+ *
+ * @see \App\Services\HeroService
  */
-class HeroCombat extends Facade
+class HeroService extends Facade
 {
     protected static function getFacadeAccessor()
     {

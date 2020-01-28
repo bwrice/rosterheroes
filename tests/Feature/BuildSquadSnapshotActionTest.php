@@ -9,7 +9,7 @@ use App\Domain\Models\Squad;
 use App\Domain\Models\Week;
 use App\Exceptions\BuildSquadSnapshotException;
 use App\Facades\CurrentWeek;
-use App\Facades\HeroCombat;
+use App\Facades\HeroService;
 use App\Domain\Models\SquadSnapshot;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -64,7 +64,7 @@ class BuildSquadSnapshotActionTest extends TestCase
     public function it_will_throw_an_exception_if_current_week_is_not_ready_for_finalizing()
     {
         CurrentWeek::partialMock()->shouldReceive('finalizing')->andReturn(false);
-        HeroCombat::partialMock()->shouldReceive('ready')->andReturn(true);
+        HeroService::partialMock()->shouldReceive('ready')->andReturn(true);
         try {
             $this->domainAction->execute($this->squad->fresh());
         } catch (BuildSquadSnapshotException $exception) {
@@ -80,7 +80,7 @@ class BuildSquadSnapshotActionTest extends TestCase
     public function it_will_create_a_squad_snapshot()
     {
         CurrentWeek::partialMock()->shouldReceive('finalizing')->andReturn(true);
-        HeroCombat::partialMock()->shouldReceive('ready')->andReturn(true);
+        HeroService::partialMock()->shouldReceive('ready')->andReturn(true);
         // execute should only be called once for heroOne
         $mock = \Mockery::mock(BuildHeroSnapshotAction::class)->shouldReceive('execute')->times(3)->getMock();
         app()->instance(BuildHeroSnapshotAction::class, $mock);
@@ -99,7 +99,7 @@ class BuildSquadSnapshotActionTest extends TestCase
     {
         CurrentWeek::partialMock()->shouldReceive('finalizing')->andReturn(true);
         // Mock only heroOne to be combat ready
-        HeroCombat::partialMock()->shouldReceive('ready')->times(3)->andReturnUsing(function (Hero $hero) {
+        HeroService::partialMock()->shouldReceive('ready')->times(3)->andReturnUsing(function (Hero $hero) {
             if ($hero->id === $this->heroOne->id) {
                 return true;
             } else {
@@ -121,7 +121,7 @@ class BuildSquadSnapshotActionTest extends TestCase
     public function it_will_throw_an_exception_if_no_heroes_are_combat_ready()
     {
         CurrentWeek::partialMock()->shouldReceive('finalizing')->andReturn(true);
-        HeroCombat::partialMock()->shouldReceive('ready')->andReturn(false);
+        HeroService::partialMock()->shouldReceive('ready')->andReturn(false);
         try {
             $this->domainAction->execute($this->squad);
         } catch (BuildSquadSnapshotException $exception) {
