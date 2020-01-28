@@ -20,6 +20,6 @@ class HeroService extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'hero-combat';
+        return 'hero-service';
     }
 }
