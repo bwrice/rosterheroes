@@ -11,7 +11,6 @@ class SquadService
 {
     public function combatReady(Squad $squad)
     {
-        return false;
         $readyHero = $squad->heroes->first(function (Hero $hero) {
             return $hero->combatReady();
         });
