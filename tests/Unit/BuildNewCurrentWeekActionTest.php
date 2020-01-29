@@ -4,7 +4,7 @@ namespace Tests\Unit;
 
 use App\Domain\Actions\BuildNewCurrentWeekAction;
 use App\Facades\CurrentWeek;
-use App\Jobs\FinalizeWeekStepOneJob;
+use App\Jobs\FinalizeWeekJob;
 use Carbon\CarbonInterface;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -73,6 +73,8 @@ class BuildNewCurrentWeekActionTest extends TestCase
     */
     public function the_week_returned_will_be_the_new_current_week()
     {
+        // Set now to the future so the week built is the latest/current week
+        Date::setTestNow(Date::now()->addDays(100));
         /** @var BuildNewCurrentWeekAction $domainAction */
         $domainAction = app(BuildNewCurrentWeekAction::class);
         $week = $domainAction->execute();
@@ -88,11 +90,11 @@ class BuildNewCurrentWeekActionTest extends TestCase
         /** @var BuildNewCurrentWeekAction $domainAction */
         $domainAction = app(BuildNewCurrentWeekAction::class);
         $domainAction->execute();
-        Queue::assertPushed(FinalizeWeekStepOneJob::class, 1);
-        Queue::assertPushed(FinalizeWeekStepOneJob::class, function (FinalizeWeekStepOneJob $job) {
+        Queue::assertPushed(FinalizeWeekJob::class, 1);
+        Queue::assertPushed(FinalizeWeekJob::class, function (FinalizeWeekJob $job) {
             /** @var CarbonInterface $delay */
             $delay = $job->delay;
-            return $delay->timestamp === CurrentWeek::finalizingStartsAt()->timestamp;
+            return ($delay->timestamp === CurrentWeek::finalizingStartsAt()->timestamp) && ($job->step === 1);
         });
     }
 }
