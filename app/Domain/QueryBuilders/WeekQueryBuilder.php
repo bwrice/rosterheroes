@@ -25,6 +25,6 @@ class WeekQueryBuilder extends Builder
      */
     public function current()
     {
-        return $this->whereNotNull('made_current_at')->orderBy('made_current_at')->first();
+        return $this->whereNotNull('made_current_at')->orderByDesc('made_current_at')->first();
     }
 }
