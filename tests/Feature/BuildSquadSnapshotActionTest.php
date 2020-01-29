@@ -44,7 +44,7 @@ class BuildSquadSnapshotActionTest extends TestCase
     {
         parent::setUp();
 
-        $this->week = factory(Week::class)->state('as-current')->create();
+        $this->week = factory(Week::class)->states('as-current', 'finalizing')->create();
         $this->squad = factory(Squad::class)->create();
         $this->heroOne = factory(Hero::class)->create([
             'squad_id' => $this->squad->id
@@ -80,7 +80,6 @@ class BuildSquadSnapshotActionTest extends TestCase
     */
     public function it_will_create_a_squad_snapshot()
     {
-        CurrentWeek::partialMock()->shouldReceive('finalizing')->andReturn(true);
         SquadService::partialMock()->shouldReceive('combatReady')->andReturn(true);
 
         $squadSnapshot = $this->domainAction->execute($this->squad);
@@ -93,7 +92,6 @@ class BuildSquadSnapshotActionTest extends TestCase
     */
     public function it_will_execute_build_hero_snapshot_action_for_combat_ready_heroes()
     {
-        CurrentWeek::partialMock()->shouldReceive('finalizing')->andReturn(true);
         SquadService::partialMock()->shouldReceive('combatReady')->andReturn(true);
         // Mock only heroOne to be combat ready
         HeroService::partialMock()->shouldReceive('combatReady')->times(3)->andReturnUsing(function (Hero $hero) {
@@ -117,7 +115,6 @@ class BuildSquadSnapshotActionTest extends TestCase
     */
     public function it_will_throw_an_exception_if_squad_is_not_combat_ready()
     {
-        CurrentWeek::partialMock()->shouldReceive('finalizing')->andReturn(true);
         SquadService::partialMock()->shouldReceive('combatReady')->andReturn(false);
         try {
             $this->domainAction->execute($this->squad);
@@ -126,5 +123,21 @@ class BuildSquadSnapshotActionTest extends TestCase
             return;
         }
         $this->fail("Exception not thrown");
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_return_the_current_week_snapshot_for_squad_if_it_exists()
+    {
+        SquadService::partialMock()->shouldReceive('combatReady')->andReturn(true);
+        $existingSnapshot = factory(SquadSnapshot::class)->create([
+            'squad_id' => $this->squad->id,
+            'week_id' => $this->week->id
+        ]);
+
+        $snapshot = $this->domainAction->execute($this->squad);
+
+        $this->assertEquals($existingSnapshot->id, $snapshot->id);
     }
 }
