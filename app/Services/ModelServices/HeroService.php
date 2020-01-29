@@ -23,7 +23,7 @@ class HeroService
         return $reasons;
     }
 
-    public function readyForCombat(Hero $hero)
+    public function combatReady(Hero $hero)
     {
         return count($this->combatUnReadyReasons($hero)) === 0;
     }
