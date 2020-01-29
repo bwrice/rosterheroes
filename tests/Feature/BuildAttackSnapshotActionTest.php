@@ -43,4 +43,21 @@ class BuildAttackSnapshotActionTest extends TestCase
         $this->assertEquals($this->attack->id, $attackSnapshot->attack_id);
         $this->assertEquals($this->week->id, $attackSnapshot->week_id);
     }
+
+    /**
+     * @test
+     */
+    public function it_will_return_an_existing_snapshot_for_the_attack_and_current_week()
+    {
+        /** @var AttackSnapshot $existing */
+        $existing = factory(AttackSnapshot::class)->create([
+            'attack_id' => $this->attack->id,
+            'week_id' => $this->week->id
+        ]);
+
+        /** @var AttackSnapshot $attackSnapshot */
+        $attackSnapshot = $this->domainAction->execute($this->attack);
+        $this->assertEquals($existing->id, $attackSnapshot->id);
+
+    }
 }
