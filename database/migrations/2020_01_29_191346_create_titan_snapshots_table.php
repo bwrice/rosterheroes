@@ -17,6 +17,7 @@ class CreateTitanSnapshotsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('titan_id')->unsigned();
             $table->integer('week_id')->unsigned();
+            $table->unique(['titan_id', 'week_id']);
             $table->json('data');
             $table->timestamps();
         });

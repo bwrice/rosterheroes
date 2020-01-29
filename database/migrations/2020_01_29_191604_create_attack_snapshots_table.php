@@ -17,6 +17,7 @@ class CreateAttackSnapshotsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('attack_id')->unsigned();
             $table->integer('week_id')->unsigned();
+            $table->unique(['attack_id', 'week_id']);
             $table->json('data');
             $table->timestamps();
         });

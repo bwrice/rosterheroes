@@ -17,6 +17,7 @@ class CreateMinionSnapshotsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('minion_id')->unsigned();
             $table->integer('week_id')->unsigned();
+            $table->unique(['minion_id', 'week_id']);
             $table->json('data');
             $table->timestamps();
         });

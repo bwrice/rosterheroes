@@ -17,6 +17,7 @@ class CreateSquadSnapshotsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('squad_id')->unsigned();
             $table->integer('week_id')->unsigned();
+            $table->unique(['squad_id', 'week_id']);
             $table->json('data');
             $table->timestamps();
         });
