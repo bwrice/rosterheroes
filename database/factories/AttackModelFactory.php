@@ -6,7 +6,7 @@ use Faker\Generator as Faker;
 
 $factory->define(\App\Domain\Models\Attack::class, function (Faker $faker) {
     return [
-        'name' => 'Factory Attack',
+        'name' => 'Factory Attack ' . random_int(1, 999999),
         'attacker_position_id' => function() {
             return \App\Domain\Models\CombatPosition::query()->inRandomOrder()->first()->id;
         },
