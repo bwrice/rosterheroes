@@ -34,6 +34,7 @@ class BuildHeroSnapshotAction
         $heroSnapshot = HeroSnapshot::query()->create([
             'squad_snapshot_id' => $this->squadSnapshot->id,
             'hero_id' => $this->hero->id,
+            'player_spirit_id' => $this->hero->player_spirit_id,
             'data' => []
         ]);
 
