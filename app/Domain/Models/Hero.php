@@ -349,11 +349,11 @@ class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasItems
 
     public function notCombatReadyReasons(): array
     {
-        return HeroService::notReadyReasons($this);
+        return HeroService::combatUnReadyReasons($this);
     }
 
     public function combatReady()
     {
-        return HeroService::combatUnReadyReasons($this);
+        return HeroService::combatReady($this);
     }
 }

@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\Facade;
  * Class HeroCombat
  * @package App\Facades
  *
- * @method static array notReadyReasons(Hero $hero)
- * @method static bool combatUnReadyReasons(Hero $hero)
+ * @method static array combatUnReadyReasons(Hero $hero)
+ * @method static bool combatReady(Hero $hero)
  *
  * @see \App\Services\ModelServices\HeroService
  */
