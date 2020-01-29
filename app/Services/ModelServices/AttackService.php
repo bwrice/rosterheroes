@@ -12,4 +12,9 @@ class AttackService
     {
         return Attack::all();
     }
+
+    public function query()
+    {
+        return Attack::query();
+    }
 }
