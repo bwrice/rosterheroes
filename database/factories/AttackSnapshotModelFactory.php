@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factory;
 
 $factory->define(AttackSnapshot::class, function (Faker $faker) {
     return [
-        'squad_id' => function () {
+        'attack_id' => function () {
             return factory(Attack::class)->create()->id;
         },
         'week_id' => function () {
