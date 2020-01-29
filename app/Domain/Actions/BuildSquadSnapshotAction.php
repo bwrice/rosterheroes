@@ -30,6 +30,15 @@ class BuildSquadSnapshotAction
     public function execute(Squad $squad): SquadSnapshot
     {
         $this->squad = $squad;
+        /** @var SquadSnapshot $existingSnapshot|null */
+        $existingSnapshot = SquadSnapshot::query()
+            ->where('squad_id', '=', $squad->id)
+            ->where('week_id', '=', CurrentWeek::id())->first();
+
+        if ($existingSnapshot) {
+            return $existingSnapshot;
+        }
+
         if (! CurrentWeek::finalizing()) {
             throw new BuildSquadSnapshotException($this->squad, "Week not in finalizing state", BuildSquadSnapshotException::CODE_WEEK_NOT_FINALIZED);
         }
