@@ -8,8 +8,9 @@ use App\Domain\Models\Hero;
 use App\Domain\Models\Squad;
 use App\Exceptions\BuildSquadSnapshotException;
 use App\Facades\CurrentWeek;
-use App\Facades\HeroCombat;
+use App\Facades\HeroService;
 use App\Domain\Models\SquadSnapshot;
+use App\Facades\SquadService;
 use Illuminate\Support\Facades\DB;
 
 class BuildSquadSnapshotAction
@@ -33,12 +34,12 @@ class BuildSquadSnapshotAction
             throw new BuildSquadSnapshotException($this->squad, "Week not in finalizing state", BuildSquadSnapshotException::CODE_WEEK_NOT_FINALIZED);
         }
 
-        $combatReadyHeroes = $this->getCombatReadyHeroes();
-        if ($combatReadyHeroes->isEmpty()) {
-            throw new BuildSquadSnapshotException($this->squad, 'No heroes ready for combat', BuildSquadSnapshotException::CODE_NO_COMBAT_READY_HEROES);
+        if (! SquadService::combatReady($squad)) {
+            $message = 'Squad: ' . $squad->name . ' is not ready for combat';
+            throw new BuildSquadSnapshotException($this->squad, $message, BuildSquadSnapshotException::SQUAD_NOT_COMBAT_READY);
         }
 
-        return DB::transaction(function () use ($combatReadyHeroes) {
+        return DB::transaction(function () {
             /** @var SquadSnapshot $squadSnapshot */
             $squadSnapshot = SquadSnapshot::query()->create([
                 'squad_id' => $this->squad->id,
@@ -46,7 +47,7 @@ class BuildSquadSnapshotAction
                 'data' => []
             ]);
 
-            $combatReadyHeroes->each(function (Hero $hero) use ($squadSnapshot) {
+            $this->getCombatReadyHeroes()->each(function (Hero $hero) use ($squadSnapshot) {
                 $this->buildHeroSnapshotAction->execute($squadSnapshot, $hero);
             });
 
@@ -57,7 +58,7 @@ class BuildSquadSnapshotAction
     protected function getCombatReadyHeroes()
     {
         return $this->squad->heroes->filter(function (Hero $hero) {
-            return HeroCombat::ready($hero);
+            return HeroService::combatReady($hero);
         });
     }
 }
