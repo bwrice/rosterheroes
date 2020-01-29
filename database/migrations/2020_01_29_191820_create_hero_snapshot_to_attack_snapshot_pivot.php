@@ -16,7 +16,7 @@ class CreateHeroSnapshotToAttackSnapshotPivot extends Migration
         Schema::create('attack_snapshot_hero_snapshot', function (Blueprint $table) {
             $table->bigInteger('attack_snapshot_id')->unsigned();
             $table->bigInteger('hero_snapshot_id')->unsigned();
-            $table->json('data');
+            $table->primary(['attack_snapshot_id', 'hero_snapshot_id'], 'primary_composite');
             $table->timestamps();
         });
 
