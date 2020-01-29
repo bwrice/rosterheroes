@@ -17,6 +17,9 @@ use Illuminate\Database\Eloquent\Model;
 class AttackSnapshot extends Model
 {
     protected $guarded = [];
+    protected $casts = [
+        'data' => 'array'
+    ];
 
     public function attack()
     {
