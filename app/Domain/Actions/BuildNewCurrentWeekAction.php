@@ -4,10 +4,9 @@
 namespace App\Domain\Actions;
 
 
-use App\Domain\Actions\WeekFinalizing\FinalizeWeekDomainAction;
 use App\Domain\Models\Week;
 use App\Facades\CurrentWeek;
-use App\Jobs\FinalizeWeekStepOneJob;
+use App\Jobs\FinalizeWeekJob;
 use Carbon\CarbonInterface;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Str;
@@ -34,7 +33,8 @@ class BuildNewCurrentWeekAction
             'made_current_at' => $now
         ]);
 
-        FinalizeWeekStepOneJob::dispatch()->delay(CurrentWeek::finalizingStartsAt());
+        $step = 1;
+        FinalizeWeekJob::dispatch($step)->delay(CurrentWeek::finalizingStartsAt());
         return $newCurrentWeek;
     }
 }
