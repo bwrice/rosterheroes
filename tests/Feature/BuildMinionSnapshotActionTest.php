@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Domain\Actions\BuildMinionSnapshotAction;
 use App\Domain\Models\Minion;
 use App\Domain\Models\Week;
+use App\MinionSnapshot;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -40,5 +41,18 @@ class BuildMinionSnapshotActionTest extends TestCase
         $snapshot = $this->domainAction->execute($this->minion);
         $this->assertEquals($this->minion->id, $snapshot->minion_id);
         $this->assertEquals($this->currentWeek->id, $snapshot->week_id);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_return_an_existing_minion_snapshot()
+    {
+        $existing = factory(MinionSnapshot::class)->create([
+            'minion_id' => $this->minion->id,
+            'week_id' => $this->currentWeek->id
+        ]);
+        $snapShot = $this->domainAction->execute($this->minion);
+        $this->assertEquals($existing->id, $snapShot->id);
     }
 }
