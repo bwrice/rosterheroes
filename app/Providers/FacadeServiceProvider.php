@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
-use App\Facades\SkirmishService;
 use App\Services\CurrentWeek;
 use App\Services\ModelServices\AttackService;
 use App\Services\ModelServices\HeroService;
+use App\Services\ModelServices\SkirmishService;
 use App\Services\ModelServices\SquadService;
 use App\Services\ModelServices\WeekService;
 use Illuminate\Support\ServiceProvider;
