@@ -18,9 +18,7 @@ class BuildCurrentWeekAttackSnapshotActions
         $chainGroup = ChainGroup::create([], [
             new FinalizeWeekJob($step + 1)
         ]);
-        $query = AttackService::query();
-        $attacks = $query->get();
-        $query->chunk(100, function (AttackCollection $attacks) use (&$chainGroup) {
+        AttackService::query()->chunk(100, function (AttackCollection $attacks) use (&$chainGroup) {
             $jobs = $attacks->map(function (Attack $attack) {
                 return new BuildAttackSnapshotJob($attack);
             });
