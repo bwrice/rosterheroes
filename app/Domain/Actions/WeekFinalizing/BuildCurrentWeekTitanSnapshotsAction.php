@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 class BuildCurrentWeekTitanSnapshotsAction implements FinalizeWeekDomainAction
 {
-    public function execute(int $step)
+    public function execute(int $finalizeWeekStep)
     {
         $buildSnapshotJobs = collect();
         Titan::query()->chunk(100, function (Collection $titans) use (&$buildSnapshotJobs) {
@@ -22,7 +22,7 @@ class BuildCurrentWeekTitanSnapshotsAction implements FinalizeWeekDomainAction
             }));
         });
         ChainGroup::create($buildSnapshotJobs->toArray(), [
-            new FinalizeWeekJob($step + 1)
+            new FinalizeWeekJob($finalizeWeekStep + 1)
         ])->dispatch();
     }
 }

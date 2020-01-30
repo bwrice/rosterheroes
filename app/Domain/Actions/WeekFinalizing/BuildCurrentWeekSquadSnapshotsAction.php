@@ -13,10 +13,10 @@ use Illuminate\Database\Eloquent\Collection;
 
 class BuildCurrentWeekSquadSnapshotsAction implements FinalizeWeekDomainAction
 {
-    public function execute(int $step)
+    public function execute(int $finalizeWeekStep)
     {
         $chainGroup = ChainGroup::create([], [
-            new FinalizeWeekJob($step + 1)
+            new FinalizeWeekJob($finalizeWeekStep + 1)
         ]);
         Squad::query()->with(['heroes'])->chunk(100, function(Collection $squads) use ($chainGroup) {
             $squads->filter(function (Squad $squad) {

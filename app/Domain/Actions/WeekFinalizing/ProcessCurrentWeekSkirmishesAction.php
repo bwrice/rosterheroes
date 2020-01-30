@@ -6,7 +6,7 @@ namespace App\Domain\Actions\WeekFinalizing;
 
 class ProcessCurrentWeekSkirmishesAction implements FinalizeWeekDomainAction
 {
-    public function execute(int $weekFinalizingStep)
+    public function execute(int $finalizeWeekStep)
     {
 
     }

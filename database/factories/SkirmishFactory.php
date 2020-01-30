@@ -2,6 +2,7 @@
 
 use Faker\Generator as Faker;
 
+/* @var $factory \Illuminate\Database\Eloquent\Factory */
 $factory->define(\App\Domain\Models\Skirmish::class, function (Faker $faker) {
 
     /** @var \App\Domain\Models\SkirmishBlueprint $blueprint */

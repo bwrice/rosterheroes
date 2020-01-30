@@ -13,10 +13,10 @@ use Illuminate\Database\Eloquent\Collection;
 
 class BuildCurrentWeekMinionSnapshotsAction implements FinalizeWeekDomainAction
 {
-    public function execute(int $step)
+    public function execute(int $finalizeWeekStep)
     {
         $chainGroup = ChainGroup::create([], [
-            new FinalizeWeekJob($step + 1)
+            new FinalizeWeekJob($finalizeWeekStep + 1)
         ]);
         Minion::query()->chunk(100, function (Collection $minions) use ($chainGroup) {
             $jobs = $minions->map(function (Minion $minion) {

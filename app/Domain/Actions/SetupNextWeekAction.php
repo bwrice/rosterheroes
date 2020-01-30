@@ -23,7 +23,7 @@ class SetupNextWeekAction implements FinalizeWeekDomainAction
         $this->buildWeekAction = $buildWeekAction;
     }
 
-    public function execute(?int $step)
+    public function execute(int $finalizeWeekStep)
     {
         if (! CurrentWeek::exists()) {
             throw new BuildNextWeekException("No current week to build next week from", BuildWeekException::CODE_INVALID_CURRENT_WEEK);

@@ -6,5 +6,5 @@ namespace App\Domain\Actions\WeekFinalizing;
 
 interface FinalizeWeekDomainAction
 {
-    public function execute(int $step);
+    public function execute(int $finalizeWeekStep);
 }
