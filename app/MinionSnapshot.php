@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property int $minion_id
+ * @property int $week_id
  *
  * @property Minion $minion
  * @property Week $week
