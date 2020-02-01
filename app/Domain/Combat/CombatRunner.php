@@ -51,7 +51,7 @@ class CombatRunner
     {
         $combatActions = $attackers->getCombatActions($this->combatMoment->getCount());
 
-        $combatActions->each(function (CombatAttack $combatAttack) use ($defenders) {
+        $combatActions->each(function (CombatAttackInterface $combatAttack) use ($defenders) {
 
             if (! $defenders->isDefeated($this->combatMoment)) {
                 $combatEvents = $defenders->receiveAttack($combatAttack);

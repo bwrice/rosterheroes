@@ -11,7 +11,7 @@ interface CombatGroup
 {
     public function getCombatActions(int $momentCount): CombatAttacksCollection;
 
-    public function receiveAttack(CombatAttack $combatAttack): CombatEventCollection;
+    public function receiveAttack(CombatAttackInterface $combatAttack): CombatEventCollection;
 
     public function isDefeated(CombatMoment $combatMoment): bool;
 }
