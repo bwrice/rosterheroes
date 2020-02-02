@@ -6,19 +6,39 @@ namespace App\Domain\Behaviors\TargetRanges;
 
 abstract class CombatPositionBehavior
 {
+    protected $combatSpeedBonus = 0;
+    protected $baseDamageBonus = 0;
+    protected $damageMultiplierBonus = 0;
+    protected $attackerSVG = '';
+    protected $targetSVG = '';
+
     public function getSVG($attacker = true): string
     {
         return $attacker ? $this->getAttackerSVG() : $this->getTargetSVG();
     }
 
+    public function getCombatSpeedBonus(): float
+    {
+        return $this->combatSpeedBonus;
+    }
 
-    abstract public function getAttackerSVG(): string;
+    public function getBaseDamageBonus(): float
+    {
+        return $this->baseDamageBonus;
+    }
 
-    abstract public function getTargetSVG(): string;
+    public function getDamageMultiplierBonus(): float
+    {
+        return $this->damageMultiplierBonus;
+    }
 
-    abstract public function getBaseDamageBonus(): float;
+    public function getAttackerSVG(): string
+    {
+        return $this->attackerSVG;
+    }
 
-    abstract public function getCombatSpeedBonus(): float;
-
-    abstract public function getDamageMultiplierBonus(): float;
+    public function getTargetSVG(): string
+    {
+        return $this->targetSVG;
+    }
 }
