@@ -7,7 +7,7 @@ namespace App\Domain\Combat;
 use App\Domain\Collections\CombatAttacksCollection;
 use App\Domain\Collections\CombatEventCollection;
 
-interface CombatGroup
+interface CombatGroupInterface
 {
     public function getCombatActions(int $momentCount): CombatAttacksCollection;
 

@@ -23,7 +23,7 @@ class CombatRunner
         $this->combatMoment = $combatMoment;
     }
 
-    public function execute(CombatGroup $sideA, CombatGroup $sideB)
+    public function execute(CombatGroupInterface $sideA, CombatGroupInterface $sideB)
     {
         while(true) {
 
@@ -47,7 +47,7 @@ class CombatRunner
         }
     }
 
-    protected function handleSingleSide(CombatGroup $attackers, CombatGroup $defenders)
+    protected function handleSingleSide(CombatGroupInterface $attackers, CombatGroupInterface $defenders)
     {
         $combatActions = $attackers->getCombatActions($this->combatMoment->getCount());
 
