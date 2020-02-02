@@ -18,4 +18,6 @@ interface CombatAttack
     public function getTargetPriority(): TargetPriority;
 
     public function getMaxTargets(): int;
+
+    public function handleDamageGiven(int $damageGiven);
 }
