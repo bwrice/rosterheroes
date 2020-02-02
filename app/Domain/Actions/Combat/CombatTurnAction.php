@@ -14,13 +14,18 @@ class CombatTurnAction
     {
         $attacks = $attackers->getReadyAttacks($moment);
         $attacks->each(function (CombatAttack $combatAttack) use ($defenders, $moment) {
-            $combatPositions = $combatAttack->getTargetCombatPositions();
-            $targets = $defenders->getTargets($combatPositions, $moment);
-            $damage = $combatAttack->getDamage($targets->count());
-            $targets->each(function (Combatant $combatant) use ($combatAttack, $damage) {
-                // calculate actual damage
-                // handle received damage
-                // handle damage given
+
+            $possibleTargets = $defenders->getPossibleTargets($moment);
+            $filteredTargets = $possibleTargets->filterByCombatPositions($combatAttack->getTargetCombatPositions());
+            $sortedTargets = $filteredTargets->sortByTargetPriority($combatAttack->getTargetPriority());
+            $targets = $sortedTargets->take($combatAttack->getMaxTargets());
+
+            $damagePerTarget = $combatAttack->getDamagePerTarget($targets->count());
+
+            $possibleTargets->each(function (Combatant $combatant) use ($combatAttack, $damagePerTarget) {
+                $actualDamage = $combatant->calculateActualDamage($damagePerTarget);
+                $combatant->handleDamageReceived($actualDamage);
+                $combatAttack->handleDamageGiven($actualDamage);
             });
         });
     }
