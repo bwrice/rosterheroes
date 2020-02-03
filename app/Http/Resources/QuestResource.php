@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources;
 
-use App\Domain\Collections\SkirmishCollection;
+use App\Domain\Collections\SideQuestCollection;
 use App\Domain\Models\Minion;
 use App\Domain\Models\Quest;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -30,7 +30,7 @@ class QuestResource extends JsonResource
             'level' => $this->level,
             'provinceID' => $this->province_id,
             'percent' => round($this->percent, 2),
-            'skirmishes' => SkirmishResource::collection($this->skirmishes),
+            'skirmishes' => SideQuestResource::collection($this->sideQuests),
             'titans' => TitanResource::collection($this->titans),
             'minions' => $this->minions->map(function (Minion $minion) {
                 $resource = new MinionResource($minion);

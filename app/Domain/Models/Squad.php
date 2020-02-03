@@ -66,7 +66,7 @@ class Squad extends EventSourcedModel implements HasItems
     const STARTING_FAVOR = 100;
     const STARTING_ESSENCE = 30000;
     const QUESTS_PER_WEEK = 3;
-    const SKIRMISHES_PER_QUEST = 5;
+    const SIDE_QUESTS_PER_QUEST = 5;
 
     const STARTING_HERO_POSTS = [
         HeroRace::HUMAN => 1,
@@ -458,9 +458,9 @@ class Squad extends EventSourcedModel implements HasItems
         return static::QUESTS_PER_WEEK;
     }
 
-    public function getSkirmishesPerQuest(): int
+    public function getSideQuestsPerQuest(): int
     {
-        return static::SKIRMISHES_PER_QUEST;
+        return static::SIDE_QUESTS_PER_QUEST;
     }
 
     public function combatReady()

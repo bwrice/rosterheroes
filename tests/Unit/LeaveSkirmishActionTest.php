@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Domain\Actions\LeaveSkirmishAction;
+use App\Domain\Actions\LeaveSideQuestAction;
 use App\Domain\Models\Campaign;
 use App\Domain\Models\CampaignStop;
 use App\Domain\Models\Quest;
@@ -64,7 +64,7 @@ class LeaveSkirmishActionTest extends TestCase
             'campaign_id' => $this->campaign->id
         ]);
 
-        $this->campaignStop->skirmishes()->attach($this->skirmish->id);
+        $this->campaignStop->sideQuests()->attach($this->skirmish->id);
     }
 
     /**
@@ -77,8 +77,8 @@ class LeaveSkirmishActionTest extends TestCase
         Week::setTestCurrent($this->week);
 
         try {
-            /** @var LeaveSkirmishAction $domainAction */
-            $domainAction = app(LeaveSkirmishAction::class);
+            /** @var LeaveSideQuestAction $domainAction */
+            $domainAction = app(LeaveSideQuestAction::class);
             $domainAction->execute($this->campaignStop, $this->skirmish);
         } catch (CampaignStopException $exception) {
             $this->assertEquals(CampaignStopException::CODE_WEEK_LOCKED, $exception->getCode());
@@ -97,8 +97,8 @@ class LeaveSkirmishActionTest extends TestCase
         $this->campaignStop->save();
 
         try {
-            /** @var LeaveSkirmishAction $domainAction */
-            $domainAction = app(LeaveSkirmishAction::class);
+            /** @var LeaveSideQuestAction $domainAction */
+            $domainAction = app(LeaveSideQuestAction::class);
             $domainAction->execute($this->campaignStop->fresh(), $this->skirmish);
         } catch (CampaignStopException $exception) {
             $this->assertEquals(CampaignStopException::CODE_QUEST_NON_MATCH, $exception->getCode());
@@ -112,14 +112,14 @@ class LeaveSkirmishActionTest extends TestCase
      */
     public function it_will_throw_an_exception_if_the_skirmish_does_not_belong_to_the_campaign_stop()
     {
-        $this->campaignStop->skirmishes()->sync([]);
+        $this->campaignStop->sideQuests()->sync([]);
 
         try {
-            /** @var LeaveSkirmishAction $domainAction */
-            $domainAction = app(LeaveSkirmishAction::class);
+            /** @var LeaveSideQuestAction $domainAction */
+            $domainAction = app(LeaveSideQuestAction::class);
             $domainAction->execute($this->campaignStop->fresh(), $this->skirmish);
         } catch (CampaignStopException $exception) {
-            $this->assertEquals(CampaignStopException::CODE_SKIRMISH_NOT_ADDED, $exception->getCode());
+            $this->assertEquals(CampaignStopException::CODE_SIDE_QUEST_NOT_ADDED, $exception->getCode());
             return;
         }
         $this->fail("Exception not thrown");
@@ -130,13 +130,13 @@ class LeaveSkirmishActionTest extends TestCase
      */
     public function it_will_leave_a_skirmish()
     {
-        $this->assertEquals(1, $this->campaignStop->skirmishes()->count());
+        $this->assertEquals(1, $this->campaignStop->sideQuests()->count());
 
-        /** @var LeaveSkirmishAction $domainAction */
-        $domainAction = app(LeaveSkirmishAction::class);
+        /** @var LeaveSideQuestAction $domainAction */
+        $domainAction = app(LeaveSideQuestAction::class);
         $domainAction->execute($this->campaignStop->fresh(), $this->skirmish);
 
-        $this->assertEquals(0, $this->campaignStop->fresh()->skirmishes()->count());
+        $this->assertEquals(0, $this->campaignStop->fresh()->sideQuests()->count());
     }
 
 

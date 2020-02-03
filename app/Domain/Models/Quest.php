@@ -4,7 +4,7 @@ namespace App\Domain\Models;
 
 use App\Domain\Collections\MinionCollection;
 use App\Domain\Collections\QuestCollection;
-use App\Domain\Collections\SkirmishCollection;
+use App\Domain\Collections\SideQuestCollection;
 use App\Domain\Collections\TitanCollection;
 use App\Domain\Models\EventSourcedModel;
 use App\Domain\Models\Province;
@@ -30,7 +30,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property Province $province
  *
- * @property SkirmishCollection $skirmishes
+ * @property SideQuestCollection $sideQuests
  * @property MinionCollection $minions
  * @property TitanCollection $titans
  */
@@ -55,11 +55,11 @@ class Quest extends EventSourcedModel
             'minions.attacks.targetPriority',
             'minions.attacks.damageType',
             'titans',
-            'skirmishes.minions.enemyType',
-            'skirmishes.minions.attacks.attackerPosition',
-            'skirmishes.minions.attacks.targetPosition',
-            'skirmishes.minions.attacks.targetPriority',
-            'skirmishes.minions.attacks.damageType',
+            'sideQuests.minions.enemyType',
+            'sideQuests.minions.attacks.attackerPosition',
+            'sideQuests.minions.attacks.targetPosition',
+            'sideQuests.minions.attacks.targetPriority',
+            'sideQuests.minions.attacks.damageType',
         ];
     }
 
@@ -88,7 +88,7 @@ class Quest extends EventSourcedModel
         return $this->belongsToMany(Titan::class)->withPivot('count')->withTimestamps();
     }
 
-    public function skirmishes()
+    public function sideQuests()
     {
         return $this->hasMany(SideQuest::class);
     }

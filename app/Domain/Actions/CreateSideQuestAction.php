@@ -24,23 +24,23 @@ class CreateSideQuestAction
         $minions = $blueprint->minions;
 
         if ($minions->isEmpty()) {
-            throw new Exception("No minions for skirmish blueprint: " . $blueprint->name);
+            throw new Exception("No minions for SideQuestBlueprint: " . $blueprint->name);
         }
 
-        /** @var SideQuest $skirmish */
-        $skirmish = SideQuest::query()->create([
+        /** @var SideQuest $sideQuest */
+        $sideQuest = SideQuest::query()->create([
             'uuid' => Str::uuid(),
             'quest_id' => $quest->id,
-            'skirmish_blueprint_id' => $blueprint->id,
+            'side_quest_blueprint_id' => $blueprint->id,
             'name' => $blueprint->name,
         ]);
 
-        $minions->each(function (Minion $minion) use ($skirmish) {
-            $skirmish->minions()->save($minion, [
+        $minions->each(function (Minion $minion) use ($sideQuest) {
+            $sideQuest->minions()->save($minion, [
                 'count' => $minion->pivot->count
             ]);
         });
 
-        return $skirmish;
+        return $sideQuest;
     }
 }

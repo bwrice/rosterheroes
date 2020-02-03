@@ -89,7 +89,7 @@ class Campaign extends EventSourcedModel
     {
         return [
             'campaignStops.quest',
-            'campaignStops.skirmishes'
+            'campaignStops.sideQuests'
         ];
     }
 

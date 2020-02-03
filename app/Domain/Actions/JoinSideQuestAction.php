@@ -12,7 +12,7 @@ use App\Domain\Models\Week;
 use App\Exceptions\CampaignException;
 use App\Exceptions\CampaignStopException;
 
-class AddSkirmishToCampaignStopAction extends CampaignStopAction
+class JoinSideQuestAction extends CampaignStopAction
 {
     /** @var Week */
     protected $week;
@@ -21,11 +21,11 @@ class AddSkirmishToCampaignStopAction extends CampaignStopAction
     protected $campaignStop;
 
     /** @var SideQuest */
-    protected $skirmish;
+    protected $sideQuest;
 
-    public function execute(CampaignStop $campaignStop, SideQuest $skirmish)
+    public function execute(CampaignStop $campaignStop, SideQuest $sideQuest)
     {
-        $this->setProperties($campaignStop, $skirmish);
+        $this->setProperties($campaignStop, $sideQuest);
         $this->validateWeek();
         $this->validateQuestMatches();
         $this->validateNonDuplicateSkirmish();
@@ -34,41 +34,41 @@ class AddSkirmishToCampaignStopAction extends CampaignStopAction
 
         /** @var CampaignStopAggregate $aggregate */
         $aggregate = CampaignStopAggregate::retrieve($campaignStop->uuid);
-        $aggregate->addSkirmish($skirmish->id)->persist();
+        $aggregate->addSkirmish($sideQuest->id)->persist();
     }
 
     protected function validateNonDuplicateSkirmish()
     {
-        $skirmishIDs = $this->campaignStop->skirmishes->map(function (SideQuest $skirmish) {
-            return $skirmish->id;
+        $skirmishIDs = $this->campaignStop->sideQuests->map(function (SideQuest $sideQuest) {
+            return $sideQuest->id;
         })->values()->toArray();
 
-        if (in_array($this->skirmish->id, $skirmishIDs)) {
-            throw (new CampaignStopException("Skirmish already added", CampaignStopException::CODE_SKIRMISH_ALREADY_ADDED))
+        if (in_array($this->sideQuest->id, $skirmishIDs)) {
+            throw (new CampaignStopException("Skirmish already added", CampaignStopException::CODE_SIDE_QUEST_ALREADY_ADDED))
                 ->setCampaignStop($this->campaignStop)
-                ->setSkirmish($this->skirmish);
+                ->setSideQuest($this->sideQuest);
         }
     }
 
     protected function validateSquadLocation()
     {
         $squad = $this->campaignStop->campaign->squad;
-        $quest = $this->skirmish->quest;
-        if ($this->campaignStop->campaign->squad->province_id !== $this->skirmish->quest->province_id) {
+        $quest = $this->sideQuest->quest;
+        if ($this->campaignStop->campaign->squad->province_id !== $this->sideQuest->quest->province_id) {
             $message = $squad->name . " must be at province: " . $quest->province->name . " to add skirmish";
             throw (new CampaignStopException($message, CampaignStopException::CODE_SQUAD_NOT_IN_QUEST_PROVINCE))
                 ->setCampaignStop($this->campaignStop)
-                ->setSkirmish($this->skirmish);
+                ->setSideQuest($this->sideQuest);
         }
     }
 
     protected function validateMaxSkirmishCount()
     {
-        if ($this->campaignStop->skirmishes()->count() >= $this->campaignStop->campaign->squad->getSkirmishesPerQuest()) {
+        if ($this->campaignStop->sideQuests()->count() >= $this->campaignStop->campaign->squad->getSideQuestsPerQuest()) {
             $message = "Skirmish limit reached for " . $this->campaignStop->quest->name;
-            throw (new CampaignStopException($message, CampaignStopException::CODE_SKIRMISH_LIMIT_REACHED))
+            throw (new CampaignStopException($message, CampaignStopException::CODE_SIDE_QUEST_LIMIT_REACHED))
                 ->setCampaignStop($this->campaignStop)
-                ->setSkirmish($this->skirmish);
+                ->setSideQuest($this->sideQuest);
         }
     }
 }

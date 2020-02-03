@@ -3,7 +3,7 @@
 namespace App\Domain\Models;
 
 use App\Aggregates\CampaignStopAggregate;
-use App\Domain\Collections\SkirmishCollection;
+use App\Domain\Collections\SideQuestCollection;
 use App\Domain\QueryBuilders\CampaignStopQueryBuilder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -22,7 +22,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Quest $quest
  * @property Province $province
  *
- * @property SkirmishCollection $skirmishes
+ * @property SideQuestCollection $sideQuests
  */
 class CampaignStop extends EventSourcedModel
 {
@@ -43,9 +43,9 @@ class CampaignStop extends EventSourcedModel
         return $this->belongsTo(Province::class);
     }
 
-    public function skirmishes()
+    public function sideQuests()
     {
-        return $this->belongsToMany(SideQuest::class, 'campaign_stop_skirmish', 'stop_id')->withTimestamps();
+        return $this->belongsToMany(SideQuest::class)->withTimestamps();
     }
 
     public function getAggregate()

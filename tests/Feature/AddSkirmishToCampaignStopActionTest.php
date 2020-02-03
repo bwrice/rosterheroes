@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Domain\Actions\AddSkirmishToCampaignStopAction;
+use App\Domain\Actions\JoinSideQuestAction;
 use App\Domain\Models\Campaign;
 use App\Domain\Models\CampaignStop;
 use App\Domain\Models\Province;
@@ -78,8 +78,8 @@ class AddSkirmishToCampaignStopActionTest extends TestCase
 
         try {
 
-            /** @var AddSkirmishToCampaignStopAction $domainAction */
-            $domainAction = app(AddSkirmishToCampaignStopAction::class);
+            /** @var JoinSideQuestAction $domainAction */
+            $domainAction = app(JoinSideQuestAction::class);
             $domainAction->execute($this->campaignStop, $this->skirmish);
 
         } catch (CampaignStopException $exception) {
@@ -103,8 +103,8 @@ class AddSkirmishToCampaignStopActionTest extends TestCase
 
         try {
 
-            /** @var AddSkirmishToCampaignStopAction $domainAction */
-            $domainAction = app(AddSkirmishToCampaignStopAction::class);
+            /** @var JoinSideQuestAction $domainAction */
+            $domainAction = app(JoinSideQuestAction::class);
             $domainAction->execute($this->campaignStop, $this->skirmish);
 
         } catch (CampaignStopException $exception) {
@@ -128,8 +128,8 @@ class AddSkirmishToCampaignStopActionTest extends TestCase
 
         try {
 
-            /** @var AddSkirmishToCampaignStopAction $domainAction */
-            $domainAction = app(AddSkirmishToCampaignStopAction::class);
+            /** @var JoinSideQuestAction $domainAction */
+            $domainAction = app(JoinSideQuestAction::class);
             $domainAction->execute($this->campaignStop, $this->skirmish);
 
         } catch (CampaignStopException $exception) {
@@ -155,13 +155,13 @@ class AddSkirmishToCampaignStopActionTest extends TestCase
             // set the relation prop to the mock
             $this->campaignStop->campaign->squad = $squadMock;
 
-            /** @var AddSkirmishToCampaignStopAction $domainAction */
-            $domainAction = app(AddSkirmishToCampaignStopAction::class);
+            /** @var JoinSideQuestAction $domainAction */
+            $domainAction = app(JoinSideQuestAction::class);
             $domainAction->execute($this->campaignStop, $this->skirmish);
 
         } catch (CampaignStopException $exception) {
 
-            $this->assertEquals(CampaignStopException::CODE_SKIRMISH_LIMIT_REACHED, $exception->getCode());
+            $this->assertEquals(CampaignStopException::CODE_SIDE_QUEST_LIMIT_REACHED, $exception->getCode());
             return;
         }
 
@@ -175,15 +175,15 @@ class AddSkirmishToCampaignStopActionTest extends TestCase
     {
         try {
 
-            $this->campaignStop->skirmishes()->attach($this->skirmish->id);
+            $this->campaignStop->sideQuests()->attach($this->skirmish->id);
 
-            /** @var AddSkirmishToCampaignStopAction $domainAction */
-            $domainAction = app(AddSkirmishToCampaignStopAction::class);
+            /** @var JoinSideQuestAction $domainAction */
+            $domainAction = app(JoinSideQuestAction::class);
             $domainAction->execute($this->campaignStop->fresh(), $this->skirmish->fresh());
 
         } catch (CampaignStopException $exception) {
 
-            $this->assertEquals(CampaignStopException::CODE_SKIRMISH_ALREADY_ADDED, $exception->getCode());
+            $this->assertEquals(CampaignStopException::CODE_SIDE_QUEST_ALREADY_ADDED, $exception->getCode());
             return;
         }
 
@@ -195,13 +195,13 @@ class AddSkirmishToCampaignStopActionTest extends TestCase
      */
     public function it_will_add_a_skirmish_to_a_campaign_stop_with_no_skirmishes()
     {
-        $this->assertEquals(0, $this->campaignStop->skirmishes()->count());
+        $this->assertEquals(0, $this->campaignStop->sideQuests()->count());
 
-        /** @var AddSkirmishToCampaignStopAction $domainAction */
-        $domainAction = app(AddSkirmishToCampaignStopAction::class);
+        /** @var JoinSideQuestAction $domainAction */
+        $domainAction = app(JoinSideQuestAction::class);
         $domainAction->execute($this->campaignStop, $this->skirmish);
 
-        $skirmishes = $this->campaignStop->fresh()->skirmishes;
+        $skirmishes = $this->campaignStop->fresh()->sideQuests;
         $this->assertEquals(1, $skirmishes->count());
     }
 

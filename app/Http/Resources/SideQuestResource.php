@@ -7,12 +7,12 @@ use App\Domain\Models\SideQuest;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * Class SkirmishResource
+ * Class SideQuestResource
  * @package App\Http\Resources
  *
  * @mixin SideQuest
  */
-class SkirmishResource extends JsonResource
+class SideQuestResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

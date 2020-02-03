@@ -5,7 +5,7 @@ namespace App\Domain\Actions\WeekFinalizing;
 
 
 use App\Domain\Collections\AttackCollection;
-use App\Domain\Collections\SkirmishCollection;
+use App\Domain\Collections\SideQuestCollection;
 use App\Domain\Models\Attack;
 use App\Domain\Models\SideQuest;
 use App\Facades\AttackService;
@@ -22,7 +22,7 @@ class BuildCurrentWeekSkirmishSnapshotsAction implements FinalizeWeekDomainActio
         $chainGroup = ChainGroup::create([], [
             new FinalizeWeekJob($finalizeWeekStep + 1)
         ]);
-        SkirmishService::query()->chunk(100, function (SkirmishCollection $skirmishes) use (&$chainGroup) {
+        SkirmishService::query()->chunk(100, function (SideQuestCollection $skirmishes) use (&$chainGroup) {
             $jobs = $skirmishes->map(function (SideQuest $skirmish) {
                 return new BuildSkirmishSnapshotJob($skirmish);
             });

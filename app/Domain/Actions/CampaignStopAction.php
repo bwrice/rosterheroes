@@ -18,13 +18,13 @@ abstract class CampaignStopAction
     protected $campaignStop;
 
     /** @var SideQuest */
-    protected $skirmish;
+    protected $sideQuest;
 
     protected function setProperties(CampaignStop $campaignStop, SideQuest $skirmish)
     {
         $this->week = Week::current();
         $this->campaignStop = $campaignStop;
-        $this->skirmish = $skirmish;
+        $this->sideQuest = $skirmish;
     }
 
     protected function validateWeek()
@@ -32,16 +32,16 @@ abstract class CampaignStopAction
         if (! $this->week->adventuringOpen()) {
             throw (new CampaignStopException("Week is currently locked", CampaignStopException::CODE_WEEK_LOCKED))
                 ->setCampaignStop($this->campaignStop)
-                ->setSkirmish($this->skirmish);
+                ->setSideQuest($this->sideQuest);
         }
     }
 
     protected function validateQuestMatches()
     {
-        if ($this->skirmish->quest_id !== $this->campaignStop->quest_id) {
+        if ($this->sideQuest->quest_id !== $this->campaignStop->quest_id) {
             throw (new CampaignStopException("Skirmish does not belong to the quest", CampaignStopException::CODE_QUEST_NON_MATCH))
                 ->setCampaignStop($this->campaignStop)
-                ->setSkirmish($this->skirmish);
+                ->setSideQuest($this->sideQuest);
         }
     }
 }

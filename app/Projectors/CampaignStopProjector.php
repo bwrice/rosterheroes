@@ -32,12 +32,12 @@ final class CampaignStopProjector implements Projector
     public function onSkirmishAddedToCampaignStop(SkirmishAddedToCampaignStop $event, string $aggregateUuid)
     {
         $campaignStop = CampaignStop::findUuidOrFail($aggregateUuid);
-        $campaignStop->skirmishes()->attach($event->skirmishID);
+        $campaignStop->sideQuests()->attach($event->skirmishID);
     }
 
     public function onSkirmishRemovedFromCampaignStop(SkirmishRemovedFromCampaignStop $event, string $aggregateUuid)
     {
         $campaignStop = CampaignStop::findUuidOrFail($aggregateUuid);
-        $campaignStop->skirmishes()->detach($event->skirmishID);
+        $campaignStop->sideQuests()->detach($event->skirmishID);
     }
 }

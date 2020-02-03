@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Domain\Actions\AddSkirmishToCampaignStopAction;
-use App\Domain\Actions\LeaveSkirmishAction;
+use App\Domain\Actions\JoinSideQuestAction;
+use App\Domain\Actions\LeaveSideQuestAction;
 use App\Domain\Models\CampaignStop;
 use App\Domain\Models\SideQuest;
 use App\Exceptions\CampaignStopException;
@@ -12,17 +12,17 @@ use App\Policies\SquadPolicy;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
-class CampaignStopSkirmishController extends Controller
+class CampaignStopSideQuestController extends Controller
 {
     /**
      * @param $stopUuid
      * @param Request $request
-     * @param AddSkirmishToCampaignStopAction $domainAction
+     * @param JoinSideQuestAction $domainAction
      * @return CampaignResource
      * @throws ValidationException
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function store($stopUuid, Request $request, AddSkirmishToCampaignStopAction $domainAction)
+    public function store($stopUuid, Request $request, JoinSideQuestAction $domainAction)
     {
         return $this->handleRequest($stopUuid, $request, function (CampaignStop $campaignStop, SideQuest $skirmish) use ($domainAction) {
             $domainAction->execute($campaignStop, $skirmish);
@@ -32,12 +32,12 @@ class CampaignStopSkirmishController extends Controller
     /**
      * @param $stopUuid
      * @param Request $request
-     * @param LeaveSkirmishAction $domainAction
+     * @param LeaveSideQuestAction $domainAction
      * @return CampaignResource
      * @throws ValidationException
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function delete($stopUuid, Request $request, LeaveSkirmishAction $domainAction)
+    public function delete($stopUuid, Request $request, LeaveSideQuestAction $domainAction)
     {
         return $this->handleRequest($stopUuid, $request, function (CampaignStop $campaignStop, SideQuest $skirmish) use ($domainAction) {
             $domainAction->execute($campaignStop, $skirmish);

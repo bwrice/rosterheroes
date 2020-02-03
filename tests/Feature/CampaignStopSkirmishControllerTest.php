@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Domain\Actions\AddSkirmishToCampaignStopAction;
+use App\Domain\Actions\JoinSideQuestAction;
 use App\Domain\Models\Campaign;
 use App\Domain\Models\CampaignStop;
 use App\Domain\Models\Quest;
@@ -93,12 +93,12 @@ class CampaignStopSkirmishControllerTest extends TestCase
         $campaignStopUuid = $this->campaignStop->uuid;
         $skirmishUuid = $this->skirmish->uuid;
 
-        $mock = \Mockery::mock(app(AddSkirmishToCampaignStopAction::class))
+        $mock = \Mockery::mock(app(JoinSideQuestAction::class))
             ->shouldReceive('execute')
             ->andThrow(new CampaignStopException())->getMock();
 
         // Use the mock when retrieving from the container
-        app()->instance(AddSkirmishToCampaignStopAction::class, $mock);
+        app()->instance(JoinSideQuestAction::class, $mock);
 
         $response = $this->json('POST', 'api/v1/campaign-stops/' . $campaignStopUuid . '/skirmishes', [
             'skirmish' => $skirmishUuid
@@ -143,7 +143,7 @@ class CampaignStopSkirmishControllerTest extends TestCase
      */
     public function it_will_leave_a_skirmish_and_return_an_updated_campaign_stop()
     {
-        $this->campaignStop->skirmishes()->attach($this->skirmish->id);
+        $this->campaignStop->sideQuests()->attach($this->skirmish->id);
 
         Passport::actingAs($this->squad->user);
 
@@ -169,6 +169,6 @@ class CampaignStopSkirmishControllerTest extends TestCase
                 ]
             ]);
 
-        $this->assertEquals(0, $this->campaignStop->fresh()->skirmishes()->count());
+        $this->assertEquals(0, $this->campaignStop->fresh()->sideQuests()->count());
     }
 }

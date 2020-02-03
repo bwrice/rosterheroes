@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSkirmishResultsTable extends Migration
+class CreateSideQuestResultsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,19 @@ class CreateSkirmishResultsTable extends Migration
      */
     public function up()
     {
-        Schema::create('skirmish_results', function (Blueprint $table) {
+        Schema::create('side_quest_results', function (Blueprint $table) {
             $table->bigInteger('id');
             $table->uuid('uuid');
             $table->bigInteger('squad_id')->unsigned();
-            $table->integer('skirmish_id')->unsigned();
+            $table->integer('side_quest_id')->unsigned();
             $table->integer('week_id')->unsigned();
+            $table->unique(['squad_id', 'side_quest_id', 'week_id']);
             $table->timestamps();
         });
 
-        Schema::table('skirmish_results', function (Blueprint $table) {
+        Schema::table('side_quest_results', function (Blueprint $table) {
             $table->foreign('squad_id')->references('id')->on('squads');
-            $table->foreign('skirmish_id')->references('id')->on('skirmishes');
+            $table->foreign('side_quest_id')->references('id')->on('side_quests');
             $table->foreign('week_id')->references('id')->on('weeks');
         });
     }
@@ -36,6 +37,6 @@ class CreateSkirmishResultsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('skirmish_results');
+        Schema::dropIfExists('side_quest_results');
     }
 }

@@ -30,7 +30,7 @@ class SquadResource extends JsonResource
             'experience' => $this->experience,
             'favor' => $this->favor,
             'questsPerWeek' => $this->getQuestsPerWeek(),
-            'skirmishesPerQuest' => $this->getSkirmishesPerQuest()
+            'sideQuestsPerQuest' => $this->getSideQuestsPerQuest()
         ];
     }
 }

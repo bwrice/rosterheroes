@@ -8,7 +8,7 @@ use App\Domain\Models\CampaignStop;
 use App\Domain\Models\SideQuest;
 use App\Exceptions\CampaignStopException;
 
-class LeaveSkirmishAction extends CampaignStopAction
+class LeaveSideQuestAction extends CampaignStopAction
 {
     public function execute(CampaignStop $campaignStop, SideQuest $skirmish)
     {
@@ -23,11 +23,11 @@ class LeaveSkirmishAction extends CampaignStopAction
 
     protected function validateCampaignStopHasSkirmish()
     {
-        $match = $this->campaignStop->skirmishes()->where('id', '=', $this->skirmish->id)->first();
+        $match = $this->campaignStop->sideQuests()->where('id', '=', $this->sideQuest->id)->first();
         if (is_null($match)) {
-            $message = "Can't leave skirmish that wasn't added";
-            throw (new CampaignStopException($message, CampaignStopException::CODE_SKIRMISH_NOT_ADDED))
-                ->setSkirmish($this->skirmish)
+            $message = "Can't leave side quest that wasn't joined";
+            throw (new CampaignStopException($message, CampaignStopException::CODE_SIDE_QUEST_NOT_ADDED))
+                ->setSideQuest($this->sideQuest)
                 ->setCampaignStop($this->campaignStop);
         }
     }

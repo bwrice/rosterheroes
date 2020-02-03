@@ -10,15 +10,15 @@ use App\Domain\Models\SideQuest;
 class CampaignStopException extends CampaignException
 {
     public const CODE_QUEST_NON_MATCH = 21;
-    public const CODE_SKIRMISH_LIMIT_REACHED = 22;
-    public const CODE_SKIRMISH_ALREADY_ADDED = 23;
-    public const CODE_SKIRMISH_NOT_ADDED = 24;
+    public const CODE_SIDE_QUEST_LIMIT_REACHED = 22;
+    public const CODE_SIDE_QUEST_ALREADY_ADDED = 23;
+    public const CODE_SIDE_QUEST_NOT_ADDED = 24;
 
     /** @var CampaignStop */
     protected $campaignStop;
 
     /** @var SideQuest */
-    protected $skirmish;
+    protected $sideQuest;
 
     /**
      * @param CampaignStop $campaignStop
@@ -31,12 +31,12 @@ class CampaignStopException extends CampaignException
     }
 
     /**
-     * @param SideQuest $skirmish
+     * @param SideQuest $sideQuest
      * @return CampaignStopException
      */
-    public function setSkirmish(SideQuest $skirmish): CampaignStopException
+    public function setSideQuest(SideQuest $sideQuest): CampaignStopException
     {
-        $this->skirmish = $skirmish;
+        $this->sideQuest = $sideQuest;
         return $this;
     }
 }

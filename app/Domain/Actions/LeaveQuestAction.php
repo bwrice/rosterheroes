@@ -18,13 +18,13 @@ class LeaveQuestAction extends SquadQuestAction
      */
     protected $campaignStop;
     /**
-     * @var LeaveSkirmishAction
+     * @var LeaveSideQuestAction
      */
-    private $leaveSkirmishAction;
+    protected $leaveSideQuestAction;
 
-    public function __construct(LeaveSkirmishAction $leaveSkirmishAction)
+    public function __construct(LeaveSideQuestAction $leaveSideQuestAction)
     {
-        $this->leaveSkirmishAction = $leaveSkirmishAction;
+        $this->leaveSideQuestAction = $leaveSideQuestAction;
     }
 
     public function execute(Squad $squad, Quest $quest)
@@ -36,8 +36,8 @@ class LeaveQuestAction extends SquadQuestAction
 
         DB::transaction(function () {
 
-            $this->campaignStop->skirmishes->each(function (SideQuest $skirmish) {
-                $this->leaveSkirmishAction->execute($this->campaignStop, $skirmish);
+            $this->campaignStop->sideQuests->each(function (SideQuest $sideQuest) {
+                $this->leaveSideQuestAction->execute($this->campaignStop, $sideQuest);
             });
 
             $this->campaignStop->getAggregate()->deleteCampaignStop()->persist();

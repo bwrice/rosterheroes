@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\CampaignStopSkirmishController;
+use App\Http\Controllers\CampaignStopSideQuestController;
 use App\Http\Controllers\CombatPositionController;
 use App\Http\Controllers\ContinentController;
 use App\Http\Controllers\CurrentCampaignController;
@@ -158,8 +158,8 @@ Route::prefix('v1')->group(function () {
         });
 
         Route::prefix('campaign-stops')->group(function () {
-            Route::post('{stopUuid}/skirmishes', [CampaignStopSkirmishController::class, 'store']);
-            Route::delete('{stopUuid}/skirmishes', [CampaignStopSkirmishController::class, 'delete']);
+            Route::post('{stopUuid}/skirmishes', [CampaignStopSideQuestController::class, 'store']);
+            Route::delete('{stopUuid}/skirmishes', [CampaignStopSideQuestController::class, 'delete']);
         });
     });
 });

@@ -93,7 +93,7 @@ class LeaveQuestActionTest extends TestCase
      */
     public function leaving_a_quest_without_a_current_campaign_will_throw_an_exception()
     {
-        $this->campaignStop->skirmishes()->sync([]);
+        $this->campaignStop->sideQuests()->sync([]);
         $this->campaignStop->delete();
         $this->campaign->delete();
 
@@ -160,7 +160,7 @@ class LeaveQuestActionTest extends TestCase
          */
         /** @var CampaignStop $campaignStop */
         $campaignStop = CampaignStop::withTrashed()->where('uuid', '=', $stopUuid)->first();
-        $this->assertEquals(0, $campaignStop->skirmishes()->count());
+        $this->assertEquals(0, $campaignStop->sideQuests()->count());
 
         $campaignStop = CampaignStop::findUuid($stopUuid);
         $this->assertNull($campaignStop);
@@ -190,7 +190,7 @@ class LeaveQuestActionTest extends TestCase
          */
         /** @var CampaignStop $campaignStop */
         $campaignStop = CampaignStop::withTrashed()->where('uuid', '=', $stopUuid)->first();
-        $this->assertEquals(0, $campaignStop->skirmishes()->count());
+        $this->assertEquals(0, $campaignStop->sideQuests()->count());
 
         $campaignStop = CampaignStop::findUuid($stopUuid);
         $this->assertNull($campaignStop);

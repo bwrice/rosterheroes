@@ -3,14 +3,14 @@
 namespace App\Domain\Models;
 
 use App\Domain\Collections\MinionCollection;
-use App\Domain\Collections\SkirmishCollection;
+use App\Domain\Collections\SideQuestCollection;
 use App\Domain\Models\Quest;
 use App\Domain\Traits\HasNameSlug;
 use App\Domain\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Skirmish
+ * Class SideQuest
  * @package App
  *
  * @property int $id
@@ -31,7 +31,7 @@ class SideQuest extends Model
 
     public function newCollection(array $models = [])
     {
-        return new SkirmishCollection($models);
+        return new SideQuestCollection($models);
     }
 
     public function quest()
