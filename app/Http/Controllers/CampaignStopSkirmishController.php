@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Domain\Actions\AddSkirmishToCampaignStopAction;
 use App\Domain\Actions\LeaveSkirmishAction;
 use App\Domain\Models\CampaignStop;
-use App\Domain\Models\Skirmish;
+use App\Domain\Models\SideQuest;
 use App\Exceptions\CampaignStopException;
 use App\Http\Resources\CampaignResource;
 use App\Policies\SquadPolicy;
@@ -24,7 +24,7 @@ class CampaignStopSkirmishController extends Controller
      */
     public function store($stopUuid, Request $request, AddSkirmishToCampaignStopAction $domainAction)
     {
-        return $this->handleRequest($stopUuid, $request, function (CampaignStop $campaignStop, Skirmish $skirmish) use ($domainAction) {
+        return $this->handleRequest($stopUuid, $request, function (CampaignStop $campaignStop, SideQuest $skirmish) use ($domainAction) {
             $domainAction->execute($campaignStop, $skirmish);
         });
     }
@@ -39,7 +39,7 @@ class CampaignStopSkirmishController extends Controller
      */
     public function delete($stopUuid, Request $request, LeaveSkirmishAction $domainAction)
     {
-        return $this->handleRequest($stopUuid, $request, function (CampaignStop $campaignStop, Skirmish $skirmish) use ($domainAction) {
+        return $this->handleRequest($stopUuid, $request, function (CampaignStop $campaignStop, SideQuest $skirmish) use ($domainAction) {
             $domainAction->execute($campaignStop, $skirmish);
         });
     }
@@ -64,8 +64,8 @@ class CampaignStopSkirmishController extends Controller
 
         $this->authorize(SquadPolicy::MANAGE, $campaignStop->campaign->squad);
 
-        /** @var Skirmish $skirmish */
-        $skirmish = Skirmish::uuid($request->skirmish)->with([
+        /** @var SideQuest $skirmish */
+        $skirmish = SideQuest::uuid($request->skirmish)->with([
             'quest'
         ])->firstOrFail();
 

@@ -1,11 +1,11 @@
 <?php
 
-use App\Domain\Actions\CreateSkirmishAction;
+use App\Domain\Actions\CreateSideQuestAction;
 use App\Domain\Models\Minion;
 use App\Domain\Models\Province;
 use App\Domain\Models\Quest;
-use App\Domain\Models\Skirmish;
-use App\Domain\Models\SkirmishBlueprint;
+use App\Domain\Models\SideQuest;
+use App\Domain\Models\SideQuestBlueprint;
 use App\Domain\Models\Titan;
 use App\Domain\Models\TravelType;
 use Illuminate\Support\Facades\Schema;
@@ -60,7 +60,7 @@ class SeedQuests extends Migration
                         'weight' => 10
                     ],
                 ],
-                'skirmish_blueprints' => [
+                'sid_quest_blueprints' => [
                     'Small Skeleton Pack',
                     'Medium Skeleton Pack',
                     'Large Skeleton Pack'
@@ -71,7 +71,7 @@ class SeedQuests extends Migration
 
         $minions = Minion::all();
         $titans = Titan::all();
-        $skirmishBlueprints = SkirmishBlueprint::all();
+        $sideQuestBlueprints = SideQuestBlueprint::all();
         $provinces = Province::all();
         $travelTypes = TravelType::all();
 
@@ -106,10 +106,10 @@ class SeedQuests extends Migration
             }
         });
 
-        $quests->each(function ($questData) use ($skirmishBlueprints) {
+        $quests->each(function ($questData) use ($sideQuestBlueprints) {
 
-            $blueprintsForQuest = $skirmishBlueprints->whereIn('name', $questData['skirmish_blueprints']);
-            if ($blueprintsForQuest->count() != count($questData['skirmish_blueprints'])) {
+            $blueprintsForQuest = $sideQuestBlueprints->whereIn('name', $questData['sid_quest_blueprints']);
+            if ($blueprintsForQuest->count() != count($questData['sid_quest_blueprints'])) {
                 throw new RuntimeException("Couldn't find all the skirmishes for quest: " . $questData['name']);
             }
         });
@@ -121,9 +121,9 @@ class SeedQuests extends Migration
             }
         });
 
-        /** @var CreateSkirmishAction $createSkirmishAction */
-        $createSkirmishAction = app(CreateSkirmishAction::class);
-        $quests->each(function ($questData) use ($skirmishBlueprints, $minions, $titans, $provinces, $travelTypes, $createSkirmishAction) {
+        /** @var CreateSideQuestAction $createSideQuestAction */
+        $createSideQuestAction = app(CreateSideQuestAction::class);
+        $quests->each(function ($questData) use ($sideQuestBlueprints, $minions, $titans, $provinces, $travelTypes, $createSideQuestAction) {
 
             /** @var Quest $quest */
             $quest = Quest::query()->create([
@@ -145,9 +145,9 @@ class SeedQuests extends Migration
                 $quest->titans()->save($titan, ['count' => $titanData['count']]);
             });
 
-            $blueprintsForQuest = $skirmishBlueprints->whereIn('name', $questData['skirmish_blueprints']);
-            $blueprintsForQuest->each(function (SkirmishBlueprint $skirmishBlueprint) use ($quest, $createSkirmishAction) {
-                $createSkirmishAction->execute($skirmishBlueprint, $quest);
+            $blueprintsForQuest = $sideQuestBlueprints->whereIn('name', $questData['sid_quest_blueprints']);
+            $blueprintsForQuest->each(function (SideQuestBlueprint $skirmishBlueprint) use ($quest, $createSideQuestAction) {
+                $createSideQuestAction->execute($skirmishBlueprint, $quest);
             });
         });
     }

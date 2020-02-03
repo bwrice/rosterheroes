@@ -4,7 +4,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(\App\Domain\Models\SkirmishBlueprint::class, function (Faker $faker) {
+$factory->define(\App\Domain\Models\SideQuestBlueprint::class, function (Faker $faker) {
     return [
         'name' => $faker->streetName,
     ];

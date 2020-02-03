@@ -1,14 +1,14 @@
 <?php
 
 use App\Domain\Models\Minion;
-use App\Domain\Models\Skirmish;
-use App\Domain\Models\SkirmishBlueprint;
+use App\Domain\Models\SideQuest;
+use App\Domain\Models\SideQuestBlueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Str;
 
-class SeedSkirmishBlueprints extends Migration
+class SeedSideQuestBlueprints extends Migration
 {
     /**
      * Run the migrations.
@@ -88,8 +88,8 @@ class SeedSkirmishBlueprints extends Migration
         });
 
         $skirmishBlueprints->each(function ($skirmishData) use ($minions) {
-            /** @var Skirmish $skirmish */
-            $skirmish = SkirmishBlueprint::query()->create([
+            /** @var SideQuest $skirmish */
+            $skirmish = SideQuestBlueprint::query()->create([
                 'name' => $skirmishData['name']
             ]);
             $minionAttachArrays = collect($skirmishData['minions'])->map(function ($skirmishMinion) use ($minions) {

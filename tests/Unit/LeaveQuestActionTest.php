@@ -7,7 +7,7 @@ use App\Domain\Models\Campaign;
 use App\Domain\Models\CampaignStop;
 use App\Domain\Models\Province;
 use App\Domain\Models\Quest;
-use App\Domain\Models\Skirmish;
+use App\Domain\Models\SideQuest;
 use App\Domain\Models\Squad;
 use App\Domain\Models\Week;
 use App\Exceptions\CampaignException;
@@ -36,7 +36,7 @@ class LeaveQuestActionTest extends TestCase
     /** @var CampaignStop */
     protected $campaignStop;
 
-    /** @var Skirmish */
+    /** @var SideQuest */
     protected $skirmish;
 
     public function setUp(): void
@@ -62,7 +62,7 @@ class LeaveQuestActionTest extends TestCase
             'quest_id' => $this->quest->id
         ]);
 
-        $this->skirmish = factory(Skirmish::class)->create([
+        $this->skirmish = factory(SideQuest::class)->create([
             'quest_id' => $this->quest->id
         ]);
     }

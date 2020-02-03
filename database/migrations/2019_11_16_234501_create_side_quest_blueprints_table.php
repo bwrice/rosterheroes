@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSkirmishBlueprintsTable extends Migration
+class CreateSideQuestBlueprintsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateSkirmishBlueprintsTable extends Migration
      */
     public function up()
     {
-        Schema::create('skirmish_blueprints', function (Blueprint $table) {
+        Schema::create('side_quest_blueprints', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('slug');
@@ -28,6 +28,6 @@ class CreateSkirmishBlueprintsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('skirmish_blueprints');
+        Schema::dropIfExists('side_quest_blueprints');
     }
 }

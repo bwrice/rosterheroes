@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $name
  * @property MinionCollection $minions
  */
-class SkirmishBlueprint extends Model
+class SideQuestBlueprint extends Model
 {
     use HasNameSlug;
     use HasUniqueNames;
@@ -24,7 +24,6 @@ class SkirmishBlueprint extends Model
 
     public function minions()
     {
-        return $this->belongsToMany(Minion::class, 'minion_skirmish_blueprint', 'blueprint_id')
-            ->withPivot('count');
+        return $this->belongsToMany(Minion::class)->withPivot('count');
     }
 }

@@ -3,14 +3,14 @@
 namespace App\Http\Resources;
 
 use App\Domain\Models\Minion;
-use App\Domain\Models\Skirmish;
+use App\Domain\Models\SideQuest;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
  * Class SkirmishResource
  * @package App\Http\Resources
  *
- * @mixin Skirmish
+ * @mixin SideQuest
  */
 class SkirmishResource extends JsonResource
 {

@@ -5,7 +5,7 @@ namespace App\Exceptions;
 
 
 use App\Domain\Models\CampaignStop;
-use App\Domain\Models\Skirmish;
+use App\Domain\Models\SideQuest;
 
 class CampaignStopException extends CampaignException
 {
@@ -17,7 +17,7 @@ class CampaignStopException extends CampaignException
     /** @var CampaignStop */
     protected $campaignStop;
 
-    /** @var Skirmish */
+    /** @var SideQuest */
     protected $skirmish;
 
     /**
@@ -31,10 +31,10 @@ class CampaignStopException extends CampaignException
     }
 
     /**
-     * @param Skirmish $skirmish
+     * @param SideQuest $skirmish
      * @return CampaignStopException
      */
-    public function setSkirmish(Skirmish $skirmish): CampaignStopException
+    public function setSkirmish(SideQuest $skirmish): CampaignStopException
     {
         $this->skirmish = $skirmish;
         return $this;

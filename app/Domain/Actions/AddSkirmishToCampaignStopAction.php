@@ -7,7 +7,7 @@ namespace App\Domain\Actions;
 use App\Aggregates\CampaignStopAggregate;
 use App\Domain\Models\Campaign;
 use App\Domain\Models\CampaignStop;
-use App\Domain\Models\Skirmish;
+use App\Domain\Models\SideQuest;
 use App\Domain\Models\Week;
 use App\Exceptions\CampaignException;
 use App\Exceptions\CampaignStopException;
@@ -20,10 +20,10 @@ class AddSkirmishToCampaignStopAction extends CampaignStopAction
     /** @var CampaignStop */
     protected $campaignStop;
 
-    /** @var Skirmish */
+    /** @var SideQuest */
     protected $skirmish;
 
-    public function execute(CampaignStop $campaignStop, Skirmish $skirmish)
+    public function execute(CampaignStop $campaignStop, SideQuest $skirmish)
     {
         $this->setProperties($campaignStop, $skirmish);
         $this->validateWeek();
@@ -39,7 +39,7 @@ class AddSkirmishToCampaignStopAction extends CampaignStopAction
 
     protected function validateNonDuplicateSkirmish()
     {
-        $skirmishIDs = $this->campaignStop->skirmishes->map(function (Skirmish $skirmish) {
+        $skirmishIDs = $this->campaignStop->skirmishes->map(function (SideQuest $skirmish) {
             return $skirmish->id;
         })->values()->toArray();
 

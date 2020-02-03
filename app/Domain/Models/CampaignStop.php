@@ -45,7 +45,7 @@ class CampaignStop extends EventSourcedModel
 
     public function skirmishes()
     {
-        return $this->belongsToMany(Skirmish::class, 'campaign_stop_skirmish', 'stop_id')->withTimestamps();
+        return $this->belongsToMany(SideQuest::class, 'campaign_stop_skirmish', 'stop_id')->withTimestamps();
     }
 
     public function getAggregate()

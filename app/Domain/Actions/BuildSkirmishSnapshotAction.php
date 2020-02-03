@@ -4,12 +4,12 @@
 namespace App\Domain\Actions;
 
 
-use App\Domain\Models\Skirmish;
+use App\Domain\Models\SideQuest;
 use App\SkirmishSnapshot;
 
 class BuildSkirmishSnapshotAction
 {
-    public function execute(Skirmish $skirmish): SkirmishSnapshot
+    public function execute(SideQuest $skirmish): SkirmishSnapshot
     {
         // TODO
     }

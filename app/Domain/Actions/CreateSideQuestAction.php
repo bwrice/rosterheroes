@@ -6,20 +6,20 @@ namespace App\Domain\Actions;
 
 use App\Domain\Models\Minion;
 use App\Domain\Models\Quest;
-use App\Domain\Models\Skirmish;
-use App\Domain\Models\SkirmishBlueprint;
+use App\Domain\Models\SideQuest;
+use App\Domain\Models\SideQuestBlueprint;
 use Exception;
 use Illuminate\Support\Str;
 
-class CreateSkirmishAction
+class CreateSideQuestAction
 {
     /**
-     * @param SkirmishBlueprint $blueprint
+     * @param SideQuestBlueprint $blueprint
      * @param Quest $quest
-     * @return Skirmish
+     * @return SideQuest
      * @throws Exception
      */
-    public function execute(SkirmishBlueprint $blueprint, Quest $quest)
+    public function execute(SideQuestBlueprint $blueprint, Quest $quest)
     {
         $minions = $blueprint->minions;
 
@@ -27,8 +27,8 @@ class CreateSkirmishAction
             throw new Exception("No minions for skirmish blueprint: " . $blueprint->name);
         }
 
-        /** @var Skirmish $skirmish */
-        $skirmish = Skirmish::query()->create([
+        /** @var SideQuest $skirmish */
+        $skirmish = SideQuest::query()->create([
             'uuid' => Str::uuid(),
             'quest_id' => $quest->id,
             'skirmish_blueprint_id' => $blueprint->id,

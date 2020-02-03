@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMinionSkirmishPivot extends Migration
+class CreateMinionSideQuestBlueprintPivot extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,17 @@ class CreateMinionSkirmishPivot extends Migration
      */
     public function up()
     {
-        Schema::create('minion_skirmish', function (Blueprint $table) {
+        Schema::create('minion_side_quest_blueprint', function (Blueprint $table) {
             $table->integer('minion_id')->unsigned();
-            $table->integer('skirmish_id')->unsigned();
+            $table->integer('side_quest_blueprint_id')->unsigned();
             $table->integer('count');
-            $table->primary(['minion_id', 'skirmish_id']);
+            $table->primary(['minion_id', 'side_quest_blueprint_id'], 'minion_blueprint_primary');
             $table->timestamps();
         });
 
-        Schema::table('minion_skirmish', function (Blueprint $table) {
+        Schema::table('minion_side_quest_blueprint', function (Blueprint $table) {
             $table->foreign('minion_id')->references('id')->on('minions');
-            $table->foreign('skirmish_id')->references('id')->on('skirmishes');
+            $table->foreign('side_quest_blueprint_id')->references('id')->on('side_quest_blueprints');
         });
     }
 

@@ -5,7 +5,7 @@ namespace App\Domain\Actions;
 
 
 use App\Domain\Models\CampaignStop;
-use App\Domain\Models\Skirmish;
+use App\Domain\Models\SideQuest;
 use App\Domain\Models\Week;
 use App\Exceptions\CampaignStopException;
 
@@ -17,10 +17,10 @@ abstract class CampaignStopAction
     /** @var CampaignStop */
     protected $campaignStop;
 
-    /** @var Skirmish */
+    /** @var SideQuest */
     protected $skirmish;
 
-    protected function setProperties(CampaignStop $campaignStop, Skirmish $skirmish)
+    protected function setProperties(CampaignStop $campaignStop, SideQuest $skirmish)
     {
         $this->week = Week::current();
         $this->campaignStop = $campaignStop;

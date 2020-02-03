@@ -6,7 +6,7 @@ namespace App\Domain\Actions;
 
 use App\Domain\Models\CampaignStop;
 use App\Domain\Models\Quest;
-use App\Domain\Models\Skirmish;
+use App\Domain\Models\SideQuest;
 use App\Domain\Models\Squad;
 use App\Exceptions\CampaignException;
 use Illuminate\Support\Facades\DB;
@@ -36,7 +36,7 @@ class LeaveQuestAction extends SquadQuestAction
 
         DB::transaction(function () {
 
-            $this->campaignStop->skirmishes->each(function (Skirmish $skirmish) {
+            $this->campaignStop->skirmishes->each(function (SideQuest $skirmish) {
                 $this->leaveSkirmishAction->execute($this->campaignStop, $skirmish);
             });
 

@@ -5,12 +5,12 @@ namespace App\Domain\Actions;
 
 
 use App\Domain\Models\CampaignStop;
-use App\Domain\Models\Skirmish;
+use App\Domain\Models\SideQuest;
 use App\Exceptions\CampaignStopException;
 
 class LeaveSkirmishAction extends CampaignStopAction
 {
-    public function execute(CampaignStop $campaignStop, Skirmish $skirmish)
+    public function execute(CampaignStop $campaignStop, SideQuest $skirmish)
     {
         $this->setProperties($campaignStop, $skirmish);
 

@@ -90,7 +90,7 @@ class Quest extends EventSourcedModel
 
     public function skirmishes()
     {
-        return $this->hasMany(Skirmish::class);
+        return $this->hasMany(SideQuest::class);
     }
 
     public function isCompleted()

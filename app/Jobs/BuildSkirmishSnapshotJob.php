@@ -3,7 +3,7 @@
 namespace App\Jobs;
 
 use App\Domain\Actions\BuildSkirmishSnapshotAction;
-use App\Domain\Models\Skirmish;
+use App\Domain\Models\SideQuest;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -15,15 +15,15 @@ class BuildSkirmishSnapshotJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * @var Skirmish
+     * @var SideQuest
      */
     public $skirmish;
 
     /**
      * BuildSkirmishSnapshotJob constructor.
-     * @param Skirmish $skirmish
+     * @param SideQuest $skirmish
      */
-    public function __construct(Skirmish $skirmish)
+    public function __construct(SideQuest $skirmish)
     {
         $this->skirmish = $skirmish;
     }

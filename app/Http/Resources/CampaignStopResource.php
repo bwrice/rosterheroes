@@ -3,7 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Domain\Models\CampaignStop;
-use App\Domain\Models\Skirmish;
+use App\Domain\Models\SideQuest;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
@@ -28,7 +28,7 @@ class CampaignStopResource extends JsonResource
             'questUuid' => $this->quest->uuid,
             'provinceUuid' => $this->province->uuid,
             'campaignUuid' => $this->campaign->uuid,
-            'skirmishUuids' => $this->skirmishes->map(function (Skirmish $skirmish) {
+            'skirmishUuids' => $this->skirmishes->map(function (SideQuest $skirmish) {
                 return $skirmish->uuid;
             })->values()->toArray()
         ];

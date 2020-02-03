@@ -23,7 +23,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property MinionCollection $minions
  */
-class Skirmish extends Model
+class SideQuest extends Model
 {
     protected $guarded = [];
 

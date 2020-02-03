@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use App\Domain\Actions\WeekFinalizing\BuildCurrentWeekSkirmishSnapshotsAction;
-use App\Domain\Models\Skirmish;
+use App\Domain\Models\SideQuest;
 use App\Domain\Models\Week;
 use App\Facades\SkirmishService;
 use App\Jobs\FinalizeWeekJob;
@@ -33,8 +33,8 @@ class BuildCurrentWeekSkirmishSnapshotsActionTest extends TestCase
         parent::setUp();
 
         $this->week = factory(Week::class)->states('as-current', 'finalizing')->create();
-        $this->skirmishes = factory(Skirmish::class, 3)->create();
-        $mockedQuery = Skirmish::query()->whereIn('id', $this->skirmishes->pluck('id')->toArray());
+        $this->skirmishes = factory(SideQuest::class, 3)->create();
+        $mockedQuery = SideQuest::query()->whereIn('id', $this->skirmishes->pluck('id')->toArray());
         $this->currentStep = random_int(1, 9);
         $this->domainAction = app(BuildCurrentWeekSkirmishSnapshotsAction::class);
         SkirmishService::partialMock()->shouldReceive('query')->andReturn($mockedQuery);
