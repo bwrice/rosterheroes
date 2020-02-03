@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Domain\Models\Item;
 use App\Domain\Models\Squad;
 use App\Domain\Models\User;
+use App\Facades\CurrentWeek;
 use App\Nova\Hero;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Laravel\Passport\Passport;
@@ -41,7 +42,7 @@ class EquipHeroControllerTest extends TestCase
         $this->singleHandWeapon->attachToHasItems($this->hero);
         $this->twoHandedWeapon = factory(Item::class)->state('two-handed')->create();
         $this->twoHandedWeapon->attachToHasItems($this->squad);
-
+        CurrentWeek::partialMock()->shouldReceive('adventuringOpen')->andReturn(true);
     }
 
     /**
@@ -56,6 +57,8 @@ class EquipHeroControllerTest extends TestCase
         $response = $this->json('POST','api/v1/heroes/' . $this->hero->slug . '/equip', [
             'item' => $this->twoHandedWeapon->uuid
         ]);
+
+        $response->assertStatus(200);
 
         $responseArray = json_decode($response->content(), true);
         $this->assertEquals(2, count($responseArray['data']));

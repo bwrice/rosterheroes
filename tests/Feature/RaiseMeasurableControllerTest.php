@@ -6,6 +6,7 @@ use App\Domain\Models\Hero;
 use App\Domain\Models\HeroPost;
 use App\Domain\Models\Measurable;
 use App\Domain\Models\User;
+use App\Facades\CurrentWeek;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
@@ -23,6 +24,7 @@ class RaiseMeasurableControllerTest extends TestCase
     {
         parent::setUp();
         $this->hero = factory(Hero::class)->state('with-measurables')->create();
+        CurrentWeek::partialMock()->shouldReceive('adventuringOpen')->andReturn(true);
     }
 
     /**

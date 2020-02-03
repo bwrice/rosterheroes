@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Domain\Models\Item;
 use App\Domain\Models\Squad;
+use App\Facades\CurrentWeek;
 use App\Nova\Hero;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Laravel\Passport\Passport;
@@ -32,6 +33,7 @@ class UnEquipHeroControllerTest extends TestCase
         $this->hero = factory(\App\Domain\Models\Hero::class)->states( 'with-measurables')->create();
         $this->squad = $this->hero->squad;
         $this->item->attachToHasItems($this->hero);
+        CurrentWeek::partialMock()->shouldReceive('adventuringOpen')->andReturn(true);
     }
 
     /**
