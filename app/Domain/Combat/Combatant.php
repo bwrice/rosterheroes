@@ -6,7 +6,7 @@ namespace App\Domain\Combat;
 
 interface Combatant
 {
-    public function calculateActualDamage(int $initialDamage): int;
+    public function receiveDamage(int $initialDamage): int;
 
-    public function handleDamageReceived(int $damage);
+//    public function handleDamageReceived(int $damage);
 }

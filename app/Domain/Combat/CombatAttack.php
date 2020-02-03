@@ -19,5 +19,5 @@ interface CombatAttack
 
     public function getMaxTargets(): int;
 
-    public function handleDamageGiven(int $damageGiven);
+//    public function handleDamageGiven(int $damageGiven);
 }
