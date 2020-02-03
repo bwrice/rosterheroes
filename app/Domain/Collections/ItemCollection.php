@@ -10,6 +10,7 @@ namespace App\Domain\Collections;
 
 
 use App\Domain\Interfaces\Slottable;
+use App\Domain\Models\Attack;
 use App\Domain\Models\Enchantment;
 use App\Domain\Models\Item;
 use Illuminate\Database\Eloquent\Collection;
@@ -39,5 +40,16 @@ class ItemCollection extends Collection
         return $this->sum(function (Item $item) {
             return $item->weight();
         });
+    }
+
+    public function getAttacks()
+    {
+        $attacks = new AttackCollection();
+        $this->loadMissing('attacks')->each(function (Item $item) use ($attacks) {
+            $item->attacks->each(function (Attack $attack) use ($attacks) {
+                $attacks->push($attack);
+            });
+        });
+        return $attacks;
     }
 }
