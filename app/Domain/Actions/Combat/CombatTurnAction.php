@@ -16,9 +16,7 @@ class CombatTurnAction
         $attacks->each(function (CombatAttack $combatAttack) use ($defenders, $moment, $eventCallback) {
 
             $possibleTargets = $defenders->getPossibleTargets($moment);
-            $filteredTargets = $possibleTargets->filterByCombatPositions($combatAttack->getTargetCombatPositions());
-            $sortedTargets = $filteredTargets->sortByTargetPriority($combatAttack->getTargetPriority());
-            $targets = $sortedTargets->take($combatAttack->getMaxTargets());
+            $targets = $combatAttack->getTargets($possibleTargets);
 
             $damagePerTarget = $combatAttack->getDamagePerTarget($targets->count());
 
