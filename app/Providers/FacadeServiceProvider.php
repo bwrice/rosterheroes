@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Facades\FantasyPower;
 use App\Services\CurrentWeek;
 use App\Services\ModelServices\AttackService;
 use App\Services\ModelServices\HeroService;
@@ -36,6 +37,9 @@ class FacadeServiceProvider extends ServiceProvider
         });
         $this->app->bind('skirmish-service', function () {
             return new SkirmishService();
+        });
+        $this->app->bind('fantasy-power', function () {
+            return new FantasyPower();
         });
     }
 
