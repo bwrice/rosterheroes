@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Facades\FantasyPower;
 use App\Services\CurrentWeek;
+use App\Services\FantasyPower;
 use App\Services\ModelServices\AttackService;
 use App\Services\ModelServices\HeroService;
 use App\Services\ModelServices\SkirmishService;
