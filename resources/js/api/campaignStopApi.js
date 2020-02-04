@@ -1,16 +1,16 @@
 
-export async function addSkirmish(campaignStopUuid, skirmishUuid) {
-    let response = await axios.post('/api/v1/campaign-stops/' + campaignStopUuid + '/skirmishes', {
-        skirmish: skirmishUuid
+export async function joinSideQuest(campaignStopUuid, sideQuestUuid) {
+    let response = await axios.post('/api/v1/campaign-stops/' + campaignStopUuid + '/side-quests', {
+        sideQuest: sideQuestUuid
     });
     return response.data;
 }
 
-export async function leaveSkirmish(campaignStopUuid, skirmishUuid) {
-    let response = await axios.delete('/api/v1/campaign-stops/' + campaignStopUuid + '/skirmishes', {
+export async function leaveSideQuest(campaignStopUuid, sideQuestUuid) {
+    let response = await axios.delete('/api/v1/campaign-stops/' + campaignStopUuid + '/side-quests', {
         // need to specify data in axios.delete
         data: {
-            skirmish: skirmishUuid
+            sideQuest: sideQuestUuid
         }
     });
     return response.data;

@@ -65,14 +65,14 @@ export default {
             }
             return state.currentCampaign.campaignStops.find(campaignStop => campaignStop.questUuid === questUuid);
         },
-        _squadSkirmishUuids(state) {
+        _squadSideQuestUuids(state) {
             let campaign = state.currentCampaign;
             let uuids = [];
             if (! campaign) {
                 return uuids;
             }
             campaign.campaignStops.forEach(function (campaignStop) {
-                uuids = _.merge(uuids, campaignStop.skirmishUuids);
+                uuids = _.merge(uuids, campaignStop.sideQuestUuids);
             });
             return uuids;
         }
@@ -322,12 +322,12 @@ export default {
             }
         },
 
-        async addSkirmishToCampaignStop({state, commit, dispatch}, {campaignStop, skirmish}) {
+        async joinSideQuest({state, commit, dispatch}, {campaignStop, sideQuest}) {
             try {
-                let campaignResponse = await campaignStopApi.addSkirmish(campaignStop.uuid, skirmish.uuid);
+                let campaignResponse = await campaignStopApi.joinSideQuest(campaignStop.uuid, sideQuest.uuid);
                 let updateCampaign = new Campaign(campaignResponse.data);
                 commit('SET_CURRENT_CAMPAIGN', updateCampaign);
-                let text = skirmish.name + ' added to campaign';
+                let text = sideQuest.name + ' added to campaign';
                 dispatch('snackBarSuccess', {
                     text: text,
                     timeout: 3000
@@ -338,12 +338,12 @@ export default {
             }
         },
 
-        async removeSkirmishFromCampaignStop({state, commit, dispatch}, {campaignStop, skirmish}) {
+        async leaveSideQuest({state, commit, dispatch}, {campaignStop, sideQuest}) {
             try {
-                let campaignResponse = await campaignStopApi.leaveSkirmish(campaignStop.uuid, skirmish.uuid);
+                let campaignResponse = await campaignStopApi.leaveSideQuest(campaignStop.uuid, sideQuest.uuid);
                 let updateCampaign = new Campaign(campaignResponse.data);
                 commit('SET_CURRENT_CAMPAIGN', updateCampaign);
-                let text = skirmish.name + ' removed from campaign';
+                let text = sideQuest.name + ' removed from campaign';
                 dispatch('snackBarSuccess', {
                     text: text,
                     timeout: 3000

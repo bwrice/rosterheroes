@@ -28,8 +28,8 @@
             </v-col>
         </v-row>
         <v-row>
-            <v-col v-for="(skirmish, uuid) in quest.skirmishes" :key="uuid" cols="12" sm="6" lg="4" xl="3">
-                <SkirmishCard :skirmish="skirmish" :quest="quest"></SkirmishCard>
+            <v-col v-for="(sideQuest, uuid) in quest.sideQuests" :key="uuid" cols="12" sm="6" lg="4" xl="3">
+                <SideQuestCard :side-quest="sideQuest" :quest="quest"></SideQuestCard>
             </v-col>
         </v-row>
     </v-container>
@@ -39,11 +39,11 @@
 
     import {mapGetters} from 'vuex';
     import {mapActions} from 'vuex';
-    import SkirmishCard from "../../campaign/SkirmishCard";
+    import SideQuestCard from "../../campaign/SideQuestCard";
 
     export default {
         name: "QuestView",
-        components: {SkirmishCard},
+        components: {SideQuestCard},
         data() {
             return {
                 pending: false

@@ -1,17 +1,17 @@
-import Skirmish from "./Skirmish";
+import SideQuest from "./SideQuest";
 import Titan from "./Titan";
 import Minion from "./Minion";
 
 export default class Quest {
 
-    constructor({uuid, name = '', slug = '', level, provinceID, percent, skirmishes = [], titans = [], minions = []}) {
+    constructor({uuid, name = '', slug = '', level, provinceID, percent, sideQuests = [], titans = [], minions = []}) {
         this.uuid = uuid;
         this.name = name;
         this.slug = slug;
         this.level = level;
         this.provinceID = provinceID;
         this.percent = percent;
-        this.skirmishes = skirmishes.map(skirmish => new Skirmish(skirmish));
+        this.sideQuests = sideQuests.map(sideQuest => new SideQuest(sideQuest));
         this.titans = titans.map(titan => new Titan(titan));
         this.minions = minions.map(minion => new Minion(minion));
     }

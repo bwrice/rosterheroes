@@ -1,6 +1,6 @@
 import Minion from "./Minion";
 
-export default class Skirmish {
+export default class SideQuest {
 
     constructor({uuid, slug, name, difficulty, minions = []}) {
         this.uuid = uuid;

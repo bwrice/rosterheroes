@@ -2,13 +2,13 @@
     <v-sheet color="#5c707d" class="pa-2">
         <v-row no-gutters class="py-2" justify="space-between" align="center">
             <span class="title rh-op-85 font-weight-regular">
-                {{skirmish.name}}
+                {{sideQuest.name}}
             </span>
             <v-chip
                 label
                 color="rgba(0,0,0,.25)"
             >
-                {{skirmish.difficulty}}
+                {{sideQuest.difficulty}}
             </v-chip>
         </v-row>
         <v-row no-gutters>
@@ -18,7 +18,7 @@
                 show-arrows-on-hover
             >
                 <v-carousel-item
-                    v-for="(minion, uuid) in skirmish.minions"
+                    v-for="(minion, uuid) in sideQuest.minions"
                     :key="uuid"
                 >
                     <MinionPanel :minion="minion" :height="height"></MinionPanel>
@@ -27,21 +27,21 @@
         </v-row>
         <v-row no-gutters justify="end">
             <v-btn
-                v-if="hasSkirmish"
+                v-if="hasSideQuest"
                 color="error"
                 class="mt-2"
-                @click="leaveSkirmish"
+                @click="handleLeaveSideQuestClicked"
             >
-                Remove Skirmish
+                Join Side Quest
             </v-btn>
             <v-btn
                 v-else
                 color="primary"
                 class="mt-2"
-                :disabled="! canAddSkirmish"
-                @click="addSkirmish"
+                :disabled="! canJoinSideQuest"
+                @click="handleJoinSideQuestClicked"
             >
-                Add Skirmish
+                Leave Side Quest
             </v-btn>
         </v-row>
     </v-sheet>
@@ -52,16 +52,16 @@
     import {mapGetters} from 'vuex';
     import {mapActions} from 'vuex';
 
-    import Skirmish from "../../../models/Skirmish";
+    import SideQuest from "../../../models/SideQuest";
     import MinionPanel from "../views/campaign/MinionPanel";
     import Quest from "../../../models/Quest";
 
     export default {
-        name: "SkirmishCard",
+        name: "SideQuestCard",
         components: {MinionPanel},
         props: {
-            skirmish: {
-                type: Skirmish,
+            sideQuest: {
+                type: SideQuest,
                 required: true
             },
             quest: {
@@ -81,38 +81,38 @@
         computed: {
             ...mapGetters([
                 '_matchingCampaignStop',
-                '_squadSkirmishUuids'
+                '_squadSideQuestUuids'
             ]),
-            canAddSkirmish() {
-                return (this.campaignStop && ! this.hasSkirmish && ! this.pending);
+            canJoinSideQuest() {
+                return (this.campaignStop && ! this.hasSideQuest && ! this.pending);
             },
             campaignStop() {
                 return this._matchingCampaignStop(this.quest.uuid);
             },
-            hasSkirmish() {
-                let localSkirmish = this.skirmish;
-                let matchingSkirmish = this._squadSkirmishUuids.find(uuid => uuid === localSkirmish.uuid);
-                return matchingSkirmish !== undefined;
+            hasSideQuest() {
+                let localSideQuest = this.sideQuest;
+                let matchingSideQuest = this._squadSideQuestUuids.find(uuid => uuid === localSideQuest.uuid);
+                return matchingSideQuest !== undefined;
             }
         },
         methods: {
             ...mapActions([
-                'addSkirmishToCampaignStop',
-                'removeSkirmishFromCampaignStop'
+                'joinSideQuest',
+                'leaveSideQuest'
             ]),
-            async addSkirmish() {
+            async handleJoinSideQuestClicked() {
                 this.pending = true;
-                await this.addSkirmishToCampaignStop({
+                await this.joinSideQuest({
                     campaignStop: this.campaignStop,
-                    skirmish: this.skirmish
+                    sideQuest: this.sideQuest
                 });
                 this.pending = false;
             },
-            async leaveSkirmish() {
+            async handleLeaveSideQuestClicked() {
                 this.pending = true;
-                await this.removeSkirmishFromCampaignStop({
+                await this.leaveSideQuest({
                     campaignStop: this.campaignStop,
-                    skirmish: this.skirmish
+                    sideQuest: this.sideQuest
                 });
                 this.pending = false;
             }

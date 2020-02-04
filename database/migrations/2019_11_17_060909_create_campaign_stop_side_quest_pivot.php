@@ -33,6 +33,6 @@ class CreateCampaignStopSideQuestPivot extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('campaign_stop_skirmish');
+        Schema::dropIfExists('campaign_stop_side_quest');
     }
 }

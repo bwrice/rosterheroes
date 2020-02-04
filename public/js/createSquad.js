@@ -87241,7 +87241,7 @@ var Squad = function Squad(_ref) {
       _ref$favor = _ref.favor,
       favor = _ref$favor === void 0 ? 0 : _ref$favor,
       questsPerWeek = _ref.questsPerWeek,
-      skirmishesPerQuest = _ref.skirmishesPerQuest;
+      sideQuestsPerWeek = _ref.sideQuestsPerWeek;
 
   _classCallCheck(this, Squad);
 
@@ -87253,7 +87253,7 @@ var Squad = function Squad(_ref) {
   this.experience = experience;
   this.favor = favor;
   this.questsPerWeek = questsPerWeek;
-  this.skirmishesPerQuest = skirmishesPerQuest;
+  this.sideQuestsPerWeek = sideQuestsPerWeek;
 };
 
 
