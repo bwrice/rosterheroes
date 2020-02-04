@@ -5,8 +5,8 @@ namespace App\Projectors;
 use App\Domain\Models\CampaignStop;
 use App\StorableEvents\CampaignStopCreated;
 use App\StorableEvents\CampaignStopDeleted;
-use App\StorableEvents\SkirmishRemovedFromCampaignStop;
-use App\StorableEvents\SkirmishAddedToCampaignStop;
+use App\StorableEvents\SideQuestRemovedFromCampaignStop;
+use App\StorableEvents\SideQuestAddedToCampaignStop;
 use Spatie\EventSourcing\Projectors\Projector;
 use Spatie\EventSourcing\Projectors\ProjectsEvents;
 
@@ -29,15 +29,15 @@ final class CampaignStopProjector implements Projector
         $campaignStop->delete();
     }
 
-    public function onSkirmishAddedToCampaignStop(SkirmishAddedToCampaignStop $event, string $aggregateUuid)
+    public function onSideQuestAddedToCampaignStop(SideQuestAddedToCampaignStop $event, string $aggregateUuid)
     {
         $campaignStop = CampaignStop::findUuidOrFail($aggregateUuid);
-        $campaignStop->sideQuests()->attach($event->skirmishID);
+        $campaignStop->sideQuests()->attach($event->sideQuestID);
     }
 
-    public function onSkirmishRemovedFromCampaignStop(SkirmishRemovedFromCampaignStop $event, string $aggregateUuid)
+    public function onSideQuestRemovedFromCampaignStop(SideQuestRemovedFromCampaignStop $event, string $aggregateUuid)
     {
         $campaignStop = CampaignStop::findUuidOrFail($aggregateUuid);
-        $campaignStop->sideQuests()->detach($event->skirmishID);
+        $campaignStop->sideQuests()->detach($event->sideQuestID);
     }
 }

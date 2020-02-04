@@ -8,7 +8,7 @@ use App\Domain\Traits\HasNameSlug;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class SkirmishBlueprint
+ * Class SideQuestBlueprint
  * @package App\Domain\Models
  *
  * @property int $id

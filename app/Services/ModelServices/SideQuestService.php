@@ -6,7 +6,7 @@ namespace App\Services\ModelServices;
 
 use App\Domain\Models\SideQuest;
 
-class SkirmishService
+class SideQuestService
 {
     public function query()
     {

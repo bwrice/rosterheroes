@@ -110,7 +110,7 @@ class SeedQuests extends Migration
 
             $blueprintsForQuest = $sideQuestBlueprints->whereIn('name', $questData['sid_quest_blueprints']);
             if ($blueprintsForQuest->count() != count($questData['sid_quest_blueprints'])) {
-                throw new RuntimeException("Couldn't find all the skirmishes for quest: " . $questData['name']);
+                throw new RuntimeException("Couldn't find all the side-quests for quest: " . $questData['name']);
             }
         });
 
@@ -146,8 +146,8 @@ class SeedQuests extends Migration
             });
 
             $blueprintsForQuest = $sideQuestBlueprints->whereIn('name', $questData['sid_quest_blueprints']);
-            $blueprintsForQuest->each(function (SideQuestBlueprint $skirmishBlueprint) use ($quest, $createSideQuestAction) {
-                $createSideQuestAction->execute($skirmishBlueprint, $quest);
+            $blueprintsForQuest->each(function (SideQuestBlueprint $sideQuestBlueprint) use ($quest, $createSideQuestAction) {
+                $createSideQuestAction->execute($sideQuestBlueprint, $quest);
             });
         });
     }

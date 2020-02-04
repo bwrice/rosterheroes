@@ -5,7 +5,7 @@ namespace Tests\Feature;
 use App\Domain\Actions\WeekFinalizing\BuildCurrentWeekSkirmishSnapshotsAction;
 use App\Domain\Models\SideQuest;
 use App\Domain\Models\Week;
-use App\Facades\SkirmishService;
+use App\Facades\SideQuestService;
 use App\Jobs\FinalizeWeekJob;
 use Bwrice\LaravelJobChainGroups\Jobs\AsyncChainedJob;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -37,7 +37,7 @@ class BuildCurrentWeekSkirmishSnapshotsActionTest extends TestCase
         $mockedQuery = SideQuest::query()->whereIn('id', $this->skirmishes->pluck('id')->toArray());
         $this->currentStep = random_int(1, 9);
         $this->domainAction = app(BuildCurrentWeekSkirmishSnapshotsAction::class);
-        SkirmishService::partialMock()->shouldReceive('query')->andReturn($mockedQuery);
+        SideQuestService::partialMock()->shouldReceive('query')->andReturn($mockedQuery);
     }
 
     /**

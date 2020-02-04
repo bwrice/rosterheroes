@@ -8,18 +8,18 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * Class SkirmishService
+ * Class SideQuestService
  * @package App\Facades
  *
  * @method static Builder query()
  *
- * @see \App\Services\ModelServices\SkirmishService
+ * @see \App\Services\ModelServices\SideQuestService
  */
-class SkirmishService extends Facade
+class SideQuestService extends Facade
 {
 
     protected static function getFacadeAccessor()
     {
-        return 'skirmish-service';
+        return 'side-quest-service';
     }
 }

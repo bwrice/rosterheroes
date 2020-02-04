@@ -24,8 +24,8 @@ class CampaignStopSideQuestController extends Controller
      */
     public function store($stopUuid, Request $request, JoinSideQuestAction $domainAction)
     {
-        return $this->handleRequest($stopUuid, $request, function (CampaignStop $campaignStop, SideQuest $skirmish) use ($domainAction) {
-            $domainAction->execute($campaignStop, $skirmish);
+        return $this->handleRequest($stopUuid, $request, function (CampaignStop $campaignStop, SideQuest $sideQuest) use ($domainAction) {
+            $domainAction->execute($campaignStop, $sideQuest);
         });
     }
 
@@ -39,8 +39,8 @@ class CampaignStopSideQuestController extends Controller
      */
     public function delete($stopUuid, Request $request, LeaveSideQuestAction $domainAction)
     {
-        return $this->handleRequest($stopUuid, $request, function (CampaignStop $campaignStop, SideQuest $skirmish) use ($domainAction) {
-            $domainAction->execute($campaignStop, $skirmish);
+        return $this->handleRequest($stopUuid, $request, function (CampaignStop $campaignStop, SideQuest $sideQuest) use ($domainAction) {
+            $domainAction->execute($campaignStop, $sideQuest);
         });
     }
 
@@ -59,18 +59,18 @@ class CampaignStopSideQuestController extends Controller
         $campaignStop = CampaignStop::uuid($stopUuid)->with([
             'campaign.squad',
             'quest',
-            'skirmishes'
+            'sideQuests'
         ])->firstOrFail();
 
         $this->authorize(SquadPolicy::MANAGE, $campaignStop->campaign->squad);
 
-        /** @var SideQuest $skirmish */
-        $skirmish = SideQuest::uuid($request->skirmish)->with([
+        /** @var SideQuest $sideQuest */
+        $sideQuest = SideQuest::uuid($request->sideQuest)->with([
             'quest'
         ])->firstOrFail();
 
         try {
-            $callable($campaignStop, $skirmish);
+            $callable($campaignStop, $sideQuest);
         } catch (CampaignStopException $exception) {
             throw ValidationException::withMessages([
                 'campaign' => $exception->getMessage()

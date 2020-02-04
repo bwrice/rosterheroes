@@ -18,7 +18,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Date;
 use Tests\TestCase;
 
-class AddSkirmishToCampaignStopActionTest extends TestCase
+class AddSideQuestToCampaignStopActionTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -38,7 +38,7 @@ class AddSkirmishToCampaignStopActionTest extends TestCase
     protected $quest;
 
     /** @var SideQuest */
-    protected $skirmish;
+    protected $sideQuest;
 
     public function setUp(): void
     {
@@ -51,7 +51,7 @@ class AddSkirmishToCampaignStopActionTest extends TestCase
         $this->quest = factory(Quest::class)->create([
             'province_id' => $this->squad->province_id
         ]);
-        $this->skirmish = factory(SideQuest::class)->create([
+        $this->sideQuest = factory(SideQuest::class)->create([
             'quest_id' => $this->quest->id
         ]);
         $this->campaign = factory(Campaign::class)->create([
@@ -70,7 +70,7 @@ class AddSkirmishToCampaignStopActionTest extends TestCase
     /**
      * @test
      */
-    public function adding_a_skirmish_will_throw_an_exception_if_the_week_is_locked()
+    public function adding_a_side_quest_will_throw_an_exception_if_the_week_is_locked()
     {
         $this->week->adventuring_locks_at = Date::now()->subHour();
         $this->week->save();
@@ -80,7 +80,7 @@ class AddSkirmishToCampaignStopActionTest extends TestCase
 
             /** @var JoinSideQuestAction $domainAction */
             $domainAction = app(JoinSideQuestAction::class);
-            $domainAction->execute($this->campaignStop, $this->skirmish);
+            $domainAction->execute($this->campaignStop, $this->sideQuest);
 
         } catch (CampaignStopException $exception) {
 
@@ -94,18 +94,18 @@ class AddSkirmishToCampaignStopActionTest extends TestCase
     /**
      * @test
      */
-    public function it_will_throw_an_exception_if_the_skirmish_does_not_belong_to_the_quest()
+    public function it_will_throw_an_exception_if_the_side_quest_does_not_belong_to_the_quest()
     {
         $quest = factory(Quest::class)->create();
-        $this->skirmish->quest_id = $quest->id;
-        $this->skirmish->save();
-        $this->skirmish = $this->skirmish->fresh();
+        $this->sideQuest->quest_id = $quest->id;
+        $this->sideQuest->save();
+        $this->sideQuest = $this->sideQuest->fresh();
 
         try {
 
             /** @var JoinSideQuestAction $domainAction */
             $domainAction = app(JoinSideQuestAction::class);
-            $domainAction->execute($this->campaignStop, $this->skirmish);
+            $domainAction->execute($this->campaignStop, $this->sideQuest);
 
         } catch (CampaignStopException $exception) {
 
@@ -119,7 +119,7 @@ class AddSkirmishToCampaignStopActionTest extends TestCase
     /**
      * @test
      */
-    public function it_will_throw_an_exception_if_the_squad_is_not_at_the_skirmish_province()
+    public function it_will_throw_an_exception_if_the_squad_is_not_at_the_side_quest_province()
     {
         $diffProvince = Province::query()->where('id', '!=', $this->quest->id)->inRandomOrder()->first();
         $this->squad->province_id = $diffProvince->id;
@@ -130,7 +130,7 @@ class AddSkirmishToCampaignStopActionTest extends TestCase
 
             /** @var JoinSideQuestAction $domainAction */
             $domainAction = app(JoinSideQuestAction::class);
-            $domainAction->execute($this->campaignStop, $this->skirmish);
+            $domainAction->execute($this->campaignStop, $this->sideQuest);
 
         } catch (CampaignStopException $exception) {
 
@@ -144,12 +144,12 @@ class AddSkirmishToCampaignStopActionTest extends TestCase
     /**
      * @test
      */
-    public function it_will_throw_an_exception_if_the_max_skirmish_count_has_already_been_reached()
+    public function it_will_throw_an_exception_if_the_max_side_quest_count_has_already_been_reached()
     {
         try {
 
             $squadMock = \Mockery::mock($this->squad)
-                ->shouldReceive('getSkirmishesPerQuest')
+                ->shouldReceive('getSideQuestsPerQuest')
                 ->andReturn(0)->getMock();
 
             // set the relation prop to the mock
@@ -157,7 +157,7 @@ class AddSkirmishToCampaignStopActionTest extends TestCase
 
             /** @var JoinSideQuestAction $domainAction */
             $domainAction = app(JoinSideQuestAction::class);
-            $domainAction->execute($this->campaignStop, $this->skirmish);
+            $domainAction->execute($this->campaignStop, $this->sideQuest);
 
         } catch (CampaignStopException $exception) {
 
@@ -171,15 +171,15 @@ class AddSkirmishToCampaignStopActionTest extends TestCase
     /**
      * @test
      */
-    public function it_will_throw_an_exception_if_the_campaign_stop_already_has_the_skirmish()
+    public function it_will_throw_an_exception_if_the_campaign_stop_already_has_the_side_quest()
     {
         try {
 
-            $this->campaignStop->sideQuests()->attach($this->skirmish->id);
+            $this->campaignStop->sideQuests()->attach($this->sideQuest->id);
 
             /** @var JoinSideQuestAction $domainAction */
             $domainAction = app(JoinSideQuestAction::class);
-            $domainAction->execute($this->campaignStop->fresh(), $this->skirmish->fresh());
+            $domainAction->execute($this->campaignStop->fresh(), $this->sideQuest->fresh());
 
         } catch (CampaignStopException $exception) {
 
@@ -193,16 +193,16 @@ class AddSkirmishToCampaignStopActionTest extends TestCase
     /**
      * @test
      */
-    public function it_will_add_a_skirmish_to_a_campaign_stop_with_no_skirmishes()
+    public function it_will_add_a_side_quest_to_a_campaign_stop_with_no_side_quests()
     {
         $this->assertEquals(0, $this->campaignStop->sideQuests()->count());
 
         /** @var JoinSideQuestAction $domainAction */
         $domainAction = app(JoinSideQuestAction::class);
-        $domainAction->execute($this->campaignStop, $this->skirmish);
+        $domainAction->execute($this->campaignStop, $this->sideQuest);
 
-        $skirmishes = $this->campaignStop->fresh()->sideQuests;
-        $this->assertEquals(1, $skirmishes->count());
+        $sideQuests = $this->campaignStop->fresh()->sideQuests;
+        $this->assertEquals(1, $sideQuests->count());
     }
 
 }

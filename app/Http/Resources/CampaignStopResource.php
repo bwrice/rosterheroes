@@ -28,8 +28,8 @@ class CampaignStopResource extends JsonResource
             'questUuid' => $this->quest->uuid,
             'provinceUuid' => $this->province->uuid,
             'campaignUuid' => $this->campaign->uuid,
-            'skirmishUuids' => $this->sideQuests->map(function (SideQuest $skirmish) {
-                return $skirmish->uuid;
+            'sideQuestUuids' => $this->sideQuests->map(function (SideQuest $sideQuest) {
+                return $sideQuest->uuid;
             })->values()->toArray()
         ];
     }

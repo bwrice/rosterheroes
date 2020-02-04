@@ -5,8 +5,8 @@ namespace App\Aggregates;
 use App\Domain\Models\CampaignStop;
 use App\StorableEvents\CampaignStopCreated;
 use App\StorableEvents\CampaignStopDeleted;
-use App\StorableEvents\SkirmishRemovedFromCampaignStop;
-use App\StorableEvents\SkirmishAddedToCampaignStop;
+use App\StorableEvents\SideQuestRemovedFromCampaignStop;
+use App\StorableEvents\SideQuestAddedToCampaignStop;
 use Spatie\EventSourcing\AggregateRoot;
 
 final class CampaignStopAggregate extends AggregateRoot
@@ -18,15 +18,15 @@ final class CampaignStopAggregate extends AggregateRoot
         return $this;
     }
 
-    public function addSkirmish(int $skirmishID)
+    public function addSideQuest(int $sideQuestID)
     {
-        $this->recordThat(new SkirmishAddedToCampaignStop($skirmishID));
+        $this->recordThat(new SideQuestAddedToCampaignStop($sideQuestID));
         return $this;
     }
 
-    public function removeSkirmish(int $skirmishID)
+    public function removeSideQuest(int $sideQuestID)
     {
-        $this->recordThat(new SkirmishRemovedFromCampaignStop($skirmishID));
+        $this->recordThat(new SideQuestRemovedFromCampaignStop($sideQuestID));
         return $this;
     }
 

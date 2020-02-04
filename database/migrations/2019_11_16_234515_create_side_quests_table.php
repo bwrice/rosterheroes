@@ -35,6 +35,6 @@ class CreateSideQuestsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('skirmishes');
+        Schema::dropIfExists('side_quests');
     }
 }

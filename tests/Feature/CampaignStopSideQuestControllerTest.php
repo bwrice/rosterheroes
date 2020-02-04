@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Date;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
 
-class CampaignStopSkirmishControllerTest extends TestCase
+class CampaignStopSideQuestControllerTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -38,7 +38,7 @@ class CampaignStopSkirmishControllerTest extends TestCase
     protected $quest;
 
     /** @var SideQuest */
-    protected $skirmish;
+    protected $sideQuest;
 
     public function setUp(): void
     {
@@ -51,7 +51,7 @@ class CampaignStopSkirmishControllerTest extends TestCase
         $this->quest = factory(Quest::class)->create([
             'province_id' => $this->squad->province_id
         ]);
-        $this->skirmish = factory(SideQuest::class)->create([
+        $this->sideQuest = factory(SideQuest::class)->create([
             'quest_id' => $this->quest->id
         ]);
         $this->campaign = factory(Campaign::class)->create([
@@ -70,15 +70,15 @@ class CampaignStopSkirmishControllerTest extends TestCase
     /**
      * @test
      */
-    public function a_user_must_own_the_squad_of_the_campaign_stop_to_add_skirmish()
+    public function a_user_must_own_the_squad_of_the_campaign_stop_to_add_side_quest()
     {
         Passport::actingAs(factory(User::class)->create());
 
         $campaignStopUuid = $this->campaignStop->uuid;
-        $skirmishUuid = $this->skirmish->uuid;
+        $sideQuestUuid = $this->sideQuest->uuid;
 
-        $response = $this->json('POST', 'api/v1/campaign-stops/' . $campaignStopUuid . '/skirmishes', [
-            'skirmish' => $skirmishUuid
+        $response = $this->json('POST', 'api/v1/campaign-stops/' . $campaignStopUuid . '/side_quests', [
+            'side_quest' => $sideQuestUuid
         ]);
         $response->assertStatus(403);
     }
@@ -91,7 +91,7 @@ class CampaignStopSkirmishControllerTest extends TestCase
         Passport::actingAs($this->squad->user);
 
         $campaignStopUuid = $this->campaignStop->uuid;
-        $skirmishUuid = $this->skirmish->uuid;
+        $sideQuestUuid = $this->sideQuest->uuid;
 
         $mock = \Mockery::mock(app(JoinSideQuestAction::class))
             ->shouldReceive('execute')
@@ -100,8 +100,8 @@ class CampaignStopSkirmishControllerTest extends TestCase
         // Use the mock when retrieving from the container
         app()->instance(JoinSideQuestAction::class, $mock);
 
-        $response = $this->json('POST', 'api/v1/campaign-stops/' . $campaignStopUuid . '/skirmishes', [
-            'skirmish' => $skirmishUuid
+        $response = $this->json('POST', 'api/v1/campaign-stops/' . $campaignStopUuid . '/side_quests', [
+            'side_quest' => $sideQuestUuid
         ]);
         $response->assertStatus(422)->assertJsonValidationErrors([
             'campaign'
@@ -111,15 +111,15 @@ class CampaignStopSkirmishControllerTest extends TestCase
     /**
      * @test
      */
-    public function it_will_add_a_skirmish_and_return_an_updated_campaign_stop()
+    public function it_will_add_a_side_quest_and_return_an_updated_campaign_stop()
     {
         Passport::actingAs($this->squad->user);
 
         $campaignStopUuid = $this->campaignStop->uuid;
-        $skirmishUuid = $this->skirmish->uuid;
+        $sideQuestUuid = $this->sideQuest->uuid;
 
-        $response = $this->json('POST', 'api/v1/campaign-stops/' . $campaignStopUuid . '/skirmishes', [
-            'skirmish' => $skirmishUuid
+        $response = $this->json('POST', 'api/v1/campaign-stops/' . $campaignStopUuid . '/side_quests', [
+            'side_quest' => $sideQuestUuid
         ]);
 
         $response->assertStatus(200)
@@ -129,8 +129,8 @@ class CampaignStopSkirmishControllerTest extends TestCase
                     'campaignStops' => [
                         [
                             'uuid' => $this->campaignStop->uuid,
-                            'skirmishUuids' => [
-                                $this->skirmish->uuid
+                            'sideQuestUuids' => [
+                                $this->sideQuest->uuid
                             ]
                         ]
                     ]
@@ -141,17 +141,17 @@ class CampaignStopSkirmishControllerTest extends TestCase
     /**
      * @test
      */
-    public function it_will_leave_a_skirmish_and_return_an_updated_campaign_stop()
+    public function it_will_leave_a_side_quest_and_return_an_updated_campaign_stop()
     {
-        $this->campaignStop->sideQuests()->attach($this->skirmish->id);
+        $this->campaignStop->sideQuests()->attach($this->sideQuest->id);
 
         Passport::actingAs($this->squad->user);
 
         $campaignStopUuid = $this->campaignStop->uuid;
-        $skirmishUuid = $this->skirmish->uuid;
+        $sideQuestUuid = $this->sideQuest->uuid;
 
-        $response = $this->json('DELETE', 'api/v1/campaign-stops/' . $campaignStopUuid . '/skirmishes', [
-            'skirmish' => $skirmishUuid
+        $response = $this->json('DELETE', 'api/v1/campaign-stops/' . $campaignStopUuid . '/side_quests', [
+            'side_quest' => $sideQuestUuid
         ]);
 
         $response->assertStatus(200)
@@ -161,8 +161,8 @@ class CampaignStopSkirmishControllerTest extends TestCase
                     'campaignStops' => [
                         [
                             'uuid' => $this->campaignStop->uuid,
-                            'skirmishUuids' => [
-                                // No skirmishes left
+                            'sideQuestUuids' => [
+                                // No side_quests left
                             ]
                         ]
                     ]

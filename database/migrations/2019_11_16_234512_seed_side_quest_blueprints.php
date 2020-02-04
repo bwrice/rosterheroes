@@ -17,7 +17,7 @@ class SeedSideQuestBlueprints extends Migration
      */
     public function up()
     {
-        $skirmishBlueprints = collect([
+        $sideQuestBlueprints = collect([
             [
                 'name' => 'Small Skeleton Pack',
                 'minions' => [
@@ -77,33 +77,33 @@ class SeedSideQuestBlueprints extends Migration
 
         $minions = Minion::all();
 
-        $skirmishBlueprints->each(function ($skirmishData) use ($minions) {
-            $minionNames = collect($skirmishData['minions'])->map(function ($skirmishMinion) {
-                return $skirmishMinion['name'];
+        $sideQuestBlueprints->each(function ($sideQuestBlueprintData) use ($minions) {
+            $minionNames = collect($sideQuestBlueprintData['minions'])->map(function ($sideQuestMinion) {
+                return $sideQuestMinion['name'];
             });
             $minionsToAttach = $minions->whereIn('name', $minionNames->values()->toArray());
             if ($minionsToAttach->count() != $minionNames->count()) {
-                throw new RuntimeException("Cannot find all the minions for skirmish: " . $skirmishData['name']);
+                throw new RuntimeException("Cannot find all the minions for side-quest: " . $sideQuestBlueprintData['name']);
             }
         });
 
-        $skirmishBlueprints->each(function ($skirmishData) use ($minions) {
-            /** @var SideQuest $skirmish */
-            $skirmish = SideQuestBlueprint::query()->create([
-                'name' => $skirmishData['name']
+        $sideQuestBlueprints->each(function ($sideQuestBlueprintData) use ($minions) {
+            /** @var SideQuest $sideQuest */
+            $sideQuest = SideQuestBlueprint::query()->create([
+                'name' => $sideQuestBlueprintData['name']
             ]);
-            $minionAttachArrays = collect($skirmishData['minions'])->map(function ($skirmishMinion) use ($minions) {
-                $minionName = $skirmishMinion['name'];
+            $minionAttachArrays = collect($sideQuestBlueprintData['minions'])->map(function ($sideQuestMinion) use ($minions) {
+                $minionName = $sideQuestMinion['name'];
                 return [
                     'minion' => $minions->first(function(Minion $minion) use ($minionName) {
                         return $minion->name === $minionName;
                     }),
-                    'count' => $skirmishMinion['count']
+                    'count' => $sideQuestMinion['count']
                 ];
             });
 
-            $minionAttachArrays->each(function ($attachArray) use ($skirmish) {
-                $skirmish->minions()->save($attachArray['minion'], ['count' => $attachArray['count']]);
+            $minionAttachArrays->each(function ($attachArray) use ($sideQuest) {
+                $sideQuest->minions()->save($attachArray['minion'], ['count' => $attachArray['count']]);
             });
         });
     }

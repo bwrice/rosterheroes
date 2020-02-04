@@ -279,23 +279,6 @@ class Squad extends EventSourcedModel implements HasItems
         return self::QUESTS_PER_WEEK;
     }
 
-//    public function addSkirmish(Skirmish $skirmish)
-//    {
-//        if(! $this->joinedQuestForCurrentWeek($skirmish->quest)) {
-//            throw new QuestRequiredException($skirmish->quest);
-//        }
-//    }
-//
-//    /**
-//     * @param Quest $quest
-//     * @return bool
-//     */
-//    public function joinedQuestForCurrentWeek(Quest $quest)
-//    {
-//        $campaign = $this->getThisWeeksCampaign();
-//        return $campaign ? in_array($quest->id, $campaign->quests->pluck('id')->toArray()) : false;
-//    }
-
     /**
      * @return Campaign
      * @throws CampaignExistsException

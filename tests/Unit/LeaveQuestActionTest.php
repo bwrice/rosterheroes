@@ -37,7 +37,7 @@ class LeaveQuestActionTest extends TestCase
     protected $campaignStop;
 
     /** @var SideQuest */
-    protected $skirmish;
+    protected $sideQuest;
 
     public function setUp(): void
     {
@@ -62,7 +62,7 @@ class LeaveQuestActionTest extends TestCase
             'quest_id' => $this->quest->id
         ]);
 
-        $this->skirmish = factory(SideQuest::class)->create([
+        $this->sideQuest = factory(SideQuest::class)->create([
             'quest_id' => $this->quest->id
         ]);
     }
@@ -147,7 +147,7 @@ class LeaveQuestActionTest extends TestCase
     /**
      * @test
      */
-    public function leaving_a_quest_will_remove_skirmishes_from_the_campaign_stop()
+    public function leaving_a_quest_will_remove_side_quests_from_the_campaign_stop()
     {
         $stopUuid = $this->campaignStop->uuid;
 
@@ -169,7 +169,7 @@ class LeaveQuestActionTest extends TestCase
     /**
      * @test
      */
-    public function you_can_leave_a_quest_and_skirmishes_when_at_a_different_province()
+    public function you_can_leave_a_quest_and_side_quests_when_at_a_different_province()
     {
         $this->squad->province_id = Province::query()
             ->where('id', '!=', $this->campaignStop->province_id)

@@ -10,18 +10,18 @@ use App\Exceptions\CampaignStopException;
 
 class LeaveSideQuestAction extends CampaignStopAction
 {
-    public function execute(CampaignStop $campaignStop, SideQuest $skirmish)
+    public function execute(CampaignStop $campaignStop, SideQuest $sideQuest)
     {
-        $this->setProperties($campaignStop, $skirmish);
+        $this->setProperties($campaignStop, $sideQuest);
 
         $this->validateWeek();
         $this->validateQuestMatches();
-        $this->validateCampaignStopHasSkirmish();
+        $this->validateCampaignStopHasSideQuest();
 
-        $campaignStop->getAggregate()->removeSkirmish($skirmish->id)->persist();
+        $campaignStop->getAggregate()->removeSideQuest($sideQuest->id)->persist();
     }
 
-    protected function validateCampaignStopHasSkirmish()
+    protected function validateCampaignStopHasSideQuest()
     {
         $match = $this->campaignStop->sideQuests()->where('id', '=', $this->sideQuest->id)->first();
         if (is_null($match)) {

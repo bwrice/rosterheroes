@@ -13,6 +13,6 @@ $factory->define(\App\Domain\Models\SideQuest::class, function (Faker $faker) {
             return factory(\App\Domain\Models\Quest::class)->create()->id;
         },
         'name' => $blueprint->name,
-        'skirmish_blueprint_id' => $blueprint->id
+        'side_quest_blueprint_id' => $blueprint->id
     ];
 });

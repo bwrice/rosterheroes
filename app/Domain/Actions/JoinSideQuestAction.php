@@ -28,23 +28,23 @@ class JoinSideQuestAction extends CampaignStopAction
         $this->setProperties($campaignStop, $sideQuest);
         $this->validateWeek();
         $this->validateQuestMatches();
-        $this->validateNonDuplicateSkirmish();
+        $this->validateNonDuplicateSideQuest();
         $this->validateSquadLocation();
-        $this->validateMaxSkirmishCount();
+        $this->validateMaxSideQuestCount();
 
         /** @var CampaignStopAggregate $aggregate */
         $aggregate = CampaignStopAggregate::retrieve($campaignStop->uuid);
-        $aggregate->addSkirmish($sideQuest->id)->persist();
+        $aggregate->addSideQuest($sideQuest->id)->persist();
     }
 
-    protected function validateNonDuplicateSkirmish()
+    protected function validateNonDuplicateSideQuest()
     {
-        $skirmishIDs = $this->campaignStop->sideQuests->map(function (SideQuest $sideQuest) {
+        $sideQuestIDs = $this->campaignStop->sideQuests->map(function (SideQuest $sideQuest) {
             return $sideQuest->id;
         })->values()->toArray();
 
-        if (in_array($this->sideQuest->id, $skirmishIDs)) {
-            throw (new CampaignStopException("Skirmish already added", CampaignStopException::CODE_SIDE_QUEST_ALREADY_ADDED))
+        if (in_array($this->sideQuest->id, $sideQuestIDs)) {
+            throw (new CampaignStopException("Side quest already joined", CampaignStopException::CODE_SIDE_QUEST_ALREADY_ADDED))
                 ->setCampaignStop($this->campaignStop)
                 ->setSideQuest($this->sideQuest);
         }
@@ -55,17 +55,17 @@ class JoinSideQuestAction extends CampaignStopAction
         $squad = $this->campaignStop->campaign->squad;
         $quest = $this->sideQuest->quest;
         if ($this->campaignStop->campaign->squad->province_id !== $this->sideQuest->quest->province_id) {
-            $message = $squad->name . " must be at province: " . $quest->province->name . " to add skirmish";
+            $message = $squad->name . " must be at province: " . $quest->province->name . " to join side quest";
             throw (new CampaignStopException($message, CampaignStopException::CODE_SQUAD_NOT_IN_QUEST_PROVINCE))
                 ->setCampaignStop($this->campaignStop)
                 ->setSideQuest($this->sideQuest);
         }
     }
 
-    protected function validateMaxSkirmishCount()
+    protected function validateMaxSideQuestCount()
     {
         if ($this->campaignStop->sideQuests()->count() >= $this->campaignStop->campaign->squad->getSideQuestsPerQuest()) {
-            $message = "Skirmish limit reached for " . $this->campaignStop->quest->name;
+            $message = "Side quest limit reached for " . $this->campaignStop->quest->name;
             throw (new CampaignStopException($message, CampaignStopException::CODE_SIDE_QUEST_LIMIT_REACHED))
                 ->setCampaignStop($this->campaignStop)
                 ->setSideQuest($this->sideQuest);

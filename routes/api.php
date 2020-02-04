@@ -158,8 +158,8 @@ Route::prefix('v1')->group(function () {
         });
 
         Route::prefix('campaign-stops')->group(function () {
-            Route::post('{stopUuid}/skirmishes', [CampaignStopSideQuestController::class, 'store']);
-            Route::delete('{stopUuid}/skirmishes', [CampaignStopSideQuestController::class, 'delete']);
+            Route::post('{stopUuid}/side-quests', [CampaignStopSideQuestController::class, 'store']);
+            Route::delete('{stopUuid}/side-quests', [CampaignStopSideQuestController::class, 'delete']);
         });
     });
 });

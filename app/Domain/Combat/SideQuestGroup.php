@@ -6,7 +6,7 @@ namespace App\Domain\Combat;
 
 use Illuminate\Support\Collection;
 
-class CombatSkirmish implements CombatGroup
+class SideQuestGroup implements CombatGroup
 {
     public function getCombatMinions()
     {

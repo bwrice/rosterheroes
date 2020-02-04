@@ -7,7 +7,7 @@ namespace App\Domain\Actions\Combat;
 use App\Domain\Combat\CombatAttack;
 use App\Domain\Combat\CombatHero;
 use App\Domain\Combat\CombatItem;
-use App\Domain\Combat\CombatSkirmish;
+use App\Domain\Combat\SideQuestGroup;
 use App\Domain\Combat\CombatSquad;
 use Illuminate\Support\Collection;
 
@@ -23,10 +23,10 @@ class RunSkirmishCombatAction
         $this->moment = 1;
     }
 
-    public function execute(CombatSquad $combatSquad, CombatSkirmish $combatSkirmish)
+    public function execute(CombatSquad $combatSquad, SideQuestGroup $sideQuestGroup)
     {
         $squadAttacks = $this->getSquadAttacks($combatSquad);
-        $combatMinions = $combatSkirmish->getCombatMinions();
+        $combatMinions = $sideQuestGroup->getCombatMinions();
         while (true) {
 
         }

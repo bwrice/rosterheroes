@@ -34,6 +34,6 @@ class CreateMinionSideQuestPivot extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('minion_skirmish');
+        Schema::dropIfExists('minion_side_quest');
     }
 }

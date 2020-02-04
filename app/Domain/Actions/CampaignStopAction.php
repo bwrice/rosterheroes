@@ -20,11 +20,11 @@ abstract class CampaignStopAction
     /** @var SideQuest */
     protected $sideQuest;
 
-    protected function setProperties(CampaignStop $campaignStop, SideQuest $skirmish)
+    protected function setProperties(CampaignStop $campaignStop, SideQuest $sideQuest)
     {
         $this->week = Week::current();
         $this->campaignStop = $campaignStop;
-        $this->sideQuest = $skirmish;
+        $this->sideQuest = $sideQuest;
     }
 
     protected function validateWeek()
@@ -39,7 +39,7 @@ abstract class CampaignStopAction
     protected function validateQuestMatches()
     {
         if ($this->sideQuest->quest_id !== $this->campaignStop->quest_id) {
-            throw (new CampaignStopException("Skirmish does not belong to the quest", CampaignStopException::CODE_QUEST_NON_MATCH))
+            throw (new CampaignStopException("Side quest does not belong to the quest", CampaignStopException::CODE_QUEST_NON_MATCH))
                 ->setCampaignStop($this->campaignStop)
                 ->setSideQuest($this->sideQuest);
         }
