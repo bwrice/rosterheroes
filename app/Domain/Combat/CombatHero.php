@@ -12,15 +12,27 @@ class CombatHero
     /**
      * @var int
      */
-    protected $health;
+    protected $initialHealth;
     /**
      * @var int
      */
-    protected $stamina;
+    protected $initialStamina;
     /**
      * @var int
      */
-    protected $mana;
+    protected $initialMana;
+    /**
+     * @var int
+     */
+    protected $currentHealth;
+    /**
+     * @var int
+     */
+    protected $currentStamina;
+    /**
+     * @var int
+     */
+    protected $currentMana;
     /**
      * @var int
      */
@@ -42,9 +54,9 @@ class CombatHero
         CombatPosition $combatPosition,
         CombatAttackCollection $combatAttacks)
     {
-        $this->health = $health;
-        $this->stamina = $stamina;
-        $this->mana = $mana;
+        $this->initialHealth = $this->currentHealth = $health;
+        $this->initialStamina = $this->currentStamina = $stamina;
+        $this->initialMana = $this->currentMana = $mana;
         $this->protection = $protection;
         $this->combatPosition = $combatPosition;
         $this->combatAttacks = $combatAttacks;
