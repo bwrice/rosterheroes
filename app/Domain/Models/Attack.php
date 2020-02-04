@@ -23,6 +23,8 @@ use Symfony\Component\Yaml\Yaml;
  * @property int $fixed_target_count
  * @property int $attacker_position_id
  * @property int $target_position_id
+ * @property int $target_priority_id
+ * @property int $damage_type_id
  * @property string $config_path
  *
  * @property DamageType $damageType

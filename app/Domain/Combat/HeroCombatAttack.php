@@ -4,13 +4,9 @@
 namespace App\Domain\Combat;
 
 
-use App\Domain\Behaviors\DamageTypes\DamageTypeBehavior;
-use App\Domain\Behaviors\TargetPriorities\TargetPriorityBehavior;
-use App\Domain\Behaviors\TargetRanges\CombatPositionBehavior;
 use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Models\CombatPosition;
 use App\Domain\Models\DamageType;
-use App\Domain\Models\Hero;
 use App\Domain\Models\TargetPriority;
 
 class HeroCombatAttack implements CombatAttack

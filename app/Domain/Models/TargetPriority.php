@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @package App\Domain\Models
  *
  * @property string $name
+ * @property int $id
  */
 class TargetPriority extends Model
 {

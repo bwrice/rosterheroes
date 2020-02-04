@@ -4,6 +4,7 @@
 namespace App\Domain\Combat;
 
 
+use App\Domain\Models\CombatPosition;
 use App\Domain\Models\TargetPriority;
 use Illuminate\Support\Collection;
 
@@ -14,7 +15,7 @@ class CombatantCollection extends Collection
         return $this;
     }
 
-    public function filterByCombatPositions(Collection $combatPositions)
+    public function filterByCombatPosition(CombatPosition $combatPosition)
     {
         return $this;
     }
