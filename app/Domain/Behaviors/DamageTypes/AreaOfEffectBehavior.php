@@ -21,4 +21,9 @@ class AreaOfEffectBehavior extends DamageTypeBehavior
     {
         return 0;
     }
+
+    public function getMaxTargetCount(int $grade, ?int $fixedTargetCount)
+    {
+        return (int) (3 + ceil($grade/30));
+    }
 }

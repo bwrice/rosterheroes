@@ -21,4 +21,9 @@ class FixedTargetBehavior extends DamageTypeBehavior
     {
         return 1/sqrt($fixedTargetCount);
     }
+
+    public function getMaxTargetCount(int $grade, ?int $fixedTargetCount)
+    {
+        return $fixedTargetCount ?: 1;
+    }
 }

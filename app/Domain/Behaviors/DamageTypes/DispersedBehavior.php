@@ -21,4 +21,9 @@ class DispersedBehavior extends DamageTypeBehavior
     {
         return 1.5;
     }
+
+    public function getMaxTargetCount(int $grade, ?int $fixedTargetCount)
+    {
+        return (int) (4 + ceil($grade/15));
+    }
 }

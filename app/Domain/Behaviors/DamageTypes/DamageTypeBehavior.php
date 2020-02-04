@@ -11,4 +11,6 @@ abstract class DamageTypeBehavior
     abstract public function getCombatSpeedBonus(?int $fixedTargetCount);
 
     abstract public function getDamageMultiplierBonus(?int $fixedTargetCount);
+
+    abstract public function getMaxTargetCount(int $grade, ?int $fixedTargetCount);
 }
