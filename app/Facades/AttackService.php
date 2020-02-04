@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Facade;
  *
  * @method static AttackCollection all()
  * @method static AttackQueryBuilder query()
- * @method static int getDamage($baseDamage, $damageMultiplier, $fantasyPower)
  *
  * @see \App\Services\ModelServices\AttackService
  */

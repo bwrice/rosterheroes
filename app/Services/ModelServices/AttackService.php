@@ -17,15 +17,4 @@ class AttackService
     {
         return Attack::query();
     }
-
-    /**
-     * @param $baseDamage
-     * @param $damageMultiplier
-     * @param $fantasyPower
-     * @return int
-     */
-    public function getDamage($baseDamage, $damageMultiplier, $fantasyPower)
-    {
-        return (int) min(ceil($baseDamage + ($damageMultiplier * $fantasyPower)), 0);
-    }
 }
