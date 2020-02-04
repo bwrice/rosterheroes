@@ -8,7 +8,7 @@ use App\Domain\Actions\WeekFinalizing\BuildCurrentWeekSquadSnapshotsAction;
 use App\Domain\Actions\WeekFinalizing\BuildCurrentWeekTitanSnapshotsAction;
 use App\Domain\Actions\WeekFinalizing\FinalizeCurrentWeekPlayerGameLogsAction;
 use App\Domain\Actions\WeekFinalizing\FinalizeCurrentWeekSpiritEnergiesAction;
-use App\Domain\Actions\WeekFinalizing\ProcessCurrentWeekSkirmishesAction;
+use App\Domain\Actions\WeekFinalizing\RunCurrentWeekSideQuestsAction;
 use App\Jobs\FinalizeWeekJob;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -56,7 +56,7 @@ class FinalizeWeekJobTest extends TestCase
             ],
             'Step 6' => [
                 'step' => 6,
-                'domainAction' => ProcessCurrentWeekSkirmishesAction::class
+                'domainAction' => RunCurrentWeekSideQuestsAction::class
             ],
             'Step 7' => [
                 'step' => 7,

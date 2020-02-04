@@ -11,7 +11,7 @@ use App\Domain\Combat\SideQuestGroup;
 use App\Domain\Combat\CombatSquad;
 use Illuminate\Support\Collection;
 
-class RunSkirmishCombatAction
+class RunSideQuestAction
 {
     /**
      * @var int

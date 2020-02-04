@@ -77,8 +77,8 @@ class CampaignStopSideQuestControllerTest extends TestCase
         $campaignStopUuid = $this->campaignStop->uuid;
         $sideQuestUuid = $this->sideQuest->uuid;
 
-        $response = $this->json('POST', 'api/v1/campaign-stops/' . $campaignStopUuid . '/side_quests', [
-            'side_quest' => $sideQuestUuid
+        $response = $this->json('POST', 'api/v1/campaign-stops/' . $campaignStopUuid . '/side-quests', [
+            'sideQuest' => $sideQuestUuid
         ]);
         $response->assertStatus(403);
     }
@@ -100,8 +100,8 @@ class CampaignStopSideQuestControllerTest extends TestCase
         // Use the mock when retrieving from the container
         app()->instance(JoinSideQuestAction::class, $mock);
 
-        $response = $this->json('POST', 'api/v1/campaign-stops/' . $campaignStopUuid . '/side_quests', [
-            'side_quest' => $sideQuestUuid
+        $response = $this->json('POST', 'api/v1/campaign-stops/' . $campaignStopUuid . '/side-quests', [
+            'sideQuest' => $sideQuestUuid
         ]);
         $response->assertStatus(422)->assertJsonValidationErrors([
             'campaign'
@@ -118,8 +118,8 @@ class CampaignStopSideQuestControllerTest extends TestCase
         $campaignStopUuid = $this->campaignStop->uuid;
         $sideQuestUuid = $this->sideQuest->uuid;
 
-        $response = $this->json('POST', 'api/v1/campaign-stops/' . $campaignStopUuid . '/side_quests', [
-            'side_quest' => $sideQuestUuid
+        $response = $this->json('POST', 'api/v1/campaign-stops/' . $campaignStopUuid . '/side-quests', [
+            'sideQuest' => $sideQuestUuid
         ]);
 
         $response->assertStatus(200)
@@ -150,8 +150,8 @@ class CampaignStopSideQuestControllerTest extends TestCase
         $campaignStopUuid = $this->campaignStop->uuid;
         $sideQuestUuid = $this->sideQuest->uuid;
 
-        $response = $this->json('DELETE', 'api/v1/campaign-stops/' . $campaignStopUuid . '/side_quests', [
-            'side_quest' => $sideQuestUuid
+        $response = $this->json('DELETE', 'api/v1/campaign-stops/' . $campaignStopUuid . '/side-quests', [
+            'sideQuest' => $sideQuestUuid
         ]);
 
         $response->assertStatus(200)
