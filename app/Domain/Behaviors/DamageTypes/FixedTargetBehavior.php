@@ -26,4 +26,9 @@ class FixedTargetBehavior extends DamageTypeBehavior
     {
         return $fixedTargetCount ?: 1;
     }
+
+    public function getDamagePerTarget(int $damage, int $targetsCount)
+    {
+        return $damage;
+    }
 }

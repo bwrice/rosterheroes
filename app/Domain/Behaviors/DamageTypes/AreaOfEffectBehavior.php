@@ -26,4 +26,9 @@ class AreaOfEffectBehavior extends DamageTypeBehavior
     {
         return (int) (3 + ceil($grade/30));
     }
+
+    public function getDamagePerTarget(int $damage, int $targetsCount)
+    {
+        return $damage;
+    }
 }
