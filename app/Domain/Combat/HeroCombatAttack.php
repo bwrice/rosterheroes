@@ -25,6 +25,18 @@ class HeroCombatAttack
      */
     protected $attackID;
     /**
+     * @var int
+     */
+    protected $damage;
+    /**
+     * @var int
+     */
+    protected $grade;
+    /**
+     * @var float
+     */
+    protected $speed;
+    /**
      * @var CombatPositionBehavior
      */
     protected $attackerPositionBehavior;
@@ -49,6 +61,9 @@ class HeroCombatAttack
         int $heroID,
         int $itemID,
         int $attackID,
+        int $damage,
+        int $grade,
+        float $speed,
         CombatPositionBehavior $attackerPositionBehavior,
         CombatPositionBehavior $targetPositionBehavior,
         DamageTypeBehavior $damageTypeBehavior,
@@ -58,6 +73,9 @@ class HeroCombatAttack
         $this->heroID = $heroID;
         $this->itemID = $itemID;
         $this->attackID = $attackID;
+        $this->damage = $damage;
+        $this->grade = $grade;
+        $this->speed = $speed;
         $this->attackerPositionBehavior = $attackerPositionBehavior;
         $this->targetPositionBehavior = $targetPositionBehavior;
         $this->damageTypeBehavior = $damageTypeBehavior;
