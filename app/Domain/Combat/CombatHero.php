@@ -7,7 +7,7 @@ namespace App\Domain\Combat;
 use App\Domain\Collections\CombatAttackCollection;
 use App\Domain\Models\CombatPosition;
 
-class CombatHero
+class CombatHero implements Combatant
 {
     /**
      * @var int
@@ -38,6 +38,10 @@ class CombatHero
      */
     protected $protection;
     /**
+     * @var float
+     */
+    protected $blockChancePercent;
+    /**
      * @var CombatPosition
      */
     protected $combatPosition;
@@ -51,6 +55,7 @@ class CombatHero
         int $stamina,
         int $mana,
         int $protection,
+        float $blockChancePercent,
         CombatPosition $combatPosition,
         CombatAttackCollection $combatAttacks)
     {
@@ -58,7 +63,34 @@ class CombatHero
         $this->initialStamina = $this->currentStamina = $stamina;
         $this->initialMana = $this->currentMana = $mana;
         $this->protection = $protection;
+        $this->blockChancePercent = $blockChancePercent;
         $this->combatPosition = $combatPosition;
         $this->combatAttacks = $combatAttacks;
+    }
+
+    public function calculateDamageToReceive(int $initialDamage): int
+    {
+        $multiplier = 500 / (500 + $this->protection);
+        return (int) ceil($multiplier * $initialDamage);
+    }
+
+    /**
+     * @param int $damage
+     * @return mixed|void
+     */
+    public function receiveDamage(int $damage)
+    {
+        $this->currentHealth = (int) min($this->currentHealth - $damage, 0);
+    }
+
+    /**
+     * @param CombatAttack $combatAttack
+     * @return bool|mixed
+     * @throws \Exception
+     */
+    public function attackBlocked(CombatAttack $combatAttack)
+    {
+        $rand = random_int(1, 100);
+        return $rand <= $this->blockChancePercent;
     }
 }
