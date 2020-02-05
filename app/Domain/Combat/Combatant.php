@@ -13,10 +13,10 @@ interface Combatant
     public function calculateDamageToReceive(int $initialDamage): int;
 
     /**
-     * @param int $initialDamage
+     * @param int $damage
      * @return mixed
      */
-    public function receiveDamage(int $initialDamage);
+    public function receiveDamage(int $damage);
 
     /**
      * @param CombatAttack $combatAttack
