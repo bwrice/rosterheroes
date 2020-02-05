@@ -6,6 +6,7 @@ namespace App\Domain\Combat;
 
 use App\Domain\Collections\CombatAttackCollection;
 use App\Domain\Models\CombatPosition;
+use Illuminate\Support\Collection;
 
 class CombatHero implements Combatant
 {
@@ -50,6 +51,11 @@ class CombatHero implements Combatant
      */
     protected $combatAttacks;
 
+    /**
+     * @var Collection
+     */
+    protected $inheritedCombatPositions;
+
     public function __construct(
         int $health,
         int $stamina,
@@ -66,6 +72,7 @@ class CombatHero implements Combatant
         $this->blockChancePercent = $blockChancePercent;
         $this->combatPosition = $combatPosition;
         $this->combatAttacks = $combatAttacks;
+        $this->inheritedCombatPositions = collect();
     }
 
     public function calculateDamageToReceive(int $initialDamage): int
@@ -114,5 +121,32 @@ class CombatHero implements Combatant
     {
         // TODO
         return 1;
+    }
+
+    /**
+     * @param CombatPosition $combatPositionToCompare
+     * @return bool
+     */
+    public function hasCombatPosition(CombatPosition $combatPositionToCompare): bool
+    {
+        $match = $this->allCombatPositions()->first(function (CombatPosition $combatPosition) use ($combatPositionToCompare) {
+            return $combatPosition->id === $combatPositionToCompare->id;
+        });
+        return ! is_null($match);
+    }
+
+    protected function allCombatPositions()
+    {
+        return clone($this->inheritedCombatPositions)->push($this->combatPosition);
+    }
+
+    /**
+     * @param Collection $inheritedCombatPositions
+     * @return CombatHero
+     */
+    public function setInheritedCombatPositions(Collection $inheritedCombatPositions): CombatHero
+    {
+        $this->inheritedCombatPositions = $inheritedCombatPositions;
+        return $this;
     }
 }

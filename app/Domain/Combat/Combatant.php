@@ -37,8 +37,8 @@ interface Combatant
     public function getThreatLevel(): float;
 
     /**
-     * @param CombatPosition $combatPosition
+     * @param CombatPosition $combatPositionToCompare
      * @return bool
      */
-    public function hasCombatPosition(CombatPosition $combatPosition): bool;
+    public function hasCombatPosition(CombatPosition $combatPositionToCompare): bool;
 }
