@@ -93,4 +93,26 @@ class CombatHero implements Combatant
         $rand = random_int(1, 100);
         return $rand <= $this->blockChancePercent;
     }
+
+    /**
+     * @return int
+     */
+    public function getCurrentHealth(): int
+    {
+        return $this->currentHealth;
+    }
+
+    /**
+     * @return float
+     */
+    public function getThreatLevel(): float
+    {
+        return $this->getDPS();
+    }
+
+    protected function getDPS()
+    {
+        // TODO
+        return 1;
+    }
 }
