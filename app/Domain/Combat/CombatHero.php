@@ -80,7 +80,7 @@ class CombatHero implements Combatant
      */
     public function receiveDamage(int $damage)
     {
-        $this->currentHealth = (int) min($this->currentHealth - $damage, 0);
+        $this->currentHealth = (int) max($this->currentHealth - $damage, 0);
     }
 
     /**
