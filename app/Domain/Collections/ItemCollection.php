@@ -62,4 +62,11 @@ class ItemCollection extends Collection
             return $item->getProtection();
         });
     }
+
+    public function blockChance()
+    {
+        return $this->sum(function (Item $item) {
+            return $item->getBlockChance();
+        });
+    }
 }
