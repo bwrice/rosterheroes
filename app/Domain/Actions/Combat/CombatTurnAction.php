@@ -18,11 +18,18 @@ class CombatTurnAction
             $possibleTargets = $defenders->getPossibleTargets($moment);
             $targets = $combatAttack->getTargets($possibleTargets);
 
-            $damagePerTarget = $combatAttack->getDamagePerTarget($targets->count());
+            $startingDamage = $combatAttack->getDamagePerTarget($targets->count());
 
-            $possibleTargets->each(function (Combatant $combatant) use ($combatAttack, $damagePerTarget, $eventCallback) {
-                $damageReceived = $combatant->receiveDamage($damagePerTarget);
-                $eventCallback($damageReceived, $combatAttack, $combatant);
+            $possibleTargets->each(function (Combatant $combatant) use ($combatAttack, $startingDamage, $moment, $eventCallback) {
+
+                $block = $combatant->attackBlocked($combatAttack);
+                if ($block) {
+                    $damageReceived = 0;
+                } else {
+                    $damageReceived = $combatant->calculateDamageToReceive($startingDamage);
+                    $combatant->receiveDamage($damageReceived);
+                }
+                $eventCallback($damageReceived, $combatAttack, $combatant, $moment, $block);
             });
         });
     }
