@@ -4,7 +4,16 @@
 namespace App\Domain\Behaviors\TargetPriorities;
 
 
-class TargetPriorityBehavior implements TargetPriorityBehaviorInterface
-{
+use App\Domain\Combat\Combatant;
 
+abstract class TargetPriorityBehavior
+{
+    protected $sortCombatantsDesc = true;
+
+    abstract public function getCombatantValue(Combatant $combatant);
+
+    public function sortCombatantsDescending()
+    {
+        return $this->sortCombatantsDesc;
+    }
 }
