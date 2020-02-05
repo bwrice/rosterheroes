@@ -20,7 +20,7 @@ class CombatTurnAction
 
             $startingDamage = $combatAttack->getDamagePerTarget($targets->count());
 
-            $possibleTargets->each(function (Combatant $combatant) use ($combatAttack, $startingDamage, $moment, $eventCallback) {
+            $targets->each(function (Combatant $combatant) use ($combatAttack, $startingDamage, $moment, $eventCallback) {
 
                 $block = $combatant->attackBlocked($combatAttack);
                 if ($block) {
