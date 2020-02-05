@@ -4,22 +4,45 @@
 namespace App\Domain\Combat;
 
 
+use App\Domain\Collections\CombatantCollection;
 use Illuminate\Support\Collection;
 
 class CombatSquad implements CombatGroup
 {
-    public function getCombatHeroes()
+    /**
+     * @var int
+     */
+    protected $squadID;
+    /**
+     * @var int
+     */
+    protected $experience;
+    /**
+     * @var CombatantCollection
+     */
+    protected $combatHeroes;
+
+    public function __construct(int $squadID, int $experience, CombatantCollection $combatHeroes)
     {
-        return collect();
+        $this->squadID = $squadID;
+        $this->experience = $experience;
+        $this->combatHeroes = $combatHeroes;
     }
 
     public function getReadyAttacks(int $moment): Collection
     {
-        // TODO: Implement getReadyAttacks() method.
+        $attacks = collect();
+        $this->combatHeroes->each(function (CombatHero $combatHero) use (&$attacks, $moment) {
+            $attacks = $attacks->merge($combatHero->getReadyAttacks($moment));
+        });
+        return $attacks;
     }
 
     public function getPossibleTargets($moment): CombatantCollection
     {
-        // TODO: Implement getPossibleTargets() method.
+        $alive = $this->combatHeroes->filter(function (CombatHero $combatHero) {
+            return $combatHero->getCurrentHealth() > 0;
+        });
+        return $alive;
     }
 }
