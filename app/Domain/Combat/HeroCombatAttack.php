@@ -4,6 +4,7 @@
 namespace App\Domain\Combat;
 
 
+use App\Domain\Collections\CombatantCollection;
 use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Models\CombatPosition;
 use App\Domain\Models\DamageType;

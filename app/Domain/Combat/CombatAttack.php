@@ -4,6 +4,7 @@
 namespace App\Domain\Combat;
 
 
+use App\Domain\Collections\CombatantCollection;
 use App\Domain\Models\TargetPriority;
 use Illuminate\Support\Collection;
 

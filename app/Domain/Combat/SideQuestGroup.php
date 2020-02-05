@@ -4,6 +4,7 @@
 namespace App\Domain\Combat;
 
 
+use App\Domain\Collections\CombatantCollection;
 use Illuminate\Support\Collection;
 
 class SideQuestGroup implements CombatGroup
