@@ -4,6 +4,8 @@
 namespace App\Domain\Combat;
 
 
+use App\Domain\Models\CombatPosition;
+
 interface Combatant
 {
     /**
@@ -33,4 +35,10 @@ interface Combatant
      * @return float
      */
     public function getThreatLevel(): float;
+
+    /**
+     * @param CombatPosition $combatPosition
+     * @return bool
+     */
+    public function hasCombatPosition(CombatPosition $combatPosition): bool;
 }

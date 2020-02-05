@@ -11,6 +11,10 @@ use Illuminate\Support\Collection;
 
 class CombatantCollection extends Collection
 {
+    /**
+     * @param TargetPriority $targetPriority
+     * @return CombatantCollection
+     */
     public function sortByTargetPriority(TargetPriority $targetPriority)
     {
         $behavior = $targetPriority->getBehavior();
@@ -24,8 +28,14 @@ class CombatantCollection extends Collection
         }
     }
 
+    /**
+     * @param CombatPosition $combatPosition
+     * @return CombatantCollection
+     */
     public function filterByCombatPosition(CombatPosition $combatPosition)
     {
-        return $this;
+        return $this->filter(function (Combatant $combatant) use ($combatPosition) {
+            return $combatant->hasCombatPosition($combatPosition);
+        });
     }
 }
