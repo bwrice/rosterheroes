@@ -52,4 +52,14 @@ class ItemCollection extends Collection
         });
         return $attacks;
     }
+
+    /**
+     * @return int
+     */
+    public function protection()
+    {
+        return $this->sum(function (Item $item) {
+            return $item->getProtection();
+        });
+    }
 }

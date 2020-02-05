@@ -212,6 +212,11 @@ class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasItems
         return $this->getMeasurable($measurableTypeName)->getPreBuffedAmount();
     }
 
+    public function getCurrentMeasurableAmount(string $measurableTypeName): int
+    {
+        return $this->getMeasurable($measurableTypeName)->getCurrentAmount();
+    }
+
     public function getUniqueIdentifier(): string
     {
         return $this->uuid;
@@ -355,5 +360,10 @@ class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasItems
     public function combatReady()
     {
         return HeroService::combatReady($this);
+    }
+
+    public function getProtection()
+    {
+        return $this->items->protection();
     }
 }
