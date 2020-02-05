@@ -23,4 +23,14 @@ interface Combatant
      * @return mixed
      */
     public function attackBlocked(CombatAttack $combatAttack);
+
+    /**
+     * @return int
+     */
+    public function getCurrentHealth(): int;
+
+    /**
+     * @return float
+     */
+    public function getThreatLevel(): float;
 }
