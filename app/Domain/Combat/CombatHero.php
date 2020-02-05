@@ -4,7 +4,6 @@
 namespace App\Domain\Combat;
 
 
-use App\Domain\Collections\CombatAttackCollection;
 use App\Domain\Models\CombatPosition;
 use Illuminate\Support\Collection;
 
@@ -47,7 +46,7 @@ class CombatHero implements Combatant
      */
     protected $combatPosition;
     /**
-     * @var CombatAttackCollection
+     * @var Collection
      */
     protected $combatAttacks;
 
@@ -63,7 +62,7 @@ class CombatHero implements Combatant
         int $protection,
         float $blockChancePercent,
         CombatPosition $combatPosition,
-        CombatAttackCollection $combatAttacks)
+        Collection $combatAttacks)
     {
         $this->initialHealth = $this->currentHealth = $health;
         $this->initialStamina = $this->currentStamina = $stamina;
