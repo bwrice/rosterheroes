@@ -50,7 +50,15 @@ class MeasurableFactory
         return $measurable;
     }
 
-    protected function forHero(Hero $hero)
+    /**
+     * @return int
+     */
+    public function getMeasurableTypeID(): int
+    {
+        return $this->measurableTypeID;
+    }
+
+    public function forHero(Hero $hero)
     {
         $clone = clone $this;
         $clone->heroID = $hero->id;
@@ -61,6 +69,13 @@ class MeasurableFactory
     {
         $clone = clone $this;
         $clone->amountRaised = $amountRaised;
+        return $clone;
+    }
+
+    public function forMeasurableType(MeasurableType $measurableType)
+    {
+        $clone = clone $this;
+        $clone->measurableTypeID = $measurableType->id;
         return $clone;
     }
 }
