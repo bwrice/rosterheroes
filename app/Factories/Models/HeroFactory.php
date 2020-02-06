@@ -9,7 +9,9 @@ use App\Domain\Models\Hero;
 use App\Domain\Models\HeroClass;
 use App\Domain\Models\HeroRace;
 use App\Domain\Models\HeroRank;
+use App\Domain\Models\MeasurableType;
 use App\Domain\Models\Squad;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 class HeroFactory
@@ -32,9 +34,13 @@ class HeroFactory
     /** @var SquadFactory */
     protected $squadFactory;
 
+    /** @var Collection */
+    protected $measurableFactories;
+
     protected function __construct()
     {
         $this->squadFactory = SquadFactory::new();
+        $this->measurableFactories = collect();
     }
 
     public static function new(): self
@@ -62,6 +68,10 @@ class HeroFactory
             ],
             $extra
         ));
+
+        $this->measurableFactories->each(function (MeasurableFactory $measurableFactory) use ($hero) {
+            $measurableFactory->forHero($hero)->create();
+        });
         return $hero;
     }
 
@@ -139,4 +149,18 @@ class HeroFactory
         return $clone;
     }
 
+    public function withMeasurables(Collection $measurableFactories = null)
+    {
+        $measurableFactories = $measurableFactories ?: collect();
+        $mappedFactories = MeasurableType::all()->map(function (MeasurableType $measurableType) use ($measurableFactories) {
+            $match = $measurableFactories->first(function (MeasurableFactory $factory) use ($measurableType) {
+                return $factory->getMeasurableTypeID() === $measurableType->id;
+            });
+            return $match ?: MeasurableFactory::new()->forMeasurableType($measurableType);
+        });
+
+        $clone = clone $this;
+        $clone->measurableFactories = $mappedFactories;
+        return $clone;
+    }
 }
