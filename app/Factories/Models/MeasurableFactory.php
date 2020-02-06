@@ -20,6 +20,9 @@ class MeasurableFactory
     /** @var HeroFactory */
     protected $heroFactory;
 
+    /** @var int */
+    protected $amountRaised = 0;
+
     protected function __construct()
     {
         $this->heroFactory = HeroFactory::new();
@@ -40,7 +43,7 @@ class MeasurableFactory
         /** @var Measurable $measurable */
         $measurable = Measurable::query()->create([
             'uuid' => (string) Str::uuid(),
-            'amount_raised' => 0,
+            'amount_raised' => $this->amountRaised,
             'measurable_type_id' => $this->measurableTypeID ?: MeasurableType::query()->inRandomOrder()->first()->id,
             'hero_id' => $this->heroID ?: $this->heroFactory->create()->id
         ]);
@@ -51,6 +54,13 @@ class MeasurableFactory
     {
         $clone = clone $this;
         $clone->heroID = $hero->id;
+        return $clone;
+    }
+
+    public function amountRaised(int $amountRaised)
+    {
+        $clone = clone $this;
+        $clone->amountRaised = $amountRaised;
         return $clone;
     }
 }
