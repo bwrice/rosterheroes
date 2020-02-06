@@ -33,7 +33,7 @@ class BuildCombatSquadAction
      * @param Collection|null $damageTypes
      * @return CombatSquad
      */
-    public function execute(Squad $squad, ?Collection $combatPositions, ?Collection $targetPriorities, ?Collection $damageTypes): CombatSquad
+    public function execute(Squad $squad, Collection $combatPositions = null, Collection $targetPriorities = null, Collection $damageTypes = null): CombatSquad
     {
         $combatPositions ?: CombatPosition::all();
         $targetPriorities ?: TargetPriority::all();
