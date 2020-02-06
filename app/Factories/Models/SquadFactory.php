@@ -42,7 +42,7 @@ class SquadFactory
                 'province_id' => $this->provinceID ?: Province::getStarting()->id,
                 'squad_rank_id' => $this->squadRankID ?: SquadRank::getStarting()->id,
                 'mobile_storage_rank_id' => $this->mobileStorageRankID ?: MobileStorageRank::getStarting()->id,
-                'spiritEssence' => Squad::STARTING_ESSENCE,
+                'spirit_essence' => Squad::STARTING_ESSENCE,
                 'gold' => Squad::STARTING_GOLD,
                 'experience' => Squad::STARTING_EXPERIENCE,
                 'favor' => Squad::STARTING_FAVOR,
