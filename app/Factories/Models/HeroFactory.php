@@ -9,41 +9,52 @@ use App\Domain\Models\Hero;
 use App\Domain\Models\HeroClass;
 use App\Domain\Models\HeroRace;
 use App\Domain\Models\HeroRank;
+use App\Domain\Models\Squad;
+use Illuminate\Support\Str;
 
 class HeroFactory
 {
-    /**
-     * @var int
-     */
+    /** @var int */
+    protected $squadID;
+
+    /** @var int */
     protected $heroClassID;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     protected $heroRankID;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     protected $heroRaceID;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     protected $combatPositionID;
+
+    /** @var SquadFactory */
+    protected $squadFactory;
+
+    protected function __construct()
+    {
+        $this->squadFactory = SquadFactory::new();
+    }
 
     public static function new(): self
     {
         return new self();
     }
 
+    /**
+     * @param array $extra
+     * @return Hero
+     * @throws \Exception
+     */
     public function create(array $extra = []): Hero
     {
         /** @var Hero $hero */
         $hero = Hero::query()->create(array_merge(
             [
+                'squad_id' => $this->squadID ?: $this->squadFactory->create()->id,
                 'name' => 'TestHero_' . random_int(1,999999999),
-                'uuid' => (string) \Ramsey\Uuid\Uuid::uuid4(),
+                'uuid' => (string) Str::uuid(),
                 'hero_class_id' => $this->heroClassID ?: $this->getDefaultHeroClassID(),
                 'hero_race_id' => $this->heroRaceID ?: $this->getDefaultHeroRaceID(),
                 'hero_rank_id' => $this->heroRankID ?: $this->getDefaultHeroRank(),
@@ -113,4 +124,19 @@ class HeroFactory
     {
         return CombatPosition::query()->inRandomOrder()->first()->id;
     }
+
+    public function forSquad(Squad $squad)
+    {
+        $clone = clone $this;
+        $clone->squadID = $squad->id;
+        return $clone;
+    }
+
+    public function squad(SquadFactory $squadFactory)
+    {
+        $clone = clone $this;
+        $clone->squadFactory = $squadFactory;
+        return $clone;
+    }
+
 }
