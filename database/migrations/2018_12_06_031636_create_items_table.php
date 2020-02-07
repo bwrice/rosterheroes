@@ -19,7 +19,7 @@ class CreateItemsTable extends Migration
             $table->integer('item_class_id')->unsigned();
             $table->integer('item_type_id')->unsigned();
             $table->integer('material_id')->unsigned();
-            $table->integer('item_blueprint_id')->unsigned();
+            $table->integer('item_blueprint_id')->unsigned()->nullable();
             $table->nullableMorphs('has_items');
             $table->string('name')->nullable();
             $table->timestamps();
