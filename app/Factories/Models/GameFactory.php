@@ -7,6 +7,8 @@ namespace App\Factories\Models;
 use App\Domain\Models\Game;
 use App\Domain\Models\League;
 use App\Domain\Models\Team;
+use App\Domain\Models\Week;
+use Illuminate\Support\Facades\Date;
 
 class GameFactory
 {
@@ -15,6 +17,9 @@ class GameFactory
 
     /** @var Team */
     protected $homeTeam;
+
+    /** @var Week */
+    protected $week;
 
     /** @var Team */
     protected $awayTeam;
@@ -32,7 +37,8 @@ class GameFactory
         /** @var Game $game */
         $game = Game::query()->create(array_merge([
             'home_team_id' => $homeTeam->id,
-            'away_team_id' => $awayTeam->id
+            'away_team_id' => $awayTeam->id,
+            'starts_at' => $this->getStartsAt()
         ], $extra));
         return $game;
     }
@@ -60,6 +66,36 @@ class GameFactory
         if ($this->awayTeam) {
             return $this->awayTeam;
         }
-        return factory(Team::class)->create(['league_id' => $this->league->id]);
+        return factory(Team::class)->create(['league_id' => $homeTeamLeague->id]);
+    }
+
+    public function forHomeTeam(Team $team)
+    {
+        $clone = clone $this;
+        $this->homeTeam = $team;
+        return $clone;
+    }
+
+    public function forAwayTeam(Team $team)
+    {
+        $clone = clone $this;
+        $this->awayTeam = $team;
+        return $clone;
+    }
+
+    public function forEitherTeam(Team $team)
+    {
+        if (rand(1,2) == 1) {
+            return $this->forHomeTeam($team);
+        }
+        return $this->forAwayTeam($team);
+    }
+
+    protected function getStartsAt()
+    {
+        if ($this->week) {
+            return $this->week->adventuring_locks_at->addHours(3);
+        }
+        return Date::now()->addHours(3);
     }
 }
