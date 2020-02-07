@@ -10,6 +10,7 @@ use App\Domain\Models\Item;
 use App\Domain\Models\ItemBase;
 use App\Domain\Models\ItemClass;
 use App\Domain\Models\ItemType;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
@@ -88,7 +89,7 @@ class ItemFactory
         return $clone;
     }
 
-    public function withAttacks(Collection $attacks = null)
+    public function withAttacks(int $amount = 1, Collection $attacks = null)
     {
         $clone = clone $this;
 
@@ -101,11 +102,56 @@ class ItemFactory
             } else {
                 $itemBase = $clone->itemType->itemBase;
             }
-            $amount = rand(1, 3);
             $attacks = $itemBase->attacks()->inRandomOrder()->take($amount)->get();
         }
 
         $clone->attacks = $attacks;
         return $clone;
+    }
+
+    public function fromItemBases(array $itemBaseNames)
+    {
+        $itemType = ItemType::query()->whereHas('itemBase', function (Builder $builder) use ($itemBaseNames) {
+            return $builder->whereIn('name', $itemBaseNames);
+        })->inRandomOrder()->first();
+
+        $clone = clone $this;
+        $clone->itemType = $itemType;
+        return $clone;
+    }
+
+    public function shield()
+    {
+        return $this->fromItemBases([
+            ItemBase::SHIELD,
+            ItemBase::PSIONIC_SHIELD,
+        ]);
+    }
+
+    public function singleHandWeapon()
+    {
+        return $this->fromItemBases([
+            ItemBase::DAGGER,
+            ItemBase::SWORD,
+            ItemBase::MACE,
+            ItemBase::WAND,
+            ItemBase::AXE,
+            ItemBase::PSIONIC_ONE_HAND,
+            ItemBase::THROWING_WEAPON,
+        ]);
+    }
+
+    public function twoHandWeapon()
+    {
+        return $this->fromItemBases([
+            ItemBase::CROSSBOW,
+            ItemBase::TWO_HAND_SWORD,
+            ItemBase::TWO_HAND_AXE,
+            ItemBase::PSIONIC_TWO_HAND,
+            ItemBase::BOW,
+            ItemBase::STAFF,
+            ItemBase::ORB,
+            ItemBase::POLEARM,
+        ]);
     }
 }
