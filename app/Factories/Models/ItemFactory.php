@@ -81,6 +81,9 @@ class ItemFactory
             $enchantments = Enchantment::query()->inRandomOrder()->take($amount)->get();
         }
         $clone = clone $this;
+        if (! $clone->itemClassID || $clone->itemClassID === ItemClass::generic()->id) {
+            $clone->itemClassID = ItemClass::enchanted()->id;
+        }
         $clone->enchantments = $enchantments;
         return $clone;
     }
