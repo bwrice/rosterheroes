@@ -14,7 +14,7 @@ use App\Domain\Models\TargetPriority;
 use App\Facades\HeroService;
 use Illuminate\Support\Collection;
 
-class BuildCombatSquadAction
+class BuildCombatSquad
 {
     /**
      * @var BuildCombatHeroAction
