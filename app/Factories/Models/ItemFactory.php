@@ -7,6 +7,7 @@ namespace App\Factories\Models;
 use App\Domain\Models\Enchantment;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Item;
+use App\Domain\Models\ItemBase;
 use App\Domain\Models\ItemClass;
 use App\Domain\Models\ItemType;
 use Illuminate\Support\Collection;
@@ -29,9 +30,13 @@ class ItemFactory
     /** @var Collection */
     protected $enchantments;
 
+    /** @var Collection */
+    protected $attacks;
+
     public function __construct()
     {
         $this->enchantments = collect();
+        $this->attacks = collect();
     }
 
     public static function new(): self
@@ -54,6 +59,7 @@ class ItemFactory
         ], $extra));
 
         $item->enchantments()->saveMany($this->enchantments);
+        $item->attacks()->saveMany($this->attacks);
 
         return $item;
     }
@@ -76,6 +82,27 @@ class ItemFactory
         }
         $clone = clone $this;
         $clone->enchantments = $enchantments;
+        return $clone;
+    }
+
+    public function withAttacks(Collection $attacks = null)
+    {
+        $clone = clone $this;
+
+        if (! $attacks) {
+
+            if (! $clone->itemType) {
+                /** @var ItemBase $itemBase */
+                $itemBase = ItemBase::query()->whereHas('attacks')->inRandomOrder()->first();
+                $clone->itemType = $itemBase->itemTypes()->inRandomOrder()->first();
+            } else {
+                $itemBase = $clone->itemType->itemBase;
+            }
+            $amount = rand(1, 3);
+            $attacks = $itemBase->attacks()->inRandomOrder()->take($amount)->get();
+        }
+
+        $clone->attacks = $attacks;
         return $clone;
     }
 }
