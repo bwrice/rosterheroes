@@ -41,12 +41,12 @@ class MeasurableFactory
     public function create(array $extra = []): Measurable
     {
         /** @var Measurable $measurable */
-        $measurable = Measurable::query()->create([
+        $measurable = Measurable::query()->create(array_merge([
             'uuid' => (string) Str::uuid(),
             'amount_raised' => $this->amountRaised,
             'measurable_type_id' => $this->measurableTypeID ?: MeasurableType::query()->inRandomOrder()->first()->id,
             'hero_id' => $this->heroID ?: $this->heroFactory->create()->id
-        ]);
+        ], $extra));
         return $measurable;
     }
 
