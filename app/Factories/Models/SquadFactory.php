@@ -29,7 +29,6 @@ class SquadFactory
     /**
      * @param array $extra
      * @return Squad
-     * @throws \Exception
      */
     public function create(array $extra = []): Squad
     {
@@ -38,7 +37,7 @@ class SquadFactory
             [
                 'user_id' => $this->userID ?: factory(User::class)->create()->id,
                 'uuid' => Str::uuid(),
-                'name' => 'TestSquad_' . random_int(1,999999999),
+                'name' => 'TestSquad_' . rand(1,999999999),
                 'province_id' => $this->provinceID ?: Province::getStarting()->id,
                 'squad_rank_id' => $this->squadRankID ?: SquadRank::getStarting()->id,
                 'mobile_storage_rank_id' => $this->mobileStorageRankID ?: MobileStorageRank::getStarting()->id,
