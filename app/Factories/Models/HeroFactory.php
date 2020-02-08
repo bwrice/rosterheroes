@@ -37,10 +37,17 @@ class HeroFactory
     /** @var Collection */
     protected $measurableFactories;
 
+    /** @var Collection */
+    protected $itemFactories;
+
+    /** @var PlayerSpiritFactory|null */
+    protected $playerSpiritFactory;
+
     protected function __construct()
     {
         $this->squadFactory = SquadFactory::new();
         $this->measurableFactories = collect();
+        $this->itemFactories = collect();
     }
 
     public static function new(): self
@@ -72,7 +79,7 @@ class HeroFactory
         $this->measurableFactories->each(function (MeasurableFactory $measurableFactory) use ($hero) {
             $measurableFactory->forHero($hero)->create();
         });
-        return $hero;
+        return $hero->fresh();
     }
 
     public function heroClass(string $heroClassName)
@@ -161,6 +168,13 @@ class HeroFactory
 
         $clone = clone $this;
         $clone->measurableFactories = $mappedFactories;
+        return $clone;
+    }
+
+    public function withPlayerSpirit(PlayerSpiritFactory $playerSpiritFactory = null)
+    {
+        $clone = clone $this;
+        $clone->playerSpiritFactory = $playerSpiritFactory ?: PlayerSpiritFactory::new();
         return $clone;
     }
 }
