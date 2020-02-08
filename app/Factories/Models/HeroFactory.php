@@ -58,7 +58,6 @@ class HeroFactory
     /**
      * @param array $extra
      * @return Hero
-     * @throws \Exception
      */
     public function create(array $extra = []): Hero
     {
@@ -66,7 +65,7 @@ class HeroFactory
         $hero = Hero::query()->create(array_merge(
             [
                 'squad_id' => $this->squadID ?: $this->squadFactory->create()->id,
-                'name' => 'TestHero_' . random_int(1,999999999),
+                'name' => 'TestHero_' . rand(1,999999999),
                 'uuid' => (string) Str::uuid(),
                 'hero_class_id' => $this->heroClassID ?: $this->getDefaultHeroClassID(),
                 'hero_race_id' => $this->heroRaceID ?: $this->getDefaultHeroRaceID(),
@@ -79,6 +78,12 @@ class HeroFactory
         $this->measurableFactories->each(function (MeasurableFactory $measurableFactory) use ($hero) {
             $measurableFactory->forHero($hero)->create();
         });
+
+        if ($this->playerSpiritFactory) {
+            $playerSpirit = $this->playerSpiritFactory->create();
+            $hero->player_spirit_id = $playerSpirit->id;
+            $hero->save();
+        }
         return $hero->fresh();
     }
 
