@@ -31,13 +31,18 @@ class ItemFactory
     /** @var Collection */
     protected $enchantments;
 
-    /** @var Collection */
+    /** @var Collection|null */
     protected $attacks;
+
+    /** @var bool */
+    protected $withAttacks;
+
+    /** @var int */
+    protected $attacksAmount = 1;
 
     public function __construct()
     {
         $this->enchantments = collect();
-        $this->attacks = collect();
     }
 
     public static function new(): self
@@ -60,7 +65,10 @@ class ItemFactory
         ], $extra));
 
         $item->enchantments()->saveMany($this->enchantments);
-        $item->attacks()->saveMany($this->attacks);
+        if ($this->withAttacks) {
+            $attacks = $this->getAttacks($itemType->itemBase);
+            $item->attacks()->saveMany($attacks);
+        }
 
         return $item;
     }
@@ -92,21 +100,18 @@ class ItemFactory
     public function withAttacks(int $amount = 1, Collection $attacks = null)
     {
         $clone = clone $this;
-
-        if (! $attacks) {
-
-            if (! $clone->itemType) {
-                /** @var ItemBase $itemBase */
-                $itemBase = ItemBase::query()->whereHas('attacks')->inRandomOrder()->first();
-                $clone->itemType = $itemBase->itemTypes()->inRandomOrder()->first();
-            } else {
-                $itemBase = $clone->itemType->itemBase;
-            }
-            $attacks = $itemBase->attacks()->inRandomOrder()->take($amount)->get();
-        }
-
+        $clone->withAttacks = true;
+        $clone->attacksAmount = $amount;
         $clone->attacks = $attacks;
         return $clone;
+    }
+
+    protected function getAttacks(ItemBase $itemBase)
+    {
+        if ($this->attacks) {
+            return $this->attacks;
+        }
+        return $itemBase->attacks()->inRandomOrder()->take($this->attacksAmount)->get();
     }
 
     public function fromItemBases(array $itemBaseNames)
