@@ -91,6 +91,13 @@ class GameFactory
         return $this->forAwayTeam($team);
     }
 
+    public function forWeek(Week $week)
+    {
+        $clone = clone $this;
+        $clone->week = $week;
+        return $clone;
+    }
+
     protected function getStartsAt()
     {
         if ($this->week) {
