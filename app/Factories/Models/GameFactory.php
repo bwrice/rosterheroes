@@ -72,14 +72,14 @@ class GameFactory
     public function forHomeTeam(Team $team)
     {
         $clone = clone $this;
-        $this->homeTeam = $team;
+        $clone->homeTeam = $team;
         return $clone;
     }
 
     public function forAwayTeam(Team $team)
     {
         $clone = clone $this;
-        $this->awayTeam = $team;
+        $clone->awayTeam = $team;
         return $clone;
     }
 
