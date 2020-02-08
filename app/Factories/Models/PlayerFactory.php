@@ -10,8 +10,8 @@ use Faker\Generator;
 
 class PlayerFactory
 {
-    /** @var int */
-    protected $teamID;
+    /** @var Team */
+    protected $team;
     /**
      * @var Generator
      */
@@ -31,7 +31,7 @@ class PlayerFactory
     {
         /** @var Player $player */
         $player = Player::query()->create(array_merge([
-            'team_id' => $this->teamID ?: $this->getTeam()->id,
+            'team_id' => $this->getTeam()->id,
             'first_name' => $this->faker->firstNameMale,
             'last_name' => $this->faker->lastName
         ], $extra));
@@ -44,7 +44,17 @@ class PlayerFactory
      */
     protected function getTeam()
     {
+        if ($this->team) {
+            return $this->team;
+        }
         return factory(Team::class)->create();
+    }
+
+    public function forTeam(Team $team)
+    {
+        $clone = clone $this;
+        $clone->team = $team;
+        return $clone;
     }
 
 }
