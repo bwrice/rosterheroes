@@ -40,6 +40,15 @@ class ItemFactory
     /** @var int */
     protected $attacksAmount = 1;
 
+    /** @var array|null */
+    protected $itemBaseNames;
+
+    /** @var int */
+    protected $maxGrade;
+
+    /** @var int */
+    protected $minGrade;
+
     public function __construct()
     {
         $this->enchantments = collect();
@@ -52,7 +61,7 @@ class ItemFactory
 
     public function create(array $extra = [])
     {
-        $itemType = $this->itemType ?: ItemType::query()->inRandomOrder()->first();
+        $itemType = $this->getItemType();
 
         /** @var Item $item */
         $item = Item::query()->create(array_merge([
@@ -116,12 +125,8 @@ class ItemFactory
 
     public function fromItemBases(array $itemBaseNames)
     {
-        $itemType = ItemType::query()->whereHas('itemBase', function (Builder $builder) use ($itemBaseNames) {
-            return $builder->whereIn('name', $itemBaseNames);
-        })->inRandomOrder()->first();
-
         $clone = clone $this;
-        $clone->itemType = $itemType;
+        $clone->itemBaseNames = $itemBaseNames;
         return $clone;
     }
 
@@ -158,5 +163,29 @@ class ItemFactory
             ItemBase::ORB,
             ItemBase::POLEARM,
         ]);
+    }
+
+    /**
+     * @return ItemType
+     */
+    protected function getItemType()
+    {
+        if ($this->itemType) {
+            return $this->itemType;
+        }
+        $query = ItemType::query();
+        if ($this->itemBaseNames) {
+            $query = $query->whereHas('itemBase', function (Builder $builder) {
+                return $builder->whereIn('name', $this->itemBaseNames);
+            });
+        }
+        if ($this->maxGrade) {
+            $query->where('grade', '<=', $this->maxGrade);
+        }
+
+        if ($this->minGrade) {
+            $query->where('grade', '>=', $this->minGrade);
+        }
+        return $query->inRandomOrder()->first();
     }
 }
