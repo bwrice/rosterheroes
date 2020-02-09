@@ -9,6 +9,7 @@ use App\Domain\Models\Hero;
 use App\Domain\Models\HeroClass;
 use App\Domain\Models\HeroRace;
 use App\Domain\Models\HeroRank;
+use App\Domain\Models\ItemBase;
 use App\Domain\Models\MeasurableType;
 use App\Domain\Models\Squad;
 use Illuminate\Support\Collection;
@@ -37,6 +38,8 @@ class HeroFactory
     /** @var Collection */
     protected $measurableFactories;
 
+    protected $withItems = false;
+
     /** @var Collection */
     protected $itemFactories;
 
@@ -47,7 +50,6 @@ class HeroFactory
     {
         $this->squadFactory = SquadFactory::new();
         $this->measurableFactories = collect();
-        $this->itemFactories = collect();
     }
 
     public static function new(): self
@@ -58,6 +60,7 @@ class HeroFactory
     /**
      * @param array $extra
      * @return Hero
+     * @throws \Exception
      */
     public function create(array $extra = []): Hero
     {
@@ -78,6 +81,14 @@ class HeroFactory
         $this->measurableFactories->each(function (MeasurableFactory $measurableFactory) use ($hero) {
             $measurableFactory->forHero($hero)->create();
         });
+
+        if ($this->withItems) {
+            if ($this->itemFactories) {
+                $itemFactories = $this->itemFactories;
+            } else {
+                $items = $this->getDefaultItemFactories($hero);
+            }
+        }
 
         if ($this->playerSpiritFactory) {
             $playerSpirit = $this->playerSpiritFactory->create();
@@ -181,5 +192,101 @@ class HeroFactory
         $clone = clone $this;
         $clone->playerSpiritFactory = $playerSpiritFactory ?: PlayerSpiritFactory::new();
         return $clone;
+    }
+
+    public function withItems(Collection $itemFactories = null)
+    {
+        $clone = clone $this;
+        $clone->withItems = true;
+        $clone->itemFactories = $itemFactories;
+        return $clone;
+    }
+
+    /**
+     * @param Hero $hero
+     * @return Collection
+     * @throws \Exception
+     */
+    protected function getDefaultItemFactories(Hero $hero)
+    {
+        $baseFactory = ItemFactory::new()
+            ->maxItemTypeGrade(20)
+            ->maxMaterialGrade(20);
+
+        switch($hero->heroClass->name) {
+            case HeroClass::WARRIOR:
+                return $this->getWarriorItemFactories($baseFactory);
+            case HeroClass::RANGER:
+                return $this->getRangerItemFactories($baseFactory);
+            case HeroClass::SORCERER:
+                return $this->getSorcererItemFactories($baseFactory);
+        }
+        throw new \Exception("No default items set up for hero class: " . $hero->heroClass->name);
+    }
+
+    protected function getWarriorItemFactories(ItemFactory $baseFactory)
+    {
+        $weaponFactory = $baseFactory->fromItemBases([
+            ItemBase::SWORD,
+            ItemBase::AXE,
+            ItemBase::MACE,
+        ])->withAttacks();
+        $shieldFactory = $baseFactory->fromItemBases([
+            ItemBase::SHIELD
+        ]);
+        $helmetFactory = $baseFactory->fromItemBases([
+            ItemBase::HELMET
+        ]);
+        $armorFactory = $baseFactory->fromItemBases([
+            ItemBase::HEAVY_ARMOR
+        ]);
+        return collect([
+            $weaponFactory,
+            $shieldFactory,
+            $helmetFactory,
+            $armorFactory
+        ]);
+    }
+
+    protected function getRangerItemFactories(ItemFactory $baseFactory)
+    {
+        $weaponFactory = $baseFactory->fromItemBases([
+            ItemBase::BOW,
+            ItemBase::CROSSBOW,
+        ])->withAttacks();
+        $glovesFactory = $baseFactory->fromItemBases([
+            ItemBase::GAUNTLETS
+        ]);
+        $armorFactory = $baseFactory->fromItemBases([
+            ItemBase::LIGHT_ARMOR
+        ]);
+        return collect([
+            $weaponFactory,
+            $glovesFactory,
+            $armorFactory
+        ]);
+    }
+
+    protected function getSorcererItemFactories(ItemFactory $baseFactory)
+    {
+        $weaponFactory = $baseFactory->fromItemBases([
+            ItemBase::STAFF,
+            ItemBase::ORB,
+        ])->withAttacks();
+        $glovesFactory = $baseFactory->fromItemBases([
+            ItemBase::GLOVES
+        ]);
+        $capFactory = $baseFactory->fromItemBases([
+            ItemBase::CAP
+        ]);
+        $armorFactory = $baseFactory->fromItemBases([
+            ItemBase::ROBES
+        ]);
+        return collect([
+            $weaponFactory,
+            $glovesFactory,
+            $capFactory,
+            $armorFactory
+        ]);
     }
 }
