@@ -10,6 +10,7 @@ use App\Domain\Models\Item;
 use App\Domain\Models\ItemBase;
 use App\Domain\Models\ItemClass;
 use App\Domain\Models\ItemType;
+use App\Domain\Models\Material;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -22,8 +23,8 @@ class ItemFactory
     /** @var ItemType */
     protected $itemType;
 
-    /** @var int */
-    protected $materialTypeID;
+    /** @var Material */
+    protected $material;
 
     /** @var array */
     protected $hasItems = [];
@@ -44,10 +45,16 @@ class ItemFactory
     protected $itemBaseNames;
 
     /** @var int */
-    protected $maxGrade;
+    protected $maxItemTypeGrade;
 
     /** @var int */
-    protected $minGrade;
+    protected $minItemTypeGrade;
+
+    /** @var int */
+    protected $maxMaterialGrade;
+
+    /** @var int */
+    protected $minMaterialGrade;
 
     public function __construct()
     {
@@ -62,13 +69,14 @@ class ItemFactory
     public function create(array $extra = [])
     {
         $itemType = $this->getItemType();
+        $material = $this->getMaterial($itemType);
 
         /** @var Item $item */
         $item = Item::query()->create(array_merge([
             'uuid' => (string) Str::uuid(),
             'item_class_id' => $this->itemClassID ?: ItemClass::generic()->id,
             'item_type_id' => $itemType->id,
-            'material_id' => $this->materialTypeID ?: $itemType->materials()->inRandomOrder()->first()->id,
+            'material_id' => $material->id,
             'has_items_id' => $this->hasItems['id'] ?? null,
             'has_items_type' => $this->hasItems['type'] ?? null
         ], $extra));
@@ -138,6 +146,34 @@ class ItemFactory
         ]);
     }
 
+    public function maxItemTypeGrade(int $maxGrade)
+    {
+        $clone = clone $this;
+        $clone->maxItemTypeGrade = $maxGrade;
+        return $clone;
+    }
+
+    public function minItemTypeGrade(int $minGrade)
+    {
+        $clone = clone $this;
+        $clone->minItemTypeGrade = $minGrade;
+        return $clone;
+    }
+
+    public function maxMaterialGrade(int $maxGrade)
+    {
+        $clone = clone $this;
+        $clone->maxMaterialGrade = $maxGrade;
+        return $clone;
+    }
+
+    public function minMaterialGrade(int $minGrade)
+    {
+        $clone = clone $this;
+        $clone->minMaterialGrade = $minGrade;
+        return $clone;
+    }
+
     public function singleHandWeapon()
     {
         return $this->fromItemBases([
@@ -179,13 +215,34 @@ class ItemFactory
                 return $builder->whereIn('name', $this->itemBaseNames);
             });
         }
-        if ($this->maxGrade) {
-            $query->where('grade', '<=', $this->maxGrade);
+        if ($this->maxItemTypeGrade) {
+            $query->where('grade', '<=', $this->maxItemTypeGrade);
         }
 
-        if ($this->minGrade) {
-            $query->where('grade', '>=', $this->minGrade);
+        if ($this->minItemTypeGrade) {
+            $query->where('grade', '>=', $this->minItemTypeGrade);
         }
         return $query->inRandomOrder()->first();
+    }
+
+    /**
+     * @param ItemType $itemType
+     * @return Material
+     */
+    protected function getMaterial(ItemType $itemType)
+    {
+        if ($this->material) {
+            return $this->material;
+        }
+        $query = $itemType->materials();
+        if ($this->maxMaterialGrade) {
+            $query = $query->where('grade', '<=', $this->maxMaterialGrade);
+        }
+        if ($this->minMaterialGrade) {
+            $query = $query->where('grade', '>=', $this->minMaterialGrade);
+        }
+        /** @var Material $material */
+        $material = $query->inRandomOrder()->first();
+        return $material;
     }
 }
