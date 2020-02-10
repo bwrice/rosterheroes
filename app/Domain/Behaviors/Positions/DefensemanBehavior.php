@@ -4,9 +4,16 @@
 namespace App\Domain\Behaviors\Positions;
 
 
+use App\Domain\Models\StatType;
+
 class DefensemanBehavior extends PositionBehavior
 {
     protected $positionValue = 30;
     protected $gamesPerSeason = 80;
     protected $abbreviation = 'D';
+    protected $factoryStatTypeNames = [
+        StatType::GOAL,
+        StatType::HOCKEY_ASSIST,
+        StatType::SHOT_ON_GOAL
+    ];
 }

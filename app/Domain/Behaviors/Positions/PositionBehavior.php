@@ -11,18 +11,14 @@ namespace App\Domain\Behaviors\Positions;
 
 abstract class PositionBehavior
 {
-    /**
-     * @var int
-     */
+    /** @var int */
     protected $positionValue;
-    /**
-     * @var int
-     */
+    /** @var int */
     protected $gamesPerSeason;
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $abbreviation;
+    /** @var array */
+    protected $factoryStatTypeNames = [];
 
     /**
      * @return int
@@ -56,5 +52,13 @@ abstract class PositionBehavior
     public function getAbbreviation(): string
     {
         return $this->abbreviation;
+    }
+
+    /**
+     * @return array
+     */
+    public function getFactoryStatTypeNames(): array
+    {
+        return $this->factoryStatTypeNames;
     }
 }
