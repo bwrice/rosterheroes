@@ -176,7 +176,8 @@ class Attack extends Model
 
     public function getConfig(string $key)
     {
-        return Yaml::parseFile(app_path() . $this->config_path)[$key];
+        $config = Yaml::parseFile(app_path() . $this->config_path);
+        return array_key_exists($key, $config) ? $config[$key] : null;
     }
 
     public function getConfigAttribute(string $attribute)
@@ -294,6 +295,6 @@ class Attack extends Model
 
     public function getMaxTargetsCount()
     {
-        return $this->damageType->getBehavior()->getMaxTargetCount($this->grade, $this->fixed_target_count);
+        return $this->damageType->getBehavior()->getMaxTargetCount($this->grade, $this->getFixedTargetCount());
     }
 }
