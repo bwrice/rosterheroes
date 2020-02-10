@@ -5,6 +5,7 @@ namespace App\Factories\Models;
 
 
 use App\Domain\Models\Player;
+use App\Domain\Models\Position;
 use App\Domain\Models\Team;
 use Faker\Generator;
 
@@ -16,6 +17,12 @@ class PlayerFactory
      * @var Generator
      */
     protected $faker;
+
+    /** @var bool  */
+    protected $withPosition = false;
+
+    /** @var Position|null */
+    protected $position;
 
     public function __construct(Generator $faker)
     {
@@ -36,7 +43,12 @@ class PlayerFactory
             'last_name' => $this->faker->lastName
         ], $extra));
 
-        return $player;
+        if ($this->withPosition) {
+            $position = $this->getPosition($player);
+            $player->positions()->save($position);
+        }
+
+        return $player->fresh();
     }
 
     /**
@@ -55,6 +67,22 @@ class PlayerFactory
         $clone = clone $this;
         $clone->team = $team;
         return $clone;
+    }
+
+    public function withPosition(Position $position = null)
+    {
+        $clone = clone $this;
+        $clone->withPosition = true;
+        $clone->position = $position;
+        return $clone;
+    }
+
+    protected function getPosition(Player $player)
+    {
+        if ($this->position) {
+            return $this->position;
+        }
+        return $player->team->league->sport->positions()->inRandomOrder()->first();
     }
 
 }
