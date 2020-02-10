@@ -45,4 +45,28 @@ class CombatSquad implements CombatGroup
         });
         return $alive;
     }
+
+    /**
+     * @return int
+     */
+    public function getSquadID(): int
+    {
+        return $this->squadID;
+    }
+
+    /**
+     * @return int
+     */
+    public function getExperience(): int
+    {
+        return $this->experience;
+    }
+
+    /**
+     * @return CombatantCollection
+     */
+    public function getCombatHeroes(): CombatantCollection
+    {
+        return $this->combatHeroes;
+    }
 }
