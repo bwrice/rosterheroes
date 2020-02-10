@@ -8,6 +8,7 @@ use App\Domain\Models\Game;
 use App\Domain\Models\Player;
 use App\Domain\Models\PlayerGameLog;
 use App\Domain\Models\Position;
+use App\Domain\Models\Sport;
 use App\Domain\Models\StatType;
 use App\Domain\Models\Team;
 use Illuminate\Support\Collection;
@@ -108,7 +109,7 @@ class PlayerGameLogFactory
         return $clone;
     }
 
-    protected function withStats(Collection $playerStatFactories = null)
+    public function withStats(Collection $playerStatFactories = null)
     {
         $clone = clone $this;
         $clone->withPlayerStats = true;
@@ -127,14 +128,29 @@ class PlayerGameLogFactory
         }
         /** @var Position $position */
         $position = $playerGameLog->player->positions()->inRandomOrder()->first();
-        $statTypeNames = $position->getBehavior()->getFactoryStatTypeNames();
         $amount = rand(3, 8);
-        $statTypes = StatType::query()
-            ->whereIn('name', $statTypeNames)
-            ->inRandomOrder()
-            ->take($amount)->get();
+        if ($position) {
+            $statTypes = $this->getStatTypesForFactoryFromPosition($position, $amount);
+        } else {
+            $sport = $playerGameLog->player->team->league->sport;
+            $statTypes = $this->getStatTypesForFactoryFromSport($sport, $amount);
+        }
         return $statTypes->map(function (StatType $statType) {
             return PlayerStatFactory::new()->forStatType($statType);
         });
+    }
+
+    protected function getStatTypesForFactoryFromPosition(Position $position, int $amount)
+    {
+        $statTypeNames = $position->getBehavior()->getFactoryStatTypeNames();
+        return StatType::query()
+            ->whereIn('name', $statTypeNames)
+            ->inRandomOrder()
+            ->take($amount)->get();
+    }
+
+    protected function getStatTypesForFactoryFromSport(Sport $sport, int $amount)
+    {
+        return $sport->statTypes()->inRandomOrder()->take($amount)->get();
     }
 }
