@@ -9,30 +9,20 @@
 namespace App\Domain\Behaviors\Positions;
 
 
-class PositionBehavior
+abstract class PositionBehavior
 {
     /**
      * @var int
      */
-    private $positionValue;
+    protected $positionValue;
     /**
      * @var int
      */
-    private $gamesPerSeason;
+    protected $gamesPerSeason;
     /**
      * @var string
      */
-    private $abbreviation;
-
-    public function __construct(
-        int $positionValue,
-        int $gamesPerSeason,
-        string $abbreviation)
-    {
-        $this->positionValue = $positionValue;
-        $this->gamesPerSeason = $gamesPerSeason;
-        $this->abbreviation = $abbreviation;
-    }
+    protected $abbreviation;
 
     /**
      * @return int
