@@ -291,4 +291,9 @@ class Attack extends Model
         $this->requirements = $requirements;
         return $this;
     }
+
+    public function getMaxTargetsCount()
+    {
+        return $this->damageType->getBehavior()->getMaxTargetCount($this->grade, $this->fixed_target_count);
+    }
 }
