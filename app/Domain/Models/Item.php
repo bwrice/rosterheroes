@@ -184,7 +184,7 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
             $blockChance *= 1 + $aptitudeAmount**.5/50;
         }
         $blockChance *= $this->material->getBlockChanceModifier();
-        return max(30, $blockChance);
+        return min(30, $blockChance);
     }
 
     public function getValue(): int

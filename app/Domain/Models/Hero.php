@@ -369,6 +369,6 @@ class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasItems
 
     public function getBlockChance()
     {
-        return max(60, $this->items->blockChance());
+        return min(60, $this->items->blockChance());
     }
 }
