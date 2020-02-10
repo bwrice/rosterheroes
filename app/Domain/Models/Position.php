@@ -2,7 +2,28 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Behaviors\Positions\BasketballCenterBehavior;
+use App\Domain\Behaviors\Positions\CatcherBehavior;
+use App\Domain\Behaviors\Positions\DefensemanBehavior;
+use App\Domain\Behaviors\Positions\FirstBaseBehavior;
+use App\Domain\Behaviors\Positions\GoalieBehavior;
+use App\Domain\Behaviors\Positions\HockeyCenterBehavior;
+use App\Domain\Behaviors\Positions\LeftWingBehavior;
+use App\Domain\Behaviors\Positions\OutfieldBehavior;
+use App\Domain\Behaviors\Positions\PitcherBehavior;
+use App\Domain\Behaviors\Positions\PointGuardBehavior;
 use App\Domain\Behaviors\Positions\PositionBehavior;
+use App\Domain\Behaviors\Positions\PowerForwardBehavior;
+use App\Domain\Behaviors\Positions\QuarterbackBehavior;
+use App\Domain\Behaviors\Positions\RightWingBehavior;
+use App\Domain\Behaviors\Positions\RunningBackBehavior;
+use App\Domain\Behaviors\Positions\SecondBaseBehavior;
+use App\Domain\Behaviors\Positions\ShootingGuardBehavior;
+use App\Domain\Behaviors\Positions\ShortstopBehavior;
+use App\Domain\Behaviors\Positions\SmallForwardBehavior;
+use App\Domain\Behaviors\Positions\ThirdBaseBehavior;
+use App\Domain\Behaviors\Positions\TightEndBehavior;
+use App\Domain\Behaviors\Positions\WideReceiverBehavior;
 use App\Domain\Models\Player;
 use App\Domain\Models\HeroRace;
 use App\Domain\Models\League;
@@ -89,50 +110,50 @@ class Position extends Model
     {
         switch ($this->name) {
             case self::QUARTERBACK;
-                return new PositionBehavior(75, 16, 'QB');
+                return app(QuarterbackBehavior::class);
             case self::RUNNING_BACK;
-                return new PositionBehavior(50, 14, 'RB');
+                return app(RunningBackBehavior::class);
             case self::WIDE_RECEIVER;
-                return new PositionBehavior(50, 14, 'WR');
+                return app(WideReceiverBehavior::class);
             case self::TIGHT_END;
-                return new PositionBehavior(35, 16, 'TE');
+                return app(TightEndBehavior::class);
 
             case self::PITCHER;
-                return new PositionBehavior(70, 30, 'P');
+                return app(PitcherBehavior::class);
             case self::CATCHER;
-                return new PositionBehavior(40, 150, 'C');
+                return app(CatcherBehavior::class);
             case self::SHORTSTOP;
-                return new PositionBehavior(50, 150, 'SS');
+                return app(ShortstopBehavior::class);
             case self::FIRST_BASE;
-                return new PositionBehavior(50, 150, '1B');
+                return app(FirstBaseBehavior::class);
             case self::SECOND_BASE;
-                return new PositionBehavior(50, 150, '2B');
+                return app(SecondBaseBehavior::class);
             case self::THIRD_BASE;
-                return new PositionBehavior(50, 150, '3B');
+                return app(ThirdBaseBehavior::class);
             case self::OUTFIELD;
-                return new PositionBehavior(60, 150, 'OF');
+                return app(OutfieldBehavior::class);
 
             case self::SMALL_FORWARD;
-                return new PositionBehavior(90, 80, 'SF');
+                return app(SmallForwardBehavior::class);
             case self::SHOOTING_GUARD;
-                return new PositionBehavior(90, 80, 'SG');
+                return app(ShootingGuardBehavior::class);
             case self::POINT_GUARD;
-                return new PositionBehavior(90, 80, 'PG');
+                return app(PointGuardBehavior::class);
             case self::POWER_FORWARD;
-                return new PositionBehavior(80, 80, 'PF');
+                return app(PowerForwardBehavior::class);
             case self::BASKETBALL_CENTER;
-                return new PositionBehavior(80, 80, 'C');
+                return app(BasketballCenterBehavior::class);
 
             case self::GOALIE;
-                return new PositionBehavior(50, 80, 'G');
+                return app(GoalieBehavior::class);
             case self::RIGHT_WING;
-                return new PositionBehavior(40, 80, 'RW');
+                return app(RightWingBehavior::class);
             case self::LEFT_WING;
-                return new PositionBehavior(40, 80, 'LW');
+                return app(LeftWingBehavior::class);
             case self::DEFENSEMAN;
-                return new PositionBehavior(30, 80, 'D');
+                return app(DefensemanBehavior::class);
             case self::HOCKEY_CENTER;
-                return new PositionBehavior(40, 80, 'C');
+                return app(HockeyCenterBehavior::class);
         }
 
         throw new UnknownBehaviorException($this->name, PositionBehavior::class);
