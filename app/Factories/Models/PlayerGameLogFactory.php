@@ -7,7 +7,10 @@ namespace App\Factories\Models;
 use App\Domain\Models\Game;
 use App\Domain\Models\Player;
 use App\Domain\Models\PlayerGameLog;
+use App\Domain\Models\Position;
+use App\Domain\Models\StatType;
 use App\Domain\Models\Team;
+use Illuminate\Support\Collection;
 
 class PlayerGameLogFactory
 {
@@ -19,6 +22,12 @@ class PlayerGameLogFactory
 
     /** @var Game */
     protected $game;
+
+    /** @var bool */
+    protected $withPlayerStats = false;
+
+    /** @var Collection|null */
+    protected $playerStatFactories;
 
     public static function new()
     {
@@ -41,7 +50,14 @@ class PlayerGameLogFactory
             'team_id' => $team->id,
             'game_id' => $game->id
         ], $extra));
-        return $playerGameLog;
+
+        if ($this->withPlayerStats) {
+            $this->getPlayerStatFactories($playerGameLog)->each(function (PlayerStatFactory $factory) use ($playerGameLog) {
+                $factory->forGameLog($playerGameLog)->create();
+            });
+        }
+
+        return $playerGameLog->fresh();
     }
 
     /**
@@ -90,5 +106,35 @@ class PlayerGameLogFactory
         $clone = clone $this;
         $clone->game = $game;
         return $clone;
+    }
+
+    protected function withStats(Collection $playerStatFactories = null)
+    {
+        $clone = clone $this;
+        $clone->withPlayerStats = true;
+        $clone->playerStatFactories = $playerStatFactories;
+        return $clone;
+    }
+
+    /**
+     * @param PlayerGameLog $playerGameLog
+     * @return Collection
+     */
+    protected function getPlayerStatFactories(PlayerGameLog $playerGameLog)
+    {
+        if ($this->playerStatFactories) {
+            return $this->playerStatFactories;
+        }
+        /** @var Position $position */
+        $position = $playerGameLog->player->positions()->inRandomOrder()->first();
+        $statTypeNames = $position->getBehavior()->getFactoryStatTypeNames();
+        $amount = rand(3, 8);
+        $statTypes = StatType::query()
+            ->whereIn('name', $statTypeNames)
+            ->inRandomOrder()
+            ->take($amount)->get();
+        return $statTypes->map(function (StatType $statType) {
+            return PlayerStatFactory::new()->forStatType($statType);
+        });
     }
 }
