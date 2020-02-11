@@ -12,6 +12,10 @@ class CombatHero implements Combatant
     /**
      * @var int
      */
+    protected $heroID;
+    /**
+     * @var int
+     */
     protected $initialHealth;
     /**
      * @var int
@@ -56,6 +60,7 @@ class CombatHero implements Combatant
     protected $inheritedCombatPositions;
 
     public function __construct(
+        int $heroID,
         int $health,
         int $stamina,
         int $mana,
@@ -64,6 +69,7 @@ class CombatHero implements Combatant
         CombatPosition $combatPosition,
         Collection $combatAttacks)
     {
+        $this->heroID = $heroID;
         $this->initialHealth = $this->currentHealth = $health;
         $this->initialStamina = $this->currentStamina = $stamina;
         $this->initialMana = $this->currentMana = $mana;
@@ -147,5 +153,26 @@ class CombatHero implements Combatant
     {
         $this->inheritedCombatPositions = $inheritedCombatPositions;
         return $this;
+    }
+
+    public function getReadyAttacks(int $moment)
+    {
+
+    }
+
+    /**
+     * @return int
+     */
+    public function getHeroID(): int
+    {
+        return $this->heroID;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getCombatAttacks(): Collection
+    {
+        return $this->combatAttacks;
     }
 }
