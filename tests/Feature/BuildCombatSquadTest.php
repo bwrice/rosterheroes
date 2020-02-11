@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Domain\Actions\Combat\BuildCombatSquad;
 use App\Domain\Combat\CombatHero;
+use App\Domain\Combat\CombatSquad;
 use App\Domain\Models\Hero;
 use App\Domain\Models\HeroClass;
 use App\Domain\Models\HeroRace;
@@ -84,6 +85,7 @@ class BuildCombatSquadTest extends TestCase
         /** @var BuildCombatSquad $domainAction */
         $domainAction = app(BuildCombatSquad::class);
         $combatSquad = $domainAction->execute($this->squad->fresh());
+        $this->assertTrue($combatSquad instanceof CombatSquad);
         $this->assertEquals($this->squad->id, $combatSquad->getSquadID());
         $combatHeroes = $combatSquad->getCombatHeroes();
         $this->assertEquals($heroCount, $combatHeroes->count());
