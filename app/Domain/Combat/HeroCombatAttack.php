@@ -13,6 +13,10 @@ use App\Domain\Models\TargetPriority;
 class HeroCombatAttack implements CombatAttack
 {
     /**
+     * @var string
+     */
+    protected $name;
+    /**
      * @var int
      */
     protected $heroID;
@@ -62,6 +66,7 @@ class HeroCombatAttack implements CombatAttack
     protected $maxTargetsCount;
 
     public function __construct(
+        string $name,
         int $heroID,
         int $itemID,
         int $attackID,
@@ -70,11 +75,12 @@ class HeroCombatAttack implements CombatAttack
         float $speed,
         CombatPosition $attackerPosition,
         CombatPosition $targetPosition,
-        DamageType $damageType,
         TargetPriority $targetPriority,
+        DamageType $damageType,
         ResourceCostsCollection $resourceCostsCollection,
         int $maxTargetsCount)
     {
+        $this->name = $name;
         $this->heroID = $heroID;
         $this->itemID = $itemID;
         $this->attackID = $attackID;
