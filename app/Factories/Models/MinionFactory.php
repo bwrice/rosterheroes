@@ -7,6 +7,7 @@ namespace App\Factories\Models;
 use App\Domain\Models\CombatPosition;
 use App\Domain\Models\EnemyType;
 use App\Domain\Models\Minion;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 class MinionFactory
@@ -17,6 +18,9 @@ class MinionFactory
     /** @var string|null */
     protected $combatPositionName;
 
+    /** @var Collection */
+    protected $attackFactories;
+
     public static function new(): self
     {
         return app(self::class);
@@ -24,12 +28,20 @@ class MinionFactory
 
     public function create(array $extra = [])
     {
+        $combatPosition = $this->getCombatPosition();
         /** @var Minion $minion */
         $minion = Minion::query()->create(array_merge([
             'uuid' => (string) Str::uuid(),
             'name' => 'Test Minion ' . rand(1, 99999),
-            'config_path' => '/Yaml/Minions/test_minion.yaml'
+            'config_path' => '/Yaml/Minions/test_minion.yaml',
+            'enemy_type_id' => $this->getEnemyType()->id,
+            'combat_position_id' => $combatPosition->id,
         ], $extra));
+
+        $this->attackFactories->each(function (AttackFactory $factory) use ($minion, $combatPosition) {
+            $attack = $factory->withAttackerPosition($combatPosition->name)->create();
+            $minion->attacks()->save($attack);
+        });
 
         return $minion->fresh();
     }
@@ -45,6 +57,9 @@ class MinionFactory
         return $enemyType;
     }
 
+    /**
+     * @return CombatPosition
+     */
     protected function getCombatPosition()
     {
         if ($this->combatPositionName) {
@@ -60,14 +75,28 @@ class MinionFactory
     public function withEnemyType(string $enemyTypeName)
     {
         $clone = clone $this;
-        $this->enemyTypeName = $enemyTypeName;
+        $clone->enemyTypeName = $enemyTypeName;
         return $clone;
     }
 
     public function withCombatPosition(string $combatPositionName)
     {
         $clone = clone $this;
-        $this->combatPositionName = $combatPositionName;
+        $clone->combatPositionName = $combatPositionName;
+        return $clone;
+    }
+
+    public function withAttacks(Collection $attackFactories = null)
+    {
+        $clone = clone $this;
+        if (! $attackFactories) {
+            $amount = rand(1, 3);
+            $attackFactories = collect();
+            foreach(range(1, $amount) as $attackCount) {
+                $attackFactories->push(AttackFactory::new());
+            }
+        }
+        $clone->attackFactories = $attackFactories;
         return $clone;
     }
 }
