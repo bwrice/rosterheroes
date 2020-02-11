@@ -83,31 +83,31 @@ class AttackFactory
         return $damageType;
     }
 
-    public function withAttackPosition(string $combatPositionName)
+    public function withAttackerPosition(string $combatPositionName)
     {
         $clone = clone $this;
-        $this->attackerPositionName = $combatPositionName;
+        $clone->attackerPositionName = $combatPositionName;
         return $clone;
     }
 
     public function withTargetPosition(string $combatPositionName)
     {
         $clone = clone $this;
-        $this->targetPositionName = $combatPositionName;
+        $clone->targetPositionName = $combatPositionName;
         return $clone;
     }
 
     public function withTargetPriority(string $targetPriorityName)
     {
         $clone = clone $this;
-        $this->targetPriorityName = $targetPriorityName;
+        $clone->targetPriorityName = $targetPriorityName;
         return $clone;
     }
 
     public function withDamageType(string $damageTypeName)
     {
         $clone = clone $this;
-        $this->damageTypeName = $damageTypeName;
+        $clone->damageTypeName = $damageTypeName;
         return $clone;
     }
 
