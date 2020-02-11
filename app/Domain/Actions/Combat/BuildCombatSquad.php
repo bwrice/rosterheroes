@@ -16,6 +16,7 @@ use App\Domain\Models\Item;
 use App\Domain\Models\MeasurableType;
 use App\Domain\Models\Squad;
 use App\Domain\Models\TargetPriority;
+use App\Exceptions\BuildCombatSquadException;
 use App\Facades\FantasyPower;
 use App\Facades\HeroService;
 use Illuminate\Support\Collection;
@@ -31,15 +32,15 @@ class BuildCombatSquad
      */
     public function execute(Squad $squad, Collection $combatPositions = null, Collection $targetPriorities = null, Collection $damageTypes = null): CombatSquad
     {
-        $combatPositions ?: CombatPosition::all();
-        $targetPriorities ?: TargetPriority::all();
-        $damageTypes ?: DamageType::all();
+        $combatPositions = $combatPositions ?: CombatPosition::all();
+        $targetPriorities = $targetPriorities ?: TargetPriority::all();
+        $damageTypes = $damageTypes ?: DamageType::all();
 
         $heroes = $squad->heroes->filter(function (Hero $hero) {
             return HeroService::combatReady($hero);
         });
         if ($heroes->isEmpty()) {
-            throw new \RuntimeException("No combat ready heroes");
+            throw new BuildCombatSquadException($squad, 'No heroes combat ready', BuildCombatSquadException::CODE_NO_COMBAT_READY_HEROES);
         }
         $combatHeroes = new CombatantCollection();
         $heroes->each(function (Hero $hero) use ($combatHeroes, $combatPositions, $targetPriorities, $damageTypes) {
@@ -65,6 +66,7 @@ class BuildCombatSquad
         });
 
         return new CombatHero(
+            $hero->id,
             $hero->getCurrentMeasurableAmount(MeasurableType::HEALTH),
             $hero->getCurrentMeasurableAmount(MeasurableType::STAMINA),
             $hero->getCurrentMeasurableAmount(MeasurableType::MANA),
@@ -97,6 +99,7 @@ class BuildCombatSquad
         });
         $damage = $this->calculateAttackDamage($attack, $fantasyPower);
         return new HeroCombatAttack(
+            $attack->name,
             $hero->id,
             $item->id,
             $attack->id,
@@ -108,6 +111,7 @@ class BuildCombatSquad
             $targetPriority,
             $damageType,
             $attack->getResourceCostCollection(),
+            $attack->getMaxTargetsCount()
         );
     }
 
@@ -115,6 +119,6 @@ class BuildCombatSquad
     {
         $baseDamage = $attack->getBaseDamage();
         $damageMultiplier = $attack->getDamageMultiplier();
-        return (int) min(ceil($baseDamage + ($damageMultiplier * $fantasyPower)), 0);
+        return (int) max(ceil($baseDamage + ($damageMultiplier * $fantasyPower)), 1);
     }
 }
