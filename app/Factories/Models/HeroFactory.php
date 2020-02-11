@@ -86,8 +86,11 @@ class HeroFactory
             if ($this->itemFactories) {
                 $itemFactories = $this->itemFactories;
             } else {
-                $items = $this->getDefaultItemFactories($hero);
+                $itemFactories = $this->getDefaultItemFactories($hero);
             }
+            $itemFactories->each(function (ItemFactory $factory) use ($hero) {
+                return $factory->forHero($hero)->create();
+            });
         }
 
         if ($this->playerSpiritFactory) {
