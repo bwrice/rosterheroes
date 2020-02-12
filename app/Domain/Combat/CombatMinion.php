@@ -105,4 +105,20 @@ class CombatMinion implements Combatant
     {
         // TODO: Implement hasCombatPosition() method.
     }
+
+    /**
+     * @return int
+     */
+    public function getMinionID(): int
+    {
+        return $this->minionID;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getCombatAttacks(): Collection
+    {
+        return $this->combatAttacks;
+    }
 }
