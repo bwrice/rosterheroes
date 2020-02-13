@@ -18,6 +18,16 @@ use Illuminate\Database\Eloquent\Collection;
 
 class BuildCombatHero
 {
+    /**
+     * @var BuildHeroCombatAttack
+     */
+    private $buildHeroCombatAttack;
+
+    public function __construct(BuildHeroCombatAttack $buildHeroCombatAttack)
+    {
+        $this->buildHeroCombatAttack = $buildHeroCombatAttack;
+    }
+
     public function execute(Hero $hero, Collection $combatPositions = null, Collection $targetPriorities = null, Collection $damageTypes = null)
     {
         $combatPositions = $combatPositions ?: CombatPosition::all();
@@ -28,7 +38,7 @@ class BuildCombatHero
         $combatAttacks = collect();
         $hero->items->each(function (Item $item) use ($hero, $fantasyPower, &$combatAttacks, $combatPositions, $targetPriorities, $damageTypes) {
             $combatAttacks = $combatAttacks->merge($item->attacks->map(function (Attack $attack) use ($hero, $item, $fantasyPower, $combatPositions, $targetPriorities, $damageTypes) {
-                return $this->createHeroCombatAttack($attack, $item, $hero, $fantasyPower, $combatPositions, $targetPriorities, $damageTypes);
+                return $this->buildHeroCombatAttack->execute($attack, $item, $hero, $fantasyPower, $combatPositions, $targetPriorities, $damageTypes);
             }));
         });
 
@@ -52,44 +62,5 @@ class BuildCombatHero
     {
         $totalPoints = $hero->playerSpirit->playerGameLog->playerStats->totalPoints();
         return FantasyPower::calculate($totalPoints);
-    }
-
-    protected function createHeroCombatAttack(Attack $attack, Item $item, Hero $hero, float $fantasyPower, \Illuminate\Support\Collection $combatPositions, Collection $targetPriorities, Collection $damageTypes)
-    {
-        $attackerPosition = $combatPositions->first(function (CombatPosition $combatPosition) use ($attack) {
-            return $combatPosition->id === $attack->attacker_position_id;
-        });
-        $targetPosition = $combatPositions->first(function (CombatPosition $combatPosition) use ($attack) {
-            return $combatPosition->id === $attack->target_position_id;
-        });
-        $targetPriority = $targetPriorities->first(function (TargetPriority $targetPriority) use ($attack) {
-            return $targetPriority->id === $attack->target_priority_id;
-        });
-        $damageType = $damageTypes->first(function (DamageType $damageType) use ($attack) {
-            return $damageType->id === $attack->damage_type_id;
-        });
-        $damage = $this->calculateAttackDamage($attack, $fantasyPower);
-        return new HeroCombatAttack(
-            $attack->name,
-            $hero->id,
-            $item->id,
-            $attack->id,
-            $damage,
-            $attack->getGrade(),
-            $attack->getCombatSpeed(),
-            $attackerPosition,
-            $targetPosition,
-            $targetPriority,
-            $damageType,
-            $attack->getResourceCostCollection(),
-            $attack->getMaxTargetsCount()
-        );
-    }
-
-    protected function calculateAttackDamage(Attack $attack, float $fantasyPower)
-    {
-        $baseDamage = $attack->getBaseDamage();
-        $damageMultiplier = $attack->getDamageMultiplier();
-        return (int) max(ceil($baseDamage + ($damageMultiplier * $fantasyPower)), 1);
     }
 }
