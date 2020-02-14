@@ -21,18 +21,10 @@ class BuildHeroCombatAttack
         $targetPriorities = $targetPriorities ?: TargetPriority::all();
         $damageTypes = $damageTypes ?: DamageType::all();
 
-        $attackerPosition = $combatPositions->first(function (CombatPosition $combatPosition) use ($attack) {
-            return $combatPosition->id === $attack->attacker_position_id;
-        });
-        $targetPosition = $combatPositions->first(function (CombatPosition $combatPosition) use ($attack) {
-            return $combatPosition->id === $attack->target_position_id;
-        });
-        $targetPriority = $targetPriorities->first(function (TargetPriority $targetPriority) use ($attack) {
-            return $targetPriority->id === $attack->target_priority_id;
-        });
-        $damageType = $damageTypes->first(function (DamageType $damageType) use ($attack) {
-            return $damageType->id === $attack->damage_type_id;
-        });
+        $attackerPosition = $combatPositions->find($attack->attacker_position_id);
+        $targetPosition = $combatPositions->find($attack->target_position_id);
+        $targetPriority = $targetPriorities->find($attack->target_priority_id);
+        $damageType = $damageTypes->find($attack->damage_type_id);
         $damage = $this->calculateAttackDamage($attack, $fantasyPower);
         return new HeroCombatAttack(
             $attack->name,
