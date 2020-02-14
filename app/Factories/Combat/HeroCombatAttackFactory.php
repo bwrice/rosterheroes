@@ -4,6 +4,7 @@
 namespace App\Factories\Combat;
 
 
+use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Combat\CombatHero;
 use App\Domain\Combat\HeroCombatAttack;
 use App\Domain\Models\CombatPosition;
@@ -27,7 +28,7 @@ class HeroCombatAttackFactory
         $targetPosition = CombatPosition::query()->inRandomOrder()->first();
         $targetPriority = TargetPriority::query()->inRandomOrder()->first();
         $damageType = DamageType::query()->inRandomOrder()->first();
-        $resourceCosts = collect();
+        $resourceCosts = new ResourceCostsCollection();
         $maxTargetCount = rand(3, 8);
         return new HeroCombatAttack(
             $name,
