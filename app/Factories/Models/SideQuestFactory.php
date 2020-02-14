@@ -6,10 +6,16 @@ namespace App\Factories\Models;
 
 use App\Domain\Models\Quest;
 use App\Domain\Models\SideQuest;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 class SideQuestFactory
 {
+    /**
+     * @var  Collection|null
+     */
+    protected $minionFactories = null;
+
     public static function new()
     {
         return new self();
@@ -23,6 +29,36 @@ class SideQuestFactory
             'name' => 'Test Side Quest ' . rand(1, 99999),
             'quest_id' => factory(Quest::class)->create()->id
         ], $extra));
-        return $sideQuest;
+
+        if ($this->minionFactories) {
+            $this->minionFactories->each(function (MinionFactory $factory, $key) use ($sideQuest) {
+                $minion = $factory->create();
+                $count = $factory->getCountForSideQuest() ?: rand(1, 3);
+                $sideQuest->minions()->save($minion, [
+                    'count' => $count
+                ]);
+            });
+        }
+        return $sideQuest->fresh();
+    }
+
+    public function withMinions(Collection $minionFactories = null)
+    {
+        $clone = clone $this;
+        $clone->minionFactories = $minionFactories ?: $this->getDefaultMinionFactories();
+        return $clone;
+    }
+
+    /**
+     * @return Collection
+     */
+    protected function getDefaultMinionFactories()
+    {
+        $amount = rand(1, 5);
+        $minionFactories = collect();
+        foreach (range(1, $amount) as $factoryCount) {
+            $minionFactories->push(MinionFactory::new());
+        }
+        return $minionFactories;
     }
 }
