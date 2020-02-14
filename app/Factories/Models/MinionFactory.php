@@ -12,6 +12,9 @@ use Illuminate\Support\Str;
 
 class MinionFactory
 {
+    /** @var int|null */
+    protected $countForSideQuest;
+
     /** @var string|null */
     protected $enemyTypeName;
 
@@ -38,10 +41,12 @@ class MinionFactory
             'combat_position_id' => $combatPosition->id,
         ], $extra));
 
-        $this->attackFactories->each(function (AttackFactory $factory) use ($minion, $combatPosition) {
-            $attack = $factory->withAttackerPosition($combatPosition->name)->create();
-            $minion->attacks()->save($attack);
-        });
+        if ($this->attackFactories) {
+            $this->attackFactories->each(function (AttackFactory $factory) use ($minion, $combatPosition) {
+                $attack = $factory->withAttackerPosition($combatPosition->name)->create();
+                $minion->attacks()->save($attack);
+            });
+        }
 
         return $minion->fresh();
     }
@@ -89,14 +94,36 @@ class MinionFactory
     public function withAttacks(Collection $attackFactories = null)
     {
         $clone = clone $this;
-        if (! $attackFactories) {
-            $amount = rand(1, 3);
-            $attackFactories = collect();
-            foreach(range(1, $amount) as $attackCount) {
-                $attackFactories->push(AttackFactory::new());
-            }
-        }
-        $clone->attackFactories = $attackFactories;
+        $clone->attackFactories = $attackFactories ?: $this->getDefaultAttackFactories();
         return $clone;
+    }
+
+    protected function getDefaultAttackFactories()
+    {
+        $amount = rand(1, 3);
+        $attackFactories = collect();
+        foreach(range(1, $amount) as $attackCount) {
+            $attackFactories->push(AttackFactory::new());
+        }
+        return $attackFactories;
+    }
+
+    /**
+     * @param mixed $countForSideQuest
+     * @return MinionFactory
+     */
+    public function setCountForSideQuest(int $countForSideQuest)
+    {
+        $clone = clone $this;
+        $clone->countForSideQuest = $countForSideQuest;
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getCountForSideQuest()
+    {
+        return $this->countForSideQuest;
     }
 }
