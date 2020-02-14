@@ -15,8 +15,12 @@ use Illuminate\Database\Eloquent\Collection;
 
 class BuildHeroCombatAttack
 {
-    public function execute(Attack $attack, Item $item, Hero $hero, float $fantasyPower, Collection $combatPositions, Collection $targetPriorities, Collection $damageTypes)
+    public function execute(Attack $attack, Item $item, Hero $hero, float $fantasyPower, Collection $combatPositions = null, Collection $targetPriorities = null, Collection $damageTypes = null)
     {
+        $combatPositions = $combatPositions ?: CombatPosition::all();
+        $targetPriorities = $targetPriorities ?: TargetPriority::all();
+        $damageTypes = $damageTypes ?: DamageType::all();
+
         $attackerPosition = $combatPositions->first(function (CombatPosition $combatPosition) use ($attack) {
             return $combatPosition->id === $attack->attacker_position_id;
         });
