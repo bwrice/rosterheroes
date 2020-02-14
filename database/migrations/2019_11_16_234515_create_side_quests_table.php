@@ -18,7 +18,7 @@ class CreateSideQuestsTable extends Migration
             $table->uuid('uuid');
             $table->string('name');
             $table->integer('quest_id')->unsigned();
-            $table->integer('side_quest_blueprint_id')->unsigned();
+            $table->integer('side_quest_blueprint_id')->unsigned()->nullable();
             $table->timestamps();
         });
 
