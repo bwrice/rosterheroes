@@ -41,14 +41,6 @@ class BuildCombatSquadTest extends TestCase
         $this->currentWeek = factory(Week::class)->states('as-current', 'finalizing')->create();
         $this->squad = SquadFactory::new()->create();
         $this->heroFactory = HeroFactory::new()->forSquad($this->squad);
-//        $player = PlayerFactory::new()->withPosition()->create();
-//        $playerGameLogFactory = PlayerGameLogFactory::new()->forPlayer($player)->withStats();
-//        $playerSpiritFactory = PlayerSpiritFactory::new()->withPlayerGameLog($playerGameLogFactory);
-//        $this->heroFactory = HeroFactory::new()
-//            ->forSquad($this->squad)
-//            ->withMeasurables()
-//            ->withItems()
-//            ->withPlayerSpirit($playerSpiritFactory);
     }
 
     /**
