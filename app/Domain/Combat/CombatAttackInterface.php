@@ -8,7 +8,7 @@ use App\Domain\Collections\CombatantCollection;
 use App\Domain\Models\TargetPriority;
 use Illuminate\Support\Collection;
 
-interface CombatAttack
+interface CombatAttackInterface
 {
     public function getDamagePerTarget(int $targetsCount): int;
 

@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use App\Domain\Actions\Combat\BuildHeroCombatAttack;
-use App\Domain\Combat\CombatAttack;
+use App\Domain\Combat\CombatAttackInterface;
 use App\Factories\Models\AttackFactory;
 use App\Factories\Models\HeroFactory;
 use App\Factories\Models\ItemFactory;
@@ -25,6 +25,6 @@ class BuildHeroCombatAttackTest extends TestCase
         /** @var BuildHeroCombatAttack $domainAction */
         $domainAction = app(BuildHeroCombatAttack::class);
         $heroCombatAttack = $domainAction->execute($attack, $item, $hero, $fantasyPower);
-        $this->assertTrue($heroCombatAttack instanceof CombatAttack);
+        $this->assertTrue($heroCombatAttack instanceof CombatAttackInterface);
     }
 }

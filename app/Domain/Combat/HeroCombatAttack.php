@@ -10,7 +10,7 @@ use App\Domain\Models\CombatPosition;
 use App\Domain\Models\DamageType;
 use App\Domain\Models\TargetPriority;
 
-class HeroCombatAttack implements CombatAttack
+class HeroCombatAttack implements CombatAttackInterface
 {
     /**
      * @var string
