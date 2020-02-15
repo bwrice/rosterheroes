@@ -116,7 +116,7 @@ class MinionFactory
     {
         $clone = clone $this;
         $clone->countForSideQuest = $countForSideQuest;
-        return $this;
+        return $clone;
     }
 
     /**
