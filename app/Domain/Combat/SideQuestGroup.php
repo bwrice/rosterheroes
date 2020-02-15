@@ -9,9 +9,14 @@ use Illuminate\Support\Collection;
 
 class SideQuestGroup implements CombatGroup
 {
-    public function getCombatMinions()
+    /**
+     * @var CombatantCollection
+     */
+    protected $combatMinions;
+
+    public function __construct(CombatantCollection $combatMinions)
     {
-        return collect();
+        $this->combatMinions = $combatMinions;
     }
 
     public function getReadyAttacks(int $moment): Collection
