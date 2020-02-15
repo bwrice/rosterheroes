@@ -28,4 +28,12 @@ class SideQuestGroup implements CombatGroup
     {
         // TODO: Implement getPossibleTargets() method.
     }
+
+    /**
+     * @return CombatantCollection
+     */
+    public function getCombatMinions(): CombatantCollection
+    {
+        return $this->combatMinions;
+    }
 }
