@@ -43,5 +43,6 @@ class BuildSideQuestGroupTest extends TestCase
         $sideQuestGroup = $domainAction->execute($sideQuest);
         $this->assertTrue($sideQuestGroup instanceof CombatGroup);
         $this->assertTrue($sideQuestGroup instanceof SideQuestGroup);
+        $this->assertEquals($minionsOfTypeCount * 2, $sideQuestGroup->getCombatMinions()->count());
     }
 }
