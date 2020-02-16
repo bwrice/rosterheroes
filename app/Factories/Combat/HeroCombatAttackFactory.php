@@ -13,6 +13,8 @@ use App\Domain\Models\TargetPriority;
 
 class HeroCombatAttackFactory
 {
+    protected $combatAttackFactory;
+
     public static function new()
     {
         return new self();
@@ -20,30 +22,23 @@ class HeroCombatAttackFactory
 
     public function create()
     {
-        $name = 'Test_Hero_Combat_Attack';
         $heroID = rand(1, 999999);
         $itemID = rand(1, 999999);
-        $attackID = rand(1, 999999);
-        $attackerPosition = CombatPosition::query()->inRandomOrder()->first();
-        $targetPosition = CombatPosition::query()->inRandomOrder()->first();
-        $targetPriority = TargetPriority::query()->inRandomOrder()->first();
-        $damageType = DamageType::query()->inRandomOrder()->first();
         $resourceCosts = new ResourceCostsCollection();
-        $maxTargetCount = rand(3, 8);
+        $combatAttackFactory = $this->combatAttackFactory ?: CombatAttackFactory::new();
+        $combatAttack = $combatAttackFactory->create();
         return new HeroCombatAttack(
-            $name,
             $heroID,
             $itemID,
-            $attackID,
-            100,
-            10,
-            10,
-            $attackerPosition,
-            $targetPosition,
-            $targetPriority,
-            $damageType,
-            $resourceCosts,
-            $maxTargetCount
+            $combatAttack,
+            $resourceCosts
         );
+    }
+    
+    public function withCombatAttackFactory(CombatAttackFactory $combatAttackFactory)
+    {
+        $clone = clone $this;
+        $clone->combatAttackFactory = $combatAttackFactory;
+        return $clone;
     }
 }
