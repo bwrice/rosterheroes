@@ -100,7 +100,7 @@ class MinionFactory
 
     protected function getDefaultAttackFactories()
     {
-        $amount = rand(1, 3);
+        $amount = rand(3, 6);
         $attackFactories = collect();
         foreach(range(1, $amount) as $attackCount) {
             $attackFactories->push(AttackFactory::new());
