@@ -36,15 +36,21 @@ class BuildCombatAttack
         $targetPriorities = $targetPriorities ?: TargetPriority::all();
         $damageTypes = $damageTypes ?: DamageType::all();
 
+        /** @var CombatPosition $attackerPosition */
         $attackerPosition = $combatPositions->find($attack->attacker_position_id);
+        /** @var CombatPosition $targetPosition */
         $targetPosition = $combatPositions->find($attack->target_position_id);
+        /** @var TargetPriority $targetPriority */
         $targetPriority = $targetPriorities->find($attack->target_priority_id);
+        /** @var DamageType $damageType */
         $damageType = $damageTypes->find($attack->damage_type_id);
         $damage = $this->calculateAttackDamage($attack, $hasFantasyPoints);
         return new CombatAttack(
             $attack->name,
             $attack->id,
             $damage,
+            $attack->getCombatSpeed(),
+            $attack->getGrade(),
             $attackerPosition,
             $targetPosition,
             $targetPriority,
