@@ -8,6 +8,7 @@ use App\Domain\Collections\GearSlotCollection;
 use App\Domain\Collections\ItemCollection;
 use App\Domain\Collections\MeasurableCollection;
 use App\Domain\Collections\SpellCollection;
+use App\Domain\Interfaces\HasFantasyPoints;
 use App\Domain\Interfaces\HasItems;
 use App\Domain\Interfaces\SpellCaster;
 use App\Domain\Interfaces\UsesItems;
@@ -48,7 +49,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  *
  * @method static HeroQueryBuilder query();
  */
-class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasItems
+class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasItems, HasFantasyPoints
 {
     use HasNameSlug;
 
@@ -370,5 +371,18 @@ class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasItems
     public function getBlockChance()
     {
         return min(60, $this->items->blockChance());
+    }
+
+    public function getFantasyPoints(): float
+    {
+        $playerSpirit = $this->playerSpirit;
+        if (! $playerSpirit) {
+            return 0;
+        }
+        $gameLog = $playerSpirit->playerGameLog;
+        if (! $gameLog) {
+            return 0;
+        }
+        return $gameLog->playerStats->totalPoints();
     }
 }
