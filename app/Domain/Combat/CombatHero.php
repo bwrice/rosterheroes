@@ -96,11 +96,11 @@ class CombatHero implements Combatant
     }
 
     /**
-     * @param CombatAttack $combatAttack
+     * @param CombatAttackInterface $combatAttack
      * @return bool|mixed
      * @throws \Exception
      */
-    public function attackBlocked(CombatAttack $combatAttack)
+    public function attackBlocked(CombatAttackInterface $combatAttack)
     {
         $rand = random_int(1, 100);
         return $rand <= $this->blockChancePercent;

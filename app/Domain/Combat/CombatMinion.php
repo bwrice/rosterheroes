@@ -73,10 +73,10 @@ class CombatMinion implements Combatant
     }
 
     /**
-     * @param CombatAttack $combatAttack
+     * @param CombatAttackInterface $combatAttack
      * @return mixed
      */
-    public function attackBlocked(CombatAttack $combatAttack)
+    public function attackBlocked(CombatAttackInterface $combatAttack)
     {
         // TODO: Implement attackBlocked() method.
     }
