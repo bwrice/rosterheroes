@@ -5,6 +5,7 @@ namespace App\Domain\Combat;
 
 
 use App\Domain\Collections\CombatantCollection;
+use App\Domain\Collections\ResourceCostsCollection;
 
 class HeroCombatAttack implements CombatAttackInterface
 {
@@ -24,7 +25,8 @@ class HeroCombatAttack implements CombatAttackInterface
     public function __construct(
         int $heroID,
         int $itemID,
-        CombatAttack $combatAttack)
+        CombatAttack $combatAttack,
+        ResourceCostsCollection $resourceCosts)
     {
         $this->heroID = $heroID;
         $this->itemID = $itemID;

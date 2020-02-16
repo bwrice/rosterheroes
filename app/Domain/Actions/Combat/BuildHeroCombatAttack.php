@@ -34,7 +34,8 @@ class BuildHeroCombatAttack
         return new HeroCombatAttack(
             $hero->id,
             $item->id,
-            $combatAttack
+            $combatAttack,
+            $attack->getResourceCostCollection()
         );
     }
 }
