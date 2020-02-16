@@ -5,7 +5,7 @@ namespace App\Domain\Actions\Combat;
 
 
 use App\Domain\Combat\Combatant;
-use App\Domain\Combat\CombatAttack;
+use App\Domain\Combat\CombatAttackInterface;
 use App\Domain\Combat\CombatGroup;
 
 class CombatTurnAction
@@ -13,7 +13,7 @@ class CombatTurnAction
     public function execute(CombatGroup $attackers, CombatGroup $defenders, int $moment, callable $eventCallback)
     {
         $attacks = $attackers->getReadyAttacks($moment);
-        $attacks->each(function (CombatAttack $combatAttack) use ($defenders, $moment, $eventCallback) {
+        $attacks->each(function (CombatAttackInterface $combatAttack) use ($defenders, $moment, $eventCallback) {
 
             $possibleTargets = $defenders->getPossibleTargets($moment);
             $targets = $combatAttack->getTargets($possibleTargets);
