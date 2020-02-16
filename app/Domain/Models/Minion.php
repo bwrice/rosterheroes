@@ -6,6 +6,7 @@ use App\Domain\Behaviors\EnemyTypes\EnemyTypeBehavior;
 use App\Domain\Collections\AttackCollection;
 use App\Domain\Collections\MinionCollection;
 use App\Domain\Interfaces\HasAttacks;
+use App\Domain\Interfaces\HasFantasyPoints;
 use App\Domain\Traits\HasNameSlug;
 use Illuminate\Database\Eloquent\Model;
 
@@ -31,7 +32,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property AttackCollection $attacks
  */
-class Minion extends Model implements HasAttacks
+class Minion extends Model implements HasAttacks, HasFantasyPoints
 {
     use HasNameSlug;
 
@@ -101,5 +102,10 @@ class Minion extends Model implements HasAttacks
     public function adjustResourceCostPercent(float $amount): float
     {
         return 0;
+    }
+
+    public function getFantasyPoints(): float
+    {
+        return $this->level/5 + (sqrt($this->level) * 6);
     }
 }
