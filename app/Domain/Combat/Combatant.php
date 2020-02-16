@@ -21,10 +21,10 @@ interface Combatant
     public function receiveDamage(int $damage);
 
     /**
-     * @param CombatAttack $combatAttack
+     * @param CombatAttackInterface $combatAttack
      * @return mixed
      */
-    public function attackBlocked(CombatAttack $combatAttack);
+    public function attackBlocked(CombatAttackInterface $combatAttack);
 
     /**
      * @return int
