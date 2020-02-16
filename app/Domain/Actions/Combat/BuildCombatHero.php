@@ -34,11 +34,10 @@ class BuildCombatHero
         $targetPriorities = $targetPriorities ?: TargetPriority::all();
         $damageTypes = $damageTypes ?: DamageType::all();
         $hero->loadMissing(Hero::heroResourceRelations());
-        $fantasyPower = $this->getFantasyPower($hero);
         $combatAttacks = collect();
-        $hero->items->each(function (Item $item) use ($hero, $fantasyPower, &$combatAttacks, $combatPositions, $targetPriorities, $damageTypes) {
-            $combatAttacks = $combatAttacks->merge($item->attacks->map(function (Attack $attack) use ($hero, $item, $fantasyPower, $combatPositions, $targetPriorities, $damageTypes) {
-                return $this->buildHeroCombatAttack->execute($attack, $item, $hero, $fantasyPower, $combatPositions, $targetPriorities, $damageTypes);
+        $hero->items->each(function (Item $item) use ($hero, &$combatAttacks, $combatPositions, $targetPriorities, $damageTypes) {
+            $combatAttacks = $combatAttacks->merge($item->attacks->map(function (Attack $attack) use ($hero, $item, $combatPositions, $targetPriorities, $damageTypes) {
+                return $this->buildHeroCombatAttack->execute($attack, $item, $hero, $combatPositions, $targetPriorities, $damageTypes);
             }));
         });
 
@@ -56,11 +55,5 @@ class BuildCombatHero
             $heroCombatPosition,
             $combatAttacks
         );
-    }
-
-    protected function getFantasyPower(Hero $hero)
-    {
-        $totalPoints = $hero->playerSpirit->playerGameLog->playerStats->totalPoints();
-        return FantasyPower::calculate($totalPoints);
     }
 }
