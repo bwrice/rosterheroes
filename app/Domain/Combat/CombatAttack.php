@@ -28,6 +28,10 @@ class CombatAttack implements CombatAttackInterface
      */
     protected $combatSpeed;
     /**
+     * @var int
+     */
+    protected $grade;
+    /**
      * @var CombatPosition
      */
     protected $attackerPosition;
@@ -53,6 +57,7 @@ class CombatAttack implements CombatAttackInterface
         int $attackID,
         int $damage,
         float $combatSpeed,
+        int $grade,
         CombatPosition $attackerPosition,
         CombatPosition $targetPosition,
         TargetPriority $targetPriority,
@@ -63,6 +68,7 @@ class CombatAttack implements CombatAttackInterface
         $this->attackID = $attackID;
         $this->damage = $damage;
         $this->combatSpeed = $combatSpeed;
+        $this->grade = $grade;
         $this->attackerPosition = $attackerPosition;
         $this->targetPosition = $targetPosition;
         $this->targetPriority = $targetPriority;
