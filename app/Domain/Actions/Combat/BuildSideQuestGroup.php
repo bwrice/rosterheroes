@@ -6,8 +6,12 @@ namespace App\Domain\Actions\Combat;
 
 use App\Domain\Collections\CombatantCollection;
 use App\Domain\Combat\SideQuestGroup;
+use App\Domain\Models\CombatPosition;
+use App\Domain\Models\DamageType;
 use App\Domain\Models\Minion;
 use App\Domain\Models\SideQuest;
+use App\Domain\Models\TargetPriority;
+use Illuminate\Support\Collection;
 
 class BuildSideQuestGroup
 {
@@ -21,11 +25,21 @@ class BuildSideQuestGroup
         $this->buildCombatMinion = $buildCombatMinion;
     }
 
-    public function execute(SideQuest $sideQuest)
+    /**
+     * @param SideQuest $sideQuest
+     * @param Collection|null $combatPositions
+     * @param Collection|null $targetPriorities
+     * @param Collection|null $damageTypes
+     * @return SideQuestGroup
+     */
+    public function execute(SideQuest $sideQuest, Collection $combatPositions = null, Collection $targetPriorities = null, Collection $damageTypes = null)
     {
+        $combatPositions = $combatPositions ?: CombatPosition::all();
+        $targetPriorities = $targetPriorities ?: TargetPriority::all();
+        $damageTypes = $damageTypes ?: DamageType::all();
         $combatMinions = new CombatantCollection();
-        $sideQuest->minions->each(function (Minion $minion) use ($combatMinions) {
-            $combatMinion = $this->buildCombatMinion->execute($minion);
+        $sideQuest->minions->each(function (Minion $minion) use ($combatMinions, $combatPositions, $targetPriorities, $damageTypes) {
+            $combatMinion = $this->buildCombatMinion->execute($minion, $combatPositions, $targetPriorities, $damageTypes);
             $combatMinions->push($combatMinion);
             $minionCount = $minion->pivot->count;
             if ($minionCount > 1) {
