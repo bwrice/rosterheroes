@@ -4,7 +4,43 @@
 namespace App\Domain\Collections;
 
 
+use App\Domain\Combat\CombatHero;
+use App\Domain\Models\CombatPosition;
+
 class CombatHeroCollection extends CombatantCollection
 {
+    public function updateCombatPositions(CombatPositionCollection $allCombatPositions)
+    {
+        $heroCombatPositions = $this->getInitialCombatPositions();
+        $combatPositionsWithoutHeroes = $allCombatPositions->diff($heroCombatPositions);
+        if ($combatPositionsWithoutHeroes->isNotEmpty() && $heroCombatPositions->isNotEmpty()) {
+            $closestProximityPosition = $heroCombatPositions->closestProximity();
+            $this->withInitialCombatPosition($closestProximityPosition)->setInheritedCombatPositions($combatPositionsWithoutHeroes);
+        }
+    }
 
+    /**
+     * @return CombatPositionCollection
+     */
+    protected function getInitialCombatPositions()
+    {
+        $collection = new CombatPositionCollection();
+        return $collection->merge($this->unique(function (CombatHero $combatHero) {
+            return $combatHero->getInitialCombatPosition();
+        }));
+    }
+
+    protected function withInitialCombatPosition(CombatPosition $combatPosition)
+    {
+        return $this->filter(function (CombatHero $combatHero) use ($combatPosition) {
+            return $combatHero->getInitialCombatPosition()->id === $combatPosition->id;
+        });
+    }
+
+    protected function setInheritedCombatPositions(CombatPositionCollection $inheritedCombatPositions)
+    {
+        return $this->each(function (CombatHero $combatHero) use ($inheritedCombatPositions) {
+            $combatHero->setInheritedCombatPositions($inheritedCombatPositions);
+        });
+    }
 }
