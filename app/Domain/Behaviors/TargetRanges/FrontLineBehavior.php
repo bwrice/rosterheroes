@@ -9,6 +9,7 @@ class FrontLineBehavior extends CombatPositionBehavior
     protected $combatSpeedBonus = 1;
     protected $baseDamageBonus = 1;
     protected $damageMultiplierBonus = 1;
+    protected $proximity = 1;
 
     protected $attackerSVG = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0,0,320,320\" style=\"display: block\">
                     <path d=\"M210,30 A1,1 0 0,0 210,290\" fill=\"#808080\"/>

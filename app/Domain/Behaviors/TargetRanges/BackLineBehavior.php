@@ -9,6 +9,7 @@ class BackLineBehavior extends CombatPositionBehavior
     protected $combatSpeedBonus = .25;
     protected $baseDamageBonus = .25;
     protected $damageMultiplierBonus = .25;
+    protected $proximity = 2;
 
     protected $attackerSVG = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0,0,320,320\" style=\"display: block\">
                     <path d=\"M210,30 A1,1 0 0,0 210,290\" fill=\"#808080\"/>

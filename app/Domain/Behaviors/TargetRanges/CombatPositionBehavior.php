@@ -11,6 +11,7 @@ abstract class CombatPositionBehavior
     protected $damageMultiplierBonus = 0;
     protected $attackerSVG = '';
     protected $targetSVG = '';
+    protected $proximity = 100;
 
     public function getSVG($attacker = true): string
     {
@@ -40,5 +41,10 @@ abstract class CombatPositionBehavior
     public function getTargetSVG(): string
     {
         return $this->targetSVG;
+    }
+
+    public function getProximity(): int
+    {
+        return $this->proximity;
     }
 }

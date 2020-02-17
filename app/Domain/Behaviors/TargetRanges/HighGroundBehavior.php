@@ -9,6 +9,7 @@ class HighGroundBehavior extends CombatPositionBehavior
     protected $combatSpeedBonus = 0;
     protected $baseDamageBonus = 0;
     protected $damageMultiplierBonus = 0;
+    protected $proximity = 3;
 
     protected $attackerSVG = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0,0,320,320\" style=\"display: block\">
                     <path d=\"M210,30 A1,1 0 0,0 210,290\" fill=\"#00ffd1\" stroke=\"#fff\"/>
