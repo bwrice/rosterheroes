@@ -12,6 +12,9 @@ class CombatHeroFactory
     /** @var int|null */
     protected $heroID;
 
+    /** @var CombatPosition */
+    protected $combatPosition;
+
     public static function new()
     {
         return new self();
@@ -20,7 +23,7 @@ class CombatHeroFactory
     public function create()
     {
         /** @var CombatPosition $combatPosition */
-        $combatPosition = CombatPosition::query()->inRandomOrder()->first();
+        $combatPosition = $this->combatPosition ?: CombatPosition::query()->inRandomOrder()->first();
 
         return new CombatHero(
             $this->buildHeroID(),
@@ -45,4 +48,12 @@ class CombatHeroFactory
     {
         return $this->heroID ?: rand(1, 999999);
     }
+
+    protected function withCombatPosition(CombatPosition $combatPosition)
+    {
+        $clone = clone $this;
+        $clone->combatPosition = $combatPosition;
+        return $clone;
+    }
+
 }
