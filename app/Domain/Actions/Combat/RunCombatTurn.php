@@ -8,7 +8,7 @@ use App\Domain\Combat\Combatant;
 use App\Domain\Combat\CombatAttackInterface;
 use App\Domain\Combat\CombatGroup;
 
-class CombatTurnAction
+class RunCombatTurn
 {
     public function execute(CombatGroup $attackers, CombatGroup $defenders, int $moment, callable $eventCallback)
     {
