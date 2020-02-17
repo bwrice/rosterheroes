@@ -5,6 +5,7 @@ namespace App\Domain\Models;
 use App\Domain\Behaviors\TargetRanges\CombatPositionBehavior;
 use App\Domain\Behaviors\TargetRanges\CombatPositionBehaviorFactory;
 use App\Domain\Behaviors\TargetRanges\CombatPositionBehaviorInterface;
+use App\Domain\Collections\CombatPositionCollection;
 use App\Domain\Models\Traits\HasUniqueNames;
 use Illuminate\Database\Eloquent\Model;
 
@@ -33,6 +34,11 @@ class CombatPosition extends Model
         /** @var CombatPositionBehaviorFactory $factory */
         $factory = app(CombatPositionBehaviorFactory::class);
         return $factory->getBehavior($this->name);
+    }
+
+    public function newCollection(array $models = [])
+    {
+        return new CombatPositionCollection($models);
     }
 
     public function getSVG($attacker = true)
