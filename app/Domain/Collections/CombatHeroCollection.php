@@ -24,10 +24,9 @@ class CombatHeroCollection extends CombatantCollection
      */
     protected function getInitialCombatPositions()
     {
-        $collection = new CombatPositionCollection();
-        return $collection->merge($this->unique(function (CombatHero $combatHero) {
+        return (new CombatPositionCollection($this->map(function (CombatHero $combatHero) {
             return $combatHero->getInitialCombatPosition();
-        }));
+        })))->unique();
     }
 
     protected function withInitialCombatPosition(CombatPosition $combatPosition)
