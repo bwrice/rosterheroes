@@ -29,7 +29,7 @@ class RunCombatTurn
                     $damageReceived = $combatant->calculateDamageToReceive($startingDamage);
                     $combatant->receiveDamage($damageReceived);
                 }
-                $eventCallback($damageReceived, $combatAttack, $combatant, $moment, $block);
+                $eventCallback($damageReceived, $combatAttack, $combatant, $block);
             });
         });
     }
