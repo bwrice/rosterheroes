@@ -48,7 +48,7 @@ class CombatHero implements Combatant
     /**
      * @var CombatPosition
      */
-    protected $combatPosition;
+    protected $initialCombatPosition;
     /**
      * @var Collection
      */
@@ -75,7 +75,7 @@ class CombatHero implements Combatant
         $this->initialMana = $this->currentMana = $mana;
         $this->protection = $protection;
         $this->blockChancePercent = $blockChancePercent;
-        $this->combatPosition = $combatPosition;
+        $this->initialCombatPosition = $combatPosition;
         $this->combatAttacks = $combatAttacks;
         $this->inheritedCombatPositions = collect();
     }
@@ -140,9 +140,9 @@ class CombatHero implements Combatant
         return ! is_null($match);
     }
 
-    protected function allCombatPositions()
+    public function allCombatPositions()
     {
-        return clone($this->inheritedCombatPositions)->push($this->combatPosition);
+        return clone($this->inheritedCombatPositions)->push($this->initialCombatPosition)->unique();
     }
 
     /**
@@ -174,5 +174,13 @@ class CombatHero implements Combatant
     public function getCombatAttacks(): Collection
     {
         return $this->combatAttacks;
+    }
+
+    /**
+     * @return CombatPosition
+     */
+    public function getInitialCombatPosition(): CombatPosition
+    {
+        return $this->initialCombatPosition;
     }
 }
