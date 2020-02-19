@@ -14,7 +14,7 @@ class CreateSideQuestResultsTable extends Migration
     public function up()
     {
         Schema::create('side_quest_results', function (Blueprint $table) {
-            $table->bigInteger('id');
+            $table->bigIncrements('id');
             $table->uuid('uuid');
             $table->bigInteger('squad_id')->unsigned();
             $table->integer('side_quest_id')->unsigned();
