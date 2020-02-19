@@ -17,6 +17,7 @@ class CreateSideQuestEventsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('combat_event_type_id')->unsigned();
             $table->bigInteger('side_quest_result_id')->unsigned();
+            $table->integer('moment');
             $table->json('data');
             $table->timestamps();
         });
