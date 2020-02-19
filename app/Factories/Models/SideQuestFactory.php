@@ -27,7 +27,7 @@ class SideQuestFactory
         $sideQuest = SideQuest::query()->create(array_merge([
             'uuid' => (string) Str::uuid(),
             'name' => 'Test Side Quest ' . rand(1, 99999),
-            'quest_id' => factory(Quest::class)->create()->id
+            'quest_id' => QuestFactory::new()->create()->id
         ], $extra));
 
         if ($this->minionFactories) {
