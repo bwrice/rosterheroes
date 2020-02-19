@@ -5,6 +5,7 @@ namespace App\Domain\Actions\Combat;
 
 
 use App\Domain\Collections\CombatantCollection;
+use App\Domain\Collections\CombatHeroCollection;
 use App\Domain\Combat\CombatSquad;
 use App\Domain\Models\CombatPosition;
 use App\Domain\Models\DamageType;
@@ -46,7 +47,7 @@ class BuildCombatSquad
         if ($heroes->isEmpty()) {
             throw new BuildCombatSquadException($squad, 'No heroes combat ready', BuildCombatSquadException::CODE_NO_COMBAT_READY_HEROES);
         }
-        $combatHeroes = new CombatantCollection();
+        $combatHeroes = new CombatHeroCollection();
         $heroes->each(function (Hero $hero) use ($combatHeroes, $combatPositions, $targetPriorities, $damageTypes) {
             $combatHeroes->push($this->buildCombatHero->execute($hero, $combatPositions, $targetPriorities, $damageTypes));
         });
