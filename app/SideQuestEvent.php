@@ -12,6 +12,11 @@ use Illuminate\Database\Eloquent\Model;
  */
 class SideQuestEvent extends Model
 {
+    protected $guarded = [];
+    protected $casts = [
+        'data' => 'array'
+    ];
+
     public function sideQuestResult()
     {
         return $this->belongsTo(SideQuestResult::class);
