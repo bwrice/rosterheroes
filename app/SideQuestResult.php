@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Model;
  * Class SideQuestResult
  * @package App
  *
+ * @property int $id
+ *
  * @property Collection $sideQuestEvents
  */
 class SideQuestResult extends Model

@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
  * Class SideQuestEvent
  * @package App
  *
+ * @property array $data
+ *
  * @property SideQuestResult $sideQuestResult
  */
 class SideQuestEvent extends Model
