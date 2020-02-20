@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  * @package App
  *
  * @property array $data
+ * @property int $moment
  *
  * @property SideQuestResult $sideQuestResult
  */
