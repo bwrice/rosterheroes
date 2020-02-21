@@ -4,7 +4,7 @@
 namespace App\Domain\Actions\Combat;
 
 
-use App\Domain\Combat\CombatAttack;
+use App\Domain\Combat\Attacks\CombatAttack;
 use App\Domain\Interfaces\HasFantasyPoints;
 use App\Domain\Models\Attack;
 use App\Domain\Models\CombatPosition;

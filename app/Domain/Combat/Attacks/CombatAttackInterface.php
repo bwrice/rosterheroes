@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Domain\Combat;
+namespace App\Domain\Combat\Attacks;
 
 
 use App\Domain\Collections\CombatantCollection;

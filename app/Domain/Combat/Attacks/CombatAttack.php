@@ -1,10 +1,11 @@
 <?php
 
 
-namespace App\Domain\Combat;
+namespace App\Domain\Combat\Attacks;
 
 
 use App\Domain\Collections\CombatantCollection;
+use App\Domain\Combat\Attacks\CombatAttackInterface;
 use App\Domain\Models\CombatPosition;
 use App\Domain\Models\DamageType;
 use App\Domain\Models\TargetPriority;

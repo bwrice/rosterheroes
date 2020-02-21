@@ -1,11 +1,13 @@
 <?php
 
 
-namespace App\Domain\Combat;
+namespace App\Domain\Combat\Attacks;
 
 
 use App\Domain\Collections\CombatantCollection;
 use App\Domain\Collections\ResourceCostsCollection;
+use App\Domain\Combat\Attacks\CombatAttack;
+use App\Domain\Combat\Attacks\CombatAttackInterface;
 
 class HeroCombatAttack implements CombatAttackInterface
 {
