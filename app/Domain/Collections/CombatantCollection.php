@@ -38,4 +38,15 @@ class CombatantCollection extends Collection
             return $combatant->hasCombatPosition($combatPosition);
         });
     }
+
+    /**
+     * @return bool
+     */
+    public function hasSurvivors()
+    {
+        $survivor = $this->first(function (Combatant $combatant) {
+            return $combatant->getCurrentHealth() > 0;
+        });
+        return ! is_null($survivor);
+    }
 }
