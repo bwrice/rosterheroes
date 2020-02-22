@@ -3,8 +3,8 @@
 namespace Tests\Feature;
 
 use App\Domain\Actions\Combat\BuildHeroCombatAttack;
-use App\Domain\Combat\CombatAttackInterface;
-use App\Domain\Combat\HeroCombatAttack;
+use App\Domain\Combat\Attacks\CombatAttackInterface;
+use App\Domain\Combat\Attacks\HeroCombatAttack;
 use App\Factories\Models\AttackFactory;
 use App\Factories\Models\HeroFactory;
 use App\Factories\Models\ItemFactory;
