@@ -36,4 +36,9 @@ class SideQuestGroup implements CombatGroup
     {
         return $this->combatMinions;
     }
+
+    public function isDefeated()
+    {
+        return $this->combatMinions->hasSurvivors();
+    }
 }
