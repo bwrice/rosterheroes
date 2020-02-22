@@ -15,13 +15,13 @@ use Illuminate\Database\Eloquent\Collection;
 class BuildCombatMinion
 {
     /**
-     * @var BuildCombatAttack
+     * @var BuildMinionCombatAttack
      */
-    private $buildCombatAttack;
+    protected $buildMinionCombatAttack;
 
-    public function __construct(BuildCombatAttack $buildCombatAttack)
+    public function __construct(BuildMinionCombatAttack $buildMinionCombatAttack)
     {
-        $this->buildCombatAttack = $buildCombatAttack;
+        $this->buildMinionCombatAttack = $buildMinionCombatAttack;
     }
 
     public function execute(
@@ -34,7 +34,7 @@ class BuildCombatMinion
         /** @var CombatPosition $minionCombatPosition */
         $minionCombatPosition = $combatPositions->find($minion->combat_position_id);
         $combatAttacks = $minion->attacks->map(function (Attack $attack) use ($minion, $combatPositions, $targetPriorities, $damageTypes) {
-            return $this->buildCombatAttack->execute($attack, $minion, $combatPositions, $targetPriorities, $damageTypes);
+            return $this->buildMinionCombatAttack->execute($attack, $minion, $combatPositions, $targetPriorities, $damageTypes);
         });
         return new CombatMinion(
             $minion->id,
