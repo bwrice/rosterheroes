@@ -9,7 +9,7 @@ use App\Domain\Combat\Attacks\CombatAttackInterface;
 use App\Domain\Models\CombatPosition;
 use Illuminate\Support\Collection;
 
-class BasicCombatant implements Combatant
+abstract class AbstractCombatant implements Combatant
 {
     /**
      * @var int
@@ -94,20 +94,6 @@ class BasicCombatant implements Combatant
     }
 
     /**
-     * @return float
-     */
-    public function getThreatLevel(): float
-    {
-        return $this->getDPS();
-    }
-
-    protected function getDPS()
-    {
-        // TODO
-        return 1;
-    }
-
-    /**
      * @param CombatPosition $combatPositionToCompare
      * @return bool
      */
@@ -123,4 +109,14 @@ class BasicCombatant implements Combatant
     {
         return clone($this->inheritedCombatPositions)->push($this->initialCombatPosition)->unique();
     }
+
+    /**
+     * @return float
+     */
+    public function getThreatLevel(): float
+    {
+        return $this->getDPS();
+    }
+
+    abstract protected function getDPS();
 }
