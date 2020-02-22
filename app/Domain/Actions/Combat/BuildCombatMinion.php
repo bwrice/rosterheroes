@@ -4,7 +4,7 @@
 namespace App\Domain\Actions\Combat;
 
 
-use App\Domain\Combat\CombatMinion;
+use App\Domain\Combat\Combatants\CombatMinion;
 use App\Domain\Models\Attack;
 use App\Domain\Models\CombatPosition;
 use App\Domain\Models\DamageType;

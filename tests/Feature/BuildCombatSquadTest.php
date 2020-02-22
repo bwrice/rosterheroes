@@ -4,7 +4,7 @@ namespace Tests\Feature;
 
 use App\Domain\Actions\Combat\BuildCombatHero;
 use App\Domain\Actions\Combat\BuildCombatSquad;
-use App\Domain\Combat\CombatHero;
+use App\Domain\Combat\Combatants\CombatHero;
 use App\Domain\Combat\CombatSquad;
 use App\Domain\Models\Hero;
 use App\Domain\Models\HeroClass;

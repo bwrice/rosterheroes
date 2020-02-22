@@ -4,7 +4,7 @@
 namespace App\Domain\Collections;
 
 
-use App\Domain\Combat\CombatHero;
+use App\Domain\Combat\Combatants\CombatHero;
 use App\Domain\Models\CombatPosition;
 
 class CombatHeroCollection extends CombatantCollection

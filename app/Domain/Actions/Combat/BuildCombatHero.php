@@ -4,7 +4,7 @@
 namespace App\Domain\Actions\Combat;
 
 
-use App\Domain\Combat\CombatHero;
+use App\Domain\Combat\Combatants\CombatHero;
 use App\Domain\Combat\Attacks\HeroCombatAttack;
 use App\Domain\Models\Attack;
 use App\Domain\Models\CombatPosition;

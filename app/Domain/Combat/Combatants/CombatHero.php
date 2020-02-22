@@ -1,10 +1,11 @@
 <?php
 
 
-namespace App\Domain\Combat;
+namespace App\Domain\Combat\Combatants;
 
 
 use App\Domain\Combat\Attacks\CombatAttackInterface;
+use App\Domain\Combat\Combatants\Combatant;
 use App\Domain\Models\CombatPosition;
 use Illuminate\Support\Collection;
 

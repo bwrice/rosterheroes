@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Domain\Combat;
+namespace App\Domain\Combat\Combatants;
 
 
 use App\Domain\Combat\Attacks\CombatAttackInterface;

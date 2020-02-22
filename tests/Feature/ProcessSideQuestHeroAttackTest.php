@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use App\Domain\Actions\Combat\ProcessSideQuestHeroAttack;
-use App\Domain\Combat\CombatMinion;
+use App\Domain\Combat\Combatants\CombatMinion;
 use App\Domain\Combat\Attacks\HeroCombatAttack;
 use App\Factories\Combat\CombatMinionFactory;
 use App\Factories\Combat\HeroCombatAttackFactory;

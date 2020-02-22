@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use App\Domain\Collections\CombatHeroCollection;
-use App\Domain\Combat\CombatHero;
+use App\Domain\Combat\Combatants\CombatHero;
 use App\Domain\Models\CombatPosition;
 use App\Factories\Combat\CombatHeroFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;

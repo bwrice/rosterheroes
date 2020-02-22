@@ -4,7 +4,7 @@
 namespace App\Domain\Behaviors\TargetPriorities;
 
 
-use App\Domain\Combat\Combatant;
+use App\Domain\Combat\Combatants\Combatant;
 
 abstract class TargetPriorityBehavior
 {

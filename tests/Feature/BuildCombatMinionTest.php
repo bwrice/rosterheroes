@@ -4,8 +4,8 @@ namespace Tests\Feature;
 
 use App\Domain\Actions\Combat\BuildCombatAttack;
 use App\Domain\Actions\Combat\BuildCombatMinion;
-use App\Domain\Combat\Combatant;
-use App\Domain\Combat\CombatMinion;
+use App\Domain\Combat\Combatants\Combatant;
+use App\Domain\Combat\Combatants\CombatMinion;
 use App\Factories\Combat\CombatAttackFactory;
 use App\Factories\Models\MinionFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;

@@ -4,8 +4,8 @@
 namespace App\Factories\Combat;
 
 
-use App\Domain\Combat\CombatHero;
-use App\Domain\Combat\CombatMinion;
+use App\Domain\Combat\Combatants\CombatHero;
+use App\Domain\Combat\Combatants\CombatMinion;
 use App\Domain\Models\CombatPosition;
 
 class CombatMinionFactory

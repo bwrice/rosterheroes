@@ -5,7 +5,7 @@ namespace App\Factories\Combat;
 
 
 use App\Domain\Collections\ResourceCostsCollection;
-use App\Domain\Combat\CombatHero;
+use App\Domain\Combat\Combatants\CombatHero;
 use App\Domain\Combat\Attacks\HeroCombatAttack;
 
 class HeroCombatAttackFactory
