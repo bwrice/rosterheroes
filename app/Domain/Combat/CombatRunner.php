@@ -4,6 +4,7 @@
 namespace App\Domain\Combat;
 
 
+use App\Domain\Combat\Attacks\CombatAttackInterface;
 use Illuminate\Support\Collection;
 
 class CombatRunner

@@ -4,6 +4,7 @@
 namespace App\Domain\Combat;
 
 
+use App\Domain\Combat\Attacks\CombatAttackInterface;
 use App\Domain\Models\CombatPosition;
 use Illuminate\Support\Collection;
 
@@ -86,7 +87,7 @@ class CombatMinion implements Combatant
      */
     public function getCurrentHealth(): int
     {
-        // TODO: Implement getCurrentHealth() method.
+        return $this->currentHealth;
     }
 
     /**

@@ -4,6 +4,7 @@
 namespace App\Domain\Combat;
 
 
+use App\Domain\Combat\Attacks\CombatAttackInterface;
 use App\Domain\Models\CombatPosition;
 
 interface Combatant
