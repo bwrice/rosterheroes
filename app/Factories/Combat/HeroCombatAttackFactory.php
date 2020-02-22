@@ -6,10 +6,7 @@ namespace App\Factories\Combat;
 
 use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Combat\CombatHero;
-use App\Domain\Combat\HeroCombatAttack;
-use App\Domain\Models\CombatPosition;
-use App\Domain\Models\DamageType;
-use App\Domain\Models\TargetPriority;
+use App\Domain\Combat\Attacks\HeroCombatAttack;
 
 class HeroCombatAttackFactory
 {
@@ -34,7 +31,7 @@ class HeroCombatAttackFactory
             $resourceCosts
         );
     }
-    
+
     public function withCombatAttackFactory(CombatAttackFactory $combatAttackFactory)
     {
         $clone = clone $this;
