@@ -58,21 +58,6 @@ class CombatHero extends AbstractCombatant
         return 1;
     }
 
-    public function allCombatPositions()
-    {
-        return clone($this->inheritedCombatPositions)->push($this->initialCombatPosition)->unique();
-    }
-
-    /**
-     * @param Collection $inheritedCombatPositions
-     * @return CombatHero
-     */
-    public function setInheritedCombatPositions(Collection $inheritedCombatPositions): CombatHero
-    {
-        $this->inheritedCombatPositions = $inheritedCombatPositions;
-        return $this;
-    }
-
     public function getReadyAttacks(int $moment)
     {
 
@@ -84,13 +69,5 @@ class CombatHero extends AbstractCombatant
     public function getHeroID(): int
     {
         return $this->heroID;
-    }
-
-    /**
-     * @return CombatPosition
-     */
-    public function getInitialCombatPosition(): CombatPosition
-    {
-        return $this->initialCombatPosition;
     }
 }

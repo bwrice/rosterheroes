@@ -119,6 +119,24 @@ abstract class AbstractCombatant implements Combatant
     }
 
     /**
+     * @return CombatPosition
+     */
+    public function getInitialCombatPosition(): CombatPosition
+    {
+        return $this->initialCombatPosition;
+    }
+
+    /**
+     * @param Collection $inheritedCombatPositions
+     * @return static
+     */
+    public function setInheritedCombatPositions(Collection $inheritedCombatPositions)
+    {
+        $this->inheritedCombatPositions = $inheritedCombatPositions;
+        return $this;
+    }
+
+    /**
      * @return float
      */
     public function getThreatLevel(): float
