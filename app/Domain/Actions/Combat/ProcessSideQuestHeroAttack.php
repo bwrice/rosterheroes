@@ -4,10 +4,12 @@
 namespace App\Domain\Actions\Combat;
 
 
+use App\Aggregates\SideQuestEventAggregate;
 use App\Domain\Combat\Combatants\CombatMinion;
 use App\Domain\Combat\Attacks\HeroCombatAttack;
 use App\SideQuestEvent;
 use App\SideQuestResult;
+use Illuminate\Support\Str;
 
 class ProcessSideQuestHeroAttack
 {
@@ -27,26 +29,25 @@ class ProcessSideQuestHeroAttack
         } else {
             $kill = $combatMinion->getCurrentHealth() <= 0;
         }
-        /** @var SideQuestEvent $sideQuestEvent */
-        $sideQuestEvent = SideQuestEvent::query()->create([
-            'side_quest_result_id' => $sideQuestResult->id,
-            'moment' => $moment,
-            'data' => [
-                'type' => 'hero-attack',
-                'damage' => $damageReceived,
-                'block' => $block,
-                'kill' => $kill,
-                'attacker' => [
-                    'type' => 'hero',
-                    'hero_id' => $heroCombatAttack->getHeroID(),
-                    'item_id' => $heroCombatAttack->getItemID()
-                ],
-                'defender' => [
-                    'type' => 'minion',
-                    'minion_id' => $combatMinion->getMinionID()
-                ]
+
+        $uuid = Str::uuid();
+        $aggregate = SideQuestEventAggregate::retrieve($uuid);
+        $data = [
+            'type' => 'hero-attack',
+            'damage' => $damageReceived,
+            'block' => $block,
+            'kill' => $kill,
+            'attacker' => [
+                'type' => 'hero',
+                'hero_uuid' => $heroCombatAttack->getHeroUuid(),
+                'item_uuid' => $heroCombatAttack->getItemUuid()
+            ],
+            'defender' => [
+                'type' => 'minion',
+                'minion_id' => $combatMinion->getMinionID()
             ]
-        ]);
-        return $sideQuestEvent;
+        ];
+        $aggregate->createSideQuestEvent($sideQuestResult->id, $moment, $data)->persist();
+        return SideQuestEvent::findUuid($uuid);
     }
 }
