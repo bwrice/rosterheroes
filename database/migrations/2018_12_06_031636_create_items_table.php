@@ -22,6 +22,8 @@ class CreateItemsTable extends Migration
             $table->integer('item_blueprint_id')->unsigned()->nullable();
             $table->nullableMorphs('has_items');
             $table->string('name')->nullable();
+            $table->bigInteger('damage_dealt')->unsigned()->default(0);
+            $table->bigInteger('blocks')->unsigned()->default(0);
             $table->timestamps();
         });
 
