@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Domain\Actions\Combat\ProcessSideQuestHeroAttack;
 use App\Domain\Combat\Combatants\CombatMinion;
 use App\Domain\Combat\Attacks\HeroCombatAttack;
+use App\Domain\Models\Item;
 use App\Factories\Combat\CombatMinionFactory;
 use App\Factories\Combat\HeroCombatAttackFactory;
 use App\Factories\Models\SideQuestFactory;
@@ -95,5 +96,24 @@ class ProcessSideQuestHeroAttackTest extends TestCase
 
         $sideQuestEvent = $domainAction->execute($this->sideQuestResult, $moment, $damageReceived, $this->heroCombatAttack, $this->combatMinion, true);
         $this->assertTrue($sideQuestEvent->data['block']);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_increase_the_damage_dealt_on_the_item()
+    {
+        /** @var ProcessSideQuestHeroAttack $domainAction */
+        $domainAction = app(ProcessSideQuestHeroAttack::class);
+        $damageReceived = rand(10, 200);
+        $moment = rand(1, 99);
+
+        $item = Item::findUuid($this->heroCombatAttack->getItemUuid());
+        $this->assertEquals(0, $item->damage_dealt);
+
+        $domainAction->execute($this->sideQuestResult, $moment, $damageReceived, $this->heroCombatAttack, $this->combatMinion, false);
+
+        $item = $item->fresh();
+        $this->assertEquals($damageReceived, $item->damage_dealt);
     }
 }
