@@ -11,11 +11,11 @@ class AbstractCombatantCollection extends CombatantCollection
 {
     public function updateCombatPositions(CombatPositionCollection $allCombatPositions)
     {
-        $heroCombatPositions = $this->getInitialCombatPositions();
-        $combatPositionsWithoutHeroes = $allCombatPositions->diff($heroCombatPositions);
-        if ($combatPositionsWithoutHeroes->isNotEmpty() && $heroCombatPositions->isNotEmpty()) {
-            $closestProximityPosition = $heroCombatPositions->closestProximity();
-            $this->withInitialCombatPosition($closestProximityPosition)->setInheritedCombatPositions($combatPositionsWithoutHeroes);
+        $initialCombatPositions = $this->getInitialCombatPositions();
+        $combatPositionsWithoutCombatants = $allCombatPositions->diff($initialCombatPositions);
+        if ($combatPositionsWithoutCombatants->isNotEmpty() && $initialCombatPositions->isNotEmpty()) {
+            $closestProximityPosition = $initialCombatPositions->closestProximity();
+            $this->withInitialCombatPosition($closestProximityPosition)->setInheritedCombatPositions($combatPositionsWithoutCombatants);
         }
     }
 
