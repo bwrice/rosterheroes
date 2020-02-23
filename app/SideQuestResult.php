@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * @package App
  *
  * @property int $id
+ * @property string $uuid
  *
  * @property Collection $sideQuestEvents
  */

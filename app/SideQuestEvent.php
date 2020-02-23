@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Domain\Models\EventSourcedModel;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -9,11 +10,12 @@ use Illuminate\Database\Eloquent\Model;
  * @package App
  *
  * @property array $data
+ * @property string $uuid
  * @property int $moment
  *
  * @property SideQuestResult $sideQuestResult
  */
-class SideQuestEvent extends Model
+class SideQuestEvent extends EventSourcedModel
 {
     protected $guarded = [];
     protected $casts = [
