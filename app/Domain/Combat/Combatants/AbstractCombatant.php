@@ -111,6 +111,14 @@ abstract class AbstractCombatant implements Combatant
     }
 
     /**
+     * @return Collection
+     */
+    public function getCombatAttacks(): Collection
+    {
+        return $this->combatAttacks;
+    }
+
+    /**
      * @return float
      */
     public function getThreatLevel(): float

@@ -87,14 +87,6 @@ class CombatHero extends AbstractCombatant
     }
 
     /**
-     * @return Collection
-     */
-    public function getCombatAttacks(): Collection
-    {
-        return $this->combatAttacks;
-    }
-
-    /**
      * @return CombatPosition
      */
     public function getInitialCombatPosition(): CombatPosition
