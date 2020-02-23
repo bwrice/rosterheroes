@@ -8,12 +8,8 @@ use App\Domain\Combat\Combatants\CombatHero;
 use App\Domain\Combat\Combatants\CombatMinion;
 use App\Domain\Models\CombatPosition;
 
-class CombatMinionFactory
+class CombatMinionFactory extends AbstractCombatantFactory
 {
-    public static function new()
-    {
-        return new self();
-    }
 
     public function create()
     {
