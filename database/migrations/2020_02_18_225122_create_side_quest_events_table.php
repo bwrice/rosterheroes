@@ -15,7 +15,7 @@ class CreateSideQuestEventsTable extends Migration
     {
         Schema::create('side_quest_events', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('combat_event_type_id')->unsigned();
+            $table->uuid('uuid');
             $table->bigInteger('side_quest_result_id')->unsigned();
             $table->integer('moment');
             $table->json('data');
@@ -23,7 +23,6 @@ class CreateSideQuestEventsTable extends Migration
         });
 
         Schema::table('side_quest_events', function (Blueprint $table) {
-            $table->foreign('combat_event_type_id')->references('id')->on('combat_event_types');
             $table->foreign('side_quest_result_id')->references('id')->on('side_quest_results');
         });
     }
