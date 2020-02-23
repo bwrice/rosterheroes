@@ -24,6 +24,8 @@ class CreateHeroesTable extends Migration
             $table->integer('hero_race_id')->unsigned();
             $table->integer('combat_position_id')->unsigned();
             $table->bigInteger('player_spirit_id')->unsigned()->nullable();
+            $table->bigInteger('damage_dealt')->default(0);
+            $table->bigInteger('attacks_blocked')->default(0);
             $table->timestamps();
         });
 

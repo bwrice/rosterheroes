@@ -24,7 +24,7 @@ use phpDocumentor\Reflection\Types\Static_;
  * @property string $uuid
  * @property string $name
  * @property int $damage_dealt
- * @property int $blocks
+ * @property int $attacks_blocked
  *
  * @property string $has_items_type
  * @property string $has_items_id

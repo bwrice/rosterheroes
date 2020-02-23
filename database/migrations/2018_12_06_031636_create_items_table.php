@@ -23,7 +23,7 @@ class CreateItemsTable extends Migration
             $table->nullableMorphs('has_items');
             $table->string('name')->nullable();
             $table->bigInteger('damage_dealt')->unsigned()->default(0);
-            $table->bigInteger('blocks')->unsigned()->default(0);
+            $table->bigInteger('attacks_blocked')->unsigned()->default(0);
             $table->timestamps();
         });
 
