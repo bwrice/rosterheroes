@@ -4,9 +4,10 @@
 namespace App\Factories\Combat;
 
 
+use App\Domain\Combat\Combatants\AbstractCombatant;
 use App\Domain\Models\CombatPosition;
 
-class AbstractCombatantFactory
+abstract class AbstractCombatantFactory
 {
     /** @var string|null */
     protected $combatPositionName;
@@ -18,6 +19,11 @@ class AbstractCombatantFactory
     {
         return new static();
     }
+
+    /**
+     * @return AbstractCombatant
+     */
+    abstract public function create();
 
     protected function getCombatPosition()
     {
