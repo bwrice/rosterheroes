@@ -14,7 +14,7 @@ class CombatMinionFactory extends AbstractCombatantFactory
     public function create()
     {
         /** @var CombatPosition $combatPosition */
-        $combatPosition = CombatPosition::query()->inRandomOrder()->first();
+        $combatPosition = $this->getCombatPosition();
 
         return new CombatMinion(
             rand(1, 99999),
