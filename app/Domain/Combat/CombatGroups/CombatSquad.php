@@ -5,7 +5,7 @@ namespace App\Domain\Combat\CombatGroups;
 
 
 use App\Domain\Collections\CombatantCollection;
-use App\Domain\Collections\CombatHeroCollection;
+use App\Domain\Collections\AbstractCombatantCollection;
 use App\Domain\Combat\Combatants\CombatHero;
 use App\Domain\Models\CombatPosition;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
@@ -22,11 +22,11 @@ class CombatSquad implements CombatGroup
      */
     protected $experience;
     /**
-     * @var CombatHeroCollection
+     * @var AbstractCombatantCollection
      */
     protected $combatHeroes;
 
-    public function __construct(int $squadID, int $experience, CombatHeroCollection $combatHeroes)
+    public function __construct(int $squadID, int $experience, AbstractCombatantCollection $combatHeroes)
     {
         $this->squadID = $squadID;
         $this->experience = $experience;
@@ -44,7 +44,7 @@ class CombatSquad implements CombatGroup
 
     /**
      * @param $moment
-     * @return CombatHeroCollection
+     * @return AbstractCombatantCollection
      */
     public function getPossibleTargets($moment): CombatantCollection
     {
@@ -71,9 +71,9 @@ class CombatSquad implements CombatGroup
     }
 
     /**
-     * @return CombatHeroCollection
+     * @return AbstractCombatantCollection
      */
-    public function getCombatHeroes(): CombatHeroCollection
+    public function getCombatHeroes(): AbstractCombatantCollection
     {
         return $this->combatHeroes;
     }
