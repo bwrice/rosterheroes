@@ -25,7 +25,7 @@ class CampaignProjector implements Projector
 
     public function onCampaignDeleted(CampaignDeleted $event, string $aggregateUuid)
     {
-        $campaign =Campaign::findUuidOrFail($aggregateUuid);
+        $campaign = Campaign::findUuidOrFail($aggregateUuid);
         $campaign->delete();
     }
 }
