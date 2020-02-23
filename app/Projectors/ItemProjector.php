@@ -38,7 +38,7 @@ class ItemProjector implements Projector
         $item->attacks()->attach($event->attackID);
     }
 
-    public function onSideQuestEventCreated(SideQuestEventCreated $event, string $aggregateUuid)
+    public function onSideQuestEventCreated(SideQuestEventCreated $event)
     {
         $attacker = $event->data['attacker'];
         if ($attacker['type'] === 'hero') {
