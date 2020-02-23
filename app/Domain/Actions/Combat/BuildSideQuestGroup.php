@@ -5,7 +5,7 @@ namespace App\Domain\Actions\Combat;
 
 
 use App\Domain\Collections\CombatantCollection;
-use App\Domain\Combat\SideQuestGroup;
+use App\Domain\Combat\CombatGroups\SideQuestGroup;
 use App\Domain\Models\CombatPosition;
 use App\Domain\Models\DamageType;
 use App\Domain\Models\Minion;

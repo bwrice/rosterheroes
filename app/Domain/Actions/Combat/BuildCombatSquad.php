@@ -6,7 +6,7 @@ namespace App\Domain\Actions\Combat;
 
 use App\Domain\Collections\CombatantCollection;
 use App\Domain\Collections\CombatHeroCollection;
-use App\Domain\Combat\CombatSquad;
+use App\Domain\Combat\CombatGroups\CombatSquad;
 use App\Domain\Models\CombatPosition;
 use App\Domain\Models\DamageType;
 use App\Domain\Models\Hero;

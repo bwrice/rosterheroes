@@ -4,8 +4,8 @@ namespace Tests\Feature;
 
 use App\Domain\Actions\Combat\BuildCombatMinion;
 use App\Domain\Actions\Combat\BuildSideQuestGroup;
-use App\Domain\Combat\CombatGroup;
-use App\Domain\Combat\SideQuestGroup;
+use App\Domain\Combat\CombatGroups\CombatGroup;
+use App\Domain\Combat\CombatGroups\SideQuestGroup;
 use App\Domain\Models\SideQuest;
 use App\Factories\Combat\CombatMinionFactory;
 use App\Factories\Models\MinionFactory;

@@ -4,7 +4,7 @@
 namespace App\Domain\Actions\Combat;
 
 
-use App\Domain\Combat\CombatMinion;
+use App\Domain\Combat\Combatants\CombatMinion;
 use App\Domain\Combat\Attacks\HeroCombatAttack;
 use App\SideQuestEvent;
 use App\SideQuestResult;

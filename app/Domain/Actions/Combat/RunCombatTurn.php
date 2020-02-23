@@ -6,7 +6,7 @@ namespace App\Domain\Actions\Combat;
 
 use App\Domain\Combat\Combatants\Combatant;
 use App\Domain\Combat\Attacks\CombatAttackInterface;
-use App\Domain\Combat\CombatGroup;
+use App\Domain\Combat\CombatGroups\CombatGroup;
 
 class RunCombatTurn
 {

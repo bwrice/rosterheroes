@@ -1,11 +1,12 @@
 <?php
 
 
-namespace App\Domain\Combat;
+namespace App\Domain\Combat\CombatGroups;
 
 
 use App\Domain\Collections\CombatantCollection;
 use App\Domain\Collections\CombatHeroCollection;
+use App\Domain\Combat\Combatants\CombatHero;
 use App\Domain\Models\CombatPosition;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
@@ -41,7 +42,11 @@ class CombatSquad implements CombatGroup
         return $attacks;
     }
 
-    public function getPossibleTargets($moment): CombatHeroCollection
+    /**
+     * @param $moment
+     * @return CombatHeroCollection
+     */
+    public function getPossibleTargets($moment): CombatantCollection
     {
         $alive = $this->combatHeroes->filter(function (CombatHero $combatHero) {
             return $combatHero->getCurrentHealth() > 0;
@@ -71,5 +76,22 @@ class CombatSquad implements CombatGroup
     public function getCombatHeroes(): CombatHeroCollection
     {
         return $this->combatHeroes;
+    }
+
+    public function isDefeated()
+    {
+        return $this->combatHeroes->hasSurvivors();
+    }
+
+
+    public function updateCombatPositions(EloquentCollection $combatPositions)
+    {
+        $heroCombatPositions = $this->combatHeroes->unique(function (CombatHero $combatHero) {
+            return $combatHero->getInitialCombatPosition();
+        });
+        $heroCombatPositionIDs = $heroCombatPositions->pluck('id');
+        $missing = $combatPositions->reject(function (CombatPosition $combatPosition) use ($heroCombatPositionIDs) {
+            return $heroCombatPositionIDs->contains($combatPosition->id);
+        });
     }
 }

@@ -7,8 +7,8 @@ namespace App\Domain\Actions\Combat;
 use App\Domain\Combat\Attacks\CombatAttackInterface;
 use App\Domain\Combat\Combatants\CombatHero;
 use App\Domain\Combat\CombatItem;
-use App\Domain\Combat\SideQuestGroup;
-use App\Domain\Combat\CombatSquad;
+use App\Domain\Combat\CombatGroups\SideQuestGroup;
+use App\Domain\Combat\CombatGroups\CombatSquad;
 use App\Domain\Models\CombatPosition;
 use Illuminate\Support\Collection;
 
