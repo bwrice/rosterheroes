@@ -7,18 +7,10 @@ namespace App\Factories\Combat;
 use App\Domain\Combat\Combatants\CombatHero;
 use App\Domain\Models\CombatPosition;
 
-class CombatHeroFactory
+class CombatHeroFactory extends AbstractCombatantFactory
 {
     /** @var int|null */
     protected $heroID;
-
-    /** @var string|null */
-    protected $combatPositionName;
-
-    public static function new()
-    {
-        return new self();
-    }
 
     public function create()
     {
@@ -47,22 +39,4 @@ class CombatHeroFactory
     {
         return $this->heroID ?: rand(1, 999999);
     }
-
-    protected function getCombatPosition()
-    {
-        if ($this->combatPositionName) {
-            return CombatPosition::forName($this->combatPositionName);
-        }
-        /** @var CombatPosition $combatPosition */
-        $combatPosition = CombatPosition::query()->inRandomOrder()->first();
-        return $combatPosition;
-    }
-
-    public function withCombatPosition(string $combatPositionName)
-    {
-        $clone = clone $this;
-        $clone->combatPositionName = $combatPositionName;
-        return $clone;
-    }
-
 }
