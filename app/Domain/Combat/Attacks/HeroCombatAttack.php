@@ -12,26 +12,26 @@ use App\Domain\Combat\Attacks\CombatAttackInterface;
 class HeroCombatAttack implements CombatAttackInterface
 {
     /**
-     * @var int
+     * @var string
      */
-    protected $heroID;
+    protected $heroUuid;
     /**
-     * @var int
+     * @var string
      */
-    protected $itemID;
+    protected $itemUuid;
     /**
      * @var CombatAttack
      */
     protected $combatAttack;
 
     public function __construct(
-        int $heroID,
-        int $itemID,
+        string $heroUuid,
+        string $itemUuid,
         CombatAttack $combatAttack,
         ResourceCostsCollection $resourceCosts)
     {
-        $this->heroID = $heroID;
-        $this->itemID = $itemID;
+        $this->heroUuid = $heroUuid;
+        $this->itemUuid = $itemUuid;
         $this->combatAttack = $combatAttack;
     }
 
@@ -46,19 +46,19 @@ class HeroCombatAttack implements CombatAttackInterface
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getHeroID(): int
+    public function getHeroUuid()
     {
-        return $this->heroID;
+        return $this->heroUuid;
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getItemID(): int
+    public function getItemUuid()
     {
-        return $this->itemID;
+        return $this->itemUuid;
     }
 
     /**

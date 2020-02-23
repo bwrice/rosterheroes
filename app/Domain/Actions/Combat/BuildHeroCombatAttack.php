@@ -32,8 +32,8 @@ class BuildHeroCombatAttack
     {
         $combatAttack = $this->buildCombatAttack->execute($attack, $hero, $combatPositions, $targetPriorities, $damageTypes);
         return new HeroCombatAttack(
-            $hero->id,
-            $item->id,
+            $hero->uuid,
+            $item->uuid,
             $combatAttack,
             $attack->getResourceCostCollection()
         );

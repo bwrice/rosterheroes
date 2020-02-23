@@ -29,8 +29,8 @@ class HeroCombatAttackFactory
 
     public function create()
     {
-        $heroID = $this->getHeroID();
-        $itemID = $this->getItemID();
+        $heroID = $this->getHeroUuid();
+        $itemID = $this->getItemUuid();
         $resourceCosts = new ResourceCostsCollection();
         $combatAttackFactory = $this->combatAttackFactory ?: CombatAttackFactory::new();
         $combatAttack = $combatAttackFactory->create();
@@ -63,15 +63,15 @@ class HeroCombatAttackFactory
         return $clone;
     }
 
-    protected function getItemID()
+    protected function getItemUuid()
     {
         $itemFactory = $this->itemFactory ?: ItemFactory::new();
-        return $itemFactory->create()->id;
+        return $itemFactory->create()->uuid;
     }
 
-    protected function getHeroID()
+    protected function getHeroUuid()
     {
         $heroFactory = $this->heroFactory ?: HeroFactory::new();
-        return $heroFactory->create()->id;
+        return $heroFactory->create()->uuid;
     }
 }
