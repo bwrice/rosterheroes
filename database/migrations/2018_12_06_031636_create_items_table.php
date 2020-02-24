@@ -24,6 +24,8 @@ class CreateItemsTable extends Migration
             $table->string('name')->nullable();
             $table->bigInteger('damage_dealt')->unsigned()->default(0);
             $table->bigInteger('attacks_blocked')->unsigned()->default(0);
+            $table->bigInteger('minion_kills')->default(0);
+            $table->bigInteger('titan_kills')->default(0);
             $table->timestamps();
         });
 
