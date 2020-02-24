@@ -18,7 +18,7 @@ class CreateSideQuestEventsTable extends Migration
             $table->uuid('uuid');
             $table->bigInteger('side_quest_result_id')->unsigned();
             $table->integer('moment');
-            $table->json('data');
+            $table->json('event');
             $table->timestamps();
         });
 
