@@ -10,6 +10,10 @@ use App\Domain\Combat\Combatants\CombatMinion;
 class HeroAttackOnMinion
 {
     /**
+     * @var string
+     */
+    protected $type;
+    /**
      * @var HeroCombatAttack
      */
     protected $heroCombatAttack;
@@ -24,8 +28,15 @@ class HeroAttackOnMinion
     protected $block;
     protected $kill;
 
-    public function __construct(HeroCombatAttack $heroCombatAttack, CombatMinion $combatMinion, int $damageReceived, $block, $kill)
+    public function __construct(
+        string $type,
+        HeroCombatAttack $heroCombatAttack,
+        CombatMinion $combatMinion,
+        int $damageReceived,
+        $block,
+        $kill)
     {
+        $this->type = $type;
         $this->heroCombatAttack = $heroCombatAttack;
         $this->combatMinion = $combatMinion;
         $this->damageReceived = $damageReceived;
@@ -38,17 +49,33 @@ class HeroAttackOnMinion
         if ($block) {
             $damageReceived = 0;
             $kill = false;
+            $type = 'minion-blocks-hero';
         } else {
-            $kill = $combatMinion->getCurrentHealth() <= 0;
+            if ($combatMinion->getCurrentHealth() <= 0) {
+                $kill = true;
+                $type = 'hero-kills-minion';
+            } else {
+                $kill = false;
+                $type = 'hero-damages-minion';
+            }
         }
 
         return new self(
+            $type,
             clone $heroCombatAttack,
             clone $combatMinion,
             $damageReceived,
             $block,
             $kill
         );
+    }
+
+    /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
     }
 
     /**
