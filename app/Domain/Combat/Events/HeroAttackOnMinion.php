@@ -7,7 +7,7 @@ namespace App\Domain\Combat\Events;
 use App\Domain\Combat\Attacks\HeroCombatAttack;
 use App\Domain\Combat\Combatants\CombatMinion;
 
-class HeroAttackOnMinion
+class HeroAttackOnMinion implements CombatEvent
 {
     /**
      * @var string
@@ -116,5 +116,20 @@ class HeroAttackOnMinion
     public function getKill()
     {
         return $this->kill;
+    }
+
+    public function getEventData(): array
+    {
+        return [
+            'type' => $this->type,
+            'data' => [
+                'heroUuid' => $this->heroCombatAttack->getHeroUuid(),
+                'itemUuid' => $this->heroCombatAttack->getItemUuid(),
+                'minionUuid' => $this->combatMinion->getMinionUuid(),
+                'damage' => $this->getDamageReceived(),
+                'kill' => $this->getKill(),
+                'block' => $this->getBlock()
+            ]
+        ];
     }
 }
