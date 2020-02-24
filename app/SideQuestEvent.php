@@ -19,7 +19,7 @@ class SideQuestEvent extends EventSourcedModel
 {
     protected $guarded = [];
     protected $casts = [
-        'data' => 'array'
+        'event' => 'array'
     ];
 
     public function sideQuestResult()
