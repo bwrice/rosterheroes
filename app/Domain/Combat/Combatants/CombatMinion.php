@@ -12,19 +12,19 @@ use Illuminate\Support\Collection;
 class CombatMinion extends AbstractCombatant
 {
     /**
-     * @var int
+     * @var string
      */
-    protected $minionID;
+    protected $minionUuid;
 
     public function __construct(
-        int $minionID,
+        string $minionUuid,
         int $health,
         int $protection,
         int $blockChancePercent,
         CombatPosition $combatPosition,
         Collection $combatAttacks)
     {
-        $this->minionID = $minionID;
+        $this->minionUuid = $minionUuid;
         parent::__construct(
             $health,
             $protection,
@@ -35,11 +35,11 @@ class CombatMinion extends AbstractCombatant
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getMinionID(): int
+    public function getMinionUuid(): string
     {
-        return $this->minionID;
+        return $this->minionUuid;
     }
 
     protected function getDPS()

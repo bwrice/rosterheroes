@@ -7,6 +7,7 @@ namespace App\Factories\Combat;
 use App\Domain\Combat\Combatants\CombatHero;
 use App\Domain\Combat\Combatants\CombatMinion;
 use App\Domain\Models\CombatPosition;
+use Illuminate\Support\Str;
 
 class CombatMinionFactory extends AbstractCombatantFactory
 {
@@ -17,7 +18,7 @@ class CombatMinionFactory extends AbstractCombatantFactory
         $combatPosition = $this->getCombatPosition();
 
         return new CombatMinion(
-            rand(1, 99999),
+            (string) Str::uuid(),
             1500,
             250,
             20,

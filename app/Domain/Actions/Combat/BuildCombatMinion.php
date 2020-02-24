@@ -37,7 +37,7 @@ class BuildCombatMinion
             return $this->buildMinionCombatAttack->execute($attack, $minion, $combatPositions, $targetPriorities, $damageTypes);
         });
         return new CombatMinion(
-            $minion->id,
+            $minion->uuid,
             $minion->getStartingHealth(),
             $minion->getProtection(),
             $minion->getBlockChance(),
