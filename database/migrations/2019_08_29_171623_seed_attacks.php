@@ -10,6 +10,7 @@ use App\Domain\Models\CombatPosition;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Str;
 
 class SeedAttacks extends Migration
 {
@@ -458,6 +459,7 @@ class SeedAttacks extends Migration
         foreach($attacks as $attackData) {
             /** @var Attack $attack */
             $attack = Attack::query()->create([
+                'uuid' => (string) Str::uuid(),
                 'name' => $attackData['name'],
                 'damage_type_id' => $damageTypes->firstWhere('name', '=', $attackData['damage_type'])->id,
                 'attacker_position_id' => $combatPositions->firstWhere('name', '=', $attackData['attacker_position'])->id,
