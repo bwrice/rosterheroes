@@ -8,6 +8,7 @@ use App\Domain\Models\Attack;
 use App\Domain\Models\CombatPosition;
 use App\Domain\Models\DamageType;
 use App\Domain\Models\TargetPriority;
+use Illuminate\Support\Str;
 
 class AttackFactory
 {
@@ -29,6 +30,7 @@ class AttackFactory
     {
         /** @var Attack $attack */
         $attack = Attack::query()->create(array_merge([
+            'uuid' => (string) Str::uuid(),
             'name' => 'Factory Attack ' . rand(1, 999999),
             'config_path' => '/Yaml/Attacks/test_attack.yaml',
             'attacker_position_id' => $this->getAttackerPosition()->id,
