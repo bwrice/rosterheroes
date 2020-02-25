@@ -19,7 +19,7 @@ class CombatAttack implements CombatAttackInterface
     /**
      * @var int
      */
-    protected $attackID;
+    protected $attackUuid;
     /**
      * @var int
      */
@@ -55,7 +55,7 @@ class CombatAttack implements CombatAttackInterface
 
     public function __construct(
         string $name,
-        int $attackID,
+        string $attackUuid,
         int $damage,
         float $combatSpeed,
         int $grade,
@@ -66,7 +66,7 @@ class CombatAttack implements CombatAttackInterface
         int $maxTargetsCount)
     {
         $this->name = $name;
-        $this->attackID = $attackID;
+        $this->attackUuid = $attackUuid;
         $this->damage = $damage;
         $this->combatSpeed = $combatSpeed;
         $this->grade = $grade;
@@ -91,10 +91,10 @@ class CombatAttack implements CombatAttackInterface
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getAttackID(): int
+    public function getAttackUuid()
     {
-        return $this->attackID;
+        return $this->attackUuid;
     }
 }

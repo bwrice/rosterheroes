@@ -21,7 +21,7 @@ final class MinionBlocksHeroSideQuestEvent implements ShouldBeStored
     /**
      * @var int
      */
-    public $attackID;
+    public $attackUuid;
     /**
      * @var string
      */
@@ -35,14 +35,14 @@ final class MinionBlocksHeroSideQuestEvent implements ShouldBeStored
         int $sideQuestResultID,
         int $moment,
         string $heroUuid,
-        int $attackID,
+        string $attackUuid,
         string $itemUuid,
         string $minionUuid)
     {
         $this->sideQuestResultID = $sideQuestResultID;
         $this->moment = $moment;
         $this->heroUuid = $heroUuid;
-        $this->attackID = $attackID;
+        $this->attackUuid = $attackUuid;
         $this->itemUuid = $itemUuid;
         $this->minionUuid = $minionUuid;
     }

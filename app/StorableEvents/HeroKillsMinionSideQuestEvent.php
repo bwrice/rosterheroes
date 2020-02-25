@@ -19,9 +19,9 @@ final class HeroKillsMinionSideQuestEvent implements ShouldBeStored
      */
     public $heroUuid;
     /**
-     * @var int
+     * @var string
      */
-    public $attackID;
+    public $attackUuid;
     /**
      * @var string
      */
@@ -39,7 +39,7 @@ final class HeroKillsMinionSideQuestEvent implements ShouldBeStored
         int $sideQuestResultID,
         int $moment,
         string $heroUuid,
-        int $attackID,
+        string $attackUuid,
         string $itemUuid,
         string $minionUuid,
         int $damage)
@@ -47,7 +47,7 @@ final class HeroKillsMinionSideQuestEvent implements ShouldBeStored
         $this->sideQuestResultID = $sideQuestResultID;
         $this->moment = $moment;
         $this->heroUuid = $heroUuid;
-        $this->attackID = $attackID;
+        $this->attackUuid = $attackUuid;
         $this->itemUuid = $itemUuid;
         $this->minionUuid = $minionUuid;
         $this->damage = $damage;

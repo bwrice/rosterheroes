@@ -21,7 +21,7 @@ final class SideQuestEventProjector implements Projector
             'moment' => $event->moment,
             'event_type' => SideQuestEvent::TYPE_HERO_DAMAGES_MINION,
             'data' => [
-                'attackID' => $event->attackID,
+                'attackUuid' => $event->attackUuid,
                 'heroUuid' => $event->heroUuid,
                 'itemUuid' => $event->itemUuid,
                 'minionUuid' => $event->minionUuid,
@@ -38,7 +38,7 @@ final class SideQuestEventProjector implements Projector
             'moment' => $event->moment,
             'event_type' => SideQuestEvent::TYPE_HERO_KILLS_MINION,
             'data' => [
-                'attackID' => $event->attackID,
+                'attackUuid' => $event->attackUuid,
                 'heroUuid' => $event->heroUuid,
                 'itemUuid' => $event->itemUuid,
                 'minionUuid' => $event->minionUuid,
@@ -55,7 +55,7 @@ final class SideQuestEventProjector implements Projector
             'moment' => $event->moment,
             'event_type' => SideQuestEvent::TYPE_MINION_BLOCKS_HERO,
             'data' => [
-                'attackID' => $event->attackID,
+                'attackUuid' => $event->attackUuid,
                 'heroUuid' => $event->heroUuid,
                 'itemUuid' => $event->itemUuid,
                 'minionUuid' => $event->minionUuid

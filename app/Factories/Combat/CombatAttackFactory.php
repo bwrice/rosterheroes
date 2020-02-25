@@ -8,6 +8,7 @@ use App\Domain\Combat\Attacks\CombatAttack;
 use App\Domain\Models\CombatPosition;
 use App\Domain\Models\DamageType;
 use App\Domain\Models\TargetPriority;
+use Illuminate\Support\Str;
 
 class CombatAttackFactory
 {
@@ -19,7 +20,6 @@ class CombatAttackFactory
     public function create()
     {
         $name = 'Test_Hero_Combat_Attack ' . rand(1, 99999);
-        $attackID = rand(1, 999999);
         $attackerPosition = CombatPosition::query()->inRandomOrder()->first();
         $targetPosition = CombatPosition::query()->inRandomOrder()->first();
         $targetPriority = TargetPriority::query()->inRandomOrder()->first();
@@ -27,7 +27,7 @@ class CombatAttackFactory
         $maxTargetCount = rand(3, 8);
         return new CombatAttack(
             $name,
-            $attackID,
+            (string) Str::uuid(),
             100,
             10,
             10,
