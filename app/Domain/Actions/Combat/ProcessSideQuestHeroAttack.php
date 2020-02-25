@@ -33,7 +33,7 @@ class ProcessSideQuestHeroAttack
                 $sideQuestResult->id,
                 $moment,
                 $heroCombatAttack->getHeroUuid(),
-                $heroCombatAttack->getCombatAttack()->getAttackID(),
+                $heroCombatAttack->getCombatAttack()->getAttackUuid(),
                 $heroCombatAttack->getItemUuid(),
                 $combatMinion->getMinionUuid(),
             );
@@ -44,7 +44,7 @@ class ProcessSideQuestHeroAttack
                     $sideQuestResult->id,
                     $moment,
                     $heroCombatAttack->getHeroUuid(),
-                    $heroCombatAttack->getCombatAttack()->getAttackID(),
+                    $heroCombatAttack->getCombatAttack()->getAttackUuid(),
                     $heroCombatAttack->getItemUuid(),
                     $combatMinion->getMinionUuid(),
                     $damageReceived
@@ -54,7 +54,7 @@ class ProcessSideQuestHeroAttack
                     $sideQuestResult->id,
                     $moment,
                     $heroCombatAttack->getHeroUuid(),
-                    $heroCombatAttack->getCombatAttack()->getAttackID(),
+                    $heroCombatAttack->getCombatAttack()->getAttackUuid(),
                     $heroCombatAttack->getItemUuid(),
                     $combatMinion->getMinionUuid(),
                     $damageReceived
