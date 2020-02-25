@@ -4,10 +4,11 @@
 namespace App\Domain\Combat\Combatants;
 
 
+use App\Domain\Interfaces\SpendsResources;
 use App\Domain\Models\CombatPosition;
 use Illuminate\Support\Collection;
 
-class CombatHero extends AbstractCombatant
+class CombatHero extends AbstractCombatant implements SpendsResources
 {
     /**
      * @var int
@@ -69,5 +70,25 @@ class CombatHero extends AbstractCombatant
     public function getHeroID(): int
     {
         return $this->heroID;
+    }
+
+    public function getCurrentStamina(): int
+    {
+        return $this->currentStamina;
+    }
+
+    public function getCurrentMana(): int
+    {
+        return $this->currentMana;
+    }
+
+    public function setCurrentStamina(int $amount)
+    {
+        $this->currentStamina = $amount;
+    }
+
+    public function setCurrentMana(int $amount)
+    {
+        $this->currentMana = $amount
     }
 }
