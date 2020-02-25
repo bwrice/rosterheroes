@@ -47,7 +47,7 @@ class BuildCombatAttack
         $damage = $this->calculateAttackDamage($attack, $hasFantasyPoints);
         return new CombatAttack(
             $attack->name,
-            $attack->id,
+            $attack->uuid,
             $damage,
             $attack->getCombatSpeed(),
             $attack->getGrade(),
