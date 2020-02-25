@@ -89,4 +89,12 @@ class CombatAttack implements CombatAttackInterface
             ->sortByTargetPriority($this->targetPriority)
             ->take($this->maxTargetsCount);
     }
+
+    /**
+     * @return int
+     */
+    public function getAttackID(): int
+    {
+        return $this->attackID;
+    }
 }
