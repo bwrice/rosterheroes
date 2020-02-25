@@ -23,6 +23,10 @@ class HeroCombatAttack implements CombatAttackInterface
      * @var CombatAttack
      */
     protected $combatAttack;
+    /**
+     * @var ResourceCostsCollection
+     */
+    protected $resourceCosts;
 
     public function __construct(
         string $heroUuid,
@@ -33,6 +37,7 @@ class HeroCombatAttack implements CombatAttackInterface
         $this->heroUuid = $heroUuid;
         $this->itemUuid = $itemUuid;
         $this->combatAttack = $combatAttack;
+        $this->resourceCosts = $resourceCosts;
     }
 
     public function getDamagePerTarget(int $targetsCount): int
@@ -67,5 +72,13 @@ class HeroCombatAttack implements CombatAttackInterface
     public function getCombatAttack(): CombatAttack
     {
         return $this->combatAttack;
+    }
+
+    /**
+     * @return ResourceCostsCollection
+     */
+    public function getResourceCosts(): ResourceCostsCollection
+    {
+        return $this->resourceCosts;
     }
 }
