@@ -19,6 +19,7 @@ use Symfony\Component\Yaml\Yaml;
  * @package App\Domain\Models
  *
  * @property int $id
+ * @property string $uuid
  * @property string $name
  * @property int $fixed_target_count
  * @property int $attacker_position_id
