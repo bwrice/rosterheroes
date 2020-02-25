@@ -10,7 +10,7 @@ interface SpendsResources
 
     public function getCurrentMana(): int;
 
-    public function spendStamina(int $amount);
+    public function setCurrentStamina(int $amount);
 
-    public function spendMana(int $amount);
+    public function setCurrentMana(int $amount);
 }
