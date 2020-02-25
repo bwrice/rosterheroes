@@ -4,6 +4,7 @@
 namespace App\Domain\Models\Json\ResourceCosts;
 
 
+use App\Domain\Interfaces\SpendsResources;
 use Illuminate\Contracts\Support\Arrayable;
 
 abstract class ResourceCost implements Arrayable
@@ -29,5 +30,14 @@ abstract class ResourceCost implements Arrayable
             'resource' => $this->resourceName,
             'description' => $this->getDescription()
         ];
+    }
+
+    abstract public function getStaminaCost(SpendsResources $spendsResources): int;
+
+    abstract public function getManCost(SpendsResources $spendsResources): int;
+
+    protected function matchesResourceType($resourceType)
+    {
+        return $this->resourceName === $resourceType;
     }
 }

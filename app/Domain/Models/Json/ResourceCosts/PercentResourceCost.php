@@ -4,7 +4,9 @@
 namespace App\Domain\Models\Json\ResourceCosts;
 
 
+use App\Domain\Interfaces\SpendsResources;
 use App\Domain\Models\Json\ResourceCosts\ResourceCost;
+use App\Domain\Models\MeasurableType;
 
 class PercentResourceCost extends ResourceCost
 {
@@ -22,5 +24,23 @@ class PercentResourceCost extends ResourceCost
     public function getDescription(): string
     {
         return $this->percent . '% of available ' . ucwords($this->resourceName);
+    }
+
+    public function getStaminaCost(SpendsResources $spendsResources): int
+    {
+        if ($this->matchesResourceType(MeasurableType::STAMINA)) {
+            $currentStamina = $spendsResources->getCurrentStamina();
+            return (int) max(0, floor($currentStamina * ($this->percent/100)));
+        }
+        return 0;
+    }
+
+    public function getManCost(SpendsResources $spendsResources): int
+    {
+        if ($this->matchesResourceType(MeasurableType::MANA)) {
+            $currentMana = $spendsResources->getCurrentMana();
+            return (int) max(0, floor($currentMana * ($this->percent/100)));
+        }
+        return 0;
     }
 }
