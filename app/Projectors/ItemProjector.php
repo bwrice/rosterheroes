@@ -6,7 +6,7 @@ use App\StorableEvents\AttackAttachedToItem;
 use App\StorableEvents\ItemCreated;
 use App\Domain\Models\Item;
 use App\StorableEvents\EnchantmentAttachedToItem;
-use App\StorableEvents\SideQuestEventCreated;
+use App\StorableEvents\HeroDamagesMinionSideQuestEvent;
 use Spatie\EventSourcing\Projectors\Projector;
 use Spatie\EventSourcing\Projectors\ProjectsEvents;
 
@@ -38,14 +38,10 @@ class ItemProjector implements Projector
         $item->attacks()->attach($event->attackID);
     }
 
-    public function onSideQuestEventCreated(SideQuestEventCreated $event)
+    public function onHeroDamagesMinionSideQuestEvent(HeroDamagesMinionSideQuestEvent $event)
     {
-        $attacker = $event->data['attacker'];
-        if ($attacker['type'] === 'hero') {
-            /** @var Item $item */
-            $item = Item::findUuidOrFail($attacker['item_uuid']);
-            $item->damage_dealt += $event->data['damage'];
-            $item->save();
-        }
+        $item = Item::findUuidOrFail($event->itemUuid);
+        $item->damage_dealt += $event->damage;
+        $item->save();
     }
 }

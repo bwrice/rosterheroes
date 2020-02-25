@@ -5,7 +5,7 @@ namespace App\Projectors;
 use App\Domain\Models\Item;
 use App\StorableEvents\HeroCreated;
 use App\Domain\Models\Hero;
-use App\StorableEvents\SideQuestEventCreated;
+use App\StorableEvents\HeroDamagesMinionSideQuestEvent;
 use App\StorableEvents\UpdateHeroPlayerSpirit;
 use Spatie\EventSourcing\Projectors\Projector;
 use Spatie\EventSourcing\Projectors\ProjectsEvents;
@@ -34,14 +34,10 @@ class HeroProjector implements Projector
         $hero->save();
     }
 
-    public function onSideQuestEventCreated(SideQuestEventCreated $event)
+    public function onHeroDamagesMinionSideQuestEvent(HeroDamagesMinionSideQuestEvent $event)
     {
-        $attacker = $event->data['attacker'];
-        if ($attacker['type'] === 'hero') {
-            /** @var Hero $hero */
-            $hero = Hero::findUuidOrFail($attacker['hero_uuid']);
-            $hero->damage_dealt += $event->data['damage'];
-            $hero->save();
-        }
+        $hero = Hero::findUuidOrFail($event->heroUuid);
+        $hero->damage_dealt += $event->damage;
+        $hero->save();
     }
 }
