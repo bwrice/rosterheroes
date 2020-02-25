@@ -3,6 +3,7 @@
 namespace App\Projectors;
 
 use App\StorableEvents\AttackAttachedToItem;
+use App\StorableEvents\HeroKillsMinionSideQuestEvent;
 use App\StorableEvents\ItemCreated;
 use App\Domain\Models\Item;
 use App\StorableEvents\EnchantmentAttachedToItem;
@@ -39,6 +40,13 @@ class ItemProjector implements Projector
     }
 
     public function onHeroDamagesMinionSideQuestEvent(HeroDamagesMinionSideQuestEvent $event)
+    {
+        $item = Item::findUuidOrFail($event->itemUuid);
+        $item->damage_dealt += $event->damage;
+        $item->save();
+    }
+
+    public function onHeroKillsMinionSideQuestEvent(HeroKillsMinionSideQuestEvent $event)
     {
         $item = Item::findUuidOrFail($event->itemUuid);
         $item->damage_dealt += $event->damage;
