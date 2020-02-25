@@ -89,6 +89,6 @@ class CombatHero extends AbstractCombatant implements SpendsResources
 
     public function setCurrentMana(int $amount)
     {
-        $this->currentMana = $amount
+        $this->currentMana = $amount;
     }
 }
