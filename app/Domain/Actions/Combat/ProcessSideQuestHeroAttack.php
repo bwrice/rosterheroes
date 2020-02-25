@@ -7,6 +7,7 @@ namespace App\Domain\Actions\Combat;
 use App\Aggregates\SideQuestEventAggregate;
 use App\Domain\Combat\Combatants\CombatMinion;
 use App\Domain\Combat\Attacks\HeroCombatAttack;
+use App\Domain\Combat\Events\HeroAttackOnMinion;
 use App\SideQuestEvent;
 use App\SideQuestResult;
 use Illuminate\Support\Str;
@@ -24,30 +25,43 @@ class ProcessSideQuestHeroAttack
      */
     public function execute(SideQuestResult $sideQuestResult, int $moment, int $damageReceived, HeroCombatAttack $heroCombatAttack, CombatMinion $combatMinion, $block)
     {
-        if ($block) {
-            $kill = false;
-        } else {
-            $kill = $combatMinion->getCurrentHealth() <= 0;
-        }
-
         $uuid = Str::uuid();
         $aggregate = SideQuestEventAggregate::retrieve($uuid);
-        $data = [
-            'type' => 'hero-attack',
-            'damage' => $damageReceived,
-            'block' => $block,
-            'kill' => $kill,
-            'attacker' => [
-                'type' => 'hero',
-                'hero_uuid' => $heroCombatAttack->getHeroUuid(),
-                'item_uuid' => $heroCombatAttack->getItemUuid()
-            ],
-            'defender' => [
-                'type' => 'minion',
-                'minion_id' => $combatMinion->getMinionID()
-            ]
-        ];
-        $aggregate->createSideQuestEvent($sideQuestResult->id, $moment, $data)->persist();
+
+        if ($block) {
+            $aggregate->createMinionBlocksHeroEvent(
+                $sideQuestResult->id,
+                $moment,
+                $heroCombatAttack->getHeroUuid(),
+                $heroCombatAttack->getCombatAttack()->getAttackID(),
+                $heroCombatAttack->getItemUuid(),
+                $combatMinion->getMinionUuid(),
+            );
+        } else {
+            if ($combatMinion->getCurrentHealth() > 0) {
+
+                $aggregate->createHeroDamagesMinionEvent(
+                    $sideQuestResult->id,
+                    $moment,
+                    $heroCombatAttack->getHeroUuid(),
+                    $heroCombatAttack->getCombatAttack()->getAttackID(),
+                    $heroCombatAttack->getItemUuid(),
+                    $combatMinion->getMinionUuid(),
+                    $damageReceived
+                );
+            } else {
+                $aggregate->createHeroKillsMinionEvent(
+                    $sideQuestResult->id,
+                    $moment,
+                    $heroCombatAttack->getHeroUuid(),
+                    $heroCombatAttack->getCombatAttack()->getAttackID(),
+                    $heroCombatAttack->getItemUuid(),
+                    $combatMinion->getMinionUuid(),
+                    $damageReceived
+                );
+            }
+        }
+        $aggregate->persist();
         return SideQuestEvent::findUuid($uuid);
     }
 }
