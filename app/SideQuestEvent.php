@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property array $data
  * @property string $uuid
+ * @property string $event_type
  * @property int $moment
  *
  * @property SideQuestResult $sideQuestResult
