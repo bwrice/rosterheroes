@@ -38,4 +38,18 @@ class CombatSquadFactory
             new AbstractCombatantCollection($combatHeroes)
         );
     }
+
+    public function withCombatHeroes(Collection $combatHeroFactories = null)
+    {
+        if (! $combatHeroFactories) {
+            $heroCount = rand(4, 6);
+            $combatHeroFactories = collect();
+            foreach(range(1, $heroCount) as $count) {
+                $combatHeroFactories->push(CombatHeroFactory::new());
+            }
+        }
+        $clone = clone $this;
+        $this->combatHeroFactories = $combatHeroFactories;
+        return $clone;
+    }
 }
