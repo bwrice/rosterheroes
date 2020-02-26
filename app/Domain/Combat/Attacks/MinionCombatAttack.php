@@ -40,4 +40,12 @@ class MinionCombatAttack implements CombatAttackInterface
     {
         return $this->minionUuid;
     }
+
+    /**
+     * @return CombatAttack
+     */
+    public function getCombatAttack(): CombatAttack
+    {
+        return $this->combatAttack;
+    }
 }
