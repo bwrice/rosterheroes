@@ -77,11 +77,10 @@ abstract class AbstractCombatant implements Combatant
     /**
      * @param CombatAttackInterface $combatAttack
      * @return bool|mixed
-     * @throws \Exception
      */
     public function attackBlocked(CombatAttackInterface $combatAttack)
     {
-        $rand = random_int(1, 100);
+        $rand = rand(1, 100);
         return $rand <= $this->blockChancePercent;
     }
 
