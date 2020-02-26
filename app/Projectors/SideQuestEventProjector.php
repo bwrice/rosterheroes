@@ -25,7 +25,9 @@ final class SideQuestEventProjector implements Projector
                 'heroUuid' => $event->heroUuid,
                 'itemUuid' => $event->itemUuid,
                 'minionUuid' => $event->minionUuid,
-                'damage' => $event->damage
+                'damage' => $event->damage,
+                'stamina_cost' => $event->staminaCost,
+                'mana_cost' => $event->manaCost
             ]
         ]);
     }
@@ -42,7 +44,9 @@ final class SideQuestEventProjector implements Projector
                 'heroUuid' => $event->heroUuid,
                 'itemUuid' => $event->itemUuid,
                 'minionUuid' => $event->minionUuid,
-                'damage' => $event->damage
+                'damage' => $event->damage,
+                'stamina_cost' => $event->staminaCost,
+                'mana_cost' => $event->manaCost
             ]
         ]);
     }
@@ -58,7 +62,9 @@ final class SideQuestEventProjector implements Projector
                 'attackUuid' => $event->attackUuid,
                 'heroUuid' => $event->heroUuid,
                 'itemUuid' => $event->itemUuid,
-                'minionUuid' => $event->minionUuid
+                'minionUuid' => $event->minionUuid,
+                'stamina_cost' => $event->staminaCost,
+                'mana_cost' => $event->manaCost
             ]
         ]);
     }

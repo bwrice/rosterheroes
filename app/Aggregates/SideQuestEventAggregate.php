@@ -16,10 +16,12 @@ final class SideQuestEventAggregate extends AggregateRoot
         string $attackUuid,
         string $itemUuid,
         string $minionUuid,
-        int $damage
+        int $damage,
+        int $staminaCost,
+        int $manaCost
     )
     {
-        $this->recordThat(new HeroDamagesMinionSideQuestEvent($sideQuestResultID, $moment, $heroUuid, $attackUuid, $itemUuid, $minionUuid, $damage));
+        $this->recordThat(new HeroDamagesMinionSideQuestEvent($sideQuestResultID, $moment, $heroUuid, $attackUuid, $itemUuid, $minionUuid, $damage, $staminaCost, $manaCost));
         return $this;
     }
 
@@ -30,9 +32,11 @@ final class SideQuestEventAggregate extends AggregateRoot
         string $attackUuid,
         string $itemUuid,
         string $minionUuid,
-        int $damage
+        int $damage,
+        int $staminaCost,
+        int $manaCost
     ) {
-        $this->recordThat(new HeroKillsMinionSideQuestEvent($sideQuestResultID, $moment, $heroUuid, $attackUuid, $itemUuid, $minionUuid, $damage));
+        $this->recordThat(new HeroKillsMinionSideQuestEvent($sideQuestResultID, $moment, $heroUuid, $attackUuid, $itemUuid, $minionUuid, $damage, $staminaCost, $manaCost));
         return $this;
     }
 
@@ -42,10 +46,12 @@ final class SideQuestEventAggregate extends AggregateRoot
         string $heroUuid,
         string $attackUuid,
         string $itemUuid,
-        string $minionUuid
+        string $minionUuid,
+        int $staminaCost,
+        int $manaCost
     )
     {
-        $this->recordThat(new MinionBlocksHeroSideQuestEvent($sideQuestResultID, $moment, $heroUuid, $attackUuid, $itemUuid, $minionUuid));
+        $this->recordThat(new MinionBlocksHeroSideQuestEvent($sideQuestResultID, $moment, $heroUuid, $attackUuid, $itemUuid, $minionUuid, $staminaCost, $manaCost));
         return $this;
     }
 }
