@@ -37,6 +37,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property string $slug
  * @property int $damage_dealt
  * @property int $attacks_blocked
+ * @property int $minion_kills
+ * @property int $titan_kills
  *
  * @property Squad $squad
  * @property HeroClass $heroClass
