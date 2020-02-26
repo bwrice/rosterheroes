@@ -32,14 +32,14 @@ class HeroCombatAttackFactory
 
     public function create()
     {
-        $heroID = $this->getHeroUuid();
-        $itemID = $this->getItemUuid();
+        $heroUuid = $this->getHeroUuid();
+        $itemUuid = $this->getItemUuid();
         $resourceCosts = $this->resourceCostsCollection ?: new ResourceCostsCollection();
         $combatAttackFactory = $this->combatAttackFactory ?: CombatAttackFactory::new();
         $combatAttack = $combatAttackFactory->create();
         return new HeroCombatAttack(
-            $heroID,
-            $itemID,
+            $heroUuid,
+            $itemUuid,
             $combatAttack,
             $resourceCosts
         );
