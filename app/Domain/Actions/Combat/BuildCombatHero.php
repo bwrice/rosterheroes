@@ -46,7 +46,7 @@ class BuildCombatHero
         });
 
         return new CombatHero(
-            $hero->id,
+            $hero->uuid,
             $hero->getCurrentMeasurableAmount(MeasurableType::HEALTH),
             $hero->getCurrentMeasurableAmount(MeasurableType::STAMINA),
             $hero->getCurrentMeasurableAmount(MeasurableType::MANA),

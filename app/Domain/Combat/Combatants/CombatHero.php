@@ -11,9 +11,9 @@ use Illuminate\Support\Collection;
 class CombatHero extends AbstractCombatant implements SpendsResources
 {
     /**
-     * @var int
+     * @var string
      */
-    protected $heroID;
+    protected $heroUuid;
     /**
      * @var int
      */
@@ -32,7 +32,7 @@ class CombatHero extends AbstractCombatant implements SpendsResources
     protected $currentMana;
 
     public function __construct(
-        int $heroID,
+        string $heroUuid,
         int $health,
         int $stamina,
         int $mana,
@@ -41,7 +41,7 @@ class CombatHero extends AbstractCombatant implements SpendsResources
         CombatPosition $combatPosition,
         Collection $combatAttacks)
     {
-        $this->heroID = $heroID;
+        $this->heroUuid = $heroUuid;
         $this->initialStamina = $this->currentStamina = $stamina;
         $this->initialMana = $this->currentMana = $mana;
         parent::__construct(
@@ -65,11 +65,11 @@ class CombatHero extends AbstractCombatant implements SpendsResources
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getHeroID(): int
+    public function getHeroUuid(): string
     {
-        return $this->heroID;
+        return $this->heroUuid;
     }
 
     public function getCurrentStamina(): int

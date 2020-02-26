@@ -6,11 +6,12 @@ namespace App\Factories\Combat;
 
 use App\Domain\Combat\Combatants\CombatHero;
 use App\Domain\Models\CombatPosition;
+use Illuminate\Support\Str;
 
 class CombatHeroFactory extends AbstractCombatantFactory
 {
-    /** @var int|null */
-    protected $heroID;
+    /** @var string|null */
+    protected $heroUuid;
 
     protected $health;
 
@@ -23,7 +24,7 @@ class CombatHeroFactory extends AbstractCombatantFactory
         $combatPosition = $this->getCombatPosition();
 
         return new CombatHero(
-            $this->buildHeroID(),
+            $this->heroUuid ?: (string) Str::uuid(),
             is_null($this->health) ? 800 : $this->health,
             is_null($this->stamina) ? 500 : $this->stamina,
             is_null($this->mana) ? 400 : $this->mana,
@@ -34,16 +35,11 @@ class CombatHeroFactory extends AbstractCombatantFactory
         );
     }
 
-    public function withHeroID(int $heroID)
+    public function forHero(string $heroUuid)
     {
         $clone = clone $this;
-        $clone->heroID = $heroID;
+        $clone->heroUuid = $heroUuid;
         return $clone;
-    }
-
-    protected function buildHeroID()
-    {
-        return $this->heroID ?: rand(1, 999999);
     }
 
     public function withMana(int $mana)
