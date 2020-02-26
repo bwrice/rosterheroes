@@ -223,4 +223,44 @@ class ProcessSideQuestHeroAttackTest extends TestCase
             ]
         ];
     }
+
+    /**
+     * @test
+     */
+    public function it_will_increase_minion_kills_for_the_hero()
+    {
+        /** @var ProcessSideQuestHeroAttack $domainAction */
+        $domainAction = app(ProcessSideQuestHeroAttack::class);
+        $damageReceived = rand(10, 200);
+        $moment = rand(1, 99);
+
+        $hero = Hero::findUuid($this->heroCombatAttack->getHeroUuid());
+        $this->assertEquals(0, $hero->minion_kills);
+
+        $combatMinion = \Mockery::mock($this->combatMinion)->shouldReceive('getCurrentHealth')->andReturn(0)->getMock();
+        $domainAction->execute($this->sideQuestResult, $moment, $damageReceived, $this->combatHero, $this->heroCombatAttack, $combatMinion, false);
+
+        $hero = $hero->fresh();
+        $this->assertEquals(1, $hero->minion_kills);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_increase_minion_kills_for_the_item()
+    {
+        /** @var ProcessSideQuestHeroAttack $domainAction */
+        $domainAction = app(ProcessSideQuestHeroAttack::class);
+        $damageReceived = rand(10, 200);
+        $moment = rand(1, 99);
+
+        $item = Item::findUuid($this->heroCombatAttack->getItemUuid());
+        $this->assertEquals(0, $item->minion_kills);
+
+        $combatMinion = \Mockery::mock($this->combatMinion)->shouldReceive('getCurrentHealth')->andReturn(0)->getMock();
+        $domainAction->execute($this->sideQuestResult, $moment, $damageReceived, $this->combatHero, $this->heroCombatAttack, $combatMinion, false);
+
+        $item = $item->fresh();
+        $this->assertEquals(1, $item->minion_kills);
+    }
 }
