@@ -82,7 +82,7 @@ class BuildCombatSquadTest extends TestCase
         $domainAction = app(BuildCombatSquad::class);
         $combatSquad = $domainAction->execute($this->squad->fresh());
         $this->assertTrue($combatSquad instanceof CombatSquad);
-        $this->assertEquals($this->squad->id, $combatSquad->getSquadID());
+        $this->assertEquals($this->squad->uuid, $combatSquad->getSquadUuid());
         $combatHeroes = $combatSquad->getCombatHeroes();
         $this->assertEquals(2, $combatHeroes->count());
     }
