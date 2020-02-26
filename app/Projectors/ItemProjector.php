@@ -50,6 +50,7 @@ class ItemProjector implements Projector
     {
         $item = Item::findUuidOrFail($event->itemUuid);
         $item->damage_dealt += $event->damage;
+        $item->minion_kills++;
         $item->save();
     }
 }

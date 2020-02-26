@@ -46,6 +46,7 @@ class HeroProjector implements Projector
     {
         $hero = Hero::findUuidOrFail($event->heroUuid);
         $hero->damage_dealt += $event->damage;
+        $hero->minion_kills++;
         $hero->save();
     }
 }
