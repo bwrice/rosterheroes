@@ -5,9 +5,10 @@ namespace App\Domain\Combat\CombatGroups;
 
 
 use App\Domain\Collections\CombatantCollection;
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
 
-class SideQuestGroup implements CombatGroup
+class SideQuestGroup implements CombatGroup, Arrayable
 {
     /**
      * @var CombatantCollection
@@ -40,5 +41,17 @@ class SideQuestGroup implements CombatGroup
     public function isDefeated()
     {
         return $this->combatMinions->hasSurvivors();
+    }
+
+    /**
+     * Get the instance as an array.
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        return [
+            'combatMinions' => $this->combatMinions->toArray()
+        ];
     }
 }

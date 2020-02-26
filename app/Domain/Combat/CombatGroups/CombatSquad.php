@@ -8,10 +8,11 @@ use App\Domain\Collections\CombatantCollection;
 use App\Domain\Collections\AbstractCombatantCollection;
 use App\Domain\Combat\Combatants\CombatHero;
 use App\Domain\Models\CombatPosition;
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
 
-class CombatSquad implements CombatGroup
+class CombatSquad implements CombatGroup, Arrayable
 {
     /**
      * @var string
@@ -93,5 +94,19 @@ class CombatSquad implements CombatGroup
         $missing = $combatPositions->reject(function (CombatPosition $combatPosition) use ($heroCombatPositionIDs) {
             return $heroCombatPositionIDs->contains($combatPosition->id);
         });
+    }
+
+    /**
+     * Get the instance as an array.
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        return [
+            'squadUuid' => $this->squadUuid,
+            'experience' => $this->experience,
+            'combatHeroes' => $this->combatHeroes->toArray()
+        ];
     }
 }
