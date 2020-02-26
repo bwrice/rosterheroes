@@ -22,6 +22,9 @@ class HeroCombatAttackFactory
     /** @var ItemFactory */
     protected $itemFactory;
 
+    /** @var ResourceCostsCollection|null */
+    protected $resourceCostsCollection;
+
     public static function new()
     {
         return new self();
@@ -31,7 +34,7 @@ class HeroCombatAttackFactory
     {
         $heroID = $this->getHeroUuid();
         $itemID = $this->getItemUuid();
-        $resourceCosts = new ResourceCostsCollection();
+        $resourceCosts = $this->resourceCostsCollection ?: new ResourceCostsCollection();
         $combatAttackFactory = $this->combatAttackFactory ?: CombatAttackFactory::new();
         $combatAttack = $combatAttackFactory->create();
         return new HeroCombatAttack(
@@ -73,5 +76,12 @@ class HeroCombatAttackFactory
     {
         $heroFactory = $this->heroFactory ?: HeroFactory::new();
         return $heroFactory->create()->uuid;
+    }
+
+    public function withResourceCosts(ResourceCostsCollection $resourceCostsCollection)
+    {
+        $clone = clone $this;
+        $clone->resourceCostsCollection = $resourceCostsCollection;
+        return $clone;
     }
 }
