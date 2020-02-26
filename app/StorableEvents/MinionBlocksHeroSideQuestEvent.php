@@ -30,6 +30,14 @@ final class MinionBlocksHeroSideQuestEvent implements ShouldBeStored
      * @var string
      */
     public $minionUuid;
+    /**
+     * @var int
+     */
+    public $staminaCost;
+    /**
+     * @var int
+     */
+    public $manaCost;
 
     public function __construct(
         int $sideQuestResultID,
@@ -37,7 +45,9 @@ final class MinionBlocksHeroSideQuestEvent implements ShouldBeStored
         string $heroUuid,
         string $attackUuid,
         string $itemUuid,
-        string $minionUuid)
+        string $minionUuid,
+        int $staminaCost,
+        int $manaCost)
     {
         $this->sideQuestResultID = $sideQuestResultID;
         $this->moment = $moment;
@@ -45,5 +55,7 @@ final class MinionBlocksHeroSideQuestEvent implements ShouldBeStored
         $this->attackUuid = $attackUuid;
         $this->itemUuid = $itemUuid;
         $this->minionUuid = $minionUuid;
+        $this->staminaCost = $staminaCost;
+        $this->manaCost = $manaCost;
     }
 }
