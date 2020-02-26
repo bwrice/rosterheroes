@@ -8,8 +8,9 @@ use App\Domain\Collections\CombatantCollection;
 use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Combat\Attacks\CombatAttack;
 use App\Domain\Combat\Attacks\CombatAttackInterface;
+use Illuminate\Contracts\Support\Arrayable;
 
-class HeroCombatAttack implements CombatAttackInterface
+class HeroCombatAttack implements CombatAttackInterface, Arrayable
 {
     /**
      * @var string
