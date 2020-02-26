@@ -2,9 +2,12 @@
 
 namespace App\Aggregates;
 
+use App\StorableEvents\HeroBlocksMinionSideQuestEvent;
 use App\StorableEvents\HeroDamagesMinionSideQuestEvent;
 use App\StorableEvents\HeroKillsMinionSideQuestEvent;
 use App\StorableEvents\MinionBlocksHeroSideQuestEvent;
+use App\StorableEvents\MinionDamagesHeroSideQuestEvent;
+use App\StorableEvents\MinionKillsHeroSideQuestEvent;
 use Spatie\EventSourcing\AggregateRoot;
 
 final class SideQuestEventAggregate extends AggregateRoot
@@ -52,6 +55,41 @@ final class SideQuestEventAggregate extends AggregateRoot
     )
     {
         $this->recordThat(new MinionBlocksHeroSideQuestEvent($sideQuestResultID, $moment, $heroUuid, $attackUuid, $itemUuid, $minionUuid, $staminaCost, $manaCost));
+        return $this;
+    }
+
+    public function createMinionDamagesHeroEvent(
+        int $sideQuestResultID,
+        int $moment,
+        string $minionUuid,
+        string $attackUuid,
+        string $heroUuid,
+        int $damage)
+    {
+        $this->recordThat(new MinionDamagesHeroSideQuestEvent($sideQuestResultID, $moment, $minionUuid, $attackUuid, $heroUuid, $damage));
+        return $this;
+    }
+
+    public function createMinionKillsHeroEvent(
+        int $sideQuestResultID,
+        int $moment,
+        string $minionUuid,
+        string $attackUuid,
+        string $heroUuid,
+        int $damage)
+    {
+        $this->recordThat(new MinionKillsHeroSideQuestEvent($sideQuestResultID, $moment, $minionUuid, $attackUuid, $heroUuid, $damage));
+        return $this;
+    }
+
+    public function createHeroBlocksMinionEvent(
+        int $sideQuestResultID,
+        int $moment,
+        string $minionUuid,
+        string $attackUuid,
+        string $heroUuid)
+    {
+        $this->recordThat(new HeroBlocksMinionSideQuestEvent($sideQuestResultID, $moment, $minionUuid, $attackUuid, $heroUuid));
         return $this;
     }
 }
