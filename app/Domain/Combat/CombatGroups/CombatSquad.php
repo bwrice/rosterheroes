@@ -14,9 +14,9 @@ use Illuminate\Support\Collection;
 class CombatSquad implements CombatGroup
 {
     /**
-     * @var int
+     * @var string
      */
-    protected $squadID;
+    protected $squadUuid;
     /**
      * @var int
      */
@@ -26,9 +26,9 @@ class CombatSquad implements CombatGroup
      */
     protected $combatHeroes;
 
-    public function __construct(int $squadID, int $experience, AbstractCombatantCollection $combatHeroes)
+    public function __construct(string $squadUuid, int $experience, AbstractCombatantCollection $combatHeroes)
     {
-        $this->squadID = $squadID;
+        $this->squadUuid = $squadUuid;
         $this->experience = $experience;
         $this->combatHeroes = $combatHeroes;
     }
@@ -55,11 +55,11 @@ class CombatSquad implements CombatGroup
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getSquadID(): int
+    public function getSquadUuid(): string
     {
-        return $this->squadID;
+        return $this->squadUuid;
     }
 
     /**
