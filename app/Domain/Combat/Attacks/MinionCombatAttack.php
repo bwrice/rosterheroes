@@ -9,17 +9,17 @@ use App\Domain\Collections\CombatantCollection;
 class MinionCombatAttack implements CombatAttackInterface
 {
     /**
-     * @var int
+     * @var string
      */
-    protected $minionID;
+    protected $minionUuid;
     /**
      * @var CombatAttack
      */
     protected $combatAttack;
 
-    public function __construct(int $minionID, CombatAttack $combatAttack)
+    public function __construct(string $minionUuid, CombatAttack $combatAttack)
     {
-        $this->minionID = $minionID;
+        $this->minionUuid = $minionUuid;
         $this->combatAttack = $combatAttack;
     }
 
@@ -34,10 +34,10 @@ class MinionCombatAttack implements CombatAttackInterface
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getMinionID(): int
+    public function getMinionUuid(): string
     {
-        return $this->minionID;
+        return $this->minionUuid;
     }
 }

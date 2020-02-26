@@ -37,6 +37,6 @@ class BuildMinionCombatAttack
         Collection $damageTypes = null)
     {
         $combatAttack = $this->buildCombatAttack->execute($attack, $minion, $combatPositions, $targetPriorities, $damageTypes);
-        return new MinionCombatAttack($minion->id, $combatAttack);
+        return new MinionCombatAttack($minion->uuid, $combatAttack);
     }
 }

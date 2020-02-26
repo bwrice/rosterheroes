@@ -4,6 +4,7 @@
 namespace App\Factories\Combat;
 
 use App\Domain\Combat\Attacks\MinionCombatAttack;
+use Illuminate\Support\Str;
 
 class MinionCombatAttackFactory
 {
@@ -16,11 +17,11 @@ class MinionCombatAttackFactory
 
     public function create()
     {
-        $minionID = rand(1, 999999);
+        $minionUuid = (string) Str::uuid();
         $combatAttackFactory = $this->combatAttackFactory ?: CombatAttackFactory::new();
         $combatAttack = $combatAttackFactory->create();
         return new MinionCombatAttack(
-            $minionID,
+            $minionUuid,
             $combatAttack
         );
     }
