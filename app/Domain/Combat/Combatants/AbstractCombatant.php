@@ -7,9 +7,10 @@ namespace App\Domain\Combat\Combatants;
 use App\Domain\Collections\CombatPositionCollection;
 use App\Domain\Combat\Attacks\CombatAttackInterface;
 use App\Domain\Models\CombatPosition;
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
 
-abstract class AbstractCombatant implements Combatant
+abstract class AbstractCombatant implements Combatant, Arrayable
 {
     /**
      * @var int
@@ -144,4 +145,16 @@ abstract class AbstractCombatant implements Combatant
     }
 
     abstract protected function getDPS();
+
+    public function toArray()
+    {
+        return [
+            'initialHealth' => $this->initialHealth,
+            'currentHealth' => $this->currentHealth,
+            'blockChancePercent' => $this->blockChancePercent,
+            'combatAttacks' => $this->combatAttacks->toArray(),
+            'initialCombatPositionID' => $this->initialCombatPosition->id,
+            'inheritedCombatPositionIDs' => $this->inheritedCombatPositions->pluck('id')->toArray()
+        ];
+    }
 }

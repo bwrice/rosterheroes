@@ -6,6 +6,7 @@ namespace App\Domain\Combat\Combatants;
 
 use App\Domain\Interfaces\SpendsResources;
 use App\Domain\Models\CombatPosition;
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
 
 class CombatHero extends AbstractCombatant implements SpendsResources
@@ -53,6 +54,30 @@ class CombatHero extends AbstractCombatant implements SpendsResources
         );
     }
 
+    /**
+     * @return int
+     */
+    public function getInitialStamina(): int
+    {
+        return $this->initialStamina;
+    }
+
+    /**
+     * @param int $initialStamina
+     */
+    public function setInitialStamina(int $initialStamina): void
+    {
+        $this->initialStamina = $initialStamina;
+    }
+
+    /**
+     * @return int
+     */
+    public function getInitialMana(): int
+    {
+        return $this->initialMana;
+    }
+
     protected function getDPS()
     {
         // TODO
@@ -90,5 +115,16 @@ class CombatHero extends AbstractCombatant implements SpendsResources
     public function setCurrentMana(int $amount)
     {
         $this->currentMana = $amount;
+    }
+
+    public function toArray()
+    {
+        return array_merge([
+            'heroUuid' => $this->heroUuid,
+            'initialStamina' => $this->initialStamina,
+            'currentStamina' => $this->currentStamina,
+            'initialMana' => $this->initialMana,
+            'currentMana' => $this->currentMana,
+        ], parent::toArray());
     }
 }

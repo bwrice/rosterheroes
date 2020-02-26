@@ -47,4 +47,11 @@ class CombatMinion extends AbstractCombatant
         // TODO
         return 1;
     }
+
+    public function toArray()
+    {
+        return array_merge([
+            'minionUuid' => $this->minionUuid
+        ], parent::toArray());
+    }
 }
