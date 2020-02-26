@@ -51,6 +51,6 @@ class BuildCombatSquad
         $heroes->each(function (Hero $hero) use ($combatHeroes, $combatPositions, $targetPriorities, $damageTypes) {
             $combatHeroes->push($this->buildCombatHero->execute($hero, $combatPositions, $targetPriorities, $damageTypes));
         });
-        return new CombatSquad($squad->uuid, $squad->experience, $combatHeroes);
+        return new CombatSquad($squad->name, $squad->uuid, $squad->experience, $combatHeroes);
     }
 }

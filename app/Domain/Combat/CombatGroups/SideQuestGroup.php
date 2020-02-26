@@ -11,12 +11,22 @@ use Illuminate\Support\Collection;
 class SideQuestGroup implements CombatGroup, Arrayable
 {
     /**
+     * @var string
+     */
+    protected $sideQuestName;
+    /**
+     * @var string
+     */
+    protected $sideQuestUuid;
+    /**
      * @var CombatantCollection
      */
     protected $combatMinions;
 
-    public function __construct(CombatantCollection $combatMinions)
+    public function __construct(string $sideQuestName, string $sideQuestUuid, CombatantCollection $combatMinions)
     {
+        $this->sideQuestName = $sideQuestName;
+        $this->sideQuestUuid = $sideQuestUuid;
         $this->combatMinions = $combatMinions;
     }
 
@@ -51,6 +61,8 @@ class SideQuestGroup implements CombatGroup, Arrayable
     public function toArray()
     {
         return [
+            'sideQuestName' => $this->sideQuestName,
+            'sideQuestUuid' => $this->sideQuestUuid,
             'combatMinions' => $this->combatMinions->toArray()
         ];
     }

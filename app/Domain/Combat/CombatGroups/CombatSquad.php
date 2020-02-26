@@ -17,6 +17,10 @@ class CombatSquad implements CombatGroup, Arrayable
     /**
      * @var string
      */
+    protected $squadName;
+    /**
+     * @var string
+     */
     protected $squadUuid;
     /**
      * @var int
@@ -27,8 +31,9 @@ class CombatSquad implements CombatGroup, Arrayable
      */
     protected $combatHeroes;
 
-    public function __construct(string $squadUuid, int $experience, AbstractCombatantCollection $combatHeroes)
+    public function __construct(string $squadName, string $squadUuid, int $experience, AbstractCombatantCollection $combatHeroes)
     {
+        $this->squadName = $squadName;
         $this->squadUuid = $squadUuid;
         $this->experience = $experience;
         $this->combatHeroes = $combatHeroes;
@@ -104,6 +109,7 @@ class CombatSquad implements CombatGroup, Arrayable
     public function toArray()
     {
         return [
+            'squadName' => $this->squadName,
             'squadUuid' => $this->squadUuid,
             'experience' => $this->experience,
             'combatHeroes' => $this->combatHeroes->toArray()
