@@ -5,12 +5,12 @@ namespace App\Domain\Combat\Attacks;
 
 
 use App\Domain\Collections\CombatantCollection;
-use App\Domain\Combat\Attacks\CombatAttackInterface;
 use App\Domain\Models\CombatPosition;
 use App\Domain\Models\DamageType;
 use App\Domain\Models\TargetPriority;
+use Illuminate\Contracts\Support\Arrayable;
 
-class CombatAttack implements CombatAttackInterface
+class CombatAttack implements CombatAttackInterface, Arrayable
 {
     /**
      * @var string
@@ -96,5 +96,21 @@ class CombatAttack implements CombatAttackInterface
     public function getAttackUuid()
     {
         return $this->attackUuid;
+    }
+
+    public function toArray()
+    {
+        return [
+            'name' => $this->name,
+            'attackUuid' => $this->attackUuid,
+            'damage' => $this->damage,
+            'combatSpeed' => $this->combatSpeed,
+            'grade' => $this->grade,
+            'attackerPositionID' => $this->attackerPosition->id,
+            'targetPositionID' => $this->targetPosition->id,
+            'targetPriorityID' => $this->targetPriority->id,
+            'damageTypeID' => $this->damageType->id,
+            'maxTargetsCount' => $this->maxTargetsCount
+        ];
     }
 }

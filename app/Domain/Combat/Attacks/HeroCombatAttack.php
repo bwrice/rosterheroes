@@ -81,4 +81,13 @@ class HeroCombatAttack implements CombatAttackInterface
     {
         return $this->resourceCosts;
     }
+
+    public function toArray()
+    {
+        return [
+            'heroUuid' => $this->heroUuid,
+            'itemUuid' => $this->itemUuid,
+            'combatAttack' => $this->combatAttack->toArray()
+        ];
+    }
 }

@@ -5,8 +5,9 @@ namespace App\Domain\Combat\Attacks;
 
 
 use App\Domain\Collections\CombatantCollection;
+use Illuminate\Contracts\Support\Arrayable;
 
-class MinionCombatAttack implements CombatAttackInterface
+class MinionCombatAttack implements CombatAttackInterface, Arrayable
 {
     /**
      * @var string
@@ -47,5 +48,13 @@ class MinionCombatAttack implements CombatAttackInterface
     public function getCombatAttack(): CombatAttack
     {
         return $this->combatAttack;
+    }
+
+    public function toArray()
+    {
+        return [
+            'minionUuid' => $this->minionUuid,
+            'combatAttack' => $this->combatAttack->toArray()
+        ];
     }
 }
