@@ -2,6 +2,10 @@
 
 namespace App\Aggregates;
 
+use App\Domain\Combat\CombatGroups\CombatSquad;
+use App\Domain\Combat\CombatGroups\SideQuestGroup;
+use App\SideQuestResult;
+use App\StorableEvents\BattlefieldSetForSideQuest;
 use App\StorableEvents\HeroBlocksMinionSideQuestEvent;
 use App\StorableEvents\HeroDamagesMinionSideQuestEvent;
 use App\StorableEvents\HeroKillsMinionSideQuestEvent;
@@ -90,6 +94,12 @@ final class SideQuestEventAggregate extends AggregateRoot
         string $heroUuid)
     {
         $this->recordThat(new HeroBlocksMinionSideQuestEvent($sideQuestResultID, $moment, $minionUuid, $attackUuid, $heroUuid));
+        return $this;
+    }
+
+    public function createBattlefieldSetEvent(int $sideQuestResultID, array $eventData)
+    {
+        $this->recordThat(new BattlefieldSetForSideQuest($sideQuestResultID, $eventData));
         return $this;
     }
 }
