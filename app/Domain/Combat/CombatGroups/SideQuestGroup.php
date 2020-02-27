@@ -4,6 +4,7 @@
 namespace App\Domain\Combat\CombatGroups;
 
 
+use App\Domain\Collections\AbstractCombatantCollection;
 use App\Domain\Collections\CombatantCollection;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
@@ -19,11 +20,11 @@ class SideQuestGroup implements CombatGroup, Arrayable
      */
     protected $sideQuestUuid;
     /**
-     * @var CombatantCollection
+     * @var AbstractCombatantCollection
      */
     protected $combatMinions;
 
-    public function __construct(string $sideQuestName, string $sideQuestUuid, CombatantCollection $combatMinions)
+    public function __construct(string $sideQuestName, string $sideQuestUuid, AbstractCombatantCollection $combatMinions)
     {
         $this->sideQuestName = $sideQuestName;
         $this->sideQuestUuid = $sideQuestUuid;
