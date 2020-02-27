@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Domain\Actions\Combat\ProcessSideQuestMinionAttack;
 use App\Factories\Combat\CombatHeroFactory;
+use App\Factories\Combat\CombatMinionFactory;
 use App\Factories\Combat\MinionCombatAttackFactory;
 use App\Factories\Models\SideQuestResultFactory;
 use App\SideQuestEvent;
@@ -23,6 +24,7 @@ class ProcessSideQuestMinionAttackTest extends TestCase
     public function it_will_properly_save_side_quest_events_for_minion_attacks_hero_events($heroCurrentHealth, $block, $eventType)
     {
         $sideQuestResult = SideQuestResultFactory::new()->create();
+        $combatMinion = CombatMinionFactory::new()->create();
         $minionCombatAttack = MinionCombatAttackFactory::new()->create();
         $combatHero = CombatHeroFactory::new()->create();
         $damageReceived = rand(10, 100);
@@ -32,7 +34,7 @@ class ProcessSideQuestMinionAttackTest extends TestCase
         $combatHeroMock = \Mockery::mock($combatHero)->shouldReceive('getCurrentHealth')->andReturn($heroCurrentHealth)->getMock();
         /** @var ProcessSideQuestMinionAttack $domainAction */
         $domainAction = app(ProcessSideQuestMinionAttack::class);
-        $domainAction->execute($sideQuestResult, $moment, $damageReceived, $minionCombatAttack, $combatHeroMock, $block);
+        $domainAction->execute($sideQuestResult, $moment, $damageReceived, $combatMinion, $minionCombatAttack, $combatHeroMock, $block);
 
         $sideQuestEvents = $sideQuestResult->sideQuestEvents;
         $this->assertEquals(1, $sideQuestEvents->count());
@@ -40,9 +42,9 @@ class ProcessSideQuestMinionAttackTest extends TestCase
         $sideQuestEvent = $sideQuestEvents->first();
         $this->assertEquals($moment, $sideQuestEvent->moment);
         $this->assertEquals($eventType, $sideQuestEvent->event_type);
-        $this->assertEquals($combatHero->getHeroUuid(), $sideQuestEvent->data['heroUuid']);
-        $this->assertEquals($minionCombatAttack->getMinionUuid(), $sideQuestEvent->data['minionUuid']);
-        $this->assertEquals($minionCombatAttack->getCombatAttack()->getAttackUuid(), $sideQuestEvent->data['attackUuid']);
+        $this->assertEquals($combatHero->getHeroUuid(), $sideQuestEvent->data['combatHero']['heroUuid']);
+        $this->assertEquals($combatMinion->getMinionUuid(), $sideQuestEvent->data['combatMinion']['minionUuid']);
+        $this->assertEquals($minionCombatAttack->getCombatAttack()->getAttackUuid(), $sideQuestEvent->data['minionCombatAttack']['combatAttack']['attackUuid']);
         if (!$block) {
             $this->assertEquals($damageReceived, $sideQuestEvent->data['damage']);
         }
