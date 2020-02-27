@@ -49,7 +49,7 @@ class CombatSquadFactory
             }
         }
         $clone = clone $this;
-        $this->combatHeroFactories = $combatHeroFactories;
+        $clone->combatHeroFactories = $combatHeroFactories;
         return $clone;
     }
 }
