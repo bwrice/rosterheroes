@@ -35,4 +35,18 @@ class SideQuestGroupFactory
             new AbstractCombatantCollection($combatMinions)
         );
     }
+
+    public function withCombatMinions(Collection $combatMinionFactories = null)
+    {
+        if (! $combatMinionFactories) {
+            $minionCount = rand(1, 5);
+            $combatMinionFactories = collect();
+            foreach(range(1, $minionCount) as $count) {
+                $combatMinionFactories->push(CombatMinionFactory::new());
+            }
+        }
+        $clone = clone $this;
+        $clone->combatMinionFactories = $combatMinionFactories;
+        return $clone;
+    }
 }
