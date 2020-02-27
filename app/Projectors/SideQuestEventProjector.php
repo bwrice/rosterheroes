@@ -3,6 +3,7 @@
 namespace App\Projectors;
 
 use App\SideQuestEvent;
+use App\StorableEvents\BattlefieldSetForSideQuest;
 use App\StorableEvents\HeroBlocksMinionSideQuestEvent;
 use App\StorableEvents\HeroDamagesMinionSideQuestEvent;
 use App\StorableEvents\HeroKillsMinionSideQuestEvent;
@@ -79,12 +80,7 @@ final class SideQuestEventProjector implements Projector
             'side_quest_result_id' => $event->sideQuestResultID,
             'moment' => $event->moment,
             'event_type' => SideQuestEvent::TYPE_MINION_DAMAGES_HERO,
-            'data' => [
-                'minionUuid' => $event->minionUuid,
-                'attackUuid' => $event->attackUuid,
-                'heroUuid' => $event->heroUuid,
-                'damage' => $event->damage
-            ]
+            'data' => $event->data
         ]);
     }
 
@@ -95,12 +91,7 @@ final class SideQuestEventProjector implements Projector
             'side_quest_result_id' => $event->sideQuestResultID,
             'moment' => $event->moment,
             'event_type' => SideQuestEvent::TYPE_MINION_KILLS_HERO,
-            'data' => [
-                'minionUuid' => $event->minionUuid,
-                'attackUuid' => $event->attackUuid,
-                'heroUuid' => $event->heroUuid,
-                'damage' => $event->damage
-            ]
+            'data' => $event->data
         ]);
     }
 
@@ -111,11 +102,18 @@ final class SideQuestEventProjector implements Projector
             'side_quest_result_id' => $event->sideQuestResultID,
             'moment' => $event->moment,
             'event_type' => SideQuestEvent::TYPE_HERO_BLOCKS_MINION,
-            'data' => [
-                'minionUuid' => $event->minionUuid,
-                'attackUuid' => $event->attackUuid,
-                'heroUuid' => $event->heroUuid
-            ]
+            'data' => $event->data
+        ]);
+    }
+
+    public function onBattlefieldSet(BattlefieldSetForSideQuest $event, string $aggregateUuid)
+    {
+        SideQuestEvent::query()->create([
+            'uuid' => $aggregateUuid,
+            'side_quest_result_id' => $event->sideQuestResultID,
+            'moment' => 0,
+            'event_type' => SideQuestEvent::TYPE_BATTLEGROUND_SET,
+            'data' => $event->eventData
         ]);
     }
 }
