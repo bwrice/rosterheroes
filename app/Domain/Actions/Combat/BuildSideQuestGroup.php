@@ -4,6 +4,7 @@
 namespace App\Domain\Actions\Combat;
 
 
+use App\Domain\Collections\AbstractCombatantCollection;
 use App\Domain\Collections\CombatantCollection;
 use App\Domain\Combat\CombatGroups\SideQuestGroup;
 use App\Domain\Models\CombatPosition;
@@ -37,7 +38,7 @@ class BuildSideQuestGroup
         $combatPositions = $combatPositions ?: CombatPosition::all();
         $targetPriorities = $targetPriorities ?: TargetPriority::all();
         $damageTypes = $damageTypes ?: DamageType::all();
-        $combatMinions = new CombatantCollection();
+        $combatMinions = new AbstractCombatantCollection();
         $sideQuest->minions->each(function (Minion $minion) use ($combatMinions, $combatPositions, $targetPriorities, $damageTypes) {
             $combatMinion = $this->buildCombatMinion->execute($minion, $combatPositions, $targetPriorities, $damageTypes);
             $combatMinions->push($combatMinion);
