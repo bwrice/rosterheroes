@@ -65,35 +65,27 @@ final class SideQuestEventAggregate extends AggregateRoot
     public function createMinionDamagesHeroEvent(
         int $sideQuestResultID,
         int $moment,
-        string $minionUuid,
-        string $attackUuid,
-        string $heroUuid,
-        int $damage)
+        array $data)
     {
-        $this->recordThat(new MinionDamagesHeroSideQuestEvent($sideQuestResultID, $moment, $minionUuid, $attackUuid, $heroUuid, $damage));
+        $this->recordThat(new MinionDamagesHeroSideQuestEvent($sideQuestResultID, $moment, $data));
         return $this;
     }
 
     public function createMinionKillsHeroEvent(
         int $sideQuestResultID,
         int $moment,
-        string $minionUuid,
-        string $attackUuid,
-        string $heroUuid,
-        int $damage)
+        array $data)
     {
-        $this->recordThat(new MinionKillsHeroSideQuestEvent($sideQuestResultID, $moment, $minionUuid, $attackUuid, $heroUuid, $damage));
+        $this->recordThat(new MinionKillsHeroSideQuestEvent($sideQuestResultID, $moment, $data));
         return $this;
     }
 
     public function createHeroBlocksMinionEvent(
         int $sideQuestResultID,
         int $moment,
-        string $minionUuid,
-        string $attackUuid,
-        string $heroUuid)
+        array $data)
     {
-        $this->recordThat(new HeroBlocksMinionSideQuestEvent($sideQuestResultID, $moment, $minionUuid, $attackUuid, $heroUuid));
+        $this->recordThat(new HeroBlocksMinionSideQuestEvent($sideQuestResultID, $moment, $data));
         return $this;
     }
 
