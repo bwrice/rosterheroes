@@ -44,6 +44,12 @@ class CombatHeroDataMapper
         $combatHero->setCurrentStamina($data['currentStamina']);
         $combatHero->setCurrentMana($data['currentMana']);
 
+        $inheritedCombatPositions = $combatPositions->filter(function (CombatPosition $combatPosition) use ($data) {
+            return in_array($combatPosition->id, $data['inheritedCombatPositionIDs']);
+        });
+
+        $combatHero->setInheritedCombatPositions($inheritedCombatPositions->values());
+
         return $combatHero;
     }
 }
