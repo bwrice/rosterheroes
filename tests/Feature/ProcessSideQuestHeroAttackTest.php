@@ -202,8 +202,8 @@ class ProcessSideQuestHeroAttackTest extends TestCase
 
         $combatMinion = \Mockery::mock($this->combatMinion)->shouldReceive('getCurrentHealth')->andReturn($minionHealthReturned)->getMock();
         $sideQuestEvent = $domainAction->execute($this->sideQuestResult, $moment, $damageReceived, $this->combatHero, $heroCombatAttack, $combatMinion, $block);
-        $this->assertEquals(2 * $staminaCost, $sideQuestEvent->data['stamina_cost']);
-        $this->assertEquals(2 * $manaCost, $sideQuestEvent->data['mana_cost']);
+        $this->assertEquals(2 * $staminaCost, $sideQuestEvent->data['staminaCost']);
+        $this->assertEquals(2 * $manaCost, $sideQuestEvent->data['manaCost']);
     }
 
     public function provides_it_save_resource_costs_to_the_side_quest_event()
