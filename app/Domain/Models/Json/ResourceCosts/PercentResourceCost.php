@@ -43,4 +43,12 @@ class PercentResourceCost extends ResourceCost
         }
         return 0;
     }
+
+    public function toArray()
+    {
+        return array_merge([
+            'type' => 'percent',
+            'percent' => $this->percent
+        ], parent::toArray());
+    }
 }

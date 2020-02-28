@@ -40,4 +40,12 @@ class FixedResourceCost extends ResourceCost
         }
         return 0;
     }
+
+    public function toArray()
+    {
+        return array_merge([
+            'type' => 'fixed',
+            'amount' => $this->amount
+        ], parent::toArray());
+    }
 }
