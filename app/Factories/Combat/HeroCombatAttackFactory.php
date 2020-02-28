@@ -58,7 +58,7 @@ class HeroCombatAttackFactory
     public function withCombatAttack(CombatAttack $combatAttack)
     {
         $clone = clone $this;
-        $clone->combatAttack = $clone;
+        $clone->combatAttack = $combatAttack;
         return $clone;
     }
 
