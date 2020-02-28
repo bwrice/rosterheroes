@@ -151,6 +151,7 @@ abstract class AbstractCombatant implements Combatant, Arrayable
         return [
             'initialHealth' => $this->initialHealth,
             'currentHealth' => $this->currentHealth,
+            'protection' => $this->protection,
             'blockChancePercent' => $this->blockChancePercent,
             'combatAttacks' => $this->combatAttacks->toArray(),
             'initialCombatPositionID' => $this->initialCombatPosition->id,
