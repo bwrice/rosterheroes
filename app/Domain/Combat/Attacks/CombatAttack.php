@@ -90,14 +90,6 @@ class CombatAttack implements CombatAttackInterface, Arrayable
             ->take($this->maxTargetsCount);
     }
 
-    /**
-     * @return string
-     */
-    public function getAttackUuid()
-    {
-        return $this->attackUuid;
-    }
-
     public function toArray()
     {
         return [
@@ -112,5 +104,85 @@ class CombatAttack implements CombatAttackInterface, Arrayable
             'damageTypeID' => $this->damageType->id,
             'maxTargetsCount' => $this->maxTargetsCount
         ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getAttackUuid()
+    {
+        return $this->attackUuid;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDamage(): int
+    {
+        return $this->damage;
+    }
+
+    /**
+     * @return float
+     */
+    public function getCombatSpeed(): float
+    {
+        return $this->combatSpeed;
+    }
+
+    /**
+     * @return int
+     */
+    public function getGrade(): int
+    {
+        return $this->grade;
+    }
+
+    /**
+     * @return CombatPosition
+     */
+    public function getAttackerPosition(): CombatPosition
+    {
+        return $this->attackerPosition;
+    }
+
+    /**
+     * @return CombatPosition
+     */
+    public function getTargetPosition(): CombatPosition
+    {
+        return $this->targetPosition;
+    }
+
+    /**
+     * @return TargetPriority
+     */
+    public function getTargetPriority(): TargetPriority
+    {
+        return $this->targetPriority;
+    }
+
+    /**
+     * @return DamageType
+     */
+    public function getDamageType(): DamageType
+    {
+        return $this->damageType;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxTargetsCount(): int
+    {
+        return $this->maxTargetsCount;
     }
 }
