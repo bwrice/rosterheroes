@@ -157,4 +157,14 @@ abstract class AbstractCombatant implements Combatant, Arrayable
             'inheritedCombatPositionIDs' => $this->inheritedCombatPositions->pluck('id')->toArray()
         ];
     }
+
+    /**
+     * @param int $currentHealth
+     * @return $this
+     */
+    public function setCurrentHealth(int $currentHealth)
+    {
+        $this->currentHealth = $currentHealth;
+        return $this;
+    }
 }
