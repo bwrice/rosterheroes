@@ -24,15 +24,7 @@ final class SideQuestEventProjector implements Projector
             'side_quest_result_id' => $event->sideQuestResultID,
             'moment' => $event->moment,
             'event_type' => SideQuestEvent::TYPE_HERO_DAMAGES_MINION,
-            'data' => [
-                'attackUuid' => $event->attackUuid,
-                'heroUuid' => $event->heroUuid,
-                'itemUuid' => $event->itemUuid,
-                'minionUuid' => $event->minionUuid,
-                'damage' => $event->damage,
-                'stamina_cost' => $event->staminaCost,
-                'mana_cost' => $event->manaCost
-            ]
+            'data' => $event->data
         ]);
     }
 
@@ -43,15 +35,7 @@ final class SideQuestEventProjector implements Projector
             'side_quest_result_id' => $event->sideQuestResultID,
             'moment' => $event->moment,
             'event_type' => SideQuestEvent::TYPE_HERO_KILLS_MINION,
-            'data' => [
-                'attackUuid' => $event->attackUuid,
-                'heroUuid' => $event->heroUuid,
-                'itemUuid' => $event->itemUuid,
-                'minionUuid' => $event->minionUuid,
-                'damage' => $event->damage,
-                'stamina_cost' => $event->staminaCost,
-                'mana_cost' => $event->manaCost
-            ]
+            'data' => $event->data
         ]);
     }
 
@@ -62,14 +46,7 @@ final class SideQuestEventProjector implements Projector
             'side_quest_result_id' => $event->sideQuestResultID,
             'moment' => $event->moment,
             'event_type' => SideQuestEvent::TYPE_MINION_BLOCKS_HERO,
-            'data' => [
-                'attackUuid' => $event->attackUuid,
-                'heroUuid' => $event->heroUuid,
-                'itemUuid' => $event->itemUuid,
-                'minionUuid' => $event->minionUuid,
-                'stamina_cost' => $event->staminaCost,
-                'mana_cost' => $event->manaCost
-            ]
+            'data' => $event->data
         ]);
     }
 
