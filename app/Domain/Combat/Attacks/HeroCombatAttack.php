@@ -88,7 +88,8 @@ class HeroCombatAttack implements CombatAttackInterface, Arrayable
         return [
             'heroUuid' => $this->heroUuid,
             'itemUuid' => $this->itemUuid,
-            'combatAttack' => $this->combatAttack->toArray()
+            'combatAttack' => $this->combatAttack->toArray(),
+            'resourceCosts' => $this->resourceCosts->toArray()
         ];
     }
 }
