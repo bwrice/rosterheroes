@@ -8,7 +8,7 @@ use App\Domain\Combat\Attacks\HeroCombatAttackDataMapper;
 use App\Domain\Models\CombatPosition;
 use Illuminate\Database\Eloquent\Collection;
 
-class CombatHeroDataMapper
+class CombatHeroDataMapper extends AbstractCombatantDataMapper
 {
     /**
      * @var HeroCombatAttackDataMapper
@@ -23,7 +23,7 @@ class CombatHeroDataMapper
     public function getCombatHero(array $data, Collection $combatPositions = null)
     {
         $combatPositions = $combatPositions ?: CombatPosition::all();
-        $initialCombatPosition = $combatPositions->find($data['initialCombatPositionID']);
+        $initialCombatPosition = $this->getInitialCombatPosition($data, $combatPositions);
 
         $combatAttacks = collect($data['combatAttacks'])->map(function ($combatAttackData) {
             return $this->heroCombatAttackDataMapper->getHeroCombatAttack($combatAttackData);
@@ -31,24 +31,19 @@ class CombatHeroDataMapper
 
         $combatHero = new CombatHero(
             $data['heroUuid'],
-            $data['initialHealth'],
+            $this->getInitialHealth($data),
             $data['initialStamina'],
             $data['initialMana'],
-            $data['protection'],
-            $data['blockChancePercent'],
+            $this->getProtection($data),
+            $this->getBlockChancePercent($data),
             $initialCombatPosition,
             $combatAttacks
         );
 
-        $combatHero->setCurrentHealth($data['currentHealth']);
         $combatHero->setCurrentStamina($data['currentStamina']);
         $combatHero->setCurrentMana($data['currentMana']);
-
-        $inheritedCombatPositions = $combatPositions->filter(function (CombatPosition $combatPosition) use ($data) {
-            return in_array($combatPosition->id, $data['inheritedCombatPositionIDs']);
-        });
-
-        $combatHero->setInheritedCombatPositions($inheritedCombatPositions->values());
+        $combatHero = $this->setCombatantCurrentHealth($combatHero, $data);
+        $combatHero = $this->setInheritedCombatPositions($combatHero, $data, $combatPositions);
 
         return $combatHero;
     }
