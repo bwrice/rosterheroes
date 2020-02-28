@@ -127,10 +127,10 @@ abstract class AbstractCombatant implements Combatant, Arrayable
     }
 
     /**
-     * @param Collection $inheritedCombatPositions
+     * @param CombatPositionCollection $inheritedCombatPositions
      * @return static
      */
-    public function setInheritedCombatPositions(Collection $inheritedCombatPositions)
+    public function setInheritedCombatPositions(CombatPositionCollection $inheritedCombatPositions)
     {
         $this->inheritedCombatPositions = $inheritedCombatPositions;
         return $this;
