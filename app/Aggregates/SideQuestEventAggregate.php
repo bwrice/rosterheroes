@@ -19,46 +19,29 @@ final class SideQuestEventAggregate extends AggregateRoot
     public function createHeroDamagesMinionEvent(
         int $sideQuestResultID,
         int $moment,
-        string $heroUuid,
-        string $attackUuid,
-        string $itemUuid,
-        string $minionUuid,
-        int $damage,
-        int $staminaCost,
-        int $manaCost
+        array $data
     )
     {
-        $this->recordThat(new HeroDamagesMinionSideQuestEvent($sideQuestResultID, $moment, $heroUuid, $attackUuid, $itemUuid, $minionUuid, $damage, $staminaCost, $manaCost));
+        $this->recordThat(new HeroDamagesMinionSideQuestEvent($sideQuestResultID, $moment, $data));
         return $this;
     }
 
     public function createHeroKillsMinionEvent(
         int $sideQuestResultID,
         int $moment,
-        string $heroUuid,
-        string $attackUuid,
-        string $itemUuid,
-        string $minionUuid,
-        int $damage,
-        int $staminaCost,
-        int $manaCost
+        array $data
     ) {
-        $this->recordThat(new HeroKillsMinionSideQuestEvent($sideQuestResultID, $moment, $heroUuid, $attackUuid, $itemUuid, $minionUuid, $damage, $staminaCost, $manaCost));
+        $this->recordThat(new HeroKillsMinionSideQuestEvent($sideQuestResultID, $moment, $data));
         return $this;
     }
 
     public function createMinionBlocksHeroEvent(
         int $sideQuestResultID,
         int $moment,
-        string $heroUuid,
-        string $attackUuid,
-        string $itemUuid,
-        string $minionUuid,
-        int $staminaCost,
-        int $manaCost
+        array $data
     )
     {
-        $this->recordThat(new MinionBlocksHeroSideQuestEvent($sideQuestResultID, $moment, $heroUuid, $attackUuid, $itemUuid, $minionUuid, $staminaCost, $manaCost));
+        $this->recordThat(new MinionBlocksHeroSideQuestEvent($sideQuestResultID, $moment, $data));
         return $this;
     }
 
