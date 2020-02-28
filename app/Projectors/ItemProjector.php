@@ -2,6 +2,7 @@
 
 namespace App\Projectors;
 
+use App\Domain\Combat\Attacks\HeroCombatAttackDataMapper;
 use App\StorableEvents\AttackAttachedToItem;
 use App\StorableEvents\HeroKillsMinionSideQuestEvent;
 use App\StorableEvents\ItemCreated;
@@ -41,16 +42,30 @@ class ItemProjector implements Projector
 
     public function onHeroDamagesMinionSideQuestEvent(HeroDamagesMinionSideQuestEvent $event)
     {
-        $item = Item::findUuidOrFail($event->itemUuid);
-        $item->damage_dealt += $event->damage;
+        $heroCombatAttack = $this->getHeroCombatAttackDataMapper()
+            ->getHeroCombatAttack($event->getHeroCombatAttackData());
+
+        $item = Item::findUuidOrFail($heroCombatAttack->getItemUuid());
+        $item->damage_dealt += $event->getDamage();
         $item->save();
     }
 
     public function onHeroKillsMinionSideQuestEvent(HeroKillsMinionSideQuestEvent $event)
     {
-        $item = Item::findUuidOrFail($event->itemUuid);
-        $item->damage_dealt += $event->damage;
+        $heroCombatAttack = $this->getHeroCombatAttackDataMapper()
+            ->getHeroCombatAttack($event->getHeroCombatAttackData());
+
+        $item = Item::findUuidOrFail($heroCombatAttack->getItemUuid());
+        $item->damage_dealt += $event->getDamage();
         $item->minion_kills++;
         $item->save();
+    }
+
+    /**
+     * @return HeroCombatAttackDataMapper
+     */
+    protected function getHeroCombatAttackDataMapper()
+    {
+        return app(HeroCombatAttackDataMapper::class);
     }
 }
