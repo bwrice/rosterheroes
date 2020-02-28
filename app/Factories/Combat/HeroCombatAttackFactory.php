@@ -5,6 +5,7 @@ namespace App\Factories\Combat;
 
 
 use App\Domain\Collections\ResourceCostsCollection;
+use App\Domain\Combat\Attacks\CombatAttack;
 use App\Domain\Combat\Combatants\CombatHero;
 use App\Domain\Combat\Attacks\HeroCombatAttack;
 use App\Domain\QueryBuilders\Filters\HeroRaceFilter;
@@ -15,6 +16,9 @@ class HeroCombatAttackFactory
 {
     /** @var CombatAttackFactory */
     protected $combatAttackFactory;
+
+    /** @var CombatAttack */
+    protected $combatAttack;
 
     /** @var HeroFactory */
     protected $heroFactory;
@@ -35,8 +39,7 @@ class HeroCombatAttackFactory
         $heroUuid = $this->getHeroUuid();
         $itemUuid = $this->getItemUuid();
         $resourceCosts = $this->resourceCostsCollection ?: new ResourceCostsCollection();
-        $combatAttackFactory = $this->combatAttackFactory ?: CombatAttackFactory::new();
-        $combatAttack = $combatAttackFactory->create();
+        $combatAttack = $this->getCombatAttack();
         return new HeroCombatAttack(
             $heroUuid,
             $itemUuid,
@@ -49,6 +52,13 @@ class HeroCombatAttackFactory
     {
         $clone = clone $this;
         $clone->combatAttackFactory = $combatAttackFactory;
+        return $clone;
+    }
+
+    public function withCombatAttack(CombatAttack $combatAttack)
+    {
+        $clone = clone $this;
+        $clone->combatAttack = $clone;
         return $clone;
     }
 
@@ -83,5 +93,18 @@ class HeroCombatAttackFactory
         $clone = clone $this;
         $clone->resourceCostsCollection = $resourceCostsCollection;
         return $clone;
+    }
+
+    /**
+     * @return CombatAttack
+     */
+    protected function getCombatAttack()
+    {
+        if ($this->combatAttack) {
+            return $this->combatAttack;
+        }
+        $combatAttackFactory = $this->combatAttackFactory ?: CombatAttackFactory::new();
+        $combatAttack = $combatAttackFactory->create();
+        return $combatAttack;
     }
 }
