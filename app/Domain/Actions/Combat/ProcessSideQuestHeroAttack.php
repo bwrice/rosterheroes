@@ -62,12 +62,13 @@ class ProcessSideQuestHeroAttack
             $aggregate->createMinionBlocksHeroEvent(
                 $sideQuestResult->id,
                 $moment,
-                $heroCombatAttack->getHeroUuid(),
-                $heroCombatAttack->getCombatAttack()->getAttackUuid(),
-                $heroCombatAttack->getItemUuid(),
-                $combatMinion->getMinionUuid(),
-                $staminaCost,
-                $manaCost
+                [
+                    'combatHero' => $combatHero->toArray(),
+                    'heroCombatAttack' => $heroCombatAttack->toArray(),
+                    'combatMinion' => $combatMinion->toArray(),
+                    'staminaCost' => $staminaCost,
+                    'manaCost' => $manaCost
+                ]
             );
         } else {
             if ($combatMinion->getCurrentHealth() > 0) {
@@ -75,25 +76,27 @@ class ProcessSideQuestHeroAttack
                 $aggregate->createHeroDamagesMinionEvent(
                     $sideQuestResult->id,
                     $moment,
-                    $heroCombatAttack->getHeroUuid(),
-                    $heroCombatAttack->getCombatAttack()->getAttackUuid(),
-                    $heroCombatAttack->getItemUuid(),
-                    $combatMinion->getMinionUuid(),
-                    $damageReceived,
-                    $staminaCost,
-                    $manaCost
+                    [
+                        'damage' => $damageReceived,
+                        'combatHero' => $combatHero->toArray(),
+                        'heroCombatAttack' => $heroCombatAttack->toArray(),
+                        'combatMinion' => $combatMinion->toArray(),
+                        'staminaCost' => $staminaCost,
+                        'manaCost' => $manaCost
+                    ]
                 );
             } else {
                 $aggregate->createHeroKillsMinionEvent(
                     $sideQuestResult->id,
                     $moment,
-                    $heroCombatAttack->getHeroUuid(),
-                    $heroCombatAttack->getCombatAttack()->getAttackUuid(),
-                    $heroCombatAttack->getItemUuid(),
-                    $combatMinion->getMinionUuid(),
-                    $damageReceived,
-                    $staminaCost,
-                    $manaCost
+                    [
+                        'damage' => $damageReceived,
+                        'combatHero' => $combatHero->toArray(),
+                        'heroCombatAttack' => $heroCombatAttack->toArray(),
+                        'combatMinion' => $combatMinion->toArray(),
+                        'staminaCost' => $staminaCost,
+                        'manaCost' => $manaCost
+                    ]
                 );
             }
         }
