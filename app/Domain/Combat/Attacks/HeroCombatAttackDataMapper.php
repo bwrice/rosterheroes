@@ -5,6 +5,8 @@ namespace App\Domain\Combat\Attacks;
 
 
 use App\Domain\Collections\ResourceCostsCollection;
+use App\Domain\Models\Json\ResourceCosts\FixedResourceCost;
+use App\Domain\Models\Json\ResourceCosts\PercentResourceCost;
 
 class HeroCombatAttackDataMapper
 {
@@ -30,7 +32,12 @@ class HeroCombatAttackDataMapper
 
     protected function getResourceCosts(array $resourceCostsArray)
     {
-        $resourcesCosts = new ResourceCostsCollection();
-        return $resourcesCosts;
+        $resourcesCosts = collect($resourceCostsArray)->map(function ($resourceCostArray) {
+            if ($resourceCostArray['type'] === 'fixed') {
+                return new FixedResourceCost($resourceCostArray['resource'], $resourceCostArray['amount']);
+            }
+            return new PercentResourceCost($resourceCostArray['resource'], $resourceCostArray['percent']);
+        });
+        return new ResourceCostsCollection($resourcesCosts);
     }
 }
