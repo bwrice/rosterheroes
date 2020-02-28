@@ -40,6 +40,10 @@ class CombatHeroDataMapper
             $combatAttacks
         );
 
+        $combatHero->setCurrentHealth($data['currentHealth']);
+        $combatHero->setCurrentStamina($data['currentStamina']);
+        $combatHero->setCurrentMana($data['currentMana']);
+
         return $combatHero;
     }
 }
