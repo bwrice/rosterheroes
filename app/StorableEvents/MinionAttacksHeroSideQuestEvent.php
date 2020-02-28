@@ -13,4 +13,9 @@ abstract class MinionAttacksHeroSideQuestEvent extends StorableSideQuestEvent
     {
         return $this->data['combatHero']['heroUuid'];
     }
+
+    public function getDamage()
+    {
+        return $this->data['damage'];
+    }
 }
