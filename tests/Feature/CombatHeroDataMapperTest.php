@@ -5,12 +5,15 @@ namespace Tests\Feature;
 use App\Domain\Combat\Combatants\CombatHeroDataMapper;
 use App\Domain\Models\CombatPosition;
 use App\Factories\Combat\CombatHeroFactory;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class CombatHeroDataMapperTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /**
      * @test
      */

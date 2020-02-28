@@ -4,10 +4,9 @@
 namespace App\Factories\Combat;
 
 
-use App\Domain\Combat\Combatants\CombatHero;
 use App\Domain\Combat\Combatants\CombatMinion;
 use App\Domain\Models\CombatPosition;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 class CombatMinionFactory extends AbstractCombatantFactory
