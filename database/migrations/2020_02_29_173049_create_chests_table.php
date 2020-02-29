@@ -18,6 +18,7 @@ class CreateChestsTable extends Migration
             $table->integer('grade')->unsigned();
             $table->bigInteger('squad_id')->unsigned();
             $table->dateTime('opened_at');
+            $table->bigInteger('gold')->unsigned();
             $table->integer('chest_blueprint_id')->unsigned()->nullable();
         });
 

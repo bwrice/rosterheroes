@@ -15,8 +15,9 @@ class CreateChestBlueprintsTable extends Migration
     {
         Schema::create('chest_blueprints', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('min_grade')->unsigned();
-            $table->integer('max_grade')->unsigned();
+            $table->integer('grade')->unsigned();
+            $table->bigInteger('min_gold')->unsigned();
+            $table->bigInteger('max_gold')->unsigned();
             $table->timestamps();
         });
     }
