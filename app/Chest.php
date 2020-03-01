@@ -2,7 +2,9 @@
 
 namespace App;
 
+use App\Domain\Collections\ItemCollection;
 use App\Domain\Models\EventSourcedModel;
+use App\Domain\Models\Item;
 use App\Domain\Models\Squad;
 use Carbon\CarbonInterface;
 
@@ -20,9 +22,13 @@ use Carbon\CarbonInterface;
  *
  * @property Squad $squad
  * @property ChestBlueprint|null $chestBlueprint
+ *
+ * @property ItemCollection $items
  */
 class Chest extends EventSourcedModel
 {
+    const RELATION_MORPH_MAP_KEY = 'chests';
+
     public function squad()
     {
         return $this->belongsTo(Squad::class);
@@ -31,5 +37,10 @@ class Chest extends EventSourcedModel
     public function chestBlueprint()
     {
         return $this->belongsTo(ChestBlueprint::class);
+    }
+
+    public function items()
+    {
+        return $this->morphMany(Item::class, 'has_items');
     }
 }

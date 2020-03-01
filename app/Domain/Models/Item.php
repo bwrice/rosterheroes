@@ -27,6 +27,7 @@ use phpDocumentor\Reflection\Types\Static_;
  * @property int $attacks_blocked
  * @property int $minion_kills
  * @property int $titan_kills
+ * @property int|null $item_blueprint_id
  *
  * @property string $has_items_type
  * @property string $has_items_id
