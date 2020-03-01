@@ -2,9 +2,34 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Domain\Models\EventSourcedModel;
+use App\Domain\Models\Squad;
+use Carbon\CarbonInterface;
 
-class Chest extends Model
+/**
+ * Class Chest
+ * @package App
+ *
+ * @property int $id
+ * @property string $uuid
+ * @property int $gold
+ * @property int $grade
+ * @property CarbonInterface $opened_at
+ * @property int $squad_id
+ * @property int|null $chest_blueprint_id
+ *
+ * @property Squad $squad
+ * @property ChestBlueprint|null $chestBlueprint
+ */
+class Chest extends EventSourcedModel
 {
-    //
+    public function squad()
+    {
+        return $this->belongsTo(Squad::class);
+    }
+
+    public function chestBlueprint()
+    {
+        return $this->belongsTo(ChestBlueprint::class);
+    }
 }
