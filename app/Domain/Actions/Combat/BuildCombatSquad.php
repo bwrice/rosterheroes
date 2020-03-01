@@ -44,9 +44,7 @@ class BuildCombatSquad
         $heroes = $squad->heroes->filter(function (Hero $hero) {
             return HeroService::combatReady($hero);
         });
-        if ($heroes->isEmpty()) {
-            throw new BuildCombatSquadException($squad, 'No heroes combat ready', BuildCombatSquadException::CODE_NO_COMBAT_READY_HEROES);
-        }
+
         $combatHeroes = new AbstractCombatantCollection();
         $heroes->each(function (Hero $hero) use ($combatHeroes, $combatPositions, $targetPriorities, $damageTypes) {
             $combatHeroes->push($this->buildCombatHero->execute($hero, $combatPositions, $targetPriorities, $damageTypes));

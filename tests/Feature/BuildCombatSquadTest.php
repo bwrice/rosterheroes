@@ -46,24 +46,6 @@ class BuildCombatSquadTest extends TestCase
     /**
      * @test
      */
-    public function it_will_throw_an_exception_if_there_are_no_combat_ready_heroes()
-    {
-        $hero = $this->heroFactory->create();
-        HeroService::partialMock()->shouldReceive('combatReady')->andReturn(false);
-        /** @var BuildCombatSquad $domainAction */
-        $domainAction = app(BuildCombatSquad::class);
-        try {
-            $domainAction->execute($this->squad);
-        } catch (BuildCombatSquadException $exception) {
-            $this->assertEquals(BuildCombatSquadException::CODE_NO_COMBAT_READY_HEROES, $exception->getCode());
-            return;
-        }
-        $this->fail("Exception not thrown");
-    }
-
-    /**
-     * @test
-     */
     public function it_will_create_a_combat_squad()
     {
         $hero1 = $this->heroFactory->create();
