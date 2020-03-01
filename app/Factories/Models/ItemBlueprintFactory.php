@@ -37,4 +37,14 @@ class ItemBlueprintFactory
     {
         return $this->chestBlueprintChance;
     }
+
+    /**
+     * @param int|null $chestBlueprintChance
+     * @return ItemBlueprintFactory
+     */
+    public function setChestBlueprintChance(?int $chestBlueprintChance): ItemBlueprintFactory
+    {
+        $this->chestBlueprintChance = $chestBlueprintChance;
+        return $this;
+    }
 }
