@@ -11,6 +11,7 @@ use App\Factories\Combat\CombatSquadFactory;
 use App\Factories\Combat\SideQuestGroupFactory;
 use App\Factories\Models\SideQuestFactory;
 use App\Factories\Models\SquadFactory;
+use App\SideQuestEvent;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -44,5 +45,12 @@ class ProcessSideQuestResultTest extends TestCase
         $domainAction->setMaxMoments(5);
         $sideQuestResult = $domainAction->execute($squad, $sideQuest);
         $this->assertEquals($squad->id, $sideQuestResult->squad_id);
+        $this->assertEquals($sideQuest->id, $sideQuestResult->side_quest_id);
+        $this->assertEquals(CurrentWeek::id(), $sideQuestResult->week_id);
+        $this->assertNull($sideQuestResult->rewards_processed_at);
+        $sideQuestEvents = $sideQuestResult->sideQuestEvents()
+            ->where('event_type', '=', SideQuestEvent::TYPE_BATTLEGROUND_SET)->get();
+        $this->assertEquals(1, $sideQuestEvents->count());
     }
+
 }
