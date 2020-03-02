@@ -134,4 +134,30 @@ class ProcessSideQuestResultTest extends TestCase
         $this->assertNotNull($victoryEvent);
     }
 
+    /**
+     * @test
+     */
+    public function it_will_create_a_side_quest_draw_event_if_the_max_moments_reached()
+    {
+
+        $squad = SquadFactory::new()->create();
+        $sideQuest = SideQuestFactory::new()->create();
+
+        $runCombatTurnMock = \Mockery::mock(RunCombatTurn::class)
+            ->shouldReceive('execute')->getMock();
+
+        app()->instance(RunCombatTurn::class, $runCombatTurnMock);
+
+        /** @var ProcessSideQuestResult $domainAction */
+        $domainAction = app(ProcessSideQuestResult::class);
+        $maxMoments = rand(2, 10);
+        $domainAction->setMaxMoments($maxMoments);
+
+        $sideQuestResult = $domainAction->execute($squad, $sideQuest);
+        /** @var SideQuestEvent $victoryEvent */
+        $victoryEvent = $sideQuestResult->sideQuestEvents()->where('event_type', '=', SideQuestEvent::TYPE_SIDE_QUEST_DRAW)->first();
+        $this->assertNotNull($victoryEvent);
+        $this->assertEquals($maxMoments, $victoryEvent->moment);
+    }
+
 }

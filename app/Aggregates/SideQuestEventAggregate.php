@@ -13,6 +13,7 @@ use App\StorableEvents\MinionBlocksHeroSideQuestEvent;
 use App\StorableEvents\MinionDamagesHeroSideQuestEvent;
 use App\StorableEvents\MinionKillsHeroSideQuestEvent;
 use App\StorableEvents\SideQuestDefeat;
+use App\StorableEvents\SideQuestDraw;
 use App\StorableEvents\SideQuestVictory;
 use Spatie\EventSourcing\AggregateRoot;
 
@@ -71,6 +72,12 @@ final class SideQuestEventAggregate extends AggregateRoot
     public function recordSideQuestVictory(int $sideQuestResultID, int $moment, array $eventData)
     {
         $this->recordThat(new SideQuestVictory($sideQuestResultID, $moment, $eventData));
+        return $this;
+    }
+
+    public function recordSideQuestDraw(int $sideQuestResultID, int $moment, array $eventData)
+    {
+        $this->recordThat(new SideQuestDraw($sideQuestResultID, $moment, $eventData));
         return $this;
     }
 }

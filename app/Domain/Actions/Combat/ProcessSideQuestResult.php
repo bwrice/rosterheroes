@@ -116,14 +116,12 @@ class ProcessSideQuestResult
                 }
             }
 
-            if ($continueBattle) {
-                $moment++;
+            if ($continueBattle && $moment >= $this->maxMoments) {
+                $continueBattle = false;
+                $this->createSideQuestDraw($sideQuestResult, $moment, $combatSquad, $sideQuestGroup);
             }
 
-            if ($moment > $this->maxMoments) {
-                $continueBattle = false;
-                // TODO: Process DRAW
-            }
+            $moment++;
         }
 
         return $sideQuestResult;
@@ -205,6 +203,22 @@ class ProcessSideQuestResult
         $uuid = (string) Str::uuid();
         $aggregate = SideQuestEventAggregate::retrieve($uuid);
         $aggregate->recordSideQuestVictory($sideQuestResult->id, $moment, [
+            'combatSquad' => $combatSquad->toArray(),
+            'sideQuestGroup' => $sideQuestGroup->toArray()
+        ])->persist();
+    }
+
+    /**
+     * @param SideQuestResult $sideQuestResult
+     * @param int $moment
+     * @param CombatSquad $combatSquad
+     * @param SideQuestGroup $sideQuestGroup
+     */
+    protected function createSideQuestDraw(SideQuestResult $sideQuestResult, int $moment, CombatSquad $combatSquad, SideQuestGroup $sideQuestGroup)
+    {
+        $uuid = (string) Str::uuid();
+        $aggregate = SideQuestEventAggregate::retrieve($uuid);
+        $aggregate->recordSideQuestDraw($sideQuestResult->id, $moment, [
             'combatSquad' => $combatSquad->toArray(),
             'sideQuestGroup' => $sideQuestGroup->toArray()
         ])->persist();
