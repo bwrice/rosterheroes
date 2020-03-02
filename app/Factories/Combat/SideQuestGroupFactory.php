@@ -26,9 +26,15 @@ class SideQuestGroupFactory
     {
         $sideQuestFactory = $this->sideQuestFactory ?: SideQuestFactory::new();
         $sideQuest = $sideQuestFactory->create();
-        $combatMinions = $this->combatMinionFactories->map(function (CombatMinionFactory $combatMinionFactory) {
-            return $combatMinionFactory->create();
-        });
+
+        if ($this->combatMinionFactories) {
+            $combatMinions = $this->combatMinionFactories->map(function (CombatMinionFactory $combatMinionFactory) {
+                return $combatMinionFactory->create();
+            });
+        } else {
+            $combatMinions = collect();
+        }
+
         return new SideQuestGroup(
             $sideQuest->name,
             $sideQuest->uuid,
