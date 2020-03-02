@@ -10,6 +10,7 @@ use App\StorableEvents\HeroKillsMinionSideQuestEvent;
 use App\StorableEvents\MinionBlocksHeroSideQuestEvent;
 use App\StorableEvents\MinionDamagesHeroSideQuestEvent;
 use App\StorableEvents\MinionKillsHeroSideQuestEvent;
+use App\StorableEvents\SideQuestDefeat;
 use Spatie\EventSourcing\Projectors\Projector;
 use Spatie\EventSourcing\Projectors\ProjectsEvents;
 
@@ -90,6 +91,17 @@ final class SideQuestEventProjector implements Projector
             'side_quest_result_id' => $event->sideQuestResultID,
             'moment' => 0,
             'event_type' => SideQuestEvent::TYPE_BATTLEGROUND_SET,
+            'data' => $event->eventData
+        ]);
+    }
+
+    public function onSideQuestDefeat(SideQuestDefeat $event, string $aggregateUuid)
+    {
+        SideQuestEvent::query()->create([
+            'uuid' => $aggregateUuid,
+            'side_quest_result_id' => $event->sideQuestResultID,
+            'moment' => $event->moment,
+            'event_type' => SideQuestEvent::TYPE_SIDE_QUEST_DEFEAT,
             'data' => $event->eventData
         ]);
     }
