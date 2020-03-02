@@ -7,21 +7,11 @@ use App\Domain\Combat\CombatGroups\SideQuestGroup;
 use App\SideQuestResult;
 use Spatie\EventSourcing\ShouldBeStored;
 
-final class BattlefieldSetForSideQuest implements ShouldBeStored
+final class BattlefieldSetForSideQuest extends StorableSideQuestEvent implements ShouldBeStored
 {
 
-    /**
-     * @var int
-     */
-    public $sideQuestResultID;
-    /**
-     * @var array
-     */
-    public $eventData;
-
-    public function __construct(int $sideQuestResultID, array $eventData)
+    public function __construct(int $sideQuestResultID, array $data)
     {
-        $this->sideQuestResultID = $sideQuestResultID;
-        $this->eventData = $eventData;
+        parent::__construct($sideQuestResultID, 0, $data);
     }
 }
