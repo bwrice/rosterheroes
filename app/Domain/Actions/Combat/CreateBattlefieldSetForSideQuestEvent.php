@@ -5,11 +5,8 @@ namespace App\Domain\Actions\Combat;
 
 
 use App\Aggregates\SideQuestEventAggregate;
-use App\Domain\Combat\Attacks\HeroCombatAttack;
-use App\Domain\Combat\Combatants\CombatHero;
 use App\Domain\Combat\CombatGroups\CombatSquad;
 use App\Domain\Combat\CombatGroups\SideQuestGroup;
-use App\Factories\Combat\CombatAttackFactory;
 use App\SideQuestResult;
 use Illuminate\Support\Str;
 
