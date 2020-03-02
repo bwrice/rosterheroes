@@ -2,8 +2,10 @@
 
 namespace Tests\Feature;
 
+use App\Domain\Actions\Combat\BuildCombatSquad;
 use App\Domain\Actions\Combat\ProcessSideQuestResult;
 use App\Domain\Actions\Combat\RunCombatTurn;
+use App\Domain\Combat\CombatGroups\CombatSquad;
 use App\Domain\Combat\CombatGroups\SideQuestGroup;
 use App\Domain\Models\Week;
 use App\Facades\CurrentWeek;
@@ -51,6 +53,41 @@ class ProcessSideQuestResultTest extends TestCase
         $sideQuestEvents = $sideQuestResult->sideQuestEvents()
             ->where('event_type', '=', SideQuestEvent::TYPE_BATTLEGROUND_SET)->get();
         $this->assertEquals(1, $sideQuestEvents->count());
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_create_a_side_quest_defeat_event_if_the_squad_is_defeated()
+    {
+        $squad = SquadFactory::new()->create();
+        $sideQuest = SideQuestFactory::new()->create();
+
+        $runCombatTurnMock = \Mockery::mock(RunCombatTurn::class)
+            ->shouldReceive('execute')->getMock();
+
+        app()->instance(RunCombatTurn::class, $runCombatTurnMock);
+
+        $combatSquad = CombatSquadFactory::new()->create();
+        $combatSquadMock = \Mockery::mock($combatSquad, [
+            'isDefeated' => true
+        ])->makePartial();
+
+        $buildCombatSquadMock = \Mockery::mock(BuildCombatSquad::class)
+            ->shouldReceive('execute')
+            ->andReturn($combatSquadMock)->getMock();
+
+        app()->instance(BuildCombatSquad::class, $buildCombatSquadMock);
+
+        /** @var ProcessSideQuestResult $domainAction */
+        $domainAction = app(ProcessSideQuestResult::class);
+        $sideQuestResult = $domainAction->execute($squad, $sideQuest);
+
+        $defeatEvents = $sideQuestResult->sideQuestEvents()->where('event_type', '=', SideQuestEvent::TYPE_SIDE_QUEST_DEFEAT)->get();
+        $this->assertEquals(1, $defeatEvents->count());
+
+        $victoryEvents = $sideQuestResult->sideQuestEvents()->where('event_type', '=', SideQuestEvent::TYPE_SIDE_QUEST_VICTORY)->get();
+        $this->assertEquals(0, $victoryEvents->count());
     }
 
 }
