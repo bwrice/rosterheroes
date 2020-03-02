@@ -6,6 +6,7 @@ namespace App\Domain\Combat\CombatGroups;
 
 use App\Domain\Collections\AbstractCombatantCollection;
 use App\Domain\Collections\CombatantCollection;
+use App\Domain\Collections\CombatPositionCollection;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
@@ -69,7 +70,7 @@ class SideQuestGroup implements CombatGroup, Arrayable
         ];
     }
 
-    public function updateCombatPositions(EloquentCollection $combatPositions)
+    public function updateCombatPositions(CombatPositionCollection $combatPositions)
     {
         $this->combatMinions->updateCombatPositions($combatPositions);
     }
