@@ -17,6 +17,9 @@ class PlayerStatFactory
     /** @var StatType */
     protected $statType;
 
+    /** @var float */
+    protected $amount;
+
     public static function new()
     {
         return new self();
@@ -51,6 +54,13 @@ class PlayerStatFactory
         return $clone;
     }
 
+    public function withAmount(float $amount)
+    {
+        $clone = clone $this;
+        $clone->amount = $amount;
+        return $clone;
+    }
+
     protected function getPlayerGameLog()
     {
         if ($this->playerGameLog) {
@@ -71,6 +81,9 @@ class PlayerStatFactory
 
     protected function getAmount(StatType $statType)
     {
+        if (! is_null($this->amount)) {
+            return $this->amount;
+        }
         $pointsPer = $statType->getBehavior()->getPointsPer();
         if ($pointsPer < 0) {
             return 1;
