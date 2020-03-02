@@ -19,6 +19,7 @@ class CreateSideQuestResultsTable extends Migration
             $table->bigInteger('squad_id')->unsigned();
             $table->integer('side_quest_id')->unsigned();
             $table->integer('week_id')->unsigned();
+            $table->dateTime('rewards_processed_at')->nullable();
             $table->unique(['squad_id', 'side_quest_id', 'week_id']);
             $table->timestamps();
         });
