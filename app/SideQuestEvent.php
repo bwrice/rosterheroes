@@ -26,6 +26,7 @@ class SideQuestEvent extends EventSourcedModel
     public const TYPE_MINION_KILLS_HERO = 'minion-kills-hero';
     public const TYPE_HERO_BLOCKS_MINION = 'hero-blocks-minion';
     public const TYPE_SIDE_QUEST_DEFEAT = 'side-quest-defeat';
+    public const TYPE_SIDE_QUEST_VICTORY = 'side-quest-victory';
 
     protected $guarded = [];
     protected $casts = [
