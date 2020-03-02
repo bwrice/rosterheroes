@@ -5,7 +5,6 @@ namespace App\Domain\Actions\Combat;
 
 
 use App\Aggregates\SideQuestEventAggregate;
-use App\Domain\Combat\Attacks\CombatAttack;
 use App\Domain\Combat\Attacks\MinionCombatAttack;
 use App\Domain\Combat\Combatants\CombatHero;
 use App\Domain\Combat\Combatants\CombatMinion;
@@ -93,7 +92,7 @@ class ProcessSideQuestResult
 
             if ($combatSquad->isDefeated()) {
                 $continueBattle = false;
-                // TODO: process Squad Defeat
+                $this->createSideQuestDefeatEvent($sideQuestResult, $moment, $combatSquad, $sideQuestGroup);
             } else {
 
                 $combatSquad->updateCombatPositions($combatPositions);
@@ -105,7 +104,6 @@ class ProcessSideQuestResult
 
                 if ($sideQuestGroup->isDefeated()) {
                     $continueBattle = false;
-                    // TODO: Process Squad Win
                 } else {
 
                     $this->runCombatTurn->execute($sideQuestGroup, $combatSquad, $moment,
@@ -178,8 +176,19 @@ class ProcessSideQuestResult
         ])->persist();
     }
 
-    protected function createSideQuestDefeatEvent(SideQuestResult $sideQuestResult, CombatSquad $combatSquad, SideQuestGroup $sideQuestGroup)
+    /**
+     * @param SideQuestResult $sideQuestResult
+     * @param int $moment
+     * @param CombatSquad $combatSquad
+     * @param SideQuestGroup $sideQuestGroup
+     */
+    protected function createSideQuestDefeatEvent(SideQuestResult $sideQuestResult, int $moment, CombatSquad $combatSquad, SideQuestGroup $sideQuestGroup)
     {
-
+        $uuid = (string) Str::uuid();
+        $aggregate = SideQuestEventAggregate::retrieve($uuid);
+        $aggregate->recordSideQuestDefeat($sideQuestResult->id, $moment, [
+            'combatSquad' => $combatSquad->toArray(),
+            'sideQuestGroup' => $sideQuestGroup->toArray()
+        ])->persist();
     }
 }
