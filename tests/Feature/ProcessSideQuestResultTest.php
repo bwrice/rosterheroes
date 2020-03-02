@@ -6,8 +6,6 @@ use App\Domain\Actions\Combat\BuildCombatSquad;
 use App\Domain\Actions\Combat\BuildSideQuestGroup;
 use App\Domain\Actions\Combat\ProcessSideQuestResult;
 use App\Domain\Actions\Combat\RunCombatTurn;
-use App\Domain\Combat\CombatGroups\CombatSquad;
-use App\Domain\Combat\CombatGroups\SideQuestGroup;
 use App\Domain\Models\Week;
 use App\Facades\CurrentWeek;
 use App\Factories\Combat\CombatSquadFactory;
@@ -15,12 +13,15 @@ use App\Factories\Combat\SideQuestGroupFactory;
 use App\Factories\Models\SideQuestFactory;
 use App\Factories\Models\SquadFactory;
 use App\SideQuestEvent;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class ProcessSideQuestResultTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /** @var Week */
     protected $currentWeek;
 
@@ -139,7 +140,6 @@ class ProcessSideQuestResultTest extends TestCase
      */
     public function it_will_create_a_side_quest_draw_event_if_the_max_moments_reached()
     {
-
         $squad = SquadFactory::new()->create();
         $sideQuest = SideQuestFactory::new()->create();
 
@@ -154,10 +154,52 @@ class ProcessSideQuestResultTest extends TestCase
         $domainAction->setMaxMoments($maxMoments);
 
         $sideQuestResult = $domainAction->execute($squad, $sideQuest);
+
+        /** @var SideQuestEvent $drawEvent */
+        $drawEvent = $sideQuestResult->sideQuestEvents()->where('event_type', '=', SideQuestEvent::TYPE_SIDE_QUEST_DRAW)->first();
+        $this->assertNotNull($drawEvent);
+        $this->assertEquals($maxMoments, $drawEvent->moment);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_not_draw_if_the_one_side_is_defeated_on_final_moment()
+    {
+        $squad = SquadFactory::new()->create();
+        $sideQuest = SideQuestFactory::new()->create();
+
+        $runCombatTurnMock = \Mockery::mock(RunCombatTurn::class)
+            ->shouldReceive('execute')->getMock();
+
+        app()->instance(RunCombatTurn::class, $runCombatTurnMock);
+
+
+        // mock SideQuestGroup
+        $sideQuestGroup = SideQuestGroupFactory::new()->create();
+        $sideQuestGroupMock = \Mockery::mock($sideQuestGroup, [
+            'isDefeated' => true
+        ])->makePartial();
+
+        $buildSideQuestGroupMock = \Mockery::mock(BuildSideQuestGroup::class)
+            ->shouldReceive('execute')
+            ->andReturn($sideQuestGroupMock)->getMock();
+
+        app()->instance(BuildSideQuestGroup::class, $buildSideQuestGroupMock);
+
+        /** @var ProcessSideQuestResult $domainAction */
+        $domainAction = app(ProcessSideQuestResult::class);
+        //Set max moments to 1 so it ends on first moment
+        $domainAction->setMaxMoments(1);
+        $sideQuestResult = $domainAction->execute($squad, $sideQuest);
+
         /** @var SideQuestEvent $victoryEvent */
-        $victoryEvent = $sideQuestResult->sideQuestEvents()->where('event_type', '=', SideQuestEvent::TYPE_SIDE_QUEST_DRAW)->first();
+        $victoryEvent = $sideQuestResult->sideQuestEvents()->where('event_type', '=', SideQuestEvent::TYPE_SIDE_QUEST_VICTORY)->first();
         $this->assertNotNull($victoryEvent);
-        $this->assertEquals($maxMoments, $victoryEvent->moment);
+        $this->assertEquals(1, $victoryEvent->moment);
+
+        $drawEvent = $sideQuestResult->sideQuestEvents()->where('event_type', '=', SideQuestEvent::TYPE_SIDE_QUEST_DRAW)->first();
+        $this->assertNull($drawEvent);
     }
 
 }
