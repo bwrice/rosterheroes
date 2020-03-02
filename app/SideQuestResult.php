@@ -12,6 +12,9 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property string $uuid
+ * @property int $squad_id
+ * @property int $week_id
+ * @property int $side_quest_id
  *
  * @property Collection $sideQuestEvents
  */
