@@ -5,6 +5,7 @@ namespace App\Domain\Actions\Combat;
 
 
 use App\Aggregates\SideQuestEventAggregate;
+use App\Domain\Collections\CombatPositionCollection;
 use App\Domain\Combat\Attacks\MinionCombatAttack;
 use App\Domain\Combat\Combatants\CombatHero;
 use App\Domain\Combat\Combatants\CombatMinion;
@@ -69,6 +70,7 @@ class ProcessSideQuestResult
 
     public function execute(Squad $squad, SideQuest $sideQuest)
     {
+        /** @var CombatPositionCollection $combatPositions */
         $combatPositions = CombatPosition::all();
         $targetPriorities = TargetPriority::all();
         $damageTypes = DamageType::all();
@@ -95,8 +97,7 @@ class ProcessSideQuestResult
                 $this->createSideQuestDefeatEvent($sideQuestResult, $moment, $combatSquad, $sideQuestGroup);
             } else {
 
-                $combatSquad->updateCombatPositions($combatPositions);
-                $this->runCombatTurn->execute($combatSquad, $sideQuestGroup, $moment,
+                $this->runCombatTurn->execute($combatSquad, $sideQuestGroup, $moment, $combatPositions,
                     function($damageReceived, HeroCombatAttack $heroCombatAttack, CombatMinion $combatMinion, $block) use ($combatSquad, $sideQuestResult, $moment) {
                         $combatHero = $this->getCombatHeroByHeroCombatAttack($combatSquad, $heroCombatAttack);
                         $this->processSideQuestHeroAttack->execute($sideQuestResult, $moment, $damageReceived, $combatHero, $heroCombatAttack, $combatMinion, $block);
@@ -106,7 +107,7 @@ class ProcessSideQuestResult
                     $continueBattle = false;
                 } else {
 
-                    $this->runCombatTurn->execute($sideQuestGroup, $combatSquad, $moment,
+                    $this->runCombatTurn->execute($sideQuestGroup, $combatSquad, $moment, $combatPositions,
                         function($damageReceived, MinionCombatAttack $minionCombatAttack, CombatHero $combatHero, $block) use ($sideQuestGroup, $sideQuestResult, $moment) {
                             $combatMinion = $this->getCombatMinionByMinionCombatAttack($sideQuestGroup, $minionCombatAttack);
                             $this->processSideQuestMinionAttack->execute($sideQuestResult, $moment, $damageReceived, $combatMinion, $minionCombatAttack, $combatHero, $block);

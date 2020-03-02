@@ -4,15 +4,20 @@
 namespace App\Domain\Actions\Combat;
 
 
+use App\Domain\Collections\CombatPositionCollection;
 use App\Domain\Combat\Combatants\Combatant;
 use App\Domain\Combat\Attacks\CombatAttackInterface;
 use App\Domain\Combat\CombatGroups\CombatGroup;
 
 class RunCombatTurn
 {
-    public function execute(CombatGroup $attackers, CombatGroup $defenders, int $moment, callable $eventCallback)
+    public function execute(CombatGroup $attackers, CombatGroup $defenders, int $moment, CombatPositionCollection $allCombatPositions, callable $eventCallback)
     {
+        $attackers->updateCombatPositions($allCombatPositions);
+        $defenders->updateCombatPositions($allCombatPositions);
+
         $attacks = $attackers->getReadyAttacks($moment);
+
         $attacks->each(function (CombatAttackInterface $combatAttack) use ($defenders, $moment, $eventCallback) {
 
             $possibleTargets = $defenders->getPossibleTargets($moment);
