@@ -6,6 +6,7 @@ namespace App\Domain\Combat\CombatGroups;
 
 use App\Domain\Collections\CombatantCollection;
 use App\Domain\Collections\AbstractCombatantCollection;
+use App\Domain\Collections\CombatPositionCollection;
 use App\Domain\Combat\Combatants\CombatHero;
 use App\Domain\Models\CombatPosition;
 use Illuminate\Contracts\Support\Arrayable;
@@ -90,15 +91,9 @@ class CombatSquad implements CombatGroup, Arrayable
     }
 
 
-    public function updateCombatPositions(EloquentCollection $combatPositions)
+    public function updateCombatPositions(CombatPositionCollection $combatPositions)
     {
-        $heroCombatPositions = $this->combatHeroes->unique(function (CombatHero $combatHero) {
-            return $combatHero->getInitialCombatPosition();
-        });
-        $heroCombatPositionIDs = $heroCombatPositions->pluck('id');
-        $missing = $combatPositions->reject(function (CombatPosition $combatPosition) use ($heroCombatPositionIDs) {
-            return $heroCombatPositionIDs->contains($combatPosition->id);
-        });
+        $this->combatHeroes->updateCombatPositions($combatPositions);
     }
 
     /**

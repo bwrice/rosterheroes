@@ -7,6 +7,7 @@ namespace App\Domain\Combat\CombatGroups;
 use App\Domain\Collections\AbstractCombatantCollection;
 use App\Domain\Collections\CombatantCollection;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
 
 class SideQuestGroup implements CombatGroup, Arrayable
@@ -33,7 +34,7 @@ class SideQuestGroup implements CombatGroup, Arrayable
 
     public function getReadyAttacks(int $moment): Collection
     {
-        // TODO: Implement getReadyAttacks() method.
+
     }
 
     public function getPossibleTargets($moment): CombatantCollection
@@ -66,5 +67,10 @@ class SideQuestGroup implements CombatGroup, Arrayable
             'sideQuestUuid' => $this->sideQuestUuid,
             'combatMinions' => $this->combatMinions->toArray()
         ];
+    }
+
+    public function updateCombatPositions(EloquentCollection $combatPositions)
+    {
+        $this->combatMinions->updateCombatPositions($combatPositions);
     }
 }
