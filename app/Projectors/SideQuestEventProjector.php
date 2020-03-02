@@ -11,6 +11,7 @@ use App\StorableEvents\MinionBlocksHeroSideQuestEvent;
 use App\StorableEvents\MinionDamagesHeroSideQuestEvent;
 use App\StorableEvents\MinionKillsHeroSideQuestEvent;
 use App\StorableEvents\SideQuestDefeat;
+use App\StorableEvents\SideQuestVictory;
 use App\StorableEvents\StorableSideQuestEvent;
 use Spatie\EventSourcing\Projectors\Projector;
 use Spatie\EventSourcing\Projectors\ProjectsEvents;
@@ -57,6 +58,11 @@ final class SideQuestEventProjector implements Projector
     public function onSideQuestDefeat(SideQuestDefeat $event, string $aggregateUuid)
     {
         $this->createSideQuestEvent($event, $aggregateUuid,SideQuestEvent::TYPE_SIDE_QUEST_DEFEAT);
+    }
+
+    public function onSideQuestVictory(SideQuestVictory $event, string $aggregateUuid)
+    {
+        $this->createSideQuestEvent($event, $aggregateUuid,SideQuestEvent::TYPE_SIDE_QUEST_VICTORY);
     }
 
     protected function createSideQuestEvent(StorableSideQuestEvent $event, string $aggregateUuid, string $eventType)

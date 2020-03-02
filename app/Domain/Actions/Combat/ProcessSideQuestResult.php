@@ -105,6 +105,7 @@ class ProcessSideQuestResult
 
                 if ($sideQuestGroup->isDefeated()) {
                     $continueBattle = false;
+                    $this->createSideQuestVictory($sideQuestResult, $moment, $combatSquad, $sideQuestGroup);
                 } else {
 
                     $this->runCombatTurn->execute($sideQuestGroup, $combatSquad, $moment, $combatPositions,
@@ -188,6 +189,22 @@ class ProcessSideQuestResult
         $uuid = (string) Str::uuid();
         $aggregate = SideQuestEventAggregate::retrieve($uuid);
         $aggregate->recordSideQuestDefeat($sideQuestResult->id, $moment, [
+            'combatSquad' => $combatSquad->toArray(),
+            'sideQuestGroup' => $sideQuestGroup->toArray()
+        ])->persist();
+    }
+
+    /**
+     * @param SideQuestResult $sideQuestResult
+     * @param int $moment
+     * @param CombatSquad $combatSquad
+     * @param SideQuestGroup $sideQuestGroup
+     */
+    protected function createSideQuestVictory(SideQuestResult $sideQuestResult, int $moment, CombatSquad $combatSquad, SideQuestGroup $sideQuestGroup)
+    {
+        $uuid = (string) Str::uuid();
+        $aggregate = SideQuestEventAggregate::retrieve($uuid);
+        $aggregate->recordSideQuestVictory($sideQuestResult->id, $moment, [
             'combatSquad' => $combatSquad->toArray(),
             'sideQuestGroup' => $sideQuestGroup->toArray()
         ])->persist();

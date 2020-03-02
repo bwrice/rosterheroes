@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Domain\Actions\Combat\BuildCombatSquad;
+use App\Domain\Actions\Combat\BuildSideQuestGroup;
 use App\Domain\Actions\Combat\ProcessSideQuestResult;
 use App\Domain\Actions\Combat\RunCombatTurn;
 use App\Domain\Combat\CombatGroups\CombatSquad;
@@ -83,11 +84,54 @@ class ProcessSideQuestResultTest extends TestCase
         $domainAction = app(ProcessSideQuestResult::class);
         $sideQuestResult = $domainAction->execute($squad, $sideQuest);
 
-        $defeatEvents = $sideQuestResult->sideQuestEvents()->where('event_type', '=', SideQuestEvent::TYPE_SIDE_QUEST_DEFEAT)->get();
-        $this->assertEquals(1, $defeatEvents->count());
+        $defeatEvent = $sideQuestResult->sideQuestEvents()->where('event_type', '=', SideQuestEvent::TYPE_SIDE_QUEST_DEFEAT)->first();
+        $this->assertNotNull($defeatEvent);
+    }
 
-        $victoryEvents = $sideQuestResult->sideQuestEvents()->where('event_type', '=', SideQuestEvent::TYPE_SIDE_QUEST_VICTORY)->get();
-        $this->assertEquals(0, $victoryEvents->count());
+    /**
+     * @test
+     */
+    public function it_will_create_a_side_quest_victory_event_if_the_side_quest_group_is_defeated()
+    {
+        $squad = SquadFactory::new()->create();
+        $sideQuest = SideQuestFactory::new()->create();
+
+        // mock RunCombatTurn
+        $runCombatTurnMock = \Mockery::mock(RunCombatTurn::class)
+            ->shouldReceive('execute')->getMock();
+
+        app()->instance(RunCombatTurn::class, $runCombatTurnMock);
+
+        // mock CombatSquad
+        $combatSquad = CombatSquadFactory::new()->create();
+        $combatSquadMock = \Mockery::mock($combatSquad, [
+            'isDefeated' => false
+        ])->makePartial();
+
+        $buildCombatSquadMock = \Mockery::mock(BuildCombatSquad::class)
+            ->shouldReceive('execute')
+            ->andReturn($combatSquadMock)->getMock();
+
+        app()->instance(BuildCombatSquad::class, $buildCombatSquadMock);
+
+        // mock SideQuestGroup
+        $sideQuestGroup = SideQuestGroupFactory::new()->create();
+        $sideQuestGroupMock = \Mockery::mock($sideQuestGroup, [
+            'isDefeated' => true
+        ])->makePartial();
+
+        $buildSideQuestGroupMock = \Mockery::mock(BuildSideQuestGroup::class)
+            ->shouldReceive('execute')
+            ->andReturn($sideQuestGroupMock)->getMock();
+
+        app()->instance(BuildSideQuestGroup::class, $buildSideQuestGroupMock);
+
+        /** @var ProcessSideQuestResult $domainAction */
+        $domainAction = app(ProcessSideQuestResult::class);
+        $sideQuestResult = $domainAction->execute($squad, $sideQuest);
+
+        $victoryEvent = $sideQuestResult->sideQuestEvents()->where('event_type', '=', SideQuestEvent::TYPE_SIDE_QUEST_VICTORY)->first();
+        $this->assertNotNull($victoryEvent);
     }
 
 }
