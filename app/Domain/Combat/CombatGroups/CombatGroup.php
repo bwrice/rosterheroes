@@ -5,12 +5,12 @@ namespace App\Domain\Combat\CombatGroups;
 
 
 use App\Domain\Collections\CombatantCollection;
-use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use App\Domain\Collections\CombatPositionCollection;
 use Illuminate\Support\Collection;
 
 interface CombatGroup
 {
-    public function updateCombatPositions(EloquentCollection $combatPositions);
+    public function updateCombatPositions(CombatPositionCollection $combatPositions);
 
     public function getReadyAttacks(int $moment): Collection;
 
