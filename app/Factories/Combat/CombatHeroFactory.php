@@ -4,6 +4,8 @@
 namespace App\Factories\Combat;
 
 
+use App\Domain\Behaviors\HeroClasses\HeroClassBehavior;
+use App\Domain\Behaviors\HeroClasses\RangerBehavior;
 use App\Domain\Behaviors\HeroClasses\WarriorBehavior;
 use App\Domain\Behaviors\MeasurableTypes\Resources\HealthBehavior;
 use App\Domain\Behaviors\MeasurableTypes\Resources\ManaBehavior;
@@ -120,25 +122,29 @@ class CombatHeroFactory extends AbstractCombatantFactory
         return $heroFactory->create()->uuid;
     }
 
-    public function noobWarrior()
+    protected function getNoobFactoryWithResources(HeroClassBehavior $heroClassBehavior)
     {
         $clone = clone $this;
-        /** @var WarriorBehavior $warriorBehavior */
-        $warriorBehavior = app(WarriorBehavior::class);
         /** @var HealthBehavior $healthBehavior */
         $healthBehavior = app(HealthBehavior::class);
-        $health = $warriorBehavior->getMeasurableStartingAmount($healthBehavior);
+        $health = $heroClassBehavior->getMeasurableStartingAmount($healthBehavior);
         /** @var StaminaBehavior $staminaBehavior */
         $staminaBehavior = app(StaminaBehavior::class);
-        $stamina = $warriorBehavior->getMeasurableStartingAmount($staminaBehavior);
+        $stamina = $heroClassBehavior->getMeasurableStartingAmount($staminaBehavior);
         /** @var ManaBehavior $manaBehavior */
         $manaBehavior = app(ManaBehavior::class);
-        $mana = $warriorBehavior->getMeasurableStartingAmount($manaBehavior);
+        $mana = $heroClassBehavior->getMeasurableStartingAmount($manaBehavior);
 
-        $clone = $clone->withHealth($health)
+        return $clone->withHealth($health)
             ->withStamina($stamina)
-            ->withMana($mana)
-            ->withProtection(200)
+            ->withMana($mana);
+    }
+
+    public function noobWarrior()
+    {
+        $clone = $this->getNoobFactoryWithResources(app(WarriorBehavior::class));
+
+        $clone = $clone->withProtection(200)
             ->withBlockChancePercent(10)
             ->withCombatPosition(CombatPosition::FRONT_LINE);
 
@@ -184,6 +190,73 @@ class CombatHeroFactory extends AbstractCombatantFactory
             $meleeAttackOne,
             $meleeAttackTwo,
             $meleeAttackThree
+        ]));
+
+        return $clone;
+    }
+
+    public function noobRanger()
+    {
+        $clone = $this->getNoobFactoryWithResources(app(RangerBehavior::class));
+
+        $clone = $clone->withProtection(50)
+            ->withBlockChancePercent(3)
+            ->withCombatPosition(CombatPosition::BACK_LINE);
+
+        $baseCombatAttackFactory = CombatAttackFactory::new()
+            ->withAttackerPosition(CombatPosition::BACK_LINE)
+            ->withTargetPosition(CombatPosition::FRONT_LINE)
+            ->withDamageType(DamageType::FIXED_TARGET)
+            ->withTargetPriority(TargetPriority::ANY);
+
+        $rangedAttackOne = HeroCombatAttackFactory::new()
+            ->withCombatAttackFactory(
+                $baseCombatAttackFactory
+                    ->withDamage(60)
+                    ->withCombatSpeed(35)
+                    ->withMaxTargetCount(1)
+            )->withResourceCosts(new ResourceCostsCollection([
+                new FixedResourceCost(MeasurableType::STAMINA, 16)
+            ]));
+
+        $rangedAttackTwo = HeroCombatAttackFactory::new()
+            ->withCombatAttackFactory(
+                $baseCombatAttackFactory
+                    ->withDamage(85)
+                    ->withCombatSpeed(15)
+                    ->withMaxTargetCount(2)
+            )->withResourceCosts(new ResourceCostsCollection([
+                new FixedResourceCost(MeasurableType::STAMINA, 28),
+                new FixedResourceCost(MeasurableType::MANA, 8)
+            ]));
+
+        $rangedAttackThree = HeroCombatAttackFactory::new()
+            ->withCombatAttackFactory(
+                $baseCombatAttackFactory
+                    ->withDamage(100)
+                    ->withCombatSpeed(7)
+                    ->withMaxTargetCount(3)
+            )->withResourceCosts(new ResourceCostsCollection([
+                new FixedResourceCost(MeasurableType::STAMINA, 40),
+                new FixedResourceCost(MeasurableType::MANA, 12)
+            ]));
+
+        $meleeAttack = HeroCombatAttackFactory::new()
+            ->withCombatAttackFactory(
+                $baseCombatAttackFactory
+                    ->withAttackerPosition(CombatPosition::FRONT_LINE)
+                    ->withDamage(30)
+                    ->withCombatSpeed(25)
+                    ->withMaxTargetCount(1)
+            )->withResourceCosts(new ResourceCostsCollection([
+                new FixedResourceCost(MeasurableType::STAMINA, 10)
+            ]));
+
+        $clone = $clone->withHeroCombatAttacks(collect([
+            $rangedAttackOne,
+            $rangedAttackTwo,
+            $rangedAttackThree,
+            $meleeAttack
         ]));
 
         return $clone;
