@@ -6,11 +6,14 @@ namespace App\Domain\Combat\Attacks;
 
 use App\Domain\Collections\CombatantCollection;
 use App\Domain\Collections\ResourceCostsCollection;
-use App\Domain\Combat\Attacks\CombatAttack;
+use App\Domain\Combat\Attacks\AbstractCombatAttack;
 use App\Domain\Combat\Attacks\CombatAttackInterface;
+use App\Domain\Models\CombatPosition;
+use App\Domain\Models\DamageType;
+use App\Domain\Models\TargetPriority;
 use Illuminate\Contracts\Support\Arrayable;
 
-class HeroCombatAttack implements CombatAttackInterface, Arrayable
+class HeroCombatAttack extends AbstractCombatAttack
 {
     /**
      * @var string
@@ -21,7 +24,7 @@ class HeroCombatAttack implements CombatAttackInterface, Arrayable
      */
     protected $itemUuid;
     /**
-     * @var CombatAttack
+     * @var AbstractCombatAttack
      */
     protected $combatAttack;
     /**
@@ -32,23 +35,33 @@ class HeroCombatAttack implements CombatAttackInterface, Arrayable
     public function __construct(
         string $heroUuid,
         string $itemUuid,
-        CombatAttack $combatAttack,
+        string $name,
+        string $attackUuid,
+        int $damage,
+        float $combatSpeed,
+        int $grade,
+        int $maxTargetsCount,
+        CombatPosition $attackerPosition,
+        CombatPosition $targetPosition,
+        TargetPriority $targetPriority,
+        DamageType $damageType,
         ResourceCostsCollection $resourceCosts)
     {
         $this->heroUuid = $heroUuid;
         $this->itemUuid = $itemUuid;
-        $this->combatAttack = $combatAttack;
         $this->resourceCosts = $resourceCosts;
-    }
-
-    public function getDamagePerTarget(int $targetsCount): int
-    {
-        return $this->combatAttack->getDamagePerTarget($targetsCount);
-    }
-
-    public function getTargets(CombatantCollection $possibleTargets): CombatantCollection
-    {
-        return $this->combatAttack->getTargets($possibleTargets);
+        parent::__construct(
+            $name,
+            $attackUuid,
+            $damage,
+            $combatSpeed,
+            $grade,
+            $attackerPosition,
+            $targetPosition,
+            $targetPriority,
+            $damageType,
+            $maxTargetsCount
+        );
     }
 
     /**
@@ -68,9 +81,9 @@ class HeroCombatAttack implements CombatAttackInterface, Arrayable
     }
 
     /**
-     * @return CombatAttack
+     * @return AbstractCombatAttack
      */
-    public function getCombatAttack(): CombatAttack
+    public function getCombatAttack(): AbstractCombatAttack
     {
         return $this->combatAttack;
     }
@@ -85,11 +98,10 @@ class HeroCombatAttack implements CombatAttackInterface, Arrayable
 
     public function toArray()
     {
-        return [
+        return array_merge([
             'heroUuid' => $this->heroUuid,
             'itemUuid' => $this->itemUuid,
-            'combatAttack' => $this->combatAttack->toArray(),
             'resourceCosts' => $this->resourceCosts->toArray()
-        ];
+        ], parent::toArray());
     }
 }
