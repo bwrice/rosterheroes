@@ -72,7 +72,7 @@ class SeedTitans extends Migration
             $titan = Titan::query()->create([
                 'uuid' => Str::uuid(),
                 'name' => $titanData['name'],
-                'config_path' => app_path() . $titanData['config_path'],
+                'config_path' => $titanData['config_path'],
                 'enemy_type_id' => $enemyTypes->where('name', '=', $titanData['enemy_type'])->first()->id,
                 'combat_position_id' => $combatPositions->where('name', '=', $titanData['combat_position'])->first()->id
             ]);

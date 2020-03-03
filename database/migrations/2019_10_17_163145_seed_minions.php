@@ -116,7 +116,7 @@ class SeedMinions extends Migration
             $minion = Minion::query()->create([
                 'uuid' => Str::uuid(),
                 'name' => $minionData['name'],
-                'config_path' => app_path() . $minionData['config_path'],
+                'config_path' => $minionData['config_path'],
                 'enemy_type_id' => $enemyTypes->where('name', '=', $minionData['enemy_type'])->first()->id,
                 'combat_position_id' => $combatPositions->where('name', '=', $minionData['combat_position'])->first()->id
             ]);
