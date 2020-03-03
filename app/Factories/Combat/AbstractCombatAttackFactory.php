@@ -4,14 +4,14 @@
 namespace App\Factories\Combat;
 
 
-use App\Domain\Combat\Attacks\CombatAttack;
+use App\Domain\Combat\Attacks\AbstractCombatAttack;
 use App\Domain\Models\CombatPosition;
 use App\Domain\Models\DamageType;
 use App\Domain\Models\TargetPriority;
 use App\Factories\Models\AttackFactory;
 use Illuminate\Support\Str;
 
-class CombatAttackFactory
+abstract class AbstractCombatAttackFactory
 {
     protected $attackerPositionName;
 
@@ -31,13 +31,13 @@ class CombatAttackFactory
 
     public static function new()
     {
-        return new self();
+        return new static();
     }
 
     public function create()
     {
         $name = 'Test_Hero_Combat_Attack ' . rand(1, 99999);
-        return new CombatAttack(
+        return new AbstractCombatAttack(
             $name,
             AttackFactory::new()->create()->uuid,
             $this->damage ?: 100,
@@ -49,6 +49,31 @@ class CombatAttackFactory
             $this->getDamageType(),
             $this->maxTargetCount ?: rand(1, 8)
         );
+    }
+
+    protected function getDamage()
+    {
+        return $this->damage ?: 100;
+    }
+
+    protected function getCombatSpeed()
+    {
+        return $this->combatSpeed ?: 10;
+    }
+
+    protected function getGrade()
+    {
+        return $this->grade ?: 10;
+    }
+
+    protected function getMaxTargetsCount()
+    {
+        return $this->maxTargetCount ?: rand(1, 8);
+    }
+
+    protected function getAttackUuid()
+    {
+        return AttackFactory::new()->create()->uuid;
     }
 
     public function withAttackerPosition(string $combatPositionName)
