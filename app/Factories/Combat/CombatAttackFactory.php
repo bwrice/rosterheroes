@@ -8,6 +8,7 @@ use App\Domain\Combat\Attacks\CombatAttack;
 use App\Domain\Models\CombatPosition;
 use App\Domain\Models\DamageType;
 use App\Domain\Models\TargetPriority;
+use App\Factories\Models\AttackFactory;
 use Illuminate\Support\Str;
 
 class CombatAttackFactory
@@ -20,6 +21,12 @@ class CombatAttackFactory
 
     protected $damageTypeName;
 
+    protected $damage;
+
+    protected $combatSpeed;
+
+    protected $grade;
+
     public static function new()
     {
         return new self();
@@ -31,10 +38,10 @@ class CombatAttackFactory
         $maxTargetCount = rand(3, 8);
         return new CombatAttack(
             $name,
-            (string) Str::uuid(),
-            100,
-            10,
-            10,
+            AttackFactory::new()->create()->uuid,
+            $this->damage ?: 100,
+            $this->combatSpeed ?: 10,
+            $this->grade ?: 10,
             $this->getAttackerPosition(),
             $this->getTargetPosition(),
             $this->getTargetPriority(),
@@ -68,6 +75,27 @@ class CombatAttackFactory
     {
         $clone = clone $this;
         $clone->damageTypeName = $damageTypeName;
+        return $clone;
+    }
+
+    public function withDamage(int $damage)
+    {
+        $clone = clone $this;
+        $clone->damage = $damage;
+        return $clone;
+    }
+
+    public function withCombatSpeed(int $combatSpeed)
+    {
+        $clone = clone $this;
+        $clone->combatSpeed = $combatSpeed;
+        return $clone;
+    }
+
+    public function withGrade(int $grade)
+    {
+        $clone = clone $this;
+        $clone->grade = $grade;
         return $clone;
     }
 
