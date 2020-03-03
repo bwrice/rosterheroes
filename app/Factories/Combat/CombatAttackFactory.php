@@ -27,6 +27,8 @@ class CombatAttackFactory
 
     protected $grade;
 
+    protected $maxTargetCount;
+
     public static function new()
     {
         return new self();
@@ -35,7 +37,6 @@ class CombatAttackFactory
     public function create()
     {
         $name = 'Test_Hero_Combat_Attack ' . rand(1, 99999);
-        $maxTargetCount = rand(3, 8);
         return new CombatAttack(
             $name,
             AttackFactory::new()->create()->uuid,
@@ -46,7 +47,7 @@ class CombatAttackFactory
             $this->getTargetPosition(),
             $this->getTargetPriority(),
             $this->getDamageType(),
-            $maxTargetCount
+            $this->maxTargetCount ?: rand(1, 8)
         );
     }
 
@@ -96,6 +97,13 @@ class CombatAttackFactory
     {
         $clone = clone $this;
         $clone->grade = $grade;
+        return $clone;
+    }
+
+    public function withMaxTargetCount(int $maxTargetCount)
+    {
+        $clone = clone $this;
+        $clone->maxTargetCount;
         return $clone;
     }
 
