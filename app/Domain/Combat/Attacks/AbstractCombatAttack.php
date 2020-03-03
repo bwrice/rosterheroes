@@ -10,7 +10,7 @@ use App\Domain\Models\DamageType;
 use App\Domain\Models\TargetPriority;
 use Illuminate\Contracts\Support\Arrayable;
 
-class CombatAttack implements CombatAttackInterface, Arrayable
+abstract class AbstractCombatAttack implements CombatAttackInterface, Arrayable
 {
     /**
      * @var string
