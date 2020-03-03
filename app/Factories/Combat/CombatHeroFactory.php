@@ -11,6 +11,7 @@ use App\Domain\Behaviors\MeasurableTypes\Resources\StaminaBehavior;
 use App\Domain\Combat\Combatants\CombatHero;
 use App\Domain\Models\CombatPosition;
 use App\Factories\Models\HeroFactory;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 class CombatHeroFactory extends AbstractCombatantFactory
@@ -31,19 +32,24 @@ class CombatHeroFactory extends AbstractCombatantFactory
 
     protected $blockChancePercent;
 
+    /** @var Collection|null */
+    protected $heroCombatAttackFactories;
+
     public function create()
     {
         $combatPosition = $this->getCombatPosition();
+        $heroUuid = $this->getHeroUuid();
+        $heroCombatAttacks = $this->getHeroCombatAttacks($heroUuid);
 
         return new CombatHero(
-            $this->getHeroUuid(),
+            $heroUuid,
             is_null($this->health) ? 800 : $this->health,
             is_null($this->stamina) ? 500 : $this->stamina,
             is_null($this->mana) ? 400 : $this->mana,
             is_null($this->protection) ? 100 : $this->protection,
             is_null($this->blockChancePercent) ? 10: $this->blockChancePercent,
             $combatPosition,
-            collect()
+            $heroCombatAttacks
         );
     }
 
@@ -96,9 +102,26 @@ class CombatHeroFactory extends AbstractCombatantFactory
         return $clone;
     }
 
+    public function withHeroCombatAttacks(Collection $heroCombatAttackFactories)
+    {
+        $clone = clone $this;
+        $clone->heroCombatAttackFactories = $heroCombatAttackFactories;
+        return $clone;
+    }
+
     protected function getHeroUuid()
     {
         $heroFactory = $this->heroFactory ?: HeroFactory::new();
         return $heroFactory->create()->uuid;
+    }
+
+    protected function getHeroCombatAttacks(string $heroUuid)
+    {
+        if ($this->heroCombatAttackFactories) {
+            return $this->heroCombatAttackFactories->map(function (HeroCombatAttackFactory $factory) use ($heroUuid) {
+                return $factory->forHero($heroUuid)->create();
+            });
+        }
+        return collect();
     }
 }

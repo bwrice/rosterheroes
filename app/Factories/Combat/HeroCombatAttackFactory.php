@@ -14,6 +14,8 @@ use App\Factories\Models\ItemFactory;
 
 class HeroCombatAttackFactory
 {
+    protected $heroUuid;
+
     /** @var CombatAttackFactory */
     protected $combatAttackFactory;
 
@@ -73,6 +75,13 @@ class HeroCombatAttackFactory
     {
         $clone = clone $this;
         $clone->heroFactory = $heroFactory;
+        return $clone;
+    }
+
+    public function forHero(string $heroUuid)
+    {
+        $clone = clone $this;
+        $clone->heroUuid = $heroUuid;
         return $clone;
     }
 
