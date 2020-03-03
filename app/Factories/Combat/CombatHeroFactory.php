@@ -4,6 +4,10 @@
 namespace App\Factories\Combat;
 
 
+use App\Domain\Behaviors\HeroClasses\WarriorBehavior;
+use App\Domain\Behaviors\MeasurableTypes\Resources\HealthBehavior;
+use App\Domain\Behaviors\MeasurableTypes\Resources\ManaBehavior;
+use App\Domain\Behaviors\MeasurableTypes\Resources\StaminaBehavior;
 use App\Domain\Combat\Combatants\CombatHero;
 use App\Domain\Models\CombatPosition;
 use App\Factories\Models\HeroFactory;
@@ -23,6 +27,10 @@ class CombatHeroFactory extends AbstractCombatantFactory
 
     protected $mana;
 
+    protected $protection;
+
+    protected $blockChancePercent;
+
     public function create()
     {
         $combatPosition = $this->getCombatPosition();
@@ -32,8 +40,8 @@ class CombatHeroFactory extends AbstractCombatantFactory
             is_null($this->health) ? 800 : $this->health,
             is_null($this->stamina) ? 500 : $this->stamina,
             is_null($this->mana) ? 400 : $this->mana,
-            100,
-            20,
+            is_null($this->protection) ? 100 : $this->protection,
+            is_null($this->blockChancePercent) ? 10: $this->blockChancePercent,
             $combatPosition,
             collect()
         );
@@ -64,6 +72,20 @@ class CombatHeroFactory extends AbstractCombatantFactory
     {
         $clone = clone $this;
         $clone->health = $health;
+        return $clone;
+    }
+
+    public function withProtection(int $protection)
+    {
+        $clone = clone $this;
+        $clone->protection = $protection;
+        return $clone;
+    }
+
+    public function withBlockChancePercent(float $blockChancePercent)
+    {
+        $clone = clone $this;
+        $clone->blockChancePercent = $blockChancePercent;
         return $clone;
     }
 
