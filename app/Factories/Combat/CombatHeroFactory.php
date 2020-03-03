@@ -17,6 +17,7 @@ use App\Domain\Models\CombatPosition;
 use App\Domain\Models\DamageType;
 use App\Domain\Models\Json\ResourceCosts\FixedResourceCost;
 use App\Domain\Models\MeasurableType;
+use App\Domain\Models\Squad;
 use App\Domain\Models\TargetPriority;
 use App\Factories\Models\HeroFactory;
 use Illuminate\Support\Collection;
@@ -39,6 +40,9 @@ class CombatHeroFactory extends AbstractCombatantFactory
     protected $protection;
 
     protected $blockChancePercent;
+
+    /** @var Squad|null */
+    protected $squad;
 
     /** @var Collection|null */
     protected $heroCombatAttackFactories;
@@ -65,6 +69,13 @@ class CombatHeroFactory extends AbstractCombatantFactory
     {
         $clone = clone $this;
         $clone->heroUuid = $heroUuid;
+        return $clone;
+    }
+
+    public function forSquad(Squad $squad)
+    {
+        $clone = clone $this;
+        $clone->squad = $squad;
         return $clone;
     }
 
@@ -119,7 +130,14 @@ class CombatHeroFactory extends AbstractCombatantFactory
 
     protected function getHeroUuid()
     {
-        $heroFactory = $this->heroFactory ?: HeroFactory::new();
+        if ($this->heroFactory) {
+            $heroFactory = $this->heroFactory;
+        } else {
+            $heroFactory = HeroFactory::new();
+            if ($this->squad) {
+                $heroFactory = $heroFactory->forSquad($this->squad);
+            }
+        }
         return $heroFactory->create()->uuid;
     }
 
