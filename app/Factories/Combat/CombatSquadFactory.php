@@ -28,8 +28,8 @@ class CombatSquadFactory
         $squad = $squadFactory->create();
 
         $combatHeroFactories = $this->combatHeroFactories ?: collect();
-        $combatHeroes = $combatHeroFactories->map(function (CombatHeroFactory $combatHeroFactory) {
-            return $combatHeroFactory->create();
+        $combatHeroes = $combatHeroFactories->map(function (CombatHeroFactory $combatHeroFactory) use ($squad) {
+            return $combatHeroFactory->forSquad($squad)->create();
         });
         return new CombatSquad(
             $squad->name,
