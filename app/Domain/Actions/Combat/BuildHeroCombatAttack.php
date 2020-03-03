@@ -10,17 +10,8 @@ use App\Domain\Models\Hero;
 use App\Domain\Models\Item;
 use Illuminate\Database\Eloquent\Collection;
 
-class BuildHeroCombatAttack
+class BuildHeroCombatAttack extends AbstractBuildCombatAttack
 {
-    /**
-     * @var BuildCombatAttack
-     */
-    protected $buildCombatAttack;
-
-    public function __construct(BuildCombatAttack $buildCombatAttack)
-    {
-        $this->buildCombatAttack = $buildCombatAttack;
-    }
 
     public function execute(
         Attack $attack,
@@ -30,11 +21,20 @@ class BuildHeroCombatAttack
         Collection $targetPriorities = null,
         Collection $damageTypes = null)
     {
-        $combatAttack = $this->buildCombatAttack->execute($attack, $hero, $combatPositions, $targetPriorities, $damageTypes);
+        $damage = $this->calculateAttackDamage($attack, $hero);
         return new HeroCombatAttack(
             $hero->uuid,
             $item->uuid,
-            $combatAttack,
+            $attack->name,
+            $attack->uuid,
+            $damage,
+            $attack->getCombatSpeed(),
+            $attack->getGrade(),
+            $attack->getMaxTargetsCount(),
+            $this->getAttackerPosition($attack, $combatPositions),
+            $this->getTargetPosition($attack, $combatPositions),
+            $this->getTargetPriority($attack, $targetPriorities),
+            $this->getDamageType($attack, $damageTypes),
             $attack->getResourceCostCollection()
         );
     }

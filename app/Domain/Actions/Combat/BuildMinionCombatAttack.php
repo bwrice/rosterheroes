@@ -4,22 +4,14 @@
 namespace App\Domain\Actions\Combat;
 
 
+use App\Domain\Combat\Attacks\HeroCombatAttack;
 use App\Domain\Combat\Attacks\MinionCombatAttack;
 use App\Domain\Models\Attack;
 use App\Domain\Models\Minion;
 use Illuminate\Database\Eloquent\Collection;
 
-class BuildMinionCombatAttack
+class BuildMinionCombatAttack extends AbstractBuildCombatAttack
 {
-    /**
-     * @var BuildCombatAttack
-     */
-    protected $buildCombatAttack;
-
-    public function __construct(BuildCombatAttack $buildCombatAttack)
-    {
-        $this->buildCombatAttack = $buildCombatAttack;
-    }
 
     /**
      * @param Attack $attack
@@ -36,7 +28,19 @@ class BuildMinionCombatAttack
         Collection $targetPriorities = null,
         Collection $damageTypes = null)
     {
-        $combatAttack = $this->buildCombatAttack->execute($attack, $minion, $combatPositions, $targetPriorities, $damageTypes);
-        return new MinionCombatAttack($minion->uuid, $combatAttack);
+        $damage = $this->calculateAttackDamage($attack, $minion);
+        return new MinionCombatAttack(
+            $minion->uuid,
+            $attack->name,
+            $attack->uuid,
+            $damage,
+            $attack->getCombatSpeed(),
+            $attack->getGrade(),
+            $attack->getMaxTargetsCount(),
+            $this->getAttackerPosition($attack, $combatPositions),
+            $this->getTargetPosition($attack, $combatPositions),
+            $this->getTargetPriority($attack, $targetPriorities),
+            $this->getDamageType($attack, $damageTypes)
+        );
     }
 }
