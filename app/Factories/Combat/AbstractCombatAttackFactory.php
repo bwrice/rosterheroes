@@ -34,23 +34,6 @@ abstract class AbstractCombatAttackFactory
         return new static();
     }
 
-    public function create()
-    {
-        $name = 'Test_Hero_Combat_Attack ' . rand(1, 99999);
-        return new AbstractCombatAttack(
-            $name,
-            AttackFactory::new()->create()->uuid,
-            $this->damage ?: 100,
-            $this->combatSpeed ?: 10,
-            $this->grade ?: 10,
-            $this->getAttackerPosition(),
-            $this->getTargetPosition(),
-            $this->getTargetPriority(),
-            $this->getDamageType(),
-            $this->maxTargetCount ?: rand(1, 8)
-        );
-    }
-
     protected function getDamage()
     {
         return $this->damage ?: 100;
