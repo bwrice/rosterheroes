@@ -4,23 +4,32 @@
 namespace App\Domain\Combat\Attacks;
 
 
-class MinionCombatAttackDataMapper
+use App\Domain\Models\CombatPosition;
+use App\Domain\Models\DamageType;
+use App\Domain\Models\TargetPriority;
+use Illuminate\Database\Eloquent\Collection;
+
+class MinionCombatAttackDataMapper extends AbstractCombatAttackDataMapper
 {
-    /**
-     * @var CombatAttackDataMapper
-     */
-    protected $combatAttackDataMapper;
 
-    public function __construct(CombatAttackDataMapper $combatAttackDataMapper)
+    public function getMinionCombatAttack(array $data, Collection $combatPositions = null, Collection $targetPriorities = null, Collection $damageTypes = null)
     {
-        $this->combatAttackDataMapper = $combatAttackDataMapper;
-    }
+        $combatPositions = $combatPositions ?: CombatPosition::all();
+        $targetPriorities = $targetPriorities ?: TargetPriority::all();
+        $damageTypes = $damageTypes ?: DamageType::all();
 
-    public function getMinionCombatAttack(array $data)
-    {
         return new MinionCombatAttack(
             $data['minionUuid'],
-            $this->combatAttackDataMapper->getCombatAttack($data['combatAttack'])
+            $this->getName($data),
+            $this->getAttackUuid($data),
+            $this->getDamage($data),
+            $this->getCombatSpeed($data),
+            $this->getGrade($data),
+            $this->getMaxTargetsCount($data),
+            $this->getAttackerPosition($data, $combatPositions),
+            $this->getTargetPosition($data, $combatPositions),
+            $this->getTargetPriority($data, $targetPriorities),
+            $this->getDamageTypes($data, $damageTypes),
         );
     }
 }
