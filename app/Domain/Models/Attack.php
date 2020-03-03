@@ -10,6 +10,7 @@ use App\Domain\Models\Json\ResourceCosts\FixedResourceCost;
 use App\Domain\Models\Json\ResourceCosts\PercentResourceCost;
 use App\Domain\Models\Json\ResourceCosts\ResourceCost;
 use App\Domain\QueryBuilders\AttackQueryBuilder;
+use App\Domain\Traits\HasConfigAttributes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Symfony\Component\Yaml\Yaml;
@@ -37,6 +38,8 @@ use Symfony\Component\Yaml\Yaml;
  */
 class Attack extends Model
 {
+    use HasConfigAttributes;
+
     // snake case to match YAML config attributes
     protected $grade;
     protected $fixed_target_count;
@@ -173,20 +176,6 @@ class Attack extends Model
     {
         $this->hasAttacks = $hasAttacks;
         return $this;
-    }
-
-    public function getConfig(string $key)
-    {
-        $config = Yaml::parseFile(app_path() . $this->config_path);
-        return array_key_exists($key, $config) ? $config[$key] : null;
-    }
-
-    public function getConfigAttribute(string $attribute)
-    {
-        if (! $this->$attribute) {
-            $this->$attribute = $this->getConfig($attribute);
-        }
-        return $this->$attribute;
     }
 
     public function getGrade()
