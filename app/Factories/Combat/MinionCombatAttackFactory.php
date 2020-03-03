@@ -4,12 +4,11 @@
 namespace App\Factories\Combat;
 
 use App\Domain\Combat\Attacks\MinionCombatAttack;
+use App\Factories\Models\MinionFactory;
 use Illuminate\Support\Str;
 
-class MinionCombatAttackFactory
+class MinionCombatAttackFactory extends AbstractCombatAttackFactory
 {
-    protected $combatAttackFactory;
-
     public static function new()
     {
         return new self();
@@ -17,19 +16,20 @@ class MinionCombatAttackFactory
 
     public function create()
     {
-        $minionUuid = (string) Str::uuid();
-        $combatAttackFactory = $this->combatAttackFactory ?: CombatAttackFactory::new();
-        $combatAttack = $combatAttackFactory->create();
+        $minionUuid = MinionFactory::new()->create()->uuid;
+        $name = 'Test_Minion_Combat_Attack ' . rand(1, 99999);
         return new MinionCombatAttack(
             $minionUuid,
-            $combatAttack
+            $name,
+            $this->getAttackUuid(),
+            $this->getDamage(),
+            $this->getCombatSpeed(),
+            $this->getGrade(),
+            $this->getMaxTargetsCount(),
+            $this->getAttackerPosition(),
+            $this->getTargetPosition(),
+            $this->getTargetPriority(),
+            $this->getDamageType(),
         );
-    }
-
-    public function withCombatAttackFactory(CombatAttackFactory $combatAttackFactory)
-    {
-        $clone = clone $this;
-        $clone->combatAttackFactory = $combatAttackFactory;
-        return $clone;
     }
 }

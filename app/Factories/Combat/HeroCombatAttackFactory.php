@@ -5,21 +5,22 @@ namespace App\Factories\Combat;
 
 
 use App\Domain\Collections\ResourceCostsCollection;
-use App\Domain\Combat\Attacks\CombatAttack;
+use App\Domain\Combat\Attacks\AbstractCombatAttack;
 use App\Domain\Combat\Combatants\CombatHero;
 use App\Domain\Combat\Attacks\HeroCombatAttack;
 use App\Domain\QueryBuilders\Filters\HeroRaceFilter;
+use App\Factories\Models\AttackFactory;
 use App\Factories\Models\HeroFactory;
 use App\Factories\Models\ItemFactory;
 
-class HeroCombatAttackFactory
+class HeroCombatAttackFactory extends AbstractCombatAttackFactory
 {
     protected $heroUuid;
 
-    /** @var CombatAttackFactory */
+    /** @var AbstractCombatAttackFactory */
     protected $combatAttackFactory;
 
-    /** @var CombatAttack */
+    /** @var AbstractCombatAttack */
     protected $combatAttack;
 
     /** @var HeroFactory */
@@ -40,24 +41,32 @@ class HeroCombatAttackFactory
     {
         $heroUuid = $this->getHeroUuid();
         $itemUuid = $this->getItemUuid();
-        $resourceCosts = $this->resourceCostsCollection ?: new ResourceCostsCollection();
-        $combatAttack = $this->getCombatAttack();
+        $name = 'Test_Hero_Combat_Attack ' . rand(1, 99999);
         return new HeroCombatAttack(
             $heroUuid,
             $itemUuid,
-            $combatAttack,
-            $resourceCosts
+            $name,
+            $this->getAttackUuid(),
+            $this->getDamage(),
+            $this->getCombatSpeed(),
+            $this->getGrade(),
+            $this->getMaxTargetsCount(),
+            $this->getAttackerPosition(),
+            $this->getTargetPosition(),
+            $this->getTargetPriority(),
+            $this->getDamageType(),
+            $this->resourceCostsCollection ?: new ResourceCostsCollection()
         );
     }
 
-    public function withCombatAttackFactory(CombatAttackFactory $combatAttackFactory)
+    public function withCombatAttackFactory(AbstractCombatAttackFactory $combatAttackFactory)
     {
         $clone = clone $this;
         $clone->combatAttackFactory = $combatAttackFactory;
         return $clone;
     }
 
-    public function withCombatAttack(CombatAttack $combatAttack)
+    public function withCombatAttack(AbstractCombatAttack $combatAttack)
     {
         $clone = clone $this;
         $clone->combatAttack = $combatAttack;
@@ -102,18 +111,5 @@ class HeroCombatAttackFactory
         $clone = clone $this;
         $clone->resourceCostsCollection = $resourceCostsCollection;
         return $clone;
-    }
-
-    /**
-     * @return CombatAttack
-     */
-    protected function getCombatAttack()
-    {
-        if ($this->combatAttack) {
-            return $this->combatAttack;
-        }
-        $combatAttackFactory = $this->combatAttackFactory ?: CombatAttackFactory::new();
-        $combatAttack = $combatAttackFactory->create();
-        return $combatAttack;
     }
 }
