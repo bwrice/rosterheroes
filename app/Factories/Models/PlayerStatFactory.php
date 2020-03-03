@@ -14,8 +14,8 @@ class PlayerStatFactory
     /** @var PlayerGameLog */
     protected $playerGameLog;
 
-    /** @var StatType */
-    protected $statType;
+    /** @var string */
+    protected $statTypeName;
 
     /** @var float */
     protected $amount;
@@ -28,7 +28,7 @@ class PlayerStatFactory
     public function create(array $extra = [])
     {
         $playerGameLog = $this->getPlayerGameLog();
-        $statType = $this->getStatType($playerGameLog);
+        $statType = $this->getStatTypeName($playerGameLog);
         $amount = $this->getAmount($statType);
 
         /** @var PlayerStat $playerStat */
@@ -47,10 +47,10 @@ class PlayerStatFactory
         return $clone;
     }
 
-    public function forStatType(StatType $statType)
+    public function forStatType(string $statTypeName)
     {
         $clone = clone $this;
-        $clone->statType = $statType;
+        $clone->statTypeName = $statTypeName;
         return $clone;
     }
 
@@ -69,10 +69,16 @@ class PlayerStatFactory
         return PlayerGameLogFactory::new()->create();
     }
 
-    protected function getStatType(PlayerGameLog $playerGameLog)
+    /**
+     * @param PlayerGameLog $playerGameLog
+     * @return StatType
+     */
+    protected function getStatTypeName(PlayerGameLog $playerGameLog)
     {
-        if ($this->statType) {
-            return $this->statType;
+        if ($this->statTypeName) {
+            /** @var StatType $statType */
+            $statType = StatType::query()->where('name', '=',$this->statTypeName)->first();
+            return $statType;
         }
 
         $sport = $playerGameLog->player->team->league->sport;

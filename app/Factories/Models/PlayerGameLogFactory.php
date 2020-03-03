@@ -136,7 +136,7 @@ class PlayerGameLogFactory
             $statTypes = $this->getStatTypesForFactoryFromSport($sport, $amount);
         }
         return $statTypes->map(function (StatType $statType) {
-            return PlayerStatFactory::new()->forStatType($statType);
+            return PlayerStatFactory::new()->forStatType($statType->name);
         });
     }
 
