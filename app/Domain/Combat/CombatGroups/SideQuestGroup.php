@@ -53,7 +53,7 @@ class SideQuestGroup implements CombatGroup, Arrayable
 
     public function isDefeated()
     {
-        return $this->combatMinions->hasSurvivors();
+        return ! $this->combatMinions->hasSurvivors();
     }
 
     /**

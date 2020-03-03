@@ -87,7 +87,7 @@ class CombatSquad implements CombatGroup, Arrayable
 
     public function isDefeated()
     {
-        return $this->combatHeroes->hasSurvivors();
+        return ! $this->combatHeroes->hasSurvivors();
     }
 
 
