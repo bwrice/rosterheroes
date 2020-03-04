@@ -24,7 +24,14 @@ class ProcessSideQuestMinionAttack
      * @param $block
      * @return SideQuestEvent
      */
-    public function execute(SideQuestResult $sideQuestResult, int $moment, int $damageReceived, CombatMinion $combatMinion, MinionCombatAttack $minionCombatAttack, CombatHero $combatHero, $block)
+    public function execute(
+        SideQuestResult $sideQuestResult,
+        int $moment,
+        int $damageReceived,
+        CombatMinion $combatMinion,
+        MinionCombatAttack $minionCombatAttack,
+        CombatHero $combatHero,
+        $block)
     {
         $uuid = (string) Str::uuid();
         $aggregate = SideQuestEventAggregate::retrieve($uuid);
