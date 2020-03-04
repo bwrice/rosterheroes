@@ -11,5 +11,5 @@ resource_costs:
     -
         type: fixed
         resource: mana
-        amount: 3
+        amount: 18
 requirements: []
