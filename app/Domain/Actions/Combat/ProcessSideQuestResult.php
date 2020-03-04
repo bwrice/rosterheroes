@@ -97,6 +97,9 @@ class ProcessSideQuestResult
                 $this->createSideQuestDefeatEvent($sideQuestResult, $moment, $combatSquad, $sideQuestGroup);
             } else {
 
+                /*
+                 * CombatSquad Turn
+                 */
                 $this->runCombatTurn->execute($combatSquad, $sideQuestGroup, $moment, $combatPositions,
                     function($damageReceived, HeroCombatAttack $heroCombatAttack, CombatMinion $combatMinion, $block) use ($combatSquad, $sideQuestResult, $moment) {
                         $combatHero = $this->getCombatHeroByHeroCombatAttack($combatSquad, $heroCombatAttack);
@@ -107,7 +110,9 @@ class ProcessSideQuestResult
                     $continueBattle = false;
                     $this->createSideQuestVictory($sideQuestResult, $moment, $combatSquad, $sideQuestGroup);
                 } else {
-
+                    /*
+                     * SideQuestGroup Turn
+                     */
                     $this->runCombatTurn->execute($sideQuestGroup, $combatSquad, $moment, $combatPositions,
                         function($damageReceived, MinionCombatAttack $minionCombatAttack, CombatHero $combatHero, $block) use ($sideQuestGroup, $sideQuestResult, $moment) {
                             $combatMinion = $this->getCombatMinionByMinionCombatAttack($sideQuestGroup, $minionCombatAttack);
