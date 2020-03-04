@@ -4,9 +4,11 @@ namespace Tests\Feature;
 
 use App\Domain\Actions\Combat\BuildCombatAttack;
 use App\Domain\Actions\Combat\BuildCombatMinion;
+use App\Domain\Actions\Combat\BuildMinionCombatAttack;
 use App\Domain\Combat\Combatants\Combatant;
 use App\Domain\Combat\Combatants\CombatMinion;
-use App\Factories\Combat\CombatAttackFactory;
+use App\Factories\Combat\AbstractCombatAttackFactory;
+use App\Factories\Combat\MinionCombatAttackFactory;
 use App\Factories\Models\MinionFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -21,13 +23,13 @@ class BuildCombatMinionTest extends TestCase
     {
         $minion = MinionFactory::new()->withAttacks()->create();
 
-        $combatAttack = CombatAttackFactory::new()->create();
-        $buildCombatAttackMock = \Mockery::mock(BuildCombatAttack::class)
+        $combatAttack = MinionCombatAttackFactory::new()->create();
+        $buildCombatAttackMock = \Mockery::mock(BuildMinionCombatAttack::class)
             ->shouldReceive('execute')
             ->andReturn($combatAttack)
             ->getMock();
 
-        app()->instance(BuildCombatAttack::class, $buildCombatAttackMock);
+        app()->instance(BuildMinionCombatAttack::class, $buildCombatAttackMock);
 
         /** @var BuildCombatMinion $domainAction */
         $domainAction = app(BuildCombatMinion::class);
