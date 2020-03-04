@@ -6,10 +6,20 @@ use App\Domain\Actions\Combat\BuildCombatSquad;
 use App\Domain\Actions\Combat\BuildSideQuestGroup;
 use App\Domain\Actions\Combat\ProcessSideQuestResult;
 use App\Domain\Actions\Combat\RunCombatTurn;
+use App\Domain\Actions\CreateSquadAction;
+use App\Domain\Models\HeroClass;
+use App\Domain\Models\SideQuest;
+use App\Domain\Models\Squad;
+use App\Domain\Models\StatType;
 use App\Domain\Models\Week;
 use App\Facades\CurrentWeek;
+use App\Factories\Combat\CombatHeroFactory;
 use App\Factories\Combat\CombatSquadFactory;
 use App\Factories\Combat\SideQuestGroupFactory;
+use App\Factories\Models\HeroFactory;
+use App\Factories\Models\PlayerGameLogFactory;
+use App\Factories\Models\PlayerSpiritFactory;
+use App\Factories\Models\PlayerStatFactory;
 use App\Factories\Models\SideQuestFactory;
 use App\Factories\Models\SquadFactory;
 use App\SideQuestEvent;
@@ -148,6 +158,30 @@ class ProcessSideQuestResultTest extends TestCase
 
         app()->instance(RunCombatTurn::class, $runCombatTurnMock);
 
+        // mock CombatSquad
+        $combatSquad = CombatSquadFactory::new()->create();
+        $combatSquadMock = \Mockery::mock($combatSquad, [
+            'isDefeated' => false
+        ])->makePartial();
+
+        $buildCombatSquadMock = \Mockery::mock(BuildCombatSquad::class)
+            ->shouldReceive('execute')
+            ->andReturn($combatSquadMock)->getMock();
+
+        app()->instance(BuildCombatSquad::class, $buildCombatSquadMock);
+
+        // mock SideQuestGroup
+        $sideQuestGroup = SideQuestGroupFactory::new()->create();
+        $sideQuestGroupMock = \Mockery::mock($sideQuestGroup, [
+            'isDefeated' => false
+        ])->makePartial();
+
+        $buildSideQuestGroupMock = \Mockery::mock(BuildSideQuestGroup::class)
+            ->shouldReceive('execute')
+            ->andReturn($sideQuestGroupMock)->getMock();
+
+        app()->instance(BuildSideQuestGroup::class, $buildSideQuestGroupMock);
+
         /** @var ProcessSideQuestResult $domainAction */
         $domainAction = app(ProcessSideQuestResult::class);
         $maxMoments = rand(2, 10);
@@ -174,6 +208,17 @@ class ProcessSideQuestResultTest extends TestCase
 
         app()->instance(RunCombatTurn::class, $runCombatTurnMock);
 
+        // mock CombatSquad
+        $combatSquad = CombatSquadFactory::new()->create();
+        $combatSquadMock = \Mockery::mock($combatSquad, [
+            'isDefeated' => false
+        ])->makePartial();
+
+        $buildCombatSquadMock = \Mockery::mock(BuildCombatSquad::class)
+            ->shouldReceive('execute')
+            ->andReturn($combatSquadMock)->getMock();
+
+        app()->instance(BuildCombatSquad::class, $buildCombatSquadMock);
 
         // mock SideQuestGroup
         $sideQuestGroup = SideQuestGroupFactory::new()->create();
