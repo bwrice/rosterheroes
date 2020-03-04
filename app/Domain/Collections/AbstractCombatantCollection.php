@@ -58,4 +58,13 @@ class AbstractCombatantCollection extends CombatantCollection
         });
         return $combatAttacks;
     }
+
+    public function getPossibleTargets()
+    {
+        return $this->filter(function (AbstractCombatant $combatant) {
+            return $combatant->getCurrentHealth() > 0;
+        });
+    }
+
+
 }

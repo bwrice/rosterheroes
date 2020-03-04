@@ -35,18 +35,18 @@ class SideQuestGroup implements CombatGroup, Arrayable
 
     public function getReadyAttacks(int $moment): Collection
     {
-
+        return $this->combatMinions->getReadyAttacks();
     }
 
     public function getPossibleTargets($moment): CombatantCollection
     {
-        // TODO: Implement getPossibleTargets() method.
+        return $this->getCombatMinions()->getPossibleTargets();
     }
 
     /**
-     * @return CombatantCollection
+     * @return AbstractCombatantCollection
      */
-    public function getCombatMinions(): CombatantCollection
+    public function getCombatMinions(): AbstractCombatantCollection
     {
         return $this->combatMinions;
     }

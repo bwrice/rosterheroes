@@ -85,11 +85,6 @@ class CombatHero extends AbstractCombatant implements SpendsResources
         return 1;
     }
 
-    public function getReadyAttacks(int $moment)
-    {
-
-    }
-
     /**
      * @return string
      */

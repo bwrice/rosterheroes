@@ -42,11 +42,7 @@ class CombatSquad implements CombatGroup, Arrayable
 
     public function getReadyAttacks(int $moment): Collection
     {
-        $attacks = collect();
-        $this->combatHeroes->each(function (CombatHero $combatHero) use (&$attacks, $moment) {
-            $attacks = $attacks->merge($combatHero->getReadyAttacks($moment));
-        });
-        return $attacks;
+        return $this->combatHeroes->getReadyAttacks();
     }
 
     /**
@@ -55,10 +51,7 @@ class CombatSquad implements CombatGroup, Arrayable
      */
     public function getPossibleTargets($moment): CombatantCollection
     {
-        $alive = $this->combatHeroes->filter(function (CombatHero $combatHero) {
-            return $combatHero->getCurrentHealth() > 0;
-        });
-        return $alive;
+        return $this->combatHeroes->getPossibleTargets();
     }
 
     /**
