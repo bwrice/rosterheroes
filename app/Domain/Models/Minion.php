@@ -19,13 +19,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $uuid
  * @property string $name
  * @property string $slug
- * @property int $level
- * @property int $base_damage_rating
- * @property int $damage_multiplier_rating
- * @property int $health_rating
- * @property int $protection_rating
- * @property int $combat_speed_rating
- * @property int $block_rating
  * @property int $enemy_type_id
  * @property int $combat_position_id
  *
