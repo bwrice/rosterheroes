@@ -2,6 +2,7 @@
 
 namespace App\Domain\Models;
 
+use App\ChestBlueprint;
 use App\Domain\Behaviors\EnemyTypes\EnemyTypeBehavior;
 use App\Domain\Collections\AttackCollection;
 use App\Domain\Collections\MinionCollection;
@@ -9,6 +10,7 @@ use App\Domain\Interfaces\HasAttacks;
 use App\Domain\Interfaces\HasFantasyPoints;
 use App\Domain\Traits\HasConfigAttributes;
 use App\Domain\Traits\HasNameSlug;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -25,6 +27,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property EnemyType $enemyType
  *
  * @property AttackCollection $attacks
+ *
+ * @property Collection $chestBlueprints
  */
 class Minion extends Model implements HasAttacks, HasFantasyPoints
 {
@@ -55,6 +59,11 @@ class Minion extends Model implements HasAttacks, HasFantasyPoints
     public function enemyType()
     {
         return $this->belongsTo(EnemyType::class);
+    }
+
+    public function chestBlueprints()
+    {
+        return $this->belongsToMany(ChestBlueprint::class)->withTimestamps();
     }
 
     protected function getEnemyTypeBehavior(): EnemyTypeBehavior
@@ -146,5 +155,11 @@ class Minion extends Model implements HasAttacks, HasFantasyPoints
     public function getBlockRating()
     {
         return $this->getConfigAttribute('block_rating');
+    }
+
+    public function getExperienceReward()
+    {
+        $level = $this->getLevel();
+        return (int) ceil(($level * 20) + $level**2);
     }
 }
