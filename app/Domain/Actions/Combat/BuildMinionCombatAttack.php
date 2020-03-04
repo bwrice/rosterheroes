@@ -7,7 +7,10 @@ namespace App\Domain\Actions\Combat;
 use App\Domain\Combat\Attacks\HeroCombatAttack;
 use App\Domain\Combat\Attacks\MinionCombatAttack;
 use App\Domain\Models\Attack;
+use App\Domain\Models\CombatPosition;
+use App\Domain\Models\DamageType;
 use App\Domain\Models\Minion;
+use App\Domain\Models\TargetPriority;
 use Illuminate\Database\Eloquent\Collection;
 
 class BuildMinionCombatAttack extends AbstractBuildCombatAttack
@@ -28,6 +31,10 @@ class BuildMinionCombatAttack extends AbstractBuildCombatAttack
         Collection $targetPriorities = null,
         Collection $damageTypes = null)
     {
+        $combatPositions = $combatPositions ?: CombatPosition::all();
+        $targetPriorities = $targetPriorities ?: TargetPriority::all();
+        $damageTypes = $damageTypes ?: DamageType::all();
+
         $damage = $this->calculateAttackDamage($attack, $minion);
         return new MinionCombatAttack(
             $minion->uuid,

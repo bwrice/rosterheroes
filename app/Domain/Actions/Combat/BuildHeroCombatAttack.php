@@ -6,8 +6,11 @@ namespace App\Domain\Actions\Combat;
 
 use App\Domain\Combat\Attacks\HeroCombatAttack;
 use App\Domain\Models\Attack;
+use App\Domain\Models\CombatPosition;
+use App\Domain\Models\DamageType;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Item;
+use App\Domain\Models\TargetPriority;
 use Illuminate\Database\Eloquent\Collection;
 
 class BuildHeroCombatAttack extends AbstractBuildCombatAttack
@@ -21,6 +24,10 @@ class BuildHeroCombatAttack extends AbstractBuildCombatAttack
         Collection $targetPriorities = null,
         Collection $damageTypes = null)
     {
+        $combatPositions = $combatPositions ?: CombatPosition::all();
+        $targetPriorities = $targetPriorities ?: TargetPriority::all();
+        $damageTypes = $damageTypes ?: DamageType::all();
+
         $damage = $this->calculateAttackDamage($attack, $hero);
         return new HeroCombatAttack(
             $hero->uuid,
