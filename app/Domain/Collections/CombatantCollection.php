@@ -8,6 +8,7 @@ use App\Domain\Combat\Combatants\Combatant;
 use App\Domain\Models\CombatPosition;
 use App\Domain\Models\TargetPriority;
 use Illuminate\Support\Collection;
+use function foo\func;
 
 class CombatantCollection extends Collection
 {
@@ -48,5 +49,15 @@ class CombatantCollection extends Collection
             return $combatant->getCurrentHealth() > 0;
         });
         return ! is_null($survivor);
+    }
+
+    /**
+     * @return static
+     */
+    public function survivors()
+    {
+        return $this->filter(function (Combatant $combatant) {
+            return $combatant->getCurrentHealth() > 0;
+        });
     }
 }

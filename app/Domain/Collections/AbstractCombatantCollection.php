@@ -12,11 +12,12 @@ class AbstractCombatantCollection extends CombatantCollection
 {
     public function updateCombatPositions(CombatPositionCollection $allCombatPositions)
     {
-        $initialCombatPositions = $this->getInitialCombatPositions();
-        $combatPositionsWithoutCombatants = $allCombatPositions->diff($initialCombatPositions);
-        if ($combatPositionsWithoutCombatants->isNotEmpty() && $initialCombatPositions->isNotEmpty()) {
+        $survivors = $this->survivors();
+        $initialCombatPositions = $survivors->getInitialCombatPositions();
+        $combatPositionsWithoutSurvivors = $allCombatPositions->diff($initialCombatPositions);
+        if ($combatPositionsWithoutSurvivors->isNotEmpty() && $initialCombatPositions->isNotEmpty()) {
             $closestProximityPosition = $initialCombatPositions->closestProximity();
-            $this->withInitialCombatPosition($closestProximityPosition)->setInheritedCombatPositions($combatPositionsWithoutCombatants);
+            $survivors->withInitialCombatPosition($closestProximityPosition)->setInheritedCombatPositions($combatPositionsWithoutSurvivors);
         }
     }
 
@@ -65,6 +66,5 @@ class AbstractCombatantCollection extends CombatantCollection
             return $combatant->getCurrentHealth() > 0;
         });
     }
-
 
 }
