@@ -17,7 +17,7 @@ use App\Domain\Models\MeasurableType;
 
 class SwordBehavior extends WeaponBehavior
 {
-    public const SPEED_RATING = 55;
+    public const SPEED_RATING = 30;
     public const BASE_DAMAGE_RAGING = 65;
 
     protected $weightModifier = 5;

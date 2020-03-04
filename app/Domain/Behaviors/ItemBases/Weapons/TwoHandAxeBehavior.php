@@ -17,7 +17,7 @@ use App\Domain\Models\MeasurableType;
 
 class TwoHandAxeBehavior extends WeaponBehavior
 {
-    public const SPEED_RATING = 25;
+    public const SPEED_RATING = 20;
     public const BASE_DAMAGE_RAGING = 9;
 
     protected $weightModifier = 15;

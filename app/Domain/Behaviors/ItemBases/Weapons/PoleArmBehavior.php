@@ -17,7 +17,7 @@ use App\Domain\Models\MeasurableType;
 
 class PoleArmBehavior extends WeaponBehavior
 {
-    public const SPEED_RATING = 82;
+    public const SPEED_RATING = 60;
     public const BASE_DAMAGE_RAGING = 30;
 
     protected $weightModifier = 9;

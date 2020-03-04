@@ -17,7 +17,7 @@ use App\Domain\Models\MeasurableType;
 
 class MaceBehavior extends WeaponBehavior
 {
-    public const SPEED_RATING = 38;
+    public const SPEED_RATING = 25;
     public const BASE_DAMAGE_RAGING = 65;
 
     protected $weightModifier = 7.2;

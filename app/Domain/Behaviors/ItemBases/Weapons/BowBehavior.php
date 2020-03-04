@@ -17,7 +17,7 @@ use App\Domain\Models\MeasurableType;
 class BowBehavior extends WeaponBehavior
 {
     public const SPEED_RATING = 65;
-    public const BASE_DAMAGE_RAGING = 35;
+    public const BASE_DAMAGE_RAGING = 40;
 
     protected $weightModifier = 8.5;
     protected $blockChanceModifier = .5;

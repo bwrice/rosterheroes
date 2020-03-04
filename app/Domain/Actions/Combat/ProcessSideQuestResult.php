@@ -26,7 +26,7 @@ class ProcessSideQuestResult
     /**
      * @var int
      */
-    protected $maxMoments = 2500;
+    protected $maxMoments = 500;
     /**
      * @var BuildCombatSquad
      */
