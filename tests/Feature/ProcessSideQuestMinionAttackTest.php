@@ -75,7 +75,7 @@ class ProcessSideQuestMinionAttackTest extends TestCase
         $this->assertEquals($eventType, $sideQuestEvent->event_type);
         $this->assertEquals($this->combatHero->getHeroUuid(), $sideQuestEvent->data['combatHero']['heroUuid']);
         $this->assertEquals($this->combatMinion->getMinionUuid(), $sideQuestEvent->data['combatMinion']['minionUuid']);
-        $this->assertEquals($this->minionCombatAttack->getCombatAttack()->getAttackUuid(), $sideQuestEvent->data['minionCombatAttack']['combatAttack']['attackUuid']);
+        $this->assertEquals($this->minionCombatAttack->getAttackUuid(), $sideQuestEvent->data['minionCombatAttack']['attackUuid']);
         if (!$block) {
             $this->assertEquals($this->damageReceived, $sideQuestEvent->data['damage']);
         }
