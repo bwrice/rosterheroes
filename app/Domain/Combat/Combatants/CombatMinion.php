@@ -4,6 +4,7 @@
 namespace App\Domain\Combat\Combatants;
 
 
+use App\Domain\Collections\AbstractCombatAttackCollection;
 use App\Domain\Combat\Attacks\CombatAttackInterface;
 use App\Domain\Combat\Combatants\Combatant;
 use App\Domain\Models\CombatPosition;
@@ -22,7 +23,7 @@ class CombatMinion extends AbstractCombatant
         int $protection,
         int $blockChancePercent,
         CombatPosition $combatPosition,
-        Collection $combatAttacks)
+        AbstractCombatAttackCollection $combatAttacks)
     {
         $this->minionUuid = $minionUuid;
         parent::__construct(

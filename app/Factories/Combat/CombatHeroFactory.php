@@ -11,6 +11,7 @@ use App\Domain\Behaviors\HeroClasses\WarriorBehavior;
 use App\Domain\Behaviors\MeasurableTypes\Resources\HealthBehavior;
 use App\Domain\Behaviors\MeasurableTypes\Resources\ManaBehavior;
 use App\Domain\Behaviors\MeasurableTypes\Resources\StaminaBehavior;
+use App\Domain\Collections\AbstractCombatAttackCollection;
 use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Combat\Combatants\CombatHero;
 use App\Domain\Models\CombatPosition;
@@ -316,11 +317,12 @@ class CombatHeroFactory extends AbstractCombatantFactory
 
     protected function getHeroCombatAttacks(string $heroUuid)
     {
+        $combatAttacks = [];
         if ($this->heroCombatAttackFactories) {
-            return $this->heroCombatAttackFactories->map(function (HeroCombatAttackFactory $factory) use ($heroUuid) {
+            $combatAttacks = $this->heroCombatAttackFactories->map(function (HeroCombatAttackFactory $factory) use ($heroUuid) {
                 return $factory->forHero($heroUuid)->create();
             });
         }
-        return collect();
+        return new AbstractCombatAttackCollection($combatAttacks);
     }
 }

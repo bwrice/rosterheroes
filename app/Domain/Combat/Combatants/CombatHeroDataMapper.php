@@ -4,6 +4,7 @@
 namespace App\Domain\Combat\Combatants;
 
 
+use App\Domain\Collections\AbstractCombatAttackCollection;
 use App\Domain\Combat\Attacks\HeroCombatAttackDataMapper;
 use App\Domain\Models\CombatPosition;
 use Illuminate\Database\Eloquent\Collection;
@@ -37,7 +38,7 @@ class CombatHeroDataMapper extends AbstractCombatantDataMapper
             $this->getProtection($data),
             $this->getBlockChancePercent($data),
             $initialCombatPosition,
-            $combatAttacks
+            new AbstractCombatAttackCollection($combatAttacks)
         );
 
         $combatHero->setCurrentStamina($data['currentStamina']);

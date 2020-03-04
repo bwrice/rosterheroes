@@ -4,6 +4,7 @@
 namespace App\Domain\Actions\Combat;
 
 
+use App\Domain\Collections\AbstractCombatAttackCollection;
 use App\Domain\Combat\Combatants\CombatHero;
 use App\Domain\Combat\Attacks\HeroCombatAttack;
 use App\Domain\Models\Attack;
@@ -34,7 +35,7 @@ class BuildCombatHero
         $targetPriorities = $targetPriorities ?: TargetPriority::all();
         $damageTypes = $damageTypes ?: DamageType::all();
         $hero->loadMissing(Hero::heroResourceRelations());
-        $combatAttacks = collect();
+        $combatAttacks = new AbstractCombatAttackCollection();
         $hero->items->each(function (Item $item) use ($hero, &$combatAttacks, $combatPositions, $targetPriorities, $damageTypes) {
             $combatAttacks = $combatAttacks->merge($item->attacks->map(function (Attack $attack) use ($hero, $item, $combatPositions, $targetPriorities, $damageTypes) {
                 return $this->buildHeroCombatAttack->execute($attack, $item, $hero, $combatPositions, $targetPriorities, $damageTypes);

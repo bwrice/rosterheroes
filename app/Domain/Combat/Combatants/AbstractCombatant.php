@@ -4,6 +4,7 @@
 namespace App\Domain\Combat\Combatants;
 
 
+use App\Domain\Collections\AbstractCombatAttackCollection;
 use App\Domain\Collections\CombatPositionCollection;
 use App\Domain\Combat\Attacks\CombatAttackInterface;
 use App\Domain\Models\CombatPosition;
@@ -50,7 +51,7 @@ abstract class AbstractCombatant implements Combatant, Arrayable
         int $protection,
         float $blockChancePercent,
         CombatPosition $combatPosition,
-        Collection $combatAttacks)
+        AbstractCombatAttackCollection $combatAttacks)
     {
         $this->initialHealth = $this->currentHealth = $health;
         $this->protection = $protection;

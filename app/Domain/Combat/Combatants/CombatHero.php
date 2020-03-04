@@ -4,6 +4,7 @@
 namespace App\Domain\Combat\Combatants;
 
 
+use App\Domain\Collections\AbstractCombatAttackCollection;
 use App\Domain\Interfaces\SpendsResources;
 use App\Domain\Models\CombatPosition;
 use Illuminate\Contracts\Support\Arrayable;
@@ -40,7 +41,7 @@ class CombatHero extends AbstractCombatant implements SpendsResources
         int $protection,
         float $blockChancePercent,
         CombatPosition $combatPosition,
-        Collection $combatAttacks)
+        AbstractCombatAttackCollection $combatAttacks)
     {
         $this->heroUuid = $heroUuid;
         $this->initialStamina = $this->currentStamina = $stamina;
