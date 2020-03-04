@@ -247,4 +247,39 @@ class ProcessSideQuestResultTest extends TestCase
         $this->assertNull($drawEvent);
     }
 
+    /**
+     * @test
+     */
+    public function a_noobish_squad_will_defeat_a_small_skeleton_pack()
+    {
+        $baseCombatHeroFactory = CombatHeroFactory::new();
+        $combatSquad = CombatSquadFactory::new()->withCombatHeroes(collect([
+            $baseCombatHeroFactory->noobWarrior(),
+            $baseCombatHeroFactory->noobWarrior(),
+            $baseCombatHeroFactory->noobRanger(),
+            $baseCombatHeroFactory->noobSorcerer()
+        ]))->create();
+
+        $buildCombatSquadMock = \Mockery::mock(BuildCombatSquad::class)
+            ->shouldReceive('execute')
+            ->andReturn($combatSquad)
+            ->getMock();
+
+        app()->instance(BuildCombatSquad::class, $buildCombatSquadMock);
+
+        $squad = Squad::findUuidOrFail($combatSquad->getSquadUuid());
+        /** @var SideQuest $sideQuest */
+        $sideQuest = SideQuest::query()->where('name', '=', 'Small Skeleton Pack')->first();
+
+        /** @var ProcessSideQuestResult $domainAction */
+        $domainAction = app(ProcessSideQuestResult::class);
+        $sideQuestResult = $domainAction->execute($squad, $sideQuest);
+        $this->assertNotNull($sideQuestResult);
+        $victoryEvent = $sideQuestResult->sideQuestEvents()->where('event_type', '=', SideQuestEvent::TYPE_SIDE_QUEST_VICTORY)->first();
+        $this->assertNotNull($victoryEvent);
+        $eventCount = $sideQuestResult->sideQuestEvents()->count();
+        $this->assertGreaterThan(15, $eventCount);
+        $this->assertLessThan(100, $eventCount);
+    }
+
 }
