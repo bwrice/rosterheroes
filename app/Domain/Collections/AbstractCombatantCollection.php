@@ -4,6 +4,7 @@
 namespace App\Domain\Collections;
 
 
+use App\Domain\Combat\Attacks\CombatAttackInterface;
 use App\Domain\Combat\Combatants\AbstractCombatant;
 use App\Domain\Models\CombatPosition;
 
@@ -41,5 +42,20 @@ class AbstractCombatantCollection extends CombatantCollection
         return $this->each(function (AbstractCombatant $abstractCombatant) use ($inheritedCombatPositions) {
             $abstractCombatant->setInheritedCombatPositions($inheritedCombatPositions);
         });
+    }
+
+    public function getReadyAttacks()
+    {
+        $combatAttacks = collect();
+        $this->each(function (AbstractCombatant $abstractCombatant) use ($combatAttacks) {
+            $combatPositions = $abstractCombatant->allCombatPositions();
+            $readyForCombatant = $abstractCombatant->getCombatAttacks()
+                ->filterByAttackerPositions($combatPositions)
+                ->ready();
+            $readyForCombatant->each(function ($attack) use ($combatAttacks) {
+                $combatAttacks->push($attack);
+            });
+        });
+        return $combatAttacks;
     }
 }

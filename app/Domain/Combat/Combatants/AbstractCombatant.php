@@ -112,9 +112,9 @@ abstract class AbstractCombatant implements Combatant, Arrayable
     }
 
     /**
-     * @return Collection
+     * @return AbstractCombatAttackCollection
      */
-    public function getCombatAttacks(): Collection
+    public function getCombatAttacks(): AbstractCombatAttackCollection
     {
         return $this->combatAttacks;
     }
