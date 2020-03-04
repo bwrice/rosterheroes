@@ -6,9 +6,9 @@ namespace App\Domain\Behaviors\TargetRanges;
 
 class FrontLineBehavior extends CombatPositionBehavior
 {
-    protected $combatSpeedBonus = .25;
-    protected $baseDamageBonus = .25;
-    protected $damageMultiplierBonus = .25;
+    protected $combatSpeedBonus = .12;
+    protected $baseDamageBonus = 0;
+    protected $damageMultiplierBonus = 0;
     protected $proximity = 1;
 
     protected $attackerSVG = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0,0,320,320\" style=\"display: block\">

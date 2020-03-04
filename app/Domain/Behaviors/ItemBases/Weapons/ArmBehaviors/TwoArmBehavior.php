@@ -14,11 +14,11 @@ class TwoArmBehavior implements ArmBehaviorInterface
 
     public function getBaseDamageRatingModifier(): float
     {
-        return 1.25;
+        return 2.25;
     }
 
     public function getSpeedRatingModifier(): float
     {
-        return .62;
+        return .8;
     }
 }

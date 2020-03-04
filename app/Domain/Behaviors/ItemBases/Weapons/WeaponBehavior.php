@@ -9,7 +9,6 @@ use App\Domain\Behaviors\ItemBases\Weapons\ArmBehaviors\ArmBehaviorInterface;
 use App\Domain\Behaviors\ItemGroup\WeaponGroup;
 use App\Domain\Interfaces\UsesItems;
 use App\Domain\Models\MeasurableType;
-use App\Domain\Models\SlotType;
 use App\Domain\Models\Support\GearSlots\GearSlot;
 
 abstract class WeaponBehavior extends ItemBaseBehavior
@@ -95,8 +94,8 @@ abstract class WeaponBehavior extends ItemBaseBehavior
     public function getDamageMultiplierBonus(UsesItems $usesItems = null): float
     {
         $measurablesBonus = $usesItems ? $this->getDamageMultiplierMeasurablesBonus($usesItems) : 0;
-        $damageRatingBonus = $this->getBaseDamageRating()/200;
-        $slownessBonus = max((110 - $this->getSpeedRating())/100, 0);
+        $damageRatingBonus = $this->getBaseDamageRating()/100;
+        $slownessBonus = max((110 - $this->getSpeedRating()) /100, 0);
         return $measurablesBonus + $damageRatingBonus + $slownessBonus;
     }
 
