@@ -108,7 +108,8 @@ abstract class AbstractCombatant implements Combatant, Arrayable
 
     public function allCombatPositions()
     {
-        return clone($this->inheritedCombatPositions)->push($this->initialCombatPosition)->unique();
+        $inheritedCombatPositions = clone $this->inheritedCombatPositions;
+        return $inheritedCombatPositions->push($this->initialCombatPosition);
     }
 
     /**
