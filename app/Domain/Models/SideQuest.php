@@ -58,4 +58,10 @@ class SideQuest extends Model
             return ((($minion->getLevel() ** 1.4)/100) + $minion->getLevel()/20) * $minion->pivot->count;
         }));
     }
+
+    public function getExperienceReward()
+    {
+        $difficult = $this->difficulty();
+        return (int) ceil($difficult * 100 + ($difficult**2.25));
+    }
 }
