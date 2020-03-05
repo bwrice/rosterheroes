@@ -11,6 +11,9 @@ use Illuminate\Support\Str;
 
 class SideQuestResultFactory
 {
+    /** @var SideQuestFactory|null */
+    protected $sideQuestFactory;
+
     public static function new(): self
     {
         return new self();
@@ -22,10 +25,23 @@ class SideQuestResultFactory
         $sideQuestResult = SideQuestResult::query()->create([
             'uuid' => Str::uuid()->toString(),
             'squad_id' => SquadFactory::new()->create()->id,
-            'side_quest_id' => SideQuestFactory::new()->create()->id,
+            'side_quest_id' => $this->getSideQuest()->id,
             'week_id' => factory(Week::class)->create()->id
         ]);
 
         return $sideQuestResult;
+    }
+
+    public function withSideQuest(SideQuestFactory $sideQuestFactory)
+    {
+        $clone = clone $this;
+        $clone->sideQuestFactory = $sideQuestFactory;
+        return $clone;
+    }
+
+    protected function getSideQuest()
+    {
+        $sideQuestFactory = $this->sideQuestFactory ?: SideQuestFactory::new();
+        return $sideQuestFactory->create();
     }
 }
