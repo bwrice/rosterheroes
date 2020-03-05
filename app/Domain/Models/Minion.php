@@ -160,6 +160,6 @@ class Minion extends Model implements HasAttacks, HasFantasyPoints
     public function getExperienceReward()
     {
         $level = $this->getLevel();
-        return (int) ceil(($level * 20) + $level**2);
+        return (int) ceil(($level * 10) + $level**2);
     }
 }
