@@ -3,6 +3,8 @@
 namespace App;
 
 use App\Domain\Models\SideQuest;
+use App\Domain\Models\Squad;
+use App\Nova\Week;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -38,5 +40,15 @@ class SideQuestResult extends Model
     public function sideQuest()
     {
         return $this->belongsTo(SideQuest::class);
+    }
+
+    public function squad()
+    {
+        return $this->belongsTo(Squad::class);
+    }
+
+    public function week()
+    {
+        return $this->belongsTo(Week::class);
     }
 }
