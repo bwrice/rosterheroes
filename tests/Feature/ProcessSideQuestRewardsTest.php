@@ -44,4 +44,15 @@ class ProcessSideQuestRewardsTest extends TestCase
 
         $this->fail("Exception not thrown");
     }
+
+    /**
+     * @test
+     */
+    public function it_will_update_the_rewards_processed_at_on_the_side_quest_result()
+    {
+        /** @var ProcessSideQuestRewards $domainAction */
+        $domainAction = app(ProcessSideQuestRewards::class);
+        $domainAction->execute($this->sideQuestResult);
+        $this->assertNotNull($this->sideQuestResult->fresh()->rewards_processed_at);
+    }
 }
