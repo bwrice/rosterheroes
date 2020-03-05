@@ -3,6 +3,7 @@
 namespace App\Domain\Models;
 
 use App\Aggregates\SquadAggregate;
+use App\Chest;
 use App\Domain\Actions\CreateCampaignAction;
 use App\Domain\Collections\ItemCollection;
 use App\Domain\Collections\SquadCollection;
@@ -23,6 +24,7 @@ use App\Domain\Traits\HasNameSlug;
 use App\Facades\SquadService;
 use App\Http\Resources\MobileStorageResource;
 use App\Http\Resources\SquadResource;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Str;
@@ -52,6 +54,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property HeroCollection $heroes
  * @property ItemCollection $items
  * @property HeroPostCollection $heroPosts
+ * @property Collection $chests
  *
  * @method static SquadQueryBuilder query()
  */
@@ -202,6 +205,11 @@ class Squad extends EventSourcedModel implements HasItems
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function chests()
+    {
+        return $this->hasMany(Chest::class);
     }
 
     /**
