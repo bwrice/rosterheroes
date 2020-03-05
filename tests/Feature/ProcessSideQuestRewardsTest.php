@@ -3,6 +3,8 @@
 namespace Tests\Feature;
 
 use App\Domain\Actions\ProcessSideQuestRewards;
+use App\Domain\Actions\RewardChestToSquad;
+use App\Factories\Models\ChestBlueprintFactory;
 use App\Factories\Models\SideQuestFactory;
 use App\Factories\Models\SideQuestResultFactory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -75,5 +77,25 @@ class ProcessSideQuestRewardsTest extends TestCase
         $domainAction->execute($sideQuestResult);
 
         $this->assertEquals($originalSquadExperience + $sideQuestXpReward, $squad->fresh()->experience);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_execute_reward_chest_for_each_of_the_side_quests_chest_blueprints()
+    {
+        $sideQuest = $this->sideQuestResult->sideQuest;
+        $blueprintFactory = ChestBlueprintFactory::new();
+
+        // Attach 2 chest blueprints
+        $sideQuest->chestBlueprints()->save($blueprintFactory->create());
+        $sideQuest->chestBlueprints()->save($blueprintFactory->create());
+
+        $rewardChestMock = \Mockery::mock(RewardChestToSquad::class)->shouldReceive('execute', 2)->getMock();
+        app()->instance(RewardChestToSquad::class, $rewardChestMock);
+
+        /** @var ProcessSideQuestRewards $domainAction */
+        $domainAction = app(ProcessSideQuestRewards::class);
+        $domainAction->execute($this->sideQuestResult->fresh());
     }
 }
