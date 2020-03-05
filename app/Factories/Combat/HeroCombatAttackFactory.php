@@ -102,6 +102,9 @@ class HeroCombatAttackFactory extends AbstractCombatAttackFactory
 
     protected function getHeroUuid()
     {
+        if ($this->heroUuid) {
+            return $this->heroUuid;
+        }
         $heroFactory = $this->heroFactory ?: HeroFactory::new();
         return $heroFactory->create()->uuid;
     }
