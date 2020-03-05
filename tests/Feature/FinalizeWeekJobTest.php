@@ -44,22 +44,10 @@ class FinalizeWeekJobTest extends TestCase
             ],
             'Step 3' => [
                 'step' => 3,
-                'domainAction' => BuildCurrentWeekSquadSnapshotsAction::class
+                'domainAction' => ProcessCurrentWeekSideQuestsAction::class
             ],
             'Step 4' => [
                 'step' => 4,
-                'domainAction' => BuildCurrentWeekMinionSnapshotsAction::class
-            ],
-            'Step 5' => [
-                'step' => 5,
-                'domainAction' => BuildCurrentWeekTitanSnapshotsAction::class
-            ],
-            'Step 6' => [
-                'step' => 6,
-                'domainAction' => ProcessCurrentWeekSideQuestsAction::class
-            ],
-            'Step 7' => [
-                'step' => 7,
                 'domainAction' => SetupNextWeekAction::class
             ],
         ];

@@ -51,14 +51,8 @@ class FinalizeWeekJob implements ShouldQueue
             case 2:
                 return app(FinalizeCurrentWeekSpiritEnergiesAction::class);
             case 3:
-                return app(BuildCurrentWeekSquadSnapshotsAction::class);
-            case 4:
-                return app(BuildCurrentWeekMinionSnapshotsAction::class);
-            case 5:
-                return app(BuildCurrentWeekTitanSnapshotsAction::class);
-            case 6:
                 return app(ProcessCurrentWeekSideQuestsAction::class);
-            case 7:
+            case 4:
                 return app(SetupNextWeekAction::class);
         }
         throw new \InvalidArgumentException("Unknown finalize action for step: " . $this->step);
