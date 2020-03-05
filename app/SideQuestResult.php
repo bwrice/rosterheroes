@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property Week $week
  * @property Squad $squad
+ * @property SideQuest $sideQuest
  *
  * @property Collection $sideQuestEvents
  */
