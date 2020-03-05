@@ -2,12 +2,14 @@
 
 namespace App\Domain\Models;
 
+use App\ChestBlueprint;
 use App\Domain\Collections\MinionCollection;
 use App\Domain\Collections\SideQuestCollection;
 use App\Domain\Models\Quest;
 use App\Domain\Traits\HasNameSlug;
 use App\Domain\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 /**
  * Class SideQuest
@@ -22,6 +24,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Quest $quest
  *
  * @property MinionCollection $minions
+ * @property Collection $chestBlueprints
  */
 class SideQuest extends Model
 {
@@ -42,6 +45,11 @@ class SideQuest extends Model
     public function minions()
     {
         return $this->belongsToMany(Minion::class)->withPivot('count')->withTimestamps();
+    }
+
+    public function chestBlueprints()
+    {
+        return $this->belongsToMany(ChestBlueprint::class)->withTimestamps();
     }
 
     public function difficulty(): int
