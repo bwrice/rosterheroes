@@ -4,7 +4,7 @@ namespace App;
 
 use App\Domain\Models\SideQuest;
 use App\Domain\Models\Squad;
-use App\Nova\Week;
+use App\Domain\Models\Week;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -19,6 +19,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $week_id
  * @property int $side_quest_id
  * @property CarbonInterface|null $rewards_processed_at
+ *
+ * @property Week $week
+ * @property Squad $squad
  *
  * @property Collection $sideQuestEvents
  */
