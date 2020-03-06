@@ -6,23 +6,14 @@ use App\Domain\Actions\Combat\BuildCombatSquad;
 use App\Domain\Actions\Combat\BuildSideQuestGroup;
 use App\Domain\Actions\Combat\ProcessSideQuestResult;
 use App\Domain\Actions\Combat\RunCombatTurn;
-use App\Domain\Actions\CreateSquadAction;
-use App\Domain\Models\HeroClass;
+use App\Domain\Models\CampaignStop;
 use App\Domain\Models\SideQuest;
-use App\Domain\Models\Squad;
-use App\Domain\Models\StatType;
 use App\Domain\Models\Week;
-use App\Facades\CurrentWeek;
 use App\Factories\Combat\CombatHeroFactory;
 use App\Factories\Combat\CombatSquadFactory;
 use App\Factories\Combat\SideQuestGroupFactory;
-use App\Factories\Models\CampaignFactory;
-use App\Factories\Models\HeroFactory;
-use App\Factories\Models\PlayerGameLogFactory;
-use App\Factories\Models\PlayerSpiritFactory;
-use App\Factories\Models\PlayerStatFactory;
+use App\Factories\Models\CampaignStopFactory;
 use App\Factories\Models\SideQuestFactory;
-use App\Factories\Models\SquadFactory;
 use App\SideQuestEvent;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -36,10 +27,18 @@ class ProcessSideQuestResultTest extends TestCase
     /** @var Week */
     protected $currentWeek;
 
+    /** @var CampaignStop */
+    protected $campaignStop;
+
+    /** @var SideQuest */
+    protected $sideQuest;
+
     public function setUp(): void
     {
         parent::setUp();
-        $this->currentWeek = factory(Week::class)->states('as-current', 'finalizing')->create();
+        $this->campaignStop = CampaignStopFactory::new()->create();
+        $this->sideQuest = SideQuestFactory::new()->create();
+        $this->campaignStop->sideQuests()->save($this->sideQuest);
     }
 
     /**
@@ -47,9 +46,6 @@ class ProcessSideQuestResultTest extends TestCase
      */
     public function it_will_create_side_result_with_a_battlefield_set_event()
     {
-        $campaign = CampaignFactory::new()->create();
-        $sideQuest = SideQuestFactory::new()->create();
-
         $runCombatTurnMock = \Mockery::mock(RunCombatTurn::class)
             ->shouldReceive('execute')->getMock();
 
@@ -58,9 +54,9 @@ class ProcessSideQuestResultTest extends TestCase
         /** @var ProcessSideQuestResult $domainAction */
         $domainAction = app(ProcessSideQuestResult::class);
         $domainAction->setMaxMoments(5);
-        $sideQuestResult = $domainAction->execute($campaign, $sideQuest);
-        $this->assertEquals($campaign->id, $sideQuestResult->campaign_id);
-        $this->assertEquals($sideQuest->id, $sideQuestResult->side_quest_id);
+        $sideQuestResult = $domainAction->execute($this->campaignStop, $this->sideQuest);
+        $this->assertEquals($this->campaignStop->id, $sideQuestResult->campaign_stop_id);
+        $this->assertEquals($this->sideQuest->id, $sideQuestResult->side_quest_id);
         $this->assertNull($sideQuestResult->rewards_processed_at);
         $sideQuestEvents = $sideQuestResult->sideQuestEvents()
             ->where('event_type', '=', SideQuestEvent::TYPE_BATTLEGROUND_SET)->get();
@@ -72,9 +68,6 @@ class ProcessSideQuestResultTest extends TestCase
      */
     public function it_will_create_a_side_quest_defeat_event_if_the_squad_is_defeated()
     {
-        $campaign = CampaignFactory::new()->create();
-        $sideQuest = SideQuestFactory::new()->create();
-
         $runCombatTurnMock = \Mockery::mock(RunCombatTurn::class)
             ->shouldReceive('execute')->getMock();
 
@@ -93,7 +86,7 @@ class ProcessSideQuestResultTest extends TestCase
 
         /** @var ProcessSideQuestResult $domainAction */
         $domainAction = app(ProcessSideQuestResult::class);
-        $sideQuestResult = $domainAction->execute($campaign, $sideQuest);
+        $sideQuestResult = $domainAction->execute($this->campaignStop, $this->sideQuest);
 
         $defeatEvent = $sideQuestResult->sideQuestEvents()->where('event_type', '=', SideQuestEvent::TYPE_SIDE_QUEST_DEFEAT)->first();
         $this->assertNotNull($defeatEvent);
@@ -104,9 +97,6 @@ class ProcessSideQuestResultTest extends TestCase
      */
     public function it_will_create_a_side_quest_victory_event_if_the_side_quest_group_is_defeated()
     {
-        $campaign = CampaignFactory::new()->create();
-        $sideQuest = SideQuestFactory::new()->create();
-
         // mock RunCombatTurn
         $runCombatTurnMock = \Mockery::mock(RunCombatTurn::class)
             ->shouldReceive('execute')->getMock();
@@ -139,7 +129,7 @@ class ProcessSideQuestResultTest extends TestCase
 
         /** @var ProcessSideQuestResult $domainAction */
         $domainAction = app(ProcessSideQuestResult::class);
-        $sideQuestResult = $domainAction->execute($campaign, $sideQuest);
+        $sideQuestResult = $domainAction->execute($this->campaignStop, $this->sideQuest);
 
         $victoryEvent = $sideQuestResult->sideQuestEvents()->where('event_type', '=', SideQuestEvent::TYPE_SIDE_QUEST_VICTORY)->first();
         $this->assertNotNull($victoryEvent);
@@ -150,9 +140,6 @@ class ProcessSideQuestResultTest extends TestCase
      */
     public function it_will_create_a_side_quest_draw_event_if_the_max_moments_reached()
     {
-        $campaign = CampaignFactory::new()->create();
-        $sideQuest = SideQuestFactory::new()->create();
-
         $runCombatTurnMock = \Mockery::mock(RunCombatTurn::class)
             ->shouldReceive('execute')->getMock();
 
@@ -187,7 +174,7 @@ class ProcessSideQuestResultTest extends TestCase
         $maxMoments = rand(2, 10);
         $domainAction->setMaxMoments($maxMoments);
 
-        $sideQuestResult = $domainAction->execute($campaign, $sideQuest);
+        $sideQuestResult = $domainAction->execute($this->campaignStop, $this->sideQuest);
 
         /** @var SideQuestEvent $drawEvent */
         $drawEvent = $sideQuestResult->sideQuestEvents()->where('event_type', '=', SideQuestEvent::TYPE_SIDE_QUEST_DRAW)->first();
@@ -200,9 +187,6 @@ class ProcessSideQuestResultTest extends TestCase
      */
     public function it_will_not_draw_if_the_one_side_is_defeated_on_final_moment()
     {
-        $campaign = CampaignFactory::new()->create();
-        $sideQuest = SideQuestFactory::new()->create();
-
         $runCombatTurnMock = \Mockery::mock(RunCombatTurn::class)
             ->shouldReceive('execute')->getMock();
 
@@ -236,7 +220,7 @@ class ProcessSideQuestResultTest extends TestCase
         $domainAction = app(ProcessSideQuestResult::class);
         //Set max moments to 1 so it ends on first moment
         $domainAction->setMaxMoments(1);
-        $sideQuestResult = $domainAction->execute($campaign, $sideQuest);
+        $sideQuestResult = $domainAction->execute($this->campaignStop, $this->sideQuest);
 
         /** @var SideQuestEvent $victoryEvent */
         $victoryEvent = $sideQuestResult->sideQuestEvents()->where('event_type', '=', SideQuestEvent::TYPE_SIDE_QUEST_VICTORY)->first();
@@ -267,13 +251,12 @@ class ProcessSideQuestResultTest extends TestCase
 
         app()->instance(BuildCombatSquad::class, $buildCombatSquadMock);
 
-        $campaign = CampaignFactory::new()->create();
         /** @var SideQuest $sideQuest */
         $sideQuest = SideQuest::query()->where('name', '=', 'Small Skeleton Pack')->first();
 
         /** @var ProcessSideQuestResult $domainAction */
         $domainAction = app(ProcessSideQuestResult::class);
-        $sideQuestResult = $domainAction->execute($campaign, $sideQuest);
+        $sideQuestResult = $domainAction->execute($this->campaignStop, $sideQuest);
         $this->assertNotNull($sideQuestResult);
         $victoryEvent = $sideQuestResult->sideQuestEvents()->where('event_type', '=', SideQuestEvent::TYPE_SIDE_QUEST_VICTORY)->first();
         $this->assertNotNull($victoryEvent);

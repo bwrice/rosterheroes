@@ -33,14 +33,14 @@ class ProcessSideQuestRewardsTest extends TestCase
     {
         $this->sideQuestResult->rewards_processed_at = Date::now();
         $this->sideQuestResult->save();
-        $originalSquadExperience = $this->sideQuestResult->campaign->squad->experience;
+        $originalSquadExperience = $this->sideQuestResult->campaignStop->campaign->squad->experience;
 
         try {
             /** @var ProcessSideQuestRewards $domainAction */
             $domainAction = app(ProcessSideQuestRewards::class);
             $domainAction->execute($this->sideQuestResult->fresh());
         } catch (\Exception $exception) {
-            $squad = $this->sideQuestResult->campaign->squad->fresh();
+            $squad = $this->sideQuestResult->campaignStop->campaign->squad->fresh();
             $this->assertEquals($originalSquadExperience, $squad->experience);
             return;
         }
@@ -66,7 +66,7 @@ class ProcessSideQuestRewardsTest extends TestCase
     {
         $sideQuestFactory = SideQuestFactory::new()->withMinions();
         $sideQuestResult = SideQuestResultFactory::new()->withSideQuest($sideQuestFactory)->create();
-        $squad = $sideQuestResult->campaign->squad;
+        $squad = $sideQuestResult->campaignStop->campaign->squad;
         $originalSquadExperience = $squad->experience;
 
         $sideQuestXpReward = $sideQuestResult->sideQuest->getExperienceReward();

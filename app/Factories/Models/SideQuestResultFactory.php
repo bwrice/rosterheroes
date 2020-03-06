@@ -4,8 +4,6 @@
 namespace App\Factories\Models;
 
 
-use App\Domain\Models\Week;
-use App\Facades\CurrentWeek;
 use App\SideQuestResult;
 use Illuminate\Support\Str;
 
@@ -24,7 +22,7 @@ class SideQuestResultFactory
         /** @var SideQuestResult $sideQuestResult */
         $sideQuestResult = SideQuestResult::query()->create(array_merge([
             'uuid' => Str::uuid()->toString(),
-            'campaign_id' => CampaignFactory::new()->create()->id,
+            'campaign_stop_id' => CampaignStopFactory::new()->create()->id,
             'side_quest_id' => $this->getSideQuest()->id
         ], $extra));
 

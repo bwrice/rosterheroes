@@ -16,15 +16,15 @@ class CreateSideQuestResultsTable extends Migration
         Schema::create('side_quest_results', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->uuid('uuid');
-            $table->bigInteger('campaign_id')->unsigned();
+            $table->bigInteger('campaign_stop_id')->unsigned();
             $table->integer('side_quest_id')->unsigned();
             $table->dateTime('rewards_processed_at')->nullable();
-            $table->unique(['campaign_id', 'side_quest_id']);
+            $table->unique(['campaign_stop_id', 'side_quest_id']);
             $table->timestamps();
         });
 
         Schema::table('side_quest_results', function (Blueprint $table) {
-            $table->foreign('campaign_id')->references('id')->on('campaigns');
+            $table->foreign('campaign_stop_id')->references('id')->on('campaign_stops');
             $table->foreign('side_quest_id')->references('id')->on('side_quests');
         });
     }

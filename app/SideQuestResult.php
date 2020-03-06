@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Domain\Models\Campaign;
+use App\Domain\Models\CampaignStop;
 use App\Domain\Models\SideQuest;
 use App\Domain\Models\Squad;
 use App\Domain\Models\Week;
@@ -16,12 +17,12 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property string $uuid
- * @property int $campaign_id
+ * @property int $campaign_stop_id
  * @property int $side_quest_id
  * @property CarbonInterface|null $rewards_processed_at
  *
  * @property SideQuest $sideQuest
- * @property Campaign $campaign
+ * @property CampaignStop $campaignStop
  *
  * @property Collection $sideQuestEvents
  */
@@ -45,8 +46,8 @@ class SideQuestResult extends Model
         return $this->belongsTo(SideQuest::class);
     }
 
-    public function campaign()
+    public function campaignStop()
     {
-        return $this->belongsTo(Campaign::class);
+        return $this->belongsTo(CampaignStop::class);
     }
 }
