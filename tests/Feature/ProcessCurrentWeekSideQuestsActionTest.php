@@ -208,4 +208,51 @@ class ProcessCurrentWeekSideQuestsActionTest extends TestCase
             });
         }
     }
+
+    /**
+     * @test
+     */
+    public function it_will_only_query_campaign_stops_with_ids_greater_than_that_given_in_the_extra_data_array()
+    {
+        $campaignFactory = CampaignFactory::new()->withWeekID($this->currentWeek->id);
+        $campaignStopFactory = CampaignStopFactory::new()->withCampaign($campaignFactory);
+
+        $campaignStop1 = $campaignStopFactory->create();
+        $campaignStop2 = $campaignStopFactory->create();
+        $campaignStop3 = $campaignStopFactory->create();
+
+        $sideQuest = SideQuestFactory::new()->create();
+
+        $campaignStop1->sideQuests()->save($sideQuest);
+        $campaignStop2->sideQuests()->save($sideQuest);
+        $campaignStop3->sideQuests()->save($sideQuest);
+
+        $step = rand(1, 10);
+        $nextStep = $step + 1;
+        Queue::fake();
+
+        /** @var ProcessCurrentWeekSideQuestsAction $domainAction */
+        $domainAction = app(ProcessCurrentWeekSideQuestsAction::class);
+        $domainAction->execute($step, [
+            'last_campaign_stop_id' => $campaignStop2->id
+        ]);
+
+        Queue::assertPushedWithChain(AsyncChainedJob::class, [
+            new FinalizeWeekJob($nextStep)
+        ], function (AsyncChainedJob $chainedJob) use ($sideQuest, $campaignStop3) {
+            return $chainedJob->getDecoratedJob()->getSideQuest()->id === $sideQuest->id
+                && $chainedJob->getDecoratedJob()->getCampaignStop()->id === $campaignStop3->id;
+        });
+
+        foreach ([
+                     $campaignStop1,
+                     $campaignStop2
+                 ] as $campaignStop) {
+
+            Queue::assertNotPushed(AsyncChainedJob::class, function (AsyncChainedJob $chainedJob) use ($sideQuest, $campaignStop) {
+                return $chainedJob->getDecoratedJob()->getSideQuest()->id === $sideQuest->id
+                    && $chainedJob->getDecoratedJob()->getCampaignStop()->id === $campaignStop->id;
+            });
+        }
+    }
 }
