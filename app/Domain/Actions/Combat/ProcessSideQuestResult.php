@@ -12,6 +12,7 @@ use App\Domain\Combat\Combatants\CombatMinion;
 use App\Domain\Combat\Attacks\HeroCombatAttack;
 use App\Domain\Combat\CombatGroups\CombatSquad;
 use App\Domain\Combat\CombatGroups\SideQuestGroup;
+use App\Domain\Models\Campaign;
 use App\Domain\Models\CombatPosition;
 use App\Domain\Models\DamageType;
 use App\Domain\Models\SideQuest;
@@ -68,21 +69,25 @@ class ProcessSideQuestResult
         $this->processSideQuestMinionAttack = $processSideQuestMinionAttack;
     }
 
-    public function execute(Squad $squad, SideQuest $sideQuest)
+    /**
+     * @param Campaign $campaign
+     * @param SideQuest $sideQuest
+     * @return SideQuestResult
+     */
+    public function execute(Campaign $campaign, SideQuest $sideQuest)
     {
         /** @var CombatPositionCollection $combatPositions */
         $combatPositions = CombatPosition::all();
         $targetPriorities = TargetPriority::all();
         $damageTypes = DamageType::all();
-        $combatSquad = $this->buildCombatSquadAction->execute($squad, $combatPositions, $targetPriorities, $damageTypes);
+        $combatSquad = $this->buildCombatSquadAction->execute($campaign->squad, $combatPositions, $targetPriorities, $damageTypes);
         $sideQuestGroup = $this->buildSideQuestGroup->execute($sideQuest, $combatPositions, $targetPriorities, $damageTypes);
 
         /** @var SideQuestResult $sideQuestResult */
         $sideQuestResult = SideQuestResult::query()->create([
             'uuid' => Str::uuid()->toString(),
             'side_quest_id' => $sideQuest->id,
-            'squad_id' => $squad->id,
-            'week_id' => CurrentWeek::id()
+            'campaign_id' => $campaign->id,
         ]);
 
         $this->createBattlefieldSetEvent($sideQuestResult, $combatSquad, $sideQuestGroup);

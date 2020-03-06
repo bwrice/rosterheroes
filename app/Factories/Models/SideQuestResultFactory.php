@@ -22,12 +22,11 @@ class SideQuestResultFactory
     public function create(array $extra = []): SideQuestResult
     {
         /** @var SideQuestResult $sideQuestResult */
-        $sideQuestResult = SideQuestResult::query()->create([
+        $sideQuestResult = SideQuestResult::query()->create(array_merge([
             'uuid' => Str::uuid()->toString(),
-            'squad_id' => SquadFactory::new()->create()->id,
-            'side_quest_id' => $this->getSideQuest()->id,
-            'week_id' => factory(Week::class)->create()->id
-        ]);
+            'campaign_id' => CampaignFactory::new()->create()->id,
+            'side_quest_id' => $this->getSideQuest()->id
+        ], $extra));
 
         return $sideQuestResult;
     }

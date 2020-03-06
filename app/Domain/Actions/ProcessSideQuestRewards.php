@@ -36,7 +36,7 @@ class ProcessSideQuestRewards
             $sideQuest = $sideQuestResult->sideQuest;
             $experienceReward = $sideQuest->getExperienceReward();
 
-            $squad = $sideQuestResult->squad;
+            $squad = $sideQuestResult->campaign->squad;
             $squad->getAggregate()->increaseExperience($experienceReward)->persist();
 
             $sideQuest->chestBlueprints->each(function (ChestBlueprint $chestBlueprint) use ($squad) {
