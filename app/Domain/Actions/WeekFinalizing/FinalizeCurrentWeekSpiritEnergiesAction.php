@@ -13,7 +13,7 @@ use App\Jobs\UpdatePlayerSpiritEnergiesJob;
 
 class FinalizeCurrentWeekSpiritEnergiesAction implements FinalizeWeekDomainAction
 {
-    public function execute(int $finalizeWeekStep)
+    public function execute(int $finalizeWeekStep, array $extra = [])
     {
         $week = Week::current();
         $count = Game::query()->withPlayerSpiritsForWeeks([$week->id])->isFinalized(false)->count();

@@ -23,14 +23,20 @@ class FinalizeWeekJob implements ShouldQueue
      * @var int
      */
     public $step;
+    /**
+     * @var array
+     */
+    public $extra;
 
     /**
      * FinalizeWeekJob constructor.
      * @param int $step
+     * @param array $extra
      */
-    public function __construct(int $step)
+    public function __construct(int $step, array $extra = [])
     {
         $this->step = $step;
+        $this->extra = $extra;
     }
 
     /**
@@ -40,7 +46,7 @@ class FinalizeWeekJob implements ShouldQueue
      */
     public function handle()
     {
-        $this->getDomainAction()->execute($this->step);
+        $this->getDomainAction()->execute($this->step, $this->extra);
     }
 
     protected function getDomainAction(): FinalizeWeekDomainAction

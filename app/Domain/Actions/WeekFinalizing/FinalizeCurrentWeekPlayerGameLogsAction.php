@@ -14,7 +14,7 @@ use Bwrice\LaravelJobChainGroups\Jobs\ChainGroup;
 
 class FinalizeCurrentWeekPlayerGameLogsAction implements FinalizeWeekDomainAction
 {
-    public function execute(int $finalizeWeekStep)
+    public function execute(int $finalizeWeekStep, array $extra = [])
     {
         if (! CurrentWeek::finalizing()) {
             throw new FinalizeWeekException(CurrentWeek::get(), "Week is not ready to be finalized", FinalizeWeekException::INVALID_TIME_TO_FINALIZE);
