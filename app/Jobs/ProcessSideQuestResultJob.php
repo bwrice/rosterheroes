@@ -42,4 +42,20 @@ class ProcessSideQuestResultJob implements ShouldQueue
     {
         $processSideQuestResult->execute($this->campaignStop, $this->sideQuest);
     }
+
+    /**
+     * @return SideQuest
+     */
+    public function getSideQuest(): SideQuest
+    {
+        return $this->sideQuest;
+    }
+
+    /**
+     * @return CampaignStop
+     */
+    public function getCampaignStop(): CampaignStop
+    {
+        return $this->campaignStop;
+    }
 }
