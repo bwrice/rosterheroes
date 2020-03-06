@@ -88,7 +88,7 @@ class FinalizeCurrentWeekPlayerGameLogsActionTest extends TestCase
     {
         Queue::fake();
 
-        $step = random_int(1, 10);
+        $step = rand(1, 10);
         $nextStep = $step + 1;
 
         $this->domainAction->execute($step);
