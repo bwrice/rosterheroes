@@ -68,7 +68,7 @@ class SeedMinions extends Migration
             ],
             [
                 'name' => 'Skeleton Soldier',
-                'config_path' => '/Yaml/Minions/skeleton_solider.yaml',
+                'config_path' => '/Yaml/Minions/skeleton_soldier.yaml',
                 'enemy_type' => EnemyType::SKELETON,
                 'combat_position' => CombatPosition::FRONT_LINE,
                 'attacks' => [
