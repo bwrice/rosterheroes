@@ -15,6 +15,7 @@ use App\Factories\Combat\SideQuestGroupFactory;
 use App\Factories\Models\CampaignStopFactory;
 use App\Factories\Models\SideQuestFactory;
 use App\SideQuestEvent;
+use App\SideQuestResult;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -39,6 +40,27 @@ class ProcessSideQuestResultTest extends TestCase
         $this->campaignStop = CampaignStopFactory::new()->create();
         $this->sideQuest = SideQuestFactory::new()->create();
         $this->campaignStop->sideQuests()->save($this->sideQuest);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_throw_an_exception_if_the_campaign_stop_has_not_joined_the_side_quest()
+    {
+        $this->campaignStop->sideQuests()->sync([]);
+
+        try {
+            /** @var ProcessSideQuestResult $domainAction */
+            $domainAction = app(ProcessSideQuestResult::class);
+            $domainAction->execute($this->campaignStop, $this->sideQuest);
+        } catch (\Exception $exception) {
+            $sideQuestResult = SideQuestResult::query()
+                ->where('side_quest_id', '=', $this->sideQuest->id)
+                ->where('campaign_stop_id', '=', $this->campaignStop->id)->first();
+            $this->assertNull($sideQuestResult);
+            return;
+        }
+        $this->fail("Exception not thrown");
     }
 
     /**
@@ -253,6 +275,7 @@ class ProcessSideQuestResultTest extends TestCase
 
         /** @var SideQuest $sideQuest */
         $sideQuest = SideQuest::query()->where('name', '=', 'Small Skeleton Pack')->first();
+        $this->campaignStop->sideQuests()->save($sideQuest);
 
         /** @var ProcessSideQuestResult $domainAction */
         $domainAction = app(ProcessSideQuestResult::class);

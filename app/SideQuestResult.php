@@ -2,11 +2,8 @@
 
 namespace App;
 
-use App\Domain\Models\Campaign;
 use App\Domain\Models\CampaignStop;
 use App\Domain\Models\SideQuest;
-use App\Domain\Models\Squad;
-use App\Domain\Models\Week;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;

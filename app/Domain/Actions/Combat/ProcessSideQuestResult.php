@@ -74,9 +74,18 @@ class ProcessSideQuestResult
      * @param CampaignStop $campaignStop
      * @param SideQuest $sideQuest
      * @return SideQuestResult
+     * @throws \Exception
      */
     public function execute(CampaignStop $campaignStop, SideQuest $sideQuest)
     {
+        $matchingSideQuest = $campaignStop->sideQuests->first(function (SideQuest $sideQuestForCampaignStop) use ($sideQuest) {
+            return $sideQuestForCampaignStop->id === $sideQuest->id;
+        });
+
+        if (! $matchingSideQuest) {
+            throw new \Exception("Side quest does not belong campaign stop");
+        }
+
         /** @var CombatPositionCollection $combatPositions */
         $combatPositions = CombatPosition::all();
         $targetPriorities = TargetPriority::all();
