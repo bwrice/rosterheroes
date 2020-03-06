@@ -86,4 +86,40 @@ class ProcessCurrentWeekSideQuestsActionTest extends TestCase
             });
         }
     }
+
+    /**
+     * @test
+     */
+    public function it_wont_dispatch_campaign_stops_for_the_non_current_week()
+    {
+        $validCampaignFactory = CampaignFactory::new()->withWeekID($this->currentWeek->id);
+        $validCampaignStopFactory = CampaignStopFactory::new()->withCampaign($validCampaignFactory);
+
+        $validCampaignStop = $validCampaignStopFactory->create();
+
+        $invalidCampaignFactory = CampaignFactory::new()->withWeekID(factory(Week::class)->create()->id);
+        $invalidCampaignStopFactory = CampaignStopFactory::new()->withCampaign($invalidCampaignFactory);
+
+        $invalidCampaignStop = $invalidCampaignStopFactory->create();
+
+        $sideQuest = SideQuestFactory::new()->create();
+
+        $validCampaignStop->sideQuests()->save($sideQuest);
+        $invalidCampaignStop->sideQuests()->save($sideQuest);
+
+        $step = rand(1, 10);
+        Queue::fake();
+
+        /** @var ProcessCurrentWeekSideQuestsAction $domainAction */
+        $domainAction = app(ProcessCurrentWeekSideQuestsAction::class);
+        $domainAction->execute($step);
+
+        Queue::assertPushed(AsyncChainedJob::class, function (AsyncChainedJob $chainedJob) use ($validCampaignStop) {
+            return $chainedJob->getDecoratedJob()->getCampaignStop()->id === $validCampaignStop->id;
+        });
+
+        Queue::assertNotPushed(AsyncChainedJob::class, function (AsyncChainedJob $chainedJob) use ($invalidCampaignStop) {
+            return $chainedJob->getDecoratedJob()->getCampaignStop()->id === $invalidCampaignStop->id;
+        });
+    }
 }
