@@ -122,4 +122,48 @@ class ProcessCurrentWeekSideQuestsActionTest extends TestCase
             return $chainedJob->getDecoratedJob()->getCampaignStop()->id === $invalidCampaignStop->id;
         });
     }
+
+    /**
+     * @test
+     */
+    public function it_will_dispatch_finalize_week_with_same_step_and_with_last_campaign_stop_id_if_max_jobs_reached()
+    {
+        $campaignFactory = CampaignFactory::new()->withWeekID($this->currentWeek->id);
+        $campaignStopFactory = CampaignStopFactory::new()->withCampaign($campaignFactory);
+
+        $campaignStop1 = $campaignStopFactory->create();
+        $campaignStop2 = $campaignStopFactory->create();
+        $campaignStop3 = $campaignStopFactory->create();
+
+        $sideQuest = SideQuestFactory::new()->create();
+
+        $campaignStop1->sideQuests()->save($sideQuest);
+        $campaignStop2->sideQuests()->save($sideQuest);
+        $campaignStop3->sideQuests()->save($sideQuest);
+
+        $originalStep = rand(1, 10);
+        Queue::fake();
+
+        /** @var ProcessCurrentWeekSideQuestsAction $domainAction */
+        $domainAction = app(ProcessCurrentWeekSideQuestsAction::class);
+        $domainAction->setMaxCampaignStopsQueried(2);
+        $domainAction->execute($originalStep);
+
+        $extra = [
+            'last_campaign_stop_id' => $campaignStop2->id
+        ];
+
+        foreach ([
+                     $campaignStop1,
+                     $campaignStop2
+                 ] as $campaignStop) {
+
+            Queue::assertPushedWithChain(AsyncChainedJob::class, [
+                new FinalizeWeekJob($originalStep, $extra)
+            ], function (AsyncChainedJob $chainedJob) use ($sideQuest, $campaignStop) {
+                return $chainedJob->getDecoratedJob()->getSideQuest()->id === $sideQuest->id
+                    && $chainedJob->getDecoratedJob()->getCampaignStop()->id === $campaignStop->id;
+            });
+        }
+    }
 }
