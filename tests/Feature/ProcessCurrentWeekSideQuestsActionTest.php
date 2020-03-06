@@ -146,7 +146,7 @@ class ProcessCurrentWeekSideQuestsActionTest extends TestCase
 
         /** @var ProcessCurrentWeekSideQuestsAction $domainAction */
         $domainAction = app(ProcessCurrentWeekSideQuestsAction::class);
-        $domainAction->setMaxCampaignStopsQueried(2);
+        $domainAction->setMaxCampaignStopsQueried(2); // set to 2 because we have 3 campaign stops
         $domainAction->execute($originalStep);
 
         $extra = [
@@ -160,6 +160,48 @@ class ProcessCurrentWeekSideQuestsActionTest extends TestCase
 
             Queue::assertPushedWithChain(AsyncChainedJob::class, [
                 new FinalizeWeekJob($originalStep, $extra)
+            ], function (AsyncChainedJob $chainedJob) use ($sideQuest, $campaignStop) {
+                return $chainedJob->getDecoratedJob()->getSideQuest()->id === $sideQuest->id
+                    && $chainedJob->getDecoratedJob()->getCampaignStop()->id === $campaignStop->id;
+            });
+        }
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_increase_next_step_job_without_extra_data_if_exactly_max_stops_needed_for_processing()
+    {
+        $campaignFactory = CampaignFactory::new()->withWeekID($this->currentWeek->id);
+        $campaignStopFactory = CampaignStopFactory::new()->withCampaign($campaignFactory);
+
+        $campaignStop1 = $campaignStopFactory->create();
+        $campaignStop2 = $campaignStopFactory->create();
+        $campaignStop3 = $campaignStopFactory->create();
+
+        $sideQuest = SideQuestFactory::new()->create();
+
+        $campaignStop1->sideQuests()->save($sideQuest);
+        $campaignStop2->sideQuests()->save($sideQuest);
+        $campaignStop3->sideQuests()->save($sideQuest);
+
+        $originalStep = rand(1, 10);
+        $nextStep = $originalStep + 1;
+        Queue::fake();
+
+        /** @var ProcessCurrentWeekSideQuestsAction $domainAction */
+        $domainAction = app(ProcessCurrentWeekSideQuestsAction::class);
+        $domainAction->setMaxCampaignStopsQueried(3); // set to 3 for exact amount of stops we have
+        $domainAction->execute($originalStep);
+
+        foreach ([
+                     $campaignStop1,
+                     $campaignStop2,
+                     $campaignStop3
+                 ] as $campaignStop) {
+
+            Queue::assertPushedWithChain(AsyncChainedJob::class, [
+                new FinalizeWeekJob($nextStep)
             ], function (AsyncChainedJob $chainedJob) use ($sideQuest, $campaignStop) {
                 return $chainedJob->getDecoratedJob()->getSideQuest()->id === $sideQuest->id
                     && $chainedJob->getDecoratedJob()->getCampaignStop()->id === $campaignStop->id;
