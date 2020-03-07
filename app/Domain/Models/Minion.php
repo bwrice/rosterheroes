@@ -36,14 +36,6 @@ class Minion extends Model implements HasAttacks, HasFantasyPoints
     use HasConfigAttributes;
     use HasNameSlug;
 
-    protected $level;
-    protected $base_damage_rating;
-    protected $damage_multiplier_rating;
-    protected $health_rating;
-    protected $protection_rating;
-    protected $combat_speed_rating;
-    protected $block_rating;
-
     protected $guarded = [];
 
     public function newCollection(array $models = [])
@@ -73,38 +65,47 @@ class Minion extends Model implements HasAttacks, HasFantasyPoints
 
     public function getStartingHealth(): int
     {
-        $enemyTypeBonus = $this->getEnemyTypeBehavior()->getHealthModifierBonus();
-        return (int) ceil(sqrt($this->getLevel()) * ($this->getLevel()/5) * $this->getHealthRating() * (1 + $enemyTypeBonus));
+        $level = $this->getLevel();
+        $startingAmount = (100 * $level) + (2 * ($level**2));
+        $enemyTypeModifier = 1 + $this->getEnemyTypeBehavior()->getHealthModifierBonus();
+        return (int) ceil($startingAmount * $enemyTypeModifier);
     }
 
     public function getProtection(): int
     {
-        $enemyTypeBonus = $this->getEnemyTypeBehavior()->getProtectionModifierBonus();
-        return (int) ceil(sqrt($this->getLevel()) * ($this->getLevel()/5) * $this->getProtectionRating() * (1 + $enemyTypeBonus));
+        $level = $this->getLevel();
+        $startingAmount = (10 * $level) + (.2 * ($level**2));
+        $enemyModifier = 1 + $this->getEnemyTypeBehavior()->getProtectionModifierBonus();
+        return (int) ceil($startingAmount + $enemyModifier);
     }
 
     public function getBlockChance(): float
     {
-        $enemyTypeBonus = $this->getEnemyTypeBehavior()->getProtectionModifierBonus();
-        return ($this->getBlockRating()/4) * (1 + $enemyTypeBonus + (sqrt($this->getLevel())/25));
+        $levelModifier = 1 + $this->getLevel()/200;
+        $enemyTypeModifier = 1 + $this->getEnemyTypeBehavior()->getProtectionModifierBonus();
+        $baseBlockChance = $this->getBlockRating()/4;
+        return min(70, $baseBlockChance * $levelModifier * $enemyTypeModifier);
     }
 
     public function adjustBaseDamage(float $baseDamage): float
     {
-        $enemyTypeBonus = $this->getEnemyTypeBehavior()->getBaseDamageModifierBonus();
-        return (int) ceil(sqrt($this->getLevel()) * ($this->getLevel()/5) * $this->getBaseDamageRating() * (1 + $enemyTypeBonus));
+        $levelModifier = 1 + ($this->getLevel()/10);
+        $enemyTypeModifier = 1 + $this->getEnemyTypeBehavior()->getBaseDamageModifierBonus();
+        return (int) ceil($baseDamage * $levelModifier * $enemyTypeModifier);
     }
 
     public function adjustCombatSpeed(float $speed): float
     {
-        $enemyTypeBonus = $this->getEnemyTypeBehavior()->getCombatSpeedModifierBonus();
-        return (int) ceil(sqrt($this->getLevel()) * ($this->getLevel()/5) * $this->getCombatSpeedRating() * (1 + $enemyTypeBonus));
+        $levelModifier = 1 + $this->getLevel()/200;
+        $enemyTypeModifier = 1 + $this->getEnemyTypeBehavior()->getCombatSpeedModifierBonus();
+        return (int) ceil($speed * $levelModifier * $enemyTypeModifier);
     }
 
     public function adjustDamageMultiplier(float $damageModifier): float
     {
-        $enemyTypeBonus = $this->getEnemyTypeBehavior()->getCombatSpeedModifierBonus();
-        return (int) ceil(sqrt($this->getLevel()) * ($this->getLevel()/5) * $this->getDamageMultiplierRating() * (1 + $enemyTypeBonus));
+        $levelModifier = 1 + ($this->getLevel()/100);
+        $enemyTypeModifier = 1 + $this->getEnemyTypeBehavior()->getDamageMultiplierModifierBonus();
+        return (int) ceil($damageModifier * $levelModifier * $enemyTypeModifier);
     }
 
     public function adjustResourceCostAmount(float $amount): float
