@@ -15,7 +15,6 @@ use Illuminate\Database\Eloquent\Collection;
 
 class BuildHeroCombatAttack extends AbstractBuildCombatAttack
 {
-
     public function execute(
         Attack $attack,
         Item $item,
@@ -24,6 +23,8 @@ class BuildHeroCombatAttack extends AbstractBuildCombatAttack
         Collection $targetPriorities = null,
         Collection $damageTypes = null)
     {
+        $item->setUsesItems($hero);
+        $attack->setHasAttacks($item);
         $combatPositions = $combatPositions ?: CombatPosition::all();
         $targetPriorities = $targetPriorities ?: TargetPriority::all();
         $damageTypes = $damageTypes ?: DamageType::all();
