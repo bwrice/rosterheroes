@@ -134,22 +134,25 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
     public function adjustCombatSpeed(float $speed): float
     {
         $gradeBonus = ($this->itemTypeGrade() ** .5)/25;
+        $materialBonus = $this->material->getSpeedModifierBonus();
         $behaviorBonus = $this->getItemBaseBehavior()->getCombatSpeedBonus($this->getUsesItems());
-        return $speed * (1 + $gradeBonus + $behaviorBonus);
+        return $speed * (1 + $gradeBonus + $materialBonus + $behaviorBonus);
     }
 
     public function adjustBaseDamage(float $baseDamage): float
     {
         $gradeBonus = $this->itemTypeGrade()/100;
+        $materialBonus = $this->material->getBaseDamageModifierBonus();
         $behaviorBonus = $this->getItemBaseBehavior()->getBaseDamageBonus($this->getUsesItems());
-        return $baseDamage * (1 + $gradeBonus + $behaviorBonus);
+        return $baseDamage * (1 + $gradeBonus + $materialBonus + $behaviorBonus);
     }
 
     public function adjustDamageMultiplier(float $damageModifier): float
     {
         $gradeBonus = $this->itemTypeGrade()/100;
+        $materialBonus = $this->material->getDamageMultiplierModifierBonus();
         $behaviorBonus = $this->getItemBaseBehavior()->getDamageMultiplierBonus($this->getUsesItems());
-        return $damageModifier * (1 + $gradeBonus + $behaviorBonus);
+        return $damageModifier * (1 + $gradeBonus + $materialBonus + $behaviorBonus);
     }
 
     public function getUsesItems(): ?UsesItems
