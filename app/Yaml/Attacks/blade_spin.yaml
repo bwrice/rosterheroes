@@ -1,7 +1,7 @@
 grade: 24
-speed_rating: 3.5
-base_damage_rating: 12
-damage_multiplier_rating: 22
+speed: 5.35
+base_damage: 95
+damage_multiplier: 4.85
 resource_costs:
     -
         type: fixed

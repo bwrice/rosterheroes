@@ -1,8 +1,8 @@
 fixed_target_count: 1
 grade: 22
-speed_rating: 4
-base_damage_rating: 9
-damage_multiplier_rating: 12
+speed: 6.35
+base_damage: 142
+damage_multiplier: 9.85
 resource_costs:
     -
         type: fixed
