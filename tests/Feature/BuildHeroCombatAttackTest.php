@@ -31,7 +31,7 @@ class BuildHeroCombatAttackTest extends TestCase
     {
         parent::setUp();
 
-        $this->hero = HeroFactory::new()->create();
+        $this->hero = HeroFactory::new()->withMeasurables()->create();
         $this->item = ItemFactory::new()->create();
         $this->attack = AttackFactory::new()->create();
     }
