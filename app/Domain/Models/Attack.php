@@ -117,10 +117,7 @@ class Attack extends Model
 
     public function getBaseDamage(): int
     {
-        $baseDamage = 10 * sqrt($this->getBaseDamageRating());
-        $attackerPositionBonus = $this->attackerPosition->getBehavior()->getBaseDamageBonus();
-        $damageTypeBonus = $this->damageType->getBehavior()->getBaseDamageBonus($this->getFixedTargetCount());
-        $baseDamage *= (1 + $attackerPositionBonus + $damageTypeBonus);
+        $baseDamage = $this->getInitialBaseDamage();
         if ($this->hasAttacks) {
             $baseDamage = $this->hasAttacks->adjustBaseDamage($baseDamage);
         }
@@ -129,10 +126,7 @@ class Attack extends Model
 
     public function getCombatSpeed(): float
     {
-        $combatSpeed = $this->getSpeedRating();
-        $attackerPositionBonus = $this->attackerPosition->getBehavior()->getCombatSpeedBonus();
-        $damageTypeBonus = $this->damageType->getBehavior()->getCombatSpeedBonus($this->getFixedTargetCount());
-        $combatSpeed *= (1 + $attackerPositionBonus + $damageTypeBonus);
+        $combatSpeed = $this->getInitialSpeed();
         if ($this->hasAttacks) {
             $combatSpeed = $this->hasAttacks->adjustCombatSpeed($combatSpeed);
         }
@@ -141,10 +135,7 @@ class Attack extends Model
 
     public function getDamageMultiplier(): float
     {
-        $damageMultiplier = $this->getDamageMultiplierRating()**.25;
-        $attackerPositionBonus = $this->attackerPosition->getBehavior()->getDamageMultiplierBonus();
-        $damageTypeBonus = $this->damageType->getBehavior()->getDamageMultiplierBonus($this->getFixedTargetCount());
-        $damageMultiplier *= (1 + $attackerPositionBonus + $damageTypeBonus);
+        $damageMultiplier = $this->getInitialDamageMultiplier();
         if ($this->hasAttacks) {
             $damageMultiplier = $this->hasAttacks->adjustDamageMultiplier($damageMultiplier);
         }
@@ -188,19 +179,19 @@ class Attack extends Model
         return $this->getConfigAttribute('fixed_target_count');
     }
 
-    public function getSpeedRating()
+    public function getInitialSpeed()
     {
-        return $this->getConfigAttribute('speed_rating');
+        return $this->getConfigAttribute('speed');
     }
 
-    public function getBaseDamageRating()
+    public function getInitialBaseDamage()
     {
-        return $this->getConfigAttribute('base_damage_rating');
+        return $this->getConfigAttribute('base_damage');
     }
 
-    public function getDamageMultiplierRating()
+    public function getInitialDamageMultiplier()
     {
-        return $this->getConfigAttribute('damage_multiplier_rating');
+        return $this->getConfigAttribute('damage_multiplier');
     }
 
     public function getResourceCosts()
