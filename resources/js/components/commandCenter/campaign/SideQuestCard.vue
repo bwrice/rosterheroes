@@ -32,7 +32,7 @@
                 class="mt-2"
                 @click="handleLeaveSideQuestClicked"
             >
-                Join Side Quest
+                Leave Side Quest
             </v-btn>
             <v-btn
                 v-else
@@ -41,7 +41,7 @@
                 :disabled="! canJoinSideQuest"
                 @click="handleJoinSideQuestClicked"
             >
-                Leave Side Quest
+                Join Side Quest
             </v-btn>
         </v-row>
     </v-sheet>
