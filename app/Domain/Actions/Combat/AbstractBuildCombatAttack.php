@@ -14,14 +14,15 @@ use Illuminate\Database\Eloquent\Collection;
 
 abstract class AbstractBuildCombatAttack
 {
-    /**
-     * @var FantasyPower
-     */
-    protected $fantasyPower;
 
-    public function __construct(FantasyPower $fantasyPower)
+    /**
+     * @var CalculateCombatDamage
+     */
+    protected $calculateCombatDamage;
+
+    public function __construct(CalculateCombatDamage $calculateCombatDamage)
     {
-        $this->fantasyPower = $fantasyPower;
+        $this->calculateCombatDamage = $calculateCombatDamage;
     }
 
     protected function getAttackerPosition(Attack $attack, Collection $allCombatPositions)
@@ -50,14 +51,6 @@ abstract class AbstractBuildCombatAttack
         /** @var DamageType $damageType */
         $damageType = $allDamageTypes->find($attack->damage_type_id);
         return $damageType;
-    }
-
-    protected function calculateAttackDamage(Attack $attack, HasFantasyPoints $hasFantasyPoints)
-    {
-        $fantasyPower = $this->fantasyPower->calculate($hasFantasyPoints->getFantasyPoints());
-        $baseDamage = $attack->getBaseDamage();
-        $damageMultiplier = $attack->getDamageMultiplier();
-        return (int) max(ceil($baseDamage + ($damageMultiplier * $fantasyPower)), 1);
     }
 
 }

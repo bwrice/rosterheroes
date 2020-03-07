@@ -35,7 +35,7 @@ class BuildMinionCombatAttack extends AbstractBuildCombatAttack
         $targetPriorities = $targetPriorities ?: TargetPriority::all();
         $damageTypes = $damageTypes ?: DamageType::all();
 
-        $damage = $this->calculateAttackDamage($attack, $minion);
+        $damage = $this->calculateCombatDamage->execute($attack, $minion);
         return new MinionCombatAttack(
             $minion->uuid,
             $attack->name,
