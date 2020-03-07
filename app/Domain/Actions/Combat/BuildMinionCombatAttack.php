@@ -31,6 +31,7 @@ class BuildMinionCombatAttack extends AbstractBuildCombatAttack
         Collection $targetPriorities = null,
         Collection $damageTypes = null)
     {
+        $attack->setHasAttacks($minion);
         $combatPositions = $combatPositions ?: CombatPosition::all();
         $targetPriorities = $targetPriorities ?: TargetPriority::all();
         $damageTypes = $damageTypes ?: DamageType::all();
