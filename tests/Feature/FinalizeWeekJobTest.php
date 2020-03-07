@@ -28,7 +28,7 @@ class FinalizeWeekJobTest extends TestCase
         app()->instance($domainAction, $spy);
         $job = new FinalizeWeekJob($step);
         $job->handle();
-        $spy->shouldHaveReceived('execute')->with($step);
+        $spy->shouldHaveReceived('execute')->with($step, []);
     }
 
     public function provides_it_will_execute_the_expected_finalize_week_action_for_step()
