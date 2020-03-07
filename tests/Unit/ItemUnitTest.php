@@ -112,30 +112,26 @@ class ItemUnitTest extends TestCase
         $materialType2_ID = MaterialType::forName($materialType2)->id;
 
         /** @var Material $firstMaterial */
-        $firstMaterial = Material::query()->where('material_type_id', '=', $materialType1_ID)->orderBy('grade')->first();
+        $firstMaterial = Material::query()->where('material_type_id', '=', $materialType1_ID)->first();
+        $firstMaterial->grade = 100;
         /** @var Material $secondMaterial */
-        $secondMaterial = Material::query()->where('material_type_id', '=', $materialType2_ID)->orderBy('grade')->first();
-        /** @var Material $secondMaterial */
-
-        $this->assertNotNull($secondMaterial);
+        $secondMaterial = Material::query()->where('material_type_id', '=', $materialType2_ID)->first();
+        $secondMaterial->grade = 100;
 
         /*
          * Set item to a high grade shield because weight is rounded, because sometimes, for lighter items,
          * the material doesn't make enough difference to get a different integer
          */
-        $itemType = ItemType::query()->whereHas('itemBase', function (Builder $builder) {
+        $heavyShieldType = ItemType::query()->whereHas('itemBase', function (Builder $builder) {
             $builder->where('name', '=', ItemBase::SHIELD);
         })->orderByDesc('grade')->first();
-        $this->item->item_type_id = $itemType->id;
-        $this->item->save();
+        $this->item->itemType = $heavyShieldType;
+        $this->item->material = $firstMaterial;
+        $weight1 = $this->item->weight();
 
-        $this->item->material_id = $firstMaterial->id;
-        $this->item->save();
-        $weight1 = $this->item->fresh()->weight();
+        $this->item->material = $secondMaterial;
+        $weight2 = $this->item->weight();
 
-        $this->item->material_id = $secondMaterial->id;
-        $this->item->save();
-        $weight2 = $this->item->fresh()->weight();
 
         $this->assertGreaterThan($weight1, $weight2);
     }
