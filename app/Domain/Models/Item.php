@@ -135,7 +135,7 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
     {
         $gradeBonus = ($this->itemTypeGrade() ** .5)/25;
         $materialBonus = $this->material->getSpeedModifierBonus();
-        $behaviorBonus = $this->getItemBaseBehavior()->getCombatSpeedBonus($this->getUsesItems());
+        $behaviorBonus = $this->getItemBaseBehavior()->adjustCombatSpeed($this->getUsesItems());
         return $speed * (1 + $gradeBonus + $materialBonus + $behaviorBonus);
     }
 
@@ -143,16 +143,18 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
     {
         $gradeBonus = $this->itemTypeGrade()/100;
         $materialBonus = $this->material->getBaseDamageModifierBonus();
-        $behaviorBonus = $this->getItemBaseBehavior()->getBaseDamageBonus($this->getUsesItems());
-        return $baseDamage * (1 + $gradeBonus + $materialBonus + $behaviorBonus);
+        $baseDamage = $baseDamage * (1 + $gradeBonus + $materialBonus);
+        $baseDamage = $this->getItemBaseBehavior()->adjustBaseDamage($baseDamage, $this->getUsesItems());
+        return $baseDamage;
     }
 
-    public function adjustDamageMultiplier(float $damageModifier): float
+    public function adjustDamageMultiplier(float $damageMultiplier): float
     {
         $gradeBonus = $this->itemTypeGrade()/100;
         $materialBonus = $this->material->getDamageMultiplierModifierBonus();
-        $behaviorBonus = $this->getItemBaseBehavior()->getDamageMultiplierBonus($this->getUsesItems());
-        return $damageModifier * (1 + $gradeBonus + $materialBonus + $behaviorBonus);
+        $damageMultiplier = $damageMultiplier * (1 + $gradeBonus + $materialBonus);
+        $damageMultiplier = $this->getItemBaseBehavior()->adjustDamageMultiplier($damageMultiplier, $this->getUsesItems());
+        return $damageMultiplier;
     }
 
     public function getUsesItems(): ?UsesItems
