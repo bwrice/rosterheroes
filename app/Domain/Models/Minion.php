@@ -101,11 +101,11 @@ class Minion extends Model implements HasAttacks, HasFantasyPoints
         return (int) ceil($speed * $levelModifier * $enemyTypeModifier);
     }
 
-    public function adjustDamageMultiplier(float $damageModifier): float
+    public function adjustDamageMultiplier(float $damageMultiplier): float
     {
         $levelModifier = 1 + ($this->getLevel()/100);
         $enemyTypeModifier = 1 + $this->getEnemyTypeBehavior()->getDamageMultiplierModifierBonus();
-        return (int) ceil($damageModifier * $levelModifier * $enemyTypeModifier);
+        return (int) ceil($damageMultiplier * $levelModifier * $enemyTypeModifier);
     }
 
     public function adjustResourceCostAmount(float $amount): float
