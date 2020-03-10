@@ -23,6 +23,10 @@ class DaggerBehavior extends WeaponBehavior
     protected $weightModifier = 2.8;
     protected $blockChanceModifier = 0;
 
+    protected $baseDamageModifierBonus = -.6;
+    protected $damageMultiplierModifierBonus = -.6;
+    protected $combatSpeedModifierBonus = .5;
+
     public function __construct(WeaponGroup $weaponGroup, SingleArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);
@@ -55,7 +59,7 @@ class DaggerBehavior extends WeaponBehavior
         return .2;
     }
 
-    protected function getBaseDamageMeasurablesModifier(UsesItems $usesItems): float
+    protected function getBaseDamageMeasurablesBonus(UsesItems $usesItems): float
     {
         return $this->getMeasurablesDamageBonus($usesItems);
     }
@@ -65,7 +69,7 @@ class DaggerBehavior extends WeaponBehavior
         return $this->getMeasurablesDamageBonus($usesItems);
     }
 
-    protected function getMeasurablesDamageBonus(UsesItems $usesItems)
+    protected function getMeasurablesDamageBonus(UsesItems $usesItems): float
     {
         $agilityBonus = .0125 * $usesItems->getBuffedMeasurableAmount(MeasurableType::AGILITY);
         $focusBonus = .0125 * $usesItems->getBuffedMeasurableAmount(MeasurableType::FOCUS);

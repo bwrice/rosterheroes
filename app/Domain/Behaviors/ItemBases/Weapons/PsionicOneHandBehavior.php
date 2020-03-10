@@ -23,6 +23,10 @@ class PsionicOneHandBehavior extends WeaponBehavior
     protected $weightModifier = 3;
     protected $blockChanceModifier = 0;
 
+    protected $baseDamageModifierBonus = 0;
+    protected $damageMultiplierModifierBonus = 0;
+    protected $combatSpeedModifierBonus = 0;
+
     public function __construct(WeaponGroup $weaponGroup, SingleArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);
@@ -55,7 +59,7 @@ class PsionicOneHandBehavior extends WeaponBehavior
         return .1;
     }
 
-    protected function getBaseDamageMeasurablesModifier(UsesItems $usesItems): float
+    protected function getBaseDamageMeasurablesBonus(UsesItems $usesItems): float
     {
         return 1 + $this->getMeasurablesDamageBonus($usesItems);
     }
@@ -65,7 +69,7 @@ class PsionicOneHandBehavior extends WeaponBehavior
         return 1 + $this->getMeasurablesDamageBonus($usesItems);
     }
 
-    protected function getMeasurablesDamageBonus(UsesItems $usesItems)
+    protected function getMeasurablesDamageBonus(UsesItems $usesItems): float
     {
         $agilityBonus = .007 * $usesItems->getBuffedMeasurableAmount(MeasurableType::AGILITY);
         $aptitudeBonus = .007 * $usesItems->getBuffedMeasurableAmount(MeasurableType::APTITUDE);

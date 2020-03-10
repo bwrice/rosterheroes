@@ -10,7 +10,6 @@ namespace App\Domain\Behaviors\ItemBases\Weapons;
 
 
 use App\Domain\Behaviors\ItemBases\Weapons\ArmBehaviors\SingleArmBehavior;
-use App\Domain\Behaviors\ItemBases\Weapons\WeaponBehavior;
 use App\Domain\Behaviors\ItemGroup\WeaponGroup;
 use App\Domain\Interfaces\UsesItems;
 use App\Domain\Models\MeasurableType;
@@ -22,6 +21,10 @@ class WandBehavior extends WeaponBehavior
 
     protected $weightModifier = 2;
     protected $blockChanceModifier = 0;
+
+    protected $baseDamageModifierBonus = 0;
+    protected $damageMultiplierModifierBonus = 0;
+    protected $combatSpeedModifierBonus = 0;
 
     public function __construct(WeaponGroup $weaponGroup, SingleArmBehavior $armBehavior)
     {
@@ -55,7 +58,7 @@ class WandBehavior extends WeaponBehavior
         return .3;
     }
 
-    protected function getBaseDamageMeasurablesModifier(UsesItems $usesItems): float
+    protected function getBaseDamageMeasurablesBonus(UsesItems $usesItems): float
     {
         return $this->getMeasurablesDamageBonus($usesItems);
     }
@@ -65,7 +68,7 @@ class WandBehavior extends WeaponBehavior
         return $this->getMeasurablesDamageBonus($usesItems);
     }
 
-    protected function getMeasurablesDamageBonus(UsesItems $usesItems)
+    protected function getMeasurablesDamageBonus(UsesItems $usesItems): float
     {
         $aptitudeBonus = .0125 * $usesItems->getBuffedMeasurableAmount(MeasurableType::APTITUDE);
         $intelligenceBonus = .0125 * $usesItems->getBuffedMeasurableAmount(MeasurableType::INTELLIGENCE);

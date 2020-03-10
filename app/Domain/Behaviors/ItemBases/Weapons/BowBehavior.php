@@ -22,6 +22,10 @@ class BowBehavior extends WeaponBehavior
     protected $weightModifier = 8.5;
     protected $blockChanceModifier = .5;
 
+    protected $baseDamageModifierBonus = 0;
+    protected $damageMultiplierModifierBonus = 0;
+    protected $combatSpeedModifierBonus = 0;
+
     public function __construct(WeaponGroup $weaponGroup, TwoArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);
@@ -54,17 +58,7 @@ class BowBehavior extends WeaponBehavior
         return .35;
     }
 
-    protected function getBaseDamageMeasurablesModifier(UsesItems $usesItems): float
-    {
-        return $this->getMeasurablesDamageBonus($usesItems);
-    }
-
-    protected function getDamageMultiplierMeasurablesBonus(UsesItems $usesItems): float
-    {
-        return $this->getMeasurablesDamageBonus($usesItems);
-    }
-
-    protected function getMeasurablesDamageBonus(UsesItems $usesItems)
+    protected function getMeasurablesDamageBonus(UsesItems $usesItems): float
     {
         $strengthBonus = .006 * $usesItems->getBuffedMeasurableAmount(MeasurableType::STRENGTH);
         $agilityBonus = .008 * $usesItems->getBuffedMeasurableAmount(MeasurableType::AGILITY);

@@ -20,8 +20,9 @@ class StaffBehavior extends WeaponBehavior
     public const SPEED_RATING = 35;
     public const BASE_DAMAGE_RAGING = 44;
 
-    protected $weightModifier = 7.3;
-    protected $blockChanceModifier = .5;
+    protected $baseDamageModifierBonus = .4;
+    protected $damageMultiplierModifierBonus = .4;
+    protected $combatSpeedModifierBonus = -.25;
 
     public function __construct(WeaponGroup $weaponGroup, TwoArmBehavior $armBehavior)
     {
@@ -55,7 +56,7 @@ class StaffBehavior extends WeaponBehavior
         return .4;
     }
 
-    protected function getBaseDamageMeasurablesModifier(UsesItems $usesItems): float
+    protected function getBaseDamageMeasurablesBonus(UsesItems $usesItems): float
     {
         return $this->getMeasurablesDamageBonus($usesItems);
     }
@@ -65,7 +66,7 @@ class StaffBehavior extends WeaponBehavior
         return $this->getMeasurablesDamageBonus($usesItems);
     }
 
-    protected function getMeasurablesDamageBonus(UsesItems $usesItems)
+    protected function getMeasurablesDamageBonus(UsesItems $usesItems): float
     {
         $valorBonus = .006 * $usesItems->getBuffedMeasurableAmount(MeasurableType::VALOR);
         $aptitudeBonus = .006 * $usesItems->getBuffedMeasurableAmount(MeasurableType::APTITUDE);

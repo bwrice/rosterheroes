@@ -23,6 +23,10 @@ class SwordBehavior extends WeaponBehavior
     protected $weightModifier = 5;
     protected $blockChanceModifier = 0;
 
+    protected $baseDamageModifierBonus = -.3;
+    protected $damageMultiplierModifierBonus = -.3;
+    protected $combatSpeedModifierBonus = .25;
+
     public function __construct(WeaponGroup $weaponGroup, SingleArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);
@@ -55,7 +59,7 @@ class SwordBehavior extends WeaponBehavior
         return .65;
     }
 
-    protected function getBaseDamageMeasurablesModifier(UsesItems $usesItems): float
+    protected function getBaseDamageMeasurablesBonus(UsesItems $usesItems): float
     {
         return $this->getMeasurablesDamageBonus($usesItems);
     }
@@ -65,7 +69,7 @@ class SwordBehavior extends WeaponBehavior
         return $this->getMeasurablesDamageBonus($usesItems);
     }
 
-    protected function getMeasurablesDamageBonus(UsesItems $usesItems)
+    protected function getMeasurablesDamageBonus(UsesItems $usesItems): float
     {
         $strengthBonus = .007 * $usesItems->getBuffedMeasurableAmount(MeasurableType::STRENGTH);
         $valorBonus = .007 * $usesItems->getBuffedMeasurableAmount(MeasurableType::VALOR);

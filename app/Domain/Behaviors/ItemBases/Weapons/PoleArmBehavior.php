@@ -23,6 +23,10 @@ class PoleArmBehavior extends WeaponBehavior
     protected $weightModifier = 9;
     protected $blockChanceModifier = 1.7;
 
+    protected $baseDamageModifierBonus = -.6;
+    protected $damageMultiplierModifierBonus = -.6;
+    protected $combatSpeedModifierBonus = .5;
+
     public function __construct(WeaponGroup $weaponGroup, TwoArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);
@@ -55,7 +59,7 @@ class PoleArmBehavior extends WeaponBehavior
         return .8;
     }
 
-    protected function getBaseDamageMeasurablesModifier(UsesItems $usesItems): float
+    protected function getBaseDamageMeasurablesBonus(UsesItems $usesItems): float
     {
         return $this->getMeasurablesDamageBonus($usesItems);
     }
@@ -65,7 +69,7 @@ class PoleArmBehavior extends WeaponBehavior
         return $this->getMeasurablesDamageBonus($usesItems);
     }
 
-    protected function getMeasurablesDamageBonus(UsesItems $usesItems)
+    protected function getMeasurablesDamageBonus(UsesItems $usesItems): float
     {
         $valorBonus = .006 * $usesItems->getBuffedMeasurableAmount(MeasurableType::VALOR);
         $agilityBonus = .012 * $usesItems->getBuffedMeasurableAmount(MeasurableType::AGILITY);

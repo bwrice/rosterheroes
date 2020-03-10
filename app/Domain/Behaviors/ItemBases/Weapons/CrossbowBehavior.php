@@ -23,6 +23,10 @@ class CrossbowBehavior extends WeaponBehavior
     protected $weightModifier = 9;
     protected $blockChanceModifier = 0;
 
+    protected $baseDamageModifierBonus = .4;
+    protected $damageMultiplierModifierBonus = .4;
+    protected $combatSpeedModifierBonus = -.25;
+
     public function __construct(WeaponGroup $weaponGroup, TwoArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);
@@ -55,7 +59,7 @@ class CrossbowBehavior extends WeaponBehavior
         return .75;
     }
 
-    protected function getBaseDamageMeasurablesModifier(UsesItems $usesItems): float
+    protected function getBaseDamageMeasurablesBonus(UsesItems $usesItems): float
     {
         return $this->getMeasurablesDamageBonus($usesItems);
     }
@@ -65,7 +69,7 @@ class CrossbowBehavior extends WeaponBehavior
         return $this->getMeasurablesDamageBonus($usesItems);
     }
 
-    protected function getMeasurablesDamageBonus(UsesItems $usesItems)
+    protected function getMeasurablesDamageBonus(UsesItems $usesItems): float
     {
         $focusBonus = .0125 * $usesItems->getBuffedMeasurableAmount(MeasurableType::FOCUS);
         $aptitudeBonus = .0125 * $usesItems->getBuffedMeasurableAmount(MeasurableType::APTITUDE);

@@ -23,6 +23,10 @@ class MaceBehavior extends WeaponBehavior
     protected $weightModifier = 7.2;
     protected $blockChanceModifier = 0;
 
+    protected $baseDamageModifierBonus = .4;
+    protected $damageMultiplierModifierBonus = .4;
+    protected $combatSpeedModifierBonus = -.25;
+
     public function __construct(WeaponGroup $weaponGroup, SingleArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);
@@ -55,7 +59,7 @@ class MaceBehavior extends WeaponBehavior
         return .65;
     }
 
-    protected function getBaseDamageMeasurablesModifier(UsesItems $usesItems): float
+    protected function getBaseDamageMeasurablesBonus(UsesItems $usesItems): float
     {
         return 1 + $this->getMeasurablesDamageBonus($usesItems);
     }
@@ -65,7 +69,7 @@ class MaceBehavior extends WeaponBehavior
         return 1 + $this->getMeasurablesDamageBonus($usesItems);
     }
 
-    protected function getMeasurablesDamageBonus(UsesItems $usesItems)
+    protected function getMeasurablesDamageBonus(UsesItems $usesItems): float
     {
         $strengthBonus = .02 * $usesItems->getBuffedMeasurableAmount(MeasurableType::STRENGTH);
         $valorBonus = .006 * $usesItems->getBuffedMeasurableAmount(MeasurableType::VALOR);

@@ -24,6 +24,10 @@ class ThrowingWeaponBehavior extends WeaponBehavior
     protected $weightModifier = 4;
     protected $blockChanceModifier = 0;
 
+    protected $baseDamageModifierBonus = .4;
+    protected $damageMultiplierModifierBonus = .4;
+    protected $combatSpeedModifierBonus = -.25;
+
     public function __construct(WeaponGroup $weaponGroup, SingleArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);
@@ -56,7 +60,7 @@ class ThrowingWeaponBehavior extends WeaponBehavior
         return .65;
     }
 
-    protected function getBaseDamageMeasurablesModifier(UsesItems $usesItems): float
+    protected function getBaseDamageMeasurablesBonus(UsesItems $usesItems): float
     {
         return $this->getMeasurablesDamageBonus($usesItems);
     }
@@ -66,7 +70,7 @@ class ThrowingWeaponBehavior extends WeaponBehavior
         return $this->getMeasurablesDamageBonus($usesItems);
     }
 
-    protected function getMeasurablesDamageBonus(UsesItems $usesItems)
+    protected function getMeasurablesDamageBonus(UsesItems $usesItems): float
     {
         $strengthBonus = .0125 * $usesItems->getBuffedMeasurableAmount(MeasurableType::STRENGTH);
         $focusBonus = .0125 * $usesItems->getBuffedMeasurableAmount(MeasurableType::FOCUS);

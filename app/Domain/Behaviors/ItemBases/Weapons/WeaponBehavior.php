@@ -13,6 +13,12 @@ use App\Domain\Models\Support\GearSlots\GearSlot;
 
 abstract class WeaponBehavior extends ItemBaseBehavior
 {
+    protected $protectionModifier = 0;
+
+    protected $damageMultiplierModifierBonus = 0;
+    protected $baseDamageModifierBonus = 0;
+    protected $combatSpeedModifierBonus = 0;
+
     protected $validGearSlotTypes = [
         GearSlot::PRIMARY_ARM,
         GearSlot::OFF_ARM,
@@ -22,8 +28,6 @@ abstract class WeaponBehavior extends ItemBaseBehavior
      * @var ArmBehaviorInterface
      */
     private $armBehavior;
-
-    protected $protectionModifier = 0;
 
     public function __construct(WeaponGroup $weaponGroup, ArmBehaviorInterface $armBehavior)
     {
@@ -70,45 +74,48 @@ abstract class WeaponBehavior extends ItemBaseBehavior
 
     public function getSpeedRating(): float
     {
-        return $this->getStartingSpeedRating() * $this->armBehavior->getSpeedRatingModifier();
+        return $this->getStartingSpeedRating() * $this->armBehavior->getCombatSpeedModifierBonus();
     }
 
     abstract protected function getStartingSpeedRating(): int;
 
     public function getBaseDamageRating(): float
     {
-        return $this->getStartingBaseDamageRating() * $this->armBehavior->getBaseDamageRatingModifier();
+        return $this->getStartingBaseDamageRating() * $this->armBehavior->getDamageMultiplierModifierBonus();
     }
 
     abstract protected function getStartingBaseDamageRating(): int;
 
-    abstract protected function getBaseDamageMeasurablesModifier(UsesItems $usesItems): float;
-
-
-    public function getBaseDamageBonus(UsesItems $usesItems = null): float
+    public function adjustBaseDamage(float $baseDamage, UsesItems $usesItems = null): float
     {
-        $measurablesModifier = $usesItems ? $this->getBaseDamageMeasurablesModifier($usesItems) : 1;
-        return $measurablesModifier * ($this->getBaseDamageRating()/$this->getSpeedRating());
+        $measurablesBonus = $usesItems ? $this->getBaseDamageMeasurablesBonus($usesItems) : 1;
+        $sumOfBonuses = $measurablesBonus + $this->baseDamageModifierBonus + $this->armBehavior->getBaseDamageModifierBonus();
+        return $baseDamage * (1 + $sumOfBonuses);
     }
 
-    public function getDamageMultiplierBonus(UsesItems $usesItems = null): float
+    public function adjustDamageMultiplier(float $damageMultiplier, UsesItems $usesItems = null): float
     {
         $measurablesBonus = $usesItems ? $this->getDamageMultiplierMeasurablesBonus($usesItems) : 0;
-        $damageRatingBonus = $this->getBaseDamageRating()/100;
-        $slownessBonus = max((110 - $this->getSpeedRating()) /100, 0);
-        return $measurablesBonus + $damageRatingBonus + $slownessBonus;
+        $sumOfBonuses = $measurablesBonus + $this->damageMultiplierModifierBonus + $this->armBehavior->getDamageMultiplierModifierBonus();
+        return $damageMultiplier * (1 + $sumOfBonuses);
     }
 
-    /**
-     * @param UsesItems|null $hasItems
-     * @return float
-     */
-    public function getCombatSpeedBonus(UsesItems $hasItems = null): float
+    public function adjustCombatSpeed(float $combatSpeed, UsesItems $hasItems = null): float
     {
         $agilityBonus = $hasItems ? $hasItems->getBuffedMeasurableAmount(MeasurableType::AGILITY)/500 : 0;
-        $speedRatingBonus = $this->getSpeedRating()/100;
-        return $speedRatingBonus + $agilityBonus;
+        $sumOfBonuses = $agilityBonus + $this->combatSpeedModifierBonus + $this->armBehavior->getCombatSpeedModifierBonus();
+        return $combatSpeed * (1 + $sumOfBonuses);
     }
 
-    abstract protected function getDamageMultiplierMeasurablesBonus(UsesItems $usesItems): float;
+    protected function getBaseDamageMeasurablesBonus(UsesItems $usesItems): float
+    {
+        return 4 * $this->getMeasurablesDamageBonus($usesItems);
+    }
+
+    protected function getDamageMultiplierMeasurablesBonus(UsesItems $usesItems)
+    {
+        return $this->getMeasurablesDamageBonus($usesItems);
+    }
+
+    abstract protected function getMeasurablesDamageBonus(UsesItems $usesItems): float;
 }
