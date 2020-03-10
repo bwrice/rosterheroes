@@ -8,7 +8,9 @@ interface ArmBehaviorInterface
 {
     public function getSlotsCount(): int;
 
-    public function getBaseDamageRatingModifier(): float;
+    public function getDamageMultiplierModifierBonus(): float;
 
-    public function getSpeedRatingModifier(): float;
+    public function getBaseDamageModifierBonus(): float;
+
+    public function getCombatSpeedModifierBonus(): float;
 }

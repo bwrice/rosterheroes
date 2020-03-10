@@ -12,13 +12,18 @@ class SingleArmBehavior implements ArmBehaviorInterface
         return 1;
     }
 
-    public function getBaseDamageRatingModifier(): float
+    public function getDamageMultiplierModifierBonus(): float
     {
-        return 1;
+        return 0;
     }
 
-    public function getSpeedRatingModifier(): float
+    public function getBaseDamageModifierBonus(): float
     {
-        return 1;
+        return 0;
+    }
+
+    public function getCombatSpeedModifierBonus(): float
+    {
+        return .3;
     }
 }
