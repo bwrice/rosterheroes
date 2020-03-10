@@ -17,9 +17,6 @@ use App\Domain\Models\MeasurableType;
 
 class PoleArmBehavior extends WeaponBehavior
 {
-    public const SPEED_RATING = 60;
-    public const BASE_DAMAGE_RAGING = 30;
-
     protected $weightModifier = 9;
     protected $blockChanceModifier = 1.7;
 
@@ -32,33 +29,6 @@ class PoleArmBehavior extends WeaponBehavior
         parent::__construct($weaponGroup, $armBehavior);
     }
 
-    /**
-     * Higher = faster
-     * @return float
-     */
-    public function itemBaseSpeedModifier(): float
-    {
-        return .82;
-    }
-
-    /**
-     * Higher = more variance
-     * @return float
-     */
-    public function getVarianceModifier(): float
-    {
-        return .2;
-    }
-
-    /**
-     * higher = more base damage
-     * @return float
-     */
-    public function itemBaseDamageModifier(): float
-    {
-        return .8;
-    }
-
     protected function getMeasurablesDamageBonus(UsesItems $usesItems): float
     {
         $valorBonus = .006 * $usesItems->getBuffedMeasurableAmount(MeasurableType::VALOR);
@@ -66,15 +36,4 @@ class PoleArmBehavior extends WeaponBehavior
         $focusBonus = .006 * $usesItems->getBuffedMeasurableAmount(MeasurableType::APTITUDE);
         return $valorBonus + $agilityBonus + $focusBonus;
     }
-
-    protected function getStartingSpeedRating(): int
-    {
-        return self::SPEED_RATING;
-    }
-
-    protected function getStartingBaseDamageRating(): int
-    {
-        return self::BASE_DAMAGE_RAGING;
-    }
-
 }

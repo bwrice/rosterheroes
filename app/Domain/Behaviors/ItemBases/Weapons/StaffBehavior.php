@@ -17,9 +17,6 @@ use App\Domain\Models\MeasurableType;
 
 class StaffBehavior extends WeaponBehavior
 {
-    public const SPEED_RATING = 35;
-    public const BASE_DAMAGE_RAGING = 44;
-
     protected $baseDamageModifierBonus = .4;
     protected $damageMultiplierModifierBonus = .4;
     protected $combatSpeedModifierBonus = -.25;
@@ -29,48 +26,11 @@ class StaffBehavior extends WeaponBehavior
         parent::__construct($weaponGroup, $armBehavior);
     }
 
-    /**
-     * Higher = faster
-     * @return float
-     */
-    public function itemBaseSpeedModifier(): float
-    {
-        return .35;
-    }
-
-    /**
-     * Higher = more variance
-     * @return float
-     */
-    public function getVarianceModifier(): float
-    {
-        return .45;
-    }
-
-    /**
-     * higher = more base damage
-     * @return float
-     */
-    public function itemBaseDamageModifier(): float
-    {
-        return .4;
-    }
-
     protected function getMeasurablesDamageBonus(UsesItems $usesItems): float
     {
         $valorBonus = .006 * $usesItems->getBuffedMeasurableAmount(MeasurableType::VALOR);
         $aptitudeBonus = .006 * $usesItems->getBuffedMeasurableAmount(MeasurableType::APTITUDE);
         $intelligenceBonus = .012 * $usesItems->getBuffedMeasurableAmount(MeasurableType::INTELLIGENCE);
         return $valorBonus + $aptitudeBonus + $intelligenceBonus;
-    }
-
-    protected function getStartingSpeedRating(): int
-    {
-        return self::SPEED_RATING;
-    }
-
-    protected function getStartingBaseDamageRating(): int
-    {
-        return self::BASE_DAMAGE_RAGING;
     }
 }

@@ -17,9 +17,6 @@ use App\Domain\Models\MeasurableType;
 
 class TwoHandAxeBehavior extends WeaponBehavior
 {
-    public const SPEED_RATING = 20;
-    public const BASE_DAMAGE_RAGING = 9;
-
     protected $weightModifier = 15;
     protected $blockChanceModifier = 1.5;
 
@@ -32,47 +29,10 @@ class TwoHandAxeBehavior extends WeaponBehavior
         parent::__construct($weaponGroup, $armBehavior);
     }
 
-    /**
-     * Higher = faster
-     * @return float
-     */
-    public function itemBaseSpeedModifier(): float
-    {
-        return .25;
-    }
-
-    /**
-     * Higher = more variance
-     * @return float
-     */
-    public function getVarianceModifier(): float
-    {
-        return .82;
-    }
-
-    /**
-     * higher = more base damage
-     * @return float
-     */
-    public function itemBaseDamageModifier(): float
-    {
-        return .9;
-    }
-
     protected function getMeasurablesDamageBonus(UsesItems $usesItems): float
     {
         $strengthBonus = .02 * $usesItems->getBuffedMeasurableAmount(MeasurableType::STRENGTH);
         $valorBonus = .007 * $usesItems->getBuffedMeasurableAmount(MeasurableType::VALOR);
         return $strengthBonus + $valorBonus;
-    }
-
-    protected function getStartingSpeedRating(): int
-    {
-        return self::SPEED_RATING;
-    }
-
-    protected function getStartingBaseDamageRating(): int
-    {
-        return self::BASE_DAMAGE_RAGING;
     }
 }

@@ -53,39 +53,6 @@ abstract class WeaponBehavior extends ItemBaseBehavior
         return $this->gearSlotsCount = $this->armBehavior->getSlotsCount();
     }
 
-    /**
-     * higher = faster
-     * @return float
-     */
-    abstract public function itemBaseSpeedModifier(): float;
-
-    /**
-     * higher = more variance
-     * @return float
-     */
-    abstract public function getVarianceModifier(): float;
-
-    /**
-     * higher = more base damage
-     * @return float
-     */
-    abstract public function itemBaseDamageModifier(): float;
-
-
-    public function getSpeedRating(): float
-    {
-        return $this->getStartingSpeedRating() * $this->armBehavior->getCombatSpeedModifierBonus();
-    }
-
-    abstract protected function getStartingSpeedRating(): int;
-
-    public function getBaseDamageRating(): float
-    {
-        return $this->getStartingBaseDamageRating() * $this->armBehavior->getDamageMultiplierModifierBonus();
-    }
-
-    abstract protected function getStartingBaseDamageRating(): int;
-
     public function adjustBaseDamage(float $baseDamage, UsesItems $usesItems = null): float
     {
         $measurablesBonus = $usesItems ? $this->getBaseDamageMeasurablesBonus($usesItems) : 1;

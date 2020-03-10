@@ -17,9 +17,6 @@ use App\Domain\Models\MeasurableType;
 
 class DaggerBehavior extends WeaponBehavior
 {
-    public const SPEED_RATING = 95;
-    public const BASE_DAMAGE_RAGING = 20;
-
     protected $weightModifier = 2.8;
     protected $blockChanceModifier = 0;
 
@@ -32,47 +29,10 @@ class DaggerBehavior extends WeaponBehavior
         parent::__construct($weaponGroup, $armBehavior);
     }
 
-    /**
-     * Higher = faster
-     * @return float
-     */
-    public function itemBaseSpeedModifier(): float
-    {
-        return .95;
-    }
-
-    /**
-     * Higher = more variance
-     * @return float
-     */
-    public function getVarianceModifier(): float
-    {
-        return .15;
-    }
-
-    /**
-     * higher = more base damage
-     * @return float
-     */
-    public function itemBaseDamageModifier(): float
-    {
-        return .2;
-    }
-
     protected function getMeasurablesDamageBonus(UsesItems $usesItems): float
     {
         $agilityBonus = .0125 * $usesItems->getBuffedMeasurableAmount(MeasurableType::AGILITY);
         $focusBonus = .0125 * $usesItems->getBuffedMeasurableAmount(MeasurableType::FOCUS);
         return $agilityBonus + $focusBonus;
-    }
-
-    protected function getStartingSpeedRating(): int
-    {
-        return self::SPEED_RATING;
-    }
-
-    protected function getStartingBaseDamageRating(): int
-    {
-        return self::BASE_DAMAGE_RAGING;
     }
 }

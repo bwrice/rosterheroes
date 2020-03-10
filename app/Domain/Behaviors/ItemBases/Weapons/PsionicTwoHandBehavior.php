@@ -17,9 +17,6 @@ use App\Domain\Models\MeasurableType;
 
 class PsionicTwoHandBehavior extends WeaponBehavior
 {
-    public const SPEED_RATING = 35;
-    public const BASE_DAMAGE_RAGING = 75;
-
     protected $weightModifier = 7;
     protected $blockChanceModifier = 1.3;
 
@@ -32,48 +29,11 @@ class PsionicTwoHandBehavior extends WeaponBehavior
         parent::__construct($weaponGroup, $armBehavior);
     }
 
-    /**
-     * Higher = faster
-     * @return float
-     */
-    public function itemBaseSpeedModifier(): float
-    {
-        return .25;
-    }
-
-    /**
-     * Higher = more variance
-     * @return float
-     */
-    public function getVarianceModifier(): float
-    {
-        return .7;
-    }
-
-    /**
-     * higher = more base damage
-     * @return float
-     */
-    public function itemBaseDamageModifier(): float
-    {
-        return .15;
-    }
-
     protected function getMeasurablesDamageBonus(UsesItems $usesItems): float
     {
         $strengthBonus = .007 * $usesItems->getBuffedMeasurableAmount(MeasurableType::STRENGTH);
         $aptitudeBonus = .007 * $usesItems->getBuffedMeasurableAmount(MeasurableType::APTITUDE);
         $intelligenceBonus = .007 * $usesItems->getBuffedMeasurableAmount(MeasurableType::INTELLIGENCE);
         return $strengthBonus + $aptitudeBonus + $intelligenceBonus;
-    }
-
-    protected function getStartingSpeedRating(): int
-    {
-        return self::SPEED_RATING;
-    }
-
-    protected function getStartingBaseDamageRating(): int
-    {
-        return self::BASE_DAMAGE_RAGING;
     }
 }
