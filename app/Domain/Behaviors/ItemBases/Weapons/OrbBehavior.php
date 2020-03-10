@@ -59,16 +59,6 @@ class OrbBehavior extends WeaponBehavior
         return .5;
     }
 
-    protected function getBaseDamageMeasurablesBonus(UsesItems $usesItems): float
-    {
-        return $this->getMeasurablesDamageBonus($usesItems);
-    }
-
-    protected function getDamageMultiplierMeasurablesBonus(UsesItems $usesItems): float
-    {
-        return $this->getMeasurablesDamageBonus($usesItems);
-    }
-
     protected function getMeasurablesDamageBonus(UsesItems $usesItems): float
     {
         $focusBonus = .007 * $usesItems->getBuffedMeasurableAmount(MeasurableType::FOCUS);

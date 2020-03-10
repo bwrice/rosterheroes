@@ -59,16 +59,6 @@ class TwoHandAxeBehavior extends WeaponBehavior
         return .9;
     }
 
-    protected function getBaseDamageMeasurablesBonus(UsesItems $usesItems): float
-    {
-        return $this->getMeasurablesDamageBonus($usesItems);
-    }
-
-    protected function getDamageMultiplierMeasurablesBonus(UsesItems $usesItems): float
-    {
-        return $this->getMeasurablesDamageBonus($usesItems);
-    }
-
     protected function getMeasurablesDamageBonus(UsesItems $usesItems): float
     {
         $strengthBonus = .02 * $usesItems->getBuffedMeasurableAmount(MeasurableType::STRENGTH);

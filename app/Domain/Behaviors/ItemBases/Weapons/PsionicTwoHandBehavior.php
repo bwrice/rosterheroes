@@ -59,16 +59,6 @@ class PsionicTwoHandBehavior extends WeaponBehavior
         return .15;
     }
 
-    protected function getBaseDamageMeasurablesBonus(UsesItems $usesItems): float
-    {
-        return 1 + $this->getMeasurablesDamageBonus($usesItems);
-    }
-
-    protected function getDamageMultiplierMeasurablesBonus(UsesItems $usesItems): float
-    {
-        return 1 + $this->getMeasurablesDamageBonus($usesItems);
-    }
-
     protected function getMeasurablesDamageBonus(UsesItems $usesItems): float
     {
         $strengthBonus = .007 * $usesItems->getBuffedMeasurableAmount(MeasurableType::STRENGTH);
