@@ -135,8 +135,9 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
     {
         $gradeBonus = ($this->itemTypeGrade() ** .5)/25;
         $materialBonus = $this->material->getSpeedModifierBonus();
-        $behaviorBonus = $this->getItemBaseBehavior()->adjustCombatSpeed($this->getUsesItems());
-        return $speed * (1 + $gradeBonus + $materialBonus + $behaviorBonus);
+        $combatSpeed = $speed * (1 + $gradeBonus + $materialBonus);
+        $combatSpeed = $this->getItemBaseBehavior()->adjustCombatSpeed($combatSpeed, $this->getUsesItems());
+        return $combatSpeed;
     }
 
     public function adjustBaseDamage(float $baseDamage): float
