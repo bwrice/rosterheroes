@@ -38,4 +38,13 @@ class EyeWearBehavior extends ItemBaseBehavior
     {
         return 0;
     }
+    public function adjustBaseDamage(float $baseDamage, UsesItems $usesItems = null): float
+    {
+        return $baseDamage;
+    }
+
+    public function adjustDamageMultiplier(float $damageMultiplier, UsesItems $usesItems = null): float
+    {
+        return $damageMultiplier;
+    }
 }

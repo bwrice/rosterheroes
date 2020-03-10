@@ -9,6 +9,7 @@
 namespace App\Domain\Behaviors\ItemBases;
 
 use App\Domain\Behaviors\ItemGroup\ItemGroup;
+use App\Domain\Interfaces\UsesItems;
 
 abstract class ItemBaseBehavior
 {
@@ -70,4 +71,8 @@ abstract class ItemBaseBehavior
     {
         return $this->resourceCostPercentModifier;
     }
+
+    abstract public function adjustBaseDamage(float $baseDamage, UsesItems $usesItems = null): float;
+
+    abstract public function adjustDamageMultiplier(float $damageMultiplier, UsesItems $usesItems = null): float;
 }
