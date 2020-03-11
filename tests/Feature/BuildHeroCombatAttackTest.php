@@ -66,7 +66,7 @@ class BuildHeroCombatAttackTest extends TestCase
 
         $this->assertEquals($expectedDamage, $heroCombatAttack->getDamage());
     }
-ß
+    
     /**
      * @test
      */
