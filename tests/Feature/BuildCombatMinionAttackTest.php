@@ -73,7 +73,7 @@ class BuildCombatMinionAttackTest extends TestCase
 
         /** @var CalculateCombatDamage $calculateDamage */
         $calculateDamage = app(CalculateCombatDamage::class);
-        $expectedDamage = $calculateDamage->execute($this->attack, $this->minion);
+        $expectedDamage = $calculateDamage->execute($this->attack, $this->minion->getFantasyPoints());
 
         $this->assertEquals($expectedDamage, $minionCombatAttack->getDamage());
     }

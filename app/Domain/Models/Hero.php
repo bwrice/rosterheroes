@@ -8,7 +8,6 @@ use App\Domain\Collections\GearSlotCollection;
 use App\Domain\Collections\ItemCollection;
 use App\Domain\Collections\MeasurableCollection;
 use App\Domain\Collections\SpellCollection;
-use App\Domain\Interfaces\HasFantasyPoints;
 use App\Domain\Interfaces\HasItems;
 use App\Domain\Interfaces\SpellCaster;
 use App\Domain\Interfaces\UsesItems;
@@ -54,7 +53,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  *
  * @method static HeroQueryBuilder query();
  */
-class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasItems, HasFantasyPoints
+class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasItems
 {
     use HasNameSlug;
 

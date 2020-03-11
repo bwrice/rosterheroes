@@ -9,9 +9,9 @@ use App\Domain\Models\Attack;
 
 class CalculateCombatDamage
 {
-    public function execute(Attack $attack, HasFantasyPoints $hasFantasyPoints)
+    public function execute(Attack $attack, float $fantasyPoints)
     {
-        $fantasyPower = $this->getFantasyPower($hasFantasyPoints->getFantasyPoints());
+        $fantasyPower = $this->getFantasyPower($fantasyPoints);
         $baseDamage = $attack->getBaseDamage();
         $damageMultiplier = $attack->getDamageMultiplier();
         return (int) max(ceil($baseDamage + ($damageMultiplier * $fantasyPower)), 1);

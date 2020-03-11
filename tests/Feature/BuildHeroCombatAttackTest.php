@@ -62,11 +62,11 @@ class BuildHeroCombatAttackTest extends TestCase
 
         /** @var CalculateCombatDamage $calculateDamage */
         $calculateDamage = app(CalculateCombatDamage::class);
-        $expectedDamage = $calculateDamage->execute($this->attack, $this->hero);
+        $expectedDamage = $calculateDamage->execute($this->attack, $this->hero->getFantasyPoints());
 
         $this->assertEquals($expectedDamage, $heroCombatAttack->getDamage());
     }
-
+ß
     /**
      * @test
      */

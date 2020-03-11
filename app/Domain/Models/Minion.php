@@ -7,7 +7,6 @@ use App\Domain\Behaviors\EnemyTypes\EnemyTypeBehavior;
 use App\Domain\Collections\AttackCollection;
 use App\Domain\Collections\MinionCollection;
 use App\Domain\Interfaces\HasAttacks;
-use App\Domain\Interfaces\HasFantasyPoints;
 use App\Domain\Traits\HasConfigAttributes;
 use App\Domain\Traits\HasNameSlug;
 use Illuminate\Database\Eloquent\Collection;
@@ -30,7 +29,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property Collection $chestBlueprints
  */
-class Minion extends Model implements HasAttacks, HasFantasyPoints
+class Minion extends Model implements HasAttacks
 {
 
     use HasConfigAttributes;
