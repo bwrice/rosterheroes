@@ -60,4 +60,14 @@ class CombatPosition extends Model
     {
         return self::forName(self::HIGH_GROUND);
     }
+
+    public function getProximity()
+    {
+        return $this->getBehavior()->getProximity();
+    }
+
+    public function isWithinProximity(int $proximity)
+    {
+        return $this->getProximity() >= $proximity;
+    }
 }

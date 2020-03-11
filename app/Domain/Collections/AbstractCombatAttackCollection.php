@@ -9,6 +9,13 @@ use Illuminate\Support\Collection;
 
 class AbstractCombatAttackCollection extends Collection
 {
+    public function withinAttackerProximity(int $proximity)
+    {
+        return $this->filter(function (AbstractCombatAttack $combatAttack) use ($proximity) {
+            return $combatAttack->getAttackerPosition()->isWithinProximity($proximity);
+        });
+    }
+
     public function filterByAttackerPositions(Collection $combatPositions)
     {
         return $this->filter(function (AbstractCombatAttack $combatAttack) use ($combatPositions) {
