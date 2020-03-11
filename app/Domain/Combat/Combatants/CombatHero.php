@@ -5,8 +5,11 @@ namespace App\Domain\Combat\Combatants;
 
 
 use App\Domain\Collections\AbstractCombatAttackCollection;
+use App\Domain\Combat\Attacks\HeroCombatAttack;
 use App\Domain\Interfaces\SpendsResources;
 use App\Domain\Models\CombatPosition;
+use App\Domain\Models\Json\ResourceCosts\ResourceCost;
+use App\Domain\Models\MeasurableType;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
 
@@ -127,8 +130,27 @@ class CombatHero extends AbstractCombatant implements SpendsResources
     public function getReadyAttacks(): AbstractCombatAttackCollection
     {
         $closestProximityPosition = $this->allCombatPositions()->closestProximity();
-        return $this->combatAttacks
+        $combatAttacks = $this->combatAttacks
             ->withinAttackerProximity($closestProximityPosition->getProximity())
             ->ready();
+
+        if ($this->currentStamina <= 0) {
+            $combatAttacks = $combatAttacks->filter(function (HeroCombatAttack $heroCombatAttack) {
+                $staminaResourceCost = $heroCombatAttack->getResourceCosts()->first(function (ResourceCost $resourceCost) {
+                    return $resourceCost->getResourceName() === MeasurableType::STAMINA;
+                });
+                return is_null($staminaResourceCost);
+            });
+        }
+
+        if ($this->currentMana <= 0) {
+            $combatAttacks = $combatAttacks->filter(function (HeroCombatAttack $heroCombatAttack) {
+                $staminaResourceCost = $heroCombatAttack->getResourceCosts()->first(function (ResourceCost $resourceCost) {
+                    return $resourceCost->getResourceName() === MeasurableType::MANA;
+                });
+                return is_null($staminaResourceCost);
+            });
+        }
+        return $combatAttacks;
     }
 }
