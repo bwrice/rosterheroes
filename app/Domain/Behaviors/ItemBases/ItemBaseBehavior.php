@@ -75,4 +75,6 @@ abstract class ItemBaseBehavior
     abstract public function adjustBaseDamage(float $baseDamage, UsesItems $usesItems = null): float;
 
     abstract public function adjustDamageMultiplier(float $damageMultiplier, UsesItems $usesItems = null): float;
+
+    abstract public function adjustCombatSpeed(float $combatSpeed, UsesItems $hasItems = null): float;
 }

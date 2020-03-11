@@ -47,4 +47,9 @@ class EyeWearBehavior extends ItemBaseBehavior
     {
         return $damageMultiplier;
     }
+
+    public function adjustCombatSpeed(float $combatSpeed, UsesItems $hasItems = null): float
+    {
+        return $combatSpeed;
+    }
 }

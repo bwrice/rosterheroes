@@ -6,7 +6,6 @@ namespace App\Domain\Behaviors\ItemBases\Shields;
 use App\Domain\Behaviors\ItemBases\ItemBaseBehavior;
 use App\Domain\Behaviors\ItemGroup\ShieldGroup;
 use App\Domain\Interfaces\UsesItems;
-use App\Domain\Models\SlotType;
 use App\Domain\Models\Support\GearSlots\GearSlot;
 
 abstract class ShieldGroupBehavior extends ItemBaseBehavior
@@ -43,6 +42,11 @@ abstract class ShieldGroupBehavior extends ItemBaseBehavior
     public function adjustDamageMultiplier(float $damageMultiplier, UsesItems $usesItems = null): float
     {
         return $damageMultiplier;
+    }
+
+    public function adjustCombatSpeed(float $combatSpeed, UsesItems $hasItems = null): float
+    {
+        return $combatSpeed;
     }
 
 }
