@@ -27,7 +27,7 @@ abstract class ResourceCost implements Arrayable
     public function toArray()
     {
         return [
-            'resource' => $this->resourceName,
+            'resource' => $this->getResourceName(),
             'description' => $this->getDescription()
         ];
     }
@@ -35,6 +35,14 @@ abstract class ResourceCost implements Arrayable
     abstract public function getStaminaCost(SpendsResources $spendsResources): int;
 
     abstract public function getManCost(SpendsResources $spendsResources): int;
+
+    /**
+     * @return string
+     */
+    public function getResourceName(): string
+    {
+        return $this->resourceName;
+    }
 
     protected function matchesResourceType($resourceType)
     {
