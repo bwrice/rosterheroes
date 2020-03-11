@@ -55,4 +55,12 @@ class CombatMinion extends AbstractCombatant
             'minionUuid' => $this->minionUuid
         ], parent::toArray());
     }
+
+    public function getReadyAttacks(): AbstractCombatAttackCollection
+    {
+        $closestProximityPosition = $this->allCombatPositions()->closestProximity();
+        return $this->combatAttacks
+            ->withinAttackerProximity($closestProximityPosition->getProximity())
+            ->ready();
+    }
 }
