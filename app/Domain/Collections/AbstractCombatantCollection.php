@@ -49,11 +49,7 @@ class AbstractCombatantCollection extends CombatantCollection
     {
         $combatAttacks = collect();
         $this->each(function (AbstractCombatant $abstractCombatant) use ($combatAttacks) {
-            $combatPositions = $abstractCombatant->allCombatPositions();
-            $readyForCombatant = $abstractCombatant->getCombatAttacks()
-                ->filterByAttackerPositions($combatPositions)
-                ->ready();
-            $readyForCombatant->each(function ($attack) use ($combatAttacks) {
+            $abstractCombatant->getReadyAttacks()->each(function ($attack) use ($combatAttacks) {
                 $combatAttacks->push($attack);
             });
         });

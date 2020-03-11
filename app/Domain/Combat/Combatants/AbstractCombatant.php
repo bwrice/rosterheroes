@@ -170,4 +170,6 @@ abstract class AbstractCombatant implements Combatant, Arrayable
         $this->currentHealth = $currentHealth;
         return $this;
     }
+
+    abstract public function getReadyAttacks(): AbstractCombatAttackCollection;
 }

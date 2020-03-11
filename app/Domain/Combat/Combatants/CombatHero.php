@@ -123,4 +123,12 @@ class CombatHero extends AbstractCombatant implements SpendsResources
             'currentMana' => $this->currentMana,
         ], parent::toArray());
     }
+
+    public function getReadyAttacks(): AbstractCombatAttackCollection
+    {
+        $closestProximityPosition = $this->allCombatPositions()->closestProximity();
+        return $this->combatAttacks
+            ->withinAttackerProximity($closestProximityPosition->getProximity())
+            ->ready();
+    }
 }
