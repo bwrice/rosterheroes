@@ -1,7 +1,7 @@
 grade: 48
-speed: 4.45
-base_damage: 145
-damage_multiplier: 8.8
+speed: 3.75
+base_damage: 12
+damage_multiplier: 1.175
 resource_costs:
     -
         type: fixed
