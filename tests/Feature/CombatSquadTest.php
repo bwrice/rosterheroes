@@ -2,7 +2,11 @@
 
 namespace Tests\Feature;
 
+use App\Domain\Collections\ResourceCostsCollection;
+use App\Domain\Combat\Combatants\CombatHero;
 use App\Domain\Models\CombatPosition;
+use App\Domain\Models\Json\ResourceCosts\FixedResourceCost;
+use App\Domain\Models\MeasurableType;
 use App\Factories\Combat\CombatHeroFactory;
 use App\Factories\Combat\CombatSquadFactory;
 use App\Factories\Combat\HeroCombatAttackFactory;
@@ -104,5 +108,44 @@ class CombatSquadTest extends TestCase
 
         $readyAttacks = $combatSquad->getReadyAttacks(1); //moment shouldn't matter
         $this->assertEquals(3, $readyAttacks->count());
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_not_return_an_attack_if_the_hero_has_zero_of_the_resource_cost()
+    {
+        $resourceCost = new FixedResourceCost(MeasurableType::STAMINA, 5);
+
+        // set speed to 100 so it's always ready
+        $staminaCostingAttackFactory = HeroCombatAttackFactory::new()
+            ->withResourceCosts(new ResourceCostsCollection([
+                $resourceCost
+            ]))
+            ->withCombatSpeed(100)
+            ->withAttackerPosition(CombatPosition::FRONT_LINE);
+
+        $anotherAttackFactory = HeroCombatAttackFactory::new()
+            ->withCombatSpeed(100)
+            ->withAttackerPosition(CombatPosition::FRONT_LINE);
+
+        $combatHeroFactory = CombatHeroFactory::new()
+            ->withHeroCombatAttacks(collect([
+                $staminaCostingAttackFactory,
+                $anotherAttackFactory
+            ]))
+            ->withCombatPosition(CombatPosition::FRONT_LINE);
+
+        $combatSquad = CombatSquadFactory::new()->withCombatHeroes(collect([
+            $combatHeroFactory
+        ]))->create();
+
+        $this->assertEquals(2, $combatSquad->getReadyAttacks(1)->count());
+
+        /** @var CombatHero $combatHero */
+        $combatHero = $combatSquad->getCombatHeroes()->first();
+        $combatHero->setCurrentStamina(0);
+
+        $this->assertEquals(1, $combatSquad->getReadyAttacks(1)->count());
     }
 }

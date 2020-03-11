@@ -59,6 +59,10 @@ abstract class AbstractCombatAttackFactory
         return AttackFactory::new()->create()->uuid;
     }
 
+    /**
+     * @param string $combatPositionName
+     * @return static
+     */
     public function withAttackerPosition(string $combatPositionName)
     {
         $clone = clone $this;
@@ -66,6 +70,10 @@ abstract class AbstractCombatAttackFactory
         return $clone;
     }
 
+    /**
+     * @param string $combatPositionName
+     * @return static
+     */
     public function withTargetPosition(string $combatPositionName)
     {
         $clone = clone $this;
