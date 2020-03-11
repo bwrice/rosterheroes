@@ -17,6 +17,9 @@ use App\Domain\Models\MeasurableType;
 
 class StaffBehavior extends WeaponBehavior
 {
+    protected $weightModifier = 7.3;
+    protected $blockChanceModifier = .5;
+
     protected $baseDamageModifierBonus = .4;
     protected $damageMultiplierModifierBonus = .4;
     protected $combatSpeedModifierBonus = -.25;
