@@ -148,4 +148,84 @@ class CombatSquadTest extends TestCase
 
         $this->assertEquals(1, $combatSquad->getReadyAttacks(1)->count());
     }
+
+    /**
+     * @test
+     */
+    public function it_wont_filter_attacks_with_resource_costs_if_the_hero_has_even_just_one_point_left()
+    {
+        $resourceCost = new FixedResourceCost(MeasurableType::MANA, 99);
+
+        // set speed to 100 so it's always ready
+        $staminaCostingAttackFactory = HeroCombatAttackFactory::new()
+            ->withResourceCosts(new ResourceCostsCollection([
+                $resourceCost
+            ]))
+            ->withCombatSpeed(100)
+            ->withAttackerPosition(CombatPosition::FRONT_LINE);
+
+        $anotherAttackFactory = HeroCombatAttackFactory::new()
+            ->withCombatSpeed(100)
+            ->withAttackerPosition(CombatPosition::FRONT_LINE);
+
+        $combatHeroFactory = CombatHeroFactory::new()
+            ->withHeroCombatAttacks(collect([
+                $staminaCostingAttackFactory,
+                $anotherAttackFactory
+            ]))
+            ->withCombatPosition(CombatPosition::FRONT_LINE);
+
+        $combatSquad = CombatSquadFactory::new()->withCombatHeroes(collect([
+            $combatHeroFactory
+        ]))->create();
+
+        $this->assertEquals(2, $combatSquad->getReadyAttacks(1)->count());
+
+        /** @var CombatHero $combatHero */
+        $combatHero = $combatSquad->getCombatHeroes()->first();
+        $combatHero->setCurrentMana(1);
+
+        $this->assertEquals(2, $combatSquad->getReadyAttacks(1)->count());
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_filter_an_attack_with_multiple_resource_costs_if_either_resource_is_missing()
+    {
+        $staminaCost = new FixedResourceCost(MeasurableType::STAMINA, 10);
+        $manaCost = new FixedResourceCost(MeasurableType::MANA, 10);
+
+        // set speed to 100 so it's always ready
+        $staminaCostingAttackFactory = HeroCombatAttackFactory::new()
+            ->withResourceCosts(new ResourceCostsCollection([
+                $staminaCost,
+                $manaCost
+            ]))
+            ->withCombatSpeed(100)
+            ->withAttackerPosition(CombatPosition::FRONT_LINE);
+
+        $anotherAttackFactory = HeroCombatAttackFactory::new()
+            ->withCombatSpeed(100)
+            ->withAttackerPosition(CombatPosition::FRONT_LINE);
+
+        $combatHeroFactory = CombatHeroFactory::new()
+            ->withHeroCombatAttacks(collect([
+                $staminaCostingAttackFactory,
+                $anotherAttackFactory
+            ]))
+            ->withCombatPosition(CombatPosition::FRONT_LINE);
+
+        $combatSquad = CombatSquadFactory::new()->withCombatHeroes(collect([
+            $combatHeroFactory
+        ]))->create();
+
+        $this->assertEquals(2, $combatSquad->getReadyAttacks(1)->count());
+
+        /** @var CombatHero $combatHero */
+        $combatHero = $combatSquad->getCombatHeroes()->first();
+        $combatHero->setCurrentMana(0);
+
+        $this->assertEquals(1, $combatSquad->getReadyAttacks(1)->count());
+    }
 }
