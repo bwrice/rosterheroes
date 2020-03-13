@@ -10,6 +10,7 @@ use Throwable;
 class CalculateHeroFantasyPowerException extends \Exception
 {
     public const CODE_NO_PLAYER_SPIRIT = 1;
+    public const CODE_NO_PLAYER_GAME_LOG = 2;
 
     /**
      * @var Hero

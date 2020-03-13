@@ -15,5 +15,10 @@ class CalculateHeroFantasyPower
         if (! $playerSpirit) {
             throw new CalculateHeroFantasyPowerException($hero, "No player spirit for hero", CalculateHeroFantasyPowerException::CODE_NO_PLAYER_SPIRIT);
         }
+
+        $playerGameLog = $playerSpirit->playerGameLog;
+        if (! $playerGameLog) {
+            throw new CalculateHeroFantasyPowerException($hero, "No player game log for player spirit", CalculateHeroFantasyPowerException::CODE_NO_PLAYER_GAME_LOG);
+        }
     }
 }
