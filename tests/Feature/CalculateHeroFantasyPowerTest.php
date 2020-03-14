@@ -3,13 +3,16 @@
 namespace Tests\Feature;
 
 use App\Domain\Actions\CalculateHeroFantasyPower;
-use App\Domain\Models\PlayerStat;
+use App\Domain\Models\Enchantment;
+use App\Domain\Models\MeasurableType;
 use App\Domain\Models\StatType;
 use App\Exceptions\CalculateHeroFantasyPowerException;
 use App\Factories\Models\HeroFactory;
+use App\Factories\Models\ItemFactory;
 use App\Factories\Models\PlayerGameLogFactory;
 use App\Factories\Models\PlayerSpiritFactory;
 use App\Factories\Models\PlayerStatFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -88,7 +91,7 @@ class CalculateHeroFantasyPowerTest extends TestCase
             $playerStatFactory->withAmount(1) // amount 1
         ]));
         $playerSpiritFactory = PlayerSpiritFactory::new()->withPlayerGameLog($playerGameLogFactory);
-        $hero = HeroFactory::new()->withPlayerSpirit($playerSpiritFactory)->create();
+        $hero = HeroFactory::new()->withMeasurables()->withPlayerSpirit($playerSpiritFactory)->create();
 
         /** @var CalculateHeroFantasyPower $domainAction */
         $domainAction = app(CalculateHeroFantasyPower::class);
@@ -99,11 +102,52 @@ class CalculateHeroFantasyPowerTest extends TestCase
             $playerStatFactory->withAmount(2) // amount 2
         ]));
         $playerSpiritFactory = PlayerSpiritFactory::new()->withPlayerGameLog($playerGameLogFactory);
-        $hero = HeroFactory::new()->withPlayerSpirit($playerSpiritFactory)->create();
+        $hero = HeroFactory::new()->withMeasurables()->withPlayerSpirit($playerSpiritFactory)->create();
 
         /** @var CalculateHeroFantasyPower $domainAction */
         $domainAction = app(CalculateHeroFantasyPower::class);
         $fantasyPowerTwo = $domainAction->execute($hero);
+
+        $this->assertGreaterThan($fantasyPowerOne, $fantasyPowerTwo);
+    }
+
+    /**
+     * @test
+     */
+    public function having_the_corresponding_quality_boosted_for_the_stat_type_will_increase_fantasy_power()
+    {
+        /** @var MeasurableType $measurableType */
+        $measurableType = MeasurableType::query()->where('name', '=', MeasurableType::BALANCE)->first();
+
+        // get positive stat type
+        do {
+            /** @var StatType $statType */
+            $statType = StatType::query()->whereIn('name', $measurableType->getBehavior()->getStatTypeNames())->inRandomOrder()->first();
+        } while($statType->getBehavior()->getPointsPer() < 0);
+
+        $playerStatFactory = PlayerStatFactory::new()->forStatType($statType->name);
+        $playerGameLogFactory = PlayerGameLogFactory::new()->withStats(collect([
+            $playerStatFactory->withAmount(1)
+        ]));
+        $playerSpiritFactory = PlayerSpiritFactory::new()->withPlayerGameLog($playerGameLogFactory);
+
+        $baseHeroFactory = HeroFactory::new()->withMeasurables()->withPlayerSpirit($playerSpiritFactory);
+        $hero = $baseHeroFactory->create();
+
+        /** @var CalculateHeroFantasyPower $domainAction */
+        $domainAction = app(CalculateHeroFantasyPower::class);
+        $fantasyPowerOne = $domainAction->execute($hero);
+
+        $enchantment = Enchantment::query()->whereHas('measurableBoosts', function (Builder $builder) use ($measurableType) {
+            return $builder->where('measurable_type_id', '=', $measurableType->id);
+        })->inRandomOrder()->first();
+        $itemFactory = ItemFactory::new()->withEnchantments(collect([$enchantment]));
+
+        $heroTwo = $baseHeroFactory->withItems(collect([$itemFactory]))->create();
+
+        /** @var CalculateHeroFantasyPower $domainAction */
+        $domainAction = app(CalculateHeroFantasyPower::class);
+        $fantasyPowerTwo = $domainAction->execute($heroTwo);
 
         $this->assertGreaterThan($fantasyPowerOne, $fantasyPowerTwo);
     }
