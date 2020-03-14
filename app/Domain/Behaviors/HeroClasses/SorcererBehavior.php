@@ -3,8 +3,6 @@
 
 namespace App\Domain\Behaviors\HeroClasses;
 
-use App\Domain\Behaviors\HeroClasses\MeasurableOperators\HeroMeasurableCalculator;
-use App\Domain\Behaviors\HeroClasses\MeasurableOperators\SorcererMeasurableOperator;
 use App\Domain\Models\CombatPosition;
 use App\Domain\Models\ItemBlueprint;
 use App\Domain\Models\MeasurableType;

@@ -16,7 +16,6 @@ use App\Domain\Behaviors\MeasurableTypes\Resources\ResourceBehavior;
 use App\Domain\Models\CombatPosition;
 use App\Domain\Models\ItemBlueprint;
 use App\Domain\Collections\ItemBlueprintCollection;
-use App\Domain\Models\Measurable;
 use App\Domain\Models\MeasurableType;
 
 abstract class HeroClassBehavior
