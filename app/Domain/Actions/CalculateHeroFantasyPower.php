@@ -25,7 +25,7 @@ class CalculateHeroFantasyPower
 
         $heroMeasurables = $hero->measurables;
 
-        $fantasyPower = $playerGameLog->playerStats->sum(function (PlayerStat $playerStat) use ($heroMeasurables) {
+        $fantasyPoints = $playerGameLog->playerStats->sum(function (PlayerStat $playerStat) use ($heroMeasurables) {
             /** @var Measurable $matchingMeasurable */
             $matchingMeasurable = $heroMeasurables->first(function (Measurable $measurable) use ($playerStat) {
                 $statTypeNames = $measurable->measurableType->getBehavior()->getStatTypeNames();
@@ -35,6 +35,20 @@ class CalculateHeroFantasyPower
             return $fantasyPoints * $matchingMeasurable->getBuffedAmount()/100;
         });
 
-        return min(0, $fantasyPower);
+        return max(0, $this->getFantasyPower($fantasyPoints));
+    }
+
+    protected function getFantasyPower(float $totalPoints)
+    {
+        $fantasyPower = 0;
+        $coefficient = 1;
+        $remaining = $totalPoints;
+        while ($remaining > 0) {
+            $pointsToMultiply = $remaining < 10 ? $remaining : 10;
+            $fantasyPower += ($coefficient * $pointsToMultiply);
+            $remaining -= 10;
+            $coefficient *= .8;
+        }
+        return $fantasyPower;
     }
 }
