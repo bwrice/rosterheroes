@@ -5,6 +5,7 @@ namespace App\Domain\Behaviors\MeasurableTypes\Qualities;
 
 use App\Domain\Behaviors\MeasurableTypes\MeasurableTypeBehavior;
 use App\Domain\Interfaces\BoostsMeasurables;
+use App\Domain\Models\StatType;
 
 abstract class QualityBehavior extends MeasurableTypeBehavior
 {
