@@ -41,9 +41,10 @@ class BuildHeroCombatAttackTest extends TestCase
      */
     public function it_will_build_a_hero_combat_attack()
     {
+        $fantasyPower = rand(1, 50);
         /** @var BuildHeroCombatAttack $domainAction */
         $domainAction = app(BuildHeroCombatAttack::class);
-        $heroCombatAttack = $domainAction->execute($this->attack, $this->item, $this->hero);
+        $heroCombatAttack = $domainAction->execute($this->attack, $this->item, $this->hero, $fantasyPower);
         $this->assertTrue($heroCombatAttack instanceof HeroCombatAttack);
         $this->assertTrue($heroCombatAttack instanceof CombatAttackInterface);
     }
@@ -53,28 +54,30 @@ class BuildHeroCombatAttackTest extends TestCase
      */
     public function it_will_have_the_expected_combat_damage()
     {
+        $fantasyPower = rand(1, 50);
         /** @var BuildHeroCombatAttack $domainAction */
         $domainAction = app(BuildHeroCombatAttack::class);
-        $heroCombatAttack = $domainAction->execute($this->attack, $this->item, $this->hero);
+        $heroCombatAttack = $domainAction->execute($this->attack, $this->item, $this->hero, $fantasyPower);
 
         $this->item->setUsesItems($this->hero);
         $this->attack->setHasAttacks($this->item);
 
         /** @var CalculateCombatDamage $calculateDamage */
         $calculateDamage = app(CalculateCombatDamage::class);
-        $expectedDamage = $calculateDamage->execute($this->attack, $this->hero->getFantasyPoints());
+        $expectedDamage = $calculateDamage->execute($this->attack, $fantasyPower);
 
         $this->assertEquals($expectedDamage, $heroCombatAttack->getDamage());
     }
-    
+
     /**
      * @test
      */
     public function it_will_have_the_expected_combat_speed()
     {
+        $fantasyPower = rand(1, 50);
         /** @var BuildHeroCombatAttack $domainAction */
         $domainAction = app(BuildHeroCombatAttack::class);
-        $heroCombatAttack = $domainAction->execute($this->attack, $this->item, $this->hero);
+        $heroCombatAttack = $domainAction->execute($this->attack, $this->item, $this->hero, $fantasyPower);
 
         $this->item->setUsesItems($this->hero);
         $this->attack->setHasAttacks($this->item);
