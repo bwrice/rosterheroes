@@ -4,6 +4,7 @@
 namespace App\Domain\Actions\Combat;
 
 
+use App\Domain\Actions\CalculateHeroFantasyPower;
 use App\Domain\Collections\AbstractCombatAttackCollection;
 use App\Domain\Combat\Combatants\CombatHero;
 use App\Domain\Combat\Attacks\HeroCombatAttack;
@@ -22,10 +23,15 @@ class BuildCombatHero
     /**
      * @var BuildHeroCombatAttack
      */
-    private $buildHeroCombatAttack;
+    protected $buildHeroCombatAttack;
+    /**
+     * @var CalculateHeroFantasyPower
+     */
+    protected $calculateHeroFantasyPower;
 
-    public function __construct(BuildHeroCombatAttack $buildHeroCombatAttack)
+    public function __construct(CalculateHeroFantasyPower $calculateHeroFantasyPower, BuildHeroCombatAttack $buildHeroCombatAttack)
     {
+        $this->calculateHeroFantasyPower = $calculateHeroFantasyPower;
         $this->buildHeroCombatAttack = $buildHeroCombatAttack;
     }
 
@@ -35,10 +41,11 @@ class BuildCombatHero
         $targetPriorities = $targetPriorities ?: TargetPriority::all();
         $damageTypes = $damageTypes ?: DamageType::all();
         $hero->loadMissing(Hero::heroResourceRelations());
+        $heroFantasyPower = $this->calculateHeroFantasyPower->execute($hero);
         $combatAttacks = new AbstractCombatAttackCollection();
-        $hero->items->each(function (Item $item) use ($hero, &$combatAttacks, $combatPositions, $targetPriorities, $damageTypes) {
-            $combatAttacks = $combatAttacks->merge($item->attacks->map(function (Attack $attack) use ($hero, $item, $combatPositions, $targetPriorities, $damageTypes) {
-                return $this->buildHeroCombatAttack->execute($attack, $item, $hero, $combatPositions, $targetPriorities, $damageTypes);
+        $hero->items->each(function (Item $item) use ($hero, $heroFantasyPower, &$combatAttacks, $combatPositions, $targetPriorities, $damageTypes) {
+            $combatAttacks = $combatAttacks->merge($item->attacks->map(function (Attack $attack) use ($hero, $item, $heroFantasyPower, $combatPositions, $targetPriorities, $damageTypes) {
+                return $this->buildHeroCombatAttack->execute($attack, $item, $hero, $heroFantasyPower, $combatPositions, $targetPriorities, $damageTypes);
             }));
         });
 

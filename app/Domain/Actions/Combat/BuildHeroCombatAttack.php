@@ -19,6 +19,7 @@ class BuildHeroCombatAttack extends AbstractBuildCombatAttack
         Attack $attack,
         Item $item,
         Hero $hero,
+        float $fantasyPower,
         Collection $combatPositions = null,
         Collection $targetPriorities = null,
         Collection $damageTypes = null)
@@ -29,7 +30,7 @@ class BuildHeroCombatAttack extends AbstractBuildCombatAttack
         $targetPriorities = $targetPriorities ?: TargetPriority::all();
         $damageTypes = $damageTypes ?: DamageType::all();
 
-        $damage = $this->calculateCombatDamage->execute($attack, $hero->getFantasyPoints());
+        $damage = $this->calculateCombatDamage->execute($attack, $fantasyPower);
         return new HeroCombatAttack(
             $hero->uuid,
             $item->uuid,
