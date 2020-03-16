@@ -273,4 +273,44 @@ class ItemFactory
         $material = $query->inRandomOrder()->first();
         return $material;
     }
+
+    protected function beginnerItem(string $itemBaseName)
+    {
+        return $this->fromItemBases([$itemBaseName])->withLowestItemTypeGrade()->withLowestMaterialTypeGrade()
+    }
+
+    public function beginnerShield()
+    {
+        return $this->beginnerItem(ItemBase::SHIELD);
+    }
+
+    public function beginnerSword()
+    {
+        return $this->beginnerItem(ItemBase::SWORD);
+    }
+
+    public function beginnerBow()
+    {
+        return $this->beginnerItem(ItemBase::BOW);
+    }
+
+    public function beginnerStaff()
+    {
+        return $this->beginnerItem(ItemBase::STAFF);
+    }
+
+    public function beginnerHeavyArmor()
+    {
+        return $this->beginnerItem(ItemBase::HEAVY_ARMOR);
+    }
+
+    public function beginnerLightArmor()
+    {
+        return $this->beginnerItem(ItemBase::LIGHT_ARMOR);
+    }
+
+    public function beginnerRobes()
+    {
+        return $this->beginnerItem(ItemBase::ROBES);
+    }
 }
