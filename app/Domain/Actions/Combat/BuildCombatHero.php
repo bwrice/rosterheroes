@@ -44,7 +44,7 @@ class BuildCombatHero
         $heroFantasyPower = $this->calculateHeroFantasyPower->execute($hero);
         $combatAttacks = new AbstractCombatAttackCollection();
         $hero->items->each(function (Item $item) use ($hero, $heroFantasyPower, &$combatAttacks, $combatPositions, $targetPriorities, $damageTypes) {
-            $combatAttacks = $combatAttacks->merge($item->attacks->map(function (Attack $attack) use ($hero, $item, $heroFantasyPower, $combatPositions, $targetPriorities, $damageTypes) {
+            $combatAttacks = $combatAttacks->merge($item->getAttacks()->map(function (Attack $attack) use ($hero, $item, $heroFantasyPower, $combatPositions, $targetPriorities, $damageTypes) {
                 return $this->buildHeroCombatAttack->execute($attack, $item, $hero, $heroFantasyPower, $combatPositions, $targetPriorities, $damageTypes);
             }));
         });
