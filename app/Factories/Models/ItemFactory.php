@@ -276,7 +276,7 @@ class ItemFactory
 
     protected function beginnerItem(string $itemBaseName)
     {
-        return $this->fromItemBases([$itemBaseName])->withLowestItemTypeGrade()->withLowestMaterialTypeGrade()
+        return $this->fromItemBases([$itemBaseName])->withLowestItemTypeGrade()->withLowestMaterialTypeGrade();
     }
 
     public function beginnerShield()
