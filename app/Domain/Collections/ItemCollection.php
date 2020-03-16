@@ -45,8 +45,11 @@ class ItemCollection extends Collection
     public function getAttacks()
     {
         $attacks = new AttackCollection();
-        $this->loadMissing('attacks')->each(function (Item $item) use ($attacks) {
-            $item->attacks->each(function (Attack $attack) use ($attacks) {
+        $this->loadMissing([
+            'itemType.itemBase.attacks',
+            'attacks'
+        ])->each(function (Item $item) use ($attacks) {
+            $item->getAttacks()->each(function (Attack $attack) use ($attacks) {
                 $attacks->push($attack);
             });
         });

@@ -50,9 +50,6 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
     /** @var UsesItems|null */
     protected $usesItems;
 
-    /** @var HasSlots|null */
-    protected $hasSlots;
-
     /**
      * @return BelongsToMany
      */
@@ -129,6 +126,14 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
         /** @var ItemNameBuilder $nameBuilder */
         $nameBuilder = app(ItemNameBuilder::class);
         return $nameBuilder->buildItemName($this);
+    }
+
+    /**
+     * @return AttackCollection
+     */
+    public function getAttacks()
+    {
+        return $this->itemType->itemBase->attacks->merge($this->attacks);
     }
 
     public function adjustCombatSpeed(float $speed): float
