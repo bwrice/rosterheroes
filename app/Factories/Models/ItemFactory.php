@@ -56,6 +56,10 @@ class ItemFactory
     /** @var int */
     protected $minMaterialGrade;
 
+    protected $lowestMaterialTypeGrade = false;
+
+    protected $lowestItemTypeGrade = false;
+
     public function __construct()
     {
         $this->enchantments = collect();
@@ -201,6 +205,20 @@ class ItemFactory
         ]);
     }
 
+    public function withLowestItemTypeGrade()
+    {
+        $clone = clone $this;
+        $clone->lowestItemTypeGrade = true;
+        return $clone;
+    }
+
+    public function withLowestMaterialTypeGrade()
+    {
+        $clone = clone $this;
+        $clone->lowestMaterialTypeGrade = true;
+        return $clone;
+    }
+
     /**
      * @return ItemType
      */
@@ -215,6 +233,11 @@ class ItemFactory
                 return $builder->whereIn('name', $this->itemBaseNames);
             });
         }
+
+        if ($this->lowestItemTypeGrade) {
+            return $query->orderBy('grade')->first();
+        }
+
         if ($this->maxItemTypeGrade) {
             $query->where('grade', '<=', $this->maxItemTypeGrade);
         }
