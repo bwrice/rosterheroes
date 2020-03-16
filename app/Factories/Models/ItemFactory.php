@@ -258,6 +258,11 @@ class ItemFactory
             return $this->material;
         }
         $query = $itemType->materials();
+
+        if ($this->lowestMaterialTypeGrade) {
+            return $query->orderBy('grade')->first();
+        }
+
         if ($this->maxMaterialGrade) {
             $query = $query->where('grade', '<=', $this->maxMaterialGrade);
         }
