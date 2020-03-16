@@ -9,7 +9,6 @@ $factory->define( ItemBlueprint::class, function(Faker $faker) {
 
     return [
         'item_name' => 'Blueprint Test Item',
-        'enchantment_power' => 0,
-        'attack_power' => 0
+        'enchantment_power' => null,
     ];
 });

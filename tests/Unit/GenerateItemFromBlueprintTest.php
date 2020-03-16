@@ -11,6 +11,7 @@ use App\Domain\Models\ItemClass;
 use App\Domain\Models\ItemGroup;
 use App\Domain\Models\ItemBase;
 use App\Domain\Models\ItemType;
+use App\Factories\Models\AttackFactory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -224,7 +225,11 @@ class GenerateItemFromBlueprintTest extends TestCase
         $this->itemBlueprint->itemBases()->save($swordBase);
         $this->itemBlueprint->save();
 
-        $attacks = Attack::query()->whereIn('name', Attack::STARTER_SWORD_ATTACKS)->get();
+        $attackFactory = AttackFactory::new();
+        $attacks = collect();
+        foreach (range(1, rand(1,5)) as $count) {
+            $attacks->push($attackFactory->create());
+        }
         $this->itemBlueprint->attacks()->saveMany($attacks);
         $this->assertGreaterThan(0, $attacks->count());
 

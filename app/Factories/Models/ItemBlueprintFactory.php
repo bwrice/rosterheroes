@@ -21,11 +21,9 @@ class ItemBlueprintFactory
     public function create(array $extra = [])
     {
         $enchantmentPower = rand(1, 20);
-        $attackPower = rand(1, 20);
         /** @var ItemBlueprint $blueprint */
         $blueprint = ItemBlueprint::query()->create(array_merge([
-            'enchantment_power' => $enchantmentPower,
-            'attack_power' => $attackPower
+            'enchantment_power' => $enchantmentPower
         ], $extra));
         return $blueprint;
     }

@@ -14,7 +14,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  *
  * @property int $id
  * @property string|null $item_name
- * @property int|null $attack_power
  * @property int|null $enchantment_power
  * @property string|null $description
  *

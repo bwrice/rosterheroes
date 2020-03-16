@@ -39,10 +39,7 @@ class SeedStarterItemBlueprints extends Migration
                 ],
                 'enchantments' => [
                     'Level 1 Strength'
-                ],
-                'attacks' => Attack::query()
-                    ->whereIn('name', Attack::STARTER_SWORD_ATTACKS)
-                    ->get()
+                ]
             ],
             [
                 'create_array' => [
@@ -54,9 +51,6 @@ class SeedStarterItemBlueprints extends Migration
                 ],
                 'enchantments' => [
                     'Level 1 Valor'
-                ],
-                'attacks' => [
-                    // No attacks for shield
                 ]
             ],
             [
@@ -70,10 +64,7 @@ class SeedStarterItemBlueprints extends Migration
                 'enchantments' => [
                     'Level 1 Agility',
                     'Level 1 Focus'
-                ],
-                'attacks' => Attack::query()
-                    ->whereIn('name', Attack::STARTER_BOW_ATTACKS)
-                    ->get()
+                ]
             ],
             [
                 'create_array' => [
@@ -86,10 +77,7 @@ class SeedStarterItemBlueprints extends Migration
                 'enchantments' => [
                     'Level 1 Aptitude',
                     'Level 1 Intelligence'
-                ],
-                'attacks' => Attack::query()
-                    ->whereIn('name', Attack::STARTER_STAFF_ATTACKS)
-                    ->get()
+                ]
             ],
             [
                 'create_array' => [
@@ -101,8 +89,7 @@ class SeedStarterItemBlueprints extends Migration
                 ],
                 'enchantments' => [
                     "Beginner's Blessing"
-                ],
-                'attacks' => []
+                ]
             ],
             [
                 'create_array' => [
@@ -114,8 +101,7 @@ class SeedStarterItemBlueprints extends Migration
                 ],
                 'enchantments' => [
                     "Beginner's Blessing"
-                ],
-                'attacks' => []
+                ]
             ],
             [
                 'create_array' => [
@@ -127,8 +113,7 @@ class SeedStarterItemBlueprints extends Migration
                 ],
                 'enchantments' => [
                     "Beginner's Blessing"
-                ],
-                'attacks' => []
+                ]
             ],
             [
                 'create_array' => [
@@ -136,8 +121,7 @@ class SeedStarterItemBlueprints extends Migration
                     'description' => 'Completely random enchanted item',
                     'item_class' => $itemClasses->where('name', '=', ItemClass::ENCHANTED)->first(),
                 ],
-                'enchantments' => [],
-                'attacks' => []
+                'enchantments' => []
             ]
         ];
 
@@ -161,7 +145,6 @@ class SeedStarterItemBlueprints extends Migration
             $enchantmentsToAttach = $enchantments->whereIn('name', $blueprint['enchantments']);
 
             $blueprintCreated->enchantments()->saveMany($enchantmentsToAttach);
-            $blueprintCreated->attacks()->saveMany($blueprint['attacks']);
         }
     }
 

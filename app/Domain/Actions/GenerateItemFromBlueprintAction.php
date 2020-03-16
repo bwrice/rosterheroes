@@ -49,9 +49,7 @@ class GenerateItemFromBlueprintAction
             $itemAggregate->attachEnchantment($enchantment->id);
         });
 
-        $attacks = $this->getAttacks($itemBlueprint, $itemType);
-
-        $attacks->each(function (Attack $attack) use ($itemAggregate) {
+        $itemBlueprint->attacks->each(function (Attack $attack) use ($itemAggregate) {
             $itemAggregate->attachAttack($attack->id);
         });
 
@@ -149,35 +147,6 @@ class GenerateItemFromBlueprintAction
         }
 
         return $enchantments->unique();
-    }
-
-    /**
-     * @param ItemBlueprint $blueprint
-     * @param ItemType $itemType
-     * @return AttackCollection
-     */
-    protected function getAttacks(ItemBlueprint $blueprint, ItemType $itemType)
-    {
-        $blueprintAttacks = $blueprint->attacks;
-        if ($blueprintAttacks->isNotEmpty()) {
-            return $blueprintAttacks;
-        }
-        $attackPower = $blueprint->attack_power;
-        $attackPower = $attackPower > 0 ? $attackPower : $itemType->grade;
-
-        $attacksPool = $itemType->itemBase->attacks;
-        $attacksToAttach = new AttackCollection();
-
-        while ($attackPower > 0 && $attacksPool->isNotEmpty()) {
-
-            /** @var Attack $attack */
-            $attack = $attacksPool->shift();
-            $attacksToAttach->push($attack);
-
-            $attackPower -= $attack->getGrade();
-        }
-
-        return $attacksToAttach;
     }
 
 }

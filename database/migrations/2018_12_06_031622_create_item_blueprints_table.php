@@ -16,7 +16,6 @@ class CreateItemBlueprintsTable extends Migration
         Schema::create('item_blueprints', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('enchantment_power')->nullable();
-            $table->integer('attack_power')->nullable();
             $table->string('item_name')->nullable();
             $table->string('description')->nullable();
             $table->timestamps();
