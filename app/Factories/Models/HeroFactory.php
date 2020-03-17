@@ -10,6 +10,7 @@ use App\Domain\Models\HeroClass;
 use App\Domain\Models\HeroRace;
 use App\Domain\Models\HeroRank;
 use App\Domain\Models\ItemBase;
+use App\Domain\Models\League;
 use App\Domain\Models\MeasurableType;
 use App\Domain\Models\Squad;
 use Illuminate\Support\Collection;
@@ -291,5 +292,29 @@ class HeroFactory
             $capFactory,
             $armorFactory
         ]);
+    }
+
+    public function beginnerWarrior()
+    {
+        $itemFactory = ItemFactory::new();
+
+        $clone = $this
+            ->heroClass(HeroClass::WARRIOR)
+            ->withMeasurables()
+            ->combatPosition(CombatPosition::FRONT_LINE)
+            ->withItems(collect([
+            $itemFactory->beginnerSword(),
+            $itemFactory->beginnerShield(),
+            $itemFactory->beginnerHeavyArmor()
+        ]));
+        return $clone;
+    }
+
+    public function withCompletedGamePlayerSpirit()
+    {
+        $playerFactory = PlayerFactory::new()->forTeam(TeamFactory::new()->forLeague(League::NFL));
+        $playerGameLogFactory = PlayerGameLogFactory::new()->withPlayer($playerFactory)->goodRunningBackGame();
+        $playerSpiritFactory = PlayerSpiritFactory::new()->withPlayerGameLog($playerGameLogFactory);
+        return $this->withPlayerSpirit($playerSpiritFactory);
     }
 }
