@@ -72,7 +72,7 @@ class PlayerFactory
     public function forTeam(TeamFactory $teamFactory)
     {
         $clone = clone $this;
-        $clone->$teamFactory = $teamFactory;
+        $clone->teamFactory = $teamFactory;
         return $clone;
     }
 
