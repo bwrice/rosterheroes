@@ -13,6 +13,10 @@ class PlayerFactory
 {
     /** @var int */
     protected $teamID;
+
+    /** @var TeamFactory|null */
+    protected $teamFactory;
+
     /**
      * @var Generator
      */
@@ -59,7 +63,17 @@ class PlayerFactory
         if ($this->teamID) {
             return $this->teamID;
         }
+        if ($this->teamFactory) {
+            return $this->teamFactory->create()->id;
+        }
         return TeamFactory::new()->create()->id;
+    }
+
+    public function forTeam(TeamFactory $teamFactory)
+    {
+        $clone = clone $this;
+        $clone->$teamFactory = $teamFactory;
+        return $clone;
     }
 
     public function withTeamID(int $teamID)
