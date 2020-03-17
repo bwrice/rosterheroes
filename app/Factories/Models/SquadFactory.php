@@ -9,10 +9,14 @@ use App\Domain\Models\Province;
 use App\Domain\Models\Squad;
 use App\Domain\Models\SquadRank;
 use App\Domain\Models\User;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 class SquadFactory
 {
+    /** @var Collection|null */
+    protected $heroFactories;
+
     protected $userID;
 
     protected $provinceID;
@@ -48,6 +52,19 @@ class SquadFactory
             ],
             $extra
         ));
+        if ($this->heroFactories) {
+            $this->heroFactories->each(function (HeroFactory $heroFactory) use ($squad) {
+                $heroFactory->forSquad($squad)->create();
+            });
+        }
+
         return $squad;
+    }
+
+    public function withHeroes(Collection $heroFactories)
+    {
+        $clone = clone $this;
+        $clone->heroFactories = $heroFactories;
+        return $clone;
     }
 }
