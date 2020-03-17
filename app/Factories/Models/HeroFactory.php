@@ -310,6 +310,36 @@ class HeroFactory
         return $clone;
     }
 
+    public function beginnerRanger()
+    {
+        $itemFactory = ItemFactory::new();
+
+        $clone = $this
+            ->heroClass(HeroClass::RANGER)
+            ->withMeasurables()
+            ->combatPosition(CombatPosition::BACK_LINE)
+            ->withItems(collect([
+            $itemFactory->beginnerBow(),
+            $itemFactory->beginnerLightArmor(),
+        ]));
+        return $clone;
+    }
+
+    public function beginnerSorcerer()
+    {
+        $itemFactory = ItemFactory::new();
+
+        $clone = $this
+            ->heroClass(HeroClass::SORCERER)
+            ->withMeasurables()
+            ->combatPosition(CombatPosition::BACK_LINE)
+            ->withItems(collect([
+            $itemFactory->beginnerStaff(),
+            $itemFactory->beginnerRobes(),
+        ]));
+        return $clone;
+    }
+
     public function withCompletedGamePlayerSpirit()
     {
         $playerFactory = PlayerFactory::new()->forTeam(TeamFactory::new()->forLeague(League::NFL));
