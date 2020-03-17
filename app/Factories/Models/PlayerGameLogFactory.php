@@ -77,7 +77,7 @@ class PlayerGameLogFactory
         if ($this->player) {
             return $this->player;
         }
-        return PlayerFactory::new()->forTeam($team)->create();
+        return PlayerFactory::new()->withTeamID($team->id)->create();
     }
 
     protected function getGame(Team $team)
