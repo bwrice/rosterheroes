@@ -153,4 +153,13 @@ class PlayerGameLogFactory
     {
         return $sport->statTypes()->inRandomOrder()->take($amount)->get();
     }
+
+    public function goodRunningBackGame()
+    {
+        $playerStatFactory = PlayerStatFactory::new();
+        return $this->withStats(collect([
+            $playerStatFactory->forStatType(StatType::RUSH_YARD)->withAmount(80),
+            $playerStatFactory->forStatType(StatType::RUSH_TD)->withAmount(1)
+        ]));
+    }
 }
