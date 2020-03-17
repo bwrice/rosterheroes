@@ -15,6 +15,9 @@ use Illuminate\Support\Collection;
 
 class PlayerGameLogFactory
 {
+    /** @var PlayerFactory */
+    protected $playerFactory;
+
     /** @var Player */
     protected $player;
 
@@ -41,14 +44,13 @@ class PlayerGameLogFactory
      */
     public function create(array $extra = [])
     {
-        $team = $this->getTeam();
-        $player = $this->getPlayer($team);
-        $game = $this->getGame($team);
+        $player = $this->getPlayer();
+        $game = $this->getGame($player->team);
 
         /** @var PlayerGameLog $playerGameLog */
         $playerGameLog = PlayerGameLog::query()->create(array_merge([
             'player_id' => $player->id,
-            'team_id' => $team->id,
+            'team_id' => $this->getTeamID($player),
             'game_id' => $game->id
         ], $extra));
 
@@ -61,23 +63,24 @@ class PlayerGameLogFactory
         return $playerGameLog->fresh();
     }
 
-    /**
-     * @return Team
-     */
-    protected function getTeam()
-    {
-        if ($this->team) {
-            return $this->team;
-        }
-        return factory(Team::class)->create();
-    }
-
-    protected function getPlayer(Team $team)
+    protected function getPlayer()
     {
         if ($this->player) {
             return $this->player;
         }
-        return PlayerFactory::new()->withTeamID($team->id)->create();
+        $playerFactory = $this->playerFactory ?: PlayerFactory::new();
+        if ($this->team) {
+            $playerFactory->withTeamID($this->team->id);
+        }
+        return $playerFactory->create();
+    }
+
+    protected function getTeamID(Player $player)
+    {
+        if ($this->team) {
+            return $this->team->id;
+        }
+        return $player->id;
     }
 
     protected function getGame(Team $team)
@@ -86,6 +89,13 @@ class PlayerGameLogFactory
             return $this->game;
         }
         return GameFactory::new()->forEitherTeam($team)->create();
+    }
+
+    public function withPlayer(PlayerFactory $playerFactory)
+    {
+        $clone = clone $this;
+        $clone->playerFactory = $playerFactory;
+        return $clone;
     }
 
     public function forPlayer(Player $player)
