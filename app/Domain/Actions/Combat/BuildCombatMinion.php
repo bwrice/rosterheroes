@@ -35,12 +35,13 @@ class BuildCombatMinion
         $combatPositions = $combatPositions ?: CombatPosition::all();
         /** @var CombatPosition $minionCombatPosition */
         $minionCombatPosition = $combatPositions->find($minion->combat_position_id);
-        $combatAttacks = $minion->attacks->map(function (Attack $attack) use ($minion, $combatPositions, $targetPriorities, $damageTypes) {
-            return $this->buildMinionCombatAttack->execute($attack, $minion, $combatPositions, $targetPriorities, $damageTypes);
+        $combatantUuid = (string) Str::uuid();
+        $combatAttacks = $minion->attacks->map(function (Attack $attack) use ($minion, $combatantUuid, $combatPositions, $targetPriorities, $damageTypes) {
+            return $this->buildMinionCombatAttack->execute($attack, $minion, $combatantUuid, $combatPositions, $targetPriorities, $damageTypes);
         });
         return new CombatMinion(
             $minion->uuid,
-            (string) Str::uuid(),
+            $combatantUuid,
             $minion->getStartingHealth(),
             $minion->getProtection(),
             $minion->getBlockChance(),

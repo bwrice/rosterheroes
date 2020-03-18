@@ -48,7 +48,7 @@ class AbstractCombatantCollection extends CombatantCollection
     public function getReadyAttacks()
     {
         $combatAttacks = collect();
-        $this->each(function (AbstractCombatant $abstractCombatant) use ($combatAttacks) {
+        $this->alive()->each(function (AbstractCombatant $abstractCombatant) use ($combatAttacks) {
             $abstractCombatant->getReadyAttacks()->each(function ($attack) use ($combatAttacks) {
                 $combatAttacks->push($attack);
             });
@@ -60,6 +60,13 @@ class AbstractCombatantCollection extends CombatantCollection
     {
         return $this->filter(function (AbstractCombatant $combatant) {
             return $combatant->getCurrentHealth() > 0;
+        });
+    }
+
+    public function alive()
+    {
+        return $this->filter(function (AbstractCombatant $abstractCombatant) {
+            return $abstractCombatant->getCurrentHealth() > 0;
         });
     }
 

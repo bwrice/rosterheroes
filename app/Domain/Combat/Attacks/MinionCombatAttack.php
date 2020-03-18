@@ -15,9 +15,14 @@ class MinionCombatAttack extends AbstractCombatAttack
      * @var string
      */
     protected $minionUuid;
+    /**
+     * @var string
+     */
+    protected $combatantUuid;
 
     public function __construct(
         string $minionUuid,
+        string $combatantUuid,
         string $name,
         string $attackUuid,
         int $damage,
@@ -30,6 +35,7 @@ class MinionCombatAttack extends AbstractCombatAttack
         DamageType $damageType)
     {
         $this->minionUuid = $minionUuid;
+        $this->combatantUuid = $combatantUuid;
         parent::__construct(
             $name,
             $attackUuid,
@@ -55,7 +61,16 @@ class MinionCombatAttack extends AbstractCombatAttack
     public function toArray()
     {
         return array_merge([
-            'minionUuid' => $this->minionUuid
+            'minionUuid' => $this->minionUuid,
+            'combatantUuid' => $this->combatantUuid
         ], parent::toArray());
+    }
+
+    /**
+     * @return string
+     */
+    public function getCombatantUuid(): string
+    {
+        return $this->combatantUuid;
     }
 }

@@ -51,6 +51,14 @@ class CombatMinion extends AbstractCombatant
         return $this->minionUuid;
     }
 
+    /**
+     * @return string
+     */
+    public function getCombatantUuid(): string
+    {
+        return $this->combatantUuid;
+    }
+
     protected function getDPS()
     {
         // TODO

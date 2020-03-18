@@ -20,6 +20,7 @@ class MinionCombatAttackDataMapper extends AbstractCombatAttackDataMapper
 
         return new MinionCombatAttack(
             $data['minionUuid'],
+            $data['combatantUuid'],
             $this->getName($data),
             $this->getAttackUuid($data),
             $this->getDamage($data),

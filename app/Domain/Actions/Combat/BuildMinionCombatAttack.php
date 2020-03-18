@@ -19,6 +19,7 @@ class BuildMinionCombatAttack extends AbstractBuildCombatAttack
     /**
      * @param Attack $attack
      * @param Minion $minion
+     * @param string $combatantUuid
      * @param Collection|null $combatPositions
      * @param Collection|null $targetPriorities
      * @param Collection|null $damageTypes
@@ -27,6 +28,7 @@ class BuildMinionCombatAttack extends AbstractBuildCombatAttack
     public function execute(
         Attack $attack,
         Minion $minion,
+        string $combatantUuid,
         Collection $combatPositions = null,
         Collection $targetPriorities = null,
         Collection $damageTypes = null)
@@ -39,6 +41,7 @@ class BuildMinionCombatAttack extends AbstractBuildCombatAttack
         $damage = $this->calculateCombatDamage->execute($attack, $minion->getFantasyPoints());
         return new MinionCombatAttack(
             $minion->uuid,
+            $combatantUuid,
             $attack->name,
             $attack->uuid,
             $damage,

@@ -13,6 +13,7 @@ use App\Factories\Models\MinionFactory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class BuildCombatMinionAttackTest extends TestCase
@@ -40,7 +41,7 @@ class BuildCombatMinionAttackTest extends TestCase
     {
         /** @var BuildMinionCombatAttack $domainAction */
         $domainAction = app(BuildMinionCombatAttack::class);
-        $minionCombatAttack = $domainAction->execute($this->attack, $this->minion);
+        $minionCombatAttack = $domainAction->execute($this->attack, $this->minion, Str::uuid());
         $this->assertTrue($minionCombatAttack instanceof MinionCombatAttack);
         $this->assertTrue($minionCombatAttack instanceof CombatAttackInterface);
     }
@@ -52,7 +53,7 @@ class BuildCombatMinionAttackTest extends TestCase
     {
         /** @var BuildMinionCombatAttack $domainAction */
         $domainAction = app(BuildMinionCombatAttack::class);
-        $minionCombatAttack = $domainAction->execute($this->attack, $this->minion);
+        $minionCombatAttack = $domainAction->execute($this->attack, $this->minion, Str::uuid());
 
         $this->attack->setHasAttacks($this->minion);
         $expectedSpeed = $this->attack->getCombatSpeed();
@@ -67,7 +68,7 @@ class BuildCombatMinionAttackTest extends TestCase
     {
         /** @var BuildMinionCombatAttack $domainAction */
         $domainAction = app(BuildMinionCombatAttack::class);
-        $minionCombatAttack = $domainAction->execute($this->attack, $this->minion);
+        $minionCombatAttack = $domainAction->execute($this->attack, $this->minion, Str::uuid());
 
         $this->attack->setHasAttacks($this->minion);
 

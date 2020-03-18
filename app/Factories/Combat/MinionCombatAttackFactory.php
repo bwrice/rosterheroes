@@ -20,6 +20,7 @@ class MinionCombatAttackFactory extends AbstractCombatAttackFactory
         $name = 'Test_Minion_Combat_Attack ' . rand(1, 99999);
         return new MinionCombatAttack(
             $minionUuid,
+            (string) Str::uuid(),
             $name,
             $this->getAttackUuid(),
             $this->getDamage(),
