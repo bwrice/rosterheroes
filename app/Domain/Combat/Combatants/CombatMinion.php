@@ -9,6 +9,7 @@ use App\Domain\Combat\Attacks\CombatAttackInterface;
 use App\Domain\Combat\Combatants\Combatant;
 use App\Domain\Models\CombatPosition;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 class CombatMinion extends AbstractCombatant
 {
@@ -16,9 +17,14 @@ class CombatMinion extends AbstractCombatant
      * @var string
      */
     protected $minionUuid;
+    /**
+     * @var string
+     */
+    protected $combatantUuid;
 
     public function __construct(
         string $minionUuid,
+        string $combatantUuid,
         int $health,
         int $protection,
         int $blockChancePercent,
@@ -26,6 +32,8 @@ class CombatMinion extends AbstractCombatant
         AbstractCombatAttackCollection $combatAttacks)
     {
         $this->minionUuid = $minionUuid;
+        // We need a local uuid because a quest/side-quest can have multiples of the same minion
+        $this->combatantUuid = $combatantUuid;
         parent::__construct(
             $health,
             $protection,
@@ -52,7 +60,8 @@ class CombatMinion extends AbstractCombatant
     public function toArray()
     {
         return array_merge([
-            'minionUuid' => $this->minionUuid
+            'minionUuid' => $this->minionUuid,
+            'combatantUuid' => $this->combatantUuid
         ], parent::toArray());
     }
 

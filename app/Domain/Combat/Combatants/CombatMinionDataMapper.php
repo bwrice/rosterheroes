@@ -31,6 +31,7 @@ class CombatMinionDataMapper extends AbstractCombatantDataMapper
 
         $combatMinion =  new CombatMinion(
             $data['minionUuid'],
+            $data['combatantUuid'],
             $this->getInitialHealth($data),
             $this->getProtection($data),
             $this->getBlockChancePercent($data),

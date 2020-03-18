@@ -31,6 +31,7 @@ class CombatMinionFactory extends AbstractCombatantFactory
 
         return new CombatMinion(
             (string) Str::uuid(),
+            (string) Str::uuid(),
             1500,
             250,
             20,

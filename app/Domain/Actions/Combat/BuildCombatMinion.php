@@ -12,6 +12,7 @@ use App\Domain\Models\DamageType;
 use App\Domain\Models\Minion;
 use App\Domain\Models\TargetPriority;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Str;
 
 class BuildCombatMinion
 {
@@ -39,6 +40,7 @@ class BuildCombatMinion
         });
         return new CombatMinion(
             $minion->uuid,
+            (string) Str::uuid(),
             $minion->getStartingHealth(),
             $minion->getProtection(),
             $minion->getBlockChance(),
