@@ -6,14 +6,19 @@ use App\Domain\Actions\Combat\BuildCombatSquad;
 use App\Domain\Actions\Combat\BuildSideQuestGroup;
 use App\Domain\Actions\Combat\ProcessSideQuestResult;
 use App\Domain\Actions\Combat\RunCombatTurn;
+use App\Domain\Actions\CreateSquadAction;
 use App\Domain\Models\CampaignStop;
 use App\Domain\Models\SideQuest;
 use App\Domain\Models\Week;
+use App\Facades\CurrentWeek;
 use App\Factories\Combat\CombatHeroFactory;
 use App\Factories\Combat\CombatSquadFactory;
 use App\Factories\Combat\SideQuestGroupFactory;
+use App\Factories\Models\CampaignFactory;
 use App\Factories\Models\CampaignStopFactory;
+use App\Factories\Models\HeroFactory;
 use App\Factories\Models\SideQuestFactory;
+use App\Factories\Models\SquadFactory;
 use App\SideQuestEvent;
 use App\SideQuestResult;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -256,36 +261,31 @@ class ProcessSideQuestResultTest extends TestCase
     /**
      * @test
      */
-    public function a_noobish_squad_will_defeat_a_small_skeleton_pack()
+    public function a_beginner_squad_will_defeat_a_small_skeleton_pack()
     {
-        $baseCombatHeroFactory = CombatHeroFactory::new();
-        $combatSquad = CombatSquadFactory::new()->withCombatHeroes(collect([
-            $baseCombatHeroFactory->noobWarrior(),
-            $baseCombatHeroFactory->noobWarrior(),
-            $baseCombatHeroFactory->noobRanger(),
-            $baseCombatHeroFactory->noobSorcerer()
+        $heroFactory = HeroFactory::new();
+        $squad = SquadFactory::new()->withHeroes(collect([
+            $heroFactory->beginnerWarrior()->withCompletedGamePlayerSpirit(),
+            $heroFactory->beginnerWarrior()->withCompletedGamePlayerSpirit(),
+            $heroFactory->beginnerRanger()->withCompletedGamePlayerSpirit(),
+            $heroFactory->beginnerSorcerer()->withCompletedGamePlayerSpirit(),
         ]))->create();
 
-        $buildCombatSquadMock = \Mockery::mock(BuildCombatSquad::class)
-            ->shouldReceive('execute')
-            ->andReturn($combatSquad)
-            ->getMock();
-
-        app()->instance(BuildCombatSquad::class, $buildCombatSquadMock);
+        $campaignStop = CampaignStopFactory::new()->withCampaign(CampaignFactory::new()->withSquadID($squad->id))->create();
 
         /** @var SideQuest $sideQuest */
         $sideQuest = SideQuest::query()->where('name', '=', 'Small Skeleton Pack')->first();
-        $this->campaignStop->sideQuests()->save($sideQuest);
+        $campaignStop->sideQuests()->save($sideQuest);
 
         /** @var ProcessSideQuestResult $domainAction */
         $domainAction = app(ProcessSideQuestResult::class);
-        $sideQuestResult = $domainAction->execute($this->campaignStop, $sideQuest);
+        $sideQuestResult = $domainAction->execute($campaignStop, $sideQuest);
         $this->assertNotNull($sideQuestResult);
         $victoryEvent = $sideQuestResult->sideQuestEvents()->where('event_type', '=', SideQuestEvent::TYPE_SIDE_QUEST_VICTORY)->first();
         $this->assertNotNull($victoryEvent);
         $eventCount = $sideQuestResult->sideQuestEvents()->count();
-        $this->assertGreaterThan(15, $eventCount);
-        $this->assertLessThan(100, $eventCount);
+        $this->assertGreaterThan(25, $eventCount);
+        $this->assertLessThan(250, $eventCount);
     }
 
 }
