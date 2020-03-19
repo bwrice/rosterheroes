@@ -65,7 +65,7 @@ class Minion extends Model implements HasAttacks
     public function getStartingHealth(): int
     {
         $level = $this->getLevel();
-        $baseHealth = (100 * $level) + (2 * ($level**2));
+        $baseHealth = 200 + (50 * $level) + (2 * ($level**2));
         $healthRatingBonus = $this->getHealthRating()/100;
         $enemyTypeBonus = $this->getEnemyTypeBehavior()->getHealthModifierBonus();
         return (int) ceil($baseHealth * (1 + $healthRatingBonus + $enemyTypeBonus));
@@ -74,7 +74,7 @@ class Minion extends Model implements HasAttacks
     public function getProtection(): int
     {
         $level = $this->getLevel();
-        $baseProtection = (10 * $level) + (.2 * ($level**2));
+        $baseProtection = 20 + (4 * $level) + (.2 * ($level**2));
         $protectionRatingBonus = $this->getProtectionRating()/100;
         $enemyTypeBonus = $this->getEnemyTypeBehavior()->getProtectionModifierBonus();
         return (int) ceil($baseProtection * (1 + $protectionRatingBonus + $enemyTypeBonus));
