@@ -28,7 +28,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/cut.yaml'
             ],
             [
                 'name' => 'Double Cut',
@@ -36,7 +35,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/double_cut.yaml'
             ],
             [
                 'name' => 'Triple Cut',
@@ -44,7 +42,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/triple_cut.yaml'
             ],
             [
                 'name' => 'Slash',
@@ -52,7 +49,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/slash.yaml'
             ],
             [
                 'name' => 'Double Slash',
@@ -60,7 +56,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/double_slash.yaml'
             ],
             [
                 'name' => 'Triple Slash',
@@ -68,7 +63,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/triple_slash.yaml'
             ],
             [
                 'name' => 'Poke',
@@ -76,7 +70,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/poke.yaml'
             ],
             [
                 'name' => 'Double Poke',
@@ -84,7 +77,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/double_poke.yaml'
             ],
             [
                 'name' => 'Triple Poke',
@@ -92,7 +84,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/triple_poke.yaml'
             ],
             [
                 'name' => 'Whack',
@@ -100,7 +91,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/whack.yaml'
             ],
             [
                 'name' => 'Double Whack',
@@ -108,7 +98,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/double_whack.yaml'
             ],
             [
                 'name' => 'Triple Whack',
@@ -116,7 +105,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/triple_whack.yaml'
             ],
             [
                 'name' => 'Arrow Release',
@@ -124,7 +112,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::HIGH_GROUND,
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/arrow_release.yaml'
             ],
             [
                 'name' => 'Double Arrow Release',
@@ -132,7 +119,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::HIGH_GROUND,
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/double_arrow_release.yaml'
             ],
             [
                 'name' => 'Triple Arrow Release',
@@ -140,7 +126,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::HIGH_GROUND,
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/triple_arrow_release.yaml'
             ],
             [
                 'name' => 'Bolt Release',
@@ -148,7 +133,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::HIGH_GROUND,
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/bolt_release.yaml'
             ],
             [
                 'name' => 'Double Bolt Release',
@@ -156,7 +140,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::HIGH_GROUND,
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/double_bolt_release.yaml'
             ],
             [
                 'name' => 'Triple Bolt Release',
@@ -164,7 +147,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::HIGH_GROUND,
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/triple_bolt_release.yaml'
             ],
             [
                 'name' => 'Magic Dart',
@@ -172,7 +154,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/magic_dart.yaml'
             ],
             [
                 'name' => 'Double Magic Dart',
@@ -180,7 +161,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/double_magic_dart.yaml'
             ],
             [
                 'name' => 'Triple Magic Dart',
@@ -188,7 +168,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/triple_magic_dart.yaml'
             ],
             [
                 'name' => 'Chuck',
@@ -196,7 +175,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/chuck.yaml'
             ],
             [
                 'name' => 'Double Chuck',
@@ -204,7 +182,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/double_chuck.yaml'
             ],
             [
                 'name' => 'Triple Chuck',
@@ -212,7 +189,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/triple_chuck.yaml'
             ],
             [
                 'name' => 'Stab',
@@ -220,7 +196,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/stab.yaml'
             ],
             [
                 'name' => 'Double Stab',
@@ -228,7 +203,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/double_stab.yaml'
             ],
             [
                 'name' => 'Triple Stab',
@@ -236,7 +210,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/triple_stab.yaml'
             ],
             [
                 'name' => 'Slice',
@@ -244,7 +217,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/slice.yaml'
             ],
             [
                 'name' => 'Double Slice',
@@ -252,7 +224,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/double_slice.yaml'
             ],
             [
                 'name' => 'Triple Slice',
@@ -260,7 +231,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/triple_slice.yaml'
             ],
             [
                 'name' => 'Smash',
@@ -268,7 +238,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/slice.yaml'
             ],
             [
                 'name' => 'Double Smash',
@@ -276,7 +245,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/double_slice.yaml'
             ],
             [
                 'name' => 'Triple Smash',
@@ -284,7 +252,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/triple_slice.yaml'
             ],
             [
                 'name' => 'Arrow Shot',
@@ -292,7 +259,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::HIGH_GROUND,
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/arrow_shot.yaml'
             ],
             [
                 'name' => 'Double Arrow Shot',
@@ -300,7 +266,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::HIGH_GROUND,
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/double_arrow_shot.yaml'
             ],
             [
                 'name' => 'Triple Arrow Shot',
@@ -308,7 +273,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::HIGH_GROUND,
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/triple_arrow_shot.yaml'
             ],
             [
                 'name' => 'Bolt Shot',
@@ -316,7 +280,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::HIGH_GROUND,
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/bolt_shot.yaml'
             ],
             [
                 'name' => 'Double Bolt Shot',
@@ -324,7 +287,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::HIGH_GROUND,
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/double_bolt_shot.yaml'
             ],
             [
                 'name' => 'Triple Bolt Shot',
@@ -332,7 +294,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::HIGH_GROUND,
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/triple_bolt_shot.yaml'
             ],
             [
                 'name' => 'Bolt Shot',
@@ -340,7 +301,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::HIGH_GROUND,
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/bolt_shot.yaml'
             ],
             [
                 'name' => 'Double Bolt Shot',
@@ -348,7 +308,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::HIGH_GROUND,
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/double_bolt_shot.yaml'
             ],
             [
                 'name' => 'Triple Bolt Shot',
@@ -356,7 +315,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::HIGH_GROUND,
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/triple_bolt_shot.yaml'
             ],
             [
                 'name' => 'Magic Bullet',
@@ -364,7 +322,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/magic_bullet.yaml'
             ],
             [
                 'name' => 'Double Magic Bullet',
@@ -372,7 +329,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/double_magic_bullet.yaml'
             ],
             [
                 'name' => 'Triple Magic Bullet',
@@ -380,7 +336,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/triple_magic_bullet.yaml'
             ],
             [
                 'name' => 'Hurl',
@@ -388,7 +343,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/hurl.yaml'
             ],
             [
                 'name' => 'Double Hurl',
@@ -396,7 +350,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/double_hurl.yaml'
             ],
             [
                 'name' => 'Triple Hurl',
@@ -404,7 +357,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/triple_hurl.yaml'
             ],
             [
                 'name' => 'Puncture',
@@ -412,7 +364,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/puncture.yaml'
             ],
             [
                 'name' => 'Double Puncture',
@@ -420,7 +371,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/double_puncture.yaml'
             ],
             [
                 'name' => 'Triple Puncture',
@@ -428,7 +378,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/triple_puncture.yaml'
             ],
             [
                 'name' => 'Cleave',
@@ -436,7 +385,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/cleave.yaml'
             ],
             [
                 'name' => 'Double Cleave',
@@ -444,7 +392,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/double_cleave.yaml'
             ],
             [
                 'name' => 'Triple Cleave',
@@ -452,7 +399,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/triple_cleave.yaml'
             ],
             [
                 'name' => 'Clobber',
@@ -460,7 +406,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/clobber.yaml'
             ],
             [
                 'name' => 'Double Clobber',
@@ -468,7 +413,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/double_clobber.yaml'
             ],
             [
                 'name' => 'Triple Clobber',
@@ -476,7 +420,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/triple_clobber.yaml'
             ],
             [
                 'name' => 'Arrow Missile',
@@ -484,7 +427,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::HIGH_GROUND,
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/arrow_missile.yaml'
             ],
             [
                 'name' => 'Double Arrow Missile',
@@ -492,7 +434,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::HIGH_GROUND,
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/double_arrow_missile.yaml'
             ],
             [
                 'name' => 'Triple Arrow Missile',
@@ -500,7 +441,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::HIGH_GROUND,
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/triple_arrow_missile.yaml'
             ],
             [
                 'name' => 'Bolt Missile',
@@ -508,7 +448,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::HIGH_GROUND,
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/bolt_shot.yaml'
             ],
             [
                 'name' => 'Double Bolt Missile',
@@ -516,7 +455,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::HIGH_GROUND,
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/double_bolt_shot.yaml'
             ],
             [
                 'name' => 'Triple Bolt Missile',
@@ -524,7 +462,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::HIGH_GROUND,
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/triple_bolt_shot.yaml'
             ],
             [
                 'name' => 'Magic Torpedo',
@@ -532,7 +469,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/magic_bullet.yaml'
             ],
             [
                 'name' => 'Double Magic Torpedo',
@@ -540,7 +476,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/double_magic_bullet.yaml'
             ],
             [
                 'name' => 'Triple Magic Torpedo',
@@ -548,7 +483,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/triple_magic_bullet.yaml'
             ],
             [
                 'name' => 'Launch',
@@ -556,7 +490,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/hurl.yaml'
             ],
             [
                 'name' => 'Double Launch',
@@ -564,7 +497,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/double_hurl.yaml'
             ],
             [
                 'name' => 'Triple Launch',
@@ -572,7 +504,237 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/triple_hurl.yaml'
+            ],
+            [
+                'name' => 'Blade Sweep',
+                'damage_type' => DamageType::AREA_OF_EFFECT,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+            ],
+            [
+                'name' => 'Mace Sweep',
+                'damage_type' => DamageType::AREA_OF_EFFECT,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+            ],
+            [
+                'name' => 'Polearm Blitz',
+                'damage_type' => DamageType::AREA_OF_EFFECT,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+            ],
+            [
+                'name' => 'Arrow Spray',
+                'damage_type' => DamageType::AREA_OF_EFFECT,
+                'attacker_position' => CombatPosition::HIGH_GROUND,
+                'target_position' => CombatPosition::BACK_LINE,
+                'target_priority' => TargetPriority::ANY,
+            ],
+            [
+                'name' => 'Bolt Spray',
+                'damage_type' => DamageType::AREA_OF_EFFECT,
+                'attacker_position' => CombatPosition::HIGH_GROUND,
+                'target_position' => CombatPosition::BACK_LINE,
+                'target_priority' => TargetPriority::ANY,
+            ],
+            [
+                'name' => 'Magic Burst',
+                'damage_type' => DamageType::AREA_OF_EFFECT,
+                'attacker_position' => CombatPosition::BACK_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+            ],
+            [
+                'name' => 'Blade Whirlwind',
+                'damage_type' => DamageType::AREA_OF_EFFECT,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+            ],
+            [
+                'name' => 'Mace Whirlwind',
+                'damage_type' => DamageType::AREA_OF_EFFECT,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+            ],
+            [
+                'name' => 'Polearm Torrent',
+                'damage_type' => DamageType::AREA_OF_EFFECT,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+            ],
+            [
+                'name' => 'Arrow Assault',
+                'damage_type' => DamageType::AREA_OF_EFFECT,
+                'attacker_position' => CombatPosition::HIGH_GROUND,
+                'target_position' => CombatPosition::BACK_LINE,
+                'target_priority' => TargetPriority::ANY,
+            ],
+            [
+                'name' => 'Bolt Barrage',
+                'damage_type' => DamageType::AREA_OF_EFFECT,
+                'attacker_position' => CombatPosition::HIGH_GROUND,
+                'target_position' => CombatPosition::BACK_LINE,
+                'target_priority' => TargetPriority::ANY,
+            ],
+            [
+                'name' => 'Magic Blast',
+                'damage_type' => DamageType::AREA_OF_EFFECT,
+                'attacker_position' => CombatPosition::BACK_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+            ],
+            [
+                'name' => 'Throwing Torrent',
+                'damage_type' => DamageType::AREA_OF_EFFECT,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+            ],
+            [
+                'name' => 'Blade Sweep',
+                'damage_type' => DamageType::AREA_OF_EFFECT,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+            ],
+            [
+                'name' => 'Mace Sweep',
+                'damage_type' => DamageType::AREA_OF_EFFECT,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+            ],
+            [
+                'name' => 'Polearm Blitz',
+                'damage_type' => DamageType::AREA_OF_EFFECT,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+            ],
+            [
+                'name' => 'Arrow Spray',
+                'damage_type' => DamageType::AREA_OF_EFFECT,
+                'attacker_position' => CombatPosition::HIGH_GROUND,
+                'target_position' => CombatPosition::BACK_LINE,
+                'target_priority' => TargetPriority::ANY,
+            ],
+            [
+                'name' => 'Bolt Spray',
+                'damage_type' => DamageType::AREA_OF_EFFECT,
+                'attacker_position' => CombatPosition::HIGH_GROUND,
+                'target_position' => CombatPosition::BACK_LINE,
+                'target_priority' => TargetPriority::ANY,
+            ],
+            [
+                'name' => 'Magic Burst',
+                'damage_type' => DamageType::AREA_OF_EFFECT,
+                'attacker_position' => CombatPosition::BACK_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+            ],
+            [
+                'name' => 'Blade Whirlwind',
+                'damage_type' => DamageType::AREA_OF_EFFECT,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+            ],
+            [
+                'name' => 'Mace Whirlwind',
+                'damage_type' => DamageType::AREA_OF_EFFECT,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+            ],
+            [
+                'name' => 'Polearm Torrent',
+                'damage_type' => DamageType::AREA_OF_EFFECT,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+            ],
+            [
+                'name' => 'Arrow Assault',
+                'damage_type' => DamageType::AREA_OF_EFFECT,
+                'attacker_position' => CombatPosition::HIGH_GROUND,
+                'target_position' => CombatPosition::BACK_LINE,
+                'target_priority' => TargetPriority::ANY,
+            ],
+            [
+                'name' => 'Bolt Barrage',
+                'damage_type' => DamageType::AREA_OF_EFFECT,
+                'attacker_position' => CombatPosition::HIGH_GROUND,
+                'target_position' => CombatPosition::BACK_LINE,
+                'target_priority' => TargetPriority::ANY,
+            ],
+            [
+                'name' => 'Magic Blast',
+                'damage_type' => DamageType::AREA_OF_EFFECT,
+                'attacker_position' => CombatPosition::BACK_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+            ],
+            [
+                'name' => 'Throwing Torrent',
+                'damage_type' => DamageType::AREA_OF_EFFECT,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+            ],
+            [
+                'name' => 'Blade Tornado',
+                'damage_type' => DamageType::AREA_OF_EFFECT,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+            ],
+            [
+                'name' => 'Mace Tornado',
+                'damage_type' => DamageType::AREA_OF_EFFECT,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+            ],
+            [
+                'name' => 'Polearm Onslaught',
+                'damage_type' => DamageType::AREA_OF_EFFECT,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+            ],
+            [
+                'name' => 'Hail of Arrows',
+                'damage_type' => DamageType::AREA_OF_EFFECT,
+                'attacker_position' => CombatPosition::HIGH_GROUND,
+                'target_position' => CombatPosition::BACK_LINE,
+                'target_priority' => TargetPriority::ANY,
+            ],
+            [
+                'name' => 'Bolt Bombardment',
+                'damage_type' => DamageType::AREA_OF_EFFECT,
+                'attacker_position' => CombatPosition::HIGH_GROUND,
+                'target_position' => CombatPosition::BACK_LINE,
+                'target_priority' => TargetPriority::ANY,
+            ],
+            [
+                'name' => 'Magic Storm',
+                'damage_type' => DamageType::AREA_OF_EFFECT,
+                'attacker_position' => CombatPosition::BACK_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+            ],
+            [
+                'name' => 'Throwing Onslaught',
+                'damage_type' => DamageType::AREA_OF_EFFECT,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
             ],
             [
                 'name' => 'Double Slash',
@@ -580,7 +742,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/double_slash.yaml',
                 'item_bases' => [
                     ItemBase::DAGGER,
                     ItemBase::SWORD,
@@ -598,7 +759,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/triple_slash.yaml',
                 'item_bases' => [
                     ItemBase::DAGGER,
                     ItemBase::SWORD,
@@ -616,7 +776,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/sword_sweep.yaml',
                 'item_bases' => [
                     ItemBase::SWORD,
                     ItemBase::TWO_HAND_SWORD,
@@ -630,7 +789,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/axe_sweep.yaml',
                 'item_bases' => [
                     ItemBase::AXE,
                     ItemBase::TWO_HAND_AXE,
@@ -643,7 +801,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/blade_spin.yaml',
                 'item_bases' => [
                     ItemBase::AXE,
                     ItemBase::TWO_HAND_AXE,
@@ -656,7 +813,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/slice.yaml',
                 'item_bases' => [
                     ItemBase::DAGGER,
                     ItemBase::SWORD,
@@ -674,7 +830,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/double_slice.yaml',
                 'item_bases' => [
                     ItemBase::DAGGER,
                     ItemBase::SWORD,
@@ -692,7 +847,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/triple_slice.yaml',
                 'item_bases' => [
                     ItemBase::DAGGER,
                     ItemBase::SWORD,
@@ -710,7 +864,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/whack.yaml',
                 'item_bases' => [
                     ItemBase::MACE,
                 ],
@@ -721,7 +874,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/double_whack.yaml',
                 'item_bases' => [
                     ItemBase::MACE,
                 ]
@@ -732,7 +884,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/triple_whack.yaml',
                 'item_bases' => [
                     ItemBase::MACE,
                 ]
@@ -743,7 +894,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/poke.yaml',
                 'item_bases' => [
                     ItemBase::POLEARM,
                 ]
@@ -754,7 +904,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/double_poke.yaml',
                 'item_bases' => [
                     ItemBase::POLEARM,
                 ]
@@ -765,7 +914,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/triple_poke.yaml',
                 'item_bases' => [
                     ItemBase::POLEARM,
                 ]
@@ -776,7 +924,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/arrow.yaml',
                 'item_bases' => [
                     ItemBase::BOW,
                 ]
@@ -787,7 +934,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/double_arrow.yaml',
                 'item_bases' => [
                     ItemBase::BOW,
                 ]
@@ -798,7 +944,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/triple_arrow.yaml',
                 'item_bases' => [
                     ItemBase::BOW,
                 ]
@@ -809,7 +954,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/arrow_spray.yaml',
                 'item_bases' => [
                     ItemBase::BOW,
                 ]
@@ -820,7 +964,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/deep_shot.yaml',
                 'item_bases' => [
                     ItemBase::BOW,
                     ItemBase::CROSSBOW
@@ -832,7 +975,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::HIGH_GROUND,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/long_shot.yaml',
                 'item_bases' => [
                     ItemBase::BOW,
                     ItemBase::CROSSBOW
@@ -844,7 +986,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::HIGH_GROUND,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/double_long_shot.yaml',
                 'item_bases' => [
                     ItemBase::BOW,
                     ItemBase::CROSSBOW
@@ -856,7 +997,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/bolt.yaml',
                 'item_bases' => [
                     ItemBase::CROSSBOW,
                 ]
@@ -867,7 +1007,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/double_bolt.yaml',
                 'item_bases' => [
                     ItemBase::CROSSBOW,
                 ]
@@ -878,7 +1017,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/triple_bolt.yaml',
                 'item_bases' => [
                     ItemBase::CROSSBOW,
                 ]
@@ -889,7 +1027,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/chuck.yaml',
                 'item_bases' => [
                     ItemBase::THROWING_WEAPON,
                 ]
@@ -900,7 +1037,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/magic_bolt.yaml',
                 'item_bases' => [
                     ItemBase::STAFF,
                     ItemBase::WAND,
@@ -913,7 +1049,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/magic_bolt.yaml',
                 'item_bases' => [
                     ItemBase::STAFF,
                     ItemBase::WAND,
@@ -926,7 +1061,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/magic_bolt.yaml',
                 'item_bases' => [
                     ItemBase::STAFF,
                     ItemBase::WAND,
@@ -939,7 +1073,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/magic_burst.yaml',
                 'item_bases' => [
                     ItemBase::STAFF,
                     ItemBase::WAND,
@@ -952,7 +1085,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/magic_blast.yaml',
                 'item_bases' => [
                     ItemBase::STAFF,
                     ItemBase::WAND,
@@ -965,7 +1097,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::HIGH_GROUND,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/lightning_bolt.yaml',
                 'item_bases' => [
                     ItemBase::STAFF,
                     ItemBase::ORB
@@ -977,7 +1108,6 @@ class SeedAttacks extends Migration
                 'attacker_position' => CombatPosition::HIGH_GROUND,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/lightning_strike.yaml',
                 'item_bases' => [
                     ItemBase::STAFF,
                     ItemBase::ORB
@@ -999,7 +1129,6 @@ class SeedAttacks extends Migration
                 'attacker_position_id' => $combatPositions->firstWhere('name', '=', $attackData['attacker_position'])->id,
                 'target_position_id' => $combatPositions->firstWhere('name', '=', $attackData['target_position'])->id,
                 'target_priority_id' => $targetPriorities->firstWhere('name', '=', $attackData['target_priority'])->id,
-                'config_path' => $attackData['config_path'],
             ]);
 
             $basesToAttach = $itemBases->whereIn('name', $attackData['item_bases']);
