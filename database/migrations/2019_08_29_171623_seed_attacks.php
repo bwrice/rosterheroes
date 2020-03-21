@@ -23,22 +23,556 @@ class SeedAttacks extends Migration
     {
         $attacks = [
             [
-                'name' => Attack::BASIC_BLADE_ATTACK_NAME, // Slash
+                'name' => 'Cut',
                 'damage_type' => DamageType::FIXED_TARGET,
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
-                'config_path' => '/Yaml/Attacks/slash.yaml',
-                'item_bases' => [
-                    ItemBase::DAGGER,
-                    ItemBase::SWORD,
-                    ItemBase::TWO_HAND_SWORD,
-                    ItemBase::AXE,
-                    ItemBase::TWO_HAND_AXE,
-                    ItemBase::POLEARM,
-                    ItemBase::PSIONIC_ONE_HAND,
-                    ItemBase::PSIONIC_TWO_HAND
-                ]
+                'config_path' => '/Yaml/Attacks/cut.yaml'
+            ],
+            [
+                'name' => 'Double Cut',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/double_cut.yaml'
+            ],
+            [
+                'name' => 'Triple Cut',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/triple_cut.yaml'
+            ],
+            [
+                'name' => 'Slash',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/slash.yaml'
+            ],
+            [
+                'name' => 'Double Slash',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/double_slash.yaml'
+            ],
+            [
+                'name' => 'Triple Slash',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/triple_slash.yaml'
+            ],
+            [
+                'name' => 'Poke',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/poke.yaml'
+            ],
+            [
+                'name' => 'Double Poke',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/double_poke.yaml'
+            ],
+            [
+                'name' => 'Triple Poke',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/triple_poke.yaml'
+            ],
+            [
+                'name' => 'Whack',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/whack.yaml'
+            ],
+            [
+                'name' => 'Double Whack',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/double_whack.yaml'
+            ],
+            [
+                'name' => 'Triple Whack',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/triple_whack.yaml'
+            ],
+            [
+                'name' => 'Arrow Release',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::HIGH_GROUND,
+                'target_position' => CombatPosition::BACK_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/arrow_release.yaml'
+            ],
+            [
+                'name' => 'Double Arrow Release',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::HIGH_GROUND,
+                'target_position' => CombatPosition::BACK_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/double_arrow_release.yaml'
+            ],
+            [
+                'name' => 'Triple Arrow Release',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::HIGH_GROUND,
+                'target_position' => CombatPosition::BACK_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/triple_arrow_release.yaml'
+            ],
+            [
+                'name' => 'Bolt Release',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::HIGH_GROUND,
+                'target_position' => CombatPosition::BACK_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/bolt_release.yaml'
+            ],
+            [
+                'name' => 'Double Bolt Release',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::HIGH_GROUND,
+                'target_position' => CombatPosition::BACK_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/double_bolt_release.yaml'
+            ],
+            [
+                'name' => 'Triple Bolt Release',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::HIGH_GROUND,
+                'target_position' => CombatPosition::BACK_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/triple_bolt_release.yaml'
+            ],
+            [
+                'name' => 'Magic Dart',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::BACK_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/magic_dart.yaml'
+            ],
+            [
+                'name' => 'Double Magic Dart',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::BACK_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/double_magic_dart.yaml'
+            ],
+            [
+                'name' => 'Triple Magic Dart',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::BACK_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/triple_magic_dart.yaml'
+            ],
+            [
+                'name' => 'Chuck',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::BACK_LINE,
+                'target_position' => CombatPosition::BACK_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/chuck.yaml'
+            ],
+            [
+                'name' => 'Double Chuck',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::BACK_LINE,
+                'target_position' => CombatPosition::BACK_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/double_chuck.yaml'
+            ],
+            [
+                'name' => 'Triple Chuck',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::BACK_LINE,
+                'target_position' => CombatPosition::BACK_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/triple_chuck.yaml'
+            ],
+            [
+                'name' => 'Stab',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/stab.yaml'
+            ],
+            [
+                'name' => 'Double Stab',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/double_stab.yaml'
+            ],
+            [
+                'name' => 'Triple Stab',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/triple_stab.yaml'
+            ],
+            [
+                'name' => 'Slice',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/slice.yaml'
+            ],
+            [
+                'name' => 'Double Slice',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/double_slice.yaml'
+            ],
+            [
+                'name' => 'Triple Slice',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/triple_slice.yaml'
+            ],
+            [
+                'name' => 'Smash',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/slice.yaml'
+            ],
+            [
+                'name' => 'Double Smash',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/double_slice.yaml'
+            ],
+            [
+                'name' => 'Triple Smash',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/triple_slice.yaml'
+            ],
+            [
+                'name' => 'Arrow Shot',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::HIGH_GROUND,
+                'target_position' => CombatPosition::BACK_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/arrow_shot.yaml'
+            ],
+            [
+                'name' => 'Double Arrow Shot',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::HIGH_GROUND,
+                'target_position' => CombatPosition::BACK_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/double_arrow_shot.yaml'
+            ],
+            [
+                'name' => 'Triple Arrow Shot',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::HIGH_GROUND,
+                'target_position' => CombatPosition::BACK_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/triple_arrow_shot.yaml'
+            ],
+            [
+                'name' => 'Bolt Shot',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::HIGH_GROUND,
+                'target_position' => CombatPosition::BACK_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/bolt_shot.yaml'
+            ],
+            [
+                'name' => 'Double Bolt Shot',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::HIGH_GROUND,
+                'target_position' => CombatPosition::BACK_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/double_bolt_shot.yaml'
+            ],
+            [
+                'name' => 'Triple Bolt Shot',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::HIGH_GROUND,
+                'target_position' => CombatPosition::BACK_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/triple_bolt_shot.yaml'
+            ],
+            [
+                'name' => 'Bolt Shot',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::HIGH_GROUND,
+                'target_position' => CombatPosition::BACK_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/bolt_shot.yaml'
+            ],
+            [
+                'name' => 'Double Bolt Shot',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::HIGH_GROUND,
+                'target_position' => CombatPosition::BACK_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/double_bolt_shot.yaml'
+            ],
+            [
+                'name' => 'Triple Bolt Shot',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::HIGH_GROUND,
+                'target_position' => CombatPosition::BACK_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/triple_bolt_shot.yaml'
+            ],
+            [
+                'name' => 'Magic Bullet',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::BACK_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/magic_bullet.yaml'
+            ],
+            [
+                'name' => 'Double Magic Bullet',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::BACK_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/double_magic_bullet.yaml'
+            ],
+            [
+                'name' => 'Triple Magic Bullet',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::BACK_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/triple_magic_bullet.yaml'
+            ],
+            [
+                'name' => 'Hurl',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::BACK_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/hurl.yaml'
+            ],
+            [
+                'name' => 'Double Hurl',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::BACK_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/double_hurl.yaml'
+            ],
+            [
+                'name' => 'Triple Hurl',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::BACK_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/triple_hurl.yaml'
+            ],
+            [
+                'name' => 'Puncture',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/puncture.yaml'
+            ],
+            [
+                'name' => 'Double Puncture',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/double_puncture.yaml'
+            ],
+            [
+                'name' => 'Triple Puncture',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/triple_puncture.yaml'
+            ],
+            [
+                'name' => 'Cleave',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/cleave.yaml'
+            ],
+            [
+                'name' => 'Double Cleave',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/double_cleave.yaml'
+            ],
+            [
+                'name' => 'Triple Cleave',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/triple_cleave.yaml'
+            ],
+            [
+                'name' => 'Clobber',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/clobber.yaml'
+            ],
+            [
+                'name' => 'Double Clobber',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/double_clobber.yaml'
+            ],
+            [
+                'name' => 'Triple Clobber',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/triple_clobber.yaml'
+            ],
+            [
+                'name' => 'Arrow Missile',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::HIGH_GROUND,
+                'target_position' => CombatPosition::BACK_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/arrow_missile.yaml'
+            ],
+            [
+                'name' => 'Double Arrow Missile',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::HIGH_GROUND,
+                'target_position' => CombatPosition::BACK_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/double_arrow_missile.yaml'
+            ],
+            [
+                'name' => 'Triple Arrow Missile',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::HIGH_GROUND,
+                'target_position' => CombatPosition::BACK_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/triple_arrow_missile.yaml'
+            ],
+            [
+                'name' => 'Bolt Missile',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::HIGH_GROUND,
+                'target_position' => CombatPosition::BACK_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/bolt_shot.yaml'
+            ],
+            [
+                'name' => 'Double Bolt Missile',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::HIGH_GROUND,
+                'target_position' => CombatPosition::BACK_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/double_bolt_shot.yaml'
+            ],
+            [
+                'name' => 'Triple Bolt Missile',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::HIGH_GROUND,
+                'target_position' => CombatPosition::BACK_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/triple_bolt_shot.yaml'
+            ],
+            [
+                'name' => 'Magic Torpedo',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::BACK_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/magic_bullet.yaml'
+            ],
+            [
+                'name' => 'Double Magic Torpedo',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::BACK_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/double_magic_bullet.yaml'
+            ],
+            [
+                'name' => 'Triple Magic Torpedo',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::BACK_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/triple_magic_bullet.yaml'
+            ],
+            [
+                'name' => 'Launch',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::BACK_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/hurl.yaml'
+            ],
+            [
+                'name' => 'Double Launch',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::BACK_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/double_hurl.yaml'
+            ],
+            [
+                'name' => 'Triple Launch',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::BACK_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'config_path' => '/Yaml/Attacks/triple_hurl.yaml'
             ],
             [
                 'name' => 'Double Slash',
