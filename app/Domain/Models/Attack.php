@@ -49,21 +49,6 @@ class Attack extends Model
     protected $resource_costs;
     protected $requirements;
 
-
-    public const BASIC_BLADE_ATTACK_NAME = 'Slash';
-    public const BASIC_BOW_ATTACK_NAME = 'Arrow';
-    public const BASIC_MAGIC_ATTACK_NAME = 'Magic Bolt';
-
-    public const STARTER_SWORD_ATTACKS = [
-        self::BASIC_BLADE_ATTACK_NAME
-    ];
-    public const STARTER_BOW_ATTACKS = [
-        self::BASIC_BOW_ATTACK_NAME
-    ];
-    public const STARTER_STAFF_ATTACKS = [
-        self::BASIC_MAGIC_ATTACK_NAME
-    ];
-
     protected $guarded = [];
 
     /** @var HasAttacks|null */
