@@ -70,6 +70,11 @@ class Attack extends Model
         return $this->belongsToMany(ItemBase::class)->withTimestamps();
     }
 
+    public function itemTypes()
+    {
+        return $this->belongsToMany(ItemType::class)->withTimestamps();
+    }
+
     public function damageType()
     {
         return $this->belongsTo(DamageType::class);

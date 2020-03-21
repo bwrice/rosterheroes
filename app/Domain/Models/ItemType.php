@@ -33,6 +33,11 @@ class ItemType extends Model
         return $this->belongsToMany(Material::class, 'item_type_material', 'i_type_id', 'material_id')->withTimestamps();
     }
 
+    public function attacks()
+    {
+        return $this->belongsToMany(Attack::class)->withTimestamps();
+    }
+
     public function itemBase()
     {
         return $this->belongsTo(ItemBase::class);
