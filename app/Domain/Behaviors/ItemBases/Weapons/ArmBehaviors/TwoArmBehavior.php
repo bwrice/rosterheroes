@@ -26,4 +26,14 @@ class TwoArmBehavior implements ArmBehaviorInterface
     {
         return 0;
     }
+
+    public function getResourceCostAmountModifier(): float
+    {
+        return 1.8;
+    }
+
+    public function getResourceCostPercentModifier(): float
+    {
+        return 1.6;
+    }
 }

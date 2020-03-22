@@ -26,4 +26,14 @@ class SingleArmBehavior implements ArmBehaviorInterface
     {
         return .3;
     }
+
+    public function getResourceCostAmountModifier(): float
+    {
+        return 1;
+    }
+
+    public function getResourceCostPercentModifier(): float
+    {
+        return 1;
+    }
 }

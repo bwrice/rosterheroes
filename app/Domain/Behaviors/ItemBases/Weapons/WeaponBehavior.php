@@ -33,19 +33,19 @@ abstract class WeaponBehavior extends ItemBaseBehavior
     {
         parent::__construct($weaponGroup);
         $this->armBehavior = $armBehavior;
+        $this->setGearSlotsCount();
         $this->setResourceCostAmountModifier();
         $this->setResourceCostPercentModifier();
-        $this->setGearSlotsCount();
     }
 
     protected function setResourceCostAmountModifier()
     {
-        $this->resourceCostAmountModifier = sqrt($this->getGearSlotsCount());
+        $this->resourceCostAmountModifier = $this->armBehavior->getResourceCostAmountModifier();
     }
 
     protected function setResourceCostPercentModifier()
     {
-        $this->resourceCostPercentModifier = $this->getGearSlotsCount() ** .25;
+        $this->resourceCostPercentModifier = $this->armBehavior->getResourceCostPercentModifier();
     }
 
     public function setGearSlotsCount(): int
@@ -76,12 +76,12 @@ abstract class WeaponBehavior extends ItemBaseBehavior
 
     protected function getBaseDamageMeasurablesBonus(UsesItems $usesItems): float
     {
-        return 4 * $this->getMeasurablesDamageBonus($usesItems);
+        return 5 * $this->getMeasurablesDamageBonus($usesItems);
     }
 
     protected function getDamageMultiplierMeasurablesBonus(UsesItems $usesItems)
     {
-        return $this->getMeasurablesDamageBonus($usesItems);
+        return 2 * $this->getMeasurablesDamageBonus($usesItems);
     }
 
     abstract protected function getMeasurablesDamageBonus(UsesItems $usesItems): float;

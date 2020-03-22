@@ -227,9 +227,9 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
         return $this;
     }
 
-    public function adjustResourceCostAmount(float $amount): float
+    public function adjustResourceCostAmount(float $amount): int
     {
-        return $amount * $this->getItemBaseBehavior()->getResourceCostAmountModifier();
+        return (int) floor($amount * $this->getItemBaseBehavior()->getResourceCostAmountModifier());
     }
 
     public function adjustResourceCostPercent(float $amount): float

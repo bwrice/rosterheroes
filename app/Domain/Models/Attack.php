@@ -139,9 +139,17 @@ class Attack extends Model
         $resourceCosts = array_map(function ($resourceCostArray) {
             switch ($resourceCostArray['type']) {
                 case ResourceCost::FIXED:
-                    return new FixedResourceCost($resourceCostArray['resource'], $resourceCostArray['amount']);
+                    $amount = $resourceCostArray['amount'];
+                    if ($this->hasAttacks) {
+                        $amount = $this->hasAttacks->adjustResourceCostAmount($resourceCostArray['amount']);
+                    }
+                    return new FixedResourceCost($resourceCostArray['resource'], $amount);
                 case ResourceCost::PERCENT_AVAILABLE:
-                    return new PercentResourceCost($resourceCostArray['resource'], $resourceCostArray['percent']);
+                    $percent = $resourceCostArray['percent'];
+                    if ($this->hasAttacks) {
+                        $percent = $this->hasAttacks->adjustResourceCostPercent($resourceCostArray['percent']);
+                    }
+                    return new PercentResourceCost($resourceCostArray['resource'], $percent);
             }
             throw new \RuntimeException("Unknown type for Resource Cost: " . $resourceCostArray['type']);
         }, $resourceCostsArray);

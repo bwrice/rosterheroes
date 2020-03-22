@@ -13,4 +13,8 @@ interface ArmBehaviorInterface
     public function getBaseDamageModifierBonus(): float;
 
     public function getCombatSpeedModifierBonus(): float;
+
+    public function getResourceCostAmountModifier(): float;
+
+    public function getResourceCostPercentModifier(): float;
 }
