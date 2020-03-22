@@ -16,7 +16,7 @@ class CreateMinionsTable extends Migration
         Schema::create('minions', function (Blueprint $table) {
             $table->increments('id');
             $table->uuid('uuid');
-            $table->string('name');
+            $table->string('name')->unique();
             $table->string('slug');
             $table->string('config_path');
             $table->integer('enemy_type_id')->unsigned();

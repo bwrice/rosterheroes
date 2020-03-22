@@ -16,7 +16,7 @@ class CreateAttacksTable extends Migration
         Schema::create('attacks', function (Blueprint $table) {
             $table->increments('id');
             $table->uuid('uuid');
-            $table->string('name');
+            $table->string('name')->unique();
             $table->integer('attacker_position_id')->unsigned();
             $table->integer('target_position_id')->unsigned();
             $table->integer('damage_type_id')->unsigned();
