@@ -30,6 +30,7 @@ class SeedTitans extends Migration
                     'Triple Slash',
                     'Magic Bullet',
                     'Double Magic Bullet',
+                    'Triple Magic Dart',
                     'Triple Magic Bullet',
                     'Magic Burst',
                     'Magic Blast',
@@ -41,6 +42,7 @@ class SeedTitans extends Migration
                 'enemy_type' => EnemyType::SKELETON,
                 'combat_position' => CombatPosition::FRONT_LINE,
                 'attacks' => [
+                    'Arrow Release',
                     'Slice',
                     'Double Slice',
                     'Triple Slice',
