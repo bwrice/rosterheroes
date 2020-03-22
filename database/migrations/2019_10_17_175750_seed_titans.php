@@ -24,15 +24,15 @@ class SeedTitans extends Migration
                 'name' => 'Skeleton Overlord',
                 'config_path' => '/Yaml/Titans/skeleton_overlord.yaml',
                 'enemy_type' => EnemyType::SKELETON,
-                'combat_position' => CombatPosition::HIGH_GROUND,
+                'combat_position' => CombatPosition::BACK_LINE,
                 'attacks' => [
-                    'Magic Bolt',
-                    'Double Magic Bolt',
-                    'Triple Magic Bolt',
+                    'Double Slash',
+                    'Triple Slash',
+                    'Magic Bullet',
+                    'Double Magic Bullet',
+                    'Triple Magic Bullet',
                     'Magic Burst',
                     'Magic Blast',
-                    'Lightning Bolt',
-                    'Lightning Strike'
                 ]
             ],
             [
@@ -41,12 +41,11 @@ class SeedTitans extends Migration
                 'enemy_type' => EnemyType::SKELETON,
                 'combat_position' => CombatPosition::FRONT_LINE,
                 'attacks' => [
-                    'Triple Slash',
-                    'Sword Sweep',
-                    'Blade Spin',
                     'Slice',
                     'Double Slice',
                     'Triple Slice',
+                    'Blade Sweep',
+                    'Blade Whirlwind',
                 ]
             ],
         ]);
