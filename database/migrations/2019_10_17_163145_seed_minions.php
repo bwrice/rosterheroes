@@ -23,11 +23,10 @@ class SeedMinions extends Migration
                 'name' => 'Skeleton Scout',
                 'config_path' => '/Yaml/Minions/skeleton_scout.yaml',
                 'enemy_type' => EnemyType::SKELETON,
-                'combat_position' => CombatPosition::BACK_LINE,
+                'combat_position' => CombatPosition::HIGH_GROUND,
                 'attacks' => [
                     'Slash',
-                    'Arrow',
-                    'Arrow Spray'
+                    'Arrow Release',
                 ]
             ],
             [
@@ -38,19 +37,17 @@ class SeedMinions extends Migration
                 'attacks' => [
                     'Slash',
                     'Double Slash',
-                    'Sword Sweep',
                 ]
             ],
             [
                 'name' => 'Skeleton Archer',
                 'config_path' => '/Yaml/Minions/skeleton_archer.yaml',
                 'enemy_type' => EnemyType::SKELETON,
-                'combat_position' => CombatPosition::BACK_LINE,
+                'combat_position' => CombatPosition::HIGH_GROUND,
                 'attacks' => [
-                    'Arrow',
-                    'Double Arrow',
+                    'Arrow Release',
+                    'Double Arrow Release',
                     'Arrow Spray',
-                    'Deep Shot'
                 ]
             ],
             [
@@ -59,11 +56,9 @@ class SeedMinions extends Migration
                 'enemy_type' => EnemyType::SKELETON,
                 'combat_position' => CombatPosition::BACK_LINE,
                 'attacks' => [
-                    'Magic Bolt',
-                    'Double Magic Bolt',
-                    'Triple Magic Bolt',
-                    'Magic Burst',
-                    'Magic Blast'
+                    'Magic Dart',
+                    'Double Magic Dart',
+                    'Magic Burst'
                 ]
             ],
             [
@@ -75,9 +70,7 @@ class SeedMinions extends Migration
                     'Slash',
                     'Double Slash',
                     'Triple Slash',
-                    'Slice',
-                    'Axe Sweep',
-                    'Blade Spin'
+                    'Blade Sweep',
                 ]
             ],
             [
@@ -86,11 +79,10 @@ class SeedMinions extends Migration
                 'enemy_type' => EnemyType::SKELETON,
                 'combat_position' => CombatPosition::HIGH_GROUND,
                 'attacks' => [
-                    'Arrow',
-                    'Double Arrow',
+                    'Arrow Release',
+                    'Double Arrow Release',
+                    'Triple Arrow Release',
                     'Arrow Spray',
-                    'Long Shot',
-                    'Double Long Shot'
                 ]
             ],
         ]);
@@ -103,7 +95,14 @@ class SeedMinions extends Migration
                 return in_array($attack->name, $minionData['attacks']);
             });
             if ($count != $attacksToAttach->count() ) {
-                throw new RuntimeException("Not all of the attacks for " . $minionData['name'] . " were found");
+
+                $missing = collect($minionData['attacks'])->filter(function ($attackName) use ($attacksToAttach) {
+                    $match = $attacksToAttach->first(function (Attack $attack) use ($attackName) {
+                        return $attack->name === $attackName;
+                    });
+                    return is_null($match);
+                })->first();
+                throw new RuntimeException("Not all of the attacks for " . $minionData['name'] . " were found: " . $missing);
             }
         });
 
