@@ -3,6 +3,7 @@
 use App\Domain\Models\Attack;
 use App\Domain\Models\DamageType;
 use App\Domain\Models\ItemBase;
+use App\Domain\Models\ItemType;
 use App\Domain\Models\Json\ResourceCosts\ResourceCost;
 use App\Domain\Models\MeasurableType;
 use App\Domain\Models\TargetPriority;
@@ -269,27 +270,6 @@ class SeedAttacks extends Migration
             ],
             [
                 'name' => 'Triple Arrow Shot',
-                'damage_type' => DamageType::FIXED_TARGET,
-                'attacker_position' => CombatPosition::HIGH_GROUND,
-                'target_position' => CombatPosition::BACK_LINE,
-                'target_priority' => TargetPriority::ANY,
-            ],
-            [
-                'name' => 'Bolt Shot',
-                'damage_type' => DamageType::FIXED_TARGET,
-                'attacker_position' => CombatPosition::HIGH_GROUND,
-                'target_position' => CombatPosition::BACK_LINE,
-                'target_priority' => TargetPriority::ANY,
-            ],
-            [
-                'name' => 'Double Bolt Shot',
-                'damage_type' => DamageType::FIXED_TARGET,
-                'attacker_position' => CombatPosition::HIGH_GROUND,
-                'target_position' => CombatPosition::BACK_LINE,
-                'target_priority' => TargetPriority::ANY,
-            ],
-            [
-                'name' => 'Triple Bolt Shot',
                 'damage_type' => DamageType::FIXED_TARGET,
                 'attacker_position' => CombatPosition::HIGH_GROUND,
                 'target_position' => CombatPosition::BACK_LINE,
@@ -597,97 +577,6 @@ class SeedAttacks extends Migration
                 'target_priority' => TargetPriority::ANY,
             ],
             [
-                'name' => 'Blade Sweep',
-                'damage_type' => DamageType::AREA_OF_EFFECT,
-                'attacker_position' => CombatPosition::FRONT_LINE,
-                'target_position' => CombatPosition::FRONT_LINE,
-                'target_priority' => TargetPriority::ANY,
-            ],
-            [
-                'name' => 'Mace Sweep',
-                'damage_type' => DamageType::AREA_OF_EFFECT,
-                'attacker_position' => CombatPosition::FRONT_LINE,
-                'target_position' => CombatPosition::FRONT_LINE,
-                'target_priority' => TargetPriority::ANY,
-            ],
-            [
-                'name' => 'Polearm Blitz',
-                'damage_type' => DamageType::AREA_OF_EFFECT,
-                'attacker_position' => CombatPosition::FRONT_LINE,
-                'target_position' => CombatPosition::FRONT_LINE,
-                'target_priority' => TargetPriority::ANY,
-            ],
-            [
-                'name' => 'Arrow Spray',
-                'damage_type' => DamageType::AREA_OF_EFFECT,
-                'attacker_position' => CombatPosition::HIGH_GROUND,
-                'target_position' => CombatPosition::BACK_LINE,
-                'target_priority' => TargetPriority::ANY,
-            ],
-            [
-                'name' => 'Bolt Spray',
-                'damage_type' => DamageType::AREA_OF_EFFECT,
-                'attacker_position' => CombatPosition::HIGH_GROUND,
-                'target_position' => CombatPosition::BACK_LINE,
-                'target_priority' => TargetPriority::ANY,
-            ],
-            [
-                'name' => 'Magic Burst',
-                'damage_type' => DamageType::AREA_OF_EFFECT,
-                'attacker_position' => CombatPosition::BACK_LINE,
-                'target_position' => CombatPosition::FRONT_LINE,
-                'target_priority' => TargetPriority::ANY,
-            ],
-            [
-                'name' => 'Blade Whirlwind',
-                'damage_type' => DamageType::AREA_OF_EFFECT,
-                'attacker_position' => CombatPosition::FRONT_LINE,
-                'target_position' => CombatPosition::FRONT_LINE,
-                'target_priority' => TargetPriority::ANY,
-            ],
-            [
-                'name' => 'Mace Whirlwind',
-                'damage_type' => DamageType::AREA_OF_EFFECT,
-                'attacker_position' => CombatPosition::FRONT_LINE,
-                'target_position' => CombatPosition::FRONT_LINE,
-                'target_priority' => TargetPriority::ANY,
-            ],
-            [
-                'name' => 'Polearm Torrent',
-                'damage_type' => DamageType::AREA_OF_EFFECT,
-                'attacker_position' => CombatPosition::FRONT_LINE,
-                'target_position' => CombatPosition::FRONT_LINE,
-                'target_priority' => TargetPriority::ANY,
-            ],
-            [
-                'name' => 'Arrow Assault',
-                'damage_type' => DamageType::AREA_OF_EFFECT,
-                'attacker_position' => CombatPosition::HIGH_GROUND,
-                'target_position' => CombatPosition::BACK_LINE,
-                'target_priority' => TargetPriority::ANY,
-            ],
-            [
-                'name' => 'Bolt Barrage',
-                'damage_type' => DamageType::AREA_OF_EFFECT,
-                'attacker_position' => CombatPosition::HIGH_GROUND,
-                'target_position' => CombatPosition::BACK_LINE,
-                'target_priority' => TargetPriority::ANY,
-            ],
-            [
-                'name' => 'Magic Blast',
-                'damage_type' => DamageType::AREA_OF_EFFECT,
-                'attacker_position' => CombatPosition::BACK_LINE,
-                'target_position' => CombatPosition::FRONT_LINE,
-                'target_priority' => TargetPriority::ANY,
-            ],
-            [
-                'name' => 'Throwing Torrent',
-                'damage_type' => DamageType::AREA_OF_EFFECT,
-                'attacker_position' => CombatPosition::FRONT_LINE,
-                'target_position' => CombatPosition::FRONT_LINE,
-                'target_priority' => TargetPriority::ANY,
-            ],
-            [
                 'name' => 'Blade Tornado',
                 'damage_type' => DamageType::AREA_OF_EFFECT,
                 'attacker_position' => CombatPosition::FRONT_LINE,
@@ -741,7 +630,7 @@ class SeedAttacks extends Migration
         $damageTypes = DamageType::all();
         $combatPositions = CombatPosition::all();
         $targetPriorities = TargetPriority::all();
-        $itemBases = ItemBase::all();
+        $itemTypes = ItemType::all();
 
         foreach($attacks as $attackData) {
 
@@ -758,8 +647,8 @@ class SeedAttacks extends Migration
                 'config_path' => $configPath
             ]);
 
-            $basesToAttach = $itemBases->whereIn('name', $attackData['item_bases']);
-            $attack->itemBases()->saveMany($basesToAttach);
+//            $itemTypesToAttach = $itemTypes->whereIn('name', $attackData['item_bases']);
+//            $attack->itemBases()->saveMany($itemTypesToAttach);
         }
     }
 
