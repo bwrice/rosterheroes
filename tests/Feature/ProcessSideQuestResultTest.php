@@ -261,7 +261,7 @@ class ProcessSideQuestResultTest extends TestCase
     /**
      * @test
      */
-    public function a_beginner_squad_will_defeat_a_small_skeleton_pack()
+    public function a_beginner_squad_will_be_victorious_against_a_small_skeleton_pack()
     {
         $heroFactory = HeroFactory::new();
         $squad = SquadFactory::new()->withHeroes(collect([
@@ -283,6 +283,36 @@ class ProcessSideQuestResultTest extends TestCase
         $this->assertNotNull($sideQuestResult);
         $victoryEvent = $sideQuestResult->sideQuestEvents()->where('event_type', '=', SideQuestEvent::TYPE_SIDE_QUEST_VICTORY)->first();
         $this->assertNotNull($victoryEvent);
+        $eventCount = $sideQuestResult->sideQuestEvents()->count();
+        $this->assertGreaterThan(25, $eventCount);
+        $this->assertLessThan(250, $eventCount);
+    }
+
+    /**
+     * @test
+     */
+    public function a_beginner_squad_will_be_defeated_by_a_large_skeleton_pack()
+    {
+        $heroFactory = HeroFactory::new();
+        $squad = SquadFactory::new()->withHeroes(collect([
+            $heroFactory->beginnerWarrior()->withCompletedGamePlayerSpirit(),
+            $heroFactory->beginnerWarrior()->withCompletedGamePlayerSpirit(),
+            $heroFactory->beginnerRanger()->withCompletedGamePlayerSpirit(),
+            $heroFactory->beginnerSorcerer()->withCompletedGamePlayerSpirit(),
+        ]))->create();
+
+        $campaignStop = CampaignStopFactory::new()->withCampaign(CampaignFactory::new()->withSquadID($squad->id))->create();
+
+        /** @var SideQuest $sideQuest */
+        $sideQuest = SideQuest::query()->where('name', '=', 'Large Skeleton Pack')->first();
+        $campaignStop->sideQuests()->save($sideQuest);
+
+        /** @var ProcessSideQuestResult $domainAction */
+        $domainAction = app(ProcessSideQuestResult::class);
+        $sideQuestResult = $domainAction->execute($campaignStop, $sideQuest);
+        $this->assertNotNull($sideQuestResult);
+        $defeatEvent = $sideQuestResult->sideQuestEvents()->where('event_type', '=', SideQuestEvent::TYPE_SIDE_QUEST_DEFEAT)->first();
+        $this->assertNotNull($defeatEvent);
         $eventCount = $sideQuestResult->sideQuestEvents()->count();
         $this->assertGreaterThan(25, $eventCount);
         $this->assertLessThan(250, $eventCount);
