@@ -591,6 +591,13 @@ class SeedAttacks extends Migration
                 'target_priority' => TargetPriority::ANY,
             ],
             [
+                'name' => 'Throwing Shower',
+                'damage_type' => DamageType::AREA_OF_EFFECT,
+                'attacker_position' => CombatPosition::BACK_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+            ],
+            [
                 'name' => 'Blade Whirlwind',
                 'damage_type' => DamageType::AREA_OF_EFFECT,
                 'attacker_position' => CombatPosition::FRONT_LINE,
@@ -633,9 +640,9 @@ class SeedAttacks extends Migration
                 'target_priority' => TargetPriority::ANY,
             ],
             [
-                'name' => 'Throwing Torrent',
+                'name' => 'Throwing Downpour',
                 'damage_type' => DamageType::AREA_OF_EFFECT,
-                'attacker_position' => CombatPosition::FRONT_LINE,
+                'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
             ],
@@ -682,9 +689,9 @@ class SeedAttacks extends Migration
                 'target_priority' => TargetPriority::ANY,
             ],
             [
-                'name' => 'Throwing Onslaught',
+                'name' => 'Throwing Torrent',
                 'damage_type' => DamageType::AREA_OF_EFFECT,
-                'attacker_position' => CombatPosition::FRONT_LINE,
+                'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
             ],

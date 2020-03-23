@@ -5,5 +5,5 @@ damage_multiplier: 1
 resource_costs:
     -   type: fixed
         resource: stamina
-        amount: 15
+        amount: 25
 requirements: []

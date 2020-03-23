@@ -1,3 +1,4 @@
+fixed_target_count: 3
 grade: 10
 speed: 8
 base_damage: 10
@@ -5,5 +6,5 @@ damage_multiplier: 1
 resource_costs:
     -   type: fixed
         resource: stamina
-        amount: 15
+        amount: 12
 requirements: []
