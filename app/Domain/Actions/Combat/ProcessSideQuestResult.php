@@ -177,7 +177,7 @@ class ProcessSideQuestResult
     protected function getCombatMinionByMinionCombatAttack(SideQuestGroup $sideQuestGroup, MinionCombatAttack $minionCombatAttack)
     {
         return $sideQuestGroup->getCombatMinions()->first(function (CombatMinion $combatMinion) use ($minionCombatAttack) {
-            return $combatMinion->getMinionUuid() === $minionCombatAttack->getMinionUuid();
+            return $combatMinion->getCombatantUuid() === $minionCombatAttack->getCombatantUuid();
         });
     }
 
