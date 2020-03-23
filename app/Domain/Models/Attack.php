@@ -27,6 +27,8 @@ use Symfony\Component\Yaml\Yaml;
  * @property int $target_position_id
  * @property int $target_priority_id
  * @property int $damage_type_id
+ * @property int $tier
+ * @property int|null $targets_count
  * @property string $config_path
  *
  * @property DamageType $damageType

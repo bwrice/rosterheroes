@@ -21,7 +21,9 @@ class CreateAttacksTable extends Migration
             $table->integer('target_position_id')->unsigned();
             $table->integer('damage_type_id')->unsigned();
             $table->integer('target_priority_id')->unsigned();
-            $table->string('config_path');
+            $table->smallInteger('tier')->unsigned();
+            $table->smallInteger('targets_count')->unsigned()->nullable();
+            $table->string('config_path')->nullable();
             $table->timestamps();
         });
 
