@@ -26,4 +26,10 @@ class AreaOfEffectBehavior extends DamageTypeBehavior
     {
         return sqrt($tier);
     }
+
+    public function getInitialCombatSpeed(int $tier, ?int $targetsCount): float
+    {
+        $tierMultiplier = 1/sqrt($tier);
+        return 4 * $tierMultiplier;
+    }
 }

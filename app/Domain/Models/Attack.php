@@ -181,7 +181,7 @@ class Attack extends Model
 
     public function getInitialSpeed()
     {
-        return $this->getConfigAttribute('speed');
+        return $this->damageType->getBehavior()->getInitialCombatSpeed($this->tier, $this->targets_count);
     }
 
     public function getInitialBaseDamage()

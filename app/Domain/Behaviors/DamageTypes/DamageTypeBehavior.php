@@ -13,4 +13,6 @@ abstract class DamageTypeBehavior
     abstract public function getInitialBaseDamage(int $tier, ?int $targetsCount): float;
 
     abstract public function getInitialDamageMultiplier(int $tier, ?int $targetsCount): float;
+
+    abstract public function getInitialCombatSpeed(int $tier, ?int $targetsCount): float;
 }
