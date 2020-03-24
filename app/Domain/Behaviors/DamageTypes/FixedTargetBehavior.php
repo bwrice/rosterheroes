@@ -15,4 +15,12 @@ class FixedTargetBehavior extends DamageTypeBehavior
     {
         return $damage;
     }
+
+    public function getInitialBaseDamage(int $tier, ?int $targetsCount): float
+    {
+        $targetsCount = $targetsCount ?: 1;
+        $tierMultiplier = sqrt($tier);
+        $targetsCountReduction = 1/(1 + .25 * ($targetsCount - 1));
+        return 10 * $tierMultiplier * $targetsCountReduction;
+    }
 }

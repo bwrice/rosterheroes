@@ -186,7 +186,7 @@ class Attack extends Model
 
     public function getInitialBaseDamage()
     {
-        return $this->getConfigAttribute('base_damage');
+        $this->damageType->getBehavior()->getInitialBaseDamage($this->tier, $this->targets_count);
     }
 
     public function getInitialDamageMultiplier()
