@@ -11,4 +11,6 @@ abstract class DamageTypeBehavior
     abstract public function getDamagePerTarget(int $damage, int $targetsCount);
 
     abstract public function getInitialBaseDamage(int $tier, ?int $targetsCount): float;
+
+    abstract public function getInitialDamageMultiplier(int $tier, ?int $targetsCount): float;
 }

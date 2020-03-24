@@ -191,7 +191,7 @@ class Attack extends Model
 
     public function getInitialDamageMultiplier()
     {
-        return $this->getConfigAttribute('damage_multiplier');
+        return $this->damageType->getBehavior()->getInitialDamageMultiplier($this->tier, $this->targets_count);
     }
 
     public function getResourceCosts()

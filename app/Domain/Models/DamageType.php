@@ -4,7 +4,6 @@ namespace App\Domain\Models;
 
 use App\Domain\Behaviors\DamageTypes\DamageTypeBehavior;
 use App\Domain\Behaviors\DamageTypes\DamageTypeBehaviorFactory;
-use App\Domain\Behaviors\DamageTypes\DamageTypeBehaviorInterface;
 use App\Domain\Models\Traits\HasUniqueNames;
 use Illuminate\Database\Eloquent\Model;
 

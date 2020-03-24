@@ -23,4 +23,12 @@ class FixedTargetBehavior extends DamageTypeBehavior
         $targetsCountReduction = 1/(1 + .25 * ($targetsCount - 1));
         return 10 * $tierMultiplier * $targetsCountReduction;
     }
+
+    public function getInitialDamageMultiplier(int $tier, ?int $targetsCount): float
+    {
+        $targetsCount = $targetsCount ?: 1;
+        $tierMultiplier = sqrt($tier);
+        $targetsCountReduction = 1/(1 + .25 * ($targetsCount - 1));
+        return 2 * $tierMultiplier * $targetsCountReduction;
+    }
 }

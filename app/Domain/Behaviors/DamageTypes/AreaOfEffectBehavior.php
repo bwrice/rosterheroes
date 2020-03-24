@@ -19,6 +19,11 @@ class AreaOfEffectBehavior extends DamageTypeBehavior
 
     public function getInitialBaseDamage(int $tier, ?int $targetsCount): float
     {
-        return sqrt($tier) * 20;
+        return sqrt($tier) * 5;
+    }
+
+    public function getInitialDamageMultiplier(int $tier, ?int $targetsCount): float
+    {
+        return sqrt($tier);
     }
 }
