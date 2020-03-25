@@ -5,6 +5,7 @@ namespace App\Domain\Behaviors\ItemBases\Jewelry;
 
 use App\Domain\Behaviors\ItemBases\ItemBaseBehavior;
 use App\Domain\Behaviors\ItemGroup\JewelryGroup;
+use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Interfaces\UsesItems;
 
 abstract class JewelryBehavior extends ItemBaseBehavior
@@ -45,5 +46,10 @@ abstract class JewelryBehavior extends ItemBaseBehavior
     public function adjustCombatSpeed(float $combatSpeed, UsesItems $hasItems = null): float
     {
         return $combatSpeed;
+    }
+
+    public function getResourceCosts(int $attackTier, float $resourceCostMagnitude)
+    {
+        return new ResourceCostsCollection();
     }
 }

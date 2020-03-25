@@ -6,6 +6,7 @@ namespace App\Domain\Behaviors\ItemBases\Clothing;
 
 use App\Domain\Behaviors\ItemBases\ItemBaseBehavior;
 use App\Domain\Behaviors\ItemGroup\ClothingGroup;
+use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Interfaces\UsesItems;
 
 abstract class ClothingBehavior extends ItemBaseBehavior
@@ -45,5 +46,10 @@ abstract class ClothingBehavior extends ItemBaseBehavior
     public function adjustCombatSpeed(float $combatSpeed, UsesItems $hasItems = null): float
     {
         return $combatSpeed;
+    }
+
+    public function getResourceCosts(int $attackTier, float $resourceCostMagnitude)
+    {
+        return new ResourceCostsCollection();
     }
 }

@@ -10,6 +10,7 @@ namespace App\Domain\Behaviors\ItemBases;
 
 
 use App\Domain\Behaviors\ItemGroup\EyeWearGroup;
+use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Interfaces\UsesItems;
 use App\Domain\Models\Support\GearSlots\GearSlot;
 
@@ -51,5 +52,10 @@ class EyeWearBehavior extends ItemBaseBehavior
     public function adjustCombatSpeed(float $combatSpeed, UsesItems $hasItems = null): float
     {
         return $combatSpeed;
+    }
+
+    public function getResourceCosts(int $attackTier, float $resourceCostMagnitude)
+    {
+        return new ResourceCostsCollection();
     }
 }
