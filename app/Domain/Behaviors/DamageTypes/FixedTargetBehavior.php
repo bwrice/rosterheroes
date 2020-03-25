@@ -39,4 +39,9 @@ class FixedTargetBehavior extends DamageTypeBehavior
         $targetsCountMultiplier = 1/(1 + .5 * ($targetsCount - 1));
         return 10 * $tierMultiplier * $targetsCountMultiplier;
     }
+
+    public function getResourceCostMagnitude(int $tier, ?int $targetsCount): float
+    {
+        return $tier * sqrt($targetsCount);
+    }
 }

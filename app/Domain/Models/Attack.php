@@ -136,7 +136,7 @@ class Attack extends Model
 
     public function getResourceCostCollection()
     {
-        $resourceCostsArray = $this->getResourceCosts();
+        $resourceCostsArray = $this->getInitialResourceCosts();
 
         $resourceCosts = array_map(function ($resourceCostArray) {
             switch ($resourceCostArray['type']) {
@@ -194,9 +194,12 @@ class Attack extends Model
         return $this->damageType->getBehavior()->getInitialDamageMultiplier($this->tier, $this->targets_count);
     }
 
-    public function getResourceCosts()
+    public function getInitialResourceCosts()
     {
-        return $this->getConfigAttribute('resource_costs');
+        if ($this->hasAttacks) {
+            return $this->hasAttacks->getResourceCosts($this->tier, $this->damageType->getBehavior(), $this->targets_count);
+        }
+        return new ResourceCostsCollection();
     }
 
     public function getRequirements()

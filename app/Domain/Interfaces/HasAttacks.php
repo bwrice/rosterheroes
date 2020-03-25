@@ -4,6 +4,10 @@
 namespace App\Domain\Interfaces;
 
 
+use App\Domain\Collections\ResourceCostsCollection;
+use App\Domain\Behaviors\DamageTypes\DamageTypeBehavior;
+use App\Domain\Models\DamageType;
+
 interface HasAttacks
 {
     public function adjustBaseDamage(float $baseDamage): float;
@@ -15,4 +19,6 @@ interface HasAttacks
     public function adjustResourceCostAmount(float $amount): int;
 
     public function adjustResourceCostPercent(float $amount): float;
+
+    public function getResourceCosts(int $attackTier, DamageTypeBehavior $damageTypeBehavior, ?int $targetsCount): ResourceCostsCollection;
 }

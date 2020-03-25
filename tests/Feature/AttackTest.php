@@ -25,7 +25,7 @@ class AttackTest extends TestCase
                 $this->assertNotNull($attack->getInitialSpeed());
                 $this->assertNotNull($attack->getInitialBaseDamage());
                 $this->assertNotNull($attack->getInitialDamageMultiplier());
-                $this->assertNotNull($attack->getResourceCosts());
+                $this->assertNotNull($attack->getInitialResourceCosts());
                 $this->assertNotNull($attack->getRequirements());
             } catch (\Exception $exception) {
                 $this->fail("Failed to get config attribute for attack: "

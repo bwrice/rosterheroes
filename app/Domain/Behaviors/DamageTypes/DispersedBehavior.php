@@ -35,4 +35,9 @@ class DispersedBehavior extends DamageTypeBehavior
         $tierMultiplier = 1/sqrt($tier);
         return 2 * $tierMultiplier;
     }
+
+    public function getResourceCostMagnitude(int $tier, ?int $targetsCount): float
+    {
+        return 2.5 * $tier;
+    }
 }

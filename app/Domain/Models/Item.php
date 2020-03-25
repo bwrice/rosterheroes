@@ -2,10 +2,12 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Behaviors\DamageTypes\DamageTypeBehavior;
 use App\Domain\Behaviors\ItemBases\ItemBaseBehavior;
 use App\Domain\Collections\AttackCollection;
 use App\Domain\Collections\EnchantmentCollection;
 use App\Domain\Collections\ItemCollection;
+use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Interfaces\FillsGearSlots;
 use App\Domain\Interfaces\HasAttacks;
 use App\Domain\Interfaces\HasItems;
@@ -275,5 +277,15 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
         }
         return $this->has_items_type === $hasItems->getMorphType()
             && $this->has_items_id === $hasItems->getMorphID();
+    }
+
+    public function getResourceCosts(int $attackTier, DamageTypeBehavior $damageTypeBehavior, ?int $targetsCount): ResourceCostsCollection
+    {
+        if ($attackTier === 1) {
+            return new ResourceCostsCollection();
+        }
+
+        $costMagnitude = $damageTypeBehavior->getResourceCostMagnitude($attackTier, $targetsCount);
+        return $this->getItemBaseBehavior()->getResourceCosts($attackTier, $costMagnitude);
     }
 }

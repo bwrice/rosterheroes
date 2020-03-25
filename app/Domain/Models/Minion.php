@@ -3,9 +3,11 @@
 namespace App\Domain\Models;
 
 use App\ChestBlueprint;
+use App\Domain\Behaviors\DamageTypes\DamageTypeBehavior;
 use App\Domain\Behaviors\EnemyTypes\EnemyTypeBehavior;
 use App\Domain\Collections\AttackCollection;
 use App\Domain\Collections\MinionCollection;
+use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Interfaces\HasAttacks;
 use App\Domain\Traits\HasConfigAttributes;
 use App\Domain\Traits\HasNameSlug;
@@ -166,5 +168,14 @@ class Minion extends Model implements HasAttacks
     {
         $level = $this->getLevel();
         return (int) ceil(($level * 10) + $level**2);
+    }
+
+    public function getResourceCosts(int $attackTier, DamageTypeBehavior $damageTypeBehavior, ?int $targetsCount): ResourceCostsCollection
+    {
+        /*
+         * Minions don't spend resources on attacks since they don't have stamina or mana
+         * Might have to update this if we add attacks that cost health
+         */
+        return new ResourceCostsCollection();
     }
 }
