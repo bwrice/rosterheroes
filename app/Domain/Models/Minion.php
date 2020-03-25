@@ -112,7 +112,7 @@ class Minion extends Model implements HasAttacks
         return $damageMultiplier * (1 + $damageMultiplierRatingBonus + $levelBonus + $enemyTypeBonus);
     }
 
-    public function adjustResourceCostAmount(float $amount): float
+    public function adjustResourceCostAmount(float $amount): int
     {
         return 0;
     }
