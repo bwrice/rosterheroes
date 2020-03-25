@@ -26,7 +26,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::DAGGER,
                 'name' => 'Knife',
-                'grade' => 6,
+                'tier' => 1,
                 'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
@@ -120,9 +120,257 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
+                'base' => \App\Domain\Models\ItemBase::DAGGER,
+                'name' => 'Kris',
+                'tier' => 2,
+                'materials' => [
+                    'Mammoth Tusk',
+                    'Sabertooth',
+                    'Minotaur Horn',
+                    'Spider Fang',
+                    'Dragon Bone',
+                    'Cotton',
+                    'Linen',
+                    'Wool',
+                    'Satin',
+                    'Velvet',
+                    'Silk',
+                    'Vicuna',
+                    'Ethereal',
+                    'Amber',
+                    'Ivory',
+                    'Jade',
+                    'Onyx',
+                    'Emerald',
+                    'Ruby',
+                    'Sapphire',
+                    'Diamond',
+                    'Wolf Pelt',
+                    'Leather',
+                    'Mammoth Hide',
+                    'Studded Leather',
+                    'Werewolf Pelt',
+                    'Scarab Shell',
+                    'Scorpion Shell',
+                    'Dragon Scale',
+                    'Copper',
+                    'Iron',
+                    'Bronze',
+                    'Steel',
+                    'Orichalcum',
+                    'Tungsten',
+                    'Elven',
+                    'Empyrean',
+                    'Silver',
+                    'Gold',
+                    'Platinum',
+                    'Acid',
+                    'Ice',
+                    'Fire',
+                    'Lightning',
+                    'Spirit',
+                    'Nova',
+                    'Yew',
+                    'Juniper',
+                    'Makore',
+                    'Mansonia',
+                    'Cebil',
+                    'Muninga',
+                    'Rosewood',
+                    'Elderwood',
+                    'Entwood'
+                ],
+            ],
+            [
+                'base' => \App\Domain\Models\ItemBase::DAGGER,
+                'name' => 'Dirk',
+                'tier' => 3,
+                'materials' => [
+                    'Mammoth Tusk',
+                    'Sabertooth',
+                    'Minotaur Horn',
+                    'Spider Fang',
+                    'Dragon Bone',
+                    'Cotton',
+                    'Linen',
+                    'Wool',
+                    'Satin',
+                    'Velvet',
+                    'Silk',
+                    'Vicuna',
+                    'Ethereal',
+                    'Amber',
+                    'Ivory',
+                    'Jade',
+                    'Onyx',
+                    'Emerald',
+                    'Ruby',
+                    'Sapphire',
+                    'Diamond',
+                    'Wolf Pelt',
+                    'Leather',
+                    'Mammoth Hide',
+                    'Studded Leather',
+                    'Werewolf Pelt',
+                    'Scarab Shell',
+                    'Scorpion Shell',
+                    'Dragon Scale',
+                    'Copper',
+                    'Iron',
+                    'Bronze',
+                    'Steel',
+                    'Orichalcum',
+                    'Tungsten',
+                    'Elven',
+                    'Empyrean',
+                    'Silver',
+                    'Gold',
+                    'Platinum',
+                    'Acid',
+                    'Ice',
+                    'Fire',
+                    'Lightning',
+                    'Spirit',
+                    'Nova',
+                    'Yew',
+                    'Juniper',
+                    'Makore',
+                    'Mansonia',
+                    'Cebil',
+                    'Muninga',
+                    'Rosewood',
+                    'Elderwood',
+                    'Entwood'
+                ]
+            ],
+            [
+                'base' => \App\Domain\Models\ItemBase::DAGGER,
+                'name' => 'Katar',
+                'tier' => 4,
+                'materials' => [
+                    'Mammoth Tusk',
+                    'Sabertooth',
+                    'Minotaur Horn',
+                    'Spider Fang',
+                    'Dragon Bone',
+                    'Cotton',
+                    'Linen',
+                    'Wool',
+                    'Satin',
+                    'Velvet',
+                    'Silk',
+                    'Vicuna',
+                    'Ethereal',
+                    'Amber',
+                    'Ivory',
+                    'Jade',
+                    'Onyx',
+                    'Emerald',
+                    'Ruby',
+                    'Sapphire',
+                    'Diamond',
+                    'Wolf Pelt',
+                    'Leather',
+                    'Mammoth Hide',
+                    'Studded Leather',
+                    'Werewolf Pelt',
+                    'Scarab Shell',
+                    'Scorpion Shell',
+                    'Dragon Scale',
+                    'Copper',
+                    'Iron',
+                    'Bronze',
+                    'Steel',
+                    'Orichalcum',
+                    'Tungsten',
+                    'Elven',
+                    'Empyrean',
+                    'Silver',
+                    'Gold',
+                    'Platinum',
+                    'Acid',
+                    'Ice',
+                    'Fire',
+                    'Lightning',
+                    'Spirit',
+                    'Nova',
+                    'Yew',
+                    'Juniper',
+                    'Makore',
+                    'Mansonia',
+                    'Cebil',
+                    'Muninga',
+                    'Rosewood',
+                    'Elderwood',
+                    'Entwood'
+                ]
+            ],
+            [
+                'base' => \App\Domain\Models\ItemBase::DAGGER,
+                'name' => 'Stiletto',
+                'tier' => 5,
+                'materials' => [
+                    'Mammoth Tusk',
+                    'Sabertooth',
+                    'Minotaur Horn',
+                    'Spider Fang',
+                    'Dragon Bone',
+                    'Cotton',
+                    'Linen',
+                    'Wool',
+                    'Satin',
+                    'Velvet',
+                    'Silk',
+                    'Vicuna',
+                    'Ethereal',
+                    'Amber',
+                    'Ivory',
+                    'Jade',
+                    'Onyx',
+                    'Emerald',
+                    'Ruby',
+                    'Sapphire',
+                    'Diamond',
+                    'Wolf Pelt',
+                    'Leather',
+                    'Mammoth Hide',
+                    'Studded Leather',
+                    'Werewolf Pelt',
+                    'Scarab Shell',
+                    'Scorpion Shell',
+                    'Dragon Scale',
+                    'Copper',
+                    'Iron',
+                    'Bronze',
+                    'Steel',
+                    'Orichalcum',
+                    'Tungsten',
+                    'Elven',
+                    'Empyrean',
+                    'Silver',
+                    'Gold',
+                    'Platinum',
+                    'Acid',
+                    'Ice',
+                    'Fire',
+                    'Lightning',
+                    'Spirit',
+                    'Nova',
+                    'Yew',
+                    'Juniper',
+                    'Makore',
+                    'Mansonia',
+                    'Cebil',
+                    'Muninga',
+                    'Rosewood',
+                    'Elderwood',
+                    'Entwood'
+                ]
+            ],
+            [
                 'base' => \App\Domain\Models\ItemBase::WAND,
                 'name' => 'Sprig',
-                'grade' => 7,
+                'tier' => 7,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -219,8 +467,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::MACE,
                 'name' => 'Club',
-                'grade' => 8,
-
+                'tier' => 8,
                 'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
@@ -316,7 +563,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::SWORD,
                 'name' => 'Short Sword',
-                'grade' => 9,
+                'tier' => 9,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -413,7 +660,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::STAFF,
                 'name' => 'Lesser Staff',
-                'grade' => 10,
+                'tier' => 10,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -510,7 +757,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::AXE,
                 'name' => 'Hatchet',
-                'grade' => 12,
+                'tier' => 12,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -607,7 +854,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::BOW,
                 'name' => 'Straight Bow',
-                'grade' => 13,
+                'tier' => 13,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -704,7 +951,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::TWO_HAND_SWORD,
                 'name' => 'Longsword',
-                'grade' => 14,
+                'tier' => 14,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -801,7 +1048,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::THROWING_WEAPON,
                 'name' => 'Throwing Knives',
-                'grade' => 15,
+                'tier' => 15,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -898,7 +1145,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::MACE,
                 'name' => 'Cudgel',
-                'grade' => 16,
+                'tier' => 16,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -995,7 +1242,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::POLEARM,
                 'name' => 'Spear',
-                'grade' => 17,
+                'tier' => 17,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -1092,104 +1339,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::CROSSBOW,
                 'name' => 'Light Crossbow',
-                'grade' => 18,
-
-                'materials' => [
-                    'Mammoth Tusk',
-                    'Sabertooth',
-                    'Minotaur Horn',
-                    'Spider Fang',
-                    'Dragon Bone',
-                    'Cotton',
-                    'Linen',
-                    'Wool',
-                    'Satin',
-                    'Velvet',
-                    'Silk',
-                    'Vicuna',
-                    'Ethereal',
-                    'Amber',
-                    'Ivory',
-                    'Jade',
-                    'Onyx',
-                    'Emerald',
-                    'Ruby',
-                    'Sapphire',
-                    'Diamond',
-                    'Wolf Pelt',
-                    'Leather',
-                    'Mammoth Hide',
-                    'Studded Leather',
-                    'Werewolf Pelt',
-                    'Scarab Shell',
-                    'Scorpion Shell',
-                    'Dragon Scale',
-                    'Copper',
-                    'Iron',
-                    'Bronze',
-                    'Steel',
-                    'Orichalcum',
-                    'Tungsten',
-                    'Elven',
-                    'Empyrean',
-                    'Silver',
-                    'Gold',
-                    'Platinum',
-                    'Acid',
-                    'Ice',
-                    'Fire',
-                    'Lightning',
-                    'Spirit',
-                    'Nova',
-                    'Yew',
-                    'Juniper',
-                    'Makore',
-                    'Mansonia',
-                    'Cebil',
-                    'Muninga',
-                    'Rosewood',
-                    'Elderwood',
-                    'Entwood'
-                ],
-                'attacks' => [
-                    'Arrow',
-                    'Arrow Spray',
-                    'Axe Sweep',
-                    'Blade Spin',
-                    'Bolt',
-                    'Chuck',
-                    'Deep Shot',
-                    'Double Arrow',
-                    'Double Bolt',
-                    'Double Long Shot',
-                    'Double Magic Bolt',
-                    'Double Poke',
-                    'Double Slash',
-                    'Double Slice',
-                    'Double Whack',
-                    'Lightning Bolt',
-                    'Lightning Strike',
-                    'Long Shot',
-                    'Magic Blast',
-                    'Magic Burst',
-                    'Poke',
-                    'Slash',
-                    'Slice',
-                    'Sword Sweep',
-                    'Triple Arrow',
-                    'Triple Bolt',
-                    'Triple Magic Bolt',
-                    'Triple Poke',
-                    'Triple Slash',
-                    'Triple Slice',
-                    'Triple Whack',
-                    'Whack'
-                ]
-            ],
-            [
-                'base' => \App\Domain\Models\ItemBase::DAGGER,
-                'name' => 'Kris',
-                'grade' => 19,
+                'tier' => 18,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -1286,7 +1436,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::ORB,
                 'name' => 'Lesser Orb',
-                'grade' => 20,
+                'tier' => 20,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -1384,7 +1534,7 @@ class SeedItemTypes extends Migration
 
                 'base' => \App\Domain\Models\ItemBase::TWO_HAND_AXE,
                 'name' => 'Bardiche',
-                'grade' => 21,
+                'tier' => 21,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -1481,7 +1631,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::WAND,
                 'name' => 'Lesser Wand',
-                'grade' => 22,
+                'tier' => 22,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -1578,7 +1728,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::SWORD,
                 'name' => 'Falchion',
-                'grade' => 23,
+                'tier' => 23,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -1675,104 +1825,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::BOW,
                 'name' => 'Longbow',
-                'grade' => 24,
-
-                'materials' => [
-                    'Mammoth Tusk',
-                    'Sabertooth',
-                    'Minotaur Horn',
-                    'Spider Fang',
-                    'Dragon Bone',
-                    'Cotton',
-                    'Linen',
-                    'Wool',
-                    'Satin',
-                    'Velvet',
-                    'Silk',
-                    'Vicuna',
-                    'Ethereal',
-                    'Amber',
-                    'Ivory',
-                    'Jade',
-                    'Onyx',
-                    'Emerald',
-                    'Ruby',
-                    'Sapphire',
-                    'Diamond',
-                    'Wolf Pelt',
-                    'Leather',
-                    'Mammoth Hide',
-                    'Studded Leather',
-                    'Werewolf Pelt',
-                    'Scarab Shell',
-                    'Scorpion Shell',
-                    'Dragon Scale',
-                    'Copper',
-                    'Iron',
-                    'Bronze',
-                    'Steel',
-                    'Orichalcum',
-                    'Tungsten',
-                    'Elven',
-                    'Empyrean',
-                    'Silver',
-                    'Gold',
-                    'Platinum',
-                    'Acid',
-                    'Ice',
-                    'Fire',
-                    'Lightning',
-                    'Spirit',
-                    'Nova',
-                    'Yew',
-                    'Juniper',
-                    'Makore',
-                    'Mansonia',
-                    'Cebil',
-                    'Muninga',
-                    'Rosewood',
-                    'Elderwood',
-                    'Entwood'
-                ],
-                'attacks' => [
-                    'Arrow',
-                    'Arrow Spray',
-                    'Axe Sweep',
-                    'Blade Spin',
-                    'Bolt',
-                    'Chuck',
-                    'Deep Shot',
-                    'Double Arrow',
-                    'Double Bolt',
-                    'Double Long Shot',
-                    'Double Magic Bolt',
-                    'Double Poke',
-                    'Double Slash',
-                    'Double Slice',
-                    'Double Whack',
-                    'Lightning Bolt',
-                    'Lightning Strike',
-                    'Long Shot',
-                    'Magic Blast',
-                    'Magic Burst',
-                    'Poke',
-                    'Slash',
-                    'Slice',
-                    'Sword Sweep',
-                    'Triple Arrow',
-                    'Triple Bolt',
-                    'Triple Magic Bolt',
-                    'Triple Poke',
-                    'Triple Slash',
-                    'Triple Slice',
-                    'Triple Whack',
-                    'Whack'
-                ]
-            ],
-            [
-                'base' => \App\Domain\Models\ItemBase::DAGGER,
-                'name' => 'Dirk',
-                'grade' => 26,
+                'tier' => 24,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -1869,7 +1922,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::STAFF,
                 'name' => 'Rod',
-                'grade' => 27,
+                'tier' => 27,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -1966,7 +2019,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::TWO_HAND_SWORD,
                 'name' => 'Bastard Sword',
-                'grade' => 28,
+                'tier' => 28,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -2063,7 +2116,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::POLEARM,
                 'name' => 'Glaive',
-                'grade' => 29,
+                'tier' => 29,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -2160,7 +2213,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::PSIONIC_ONE_HAND,
                 'name' => 'Spell Blade',
-                'grade' => 30,
+                'tier' => 30,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -2257,7 +2310,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::AXE,
                 'name' => 'Hand Axe',
-                'grade' => 31,
+                'tier' => 31,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -2354,7 +2407,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::PSIONIC_TWO_HAND,
                 'name' => 'Spell Cleaver',
-                'grade' => 32,
+                'tier' => 32,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -2451,7 +2504,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::CROSSBOW,
                 'name' => 'Heavy Crossbow',
-                'grade' => 33,
+                'tier' => 33,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -2548,7 +2601,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::MACE,
                 'name' => 'Flail',
-                'grade' => 34,
+                'tier' => 34,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -2645,7 +2698,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::BOW,
                 'name' => 'Recurve Bow',
-                'grade' => 36,
+                'tier' => 36,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -2742,7 +2795,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::THROWING_WEAPON,
                 'name' => 'Throwing Stars',
-                'grade' => 37,
+                'tier' => 37,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -2839,7 +2892,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::WAND,
                 'name' => 'Scepter',
-                'grade' => 38,
+                'tier' => 38,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -2936,7 +2989,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::AXE,
                 'name' => 'Pickaxe',
-                'grade' => 39,
+                'tier' => 39,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -3033,7 +3086,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::TWO_HAND_AXE,
                 'name' => 'Lance',
-                'grade' => 41,
+                'tier' => 41,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -3130,104 +3183,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::POLEARM,
                 'name' => 'Scythe',
-                'grade' => 42,
-
-                'materials' => [
-                    'Mammoth Tusk',
-                    'Sabertooth',
-                    'Minotaur Horn',
-                    'Spider Fang',
-                    'Dragon Bone',
-                    'Cotton',
-                    'Linen',
-                    'Wool',
-                    'Satin',
-                    'Velvet',
-                    'Silk',
-                    'Vicuna',
-                    'Ethereal',
-                    'Amber',
-                    'Ivory',
-                    'Jade',
-                    'Onyx',
-                    'Emerald',
-                    'Ruby',
-                    'Sapphire',
-                    'Diamond',
-                    'Wolf Pelt',
-                    'Leather',
-                    'Mammoth Hide',
-                    'Studded Leather',
-                    'Werewolf Pelt',
-                    'Scarab Shell',
-                    'Scorpion Shell',
-                    'Dragon Scale',
-                    'Copper',
-                    'Iron',
-                    'Bronze',
-                    'Steel',
-                    'Orichalcum',
-                    'Tungsten',
-                    'Elven',
-                    'Empyrean',
-                    'Silver',
-                    'Gold',
-                    'Platinum',
-                    'Acid',
-                    'Ice',
-                    'Fire',
-                    'Lightning',
-                    'Spirit',
-                    'Nova',
-                    'Yew',
-                    'Juniper',
-                    'Makore',
-                    'Mansonia',
-                    'Cebil',
-                    'Muninga',
-                    'Rosewood',
-                    'Elderwood',
-                    'Entwood'
-                ],
-                'attacks' => [
-                    'Arrow',
-                    'Arrow Spray',
-                    'Axe Sweep',
-                    'Blade Spin',
-                    'Bolt',
-                    'Chuck',
-                    'Deep Shot',
-                    'Double Arrow',
-                    'Double Bolt',
-                    'Double Long Shot',
-                    'Double Magic Bolt',
-                    'Double Poke',
-                    'Double Slash',
-                    'Double Slice',
-                    'Double Whack',
-                    'Lightning Bolt',
-                    'Lightning Strike',
-                    'Long Shot',
-                    'Magic Blast',
-                    'Magic Burst',
-                    'Poke',
-                    'Slash',
-                    'Slice',
-                    'Sword Sweep',
-                    'Triple Arrow',
-                    'Triple Bolt',
-                    'Triple Magic Bolt',
-                    'Triple Poke',
-                    'Triple Slash',
-                    'Triple Slice',
-                    'Triple Whack',
-                    'Whack'
-                ]
-            ],
-            [
-                'base' => \App\Domain\Models\ItemBase::DAGGER,
-                'name' => 'Katar',
-                'grade' => 43,
+                'tier' => 42,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -3324,7 +3280,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::STAFF,
                 'name' => 'Greater Staff',
-                'grade' => 44,
+                'tier' => 44,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -3421,7 +3377,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::SWORD,
                 'name' => 'Scimitar',
-                'grade' => 45,
+                'tier' => 45,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -3518,7 +3474,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::BOW,
                 'name' => 'Reflex Bow',
-                'grade' => 46,
+                'tier' => 46,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -3615,7 +3571,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::TWO_HAND_SWORD,
                 'name' => 'Nagamaki',
-                'grade' => 49,
+                'tier' => 49,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -3712,7 +3668,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::ORB,
                 'name' => 'Greater Orb',
-                'grade' => 50,
+                'tier' => 50,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -3809,7 +3765,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::POLEARM,
                 'name' => 'Trident',
-                'grade' => 51,
+                'tier' => 51,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -3906,7 +3862,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::AXE,
                 'name' => 'Sickle',
-                'grade' => 52,
+                'tier' => 52,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -4003,7 +3959,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::CROSSBOW,
                 'name' => 'Arbalest',
-                'grade' => 53,
+                'tier' => 53,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -4100,104 +4056,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::MACE,
                 'name' => 'Battle Mace',
-                'grade' => 54,
-
-                'materials' => [
-                    'Mammoth Tusk',
-                    'Sabertooth',
-                    'Minotaur Horn',
-                    'Spider Fang',
-                    'Dragon Bone',
-                    'Cotton',
-                    'Linen',
-                    'Wool',
-                    'Satin',
-                    'Velvet',
-                    'Silk',
-                    'Vicuna',
-                    'Ethereal',
-                    'Amber',
-                    'Ivory',
-                    'Jade',
-                    'Onyx',
-                    'Emerald',
-                    'Ruby',
-                    'Sapphire',
-                    'Diamond',
-                    'Wolf Pelt',
-                    'Leather',
-                    'Mammoth Hide',
-                    'Studded Leather',
-                    'Werewolf Pelt',
-                    'Scarab Shell',
-                    'Scorpion Shell',
-                    'Dragon Scale',
-                    'Copper',
-                    'Iron',
-                    'Bronze',
-                    'Steel',
-                    'Orichalcum',
-                    'Tungsten',
-                    'Elven',
-                    'Empyrean',
-                    'Silver',
-                    'Gold',
-                    'Platinum',
-                    'Acid',
-                    'Ice',
-                    'Fire',
-                    'Lightning',
-                    'Spirit',
-                    'Nova',
-                    'Yew',
-                    'Juniper',
-                    'Makore',
-                    'Mansonia',
-                    'Cebil',
-                    'Muninga',
-                    'Rosewood',
-                    'Elderwood',
-                    'Entwood'
-                ],
-                'attacks' => [
-                    'Arrow',
-                    'Arrow Spray',
-                    'Axe Sweep',
-                    'Blade Spin',
-                    'Bolt',
-                    'Chuck',
-                    'Deep Shot',
-                    'Double Arrow',
-                    'Double Bolt',
-                    'Double Long Shot',
-                    'Double Magic Bolt',
-                    'Double Poke',
-                    'Double Slash',
-                    'Double Slice',
-                    'Double Whack',
-                    'Lightning Bolt',
-                    'Lightning Strike',
-                    'Long Shot',
-                    'Magic Blast',
-                    'Magic Burst',
-                    'Poke',
-                    'Slash',
-                    'Slice',
-                    'Sword Sweep',
-                    'Triple Arrow',
-                    'Triple Bolt',
-                    'Triple Magic Bolt',
-                    'Triple Poke',
-                    'Triple Slash',
-                    'Triple Slice',
-                    'Triple Whack',
-                    'Whack'
-                ]
-            ],
-            [
-                'base' => \App\Domain\Models\ItemBase::DAGGER,
-                'name' => 'Stiletto',
-                'grade' => 55,
+                'tier' => 54,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -4294,7 +4153,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::WAND,
                 'name' => 'Greater Wand',
-                'grade' => 56,
+                'tier' => 56,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -4391,7 +4250,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::AXE,
                 'name' => 'Ono',
-                'grade' => 57,
+                'tier' => 57,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -4488,7 +4347,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::STAFF,
                 'name' => 'Master\'s Rod',
-                'grade' => 58,
+                'tier' => 58,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -4585,7 +4444,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::SWORD,
                 'name' => 'Sabre',
-                'grade' => 59,
+                'tier' => 59,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -4682,7 +4541,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::BOW,
                 'name' => 'Composite Bow',
-                'grade' => 60,
+                'tier' => 60,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -4779,7 +4638,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::TWO_HAND_SWORD,
                 'name' => 'Claymore',
-                'grade' => 61,
+                'tier' => 61,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -4876,7 +4735,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::PSIONIC_ONE_HAND,
                 'name' => 'Mind Blade',
-                'grade' => 62,
+                'tier' => 62,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -4973,7 +4832,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::POLEARM,
                 'name' => 'Halberd',
-                'grade' => 63,
+                'tier' => 63,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -5070,7 +4929,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::TWO_HAND_AXE,
                 'name' => 'Great Axe',
-                'grade' => 64,
+                'tier' => 64,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -5167,7 +5026,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::PSIONIC_TWO_HAND,
                 'name' => 'Mind Cleaver',
-                'grade' => 65,
+                'tier' => 65,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -5264,7 +5123,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::AXE,
                 'name' => 'Broad Axe',
-                'grade' => 66,
+                'tier' => 66,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -5361,104 +5220,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::THROWING_WEAPON,
                 'name' => 'Javelins',
-                'grade' => 67,
-
-                'materials' => [
-                    'Mammoth Tusk',
-                    'Sabertooth',
-                    'Minotaur Horn',
-                    'Spider Fang',
-                    'Dragon Bone',
-                    'Cotton',
-                    'Linen',
-                    'Wool',
-                    'Satin',
-                    'Velvet',
-                    'Silk',
-                    'Vicuna',
-                    'Ethereal',
-                    'Amber',
-                    'Ivory',
-                    'Jade',
-                    'Onyx',
-                    'Emerald',
-                    'Ruby',
-                    'Sapphire',
-                    'Diamond',
-                    'Wolf Pelt',
-                    'Leather',
-                    'Mammoth Hide',
-                    'Studded Leather',
-                    'Werewolf Pelt',
-                    'Scarab Shell',
-                    'Scorpion Shell',
-                    'Dragon Scale',
-                    'Copper',
-                    'Iron',
-                    'Bronze',
-                    'Steel',
-                    'Orichalcum',
-                    'Tungsten',
-                    'Elven',
-                    'Empyrean',
-                    'Silver',
-                    'Gold',
-                    'Platinum',
-                    'Acid',
-                    'Ice',
-                    'Fire',
-                    'Lightning',
-                    'Spirit',
-                    'Nova',
-                    'Yew',
-                    'Juniper',
-                    'Makore',
-                    'Mansonia',
-                    'Cebil',
-                    'Muninga',
-                    'Rosewood',
-                    'Elderwood',
-                    'Entwood'
-                ],
-                'attacks' => [
-                    'Arrow',
-                    'Arrow Spray',
-                    'Axe Sweep',
-                    'Blade Spin',
-                    'Bolt',
-                    'Chuck',
-                    'Deep Shot',
-                    'Double Arrow',
-                    'Double Bolt',
-                    'Double Long Shot',
-                    'Double Magic Bolt',
-                    'Double Poke',
-                    'Double Slash',
-                    'Double Slice',
-                    'Double Whack',
-                    'Lightning Bolt',
-                    'Lightning Strike',
-                    'Long Shot',
-                    'Magic Blast',
-                    'Magic Burst',
-                    'Poke',
-                    'Slash',
-                    'Slice',
-                    'Sword Sweep',
-                    'Triple Arrow',
-                    'Triple Bolt',
-                    'Triple Magic Bolt',
-                    'Triple Poke',
-                    'Triple Slash',
-                    'Triple Slice',
-                    'Triple Whack',
-                    'Whack'
-                ]
-            ],
-            [
-                'base' => \App\Domain\Models\ItemBase::DAGGER,
-                'name' => 'Knight\'s Dagger',
-                'grade' => 68,
+                'tier' => 67,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -5555,7 +5317,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::TWO_HAND_SWORD,
                 'name' => 'Greatsword',
-                'grade' => 70,
+                'tier' => 70,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -5652,7 +5414,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::WAND,
                 'name' => 'Greater Scepter',
-                'grade' => 71,
+                'tier' => 71,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -5749,7 +5511,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::BOW,
                 'name' => 'Battle Bow',
-                'grade' => 72,
+                'tier' => 72,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -5846,7 +5608,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::MACE,
                 'name' => 'Morning Star',
-                'grade' => 74,
+                'tier' => 74,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -5943,7 +5705,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::CROSSBOW,
                 'name' => 'Repeating Crossbow',
-                'grade' => 76,
+                'tier' => 76,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -6040,8 +5802,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::DAGGER,
                 'name' => 'Gladius',
-                'grade' => 77,
-
+                'tier' => 6,
                 'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
@@ -6137,7 +5898,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::STAFF,
                 'name' => 'Battle Staff',
-                'grade' => 78,
+                'tier' => 78,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -6234,7 +5995,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::SWORD,
                 'name' => 'Rapier',
-                'grade' => 79,
+                'tier' => 79,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -6331,7 +6092,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::POLEARM,
                 'name' => 'Naginata',
-                'grade' => 80,
+                'tier' => 80,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -6428,7 +6189,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::TWO_HAND_AXE,
                 'name' => 'Labrys',
-                'grade' => 81,
+                'tier' => 81,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -6525,7 +6286,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::BOW,
                 'name' => 'Compound Bow',
-                'grade' => 82,
+                'tier' => 82,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -6622,7 +6383,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::TWO_HAND_SWORD,
                 'name' => 'Katana',
-                'grade' => 83,
+                'tier' => 83,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -6719,7 +6480,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::MACE,
                 'name' => 'War Hammer',
-                'grade' => 84,
+                'tier' => 84,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -6816,7 +6577,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::THROWING_WEAPON,
                 'name' => 'Exploding Flasks',
-                'grade' => 86,
+                'tier' => 86,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -6913,7 +6674,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::AXE,
                 'name' => 'Battle Axe',
-                'grade' => 87,
+                'tier' => 87,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -7010,7 +6771,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::PSIONIC_ONE_HAND,
                 'name' => 'Conjure Blade',
-                'grade' => 88,
+                'tier' => 88,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -7107,7 +6868,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::ORB,
                 'name' => 'Magus Orb',
-                'grade' => 89,
+                'tier' => 89,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -7204,104 +6965,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::PSIONIC_TWO_HAND,
                 'name' => 'Conjure Cleaver',
-                'grade' => 90,
-
-                'materials' => [
-                    'Mammoth Tusk',
-                    'Sabertooth',
-                    'Minotaur Horn',
-                    'Spider Fang',
-                    'Dragon Bone',
-                    'Cotton',
-                    'Linen',
-                    'Wool',
-                    'Satin',
-                    'Velvet',
-                    'Silk',
-                    'Vicuna',
-                    'Ethereal',
-                    'Amber',
-                    'Ivory',
-                    'Jade',
-                    'Onyx',
-                    'Emerald',
-                    'Ruby',
-                    'Sapphire',
-                    'Diamond',
-                    'Wolf Pelt',
-                    'Leather',
-                    'Mammoth Hide',
-                    'Studded Leather',
-                    'Werewolf Pelt',
-                    'Scarab Shell',
-                    'Scorpion Shell',
-                    'Dragon Scale',
-                    'Copper',
-                    'Iron',
-                    'Bronze',
-                    'Steel',
-                    'Orichalcum',
-                    'Tungsten',
-                    'Elven',
-                    'Empyrean',
-                    'Silver',
-                    'Gold',
-                    'Platinum',
-                    'Acid',
-                    'Ice',
-                    'Fire',
-                    'Lightning',
-                    'Spirit',
-                    'Nova',
-                    'Yew',
-                    'Juniper',
-                    'Makore',
-                    'Mansonia',
-                    'Cebil',
-                    'Muninga',
-                    'Rosewood',
-                    'Elderwood',
-                    'Entwood'
-                ],
-                'attacks' => [
-                    'Arrow',
-                    'Arrow Spray',
-                    'Axe Sweep',
-                    'Blade Spin',
-                    'Bolt',
-                    'Chuck',
-                    'Deep Shot',
-                    'Double Arrow',
-                    'Double Bolt',
-                    'Double Long Shot',
-                    'Double Magic Bolt',
-                    'Double Poke',
-                    'Double Slash',
-                    'Double Slice',
-                    'Double Whack',
-                    'Lightning Bolt',
-                    'Lightning Strike',
-                    'Long Shot',
-                    'Magic Blast',
-                    'Magic Burst',
-                    'Poke',
-                    'Slash',
-                    'Slice',
-                    'Sword Sweep',
-                    'Triple Arrow',
-                    'Triple Bolt',
-                    'Triple Magic Bolt',
-                    'Triple Poke',
-                    'Triple Slash',
-                    'Triple Slice',
-                    'Triple Whack',
-                    'Whack'
-                ]
-            ],
-            [
-                'base' => \App\Domain\Models\ItemBase::DAGGER,
-                'name' => 'Ninjato',
-                'grade' => 91,
+                'tier' => 90,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -7398,7 +7062,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::POLEARM,
                 'name' => 'War Scythe',
-                'grade' => 92,
+                'tier' => 92,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -7495,7 +7159,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::WAND,
                 'name' => 'Magus Scepter',
-                'grade' => 93,
+                'tier' => 93,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -7592,7 +7256,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::SWORD,
                 'name' => 'War Sword',
-                'grade' => 94,
+                'tier' => 94,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -7689,7 +7353,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::CROSSBOW,
                 'name' => 'Heavy Arbalest',
-                'grade' => 95,
+                'tier' => 95,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -7786,7 +7450,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::BOW,
                 'name' => 'War Bow',
-                'grade' => 96,
+                'tier' => 96,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -7883,7 +7547,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::TWO_HAND_AXE,
                 'name' => 'Giant\'s Axe',
-                'grade' => 97,
+                'tier' => 97,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -7980,7 +7644,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::STAFF,
                 'name' => 'Magus Staff',
-                'grade' => 98,
+                'tier' => 98,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -8077,7 +7741,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::TWO_HAND_SWORD,
                 'name' => 'Giant\'s Sword',
-                'grade' => 99,
+                'tier' => 99,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -8179,7 +7843,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::CAP,
                 'name' => 'Fez',
-                'grade' => 6,
+                'tier' => 6,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -8242,7 +7906,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::SHIELD,
                 'name' => 'Buckler',
-                'grade' => 8,
+                'tier' => 8,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -8305,7 +7969,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::HELMET,
                 'name' => 'Kettle Hat',
-                'grade' => 9,
+                'tier' => 9,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -8368,7 +8032,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::ROBES,
                 'name' => 'Frock',
-                'grade' => 10,
+                'tier' => 10,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -8431,7 +8095,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::SHOES,
                 'name' => 'Slippers',
-                'grade' => 11,
+                'tier' => 11,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -8494,7 +8158,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::LIGHT_ARMOR,
                 'name' => 'Light Cuirass',
-                'grade' => 12,
+                'tier' => 12,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -8557,7 +8221,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::BOOTS,
                 'name' => 'Light Boots',
-                'grade' => 13,
+                'tier' => 13,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -8620,7 +8284,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::GLOVES,
                 'name' => 'Light Gloves',
-                'grade' => 14,
+                'tier' => 14,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -8683,7 +8347,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::HEAVY_ARMOR,
                 'name' => 'Breastplate',
-                'grade' => 15,
+                'tier' => 15,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -8746,7 +8410,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::CAP,
                 'name' => 'Beret',
-                'grade' => 16,
+                'tier' => 16,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -8809,7 +8473,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::SHIELD,
                 'name' => 'Targe',
-                'grade' => 17,
+                'tier' => 17,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -8872,7 +8536,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::GAUNTLETS,
                 'name' => 'Light Gauntlets',
-                'grade' => 18,
+                'tier' => 18,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -8935,7 +8599,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::HELMET,
                 'name' => 'Skullcap',
-                'grade' => 19,
+                'tier' => 19,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -8998,7 +8662,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::LEGGINGS,
                 'name' => 'Greaves',
-                'grade' => 22,
+                'tier' => 22,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -9061,7 +8725,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::BELT,
                 'name' => 'Light Belt',
-                'grade' => 23,
+                'tier' => 23,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -9124,7 +8788,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::SASH,
                 'name' => 'Pupil\'s Sash',
-                'grade' => 25,
+                'tier' => 25,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -9187,7 +8851,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::HELMET,
                 'name' => 'Spangenhelm',
-                'grade' => 27,
+                'tier' => 27,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -9250,7 +8914,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::SHIELD,
                 'name' => 'Heavy Buckler',
-                'grade' => 29,
+                'tier' => 29,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -9313,7 +8977,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::GLOVES,
                 'name' => 'Gages',
-                'grade' => 31,
+                'tier' => 31,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -9376,7 +9040,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::ROBES,
                 'name' => 'Coat',
-                'grade' => 32,
+                'tier' => 32,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -9439,7 +9103,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::CAP,
                 'name' => 'Busby',
-                'grade' => 33,
+                'tier' => 33,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -9502,7 +9166,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::BOOTS,
                 'name' => 'Heavy Boots',
-                'grade' => 34,
+                'tier' => 34,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -9565,7 +9229,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::HELMET,
                 'name' => 'Helm',
-                'grade' => 35,
+                'tier' => 35,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -9628,7 +9292,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::PSIONIC_SHIELD,
                 'name' => 'Barrier',
-                'grade' => 37,
+                'tier' => 37,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -9691,7 +9355,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::SHOES,
                 'name' => 'Clogs',
-                'grade' => 38,
+                'tier' => 38,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -9754,7 +9418,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::GAUNTLETS,
                 'name' => 'Heavy Gauntlets',
-                'grade' => 39,
+                'tier' => 39,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -9817,7 +9481,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::LIGHT_ARMOR,
                 'name' => 'Plackart',
-                'grade' => 40,
+                'tier' => 40,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -9880,7 +9544,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::SHIELD,
                 'name' => 'Rondache',
-                'grade' => 42,
+                'tier' => 42,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -9943,7 +9607,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::HEAVY_ARMOR,
                 'name' => 'Chainmail',
-                'grade' => 43,
+                'tier' => 43,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -10006,7 +9670,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::LEGGINGS,
                 'name' => 'Tassets',
-                'grade' => 44,
+                'tier' => 44,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -10069,7 +9733,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::HELMET,
                 'name' => 'Helm',
-                'grade' => 45,
+                'tier' => 45,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -10132,7 +9796,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::CAP,
                 'name' => 'Trilby',
-                'grade' => 48,
+                'tier' => 48,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -10195,7 +9859,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::BELT,
                 'name' => 'Heavy Belt',
-                'grade' => 50,
+                'tier' => 50,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -10258,7 +9922,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::SASH,
                 'name' => 'Veteran\'s Sash',
-                'grade' => 51,
+                'tier' => 51,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -10321,7 +9985,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::GLOVES,
                 'name' => 'Gages',
-                'grade' => 52,
+                'tier' => 52,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -10384,7 +10048,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::HELMET,
                 'name' => 'Bascinet',
-                'grade' => 53,
+                'tier' => 53,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -10447,7 +10111,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::SHIELD,
                 'name' => 'Heater Shield',
-                'grade' => 55,
+                'tier' => 55,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -10510,7 +10174,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::LIGHT_ARMOR,
                 'name' => 'Heavy Cuirass',
-                'grade' => 56,
+                'tier' => 56,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -10573,7 +10237,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::HEAVY_ARMOR,
                 'name' => 'Scalemail',
-                'grade' => 57,
+                'tier' => 57,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -10636,7 +10300,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::SHOES,
                 'name' => 'Pantofles',
-                'grade' => 58,
+                'tier' => 58,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -10699,7 +10363,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::ROBES,
                 'name' => 'Mantle',
-                'grade' => 59,
+                'tier' => 59,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -10762,7 +10426,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::CAP,
                 'name' => 'Tubetieka',
-                'grade' => 60,
+                'tier' => 60,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -10825,7 +10489,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::BOOTS,
                 'name' => 'Combat Boots',
-                'grade' => 61,
+                'tier' => 61,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -10888,7 +10552,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::HELMET,
                 'name' => 'Armet',
-                'grade' => 62,
+                'tier' => 62,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -10951,7 +10615,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::PSIONIC_SHIELD,
                 'name' => 'Force-field',
-                'grade' => 64,
+                'tier' => 64,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -11014,7 +10678,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::SHIELD,
                 'name' => 'Kite Shield',
-                'grade' => 66,
+                'tier' => 66,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -11077,7 +10741,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::GAUNTLETS,
                 'name' => 'Battle Gauntlets',
-                'grade' => 68,
+                'tier' => 68,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -11140,7 +10804,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::HELMET,
                 'name' => 'Sallet',
-                'grade' => 71,
+                'tier' => 71,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -11203,7 +10867,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::LEGGINGS,
                 'name' => 'Cuisses',
-                'grade' => 72,
+                'tier' => 72,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -11266,7 +10930,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::GLOVES,
                 'name' => 'Wizard Hands',
-                'grade' => 73,
+                'tier' => 73,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -11329,7 +10993,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::BELT,
                 'name' => 'Captain\'s Belt',
-                'grade' => 74,
+                'tier' => 74,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -11392,7 +11056,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::SASH,
                 'name' => 'Master\'s Sash',
-                'grade' => 75,
+                'tier' => 75,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -11455,7 +11119,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::CAP,
                 'name' => 'Wizard\'s Cap',
-                'grade' => 76,
+                'tier' => 76,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -11518,7 +11182,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::ROBES,
                 'name' => 'Cape',
-                'grade' => 77,
+                'tier' => 77,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -11581,7 +11245,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::SHIELD,
                 'name' => 'Gothic Shield',
-                'grade' => 78,
+                'tier' => 78,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -11644,7 +11308,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::LIGHT_ARMOR,
                 'name' => 'Hauberk',
-                'grade' => 79,
+                'tier' => 79,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -11707,7 +11371,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::HELMET,
                 'name' => 'Great Bascinet',
-                'grade' => 80,
+                'tier' => 80,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -11770,7 +11434,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::HEAVY_ARMOR,
                 'name' => 'Platemail',
-                'grade' => 82,
+                'tier' => 82,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -11833,7 +11497,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::SHIELD,
                 'name' => 'Tower Shield',
-                'grade' => 85,
+                'tier' => 85,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -11896,7 +11560,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::LEGGINGS,
                 'name' => 'Chausses',
-                'grade' => 87,
+                'tier' => 87,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -11959,7 +11623,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::HELMET,
                 'name' => 'Fluted Armet',
-                'grade' => 88,
+                'tier' => 88,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -12022,7 +11686,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::SHOES,
                 'name' => 'Magus Pantofles',
-                'grade' => 90,
+                'tier' => 90,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -12085,7 +11749,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::GLOVES,
                 'name' => 'Sorcerer Palms',
-                'grade' => 91,
+                'tier' => 91,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -12148,7 +11812,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::SASH,
                 'name' => 'Magus Sash',
-                'grade' => 92,
+                'tier' => 92,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -12211,7 +11875,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::GAUNTLETS,
                 'name' => 'War Gauntlets',
-                'grade' => 92,
+                'tier' => 92,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -12274,7 +11938,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::PSIONIC_SHIELD,
                 'name' => 'Citadel',
-                'grade' => 93,
+                'tier' => 93,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -12337,7 +12001,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::BOOTS,
                 'name' => 'Spartan Sandals',
-                'grade' => 93,
+                'tier' => 93,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -12400,7 +12064,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::CAP,
                 'name' => 'Sorcerer\'s Hat',
-                'grade' => 94,
+                'tier' => 94,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -12463,7 +12127,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::ROBES,
                 'name' => 'Cloak',
-                'grade' => 94,
+                'tier' => 94,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -12526,7 +12190,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::LIGHT_ARMOR,
                 'name' => 'Ranger\'s Suit',
-                'grade' => 94,
+                'tier' => 94,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -12589,7 +12253,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::BELT,
                 'name' => 'Giant\'s Belt',
-                'grade' => 95,
+                'tier' => 95,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -12652,7 +12316,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::HELMET,
                 'name' => 'Sallet with Bevor',
-                'grade' => 95,
+                'tier' => 95,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -12715,7 +12379,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::HEAVY_ARMOR,
                 'name' => 'Phalanx Suit',
-                'grade' => 96,
+                'tier' => 96,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -12778,7 +12442,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::SHIELD,
                 'name' => 'Giant\'s Shield',
-                'grade' => 97,
+                'tier' => 97,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -12846,7 +12510,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::RING,
                 'name' => 'Band',
-                'grade' => 10,
+                'tier' => 10,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -12909,7 +12573,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::BRACELET,
                 'name' => 'Shackle',
-                'grade' => 10,
+                'tier' => 10,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -12972,7 +12636,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::NECKLACE,
                 'name' => 'Beeds',
-                'grade' => 10,
+                'tier' => 10,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -13035,7 +12699,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::CROWN,
                 'name' => 'Headband',
-                'grade' => 28,
+                'tier' => 28,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -13098,7 +12762,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::RING,
                 'name' => 'Ring',
-                'grade' => 30,
+                'tier' => 30,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -13161,7 +12825,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::BRACELET,
                 'name' => 'Bracelet',
-                'grade' => 30,
+                'tier' => 30,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -13224,7 +12888,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::NECKLACE,
                 'name' => 'Necklace',
-                'grade' => 30,
+                'tier' => 30,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -13287,7 +12951,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::CROWN,
                 'name' => 'Circlet',
-                'grade' => 36,
+                'tier' => 36,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -13350,7 +13014,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::CROWN,
                 'name' => 'Chaplet',
-                'grade' => 46,
+                'tier' => 46,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -13413,7 +13077,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::RING,
                 'name' => 'Heavy Band',
-                'grade' => 50,
+                'tier' => 50,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -13476,7 +13140,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::BRACELET,
                 'name' => 'Arm Band',
-                'grade' => 50,
+                'tier' => 50,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -13539,7 +13203,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::NECKLACE,
                 'name' => 'Locket',
-                'grade' => 50,
+                'tier' => 50,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -13602,7 +13266,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::CROWN,
                 'name' => 'Tiara',
-                'grade' => 54,
+                'tier' => 54,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -13665,7 +13329,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::CROWN,
                 'name' => 'Coronet',
-                'grade' => 69,
+                'tier' => 69,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -13728,7 +13392,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::RING,
                 'name' => 'Signet',
-                'grade' => 70,
+                'tier' => 70,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -13791,7 +13455,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::BRACELET,
                 'name' => 'Bangle',
-                'grade' => 70,
+                'tier' => 70,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -13854,7 +13518,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::NECKLACE,
                 'name' => 'Pendant',
-                'grade' => 70,
+                'tier' => 70,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -13917,7 +13581,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::CROWN,
                 'name' => 'Queen\'s Crown',
-                'grade' => 81,
+                'tier' => 81,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -13980,7 +13644,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::RING,
                 'name' => 'Royal Signet',
-                'grade' => 90,
+                'tier' => 90,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -14043,7 +13707,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::BRACELET,
                 'name' => 'Armlet',
-                'grade' => 90,
+                'tier' => 90,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -14106,7 +13770,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::NECKLACE,
                 'name' => 'Amulet',
-                'grade' => 90,
+                'tier' => 90,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -14169,7 +13833,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => \App\Domain\Models\ItemBase::CROWN,
                 'name' => 'King\'s Crown',
-                'grade' => 92,
+                'tier' => 92,
 
                 'materials' => [
                     'Mammoth Tusk',
@@ -14236,7 +13900,7 @@ class SeedItemTypes extends Migration
             $itemTypeModel =  \App\Domain\Models\ItemType::query()->create([
                 'name' => $itemType['name'],
                 'item_base_id' => $itemBases->where('name', $itemType['base'])->first()->id,
-                'grade' => $itemType['grade']
+                'tier' => $itemType['tier']
             ]);
 
             /** @var \Illuminate\Database\Eloquent\Collection $materials */
