@@ -24,6 +24,9 @@ class OrbBehavior extends WeaponBehavior
     protected $damageMultiplierModifierBonus = -.6;
     protected $combatSpeedModifierBonus = .5;
 
+    protected $staminaCostBase = 4.8;
+    protected $manaCostBase = 9;
+
     public function __construct(WeaponGroup $weaponGroup, TwoArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);

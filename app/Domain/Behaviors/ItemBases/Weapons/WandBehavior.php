@@ -23,6 +23,9 @@ class WandBehavior extends WeaponBehavior
     protected $damageMultiplierModifierBonus = 0;
     protected $combatSpeedModifierBonus = 0;
 
+    protected $staminaCostBase = 3.2;
+    protected $manaCostBase = 7;
+
     public function __construct(WeaponGroup $weaponGroup, SingleArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);

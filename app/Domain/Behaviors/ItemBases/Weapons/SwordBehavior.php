@@ -24,6 +24,9 @@ class SwordBehavior extends WeaponBehavior
     protected $damageMultiplierModifierBonus = -.3;
     protected $combatSpeedModifierBonus = .25;
 
+    protected $staminaCostBase = 7.5;
+    protected $manaCostBase = 2.3;
+
     public function __construct(WeaponGroup $weaponGroup, SingleArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);

@@ -24,6 +24,9 @@ class PsionicTwoHandBehavior extends WeaponBehavior
     protected $damageMultiplierModifierBonus = 0;
     protected $combatSpeedModifierBonus = 0;
 
+    protected $staminaCostBase = 8;
+    protected $manaCostBase = 10;
+
     public function __construct(WeaponGroup $weaponGroup, TwoArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);

@@ -24,6 +24,9 @@ class AxeBehavior extends WeaponBehavior
     protected $damageMultiplierModifierBonus = 0;
     protected $combatSpeedModifierBonus = 0;
 
+    protected $staminaCostBase = 8;
+    protected $manaCostBase = 2.5;
+
     public function __construct(WeaponGroup $weaponGroup, SingleArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);

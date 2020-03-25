@@ -24,6 +24,9 @@ class CrossbowBehavior extends WeaponBehavior
     protected $damageMultiplierModifierBonus = .4;
     protected $combatSpeedModifierBonus = -.25;
 
+    protected $staminaCostBase = 18;
+    protected $manaCostBase = 4.5;
+
     public function __construct(WeaponGroup $weaponGroup, TwoArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);

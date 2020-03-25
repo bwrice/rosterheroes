@@ -24,6 +24,9 @@ class DaggerBehavior extends WeaponBehavior
     protected $damageMultiplierModifierBonus = -.6;
     protected $combatSpeedModifierBonus = .5;
 
+    protected $staminaCostBase = 5;
+    protected $manaCostBase = 1.5;
+
     public function __construct(WeaponGroup $weaponGroup, SingleArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);

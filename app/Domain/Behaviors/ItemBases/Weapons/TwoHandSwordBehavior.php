@@ -24,6 +24,9 @@ class TwoHandSwordBehavior extends WeaponBehavior
     protected $damageMultiplierModifierBonus = -.3;
     protected $combatSpeedModifierBonus = .25;
 
+    protected $staminaCostBase = 13;
+    protected $manaCostBase = 3.7;
+
     public function __construct(WeaponGroup $weaponGroup, TwoArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);

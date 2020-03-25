@@ -24,6 +24,9 @@ class PoleArmBehavior extends WeaponBehavior
     protected $damageMultiplierModifierBonus = -.6;
     protected $combatSpeedModifierBonus = .5;
 
+    protected $staminaCostBase = 10;
+    protected $manaCostBase = 3;
+
     public function __construct(WeaponGroup $weaponGroup, TwoArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);

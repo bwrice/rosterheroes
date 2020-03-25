@@ -25,6 +25,9 @@ class ThrowingWeaponBehavior extends WeaponBehavior
     protected $damageMultiplierModifierBonus = .4;
     protected $combatSpeedModifierBonus = -.25;
 
+    protected $staminaCostBase = 8;
+    protected $manaCostBase = 2.2;
+
     public function __construct(WeaponGroup $weaponGroup, SingleArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);

@@ -24,6 +24,9 @@ class StaffBehavior extends WeaponBehavior
     protected $damageMultiplierModifierBonus = .4;
     protected $combatSpeedModifierBonus = -.25;
 
+    protected $staminaCostBase = 6;
+    protected $manaCostBase = 12;
+
     public function __construct(WeaponGroup $weaponGroup, TwoArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);
