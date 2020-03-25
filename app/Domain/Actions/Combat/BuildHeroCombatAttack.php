@@ -44,7 +44,7 @@ class BuildHeroCombatAttack extends AbstractBuildCombatAttack
             $this->getTargetPosition($attack, $combatPositions),
             $this->getTargetPriority($attack, $targetPriorities),
             $this->getDamageType($attack, $damageTypes),
-            $attack->getResourceCostCollection()
+            $attack->getResourceCosts()
         );
     }
 }
