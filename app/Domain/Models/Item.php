@@ -281,7 +281,7 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
 
     public function getResourceCosts(int $attackTier, DamageTypeBehavior $damageTypeBehavior, ?int $targetsCount): ResourceCostsCollection
     {
-        if ($attackTier === 1) {
+        if ($attackTier === 1 && $targetsCount === 1) {
             return new ResourceCostsCollection();
         }
 
