@@ -31,7 +31,7 @@ abstract class AbstractCombatAttack implements CombatAttackInterface, Arrayable
     /**
      * @var int
      */
-    protected $grade;
+    protected $tier;
     /**
      * @var CombatPosition
      */
@@ -58,7 +58,7 @@ abstract class AbstractCombatAttack implements CombatAttackInterface, Arrayable
         string $attackUuid,
         int $damage,
         float $combatSpeed,
-        int $grade,
+        int $tier,
         CombatPosition $attackerPosition,
         CombatPosition $targetPosition,
         TargetPriority $targetPriority,
@@ -69,7 +69,7 @@ abstract class AbstractCombatAttack implements CombatAttackInterface, Arrayable
         $this->attackUuid = $attackUuid;
         $this->damage = $damage;
         $this->combatSpeed = $combatSpeed;
-        $this->grade = $grade;
+        $this->tier = $tier;
         $this->attackerPosition = $attackerPosition;
         $this->targetPosition = $targetPosition;
         $this->targetPriority = $targetPriority;
@@ -97,7 +97,7 @@ abstract class AbstractCombatAttack implements CombatAttackInterface, Arrayable
             'attackUuid' => $this->attackUuid,
             'damage' => $this->damage,
             'combatSpeed' => $this->combatSpeed,
-            'grade' => $this->grade,
+            'grade' => $this->tier,
             'attackerPositionID' => $this->attackerPosition->id,
             'targetPositionID' => $this->targetPosition->id,
             'targetPriorityID' => $this->targetPriority->id,
@@ -141,9 +141,9 @@ abstract class AbstractCombatAttack implements CombatAttackInterface, Arrayable
     /**
      * @return int
      */
-    public function getGrade(): int
+    public function getTier(): int
     {
-        return $this->grade;
+        return $this->tier;
     }
 
     /**

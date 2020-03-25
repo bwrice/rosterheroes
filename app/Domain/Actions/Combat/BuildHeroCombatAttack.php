@@ -38,7 +38,7 @@ class BuildHeroCombatAttack extends AbstractBuildCombatAttack
             $attack->uuid,
             $damage,
             $attack->getCombatSpeed(),
-            $attack->getGrade(),
+            $attack->tier,
             $attack->getMaxTargetsCount(),
             $this->getAttackerPosition($attack, $combatPositions),
             $this->getTargetPosition($attack, $combatPositions),

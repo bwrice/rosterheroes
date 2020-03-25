@@ -144,16 +144,6 @@ class Attack extends Model
         return $this;
     }
 
-    public function getGrade()
-    {
-        return $this->getConfigAttribute('grade');
-    }
-
-    public function getFixedTargetCount()
-    {
-        return $this->getConfigAttribute('fixed_target_count');
-    }
-
     public function getInitialSpeed()
     {
         return $this->damageType->getBehavior()->getInitialCombatSpeed($this->tier, $this->targets_count);
@@ -161,7 +151,7 @@ class Attack extends Model
 
     public function getInitialBaseDamage()
     {
-        $this->damageType->getBehavior()->getInitialBaseDamage($this->tier, $this->targets_count);
+        return $this->damageType->getBehavior()->getInitialBaseDamage($this->tier, $this->targets_count);
     }
 
     public function getInitialDamageMultiplier()
@@ -179,7 +169,8 @@ class Attack extends Model
 
     public function getRequirements()
     {
-        return $this->getConfigAttribute('requirements');
+        // TODO
+        return collect();
     }
 
     /**
@@ -254,6 +245,6 @@ class Attack extends Model
 
     public function getMaxTargetsCount()
     {
-        return $this->damageType->getBehavior()->getMaxTargetCount($this->grade, $this->getFixedTargetCount());
+        return $this->damageType->getBehavior()->getMaxTargetCount($this->grade, $this->targets_count);
     }
 }

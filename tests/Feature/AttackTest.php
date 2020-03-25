@@ -21,7 +21,6 @@ class AttackTest extends TestCase
         $attacks = Attack::all();
         $attacks->each(function (Attack $attack) {
             try {
-                $this->assertNotNull($attack->getGrade());
                 $this->assertNotNull($attack->getInitialSpeed());
                 $this->assertNotNull($attack->getInitialBaseDamage());
                 $this->assertNotNull($attack->getInitialDamageMultiplier());
