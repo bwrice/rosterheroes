@@ -7,7 +7,9 @@ namespace App\Domain\Behaviors\ItemBases\Weapons;
 use App\Domain\Behaviors\ItemBases\ItemBaseBehavior;
 use App\Domain\Behaviors\ItemBases\Weapons\ArmBehaviors\ArmBehaviorInterface;
 use App\Domain\Behaviors\ItemGroup\WeaponGroup;
+use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Interfaces\UsesItems;
+use App\Domain\Models\Json\ResourceCosts\FixedResourceCost;
 use App\Domain\Models\MeasurableType;
 use App\Domain\Models\Support\GearSlots\GearSlot;
 
@@ -18,6 +20,9 @@ abstract class WeaponBehavior extends ItemBaseBehavior
     protected $damageMultiplierModifierBonus = 0;
     protected $baseDamageModifierBonus = 0;
     protected $combatSpeedModifierBonus = 0;
+
+    protected $staminaCostBase = 1;
+    protected $manaCostBase = 1;
 
     protected $validGearSlotTypes = [
         GearSlot::PRIMARY_ARM,
@@ -85,4 +90,19 @@ abstract class WeaponBehavior extends ItemBaseBehavior
     }
 
     abstract protected function getMeasurablesDamageBonus(UsesItems $usesItems): float;
+
+    public function getResourceCosts(int $attackTier, float $resourceCostMagnitude)
+    {
+        $staminaAmount = (int) ceil($this->staminaCostBase * $attackTier * $resourceCostMagnitude);
+        $staminaResourceCost = new FixedResourceCost(MeasurableType::STAMINA, $staminaAmount);
+        $resourceCosts = new ResourceCostsCollection([
+            $staminaResourceCost
+        ]);
+        if ($attackTier >= 2) {
+            $manaAmount = (int) ceil($this->manaCostBase * $attackTier * $resourceCostMagnitude);
+            $manaResourceCost = new FixedResourceCost(MeasurableType::MANA, $manaAmount);
+            $resourceCosts->push($manaResourceCost);
+        }
+        return $resourceCosts;
+    }
 }
