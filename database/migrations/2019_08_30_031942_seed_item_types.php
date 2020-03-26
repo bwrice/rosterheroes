@@ -714,205 +714,333 @@ class SeedItemTypes extends Migration
             ],
 
             /*
-             * ARMOR
+             * SHIELDS
              */
 
             [
-                'base' => ItemBase::CAP,
-                'name' => 'Fez',
-                'tier' => 6,
-
-                'materials' => [
-                ]
-            ],
-            [
                 'base' => ItemBase::SHIELD,
                 'name' => 'Buckler',
-                'tier' => 8,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::HELMET,
-                'name' => 'Kettle Hat',
-                'tier' => 9,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::ROBES,
-                'name' => 'Frock',
-                'tier' => 10,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::SHOES,
-                'name' => 'Slippers',
-                'tier' => 11,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::LIGHT_ARMOR,
-                'name' => 'Light Cuirass',
-                'tier' => 12,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::BOOTS,
-                'name' => 'Light Boots',
-                'tier' => 13,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::GLOVES,
-                'name' => 'Light Gloves',
-                'tier' => 14,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::HEAVY_ARMOR,
-                'name' => 'Breastplate',
-                'tier' => 15,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::CAP,
-                'name' => 'Beret',
-                'tier' => 16,
-
+                'tier' => 1,
                 'materials' => [
                 ]
             ],
             [
                 'base' => ItemBase::SHIELD,
-                'name' => 'Targe',
-                'tier' => 17,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::GAUNTLETS,
-                'name' => 'Light Gauntlets',
-                'tier' => 18,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::HELMET,
-                'name' => 'Skullcap',
-                'tier' => 19,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::LEGGINGS,
-                'name' => 'Greaves',
-                'tier' => 22,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::BELT,
-                'name' => 'Light Belt',
-                'tier' => 23,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::SASH,
-                'name' => 'Pupil\'s Sash',
-                'tier' => 25,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::HELMET,
-                'name' => 'Spangenhelm',
-                'tier' => 27,
-
+                'name' => 'Rondache',
+                'tier' => 2,
                 'materials' => [
                 ]
             ],
             [
                 'base' => ItemBase::SHIELD,
-                'name' => 'Heavy Buckler',
-                'tier' => 29,
-
+                'name' => 'Heater Shield',
+                'tier' => 3,
                 'materials' => [
                 ]
             ],
             [
-                'base' => ItemBase::GLOVES,
-                'name' => 'Gages',
-                'tier' => 31,
-
+                'base' => ItemBase::SHIELD,
+                'name' => 'Kite Shield',
+                'tier' => 4,
                 'materials' => [
                 ]
             ],
             [
-                'base' => ItemBase::ROBES,
-                'name' => 'Coat',
-                'tier' => 32,
-
+                'base' => ItemBase::SHIELD,
+                'name' => 'Gothic Shield',
+                'tier' => 5,
                 'materials' => [
                 ]
             ],
             [
-                'base' => ItemBase::CAP,
-                'name' => 'Busby',
-                'tier' => 33,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::BOOTS,
-                'name' => 'Heavy Boots',
-                'tier' => 34,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::HELMET,
-                'name' => 'Helm',
-                'tier' => 35,
-
+                'base' => ItemBase::SHIELD,
+                'name' => 'Tower Shield',
+                'tier' => 6,
                 'materials' => [
                 ]
             ],
             [
                 'base' => ItemBase::PSIONIC_SHIELD,
                 'name' => 'Barrier',
-                'tier' => 37,
+                'tier' => 3,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::PSIONIC_SHIELD,
+                'name' => 'Force-field',
+                'tier' => 4,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::PSIONIC_SHIELD,
+                'name' => 'Citadel',
+                'tier' => 5,
+                'materials' => [
+                ]
+            ],
 
+            /*
+             * CLOTHING
+             */
+            [
+                'base' => ItemBase::CAP,
+                'name' => 'Fez',
+                'tier' => 1,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::CAP,
+                'name' => 'Beret',
+                'tier' => 2,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::CAP,
+                'name' => 'Trilby',
+                'tier' => 3,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::CAP,
+                'name' => 'Apprentice Cap',
+                'tier' => 4,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::CAP,
+                'name' => 'Wizard\'s Cap',
+                'tier' => 5,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::CAP,
+                'name' => 'Sorcerer\'s Hat',
+                'tier' => 6,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::ROBES,
+                'name' => 'Frock',
+                'tier' => 1,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::ROBES,
+                'name' => 'Coat',
+                'tier' => 2,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::ROBES,
+                'name' => 'Mantle',
+                'tier' => 3,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::ROBES,
+                'name' => 'Cape',
+                'tier' => 4,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::ROBES,
+                'name' => 'Cloak',
+                'tier' => 5,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::ROBES,
+                'name' => 'Magus Cloak',
+                'tier' => 6,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::SHOES,
+                'name' => 'Slippers',
+                'tier' => 1,
                 'materials' => [
                 ]
             ],
             [
                 'base' => ItemBase::SHOES,
                 'name' => 'Clogs',
-                'tier' => 38,
+                'tier' => 2,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::SHOES,
+                'name' => 'Pantofles',
+                'tier' => 3,
+                'materials' => [
+                ]
+            ],
+
+            /*
+             * ARMOR
+             */
+            [
+                'base' => ItemBase::HELMET,
+                'name' => 'Skullcap',
+                'tier' => 1,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::HELMET,
+                'name' => 'Kettle Hat',
+                'tier' => 2,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::HELMET,
+                'name' => 'Helm',
+                'tier' => 3,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::HELMET,
+                'name' => 'Bascinet',
+                'tier' => 4,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::HELMET,
+                'name' => 'Armet',
+                'tier' => 5,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::HELMET,
+                'name' => 'Sallet',
+                'tier' => 6,
+                'materials' => [
+                ]
+            ],
+
+            [
+                'base' => ItemBase::BOOTS,
+                'name' => 'Light Boots',
+                'tier' => 1,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::BOOTS,
+                'name' => 'Heavy Boots',
+                'tier' => 2,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::BOOTS,
+                'name' => 'Combat Boots',
+                'tier' => 3,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::BOOTS,
+                'name' => 'Spartan Sandals',
+                'tier' => 4,
+                'materials' => [
+                ]
+            ],
+
+            [
+                'base' => ItemBase::GLOVES,
+                'name' => 'Light Gloves',
+                'tier' => 1,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::GLOVES,
+                'name' => 'Gages',
+                'tier' => 3,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::GLOVES,
+                'name' => 'Wizard Hands',
+                'tier' => 5,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::GLOVES,
+                'name' => 'Sorcerer Palms',
+                'tier' => 6,
+                'materials' => [
+                ]
+            ],
+
+            [
+                'base' => ItemBase::LIGHT_ARMOR,
+                'name' => 'Light Cuirass',
+                'tier' => 1,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::LIGHT_ARMOR,
+                'name' => 'Plackart',
+                'tier' => 2,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::LIGHT_ARMOR,
+                'name' => 'Heavy Cuirass',
+                'tier' => 3,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::LIGHT_ARMOR,
+                'name' => 'Heavy Plackart',
+                'tier' => 4,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::LIGHT_ARMOR,
+                'name' => 'Hauberk',
+                'tier' => 5,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::LIGHT_ARMOR,
+                'name' => 'Ranger\'s Suit',
+                'tier' => 6,
+                'materials' => [
+                ]
+            ],
+
+            [
+                'base' => ItemBase::GAUNTLETS,
+                'name' => 'Light Gauntlets',
+                'tier' => 1,
 
                 'materials' => [
                 ]
@@ -920,303 +1048,158 @@ class SeedItemTypes extends Migration
             [
                 'base' => ItemBase::GAUNTLETS,
                 'name' => 'Heavy Gauntlets',
-                'tier' => 39,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::LIGHT_ARMOR,
-                'name' => 'Plackart',
-                'tier' => 40,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::SHIELD,
-                'name' => 'Rondache',
-                'tier' => 42,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::HEAVY_ARMOR,
-                'name' => 'Chainmail',
-                'tier' => 43,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::LEGGINGS,
-                'name' => 'Tassets',
-                'tier' => 44,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::HELMET,
-                'name' => 'Helm',
-                'tier' => 45,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::CAP,
-                'name' => 'Trilby',
-                'tier' => 48,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::BELT,
-                'name' => 'Heavy Belt',
-                'tier' => 50,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::SASH,
-                'name' => 'Veteran\'s Sash',
-                'tier' => 51,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::GLOVES,
-                'name' => 'Gages',
-                'tier' => 52,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::HELMET,
-                'name' => 'Bascinet',
-                'tier' => 53,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::SHIELD,
-                'name' => 'Heater Shield',
-                'tier' => 55,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::LIGHT_ARMOR,
-                'name' => 'Heavy Cuirass',
-                'tier' => 56,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::HEAVY_ARMOR,
-                'name' => 'Scalemail',
-                'tier' => 57,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::SHOES,
-                'name' => 'Pantofles',
-                'tier' => 58,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::ROBES,
-                'name' => 'Mantle',
-                'tier' => 59,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::CAP,
-                'name' => 'Tubetieka',
-                'tier' => 60,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::BOOTS,
-                'name' => 'Combat Boots',
-                'tier' => 61,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::HELMET,
-                'name' => 'Armet',
-                'tier' => 62,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::PSIONIC_SHIELD,
-                'name' => 'Force-field',
-                'tier' => 64,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::SHIELD,
-                'name' => 'Kite Shield',
-                'tier' => 66,
-
+                'tier' => 4,
                 'materials' => [
                 ]
             ],
             [
                 'base' => ItemBase::GAUNTLETS,
                 'name' => 'Battle Gauntlets',
-                'tier' => 68,
-
+                'tier' => 5,
                 'materials' => [
                 ]
             ],
             [
-                'base' => ItemBase::HELMET,
-                'name' => 'Sallet',
-                'tier' => 71,
+                'base' => ItemBase::GAUNTLETS,
+                'name' => 'War Gauntlets',
+                'tier' => 6,
+                'materials' => [
+                ]
+            ],
 
+            [
+                'base' => ItemBase::HEAVY_ARMOR,
+                'name' => 'Breastplate',
+                'tier' => 1,
                 'materials' => [
                 ]
             ],
             [
-                'base' => ItemBase::LEGGINGS,
-                'name' => 'Cuisses',
-                'tier' => 72,
-
+                'base' => ItemBase::HEAVY_ARMOR,
+                'name' => 'Chainmail',
+                'tier' => 2,
                 'materials' => [
                 ]
             ],
             [
-                'base' => ItemBase::GLOVES,
-                'name' => 'Wizard Hands',
-                'tier' => 73,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::BELT,
-                'name' => 'Captain\'s Belt',
-                'tier' => 74,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::SASH,
-                'name' => 'Master\'s Sash',
-                'tier' => 75,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::CAP,
-                'name' => 'Wizard\'s Cap',
-                'tier' => 76,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::ROBES,
-                'name' => 'Cape',
-                'tier' => 77,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::SHIELD,
-                'name' => 'Gothic Shield',
-                'tier' => 78,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::LIGHT_ARMOR,
-                'name' => 'Hauberk',
-                'tier' => 79,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::HELMET,
-                'name' => 'Great Bascinet',
-                'tier' => 80,
-
+                'base' => ItemBase::HEAVY_ARMOR,
+                'name' => 'Scalemail',
+                'tier' => 3,
                 'materials' => [
                 ]
             ],
             [
                 'base' => ItemBase::HEAVY_ARMOR,
                 'name' => 'Platemail',
-                'tier' => 82,
-
+                'tier' => 4,
                 'materials' => [
                 ]
             ],
             [
-                'base' => ItemBase::SHIELD,
-                'name' => 'Tower Shield',
-                'tier' => 85,
+                'base' => ItemBase::HEAVY_ARMOR,
+                'name' => 'Heavy Hauberk',
+                'tier' => 5,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::HEAVY_ARMOR,
+                'name' => 'Phalanx Suit',
+                'tier' => 6,
+                'materials' => [
+                ]
+            ],
 
+            [
+                'base' => ItemBase::BELT,
+                'name' => 'Light Belt',
+                'tier' => 1,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::BELT,
+                'name' => 'Heavy Belt',
+                'tier' => 2,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::BELT,
+                'name' => 'Captain\'s Belt',
+                'tier' => 5,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::BELT,
+                'name' => 'Giant\'s Belt',
+                'tier' => 6,
+                'materials' => [
+                ]
+            ],
+
+            [
+                'base' => ItemBase::LEGGINGS,
+                'name' => 'Greaves',
+                'tier' => 1,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::LEGGINGS,
+                'name' => 'Tassets',
+                'tier' => 2,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::LEGGINGS,
+                'name' => 'Cuisses',
+                'tier' => 3,
                 'materials' => [
                 ]
             ],
             [
                 'base' => ItemBase::LEGGINGS,
                 'name' => 'Chausses',
-                'tier' => 87,
+                'tier' => 4,
+                'materials' => [
+                ]
+            ],
 
+            [
+                'base' => ItemBase::SASH,
+                'name' => 'Pupil\'s Sash',
+                'tier' => 1,
                 'materials' => [
                 ]
             ],
             [
-                'base' => ItemBase::HELMET,
-                'name' => 'Fluted Armet',
-                'tier' => 88,
-
+                'base' => ItemBase::SASH,
+                'name' => 'Apprentice\'s Sash',
+                'tier' => 2,
                 'materials' => [
                 ]
             ],
             [
-                'base' => ItemBase::SHOES,
-                'name' => 'Magus Pantofles',
-                'tier' => 90,
-
+                'base' => ItemBase::SASH,
+                'name' => 'Scholar\'s Sash',
+                'tier' => 3,
                 'materials' => [
                 ]
             ],
             [
-                'base' => ItemBase::GLOVES,
-                'name' => 'Sorcerer Palms',
-                'tier' => 91,
+                'base' => ItemBase::SASH,
+                'name' => 'Veteran\'s Sash',
+                'tier' => 4,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::SASH,
+                'name' => 'Master\'s Sash',
+                'tier' => 5,
 
                 'materials' => [
                 ]
@@ -1224,88 +1207,7 @@ class SeedItemTypes extends Migration
             [
                 'base' => ItemBase::SASH,
                 'name' => 'Magus Sash',
-                'tier' => 92,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::GAUNTLETS,
-                'name' => 'War Gauntlets',
-                'tier' => 92,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::PSIONIC_SHIELD,
-                'name' => 'Citadel',
-                'tier' => 93,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::BOOTS,
-                'name' => 'Spartan Sandals',
-                'tier' => 93,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::CAP,
-                'name' => 'Sorcerer\'s Hat',
-                'tier' => 94,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::ROBES,
-                'name' => 'Cloak',
-                'tier' => 94,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::LIGHT_ARMOR,
-                'name' => 'Ranger\'s Suit',
-                'tier' => 94,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::BELT,
-                'name' => 'Giant\'s Belt',
-                'tier' => 95,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::HELMET,
-                'name' => 'Sallet with Bevor',
-                'tier' => 95,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::HEAVY_ARMOR,
-                'name' => 'Phalanx Suit',
-                'tier' => 96,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::SHIELD,
-                'name' => 'Giant\'s Shield',
-                'tier' => 97,
-
+                'tier' => 6,
                 'materials' => [
                 ]
             ],
@@ -1317,151 +1219,64 @@ class SeedItemTypes extends Migration
             [
                 'base' => ItemBase::RING,
                 'name' => 'Band',
-                'tier' => 10,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::BRACELET,
-                'name' => 'Shackle',
-                'tier' => 10,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::NECKLACE,
-                'name' => 'Beeds',
-                'tier' => 10,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::CROWN,
-                'name' => 'Headband',
-                'tier' => 28,
-
+                'tier' => 1,
                 'materials' => [
                 ]
             ],
             [
                 'base' => ItemBase::RING,
                 'name' => 'Ring',
-                'tier' => 30,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::BRACELET,
-                'name' => 'Bracelet',
-                'tier' => 30,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::NECKLACE,
-                'name' => 'Necklace',
-                'tier' => 30,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::CROWN,
-                'name' => 'Circlet',
-                'tier' => 36,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::CROWN,
-                'name' => 'Chaplet',
-                'tier' => 46,
-
+                'tier' => 2,
                 'materials' => [
                 ]
             ],
             [
                 'base' => ItemBase::RING,
                 'name' => 'Heavy Band',
-                'tier' => 50,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::BRACELET,
-                'name' => 'Arm Band',
-                'tier' => 50,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::NECKLACE,
-                'name' => 'Locket',
-                'tier' => 50,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::CROWN,
-                'name' => 'Tiara',
-                'tier' => 54,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::CROWN,
-                'name' => 'Coronet',
-                'tier' => 69,
-
+                'tier' => 3,
                 'materials' => [
                 ]
             ],
             [
                 'base' => ItemBase::RING,
                 'name' => 'Signet',
-                'tier' => 70,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::BRACELET,
-                'name' => 'Bangle',
-                'tier' => 70,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::NECKLACE,
-                'name' => 'Pendant',
-                'tier' => 70,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::CROWN,
-                'name' => 'Queen\'s Crown',
-                'tier' => 81,
-
+                'tier' => 4,
                 'materials' => [
                 ]
             ],
             [
                 'base' => ItemBase::RING,
                 'name' => 'Royal Signet',
-                'tier' => 90,
+                'tier' => 5,
+                'materials' => [
+                ]
+            ],
+
+            [
+                'base' => ItemBase::BRACELET,
+                'name' => 'Shackle',
+                'tier' => 1,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::BRACELET,
+                'name' => 'Bracelet',
+                'tier' => 2,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::BRACELET,
+                'name' => 'Arm Band',
+                'tier' => 3,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::BRACELET,
+                'name' => 'Bangle',
+                'tier' => 4,
 
                 'materials' => [
                 ]
@@ -1469,24 +1284,86 @@ class SeedItemTypes extends Migration
             [
                 'base' => ItemBase::BRACELET,
                 'name' => 'Armlet',
-                'tier' => 90,
+                'tier' => 5,
+                'materials' => [
+                ]
+            ],
 
+            [
+                'base' => ItemBase::NECKLACE,
+                'name' => 'Beeds',
+                'tier' => 1,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::NECKLACE,
+                'name' => 'Necklace',
+                'tier' => 2,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::NECKLACE,
+                'name' => 'Locket',
+                'tier' => 3,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::NECKLACE,
+                'name' => 'Pendant',
+                'tier' => 4,
                 'materials' => [
                 ]
             ],
             [
                 'base' => ItemBase::NECKLACE,
                 'name' => 'Amulet',
-                'tier' => 90,
+                'tier' => 5,
+                'materials' => [
+                ]
+            ],
 
+            [
+                'base' => ItemBase::CROWN,
+                'name' => 'Headband',
+                'tier' => 1,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::CROWN,
+                'name' => 'Circlet',
+                'tier' => 2,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::CROWN,
+                'name' => 'Chaplet',
+                'tier' => 3,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::CROWN,
+                'name' => 'Coronet',
+                'tier' => 4,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::CROWN,
+                'name' => 'Queen\'s Crown',
+                'tier' => 5,
                 'materials' => [
                 ]
             ],
             [
                 'base' => ItemBase::CROWN,
                 'name' => 'King\'s Crown',
-                'tier' => 92,
-
+                'tier' => 6,
                 'materials' => [
                 ]
             ],
