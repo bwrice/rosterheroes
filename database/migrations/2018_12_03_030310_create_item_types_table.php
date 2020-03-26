@@ -17,7 +17,7 @@ class CreateItemTypesTable extends Migration
             $table->increments('id');
             $table->integer('item_base_id')->unsigned();
             $table->string('name');
-            $table->integer('grade');
+            $table->integer('tier');
             $table->timestamps();
         });
 
