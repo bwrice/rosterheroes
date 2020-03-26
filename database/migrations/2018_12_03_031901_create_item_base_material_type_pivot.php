@@ -33,6 +33,6 @@ class CreateItemBaseMaterialTypePivot extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('item_type_material_type');
+        Schema::dropIfExists('item_base_material_type');
     }
 }
