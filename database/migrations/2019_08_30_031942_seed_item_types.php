@@ -1,7 +1,6 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
+use App\Domain\Models\ItemBase;
 use Illuminate\Database\Migrations\Migration;
 
 class SeedItemTypes extends Migration
@@ -14,7 +13,7 @@ class SeedItemTypes extends Migration
     public function up()
     {
         // TODO: limit materials for each type
-        $itemBases = \App\Domain\Models\ItemBase::all();
+        $itemBases = ItemBase::all();
         $materials = \App\Domain\Models\Material::all();
         $attacks = \App\Domain\Models\Attack::all();
         $itemTypes = [
@@ -24,7 +23,7 @@ class SeedItemTypes extends Migration
              */
 
             [
-                'base' => \App\Domain\Models\ItemBase::DAGGER,
+                'base' => ItemBase::DAGGER,
                 'name' => 'Knife',
                 'tier' => 1,
                 'materials' => [
@@ -120,7 +119,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::DAGGER,
+                'base' => ItemBase::DAGGER,
                 'name' => 'Kris',
                 'tier' => 2,
                 'materials' => [
@@ -182,7 +181,7 @@ class SeedItemTypes extends Migration
                 ],
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::DAGGER,
+                'base' => ItemBase::DAGGER,
                 'name' => 'Dirk',
                 'tier' => 3,
                 'materials' => [
@@ -244,7 +243,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::DAGGER,
+                'base' => ItemBase::DAGGER,
                 'name' => 'Katar',
                 'tier' => 4,
                 'materials' => [
@@ -306,7 +305,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::DAGGER,
+                'base' => ItemBase::DAGGER,
                 'name' => 'Stiletto',
                 'tier' => 5,
                 'materials' => [
@@ -368,10 +367,9 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::WAND,
+                'base' => ItemBase::WAND,
                 'name' => 'Sprig',
                 'tier' => 7,
-
                 'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
@@ -465,7 +463,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::MACE,
+                'base' => ItemBase::MACE,
                 'name' => 'Club',
                 'tier' => 8,
                 'materials' => [
@@ -524,47 +522,12 @@ class SeedItemTypes extends Migration
                     'Rosewood',
                     'Elderwood',
                     'Entwood'
-                ],
-                'attacks' => [
-                    'Arrow',
-                    'Arrow Spray',
-                    'Axe Sweep',
-                    'Blade Spin',
-                    'Bolt',
-                    'Chuck',
-                    'Deep Shot',
-                    'Double Arrow',
-                    'Double Bolt',
-                    'Double Long Shot',
-                    'Double Magic Bolt',
-                    'Double Poke',
-                    'Double Slash',
-                    'Double Slice',
-                    'Double Whack',
-                    'Lightning Bolt',
-                    'Lightning Strike',
-                    'Long Shot',
-                    'Magic Blast',
-                    'Magic Burst',
-                    'Poke',
-                    'Slash',
-                    'Slice',
-                    'Sword Sweep',
-                    'Triple Arrow',
-                    'Triple Bolt',
-                    'Triple Magic Bolt',
-                    'Triple Poke',
-                    'Triple Slash',
-                    'Triple Slice',
-                    'Triple Whack',
-                    'Whack'
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::SWORD,
+                'base' => ItemBase::SWORD,
                 'name' => 'Short Sword',
-                'tier' => 9,
-
+                'tier' => 1,
                 'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
@@ -621,44 +584,320 @@ class SeedItemTypes extends Migration
                     'Rosewood',
                     'Elderwood',
                     'Entwood'
-                ],
-                'attacks' => [
-                    'Arrow',
-                    'Arrow Spray',
-                    'Axe Sweep',
-                    'Blade Spin',
-                    'Bolt',
-                    'Chuck',
-                    'Deep Shot',
-                    'Double Arrow',
-                    'Double Bolt',
-                    'Double Long Shot',
-                    'Double Magic Bolt',
-                    'Double Poke',
-                    'Double Slash',
-                    'Double Slice',
-                    'Double Whack',
-                    'Lightning Bolt',
-                    'Lightning Strike',
-                    'Long Shot',
-                    'Magic Blast',
-                    'Magic Burst',
-                    'Poke',
-                    'Slash',
-                    'Slice',
-                    'Sword Sweep',
-                    'Triple Arrow',
-                    'Triple Bolt',
-                    'Triple Magic Bolt',
-                    'Triple Poke',
-                    'Triple Slash',
-                    'Triple Slice',
-                    'Triple Whack',
-                    'Whack'
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::STAFF,
+                'base' => ItemBase::SWORD,
+                'name' => 'Falchion',
+                'tier' => 2,
+                'materials' => [
+                    'Mammoth Tusk',
+                    'Sabertooth',
+                    'Minotaur Horn',
+                    'Spider Fang',
+                    'Dragon Bone',
+                    'Cotton',
+                    'Linen',
+                    'Wool',
+                    'Satin',
+                    'Velvet',
+                    'Silk',
+                    'Vicuna',
+                    'Ethereal',
+                    'Amber',
+                    'Ivory',
+                    'Jade',
+                    'Onyx',
+                    'Emerald',
+                    'Ruby',
+                    'Sapphire',
+                    'Diamond',
+                    'Wolf Pelt',
+                    'Leather',
+                    'Mammoth Hide',
+                    'Studded Leather',
+                    'Werewolf Pelt',
+                    'Scarab Shell',
+                    'Scorpion Shell',
+                    'Dragon Scale',
+                    'Copper',
+                    'Iron',
+                    'Bronze',
+                    'Steel',
+                    'Orichalcum',
+                    'Tungsten',
+                    'Elven',
+                    'Empyrean',
+                    'Silver',
+                    'Gold',
+                    'Platinum',
+                    'Acid',
+                    'Ice',
+                    'Fire',
+                    'Lightning',
+                    'Spirit',
+                    'Nova',
+                    'Yew',
+                    'Juniper',
+                    'Makore',
+                    'Mansonia',
+                    'Cebil',
+                    'Muninga',
+                    'Rosewood',
+                    'Elderwood',
+                    'Entwood'
+                ]
+            ],
+            [
+                'base' => ItemBase::SWORD,
+                'name' => 'Scimitar',
+                'tier' => 3,
+                'materials' => [
+                    'Mammoth Tusk',
+                    'Sabertooth',
+                    'Minotaur Horn',
+                    'Spider Fang',
+                    'Dragon Bone',
+                    'Cotton',
+                    'Linen',
+                    'Wool',
+                    'Satin',
+                    'Velvet',
+                    'Silk',
+                    'Vicuna',
+                    'Ethereal',
+                    'Amber',
+                    'Ivory',
+                    'Jade',
+                    'Onyx',
+                    'Emerald',
+                    'Ruby',
+                    'Sapphire',
+                    'Diamond',
+                    'Wolf Pelt',
+                    'Leather',
+                    'Mammoth Hide',
+                    'Studded Leather',
+                    'Werewolf Pelt',
+                    'Scarab Shell',
+                    'Scorpion Shell',
+                    'Dragon Scale',
+                    'Copper',
+                    'Iron',
+                    'Bronze',
+                    'Steel',
+                    'Orichalcum',
+                    'Tungsten',
+                    'Elven',
+                    'Empyrean',
+                    'Silver',
+                    'Gold',
+                    'Platinum',
+                    'Acid',
+                    'Ice',
+                    'Fire',
+                    'Lightning',
+                    'Spirit',
+                    'Nova',
+                    'Yew',
+                    'Juniper',
+                    'Makore',
+                    'Mansonia',
+                    'Cebil',
+                    'Muninga',
+                    'Rosewood',
+                    'Elderwood',
+                    'Entwood'
+                ]
+            ],
+            [
+                'base' => ItemBase::SWORD,
+                'name' => 'Sabre',
+                'tier' => 4,
+                'materials' => [
+                    'Mammoth Tusk',
+                    'Sabertooth',
+                    'Minotaur Horn',
+                    'Spider Fang',
+                    'Dragon Bone',
+                    'Cotton',
+                    'Linen',
+                    'Wool',
+                    'Satin',
+                    'Velvet',
+                    'Silk',
+                    'Vicuna',
+                    'Ethereal',
+                    'Amber',
+                    'Ivory',
+                    'Jade',
+                    'Onyx',
+                    'Emerald',
+                    'Ruby',
+                    'Sapphire',
+                    'Diamond',
+                    'Wolf Pelt',
+                    'Leather',
+                    'Mammoth Hide',
+                    'Studded Leather',
+                    'Werewolf Pelt',
+                    'Scarab Shell',
+                    'Scorpion Shell',
+                    'Dragon Scale',
+                    'Copper',
+                    'Iron',
+                    'Bronze',
+                    'Steel',
+                    'Orichalcum',
+                    'Tungsten',
+                    'Elven',
+                    'Empyrean',
+                    'Silver',
+                    'Gold',
+                    'Platinum',
+                    'Acid',
+                    'Ice',
+                    'Fire',
+                    'Lightning',
+                    'Spirit',
+                    'Nova',
+                    'Yew',
+                    'Juniper',
+                    'Makore',
+                    'Mansonia',
+                    'Cebil',
+                    'Muninga',
+                    'Rosewood',
+                    'Elderwood',
+                    'Entwood'
+                ]
+            ],
+            [
+                'base' => ItemBase::SWORD,
+                'name' => 'Rapier',
+                'tier' => 5,
+                'materials' => [
+                    'Mammoth Tusk',
+                    'Sabertooth',
+                    'Minotaur Horn',
+                    'Spider Fang',
+                    'Dragon Bone',
+                    'Cotton',
+                    'Linen',
+                    'Wool',
+                    'Satin',
+                    'Velvet',
+                    'Silk',
+                    'Vicuna',
+                    'Ethereal',
+                    'Amber',
+                    'Ivory',
+                    'Jade',
+                    'Onyx',
+                    'Emerald',
+                    'Ruby',
+                    'Sapphire',
+                    'Diamond',
+                    'Wolf Pelt',
+                    'Leather',
+                    'Mammoth Hide',
+                    'Studded Leather',
+                    'Werewolf Pelt',
+                    'Scarab Shell',
+                    'Scorpion Shell',
+                    'Dragon Scale',
+                    'Copper',
+                    'Iron',
+                    'Bronze',
+                    'Steel',
+                    'Orichalcum',
+                    'Tungsten',
+                    'Elven',
+                    'Empyrean',
+                    'Silver',
+                    'Gold',
+                    'Platinum',
+                    'Acid',
+                    'Ice',
+                    'Fire',
+                    'Lightning',
+                    'Spirit',
+                    'Nova',
+                    'Yew',
+                    'Juniper',
+                    'Makore',
+                    'Mansonia',
+                    'Cebil',
+                    'Muninga',
+                    'Rosewood',
+                    'Elderwood',
+                    'Entwood'
+                ]
+            ],
+            [
+                'base' => ItemBase::SWORD,
+                'name' => 'Ninjato',
+                'tier' => 6,
+                'materials' => [
+                    'Mammoth Tusk',
+                    'Sabertooth',
+                    'Minotaur Horn',
+                    'Spider Fang',
+                    'Dragon Bone',
+                    'Cotton',
+                    'Linen',
+                    'Wool',
+                    'Satin',
+                    'Velvet',
+                    'Silk',
+                    'Vicuna',
+                    'Ethereal',
+                    'Amber',
+                    'Ivory',
+                    'Jade',
+                    'Onyx',
+                    'Emerald',
+                    'Ruby',
+                    'Sapphire',
+                    'Diamond',
+                    'Wolf Pelt',
+                    'Leather',
+                    'Mammoth Hide',
+                    'Studded Leather',
+                    'Werewolf Pelt',
+                    'Scarab Shell',
+                    'Scorpion Shell',
+                    'Dragon Scale',
+                    'Copper',
+                    'Iron',
+                    'Bronze',
+                    'Steel',
+                    'Orichalcum',
+                    'Tungsten',
+                    'Elven',
+                    'Empyrean',
+                    'Silver',
+                    'Gold',
+                    'Platinum',
+                    'Acid',
+                    'Ice',
+                    'Fire',
+                    'Lightning',
+                    'Spirit',
+                    'Nova',
+                    'Yew',
+                    'Juniper',
+                    'Makore',
+                    'Mansonia',
+                    'Cebil',
+                    'Muninga',
+                    'Rosewood',
+                    'Elderwood',
+                    'Entwood'
+                ]
+            ],
+            [
+                'base' => ItemBase::STAFF,
                 'name' => 'Lesser Staff',
                 'tier' => 10,
 
@@ -755,7 +994,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::AXE,
+                'base' => ItemBase::AXE,
                 'name' => 'Hatchet',
                 'tier' => 12,
 
@@ -852,7 +1091,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::BOW,
+                'base' => ItemBase::BOW,
                 'name' => 'Straight Bow',
                 'tier' => 13,
 
@@ -949,7 +1188,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::TWO_HAND_SWORD,
+                'base' => ItemBase::TWO_HAND_SWORD,
                 'name' => 'Longsword',
                 'tier' => 14,
 
@@ -1046,7 +1285,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::THROWING_WEAPON,
+                'base' => ItemBase::THROWING_WEAPON,
                 'name' => 'Throwing Knives',
                 'tier' => 15,
 
@@ -1143,7 +1382,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::MACE,
+                'base' => ItemBase::MACE,
                 'name' => 'Cudgel',
                 'tier' => 16,
 
@@ -1240,7 +1479,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::POLEARM,
+                'base' => ItemBase::POLEARM,
                 'name' => 'Spear',
                 'tier' => 17,
 
@@ -1337,7 +1576,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::CROSSBOW,
+                'base' => ItemBase::CROSSBOW,
                 'name' => 'Light Crossbow',
                 'tier' => 18,
 
@@ -1434,7 +1673,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::ORB,
+                'base' => ItemBase::ORB,
                 'name' => 'Lesser Orb',
                 'tier' => 20,
 
@@ -1532,7 +1771,7 @@ class SeedItemTypes extends Migration
             ],
             [
 
-                'base' => \App\Domain\Models\ItemBase::TWO_HAND_AXE,
+                'base' => ItemBase::TWO_HAND_AXE,
                 'name' => 'Bardiche',
                 'tier' => 21,
 
@@ -1629,7 +1868,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::WAND,
+                'base' => ItemBase::WAND,
                 'name' => 'Lesser Wand',
                 'tier' => 22,
 
@@ -1726,104 +1965,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::SWORD,
-                'name' => 'Falchion',
-                'tier' => 23,
-
-                'materials' => [
-                    'Mammoth Tusk',
-                    'Sabertooth',
-                    'Minotaur Horn',
-                    'Spider Fang',
-                    'Dragon Bone',
-                    'Cotton',
-                    'Linen',
-                    'Wool',
-                    'Satin',
-                    'Velvet',
-                    'Silk',
-                    'Vicuna',
-                    'Ethereal',
-                    'Amber',
-                    'Ivory',
-                    'Jade',
-                    'Onyx',
-                    'Emerald',
-                    'Ruby',
-                    'Sapphire',
-                    'Diamond',
-                    'Wolf Pelt',
-                    'Leather',
-                    'Mammoth Hide',
-                    'Studded Leather',
-                    'Werewolf Pelt',
-                    'Scarab Shell',
-                    'Scorpion Shell',
-                    'Dragon Scale',
-                    'Copper',
-                    'Iron',
-                    'Bronze',
-                    'Steel',
-                    'Orichalcum',
-                    'Tungsten',
-                    'Elven',
-                    'Empyrean',
-                    'Silver',
-                    'Gold',
-                    'Platinum',
-                    'Acid',
-                    'Ice',
-                    'Fire',
-                    'Lightning',
-                    'Spirit',
-                    'Nova',
-                    'Yew',
-                    'Juniper',
-                    'Makore',
-                    'Mansonia',
-                    'Cebil',
-                    'Muninga',
-                    'Rosewood',
-                    'Elderwood',
-                    'Entwood'
-                ],
-                'attacks' => [
-                    'Arrow',
-                    'Arrow Spray',
-                    'Axe Sweep',
-                    'Blade Spin',
-                    'Bolt',
-                    'Chuck',
-                    'Deep Shot',
-                    'Double Arrow',
-                    'Double Bolt',
-                    'Double Long Shot',
-                    'Double Magic Bolt',
-                    'Double Poke',
-                    'Double Slash',
-                    'Double Slice',
-                    'Double Whack',
-                    'Lightning Bolt',
-                    'Lightning Strike',
-                    'Long Shot',
-                    'Magic Blast',
-                    'Magic Burst',
-                    'Poke',
-                    'Slash',
-                    'Slice',
-                    'Sword Sweep',
-                    'Triple Arrow',
-                    'Triple Bolt',
-                    'Triple Magic Bolt',
-                    'Triple Poke',
-                    'Triple Slash',
-                    'Triple Slice',
-                    'Triple Whack',
-                    'Whack'
-                ]
-            ],
-            [
-                'base' => \App\Domain\Models\ItemBase::BOW,
+                'base' => ItemBase::BOW,
                 'name' => 'Longbow',
                 'tier' => 24,
 
@@ -1920,7 +2062,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::STAFF,
+                'base' => ItemBase::STAFF,
                 'name' => 'Rod',
                 'tier' => 27,
 
@@ -2017,7 +2159,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::TWO_HAND_SWORD,
+                'base' => ItemBase::TWO_HAND_SWORD,
                 'name' => 'Bastard Sword',
                 'tier' => 28,
 
@@ -2114,7 +2256,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::POLEARM,
+                'base' => ItemBase::POLEARM,
                 'name' => 'Glaive',
                 'tier' => 29,
 
@@ -2211,7 +2353,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::PSIONIC_ONE_HAND,
+                'base' => ItemBase::PSIONIC_ONE_HAND,
                 'name' => 'Spell Blade',
                 'tier' => 30,
 
@@ -2308,7 +2450,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::AXE,
+                'base' => ItemBase::AXE,
                 'name' => 'Hand Axe',
                 'tier' => 31,
 
@@ -2405,7 +2547,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::PSIONIC_TWO_HAND,
+                'base' => ItemBase::PSIONIC_TWO_HAND,
                 'name' => 'Spell Cleaver',
                 'tier' => 32,
 
@@ -2502,7 +2644,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::CROSSBOW,
+                'base' => ItemBase::CROSSBOW,
                 'name' => 'Heavy Crossbow',
                 'tier' => 33,
 
@@ -2599,7 +2741,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::MACE,
+                'base' => ItemBase::MACE,
                 'name' => 'Flail',
                 'tier' => 34,
 
@@ -2696,7 +2838,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::BOW,
+                'base' => ItemBase::BOW,
                 'name' => 'Recurve Bow',
                 'tier' => 36,
 
@@ -2793,7 +2935,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::THROWING_WEAPON,
+                'base' => ItemBase::THROWING_WEAPON,
                 'name' => 'Throwing Stars',
                 'tier' => 37,
 
@@ -2890,7 +3032,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::WAND,
+                'base' => ItemBase::WAND,
                 'name' => 'Scepter',
                 'tier' => 38,
 
@@ -2987,7 +3129,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::AXE,
+                'base' => ItemBase::AXE,
                 'name' => 'Pickaxe',
                 'tier' => 39,
 
@@ -3084,7 +3226,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::TWO_HAND_AXE,
+                'base' => ItemBase::TWO_HAND_AXE,
                 'name' => 'Lance',
                 'tier' => 41,
 
@@ -3181,7 +3323,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::POLEARM,
+                'base' => ItemBase::POLEARM,
                 'name' => 'Scythe',
                 'tier' => 42,
 
@@ -3278,7 +3420,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::STAFF,
+                'base' => ItemBase::STAFF,
                 'name' => 'Greater Staff',
                 'tier' => 44,
 
@@ -3375,104 +3517,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::SWORD,
-                'name' => 'Scimitar',
-                'tier' => 45,
-
-                'materials' => [
-                    'Mammoth Tusk',
-                    'Sabertooth',
-                    'Minotaur Horn',
-                    'Spider Fang',
-                    'Dragon Bone',
-                    'Cotton',
-                    'Linen',
-                    'Wool',
-                    'Satin',
-                    'Velvet',
-                    'Silk',
-                    'Vicuna',
-                    'Ethereal',
-                    'Amber',
-                    'Ivory',
-                    'Jade',
-                    'Onyx',
-                    'Emerald',
-                    'Ruby',
-                    'Sapphire',
-                    'Diamond',
-                    'Wolf Pelt',
-                    'Leather',
-                    'Mammoth Hide',
-                    'Studded Leather',
-                    'Werewolf Pelt',
-                    'Scarab Shell',
-                    'Scorpion Shell',
-                    'Dragon Scale',
-                    'Copper',
-                    'Iron',
-                    'Bronze',
-                    'Steel',
-                    'Orichalcum',
-                    'Tungsten',
-                    'Elven',
-                    'Empyrean',
-                    'Silver',
-                    'Gold',
-                    'Platinum',
-                    'Acid',
-                    'Ice',
-                    'Fire',
-                    'Lightning',
-                    'Spirit',
-                    'Nova',
-                    'Yew',
-                    'Juniper',
-                    'Makore',
-                    'Mansonia',
-                    'Cebil',
-                    'Muninga',
-                    'Rosewood',
-                    'Elderwood',
-                    'Entwood'
-                ],
-                'attacks' => [
-                    'Arrow',
-                    'Arrow Spray',
-                    'Axe Sweep',
-                    'Blade Spin',
-                    'Bolt',
-                    'Chuck',
-                    'Deep Shot',
-                    'Double Arrow',
-                    'Double Bolt',
-                    'Double Long Shot',
-                    'Double Magic Bolt',
-                    'Double Poke',
-                    'Double Slash',
-                    'Double Slice',
-                    'Double Whack',
-                    'Lightning Bolt',
-                    'Lightning Strike',
-                    'Long Shot',
-                    'Magic Blast',
-                    'Magic Burst',
-                    'Poke',
-                    'Slash',
-                    'Slice',
-                    'Sword Sweep',
-                    'Triple Arrow',
-                    'Triple Bolt',
-                    'Triple Magic Bolt',
-                    'Triple Poke',
-                    'Triple Slash',
-                    'Triple Slice',
-                    'Triple Whack',
-                    'Whack'
-                ]
-            ],
-            [
-                'base' => \App\Domain\Models\ItemBase::BOW,
+                'base' => ItemBase::BOW,
                 'name' => 'Reflex Bow',
                 'tier' => 46,
 
@@ -3569,7 +3614,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::TWO_HAND_SWORD,
+                'base' => ItemBase::TWO_HAND_SWORD,
                 'name' => 'Nagamaki',
                 'tier' => 49,
 
@@ -3666,7 +3711,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::ORB,
+                'base' => ItemBase::ORB,
                 'name' => 'Greater Orb',
                 'tier' => 50,
 
@@ -3763,7 +3808,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::POLEARM,
+                'base' => ItemBase::POLEARM,
                 'name' => 'Trident',
                 'tier' => 51,
 
@@ -3860,7 +3905,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::AXE,
+                'base' => ItemBase::AXE,
                 'name' => 'Sickle',
                 'tier' => 52,
 
@@ -3957,7 +4002,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::CROSSBOW,
+                'base' => ItemBase::CROSSBOW,
                 'name' => 'Arbalest',
                 'tier' => 53,
 
@@ -4054,7 +4099,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::MACE,
+                'base' => ItemBase::MACE,
                 'name' => 'Battle Mace',
                 'tier' => 54,
 
@@ -4151,7 +4196,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::WAND,
+                'base' => ItemBase::WAND,
                 'name' => 'Greater Wand',
                 'tier' => 56,
 
@@ -4248,7 +4293,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::AXE,
+                'base' => ItemBase::AXE,
                 'name' => 'Ono',
                 'tier' => 57,
 
@@ -4345,7 +4390,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::STAFF,
+                'base' => ItemBase::STAFF,
                 'name' => 'Master\'s Rod',
                 'tier' => 58,
 
@@ -4442,104 +4487,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::SWORD,
-                'name' => 'Sabre',
-                'tier' => 59,
-
-                'materials' => [
-                    'Mammoth Tusk',
-                    'Sabertooth',
-                    'Minotaur Horn',
-                    'Spider Fang',
-                    'Dragon Bone',
-                    'Cotton',
-                    'Linen',
-                    'Wool',
-                    'Satin',
-                    'Velvet',
-                    'Silk',
-                    'Vicuna',
-                    'Ethereal',
-                    'Amber',
-                    'Ivory',
-                    'Jade',
-                    'Onyx',
-                    'Emerald',
-                    'Ruby',
-                    'Sapphire',
-                    'Diamond',
-                    'Wolf Pelt',
-                    'Leather',
-                    'Mammoth Hide',
-                    'Studded Leather',
-                    'Werewolf Pelt',
-                    'Scarab Shell',
-                    'Scorpion Shell',
-                    'Dragon Scale',
-                    'Copper',
-                    'Iron',
-                    'Bronze',
-                    'Steel',
-                    'Orichalcum',
-                    'Tungsten',
-                    'Elven',
-                    'Empyrean',
-                    'Silver',
-                    'Gold',
-                    'Platinum',
-                    'Acid',
-                    'Ice',
-                    'Fire',
-                    'Lightning',
-                    'Spirit',
-                    'Nova',
-                    'Yew',
-                    'Juniper',
-                    'Makore',
-                    'Mansonia',
-                    'Cebil',
-                    'Muninga',
-                    'Rosewood',
-                    'Elderwood',
-                    'Entwood'
-                ],
-                'attacks' => [
-                    'Arrow',
-                    'Arrow Spray',
-                    'Axe Sweep',
-                    'Blade Spin',
-                    'Bolt',
-                    'Chuck',
-                    'Deep Shot',
-                    'Double Arrow',
-                    'Double Bolt',
-                    'Double Long Shot',
-                    'Double Magic Bolt',
-                    'Double Poke',
-                    'Double Slash',
-                    'Double Slice',
-                    'Double Whack',
-                    'Lightning Bolt',
-                    'Lightning Strike',
-                    'Long Shot',
-                    'Magic Blast',
-                    'Magic Burst',
-                    'Poke',
-                    'Slash',
-                    'Slice',
-                    'Sword Sweep',
-                    'Triple Arrow',
-                    'Triple Bolt',
-                    'Triple Magic Bolt',
-                    'Triple Poke',
-                    'Triple Slash',
-                    'Triple Slice',
-                    'Triple Whack',
-                    'Whack'
-                ]
-            ],
-            [
-                'base' => \App\Domain\Models\ItemBase::BOW,
+                'base' => ItemBase::BOW,
                 'name' => 'Composite Bow',
                 'tier' => 60,
 
@@ -4636,7 +4584,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::TWO_HAND_SWORD,
+                'base' => ItemBase::TWO_HAND_SWORD,
                 'name' => 'Claymore',
                 'tier' => 61,
 
@@ -4733,7 +4681,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::PSIONIC_ONE_HAND,
+                'base' => ItemBase::PSIONIC_ONE_HAND,
                 'name' => 'Mind Blade',
                 'tier' => 62,
 
@@ -4830,7 +4778,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::POLEARM,
+                'base' => ItemBase::POLEARM,
                 'name' => 'Halberd',
                 'tier' => 63,
 
@@ -4927,7 +4875,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::TWO_HAND_AXE,
+                'base' => ItemBase::TWO_HAND_AXE,
                 'name' => 'Great Axe',
                 'tier' => 64,
 
@@ -5024,7 +4972,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::PSIONIC_TWO_HAND,
+                'base' => ItemBase::PSIONIC_TWO_HAND,
                 'name' => 'Mind Cleaver',
                 'tier' => 65,
 
@@ -5121,7 +5069,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::AXE,
+                'base' => ItemBase::AXE,
                 'name' => 'Broad Axe',
                 'tier' => 66,
 
@@ -5218,7 +5166,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::THROWING_WEAPON,
+                'base' => ItemBase::THROWING_WEAPON,
                 'name' => 'Javelins',
                 'tier' => 67,
 
@@ -5315,7 +5263,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::TWO_HAND_SWORD,
+                'base' => ItemBase::TWO_HAND_SWORD,
                 'name' => 'Greatsword',
                 'tier' => 70,
 
@@ -5412,7 +5360,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::WAND,
+                'base' => ItemBase::WAND,
                 'name' => 'Greater Scepter',
                 'tier' => 71,
 
@@ -5509,7 +5457,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::BOW,
+                'base' => ItemBase::BOW,
                 'name' => 'Battle Bow',
                 'tier' => 72,
 
@@ -5606,7 +5554,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::MACE,
+                'base' => ItemBase::MACE,
                 'name' => 'Morning Star',
                 'tier' => 74,
 
@@ -5703,7 +5651,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::CROSSBOW,
+                'base' => ItemBase::CROSSBOW,
                 'name' => 'Repeating Crossbow',
                 'tier' => 76,
 
@@ -5800,7 +5748,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::DAGGER,
+                'base' => ItemBase::DAGGER,
                 'name' => 'Gladius',
                 'tier' => 6,
                 'materials' => [
@@ -5896,7 +5844,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::STAFF,
+                'base' => ItemBase::STAFF,
                 'name' => 'Battle Staff',
                 'tier' => 78,
 
@@ -5993,104 +5941,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::SWORD,
-                'name' => 'Rapier',
-                'tier' => 79,
-
-                'materials' => [
-                    'Mammoth Tusk',
-                    'Sabertooth',
-                    'Minotaur Horn',
-                    'Spider Fang',
-                    'Dragon Bone',
-                    'Cotton',
-                    'Linen',
-                    'Wool',
-                    'Satin',
-                    'Velvet',
-                    'Silk',
-                    'Vicuna',
-                    'Ethereal',
-                    'Amber',
-                    'Ivory',
-                    'Jade',
-                    'Onyx',
-                    'Emerald',
-                    'Ruby',
-                    'Sapphire',
-                    'Diamond',
-                    'Wolf Pelt',
-                    'Leather',
-                    'Mammoth Hide',
-                    'Studded Leather',
-                    'Werewolf Pelt',
-                    'Scarab Shell',
-                    'Scorpion Shell',
-                    'Dragon Scale',
-                    'Copper',
-                    'Iron',
-                    'Bronze',
-                    'Steel',
-                    'Orichalcum',
-                    'Tungsten',
-                    'Elven',
-                    'Empyrean',
-                    'Silver',
-                    'Gold',
-                    'Platinum',
-                    'Acid',
-                    'Ice',
-                    'Fire',
-                    'Lightning',
-                    'Spirit',
-                    'Nova',
-                    'Yew',
-                    'Juniper',
-                    'Makore',
-                    'Mansonia',
-                    'Cebil',
-                    'Muninga',
-                    'Rosewood',
-                    'Elderwood',
-                    'Entwood'
-                ],
-                'attacks' => [
-                    'Arrow',
-                    'Arrow Spray',
-                    'Axe Sweep',
-                    'Blade Spin',
-                    'Bolt',
-                    'Chuck',
-                    'Deep Shot',
-                    'Double Arrow',
-                    'Double Bolt',
-                    'Double Long Shot',
-                    'Double Magic Bolt',
-                    'Double Poke',
-                    'Double Slash',
-                    'Double Slice',
-                    'Double Whack',
-                    'Lightning Bolt',
-                    'Lightning Strike',
-                    'Long Shot',
-                    'Magic Blast',
-                    'Magic Burst',
-                    'Poke',
-                    'Slash',
-                    'Slice',
-                    'Sword Sweep',
-                    'Triple Arrow',
-                    'Triple Bolt',
-                    'Triple Magic Bolt',
-                    'Triple Poke',
-                    'Triple Slash',
-                    'Triple Slice',
-                    'Triple Whack',
-                    'Whack'
-                ]
-            ],
-            [
-                'base' => \App\Domain\Models\ItemBase::POLEARM,
+                'base' => ItemBase::POLEARM,
                 'name' => 'Naginata',
                 'tier' => 80,
 
@@ -6187,7 +6038,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::TWO_HAND_AXE,
+                'base' => ItemBase::TWO_HAND_AXE,
                 'name' => 'Labrys',
                 'tier' => 81,
 
@@ -6284,7 +6135,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::BOW,
+                'base' => ItemBase::BOW,
                 'name' => 'Compound Bow',
                 'tier' => 82,
 
@@ -6381,7 +6232,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::TWO_HAND_SWORD,
+                'base' => ItemBase::TWO_HAND_SWORD,
                 'name' => 'Katana',
                 'tier' => 83,
 
@@ -6478,7 +6329,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::MACE,
+                'base' => ItemBase::MACE,
                 'name' => 'War Hammer',
                 'tier' => 84,
 
@@ -6575,7 +6426,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::THROWING_WEAPON,
+                'base' => ItemBase::THROWING_WEAPON,
                 'name' => 'Exploding Flasks',
                 'tier' => 86,
 
@@ -6672,7 +6523,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::AXE,
+                'base' => ItemBase::AXE,
                 'name' => 'Battle Axe',
                 'tier' => 87,
 
@@ -6769,7 +6620,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::PSIONIC_ONE_HAND,
+                'base' => ItemBase::PSIONIC_ONE_HAND,
                 'name' => 'Conjure Blade',
                 'tier' => 88,
 
@@ -6866,7 +6717,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::ORB,
+                'base' => ItemBase::ORB,
                 'name' => 'Magus Orb',
                 'tier' => 89,
 
@@ -6963,7 +6814,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::PSIONIC_TWO_HAND,
+                'base' => ItemBase::PSIONIC_TWO_HAND,
                 'name' => 'Conjure Cleaver',
                 'tier' => 90,
 
@@ -7060,10 +6911,9 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::POLEARM,
+                'base' => ItemBase::POLEARM,
                 'name' => 'War Scythe',
                 'tier' => 92,
-
                 'materials' => [
                     'Mammoth Tusk',
                     'Sabertooth',
@@ -7157,7 +7007,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::WAND,
+                'base' => ItemBase::WAND,
                 'name' => 'Magus Scepter',
                 'tier' => 93,
 
@@ -7254,104 +7104,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::SWORD,
-                'name' => 'War Sword',
-                'tier' => 94,
-
-                'materials' => [
-                    'Mammoth Tusk',
-                    'Sabertooth',
-                    'Minotaur Horn',
-                    'Spider Fang',
-                    'Dragon Bone',
-                    'Cotton',
-                    'Linen',
-                    'Wool',
-                    'Satin',
-                    'Velvet',
-                    'Silk',
-                    'Vicuna',
-                    'Ethereal',
-                    'Amber',
-                    'Ivory',
-                    'Jade',
-                    'Onyx',
-                    'Emerald',
-                    'Ruby',
-                    'Sapphire',
-                    'Diamond',
-                    'Wolf Pelt',
-                    'Leather',
-                    'Mammoth Hide',
-                    'Studded Leather',
-                    'Werewolf Pelt',
-                    'Scarab Shell',
-                    'Scorpion Shell',
-                    'Dragon Scale',
-                    'Copper',
-                    'Iron',
-                    'Bronze',
-                    'Steel',
-                    'Orichalcum',
-                    'Tungsten',
-                    'Elven',
-                    'Empyrean',
-                    'Silver',
-                    'Gold',
-                    'Platinum',
-                    'Acid',
-                    'Ice',
-                    'Fire',
-                    'Lightning',
-                    'Spirit',
-                    'Nova',
-                    'Yew',
-                    'Juniper',
-                    'Makore',
-                    'Mansonia',
-                    'Cebil',
-                    'Muninga',
-                    'Rosewood',
-                    'Elderwood',
-                    'Entwood'
-                ],
-                'attacks' => [
-                    'Arrow',
-                    'Arrow Spray',
-                    'Axe Sweep',
-                    'Blade Spin',
-                    'Bolt',
-                    'Chuck',
-                    'Deep Shot',
-                    'Double Arrow',
-                    'Double Bolt',
-                    'Double Long Shot',
-                    'Double Magic Bolt',
-                    'Double Poke',
-                    'Double Slash',
-                    'Double Slice',
-                    'Double Whack',
-                    'Lightning Bolt',
-                    'Lightning Strike',
-                    'Long Shot',
-                    'Magic Blast',
-                    'Magic Burst',
-                    'Poke',
-                    'Slash',
-                    'Slice',
-                    'Sword Sweep',
-                    'Triple Arrow',
-                    'Triple Bolt',
-                    'Triple Magic Bolt',
-                    'Triple Poke',
-                    'Triple Slash',
-                    'Triple Slice',
-                    'Triple Whack',
-                    'Whack'
-                ]
-            ],
-            [
-                'base' => \App\Domain\Models\ItemBase::CROSSBOW,
+                'base' => ItemBase::CROSSBOW,
                 'name' => 'Heavy Arbalest',
                 'tier' => 95,
 
@@ -7448,7 +7201,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::BOW,
+                'base' => ItemBase::BOW,
                 'name' => 'War Bow',
                 'tier' => 96,
 
@@ -7545,7 +7298,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::TWO_HAND_AXE,
+                'base' => ItemBase::TWO_HAND_AXE,
                 'name' => 'Giant\'s Axe',
                 'tier' => 97,
 
@@ -7642,7 +7395,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::STAFF,
+                'base' => ItemBase::STAFF,
                 'name' => 'Magus Staff',
                 'tier' => 98,
 
@@ -7739,7 +7492,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::TWO_HAND_SWORD,
+                'base' => ItemBase::TWO_HAND_SWORD,
                 'name' => 'Giant\'s Sword',
                 'tier' => 99,
 
@@ -7841,7 +7594,7 @@ class SeedItemTypes extends Migration
              */
 
             [
-                'base' => \App\Domain\Models\ItemBase::CAP,
+                'base' => ItemBase::CAP,
                 'name' => 'Fez',
                 'tier' => 6,
 
@@ -7904,7 +7657,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::SHIELD,
+                'base' => ItemBase::SHIELD,
                 'name' => 'Buckler',
                 'tier' => 8,
 
@@ -7967,7 +7720,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::HELMET,
+                'base' => ItemBase::HELMET,
                 'name' => 'Kettle Hat',
                 'tier' => 9,
 
@@ -8030,7 +7783,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::ROBES,
+                'base' => ItemBase::ROBES,
                 'name' => 'Frock',
                 'tier' => 10,
 
@@ -8093,7 +7846,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::SHOES,
+                'base' => ItemBase::SHOES,
                 'name' => 'Slippers',
                 'tier' => 11,
 
@@ -8156,7 +7909,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::LIGHT_ARMOR,
+                'base' => ItemBase::LIGHT_ARMOR,
                 'name' => 'Light Cuirass',
                 'tier' => 12,
 
@@ -8219,7 +7972,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::BOOTS,
+                'base' => ItemBase::BOOTS,
                 'name' => 'Light Boots',
                 'tier' => 13,
 
@@ -8282,7 +8035,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::GLOVES,
+                'base' => ItemBase::GLOVES,
                 'name' => 'Light Gloves',
                 'tier' => 14,
 
@@ -8345,7 +8098,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::HEAVY_ARMOR,
+                'base' => ItemBase::HEAVY_ARMOR,
                 'name' => 'Breastplate',
                 'tier' => 15,
 
@@ -8408,7 +8161,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::CAP,
+                'base' => ItemBase::CAP,
                 'name' => 'Beret',
                 'tier' => 16,
 
@@ -8471,7 +8224,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::SHIELD,
+                'base' => ItemBase::SHIELD,
                 'name' => 'Targe',
                 'tier' => 17,
 
@@ -8534,7 +8287,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::GAUNTLETS,
+                'base' => ItemBase::GAUNTLETS,
                 'name' => 'Light Gauntlets',
                 'tier' => 18,
 
@@ -8597,7 +8350,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::HELMET,
+                'base' => ItemBase::HELMET,
                 'name' => 'Skullcap',
                 'tier' => 19,
 
@@ -8660,7 +8413,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::LEGGINGS,
+                'base' => ItemBase::LEGGINGS,
                 'name' => 'Greaves',
                 'tier' => 22,
 
@@ -8723,7 +8476,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::BELT,
+                'base' => ItemBase::BELT,
                 'name' => 'Light Belt',
                 'tier' => 23,
 
@@ -8786,7 +8539,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::SASH,
+                'base' => ItemBase::SASH,
                 'name' => 'Pupil\'s Sash',
                 'tier' => 25,
 
@@ -8849,7 +8602,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::HELMET,
+                'base' => ItemBase::HELMET,
                 'name' => 'Spangenhelm',
                 'tier' => 27,
 
@@ -8912,7 +8665,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::SHIELD,
+                'base' => ItemBase::SHIELD,
                 'name' => 'Heavy Buckler',
                 'tier' => 29,
 
@@ -8975,7 +8728,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::GLOVES,
+                'base' => ItemBase::GLOVES,
                 'name' => 'Gages',
                 'tier' => 31,
 
@@ -9038,7 +8791,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::ROBES,
+                'base' => ItemBase::ROBES,
                 'name' => 'Coat',
                 'tier' => 32,
 
@@ -9101,7 +8854,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::CAP,
+                'base' => ItemBase::CAP,
                 'name' => 'Busby',
                 'tier' => 33,
 
@@ -9164,7 +8917,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::BOOTS,
+                'base' => ItemBase::BOOTS,
                 'name' => 'Heavy Boots',
                 'tier' => 34,
 
@@ -9227,7 +8980,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::HELMET,
+                'base' => ItemBase::HELMET,
                 'name' => 'Helm',
                 'tier' => 35,
 
@@ -9290,7 +9043,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::PSIONIC_SHIELD,
+                'base' => ItemBase::PSIONIC_SHIELD,
                 'name' => 'Barrier',
                 'tier' => 37,
 
@@ -9353,7 +9106,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::SHOES,
+                'base' => ItemBase::SHOES,
                 'name' => 'Clogs',
                 'tier' => 38,
 
@@ -9416,7 +9169,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::GAUNTLETS,
+                'base' => ItemBase::GAUNTLETS,
                 'name' => 'Heavy Gauntlets',
                 'tier' => 39,
 
@@ -9479,7 +9232,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::LIGHT_ARMOR,
+                'base' => ItemBase::LIGHT_ARMOR,
                 'name' => 'Plackart',
                 'tier' => 40,
 
@@ -9542,7 +9295,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::SHIELD,
+                'base' => ItemBase::SHIELD,
                 'name' => 'Rondache',
                 'tier' => 42,
 
@@ -9605,7 +9358,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::HEAVY_ARMOR,
+                'base' => ItemBase::HEAVY_ARMOR,
                 'name' => 'Chainmail',
                 'tier' => 43,
 
@@ -9668,7 +9421,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::LEGGINGS,
+                'base' => ItemBase::LEGGINGS,
                 'name' => 'Tassets',
                 'tier' => 44,
 
@@ -9731,7 +9484,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::HELMET,
+                'base' => ItemBase::HELMET,
                 'name' => 'Helm',
                 'tier' => 45,
 
@@ -9794,7 +9547,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::CAP,
+                'base' => ItemBase::CAP,
                 'name' => 'Trilby',
                 'tier' => 48,
 
@@ -9857,7 +9610,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::BELT,
+                'base' => ItemBase::BELT,
                 'name' => 'Heavy Belt',
                 'tier' => 50,
 
@@ -9920,7 +9673,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::SASH,
+                'base' => ItemBase::SASH,
                 'name' => 'Veteran\'s Sash',
                 'tier' => 51,
 
@@ -9983,7 +9736,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::GLOVES,
+                'base' => ItemBase::GLOVES,
                 'name' => 'Gages',
                 'tier' => 52,
 
@@ -10046,7 +9799,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::HELMET,
+                'base' => ItemBase::HELMET,
                 'name' => 'Bascinet',
                 'tier' => 53,
 
@@ -10109,7 +9862,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::SHIELD,
+                'base' => ItemBase::SHIELD,
                 'name' => 'Heater Shield',
                 'tier' => 55,
 
@@ -10172,7 +9925,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::LIGHT_ARMOR,
+                'base' => ItemBase::LIGHT_ARMOR,
                 'name' => 'Heavy Cuirass',
                 'tier' => 56,
 
@@ -10235,7 +9988,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::HEAVY_ARMOR,
+                'base' => ItemBase::HEAVY_ARMOR,
                 'name' => 'Scalemail',
                 'tier' => 57,
 
@@ -10298,7 +10051,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::SHOES,
+                'base' => ItemBase::SHOES,
                 'name' => 'Pantofles',
                 'tier' => 58,
 
@@ -10361,7 +10114,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::ROBES,
+                'base' => ItemBase::ROBES,
                 'name' => 'Mantle',
                 'tier' => 59,
 
@@ -10424,7 +10177,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::CAP,
+                'base' => ItemBase::CAP,
                 'name' => 'Tubetieka',
                 'tier' => 60,
 
@@ -10487,7 +10240,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::BOOTS,
+                'base' => ItemBase::BOOTS,
                 'name' => 'Combat Boots',
                 'tier' => 61,
 
@@ -10550,7 +10303,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::HELMET,
+                'base' => ItemBase::HELMET,
                 'name' => 'Armet',
                 'tier' => 62,
 
@@ -10613,7 +10366,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::PSIONIC_SHIELD,
+                'base' => ItemBase::PSIONIC_SHIELD,
                 'name' => 'Force-field',
                 'tier' => 64,
 
@@ -10676,7 +10429,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::SHIELD,
+                'base' => ItemBase::SHIELD,
                 'name' => 'Kite Shield',
                 'tier' => 66,
 
@@ -10739,7 +10492,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::GAUNTLETS,
+                'base' => ItemBase::GAUNTLETS,
                 'name' => 'Battle Gauntlets',
                 'tier' => 68,
 
@@ -10802,7 +10555,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::HELMET,
+                'base' => ItemBase::HELMET,
                 'name' => 'Sallet',
                 'tier' => 71,
 
@@ -10865,7 +10618,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::LEGGINGS,
+                'base' => ItemBase::LEGGINGS,
                 'name' => 'Cuisses',
                 'tier' => 72,
 
@@ -10928,7 +10681,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::GLOVES,
+                'base' => ItemBase::GLOVES,
                 'name' => 'Wizard Hands',
                 'tier' => 73,
 
@@ -10991,7 +10744,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::BELT,
+                'base' => ItemBase::BELT,
                 'name' => 'Captain\'s Belt',
                 'tier' => 74,
 
@@ -11054,7 +10807,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::SASH,
+                'base' => ItemBase::SASH,
                 'name' => 'Master\'s Sash',
                 'tier' => 75,
 
@@ -11117,7 +10870,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::CAP,
+                'base' => ItemBase::CAP,
                 'name' => 'Wizard\'s Cap',
                 'tier' => 76,
 
@@ -11180,7 +10933,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::ROBES,
+                'base' => ItemBase::ROBES,
                 'name' => 'Cape',
                 'tier' => 77,
 
@@ -11243,7 +10996,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::SHIELD,
+                'base' => ItemBase::SHIELD,
                 'name' => 'Gothic Shield',
                 'tier' => 78,
 
@@ -11306,7 +11059,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::LIGHT_ARMOR,
+                'base' => ItemBase::LIGHT_ARMOR,
                 'name' => 'Hauberk',
                 'tier' => 79,
 
@@ -11369,7 +11122,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::HELMET,
+                'base' => ItemBase::HELMET,
                 'name' => 'Great Bascinet',
                 'tier' => 80,
 
@@ -11432,7 +11185,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::HEAVY_ARMOR,
+                'base' => ItemBase::HEAVY_ARMOR,
                 'name' => 'Platemail',
                 'tier' => 82,
 
@@ -11495,7 +11248,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::SHIELD,
+                'base' => ItemBase::SHIELD,
                 'name' => 'Tower Shield',
                 'tier' => 85,
 
@@ -11558,7 +11311,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::LEGGINGS,
+                'base' => ItemBase::LEGGINGS,
                 'name' => 'Chausses',
                 'tier' => 87,
 
@@ -11621,7 +11374,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::HELMET,
+                'base' => ItemBase::HELMET,
                 'name' => 'Fluted Armet',
                 'tier' => 88,
 
@@ -11684,7 +11437,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::SHOES,
+                'base' => ItemBase::SHOES,
                 'name' => 'Magus Pantofles',
                 'tier' => 90,
 
@@ -11747,7 +11500,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::GLOVES,
+                'base' => ItemBase::GLOVES,
                 'name' => 'Sorcerer Palms',
                 'tier' => 91,
 
@@ -11810,7 +11563,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::SASH,
+                'base' => ItemBase::SASH,
                 'name' => 'Magus Sash',
                 'tier' => 92,
 
@@ -11873,7 +11626,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::GAUNTLETS,
+                'base' => ItemBase::GAUNTLETS,
                 'name' => 'War Gauntlets',
                 'tier' => 92,
 
@@ -11936,7 +11689,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::PSIONIC_SHIELD,
+                'base' => ItemBase::PSIONIC_SHIELD,
                 'name' => 'Citadel',
                 'tier' => 93,
 
@@ -11999,7 +11752,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::BOOTS,
+                'base' => ItemBase::BOOTS,
                 'name' => 'Spartan Sandals',
                 'tier' => 93,
 
@@ -12062,7 +11815,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::CAP,
+                'base' => ItemBase::CAP,
                 'name' => 'Sorcerer\'s Hat',
                 'tier' => 94,
 
@@ -12125,7 +11878,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::ROBES,
+                'base' => ItemBase::ROBES,
                 'name' => 'Cloak',
                 'tier' => 94,
 
@@ -12188,7 +11941,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::LIGHT_ARMOR,
+                'base' => ItemBase::LIGHT_ARMOR,
                 'name' => 'Ranger\'s Suit',
                 'tier' => 94,
 
@@ -12251,7 +12004,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::BELT,
+                'base' => ItemBase::BELT,
                 'name' => 'Giant\'s Belt',
                 'tier' => 95,
 
@@ -12314,7 +12067,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::HELMET,
+                'base' => ItemBase::HELMET,
                 'name' => 'Sallet with Bevor',
                 'tier' => 95,
 
@@ -12377,7 +12130,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::HEAVY_ARMOR,
+                'base' => ItemBase::HEAVY_ARMOR,
                 'name' => 'Phalanx Suit',
                 'tier' => 96,
 
@@ -12440,7 +12193,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::SHIELD,
+                'base' => ItemBase::SHIELD,
                 'name' => 'Giant\'s Shield',
                 'tier' => 97,
 
@@ -12508,7 +12261,7 @@ class SeedItemTypes extends Migration
              */
 
             [
-                'base' => \App\Domain\Models\ItemBase::RING,
+                'base' => ItemBase::RING,
                 'name' => 'Band',
                 'tier' => 10,
 
@@ -12571,7 +12324,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::BRACELET,
+                'base' => ItemBase::BRACELET,
                 'name' => 'Shackle',
                 'tier' => 10,
 
@@ -12634,7 +12387,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::NECKLACE,
+                'base' => ItemBase::NECKLACE,
                 'name' => 'Beeds',
                 'tier' => 10,
 
@@ -12697,7 +12450,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::CROWN,
+                'base' => ItemBase::CROWN,
                 'name' => 'Headband',
                 'tier' => 28,
 
@@ -12760,7 +12513,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::RING,
+                'base' => ItemBase::RING,
                 'name' => 'Ring',
                 'tier' => 30,
 
@@ -12823,7 +12576,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::BRACELET,
+                'base' => ItemBase::BRACELET,
                 'name' => 'Bracelet',
                 'tier' => 30,
 
@@ -12886,7 +12639,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::NECKLACE,
+                'base' => ItemBase::NECKLACE,
                 'name' => 'Necklace',
                 'tier' => 30,
 
@@ -12949,7 +12702,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::CROWN,
+                'base' => ItemBase::CROWN,
                 'name' => 'Circlet',
                 'tier' => 36,
 
@@ -13012,7 +12765,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::CROWN,
+                'base' => ItemBase::CROWN,
                 'name' => 'Chaplet',
                 'tier' => 46,
 
@@ -13075,7 +12828,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::RING,
+                'base' => ItemBase::RING,
                 'name' => 'Heavy Band',
                 'tier' => 50,
 
@@ -13138,7 +12891,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::BRACELET,
+                'base' => ItemBase::BRACELET,
                 'name' => 'Arm Band',
                 'tier' => 50,
 
@@ -13201,7 +12954,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::NECKLACE,
+                'base' => ItemBase::NECKLACE,
                 'name' => 'Locket',
                 'tier' => 50,
 
@@ -13264,7 +13017,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::CROWN,
+                'base' => ItemBase::CROWN,
                 'name' => 'Tiara',
                 'tier' => 54,
 
@@ -13327,7 +13080,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::CROWN,
+                'base' => ItemBase::CROWN,
                 'name' => 'Coronet',
                 'tier' => 69,
 
@@ -13390,7 +13143,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::RING,
+                'base' => ItemBase::RING,
                 'name' => 'Signet',
                 'tier' => 70,
 
@@ -13453,7 +13206,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::BRACELET,
+                'base' => ItemBase::BRACELET,
                 'name' => 'Bangle',
                 'tier' => 70,
 
@@ -13516,7 +13269,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::NECKLACE,
+                'base' => ItemBase::NECKLACE,
                 'name' => 'Pendant',
                 'tier' => 70,
 
@@ -13579,7 +13332,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::CROWN,
+                'base' => ItemBase::CROWN,
                 'name' => 'Queen\'s Crown',
                 'tier' => 81,
 
@@ -13642,7 +13395,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::RING,
+                'base' => ItemBase::RING,
                 'name' => 'Royal Signet',
                 'tier' => 90,
 
@@ -13705,7 +13458,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::BRACELET,
+                'base' => ItemBase::BRACELET,
                 'name' => 'Armlet',
                 'tier' => 90,
 
@@ -13768,7 +13521,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::NECKLACE,
+                'base' => ItemBase::NECKLACE,
                 'name' => 'Amulet',
                 'tier' => 90,
 
@@ -13831,7 +13584,7 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => \App\Domain\Models\ItemBase::CROWN,
+                'base' => ItemBase::CROWN,
                 'name' => 'King\'s Crown',
                 'tier' => 92,
 
