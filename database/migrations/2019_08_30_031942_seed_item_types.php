@@ -116,6 +116,13 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
+                'base' => ItemBase::DAGGER,
+                'name' => 'Gladius',
+                'tier' => 6,
+                'materials' => [
+                ]
+            ],
+            [
                 'base' => ItemBase::SWORD,
                 'name' => 'Short Sword',
                 'tier' => 1,
@@ -452,6 +459,50 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
+
+                'base' => ItemBase::TWO_HAND_AXE,
+                'name' => 'Long Axe',
+                'tier' => 1,
+                'materials' => [
+                ]
+            ],
+            [
+
+                'base' => ItemBase::TWO_HAND_AXE,
+                'name' => 'Bardiche',
+                'tier' => 2,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::TWO_HAND_AXE,
+                'name' => 'Lance',
+                'tier' => 3,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::TWO_HAND_AXE,
+                'name' => 'Great Axe',
+                'tier' => 4,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::TWO_HAND_AXE,
+                'name' => 'Labrys',
+                'tier' => 5,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::TWO_HAND_AXE,
+                'name' => 'Giant\'s Axe',
+                'tier' => 6,
+                'materials' => [
+                ]
+            ],
+            [
                 'base' => ItemBase::WAND,
                 'name' => 'Sprig',
                 'tier' => 1,
@@ -489,6 +540,48 @@ class SeedItemTypes extends Migration
             [
                 'base' => ItemBase::WAND,
                 'name' => 'Magus Scepter',
+                'tier' => 6,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::ORB,
+                'name' => 'Lesser Orb',
+                'tier' => 1,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::ORB,
+                'name' => 'Polished Orb',
+                'tier' => 2,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::ORB,
+                'name' => 'Greater Orb',
+                'tier' => 3,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::ORB,
+                'name' => 'Seer\'s Sphere',
+                'tier' => 4,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::ORB,
+                'name' => 'Magus Orb',
+                'tier' => 5,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::ORB,
+                'name' => 'Wizard\'s Eye',
                 'tier' => 6,
                 'materials' => [
                 ]
@@ -536,128 +629,86 @@ class SeedItemTypes extends Migration
                 ]
             ],
             [
-                'base' => ItemBase::ORB,
-                'name' => 'Lesser Orb',
-                'tier' => 20,
-                'materials' => [
-                ]
-            ],
-            [
-
-                'base' => ItemBase::TWO_HAND_AXE,
-                'name' => 'Bardiche',
-                'tier' => 21,
-
-                'materials' => [
-                ]
-            ],
-            [
                 'base' => ItemBase::PSIONIC_ONE_HAND,
                 'name' => 'Spell Blade',
-                'tier' => 30,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::PSIONIC_TWO_HAND,
-                'name' => 'Spell Cleaver',
-                'tier' => 32,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::TWO_HAND_AXE,
-                'name' => 'Lance',
-                'tier' => 41,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::ORB,
-                'name' => 'Greater Orb',
-                'tier' => 50,
-
+                'tier' => 1,
                 'materials' => [
                 ]
             ],
             [
                 'base' => ItemBase::PSIONIC_ONE_HAND,
                 'name' => 'Mind Blade',
-                'tier' => 62,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::TWO_HAND_AXE,
-                'name' => 'Great Axe',
-                'tier' => 64,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::PSIONIC_TWO_HAND,
-                'name' => 'Mind Cleaver',
-                'tier' => 65,
-
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::MACE,
-                'name' => 'Morning Star',
-                'tier' => 5,
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::DAGGER,
-                'name' => 'Gladius',
-                'tier' => 6,
-                'materials' => [
-                ]
-            ],
-            [
-                'base' => ItemBase::TWO_HAND_AXE,
-                'name' => 'Labrys',
-                'tier' => 81,
-
+                'tier' => 2,
                 'materials' => [
                 ]
             ],
             [
                 'base' => ItemBase::PSIONIC_ONE_HAND,
                 'name' => 'Conjure Blade',
-                'tier' => 88,
-
+                'tier' => 3,
                 'materials' => [
                 ]
             ],
             [
-                'base' => ItemBase::ORB,
-                'name' => 'Magus Orb',
-                'tier' => 89,
-
+                'base' => ItemBase::PSIONIC_ONE_HAND,
+                'name' => 'Vision Blade',
+                'tier' => 4,
                 'materials' => [
                 ]
             ],
             [
-                'base' => ItemBase::PSIONIC_TWO_HAND,
+                'base' => ItemBase::PSIONIC_ONE_HAND,
+                'name' => 'Rune Blade',
+                'tier' => 5,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::PSIONIC_ONE_HAND,
+                'name' => 'Magus Blade',
+                'tier' => 6,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::TWO_HAND_SWORD,
+                'name' => 'Spell Cleaver',
+                'tier' => 1,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::TWO_HAND_SWORD,
+                'name' => 'Mind Cleaver',
+                'tier' => 2,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::TWO_HAND_SWORD,
                 'name' => 'Conjure Cleaver',
-                'tier' => 90,
-
+                'tier' => 3,
                 'materials' => [
                 ]
             ],
             [
-                'base' => ItemBase::TWO_HAND_AXE,
-                'name' => 'Giant\'s Axe',
-                'tier' => 97,
-
+                'base' => ItemBase::TWO_HAND_SWORD,
+                'name' => 'Vision Cleaver',
+                'tier' => 4,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::TWO_HAND_SWORD,
+                'name' => 'Rune Cleaver',
+                'tier' => 5,
+                'materials' => [
+                ]
+            ],
+            [
+                'base' => ItemBase::TWO_HAND_SWORD,
+                'name' => 'Magus Cleaver',
+                'tier' => 6,
                 'materials' => [
                 ]
             ],
