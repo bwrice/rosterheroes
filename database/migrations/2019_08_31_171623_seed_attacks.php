@@ -30,7 +30,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 1,
-                'targets_count' => 1
+                'targets_count' => 1,
+                'item_bases' => [
+                    ItemBase::DAGGER
+                ]
             ],
             [
                 'name' => 'Double Cut',
@@ -39,7 +42,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 1,
-                'targets_count' => 2
+                'targets_count' => 2,
+                'item_bases' => [
+                    ItemBase::DAGGER
+                ]
             ],
             [
                 'name' => 'Triple Cut',
@@ -48,7 +54,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 1,
-                'targets_count' => 3
+                'targets_count' => 3,
+                'item_bases' => [
+                    ItemBase::DAGGER
+                ]
             ],
             [
                 'name' => 'Slash',
@@ -57,7 +66,13 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 1,
-                'targets_count' => 1
+                'targets_count' => 1,
+                'item_bases' => [
+                    ItemBase::SWORD,
+                    ItemBase::AXE,
+                    ItemBase::TWO_HAND_SWORD,
+                    ItemBase::TWO_HAND_AXE
+                ]
             ],
             [
                 'name' => 'Double Slash',
@@ -66,7 +81,13 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 1,
-                'targets_count' => 2
+                'targets_count' => 2,
+                'item_bases' => [
+                    ItemBase::SWORD,
+                    ItemBase::AXE,
+                    ItemBase::TWO_HAND_SWORD,
+                    ItemBase::TWO_HAND_AXE
+                ]
             ],
             [
                 'name' => 'Triple Slash',
@@ -75,7 +96,13 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 1,
-                'targets_count' => 3
+                'targets_count' => 3,
+                'item_bases' => [
+                    ItemBase::SWORD,
+                    ItemBase::AXE,
+                    ItemBase::TWO_HAND_SWORD,
+                    ItemBase::TWO_HAND_AXE
+                ]
             ],
             [
                 'name' => 'Poke',
@@ -84,7 +111,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 1,
-                'targets_count' => 1
+                'targets_count' => 1,
+                'item_bases' => [
+                    ItemBase::POLEARM
+                ]
             ],
             [
                 'name' => 'Double Poke',
@@ -93,7 +123,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 1,
-                'targets_count' => 2
+                'targets_count' => 2,
+                'item_bases' => [
+                    ItemBase::POLEARM
+                ]
             ],
             [
                 'name' => 'Triple Poke',
@@ -102,7 +135,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 1,
-                'targets_count' => 3
+                'targets_count' => 3,
+                'item_bases' => [
+                    ItemBase::POLEARM
+                ]
             ],
             [
                 'name' => 'Whack',
@@ -111,7 +147,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 1,
-                'targets_count' => 1
+                'targets_count' => 1,
+                'item_bases' => [
+                    ItemBase::MACE
+                ]
             ],
             [
                 'name' => 'Double Whack',
@@ -120,7 +159,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 1,
-                'targets_count' => 2
+                'targets_count' => 2,
+                'item_bases' => [
+                    ItemBase::MACE
+                ]
             ],
             [
                 'name' => 'Triple Whack',
@@ -129,7 +171,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 1,
-                'targets_count' => 3
+                'targets_count' => 3,
+                'item_bases' => [
+                    ItemBase::MACE
+                ]
             ],
             [
                 'name' => 'Arrow Release',
@@ -138,7 +183,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 1,
-                'targets_count' => 1
+                'targets_count' => 1,
+                'item_bases' => [
+                    ItemBase::BOW
+                ]
             ],
             [
                 'name' => 'Double Arrow Release',
@@ -147,7 +195,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 1,
-                'targets_count' => 2
+                'targets_count' => 2,
+                'item_bases' => [
+                    ItemBase::BOW
+                ]
             ],
             [
                 'name' => 'Triple Arrow Release',
@@ -156,7 +207,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 1,
-                'targets_count' => 3
+                'targets_count' => 3,
+                'item_bases' => [
+                    ItemBase::BOW
+                ]
             ],
             [
                 'name' => 'Bolt Release',
@@ -165,7 +219,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 1,
-                'targets_count' => 1
+                'targets_count' => 1,
+                'item_bases' => [
+                    ItemBase::CROSSBOW
+                ]
             ],
             [
                 'name' => 'Double Bolt Release',
@@ -174,7 +231,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 1,
-                'targets_count' => 2
+                'targets_count' => 2,
+                'item_bases' => [
+                    ItemBase::CROSSBOW
+                ]
             ],
             [
                 'name' => 'Triple Bolt Release',
@@ -183,7 +243,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 1,
-                'targets_count' => 3
+                'targets_count' => 3,
+                'item_bases' => [
+                    ItemBase::CROSSBOW
+                ]
             ],
             [
                 'name' => 'Magic Dart',
@@ -192,7 +255,12 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 1,
-                'targets_count' => 1
+                'targets_count' => 1,
+                'item_bases' => [
+                    ItemBase::WAND,
+                    ItemBase::ORB,
+                    ItemBase::STAFF
+                ]
             ],
             [
                 'name' => 'Double Magic Dart',
@@ -201,7 +269,12 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 1,
-                'targets_count' => 2
+                'targets_count' => 2,
+                'item_bases' => [
+                    ItemBase::WAND,
+                    ItemBase::ORB,
+                    ItemBase::STAFF
+                ]
             ],
             [
                 'name' => 'Triple Magic Dart',
@@ -210,7 +283,12 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 1,
-                'targets_count' => 3
+                'targets_count' => 3,
+                'item_bases' => [
+                    ItemBase::WAND,
+                    ItemBase::ORB,
+                    ItemBase::STAFF
+                ]
             ],
             [
                 'name' => 'Chuck',
@@ -219,7 +297,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 1,
-                'targets_count' => 1
+                'targets_count' => 1,
+                'item_bases' => [
+                    ItemBase::THROWING_WEAPON
+                ]
             ],
             [
                 'name' => 'Double Chuck',
@@ -228,7 +309,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 1,
-                'targets_count' => 2
+                'targets_count' => 2,
+                'item_bases' => [
+                    ItemBase::THROWING_WEAPON
+                ]
             ],
             [
                 'name' => 'Triple Chuck',
@@ -237,7 +321,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 1,
-                'targets_count' => 3
+                'targets_count' => 3,
+                'item_bases' => [
+                    ItemBase::THROWING_WEAPON
+                ]
             ],
             [
                 'name' => 'Singe',
@@ -246,7 +333,11 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 1,
-                'targets_count' => 1
+                'targets_count' => 1,
+                'item_bases' => [
+                    ItemBase::PSIONIC_ONE_HAND,
+                    ItemBase::PSIONIC_TWO_HAND
+                ]
             ],
             [
                 'name' => 'Double Singe',
@@ -255,7 +346,11 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 1,
-                'targets_count' => 3
+                'targets_count' => 3,
+                'item_bases' => [
+                    ItemBase::PSIONIC_ONE_HAND,
+                    ItemBase::PSIONIC_TWO_HAND
+                ]
             ],
             [
                 'name' => 'Triple Singe',
@@ -264,7 +359,11 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 1,
-                'targets_count' => 2
+                'targets_count' => 2,
+                'item_bases' => [
+                    ItemBase::PSIONIC_ONE_HAND,
+                    ItemBase::PSIONIC_TWO_HAND
+                ]
             ],
             [
                 'name' => 'Stab',
@@ -273,7 +372,11 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 2,
-                'targets_count' => 1
+                'targets_count' => 1,
+                'item_bases' => [
+                    ItemBase::DAGGER,
+                    ItemBase::POLEARM
+                ]
             ],
             [
                 'name' => 'Double Stab',
@@ -282,7 +385,11 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 2,
-                'targets_count' => 2
+                'targets_count' => 2,
+                'item_bases' => [
+                    ItemBase::DAGGER,
+                    ItemBase::POLEARM
+                ]
             ],
             [
                 'name' => 'Triple Stab',
@@ -291,7 +398,11 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 2,
-                'targets_count' => 3
+                'targets_count' => 3,
+                'item_bases' => [
+                    ItemBase::DAGGER,
+                    ItemBase::POLEARM
+                ]
             ],
             [
                 'name' => 'Slice',
@@ -300,7 +411,13 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 2,
-                'targets_count' => 1
+                'targets_count' => 1,
+                'item_bases' => [
+                    ItemBase::SWORD,
+                    ItemBase::AXE,
+                    ItemBase::TWO_HAND_SWORD,
+                    ItemBase::TWO_HAND_AXE
+                ]
             ],
             [
                 'name' => 'Double Slice',
@@ -309,7 +426,13 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 2,
-                'targets_count' => 2
+                'targets_count' => 2,
+                'item_bases' => [
+                    ItemBase::SWORD,
+                    ItemBase::AXE,
+                    ItemBase::TWO_HAND_SWORD,
+                    ItemBase::TWO_HAND_AXE
+                ]
             ],
             [
                 'name' => 'Triple Slice',
@@ -318,7 +441,13 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 2,
-                'targets_count' => 3
+                'targets_count' => 3,
+                'item_bases' => [
+                    ItemBase::SWORD,
+                    ItemBase::AXE,
+                    ItemBase::TWO_HAND_SWORD,
+                    ItemBase::TWO_HAND_AXE
+                ]
             ],
             [
                 'name' => 'Smash',
@@ -327,7 +456,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 2,
-                'targets_count' => 1
+                'targets_count' => 1,
+                'item_bases' => [
+                    ItemBase::MACE
+                ]
             ],
             [
                 'name' => 'Double Smash',
@@ -336,7 +468,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 2,
-                'targets_count' => 2
+                'targets_count' => 2,
+                'item_bases' => [
+                    ItemBase::MACE
+                ]
             ],
             [
                 'name' => 'Triple Smash',
@@ -345,7 +480,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 2,
-                'targets_count' => 3
+                'targets_count' => 3,
+                'item_bases' => [
+                    ItemBase::MACE
+                ]
             ],
             [
                 'name' => 'Arrow Shot',
@@ -354,7 +492,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 2,
-                'targets_count' => 1
+                'targets_count' => 1,
+                'item_bases' => [
+                    ItemBase::BOW
+                ]
             ],
             [
                 'name' => 'Double Arrow Shot',
@@ -363,7 +504,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 2,
-                'targets_count' => 2
+                'targets_count' => 2,
+                'item_bases' => [
+                    ItemBase::BOW
+                ]
             ],
             [
                 'name' => 'Triple Arrow Shot',
@@ -372,7 +516,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 2,
-                'targets_count' => 3
+                'targets_count' => 3,
+                'item_bases' => [
+                    ItemBase::BOW
+                ]
             ],
             [
                 'name' => 'Bolt Shot',
@@ -381,7 +528,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 2,
-                'targets_count' => 1
+                'targets_count' => 1,
+                'item_bases' => [
+                    ItemBase::CROSSBOW
+                ]
             ],
             [
                 'name' => 'Double Bolt Shot',
@@ -390,7 +540,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 2,
-                'targets_count' => 2
+                'targets_count' => 2,
+                'item_bases' => [
+                    ItemBase::CROSSBOW
+                ]
             ],
             [
                 'name' => 'Triple Bolt Shot',
@@ -399,7 +552,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 2,
-                'targets_count' => 3
+                'targets_count' => 3,
+                'item_bases' => [
+                    ItemBase::CROSSBOW
+                ]
             ],
             [
                 'name' => 'Magic Bullet',
@@ -408,7 +564,12 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 2,
-                'targets_count' => 1
+                'targets_count' => 1,
+                'item_bases' => [
+                    ItemBase::WAND,
+                    ItemBase::ORB,
+                    ItemBase::STAFF
+                ]
             ],
             [
                 'name' => 'Double Magic Bullet',
@@ -417,7 +578,12 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 2,
-                'targets_count' => 2
+                'targets_count' => 2,
+                'item_bases' => [
+                    ItemBase::WAND,
+                    ItemBase::ORB,
+                    ItemBase::STAFF
+                ]
             ],
             [
                 'name' => 'Triple Magic Bullet',
@@ -426,7 +592,12 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 2,
-                'targets_count' => 3
+                'targets_count' => 3,
+                'item_bases' => [
+                    ItemBase::WAND,
+                    ItemBase::ORB,
+                    ItemBase::STAFF
+                ]
             ],
             [
                 'name' => 'Hurl',
@@ -435,7 +606,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 2,
-                'targets_count' => 1
+                'targets_count' => 1,
+                'item_bases' => [
+                    ItemBase::THROWING_WEAPON
+                ]
             ],
             [
                 'name' => 'Double Hurl',
@@ -444,7 +618,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 2,
-                'targets_count' => 2
+                'targets_count' => 2,
+                'item_bases' => [
+                    ItemBase::THROWING_WEAPON
+                ]
             ],
             [
                 'name' => 'Triple Hurl',
@@ -453,7 +630,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 2,
-                'targets_count' => 3
+                'targets_count' => 3,
+                'item_bases' => [
+                    ItemBase::THROWING_WEAPON
+                ]
             ],
             [
                 'name' => 'Sear',
@@ -462,7 +642,11 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 2,
-                'targets_count' => 1
+                'targets_count' => 1,
+                'item_bases' => [
+                    ItemBase::PSIONIC_ONE_HAND,
+                    ItemBase::PSIONIC_TWO_HAND
+                ]
             ],
             [
                 'name' => 'Double Sear',
@@ -471,7 +655,11 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 2,
-                'targets_count' => 2
+                'targets_count' => 2,
+                'item_bases' => [
+                    ItemBase::PSIONIC_ONE_HAND,
+                    ItemBase::PSIONIC_TWO_HAND
+                ]
             ],
             [
                 'name' => 'Triple Sear',
@@ -480,7 +668,11 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 2,
-                'targets_count' => 3
+                'targets_count' => 3,
+                'item_bases' => [
+                    ItemBase::PSIONIC_ONE_HAND,
+                    ItemBase::PSIONIC_TWO_HAND
+                ]
             ],
             [
                 'name' => 'Impale',
@@ -489,7 +681,11 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 3,
-                'targets_count' => 1
+                'targets_count' => 1,
+                'item_bases' => [
+                    ItemBase::DAGGER,
+                    ItemBase::POLEARM
+                ]
             ],
             [
                 'name' => 'Double Impale',
@@ -498,7 +694,11 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 3,
-                'targets_count' => 2
+                'targets_count' => 2,
+                'item_bases' => [
+                    ItemBase::DAGGER,
+                    ItemBase::POLEARM
+                ]
             ],
             [
                 'name' => 'Triple Impale',
@@ -507,7 +707,11 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 3,
-                'targets_count' => 3
+                'targets_count' => 3,
+                'item_bases' => [
+                    ItemBase::DAGGER,
+                    ItemBase::POLEARM
+                ]
             ],
             [
                 'name' => 'Cleave',
@@ -516,7 +720,13 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 3,
-                'targets_count' => 1
+                'targets_count' => 1,
+                'item_bases' => [
+                    ItemBase::SWORD,
+                    ItemBase::AXE,
+                    ItemBase::TWO_HAND_SWORD,
+                    ItemBase::TWO_HAND_AXE
+                ]
             ],
             [
                 'name' => 'Double Cleave',
@@ -525,7 +735,13 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 3,
-                'targets_count' => 2
+                'targets_count' => 2,
+                'item_bases' => [
+                    ItemBase::SWORD,
+                    ItemBase::AXE,
+                    ItemBase::TWO_HAND_SWORD,
+                    ItemBase::TWO_HAND_AXE
+                ]
             ],
             [
                 'name' => 'Triple Cleave',
@@ -534,7 +750,13 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 3,
-                'targets_count' => 3
+                'targets_count' => 3,
+                'item_bases' => [
+                    ItemBase::SWORD,
+                    ItemBase::AXE,
+                    ItemBase::TWO_HAND_SWORD,
+                    ItemBase::TWO_HAND_AXE
+                ]
             ],
             [
                 'name' => 'Clobber',
@@ -543,7 +765,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 3,
-                'targets_count' => 1
+                'targets_count' => 1,
+                'item_bases' => [
+                    ItemBase::MACE
+                ]
             ],
             [
                 'name' => 'Double Clobber',
@@ -552,7 +777,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 3,
-                'targets_count' => 2
+                'targets_count' => 2,
+                'item_bases' => [
+                    ItemBase::MACE
+                ]
             ],
             [
                 'name' => 'Triple Clobber',
@@ -561,7 +789,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 3,
-                'targets_count' => 3
+                'targets_count' => 3,
+                'item_bases' => [
+                    ItemBase::MACE
+                ]
             ],
             [
                 'name' => 'Arrow Missile',
@@ -570,7 +801,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 3,
-                'targets_count' => 1
+                'targets_count' => 1,
+                'item_bases' => [
+                    ItemBase::BOW
+                ]
             ],
             [
                 'name' => 'Double Arrow Missile',
@@ -579,7 +813,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 3,
-                'targets_count' => 2
+                'targets_count' => 2,
+                'item_bases' => [
+                    ItemBase::BOW
+                ]
             ],
             [
                 'name' => 'Triple Arrow Missile',
@@ -588,7 +825,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 3,
-                'targets_count' => 3
+                'targets_count' => 3,
+                'item_bases' => [
+                    ItemBase::BOW
+                ]
             ],
             [
                 'name' => 'Bolt Missile',
@@ -597,7 +837,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 3,
-                'targets_count' => 1
+                'targets_count' => 1,
+                'item_bases' => [
+                    ItemBase::CROSSBOW
+                ]
             ],
             [
                 'name' => 'Double Bolt Missile',
@@ -606,7 +849,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 3,
-                'targets_count' => 2
+                'targets_count' => 2,
+                'item_bases' => [
+                    ItemBase::CROSSBOW
+                ]
             ],
             [
                 'name' => 'Triple Bolt Missile',
@@ -615,7 +861,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 3,
-                'targets_count' => 3
+                'targets_count' => 3,
+                'item_bases' => [
+                    ItemBase::CROSSBOW
+                ]
             ],
             [
                 'name' => 'Magic Torpedo',
@@ -624,7 +873,12 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 3,
-                'targets_count' => 1
+                'targets_count' => 1,
+                'item_bases' => [
+                    ItemBase::WAND,
+                    ItemBase::ORB,
+                    ItemBase::STAFF
+                ]
             ],
             [
                 'name' => 'Double Magic Torpedo',
@@ -633,7 +887,12 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 3,
-                'targets_count' => 2
+                'targets_count' => 2,
+                'item_bases' => [
+                    ItemBase::WAND,
+                    ItemBase::ORB,
+                    ItemBase::STAFF
+                ]
             ],
             [
                 'name' => 'Triple Magic Torpedo',
@@ -642,7 +901,12 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 3,
-                'targets_count' => 3
+                'targets_count' => 3,
+                'item_bases' => [
+                    ItemBase::WAND,
+                    ItemBase::ORB,
+                    ItemBase::STAFF
+                ]
             ],
             [
                 'name' => 'Launch',
@@ -651,7 +915,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 3,
-                'targets_count' => 1
+                'targets_count' => 1,
+                'item_bases' => [
+                    ItemBase::THROWING_WEAPON
+                ]
             ],
             [
                 'name' => 'Double Launch',
@@ -660,7 +927,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 3,
-                'targets_count' => 2
+                'targets_count' => 2,
+                'item_bases' => [
+                    ItemBase::THROWING_WEAPON
+                ]
             ],
             [
                 'name' => 'Triple Launch',
@@ -669,7 +939,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 3,
-                'targets_count' => 3
+                'targets_count' => 3,
+                'item_bases' => [
+                    ItemBase::THROWING_WEAPON
+                ]
             ],
             [
                 'name' => 'Scorch',
@@ -678,7 +951,11 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 3,
-                'targets_count' => 1
+                'targets_count' => 1,
+                'item_bases' => [
+                    ItemBase::PSIONIC_ONE_HAND,
+                    ItemBase::PSIONIC_TWO_HAND
+                ]
             ],
             [
                 'name' => 'Double Scorch',
@@ -687,7 +964,11 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 3,
-                'targets_count' => 2
+                'targets_count' => 2,
+                'item_bases' => [
+                    ItemBase::PSIONIC_ONE_HAND,
+                    ItemBase::PSIONIC_TWO_HAND
+                ]
             ],
             [
                 'name' => 'Triple Scorch',
@@ -696,7 +977,11 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 3,
-                'targets_count' => 3
+                'targets_count' => 3,
+                'item_bases' => [
+                    ItemBase::PSIONIC_ONE_HAND,
+                    ItemBase::PSIONIC_TWO_HAND
+                ]
             ],
             [
                 'name' => 'Blade Sweep',
@@ -705,7 +990,16 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 1,
-                'targets_count' => null
+                'targets_count' => null,
+                'item_bases' => [
+                    ItemBase::DAGGER,
+                    ItemBase::SWORD,
+                    ItemBase::AXE,
+                    ItemBase::TWO_HAND_SWORD,
+                    ItemBase::TWO_HAND_AXE,
+                    ItemBase::PSIONIC_ONE_HAND,
+                    ItemBase::PSIONIC_TWO_HAND
+                ]
             ],
             [
                 'name' => 'Mace Sweep',
@@ -714,16 +1008,22 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 1,
-                'targets_count' => null
+                'targets_count' => null,
+                'item_bases' => [
+                    ItemBase::MACE
+                ]
             ],
             [
-                'name' => 'Polearm Blitz',
+                'name' => 'Polearm Strike',
                 'damage_type' => DamageType::AREA_OF_EFFECT,
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 1,
-                'targets_count' => null
+                'targets_count' => null,
+                'item_bases' => [
+                    ItemBase::POLEARM
+                ]
             ],
             [
                 'name' => 'Arrow Spray',
@@ -732,7 +1032,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 1,
-                'targets_count' => null
+                'targets_count' => null,
+                'item_bases' => [
+                    ItemBase::BOW
+                ]
             ],
             [
                 'name' => 'Bolt Spray',
@@ -741,7 +1044,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 1,
-                'targets_count' => null
+                'targets_count' => null,
+                'item_bases' => [
+                    ItemBase::CROSSBOW
+                ]
             ],
             [
                 'name' => 'Magic Burst',
@@ -750,7 +1056,12 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 1,
-                'targets_count' => null
+                'targets_count' => null,
+                'item_bases' => [
+                    ItemBase::WAND,
+                    ItemBase::ORB,
+                    ItemBase::STAFF
+                ]
             ],
             [
                 'name' => 'Throwing Shower',
@@ -759,7 +1070,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 1,
-                'targets_count' => null
+                'targets_count' => null,
+                'item_bases' => [
+                    ItemBase::THROWING_WEAPON
+                ]
             ],
             [
                 'name' => 'Blade Whirlwind',
@@ -768,7 +1082,16 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 2,
-                'targets_count' => null
+                'targets_count' => null,
+                'item_bases' => [
+                    ItemBase::DAGGER,
+                    ItemBase::SWORD,
+                    ItemBase::AXE,
+                    ItemBase::TWO_HAND_SWORD,
+                    ItemBase::TWO_HAND_AXE,
+                    ItemBase::PSIONIC_ONE_HAND,
+                    ItemBase::PSIONIC_TWO_HAND
+                ]
             ],
             [
                 'name' => 'Mace Whirlwind',
@@ -777,16 +1100,22 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 2,
-                'targets_count' => null
+                'targets_count' => null,
+                'item_bases' => [
+                    ItemBase::MACE
+                ]
             ],
             [
-                'name' => 'Polearm Torrent',
+                'name' => 'Polearm Blitz',
                 'damage_type' => DamageType::AREA_OF_EFFECT,
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 2,
-                'targets_count' => null
+                'targets_count' => null,
+                'item_bases' => [
+                    ItemBase::POLEARM
+                ]
             ],
             [
                 'name' => 'Arrow Assault',
@@ -795,7 +1124,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 2,
-                'targets_count' => null
+                'targets_count' => null,
+                'item_bases' => [
+                    ItemBase::BOW
+                ]
             ],
             [
                 'name' => 'Bolt Barrage',
@@ -804,7 +1136,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 2,
-                'targets_count' => null
+                'targets_count' => null,
+                'item_bases' => [
+                    ItemBase::CROSSBOW
+                ]
             ],
             [
                 'name' => 'Magic Blast',
@@ -813,7 +1148,12 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 2,
-                'targets_count' => null
+                'targets_count' => null,
+                'item_bases' => [
+                    ItemBase::WAND,
+                    ItemBase::ORB,
+                    ItemBase::STAFF
+                ]
             ],
             [
                 'name' => 'Throwing Downpour',
@@ -822,7 +1162,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 2,
-                'targets_count' => null
+                'targets_count' => null,
+                'item_bases' => [
+                    ItemBase::THROWING_WEAPON
+                ]
             ],
             [
                 'name' => 'Blade Tornado',
@@ -831,7 +1174,16 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 3,
-                'targets_count' => null
+                'targets_count' => null,
+                'item_bases' => [
+                    ItemBase::DAGGER,
+                    ItemBase::SWORD,
+                    ItemBase::AXE,
+                    ItemBase::TWO_HAND_SWORD,
+                    ItemBase::TWO_HAND_AXE,
+                    ItemBase::PSIONIC_ONE_HAND,
+                    ItemBase::PSIONIC_TWO_HAND
+                ]
             ],
             [
                 'name' => 'Mace Tornado',
@@ -840,7 +1192,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 3,
-                'targets_count' => null
+                'targets_count' => null,
+                'item_bases' => [
+                    ItemBase::MACE
+                ]
             ],
             [
                 'name' => 'Polearm Onslaught',
@@ -849,7 +1204,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 3,
-                'targets_count' => null
+                'targets_count' => null,
+                'item_bases' => [
+                    ItemBase::POLEARM
+                ]
             ],
             [
                 'name' => 'Hail of Arrows',
@@ -858,7 +1216,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 3,
-                'targets_count' => null
+                'targets_count' => null,
+                'item_bases' => [
+                    ItemBase::BOW
+                ]
             ],
             [
                 'name' => 'Bolt Bombardment',
@@ -867,7 +1228,10 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::BACK_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 3,
-                'targets_count' => null
+                'targets_count' => null,
+                'item_bases' => [
+                    ItemBase::CROSSBOW
+                ]
             ],
             [
                 'name' => 'Magic Storm',
@@ -876,7 +1240,12 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 3,
-                'targets_count' => null
+                'targets_count' => null,
+                'item_bases' => [
+                    ItemBase::WAND,
+                    ItemBase::ORB,
+                    ItemBase::STAFF
+                ]
             ],
             [
                 'name' => 'Throwing Torrent',
@@ -885,16 +1254,22 @@ class SeedAttacks extends Migration
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 3,
-                'targets_count' => null
+                'targets_count' => null,
+                'item_bases' => [
+                    ItemBase::THROWING_WEAPON
+                ]
             ],
         ];
 
         $damageTypes = DamageType::all();
         $combatPositions = CombatPosition::all();
         $targetPriorities = TargetPriority::all();
-        $itemTypes = ItemType::all();
+        $itemBases = ItemBase::with('itemTypes')->get();
 
         foreach($attacks as $attackData) {
+
+            $tier = $attackData['tier'];
+            $targetsCount = $attackData['targets_count'];
 
             /** @var Attack $attack */
             $attack = Attack::query()->create([
@@ -904,12 +1279,46 @@ class SeedAttacks extends Migration
                 'attacker_position_id' => $combatPositions->firstWhere('name', '=', $attackData['attacker_position'])->id,
                 'target_position_id' => $combatPositions->firstWhere('name', '=', $attackData['target_position'])->id,
                 'target_priority_id' => $targetPriorities->firstWhere('name', '=', $attackData['target_priority'])->id,
-                'tier' => $attackData['tier'],
-                'targets_count' => $attackData['targets_count']
+                'tier' => $tier,
+                'targets_count' => $targetsCount
             ]);
 
-//            $itemTypesToAttach = $itemTypes->whereIn('name', $attackData['item_bases']);
-//            $attack->itemBases()->saveMany($itemTypesToAttach);
+            foreach($attackData['item_bases'] as $itemBaseName) {
+
+                /** @var \Illuminate\Support\Collection $itemTypes */
+                $itemTypes = $itemBases->where('name', '=', $itemBaseName)->first()->itemTypes;
+                $minItemTypeTier = 1;
+
+                if ($tier == 5) {
+
+                    $minItemTypeTier = 5;
+
+                } elseif ($tier === 4) {
+
+                    $minItemTypeTier = 3;
+
+                } elseif ($tier === 3) {
+
+                    if ($targetsCount === 3) {
+                        $minItemTypeTier = 6;
+                    } else {
+                        $minItemTypeTier = 5;
+                    }
+                } elseif ($tier === 2) {
+
+                    if ($targetsCount === 3) {
+                        $minItemTypeTier = 4;
+                    } else {
+                        $minItemTypeTier = 2;
+                    }
+                }
+
+                $itemTypes = $itemTypes->reject(function (ItemType $itemType) use ($minItemTypeTier) {
+                    return $itemType->tier < $minItemTypeTier;
+                });
+
+                $attack->itemTypes()->saveMany($itemTypes);
+            }
         }
     }
 
