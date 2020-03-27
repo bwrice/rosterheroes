@@ -24,42 +24,6 @@ class SeedAttacks extends Migration
     {
         $attacks = [
             [
-                'name' => 'Cut',
-                'damage_type' => DamageType::FIXED_TARGET,
-                'attacker_position' => CombatPosition::FRONT_LINE,
-                'target_position' => CombatPosition::FRONT_LINE,
-                'target_priority' => TargetPriority::ANY,
-                'tier' => 1,
-                'targets_count' => 1,
-                'item_bases' => [
-                    ItemBase::DAGGER
-                ]
-            ],
-            [
-                'name' => 'Double Cut',
-                'damage_type' => DamageType::FIXED_TARGET,
-                'attacker_position' => CombatPosition::FRONT_LINE,
-                'target_position' => CombatPosition::FRONT_LINE,
-                'target_priority' => TargetPriority::ANY,
-                'tier' => 1,
-                'targets_count' => 2,
-                'item_bases' => [
-                    ItemBase::DAGGER
-                ]
-            ],
-            [
-                'name' => 'Triple Cut',
-                'damage_type' => DamageType::FIXED_TARGET,
-                'attacker_position' => CombatPosition::FRONT_LINE,
-                'target_position' => CombatPosition::FRONT_LINE,
-                'target_priority' => TargetPriority::ANY,
-                'tier' => 1,
-                'targets_count' => 3,
-                'item_bases' => [
-                    ItemBase::DAGGER
-                ]
-            ],
-            [
                 'name' => 'Slash',
                 'damage_type' => DamageType::FIXED_TARGET,
                 'attacker_position' => CombatPosition::FRONT_LINE,
@@ -105,7 +69,7 @@ class SeedAttacks extends Migration
                 ]
             ],
             [
-                'name' => 'Poke',
+                'name' => 'Pierce',
                 'damage_type' => DamageType::FIXED_TARGET,
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
@@ -113,11 +77,12 @@ class SeedAttacks extends Migration
                 'tier' => 1,
                 'targets_count' => 1,
                 'item_bases' => [
+                    ItemBase::DAGGER,
                     ItemBase::POLEARM
                 ]
             ],
             [
-                'name' => 'Double Poke',
+                'name' => 'Double Pierce',
                 'damage_type' => DamageType::FIXED_TARGET,
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
@@ -125,11 +90,12 @@ class SeedAttacks extends Migration
                 'tier' => 1,
                 'targets_count' => 2,
                 'item_bases' => [
+                    ItemBase::DAGGER,
                     ItemBase::POLEARM
                 ]
             ],
             [
-                'name' => 'Triple Poke',
+                'name' => 'Triple Pierce',
                 'damage_type' => DamageType::FIXED_TARGET,
                 'attacker_position' => CombatPosition::FRONT_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
@@ -137,6 +103,7 @@ class SeedAttacks extends Migration
                 'tier' => 1,
                 'targets_count' => 3,
                 'item_bases' => [
+                    ItemBase::DAGGER,
                     ItemBase::POLEARM
                 ]
             ],
@@ -1259,6 +1226,56 @@ class SeedAttacks extends Migration
                     ItemBase::THROWING_WEAPON
                 ]
             ],
+
+            // TODO: unique attacks
+//            [
+//                'name' => 'Assassinate',
+//                'damage_type' => DamageType::FIXED_TARGET,
+//                'attacker_position' => CombatPosition::BACK_LINE,
+//                'target_position' => CombatPosition::FRONT_LINE,
+//                'target_priority' => TargetPriority::ANY,
+//                'tier' => 4,
+//                'targets_count' => 1,
+//                'item_bases' => [
+//                    ItemBase::DAGGER
+//                ]
+//            ],
+//            [
+//                'name' => 'Double Assassinate',
+//                'damage_type' => DamageType::FIXED_TARGET,
+//                'attacker_position' => CombatPosition::BACK_LINE,
+//                'target_position' => CombatPosition::FRONT_LINE,
+//                'target_priority' => TargetPriority::ANY,
+//                'tier' => 5,
+//                'targets_count' => 2,
+//                'item_bases' => [
+//                    ItemBase::DAGGER
+//                ]
+//            ],
+//            [
+//                'name' => 'Mace Maul',
+//                'damage_type' => DamageType::AREA_OF_EFFECT,
+//                'attacker_position' => CombatPosition::BACK_LINE,
+//                'target_position' => CombatPosition::FRONT_LINE,
+//                'target_priority' => TargetPriority::ANY,
+//                'tier' => 4,
+//                'targets_count' => null,
+//                'item_bases' => [
+//                    ItemBase::MACE
+//                ]
+//            ],
+//            [
+//                'name' => 'Mace Massacre',
+//                'damage_type' => DamageType::DISPERSED,
+//                'attacker_position' => CombatPosition::BACK_LINE,
+//                'target_position' => CombatPosition::FRONT_LINE,
+//                'target_priority' => TargetPriority::ANY,
+//                'tier' => 5,
+//                'targets_count' => null,
+//                'item_bases' => [
+//                    ItemBase::MACE
+//                ]
+//            ],
         ];
 
         $damageTypes = DamageType::all();
