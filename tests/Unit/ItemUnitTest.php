@@ -42,7 +42,7 @@ class ItemUnitTest extends TestCase
     public function a_higher_grade_item_type_of_the_same_base_and_material_weighs_more()
     {
         $itemBaseID = ItemBase::query()->inRandomOrder()->first()->id;
-        $itemTypes = ItemType::query()->where('item_base_id', '=', $itemBaseID)->orderBy('grade')->get();
+        $itemTypes = ItemType::query()->where('item_base_id', '=', $itemBaseID)->orderBy('tier')->get();
         $this->assertGreaterThan(1, $itemTypes->count());
 
         /** @var ItemType $type1 */
@@ -83,7 +83,7 @@ class ItemUnitTest extends TestCase
          */
         $itemType = ItemType::query()->whereHas('itemBase', function (Builder $builder) {
             $builder->where('name', '=', ItemBase::SHIELD);
-        })->orderByDesc('grade')->first();
+        })->orderByDesc('tier')->first();
         $this->item->item_type_id = $itemType->id;
         $this->item->save();
 
@@ -124,7 +124,7 @@ class ItemUnitTest extends TestCase
          */
         $heavyShieldType = ItemType::query()->whereHas('itemBase', function (Builder $builder) {
             $builder->where('name', '=', ItemBase::SHIELD);
-        })->orderByDesc('grade')->first();
+        })->orderByDesc('tier')->first();
         $this->item->itemType = $heavyShieldType;
         $this->item->material = $firstMaterial;
         $weight1 = $this->item->weight();
@@ -200,7 +200,7 @@ class ItemUnitTest extends TestCase
         $this->item->item_type_id = $lighterItemType->id;
         $this->item->save();
         $this->item = $this->item->fresh();
-        // Set to same grade to compare
+        // Set to same tier to compare
         $this->item->itemType->tier = 10;
         $lighterItemTypeWeight = $this->item->weight();
 
@@ -324,7 +324,7 @@ class ItemUnitTest extends TestCase
     {
         $itemTypes = ItemType::query()->whereHas('itemBase', function (Builder $builder) use ($itemBaseName) {
             return $builder->where('name', '=', $itemBaseName);
-        })->orderBy('grade')->get();
+        })->orderBy('tier')->get();
 
         /** @var ItemType $lowerGradeItemType */
         $lowerGradeItemType = $itemTypes->shift();
@@ -596,7 +596,7 @@ class ItemUnitTest extends TestCase
     {
         $itemTypes = ItemType::query()->whereHas('itemBase', function (Builder $builder) use ($itemBaseName) {
             return $builder->where('name', '=', $itemBaseName);
-        })->orderBy('grade')->get();
+        })->orderBy('tier')->get();
 
         /** @var ItemType $lowerGradeItemType */
         $lowerGradeItemType = $itemTypes->shift();
@@ -956,7 +956,7 @@ class ItemUnitTest extends TestCase
     public function a_higher_grade_item_has_more_value()
     {
         $itemBaseID = ItemBase::query()->inRandomOrder()->first()->id;
-        $itemTypes = ItemType::query()->where('item_base_id', '=', $itemBaseID)->orderBy('grade')->get();
+        $itemTypes = ItemType::query()->where('item_base_id', '=', $itemBaseID)->orderBy('tier')->get();
 
         $lowerGradeItemType = $itemTypes->shift();
         $this->item->item_type_id = $lowerGradeItemType->id;
