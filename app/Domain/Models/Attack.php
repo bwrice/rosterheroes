@@ -42,15 +42,6 @@ class Attack extends Model
 {
     use HasConfigAttributes;
 
-    // snake case to match YAML config attributes
-    protected $grade;
-    protected $fixed_target_count;
-    protected $speed_rating;
-    protected $base_damage_rating;
-    protected $damage_multiplier_rating;
-    protected $resource_costs;
-    protected $requirements;
-
     protected $guarded = [];
 
     /** @var HasAttacks|null */
@@ -173,78 +164,8 @@ class Attack extends Model
         return collect();
     }
 
-    /**
-     * @param int $grade
-     * @return $this
-     */
-    public function setGrade(int $grade)
-    {
-        $this->grade = $grade;
-        return $this;
-    }
-
-    /**
-     * @param int|null $fixedTargetCount
-     * @return $this
-     */
-    public function setFixedTargetCount(?int $fixedTargetCount)
-    {
-        $this->fixed_target_count = $fixedTargetCount;
-        return $this;
-    }
-
-    /**
-     * @param float $speedRating
-     * @return $this
-     */
-    public function setSpeedRating(float $speedRating)
-    {
-        $this->speed_rating = $speedRating;
-        return $this;
-    }
-
-    /**
-     * @param float $baseDamageRating
-     * @return $this
-     */
-    public function setBaseDamageRating(float $baseDamageRating)
-    {
-        $this->base_damage_rating = $baseDamageRating;
-        return $this;
-    }
-
-    /**
-     * @param float $damageMultiplierRating
-     * @return $this
-     */
-    public function setDamageMultiplierRating(float $damageMultiplierRating)
-    {
-        $this->damage_multiplier_rating = $damageMultiplierRating;
-        return $this;
-    }
-
-    /**
-     * @param array $resource_costs
-     * @return $this
-     */
-    public function setResourceCosts(array $resource_costs)
-    {
-        $this->resource_costs = $resource_costs;
-        return $this;
-    }
-
-    /**
-     * @param array $requirements
-     * @return $this
-     */
-    public function setRequirements(array $requirements)
-    {
-        $this->requirements = $requirements;
-        return $this;
-    }
-
     public function getMaxTargetsCount()
     {
-        return $this->damageType->getBehavior()->getMaxTargetCount($this->grade, $this->targets_count);
+        return $this->damageType->getBehavior()->getMaxTargetCount($this->tier, $this->targets_count);
     }
 }
