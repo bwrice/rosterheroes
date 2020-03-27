@@ -137,7 +137,7 @@ class SeedStarterItemBlueprints extends Migration
                 $blueprintCreated->itemTypes()->attach($blueprint['create_array']['item_type']);
             }
             if (isset($blueprint['create_array']['material'])) {
-                $blueprintCreated->materialTypes()->attach($blueprint['create_array']['material']);
+                $blueprintCreated->materials()->attach($blueprint['create_array']['material']);
             }
             if (isset($blueprint['create_array']['item_class'])) {
                 $blueprintCreated->itemClasses()->attach($blueprint['create_array']['item_class']);
