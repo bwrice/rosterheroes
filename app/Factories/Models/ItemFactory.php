@@ -58,7 +58,7 @@ class ItemFactory
 
     protected $lowestMaterialTypeGrade = false;
 
-    protected $lowestItemTypeGrade = false;
+    protected $lowestItemTypeTier = false;
 
     public function __construct()
     {
@@ -205,10 +205,10 @@ class ItemFactory
         ]);
     }
 
-    public function withLowestItemTypeGrade()
+    public function withLowestItemTypeTier()
     {
         $clone = clone $this;
-        $clone->lowestItemTypeGrade = true;
+        $clone->lowestItemTypeTier = true;
         return $clone;
     }
 
@@ -234,16 +234,16 @@ class ItemFactory
             });
         }
 
-        if ($this->lowestItemTypeGrade) {
-            return $query->orderBy('grade')->first();
+        if ($this->lowestItemTypeTier) {
+            return $query->orderBy('tier')->first();
         }
 
         if ($this->maxItemTypeGrade) {
-            $query->where('grade', '<=', $this->maxItemTypeGrade);
+            $query->where('tier', '<=', $this->maxItemTypeGrade);
         }
 
         if ($this->minItemTypeGrade) {
-            $query->where('grade', '>=', $this->minItemTypeGrade);
+            $query->where('tier', '>=', $this->minItemTypeGrade);
         }
         return $query->inRandomOrder()->first();
     }
@@ -281,7 +281,7 @@ class ItemFactory
 
     protected function beginnerItem(string $itemBaseName)
     {
-        return $this->fromItemBases([$itemBaseName])->withLowestItemTypeGrade()->withLowestMaterialTypeGrade();
+        return $this->fromItemBases([$itemBaseName])->withLowestItemTypeTier()->withLowestMaterialTypeGrade();
     }
 
     public function beginnerShield()

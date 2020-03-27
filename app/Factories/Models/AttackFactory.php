@@ -32,7 +32,7 @@ class AttackFactory
         $attack = Attack::query()->create(array_merge([
             'uuid' => (string) Str::uuid(),
             'name' => 'Factory Attack ' . rand(1, 999999),
-            'config_path' => '/Yaml/Attacks/test_attack.yaml',
+            'tier' => 1,
             'attacker_position_id' => $this->getAttackerPosition()->id,
             'target_position_id' => $this->getTargetPosition()->id,
             'target_priority_id' => $this->getTargetPriority()->id,
