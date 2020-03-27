@@ -24,7 +24,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property Collection $itemTypes
  * @property Collection $itemBases
  * @property Collection $itemClasses
- * @property Collection $materialTypes
+ * @property Collection $materials
  * @property AttackCollection $attacks
  */
 class ItemBlueprint extends Model
@@ -82,7 +82,7 @@ class ItemBlueprint extends Model
     /**
      * @return BelongsToMany
      */
-    public function materialTypes()
+    public function materials()
     {
         return $this->belongsToMany(Material::class, 'item_blueprint_material', 'blueprint_id', 'material_id')->withTimestamps();
     }

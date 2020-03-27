@@ -1,18 +1,23 @@
 <?php
 
+use App\Domain\Models\Material;
 use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Builder;
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(\App\Domain\Models\Item::class, function (Faker $faker) {
 
     /** @var \App\Domain\Models\ItemType $itemType */
     $itemType = \App\Domain\Models\ItemType::query()->inRandomOrder()->first();
+    $material = Material::query()->whereHas('materialType', function (Builder $builder) use ($itemType) {
+        return $builder->whereIn('id', $itemType->itemBase->materialTypes()->pluck('id')->toArray());
+    });
 
     return [
         'uuid' => \Illuminate\Support\Str::uuid(),
         'item_class_id' => \App\Domain\Models\ItemClass::query()->where('name', '=', \App\Domain\Models\ItemClass::GENERIC)->first()->id,
         'item_type_id' => $itemType->id,
-        'material_id' => $itemType->materials()->inRandomOrder()->first()->id,
+        'material_id' => $material->id,
         'item_blueprint_id' => function () {
             return factory(\App\Domain\Models\ItemBlueprint::class)->create()->id;
         }

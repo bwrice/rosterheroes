@@ -98,14 +98,14 @@ class ItemBase extends Model
 
     protected $guarded = [];
 
-    public function slotTypes()
-    {
-        return $this->belongsToMany(SlotType::class)->withTimestamps();
-    }
-
     public function measurableTypes()
     {
         return $this->belongsToMany(MeasurableType::class, 'item_base_measurable_type', 'item_base_id', 'type_id')->withTimestamps();
+    }
+
+    public function materialTypes()
+    {
+        return $this->belongsToMany(MaterialType::class)->withTimestamps();
     }
 
     public function attacks()

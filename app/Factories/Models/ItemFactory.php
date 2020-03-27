@@ -73,7 +73,7 @@ class ItemFactory
     public function create(array $extra = [])
     {
         $itemType = $this->getItemType();
-        $material = $this->getMaterial($itemType);
+        $material = $this->getMaterial($itemType->itemBase);
 
         /** @var Item $item */
         $item = Item::query()->create(array_merge([
@@ -249,18 +249,23 @@ class ItemFactory
     }
 
     /**
-     * @param ItemType $itemType
+     * @param ItemBase $itemBase
      * @return Material
      */
-    protected function getMaterial(ItemType $itemType)
+    protected function getMaterial(ItemBase $itemBase)
     {
         if ($this->material) {
             return $this->material;
         }
-        $query = $itemType->materials();
+
+        $query = Material::query()->whereHas('materialType', function (Builder $builder) use ($itemBase) {
+            return $builder->whereIn('id', $itemBase->materialTypes()->pluck('id')->toArray());
+        });
 
         if ($this->lowestMaterialTypeGrade) {
-            return $query->orderBy('grade')->first();
+            /** @var Material $material */
+            $material = $query->orderBy('grade')->first();
+            return $material;
         }
 
         if ($this->maxMaterialGrade) {

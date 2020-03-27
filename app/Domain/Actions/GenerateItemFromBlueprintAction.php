@@ -20,6 +20,7 @@ use App\Domain\Models\ItemClass;
 use App\Domain\Models\ItemType;
 use App\Domain\Models\Material;
 use App\Exceptions\InvalidItemBlueprintException;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
 
@@ -34,7 +35,7 @@ class GenerateItemFromBlueprintAction
     {
         $itemClass = $this->getItemClass($itemBlueprint);
         $itemType = $this->getItemType($itemBlueprint);
-        $materialType = $this->getMaterialType($itemBlueprint, $itemType);
+        $materialType = $this->getMaterial($itemBlueprint, $itemType);
 
         $uuid = Str::uuid();
         /** @var ItemAggregate $itemAggregate */
@@ -99,21 +100,27 @@ class GenerateItemFromBlueprintAction
         return $itemType;
     }
 
-    protected function getMaterialType(ItemBlueprint $itemBlueprint, ItemType $itemType): Material
+    protected function getMaterial(ItemBlueprint $itemBlueprint, ItemBase $itemBase): Material
     {
-        $randomMaterialType = null;
-        $materialTypes = $itemBlueprint->materialTypes;
+        $material = null;
+        $materials = $itemBlueprint->materials;
 
-        if ($materialTypes->count() > 0) {
-            $materialTypeIDs = $itemType->materials()->pluck('id')->toArray();
-            $randomMaterialType = $materialTypes->shuffle()->first(function (Material $materialType) use ($materialTypeIDs) {
-                return in_array($materialType->id, $materialTypeIDs);
+        $materialQueryForBase = $materialIDsForBase = Material::query()->whereHas('materialType', function (Builder $builder) use ($itemBase) {
+            return $builder->whereIn('id', $itemBase->materialTypes()->pluck('id')->toArray());
+        });
+
+        if ($materials->count() > 0) {
+            $materialIDsForBase = $materialQueryForBase->pluck('id')->toArray();
+
+            $material = $materials->shuffle()->first(function (Material $materialType) use ($materialIDsForBase) {
+                return in_array($materialType->id, $materialIDsForBase);
             });
         }
 
-        $randomMaterialType = $randomMaterialType ?: $itemType->materials()->inRandomOrder()->first();
+        /** @var Material $material */
+        $material = $material ?: $materialQueryForBase->inRandomOrder()->first();
 
-        return $randomMaterialType;
+        return $material;
     }
 
 
