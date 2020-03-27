@@ -444,32 +444,32 @@ class SeedItemTypes extends Migration
                 'tier' => 6,
             ],
             [
-                'base' => ItemBase::TWO_HAND_SWORD,
+                'base' => ItemBase::PSIONIC_TWO_HAND,
                 'name' => 'Spell Cleaver',
                 'tier' => 1,
             ],
             [
-                'base' => ItemBase::TWO_HAND_SWORD,
+                'base' => ItemBase::PSIONIC_TWO_HAND,
                 'name' => 'Mind Cleaver',
                 'tier' => 2,
             ],
             [
-                'base' => ItemBase::TWO_HAND_SWORD,
+                'base' => ItemBase::PSIONIC_TWO_HAND,
                 'name' => 'Conjure Cleaver',
                 'tier' => 3,
             ],
             [
-                'base' => ItemBase::TWO_HAND_SWORD,
+                'base' => ItemBase::PSIONIC_TWO_HAND,
                 'name' => 'Vision Cleaver',
                 'tier' => 4,
             ],
             [
-                'base' => ItemBase::TWO_HAND_SWORD,
+                'base' => ItemBase::PSIONIC_TWO_HAND,
                 'name' => 'Rune Cleaver',
                 'tier' => 5,
             ],
             [
-                'base' => ItemBase::TWO_HAND_SWORD,
+                'base' => ItemBase::PSIONIC_TWO_HAND,
                 'name' => 'Magus Cleaver',
                 'tier' => 6,
             ],
