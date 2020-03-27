@@ -23,7 +23,7 @@ class ItemTypeResource extends JsonResource
     {
         return [
             'name' => $this->name,
-            'grade' => $this->grade,
+            'tier' => $this->tier,
             'itemBase' => new ItemBaseResource($this->itemBase)
         ];
     }

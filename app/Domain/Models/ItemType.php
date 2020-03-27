@@ -3,12 +3,6 @@
 namespace App\Domain\Models;
 
 use App\Domain\Behaviors\ItemBases\ItemBaseBehavior;
-use App\Domain\Behaviors\ItemBases\ItemBaseBehaviorInterface;
-use App\Domain\Interfaces\AdjustsBaseDamage;
-use App\Domain\Interfaces\AdjustsCombatSpeed;
-use App\Domain\Interfaces\AdjustsDamageModifier;
-use App\Domain\Models\ItemBase;
-use App\Domain\Models\Material;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -17,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property string $name
- * @property int $grade
+ * @property int $tier
  *
  * @property ItemBase $itemBase
  */

@@ -50,7 +50,7 @@ class ItemUnitTest extends TestCase
         /** @var ItemType $type2 */
         $type2 = $itemTypes->shift();
 
-        $this->assertGreaterThan($type1->grade, $type2->grade);
+        $this->assertGreaterThan($type1->tier, $type2->tier);
 
         $this->item->item_type_id = $type1->id;
         $this->item->save();
@@ -201,13 +201,13 @@ class ItemUnitTest extends TestCase
         $this->item->save();
         $this->item = $this->item->fresh();
         // Set to same grade to compare
-        $this->item->itemType->grade = 10;
+        $this->item->itemType->tier = 10;
         $lighterItemTypeWeight = $this->item->weight();
 
         $this->item->item_type_id = $heavierItemType->id;
         $this->item->save();
         $this->item = $this->item->fresh();
-        $this->item->itemType->grade = 10;
+        $this->item->itemType->tier = 10;
         $heavierItemTypeWeight = $this->item->weight();
 
         $this->assertGreaterThan($lighterItemTypeWeight, $heavierItemTypeWeight);
@@ -538,7 +538,7 @@ class ItemUnitTest extends TestCase
         $this->item->save();
         $this->item = $this->item->fresh();
         // Set to same grade to compare
-        $this->item->itemType->grade = 10;
+        $this->item->itemType->tier = 10;
         $lessProtectionItemTypeProtection = $this->item->getProtection();
 
         $this->assertGreaterThan(0, $lessProtectionItemTypeProtection);
@@ -546,7 +546,7 @@ class ItemUnitTest extends TestCase
         $this->item->item_type_id = $lessProtectionItemType->id;
         $this->item->save();
         $this->item = $this->item->fresh();
-        $this->item->itemType->grade = 10;
+        $this->item->itemType->tier = 10;
         $moreProtectionItemTypeProtection = $this->item->getProtection();
 
         $this->assertGreaterThan(0, $moreProtectionItemTypeProtection);
@@ -811,7 +811,7 @@ class ItemUnitTest extends TestCase
         $this->item->save();
         $this->item = $this->item->fresh();
         // Set to same grade to compare
-        $this->item->itemType->grade = 10;
+        $this->item->itemType->tier = 10;
         $lesserItemTypeBlockChance = $this->item->getBlockChance();
 
         $this->assertGreaterThan(0, $lesserItemTypeBlockChance);
@@ -819,7 +819,7 @@ class ItemUnitTest extends TestCase
         $this->item->item_type_id = $lessBlockChanceItemType->id;
         $this->item->save();
         $this->item = $this->item->fresh();
-        $this->item->itemType->grade = 10;
+        $this->item->itemType->tier = 10;
         $greaterItemTypeBlockChance = $this->item->getBlockChance();
 
         $this->assertGreaterThan(0, $greaterItemTypeBlockChance);

@@ -120,7 +120,7 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
 
     protected function itemTypeGrade()
     {
-        return $this->itemType->grade;
+        return $this->itemType->tier;
     }
 
     protected function buildItemName(): string
