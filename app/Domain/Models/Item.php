@@ -118,7 +118,7 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
         return $this->itemType->getItemBaseBehavior();
     }
 
-    protected function itemTypeGrade()
+    protected function itemTypeTier()
     {
         return $this->itemType->tier;
     }
@@ -140,16 +140,16 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
 
     public function adjustCombatSpeed(float $speed): float
     {
-        $gradeBonus = ($this->itemTypeGrade() ** .5)/25;
+        $tierBonus = ($this->itemTypeTier() ** .5)/2;
         $materialBonus = $this->material->getSpeedModifierBonus();
-        $combatSpeed = $speed * (1 + $gradeBonus + $materialBonus);
+        $combatSpeed = $speed * (1 + $tierBonus + $materialBonus);
         $combatSpeed = $this->getItemBaseBehavior()->adjustCombatSpeed($combatSpeed, $this->getUsesItems());
         return $combatSpeed;
     }
 
     public function adjustBaseDamage(float $baseDamage): float
     {
-        $gradeBonus = $this->itemTypeGrade()/100;
+        $gradeBonus = $this->itemTypeTier()/10;
         $materialBonus = $this->material->getBaseDamageModifierBonus();
         $baseDamage = $baseDamage * (1 + $gradeBonus + $materialBonus);
         $baseDamage = $this->getItemBaseBehavior()->adjustBaseDamage($baseDamage, $this->getUsesItems());
@@ -158,7 +158,7 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
 
     public function adjustDamageMultiplier(float $damageMultiplier): float
     {
-        $gradeBonus = $this->itemTypeGrade()/100;
+        $gradeBonus = $this->itemTypeTier()/10;
         $materialBonus = $this->material->getDamageMultiplierModifierBonus();
         $damageMultiplier = $damageMultiplier * (1 + $gradeBonus + $materialBonus);
         $damageMultiplier = $this->getItemBaseBehavior()->adjustDamageMultiplier($damageMultiplier, $this->getUsesItems());
@@ -176,7 +176,7 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
 
     public function weight(): int
     {
-        $weight = $this->itemTypeGrade()/10;
+        $weight = $this->itemTypeTier();
         $weight *= $this->itemType->getItemBaseBehavior()->getWeightModifier();
         $weight *= $this->material->getWeightModifier();
         return (int) ceil($weight);
@@ -184,7 +184,7 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
 
     public function getProtection(): int
     {
-        $protection = $this->itemTypeGrade();
+        $protection = 10 * $this->itemTypeTier();
         $protection *= $this->itemType->getItemBaseBehavior()->getProtectionModifier();
         $protection *= $this->material->getProtectionModifier();
         return (int) ceil($protection);
@@ -192,7 +192,7 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
 
     public function getBlockChance(): float
     {
-        $blockChance = 1 + ($this->itemTypeGrade()**.5)/5;
+        $blockChance = $this->itemTypeTier();
         $blockChance *= $this->itemType->getItemBaseBehavior()->getBlockChanceModifier();
         $usesItems = $this->getUsesItems();
         if ($usesItems) {
@@ -207,7 +207,7 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
 
     public function getValue(): int
     {
-        $value = $this->itemTypeGrade()**1.5;
+        $value = (10 * $this->itemTypeTier())**1.5;
         $value *= $this->material->getValueModifier();
         $value *= 1 + $this->enchantments->boostLevelSum()**.5/5;
         return (int) ceil($value);
