@@ -11,7 +11,7 @@ $factory->define(\App\Domain\Models\Item::class, function (Faker $faker) {
     $itemType = \App\Domain\Models\ItemType::query()->inRandomOrder()->first();
     $material = Material::query()->whereHas('materialType', function (Builder $builder) use ($itemType) {
         return $builder->whereIn('id', $itemType->itemBase->materialTypes()->pluck('id')->toArray());
-    });
+    })->inRandomOrder()->first();
 
     return [
         'uuid' => \Illuminate\Support\Str::uuid(),
