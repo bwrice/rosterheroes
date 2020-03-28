@@ -135,7 +135,7 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
      */
     public function getAttacks()
     {
-        return $this->itemType->itemBase->attacks->merge($this->attacks);
+        return $this->itemType->attacks->merge($this->attacks);
     }
 
     public function adjustCombatSpeed(float $speed): float

@@ -3,6 +3,7 @@
 namespace App\Domain\Models;
 
 use App\Domain\Behaviors\ItemBases\ItemBaseBehavior;
+use App\Domain\Collections\AttackCollection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -14,6 +15,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $tier
  *
  * @property ItemBase $itemBase
+ *
+ * @property AttackCollection $attacks
  */
 class ItemType extends Model
 {
