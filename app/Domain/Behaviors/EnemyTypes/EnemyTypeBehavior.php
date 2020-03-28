@@ -8,6 +8,7 @@ class EnemyTypeBehavior
 {
     protected $healthModifierBonus = 0;
     protected $protectionModifierBonus = 0;
+    protected $blockModifierBonus = 0;
     protected $baseDamageModifierBonus = 0;
     protected $damageMultiplierModifierBonus = 0;
     protected $combatSpeedModifierBonus = 0;
@@ -50,5 +51,13 @@ class EnemyTypeBehavior
     public function getCombatSpeedModifierBonus(): float
     {
         return $this->combatSpeedModifierBonus;
+    }
+
+    /**
+     * @return int
+     */
+    public function getBlockModifierBonus(): int
+    {
+        return $this->blockModifierBonus;
     }
 }
