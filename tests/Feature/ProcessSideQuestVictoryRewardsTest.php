@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Domain\Actions\ProcessSideQuestRewards;
+use App\Domain\Actions\ProcessSideQuestVictoryRewards;
 use App\Domain\Actions\RewardChestToSquad;
 use App\Factories\Models\ChestBlueprintFactory;
 use App\Factories\Models\SideQuestFactory;
@@ -13,7 +13,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Date;
 use Tests\TestCase;
 
-class ProcessSideQuestRewardsTest extends TestCase
+class ProcessSideQuestVictoryRewardsTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -36,8 +36,8 @@ class ProcessSideQuestRewardsTest extends TestCase
         $originalSquadExperience = $this->sideQuestResult->campaignStop->campaign->squad->experience;
 
         try {
-            /** @var ProcessSideQuestRewards $domainAction */
-            $domainAction = app(ProcessSideQuestRewards::class);
+            /** @var ProcessSideQuestVictoryRewards $domainAction */
+            $domainAction = app(ProcessSideQuestVictoryRewards::class);
             $domainAction->execute($this->sideQuestResult->fresh());
         } catch (\Exception $exception) {
             $squad = $this->sideQuestResult->campaignStop->campaign->squad->fresh();
@@ -53,8 +53,8 @@ class ProcessSideQuestRewardsTest extends TestCase
      */
     public function it_will_update_the_rewards_processed_at_on_the_side_quest_result()
     {
-        /** @var ProcessSideQuestRewards $domainAction */
-        $domainAction = app(ProcessSideQuestRewards::class);
+        /** @var ProcessSideQuestVictoryRewards $domainAction */
+        $domainAction = app(ProcessSideQuestVictoryRewards::class);
         $domainAction->execute($this->sideQuestResult);
         $this->assertNotNull($this->sideQuestResult->fresh()->rewards_processed_at);
     }
@@ -72,8 +72,8 @@ class ProcessSideQuestRewardsTest extends TestCase
         $sideQuestXpReward = $sideQuestResult->sideQuest->getExperienceReward();
         $this->assertGreaterThan(0, $sideQuestXpReward);
 
-        /** @var ProcessSideQuestRewards $domainAction */
-        $domainAction = app(ProcessSideQuestRewards::class);
+        /** @var ProcessSideQuestVictoryRewards $domainAction */
+        $domainAction = app(ProcessSideQuestVictoryRewards::class);
         $domainAction->execute($sideQuestResult);
 
         $this->assertEquals($originalSquadExperience + $sideQuestXpReward, $squad->fresh()->experience);
@@ -94,8 +94,8 @@ class ProcessSideQuestRewardsTest extends TestCase
         $rewardChestMock = \Mockery::mock(RewardChestToSquad::class)->shouldReceive('execute', 2)->getMock();
         app()->instance(RewardChestToSquad::class, $rewardChestMock);
 
-        /** @var ProcessSideQuestRewards $domainAction */
-        $domainAction = app(ProcessSideQuestRewards::class);
+        /** @var ProcessSideQuestVictoryRewards $domainAction */
+        $domainAction = app(ProcessSideQuestVictoryRewards::class);
         $domainAction->execute($this->sideQuestResult->fresh());
     }
 }
