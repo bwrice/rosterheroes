@@ -35,7 +35,7 @@ class GenerateItemFromBlueprintAction
     {
         $itemClass = $this->getItemClass($itemBlueprint);
         $itemType = $this->getItemType($itemBlueprint);
-        $materialType = $this->getMaterial($itemBlueprint, $itemType);
+        $materialType = $this->getMaterial($itemBlueprint, $itemType->itemBase);
 
         $uuid = Str::uuid();
         /** @var ItemAggregate $itemAggregate */
