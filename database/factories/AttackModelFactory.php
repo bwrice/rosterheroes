@@ -21,6 +21,6 @@ $factory->define(\App\Domain\Models\Attack::class, function (Faker $faker) {
         'target_priority_id' => function() {
             return \App\Domain\Models\TargetPriority::query()->inRandomOrder()->first()->id;
         },
-        'config_path' => '/Yaml/Attacks/test_attack.yaml'
+        'tier' => 1
     ];
 });
