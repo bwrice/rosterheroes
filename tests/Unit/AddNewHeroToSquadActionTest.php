@@ -70,7 +70,8 @@ class AddNewHeroToSquadActionTest extends TestCase
         $itemTypeIDs = $items->pluck('item_type_id')->values()->toArray();
 
         $blueprints->each(function (ItemBlueprint $itemBlueprint) use ($itemTypeIDs) {
-            $intersect = array_intersect($itemBlueprint->itemTypes()->pluck('id')->toArray(), $itemTypeIDs);
+            $blueprintItemTypeIDs = $itemBlueprint->itemTypes()->pluck('id')->toArray();
+            $intersect = array_intersect($blueprintItemTypeIDs, $itemTypeIDs);
             $this->assertGreaterThan(0, count($intersect));
         });
     }
