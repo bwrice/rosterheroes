@@ -14,14 +14,14 @@ class CreateItemBlueprintsToMaterialsPivot extends Migration
     public function up()
     {
         Schema::create('item_blueprint_material', function (Blueprint $table) {
-            $table->integer('blueprint_id')->unsigned();
+            $table->integer('item_blueprint_id')->unsigned();
             $table->integer('material_id')->unsigned();
-            $table->primary(['blueprint_id', 'material_id']);
+            $table->primary(['item_blueprint_id', 'material_id'], 'item_blueprint_material_primary');
             $table->timestamps();
         });
 
         Schema::table('item_blueprint_material', function (Blueprint $table) {
-            $table->foreign('blueprint_id')->references('id')->on('item_blueprints');
+            $table->foreign('item_blueprint_id')->references('id')->on('item_blueprints');
             $table->foreign('material_id')->references('id')->on('materials');
         });
     }

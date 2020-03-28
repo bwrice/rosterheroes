@@ -14,15 +14,15 @@ class CreateItemBlueprintsToItemClassesPivot extends Migration
     public function up()
     {
         Schema::create('item_blueprint_item_class', function (Blueprint $table) {
-            $table->integer('blueprint_id')->unsigned();
-            $table->integer('i_class_id')->unsigned();
-            $table->primary(['blueprint_id', 'i_class_id']);
+            $table->integer('item_blueprint_id')->unsigned();
+            $table->integer('item_class_id')->unsigned();
+            $table->primary(['item_blueprint_id', 'item_class_id'], 'item_blueprint_item_class_primary');
             $table->timestamps();
         });
 
         Schema::table('item_blueprint_item_class', function (Blueprint $table) {
-            $table->foreign('blueprint_id')->references('id')->on('item_blueprints');
-            $table->foreign('i_class_id')->references('id')->on('item_classes');
+            $table->foreign('item_blueprint_id')->references('id')->on('item_blueprints');
+            $table->foreign('item_class_id')->references('id')->on('item_classes');
         });
     }
 

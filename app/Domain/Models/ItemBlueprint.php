@@ -60,7 +60,7 @@ class ItemBlueprint extends Model
      */
     public function itemTypes()
     {
-        return $this->belongsToMany(ItemType::class, 'item_blueprint_item_type', 'blueprint_id', 'i_type_id')->withTimestamps();
+        return $this->belongsToMany(ItemType::class)->withTimestamps();
     }
 
     /**
@@ -68,7 +68,7 @@ class ItemBlueprint extends Model
      */
     public function itemBases()
     {
-        return $this->belongsToMany(ItemBase::class, 'item_base_item_blueprint', 'blueprint_id', 'i_base_id')->withTimestamps();
+        return $this->belongsToMany(ItemBase::class)->withTimestamps();
     }
 
     /**
@@ -76,7 +76,7 @@ class ItemBlueprint extends Model
      */
     public function itemClasses()
     {
-        return $this->belongsToMany(ItemClass::class, 'item_blueprint_item_class', 'blueprint_id', 'i_class_id')->withTimestamps();
+        return $this->belongsToMany(ItemClass::class)->withTimestamps();
     }
 
     /**
@@ -84,7 +84,7 @@ class ItemBlueprint extends Model
      */
     public function materials()
     {
-        return $this->belongsToMany(Material::class, 'item_blueprint_material', 'blueprint_id', 'material_id')->withTimestamps();
+        return $this->belongsToMany(Material::class)->withTimestamps();
     }
 
     /**
