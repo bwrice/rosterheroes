@@ -15,6 +15,7 @@ use Carbon\CarbonInterface;
 
 class GameDTO
 {
+
     /**
      * @var Team
      */
@@ -31,13 +32,23 @@ class GameDTO
      * @var string
      */
     private $externalID;
+    /**
+     * @var string
+     */
+    private $status;
 
-    public function __construct(CarbonInterface $startsAt, Team $homeTeam, Team $awayTeam, string $externalID)
+    public function __construct(
+        CarbonInterface $startsAt,
+        Team $homeTeam,
+        Team $awayTeam,
+        string $externalID,
+        string $status)
     {
         $this->startsAt = $startsAt;
         $this->homeTeam = $homeTeam;
         $this->awayTeam = $awayTeam;
         $this->externalID = $externalID;
+        $this->status = $status;
     }
 
     /**
@@ -70,5 +81,13 @@ class GameDTO
     public function getExternalID(): string
     {
         return $this->externalID;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus(): string
+    {
+        return $this->status;
     }
 }

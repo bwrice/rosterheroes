@@ -180,7 +180,8 @@ class MySportsFeed implements StatsIntegration
                     $startsAt,
                     $homeAndAwayTeams['home_team'],
                     $homeAndAwayTeams['away_team'],
-                    $scheduleData['id']
+                    $scheduleData['id'],
+                    $scheduleData['scheduleStatus']
                 );
 
             } catch (\Exception $exception) {

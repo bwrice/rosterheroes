@@ -72,9 +72,16 @@ class UpdateGamesJob implements ShouldQueue
     protected function updateGame(Game $game, GameDTO $gameDTO)
     {
         if ($game->starts_at->timestamp !== $gameDTO->getStartsAt()->timestamp) {
+            // TODO: Handle disabling player spirits no longer valid for week
             $game->starts_at = $gameDTO->getStartsAt();
             $game->save();
         }
+
+        if ($game->schedule_status !== $gameDTO->getStatus()) {
+            $game->schedule_status = $gameDTO->getStatus();
+            $game->save();
+        }
+
         return $game;
     }
 }
