@@ -46,7 +46,7 @@ class ItemCollection extends Collection
     {
         $attacks = new AttackCollection();
         $this->loadMissing([
-            'itemType.itemBase.attacks',
+            'itemType.attacks',
             'attacks'
         ])->each(function (Item $item) use ($attacks) {
             $item->getAttacks()->each(function (Attack $attack) use ($attacks) {
