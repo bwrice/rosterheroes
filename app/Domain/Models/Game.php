@@ -30,6 +30,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Game extends Model
 {
+    public const SCHEDULE_STATUS_NORMAL = 'NORMAL';
+    public const SCHEDULE_STATUS_DELAYED = 'DELAYED';
+
     protected $guarded = [];
 
     protected $dates = [

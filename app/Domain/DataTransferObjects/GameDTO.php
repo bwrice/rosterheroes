@@ -15,8 +15,6 @@ use Carbon\CarbonInterface;
 
 class GameDTO
 {
-    public const SCHEDULE_STATUS_DELAYED = 'DELAYED';
-    public const SCHEDULE_STATUS_NORMAL = 'NORMAL';
 
     /**
      * @var Team
