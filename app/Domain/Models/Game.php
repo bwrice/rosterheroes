@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $home_team_id
  * @property int $away_team_id
  * @property string $external_id
+ * @property string $schedule_status
  * @property CarbonImmutable $starts_at
  * @property CarbonImmutable|null $finalized_at
  *
