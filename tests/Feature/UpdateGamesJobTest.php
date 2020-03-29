@@ -50,7 +50,7 @@ class UpdateGamesJobTest extends TestCase
             $awayTeam = factory(Team::class)->create([
                 'league_id' => $nfl->id
             ]);
-            $gameDTO = new GameDTO($startsAt, $homeTeam, $awayTeam, $externalGameID);
+            $gameDTO = new GameDTO($startsAt, $homeTeam, $awayTeam, $externalGameID, GameDTO::SCHEDULE_STATUS_NORMAL);
             $gameDTOs->push($gameDTO);
         }
 
@@ -89,7 +89,8 @@ class UpdateGamesJobTest extends TestCase
             $fourHoursLater,
             factory(Team::class)->create(),
             factory(Team::class)->create(),
-            $externalID
+            $externalID,
+            GameDTO::SCHEDULE_STATUS_NORMAL
         );
 
         $integration = new MockIntegration(null, null, collect([$gameDTO]));
