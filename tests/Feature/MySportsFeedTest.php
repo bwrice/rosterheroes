@@ -246,6 +246,7 @@ class MySportsFeedTest extends TestCase
                             'id' => $awayTeamOneExternalID
                         ],
                         'startTime' => '2019-5-10 16:40:00',
+                        'scheduleStatus' => GameDTO::SCHEDULE_STATUS_NORMAL,
                         'id' => $gameOneID
                     ],
                 ],
@@ -258,6 +259,7 @@ class MySportsFeedTest extends TestCase
                             'id' => $awayTeamTwoExternalID
                         ],
                         'startTime' => '2019-5-12 13:15:00',
+                        'scheduleStatus' => GameDTO::SCHEDULE_STATUS_DELAYED,
                         'id' => $gameTwoID
                     ],
                 ]
@@ -276,6 +278,7 @@ class MySportsFeedTest extends TestCase
         $gameOne = $gameDTOs->first(function (GameDTO $gameDTO) use ($gameOneID) {
             return $gameDTO->getExternalID() === $gameOneID;
         });
+        $this->assertEquals($gameOne->getStatus(), GameDTO::SCHEDULE_STATUS_NORMAL);
         $this->assertEquals($homeTeamOne->id, $gameOne->getHomeTeam()->id);
         $this->assertEquals($awayTeamOne->id, $gameOne->getAwayTeam()->id);
 
@@ -283,6 +286,7 @@ class MySportsFeedTest extends TestCase
         $gameTwo = $gameDTOs->first(function (GameDTO $gameDTO) use ($gameTwoID) {
             return $gameDTO->getExternalID() === $gameTwoID;
         });
+        $this->assertEquals($gameTwo->getStatus(), GameDTO::SCHEDULE_STATUS_DELAYED);
         $this->assertEquals($homeTeamTwo->id, $gameTwo->getHomeTeam()->id);
         $this->assertEquals($awayTeamTwo->id, $gameTwo->getAwayTeam()->id);
 
