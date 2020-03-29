@@ -87,7 +87,7 @@ class ItemFactory
 
         $item->enchantments()->saveMany($this->enchantments);
         if ($this->withAttacks) {
-            $attacks = $this->getAttacks($itemType->itemBase);
+            $attacks = $this->getAttacks($itemType);
             $item->attacks()->saveMany($attacks);
         }
 
@@ -127,12 +127,12 @@ class ItemFactory
         return $clone;
     }
 
-    protected function getAttacks(ItemBase $itemBase)
+    protected function getAttacks(ItemType $itemType)
     {
         if ($this->attacks) {
             return $this->attacks;
         }
-        return $itemBase->attacks()->inRandomOrder()->take($this->attacksAmount)->get();
+        return $itemType->attacks()->inRandomOrder()->take($this->attacksAmount)->get();
     }
 
     public function fromItemBases(array $itemBaseNames)

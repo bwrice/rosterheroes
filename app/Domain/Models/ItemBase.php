@@ -53,9 +53,6 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property string $name
- *
- * @property Collection $slotTypes
- * @property AttackCollection $attacks
  */
 class ItemBase extends Model
 {
@@ -106,11 +103,6 @@ class ItemBase extends Model
     public function materialTypes()
     {
         return $this->belongsToMany(MaterialType::class)->withTimestamps();
-    }
-
-    public function attacks()
-    {
-        return $this->belongsToMany(Attack::class);
     }
 
     public function itemTypes()
