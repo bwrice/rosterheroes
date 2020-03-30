@@ -13,6 +13,9 @@ class SideQuestResultFactory
     /** @var SideQuestFactory|null */
     protected $sideQuestFactory;
 
+    /** @var CampaignStopFactory|null */
+    protected $campaignStopFactory;
+
     /** @var Collection|null */
     protected $sideQuestEventFactories;
 
@@ -26,7 +29,7 @@ class SideQuestResultFactory
         /** @var SideQuestResult $sideQuestResult */
         $sideQuestResult = SideQuestResult::query()->create(array_merge([
             'uuid' => Str::uuid()->toString(),
-            'campaign_stop_id' => CampaignStopFactory::new()->create()->id,
+            'campaign_stop_id' => $this->getCampaignStop()->id,
             'side_quest_id' => $this->getSideQuest()->id
         ], $extra));
 
@@ -46,10 +49,23 @@ class SideQuestResultFactory
         return $clone;
     }
 
+    public function withCampaignStop(CampaignStopFactory $campaignStopFactory)
+    {
+        $clone = clone $this;
+        $clone->campaignStopFactory = $campaignStopFactory;
+        return $clone;
+    }
+
     protected function getSideQuest()
     {
         $sideQuestFactory = $this->sideQuestFactory ?: SideQuestFactory::new();
         return $sideQuestFactory->create();
+    }
+
+    protected function getCampaignStop()
+    {
+        $campaignStopFactory = $this->campaignStopFactory ?: CampaignStopFactory::new();
+        return $campaignStopFactory->create();
     }
 
     public function withEvents(Collection $sideQuestEventFactories)
