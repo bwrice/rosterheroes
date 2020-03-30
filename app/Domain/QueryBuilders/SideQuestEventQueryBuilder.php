@@ -18,4 +18,9 @@ class SideQuestEventQueryBuilder extends Builder
         $event = $this->where('event_type', '=', SideQuestEvent::TYPE_SIDE_QUEST_VICTORY)->first();
         return $event;
     }
+
+    public function heroKillsMinion()
+    {
+        return $this->where('event_type', '=', SideQuestEvent::TYPE_HERO_KILLS_MINION);
+    }
 }
