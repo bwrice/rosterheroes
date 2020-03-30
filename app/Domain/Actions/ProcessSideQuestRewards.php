@@ -7,6 +7,7 @@ namespace App\Domain\Actions;
 use App\Domain\Models\Minion;
 use App\SideQuestEvent;
 use App\SideQuestResult;
+use Illuminate\Support\Facades\DB;
 
 class ProcessSideQuestRewards
 {
@@ -29,22 +30,24 @@ class ProcessSideQuestRewards
 
     public function execute(SideQuestResult $sideQuestResult)
     {
-        $squad = $sideQuestResult->campaignStop->campaign->squad;
+        DB::transaction(function () use ($sideQuestResult) {
+            $squad = $sideQuestResult->campaignStop->campaign->squad;
 
-        $lastMoment = $sideQuestResult->sideQuestEvents()->finalEvent()->moment;
-        $experienceForMoments = (int) ceil($lastMoment * $sideQuestResult->sideQuest->getExperiencePerMoment());
-        $squadAggregate = $squad->getAggregate();
-        $squadAggregate->increaseExperience($experienceForMoments)->persist();
+            $lastMoment = $sideQuestResult->sideQuestEvents()->finalEvent()->moment;
+            $experienceForMoments = (int) ceil($lastMoment * $sideQuestResult->sideQuest->getExperiencePerMoment());
+            $squadAggregate = $squad->getAggregate();
+            $squadAggregate->increaseExperience($experienceForMoments)->persist();
 
-        $minionKillEvents = $sideQuestResult->sideQuestEvents()->heroKillsMinion()->get();
-        $minionKillEvents->each(function (SideQuestEvent $sideQuestEvent) use ($squad) {
-            $minion = $sideQuestEvent->getCombatMinion()->getMinion();
-            $this->rewardSquadForMinionKill->execute($squad->fresh(), $minion);
+            $minionKillEvents = $sideQuestResult->sideQuestEvents()->heroKillsMinion()->get();
+            $minionKillEvents->each(function (SideQuestEvent $sideQuestEvent) use ($squad) {
+                $minion = $sideQuestEvent->getCombatMinion()->getMinion();
+                $this->rewardSquadForMinionKill->execute($squad->fresh(), $minion);
+            });
+
+            $victoryEvent = $sideQuestResult->sideQuestEvents()->victoryEvent();
+            if ($victoryEvent) {
+                $this->processSideQuestVictoryRewards->execute($sideQuestResult);
+            }
         });
-
-        $victoryEvent = $sideQuestResult->sideQuestEvents()->victoryEvent();
-        if ($victoryEvent) {
-            $this->processSideQuestVictoryRewards->execute($sideQuestResult);
-        }
     }
 }
