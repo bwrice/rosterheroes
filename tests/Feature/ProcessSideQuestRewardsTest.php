@@ -5,9 +5,15 @@ namespace Tests\Feature;
 use App\Domain\Actions\Combat\ProcessSideQuestResult;
 use App\Domain\Actions\ProcessSideQuestRewards;
 use App\Domain\Actions\ProcessSideQuestVictoryRewards;
+use App\Domain\Actions\RewardSquadForMinionKill;
+use App\Domain\Combat\Combatants\CombatMinion;
+use App\Factories\Combat\CombatHeroFactory;
+use App\Factories\Combat\CombatMinionFactory;
+use App\Factories\Combat\HeroCombatAttackFactory;
 use App\Factories\Models\SideQuestEventFactory;
 use App\Factories\Models\SideQuestResultFactory;
 use App\SideQuestEvent;
+use App\SideQuestResult;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -27,15 +33,15 @@ class ProcessSideQuestRewardsTest extends TestCase
             $eventFactory
         ]))->create();
 
-        $processVictoryMock = \Mockery::mock(ProcessSideQuestVictoryRewards::class)
-            ->shouldReceive('execute')
-            ->getMock();
+        $processVictoryMock = \Mockery::spy(ProcessSideQuestVictoryRewards::class);
 
         app()->instance(ProcessSideQuestVictoryRewards::class, $processVictoryMock);
 
         /** @var ProcessSideQuestRewards $domainAction */
         $domainAction = app(ProcessSideQuestRewards::class);
         $domainAction->execute($sideQuestResult);
+
+        $processVictoryMock->shouldHaveReceived('execute');
     }
 
     /**
@@ -48,11 +54,38 @@ class ProcessSideQuestRewardsTest extends TestCase
             $eventFactory
         ]))->create();
 
-        $processVictoryMock = \Mockery::mock(ProcessSideQuestVictoryRewards::class)
-            ->shouldNotReceive('execute')
-            ->getMock();
+        $processVictoryMock = \Mockery::spy(ProcessSideQuestVictoryRewards::class);
 
         app()->instance(ProcessSideQuestVictoryRewards::class, $processVictoryMock);
+
+        /** @var ProcessSideQuestRewards $domainAction */
+        $domainAction = app(ProcessSideQuestRewards::class);
+        $domainAction->execute($sideQuestResult);
+
+        $processVictoryMock->shouldNotHaveReceived('execute');
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_execute_reward_minion_kill_for_every_minion_killed()
+    {
+        $combatHero = CombatHeroFactory::new()->create();
+        $heroCombatAttack = HeroCombatAttackFactory::new()->create();
+        $combatMinion = CombatMinionFactory::new()->create();
+        $eventFactory = SideQuestEventFactory::new()->heroKillsMinion($combatHero, $heroCombatAttack, $combatMinion);
+        $sideQuestResult = SideQuestResultFactory::new()->withEvents(collect([
+            $eventFactory,
+            $eventFactory,
+            $eventFactory
+        ]))->create();
+
+        $rewardMinionKillAction = \Mockery::spy(RewardSquadForMinionKill::class)
+            ->shouldReceive('execute')
+            ->times(3)
+            ->getMock();
+
+        app()->instance(RewardSquadForMinionKill::class, $rewardMinionKillAction);
 
         /** @var ProcessSideQuestRewards $domainAction */
         $domainAction = app(ProcessSideQuestRewards::class);
