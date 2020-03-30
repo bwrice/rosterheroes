@@ -52,7 +52,7 @@ class SideQuestResultFactory
         return $sideQuestFactory->create();
     }
 
-    protected function withEvents(Collection $sideQuestEventFactories)
+    public function withEvents(Collection $sideQuestEventFactories)
     {
         $clone = clone $this;
         $clone->sideQuestEventFactories = $sideQuestEventFactories;
