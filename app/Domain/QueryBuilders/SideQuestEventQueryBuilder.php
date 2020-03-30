@@ -19,6 +19,15 @@ class SideQuestEventQueryBuilder extends Builder
         return $event;
     }
 
+    /**
+     * @return SideQuestEvent
+     */
+    public function finalEvent()
+    {/** @var SideQuestEvent|null $event */
+        $event = $this->orderByDesc('moment')->first();
+        return $event;
+    }
+
     public function heroKillsMinion()
     {
         return $this->where('event_type', '=', SideQuestEvent::TYPE_HERO_KILLS_MINION);
