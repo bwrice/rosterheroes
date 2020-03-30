@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Domain\Models\EventSourcedModel;
+use App\Domain\QueryBuilders\SideQuestEventQueryBuilder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -37,5 +38,10 @@ class SideQuestEvent extends EventSourcedModel
     public function sideQuestResult()
     {
         return $this->belongsTo(SideQuestResult::class);
+    }
+    
+    public function newEloquentBuilder($query)
+    {
+        return new SideQuestEventQueryBuilder($query);
     }
 }
