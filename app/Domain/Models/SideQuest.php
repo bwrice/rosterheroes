@@ -54,7 +54,12 @@ class SideQuest extends Model
 
     public function difficulty(): int
     {
-        return (int) ceil($this->minions->sum(function (Minion $minion) {
+        return (int) $this->floatDifficulty();
+    }
+
+    protected function floatDifficulty()
+    {
+        return ceil($this->minions->sum(function (Minion $minion) {
             return ((($minion->getLevel() ** 1.4)/100) + $minion->getLevel()/20) * $minion->pivot->count;
         }));
     }
@@ -63,5 +68,10 @@ class SideQuest extends Model
     {
         $difficult = $this->difficulty();
         return (int) ceil($difficult * 100 + ($difficult**2.25));
+    }
+
+    public function getExperiencePerMoment()
+    {
+        return $this->floatDifficulty()/4;
     }
 }
