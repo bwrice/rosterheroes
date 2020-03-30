@@ -7,6 +7,7 @@ namespace App\Domain\Actions;
 use App\Domain\Models\Minion;
 use App\SideQuestEvent;
 use App\SideQuestResult;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 
 class ProcessSideQuestRewards
@@ -33,10 +34,12 @@ class ProcessSideQuestRewards
         DB::transaction(function () use ($sideQuestResult) {
             $squad = $sideQuestResult->campaignStop->campaign->squad;
 
-            $lastMoment = $sideQuestResult->sideQuestEvents()->finalEvent()->moment;
-            $experienceForMoments = (int) ceil($lastMoment * $sideQuestResult->sideQuest->getExperiencePerMoment());
-            $squadAggregate = $squad->getAggregate();
-            $squadAggregate->increaseExperience($experienceForMoments)->persist();
+            $finalEvent = $sideQuestResult->sideQuestEvents()->finalEvent();
+            if ($finalEvent) {
+                $experienceForMoments = (int) ceil($finalEvent->moment * $sideQuestResult->sideQuest->getExperiencePerMoment());
+                $squadAggregate = $squad->getAggregate();
+                $squadAggregate->increaseExperience($experienceForMoments)->persist();
+            }
 
             $minionKillEvents = $sideQuestResult->sideQuestEvents()->heroKillsMinion()->get();
             $minionKillEvents->each(function (SideQuestEvent $sideQuestEvent) use ($squad) {
@@ -48,6 +51,9 @@ class ProcessSideQuestRewards
             if ($victoryEvent) {
                 $this->processSideQuestVictoryRewards->execute($sideQuestResult);
             }
+
+            $sideQuestResult->rewards_processed_at = Date::now();
+            $sideQuestResult->save();
         });
     }
 }

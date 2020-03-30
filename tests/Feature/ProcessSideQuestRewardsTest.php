@@ -125,4 +125,20 @@ class ProcessSideQuestRewardsTest extends TestCase
 
         $this->assertEquals($previousExperience + $experienceEarned, $squad->fresh()->experience);
     }
+
+    /**
+     * @test
+     */
+    public function it_will_save_the_rewards_processed_at_date_time()
+    {
+        $sideQuestResult = SideQuestResultFactory::new()->create();
+
+        $this->assertNull($sideQuestResult->rewards_processed_at);
+
+        /** @var ProcessSideQuestRewards $domainAction */
+        $domainAction = app(ProcessSideQuestRewards::class);
+        $domainAction->execute($sideQuestResult);
+
+        $this->assertNotNull($sideQuestResult->fresh()->rewards_processed_at);
+    }
 }
