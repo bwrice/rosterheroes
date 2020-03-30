@@ -5,12 +5,16 @@ namespace App\Factories\Models;
 
 
 use App\SideQuestResult;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 class SideQuestResultFactory
 {
     /** @var SideQuestFactory|null */
     protected $sideQuestFactory;
+
+    /** @var Collection|null */
+    protected $sideQuestEventFactories;
 
     public static function new(): self
     {
@@ -26,6 +30,12 @@ class SideQuestResultFactory
             'side_quest_id' => $this->getSideQuest()->id
         ], $extra));
 
+        if ($this->sideQuestEventFactories) {
+            $this->sideQuestEventFactories->each(function (SideQuestEventFactory $sideQuestEventFactory) use ($sideQuestResult) {
+                $sideQuestEventFactory->withSideQuestResultID($sideQuestResult->id)->create();
+            });
+        }
+
         return $sideQuestResult;
     }
 
@@ -40,5 +50,12 @@ class SideQuestResultFactory
     {
         $sideQuestFactory = $this->sideQuestFactory ?: SideQuestFactory::new();
         return $sideQuestFactory->create();
+    }
+
+    protected function withEvents(Collection $sideQuestEventFactories)
+    {
+        $clone = clone $this;
+        $clone->sideQuestEventFactories = $sideQuestEventFactories;
+        return $clone;
     }
 }
