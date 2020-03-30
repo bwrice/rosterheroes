@@ -26,7 +26,7 @@ class SideQuestEventFactory
         $sideQuestEvent = SideQuestEvent::query()->create(array_merge([
             'uuid' => (string) Str::uuid(),
             'moment' => $this->moment,
-            'side_quest_result' => $this->getSideQuestResultID(),
+            'side_quest_result_id' => $this->getSideQuestResultID(),
             'event_type' => $this->eventType,
             'data' => []
         ], $extra));
