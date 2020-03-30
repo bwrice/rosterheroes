@@ -8,6 +8,7 @@ use App\Domain\Collections\AbstractCombatAttackCollection;
 use App\Domain\Combat\Attacks\HeroCombatAttack;
 use App\Domain\Interfaces\SpendsResources;
 use App\Domain\Models\CombatPosition;
+use App\Domain\Models\Hero;
 use App\Domain\Models\Json\ResourceCosts\ResourceCost;
 use App\Domain\Models\MeasurableType;
 use Illuminate\Contracts\Support\Arrayable;
@@ -152,5 +153,10 @@ class CombatHero extends AbstractCombatant implements SpendsResources
             });
         }
         return $combatAttacks;
+    }
+
+    public function getHero()
+    {
+        return Hero::findUuidOrFail($this->getHeroUuid());
     }
 }

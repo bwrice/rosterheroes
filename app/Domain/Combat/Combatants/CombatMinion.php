@@ -8,6 +8,7 @@ use App\Domain\Collections\AbstractCombatAttackCollection;
 use App\Domain\Combat\Attacks\CombatAttackInterface;
 use App\Domain\Combat\Combatants\Combatant;
 use App\Domain\Models\CombatPosition;
+use App\Domain\Models\Minion;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
@@ -79,5 +80,10 @@ class CombatMinion extends AbstractCombatant
         return $this->combatAttacks
             ->withinAttackerProximity($closestProximityPosition->getProximity())
             ->ready();
+    }
+
+    public function getMinion()
+    {
+        return Minion::findUuidOrFail($this->getMinionUuid());
     }
 }

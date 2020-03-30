@@ -11,6 +11,7 @@ use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Interfaces\HasAttacks;
 use App\Domain\Traits\HasConfigAttributes;
 use App\Domain\Traits\HasNameSlug;
+use App\Domain\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -36,6 +37,7 @@ class Minion extends Model implements HasAttacks
 
     use HasConfigAttributes;
     use HasNameSlug;
+    use HasUuid;
 
     protected $guarded = [];
 
