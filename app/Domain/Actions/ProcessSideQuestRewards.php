@@ -29,11 +29,17 @@ class ProcessSideQuestRewards
 
     public function execute(SideQuestResult $sideQuestResult)
     {
+        $squad = $sideQuestResult->campaignStop->campaign->squad;
+
+        $lastMoment = $sideQuestResult->sideQuestEvents()->finalEvent()->moment;
+        $experienceForMoments = (int) ceil($lastMoment * $sideQuestResult->sideQuest->getExperiencePerMoment());
+        $squadAggregate = $squad->getAggregate();
+        $squadAggregate->increaseExperience($experienceForMoments)->persist();
+
         $minionKillEvents = $sideQuestResult->sideQuestEvents()->heroKillsMinion()->get();
-        $minionKillEvents->each(function (SideQuestEvent $sideQuestEvent) {
-            $squad = $sideQuestEvent->getCombatHero()->getHero()->squad;
+        $minionKillEvents->each(function (SideQuestEvent $sideQuestEvent) use ($squad) {
             $minion = $sideQuestEvent->getCombatMinion()->getMinion();
-            $this->rewardSquadForMinionKill->execute($squad, $minion);
+            $this->rewardSquadForMinionKill->execute($squad->fresh(), $minion);
         });
 
         $victoryEvent = $sideQuestResult->sideQuestEvents()->victoryEvent();

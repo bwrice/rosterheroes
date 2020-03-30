@@ -10,7 +10,9 @@ use App\Domain\Combat\Combatants\CombatMinion;
 use App\Factories\Combat\CombatHeroFactory;
 use App\Factories\Combat\CombatMinionFactory;
 use App\Factories\Combat\HeroCombatAttackFactory;
+use App\Factories\Models\MinionFactory;
 use App\Factories\Models\SideQuestEventFactory;
+use App\Factories\Models\SideQuestFactory;
 use App\Factories\Models\SideQuestResultFactory;
 use App\SideQuestEvent;
 use App\SideQuestResult;
@@ -90,5 +92,37 @@ class ProcessSideQuestRewardsTest extends TestCase
         /** @var ProcessSideQuestRewards $domainAction */
         $domainAction = app(ProcessSideQuestRewards::class);
         $domainAction->execute($sideQuestResult);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_reward_the_squad_experience_for_the_moments_lasted_in_battle()
+    {
+        $minionFactory = MinionFactory::new();
+        $sideQuestFactory = SideQuestFactory::new()->withMinions(collect([
+            $minionFactory,
+            $minionFactory
+        ]));
+
+        $finalMoment = rand(6, 50);
+        $sideQuestEventOne = SideQuestEventFactory::new()->withMoment(5);
+        $sideQuestEventTwo = SideQuestEventFactory::new()->withMoment($finalMoment);
+
+        $sideQuestResult = SideQuestResultFactory::new()->withSideQuest($sideQuestFactory)->withEvents(collect([
+            $sideQuestEventTwo,
+            $sideQuestEventOne
+        ]))->create();
+
+        $squad = $sideQuestResult->campaignStop->campaign->squad;
+        $previousExperience = $squad->experience;
+        $experienceEarned = (int) ceil($sideQuestResult->sideQuest->getExperiencePerMoment() * $finalMoment);
+        $this->assertGreaterThan(0, $experienceEarned);
+
+        /** @var ProcessSideQuestRewards $domainAction */
+        $domainAction = app(ProcessSideQuestRewards::class);
+        $domainAction->execute($sideQuestResult);
+
+        $this->assertEquals($previousExperience + $experienceEarned, $squad->fresh()->experience);
     }
 }
