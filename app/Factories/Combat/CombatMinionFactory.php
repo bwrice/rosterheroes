@@ -7,6 +7,7 @@ namespace App\Factories\Combat;
 use App\Domain\Collections\AbstractCombatAttackCollection;
 use App\Domain\Combat\Combatants\CombatMinion;
 use App\Domain\Models\CombatPosition;
+use App\Factories\Models\MinionFactory;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
@@ -30,7 +31,7 @@ class CombatMinionFactory extends AbstractCombatantFactory
         }
 
         return new CombatMinion(
-            (string) Str::uuid(),
+            (string) MinionFactory::new()->create()->uuid,
             (string) Str::uuid(),
             1500,
             250,
