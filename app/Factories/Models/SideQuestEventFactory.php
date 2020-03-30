@@ -34,21 +34,21 @@ class SideQuestEventFactory
         return $sideQuestEvent->fresh();
     }
 
-    protected function withMoment(int $moment)
+    public function withMoment(int $moment)
     {
         $clone = clone $this;
         $clone->moment = $moment;
         return $clone;
     }
 
-    protected function withSideQuestResultID(int $sideQuestResultID)
+    public function withSideQuestResultID(int $sideQuestResultID)
     {
         $clone = clone $this;
         $clone->sideQuestResultID = $sideQuestResultID;
         return $clone;
     }
 
-    protected function withEventType(string $eventType)
+    public function withEventType(string $eventType)
     {
         $clone = clone $this;
         $clone->eventType = $eventType;
