@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Domain\Combat\Combatants\CombatHeroDataMapper;
+use App\Domain\Combat\Combatants\CombatMinionDataMapper;
 use App\Domain\Models\EventSourcedModel;
 use App\Domain\QueryBuilders\SideQuestEventQueryBuilder;
 use Illuminate\Database\Eloquent\Model;
@@ -39,9 +41,34 @@ class SideQuestEvent extends EventSourcedModel
     {
         return $this->belongsTo(SideQuestResult::class);
     }
-    
+
     public function newEloquentBuilder($query)
     {
         return new SideQuestEventQueryBuilder($query);
+    }
+
+    public function getMappedData()
+    {
+        $mappedData = [];
+        if (array_key_exists('combatMinion', $this->data)) {
+            /** @var CombatMinionDataMapper $dataMapper */
+            $dataMapper = app(CombatMinionDataMapper::class);
+            return $dataMapper->getCombatMinion($this->data['combatMinion']);
+        }
+        return $mappedData;
+    }
+
+    public function getCombatMinion()
+    {
+        /** @var CombatMinionDataMapper $dataMapper */
+        $dataMapper = app(CombatMinionDataMapper::class);
+        return $dataMapper->getCombatMinion($this->data['combatMinion']);
+    }
+
+    public function getCombatHero()
+    {
+        /** @var CombatHeroDataMapper $dataMapper */
+        $dataMapper = app(CombatHeroDataMapper::class);
+        return $dataMapper->getCombatHero($this->data['combatHero']);
     }
 }
