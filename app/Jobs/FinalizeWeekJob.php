@@ -2,10 +2,6 @@
 
 namespace App\Jobs;
 
-use App\Domain\Actions\SetupNextWeekAction;
-use App\Domain\Actions\WeekFinalizing\BuildCurrentWeekMinionSnapshotsAction;
-use App\Domain\Actions\WeekFinalizing\BuildCurrentWeekSquadSnapshotsAction;
-use App\Domain\Actions\WeekFinalizing\BuildCurrentWeekTitanSnapshotsAction;
 use App\Domain\Actions\WeekFinalizing\FinalizeCurrentWeekPlayerGameLogsAction;
 use App\Domain\Actions\WeekFinalizing\FinalizeCurrentWeekSpiritEnergiesAction;
 use App\Domain\Actions\WeekFinalizing\FinalizeWeekDomainAction;
