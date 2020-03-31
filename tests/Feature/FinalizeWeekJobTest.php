@@ -3,11 +3,9 @@
 namespace Tests\Feature;
 
 use App\Domain\Actions\SetupNextWeekAction;
-use App\Domain\Actions\WeekFinalizing\BuildCurrentWeekMinionSnapshotsAction;
-use App\Domain\Actions\WeekFinalizing\BuildCurrentWeekSquadSnapshotsAction;
-use App\Domain\Actions\WeekFinalizing\BuildCurrentWeekTitanSnapshotsAction;
 use App\Domain\Actions\WeekFinalizing\FinalizeCurrentWeekPlayerGameLogsAction;
 use App\Domain\Actions\WeekFinalizing\FinalizeCurrentWeekSpiritEnergiesAction;
+use App\Domain\Actions\WeekFinalizing\FinalizeWeekFinalStep;
 use App\Domain\Actions\WeekFinalizing\ProcessCurrentWeekSideQuestsAction;
 use App\Jobs\FinalizeWeekJob;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -48,7 +46,7 @@ class FinalizeWeekJobTest extends TestCase
             ],
             'Step 4' => [
                 'step' => 4,
-                'domainAction' => SetupNextWeekAction::class
+                'domainAction' => FinalizeWeekFinalStep::class
             ],
         ];
     }
