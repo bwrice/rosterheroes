@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Domain\Actions\Testing\AutoJoinQuests;
+use App\Domain\Actions\Testing\AutoManageCampaign;
 use App\Domain\Models\Squad;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -25,9 +25,9 @@ class AutoJoinQuestsJob implements ShouldQueue
     }
 
     /**
-     * @param AutoJoinQuests $domainAction
+     * @param AutoManageCampaign $domainAction
      */
-    public function handle(AutoJoinQuests $domainAction)
+    public function handle(AutoManageCampaign $domainAction)
     {
         $domainAction->execute($this->squad);
     }

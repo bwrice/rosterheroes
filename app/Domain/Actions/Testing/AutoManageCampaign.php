@@ -8,7 +8,7 @@ use App\Domain\Actions\JoinQuestAction;
 use App\Domain\Actions\SquadBorderTravelAction;
 use App\Domain\Models\Squad;
 
-class AutoJoinQuests
+class AutoManageCampaign
 {
     public function __construct(SquadBorderTravelAction $borderTravelAction, JoinQuestAction $joinQuestAction)
     {
