@@ -29,8 +29,16 @@ class ProcessSideQuestRewards
         $this->processSideQuestVictoryRewards = $processSideQuestVictoryRewards;
     }
 
+    /**
+     * @param SideQuestResult $sideQuestResult
+     * @throws \Exception
+     */
     public function execute(SideQuestResult $sideQuestResult)
     {
+        if ($sideQuestResult->rewards_processed_at) {
+            throw new \Exception("Rewards already processed for SideQuestResult");
+        }
+
         DB::transaction(function () use ($sideQuestResult) {
             $squad = $sideQuestResult->campaignStop->campaign->squad;
 

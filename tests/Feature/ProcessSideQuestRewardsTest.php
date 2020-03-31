@@ -19,6 +19,7 @@ use App\SideQuestResult;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Date;
 use Tests\TestCase;
 
 class ProcessSideQuestRewardsTest extends TestCase
@@ -140,5 +141,25 @@ class ProcessSideQuestRewardsTest extends TestCase
         $domainAction->execute($sideQuestResult);
 
         $this->assertNotNull($sideQuestResult->fresh()->rewards_processed_at);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_throw_an_exception_if_processed_at_already_set_on_side_quest_result()
+    {
+        $sideQuestResult = SideQuestResultFactory::new()->create([
+            'rewards_processed_at' => $now = Date::now()
+        ]);
+
+        try {
+            /** @var ProcessSideQuestRewards $domainAction */
+            $domainAction = app(ProcessSideQuestRewards::class);
+            $domainAction->execute($sideQuestResult);
+        } catch (\Exception $exception) {
+            $this->assertEquals($now->timestamp, $sideQuestResult->fresh()->rewards_processed_at->timestamp);
+            return;
+        }
+        $this->fail('Exception not thrown');
     }
 }
