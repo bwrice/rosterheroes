@@ -11,7 +11,7 @@ use App\Exceptions\BuildNextWeekException;
 use App\Exceptions\BuildWeekException;
 use App\Facades\CurrentWeek;
 
-class SetupNextWeekAction implements FinalizeWeekDomainAction
+class SetupNextWeekAction
 {
     /**
      * @var BuildNewCurrentWeekAction
@@ -23,7 +23,7 @@ class SetupNextWeekAction implements FinalizeWeekDomainAction
         $this->buildWeekAction = $buildWeekAction;
     }
 
-    public function execute(int $finalizeWeekStep, array $extra = [])
+    public function execute()
     {
         if (! CurrentWeek::exists()) {
             throw new BuildNextWeekException("No current week to build next week from", BuildWeekException::CODE_INVALID_CURRENT_WEEK);
