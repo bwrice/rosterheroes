@@ -11,6 +11,8 @@ use Illuminate\Support\Str;
 
 class SideQuestFactory
 {
+    protected $questID;
+
     /**
      * @var  Collection|null
      */
@@ -27,7 +29,7 @@ class SideQuestFactory
         $sideQuest = SideQuest::query()->create(array_merge([
             'uuid' => (string) Str::uuid(),
             'name' => 'Test Side Quest ' . rand(1, 99999),
-            'quest_id' => QuestFactory::new()->create()->id
+            'quest_id' => $this->getQuestID()
         ], $extra));
 
         if ($this->minionFactories) {
@@ -60,5 +62,17 @@ class SideQuestFactory
             $minionFactories->push(MinionFactory::new());
         }
         return $minionFactories;
+    }
+
+    public function forQuestID(int $questID)
+    {
+        $clone = clone $this;
+        $clone->questID = $questID;
+        return $clone;
+    }
+
+    protected function getQuestID()
+    {
+        return $this->questID ?: QuestFactory::new()->create()->id;
     }
 }
