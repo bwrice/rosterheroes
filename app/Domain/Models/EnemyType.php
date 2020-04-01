@@ -16,7 +16,8 @@ class EnemyType extends Model
 {
     protected $guarded = [];
 
-    public const SKELETON = 'Skeleton';
+    public const SKELETON = 'skeleton';
+    public const VAMPIRE = 'vampire';
 
     public function getBehavior(): EnemyTypeBehavior
     {

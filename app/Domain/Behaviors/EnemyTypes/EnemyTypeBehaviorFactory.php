@@ -14,6 +14,8 @@ class EnemyTypeBehaviorFactory
         switch ($enemyTypeName) {
             case EnemyType::SKELETON:
                 return app(SkeletonBehavior::class);
+            case EnemyType::VAMPIRE:
+                return app(VampireBehavior::class);
         }
         throw new UnknownBehaviorException($enemyTypeName, EnemyTypeBehavior::class);
     }

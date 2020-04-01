@@ -13,7 +13,8 @@ class SeedEnemyTypes extends ModelNameSeederMigration
     public function getSeedNames(): array
     {
         return [
-            EnemyType::SKELETON
+            EnemyType::SKELETON,
+            EnemyType::VAMPIRE
         ];
     }
 }
