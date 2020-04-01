@@ -4,13 +4,11 @@
 namespace App\Domain\Actions\Testing;
 
 
-use App\Aggregates\CampaignAggregate;
 use App\Domain\Actions\JoinQuestAction;
 use App\Domain\Actions\JoinSideQuestAction;
 use App\Domain\Actions\SquadBorderTravelAction;
 use App\Domain\Collections\ProvinceCollection;
 use App\Domain\Collections\QuestCollection;
-use App\Domain\Models\Continent;
 use App\Domain\Models\Province;
 use App\Domain\Models\Quest;
 use App\Domain\Models\Squad;
@@ -149,18 +147,35 @@ class AutoManageCampaign
      */
     protected function getBorderToTravelTo()
     {
+
         /*
-         * We want to find a bordered province we haven't already visited but that won't always be possible,
-         * so we fall back to any border within the continent
+         * We want to find a bordered province we haven't already visited AND has a quest, then
+         * we fall back on the requirement of having a quest, and then again on whether we've
+         * already visited it
          */
-        $continentalBorders = $this->squad->province->borders()->where('continent_id', '=', $this->continentID)->get();
-        $border = $continentalBorders->shuffle()->first(function (Province $province) {
-            return ! in_array($province->id, $this->visitedProvinces->pluck('id')->toArray());
+        $continentalBorders = $this->squad->province->borders()
+            ->with('quests')
+            ->where('continent_id', '=', $this->continentID)
+            ->inRandomOrder()
+            ->get();
+
+        $notAlreadyVisited = $continentalBorders->reject(function (Province $province) {
+            return in_array($province->id, $this->visitedProvinces->pluck('id')->toArray());
         });
 
-        if (! $border) {
-            $border = $continentalBorders->shuffle()->first();
+        $unvisitedBorderWithQuest = $notAlreadyVisited->first(function (Province $province) {
+            return $province->quests->isNotEmpty();
+        });
+
+        if ($unvisitedBorderWithQuest) {
+            return $unvisitedBorderWithQuest;
         }
-        return $border;
+
+        $unvisitedBorder = $notAlreadyVisited->first();
+        if ($unvisitedBorder) {
+            return $unvisitedBorder;
+        }
+
+        return $continentalBorders->first();
     }
 }
