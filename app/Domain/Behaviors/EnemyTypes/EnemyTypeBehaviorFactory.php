@@ -16,6 +16,8 @@ class EnemyTypeBehaviorFactory
                 return app(GargoyleBehavior::class);
             case EnemyType::GIANT:
                 return app(GiantBehavior::class);
+            case EnemyType::GOLEM:
+                return app(GolemBehavior::class);
             case EnemyType::UNDEAD:
                 return app(UndeadBehavior::class);
             case EnemyType::VAMPIRE:

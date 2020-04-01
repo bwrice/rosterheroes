@@ -23,7 +23,7 @@ class SeedTitans extends Migration
             [
                 'name' => 'Skeleton Overlord',
                 'config_path' => '/Yaml/Titans/skeleton_overlord.yaml',
-                'enemy_type' => EnemyType::SKELETON,
+                'enemy_type' => EnemyType::UNDEAD,
                 'combat_position' => CombatPosition::BACK_LINE,
                 'attacks' => [
                     'Double Slash',
@@ -39,7 +39,21 @@ class SeedTitans extends Migration
             [
                 'name' => 'Skeleton General',
                 'config_path' => '/Yaml/Titans/skeleton_general.yaml',
-                'enemy_type' => EnemyType::SKELETON,
+                'enemy_type' => EnemyType::UNDEAD,
+                'combat_position' => CombatPosition::FRONT_LINE,
+                'attacks' => [
+                    'Arrow Release',
+                    'Slice',
+                    'Double Slice',
+                    'Triple Slice',
+                    'Blade Sweep',
+                    'Blade Whirlwind',
+                ]
+            ],
+            [
+                'name' => 'Vampire Elder',
+                'config_path' => '/Yaml/Titans/vampire_elder.yaml',
+                'enemy_type' => EnemyType::UNDEAD,
                 'combat_position' => CombatPosition::FRONT_LINE,
                 'attacks' => [
                     'Arrow Release',
