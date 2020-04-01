@@ -3,6 +3,7 @@
 namespace App\Domain\Models;
 
 use App\Domain\Collections\ProvinceCollection;
+use App\Domain\Collections\QuestCollection;
 use App\Domain\Models\Json\ViewBox;
 use App\Domain\QueryBuilders\ProvinceQueryBuilder;
 use App\Domain\Traits\HasNameSlug;
@@ -28,6 +29,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property Territory $territory
  * @property ProvinceCollection $borders
  * @property ProvinceCollection $borderedBy
+ * @property QuestCollection $quests
  *
  * @method static Builder bordersCount(int $count)
  * @method static Builder starting
