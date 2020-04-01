@@ -67,28 +67,26 @@ class AutoManageCampaign
         $this->joinedQuests = $this->getInitialJoinedQuests();
 
         DB::transaction(function () {
-            foreach (range (1, $this->questsPerWeek) as $count) {
+            foreach (range (1, $this->questsPerWeek) as $questCount) {
 
-                if ($count > 1) {
-                    $search = true;
-                    $count = 1;
+                $search = true;
+                $loopCount = 1;
 
-                    while($search) {
+                while($search) {
 
-                        $foundQuest = $this->joinNewQuestAndSideQuests();
+                    $foundQuest = $this->joinNewQuestAndSideQuests();
 
-                        /*
-                         * Border travel if we didn't just join our last needed quest
-                         */
-                        if ($this->questsPerWeek != $count && !$foundQuest) {
-                            $this->borderTravelWithinContinent();
-                        }
-
-                        if ($foundQuest || $count > 9) {
-                            $search = false;
-                        }
-                        $count++;
+                    /*
+                     * Border travel if we didn't just join our last needed quest
+                     */
+                    if ($this->questsPerWeek != $loopCount && !$foundQuest) {
+                        $this->borderTravelWithinContinent();
                     }
+
+                    if ($foundQuest || $loopCount > 100) {
+                        $search = false;
+                    }
+                    $loopCount++;
                 }
             }
         });
@@ -121,6 +119,7 @@ class AutoManageCampaign
             // TODO: sidequests
             $this->squad = $this->squad->fresh();
             $this->joinedQuests->push($questToJoin);
+            return true;
         }
         return false;
     }
@@ -129,6 +128,7 @@ class AutoManageCampaign
     {
         $border = $this->getBorderToTravelTo();
         $this->borderTravelAction->execute($this->squad, $border);
+        $this->visitedProvinces->push($border);
         $this->squad = $this->squad->fresh();
     }
 
