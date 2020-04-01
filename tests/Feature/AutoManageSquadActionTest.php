@@ -7,7 +7,7 @@ use App\Domain\Models\Hero;
 use App\Domain\Models\Squad;
 use App\Exceptions\AutoManageSquadException;
 use App\Facades\CurrentWeek;
-use App\Jobs\AutoJoinQuestsJob;
+use App\Jobs\AutoManageCampaignJob;
 use Bwrice\LaravelJobChainGroups\Jobs\AsyncChainedJob;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -96,7 +96,7 @@ class AutoManageSquadActionTest extends TestCase
                  ] as $hero) {
 
             Queue::assertPushedWithChain(AsyncChainedJob::class, [
-                new AutoJoinQuestsJob($this->squad)
+                new AutoManageCampaignJob($this->squad)
             ], function (AsyncChainedJob $chainedJob) use ($hero) {
                 return $chainedJob->getDecoratedJob()->hero->id === $hero->id;
             });
