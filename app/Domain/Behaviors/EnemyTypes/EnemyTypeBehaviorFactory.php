@@ -14,6 +14,8 @@ class EnemyTypeBehaviorFactory
         switch ($enemyTypeName) {
             case EnemyType::GARGOYLE:
                 return app(GargoyleBehavior::class);
+            case EnemyType::GIANT:
+                return app(GiantBehavior::class);
             case EnemyType::SKELETON:
                 return app(SkeletonBehavior::class);
             case EnemyType::VAMPIRE:

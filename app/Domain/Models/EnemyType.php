@@ -16,9 +16,11 @@ class EnemyType extends Model
 {
     protected $guarded = [];
 
+    public const GIANT = 'giant';
     public const GARGOYLE = 'gargoyle';
     public const SKELETON = 'skeleton';
     public const VAMPIRE = 'vampire';
+    public const WEREWOLF = 'werewolf';
 
     public function getBehavior(): EnemyTypeBehavior
     {
