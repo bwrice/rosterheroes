@@ -18,7 +18,7 @@ class EnemyType extends Model
 
     public const GIANT = 'giant';
     public const GARGOYLE = 'gargoyle';
-    public const SKELETON = 'skeleton';
+    public const UNDEAD = 'undead';
     public const VAMPIRE = 'vampire';
     public const WEREWOLF = 'werewolf';
 

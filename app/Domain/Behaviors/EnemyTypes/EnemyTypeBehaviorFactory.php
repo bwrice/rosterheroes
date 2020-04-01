@@ -16,10 +16,12 @@ class EnemyTypeBehaviorFactory
                 return app(GargoyleBehavior::class);
             case EnemyType::GIANT:
                 return app(GiantBehavior::class);
-            case EnemyType::SKELETON:
-                return app(SkeletonBehavior::class);
+            case EnemyType::UNDEAD:
+                return app(UndeadBehavior::class);
             case EnemyType::VAMPIRE:
                 return app(VampireBehavior::class);
+            case EnemyType::WEREWOLF:
+                return app(WerewolfBehavior::class);
         }
         throw new UnknownBehaviorException($enemyTypeName, EnemyTypeBehavior::class);
     }

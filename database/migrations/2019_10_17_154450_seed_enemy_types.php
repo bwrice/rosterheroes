@@ -15,7 +15,7 @@ class SeedEnemyTypes extends ModelNameSeederMigration
         return [
             EnemyType::GIANT,
             EnemyType::GARGOYLE,
-            EnemyType::SKELETON,
+            EnemyType::UNDEAD,
             EnemyType::VAMPIRE,
             EnemyType::WEREWOLF
         ];

@@ -22,7 +22,7 @@ class SeedMinions extends Migration
             [
                 'name' => 'Skeleton Scout',
                 'config_path' => '/Yaml/Minions/skeleton_scout.yaml',
-                'enemy_type' => EnemyType::SKELETON,
+                'enemy_type' => EnemyType::UNDEAD,
                 'combat_position' => CombatPosition::HIGH_GROUND,
                 'attacks' => [
                     'Slash',
@@ -32,7 +32,7 @@ class SeedMinions extends Migration
             [
                 'name' => 'Skeleton Guard',
                 'config_path' => '/Yaml/Minions/skeleton_guard.yaml',
-                'enemy_type' => EnemyType::SKELETON,
+                'enemy_type' => EnemyType::UNDEAD,
                 'combat_position' => CombatPosition::FRONT_LINE,
                 'attacks' => [
                     'Slash',
@@ -42,7 +42,7 @@ class SeedMinions extends Migration
             [
                 'name' => 'Skeleton Archer',
                 'config_path' => '/Yaml/Minions/skeleton_archer.yaml',
-                'enemy_type' => EnemyType::SKELETON,
+                'enemy_type' => EnemyType::UNDEAD,
                 'combat_position' => CombatPosition::HIGH_GROUND,
                 'attacks' => [
                     'Arrow Release',
@@ -53,7 +53,7 @@ class SeedMinions extends Migration
             [
                 'name' => 'Skeleton Mage',
                 'config_path' => '/Yaml/Minions/skeleton_mage.yaml',
-                'enemy_type' => EnemyType::SKELETON,
+                'enemy_type' => EnemyType::UNDEAD,
                 'combat_position' => CombatPosition::BACK_LINE,
                 'attacks' => [
                     'Magic Dart',
@@ -64,7 +64,7 @@ class SeedMinions extends Migration
             [
                 'name' => 'Skeleton Soldier',
                 'config_path' => '/Yaml/Minions/skeleton_soldier.yaml',
-                'enemy_type' => EnemyType::SKELETON,
+                'enemy_type' => EnemyType::UNDEAD,
                 'combat_position' => CombatPosition::FRONT_LINE,
                 'attacks' => [
                     'Slash',
@@ -76,7 +76,7 @@ class SeedMinions extends Migration
             [
                 'name' => 'Skeleton Marksman',
                 'config_path' => '/Yaml/Minions/skeleton_marksman.yaml',
-                'enemy_type' => EnemyType::SKELETON,
+                'enemy_type' => EnemyType::UNDEAD,
                 'combat_position' => CombatPosition::HIGH_GROUND,
                 'attacks' => [
                     'Arrow Release',
