@@ -107,6 +107,7 @@ class AutoManageCampaign
 
         if ($quests->isNotEmpty()) {
 
+            /** @var Quest $questToJoin */
             $questToJoin = $quests->first(function (Quest $quest) {
                 return ! $this->joinedQuests->contains($quest);
             });
@@ -115,8 +116,19 @@ class AutoManageCampaign
                 return false;
             }
 
-            $this->joinQuestAction->execute($this->squad, $questToJoin);
-            // TODO: sidequests
+            $campaignStop = $this->joinQuestAction->execute($this->squad, $questToJoin);
+            $sideQuests = $questToJoin->sideQuests->shuffle();
+
+            /*
+             * Join side quests
+             */
+            foreach (range(1, $this->sideQuestsPerQuest) as $sideQuestCount) {
+                $sideQuest = $sideQuests->shift();
+                if ($sideQuest) {
+                    $this->joinSideQuestAction->execute($campaignStop, $sideQuest);
+                }
+            }
+
             $this->squad = $this->squad->fresh();
             $this->joinedQuests->push($questToJoin);
             return true;
