@@ -276,9 +276,7 @@ class Squad extends EventSourcedModel implements HasItems
      */
     public function getThisWeeksCampaign()
     {
-        /** @var Campaign $campaign */
-        $campaign = Campaign::forSquadWeek($this, Week::current())->first();
-        return $campaign;
+        return $this->campaigns()->forCurrentWeek()->first();
     }
 
 
