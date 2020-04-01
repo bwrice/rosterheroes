@@ -12,6 +12,8 @@ class EnemyTypeBehaviorFactory
     public function getBehavior($enemyTypeName): EnemyTypeBehavior
     {
         switch ($enemyTypeName) {
+            case EnemyType::GARGOYLE:
+                return app(GargoyleBehavior::class);
             case EnemyType::SKELETON:
                 return app(SkeletonBehavior::class);
             case EnemyType::VAMPIRE:
