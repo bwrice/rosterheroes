@@ -21,6 +21,7 @@ class EnemyType extends Model
     public const UNDEAD = 'undead';
     public const VAMPIRE = 'vampire';
     public const WEREWOLF = 'werewolf';
+    public const WITCH = 'witch';
 
     public function getBehavior(): EnemyTypeBehavior
     {

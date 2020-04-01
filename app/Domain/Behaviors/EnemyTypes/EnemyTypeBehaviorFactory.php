@@ -22,6 +22,8 @@ class EnemyTypeBehaviorFactory
                 return app(VampireBehavior::class);
             case EnemyType::WEREWOLF:
                 return app(WerewolfBehavior::class);
+            case EnemyType::WITCH:
+                return app(WitchBehavior::class);
         }
         throw new UnknownBehaviorException($enemyTypeName, EnemyTypeBehavior::class);
     }

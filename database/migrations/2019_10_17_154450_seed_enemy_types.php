@@ -17,7 +17,8 @@ class SeedEnemyTypes extends ModelNameSeederMigration
             EnemyType::GARGOYLE,
             EnemyType::UNDEAD,
             EnemyType::VAMPIRE,
-            EnemyType::WEREWOLF
+            EnemyType::WEREWOLF,
+            EnemyType::WITCH
         ];
     }
 }
