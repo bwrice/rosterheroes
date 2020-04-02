@@ -53,15 +53,98 @@ class SeedTitans extends Migration
             [
                 'name' => 'Vampire Elder',
                 'config_path' => '/Yaml/Titans/vampire_elder.yaml',
-                'enemy_type' => EnemyType::UNDEAD,
+                'enemy_type' => EnemyType::VAMPIRE,
                 'combat_position' => CombatPosition::FRONT_LINE,
                 'attacks' => [
-                    'Arrow Release',
+                    'Vampiric Bite',
+                    'Triple Magic Dart',
+                    'Magic Bullet',
+                    'Double Magic Bullet',
+                    'Triple Magic Bullet',
+                    'Magic Burst',
+                    'Blood Swell'
+                ]
+            ],
+            [
+                'name' => 'Vampire Elder',
+                'config_path' => '/Yaml/Titans/vampire_elder.yaml',
+                'enemy_type' => EnemyType::VAMPIRE,
+                'combat_position' => CombatPosition::FRONT_LINE,
+                'attacks' => [
+                    'Vampiric Bite',
+                    'Triple Magic Dart',
+                    'Magic Bullet',
+                    'Double Magic Bullet',
+                    'Triple Magic Bullet',
+                    'Magic Burst',
+                    'Blood Swell'
+                ]
+            ],
+            [
+                'name' => 'Vampire Noble',
+                'config_path' => '/Yaml/Titans/vampire_noble.yaml',
+                'enemy_type' => EnemyType::VAMPIRE,
+                'combat_position' => CombatPosition::FRONT_LINE,
+                'attacks' => [
+                    'Vampiric Bite',
                     'Slice',
                     'Double Slice',
                     'Triple Slice',
+                    'Cleave',
+                    'Double Cleave',
                     'Blade Sweep',
-                    'Blade Whirlwind',
+                    'Blood Swell',
+                    'Blood Boil'
+                ]
+            ],
+            [
+                'name' => 'Vampire Lord',
+                'config_path' => '/Yaml/Titans/vampire_lord.yaml',
+                'enemy_type' => EnemyType::VAMPIRE,
+                'combat_position' => CombatPosition::FRONT_LINE,
+                'attacks' => [
+                    'Vampiric Bite',
+                    'Triple Magic Dart',
+                    'Double Magic Bullet',
+                    'Triple Magic Bullet',
+                    'Magic Torpedo',
+                    'Double Magic Torpedo',
+                    'Triple Magic Torpedo',
+                    'Cleave',
+                    'Double Cleave',
+                    'Magic Burst',
+                    'Blood Swell',
+                    'Blood Boil'
+                ]
+            ],
+            [
+                'name' => 'Werewolf Alpha',
+                'config_path' => '/Yaml/Titans/werewolf_alpha.yaml',
+                'enemy_type' => EnemyType::WEREWOLF,
+                'combat_position' => CombatPosition::FRONT_LINE,
+                'attacks' => [
+                    'Fanged Bite',
+                    'Severe Bite',
+                    'Vicious Bite',
+                    'Claw',
+                    'Double Claw',
+                    'Maul'
+                ]
+            ],
+            [
+                'name' => 'Oberon Pack Leader',
+                'config_path' => '/Yaml/Titans/werewolf_alpha.yaml',
+                'enemy_type' => EnemyType::WEREWOLF,
+                'combat_position' => CombatPosition::FRONT_LINE,
+                'attacks' => [
+                    'Fanged Bite',
+                    'Severe Bite',
+                    'Vicious Bite',
+                    'Lethal Bite',
+                    'Claw',
+                    'Double Claw',
+                    'Triple Claw',
+                    'Maul'
                 ]
             ],
         ]);
