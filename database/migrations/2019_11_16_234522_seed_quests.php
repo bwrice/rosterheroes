@@ -125,13 +125,16 @@ class SeedQuests extends Migration
         $createSideQuestAction = app(CreateSideQuestAction::class);
         $quests->each(function ($questData) use ($sideQuestBlueprints, $minions, $titans, $provinces, $travelTypes, $createSideQuestAction) {
 
+            $provinceID = $provinces->firstWhere('name', $questData['starting_province'])->id;
+
             /** @var Quest $quest */
             $quest = Quest::query()->create([
                 'uuid' => Str::uuid(),
                 'name' => $questData['name'],
                 'level' => $questData['level'],
                 'percent' => 100,
-                'province_id' => $provinces->firstWhere('name', $questData['starting_province'])->id,
+                'province_id' => $provinceID,
+                'initial_province_id' => $provinceID,
                 'travel_type_id' => $travelTypes->firstWhere('name', $questData['travel_type'])->id,
             ]);
 

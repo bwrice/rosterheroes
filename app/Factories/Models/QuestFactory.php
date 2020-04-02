@@ -28,13 +28,16 @@ class QuestFactory
      */
     public function create(array $extra = []): Quest
     {
+        $provinceID = $this->getProvinceID();
+
         /** @var Quest $quest */
         $quest = Quest::query()->create(array_merge([
             'uuid' => (string) Str::uuid(),
             'name' => 'Test Quest ' . rand(1, 999999),
             'level' => 200,
             'percent' => 100,
-            'province_id' => $this->getProvinceID(),
+            'province_id' => $provinceID,
+            'initial_province_id' => $provinceID,
             'travel_type_id' => TravelType::query()->inRandomOrder()->first()->id,
         ], $extra));
 
