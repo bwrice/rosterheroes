@@ -1,0 +1,7 @@
+base_level: 135
+base_damage_rating: 65
+damage_multiplier_rating: 65
+health_rating: 75
+protection_rating: 35
+combat_speed_rating: 25
+block_rating: 15
