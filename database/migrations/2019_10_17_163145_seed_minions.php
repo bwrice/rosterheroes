@@ -21,7 +21,6 @@ class SeedMinions extends Migration
         $minions = collect([
             [
                 'name' => 'Skeleton Scout',
-                'config_path' => '/Yaml/Minions/skeleton_scout.yaml',
                 'enemy_type' => EnemyType::UNDEAD,
                 'combat_position' => CombatPosition::HIGH_GROUND,
                 'attacks' => [
@@ -31,7 +30,6 @@ class SeedMinions extends Migration
             ],
             [
                 'name' => 'Skeleton Guard',
-                'config_path' => '/Yaml/Minions/skeleton_guard.yaml',
                 'enemy_type' => EnemyType::UNDEAD,
                 'combat_position' => CombatPosition::FRONT_LINE,
                 'attacks' => [
@@ -41,7 +39,6 @@ class SeedMinions extends Migration
             ],
             [
                 'name' => 'Skeleton Archer',
-                'config_path' => '/Yaml/Minions/skeleton_archer.yaml',
                 'enemy_type' => EnemyType::UNDEAD,
                 'combat_position' => CombatPosition::HIGH_GROUND,
                 'attacks' => [
@@ -52,7 +49,6 @@ class SeedMinions extends Migration
             ],
             [
                 'name' => 'Skeleton Mage',
-                'config_path' => '/Yaml/Minions/skeleton_mage.yaml',
                 'enemy_type' => EnemyType::UNDEAD,
                 'combat_position' => CombatPosition::BACK_LINE,
                 'attacks' => [
@@ -63,7 +59,6 @@ class SeedMinions extends Migration
             ],
             [
                 'name' => 'Skeleton Soldier',
-                'config_path' => '/Yaml/Minions/skeleton_soldier.yaml',
                 'enemy_type' => EnemyType::UNDEAD,
                 'combat_position' => CombatPosition::FRONT_LINE,
                 'attacks' => [
@@ -75,7 +70,6 @@ class SeedMinions extends Migration
             ],
             [
                 'name' => 'Skeleton Marksman',
-                'config_path' => '/Yaml/Minions/skeleton_marksman.yaml',
                 'enemy_type' => EnemyType::UNDEAD,
                 'combat_position' => CombatPosition::HIGH_GROUND,
                 'attacks' => [
@@ -83,6 +77,47 @@ class SeedMinions extends Migration
                     'Double Arrow Release',
                     'Triple Arrow Release',
                     'Arrow Spray',
+                ]
+            ],
+            [
+                'name' => 'Werewolf Pup',
+                'enemy_type' => EnemyType::WEREWOLF,
+                'combat_position' => CombatPosition::FRONT_LINE,
+                'attacks' => [
+                    'Bite',
+                    'Scratch'
+                ]
+            ],
+            [
+                'name' => 'Young Werewolf',
+                'enemy_type' => EnemyType::WEREWOLF,
+                'combat_position' => CombatPosition::FRONT_LINE,
+                'attacks' => [
+                    'Bite',
+                    'Scratch',
+                    'Double Scratch'
+                ]
+            ],
+            [
+                'name' => 'Werewolf Mauler',
+                'enemy_type' => EnemyType::WEREWOLF,
+                'combat_position' => CombatPosition::FRONT_LINE,
+                'attacks' => [
+                    'Bite',
+                    'Fanged Bite',
+                    'Scratch',
+                    'Double Scratch'
+                ]
+            ],
+            [
+                'name' => 'Werewolf Ravager',
+                'enemy_type' => EnemyType::WEREWOLF,
+                'combat_position' => CombatPosition::FRONT_LINE,
+                'attacks' => [
+                    'Bite',
+                    'Fanged Bite',
+                    'Scratch',
+                    'Double Scratch'
                 ]
             ],
         ]);
@@ -111,11 +146,13 @@ class SeedMinions extends Migration
 
         $minions->each(function ($minionData) use ($enemyTypes, $combatPositions, $attacks) {
 
+            $name = $minionData['name'];
+
             /** @var Minion $minion */
             $minion = Minion::query()->create([
                 'uuid' => Str::uuid(),
                 'name' => $minionData['name'],
-                'config_path' => $minionData['config_path'],
+                'config_path' => '/Yaml/Minions/' . str_replace(strtolower($name), '' , '_') . '.yaml',
                 'enemy_type_id' => $enemyTypes->where('name', '=', $minionData['enemy_type'])->first()->id,
                 'combat_position_id' => $combatPositions->where('name', '=', $minionData['combat_position'])->first()->id
             ]);
