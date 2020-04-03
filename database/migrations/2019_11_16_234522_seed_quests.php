@@ -24,7 +24,7 @@ class SeedQuests extends Migration
     {
         $quests = collect([
             [
-                'name' => 'North Skeleton Fortress',
+                'name' => 'Everium Skeleton Fortress',
                 'travel_type' => TravelType::STATIONARY,
                 'level' => 125,
                 'starting_province' => 'Everium',
@@ -62,11 +62,63 @@ class SeedQuests extends Migration
                 ],
                 'sid_quest_blueprints' => [
                     'Small Skeleton Pack',
-                    'Medium Skeleton Pack',
+                    'Skeleton Pack',
                     'Large Skeleton Pack'
                 ]
 
-            ]
+            ],
+            [
+                'name' => 'Oberon Werewolf Pack',
+                'travel_type' => TravelType::TERRITORY,
+                'level' => 178,
+                'starting_province' => 'Vyspen',
+                'titans' => [
+                    [
+                        'name' => 'Oberon Pack Leader',
+                        'count' => 1
+                    ],
+                    [
+                        'name' => 'Werewolf Alpha',
+                        'count' => 5
+                    ]
+                ],
+                'minions' => [
+                    [
+                        'name' => 'Werewolf Young',
+                        'weight' => 10
+                    ],
+                    [
+                        'name' => 'Werewolf Thrasher',
+                        'weight' => 20
+                    ],
+                    [
+                        'name' => 'Werewolf Mangler',
+                        'weight' => 25
+                    ],
+                    [
+                        'name' => 'Werewolf Ravager',
+                        'weight' => 25
+                    ],
+                    [
+                        'name' => 'Werewolf Mauler',
+                        'weight' => 15
+                    ],
+                    [
+                        'name' => 'Werewolf Maimer',
+                        'weight' => 15
+                    ],
+                ],
+                'sid_quest_blueprints' => [
+                    'Werewolf Thrasher',
+                    'Werewolf Mangler',
+                    'Werewolf Maimer',
+                    'Small Werewolf Cluster',
+                    'Werewolf Cluster',
+                    'Large Werewolf Cluster',
+                    'Werewolf Hunting Pack'
+                ]
+
+            ],
         ]);
 
         $minions = Minion::all();
