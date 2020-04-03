@@ -19,6 +19,42 @@ class SeedSideQuestBlueprints extends Migration
     {
         $sideQuestBlueprints = collect([
             [
+                'name' => 'Skeleton Scout',
+                'minions' => [
+                    [
+                        'name' => 'Skeleton Scout',
+                        'count' => 1
+                    ]
+                ]
+            ],
+            [
+                'name' => 'Skeleton Guard',
+                'minions' => [
+                    [
+                        'name' => 'Skeleton Guard',
+                        'count' => 1
+                    ]
+                ]
+            ],
+            [
+                'name' => 'Skeleton Archer',
+                'minions' => [
+                    [
+                        'name' => 'Skeleton Archer',
+                        'count' => 1
+                    ]
+                ]
+            ],
+            [
+                'name' => 'Skeleton Mage',
+                'minions' => [
+                    [
+                        'name' => 'Skeleton Mage',
+                        'count' => 1
+                    ]
+                ]
+            ],
+            [
                 'name' => 'Small Skeleton Pack',
                 'minions' => [
                     [
@@ -32,7 +68,7 @@ class SeedSideQuestBlueprints extends Migration
                 ]
             ],
             [
-                'name' => 'Medium Skeleton Pack',
+                'name' => 'Skeleton Pack',
                 'minions' => [
                     [
                         'name' => 'Skeleton Scout',
@@ -72,7 +108,171 @@ class SeedSideQuestBlueprints extends Migration
                         'count' => 2
                     ],
                 ]
-            ]
+            ],
+            [
+                'name' => 'Small Werewolf Cluster',
+                'minions' => [
+                    [
+                        'name' => 'Werewolf Pup',
+                        'count' => 2
+                    ],
+                    [
+                        'name' => 'Young Werewolf',
+                        'count' => 3
+                    ]
+                ]
+            ],
+            [
+                'name' => 'Young Werewolf',
+                'minions' => [
+                    [
+                        'name' => 'Young Werewolf',
+                        'count' => 1
+                    ]
+                ]
+            ],
+            [
+                'name' => 'Werewolf Thrasher',
+                'minions' => [
+                    [
+                        'name' => 'Werewolf Thrasher',
+                        'count' => 1
+                    ]
+                ]
+            ],
+            [
+                'name' => 'Werewolf Mangler',
+                'minions' => [
+                    [
+                        'name' => 'Werewolf Mangler',
+                        'count' => 1
+                    ]
+                ]
+            ],
+            [
+                'name' => 'Werewolf Ravager',
+                'minions' => [
+                    [
+                        'name' => 'Werewolf Ravager',
+                        'count' => 1
+                    ]
+                ]
+            ],
+            [
+                'name' => 'Werewolf Mauler',
+                'minions' => [
+                    [
+                        'name' => 'Werewolf Mauler',
+                        'count' => 1
+                    ]
+                ]
+            ],
+            [
+                'name' => 'Werewolf Maimer',
+                'minions' => [
+                    [
+                        'name' => 'Werewolf Maimer',
+                        'count' => 1
+                    ]
+                ]
+            ],
+            [
+                'name' => 'Werewolf Eviscerator',
+                'minions' => [
+                    [
+                        'name' => 'Werewolf Eviscerator',
+                        'count' => 1
+                    ]
+                ]
+            ],
+            [
+                'name' => 'Werewolf Cluster',
+                'minions' => [
+                    [
+                        'name' => 'Young Werewolf',
+                        'count' => 7
+                    ],
+                    [
+                        'name' => 'Werewolf Thrasher',
+                        'count' => 2
+                    ],
+                    [
+                        'name' => 'Werewolf Mangler',
+                        'count' => 1
+                    ],
+                    [
+                        'name' => 'Werewolf Ravager',
+                        'count' => 1
+                    ]
+                ]
+            ],
+            [
+                'name' => 'Large Werewolf Cluster',
+                'minions' => [
+                    [
+                        'name' => 'Werewolf Thrasher',
+                        'count' => 5
+                    ],
+                    [
+                        'name' => 'Werewolf Mangler',
+                        'count' => 4
+                    ],
+                    [
+                        'name' => 'Werewolf Ravager',
+                        'count' => 5
+                    ],
+                    [
+                        'name' => 'Werewolf Mauler',
+                        'count' => 2
+                    ],
+                    [
+                        'name' => 'Werewolf Maimer',
+                        'count' => 1
+                    ]
+                ]
+            ],
+            [
+                'name' => 'Werewolf Hunting Pack',
+                'minions' => [
+                    [
+                        'name' => 'Werewolf Mangler',
+                        'count' => 2
+                    ],
+                    [
+                        'name' => 'Werewolf Ravager',
+                        'count' => 7
+                    ],
+                    [
+                        'name' => 'Werewolf Mauler',
+                        'count' => 5
+                    ],
+                    [
+                        'name' => 'Werewolf Maimer',
+                        'count' => 6
+                    ]
+                ]
+            ],
+            [
+                'name' => 'Werewolf Predator Pack',
+                'minions' => [
+                    [
+                        'name' => 'Werewolf Ravager',
+                        'count' => 6
+                    ],
+                    [
+                        'name' => 'Werewolf Mauler',
+                        'count' => 9
+                    ],
+                    [
+                        'name' => 'Werewolf Maimer',
+                        'count' => 7
+                    ],
+                    [
+                        'name' => 'Werewolf Eviscerator',
+                        'count' => 3
+                    ]
+                ]
+            ],
         ]);
 
         $minions = Minion::all();
