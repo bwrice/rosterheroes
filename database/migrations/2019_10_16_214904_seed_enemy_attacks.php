@@ -65,6 +65,15 @@ class SeedEnemyAttacks extends Migration
                 'targets_count' => 1,
             ],
             [
+                'name' => 'Lethal Bite',
+                'damage_type' => DamageType::FIXED_TARGET,
+                'attacker_position' => CombatPosition::FRONT_LINE,
+                'target_position' => CombatPosition::FRONT_LINE,
+                'target_priority' => TargetPriority::ANY,
+                'tier' => 6,
+                'targets_count' => 1,
+            ],
+            [
                 'name' => 'Scratch',
                 'damage_type' => DamageType::FIXED_TARGET,
                 'attacker_position' => CombatPosition::FRONT_LINE,
