@@ -27,6 +27,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $combat_position_id
  *
  * @property EnemyType $enemyType
+ * @property CombatPosition $combatPosition
  *
  * @property AttackCollection $attacks
  *
@@ -54,6 +55,11 @@ class Minion extends Model implements HasAttacks
     public function enemyType()
     {
         return $this->belongsTo(EnemyType::class);
+    }
+
+    public function combatPosition()
+    {
+        return $this->belongsTo(CombatPosition::class);
     }
 
     public function chestBlueprints()
