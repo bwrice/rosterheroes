@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $uuid
  * @property string $name
  * @property string $slug
+ * @property int $level
  * @property int $enemy_type_id
  * @property int $combat_position_id
  *
@@ -74,52 +75,32 @@ class Minion extends Model implements HasAttacks
 
     public function getStartingHealth(): int
     {
-        $level = $this->getLevel();
-        $baseHealth = 200 + (50 * $level) + (2 * ($level**2));
-        $healthRatingBonus = $this->getHealthRating()/100;
-        $enemyTypeBonus = $this->getEnemyTypeBehavior()->getHealthModifierBonus();
-        return (int) ceil($baseHealth * (1 + $healthRatingBonus + $enemyTypeBonus));
+        return $this->getEnemyTypeBehavior()->getStartingHealth($this->level, $this->combatPosition);
     }
 
     public function getProtection(): int
     {
-        $level = $this->getLevel();
-        $baseProtection = 20 + (4 * $level) + (.2 * ($level**2));
-        $protectionRatingBonus = $this->getProtectionRating()/100;
-        $enemyTypeBonus = $this->getEnemyTypeBehavior()->getProtectionModifierBonus();
-        return (int) ceil($baseProtection * (1 + $protectionRatingBonus + $enemyTypeBonus));
+        return $this->getEnemyTypeBehavior()->getProtection($this->level, $this->combatPosition);
     }
 
     public function getBlockChance(): float
     {
-        $baseBlockChance = $this->getBlockRating()/4;
-        $levelBonus = 1 + $this->getLevel()/100;
-        $enemyTypeBonus = 1 + $this->getEnemyTypeBehavior()->getBlockModifierBonus();
-        return min(40, $baseBlockChance * (1 + $levelBonus + $enemyTypeBonus));
+        return $this->getEnemyTypeBehavior()->getBlockChancePercent($this->level, $this->combatPosition);
     }
 
     public function adjustBaseDamage(float $baseDamage): float
     {
-        $baseDamageRatingBonus = $this->getBaseDamageRating()/100;
-        $levelBonus = $this->getLevel()/10;
-        $enemyTypeBonus = $this->getEnemyTypeBehavior()->getBaseDamageModifierBonus();
-        return (int) ceil($baseDamage * (1 + $baseDamageRatingBonus + $levelBonus + $enemyTypeBonus));
+        return $this->getEnemyTypeBehavior()->adjustBaseDamage($baseDamage, $this->level, $this->combatPosition);
     }
 
     public function adjustCombatSpeed(float $speed): float
     {
-        $speedRatingBonus = $this->getCombatSpeedRating()/100;
-        $levelBonus = $this->getLevel()/200;
-        $enemyTypeBonus = $this->getEnemyTypeBehavior()->getCombatSpeedModifierBonus();
-        return $speed * (1 + $speedRatingBonus + $levelBonus + $enemyTypeBonus);
+        return $this->getEnemyTypeBehavior()->adjustCombatSpeed($speed, $this->level, $this->combatPosition);
     }
 
     public function adjustDamageMultiplier(float $damageMultiplier): float
     {
-        $damageMultiplierRatingBonus = $this->getDamageMultiplierRating()/100;
-        $levelBonus = $this->getLevel()/100;
-        $enemyTypeBonus = $this->getEnemyTypeBehavior()->getDamageMultiplierModifierBonus();
-        return $damageMultiplier * (1 + $damageMultiplierRatingBonus + $levelBonus + $enemyTypeBonus);
+        return $this->getEnemyTypeBehavior()->adjustDamageMultiplier($damageMultiplier, $this->level, $this->combatPosition);
     }
 
     public function adjustResourceCostAmount(float $amount): int
@@ -140,36 +121,6 @@ class Minion extends Model implements HasAttacks
     public function getLevel()
     {
         return $this->getConfigAttribute('level');
-    }
-
-    public function getBaseDamageRating()
-    {
-        return $this->getConfigAttribute('base_damage_rating');
-    }
-
-    public function getDamageMultiplierRating()
-    {
-        return $this->getConfigAttribute('damage_multiplier_rating');
-    }
-
-    public function getHealthRating()
-    {
-        return $this->getConfigAttribute('health_rating');
-    }
-
-    public function getProtectionRating()
-    {
-        return $this->getConfigAttribute('protection_rating');
-    }
-
-    public function getCombatSpeedRating()
-    {
-        return $this->getConfigAttribute('combat_speed_rating');
-    }
-
-    public function getBlockRating()
-    {
-        return $this->getConfigAttribute('block_rating');
     }
 
     public function getExperienceReward()
