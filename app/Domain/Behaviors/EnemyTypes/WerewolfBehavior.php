@@ -74,7 +74,7 @@ class WerewolfBehavior extends EnemyTypeBehavior
      */
     public function adjustCombatSpeed(float $combatSpeed, int $enemyLevel, CombatPosition $startingCombatPosition): float
     {
-        return $combatSpeed * (1.5 + $enemyLevel/80);
+        return $combatSpeed * (1.6 + $enemyLevel/80);
     }
 
     /**
