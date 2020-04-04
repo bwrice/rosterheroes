@@ -21,8 +21,22 @@ class SeedTitans extends Migration
     {
         $titans = collect([
             [
+                'name' => 'Skeleton General',
+                'level' => 102,
+                'enemy_type' => EnemyType::UNDEAD,
+                'combat_position' => CombatPosition::FRONT_LINE,
+                'attacks' => [
+                    'Arrow Release',
+                    'Slice',
+                    'Double Slice',
+                    'Triple Slice',
+                    'Blade Sweep',
+                    'Blade Whirlwind',
+                ]
+            ],
+            [
                 'name' => 'Skeleton Overlord',
-                'config_path' => '/Yaml/Titans/skeleton_overlord.yaml',
+                'level' => 134,
                 'enemy_type' => EnemyType::UNDEAD,
                 'combat_position' => CombatPosition::BACK_LINE,
                 'attacks' => [
@@ -37,37 +51,8 @@ class SeedTitans extends Migration
                 ]
             ],
             [
-                'name' => 'Skeleton General',
-                'config_path' => '/Yaml/Titans/skeleton_general.yaml',
-                'enemy_type' => EnemyType::UNDEAD,
-                'combat_position' => CombatPosition::FRONT_LINE,
-                'attacks' => [
-                    'Arrow Release',
-                    'Slice',
-                    'Double Slice',
-                    'Triple Slice',
-                    'Blade Sweep',
-                    'Blade Whirlwind',
-                ]
-            ],
-            [
                 'name' => 'Vampire Elder',
-                'config_path' => '/Yaml/Titans/vampire_elder.yaml',
-                'enemy_type' => EnemyType::VAMPIRE,
-                'combat_position' => CombatPosition::FRONT_LINE,
-                'attacks' => [
-                    'Vampiric Bite',
-                    'Triple Magic Dart',
-                    'Magic Bullet',
-                    'Double Magic Bullet',
-                    'Triple Magic Bullet',
-                    'Magic Burst',
-                    'Blood Swell'
-                ]
-            ],
-            [
-                'name' => 'Vampire Elder',
-                'config_path' => '/Yaml/Titans/vampire_elder.yaml',
+                'level' => 161,
                 'enemy_type' => EnemyType::VAMPIRE,
                 'combat_position' => CombatPosition::FRONT_LINE,
                 'attacks' => [
@@ -82,7 +67,7 @@ class SeedTitans extends Migration
             ],
             [
                 'name' => 'Vampire Noble',
-                'config_path' => '/Yaml/Titans/vampire_noble.yaml',
+                'level' => 188,
                 'enemy_type' => EnemyType::VAMPIRE,
                 'combat_position' => CombatPosition::FRONT_LINE,
                 'attacks' => [
@@ -99,7 +84,7 @@ class SeedTitans extends Migration
             ],
             [
                 'name' => 'Vampire Lord',
-                'config_path' => '/Yaml/Titans/vampire_lord.yaml',
+                'level' => 241,
                 'enemy_type' => EnemyType::VAMPIRE,
                 'combat_position' => CombatPosition::FRONT_LINE,
                 'attacks' => [
@@ -119,7 +104,7 @@ class SeedTitans extends Migration
             ],
             [
                 'name' => 'Werewolf Alpha',
-                'config_path' => '/Yaml/Titans/werewolf_alpha.yaml',
+                'level' => 143,
                 'enemy_type' => EnemyType::WEREWOLF,
                 'combat_position' => CombatPosition::FRONT_LINE,
                 'attacks' => [
@@ -133,7 +118,7 @@ class SeedTitans extends Migration
             ],
             [
                 'name' => 'Oberon Pack Leader',
-                'config_path' => '/Yaml/Titans/werewolf_alpha.yaml',
+                'level' => 219,
                 'enemy_type' => EnemyType::WEREWOLF,
                 'combat_position' => CombatPosition::FRONT_LINE,
                 'attacks' => [
@@ -170,7 +155,7 @@ class SeedTitans extends Migration
             $titan = Titan::query()->create([
                 'uuid' => Str::uuid(),
                 'name' => $titanData['name'],
-                'config_path' => $titanData['config_path'],
+                'config_path' => $titanData['level'],
                 'enemy_type_id' => $enemyTypes->where('name', '=', $titanData['enemy_type'])->first()->id,
                 'combat_position_id' => $combatPositions->where('name', '=', $titanData['combat_position'])->first()->id
             ]);
