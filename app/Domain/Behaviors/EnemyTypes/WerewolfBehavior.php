@@ -4,12 +4,86 @@
 namespace App\Domain\Behaviors\EnemyTypes;
 
 
+use App\Domain\Models\CombatPosition;
+
 class WerewolfBehavior extends EnemyTypeBehavior
 {
-    protected $healthModifierBonus = -.4;
-    protected $protectionModifierBonus = -.6;
-    protected $blockModifierBonus = -.6;
-    protected $baseDamageModifierBonus = .75;
-    protected $damageMultiplierModifierBonus = .75;
-    protected $combatSpeedModifierBonus = .35;
+
+    /**
+     * @param int $enemyLevel
+     * @param CombatPosition $startingCombatPosition
+     * @return int
+     */
+    public function getStartingHealth(int $enemyLevel, CombatPosition $startingCombatPosition): int
+    {
+        $base = 500;
+        $levelModifier = 15;
+        return $base + ($levelModifier * $enemyLevel);
+    }
+
+    /**
+     * @param int $enemyLevel
+     * @param CombatPosition $startingCombatPosition
+     * @return int
+     */
+    public function getProtection(int $enemyLevel, CombatPosition $startingCombatPosition): int
+    {
+        $base = 5;
+        $levelModifier = .5;
+        return (int) ceil($base + ($levelModifier * $enemyLevel));
+    }
+
+    /**
+     * @param float $damageProperty
+     * @param int $enemyLevel
+     * @param CombatPosition $startingCombatPosition
+     * @return int|float
+     */
+    protected function adjustDamageProperty(float $damageProperty, int $enemyLevel, CombatPosition $startingCombatPosition)
+    {
+        return $damageProperty * (1.15 + ($enemyLevel / 35));
+    }
+
+    /**
+     * @param float $baseDamage
+     * @param int $enemyLevel
+     * @param CombatPosition $startingCombatPosition
+     * @return float
+     */
+    public function adjustBaseDamage(float $baseDamage, int $enemyLevel, CombatPosition $startingCombatPosition): float
+    {
+        return $this->adjustDamageProperty($baseDamage, $enemyLevel, $startingCombatPosition);
+    }
+
+    /**
+     * @param float $damageMultiplier
+     * @param int $enemyLevel
+     * @param CombatPosition $startingCombatPosition
+     * @return float
+     */
+    public function adjustDamageMultiplier(float $damageMultiplier, int $enemyLevel, CombatPosition $startingCombatPosition): float
+    {
+        return $this->adjustDamageProperty($damageMultiplier, $enemyLevel, $startingCombatPosition);
+    }
+
+    /**
+     * @param float $combatSpeed
+     * @param int $enemyLevel
+     * @param CombatPosition $startingCombatPosition
+     * @return float
+     */
+    public function adjustCombatSpeed(float $combatSpeed, int $enemyLevel, CombatPosition $startingCombatPosition): float
+    {
+        return $combatSpeed * (1.5 + $enemyLevel/80);
+    }
+
+    /**
+     * @param int $enemyLevel
+     * @param CombatPosition $startingCombatPosition
+     * @return float
+     */
+    public function getBlockChancePercent(int $enemyLevel, CombatPosition $startingCombatPosition): float
+    {
+        return 5;
+    }
 }
