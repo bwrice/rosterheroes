@@ -102,7 +102,7 @@ class UndeadBehavior extends EnemyTypeBehavior
      */
     public function adjustCombatSpeed(float $combatSpeed, int $enemyLevel, CombatPosition $startingCombatPosition): float
     {
-        return $combatSpeed * (1 + $enemyLevel/100);
+        return $combatSpeed * (1 + $enemyLevel/200);
     }
 
     /**

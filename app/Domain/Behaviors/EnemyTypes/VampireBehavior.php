@@ -102,7 +102,7 @@ class VampireBehavior extends EnemyTypeBehavior
      */
     public function adjustCombatSpeed(float $combatSpeed, int $enemyLevel, CombatPosition $startingCombatPosition): float
     {
-        return $combatSpeed * (.75 + $enemyLevel/150);
+        return $combatSpeed * (.75 + $enemyLevel/200);
     }
 
     /**

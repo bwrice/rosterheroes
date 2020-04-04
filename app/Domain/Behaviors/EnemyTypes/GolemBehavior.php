@@ -4,12 +4,120 @@
 namespace App\Domain\Behaviors\EnemyTypes;
 
 
+use App\Domain\Models\CombatPosition;
+
 class GolemBehavior extends EnemyTypeBehavior
 {
-    protected $healthModifierBonus = 3.5;
-    protected $protectionModifierBonus = 8.5;
-    protected $blockModifierBonus = .25;
-    protected $baseDamageModifierBonus = -.25;
-    protected $damageMultiplierModifierBonus = -.25;
-    protected $combatSpeedModifierBonus = -.75;
+    /**
+     * @param int $enemyLevel
+     * @param CombatPosition $startingCombatPosition
+     * @return int
+     */
+    public function getStartingHealth(int $enemyLevel, CombatPosition $startingCombatPosition): int
+    {
+        $base = 500;
+        $levelModifier = 12;
+        switch ($startingCombatPosition->name) {
+            case CombatPosition::FRONT_LINE:
+                $base += 500;
+                $levelModifier += 25;
+                break;
+            case CombatPosition::BACK_LINE:
+                $base += 300;
+                $levelModifier += 18;
+                break;
+        }
+        return $base + ($levelModifier * $enemyLevel);
+    }
+
+    /**
+     * @param int $enemyLevel
+     * @param CombatPosition $startingCombatPosition
+     * @return int
+     */
+    public function getProtection(int $enemyLevel, CombatPosition $startingCombatPosition): int
+    {
+        $base = 500;
+        $levelModifier = 10;
+        switch ($startingCombatPosition->name) {
+            case CombatPosition::FRONT_LINE:
+                $base += 300;
+                $levelModifier += 5;
+                break;
+            case CombatPosition::BACK_LINE:
+                $base += 200;
+                $levelModifier += 3;
+                break;
+        }
+        return $base + ($levelModifier * $enemyLevel);
+    }
+
+    /**
+     * @param float $damageProperty
+     * @param int $enemyLevel
+     * @param CombatPosition $startingCombatPosition
+     * @return int|float
+     */
+    protected function adjustDamageProperty(float $damageProperty, int $enemyLevel, CombatPosition $startingCombatPosition)
+    {
+        $modifier = 1 + ($enemyLevel / 50);
+        switch ($startingCombatPosition->name) {
+            case CombatPosition::HIGH_GROUND:
+                $modifier *= 1.2;
+                break;
+            case CombatPosition::BACK_LINE:
+                $modifier *= 1.1;
+                break;
+        }
+        return $damageProperty * $modifier;
+    }
+
+    /**
+     * @param float $baseDamage
+     * @param int $enemyLevel
+     * @param CombatPosition $startingCombatPosition
+     * @return float
+     */
+    public function adjustBaseDamage(float $baseDamage, int $enemyLevel, CombatPosition $startingCombatPosition): float
+    {
+        return $this->adjustDamageProperty($baseDamage, $enemyLevel, $startingCombatPosition);
+    }
+
+    /**
+     * @param float $damageMultiplier
+     * @param int $enemyLevel
+     * @param CombatPosition $startingCombatPosition
+     * @return float
+     */
+    public function adjustDamageMultiplier(float $damageMultiplier, int $enemyLevel, CombatPosition $startingCombatPosition): float
+    {
+        return $this->adjustDamageProperty($damageMultiplier, $enemyLevel, $startingCombatPosition);
+    }
+
+    /**
+     * @param float $combatSpeed
+     * @param int $enemyLevel
+     * @param CombatPosition $startingCombatPosition
+     * @return float
+     */
+    public function adjustCombatSpeed(float $combatSpeed, int $enemyLevel, CombatPosition $startingCombatPosition): float
+    {
+        return $combatSpeed * (.32 + $enemyLevel/500);
+    }
+
+    /**
+     * @param int $enemyLevel
+     * @param CombatPosition $startingCombatPosition
+     * @return float
+     */
+    public function getBlockChancePercent(int $enemyLevel, CombatPosition $startingCombatPosition): float
+    {
+        switch ($startingCombatPosition->name) {
+            case CombatPosition::HIGH_GROUND:
+            case CombatPosition::BACK_LINE:
+                return 0;
+        }
+        $blockChance = 20 + $enemyLevel/10;
+        return min(70, $blockChance);
+    }
 }
