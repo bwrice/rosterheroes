@@ -21,6 +21,7 @@ class SeedMinions extends Migration
         $minions = collect([
             [
                 'name' => 'Skeleton Scout',
+                'level' => 8,
                 'enemy_type' => EnemyType::UNDEAD,
                 'combat_position' => CombatPosition::HIGH_GROUND,
                 'attacks' => [
@@ -30,6 +31,7 @@ class SeedMinions extends Migration
             ],
             [
                 'name' => 'Skeleton Guard',
+                'level' => 13,
                 'enemy_type' => EnemyType::UNDEAD,
                 'combat_position' => CombatPosition::FRONT_LINE,
                 'attacks' => [
@@ -39,6 +41,7 @@ class SeedMinions extends Migration
             ],
             [
                 'name' => 'Skeleton Archer',
+                'level' => 17,
                 'enemy_type' => EnemyType::UNDEAD,
                 'combat_position' => CombatPosition::HIGH_GROUND,
                 'attacks' => [
@@ -49,6 +52,7 @@ class SeedMinions extends Migration
             ],
             [
                 'name' => 'Skeleton Mage',
+                'level' => 18,
                 'enemy_type' => EnemyType::UNDEAD,
                 'combat_position' => CombatPosition::BACK_LINE,
                 'attacks' => [
@@ -59,6 +63,7 @@ class SeedMinions extends Migration
             ],
             [
                 'name' => 'Skeleton Soldier',
+                'level' => 21,
                 'enemy_type' => EnemyType::UNDEAD,
                 'combat_position' => CombatPosition::FRONT_LINE,
                 'attacks' => [
@@ -70,6 +75,7 @@ class SeedMinions extends Migration
             ],
             [
                 'name' => 'Skeleton Marksman',
+                'level' => 23,
                 'enemy_type' => EnemyType::UNDEAD,
                 'combat_position' => CombatPosition::HIGH_GROUND,
                 'attacks' => [
@@ -80,16 +86,8 @@ class SeedMinions extends Migration
                 ]
             ],
             [
-                'name' => 'Werewolf Pup',
-                'enemy_type' => EnemyType::WEREWOLF,
-                'combat_position' => CombatPosition::FRONT_LINE,
-                'attacks' => [
-                    'Bite',
-                    'Scratch'
-                ]
-            ],
-            [
                 'name' => 'Young Werewolf',
+                'level' => 15,
                 'enemy_type' => EnemyType::WEREWOLF,
                 'combat_position' => CombatPosition::FRONT_LINE,
                 'attacks' => [
@@ -99,7 +97,31 @@ class SeedMinions extends Migration
                 ]
             ],
             [
-                'name' => 'Werewolf Mauler',
+                'name' => 'Werewolf',
+                'level' => 21,
+                'enemy_type' => EnemyType::WEREWOLF,
+                'combat_position' => CombatPosition::FRONT_LINE,
+                'attacks' => [
+                    'Bite',
+                    'Scratch',
+                    'Double Scratch'
+                ]
+            ],
+            [
+                'name' => 'Werewolf Thrasher',
+                'level' => 28,
+                'enemy_type' => EnemyType::WEREWOLF,
+                'combat_position' => CombatPosition::FRONT_LINE,
+                'attacks' => [
+                    'Bite',
+                    'Fanged Bite',
+                    'Scratch',
+                    'Double Scratch'
+                ]
+            ],
+            [
+                'name' => 'Werewolf Mangler',
+                'level' => 37,
                 'enemy_type' => EnemyType::WEREWOLF,
                 'combat_position' => CombatPosition::FRONT_LINE,
                 'attacks' => [
@@ -111,6 +133,43 @@ class SeedMinions extends Migration
             ],
             [
                 'name' => 'Werewolf Ravager',
+                'level' => 45,
+                'enemy_type' => EnemyType::WEREWOLF,
+                'combat_position' => CombatPosition::FRONT_LINE,
+                'attacks' => [
+                    'Bite',
+                    'Fanged Bite',
+                    'Scratch',
+                    'Double Scratch'
+                ]
+            ],
+            [
+                'name' => 'Werewolf Mauler',
+                'level' => 51,
+                'enemy_type' => EnemyType::WEREWOLF,
+                'combat_position' => CombatPosition::FRONT_LINE,
+                'attacks' => [
+                    'Bite',
+                    'Fanged Bite',
+                    'Scratch',
+                    'Double Scratch'
+                ]
+            ],
+            [
+                'name' => 'Werewolf Maimer',
+                'level' => 59,
+                'enemy_type' => EnemyType::WEREWOLF,
+                'combat_position' => CombatPosition::FRONT_LINE,
+                'attacks' => [
+                    'Bite',
+                    'Fanged Bite',
+                    'Scratch',
+                    'Double Scratch'
+                ]
+            ],
+            [
+                'name' => 'Werewolf Eviscerator',
+                'level' => 90,
                 'enemy_type' => EnemyType::WEREWOLF,
                 'combat_position' => CombatPosition::FRONT_LINE,
                 'attacks' => [
@@ -152,7 +211,7 @@ class SeedMinions extends Migration
             $minion = Minion::query()->create([
                 'uuid' => Str::uuid(),
                 'name' => $minionData['name'],
-                'config_path' => '/Yaml/Minions/' . str_replace(strtolower($name), '' , '_') . '.yaml',
+                'level' => $minionData['level'],
                 'enemy_type_id' => $enemyTypes->where('name', '=', $minionData['enemy_type'])->first()->id,
                 'combat_position_id' => $combatPositions->where('name', '=', $minionData['combat_position'])->first()->id
             ]);
