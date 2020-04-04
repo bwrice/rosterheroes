@@ -33,9 +33,9 @@ abstract class EnemyTypeBehavior
      * @param float $baseDamage
      * @param int $enemyLevel
      * @param CombatPosition $startingCombatPosition
-     * @return int
+     * @return float
      */
-    abstract public function adjustBaseDamage(float $baseDamage, int $enemyLevel, CombatPosition $startingCombatPosition): int;
+    abstract public function adjustBaseDamage(float $baseDamage, int $enemyLevel, CombatPosition $startingCombatPosition): float;
 
     /**
      * @param float $damageMultiplier
