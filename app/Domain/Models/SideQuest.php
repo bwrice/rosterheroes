@@ -60,7 +60,7 @@ class SideQuest extends Model
     protected function floatDifficulty()
     {
         return ceil($this->minions->sum(function (Minion $minion) {
-            return ((($minion->getLevel() ** 1.4)/100) + $minion->getLevel()/20) * $minion->pivot->count;
+            return ((($minion->level** 1.4)/100) + $minion->level/20) * $minion->pivot->count;
         }));
     }
 

@@ -115,18 +115,12 @@ class Minion extends Model implements HasAttacks
 
     public function getFantasyPoints(): float
     {
-        return $this->getLevel()/5 + (sqrt($this->getLevel()) * 6);
-    }
-
-    public function getLevel()
-    {
-        return $this->getConfigAttribute('level');
+        return $this->level/5 + (sqrt($this->level) * 6);
     }
 
     public function getExperienceReward()
     {
-        $level = $this->getLevel();
-        return (int) ceil(($level * 10) + $level**2);
+        return (int) ceil(($this->level * 10) + $this->level**2);
     }
 
     public function getResourceCosts(int $attackTier, DamageTypeBehavior $damageTypeBehavior, ?int $targetsCount): ResourceCostsCollection

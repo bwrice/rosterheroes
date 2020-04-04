@@ -34,7 +34,7 @@ class MinionResource extends JsonResource
             'name' => $this->name,
             'slug' => $this->slug,
             'combatPositionID' => $this->combat_position_id,
-            'level' => $this->getLevel(),
+            'level' => $this->level,
             'startingHealth' => $this->getStartingHealth(),
             'protection' => $this->getProtection(),
             'blockChance' => round($this->getBlockChance(), 2),
