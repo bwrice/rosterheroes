@@ -60,12 +60,171 @@ class SeedQuests extends Migration
                         'weight' => 10
                     ],
                 ],
-                'sid_quest_blueprints' => [
-                    'Small Skeleton Pack',
-                    'Skeleton Pack',
-                    'Large Skeleton Pack'
+                'side_quest_blueprints' => [
+                    'Skeleton Scout',
+                    'Skeleton Guard',
+                    'Skeleton Mage',
+                    'Skeleton Archer',
+                    'Skeleton Soldier',
+                    'Skeleton Marksman',
+                    'Small Skeleton Group',
+                    'Skeleton Group',
+                    'Large Skeleton Group'
                 ]
 
+            ],
+            [
+                'name' => 'Joichela Skeleton Fortress',
+                'travel_type' => TravelType::STATIONARY,
+                'level' => 135,
+                'starting_province' => 'Joichela',
+                'titans' => [
+                    [
+                        'name' => 'Skeleton Overlord',
+                        'count' => 1
+                    ],
+                    [
+                        'name' => 'Skeleton General',
+                        'count' => 6
+                    ]
+                ],
+                'minions' => [
+                    [
+                        'name' => 'Skeleton Guard',
+                        'weight' => 25
+                    ],
+                    [
+                        'name' => 'Skeleton Archer',
+                        'weight' => 20
+                    ],
+                    [
+                        'name' => 'Skeleton Mage',
+                        'weight' => 20
+                    ],
+                    [
+                        'name' => 'Skeleton Soldier',
+                        'weight' => 25
+                    ],
+                    [
+                        'name' => 'Skeleton Marksman',
+                        'weight' => 10
+                    ],
+                ],
+                'side_quest_blueprints' => [
+                    'Skeleton Scout',
+                    'Skeleton Guard',
+                    'Skeleton Mage',
+                    'Skeleton Archer',
+                    'Skeleton Soldier',
+                    'Skeleton Battler',
+                    'Skeleton Marksman',
+                    'Small Skeleton Group',
+                    'Skeleton Group',
+                    'Large Skeleton Group'
+                ]
+            ],
+            [
+                'name' => 'Brashus Skeleton Fortress',
+                'travel_type' => TravelType::STATIONARY,
+                'level' => 162,
+                'starting_province' => 'Brashus',
+                'titans' => [
+                    [
+                        'name' => 'Skeleton Overlord',
+                        'count' => 2
+                    ],
+                    [
+                        'name' => 'Skeleton General',
+                        'count' => 8
+                    ]
+                ],
+                'minions' => [
+                    [
+                        'name' => 'Skeleton Guard',
+                        'weight' => 15
+                    ],
+                    [
+                        'name' => 'Skeleton Archer',
+                        'weight' => 15
+                    ],
+                    [
+                        'name' => 'Skeleton Mage',
+                        'weight' => 20
+                    ],
+                    [
+                        'name' => 'Skeleton Soldier',
+                        'weight' => 25
+                    ],
+                    [
+                        'name' => 'Skeleton Marksman',
+                        'weight' => 15
+                    ],
+                    [
+                        'name' => 'Skeleton Battler',
+                        'weight' => 10
+                    ],
+                ],
+                'side_quest_blueprints' => [
+                    'Skeleton Guard',
+                    'Skeleton Mage',
+                    'Skeleton Archer',
+                    'Skeleton Soldier',
+                    'Skeleton Marksman',
+                    'Skeleton Battler',
+                    'Small Skeleton Group',
+                    'Skeleton Group',
+                    'Large Skeleton Group',
+                    'Skeleton Platoon'
+                ]
+            ],
+            [
+                'name' => 'Cleotyn Skeleton Fortress',
+                'travel_type' => TravelType::STATIONARY,
+                'level' => 162,
+                'starting_province' => 'Cleotyn',
+                'titans' => [
+                    [
+                        'name' => 'Skeleton Overlord',
+                        'count' => 2
+                    ],
+                    [
+                        'name' => 'Skeleton General',
+                        'count' => 8
+                    ]
+                ],
+                'minions' => [
+                    [
+                        'name' => 'Skeleton Archer',
+                        'weight' => 10
+                    ],
+                    [
+                        'name' => 'Skeleton Mage',
+                        'weight' => 25
+                    ],
+                    [
+                        'name' => 'Skeleton Soldier',
+                        'weight' => 30
+                    ],
+                    [
+                        'name' => 'Skeleton Marksman',
+                        'weight' => 15
+                    ],
+                    [
+                        'name' => 'Skeleton Battler',
+                        'weight' => 20
+                    ],
+                ],
+                'side_quest_blueprints' => [
+                    'Skeleton Mage',
+                    'Skeleton Archer',
+                    'Skeleton Soldier',
+                    'Skeleton Marksman',
+                    'Skeleton Battler',
+                    'Small Skeleton Group',
+                    'Skeleton Group',
+                    'Large Skeleton Group',
+                    'Skeleton Platoon'
+                ]
             ],
             [
                 'name' => 'Oberon Werewolf Pack',
@@ -116,17 +275,77 @@ class SeedQuests extends Migration
                         'weight' => 3
                     ],
                 ],
-                'sid_quest_blueprints' => [
+                'side_quest_blueprints' => [
+                    'Young Werewolf',
                     'Werewolf',
                     'Werewolf Thrasher',
                     'Werewolf Mangler',
+                    'Werewolf Mauler',
                     'Werewolf Maimer',
                     'Small Werewolf Cluster',
                     'Werewolf Cluster',
                     'Large Werewolf Cluster',
                     'Werewolf Hunting Pack'
                 ]
-
+            ],
+            [
+                'name' => 'Mimas Werewolf Pack',
+                'travel_type' => TravelType::TERRITORY,
+                'level' => 231,
+                'starting_province' => 'Shael Obela',
+                'titans' => [
+                    [
+                        'name' => 'Mimas Pack Leader',
+                        'count' => 1
+                    ],
+                    [
+                        'name' => 'Werewolf Alpha',
+                        'count' => 8
+                    ]
+                ],
+                'minions' => [
+                    [
+                        'name' => 'Werewolf',
+                        'weight' => 25
+                    ],
+                    [
+                        'name' => 'Werewolf Thrasher',
+                        'weight' => 15
+                    ],
+                    [
+                        'name' => 'Werewolf Mangler',
+                        'weight' => 15
+                    ],
+                    [
+                        'name' => 'Werewolf Ravager',
+                        'weight' => 15
+                    ],
+                    [
+                        'name' => 'Werewolf Mauler',
+                        'weight' => 15
+                    ],
+                    [
+                        'name' => 'Werewolf Maimer',
+                        'weight' => 10
+                    ],
+                    [
+                        'name' => 'Werewolf Eviscerator',
+                        'weight' => 5
+                    ],
+                ],
+                'side_quest_blueprints' => [
+                    'Werewolf',
+                    'Werewolf Thrasher',
+                    'Werewolf Mangler',
+                    'Werewolf Ravager',
+                    'Werewolf Mauler',
+                    'Werewolf Maimer',
+                    'Small Werewolf Cluster',
+                    'Werewolf Cluster',
+                    'Large Werewolf Cluster',
+                    'Werewolf Hunting Pack',
+                    'Werewolf Predator Pack'
+                ]
             ],
         ]);
 
@@ -169,9 +388,13 @@ class SeedQuests extends Migration
 
         $quests->each(function ($questData) use ($sideQuestBlueprints) {
 
-            $blueprintsForQuest = $sideQuestBlueprints->whereIn('name', $questData['sid_quest_blueprints']);
-            if ($blueprintsForQuest->count() != count($questData['sid_quest_blueprints'])) {
-                throw new RuntimeException("Couldn't find all the side-quests for quest: " . $questData['name']);
+            $blueprintsForQuest = $sideQuestBlueprints->whereIn('name', $questData['side_quest_blueprints']);
+            if ($blueprintsForQuest->count() != count($questData['side_quest_blueprints'])) {
+
+                $missing = collect($questData['side_quest_blueprints'])->reject(function ($name) use ($sideQuestBlueprints) {
+                    return in_array($name, $sideQuestBlueprints->pluck('name')->toArray());
+                });
+                throw new RuntimeException("Couldn't find all the side-quests for quest: " . $questData['name'] . ' : ' . print_r($missing, true));
             }
         });
 
@@ -209,7 +432,7 @@ class SeedQuests extends Migration
                 $quest->titans()->save($titan, ['count' => $titanData['count']]);
             });
 
-            $blueprintsForQuest = $sideQuestBlueprints->whereIn('name', $questData['sid_quest_blueprints']);
+            $blueprintsForQuest = $sideQuestBlueprints->whereIn('name', $questData['side_quest_blueprints']);
             $blueprintsForQuest->each(function (SideQuestBlueprint $sideQuestBlueprint) use ($quest, $createSideQuestAction) {
                 $createSideQuestAction->execute($sideQuestBlueprint, $quest);
             });
