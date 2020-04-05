@@ -10,6 +10,7 @@ use App\Domain\Traits\HasNameSlug;
 use App\Domain\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 /**
  * Class SideQuest
@@ -18,7 +19,7 @@ use Illuminate\Support\Collection;
  * @property int $id
  * @property int $quest_id
  * @property string $uuid
- * @property string $name
+ * @property string|null $name
  * @property string $slug
  *
  * @property Quest $quest
@@ -73,5 +74,30 @@ class SideQuest extends Model
     public function getExperiencePerMoment()
     {
         return $this->floatDifficulty()/4;
+    }
+
+    public function buildName()
+    {
+        if ($this->name) {
+            return $this->name;
+        }
+
+        if ($this->minions->count() === 1) {
+            /** @var Minion $firstMinion */
+            $firstMinion = $this->minions->first();
+            return Str::plural($firstMinion->name, $firstMinion->pivot->count);
+        }
+
+        $enemyTypes = $this->minions->map(function (Minion $minion) {
+            return $minion->enemyType;
+        })->unique('id');
+
+        if ($enemyTypes->count() === 1) {
+            /** @var EnemyType $enemyType */
+            $enemyType = $enemyTypes->first();
+            return ucwords(Str::plural($enemyType->name)) . ' (Mixed)';
+        }
+
+        return 'Minions (Mixed)';
     }
 }
