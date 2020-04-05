@@ -129,7 +129,27 @@ class SeedTitans extends Migration
                     'Claw',
                     'Double Claw',
                     'Triple Claw',
-                    'Maul'
+                    'Maul',
+                    'Pounce'
+                ]
+            ],
+            [
+                'name' => 'Mimas Pack Leader',
+                'level' => 243,
+                'enemy_type' => EnemyType::WEREWOLF,
+                'combat_position' => CombatPosition::FRONT_LINE,
+                'attacks' => [
+                    'Fanged Bite',
+                    'Severe Bite',
+                    'Vicious Bite',
+                    'Lethal Bite',
+                    'Triple Scratch',
+                    'Claw',
+                    'Double Claw',
+                    'Triple Claw',
+                    'Maul',
+                    'Pounce',
+                    'Double Pounce'
                 ]
             ],
         ]);
