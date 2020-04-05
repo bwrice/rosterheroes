@@ -61,15 +61,18 @@ class SeedQuests extends Migration
                     ],
                 ],
                 'side_quest_blueprints' => [
-                    'Skeleton Scout',
-                    'Skeleton Guard',
-                    'Skeleton Mage',
-                    'Skeleton Archer',
-                    'Skeleton Soldier',
-                    'Skeleton Marksman',
-                    'Small Skeleton Group',
-                    'Skeleton Group',
-                    'Large Skeleton Group'
+                    'A',
+                    'B',
+                    'C',
+                    'D',
+                    'E',
+                    'F',
+                    'G',
+                    'H',
+                    'I',
+                    'J',
+                    'K',
+                    'N'
                 ]
 
             ],
@@ -111,16 +114,18 @@ class SeedQuests extends Migration
                     ],
                 ],
                 'side_quest_blueprints' => [
-                    'Skeleton Scout',
-                    'Skeleton Guard',
-                    'Skeleton Mage',
-                    'Skeleton Archer',
-                    'Skeleton Soldier',
-                    'Skeleton Battler',
-                    'Skeleton Marksman',
-                    'Small Skeleton Group',
-                    'Skeleton Group',
-                    'Large Skeleton Group'
+                    'B',
+                    'C',
+                    'D',
+                    'E',
+                    'F',
+                    'G',
+                    'H',
+                    'J',
+                    'K',
+                    'L',
+                    'M',
+                    'N'
                 ]
             ],
             [
@@ -165,16 +170,18 @@ class SeedQuests extends Migration
                     ],
                 ],
                 'side_quest_blueprints' => [
-                    'Skeleton Guard',
-                    'Skeleton Mage',
-                    'Skeleton Archer',
-                    'Skeleton Soldier',
-                    'Skeleton Marksman',
-                    'Skeleton Battler',
-                    'Small Skeleton Group',
-                    'Skeleton Group',
-                    'Large Skeleton Group',
-                    'Skeleton Platoon'
+                    'B',
+                    'D',
+                    'E',
+                    'F',
+                    'G',
+                    'H',
+                    'I',
+                    'J',
+                    'K',
+                    'L',
+                    'M',
+                    'N'
                 ]
             ],
             [
@@ -215,15 +222,18 @@ class SeedQuests extends Migration
                     ],
                 ],
                 'side_quest_blueprints' => [
-                    'Skeleton Mage',
-                    'Skeleton Archer',
-                    'Skeleton Soldier',
-                    'Skeleton Marksman',
-                    'Skeleton Battler',
-                    'Small Skeleton Group',
-                    'Skeleton Group',
-                    'Large Skeleton Group',
-                    'Skeleton Platoon'
+                    'A',
+                    'C',
+                    'D',
+                    'E',
+                    'F',
+                    'G',
+                    'H',
+                    'I',
+                    'J',
+                    'L',
+                    'M',
+                    'N'
                 ]
             ],
             [
@@ -276,16 +286,17 @@ class SeedQuests extends Migration
                     ],
                 ],
                 'side_quest_blueprints' => [
-                    'Young Werewolf',
-                    'Werewolf',
-                    'Werewolf Thrasher',
-                    'Werewolf Mangler',
-                    'Werewolf Mauler',
-                    'Werewolf Maimer',
-                    'Small Werewolf Cluster',
-                    'Werewolf Cluster',
-                    'Large Werewolf Cluster',
-                    'Werewolf Hunting Pack'
+                    'O',
+                    'P',
+                    'Q',
+                    'R',
+                    'S',
+                    'T',
+                    'U',
+                    'V',
+                    'W',
+                    'X',
+                    'Y'
                 ]
             ],
             [
@@ -334,17 +345,17 @@ class SeedQuests extends Migration
                     ],
                 ],
                 'side_quest_blueprints' => [
-                    'Werewolf',
-                    'Werewolf Thrasher',
-                    'Werewolf Mangler',
-                    'Werewolf Ravager',
-                    'Werewolf Mauler',
-                    'Werewolf Maimer',
-                    'Small Werewolf Cluster',
-                    'Werewolf Cluster',
-                    'Large Werewolf Cluster',
-                    'Werewolf Hunting Pack',
-                    'Werewolf Predator Pack'
+                    'O',
+                    'P',
+                    'R',
+                    'S',
+                    'T',
+                    'U',
+                    'V',
+                    'W',
+                    'X',
+                    'Y',
+                    'Z'
                 ]
             ],
         ]);
@@ -388,7 +399,7 @@ class SeedQuests extends Migration
 
         $quests->each(function ($questData) use ($sideQuestBlueprints) {
 
-            $blueprintsForQuest = $sideQuestBlueprints->whereIn('name', $questData['side_quest_blueprints']);
+            $blueprintsForQuest = $sideQuestBlueprints->whereIn('reference_id', $questData['side_quest_blueprints']);
             if ($blueprintsForQuest->count() != count($questData['side_quest_blueprints'])) {
 
                 $missing = collect($questData['side_quest_blueprints'])->reject(function ($name) use ($sideQuestBlueprints) {
@@ -432,7 +443,7 @@ class SeedQuests extends Migration
                 $quest->titans()->save($titan, ['count' => $titanData['count']]);
             });
 
-            $blueprintsForQuest = $sideQuestBlueprints->whereIn('name', $questData['side_quest_blueprints']);
+            $blueprintsForQuest = $sideQuestBlueprints->whereIn('reference_id', $questData['side_quest_blueprints']);
             $blueprintsForQuest->each(function (SideQuestBlueprint $sideQuestBlueprint) use ($quest, $createSideQuestAction) {
                 $createSideQuestAction->execute($sideQuestBlueprint, $quest);
             });
