@@ -274,7 +274,7 @@ class ProcessSideQuestResultTest extends TestCase
         $campaignStop = CampaignStopFactory::new()->withCampaign(CampaignFactory::new()->withSquadID($squad->id))->create();
 
         /** @var SideQuest $sideQuest */
-        $sideQuest = SideQuest::query()->where('name', '=', 'Small Skeleton Pack')->first();
+        $sideQuest = SideQuest::query()->where('name', '=', 'Small Skeleton Group')->first();
         $campaignStop->sideQuests()->save($sideQuest);
 
         /** @var ProcessSideQuestResult $domainAction */
@@ -304,7 +304,7 @@ class ProcessSideQuestResultTest extends TestCase
         $campaignStop = CampaignStopFactory::new()->withCampaign(CampaignFactory::new()->withSquadID($squad->id))->create();
 
         /** @var SideQuest $sideQuest */
-        $sideQuest = SideQuest::query()->where('name', '=', 'Large Skeleton Pack')->first();
+        $sideQuest = SideQuest::query()->where('name', '=', 'Large Skeleton Group')->first();
         $campaignStop->sideQuests()->save($sideQuest);
 
         /** @var ProcessSideQuestResult $domainAction */
