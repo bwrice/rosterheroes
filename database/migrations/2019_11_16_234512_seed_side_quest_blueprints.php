@@ -55,7 +55,43 @@ class SeedSideQuestBlueprints extends Migration
                 ]
             ],
             [
-                'name' => 'Small Skeleton Pack',
+                'name' => 'Skeleton Soldier',
+                'minions' => [
+                    [
+                        'name' => 'Skeleton Soldier',
+                        'count' => 1
+                    ]
+                ]
+            ],
+            [
+                'name' => 'Skeleton Marksman',
+                'minions' => [
+                    [
+                        'name' => 'Skeleton Marksman',
+                        'count' => 1
+                    ]
+                ]
+            ],
+            [
+                'name' => 'Skeleton Battler',
+                'minions' => [
+                    [
+                        'name' => 'Skeleton Battler',
+                        'count' => 1
+                    ]
+                ]
+            ],
+            [
+                'name' => 'Skeleton Captain',
+                'minions' => [
+                    [
+                        'name' => 'Skeleton Captain',
+                        'count' => 1
+                    ]
+                ]
+            ],
+            [
+                'name' => 'Small Skeleton Group',
                 'minions' => [
                     [
                         'name' => 'Skeleton Scout',
@@ -68,7 +104,7 @@ class SeedSideQuestBlueprints extends Migration
                 ]
             ],
             [
-                'name' => 'Skeleton Pack',
+                'name' => 'Skeleton Group',
                 'minions' => [
                     [
                         'name' => 'Skeleton Scout',
@@ -89,7 +125,7 @@ class SeedSideQuestBlueprints extends Migration
                 ]
             ],
             [
-                'name' => 'Large Skeleton Pack',
+                'name' => 'Large Skeleton Group',
                 'minions' => [
                     [
                         'name' => 'Skeleton Guard',
@@ -107,6 +143,40 @@ class SeedSideQuestBlueprints extends Migration
                         'name' => 'Skeleton Mage',
                         'count' => 2
                     ],
+                ]
+            ],
+            [
+                'name' => 'Skeleton Platoon',
+                'minions' => [
+                    [
+                        'name' => 'Skeleton Soldier',
+                        'count' => 9
+                    ],
+                    [
+                        'name' => 'Skeleton Marksman',
+                        'count' => 7
+                    ],
+                    [
+                        'name' => 'Skeleton Mage',
+                        'count' => 5
+                    ],
+                    [
+                        'name' => 'Skeleton Battler',
+                        'count' => 3
+                    ],
+                    [
+                        'name' => 'Skeleton Captain',
+                        'count' => 1
+                    ],
+                ]
+            ],
+            [
+                'name' => 'Young Werewolf',
+                'minions' => [
+                    [
+                        'name' => 'Young Werewolf',
+                        'count' => 1
+                    ]
                 ]
             ],
             [
