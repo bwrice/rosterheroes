@@ -84,31 +84,40 @@ class SeedQuests extends Migration
                 ],
                 'minions' => [
                     [
-                        'name' => 'Werewolf Young',
+                        'name' => 'Young Werewolf',
                         'weight' => 10
                     ],
                     [
+                        'name' => 'Werewolf',
+                        'weight' => 25
+                    ],
+                    [
                         'name' => 'Werewolf Thrasher',
-                        'weight' => 20
+                        'weight' => 15
                     ],
                     [
                         'name' => 'Werewolf Mangler',
-                        'weight' => 25
+                        'weight' => 15
                     ],
                     [
                         'name' => 'Werewolf Ravager',
-                        'weight' => 25
+                        'weight' => 15
                     ],
                     [
                         'name' => 'Werewolf Mauler',
-                        'weight' => 15
+                        'weight' => 10
                     ],
                     [
                         'name' => 'Werewolf Maimer',
-                        'weight' => 15
+                        'weight' => 7
+                    ],
+                    [
+                        'name' => 'Werewolf Eviscerator',
+                        'weight' => 3
                     ],
                 ],
                 'sid_quest_blueprints' => [
+                    'Werewolf',
                     'Werewolf Thrasher',
                     'Werewolf Mangler',
                     'Werewolf Maimer',

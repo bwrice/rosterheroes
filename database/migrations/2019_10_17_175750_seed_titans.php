@@ -141,8 +141,11 @@ class SeedTitans extends Migration
             $attacksToAttach = $attacks->filter(function (Attack $attack) use ($titanData) {
                 return in_array($attack->name, $titanData['attacks']);
             });
-            if ($count != $attacksToAttach->count() ) {
-                throw new RuntimeException("Not all of the attacks for " . $titanData['name'] . " were found");
+            if ($count != $attacksToAttach->count()) {
+                $missing = collect($titanData['attacks'])->reject(function ($attackName) use ($attacks) {
+                    return in_array($attackName, $attacks->pluck('name')->toArray());
+                });
+                throw new RuntimeException("Not all of the attacks for " . $titanData['name'] . " were found: " . print_r($missing, true));
             }
         });
 
@@ -155,7 +158,7 @@ class SeedTitans extends Migration
             $titan = Titan::query()->create([
                 'uuid' => Str::uuid(),
                 'name' => $titanData['name'],
-                'config_path' => $titanData['level'],
+                'level' => $titanData['level'],
                 'enemy_type_id' => $enemyTypes->where('name', '=', $titanData['enemy_type'])->first()->id,
                 'combat_position_id' => $combatPositions->where('name', '=', $titanData['combat_position'])->first()->id
             ]);

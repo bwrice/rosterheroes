@@ -110,23 +110,10 @@ class SeedSideQuestBlueprints extends Migration
                 ]
             ],
             [
-                'name' => 'Small Werewolf Cluster',
+                'name' => 'Werewolf',
                 'minions' => [
                     [
-                        'name' => 'Werewolf Pup',
-                        'count' => 2
-                    ],
-                    [
-                        'name' => 'Young Werewolf',
-                        'count' => 3
-                    ]
-                ]
-            ],
-            [
-                'name' => 'Young Werewolf',
-                'minions' => [
-                    [
-                        'name' => 'Young Werewolf',
+                        'name' => 'Werewolf',
                         'count' => 1
                     ]
                 ]
@@ -186,10 +173,23 @@ class SeedSideQuestBlueprints extends Migration
                 ]
             ],
             [
-                'name' => 'Werewolf Cluster',
+                'name' => 'Small Werewolf Cluster',
                 'minions' => [
                     [
                         'name' => 'Young Werewolf',
+                        'count' => 3
+                    ],
+                    [
+                        'name' => 'Werewolf',
+                        'count' => 2
+                    ]
+                ]
+            ],
+            [
+                'name' => 'Werewolf Cluster',
+                'minions' => [
+                    [
+                        'name' => 'Werewolf',
                         'count' => 7
                     ],
                     [
@@ -261,15 +261,15 @@ class SeedSideQuestBlueprints extends Migration
                     ],
                     [
                         'name' => 'Werewolf Mauler',
-                        'count' => 9
+                        'count' => 8
                     ],
                     [
                         'name' => 'Werewolf Maimer',
-                        'count' => 7
+                        'count' => 5
                     ],
                     [
                         'name' => 'Werewolf Eviscerator',
-                        'count' => 3
+                        'count' => 4
                     ]
                 ]
             ],
