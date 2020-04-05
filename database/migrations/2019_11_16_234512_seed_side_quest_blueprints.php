@@ -19,17 +19,13 @@ class SeedSideQuestBlueprints extends Migration
     {
         $sideQuestBlueprints = collect([
             [
-                'name' => 'Skeleton Scout',
+                'name' => null,
+                'reference_id' => 'A',
                 'minions' => [
                     [
                         'name' => 'Skeleton Scout',
-                        'count' => 1
-                    ]
-                ]
-            ],
-            [
-                'name' => 'Skeleton Guard',
-                'minions' => [
+                        'count' => 2
+                    ],
                     [
                         'name' => 'Skeleton Guard',
                         'count' => 1
@@ -37,8 +33,17 @@ class SeedSideQuestBlueprints extends Migration
                 ]
             ],
             [
-                'name' => 'Skeleton Archer',
+                'name' => null,
+                'reference_id' => 'B',
                 'minions' => [
+                    [
+                        'name' => 'Skeleton Scout',
+                        'count' => 2
+                    ],
+                    [
+                        'name' => 'Skeleton Guard',
+                        'count' => 1
+                    ],
                     [
                         'name' => 'Skeleton Archer',
                         'count' => 1
@@ -46,69 +51,44 @@ class SeedSideQuestBlueprints extends Migration
                 ]
             ],
             [
-                'name' => 'Skeleton Mage',
+                'name' => null,
+                'reference_id' => 'C',
                 'minions' => [
                     [
-                        'name' => 'Skeleton Mage',
-                        'count' => 1
-                    ]
-                ]
-            ],
-            [
-                'name' => 'Skeleton Soldier',
-                'minions' => [
-                    [
-                        'name' => 'Skeleton Soldier',
-                        'count' => 1
-                    ]
-                ]
-            ],
-            [
-                'name' => 'Skeleton Marksman',
-                'minions' => [
-                    [
-                        'name' => 'Skeleton Marksman',
-                        'count' => 1
-                    ]
-                ]
-            ],
-            [
-                'name' => 'Skeleton Battler',
-                'minions' => [
-                    [
-                        'name' => 'Skeleton Battler',
-                        'count' => 1
-                    ]
-                ]
-            ],
-            [
-                'name' => 'Skeleton Captain',
-                'minions' => [
-                    [
-                        'name' => 'Skeleton Captain',
-                        'count' => 1
-                    ]
-                ]
-            ],
-            [
-                'name' => 'Small Skeleton Group',
-                'minions' => [
-                    [
-                        'name' => 'Skeleton Scout',
+                        'name' => 'Skeleton Guard',
                         'count' => 3
                     ],
                     [
-                        'name' => 'Skeleton Guard',
+                        'name' => 'Skeleton Archer',
                         'count' => 2
                     ]
                 ]
             ],
             [
-                'name' => 'Skeleton Group',
+                'name' => null,
+                'reference_id' => 'D',
+                'minions' => [
+                    [
+                        'name' => 'Skeleton Guard',
+                        'count' => 2
+                    ],
+                    [
+                        'name' => 'Skeleton Archer',
+                        'count' => 1
+                    ],
+                    [
+                        'name' => 'Skeleton Mage',
+                        'count' => 2
+                    ],
+                ]
+            ],
+            [
+                'name' => null,
+                'reference_id' => 'E',
                 'minions' => [
                     [
                         'name' => 'Skeleton Scout',
-                        'count' => 2
+                        'count' => 4
                     ],
                     [
                         'name' => 'Skeleton Guard',
@@ -121,19 +101,57 @@ class SeedSideQuestBlueprints extends Migration
                     [
                         'name' => 'Skeleton Mage',
                         'count' => 1
-                    ],
+                    ]
                 ]
             ],
             [
-                'name' => 'Large Skeleton Group',
+                'name' => null,
+                'reference_id' => 'F',
                 'minions' => [
+                    [
+                        'name' => 'Skeleton Scout',
+                        'count' => 3
+                    ],
                     [
                         'name' => 'Skeleton Guard',
                         'count' => 4
                     ],
                     [
-                        'name' => 'Skeleton Soldier',
+                        'name' => 'Skeleton Archer',
                         'count' => 2
+                    ],
+                    [
+                        'name' => 'Skeleton Mage',
+                        'count' => 1
+                    ]
+                ]
+            ],
+            [
+                'name' => null,
+                'reference_id' => 'G',
+                'minions' => [
+                    [
+                        'name' => 'Skeleton Mage',
+                        'count' => 2
+                    ],
+                    [
+                        'name' => 'Skeleton Soldier',
+                        'count' => 1
+                    ],
+                    [
+                        'name' => 'Skeleton Marksman',
+                        'count' => 1
+                    ],
+
+                ]
+            ],
+            [
+                'name' => null,
+                'reference_id' => 'H',
+                'minions' => [
+                    [
+                        'name' => 'Skeleton Guard',
+                        'count' => 3
                     ],
                     [
                         'name' => 'Skeleton Archer',
@@ -143,10 +161,89 @@ class SeedSideQuestBlueprints extends Migration
                         'name' => 'Skeleton Mage',
                         'count' => 2
                     ],
+                    [
+                        'name' => 'Skeleton Soldier',
+                        'count' => 2
+                    ]
+                ]
+            ],
+            [
+                'name' => null,
+                'reference_id' => 'I',
+                'minions' => [
+                    [
+                        'name' => 'Skeleton Guard',
+                        'count' => 5
+                    ]
+                ]
+            ],
+            [
+                'name' => null,
+                'reference_id' => 'J',
+                'minions' => [
+                    [
+                        'name' => 'Skeleton Soldier',
+                        'count' => 3
+                    ]
+                ]
+            ],
+            [
+                'name' => null,
+                'reference_id' => 'K',
+                'minions' => [
+                    [
+                        'name' => 'Skeleton Guard',
+                        'count' => 7
+                    ]
+                ]
+            ],
+            [
+                'name' => null,
+                'reference_id' => 'L',
+                'minions' => [
+                    [
+                        'name' => 'Skeleton Mage',
+                        'count' => 2
+                    ],
+                    [
+                        'name' => 'Skeleton Marksman',
+                        'count' => 2
+                    ],
+                    [
+                        'name' => 'Skeleton Battler',
+                        'count' => 2
+                    ]
+                ]
+            ],
+            [
+                'name' => null,
+                'reference_id' => 'M',
+                'minions' => [
+                    [
+                        'name' => 'Skeleton Archer',
+                        'count' => 1
+                    ],
+                    [
+                        'name' => 'Skeleton Mage',
+                        'count' => 2
+                    ],
+                    [
+                        'name' => 'Skeleton Soldier',
+                        'count' => 3
+                    ],
+                    [
+                        'name' => 'Skeleton Marksman',
+                        'count' => 3
+                    ],
+                    [
+                        'name' => 'Skeleton Battler',
+                        'count' => 2
+                    ]
                 ]
             ],
             [
                 'name' => 'Skeleton Platoon',
+                'reference_id' => 'N',
                 'minions' => [
                     [
                         'name' => 'Skeleton Soldier',
@@ -171,79 +268,18 @@ class SeedSideQuestBlueprints extends Migration
                 ]
             ],
             [
-                'name' => 'Young Werewolf',
-                'minions' => [
-                    [
-                        'name' => 'Young Werewolf',
-                        'count' => 1
-                    ]
-                ]
-            ],
-            [
-                'name' => 'Werewolf',
+                'name' => null,
+                'reference_id' => 'O',
                 'minions' => [
                     [
                         'name' => 'Werewolf',
-                        'count' => 1
+                        'count' => 3
                     ]
                 ]
             ],
             [
-                'name' => 'Werewolf Thrasher',
-                'minions' => [
-                    [
-                        'name' => 'Werewolf Thrasher',
-                        'count' => 1
-                    ]
-                ]
-            ],
-            [
-                'name' => 'Werewolf Mangler',
-                'minions' => [
-                    [
-                        'name' => 'Werewolf Mangler',
-                        'count' => 1
-                    ]
-                ]
-            ],
-            [
-                'name' => 'Werewolf Ravager',
-                'minions' => [
-                    [
-                        'name' => 'Werewolf Ravager',
-                        'count' => 1
-                    ]
-                ]
-            ],
-            [
-                'name' => 'Werewolf Mauler',
-                'minions' => [
-                    [
-                        'name' => 'Werewolf Mauler',
-                        'count' => 1
-                    ]
-                ]
-            ],
-            [
-                'name' => 'Werewolf Maimer',
-                'minions' => [
-                    [
-                        'name' => 'Werewolf Maimer',
-                        'count' => 1
-                    ]
-                ]
-            ],
-            [
-                'name' => 'Werewolf Eviscerator',
-                'minions' => [
-                    [
-                        'name' => 'Werewolf Eviscerator',
-                        'count' => 1
-                    ]
-                ]
-            ],
-            [
-                'name' => 'Small Werewolf Cluster',
+                'name' => null,
+                'reference_id' => 'P',
                 'minions' => [
                     [
                         'name' => 'Young Werewolf',
@@ -256,12 +292,41 @@ class SeedSideQuestBlueprints extends Migration
                 ]
             ],
             [
-                'name' => 'Werewolf Cluster',
+                'name' => null,
+                'reference_id' => 'Q',
+                'minions' => [
+                    [
+                        'name' => 'Young Werewolf',
+                        'count' => 1
+                    ],
+                    [
+                        'name' => 'Werewolf',
+                        'count' => 2
+                    ],
+                    [
+                        'name' => 'Werewolf Thrasher',
+                        'count' => 2
+                    ]
+                ]
+            ],
+            [
+                'name' => null,
+                'reference_id' => 'R',
                 'minions' => [
                     [
                         'name' => 'Werewolf',
-                        'count' => 7
+                        'count' => 2
                     ],
+                    [
+                        'name' => 'Werewolf Thrasher',
+                        'count' => 3
+                    ]
+                ]
+            ],
+            [
+                'name' => null,
+                'reference_id' => 'S',
+                'minions' => [
                     [
                         'name' => 'Werewolf Thrasher',
                         'count' => 2
@@ -277,19 +342,52 @@ class SeedSideQuestBlueprints extends Migration
                 ]
             ],
             [
-                'name' => 'Large Werewolf Cluster',
+                'name' => null,
+                'reference_id' => 'T',
                 'minions' => [
                     [
                         'name' => 'Werewolf Thrasher',
-                        'count' => 5
+                        'count' => 2
                     ],
                     [
                         'name' => 'Werewolf Mangler',
-                        'count' => 4
+                        'count' => 3
                     ],
                     [
                         'name' => 'Werewolf Ravager',
-                        'count' => 5
+                        'count' => 2
+                    ]
+                ]
+            ],
+            [
+                'name' => null,
+                'reference_id' => 'U',
+                'minions' => [
+                    [
+                        'name' => 'Werewolf Thrasher',
+                        'count' => 1
+                    ],
+                    [
+                        'name' => 'Werewolf Mangler',
+                        'count' => 1
+                    ],
+                    [
+                        'name' => 'Werewolf Ravager',
+                        'count' => 2
+                    ],
+                    [
+                        'name' => 'Werewolf Mauler',
+                        'count' => 1
+                    ]
+                ]
+            ],
+            [
+                'name' => null,
+                'reference_id' => 'V',
+                'minions' => [
+                    [
+                        'name' => 'Werewolf Ravager',
+                        'count' => 2
                     ],
                     [
                         'name' => 'Werewolf Mauler',
@@ -298,12 +396,35 @@ class SeedSideQuestBlueprints extends Migration
                     [
                         'name' => 'Werewolf Maimer',
                         'count' => 1
+                    ]
+                ]
+            ],
+            [
+                'name' => null,
+                'reference_id' => 'W',
+                'minions' => [
+                    [
+                        'name' => 'Werewolf Ravager',
+                        'count' => 3
+                    ],
+                    [
+                        'name' => 'Werewolf Mauler',
+                        'count' => 3
+                    ],
+                    [
+                        'name' => 'Werewolf Maimer',
+                        'count' => 2
                     ]
                 ]
             ],
             [
                 'name' => 'Werewolf Hunting Pack',
+                'reference_id' => 'X',
                 'minions' => [
+                    [
+                        'name' => 'Werewolf Thrasher',
+                        'count' => 2
+                    ],
                     [
                         'name' => 'Werewolf Mangler',
                         'count' => 2
@@ -318,16 +439,21 @@ class SeedSideQuestBlueprints extends Migration
                     ],
                     [
                         'name' => 'Werewolf Maimer',
-                        'count' => 6
+                        'count' => 3
+                    ],
+                    [
+                        'name' => 'Werewolf Eviscerator',
+                        'count' => 1
                     ]
                 ]
             ],
             [
                 'name' => 'Werewolf Predator Pack',
+                'reference_id' => 'Y',
                 'minions' => [
                     [
                         'name' => 'Werewolf Ravager',
-                        'count' => 6
+                        'count' => 7
                     ],
                     [
                         'name' => 'Werewolf Mauler',
@@ -335,10 +461,24 @@ class SeedSideQuestBlueprints extends Migration
                     ],
                     [
                         'name' => 'Werewolf Maimer',
-                        'count' => 5
+                        'count' => 6
                     ],
                     [
                         'name' => 'Werewolf Eviscerator',
+                        'count' => 3
+                    ]
+                ]
+            ],
+            [
+                'name' => null,
+                'reference_id' => 'Z',
+                'minions' => [
+                    [
+                        'name' => 'Werewolf Thrasher',
+                        'count' => 3
+                    ],
+                    [
+                        'name' => 'Werewolf Mauler',
                         'count' => 4
                     ]
                 ]
@@ -353,14 +493,15 @@ class SeedSideQuestBlueprints extends Migration
             });
             $minionsToAttach = $minions->whereIn('name', $minionNames->values()->toArray());
             if ($minionsToAttach->count() != $minionNames->count()) {
-                throw new RuntimeException("Cannot find all the minions for side-quest: " . $sideQuestBlueprintData['name']);
+                throw new RuntimeException("Cannot find all the minions for side-quest: " . $sideQuestBlueprintData['reference_id']);
             }
         });
 
         $sideQuestBlueprints->each(function ($sideQuestBlueprintData) use ($minions) {
             /** @var SideQuest $sideQuest */
             $sideQuest = SideQuestBlueprint::query()->create([
-                'name' => $sideQuestBlueprintData['name']
+                'name' => $sideQuestBlueprintData['name'],
+                'reference_id' => $sideQuestBlueprintData['reference_id']
             ]);
             $minionAttachArrays = collect($sideQuestBlueprintData['minions'])->map(function ($sideQuestMinion) use ($minions) {
                 $minionName = $sideQuestMinion['name'];
