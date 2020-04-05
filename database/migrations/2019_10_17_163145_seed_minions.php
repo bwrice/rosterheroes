@@ -86,6 +86,34 @@ class SeedMinions extends Migration
                 ]
             ],
             [
+                'name' => 'Skeleton Battler',
+                'level' => 31,
+                'enemy_type' => EnemyType::UNDEAD,
+                'combat_position' => CombatPosition::FRONT_LINE,
+                'attacks' => [
+                    'Pierce',
+                    'Double Pierce',
+                    'Stab',
+                    'Double Stab',
+                    'Triple Stab',
+                    'Polearm Strike',
+                ]
+            ],
+            [
+                'name' => 'Skeleton Captain',
+                'level' => 40,
+                'enemy_type' => EnemyType::UNDEAD,
+                'combat_position' => CombatPosition::FRONT_LINE,
+                'attacks' => [
+                    'Smash',
+                    'Double Smash',
+                    'Triple Smash',
+                    'Clobber',
+                    'Double Clobber',
+                    'Mace Sweep',
+                ]
+            ],
+            [
                 'name' => 'Young Werewolf',
                 'level' => 15,
                 'enemy_type' => EnemyType::WEREWOLF,
