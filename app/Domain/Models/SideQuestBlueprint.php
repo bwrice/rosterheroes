@@ -25,4 +25,9 @@ class SideQuestBlueprint extends Model
     {
         return $this->belongsToMany(Minion::class)->withPivot('count');
     }
+
+    public function sideQuests()
+    {
+        return $this->hasMany(SideQuest::class);
+    }
 }
