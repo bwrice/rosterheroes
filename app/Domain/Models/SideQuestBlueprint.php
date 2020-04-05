@@ -17,7 +17,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 class SideQuestBlueprint extends Model
 {
-    use HasNameSlug;
     use HasUniqueNames;
 
     protected $guarded = [];
