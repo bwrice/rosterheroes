@@ -15,7 +15,8 @@ class CreateSideQuestBlueprintsTable extends Migration
     {
         Schema::create('side_quest_blueprints', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->string('name')->nullable();
+            $table->string('reference_id')->unique();
             $table->timestamps();
         });
     }
