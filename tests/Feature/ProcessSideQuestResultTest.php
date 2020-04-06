@@ -21,6 +21,7 @@ use App\Factories\Models\SideQuestFactory;
 use App\Factories\Models\SquadFactory;
 use App\SideQuestEvent;
 use App\SideQuestResult;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -260,8 +261,11 @@ class ProcessSideQuestResultTest extends TestCase
 
     /**
      * @test
+     * @param $referenceID
+     * @throws \Exception
+     * @dataProvider provides_a_beginner_squad_will_be_victorious_against_easy_side_quests
      */
-    public function a_beginner_squad_will_be_victorious_against_a_small_skeleton_pack()
+    public function a_beginner_squad_will_be_victorious_against_easy_side_quests($referenceID)
     {
         $heroFactory = HeroFactory::new();
         $squad = SquadFactory::new()->withHeroes(collect([
@@ -274,7 +278,9 @@ class ProcessSideQuestResultTest extends TestCase
         $campaignStop = CampaignStopFactory::new()->withCampaign(CampaignFactory::new()->withSquadID($squad->id))->create();
 
         /** @var SideQuest $sideQuest */
-        $sideQuest = SideQuest::query()->where('name', '=', 'Small Skeleton Group')->first();
+        $sideQuest = SideQuest::query()->whereHas('sideQuestBlueprint', function (Builder $builder) use ($referenceID) {
+            return $builder->where('reference_id', '=', $referenceID);
+        })->first();
         $campaignStop->sideQuests()->save($sideQuest);
 
         /** @var ProcessSideQuestResult $domainAction */
@@ -286,6 +292,27 @@ class ProcessSideQuestResultTest extends TestCase
         $eventCount = $sideQuestResult->sideQuestEvents()->count();
         $this->assertGreaterThan(25, $eventCount);
         $this->assertLessThan(250, $eventCount);
+    }
+
+    public function provides_a_beginner_squad_will_be_victorious_against_easy_side_quests()
+    {
+        return [
+            [
+                'referenceID' => 'A',
+            ],
+            [
+                'referenceID' => 'B',
+            ],
+            [
+                'referenceID' => 'C',
+            ],
+            [
+                'referenceID' => 'O',
+            ],
+            [
+                'referenceID' => 'P',
+            ],
+        ];
     }
 
     /**
