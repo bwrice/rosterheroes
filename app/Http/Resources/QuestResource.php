@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use App\Domain\Collections\SideQuestCollection;
 use App\Domain\Models\Minion;
 use App\Domain\Models\Quest;
+use App\Domain\Models\SideQuest;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
@@ -30,7 +31,9 @@ class QuestResource extends JsonResource
             'level' => $this->level,
             'provinceID' => $this->province_id,
             'percent' => round($this->percent, 2),
-            'sideQuests' => SideQuestResource::collection($this->sideQuests),
+            'sideQuests' => SideQuestResource::collection($this->sideQuests->sortBy(function (SideQuest $sideQuest) {
+                return $sideQuest->difficulty();
+            })),
             'titans' => TitanResource::collection($this->titans),
             'minions' => $this->minions->map(function (Minion $minion) {
                 $resource = new MinionResource($minion);
