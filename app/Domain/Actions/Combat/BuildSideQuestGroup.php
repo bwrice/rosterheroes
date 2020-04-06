@@ -51,6 +51,6 @@ class BuildSideQuestGroup
             }
         });
 
-        return new SideQuestGroup($sideQuest->name, $sideQuest->uuid, $combatMinions);
+        return new SideQuestGroup($sideQuest->buildName(), $sideQuest->uuid, $combatMinions);
     }
 }
