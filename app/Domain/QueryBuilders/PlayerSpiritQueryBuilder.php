@@ -9,6 +9,7 @@
 namespace App\Domain\QueryBuilders;
 
 use App\Domain\Models\HeroRace;
+use App\Domain\Models\Player;
 use App\Domain\Models\Squad;
 use App\Domain\Models\Week;
 use App\Domain\Models\PlayerSpirit;
@@ -44,8 +45,10 @@ class PlayerSpiritQueryBuilder extends Builder
 
     public function withPositions(array $positionNames)
     {
-        return $this->whereHas('player', function (PlayerQueryBuilder $builder) use ($positionNames) {
-            return $builder->withPositions($positionNames);
+        return $this->whereHas('playerGameLog', function (Builder $builder) use ($positionNames) {
+            return $builder->whereHas('player', function (PlayerQueryBuilder $builder) use ($positionNames) {
+                return $builder->withPositions($positionNames);
+            });
         });
     }
 
