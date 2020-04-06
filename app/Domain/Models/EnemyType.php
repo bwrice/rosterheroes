@@ -5,6 +5,7 @@ namespace App\Domain\Models;
 use App\Domain\Behaviors\EnemyTypes\EnemyTypeBehavior;
 use App\Domain\Behaviors\EnemyTypes\EnemyTypeBehaviorFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 /**
  * Class EnemyType
@@ -29,5 +30,15 @@ class EnemyType extends Model
         /** @var EnemyTypeBehaviorFactory $factory */
         $factory = app(EnemyTypeBehaviorFactory::class);
         return $factory->getBehavior($this->name);
+    }
+
+    public function getPluralName($count = 2)
+    {
+        $name = $this->name;
+        switch ($name) {
+            case self::UNDEAD:
+                return self::UNDEAD;
+        }
+        return ucwords(Str::plural($this->name, $count));
     }
 }

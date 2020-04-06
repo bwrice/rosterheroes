@@ -95,7 +95,7 @@ class SideQuest extends Model
         if ($enemyTypes->count() === 1) {
             /** @var EnemyType $enemyType */
             $enemyType = $enemyTypes->first();
-            return ucwords(Str::plural($enemyType->name)) . ' (Mixed)';
+            return ucwords($enemyType->getPluralName()) . ' (Mixed)';
         }
 
         return 'Minions (Mixed)';
