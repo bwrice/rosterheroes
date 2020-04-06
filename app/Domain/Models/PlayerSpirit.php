@@ -20,7 +20,6 @@ use App\Domain\QueryBuilders\PlayerSpiritQueryBuilder;
  * @property int $week_id
  *
  * @property Week $week
- * @property Game $game
  * @property PlayerGameLog $playerGameLog
  * @property HeroCollection $heroes
  *

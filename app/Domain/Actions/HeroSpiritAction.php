@@ -26,8 +26,8 @@ abstract class HeroSpiritAction
      */
     protected function validateGameTime(Hero $hero, PlayerSpirit $playerSpirit): void
     {
-        if ($playerSpirit->game->hasStarted()) {
-            $message = $playerSpirit->game->getSimpleDescription() . " has already started";
+        if ($playerSpirit->playerGameLog->game->hasStarted()) {
+            $message = $playerSpirit->playerGameLog->game->getSimpleDescription() . " has already started";
             throw new HeroPlayerSpiritException(
                 $hero,
                 $playerSpirit,
@@ -46,7 +46,7 @@ abstract class HeroSpiritAction
     protected function validateWeek(Hero $hero, PlayerSpirit $playerSpirit): void
     {
         if (!Week::isCurrent($playerSpirit->week)) {
-            $gameDescription = $playerSpirit->game->getSimpleDescription();
+            $gameDescription = $playerSpirit->playerGameLog->game->getSimpleDescription();
             $message = $gameDescription . ' is not for the current week';
             throw new HeroPlayerSpiritException(
                 $hero,

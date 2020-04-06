@@ -26,7 +26,7 @@ class RemoveSpiritFromHeroActionTest extends TestCase
         /** @var PlayerSpirit $playerSpirit */
         $playerSpirit = factory(PlayerSpirit::class)->create();
 
-        $game = $playerSpirit->game;
+        $game = $playerSpirit->playerGameLog->game;
 
         // set current week to spirit's week
         Week::setTestCurrent($playerSpirit->week);

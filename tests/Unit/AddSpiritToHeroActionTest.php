@@ -65,8 +65,9 @@ class AddSpiritToHeroActionTest extends TestCase
         /*
          * Set game start time to AFTER the week ends
          */
-        $this->playerSpirit->game->starts_at = Week::current()->adventuring_locks_at->addHours(2);
-        $this->playerSpirit->game->save();
+        $game = $this->playerSpirit->playerGameLog->game;
+        $game->starts_at = Week::current()->adventuring_locks_at->addHours(2);
+        $game->save();
 
     }
 
@@ -165,7 +166,7 @@ class AddSpiritToHeroActionTest extends TestCase
     {
 
         $now = Date::now();
-        $game = $this->playerSpirit->game;
+        $game = $this->playerSpirit->playerGameLog->game;
         $game->starts_at = $now->subHour();
         $game->save();
 
@@ -200,14 +201,14 @@ class AddSpiritToHeroActionTest extends TestCase
         ]);
 
         // Set game to before now
-        $game = $spiritToBeReplaced->game;
+        $game = $spiritToBeReplaced->playerGameLog->game;
         $game->starts_at = Date::now()->subHour();
         $game->save();
 
         $this->hero->player_spirit_id = $spiritToBeReplaced->id;
         $this->hero->save();
 
-        $this->assertTrue($spiritToBeReplaced->game->hasStarted());
+        $this->assertTrue($spiritToBeReplaced->playerGameLog->game->hasStarted());
 
         try {
 

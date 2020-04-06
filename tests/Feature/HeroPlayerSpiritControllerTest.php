@@ -55,8 +55,9 @@ class HeroPlayerSpiritControllerTest extends TestCase
         // Mock 6 hours before everything locks
         Date::setTestNow(Week::current()->adventuring_locks_at->subHours(6));
         // Set game time
-        $playerSpirit->game->starts_at = Week::current()->adventuring_locks_at->addHours(2);
-        $playerSpirit->game->save();
+        $game = $playerSpirit->playerGameLog->game;
+        $game->starts_at = Week::current()->adventuring_locks_at->addHours(2);
+        $$game->game->save();
 
         Passport::actingAs($hero->squad->user);
 
@@ -131,8 +132,9 @@ class HeroPlayerSpiritControllerTest extends TestCase
         // Mock 6 hours before everything locks
         Date::setTestNow(Week::current()->adventuring_locks_at->subHours(6));
         // Set game time
-        $playerSpirit->game->starts_at = Week::current()->adventuring_locks_at->addHours(2);
-        $playerSpirit->game->save();
+        $game = $playerSpirit->playerGameLog->game;
+        $game->starts_at = Week::current()->adventuring_locks_at->addHours(2);
+        $game->save();
 
         Passport::actingAs($hero->squad->user);
 
