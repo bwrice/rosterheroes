@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\Model;
  * @package App\Domain\Models
  *
  * @property int $id
+ * @property int $team_id
+ * @property int $game_id
  *
  * @property Game $game
  * @property Player $player
