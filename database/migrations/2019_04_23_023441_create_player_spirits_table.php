@@ -17,8 +17,6 @@ class CreatePlayerSpiritsTable extends Migration
             $table->bigIncrements('id');
             $table->uuid('uuid');
             $table->integer('week_id')->unsigned();
-            $table->integer('player_id')->unsigned();
-            $table->integer('game_id')->unsigned();
             $table->bigInteger('player_game_log_id')->unsigned()->nullable();
             $table->integer('essence_cost');
             $table->integer('energy');
@@ -27,8 +25,6 @@ class CreatePlayerSpiritsTable extends Migration
 
         Schema::table('player_spirits', function (Blueprint $table) {
             $table->foreign('week_id')->references('id')->on('weeks');
-            $table->foreign('player_id')->references('id')->on('players');
-            $table->foreign('game_id')->references('id')->on('games');
             $table->foreign('player_game_log_id')->references('id')->on('player_game_logs');
         });
     }
