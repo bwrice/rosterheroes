@@ -14,7 +14,7 @@ class BuildWeeklyPlayerSpiritsAction
 {
     public function execute(Week $week)
     {
-        $games = Game::query()->validForWeek($week);
+        $games = Game::query()->validForWeek($week)->get();
 
         $games->each(function (Game $game) use ($week) {
             Player::query()->withNoSpiritForGame($game)->get()->each(function (Player $player) use ($game, $week) {
