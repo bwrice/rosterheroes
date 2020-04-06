@@ -50,7 +50,7 @@ class AddSpiritToHeroActionTest extends TestCase
          * Attach matching position
          */
         $position = $heroRace->positions()->inRandomOrder()->first();
-        $this->playerSpirit->player->positions()->attach($position);
+        $this->playerSpirit->playerGameLog->player->positions()->attach($position);
 
         /*
          * Set current week to Player Spirit's week
@@ -107,7 +107,7 @@ class AddSpiritToHeroActionTest extends TestCase
             $query->where('id', '=', $this->hero->heroRace->id);
         })->first();
 
-        $this->playerSpirit->player->positions()->sync([$invalidPosition->id]);
+        $this->playerSpirit->playerGameLog->player->positions()->sync([$invalidPosition->id]);
 
         try {
 

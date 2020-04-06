@@ -66,7 +66,7 @@ class AddSpiritToHeroAction extends HeroSpiritAction
     protected function validatePositions(Hero $hero, PlayerSpirit $playerSpirit): void
     {
         if (!$hero->heroRace->positions->intersect($playerSpirit->getPositions())->count() > 0) {
-            $playerName = $playerSpirit->player->fullName();
+            $playerName = $playerSpirit->playerGameLog->player->fullName();
             $heroRaceName = ucwords(str_replace('-', ' ', $hero->heroRace->name));
             $message = $heroRaceName . " does not have valid positions for " . $playerName;
             throw new HeroPlayerSpiritException(
@@ -106,7 +106,7 @@ class AddSpiritToHeroAction extends HeroSpiritAction
 
         /** @var Hero $squadHeroUsingSpirit */
         if ($squadHeroUsingSpirit) {
-            $message = $playerSpirit->player->fullName() . ' is already in use by ' . $squadHeroUsingSpirit->name;
+            $message = $playerSpirit->playerGameLog->player->fullName() . ' is already in use by ' . $squadHeroUsingSpirit->name;
             throw new HeroPlayerSpiritException(
                 $hero,
                 $playerSpirit,

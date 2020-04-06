@@ -49,7 +49,7 @@ class HeroPlayerSpiritControllerTest extends TestCase
         /** @var PlayerSpirit $playerSpirit */
         $playerSpirit = factory(PlayerSpirit::class)->create();
 
-        $playerSpirit->player->positions()->attach($position);
+        $playerSpirit->playerGameLog->player->positions()->attach($position);
 
         Week::setTestCurrent($playerSpirit->week);
         // Mock 6 hours before everything locks
@@ -125,7 +125,7 @@ class HeroPlayerSpiritControllerTest extends TestCase
             'essence_cost' => ($squadSpiritEssence - $alreadyFilledPlayerSpiritCost) - 1500
         ]);
 
-        $playerSpirit->player->positions()->attach($position);
+        $playerSpirit->playerGameLog->player->positions()->attach($position);
 
         Week::setTestCurrent($playerSpirit->week);
         // Mock 6 hours before everything locks

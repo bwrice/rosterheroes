@@ -37,7 +37,7 @@ class RemoveSpiritFromHeroAction extends HeroSpiritAction
     protected function validateEmbodiedBy(Hero $hero, PlayerSpirit $playerSpirit)
     {
         if ($hero->player_spirit_id !== $playerSpirit->id) {
-            $message = $hero->name . " is not embodied by " . $playerSpirit->player->fullName();
+            $message = $hero->name . " is not embodied by " . $playerSpirit->playerGameLog->player->fullName();
             throw new HeroPlayerSpiritException(
                 $hero,
                 $playerSpirit,

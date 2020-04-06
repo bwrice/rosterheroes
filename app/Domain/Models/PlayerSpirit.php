@@ -20,7 +20,6 @@ use App\Domain\QueryBuilders\PlayerSpiritQueryBuilder;
  * @property int $week_id
  *
  * @property Week $week
- * @property Player $player
  * @property Game $game
  * @property PlayerGameLog $playerGameLog
  * @property HeroCollection $heroes
@@ -72,7 +71,7 @@ class PlayerSpirit extends EventSourcedModel
 
     public function getPositions()
     {
-        return $this->player->positions;
+        return $this->playerGameLog->player->positions;
     }
 
     public function scopeWithPositions(PlayerSpiritQueryBuilder $builder, array $positions)
