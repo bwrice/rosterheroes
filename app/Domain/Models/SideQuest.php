@@ -23,6 +23,7 @@ use Illuminate\Support\Str;
  * @property string $slug
  *
  * @property Quest $quest
+ * @property SideQuestBlueprint|null $sideQuestBlueprint
  *
  * @property MinionCollection $minions
  * @property Collection $chestBlueprints
@@ -51,6 +52,11 @@ class SideQuest extends Model
     public function chestBlueprints()
     {
         return $this->belongsToMany(ChestBlueprint::class)->withTimestamps();
+    }
+
+    public function sideQuestBlueprint()
+    {
+        return $this->belongsTo(SideQuestBlueprint::class);
     }
 
     public function difficulty(): int
