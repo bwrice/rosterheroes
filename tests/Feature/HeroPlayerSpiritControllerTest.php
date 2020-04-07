@@ -57,7 +57,7 @@ class HeroPlayerSpiritControllerTest extends TestCase
         // Set game time
         $game = $playerSpirit->playerGameLog->game;
         $game->starts_at = Week::current()->adventuring_locks_at->addHours(2);
-        $$game->game->save();
+        $game->save();
 
         Passport::actingAs($hero->squad->user);
 
