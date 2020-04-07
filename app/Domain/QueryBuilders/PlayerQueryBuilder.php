@@ -45,9 +45,8 @@ class PlayerQueryBuilder extends Builder
         return $this->forTeams([
             $game->home_team_id,
             $game->away_team_id
-        ])->whereDoesntHave('playerGameLogs', function (Builder $builder) use ($game) {
-            return $builder->where('game_id', '=', $game->id)
-                ->whereDoesntHave('playerSpirit');
+        ])->whereDoesntHave('playerGameLogs', function (PlayerGameLogQueryBuilder $builder) use ($game) {
+            return $builder->forGame($game)->withSpirit();
         });
     }
 
