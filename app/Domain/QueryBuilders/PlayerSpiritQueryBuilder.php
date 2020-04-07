@@ -8,6 +8,7 @@
 
 namespace App\Domain\QueryBuilders;
 
+use App\Domain\Models\Game;
 use App\Domain\Models\HeroRace;
 use App\Domain\Models\Player;
 use App\Domain\Models\Squad;
@@ -83,6 +84,13 @@ class PlayerSpiritQueryBuilder extends Builder
     {
         return $this->whereDoesntHave('heroes', function (Builder $builder) use ($squad) {
             return $builder->where('squad_id', '=', $squad->id);
+        });
+    }
+
+    public function forGame(Game $game)
+    {
+        return $this->whereHas('playerGameLog', function (Builder $builder) use ($game) {
+            return $builder->where('game_id', '=', $game->id);
         });
     }
 }

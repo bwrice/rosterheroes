@@ -48,7 +48,7 @@ class PlayerQueryBuilder extends Builder
             $game->home_team_id,
             $game->away_team_id
         ])->whereDoesntHave('playerSpirits', function (PlayerSpiritQueryBuilder $builder) use ($game) {
-            return $builder->where('game_id', '=', $game->id);
+            return $builder->forGame($game);
         });
     }
 
