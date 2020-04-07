@@ -42,27 +42,6 @@ class CalculateHeroFantasyPowerTest extends TestCase
     /**
      * @test
      */
-    public function it_will_throw_an_exception_if_no_player_game_log()
-    {
-        $playerSpiritFactory = PlayerSpiritFactory::new();
-        $hero = HeroFactory::new()->withPlayerSpirit($playerSpiritFactory)->create();
-        $this->assertNull($hero->playerSpirit->playerGameLog);
-
-        try {
-            /** @var CalculateHeroFantasyPower $domainAction */
-            $domainAction = app(CalculateHeroFantasyPower::class);
-            $domainAction->execute($hero);
-
-        } catch (CalculateHeroFantasyPowerException $exception) {
-            $this->assertEquals(CalculateHeroFantasyPowerException::CODE_NO_PLAYER_GAME_LOG, $exception->getCode());
-            return;
-        }
-        $this->fail("Exception not thrown");
-    }
-
-    /**
-     * @test
-     */
     public function a_game_log_with_no_stats_will_return_a_fantasy_power_of_zero()
     {
         $playerGameLogFactory = PlayerGameLogFactory::new();
