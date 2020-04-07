@@ -2,6 +2,7 @@
 
 use App\Domain\Models\Game;
 use App\Domain\Models\Player;
+use App\Domain\Models\PlayerGameLog;
 use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\Week;
 use Faker\Generator as Faker;
@@ -17,11 +18,8 @@ $factory->define(PlayerSpirit::class, function (Faker $faker) {
         'week_id' => function () {
             return factory(Week::class)->create()->id;
         },
-        'player_id' => function () {
-            return factory(Player::class)->create()->id;
-        },
-        'game_id' => function () {
-            return factory(Game::class)->create()->id;
+        'player_game_log_id' => function () {
+            return factory(PlayerGameLog::class)->create()->id;
         },
         'essence_cost' => 5000,
         'energy' => PlayerSpirit::STARTING_ENERGY
@@ -29,7 +27,7 @@ $factory->define(PlayerSpirit::class, function (Faker $faker) {
 });
 
 $factory->afterCreatingState(PlayerSpirit::class, 'with-stats', function (PlayerSpirit $playerSpirit, Faker $faker) {
-    $gameLog = factory(\App\Domain\Models\PlayerGameLog::class)->state('with-stats')->create([
+    $gameLog = factory(PlayerGameLog::class)->state('with-stats')->create([
         'player_id' => $playerSpirit->player_id,
         'game_id' => $playerSpirit->game_id
     ]);
