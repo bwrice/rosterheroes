@@ -36,6 +36,6 @@ class CreatePlayerGameLogsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('player_weeks');
+        Schema::dropIfExists('player_game_logs');
     }
 }
