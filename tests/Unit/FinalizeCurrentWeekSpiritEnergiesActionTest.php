@@ -57,12 +57,12 @@ class FinalizeCurrentWeekSpiritEnergiesActionTest extends TestCase
         $gameOnePlayerGameLogFactory = PlayerGameLogFactory::new()->forGame($this->gameOne);
         $this->playerSpiritOne = PlayerSpiritFactory::new()
             ->withPlayerGameLog($gameOnePlayerGameLogFactory)
-            ->forWeek($this->week);
+            ->forWeek($this->week)->create();
 
         $gameTwoPlayerGameLogFactory = PlayerGameLogFactory::new()->forGame($this->gameTwo);
         $this->playerSpiritOne = PlayerSpiritFactory::new()
             ->withPlayerGameLog($gameTwoPlayerGameLogFactory)
-            ->forWeek($this->week);
+            ->forWeek($this->week)->create();
 
         Date::setTestNow($this->week->adventuring_locks_at->addHours(Week::FINALIZE_AFTER_ADVENTURING_CLOSED_HOURS + 1));
         $this->domainAction = app(FinalizeCurrentWeekSpiritEnergiesAction::class);
