@@ -5,6 +5,7 @@ namespace App\Domain\Models;
 use App\Domain\Collections\PlayerGameLogCollection;
 use App\Domain\Collections\PlayerSpiritCollection;
 use App\Domain\Collections\PlayerStatCollection;
+use App\Domain\QueryBuilders\PlayerGameLogQueryBuilder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -50,6 +51,11 @@ class PlayerGameLog extends Model
     public function playerSpirits()
     {
         return $this->hasMany(PlayerSpirit::class);
+    }
+
+    public function newEloquentBuilder($query)
+    {
+        return new PlayerGameLogQueryBuilder($query);
     }
 
     public function playerStats()
