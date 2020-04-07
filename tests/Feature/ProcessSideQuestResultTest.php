@@ -290,7 +290,7 @@ class ProcessSideQuestResultTest extends TestCase
         $victoryEvent = $sideQuestResult->sideQuestEvents()->where('event_type', '=', SideQuestEvent::TYPE_SIDE_QUEST_VICTORY)->first();
         $this->assertNotNull($victoryEvent);
         $eventCount = $sideQuestResult->sideQuestEvents()->count();
-        $this->assertGreaterThan(25, $eventCount);
+        $this->assertGreaterThan(15, $eventCount);
         $this->assertLessThan(250, $eventCount);
     }
 
