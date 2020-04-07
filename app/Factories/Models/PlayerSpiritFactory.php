@@ -61,6 +61,13 @@ class PlayerSpiritFactory
         return $clone;
     }
 
+    public function forWeek(Week $week)
+    {
+        $clone = clone $this;
+        $clone->week = $week;
+        return $clone;
+    }
+
     public function withPlayerGameLog(PlayerGameLogFactory $playerGameLogFactory = null)
     {
         $clone = clone $this;
