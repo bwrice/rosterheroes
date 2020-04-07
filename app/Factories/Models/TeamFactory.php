@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class TeamFactory
 {
-    protected $leagueName;
+    protected $leagueAbbreviation;
 
     public static function new()
     {
@@ -34,16 +34,16 @@ class TeamFactory
      */
     protected function getLeague()
     {
-        if ($this->leagueName) {
-            return League::query()->where('name', '=', $this->leagueName)->first();
+        if ($this->leagueAbbreviation) {
+            return League::query()->where('abbreviation', '=', $this->leagueAbbreviation)->first();
         }
         return League::query()->inRandomOrder()->first();
     }
 
-    public function forLeague(string $leagueName)
+    public function forLeague(string $leagueAbbreviation)
     {
         $clone = clone $this;
-        $clone->leagueName = $leagueName;
+        $clone->leagueAbbreviation = $leagueAbbreviation;
         return $clone;
     }
 }
