@@ -10,8 +10,6 @@ namespace App\Domain\QueryBuilders;
 
 
 use App\Domain\Collections\PlayerCollection;
-use App\Domain\Collections\TeamCollection;
-use App\Domain\Interfaces\PositionQueryable;
 use App\Domain\Models\Game;
 use App\Domain\Models\Player;
 use Illuminate\Database\Eloquent\Builder;
@@ -49,7 +47,7 @@ class PlayerQueryBuilder extends Builder
             $game->away_team_id
         ])->whereDoesntHave('playerGameLogs', function (Builder $builder) use ($game) {
             return $builder->where('game_id', '=', $game->id)
-                ->whereDoesntHave('playerSpirits');
+                ->whereDoesntHave('playerSpirit');
         });
     }
 

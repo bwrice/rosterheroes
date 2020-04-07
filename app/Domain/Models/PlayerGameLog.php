@@ -20,9 +20,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property Game $game
  * @property Player $player
  * @property Team $team
+ * @property PlayerSpirit $playerSpirit
  *
  * @property PlayerStatCollection $playerStats
- * @property PlayerSpiritCollection $playerSpirits
  */
 class PlayerGameLog extends Model
 {
@@ -48,9 +48,9 @@ class PlayerGameLog extends Model
         return $this->belongsTo(Team::class);
     }
 
-    public function playerSpirits()
+    public function playerSpirit()
     {
-        return $this->hasMany(PlayerSpirit::class);
+        return $this->hasOne(PlayerSpirit::class);
     }
 
     public function newEloquentBuilder($query)
