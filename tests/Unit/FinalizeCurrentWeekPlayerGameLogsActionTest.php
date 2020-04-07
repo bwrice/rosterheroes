@@ -57,12 +57,14 @@ class FinalizeCurrentWeekPlayerGameLogsActionTest extends TestCase
         $gameOnePlayerGameLogFactory = PlayerGameLogFactory::new()->forGame($this->gameOne);
         $this->playerSpiritOne = PlayerSpiritFactory::new()
             ->withPlayerGameLog($gameOnePlayerGameLogFactory)
-            ->forWeek($this->week);
+            ->forWeek($this->week)
+            ->create();
 
         $gameTwoPlayerGameLogFactory = PlayerGameLogFactory::new()->forGame($this->gameTwo);
-        $this->playerSpiritOne = PlayerSpiritFactory::new()
+        $this->playerSpiritTwo = PlayerSpiritFactory::new()
             ->withPlayerGameLog($gameTwoPlayerGameLogFactory)
-            ->forWeek($this->week);
+            ->forWeek($this->week)
+            ->create();
 
         Date::setTestNow(CurrentWeek::finalizingStartsAt()->addMinutes(10));
         $this->domainAction = app(FinalizeCurrentWeekPlayerGameLogsAction::class);
@@ -76,7 +78,7 @@ class FinalizeCurrentWeekPlayerGameLogsActionTest extends TestCase
         CurrentWeek::partialMock()->shouldReceive('finalizing')->andReturn(false);
 
         try {
-            $step = random_int(1, 10);
+            $step = rand(1, 10);
             $this->domainAction->execute($step);
         } catch (FinalizeWeekException $exception) {
             $this->assertEquals(FinalizeWeekException::INVALID_TIME_TO_FINALIZE, $exception->getCode());
@@ -103,10 +105,11 @@ class FinalizeCurrentWeekPlayerGameLogsActionTest extends TestCase
             $this->playerSpiritTwo
                  ] as $playerSpirit) {
 
+            /** @var PlayerSpirit $playerSpirit */
             Queue::assertPushedWithChain(AsyncChainedJob::class, [
                 new FinalizeWeekJob($nextStep)
             ], function (AsyncChainedJob $chainedJob) use ($playerSpirit) {
-                return $chainedJob->getDecoratedJob()->getGame()->id === $playerSpirit->game_id;
+                return $chainedJob->getDecoratedJob()->getGame()->id === $playerSpirit->playerGameLog->game_id;
             });
         }
     }
