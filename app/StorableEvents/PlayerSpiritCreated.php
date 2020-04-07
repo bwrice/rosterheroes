@@ -14,11 +14,7 @@ final class PlayerSpiritCreated implements ShouldBeStored
     /**
      * @var int
      */
-    public $playerID;
-    /**
-     * @var int
-     */
-    public $gameID;
+    public $playerGameLogID;
     /**
      * @var int
      */
@@ -27,16 +23,11 @@ final class PlayerSpiritCreated implements ShouldBeStored
      * @var int
      */
     public $energy;
-    /**
-     * @var int
-     */
-    public $playerGameLogID;
 
-    public function __construct(int $weekID, int $playerID, int $gameID, int $essenceCost, int $energy = PlayerSpirit::STARTING_ENERGY, int $playerGameLogID = null)
+    public function __construct(int $weekID, int $playerGameLogID, int $essenceCost, int $energy = PlayerSpirit::STARTING_ENERGY)
     {
         $this->weekID = $weekID;
-        $this->playerID = $playerID;
-        $this->gameID = $gameID;
+        $this->playerGameLogID = $playerGameLogID;
         $this->essenceCost = $essenceCost;
         $this->energy = $energy;
         $this->playerGameLogID = $playerGameLogID;

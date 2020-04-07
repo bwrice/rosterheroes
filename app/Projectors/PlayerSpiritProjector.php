@@ -17,8 +17,6 @@ class PlayerSpiritProjector implements Projector
         PlayerSpirit::query()->create([
             'uuid' => $aggregateUuid,
             'week_id' => $event->weekID,
-            'player_id' => $event->playerID,
-            'game_id' => $event->gameID,
             'player_game_log_id' => $event->playerGameLogID,
             'essence_cost' => $event->essenceCost,
             'energy' => $event->energy

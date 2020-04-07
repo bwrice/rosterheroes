@@ -14,6 +14,7 @@ use App\Domain\Collections\PlayerGameLogCollection;
 use App\Domain\Math\WeightedValue;
 use App\Domain\Models\Game;
 use App\Domain\Models\Player;
+use App\Domain\Models\PlayerGameLog;
 use App\Domain\Models\Position;
 use App\Domain\Models\Week;
 use App\Domain\Models\PlayerSpirit;
@@ -59,7 +60,14 @@ class CreatePlayerSpiritAction
         /** @var PlayerSpiritAggregate $aggregate */
         $aggregate = PlayerSpiritAggregate::retrieve($playerSpiritUuid);
 
-        $aggregate->createPlayerSpirit($this->week->id, $this->player->id, $this->game->id, $essenceCost, PlayerSpirit::STARTING_ENERGY)
+        $gameLog = PlayerGameLog::query()->firstOrCreate([
+            'player_id' => $this->player->id,
+            'game_id' => $this->game->id
+        ], [
+            'team_id' => $this->player->team_id
+        ]);
+
+        $aggregate->createPlayerSpirit($this->week->id, $gameLog->id, $essenceCost, PlayerSpirit::STARTING_ENERGY)
             ->persist();
 
         return PlayerSpirit::findUuid($playerSpiritUuid);
