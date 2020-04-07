@@ -33,7 +33,7 @@ class BuildPlayerGameLogsForGameAction
         $gameLogDTOs = $this->statsIntegration->getGameLogDTOs($game, $yearDelta);
 
         DB::transaction(function () use ($gameLogDTOs, $game) {
-            
+
             $gameLogDTOs->each(function (PlayerGameLogDTO $dto) {
 
                 $playerID = $dto->getPlayer()->id;
@@ -41,9 +41,10 @@ class BuildPlayerGameLogsForGameAction
                 $teamID = $dto->getTeam()->id;
 
                 /** @var PlayerGameLog $playerGameLog */
-                $playerGameLog = PlayerGameLog::query()->firstOrCreate([
+                $playerGameLog = PlayerGameLog::query()->updateOrCreate([
                     'player_id' => $playerID,
-                    'game_id' => $gameID,
+                    'game_id' => $gameID
+                ], [
                     'team_id' => $teamID
                 ]);
 
