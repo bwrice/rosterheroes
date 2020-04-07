@@ -80,7 +80,7 @@ class PlayerGameLogFactory
         if ($this->team) {
             return $this->team->id;
         }
-        return $player->id;
+        return $player->team->id;
     }
 
     protected function getGame(Team $team)
