@@ -8,6 +8,8 @@ use App\Domain\Models\Player;
 use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\Team;
 use App\Domain\Models\Week;
+use App\Factories\Models\PlayerGameLogFactory;
+use App\Factories\Models\PlayerSpiritFactory;
 use App\Jobs\CreatePlayerSpiritJob;
 use App\Services\ModelServices\WeekService;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -160,10 +162,11 @@ class BuildWeeklyPlayerSpiritsActionTest extends TestCase
         ]);
 
         /** @var PlayerSpirit $alreadyExistingPlayerSpirit */
-        $alreadyExistingPlayerSpirit = factory(PlayerSpirit::class)->create([
-            'week_id' => $this->week->id,
-            'game_id' => $game->id
-        ]);
+        $playerGameLogFactory = PlayerGameLogFactory::new()->forGame($game);
+        $alreadyExistingPlayerSpirit = PlayerSpiritFactory::new()
+            ->withPlayerGameLog($playerGameLogFactory)
+            ->forWeek($this->week)->create();
+
 
         /** @var Player $diffPlayer */
         $diffPlayer = factory(Player::class)->create([
