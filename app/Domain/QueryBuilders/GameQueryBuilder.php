@@ -63,8 +63,10 @@ class GameQueryBuilder extends Builder
 
     public function withPlayerSpiritsForWeeks(array $weekIDs)
     {
-        return $this->whereHas('playerSpirits', function (PlayerSpiritQueryBuilder $builder) use ($weekIDs) {
-            return $builder->forWeeks($weekIDs);
+        return $this->whereHas('playerGameLogs', function (Builder $builder) use ($weekIDs) {
+            return $builder->whereHas('playerSpirit', function (PlayerSpiritQueryBuilder $builder) use ($weekIDs) {
+                return $builder->forWeeks($weekIDs);
+            });
         });
     }
 
