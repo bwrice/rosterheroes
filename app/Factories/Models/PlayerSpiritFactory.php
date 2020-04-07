@@ -16,6 +16,9 @@ class PlayerSpiritFactory
     /** @var Week */
     protected $week;
 
+    /** @var int */
+    protected $essenceCost;
+
     /** @var PlayerGameLogFactory */
     protected $playerGameLogFactory;
 
@@ -33,7 +36,7 @@ class PlayerSpiritFactory
             'uuid' => (string) Str::uuid(),
             'week_id' => $week->id,
             'player_game_log_id' => $this->getPlayerGameLogID(),
-            'essence_cost' => 5000,
+            'essence_cost' => $this->essenceCost ?: 5000,
             'energy' => PlayerSpirit::STARTING_ENERGY
         ], $extra));
 
@@ -73,5 +76,12 @@ class PlayerSpiritFactory
             $playerGameLogFactory = PlayerGameLogFactory::new();
         }
         return $playerGameLogFactory->create()->id;
+    }
+
+    public function withEssenceCost(int $essenceCost)
+    {
+        $clone = clone $this;
+        $clone->essenceCost = $essenceCost;
+        return $clone;
     }
 }
