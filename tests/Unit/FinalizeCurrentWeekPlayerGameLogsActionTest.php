@@ -8,6 +8,8 @@ use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\Week;
 use App\Exceptions\FinalizeWeekException;
 use App\Facades\CurrentWeek;
+use App\Factories\Models\PlayerGameLogFactory;
+use App\Factories\Models\PlayerSpiritFactory;
 use App\Jobs\FinalizeWeekJob;
 use App\Jobs\FinalizeWeekStepTwoJob;
 use Bwrice\LaravelJobChainGroups\Jobs\AsyncChainedJob;
@@ -51,14 +53,17 @@ class FinalizeCurrentWeekPlayerGameLogsActionTest extends TestCase
         $this->gameTwo = factory(Game::class)->create([
             'starts_at' => $this->week->adventuring_locks_at->addHour()
         ]);
-        $this->playerSpiritOne = factory(PlayerSpirit::class)->create([
-            'game_id' => $this->gameOne->id,
-            'week_id' => $this->week->id,
-        ]);
-        $this->playerSpiritTwo = factory(PlayerSpirit::class)->create([
-            'game_id' => $this->gameTwo->id,
-            'week_id' => $this->week->id,
-        ]);
+
+        $gameOnePlayerGameLogFactory = PlayerGameLogFactory::new()->forGame($this->gameOne);
+        $this->playerSpiritOne = PlayerSpiritFactory::new()
+            ->withPlayerGameLog($gameOnePlayerGameLogFactory)
+            ->forWeek($this->week);
+
+        $gameTwoPlayerGameLogFactory = PlayerGameLogFactory::new()->forGame($this->gameTwo);
+        $this->playerSpiritOne = PlayerSpiritFactory::new()
+            ->withPlayerGameLog($gameTwoPlayerGameLogFactory)
+            ->forWeek($this->week);
+
         Date::setTestNow(CurrentWeek::finalizingStartsAt()->addMinutes(10));
         $this->domainAction = app(FinalizeCurrentWeekPlayerGameLogsAction::class);
     }

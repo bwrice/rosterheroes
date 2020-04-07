@@ -7,6 +7,8 @@ use App\Domain\Models\Game;
 use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\Week;
 use App\Exceptions\FinalizeWeekException;
+use App\Factories\Models\PlayerGameLogFactory;
+use App\Factories\Models\PlayerSpiritFactory;
 use App\Jobs\FinalizeWeekJob;
 use App\Jobs\UpdatePlayerSpiritEnergiesJob;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -51,14 +53,17 @@ class FinalizeCurrentWeekSpiritEnergiesActionTest extends TestCase
             'starts_at' => $this->week->adventuring_locks_at->addHour(),
             'finalized_at' => $this->week->adventuring_locks_at->subHours(3)
         ]);
-        $this->playerSpiritOne = factory(PlayerSpirit::class)->create([
-            'game_id' => $this->gameOne->id,
-            'week_id' => $this->week->id
-        ]);
-        $this->playerSpiritTwo = factory(PlayerSpirit::class)->create([
-            'game_id' => $this->gameTwo->id,
-            'week_id' => $this->week->id
-        ]);
+
+        $gameOnePlayerGameLogFactory = PlayerGameLogFactory::new()->forGame($this->gameOne);
+        $this->playerSpiritOne = PlayerSpiritFactory::new()
+            ->withPlayerGameLog($gameOnePlayerGameLogFactory)
+            ->forWeek($this->week);
+
+        $gameTwoPlayerGameLogFactory = PlayerGameLogFactory::new()->forGame($this->gameTwo);
+        $this->playerSpiritOne = PlayerSpiritFactory::new()
+            ->withPlayerGameLog($gameTwoPlayerGameLogFactory)
+            ->forWeek($this->week);
+
         Date::setTestNow($this->week->adventuring_locks_at->addHours(Week::FINALIZE_AFTER_ADVENTURING_CLOSED_HOURS + 1));
         $this->domainAction = app(FinalizeCurrentWeekSpiritEnergiesAction::class);
     }
@@ -71,7 +76,7 @@ class FinalizeCurrentWeekSpiritEnergiesActionTest extends TestCase
         $this->gameOne->save();
 
         try {
-            $step = random_int(1, 10);
+            $step = rand(1, 3);
             $this->domainAction->execute($step);
         } catch (FinalizeWeekException $exception) {
             $this->assertEquals(FinalizeWeekException::CODE_GAMES_NOT_FINALIZED, $exception->getCode());
@@ -87,7 +92,7 @@ class FinalizeCurrentWeekSpiritEnergiesActionTest extends TestCase
     {
         Queue::fake();
 
-        $step = random_int(1, 10);
+        $step = rand(1, 3);
         $nextStep = $step + 1;
 
         $this->domainAction->execute($step);
