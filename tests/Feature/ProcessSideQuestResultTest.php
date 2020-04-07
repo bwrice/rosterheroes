@@ -317,8 +317,11 @@ class ProcessSideQuestResultTest extends TestCase
 
     /**
      * @test
+     * @param $referenceID
+     * @throws \Exception
+     * @dataProvider provides_a_beginner_squad_will_be_defeated_by_medium_difficulty_side_quests
      */
-    public function a_beginner_squad_will_be_defeated_by_a_large_skeleton_pack()
+    public function a_beginner_squad_will_be_defeated_by_medium_difficulty_side_quests($referenceID)
     {
         $heroFactory = HeroFactory::new();
         $squad = SquadFactory::new()->withHeroes(collect([
@@ -331,7 +334,9 @@ class ProcessSideQuestResultTest extends TestCase
         $campaignStop = CampaignStopFactory::new()->withCampaign(CampaignFactory::new()->withSquadID($squad->id))->create();
 
         /** @var SideQuest $sideQuest */
-        $sideQuest = SideQuest::query()->where('name', '=', 'Large Skeleton Group')->first();
+        $sideQuest = SideQuest::query()->whereHas('sideQuestBlueprint', function (Builder $builder) use ($referenceID) {
+            return $builder->where('reference_id', '=', $referenceID);
+        })->first();
         $campaignStop->sideQuests()->save($sideQuest);
 
         /** @var ProcessSideQuestResult $domainAction */
@@ -341,8 +346,26 @@ class ProcessSideQuestResultTest extends TestCase
         $defeatEvent = $sideQuestResult->sideQuestEvents()->where('event_type', '=', SideQuestEvent::TYPE_SIDE_QUEST_DEFEAT)->first();
         $this->assertNotNull($defeatEvent);
         $eventCount = $sideQuestResult->sideQuestEvents()->count();
-        $this->assertGreaterThan(25, $eventCount);
+        $this->assertGreaterThan(15, $eventCount);
         $this->assertLessThan(250, $eventCount);
+    }
+
+    public function provides_a_beginner_squad_will_be_defeated_by_medium_difficulty_side_quests()
+    {
+        return [
+            [
+                'referenceID' => 'H',
+            ],
+            [
+                'referenceID' => 'L',
+            ],
+            [
+                'referenceID' => 'T',
+            ],
+            [
+                'referenceID' => 'V',
+            ],
+        ];
     }
 
 }
