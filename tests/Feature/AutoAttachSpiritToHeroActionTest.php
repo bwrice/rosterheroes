@@ -11,6 +11,8 @@ use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\Position;
 use App\Domain\Models\Squad;
 use App\Domain\Models\Week;
+use App\Factories\Models\PlayerGameLogFactory;
+use App\Factories\Models\PlayerSpiritFactory;
 use App\Helpers\EloquentMatcher;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -74,29 +76,37 @@ class AutoAttachSpiritToHeroActionTest extends TestCase
         /** @var Player $invalidPlayer */
         $invalidPlayer = factory(Player::class)->create();
         $invalidPlayer->positions()->attach($invalidPositions->random()->id);
-        $invalidPositionPlayerSpirit = factory(PlayerSpirit::class)->create([
-            'player_id' => $invalidPlayer->id,
-            'essence_cost' => $this->essencePerHero,
-            'week_id' => $this->currentWeek->id
-        ]);
+
+        $playerGameLogFactory = PlayerGameLogFactory::new()->forPlayer($invalidPlayer);
+        $invalidPositionPlayerSpirit = PlayerSpiritFactory::new()
+            ->withPlayerGameLog($playerGameLogFactory)
+            ->withEssenceCost($this->essencePerHero)
+            ->forWeek($this->currentWeek)
+            ->create();
+
 
         /** @var Player $validPositionPlayer */
         $validPositionPlayer = factory(Player::class)->create();
         $validPositionPlayer->positions()->attach($validPositions->random()->id);
-        $validPositionPlayerSpirit = factory(PlayerSpirit::class)->create([
-            'player_id' => $validPositionPlayer->id,
-            'essence_cost' => $this->essencePerHero - 100, // Make essence cost less appealing than invalid position spirit
-            'week_id' => $this->currentWeek->id
-        ]);
+
+        $playerGameLogFactory = PlayerGameLogFactory::new()->forPlayer($validPositionPlayer);
+        $validPositionPlayerSpirit = PlayerSpiritFactory::new()
+            ->withPlayerGameLog($playerGameLogFactory)
+            ->withEssenceCost($this->essencePerHero - 100) // Make essence cost less appealing than invalid position spirit
+            ->forWeek($this->currentWeek)
+            ->create();
+
 
         /** @var Player $invalidPlayer */
         $invalidPlayer = factory(Player::class)->create();
         $invalidPlayer->positions()->attach($invalidPositions->random()->id);
-        $invalidPositionPlayerSpirit = factory(PlayerSpirit::class)->create([
-            'player_id' => $invalidPlayer->id,
-            'essence_cost' => $this->essencePerHero,
-            'week_id' => $this->currentWeek->id
-        ]);
+
+        $playerGameLogFactory = PlayerGameLogFactory::new()->forPlayer($invalidPlayer);
+        $invalidPositionPlayerSpirit = PlayerSpiritFactory::new()
+            ->withPlayerGameLog($playerGameLogFactory)
+            ->withEssenceCost($this->essencePerHero)
+            ->forWeek($this->currentWeek)
+            ->create();
 
         $spy = \Mockery::spy(AddSpiritToHeroAction::class);
         app()->instance(AddSpiritToHeroAction::class, $spy);
@@ -120,20 +130,24 @@ class AutoAttachSpiritToHeroActionTest extends TestCase
         /** @var Player $validPositionPlayer */
         $validPositionPlayer = factory(Player::class)->create();
         $validPositionPlayer->positions()->attach($validPositions->random()->id);
-        $tooHighEssencePlayerSpirit = factory(PlayerSpirit::class)->create([
-            'player_id' => $validPositionPlayer->id,
-            'essence_cost' => $this->essencePerHero + 2000, // Essence cost too high
-            'week_id' => $this->currentWeek->id
-        ]);
+
+        $playerGameLogFactory = PlayerGameLogFactory::new()->forPlayer($validPositionPlayer);
+        $tooHighEssencePlayerSpirit = PlayerSpiritFactory::new()
+            ->withPlayerGameLog($playerGameLogFactory)
+            ->withEssenceCost($this->essencePerHero + 2000) // Essence cost too high
+            ->forWeek($this->currentWeek)
+            ->create();
 
         /** @var Player $validPositionPlayer */
         $validPositionPlayer = factory(Player::class)->create();
         $validPositionPlayer->positions()->attach($validPositions->random()->id);
-        $optimalEssencePlayerSpirit = factory(PlayerSpirit::class)->create([
-            'player_id' => $validPositionPlayer->id,
-            'essence_cost' => $this->essencePerHero,
-            'week_id' => $this->currentWeek->id
-        ]);
+
+        $playerGameLogFactory = PlayerGameLogFactory::new()->forPlayer($validPositionPlayer);
+        $optimalEssencePlayerSpirit = PlayerSpiritFactory::new()
+            ->withPlayerGameLog($playerGameLogFactory)
+            ->withEssenceCost($this->essencePerHero)
+            ->forWeek($this->currentWeek)
+            ->create();
 
         $spy = \Mockery::spy(AddSpiritToHeroAction::class);
         app()->instance(AddSpiritToHeroAction::class, $spy);
@@ -166,29 +180,35 @@ class AutoAttachSpiritToHeroActionTest extends TestCase
         /** @var Player $validPositionPlayer */
         $validPositionPlayer = factory(Player::class)->create();
         $validPositionPlayer->positions()->attach($validPositions->random()->id);
-        $tooLowEssenceSpirit = factory(PlayerSpirit::class)->create([
-            'player_id' => $validPositionPlayer->id,
-            'essence_cost' => $this->essencePerHero,
-            'week_id' => $this->currentWeek->id
-        ]);
+
+        $playerGameLogFactory = PlayerGameLogFactory::new()->forPlayer($validPositionPlayer);
+        $tooLowEssenceSpirit = PlayerSpiritFactory::new()
+            ->withPlayerGameLog($playerGameLogFactory)
+            ->withEssenceCost($this->essencePerHero)
+            ->forWeek($this->currentWeek)
+            ->create();
 
         /** @var Player $validPositionPlayer */
         $validPositionPlayer = factory(Player::class)->create();
         $validPositionPlayer->positions()->attach($validPositions->random()->id);
-        $expectedPlayerSpirit = factory(PlayerSpirit::class)->create([
-            'player_id' => $validPositionPlayer->id,
-            'essence_cost' => $this->squadEssence - $otherSpiritCost,
-            'week_id' => $this->currentWeek->id
-        ]);
+
+        $playerGameLogFactory = PlayerGameLogFactory::new()->forPlayer($validPositionPlayer);
+        $expectedPlayerSpirit = PlayerSpiritFactory::new()
+            ->withPlayerGameLog($playerGameLogFactory)
+            ->withEssenceCost($this->squadEssence - $otherSpiritCost)
+            ->forWeek($this->currentWeek)
+            ->create();
 
         /** @var Player $validPositionPlayer */
         $validPositionPlayer = factory(Player::class)->create();
         $validPositionPlayer->positions()->attach($validPositions->random()->id);
-        $tooHighSpiritEssence = factory(PlayerSpirit::class)->create([
-            'player_id' => $validPositionPlayer->id,
-            'essence_cost' => ($this->squadEssence - $otherSpiritCost) + 100,
-            'week_id' => $this->currentWeek->id
-        ]);
+
+        $playerGameLogFactory = PlayerGameLogFactory::new()->forPlayer($validPositionPlayer);
+        $tooHighSpiritEssence = PlayerSpiritFactory::new()
+            ->withPlayerGameLog($playerGameLogFactory)
+            ->withEssenceCost(($this->squadEssence - $otherSpiritCost) + 100)
+            ->forWeek($this->currentWeek)
+            ->create();
 
         $spy = \Mockery::spy(AddSpiritToHeroAction::class);
         app()->instance(AddSpiritToHeroAction::class, $spy);
@@ -210,11 +230,13 @@ class AutoAttachSpiritToHeroActionTest extends TestCase
         /** @var Player $invalidPlayer */
         $invalidPlayer = factory(Player::class)->create();
         $invalidPlayer->positions()->attach($invalidPositions->random()->id);
-        $invalidPositionPlayerSpirit = factory(PlayerSpirit::class)->create([
-            'player_id' => $invalidPlayer->id,
-            'essence_cost' => $this->essencePerHero,
-            'week_id' => $this->currentWeek->id
-        ]);
+
+        $playerGameLogFactory = PlayerGameLogFactory::new()->forPlayer($invalidPlayer);
+        $validPositionPlayerSpirit = PlayerSpiritFactory::new()
+            ->withPlayerGameLog($playerGameLogFactory)
+            ->withEssenceCost($this->essencePerHero)
+            ->forWeek($this->currentWeek)
+            ->create();
 
         $spy = \Mockery::spy(AddSpiritToHeroAction::class);
         app()->instance(AddSpiritToHeroAction::class, $spy);
@@ -241,11 +263,13 @@ class AutoAttachSpiritToHeroActionTest extends TestCase
         /** @var Player $validPositionPlayer */
         $validPositionPlayer = factory(Player::class)->create();
         $validPositionPlayer->positions()->attach($validPositions->random()->id);
-        $validPositionPlayerSpirit = factory(PlayerSpirit::class)->create([
-            'player_id' => $validPositionPlayer->id,
-            'essence_cost' => $this->essencePerHero, // Make essence cost less appealing than invalid position spirit
-            'week_id' => $this->currentWeek->id
-        ]);
+
+        $playerGameLogFactory = PlayerGameLogFactory::new()->forPlayer($validPositionPlayer);
+        $validPositionPlayerSpirit = PlayerSpiritFactory::new()
+            ->withPlayerGameLog($playerGameLogFactory)
+            ->withEssenceCost($this->essencePerHero)
+            ->forWeek($this->currentWeek)
+            ->create();
 
         $spy = \Mockery::spy(AddSpiritToHeroAction::class);
         app()->instance(AddSpiritToHeroAction::class, $spy);
