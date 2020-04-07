@@ -3,6 +3,7 @@
 namespace App\Domain\Models;
 
 use App\Domain\Collections\PlayerGameLogCollection;
+use App\Domain\Collections\PlayerSpiritCollection;
 use App\Domain\Collections\PlayerStatCollection;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -20,6 +21,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Team $team
  *
  * @property PlayerStatCollection $playerStats
+ * @property PlayerSpiritCollection $playerSpirits
  */
 class PlayerGameLog extends Model
 {
@@ -43,6 +45,11 @@ class PlayerGameLog extends Model
     public function team()
     {
         return $this->belongsTo(Team::class);
+    }
+
+    public function playerSpirits()
+    {
+        return $this->hasMany(PlayerSpirit::class);
     }
 
     public function playerStats()
