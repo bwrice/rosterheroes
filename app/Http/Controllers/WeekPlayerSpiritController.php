@@ -29,7 +29,7 @@ class WeekPlayerSpiritController extends Controller
             $query = PlayerSpirit::query()->forWeek($week);
 
             $playerSpirits = $query->with([
-                'player.positions'
+                'playerGameLog.player.positions',
             ])->orderByDesc('essence_cost')->get();
 
             return PlayerSpiritResource::collection($playerSpirits);
