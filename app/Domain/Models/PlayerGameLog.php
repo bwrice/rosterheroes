@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property int $team_id
+ * @property int $player_id
  * @property int $game_id
  *
  * @property Game $game
