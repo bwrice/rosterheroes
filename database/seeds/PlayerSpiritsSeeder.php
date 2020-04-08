@@ -48,12 +48,12 @@ class PlayerSpiritsSeeder extends Seeder
             ]);
 
             // Home Team
-            foreach(range(1, 12) as $spiritCount) {
+            foreach(range(1, 40) as $spiritCount) {
                 $this->creatPlayerSpirit($week, $game, $homeTeam, $positions);
             }
 
             // Away Team
-            foreach(range(1, 12) as $spiritCount) {
+            foreach(range(1, 40) as $spiritCount) {
                 $this->creatPlayerSpirit($week, $game, $awayTeam, $positions);
             }
         }
@@ -87,11 +87,13 @@ class PlayerSpiritsSeeder extends Seeder
         $absoluteMinEnergy = PlayerSpirit::STARTING_ENERGY / PlayerSpirit::MIN_MAX_ENERGY_RATIO;
         $absoluteMaxEnergy = PlayerSpirit::STARTING_ENERGY * PlayerSpirit::MIN_MAX_ENERGY_RATIO;
         $energy = random_int($absoluteMinEnergy, $absoluteMaxEnergy);
+
+        $gameLog = \App\Factories\Models\PlayerGameLogFactory::new()->forGame($game)->forPlayer($player)->forTeam($player->team)->create();
+
         /** @var PlayerSpirit $playerSpirit */
         $playerSpirit = factory(PlayerSpirit::class)->create([
             'week_id' => $week->id,
-            'game_id' => $game->id,
-            'player_id' => $player->id,
+            'player_game_log_id' => $gameLog->id,
             'essence_cost' => $essenceCost,
             'energy' => $energy
         ]);
