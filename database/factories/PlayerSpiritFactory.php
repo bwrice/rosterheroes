@@ -25,11 +25,3 @@ $factory->define(PlayerSpirit::class, function (Faker $faker) {
         'energy' => PlayerSpirit::STARTING_ENERGY
     ];
 });
-
-$factory->afterCreatingState(PlayerSpirit::class, 'with-stats', function (PlayerSpirit $playerSpirit, Faker $faker) {
-    $gameLog = factory(PlayerGameLog::class)->state('with-stats')->create([
-        'player_id' => $playerSpirit->player_id,
-        'game_id' => $playerSpirit->game_id
-    ]);
-    $playerSpirit->player_game_log_id = $gameLog->id;
-});
