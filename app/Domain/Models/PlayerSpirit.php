@@ -51,16 +51,6 @@ class PlayerSpirit extends EventSourcedModel
         return $this->belongsTo(Week::class);
     }
 
-    public function game()
-    {
-        return $this->belongsTo(Game::class);
-    }
-
-    public function player()
-    {
-        return $this->belongsTo(Player::class);
-    }
-
     public function heroes()
     {
         return $this->hasMany(Hero::class);

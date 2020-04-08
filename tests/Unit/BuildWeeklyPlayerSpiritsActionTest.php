@@ -181,8 +181,8 @@ class BuildWeeklyPlayerSpiritsActionTest extends TestCase
 
         // assert existing spirit job not pushed
         Queue::assertNotPushed(CreatePlayerSpiritJob::class, function (CreatePlayerSpiritJob $job) use ($alreadyExistingPlayerSpirit) {
-            return $job->player->id === $alreadyExistingPlayerSpirit->player_id
-                && $job->game->id === $alreadyExistingPlayerSpirit->game_id;
+            return $job->player->id === $alreadyExistingPlayerSpirit->playerGameLog->player_id
+                && $job->game->id === $alreadyExistingPlayerSpirit->playerGameLog->game_id;
         });
 
         // assert missing spirit job still pushed
