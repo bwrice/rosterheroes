@@ -22,7 +22,7 @@ class PlayerGameLogResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'player' => new PlayerGameLogResource($this->player),
+            'player' => new PlayerResource($this->player),
             'teamID' => $this->team_id,
             'gameID' => $this->game_id
         ];
