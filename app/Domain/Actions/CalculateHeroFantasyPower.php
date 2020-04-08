@@ -19,10 +19,6 @@ class CalculateHeroFantasyPower
         }
 
         $playerGameLog = $playerSpirit->playerGameLog;
-        if (! $playerGameLog) {
-            throw new CalculateHeroFantasyPowerException($hero, "No player game log for player spirit", CalculateHeroFantasyPowerException::CODE_NO_PLAYER_GAME_LOG);
-        }
-
         $heroMeasurables = $hero->measurables;
 
         $fantasyPoints = $playerGameLog->playerStats->sum(function (PlayerStat $playerStat) use ($heroMeasurables) {
@@ -31,7 +27,7 @@ class CalculateHeroFantasyPower
                 $statTypeNames = $measurable->measurableType->getBehavior()->getStatTypeNames();
                 return in_array($playerStat->statType->name, $statTypeNames);
             });
-            $fantasyPoints = $playerStat->statType->getBehavior()->getPointsPer() * $playerStat->amount;
+            $fantasyPoints = $playerStat->statType->getBehavior()->getTotalPoints($playerStat->amount);
             return $fantasyPoints * $matchingMeasurable->getBuffedAmount()/100;
         });
 
