@@ -58,7 +58,7 @@ class DisableInsignificantPlayerSpirit
     {
         $gameIDs = Game::query()
             ->orderByDesc('starts_at')
-            ->where('starts_at', '<', Date::now())
+            ->where('starts_at', '<', Date::now()->subHours(6)) // Don't want to include a game potentially still running
             ->whereHas('playerGameLogs', function (Builder $builder) use ($player) {
                 return $builder->where('player_id', '=', $player->id);
             })->take($gamesToConsiderCount)->pluck('id')->toArray();
