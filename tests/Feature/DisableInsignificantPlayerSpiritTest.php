@@ -99,15 +99,15 @@ class DisableInsignificantPlayerSpiritTest extends TestCase
         return [
             Position::QUARTERBACK => [
                 'positionName' => Position::QUARTERBACK,
-                'previousGamesCount' => 3
+                'previousGamesCount' => 4
             ],
             Position::PITCHER => [
                 'positionName' => Position::PITCHER,
-                'previousGamesCount' => 4
+                'previousGamesCount' => 16
             ],
             Position::THIRD_BASE => [
                 'positionName' => Position::THIRD_BASE,
-                'previousGamesCount' => 10
+                'previousGamesCount' => 6
             ],
             Position::POINT_GUARD => [
                 'positionName' => Position::POINT_GUARD,
@@ -116,6 +116,84 @@ class DisableInsignificantPlayerSpiritTest extends TestCase
             Position::DEFENSEMAN => [
                 'positionName' => Position::DEFENSEMAN,
                 'previousGamesCount' => 8
+            ],
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider provides_it_will_not_disable_player_spirits_with_only_a_few_games_without_stats
+     * @param $positionName
+     * @param $previousGamesCount
+     */
+    public function it_will_not_disable_player_spirits_with_only_a_few_games_without_stats($positionName, $previousGamesCount)
+    {
+        $game = GameFactory::new()->create([
+            'starts_at' => Date::now()->addDays(5)
+        ]);
+        $player = PlayerFactory::new()->withPosition(Position::forName($positionName))->create();
+        $baseGameLogFactory = PlayerGameLogFactory::new()->forPlayer($player);
+        $playerSpiritsGameLog = $baseGameLogFactory->forGame($game);
+        $playerSpirit = PlayerSpiritFactory::new()->withPlayerGameLog($playerSpiritsGameLog)->create();
+
+
+        /*
+         * Make game logs without stats
+         */
+        foreach (range(1, $previousGamesCount) as $count) {
+            $game = GameFactory::new()->create([
+                'starts_at' => Date::now()->subWeeks($count)
+            ]);
+            $baseGameLogFactory->forGame($game)->create();
+        }
+
+        /*
+         * Make older game logs with stats
+         */
+        foreach (range(1, $previousGamesCount) as $count) {
+            $game = GameFactory::new()->create([
+                'starts_at' => Date::now()->subWeeks($count + 1 + $previousGamesCount)
+            ]);
+            $baseGameLogFactory->forGame($game)->withStats()->create();
+        }
+
+        // verify we have previous game logs and the one for the created player spirit
+        $expectedLogsCount = (2 * $previousGamesCount) + 1;
+        $this->assertEquals($expectedLogsCount, $player->playerGameLogs()->count());
+
+        $disableSpy = \Mockery::spy(DisablePlayerSpirit::class);
+        app()->instance(DisablePlayerSpirit::class, $disableSpy);
+
+        /** @var DisableInsignificantPlayerSpirit $domainAction */
+        $domainAction = app(DisableInsignificantPlayerSpirit::class);
+        $result = $domainAction->execute($playerSpirit);
+
+        $this->assertFalse($result);
+        $disableSpy->shouldNotHaveReceived('execute');
+    }
+
+    public function provides_it_will_not_disable_player_spirits_with_only_a_few_games_without_stats()
+    {
+        return [
+            Position::QUARTERBACK => [
+                'positionName' => Position::QUARTERBACK,
+                'previousGamesCount' => 2
+            ],
+            Position::PITCHER => [
+                'positionName' => Position::PITCHER,
+                'previousGamesCount' => 8
+            ],
+            Position::THIRD_BASE => [
+                'positionName' => Position::THIRD_BASE,
+                'previousGamesCount' => 4
+            ],
+            Position::POINT_GUARD => [
+                'positionName' => Position::POINT_GUARD,
+                'previousGamesCount' => 4
+            ],
+            Position::DEFENSEMAN => [
+                'positionName' => Position::DEFENSEMAN,
+                'previousGamesCount' => 4
             ],
         ];
     }
