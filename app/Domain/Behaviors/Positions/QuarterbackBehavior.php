@@ -10,7 +10,7 @@ class QuarterbackBehavior extends PositionBehavior
 {
     protected $positionValue = 75;
     protected $gamesPerSeason = 16;
-    protected $significantAmountOfGamesWithoutStats = 2;
+    protected $significantAmountOfGamesWithoutStats = 3;
     protected $abbreviation = 'QB';
     protected $factoryStatTypeNames = [
         StatType::PASS_TD,
