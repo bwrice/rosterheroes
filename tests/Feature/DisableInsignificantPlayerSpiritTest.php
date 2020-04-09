@@ -247,7 +247,7 @@ class DisableInsignificantPlayerSpiritTest extends TestCase
             $game = GameFactory::new()->create([
                 'starts_at' => Date::now()->subDays($count + 1)
             ]);
-            $baseGameLogFactory->forGame($game)->withStats(collect([$insignificantStatsFactory]))->create();
+            $baseGameLogFactory->forGame($game)->withStats(collect([$significantStatsFactory]))->create();
         }
 
         // verify we have previous game logs and the one for the created player spirit
@@ -305,6 +305,118 @@ class DisableInsignificantPlayerSpiritTest extends TestCase
                 'positionName' => Position::DEFENSEMAN,
                 'insignificantGamesCount' => 10,
                 'significantGamesCount' => 2,
+                'statType' => StatType::PASS_YARD,
+                'insignificantAmount' => 15,
+                'significantAmount' => 100
+            ],
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider provides_it_will_NOT_disable_player_spirits_if_the_player_has_a_only_a_few_insignificant_games
+     * @param $positionName
+     * @param $insignificantGamesCount
+     * @param $significantGamesCount
+     * @param $statType
+     * @param $insignificantAmount
+     * @param $significantAmount
+     */
+    public function it_will_NOT_disable_player_spirits_if_the_player_has_a_only_a_few_insignificant_games(
+        $positionName,
+        $insignificantGamesCount,
+        $significantGamesCount,
+        $statType,
+        $insignificantAmount,
+        $significantAmount)
+    {
+        $game = GameFactory::new()->create([
+            'starts_at' => Date::now()->addDays(5)
+        ]);
+        $player = PlayerFactory::new()->withPosition(Position::forName($positionName))->create();
+        $baseGameLogFactory = PlayerGameLogFactory::new()->forPlayer($player);
+        $playerSpiritsGameLog = $baseGameLogFactory->forGame($game);
+        $playerSpirit = PlayerSpiritFactory::new()->withPlayerGameLog($playerSpiritsGameLog)->create();
+
+
+        $playerStatFactory = PlayerStatFactory::new()->forStatType($statType);
+        $insignificantStatsFactory = $playerStatFactory->withAmount($insignificantAmount);
+        /*
+         * Make older game logs with insignificant stats
+         */
+        foreach (range(1, $insignificantGamesCount) as $count) {
+            $game = GameFactory::new()->create([
+                'starts_at' => Date::now()->subDays($count)
+            ]);
+            $baseGameLogFactory->forGame($game)->withStats(collect([$insignificantStatsFactory]))->create();
+        }
+
+        /*
+         * Make older game logs with significant stats
+         */
+        $significantStatsFactory = $playerStatFactory->withAmount($significantAmount);
+        foreach (range(1, $significantGamesCount) as $count) {
+            $game = GameFactory::new()->create([
+                'starts_at' => Date::now()->subDays($count + 1)
+            ]);
+            $baseGameLogFactory->forGame($game)->withStats(collect([$significantStatsFactory]))->create();
+        }
+
+        // verify we have previous game logs and the one for the created player spirit
+        $expectedLogsCount = $insignificantGamesCount + $significantGamesCount + 1;
+        $this->assertEquals($expectedLogsCount, $player->playerGameLogs()->count());
+
+        $disableSpy = \Mockery::spy(DisablePlayerSpirit::class);
+        app()->instance(DisablePlayerSpirit::class, $disableSpy);
+
+        /** @var DisableInsignificantPlayerSpirit $domainAction */
+        $domainAction = app(DisableInsignificantPlayerSpirit::class);
+        $result = $domainAction->execute($playerSpirit);
+
+        $this->assertFalse($result);
+        $disableSpy->shouldNotHaveReceived('execute');
+    }
+
+
+    public function provides_it_will_NOT_disable_player_spirits_if_the_player_has_a_only_a_few_insignificant_games()
+    {
+        return [
+            Position::QUARTERBACK => [
+                'positionName' => Position::QUARTERBACK,
+                'insignificantGamesCount' => 4,
+                'significantGamesCount' => 4,
+                'statType' => StatType::PASS_YARD,
+                'insignificantAmount' => 15,
+                'significantAmount' => 100
+            ],
+            Position::PITCHER => [
+                'positionName' => Position::PITCHER,
+                'insignificantGamesCount' => 16,
+                'significantGamesCount' => 8,
+                'statType' => StatType::INNING_PITCHED,
+                'insignificantAmount' => .1,
+                'significantAmount' => 2
+            ],
+            Position::THIRD_BASE => [
+                'positionName' => Position::THIRD_BASE,
+                'insignificantGamesCount' => 8,
+                'significantGamesCount' => 5,
+                'statType' => StatType::BASE_ON_BALLS,
+                'insignificantAmount' => 1,
+                'significantAmount' => 3
+            ],
+            Position::POINT_GUARD => [
+                'positionName' => Position::POINT_GUARD,
+                'insignificantGamesCount' => 8,
+                'significantGamesCount' => 5,
+                'statType' => StatType::PASS_YARD,
+                'insignificantAmount' => 15,
+                'significantAmount' => 100
+            ],
+            Position::DEFENSEMAN => [
+                'positionName' => Position::DEFENSEMAN,
+                'insignificantGamesCount' => 8,
+                'significantGamesCount' => 5,
                 'statType' => StatType::PASS_YARD,
                 'insignificantAmount' => 15,
                 'significantAmount' => 100
