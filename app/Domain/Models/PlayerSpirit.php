@@ -5,6 +5,7 @@ namespace App\Domain\Models;
 use App\Domain\Collections\HeroCollection;
 use App\Domain\Collections\PlayerSpiritCollection;
 use App\Domain\QueryBuilders\PlayerSpiritQueryBuilder;
+use Carbon\CarbonImmutable;
 
 /**
  * Class PlayerWeek
@@ -16,6 +17,7 @@ use App\Domain\QueryBuilders\PlayerSpiritQueryBuilder;
  * @property int $energy
  * @property int $player_game_log_id
  * @property int $week_id
+ * @property CarbonImmutable|null $disabled_at
  *
  * @property Week $week
  * @property PlayerGameLog $playerGameLog
@@ -30,6 +32,12 @@ class PlayerSpirit extends EventSourcedModel
     public const STARTING_ENERGY = 100;
     public const MAX_USAGE_BEFORE_ENERGY_ADJUSTMENT = 10;
     public const MIN_MAX_ENERGY_RATIO = 4;
+
+    protected $dates = [
+        'updated_at',
+        'created_at',
+        'disabled_at'
+    ];
 
     public function newCollection(array $models = [])
     {
