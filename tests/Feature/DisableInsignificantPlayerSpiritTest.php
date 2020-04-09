@@ -99,8 +99,24 @@ class DisableInsignificantPlayerSpiritTest extends TestCase
         return [
             Position::QUARTERBACK => [
                 'positionName' => Position::QUARTERBACK,
-                'previousGamesCount' => 5
-            ]
+                'previousGamesCount' => 3
+            ],
+            Position::PITCHER => [
+                'positionName' => Position::PITCHER,
+                'previousGamesCount' => 4
+            ],
+            Position::THIRD_BASE => [
+                'positionName' => Position::THIRD_BASE,
+                'previousGamesCount' => 10
+            ],
+            Position::POINT_GUARD => [
+                'positionName' => Position::POINT_GUARD,
+                'previousGamesCount' => 8
+            ],
+            Position::DEFENSEMAN => [
+                'positionName' => Position::DEFENSEMAN,
+                'previousGamesCount' => 8
+            ],
         ];
     }
 }
