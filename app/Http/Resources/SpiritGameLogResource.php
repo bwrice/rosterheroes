@@ -11,7 +11,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  *
  * @mixin PlayerGameLog
  */
-class PlayerGameLogResource extends JsonResource
+class SpiritGameLogResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
