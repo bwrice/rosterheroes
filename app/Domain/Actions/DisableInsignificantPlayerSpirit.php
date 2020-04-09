@@ -32,7 +32,8 @@ class DisableInsignificantPlayerSpirit
         /** @var Position $position */
         $position = $player->positions->first();
         $position->sport->getBehavior();
-        $gamesToConsiderCount = (int) (ceil($position->getBehavior()->getGamesPerSeason()/8) + 4);
+        $significantAmountOfGamesWithoutStats = $position->getBehavior()->getSignificantAmountOfGamesWithoutStats();
+        $gamesToConsiderCount = $significantAmountOfGamesWithoutStats * 3;
 
         $gameLogs = $this->getGameLogsToConsider($player, $gamesToConsiderCount);
 
@@ -41,7 +42,7 @@ class DisableInsignificantPlayerSpirit
             return false;
         }
 
-        if ($this->disableBasedOnGameLogsWithoutStats($playerSpirit, $gamesToConsiderCount, $gameLogs)) {
+        if ($this->disableBasedOnGameLogsWithoutStats($playerSpirit, $gameLogs->take($significantAmountOfGamesWithoutStats))) {
             return true;
         }
 
@@ -76,14 +77,11 @@ class DisableInsignificantPlayerSpirit
 
     /**
      * @param PlayerSpirit $playerSpirit
-     * @param int $gamesToConsiderCount
-     * @param Collection $gameLogs
+     * @param Collection $logsRequiredToHaveStats
      * @return bool
      */
-    protected function disableBasedOnGameLogsWithoutStats(PlayerSpirit $playerSpirit, int $gamesToConsiderCount, Collection $gameLogs): bool
+    protected function disableBasedOnGameLogsWithoutStats(PlayerSpirit $playerSpirit, Collection $logsRequiredToHaveStats): bool
     {
-        $needsStatsCount = ((int)ceil($gamesToConsiderCount) / 4 + 2);
-        $logsRequiredToHaveStats = $gameLogs->take($needsStatsCount);
         $hasStatsGameLog = $logsRequiredToHaveStats->first(function (PlayerGameLog $playerGameLog) {
             return $playerGameLog->playerStats->isNotEmpty();
         });
