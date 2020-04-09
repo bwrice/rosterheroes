@@ -71,4 +71,18 @@ class PlayerGameLog extends Model
         $gameDesc = $this->game->getSimpleDescription();
         return $playerName . ' (' . $teamAbbreviation . ') ' . $gameDesc;
     }
+
+    public static function getThoseToDisable($take, $sumMin = 1)
+    {
+        $total = 0;
+        self::query()->with('playerStats.statType')->limit($take)->get()->each(function (PlayerGameLog $playerGameLog) use (&$total, $sumMin) {
+            $sum = $playerGameLog->playerStats->sum(function (PlayerStat $playerStat) {
+                $amount = $playerStat->amount;
+                return $playerStat->statType->getBehavior()->getTotalPoints($amount);
+            });
+            if ($sum <= $sumMin) {
+                $total++;
+            }});
+        return $total;
+    }
 }
