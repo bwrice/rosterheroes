@@ -24,6 +24,16 @@ use Illuminate\Support\Str;
 class CreatePlayerSpiritAction
 {
     /**
+     * @var DisableInsignificantPlayerSpirit
+     */
+    protected $disableInsignificantPlayerSpirit;
+
+    public function __construct(DisableInsignificantPlayerSpirit $disableInsignificantPlayerSpirit)
+    {
+        $this->disableInsignificantPlayerSpirit = $disableInsignificantPlayerSpirit;
+    }
+
+    /**
      * @var Week
      */
     protected $week;
@@ -70,7 +80,9 @@ class CreatePlayerSpiritAction
         $aggregate->createPlayerSpirit($this->week->id, $gameLog->id, $essenceCost, PlayerSpirit::STARTING_ENERGY)
             ->persist();
 
-        return PlayerSpirit::findUuid($playerSpiritUuid);
+        $playerSpirit = PlayerSpirit::findUuid($playerSpiritUuid);
+        $this->disableInsignificantPlayerSpirit->execute($playerSpirit);
+        return $playerSpirit->fresh();
     }
 
     protected function setProperties(Week $week, Game $game, Player $player)
