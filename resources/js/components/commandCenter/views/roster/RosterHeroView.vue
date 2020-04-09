@@ -149,7 +149,7 @@
             playerSpiritsForHero() {
                 let heroPositionIDs = this._heroRaceByID(this.hero.heroRaceID).positionIDs;
                 let filtered = this._playerSpirits.filter(function (playerSpirit) {
-                    let matchingIDs = playerSpirit.player.positionIDs.filter(playerPositionID => heroPositionIDs.includes(playerPositionID));
+                    let matchingIDs = playerSpirit.playerGameLog.player.positionIDs.filter(playerPositionID => heroPositionIDs.includes(playerPositionID));
                     return matchingIDs.length > 0;
                 });
                 if (this.hero.playerSpirit) {

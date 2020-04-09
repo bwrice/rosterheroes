@@ -56,7 +56,7 @@
                 return this._gameDescriptionByGameID(this.playerSpirit.gameID);
             },
             positions() {
-                return this._positionsFilteredByIDs(this.playerSpirit.player.positionIDs);
+                return this._positionsFilteredByIDs(this.playerSpirit.playerGameLog.player.positionIDs);
             }
         }
     }
