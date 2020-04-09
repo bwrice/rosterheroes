@@ -10,6 +10,7 @@ class DefensemanBehavior extends PositionBehavior
 {
     protected $positionValue = 30;
     protected $gamesPerSeason = 80;
+    protected $significantAmountOfGamesWithoutStats = 5;
     protected $abbreviation = 'D';
     protected $factoryStatTypeNames = [
         StatType::GOAL,

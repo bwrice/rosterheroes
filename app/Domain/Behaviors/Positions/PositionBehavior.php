@@ -15,6 +15,8 @@ abstract class PositionBehavior
     protected $positionValue;
     /** @var int */
     protected $gamesPerSeason;
+    /** @var int */
+    protected $significantAmountOfGamesWithoutStats;
     /** @var string */
     protected $abbreviation;
     /** @var array */
@@ -60,5 +62,13 @@ abstract class PositionBehavior
     public function getFactoryStatTypeNames(): array
     {
         return $this->factoryStatTypeNames;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSignificantAmountOfGamesWithoutStats(): int
+    {
+        return $this->significantAmountOfGamesWithoutStats;
     }
 }

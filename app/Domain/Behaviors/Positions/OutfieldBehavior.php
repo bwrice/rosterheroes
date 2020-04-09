@@ -10,6 +10,7 @@ class OutfieldBehavior extends PositionBehavior
 {
     protected $positionValue = 60;
     protected $gamesPerSeason = 150;
+    protected $significantAmountOfGamesWithoutStats = 6;
     protected $abbreviation = 'OF';
     protected $factoryStatTypeNames = [
         StatType::HIT,

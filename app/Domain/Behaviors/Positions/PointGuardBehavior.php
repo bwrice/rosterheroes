@@ -10,6 +10,7 @@ class PointGuardBehavior extends PositionBehavior
 {
     protected $positionValue = 90;
     protected $gamesPerSeason = 80;
+    protected $significantAmountOfGamesWithoutStats = 5;
     protected $abbreviation = 'PG';
     protected $factoryStatTypeNames = [
         StatType::POINT_MADE,

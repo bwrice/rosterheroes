@@ -10,6 +10,7 @@ class TightEndBehavior extends PositionBehavior
 {
     protected $positionValue = 35;
     protected $gamesPerSeason = 14;
+    protected $significantAmountOfGamesWithoutStats = 4;
     protected $abbreviation = 'TE';
     protected $factoryStatTypeNames = [
         StatType::REC_TD,

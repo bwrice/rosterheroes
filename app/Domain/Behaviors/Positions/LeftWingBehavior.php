@@ -10,6 +10,7 @@ class LeftWingBehavior extends PositionBehavior
 {
     protected $positionValue = 40;
     protected $gamesPerSeason = 80;
+    protected $significantAmountOfGamesWithoutStats = 5;
     protected $abbreviation = 'LW';
     protected $factoryStatTypeNames = [
         StatType::GOAL,

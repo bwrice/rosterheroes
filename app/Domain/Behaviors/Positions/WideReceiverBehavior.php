@@ -10,6 +10,7 @@ class WideReceiverBehavior extends PositionBehavior
 {
     protected $positionValue = 50;
     protected $gamesPerSeason = 14;
+    protected $significantAmountOfGamesWithoutStats = 4;
     protected $abbreviation = 'WR';
     protected $factoryStatTypeNames = [
         StatType::REC_TD,

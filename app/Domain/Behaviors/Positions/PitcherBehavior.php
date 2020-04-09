@@ -10,6 +10,7 @@ class PitcherBehavior extends PositionBehavior
 {
     protected $positionValue = 70;
     protected $gamesPerSeason = 30;
+    protected $significantAmountOfGamesWithoutStats = 12;
     protected $abbreviation = 'P';
     protected $factoryStatTypeNames = [
         StatType::INNING_PITCHED,

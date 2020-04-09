@@ -10,6 +10,7 @@ class ThirdBaseBehavior extends PositionBehavior
 {
     protected $positionValue = 50;
     protected $gamesPerSeason = 150;
+    protected $significantAmountOfGamesWithoutStats = 6;
     protected $abbreviation = '3B';
     protected $factoryStatTypeNames = [
         StatType::HIT,

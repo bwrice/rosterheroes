@@ -10,6 +10,7 @@ class GoalieBehavior extends PositionBehavior
 {
     protected $positionValue = 50;
     protected $gamesPerSeason = 80;
+    protected $significantAmountOfGamesWithoutStats = 5;
     protected $abbreviation = 'G';
     protected $factoryStatTypeNames = [
         StatType::HOCKEY_BLOCKED_SHOT,

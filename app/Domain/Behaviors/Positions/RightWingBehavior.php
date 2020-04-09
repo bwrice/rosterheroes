@@ -10,6 +10,7 @@ class RightWingBehavior extends PositionBehavior
 {
     protected $positionValue = 40;
     protected $gamesPerSeason = 80;
+    protected $significantAmountOfGamesWithoutStats = 5;
     protected $abbreviation = 'RW';
     protected $factoryStatTypeNames = [
         StatType::GOAL,

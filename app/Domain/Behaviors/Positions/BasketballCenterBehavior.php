@@ -10,6 +10,7 @@ class BasketballCenterBehavior extends PositionBehavior
 {
     protected $positionValue = 80;
     protected $gamesPerSeason = 80;
+    protected $significantAmountOfGamesWithoutStats = 5;
     protected $abbreviation = 'C';
     protected $factoryStatTypeNames = [
         StatType::POINT_MADE,

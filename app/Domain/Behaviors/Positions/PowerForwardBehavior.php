@@ -10,6 +10,7 @@ class PowerForwardBehavior extends PositionBehavior
 {
     protected $positionValue = 80;
     protected $gamesPerSeason = 80;
+    protected $significantAmountOfGamesWithoutStats = 5;
     protected $abbreviation = 'PF';
     protected $factoryStatTypeNames = [
         StatType::POINT_MADE,

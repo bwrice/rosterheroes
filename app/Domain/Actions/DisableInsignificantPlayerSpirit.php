@@ -31,6 +31,7 @@ class DisableInsignificantPlayerSpirit
         $player = $playerSpirit->playerGameLog->player;
         /** @var Position $position */
         $position = $player->positions->first();
+        $position->sport->getBehavior();
         $gamesToConsiderCount = (int) (ceil($position->getBehavior()->getGamesPerSeason()/8) + 4);
 
         $gameLogs = $this->getGameLogsToConsider($player, $gamesToConsiderCount);

@@ -10,6 +10,7 @@ class CatcherBehavior extends PositionBehavior
 {
     protected $positionValue = 40;
     protected $gamesPerSeason = 150;
+    protected $significantAmountOfGamesWithoutStats = 6;
     protected $abbreviation = 'C';
     protected $factoryStatTypeNames = [
         StatType::HIT,
