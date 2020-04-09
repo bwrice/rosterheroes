@@ -20,6 +20,7 @@ class CreatePlayerSpiritsTable extends Migration
             $table->bigInteger('player_game_log_id')->unsigned();
             $table->integer('essence_cost');
             $table->integer('energy');
+            $table->dateTime('disabled_at')->nullable();
             $table->timestamps();
         });
 
