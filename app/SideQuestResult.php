@@ -29,7 +29,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  */
 class SideQuestResult extends Pivot
 {
-    protected $incrementing = true;
+    public $incrementing = true;
     protected $guarded = [];
 
     protected $dates = [
