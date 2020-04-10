@@ -55,15 +55,24 @@ export default {
             }
         },
         async updatePlayerSpirits({commit}) {
+            let playerSpirits = [];
+            let retrieveSpirits = true;
+            let offset = 0;
             try {
-                let playerSpiritsResponse = await weekApi.getPlayerSpirits('current');
-                let playerSpirits = playerSpiritsResponse.data.map(function (playerSpirit) {
-                    return new PlayerSpirit(playerSpirit);
-                });
-                commit('SET_PLAYER_SPIRITS', playerSpirits);
+                while (retrieveSpirits || offset > 20000) {
+                    let playerSpiritsResponse = await weekApi.getPlayerSpirits('current', offset, 100);
+                    let retrievedPlayerSpirits = playerSpiritsResponse.data.map(function (playerSpirit) {
+                        return new PlayerSpirit(playerSpirit);
+                    });
+                    playerSpirits = _.union(playerSpirits, retrievedPlayerSpirits);
+                    commit('SET_PLAYER_SPIRITS', playerSpirits);
+                    retrieveSpirits = retrievedPlayerSpirits.length !== 0;
+                    offset += 100;
+                }
             } catch (e) {
                 console.warn("Failed to update player spirits");
             }
+
         },
         async updateGames({commit}) {
             try {
