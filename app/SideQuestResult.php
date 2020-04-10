@@ -30,7 +30,6 @@ use PhpParser\Node\Expr\AssignOp\Mod;
  */
 class SideQuestResult extends Model
 {
-    use AsPivot;
     protected $guarded = [];
 
     protected $dates = [
