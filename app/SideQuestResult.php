@@ -8,6 +8,8 @@ use App\Domain\QueryBuilders\SideQuestEventQueryBuilder;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Concerns\AsPivot;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
 /**
  * Class SideQuestResult
@@ -24,8 +26,9 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property Collection $sideQuestEvents
  */
-class SideQuestResult extends Model
+class SideQuestResult extends Pivot
 {
+    protected $incrementing = true;
     protected $guarded = [];
 
     protected $dates = [
