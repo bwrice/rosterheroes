@@ -206,7 +206,7 @@ export default {
                 helpers.syncUpdatedHero(state, commit, updatedHero);
 
                 dispatch('snackBarSuccess', {
-                    text: updatedHero.playerSpirit.player.fullName + ' now embodies ' + updatedHero.name,
+                    text: updatedHero.playerSpirit.playerGameLog.player.fullName + ' now embodies ' + updatedHero.name,
                     timeout: 3000
                 })
 
