@@ -35,7 +35,7 @@
                         :items="filteredSpirits"
                         :items-per-page="itemsPerPage"
                         :page="page"
-                        :loading="_rosterLoading"
+                        :loading="_loadingSpirits"
                         hide-default-footer
                         row
                         no-gutters
@@ -127,9 +127,9 @@
                 '_squad',
                 '_currentWeek',
                 '_focusedHero',
+                '_loadingSpirits',
                 '_playerSpirits',
-                '_heroRaceByID',
-                '_rosterLoading'
+                '_heroRaceByID'
             ]),
             rosterPage() {
                 return '/command-center/' + this.$route.params.squadSlug + '/roster' ;
@@ -163,14 +163,14 @@
             filteredSpirits() {
                 if (this.spiritSearch && this.spiritSearch.length) {
                     let search = new jsSearch.Search('uuid');
-                    search.addIndex(['player', 'firstName']);
-                    search.addIndex(['player', 'lastName']);
+                    search.addIndex(['playerGameLog', 'player', 'firstName']);
+                    search.addIndex(['playerGameLog', 'player', 'lastName']);
                     search.addDocuments(this.playerSpiritsForHero);
                     return search.search(this.spiritSearch);
                 } else {
                     return this.playerSpiritsForHero;
                 }
-            }
+            },
         },
     }
 </script>

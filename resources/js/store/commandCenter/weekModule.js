@@ -8,9 +8,13 @@ export default {
         week: null,
         playerSpirits: [],
         games: [],
+        loadingSpirits: true
     },
 
     getters: {
+        _loadingSpirits(state) {
+            return state.loadingSpirits;
+        },
         _currentWeek(state) {
             return state.week;
         },
@@ -34,6 +38,9 @@ export default {
         }
     },
     mutations: {
+        SET_LOADING_SPIRITS(state, payload) {
+            state.loadingSpirits = payload;
+        },
         SET_CURRENT_WEEK(state, payload) {
             state.week = payload;
         },
@@ -67,10 +74,14 @@ export default {
                     playerSpirits = _.union(playerSpirits, retrievedPlayerSpirits);
                     commit('SET_PLAYER_SPIRITS', playerSpirits);
                     retrieveSpirits = retrievedPlayerSpirits.length !== 0;
+                    if (offset === 0) {
+                        commit('SET_LOADING_SPIRITS', false);
+                    }
                     offset += 100;
                 }
             } catch (e) {
                 console.warn("Failed to update player spirits");
+                commit('SET_LOADING_SPIRITS', false);
             }
 
         },
