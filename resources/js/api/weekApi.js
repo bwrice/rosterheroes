@@ -4,8 +4,13 @@ export async function getCurrentWeek() {
     return response.data;
 }
 
-export async function getPlayerSpirits(weekUuid = 'current') {
-    let response = await axios.get('/api/v1/weeks/' + weekUuid + '/player-spirits');
+export async function getPlayerSpirits(weekUuid = 'current', offset = 0, limit = 100) {
+    let response = await axios.get('/api/v1/weeks/' + weekUuid + '/player-spirits', {
+        params: {
+            offset,
+            limit
+        }
+    });
     return response.data;
 }
 
