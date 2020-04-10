@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Concerns\AsPivot;
 use Illuminate\Database\Eloquent\Relations\Pivot;
+use PhpParser\Node\Expr\AssignOp\Mod;
 
 /**
  * Class SideQuestResult
@@ -27,9 +28,9 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  *
  * @property Collection $sideQuestEvents
  */
-class SideQuestResult extends Pivot
+class SideQuestResult extends Model
 {
-    public $incrementing = true;
+    use AsPivot;
     protected $guarded = [];
 
     protected $dates = [
@@ -38,6 +39,14 @@ class SideQuestResult extends Pivot
         'combat_processed_at',
         'rewards_processed_at'
     ];
+
+    /*
+     * Use Model method to override AsPivot trait
+     */
+    public function getTable()
+    {
+        return parent::getTable();
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany|SideQuestEventQueryBuilder
