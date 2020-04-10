@@ -3,7 +3,6 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
-import rosterModule from './rosterModule';
 import squadModule from "./squadModule";
 import weekModule from './weekModule';
 import realmModule from './realmModule';
@@ -16,7 +15,6 @@ import referenceModule from "./referenceModule";
 export const store = new Vuex.Store({
 
     modules: {
-        rosterModule,
         squadModule,
         weekModule,
         realmModule,
