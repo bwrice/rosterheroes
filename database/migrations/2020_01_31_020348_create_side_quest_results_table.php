@@ -18,6 +18,7 @@ class CreateSideQuestResultsTable extends Migration
             $table->uuid('uuid');
             $table->bigInteger('campaign_stop_id')->unsigned();
             $table->integer('side_quest_id')->unsigned();
+            $table->dateTime('combat_processed_at')->nullable();
             $table->dateTime('rewards_processed_at')->nullable();
             $table->unique(['campaign_stop_id', 'side_quest_id']);
             $table->timestamps();

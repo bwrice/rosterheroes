@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  * @property string $uuid
  * @property int $campaign_stop_id
  * @property int $side_quest_id
+ * @property CarbonInterface|null $combat_processed_at
  * @property CarbonInterface|null $rewards_processed_at
  *
  * @property SideQuest $sideQuest
@@ -34,6 +35,7 @@ class SideQuestResult extends Pivot
     protected $dates = [
         'created_at',
         'updated_at',
+        'combat_processed_at',
         'rewards_processed_at'
     ];
 
