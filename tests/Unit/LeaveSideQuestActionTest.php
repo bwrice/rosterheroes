@@ -10,6 +10,8 @@ use App\Domain\Models\SideQuest;
 use App\Domain\Models\Squad;
 use App\Domain\Models\Week;
 use App\Exceptions\CampaignStopException;
+use App\Factories\Models\SideQuestResultFactory;
+use App\SideQuestResult;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -38,6 +40,9 @@ class LeaveSideQuestActionTest extends TestCase
     /** @var SideQuest */
     protected $sideQuest;
 
+    /** @var SideQuestResult */
+    protected $sideQuestResult;
+
     public function setUp(): void
     {
         parent::setUp();
@@ -64,7 +69,10 @@ class LeaveSideQuestActionTest extends TestCase
             'campaign_id' => $this->campaign->id
         ]);
 
-        $this->campaignStop->sideQuests()->attach($this->sideQuest->id);
+        $this->sideQuestResult = SideQuestResultFactory::new()->create([
+            'campaign_stop_id' => $this->campaignStop->id,
+            'side_quest_id' => $this->sideQuest->id
+        ]);
     }
 
     /**
@@ -82,6 +90,27 @@ class LeaveSideQuestActionTest extends TestCase
             $domainAction->execute($this->campaignStop, $this->sideQuest);
         } catch (CampaignStopException $exception) {
             $this->assertEquals(CampaignStopException::CODE_WEEK_LOCKED, $exception->getCode());
+            return;
+        }
+        $this->fail("Exception not thrown");
+    }
+
+    /**
+     * @test
+     */
+    public function leaving_a_side_quest_for_a_campaign_of_a_different_week_will_throw_an_exception()
+    {
+        $week = factory(Week::class)->create();
+        $week->adventuring_locks_at = Date::now()->addHour();
+        $week->save();
+        Week::setTestCurrent($week);
+
+        try {
+            /** @var LeaveSideQuestAction $domainAction */
+            $domainAction = app(LeaveSideQuestAction::class);
+            $domainAction->execute($this->campaignStop, $this->sideQuest);
+        } catch (CampaignStopException $exception) {
+            $this->assertEquals(CampaignStopException::CODE_CAMPAIGN_FOR_PREVIOUS_WEEK, $exception->getCode());
             return;
         }
         $this->fail("Exception not thrown");
@@ -112,7 +141,7 @@ class LeaveSideQuestActionTest extends TestCase
      */
     public function it_will_throw_an_exception_if_the_side_quest_does_not_belong_to_the_campaign_stop()
     {
-        $this->campaignStop->sideQuests()->sync([]);
+        $this->sideQuestResult->delete();
 
         try {
             /** @var LeaveSideQuestAction $domainAction */
