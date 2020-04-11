@@ -11,6 +11,8 @@ use App\Domain\Models\SideQuest;
 use App\Domain\Models\Week;
 use App\Exceptions\CampaignException;
 use App\Exceptions\CampaignStopException;
+use App\SideQuestResult;
+use Illuminate\Support\Str;
 
 class JoinSideQuestAction extends CampaignStopAction
 {
@@ -23,27 +25,35 @@ class JoinSideQuestAction extends CampaignStopAction
     /** @var SideQuest */
     protected $sideQuest;
 
+    /**
+     * @param CampaignStop $campaignStop
+     * @param SideQuest $sideQuest
+     * @return SideQuestResult
+     */
     public function execute(CampaignStop $campaignStop, SideQuest $sideQuest)
     {
         $this->setProperties($campaignStop, $sideQuest);
         $this->validateWeek();
         $this->validateQuestMatches();
-        $this->validateNonDuplicateSideQuest();
+        $this->validateNoExistingSideQuestResult();
         $this->validateSquadLocation();
         $this->validateMaxSideQuestCount();
 
-        /** @var CampaignStopAggregate $aggregate */
-        $aggregate = CampaignStopAggregate::retrieve($campaignStop->uuid);
-        $aggregate->addSideQuest($sideQuest->id)->persist();
+        /** @var SideQuestResult $sideQuestResult */
+        $sideQuestResult = SideQuestResult::query()->create([
+            'uuid' => (string) Str::uuid(),
+            'campaign_stop_id' => $campaignStop->id,
+            'side_quest_id' => $sideQuest->id
+        ]);
+
+        return $sideQuestResult;
     }
 
-    protected function validateNonDuplicateSideQuest()
+    protected function validateNoExistingSideQuestResult()
     {
-        $sideQuestIDs = $this->campaignStop->sideQuests->map(function (SideQuest $sideQuest) {
-            return $sideQuest->id;
-        })->values()->toArray();
+        $existingSideQuestResult = $this->campaignStop->sideQuestResults()->where('side_quest_id', '=', $this->sideQuest->id)->first();
 
-        if (in_array($this->sideQuest->id, $sideQuestIDs)) {
+        if ($existingSideQuestResult) {
             throw (new CampaignStopException("Side quest already joined", CampaignStopException::CODE_SIDE_QUEST_ALREADY_ADDED))
                 ->setCampaignStop($this->campaignStop)
                 ->setSideQuest($this->sideQuest);
