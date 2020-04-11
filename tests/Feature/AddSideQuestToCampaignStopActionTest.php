@@ -99,7 +99,7 @@ class AddSideQuestToCampaignStopActionTest extends TestCase
         $week = factory(Week::class)->create();
         $week->adventuring_locks_at = Date::now()->addHour();
         $week->save();
-        CurrentWeek::setTestCurrent($this->week);
+        CurrentWeek::setTestCurrent($week);
 
         try {
 
