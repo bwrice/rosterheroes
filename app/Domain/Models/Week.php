@@ -7,6 +7,7 @@ use App\Domain\Collections\PlayerSpiritCollection;
 use App\Domain\Models\Game;
 use App\Domain\Collections\WeekCollection;
 use App\Domain\QueryBuilders\WeekQueryBuilder;
+use App\Facades\CurrentWeek;
 use Carbon\CarbonImmutable;
 use Carbon\CarbonInterface;
 use Carbon\CarbonPeriod;
@@ -76,7 +77,7 @@ class Week extends EventSourcedModel
      */
     public static function current()
     {
-        return self::$testCurrent ?: self::query()->current();
+        return CurrentWeek::get();
     }
 
     public static function setCurrent(Week $week = null)
@@ -86,7 +87,7 @@ class Week extends EventSourcedModel
 
     public static function setTestCurrent(Week $week = null)
     {
-        self::$testCurrent = $week;
+        CurrentWeek::setTestCurrent($week);
     }
 
     public static function setTestLatest(Week $week = null)
