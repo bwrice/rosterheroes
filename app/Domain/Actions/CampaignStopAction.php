@@ -34,6 +34,12 @@ abstract class CampaignStopAction
                 ->setCampaignStop($this->campaignStop)
                 ->setSideQuest($this->sideQuest);
         }
+
+        if ($this->campaignStop->campaign->week_id !== $this->week->id) {
+            throw (new CampaignStopException("Cannot edit campaign for previous week", CampaignStopException::CODE_CAMPAIGN_FOR_PREVIOUS_WEEK))
+                ->setCampaignStop($this->campaignStop)
+                ->setSideQuest($this->sideQuest);
+        }
     }
 
     protected function validateQuestMatches()

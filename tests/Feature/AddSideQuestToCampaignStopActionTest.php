@@ -95,6 +95,32 @@ class AddSideQuestToCampaignStopActionTest extends TestCase
     /**
      * @test
      */
+    public function adding_a_side_quest_to_campaign_for_a_previous_week_will_throw_an_exception()
+    {
+        // Set week to a different week
+        $week = factory(Week::class)->create();
+        $week->adventuring_locks_at = Date::now()->addHour();
+        $week->save();
+        Week::setTestCurrent($week);
+
+        try {
+
+            /** @var JoinSideQuestAction $domainAction */
+            $domainAction = app(JoinSideQuestAction::class);
+            $domainAction->execute($this->campaignStop, $this->sideQuest);
+
+        } catch (CampaignStopException $exception) {
+
+            $this->assertEquals(CampaignStopException::CODE_CAMPAIGN_FOR_PREVIOUS_WEEK, $exception->getCode());
+            return;
+        }
+
+        $this->fail("Exception not thrown");
+    }
+
+    /**
+     * @test
+     */
     public function it_will_throw_an_exception_if_the_side_quest_does_not_belong_to_the_quest()
     {
         $quest = factory(Quest::class)->create();
