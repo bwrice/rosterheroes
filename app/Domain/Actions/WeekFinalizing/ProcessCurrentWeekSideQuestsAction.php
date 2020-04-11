@@ -8,7 +8,8 @@ use App\Domain\Models\CampaignStop;
 use App\Domain\Models\SideQuest;
 use App\Facades\CurrentWeek;
 use App\Jobs\FinalizeWeekJob;
-use App\Jobs\ProcessSideQuestResultJob;
+use App\Jobs\ProcessCombatForSideQuestResultJob;
+use App\SideQuestResult;
 use Bwrice\LaravelJobChainGroups\Jobs\ChainGroup;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -24,7 +25,7 @@ class ProcessCurrentWeekSideQuestsAction implements FinalizeWeekDomainAction
     public function execute(int $finalizeWeekStep, array $extra = [])
     {
         $campaignStops = $this->getCampaignStops($extra);
-        $asyncJobs = $this->getProcessResultJobs($campaignStops);
+        $asyncJobs = $this->getProcessCombatJobs($campaignStops);
 
         $finalizeWeekArgs = $this->getFinalizeWeekArgs($campaignStops, $finalizeWeekStep);
 
@@ -50,7 +51,7 @@ class ProcessCurrentWeekSideQuestsAction implements FinalizeWeekDomainAction
                 return $builder->where('week_id', '=', CurrentWeek::id());
             })
             ->orderBy('id')
-            ->with('sideQuests');
+            ->with('sideQuestResults');
 
         if ($lastCampaignStopID) {
             $query->where('id', '>', $lastCampaignStopID);
@@ -58,12 +59,12 @@ class ProcessCurrentWeekSideQuestsAction implements FinalizeWeekDomainAction
         return $query;
     }
 
-    protected function getProcessResultJobs(Collection $campaignStops)
+    protected function getProcessCombatJobs(Collection $campaignStops)
     {
         $jobs = collect();
         $campaignStops->map(function (CampaignStop $campaignStop) use ($jobs) {
-            $campaignStop->sideQuests->each(function (SideQuest $sideQuest) use ($campaignStop, $jobs) {
-                $jobs->push(new ProcessSideQuestResultJob($campaignStop, $sideQuest));
+            $campaignStop->sideQuestResults->each(function (SideQuestResult $sideQuestResult) use ($jobs) {
+                $jobs->push(new ProcessCombatForSideQuestResultJob($sideQuestResult));
             });
         });
         return $jobs->toArray();
