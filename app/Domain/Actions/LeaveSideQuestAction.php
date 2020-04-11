@@ -16,19 +16,15 @@ class LeaveSideQuestAction extends CampaignStopAction
 
         $this->validateWeek();
         $this->validateQuestMatches();
-        $this->validateCampaignStopHasSideQuest();
 
-        $campaignStop->getAggregate()->removeSideQuest($sideQuest->id)->persist();
-    }
-
-    protected function validateCampaignStopHasSideQuest()
-    {
-        $match = $this->campaignStop->sideQuests()->where('id', '=', $this->sideQuest->id)->first();
-        if (is_null($match)) {
-            $message = "Can't leave side quest that wasn't joined";
+        $sideQuestResult = $this->campaignStop->sideQuestResults()->where('side_quest_id', '=', $this->sideQuest->id)->first();
+        if (is_null($sideQuestResult)) {
+            $message = "No Side Quest found to leave";
             throw (new CampaignStopException($message, CampaignStopException::CODE_SIDE_QUEST_NOT_ADDED))
                 ->setSideQuest($this->sideQuest)
                 ->setCampaignStop($this->campaignStop);
         }
+
+        $sideQuestResult->delete();
     }
 }
