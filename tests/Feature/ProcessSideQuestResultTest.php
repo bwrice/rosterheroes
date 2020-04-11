@@ -18,6 +18,7 @@ use App\Factories\Models\CampaignFactory;
 use App\Factories\Models\CampaignStopFactory;
 use App\Factories\Models\HeroFactory;
 use App\Factories\Models\SideQuestFactory;
+use App\Factories\Models\SideQuestResultFactory;
 use App\Factories\Models\SquadFactory;
 use App\SideQuestEvent;
 use App\SideQuestResult;
@@ -25,6 +26,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Date;
 use Tests\TestCase;
 
 class ProcessSideQuestResultTest extends TestCase
@@ -34,39 +36,54 @@ class ProcessSideQuestResultTest extends TestCase
     /** @var Week */
     protected $currentWeek;
 
-    /** @var CampaignStop */
-    protected $campaignStop;
-
-    /** @var SideQuest */
-    protected $sideQuest;
+    /** @var SideQuestResult */
+    protected $sideQuestResult;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->campaignStop = CampaignStopFactory::new()->create();
-        $this->sideQuest = SideQuestFactory::new()->create();
-        $this->campaignStop->sideQuests()->save($this->sideQuest);
+        $week = factory(Week::class)->states('as-current', 'finalizing')->create();
+        $campaignFactory = CampaignFactory::new()->withWeekID($week->id);
+        $campaignStopFactory = CampaignStopFactory::new()->withCampaign($campaignFactory);
+        $this->sideQuestResult = SideQuestResultFactory::new()->withCampaignStop($campaignStopFactory)->create();
     }
 
     /**
      * @test
      */
-    public function it_will_throw_an_exception_if_the_campaign_stop_has_not_joined_the_side_quest()
+    public function it_will_throw_an_exception_if_the_side_quest_combat_has_already_been_processed()
     {
-        $this->campaignStop->sideQuests()->sync([]);
+        $processedAt = Date::now()->subSeconds(rand(50, 100));
+        $this->sideQuestResult->combat_processed_at = $processedAt;
+        $this->sideQuestResult->save();
 
         try {
             /** @var ProcessSideQuestResult $domainAction */
             $domainAction = app(ProcessSideQuestResult::class);
-            $domainAction->execute($this->campaignStop, $this->sideQuest);
+            $domainAction->execute($this->sideQuestResult->fresh());
         } catch (\Exception $exception) {
-            $sideQuestResult = SideQuestResult::query()
-                ->where('side_quest_id', '=', $this->sideQuest->id)
-                ->where('campaign_stop_id', '=', $this->campaignStop->id)->first();
-            $this->assertNull($sideQuestResult);
+            $this->assertEquals($processedAt->timestamp, $this->sideQuestResult->fresh()->combat_processed_at->timestamp);
             return;
         }
         $this->fail("Exception not thrown");
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_update_combat_processed_at()
+    {
+        $runCombatTurnMock = \Mockery::mock(RunCombatTurn::class)
+            ->shouldReceive('execute')->getMock();
+
+        app()->instance(RunCombatTurn::class, $runCombatTurnMock);
+
+        /** @var ProcessSideQuestResult $domainAction */
+        $domainAction = app(ProcessSideQuestResult::class);
+        $domainAction->setMaxMoments(5);
+        $this->assertNull($this->sideQuestResult->combat_processed_at);
+        $sideQuestResult = $domainAction->execute($this->sideQuestResult);
+        $this->assertNotNull($sideQuestResult->fresh()->combat_processed_at);
     }
 
     /**
@@ -82,10 +99,7 @@ class ProcessSideQuestResultTest extends TestCase
         /** @var ProcessSideQuestResult $domainAction */
         $domainAction = app(ProcessSideQuestResult::class);
         $domainAction->setMaxMoments(5);
-        $sideQuestResult = $domainAction->execute($this->campaignStop, $this->sideQuest);
-        $this->assertEquals($this->campaignStop->id, $sideQuestResult->campaign_stop_id);
-        $this->assertEquals($this->sideQuest->id, $sideQuestResult->side_quest_id);
-        $this->assertNull($sideQuestResult->rewards_processed_at);
+        $sideQuestResult = $domainAction->execute($this->sideQuestResult);
         $sideQuestEvents = $sideQuestResult->sideQuestEvents()
             ->where('event_type', '=', SideQuestEvent::TYPE_BATTLEGROUND_SET)->get();
         $this->assertEquals(1, $sideQuestEvents->count());
