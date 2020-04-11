@@ -8,8 +8,8 @@ use App\Domain\Models\HeroPost;
 use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\Week;
 use App\Exceptions\HeroPlayerSpiritException;
-use Cake\Chronos\Date;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Facades\Date;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -45,7 +45,7 @@ class RemoveSpiritFromHeroActionTest extends TestCase
 
         try {
             $playerSpirit = $playerSpirit->fresh();
-            $removeAction->execute($hero, $playerSpirit);
+            $removeAction->execute($hero, $playerSpirit->fresh());
 
         } catch (HeroPlayerSpiritException $exception) {
 
