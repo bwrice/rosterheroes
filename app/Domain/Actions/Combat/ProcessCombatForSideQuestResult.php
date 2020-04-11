@@ -12,19 +12,14 @@ use App\Domain\Combat\Combatants\CombatMinion;
 use App\Domain\Combat\Attacks\HeroCombatAttack;
 use App\Domain\Combat\CombatGroups\CombatSquad;
 use App\Domain\Combat\CombatGroups\SideQuestGroup;
-use App\Domain\Models\Campaign;
-use App\Domain\Models\CampaignStop;
 use App\Domain\Models\CombatPosition;
 use App\Domain\Models\DamageType;
-use App\Domain\Models\SideQuest;
-use App\Domain\Models\Squad;
 use App\Domain\Models\TargetPriority;
-use App\Facades\CurrentWeek;
 use App\SideQuestResult;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Str;
 
-class ProcessSideQuestResult
+class ProcessCombatForSideQuestResult
 {
     /**
      * @var int
@@ -140,9 +135,9 @@ class ProcessSideQuestResult
 
     /**
      * @param int $maxMoments
-     * @return ProcessSideQuestResult
+     * @return ProcessCombatForSideQuestResult
      */
-    public function setMaxMoments(int $maxMoments): ProcessSideQuestResult
+    public function setMaxMoments(int $maxMoments): ProcessCombatForSideQuestResult
     {
         $this->maxMoments = $maxMoments;
         return $this;

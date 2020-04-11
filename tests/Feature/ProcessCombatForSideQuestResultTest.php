@@ -4,20 +4,15 @@ namespace Tests\Feature;
 
 use App\Domain\Actions\Combat\BuildCombatSquad;
 use App\Domain\Actions\Combat\BuildSideQuestGroup;
-use App\Domain\Actions\Combat\ProcessSideQuestResult;
+use App\Domain\Actions\Combat\ProcessCombatForSideQuestResult;
 use App\Domain\Actions\Combat\RunCombatTurn;
-use App\Domain\Actions\CreateSquadAction;
-use App\Domain\Models\CampaignStop;
 use App\Domain\Models\SideQuest;
 use App\Domain\Models\Week;
-use App\Facades\CurrentWeek;
-use App\Factories\Combat\CombatHeroFactory;
 use App\Factories\Combat\CombatSquadFactory;
 use App\Factories\Combat\SideQuestGroupFactory;
 use App\Factories\Models\CampaignFactory;
 use App\Factories\Models\CampaignStopFactory;
 use App\Factories\Models\HeroFactory;
-use App\Factories\Models\SideQuestFactory;
 use App\Factories\Models\SideQuestResultFactory;
 use App\Factories\Models\SquadFactory;
 use App\SideQuestEvent;
@@ -29,7 +24,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Date;
 use Tests\TestCase;
 
-class ProcessSideQuestResultTest extends TestCase
+class ProcessCombatForSideQuestResultTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -58,8 +53,8 @@ class ProcessSideQuestResultTest extends TestCase
         $this->sideQuestResult->save();
 
         try {
-            /** @var ProcessSideQuestResult $domainAction */
-            $domainAction = app(ProcessSideQuestResult::class);
+            /** @var ProcessCombatForSideQuestResult $domainAction */
+            $domainAction = app(ProcessCombatForSideQuestResult::class);
             $domainAction->execute($this->sideQuestResult->fresh());
         } catch (\Exception $exception) {
             $this->assertEquals($processedAt->timestamp, $this->sideQuestResult->fresh()->combat_processed_at->timestamp);
@@ -78,8 +73,8 @@ class ProcessSideQuestResultTest extends TestCase
 
         app()->instance(RunCombatTurn::class, $runCombatTurnMock);
 
-        /** @var ProcessSideQuestResult $domainAction */
-        $domainAction = app(ProcessSideQuestResult::class);
+        /** @var ProcessCombatForSideQuestResult $domainAction */
+        $domainAction = app(ProcessCombatForSideQuestResult::class);
         $domainAction->setMaxMoments(5);
         $this->assertNull($this->sideQuestResult->combat_processed_at);
         $sideQuestResult = $domainAction->execute($this->sideQuestResult);
@@ -96,8 +91,8 @@ class ProcessSideQuestResultTest extends TestCase
 
         app()->instance(RunCombatTurn::class, $runCombatTurnMock);
 
-        /** @var ProcessSideQuestResult $domainAction */
-        $domainAction = app(ProcessSideQuestResult::class);
+        /** @var ProcessCombatForSideQuestResult $domainAction */
+        $domainAction = app(ProcessCombatForSideQuestResult::class);
         $domainAction->setMaxMoments(5);
         $sideQuestResult = $domainAction->execute($this->sideQuestResult);
         $sideQuestEvents = $sideQuestResult->sideQuestEvents()
@@ -126,8 +121,8 @@ class ProcessSideQuestResultTest extends TestCase
 
         app()->instance(BuildCombatSquad::class, $buildCombatSquadMock);
 
-        /** @var ProcessSideQuestResult $domainAction */
-        $domainAction = app(ProcessSideQuestResult::class);
+        /** @var ProcessCombatForSideQuestResult $domainAction */
+        $domainAction = app(ProcessCombatForSideQuestResult::class);
         $sideQuestResult = $domainAction->execute($this->sideQuestResult);
 
         $defeatEvent = $sideQuestResult->sideQuestEvents()->where('event_type', '=', SideQuestEvent::TYPE_SIDE_QUEST_DEFEAT)->first();
@@ -169,8 +164,8 @@ class ProcessSideQuestResultTest extends TestCase
 
         app()->instance(BuildSideQuestGroup::class, $buildSideQuestGroupMock);
 
-        /** @var ProcessSideQuestResult $domainAction */
-        $domainAction = app(ProcessSideQuestResult::class);
+        /** @var ProcessCombatForSideQuestResult $domainAction */
+        $domainAction = app(ProcessCombatForSideQuestResult::class);
         $sideQuestResult = $domainAction->execute($this->sideQuestResult);
 
         $victoryEvent = $sideQuestResult->sideQuestEvents()->where('event_type', '=', SideQuestEvent::TYPE_SIDE_QUEST_VICTORY)->first();
@@ -211,8 +206,8 @@ class ProcessSideQuestResultTest extends TestCase
 
         app()->instance(BuildSideQuestGroup::class, $buildSideQuestGroupMock);
 
-        /** @var ProcessSideQuestResult $domainAction */
-        $domainAction = app(ProcessSideQuestResult::class);
+        /** @var ProcessCombatForSideQuestResult $domainAction */
+        $domainAction = app(ProcessCombatForSideQuestResult::class);
         $maxMoments = rand(2, 10);
         $domainAction->setMaxMoments($maxMoments);
 
@@ -258,8 +253,8 @@ class ProcessSideQuestResultTest extends TestCase
 
         app()->instance(BuildSideQuestGroup::class, $buildSideQuestGroupMock);
 
-        /** @var ProcessSideQuestResult $domainAction */
-        $domainAction = app(ProcessSideQuestResult::class);
+        /** @var ProcessCombatForSideQuestResult $domainAction */
+        $domainAction = app(ProcessCombatForSideQuestResult::class);
         //Set max moments to 1 so it ends on first moment
         $domainAction->setMaxMoments(1);
         $sideQuestResult = $domainAction->execute($this->sideQuestResult);
@@ -301,8 +296,8 @@ class ProcessSideQuestResultTest extends TestCase
             'side_quest_id' => $sideQuest->id
         ]);
 
-        /** @var ProcessSideQuestResult $domainAction */
-        $domainAction = app(ProcessSideQuestResult::class);
+        /** @var ProcessCombatForSideQuestResult $domainAction */
+        $domainAction = app(ProcessCombatForSideQuestResult::class);
         $sideQuestResult = $domainAction->execute($sideQuestResult);
         $this->assertNotNull($sideQuestResult);
         $victoryEvent = $sideQuestResult->sideQuestEvents()->where('event_type', '=', SideQuestEvent::TYPE_SIDE_QUEST_VICTORY)->first();
@@ -361,8 +356,8 @@ class ProcessSideQuestResultTest extends TestCase
             'side_quest_id' => $sideQuest->id
         ]);
 
-        /** @var ProcessSideQuestResult $domainAction */
-        $domainAction = app(ProcessSideQuestResult::class);
+        /** @var ProcessCombatForSideQuestResult $domainAction */
+        $domainAction = app(ProcessCombatForSideQuestResult::class);
         $sideQuestResult = $domainAction->execute($sideQuestResult);
         $this->assertNotNull($sideQuestResult);
         $defeatEvent = $sideQuestResult->sideQuestEvents()->where('event_type', '=', SideQuestEvent::TYPE_SIDE_QUEST_DEFEAT)->first();

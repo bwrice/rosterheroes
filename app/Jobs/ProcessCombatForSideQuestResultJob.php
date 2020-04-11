@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Domain\Actions\Combat\ProcessSideQuestResult;
+use App\Domain\Actions\Combat\ProcessCombatForSideQuestResult;
 use App\Domain\Models\CampaignStop;
 use App\Domain\Models\SideQuest;
 use App\SideQuestResult;
@@ -12,7 +12,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class ProcessSideQuestResultJob implements ShouldQueue
+class ProcessCombatForSideQuestResultJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -31,10 +31,10 @@ class ProcessSideQuestResultJob implements ShouldQueue
     }
 
     /**
-     * @param ProcessSideQuestResult $processSideQuestResult
+     * @param ProcessCombatForSideQuestResult $processSideQuestResult
      * @throws \Exception
      */
-    public function handle(ProcessSideQuestResult $processSideQuestResult)
+    public function handle(ProcessCombatForSideQuestResult $processSideQuestResult)
     {
         $processSideQuestResult->execute($this->sideQuestResult);
     }
