@@ -21,6 +21,7 @@ use App\Domain\Models\Squad;
 use App\Domain\Models\TargetPriority;
 use App\Facades\CurrentWeek;
 use App\SideQuestResult;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Str;
 
 class ProcessSideQuestResult
@@ -71,34 +72,23 @@ class ProcessSideQuestResult
     }
 
     /**
-     * @param CampaignStop $campaignStop
-     * @param SideQuest $sideQuest
+     * @param SideQuestResult $sideQuestResult
      * @return SideQuestResult
      * @throws \Exception
      */
-    public function execute(CampaignStop $campaignStop, SideQuest $sideQuest)
+    public function execute(SideQuestResult $sideQuestResult)
     {
-        $matchingSideQuest = $campaignStop->sideQuests->first(function (SideQuest $sideQuestForCampaignStop) use ($sideQuest) {
-            return $sideQuestForCampaignStop->id === $sideQuest->id;
-        });
-
-        if (! $matchingSideQuest) {
-            throw new \Exception("Side quest does not belong campaign stop");
+        if ($sideQuestResult->combat_processed_at) {
+            throw new \Exception("Combat already processed for side-quest-result: " . $sideQuestResult->id);
         }
 
         /** @var CombatPositionCollection $combatPositions */
         $combatPositions = CombatPosition::all();
         $targetPriorities = TargetPriority::all();
         $damageTypes = DamageType::all();
-        $combatSquad = $this->buildCombatSquadAction->execute($campaignStop->campaign->squad, $combatPositions, $targetPriorities, $damageTypes);
-        $sideQuestGroup = $this->buildSideQuestGroup->execute($sideQuest, $combatPositions, $targetPriorities, $damageTypes);
 
-        /** @var SideQuestResult $sideQuestResult */
-        $sideQuestResult = SideQuestResult::query()->create([
-            'uuid' => Str::uuid()->toString(),
-            'side_quest_id' => $sideQuest->id,
-            'campaign_stop_id' => $campaignStop->id,
-        ]);
+        $combatSquad = $this->buildCombatSquadAction->execute($sideQuestResult->campaignStop->campaign->squad, $combatPositions, $targetPriorities, $damageTypes);
+        $sideQuestGroup = $this->buildSideQuestGroup->execute($sideQuestResult->sideQuest, $combatPositions, $targetPriorities, $damageTypes);
 
         $this->createBattlefieldSetEvent($sideQuestResult, $combatSquad, $sideQuestGroup);
 
@@ -143,8 +133,9 @@ class ProcessSideQuestResult
 
             $moment++;
         }
-
-        return $sideQuestResult;
+        $sideQuestResult->combat_processed_at = Date::now();
+        $sideQuestResult->save();
+        return $sideQuestResult->fresh();
     }
 
     /**
