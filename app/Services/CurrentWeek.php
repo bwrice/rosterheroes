@@ -34,6 +34,11 @@ class CurrentWeek
         return $this;
     }
 
+    public function clearTestCurrent()
+    {
+        self::$testCurrent = null;
+    }
+
     /**
      * @return int
      */
