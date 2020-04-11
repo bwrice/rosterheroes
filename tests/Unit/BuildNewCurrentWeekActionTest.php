@@ -76,6 +76,7 @@ class BuildNewCurrentWeekActionTest extends TestCase
         // Set now to the future so the week built is the latest/current week
         Date::setTestNow(Date::now()->addDays(100));
         /** @var BuildNewCurrentWeekAction $domainAction */
+        CurrentWeek::clearTestCurrent();
         $domainAction = app(BuildNewCurrentWeekAction::class);
         $week = $domainAction->execute();
 
