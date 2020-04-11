@@ -10,6 +10,7 @@ use App\Factories\Models\CampaignStopFactory;
 use App\Factories\Models\SideQuestResultFactory;
 use App\Jobs\ProcessSideQuestRewardsJob;
 use App\SideQuestResult;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Queue;
@@ -17,6 +18,8 @@ use Tests\TestCase;
 
 class FinalizeWeekFinalStepTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /** @var Week */
     protected $currentWeek;
 

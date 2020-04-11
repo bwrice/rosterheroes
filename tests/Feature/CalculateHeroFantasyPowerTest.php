@@ -13,12 +13,15 @@ use App\Factories\Models\PlayerGameLogFactory;
 use App\Factories\Models\PlayerSpiritFactory;
 use App\Factories\Models\PlayerStatFactory;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class CalculateHeroFantasyPowerTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /**
      * @test
      */

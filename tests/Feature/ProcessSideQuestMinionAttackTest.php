@@ -9,12 +9,15 @@ use App\Factories\Combat\CombatMinionFactory;
 use App\Factories\Combat\MinionCombatAttackFactory;
 use App\Factories\Models\SideQuestResultFactory;
 use App\SideQuestEvent;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class ProcessSideQuestMinionAttackTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /**
      * @var \App\SideQuestResult
      */

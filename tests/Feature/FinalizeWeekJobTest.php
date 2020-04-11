@@ -8,12 +8,15 @@ use App\Domain\Actions\WeekFinalizing\FinalizeCurrentWeekSpiritEnergiesAction;
 use App\Domain\Actions\WeekFinalizing\FinalizeWeekFinalStep;
 use App\Domain\Actions\WeekFinalizing\ProcessCurrentWeekSideQuestsAction;
 use App\Jobs\FinalizeWeekJob;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class FinalizeWeekJobTest extends TestCase
 {
+   use DatabaseTransactions;
+
     /**
      * @param $step
      * @param $domainAction

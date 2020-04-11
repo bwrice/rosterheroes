@@ -10,12 +10,15 @@ use App\Domain\Combat\Combatants\CombatMinion;
 use App\Factories\Combat\AbstractCombatAttackFactory;
 use App\Factories\Combat\MinionCombatAttackFactory;
 use App\Factories\Models\MinionFactory;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class BuildCombatMinionTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /**
      * @test
      */

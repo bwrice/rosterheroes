@@ -10,12 +10,15 @@ use App\Domain\Models\SideQuest;
 use App\Factories\Combat\CombatMinionFactory;
 use App\Factories\Models\MinionFactory;
 use App\Factories\Models\SideQuestFactory;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class BuildSideQuestGroupTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /**
      * @test
      */

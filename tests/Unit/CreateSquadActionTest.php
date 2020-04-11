@@ -6,12 +6,15 @@ use App\Domain\Actions\CreateSquadAction;
 use App\Domain\Models\HeroPostType;
 use App\Domain\Models\Squad;
 use App\Domain\Models\User;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class CreateSquadActionTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /** @var User */
     protected $user;
 

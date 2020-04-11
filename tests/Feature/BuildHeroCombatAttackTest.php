@@ -12,12 +12,15 @@ use App\Domain\Models\Item;
 use App\Factories\Models\AttackFactory;
 use App\Factories\Models\HeroFactory;
 use App\Factories\Models\ItemFactory;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class BuildHeroCombatAttackTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /** @var Hero */
     protected $hero;
 
