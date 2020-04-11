@@ -6,6 +6,7 @@ use App\Aggregates\CampaignStopAggregate;
 use App\Domain\Collections\SideQuestCollection;
 use App\Domain\QueryBuilders\CampaignStopQueryBuilder;
 use App\SideQuestResult;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -24,6 +25,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Province $province
  *
  * @property SideQuestCollection $sideQuests
+ * @property Collection $sideQuestResults
  */
 class CampaignStop extends EventSourcedModel
 {
@@ -47,6 +49,11 @@ class CampaignStop extends EventSourcedModel
     public function sideQuests()
     {
         return $this->belongsToMany(SideQuest::class, 'side_quest_results')->withTimestamps();
+    }
+
+    public function sideQuestResults()
+    {
+        return $this->hasMany(SideQuestResult::class);
     }
 
     public function getAggregate()
