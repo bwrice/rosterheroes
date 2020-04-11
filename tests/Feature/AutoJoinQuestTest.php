@@ -79,7 +79,7 @@ class AutoJoinQuestTest extends TestCase
 
         $this->assertEquals($questsPerWeek, $campaignStops->count());
         $campaignStops->each(function (CampaignStop $campaignStop) {
-            $this->assertGreaterThan(0, $campaignStop->sideQuests->count());
+            $this->assertGreaterThan(0, $campaignStop->sideQuestResults->count());
         });
     }
 }
