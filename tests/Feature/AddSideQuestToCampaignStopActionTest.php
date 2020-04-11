@@ -12,6 +12,7 @@ use App\Domain\Models\Squad;
 use App\Domain\Models\Week;
 use App\Exceptions\CampaignException;
 use App\Exceptions\CampaignStopException;
+use App\Facades\CurrentWeek;
 use App\Factories\Models\SideQuestResultFactory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -44,10 +45,7 @@ class AddSideQuestToCampaignStopActionTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->week = factory(Week::class)->create();
-        $this->week->adventuring_locks_at = Date::now()->addHour();
-        $this->week->save();
-        Week::setTestCurrent($this->week);
+        $this->week = factory(Week::class)->states('as-current', 'adventuring-open')->create();
         $this->squad = factory(Squad::class)->create();
         $this->quest = factory(Quest::class)->create([
             'province_id' => $this->squad->province_id
@@ -75,7 +73,7 @@ class AddSideQuestToCampaignStopActionTest extends TestCase
     {
         $this->week->adventuring_locks_at = Date::now()->subHour();
         $this->week->save();
-        Week::setTestCurrent($this->week);
+        CurrentWeek::setTestCurrent($this->week);
 
         try {
 
@@ -101,7 +99,7 @@ class AddSideQuestToCampaignStopActionTest extends TestCase
         $week = factory(Week::class)->create();
         $week->adventuring_locks_at = Date::now()->addHour();
         $week->save();
-        Week::setTestCurrent($week);
+        CurrentWeek::setTestCurrent($this->week);
 
         try {
 

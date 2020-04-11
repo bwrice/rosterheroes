@@ -8,6 +8,7 @@ use App\Domain\Models\HeroPost;
 use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\Week;
 use App\Exceptions\HeroPlayerSpiritException;
+use App\Facades\CurrentWeek;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Date;
 use Tests\TestCase;
@@ -29,7 +30,7 @@ class RemoveSpiritFromHeroActionTest extends TestCase
         $game = $playerSpirit->playerGameLog->game;
 
         // set current week to spirit's week
-        Week::setTestCurrent($playerSpirit->week);
+        CurrentWeek::setTestCurrent($playerSpirit->week);
 
         // set game time start to past
         $game->starts_at = Date::now()->subHour();
@@ -66,7 +67,7 @@ class RemoveSpiritFromHeroActionTest extends TestCase
         /** @var PlayerSpirit $playerSpirit */
         $playerSpirit = factory(PlayerSpirit::class)->create();
         // set current week to spirit's week
-        Week::setTestCurrent($playerSpirit->week);
+        CurrentWeek::setTestCurrent($playerSpirit->week);
 
         /** @var Hero $hero */
         $hero = factory(Hero::class)->create([

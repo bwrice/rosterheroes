@@ -37,10 +37,7 @@ class JoinQuestActionTest extends TestCase
         $this->squad = factory(Squad::class)->create([
             'province_id' => $this->quest->province_id
         ]);
-        $this->week = factory(Week::class)->create();
-        $this->week->adventuring_locks_at = Date::now()->addHour();
-        $this->week->save();
-        Week::setTestCurrent($this->week);
+        $this->week = factory(Week::class)->states('as-current', 'adventuring-open')->create();
     }
 
     /**

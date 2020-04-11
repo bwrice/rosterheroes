@@ -27,8 +27,7 @@ class CurrentCampaignControllerTest extends TestCase
     {
         parent::setUp();
         $this->squad = factory(Squad::class)->create();
-        $this->week = factory(Week::class)->create();
-        Week::setTestCurrent($this->week);
+        $this->week = factory(Week::class)->states('as-current')->create();
     }
 
     /**

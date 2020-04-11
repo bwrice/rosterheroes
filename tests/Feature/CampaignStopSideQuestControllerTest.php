@@ -11,6 +11,7 @@ use App\Domain\Models\Squad;
 use App\Domain\Models\User;
 use App\Domain\Models\Week;
 use App\Exceptions\CampaignStopException;
+use App\Facades\CurrentWeek;
 use App\Factories\Models\SideQuestResultFactory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -47,7 +48,7 @@ class CampaignStopSideQuestControllerTest extends TestCase
         $this->week = factory(Week::class)->create();
         $this->week->adventuring_locks_at = Date::now()->addHour();
         $this->week->save();
-        Week::setTestCurrent($this->week);
+        CurrentWeek::setTestCurrent($this->week);
         $this->squad = factory(Squad::class)->create();
         $this->quest = factory(Quest::class)->create([
             'province_id' => $this->squad->province_id

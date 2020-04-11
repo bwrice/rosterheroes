@@ -40,10 +40,7 @@ class RemoveSpellFromHeroActionTest extends TestCase
         $this->squad->spells()->save($this->spell);
         $this->hero->spells()->save($this->spell);
         /** @var Week $week */
-        $week = factory(Week::class)->create();
-        $week->adventuring_locks_at = Date::now()->addHour();
-        $week->save();
-        Week::setTestCurrent($week);
+        $week = factory(Week::class)->states('as-current', 'adventuring-open')->create();
         $this->domainAction = app(RemoveSpellFromHeroAction::class);
     }
 
@@ -54,11 +51,7 @@ class RemoveSpellFromHeroActionTest extends TestCase
     {
 
         /** @var Week $week */
-        $week = factory(Week::class)->create();
-        $week->adventuring_locks_at = Date::now()->subHour();
-        $week->save();
-
-        Week::setTestCurrent($week);
+        $week = factory(Week::class)->states('as-current', 'adventuring-closed')->create();
 
         try {
             $this->domainAction->execute($this->hero, $this->spell);

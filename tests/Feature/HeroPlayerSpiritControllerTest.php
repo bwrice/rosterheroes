@@ -13,6 +13,7 @@ use App\Domain\Actions\FillSlotsWithItemAction;
 use App\Domain\Models\Squad;
 use App\Domain\Models\Team;
 use App\Domain\Models\Week;
+use App\Facades\CurrentWeek;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -51,7 +52,8 @@ class HeroPlayerSpiritControllerTest extends TestCase
 
         $playerSpirit->playerGameLog->player->positions()->attach($position);
 
-        Week::setTestCurrent($playerSpirit->week);
+        CurrentWeek::setTestCurrent($playerSpirit->week);
+
         // Mock 6 hours before everything locks
         Date::setTestNow(Week::current()->adventuring_locks_at->subHours(6));
         // Set game time
@@ -128,7 +130,8 @@ class HeroPlayerSpiritControllerTest extends TestCase
 
         $playerSpirit->playerGameLog->player->positions()->attach($position);
 
-        Week::setTestCurrent($playerSpirit->week);
+        CurrentWeek::setTestCurrent($playerSpirit->week);
+
         // Mock 6 hours before everything locks
         Date::setTestNow(Week::current()->adventuring_locks_at->subHours(6));
         // Set game time
@@ -161,7 +164,7 @@ class HeroPlayerSpiritControllerTest extends TestCase
             'player_spirit_id' => $playerSpirit->id
         ]);
 
-        Week::setTestCurrent($playerSpirit->week);
+        CurrentWeek::setTestCurrent($playerSpirit->week);
 
         Passport::actingAs($hero->squad->user);
 

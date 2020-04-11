@@ -7,6 +7,7 @@ use App\Domain\Models\Hero;
 use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\Week;
 use App\Domain\QueryBuilders\PlayerSpiritQueryBuilder;
+use App\Facades\CurrentWeek;
 use App\Jobs\UpdatePlayerSpiritEnergiesJob;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
@@ -27,8 +28,7 @@ class UpdatePlayerSpiritEnergyActionTest extends TestCase
     {
         parent::setUp();
 
-        $this->week = factory(Week::class)->create();
-        Week::setTestCurrent($this->week);
+        $this->week = factory(Week::class)->states('as-current')->create();
 
         $this->domainAction = app(UpdatePlayerSpiritEnergiesAction::class);
     }

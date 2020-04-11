@@ -11,6 +11,7 @@ use App\Domain\Models\Position;
 use App\Domain\Models\Squad;
 use App\Domain\Models\Week;
 use App\Exceptions\HeroPlayerSpiritException;
+use App\Facades\CurrentWeek;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -55,7 +56,7 @@ class AddSpiritToHeroActionTest extends TestCase
         /*
          * Set current week to Player Spirit's week
          */
-        Week::setTestCurrent($this->playerSpirit->week);
+        CurrentWeek::setTestCurrent($this->playerSpirit->week);
 
         /*
          * Set current time to Before the week ends
@@ -77,7 +78,7 @@ class AddSpiritToHeroActionTest extends TestCase
     public function adding_a_spirit_for_a_non_current_week_will_throw_an_exception()
     {
         // set current week to different week
-        Week::setTestCurrent(factory(Week::class)->create());
+        factory(Week::class)->states('as-current')->create();
 
         try {
 
