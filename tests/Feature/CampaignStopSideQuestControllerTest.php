@@ -11,6 +11,7 @@ use App\Domain\Models\Squad;
 use App\Domain\Models\User;
 use App\Domain\Models\Week;
 use App\Exceptions\CampaignStopException;
+use App\Factories\Models\SideQuestResultFactory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -143,7 +144,10 @@ class CampaignStopSideQuestControllerTest extends TestCase
      */
     public function it_will_leave_a_side_quest_and_return_an_updated_campaign_stop()
     {
-        $this->campaignStop->sideQuests()->attach($this->sideQuest->id);
+        $sideQuestResult = SideQuestResultFactory::new()->create([
+            'side_quest_id' => $this->sideQuest->id,
+            'campaign_stop_id' => $this->campaignStop->id
+        ]);
 
         Passport::actingAs($this->squad->user);
 
@@ -169,6 +173,6 @@ class CampaignStopSideQuestControllerTest extends TestCase
                 ]
             ]);
 
-        $this->assertEquals(0, $this->campaignStop->fresh()->sideQuests()->count());
+        $this->assertNull($sideQuestResult->fresh());
     }
 }
