@@ -28,10 +28,4 @@ final class CampaignStopProjector implements Projector
         $campaignStop = CampaignStop::findUuidOrFail($aggregateUuid);
         $campaignStop->delete();
     }
-
-    public function onSideQuestRemovedFromCampaignStop(SideQuestRemovedFromCampaignStop $event, string $aggregateUuid)
-    {
-        $campaignStop = CampaignStop::findUuidOrFail($aggregateUuid);
-        $campaignStop->sideQuests()->detach($event->sideQuestID);
-    }
 }
