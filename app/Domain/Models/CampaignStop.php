@@ -46,7 +46,7 @@ class CampaignStop extends EventSourcedModel
 
     public function sideQuests()
     {
-        return $this->belongsToMany(SideQuest::class, 'side_quest_results')->using(SideQuestResult::class)->withTimestamps();
+        return $this->belongsToMany(SideQuest::class, 'side_quest_results')->withTimestamps();
     }
 
     public function getAggregate()
