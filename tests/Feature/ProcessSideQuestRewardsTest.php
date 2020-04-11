@@ -2,11 +2,9 @@
 
 namespace Tests\Feature;
 
-use App\Domain\Actions\Combat\ProcessSideQuestResult;
 use App\Domain\Actions\ProcessSideQuestRewards;
 use App\Domain\Actions\ProcessSideQuestVictoryRewards;
 use App\Domain\Actions\RewardSquadForMinionKill;
-use App\Domain\Combat\Combatants\CombatMinion;
 use App\Factories\Combat\CombatHeroFactory;
 use App\Factories\Combat\CombatMinionFactory;
 use App\Factories\Combat\HeroCombatAttackFactory;
