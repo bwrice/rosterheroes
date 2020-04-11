@@ -12,6 +12,7 @@ use App\Domain\Models\Squad;
 use App\Domain\Models\Week;
 use App\Exceptions\CampaignException;
 use App\Exceptions\CampaignStopException;
+use App\Factories\Models\SideQuestResultFactory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -175,7 +176,11 @@ class AddSideQuestToCampaignStopActionTest extends TestCase
     {
         try {
 
-            $this->campaignStop->sideQuests()->attach($this->sideQuest->id);
+            // Make existing side quest result
+            SideQuestResultFactory::new()->create([
+                'side_quest_id' => $this->sideQuest->id,
+                'campaign_stop_id' => $this->campaignStop->id
+            ]);
 
             /** @var JoinSideQuestAction $domainAction */
             $domainAction = app(JoinSideQuestAction::class);
