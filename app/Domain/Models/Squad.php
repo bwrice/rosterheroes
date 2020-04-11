@@ -286,18 +286,6 @@ class Squad extends EventSourcedModel implements HasItems
     }
 
     /**
-     * @return Campaign
-     * @throws CampaignExistsException
-     * @throws WeekLockedException
-     */
-    public function createCampaign(): Campaign
-    {
-        $week = Week::current();
-        $createCampaignAction = new CreateCampaignAction($this, $week, $this->province->continent);
-        return $createCampaignAction();
-    }
-
-    /**
      * @return bool
      */
     public function inCreationState()
