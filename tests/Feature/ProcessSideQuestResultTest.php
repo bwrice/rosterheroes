@@ -128,7 +128,7 @@ class ProcessSideQuestResultTest extends TestCase
 
         /** @var ProcessSideQuestResult $domainAction */
         $domainAction = app(ProcessSideQuestResult::class);
-        $sideQuestResult = $domainAction->execute($this->campaignStop, $this->sideQuest);
+        $sideQuestResult = $domainAction->execute($this->sideQuestResult);
 
         $defeatEvent = $sideQuestResult->sideQuestEvents()->where('event_type', '=', SideQuestEvent::TYPE_SIDE_QUEST_DEFEAT)->first();
         $this->assertNotNull($defeatEvent);
@@ -171,7 +171,7 @@ class ProcessSideQuestResultTest extends TestCase
 
         /** @var ProcessSideQuestResult $domainAction */
         $domainAction = app(ProcessSideQuestResult::class);
-        $sideQuestResult = $domainAction->execute($this->campaignStop, $this->sideQuest);
+        $sideQuestResult = $domainAction->execute($this->sideQuestResult);
 
         $victoryEvent = $sideQuestResult->sideQuestEvents()->where('event_type', '=', SideQuestEvent::TYPE_SIDE_QUEST_VICTORY)->first();
         $this->assertNotNull($victoryEvent);
@@ -216,7 +216,7 @@ class ProcessSideQuestResultTest extends TestCase
         $maxMoments = rand(2, 10);
         $domainAction->setMaxMoments($maxMoments);
 
-        $sideQuestResult = $domainAction->execute($this->campaignStop, $this->sideQuest);
+        $sideQuestResult = $domainAction->execute($this->sideQuestResult);
 
         /** @var SideQuestEvent $drawEvent */
         $drawEvent = $sideQuestResult->sideQuestEvents()->where('event_type', '=', SideQuestEvent::TYPE_SIDE_QUEST_DRAW)->first();
@@ -262,7 +262,7 @@ class ProcessSideQuestResultTest extends TestCase
         $domainAction = app(ProcessSideQuestResult::class);
         //Set max moments to 1 so it ends on first moment
         $domainAction->setMaxMoments(1);
-        $sideQuestResult = $domainAction->execute($this->campaignStop, $this->sideQuest);
+        $sideQuestResult = $domainAction->execute($this->sideQuestResult);
 
         /** @var SideQuestEvent $victoryEvent */
         $victoryEvent = $sideQuestResult->sideQuestEvents()->where('event_type', '=', SideQuestEvent::TYPE_SIDE_QUEST_VICTORY)->first();
@@ -295,11 +295,15 @@ class ProcessSideQuestResultTest extends TestCase
         $sideQuest = SideQuest::query()->whereHas('sideQuestBlueprint', function (Builder $builder) use ($referenceID) {
             return $builder->where('reference_id', '=', $referenceID);
         })->first();
-        $campaignStop->sideQuests()->save($sideQuest);
+
+        $sideQuestResult = SideQuestResultFactory::new()->create([
+            'campaign_stop_id' => $campaignStop->id,
+            'side_quest_id' => $sideQuest->id
+        ]);
 
         /** @var ProcessSideQuestResult $domainAction */
         $domainAction = app(ProcessSideQuestResult::class);
-        $sideQuestResult = $domainAction->execute($campaignStop, $sideQuest);
+        $sideQuestResult = $domainAction->execute($sideQuestResult);
         $this->assertNotNull($sideQuestResult);
         $victoryEvent = $sideQuestResult->sideQuestEvents()->where('event_type', '=', SideQuestEvent::TYPE_SIDE_QUEST_VICTORY)->first();
         $this->assertNotNull($victoryEvent);
@@ -351,11 +355,15 @@ class ProcessSideQuestResultTest extends TestCase
         $sideQuest = SideQuest::query()->whereHas('sideQuestBlueprint', function (Builder $builder) use ($referenceID) {
             return $builder->where('reference_id', '=', $referenceID);
         })->first();
-        $campaignStop->sideQuests()->save($sideQuest);
+
+        $sideQuestResult = SideQuestResultFactory::new()->create([
+            'campaign_stop_id' => $campaignStop->id,
+            'side_quest_id' => $sideQuest->id
+        ]);
 
         /** @var ProcessSideQuestResult $domainAction */
         $domainAction = app(ProcessSideQuestResult::class);
-        $sideQuestResult = $domainAction->execute($campaignStop, $sideQuest);
+        $sideQuestResult = $domainAction->execute($sideQuestResult);
         $this->assertNotNull($sideQuestResult);
         $defeatEvent = $sideQuestResult->sideQuestEvents()->where('event_type', '=', SideQuestEvent::TYPE_SIDE_QUEST_DEFEAT)->first();
         $this->assertNotNull($defeatEvent);
