@@ -7,6 +7,7 @@ use App\Domain\Models\Week;
 use App\Factories\Models\CampaignFactory;
 use App\Factories\Models\CampaignStopFactory;
 use App\Factories\Models\SideQuestFactory;
+use App\Factories\Models\SideQuestResultFactory;
 use App\Factories\Models\SquadFactory;
 use App\Jobs\FinalizeWeekJob;
 use Bwrice\LaravelJobChainGroups\Jobs\AsyncChainedJob;
@@ -44,14 +45,25 @@ class ProcessCurrentWeekSideQuestsActionTest extends TestCase
         $sideQuest1 = SideQuestFactory::new()->create();
         $sideQuest2 = SideQuestFactory::new()->create();
 
-        $campaignStop1->sideQuests()->save($sideQuest1);
-        $campaignStop1->sideQuests()->save($sideQuest2);
 
-        $campaignStop2->sideQuests()->save($sideQuest1);
+        $sideQuestResult1 = SideQuestResultFactory::new()->create([
+            'campaign_stop_id' => $campaignStop1->id,
+            'side_quest_id' => $sideQuest1->id,
+        ]);
+        $sideQuestResult2 = SideQuestResultFactory::new()->create([
+            'campaign_stop_id' => $campaignStop1->id,
+            'side_quest_id' => $sideQuest2->id,
+        ]);
+        $sideQuestResult3 = SideQuestResultFactory::new()->create([
+            'campaign_stop_id' => $campaignStop2->id,
+            'side_quest_id' => $sideQuest1->id,
+        ]);
+        $sideQuestResult4 = SideQuestResultFactory::new()->create([
+            'campaign_stop_id' => $campaignStop3->id,
+            'side_quest_id' => $sideQuest2->id,
+        ]);
 
-        $campaignStop3->sideQuests()->save($sideQuest2);
-
-        $step = rand(1, 10);
+        $step = rand(1, 4);
         $nextStep = $step + 1;
 
         Queue::fake();
@@ -61,28 +73,16 @@ class ProcessCurrentWeekSideQuestsActionTest extends TestCase
         $domainAction->execute($step);
 
         foreach ([
-                     $campaignStop1,
-                     $campaignStop2
-                 ] as $campaignStop) {
+                     $sideQuestResult1,
+                     $sideQuestResult2,
+                     $sideQuestResult3,
+                     $sideQuestResult4
+                 ] as $sideQuestResult) {
 
             Queue::assertPushedWithChain(AsyncChainedJob::class, [
                 new FinalizeWeekJob($nextStep)
-            ], function (AsyncChainedJob $chainedJob) use ($sideQuest1, $campaignStop) {
-                return $chainedJob->getDecoratedJob()->getSideQuest()->id === $sideQuest1->id
-                    && $chainedJob->getDecoratedJob()->getCampaignStop()->id === $campaignStop->id;
-            });
-        }
-
-        foreach ([
-                     $campaignStop1,
-                     $campaignStop3
-                 ] as $campaignStop) {
-
-            Queue::assertPushedWithChain(AsyncChainedJob::class, [
-                new FinalizeWeekJob($nextStep)
-            ], function (AsyncChainedJob $chainedJob) use ($sideQuest2, $campaignStop) {
-                return $chainedJob->getDecoratedJob()->getSideQuest()->id === $sideQuest2->id
-                    && $chainedJob->getDecoratedJob()->getCampaignStop()->id === $campaignStop->id;
+            ], function (AsyncChainedJob $chainedJob) use ($sideQuestResult) {
+                return $chainedJob->getDecoratedJob()->sideQuestResult->id === $sideQuestResult->id;
             });
         }
     }
@@ -104,22 +104,28 @@ class ProcessCurrentWeekSideQuestsActionTest extends TestCase
 
         $sideQuest = SideQuestFactory::new()->create();
 
-        $validCampaignStop->sideQuests()->save($sideQuest);
-        $invalidCampaignStop->sideQuests()->save($sideQuest);
+        $validSideQuestResult = SideQuestResultFactory::new()->create([
+            'campaign_stop_id' => $validCampaignStop->id,
+            'side_quest_id' => $sideQuest->id,
+        ]);
+        $invalidSideQuestResult = SideQuestResultFactory::new()->create([
+            'campaign_stop_id' => $invalidCampaignStop->id,
+            'side_quest_id' => $sideQuest->id,
+        ]);
 
-        $step = rand(1, 10);
+        $step = rand(1, 4);
         Queue::fake();
 
         /** @var ProcessCurrentWeekSideQuestsAction $domainAction */
         $domainAction = app(ProcessCurrentWeekSideQuestsAction::class);
         $domainAction->execute($step);
 
-        Queue::assertPushed(AsyncChainedJob::class, function (AsyncChainedJob $chainedJob) use ($validCampaignStop) {
-            return $chainedJob->getDecoratedJob()->getCampaignStop()->id === $validCampaignStop->id;
+        Queue::assertPushed(AsyncChainedJob::class, function (AsyncChainedJob $chainedJob) use ($validSideQuestResult) {
+            return $chainedJob->getDecoratedJob()->sideQuestResult->id === $validSideQuestResult->id;
         });
 
-        Queue::assertNotPushed(AsyncChainedJob::class, function (AsyncChainedJob $chainedJob) use ($invalidCampaignStop) {
-            return $chainedJob->getDecoratedJob()->getCampaignStop()->id === $invalidCampaignStop->id;
+        Queue::assertNotPushed(AsyncChainedJob::class, function (AsyncChainedJob $chainedJob) use ($invalidSideQuestResult) {
+            return $chainedJob->getDecoratedJob()->sideQuestResult->id === $invalidSideQuestResult->id;
         });
     }
 
@@ -130,18 +136,13 @@ class ProcessCurrentWeekSideQuestsActionTest extends TestCase
     {
         $campaignFactory = CampaignFactory::new()->withWeekID($this->currentWeek->id);
         $campaignStopFactory = CampaignStopFactory::new()->withCampaign($campaignFactory);
+        $sideQuestResultFactory = SideQuestResultFactory::new()->withCampaignStop($campaignStopFactory);
 
-        $campaignStop1 = $campaignStopFactory->create();
-        $campaignStop2 = $campaignStopFactory->create();
-        $campaignStop3 = $campaignStopFactory->create();
+        $sideQuestResult1 = $sideQuestResultFactory->create();
+        $sideQuestResult2 = $sideQuestResultFactory->create();
+        $sideQuestResult3 = $sideQuestResultFactory->create();
 
-        $sideQuest = SideQuestFactory::new()->create();
-
-        $campaignStop1->sideQuests()->save($sideQuest);
-        $campaignStop2->sideQuests()->save($sideQuest);
-        $campaignStop3->sideQuests()->save($sideQuest);
-
-        $originalStep = rand(1, 10);
+        $originalStep = rand(1, 4);
         Queue::fake();
 
         /** @var ProcessCurrentWeekSideQuestsAction $domainAction */
@@ -150,21 +151,24 @@ class ProcessCurrentWeekSideQuestsActionTest extends TestCase
         $domainAction->execute($originalStep);
 
         $extra = [
-            'last_campaign_stop_id' => $campaignStop2->id
+            'last_campaign_stop_id' => $sideQuestResult2->id
         ];
 
         foreach ([
-                     $campaignStop1,
-                     $campaignStop2
-                 ] as $campaignStop) {
+                     $sideQuestResult1,
+                     $sideQuestResult2
+                 ] as $sideQuestResult) {
 
             Queue::assertPushedWithChain(AsyncChainedJob::class, [
                 new FinalizeWeekJob($originalStep, $extra)
-            ], function (AsyncChainedJob $chainedJob) use ($sideQuest, $campaignStop) {
-                return $chainedJob->getDecoratedJob()->getSideQuest()->id === $sideQuest->id
-                    && $chainedJob->getDecoratedJob()->getCampaignStop()->id === $campaignStop->id;
+            ], function (AsyncChainedJob $chainedJob) use ($sideQuestResult) {
+                return $chainedJob->getDecoratedJob()->sideQuestResult->id === $sideQuestResult->id;
             });
         }
+
+        Queue::assertNotPushed(AsyncChainedJob::class, function (AsyncChainedJob $chainedJob) use ($sideQuestResult3) {
+            return $chainedJob->getDecoratedJob()->sideQuestResult->id === $sideQuestResult3->id;
+        });
     }
 
     /**
@@ -174,18 +178,13 @@ class ProcessCurrentWeekSideQuestsActionTest extends TestCase
     {
         $campaignFactory = CampaignFactory::new()->withWeekID($this->currentWeek->id);
         $campaignStopFactory = CampaignStopFactory::new()->withCampaign($campaignFactory);
+        $sideQuestResultFactory = SideQuestResultFactory::new()->withCampaignStop($campaignStopFactory);
 
-        $campaignStop1 = $campaignStopFactory->create();
-        $campaignStop2 = $campaignStopFactory->create();
-        $campaignStop3 = $campaignStopFactory->create();
+        $sideQuestResult1 = $sideQuestResultFactory->create();
+        $sideQuestResult2 = $sideQuestResultFactory->create();
+        $sideQuestResult3 = $sideQuestResultFactory->create();
 
-        $sideQuest = SideQuestFactory::new()->create();
-
-        $campaignStop1->sideQuests()->save($sideQuest);
-        $campaignStop2->sideQuests()->save($sideQuest);
-        $campaignStop3->sideQuests()->save($sideQuest);
-
-        $originalStep = rand(1, 10);
+        $originalStep = rand(1, 4);
         $nextStep = $originalStep + 1;
         Queue::fake();
 
@@ -195,16 +194,15 @@ class ProcessCurrentWeekSideQuestsActionTest extends TestCase
         $domainAction->execute($originalStep);
 
         foreach ([
-                     $campaignStop1,
-                     $campaignStop2,
-                     $campaignStop3
-                 ] as $campaignStop) {
+                     $sideQuestResult1,
+                     $sideQuestResult2,
+                     $sideQuestResult3
+                 ] as $sideQuestResult) {
 
             Queue::assertPushedWithChain(AsyncChainedJob::class, [
                 new FinalizeWeekJob($nextStep)
-            ], function (AsyncChainedJob $chainedJob) use ($sideQuest, $campaignStop) {
-                return $chainedJob->getDecoratedJob()->getSideQuest()->id === $sideQuest->id
-                    && $chainedJob->getDecoratedJob()->getCampaignStop()->id === $campaignStop->id;
+            ], function (AsyncChainedJob $chainedJob) use ($sideQuestResult) {
+                return $chainedJob->getDecoratedJob()->sideQuestResult->id === $sideQuestResult->id;
             });
         }
     }
@@ -216,42 +214,35 @@ class ProcessCurrentWeekSideQuestsActionTest extends TestCase
     {
         $campaignFactory = CampaignFactory::new()->withWeekID($this->currentWeek->id);
         $campaignStopFactory = CampaignStopFactory::new()->withCampaign($campaignFactory);
+        $sideQuestResultFactory = SideQuestResultFactory::new()->withCampaignStop($campaignStopFactory);
 
-        $campaignStop1 = $campaignStopFactory->create();
-        $campaignStop2 = $campaignStopFactory->create();
-        $campaignStop3 = $campaignStopFactory->create();
+        $sideQuestResult1 = $sideQuestResultFactory->create();
+        $sideQuestResult2 = $sideQuestResultFactory->create();
+        $sideQuestResult3 = $sideQuestResultFactory->create();
 
-        $sideQuest = SideQuestFactory::new()->create();
-
-        $campaignStop1->sideQuests()->save($sideQuest);
-        $campaignStop2->sideQuests()->save($sideQuest);
-        $campaignStop3->sideQuests()->save($sideQuest);
-
-        $step = rand(1, 10);
+        $step = rand(1, 4);
         $nextStep = $step + 1;
         Queue::fake();
 
         /** @var ProcessCurrentWeekSideQuestsAction $domainAction */
         $domainAction = app(ProcessCurrentWeekSideQuestsAction::class);
         $domainAction->execute($step, [
-            'last_campaign_stop_id' => $campaignStop2->id
+            'last_campaign_stop_id' => $sideQuestResult2->id
         ]);
 
         Queue::assertPushedWithChain(AsyncChainedJob::class, [
             new FinalizeWeekJob($nextStep)
-        ], function (AsyncChainedJob $chainedJob) use ($sideQuest, $campaignStop3) {
-            return $chainedJob->getDecoratedJob()->getSideQuest()->id === $sideQuest->id
-                && $chainedJob->getDecoratedJob()->getCampaignStop()->id === $campaignStop3->id;
+        ], function (AsyncChainedJob $chainedJob) use ($sideQuestResult3) {
+            return $chainedJob->getDecoratedJob()->sideQuestResult->id === $sideQuestResult3->id;
         });
 
         foreach ([
-                     $campaignStop1,
-                     $campaignStop2
-                 ] as $campaignStop) {
+                     $sideQuestResult1,
+                     $sideQuestResult2
+                 ] as $sideQuestResult) {
 
-            Queue::assertNotPushed(AsyncChainedJob::class, function (AsyncChainedJob $chainedJob) use ($sideQuest, $campaignStop) {
-                return $chainedJob->getDecoratedJob()->getSideQuest()->id === $sideQuest->id
-                    && $chainedJob->getDecoratedJob()->getCampaignStop()->id === $campaignStop->id;
+            Queue::assertNotPushed(AsyncChainedJob::class, function (AsyncChainedJob $chainedJob) use ($sideQuestResult) {
+                return $chainedJob->getDecoratedJob()->sideQuestResult->id === $sideQuestResult->id;
             });
         }
     }
