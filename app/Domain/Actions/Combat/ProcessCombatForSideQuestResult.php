@@ -17,7 +17,9 @@ use App\Domain\Models\DamageType;
 use App\Domain\Models\TargetPriority;
 use App\SideQuestResult;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use function foo\func;
 
 class ProcessCombatForSideQuestResult
 {
@@ -85,52 +87,16 @@ class ProcessCombatForSideQuestResult
         $combatSquad = $this->buildCombatSquadAction->execute($sideQuestResult->campaignStop->campaign->squad, $combatPositions, $targetPriorities, $damageTypes);
         $sideQuestGroup = $this->buildSideQuestGroup->execute($sideQuestResult->sideQuest, $combatPositions, $targetPriorities, $damageTypes);
 
-        $this->createBattlefieldSetEvent($sideQuestResult, $combatSquad, $sideQuestGroup);
+        return DB::transaction(function () use ($sideQuestResult, $combatSquad, $sideQuestGroup, $combatPositions) {
 
-        $moment = 1;
-        $continueBattle = true;
+            $this->createBattlefieldSetEvent($sideQuestResult, $combatSquad, $sideQuestGroup);
 
-        while($continueBattle) {
+            $this->loopCombat($sideQuestResult, $combatSquad, $sideQuestGroup, $combatPositions);
 
-            if ($combatSquad->isDefeated()) {
-                $continueBattle = false;
-                $this->createSideQuestDefeatEvent($sideQuestResult, $moment, $combatSquad, $sideQuestGroup);
-            } else {
-
-                /*
-                 * CombatSquad Turn
-                 */
-                $this->runCombatTurn->execute($combatSquad, $sideQuestGroup, $moment, $combatPositions,
-                    function($damageReceived, HeroCombatAttack $heroCombatAttack, CombatMinion $combatMinion, $block) use ($combatSquad, $sideQuestResult, $moment) {
-                        $combatHero = $this->getCombatHeroByHeroCombatAttack($combatSquad, $heroCombatAttack);
-                        $this->processSideQuestHeroAttack->execute($sideQuestResult, $moment, $damageReceived, $combatHero, $heroCombatAttack, $combatMinion, $block);
-                    });
-
-                if ($sideQuestGroup->isDefeated()) {
-                    $continueBattle = false;
-                    $this->createSideQuestVictory($sideQuestResult, $moment, $combatSquad, $sideQuestGroup);
-                } else {
-                    /*
-                     * SideQuestGroup Turn
-                     */
-                    $this->runCombatTurn->execute($sideQuestGroup, $combatSquad, $moment, $combatPositions,
-                        function($damageReceived, MinionCombatAttack $minionCombatAttack, CombatHero $combatHero, $block) use ($sideQuestGroup, $sideQuestResult, $moment) {
-                            $combatMinion = $this->getCombatMinionByMinionCombatAttack($sideQuestGroup, $minionCombatAttack);
-                            $this->processSideQuestMinionAttack->execute($sideQuestResult, $moment, $damageReceived, $combatMinion, $minionCombatAttack, $combatHero, $block);
-                        });
-                }
-            }
-
-            if ($continueBattle && $moment >= $this->maxMoments) {
-                $continueBattle = false;
-                $this->createSideQuestDraw($sideQuestResult, $moment, $combatSquad, $sideQuestGroup);
-            }
-
-            $moment++;
-        }
-        $sideQuestResult->combat_processed_at = Date::now();
-        $sideQuestResult->save();
-        return $sideQuestResult->fresh();
+            $sideQuestResult->combat_processed_at = Date::now();
+            $sideQuestResult->save();
+            return $sideQuestResult->fresh();
+        });
     }
 
     /**
@@ -228,5 +194,56 @@ class ProcessCombatForSideQuestResult
             'combatSquad' => $combatSquad->toArray(),
             'sideQuestGroup' => $sideQuestGroup->toArray()
         ])->persist();
+    }
+
+    /**
+     * @param SideQuestResult $sideQuestResult
+     * @param CombatSquad $combatSquad
+     * @param SideQuestGroup $sideQuestGroup
+     * @param CombatPositionCollection $combatPositions
+     */
+    protected function loopCombat(SideQuestResult $sideQuestResult, CombatSquad $combatSquad, SideQuestGroup $sideQuestGroup, CombatPositionCollection $combatPositions)
+    {
+        $moment = 1;
+        $continueBattle = true;
+
+        while ($continueBattle) {
+
+            if ($combatSquad->isDefeated()) {
+                $continueBattle = false;
+                $this->createSideQuestDefeatEvent($sideQuestResult, $moment, $combatSquad, $sideQuestGroup);
+            } else {
+
+                /*
+                 * CombatSquad Turn
+                 */
+                $this->runCombatTurn->execute($combatSquad, $sideQuestGroup, $moment, $combatPositions,
+                    function ($damageReceived, HeroCombatAttack $heroCombatAttack, CombatMinion $combatMinion, $block) use ($combatSquad, $sideQuestResult, $moment) {
+                        $combatHero = $this->getCombatHeroByHeroCombatAttack($combatSquad, $heroCombatAttack);
+                        $this->processSideQuestHeroAttack->execute($sideQuestResult, $moment, $damageReceived, $combatHero, $heroCombatAttack, $combatMinion, $block);
+                    });
+
+                if ($sideQuestGroup->isDefeated()) {
+                    $continueBattle = false;
+                    $this->createSideQuestVictory($sideQuestResult, $moment, $combatSquad, $sideQuestGroup);
+                } else {
+                    /*
+                     * SideQuestGroup Turn
+                     */
+                    $this->runCombatTurn->execute($sideQuestGroup, $combatSquad, $moment, $combatPositions,
+                        function ($damageReceived, MinionCombatAttack $minionCombatAttack, CombatHero $combatHero, $block) use ($sideQuestGroup, $sideQuestResult, $moment) {
+                            $combatMinion = $this->getCombatMinionByMinionCombatAttack($sideQuestGroup, $minionCombatAttack);
+                            $this->processSideQuestMinionAttack->execute($sideQuestResult, $moment, $damageReceived, $combatMinion, $minionCombatAttack, $combatHero, $block);
+                        });
+                }
+            }
+
+            if ($continueBattle && $moment >= $this->maxMoments) {
+                $continueBattle = false;
+                $this->createSideQuestDraw($sideQuestResult, $moment, $combatSquad, $sideQuestGroup);
+            }
+
+            $moment++;
+        }
     }
 }
