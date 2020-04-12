@@ -36,9 +36,9 @@ class SeedItemBlueprints extends Migration
                     'name' => ItemBlueprint::STARTER_SWORD,
                     'description' => 'New warrior sword',
                     'reference_id' => 'A',
-                    'item_class' => $itemClasses->where('name', '=', ItemClass::ENCHANTED)->first(),
-                    'item_type' => $itemTypes->where( 'name', '=', 'Short Sword' )->first(),
-                    'material' => $materials->where( 'name', '=', 'Copper' )->first(),
+                    'item_classes' => $itemClasses->where('name', '=', ItemClass::ENCHANTED),
+                    'item_types' => $itemTypes->where( 'name', '=', 'Short Sword' ),
+                    'materials' => $materials->where( 'name', '=', 'Copper' ),
                 ],
                 'enchantments' => [
                     'Level 1 Strength'
@@ -49,9 +49,9 @@ class SeedItemBlueprints extends Migration
                     'name' => ItemBlueprint::STARTER_SHIELD,
                     'description' => 'New warrior shield',
                     'reference_id' => 'B',
-                    'item_class' => $itemClasses->where('name', '=', ItemClass::ENCHANTED)->first(),
-                    'item_type' => $itemTypes->where( 'name', '=', 'Buckler' )->first(),
-                    'material' => $materials->where( 'name', '=', 'Copper' )->first(),
+                    'item_classes' => $itemClasses->where('name', '=', ItemClass::ENCHANTED),
+                    'item_types' => $itemTypes->where( 'name', '=', 'Buckler' ),
+                    'materials' => $materials->where( 'name', '=', 'Copper' ),
                 ],
                 'enchantments' => [
                     'Level 1 Valor'
@@ -62,9 +62,9 @@ class SeedItemBlueprints extends Migration
                     'name' => ItemBlueprint::STARTER_BOW,
                     'description' => 'New ranger bow',
                     'reference_id' => 'C',
-                    'item_class' => $itemClasses->where('name', '=', ItemClass::ENCHANTED)->first(),
-                    'item_type' => $itemTypes->where( 'name', '=', 'Straight Bow' )->first(),
-                    'material' => $materials->where( 'name', '=', 'Yew' )->first(),
+                    'item_classes' => $itemClasses->where('name', '=', ItemClass::ENCHANTED),
+                    'item_types' => $itemTypes->where( 'name', '=', 'Straight Bow' ),
+                    'materials' => $materials->where( 'name', '=', 'Yew' ),
                 ],
                 'enchantments' => [
                     'Level 1 Agility',
@@ -76,9 +76,9 @@ class SeedItemBlueprints extends Migration
                     'name' => ItemBlueprint::STARTER_STAFF,
                     'description' => 'New sorcerer staff',
                     'reference_id' => 'D',
-                    'item_class' => $itemClasses->where('name', '=', ItemClass::ENCHANTED)->first(),
-                    'item_type' => $itemTypes->where( 'name', '=', 'Lesser Staff' )->first(),
-                    'material' => $materials->where( 'name', '=', 'Yew' )->first(),
+                    'item_classes' => $itemClasses->where('name', '=', ItemClass::ENCHANTED),
+                    'item_types' => $itemTypes->where( 'name', '=', 'Lesser Staff' ),
+                    'materials' => $materials->where( 'name', '=', 'Yew' ),
                 ],
                 'enchantments' => [
                     'Level 1 Aptitude',
@@ -90,9 +90,9 @@ class SeedItemBlueprints extends Migration
                     'name' => ItemBlueprint::STARTER_ROBES,
                     'description' => 'New sorcerer robes',
                     'reference_id' => 'E',
-                    'item_class' => $itemClasses->where('name', '=', ItemClass::ENCHANTED)->first(),
-                    'item_type' => $itemTypes->where( 'name', '=', 'Frock' )->first(),
-                    'material' => $materials->where( 'name', '=', 'Cotton' )->first(),
+                    'item_classes' => $itemClasses->where('name', '=', ItemClass::ENCHANTED),
+                    'item_types' => $itemTypes->where( 'name', '=', 'Frock' ),
+                    'materials' => $materials->where( 'name', '=', 'Cotton' ),
                 ],
                 'enchantments' => [
                     "Beginner's Blessing"
@@ -103,9 +103,9 @@ class SeedItemBlueprints extends Migration
                     'name' => ItemBlueprint::STARTER_LIGHT_ARMOR,
                     'description' => 'New ranger light armor',
                     'reference_id' => 'F',
-                    'item_class' => $itemClasses->where('name', '=', ItemClass::ENCHANTED)->first(),
-                    'item_type' => $itemTypes->where( 'name', '=', 'Light Cuirass' )->first(),
-                    'material' => $materials->where( 'name', '=', 'Leather' )->first(),
+                    'item_classes' => $itemClasses->where('name', '=', ItemClass::ENCHANTED),
+                    'item_types' => $itemTypes->where( 'name', '=', 'Light Cuirass' ),
+                    'materials' => $materials->where( 'name', '=', 'Leather' ),
                 ],
                 'enchantments' => [
                     "Beginner's Blessing"
@@ -116,9 +116,9 @@ class SeedItemBlueprints extends Migration
                     'name' => ItemBlueprint::STARTER_HEAVY_ARMOR,
                     'description' => 'New warrior heavy armor',
                     'reference_id' => 'G',
-                    'item_class' => $itemClasses->where('name', '=', ItemClass::ENCHANTED)->first(),
-                    'item_type' => $itemTypes->where( 'name', '=', 'Breastplate' )->first(),
-                    'material' => $materials->where( 'name', '=', 'Leather' )->first(),
+                    'item_classes' => $itemClasses->where('name', '=', ItemClass::ENCHANTED),
+                    'item_types' => $itemTypes->where( 'name', '=', 'Breastplate' ),
+                    'materials' => $materials->where( 'name', '=', 'Leather' ),
                 ],
                 'enchantments' => [
                     "Beginner's Blessing"
@@ -129,7 +129,7 @@ class SeedItemBlueprints extends Migration
                     'name' => null,
                     'description' => 'Completely random enchanted item',
                     'reference_id' => ItemBlueprint::RANDOM_ENCHANTED_REFERENCE,
-                    'item_class' => $itemClasses->where('name', '=', ItemClass::ENCHANTED)->first(),
+                    'item_classes' => $itemClasses->where('name', '=', ItemClass::ENCHANTED),
                 ],
                 'enchantments' => []
             ],
@@ -138,8 +138,8 @@ class SeedItemBlueprints extends Migration
                     'name' => null,
                     'description' => 'Random enchanted dagger',
                     'reference_id' => ItemBlueprint::RANDOM_ENCHANTED_DAGGER,
-                    'item_class' => $itemClasses->where('name', '=', ItemClass::ENCHANTED)->first(),
-                    'item_base' => $itemBases->where('name', '=', ItemBase::DAGGER)->first()
+                    'item_classes' => $itemClasses->where('name', '=', ItemClass::ENCHANTED),
+                    'item_bases' => $itemBases->where('name', '=', ItemBase::DAGGER)
                 ],
                 'enchantments' => []
             ],
@@ -148,8 +148,8 @@ class SeedItemBlueprints extends Migration
                     'name' => null,
                     'description' => 'Random enchanted sword',
                     'reference_id' => ItemBlueprint::RANDOM_ENCHANTED_SWORD,
-                    'item_class' => $itemClasses->where('name', '=', ItemClass::ENCHANTED)->first(),
-                    'item_base' => $itemBases->where('name', '=', ItemBase::SWORD)->first()
+                    'item_classes' => $itemClasses->where('name', '=', ItemClass::ENCHANTED),
+                    'item_bases' => $itemBases->where('name', '=', ItemBase::SWORD)
                 ],
                 'enchantments' => []
             ]
@@ -164,17 +164,17 @@ class SeedItemBlueprints extends Migration
                 'reference_id' => $blueprint['create_array']['reference_id']
             ]);
 
-            if (isset($blueprint['create_array']['item_type'])) {
-                $blueprintCreated->itemTypes()->attach($blueprint['create_array']['item_type']);
+            if (isset($blueprint['create_array']['item_types'])) {
+                $blueprintCreated->itemTypes()->saveMany($blueprint['create_array']['item_types']);
             }
-            if (isset($blueprint['create_array']['item_base'])) {
-                $blueprintCreated->itemBases()->attach($blueprint['create_array']['item_base']);
+            if (isset($blueprint['create_array']['item_bases'])) {
+                $blueprintCreated->itemBases()->saveMany($blueprint['create_array']['item_bases']);
             }
-            if (isset($blueprint['create_array']['material'])) {
-                $blueprintCreated->materials()->attach($blueprint['create_array']['material']);
+            if (isset($blueprint['create_array']['materials'])) {
+                $blueprintCreated->materials()->saveMany($blueprint['create_array']['materials']);
             }
-            if (isset($blueprint['create_array']['item_class'])) {
-                $blueprintCreated->itemClasses()->attach($blueprint['create_array']['item_class']);
+            if (isset($blueprint['create_array']['item_classes'])) {
+                $blueprintCreated->itemClasses()->saveMany($blueprint['create_array']['item_classes']);
             }
             $enchantmentsToAttach = $enchantments->whereIn('name', $blueprint['enchantments']);
 
