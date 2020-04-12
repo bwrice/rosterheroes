@@ -2,6 +2,7 @@
 
 use App\Domain\Models\Attack;
 use App\Domain\Models\Enchantment;
+use App\Domain\Models\ItemBase;
 use App\Domain\Models\ItemBlueprint;
 use App\Domain\Models\ItemClass;
 use App\Domain\Models\ItemType;
@@ -21,6 +22,7 @@ class SeedItemBlueprints extends Migration
     {
         $itemTypes = ItemType::all();
         $itemClasses = ItemClass::all();
+        $itemBases = ItemBase::all();
         $materials = Material::all();
         $enchantments = Enchantment::all();
 
@@ -126,8 +128,28 @@ class SeedItemBlueprints extends Migration
                 'create_array' => [
                     'name' => null,
                     'description' => 'Completely random enchanted item',
-                    'reference_id' => 'H',
+                    'reference_id' => ItemBlueprint::RANDOM_ENCHANTED_REFERENCE,
                     'item_class' => $itemClasses->where('name', '=', ItemClass::ENCHANTED)->first(),
+                ],
+                'enchantments' => []
+            ],
+            [
+                'create_array' => [
+                    'name' => null,
+                    'description' => 'Random enchanted dagger',
+                    'reference_id' => ItemBlueprint::RANDOM_ENCHANTED_DAGGER,
+                    'item_class' => $itemClasses->where('name', '=', ItemClass::ENCHANTED)->first(),
+                    'item_base' => $itemBases->where('name', '=', ItemBase::DAGGER)->first()
+                ],
+                'enchantments' => []
+            ],
+            [
+                'create_array' => [
+                    'name' => null,
+                    'description' => 'Random enchanted sword',
+                    'reference_id' => ItemBlueprint::RANDOM_ENCHANTED_SWORD,
+                    'item_class' => $itemClasses->where('name', '=', ItemClass::ENCHANTED)->first(),
+                    'item_base' => $itemBases->where('name', '=', ItemBase::SWORD)->first()
                 ],
                 'enchantments' => []
             ]
@@ -144,6 +166,9 @@ class SeedItemBlueprints extends Migration
 
             if (isset($blueprint['create_array']['item_type'])) {
                 $blueprintCreated->itemTypes()->attach($blueprint['create_array']['item_type']);
+            }
+            if (isset($blueprint['create_array']['item_base'])) {
+                $blueprintCreated->itemBases()->attach($blueprint['create_array']['item_base']);
             }
             if (isset($blueprint['create_array']['material'])) {
                 $blueprintCreated->materials()->attach($blueprint['create_array']['material']);

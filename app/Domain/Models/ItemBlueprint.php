@@ -29,6 +29,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  */
 class ItemBlueprint extends Model
 {
+    /*
+     * Starter Item Names
+     */
     public const STARTER_SWORD = 'Starter Sword';
     public const STARTER_SHIELD = 'Starter Shield';
     public const STARTER_BOW = 'Starter Bow';
@@ -36,6 +39,17 @@ class ItemBlueprint extends Model
     public const STARTER_LIGHT_ARMOR = 'Starter Cuirass';
     public const STARTER_HEAVY_ARMOR = 'Starter Breastplate';
     public const STARTER_ROBES = 'Starter Frock';
+
+    /*
+     * Random Items Reference IDs
+     */
+    public const RANDOM_ENCHANTED_REFERENCE = 'H';
+    public const RANDOM_ENCHANTED_DAGGER = 'I';
+    public const RANDOM_ENCHANTED_SWORD = 'J';
+    public const RANDOM_ENCHANTED_AXE = 'K';
+    public const RANDOM_ENCHANTED_MACE = 'L';
+    public const RANDOM_ENCHANTED_BOW = 'M';
+    public const RANDOM_ENCHANTED_CROSSBOW = 'N';
 
     protected $guarded = [];
 
