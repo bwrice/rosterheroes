@@ -23,7 +23,7 @@ class ProcessSideQuestVictoryRewards
 
     /**
      * @param SideQuestResult $sideQuestResult
-     * @throws \Exception
+     * @throws \Throwable
      */
     public function execute(SideQuestResult $sideQuestResult)
     {
@@ -31,20 +31,27 @@ class ProcessSideQuestVictoryRewards
             throw new \Exception("Rewards already processed for SideQuestResult");
         }
 
-        DB::transaction(function () use ($sideQuestResult) {
+        $sideQuestResult->rewards_processed_at = Date::now();
+        $sideQuestResult->save();
 
-            $sideQuest = $sideQuestResult->sideQuest;
-            $experienceReward = $sideQuest->getExperienceReward();
+        try {
+            DB::transaction(function () use ($sideQuestResult) {
 
-            $squad = $sideQuestResult->campaignStop->campaign->squad;
-            $squad->getAggregate()->increaseExperience($experienceReward)->persist();
+                $sideQuest = $sideQuestResult->sideQuest;
+                $experienceReward = $sideQuest->getExperienceReward();
 
-            $sideQuest->chestBlueprints->each(function (ChestBlueprint $chestBlueprint) use ($squad) {
-                $this->rewardChestToSquad->execute($chestBlueprint, $squad);
+                $squad = $sideQuestResult->campaignStop->campaign->squad;
+                $squad->getAggregate()->increaseExperience($experienceReward)->persist();
+
+                $sideQuest->chestBlueprints->each(function (ChestBlueprint $chestBlueprint) use ($squad) {
+                    $this->rewardChestToSquad->execute($chestBlueprint, $squad);
+                });
             });
+        } catch (\Throwable $throwable) {
 
-            $sideQuestResult->rewards_processed_at = Date::now();
+            $sideQuestResult->rewards_processed_at = null;
             $sideQuestResult->save();
-        });
+            throw $throwable;
+        }
     }
 }
