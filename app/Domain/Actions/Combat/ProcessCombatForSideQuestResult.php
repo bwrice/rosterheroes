@@ -71,7 +71,7 @@ class ProcessCombatForSideQuestResult
     /**
      * @param SideQuestResult $sideQuestResult
      * @return SideQuestResult
-     * @throws \Exception
+     * @throws \Throwable
      */
     public function execute(SideQuestResult $sideQuestResult)
     {
@@ -87,16 +87,24 @@ class ProcessCombatForSideQuestResult
         $combatSquad = $this->buildCombatSquadAction->execute($sideQuestResult->campaignStop->campaign->squad, $combatPositions, $targetPriorities, $damageTypes);
         $sideQuestGroup = $this->buildSideQuestGroup->execute($sideQuestResult->sideQuest, $combatPositions, $targetPriorities, $damageTypes);
 
-        return DB::transaction(function () use ($sideQuestResult, $combatSquad, $sideQuestGroup, $combatPositions) {
-
-            $this->createBattlefieldSetEvent($sideQuestResult, $combatSquad, $sideQuestGroup);
-
-            $this->loopCombat($sideQuestResult, $combatSquad, $sideQuestGroup, $combatPositions);
-
+        try {
             $sideQuestResult->combat_processed_at = Date::now();
             $sideQuestResult->save();
-            return $sideQuestResult->fresh();
-        });
+
+            return DB::transaction(function () use ($sideQuestResult, $combatSquad, $sideQuestGroup, $combatPositions) {
+
+                $this->createBattlefieldSetEvent($sideQuestResult, $combatSquad, $sideQuestGroup);
+
+                $this->loopCombat($sideQuestResult, $combatSquad, $sideQuestGroup, $combatPositions);
+
+                return $sideQuestResult->fresh();
+            });
+        } catch (\Throwable $exception) {
+
+            $sideQuestResult->combat_processed_at = null;
+            $sideQuestResult->save();
+            throw $exception;
+        }
     }
 
     /**
