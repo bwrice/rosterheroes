@@ -79,6 +79,9 @@ class ProcessCombatForSideQuestResult
             throw new \Exception("Combat already processed for side-quest-result: " . $sideQuestResult->id);
         }
 
+        $sideQuestResult->combat_processed_at = Date::now();
+        $sideQuestResult->save();
+
         /** @var CombatPositionCollection $combatPositions */
         $combatPositions = CombatPosition::all();
         $targetPriorities = TargetPriority::all();
@@ -88,9 +91,6 @@ class ProcessCombatForSideQuestResult
         $sideQuestGroup = $this->buildSideQuestGroup->execute($sideQuestResult->sideQuest, $combatPositions, $targetPriorities, $damageTypes);
 
         try {
-            $sideQuestResult->combat_processed_at = Date::now();
-            $sideQuestResult->save();
-
             return DB::transaction(function () use ($sideQuestResult, $combatSquad, $sideQuestGroup, $combatPositions) {
 
                 $this->createBattlefieldSetEvent($sideQuestResult, $combatSquad, $sideQuestGroup);
