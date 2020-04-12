@@ -18,6 +18,7 @@ class CreateItemBlueprintsTable extends Migration
             $table->integer('enchantment_power')->nullable();
             $table->string('item_name')->nullable();
             $table->string('description')->nullable();
+            $table->string('reference_id')->unique();
             $table->timestamps();
         });
     }
