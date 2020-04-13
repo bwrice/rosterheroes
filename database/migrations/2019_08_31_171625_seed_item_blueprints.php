@@ -132,15 +132,27 @@ class SeedItemBlueprints extends Migration
             [
                 'create_array' => [
                     'name' => null,
-                    'description' => 'Completely random enchanted item',
+                    'description' => 'random enchanted item',
                     'reference_id' => ItemBlueprint::RANDOM_ENCHANTED_ITEM,
+                    'enchantment_power' => 50,
                     'item_classes' => $itemClasses->where('name', '=', ItemClass::ENCHANTED),
+                ],
+                'enchantments' => []
+            ],
+            [
+                'create_array' => [
+                    'name' => null,
+                    'description' => 'random low tier enchanted item',
+                    'reference_id' => ItemBlueprint::RANDOM_ENCHANTED_LOW_TIER_ITEM,
+                    'item_classes' => $itemClasses->where('name', '=', ItemClass::ENCHANTED),
+                    'enchantment_power' => 25,
                 ],
                 'enchantments' => []
             ],
         ]);
 
         $blueprints = $blueprints->union($this->getRandomItemBaseBlueprintArrays($itemBases, $itemClasses));
+        $blueprints = $blueprints->union($this->getLowTierEnchantedBlueprintArrays($itemTypes, $itemBases, $itemClasses));
 
         foreach($blueprints as $blueprint) {
 
@@ -148,7 +160,8 @@ class SeedItemBlueprints extends Migration
             $blueprintCreated = ItemBlueprint::create([
                 'item_name' => $blueprint['create_array']['name'],
                 'description' => $blueprint['create_array']['description'],
-                'reference_id' => $blueprint['create_array']['reference_id']
+                'reference_id' => $blueprint['create_array']['reference_id'],
+                'enchantment_power' => $blueprint['create_array']['enchantment_power'] ?? null
             ]);
 
             if (isset($blueprint['create_array']['item_types'])) {
@@ -212,15 +225,97 @@ class SeedItemBlueprints extends Migration
         })->toArray();
     }
 
-    protected function getCreateArrayForRandomItemBase(string $blueprintReferenceID, string $itemBaseName, Collection $itemClasses, Collection $itemBases)
+    protected function getCreateArrayForRandomItemBase(string $blueprintReferenceID, string $itemBaseName, Collection $itemBases, Collection $itemClasses)
     {
         return [
             'create_array' => [
                 'name' => null,
-                'description' => 'Random enchanted '. $itemBaseName,
+                'description' => 'random enchanted '. $itemBaseName,
                 'reference_id' => $blueprintReferenceID,
                 'item_classes' => $itemClasses->where('name', '=', ItemClass::ENCHANTED),
                 'item_bases' => $itemBases->where('name', '=', $itemBaseName)
+            ],
+            'enchantments' => []
+        ];
+    }
+
+    protected function getLowTierEnchantedBlueprintArrays(Collection $itemTypes, Collection $itemBases, Collection $itemClasses)
+    {
+        $referenceBasePairs = [
+            ItemBlueprint::RANDOM_ENCHANTED_LOW_TIER_DAGGER => ItemBase::DAGGER,
+            ItemBlueprint::RANDOM_ENCHANTED_LOW_TIER_SWORD => ItemBase::SWORD,
+            ItemBlueprint::RANDOM_ENCHANTED_LOW_TIER_AXE => ItemBase::AXE,
+            ItemBlueprint::RANDOM_ENCHANTED_LOW_TIER_MACE => ItemBase::MACE,
+            ItemBlueprint::RANDOM_ENCHANTED_LOW_TIER_BOW => ItemBase::BOW,
+            ItemBlueprint::RANDOM_ENCHANTED_LOW_TIER_CROSSBOW => ItemBase::CROSSBOW,
+            ItemBlueprint::RANDOM_ENCHANTED_LOW_TIER_THROWING_WEAPON => ItemBase::THROWING_WEAPON,
+            ItemBlueprint::RANDOM_ENCHANTED_LOW_TIER_POLEARM => ItemBase::POLEARM,
+            ItemBlueprint::RANDOM_ENCHANTED_LOW_TIER_TWO_HAND_SWORD => ItemBase::TWO_HAND_SWORD,
+            ItemBlueprint::RANDOM_ENCHANTED_LOW_TIER_TWO_HAND_AXE => ItemBase::TWO_HAND_AXE,
+            ItemBlueprint::RANDOM_ENCHANTED_LOW_TIER_WAND => ItemBase::WAND,
+            ItemBlueprint::RANDOM_ENCHANTED_LOW_TIER_ORB => ItemBase::ORB,
+            ItemBlueprint::RANDOM_ENCHANTED_LOW_TIER_STAFF => ItemBase::STAFF,
+            ItemBlueprint::RANDOM_ENCHANTED_LOW_TIER_PSIONIC_ONE_HAND => ItemBase::PSIONIC_ONE_HAND,
+            ItemBlueprint::RANDOM_ENCHANTED_LOW_TIER_PSIONIC_TWO_HAND => ItemBase::PSIONIC_TWO_HAND,
+            ItemBlueprint::RANDOM_ENCHANTED_LOW_TIER_SHIELD => ItemBase::SHIELD,
+            ItemBlueprint::RANDOM_ENCHANTED_LOW_TIER_PSIONIC_SHIELD => ItemBase::PSIONIC_SHIELD,
+            ItemBlueprint::RANDOM_ENCHANTED_LOW_TIER_HELMET => ItemBase::HELMET,
+            ItemBlueprint::RANDOM_ENCHANTED_LOW_TIER_CAP => ItemBase::CAP,
+            ItemBlueprint::RANDOM_ENCHANTED_LOW_TIER_HEAVY_ARMOR => ItemBase::HEAVY_ARMOR,
+            ItemBlueprint::RANDOM_ENCHANTED_LOW_TIER_LIGHT_ARMOR => ItemBase::LIGHT_ARMOR,
+            ItemBlueprint::RANDOM_ENCHANTED_LOW_TIER_LEGGINGS => ItemBase::LEGGINGS,
+            ItemBlueprint::RANDOM_ENCHANTED_LOW_TIER_ROBES => ItemBase::ROBES,
+            ItemBlueprint::RANDOM_ENCHANTED_LOW_TIER_GLOVES => ItemBase::GLOVES,
+            ItemBlueprint::RANDOM_ENCHANTED_LOW_TIER_GAUNTLETS => ItemBase::GAUNTLETS,
+            ItemBlueprint::RANDOM_ENCHANTED_LOW_TIER_SHOES => ItemBase::SHOES,
+            ItemBlueprint::RANDOM_ENCHANTED_LOW_TIER_BOOTS => ItemBase::BOOTS,
+            ItemBlueprint::RANDOM_ENCHANTED_LOW_TIER_BELT => ItemBase::BELT,
+            ItemBlueprint::RANDOM_ENCHANTED_LOW_TIER_SASH => ItemBase::SASH,
+            ItemBlueprint::RANDOM_ENCHANTED_LOW_TIER_NECKLACE => ItemBase::NECKLACE,
+            ItemBlueprint::RANDOM_ENCHANTED_LOW_TIER_BRACELET => ItemBase::BRACELET,
+            ItemBlueprint::RANDOM_ENCHANTED_LOW_TIER_RING => ItemBase::RING,
+            ItemBlueprint::RANDOM_ENCHANTED_LOW_TIER_CROWN => ItemBase::CROWN,
+        ];
+
+        return collect($referenceBasePairs)->map(function ($itemBase, $blueprintReference) use ($itemTypes, $itemBases, $itemClasses) {
+            return $this->getCreateArrayForEnchantedTieredItemTypes(
+                $blueprintReference,
+                $itemBase,
+                'low tier',
+                1,
+                2,
+                25,
+                $itemTypes,
+                $itemBases,
+                $itemClasses);
+        })->toArray();
+    }
+
+    protected function getCreateArrayForEnchantedTieredItemTypes(
+        string $blueprintReferenceID,
+        string $itemBaseName,
+        string $tierName,
+        int $minTier,
+        int $maxTier,
+        int $enchantmentPower,
+        Collection $itemTypes,
+        Collection $itemBases,
+        Collection $itemClasses)
+    {
+        $itemBaseID = $itemBases->filter(function (ItemBase $itemBase) use ($itemBaseName) {
+            return $itemBase->name === $itemBaseName;
+        })->first()->id;
+
+        return [
+            'create_array' => [
+                'name' => null,
+                'description' => 'random enchanted '. $tierName . ' ' .  $itemBaseName,
+                'reference_id' => $blueprintReferenceID,
+                'enchantment_power' => $enchantmentPower,
+                'item_classes' => $itemClasses->where('name', '=', ItemClass::ENCHANTED),
+                'item_types' => $itemTypes->filter(function (ItemType $itemType) use ($itemBaseID, $minTier, $maxTier) {
+                    return $itemType->item_base_id === $itemBaseID && $itemType->tier >= $minTier && $itemType->tier <= $maxTier;
+                })
             ],
             'enchantments' => []
         ];
