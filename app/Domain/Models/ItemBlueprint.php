@@ -43,7 +43,7 @@ class ItemBlueprint extends Model
     /*
      * Random Items Reference IDs
      */
-    public const RANDOM_ENCHANTED_REFERENCE = 'H';
+    public const RANDOM_ENCHANTED_ITEM = 'H';
     public const RANDOM_ENCHANTED_DAGGER = 'I';
     public const RANDOM_ENCHANTED_SWORD = 'J';
     public const RANDOM_ENCHANTED_AXE = 'K';
@@ -76,7 +76,41 @@ class ItemBlueprint extends Model
     public const RANDOM_ENCHANTED_NECKLACE = 'AL';
     public const RANDOM_ENCHANTED_BRACELET = 'AM';
     public const RANDOM_ENCHANTED_RING = 'AN';
-    public const RANDOM_ENCHANTED_CROWN = 'AP';
+    public const RANDOM_ENCHANTED_CROWN = 'AO';
+    public const RANDOM_ENCHANTED_LOW_TIER_ITEM = 'AP';
+    public const RANDOM_ENCHANTED_LOW_TIER_DAGGER = 'AQ';
+    public const RANDOM_ENCHANTED_LOW_TIER_SWORD = 'AR';
+    public const RANDOM_ENCHANTED_LOW_TIER_AXE = 'AS';
+    public const RANDOM_ENCHANTED_LOW_TIER_MACE = 'AT';
+    public const RANDOM_ENCHANTED_LOW_TIER_BOW = 'AU';
+    public const RANDOM_ENCHANTED_LOW_TIER_CROSSBOW = 'AV';
+    public const RANDOM_ENCHANTED_LOW_TIER_THROWING_WEAPON = 'AW';
+    public const RANDOM_ENCHANTED_LOW_TIER_POLEARM = 'AX';
+    public const RANDOM_ENCHANTED_LOW_TIER_TWO_HAND_SWORD = 'AY';
+    public const RANDOM_ENCHANTED_LOW_TIER_TWO_HAND_AXE = 'AZ';
+    public const RANDOM_ENCHANTED_LOW_TIER_WAND = 'BA';
+    public const RANDOM_ENCHANTED_LOW_TIER_ORB = 'BB';
+    public const RANDOM_ENCHANTED_LOW_TIER_STAFF = 'BC';
+    public const RANDOM_ENCHANTED_LOW_TIER_PSIONIC_ONE_HAND = 'BD';
+    public const RANDOM_ENCHANTED_LOW_TIER_PSIONIC_TWO_HAND = 'BE';
+    public const RANDOM_ENCHANTED_LOW_TIER_SHIELD = 'BF';
+    public const RANDOM_ENCHANTED_LOW_TIER_PSIONIC_SHIELD = 'BG';
+    public const RANDOM_ENCHANTED_LOW_TIER_HELMET = 'BH';
+    public const RANDOM_ENCHANTED_LOW_TIER_CAP = 'BI';
+    public const RANDOM_ENCHANTED_LOW_TIER_HEAVY_ARMOR = 'BJ';
+    public const RANDOM_ENCHANTED_LOW_TIER_LIGHT_ARMOR = 'BK';
+    public const RANDOM_ENCHANTED_LOW_TIER_LEGGINGS = 'BL';
+    public const RANDOM_ENCHANTED_LOW_TIER_ROBES = 'BM';
+    public const RANDOM_ENCHANTED_LOW_TIER_GLOVES = 'BN';
+    public const RANDOM_ENCHANTED_LOW_TIER_GAUNTLETS = 'BO';
+    public const RANDOM_ENCHANTED_LOW_TIER_SHOES = 'BP';
+    public const RANDOM_ENCHANTED_LOW_TIER_BOOTS = 'BQ';
+    public const RANDOM_ENCHANTED_LOW_TIER_BELT = 'BR';
+    public const RANDOM_ENCHANTED_LOW_TIER_SASH = 'BS';
+    public const RANDOM_ENCHANTED_LOW_TIER_NECKLACE = 'BT';
+    public const RANDOM_ENCHANTED_LOW_TIER_BRACELET = 'BU';
+    public const RANDOM_ENCHANTED_LOW_TIER_RING = 'BV';
+    public const RANDOM_ENCHANTED_LOW_TIER_CROWN = 'BW';
 
     protected $guarded = [];
 
