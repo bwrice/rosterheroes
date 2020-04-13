@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property string|null $item_name
  * @property int|null $enchantment_power
  * @property string|null $description
+ * @property string $reference_id
  *
  * @property ItemClass|null $itemClass
  * @property ItemType|null $itemType
