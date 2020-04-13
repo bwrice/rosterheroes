@@ -149,10 +149,32 @@ class SeedItemBlueprints extends Migration
                 ],
                 'enchantments' => []
             ],
+            [
+                'create_array' => [
+                    'name' => null,
+                    'description' => 'random mid tier enchanted item',
+                    'reference_id' => ItemBlueprint::RANDOM_ENCHANTED_MID_TIER_ITEM,
+                    'item_classes' => $itemClasses->where('name', '=', ItemClass::ENCHANTED),
+                    'enchantment_power' => 50,
+                ],
+                'enchantments' => []
+            ],
+            [
+                'create_array' => [
+                    'name' => null,
+                    'description' => 'random high tier enchanted item',
+                    'reference_id' => ItemBlueprint::RANDOM_ENCHANTED_HIGH_TIER_ITEM,
+                    'item_classes' => $itemClasses->where('name', '=', ItemClass::ENCHANTED),
+                    'enchantment_power' => 50,
+                ],
+                'enchantments' => []
+            ],
         ]);
 
         $blueprints = $blueprints->union($this->getRandomItemBaseBlueprintArrays($itemBases, $itemClasses));
         $blueprints = $blueprints->union($this->getLowTierEnchantedBlueprintArrays($itemTypes, $itemBases, $itemClasses));
+        $blueprints = $blueprints->union($this->getMidTierEnchantedBlueprintArrays($itemTypes, $itemBases, $itemClasses));
+        $blueprints = $blueprints->union($this->getHighTierEnchantedBlueprintArrays($itemTypes, $itemBases, $itemClasses));
 
         foreach($blueprints as $blueprint) {
 
@@ -285,6 +307,110 @@ class SeedItemBlueprints extends Migration
                 1,
                 2,
                 25,
+                $itemTypes,
+                $itemBases,
+                $itemClasses);
+        })->toArray();
+    }
+
+    protected function getMidTierEnchantedBlueprintArrays(Collection $itemTypes, Collection $itemBases, Collection $itemClasses)
+    {
+        $referenceBasePairs = [
+            ItemBlueprint::RANDOM_ENCHANTED_MID_TIER_DAGGER => ItemBase::DAGGER,
+            ItemBlueprint::RANDOM_ENCHANTED_MID_TIER_SWORD => ItemBase::SWORD,
+            ItemBlueprint::RANDOM_ENCHANTED_MID_TIER_AXE => ItemBase::AXE,
+            ItemBlueprint::RANDOM_ENCHANTED_MID_TIER_MACE => ItemBase::MACE,
+            ItemBlueprint::RANDOM_ENCHANTED_MID_TIER_BOW => ItemBase::BOW,
+            ItemBlueprint::RANDOM_ENCHANTED_MID_TIER_CROSSBOW => ItemBase::CROSSBOW,
+            ItemBlueprint::RANDOM_ENCHANTED_MID_TIER_THROWING_WEAPON => ItemBase::THROWING_WEAPON,
+            ItemBlueprint::RANDOM_ENCHANTED_MID_TIER_POLEARM => ItemBase::POLEARM,
+            ItemBlueprint::RANDOM_ENCHANTED_MID_TIER_TWO_HAND_SWORD => ItemBase::TWO_HAND_SWORD,
+            ItemBlueprint::RANDOM_ENCHANTED_MID_TIER_TWO_HAND_AXE => ItemBase::TWO_HAND_AXE,
+            ItemBlueprint::RANDOM_ENCHANTED_MID_TIER_WAND => ItemBase::WAND,
+            ItemBlueprint::RANDOM_ENCHANTED_MID_TIER_ORB => ItemBase::ORB,
+            ItemBlueprint::RANDOM_ENCHANTED_MID_TIER_STAFF => ItemBase::STAFF,
+            ItemBlueprint::RANDOM_ENCHANTED_MID_TIER_PSIONIC_ONE_HAND => ItemBase::PSIONIC_ONE_HAND,
+            ItemBlueprint::RANDOM_ENCHANTED_MID_TIER_PSIONIC_TWO_HAND => ItemBase::PSIONIC_TWO_HAND,
+            ItemBlueprint::RANDOM_ENCHANTED_MID_TIER_SHIELD => ItemBase::SHIELD,
+            ItemBlueprint::RANDOM_ENCHANTED_MID_TIER_PSIONIC_SHIELD => ItemBase::PSIONIC_SHIELD,
+            ItemBlueprint::RANDOM_ENCHANTED_MID_TIER_HELMET => ItemBase::HELMET,
+            ItemBlueprint::RANDOM_ENCHANTED_MID_TIER_CAP => ItemBase::CAP,
+            ItemBlueprint::RANDOM_ENCHANTED_MID_TIER_HEAVY_ARMOR => ItemBase::HEAVY_ARMOR,
+            ItemBlueprint::RANDOM_ENCHANTED_MID_TIER_LIGHT_ARMOR => ItemBase::LIGHT_ARMOR,
+            ItemBlueprint::RANDOM_ENCHANTED_MID_TIER_LEGGINGS => ItemBase::LEGGINGS,
+            ItemBlueprint::RANDOM_ENCHANTED_MID_TIER_ROBES => ItemBase::ROBES,
+            ItemBlueprint::RANDOM_ENCHANTED_MID_TIER_GLOVES => ItemBase::GLOVES,
+            ItemBlueprint::RANDOM_ENCHANTED_MID_TIER_GAUNTLETS => ItemBase::GAUNTLETS,
+            ItemBlueprint::RANDOM_ENCHANTED_MID_TIER_SHOES => ItemBase::SHOES,
+            ItemBlueprint::RANDOM_ENCHANTED_MID_TIER_BOOTS => ItemBase::BOOTS,
+            ItemBlueprint::RANDOM_ENCHANTED_MID_TIER_BELT => ItemBase::BELT,
+            ItemBlueprint::RANDOM_ENCHANTED_MID_TIER_SASH => ItemBase::SASH,
+            ItemBlueprint::RANDOM_ENCHANTED_MID_TIER_NECKLACE => ItemBase::NECKLACE,
+            ItemBlueprint::RANDOM_ENCHANTED_MID_TIER_BRACELET => ItemBase::BRACELET,
+            ItemBlueprint::RANDOM_ENCHANTED_MID_TIER_RING => ItemBase::RING,
+            ItemBlueprint::RANDOM_ENCHANTED_MID_TIER_CROWN => ItemBase::CROWN,
+        ];
+
+        return collect($referenceBasePairs)->map(function ($itemBase, $blueprintReference) use ($itemTypes, $itemBases, $itemClasses) {
+            return $this->getCreateArrayForEnchantedTieredItemTypes(
+                $blueprintReference,
+                $itemBase,
+                'mid tier',
+                3,
+                4,
+                50,
+                $itemTypes,
+                $itemBases,
+                $itemClasses);
+        })->toArray();
+    }
+
+    protected function getHighTierEnchantedBlueprintArrays(Collection $itemTypes, Collection $itemBases, Collection $itemClasses)
+    {
+        $referenceBasePairs = [
+            ItemBlueprint::RANDOM_ENCHANTED_HIGH_TIER_DAGGER => ItemBase::DAGGER,
+            ItemBlueprint::RANDOM_ENCHANTED_HIGH_TIER_SWORD => ItemBase::SWORD,
+            ItemBlueprint::RANDOM_ENCHANTED_HIGH_TIER_AXE => ItemBase::AXE,
+            ItemBlueprint::RANDOM_ENCHANTED_HIGH_TIER_MACE => ItemBase::MACE,
+            ItemBlueprint::RANDOM_ENCHANTED_HIGH_TIER_BOW => ItemBase::BOW,
+            ItemBlueprint::RANDOM_ENCHANTED_HIGH_TIER_CROSSBOW => ItemBase::CROSSBOW,
+            ItemBlueprint::RANDOM_ENCHANTED_HIGH_TIER_THROWING_WEAPON => ItemBase::THROWING_WEAPON,
+            ItemBlueprint::RANDOM_ENCHANTED_HIGH_TIER_POLEARM => ItemBase::POLEARM,
+            ItemBlueprint::RANDOM_ENCHANTED_HIGH_TIER_TWO_HAND_SWORD => ItemBase::TWO_HAND_SWORD,
+            ItemBlueprint::RANDOM_ENCHANTED_HIGH_TIER_TWO_HAND_AXE => ItemBase::TWO_HAND_AXE,
+            ItemBlueprint::RANDOM_ENCHANTED_HIGH_TIER_WAND => ItemBase::WAND,
+            ItemBlueprint::RANDOM_ENCHANTED_HIGH_TIER_ORB => ItemBase::ORB,
+            ItemBlueprint::RANDOM_ENCHANTED_HIGH_TIER_STAFF => ItemBase::STAFF,
+            ItemBlueprint::RANDOM_ENCHANTED_HIGH_TIER_PSIONIC_ONE_HAND => ItemBase::PSIONIC_ONE_HAND,
+            ItemBlueprint::RANDOM_ENCHANTED_HIGH_TIER_PSIONIC_TWO_HAND => ItemBase::PSIONIC_TWO_HAND,
+            ItemBlueprint::RANDOM_ENCHANTED_HIGH_TIER_SHIELD => ItemBase::SHIELD,
+            ItemBlueprint::RANDOM_ENCHANTED_HIGH_TIER_PSIONIC_SHIELD => ItemBase::PSIONIC_SHIELD,
+            ItemBlueprint::RANDOM_ENCHANTED_HIGH_TIER_HELMET => ItemBase::HELMET,
+            ItemBlueprint::RANDOM_ENCHANTED_HIGH_TIER_CAP => ItemBase::CAP,
+            ItemBlueprint::RANDOM_ENCHANTED_HIGH_TIER_HEAVY_ARMOR => ItemBase::HEAVY_ARMOR,
+            ItemBlueprint::RANDOM_ENCHANTED_HIGH_TIER_LIGHT_ARMOR => ItemBase::LIGHT_ARMOR,
+            ItemBlueprint::RANDOM_ENCHANTED_HIGH_TIER_LEGGINGS => ItemBase::LEGGINGS,
+            ItemBlueprint::RANDOM_ENCHANTED_HIGH_TIER_ROBES => ItemBase::ROBES,
+            ItemBlueprint::RANDOM_ENCHANTED_HIGH_TIER_GLOVES => ItemBase::GLOVES,
+            ItemBlueprint::RANDOM_ENCHANTED_HIGH_TIER_GAUNTLETS => ItemBase::GAUNTLETS,
+            ItemBlueprint::RANDOM_ENCHANTED_HIGH_TIER_SHOES => ItemBase::SHOES,
+            ItemBlueprint::RANDOM_ENCHANTED_HIGH_TIER_BOOTS => ItemBase::BOOTS,
+            ItemBlueprint::RANDOM_ENCHANTED_HIGH_TIER_BELT => ItemBase::BELT,
+            ItemBlueprint::RANDOM_ENCHANTED_HIGH_TIER_SASH => ItemBase::SASH,
+            ItemBlueprint::RANDOM_ENCHANTED_HIGH_TIER_NECKLACE => ItemBase::NECKLACE,
+            ItemBlueprint::RANDOM_ENCHANTED_HIGH_TIER_BRACELET => ItemBase::BRACELET,
+            ItemBlueprint::RANDOM_ENCHANTED_HIGH_TIER_RING => ItemBase::RING,
+            ItemBlueprint::RANDOM_ENCHANTED_HIGH_TIER_CROWN => ItemBase::CROWN,
+        ];
+
+        return collect($referenceBasePairs)->map(function ($itemBase, $blueprintReference) use ($itemTypes, $itemBases, $itemClasses) {
+            return $this->getCreateArrayForEnchantedTieredItemTypes(
+                $blueprintReference,
+                $itemBase,
+                'high tier',
+                5,
+                6,
+                100,
                 $itemTypes,
                 $itemBases,
                 $itemClasses);
