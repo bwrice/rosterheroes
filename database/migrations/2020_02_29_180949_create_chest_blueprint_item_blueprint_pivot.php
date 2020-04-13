@@ -16,7 +16,7 @@ class CreateChestBlueprintItemBlueprintPivot extends Migration
         Schema::create('chest_blueprint_item_blueprint', function (Blueprint $table) {
             $table->integer('chest_blueprint_id')->unsigned();
             $table->integer('item_blueprint_id')->unsigned();
-            $table->smallInteger('chance')->unsigned();
+            $table->float('chance')->unsigned();
             $table->primary(['chest_blueprint_id', 'item_blueprint_id'], 'chest_bp_item_bp');
             $table->timestamps();
         });

@@ -41,7 +41,7 @@ class RewardChestToSquad
         $itemBlueprints = $chestBlueprint->itemBlueprints;
         $itemBlueprints->each(function (ItemBlueprint $itemBlueprint) use ($chest) {
             $chance = $itemBlueprint->pivot->chance;
-            $rewardItem = rand(1, 100) <= $chance;
+            $rewardItem = (rand(0, 10000)/100) <= $chance;
             if ($rewardItem) {
                 $item = $this->generateItem->execute($itemBlueprint);
                 $chest->items()->save($item);
