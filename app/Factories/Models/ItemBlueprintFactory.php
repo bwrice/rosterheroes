@@ -5,6 +5,7 @@ namespace App\Factories\Models;
 
 
 use App\Domain\Models\ItemBlueprint;
+use Illuminate\Support\Str;
 
 class ItemBlueprintFactory
 {
@@ -23,6 +24,7 @@ class ItemBlueprintFactory
         $enchantmentPower = rand(1, 20);
         /** @var ItemBlueprint $blueprint */
         $blueprint = ItemBlueprint::query()->create(array_merge([
+            'reference_id' => (string) Str::uuid(),
             'enchantment_power' => $enchantmentPower
         ], $extra));
         return $blueprint;

@@ -6,6 +6,7 @@ namespace App\Factories\Models;
 
 use App\ChestBlueprint;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 class ChestBlueprintFactory
 {
@@ -19,13 +20,16 @@ class ChestBlueprintFactory
 
     public function create(array $extra = [])
     {
-        $grade = rand(1, 100);
+        $qualityTier = rand(1, 6);
+        $sizeTier = rand(1, 6);
         $minGold = rand(50, 5000);
         $maxGold = rand($minGold, $minGold * 10);
 
         /** @var ChestBlueprint $chestBlueprint */
         $chestBlueprint = ChestBlueprint::query()->create(array_merge([
-            'grade' => $grade,
+            'reference_id' => (string) Str::uuid(),
+            'quality_tier' => $qualityTier,
+            'size_tier' => $sizeTier,
             'min_gold' => $minGold,
             'max_gold' => $maxGold
         ], $extra));
