@@ -33,7 +33,7 @@ class RewardChestToSquad
         $uuid = (string) Str::uuid();
         $chestAggregate = ChestAggregate::retrieve($uuid);
         $chestGold = rand($chestBlueprint->min_gold, $chestBlueprint->max_gold);
-        $chestAggregate->createNewChest($chestBlueprint->qualityTier, $chestBlueprint->sizeTier, $chestGold, $squad->id, $chestBlueprint->id);
+        $chestAggregate->createNewChest($chestBlueprint->quality_tier, $chestBlueprint->size_tier, $chestGold, $squad->id, $chestBlueprint->id);
         $chestAggregate->persist();
 
         $chest = Chest::findUuidOrFail($uuid);

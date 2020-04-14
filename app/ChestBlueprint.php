@@ -14,8 +14,8 @@ use Illuminate\Database\Eloquent\Model;
  * @package App
  *
  * @property int $id
- * @property int $qualityTier
- * @property int $sizeTier
+ * @property int $quality_tier
+ * @property int $size_tier
  * @property int $min_gold
  * @property int $max_gold
  * @property string $reference_id
