@@ -55,7 +55,7 @@ class DefaultUsersSeeder extends Seeder
         }
 
         /** @var \App\Domain\Models\ItemBlueprint $blueprint */
-        $blueprint = \App\Domain\Models\ItemBlueprint::query()->where('description', '=', 'Completely random enchanted item')->first();
+        $blueprint = \App\Domain\Models\ItemBlueprint::query()->where('reference_id', '=', \App\Domain\Models\ItemBlueprint::RANDOM_ENCHANTED_LOW_TIER_ITEM)->first();
 
         foreach (range(1,20) as $count) {
             $item = $generateItemFromBlueprintAction->execute($blueprint);
