@@ -22,7 +22,6 @@ use Illuminate\Support\Str;
  * @property int $id
  * @property string $uuid;
  *
- * @property SlotCollection $slots
  */
 class Stash extends Model implements HasItems
 {
