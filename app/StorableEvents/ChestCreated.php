@@ -9,6 +9,14 @@ final class ChestCreated implements ShouldBeStored
     /**
      * @var int
      */
+    public $qualityTier;
+    /**
+     * @var int
+     */
+    public $sizeTier;
+    /**
+     * @var int
+     */
     public $grade;
     /**
      * @var int
@@ -23,9 +31,10 @@ final class ChestCreated implements ShouldBeStored
      */
     public $chestBlueprintID;
 
-    public function __construct(int $grade, int $gold, int $squadID,  int $chestBlueprintID = null)
+    public function __construct(int $qualityTier, int $sizeTier, int $gold, int $squadID,  int $chestBlueprintID = null)
     {
-        $this->grade = $grade;
+        $this->qualityTier = $qualityTier;
+        $this->sizeTier = $sizeTier;
         $this->gold = $gold;
         $this->squadID = $squadID;
         $this->chestBlueprintID = $chestBlueprintID;
