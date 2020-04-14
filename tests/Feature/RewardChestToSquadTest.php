@@ -33,8 +33,8 @@ class RewardChestToSquadTest extends TestCase
         $this->assertGreaterThan($chestBlueprint->min_gold, $chestGold);
         $this->assertLessThan($chestBlueprint->max_gold, $chestGold);
         $this->assertEquals($squad->id, $chest->squad_id);
-        $this->assertEquals($chestBlueprint->size_tier, $chest->sizeTier);
-        $this->assertEquals($chestBlueprint->quality_tier, $chest->qualityTier);
+        $this->assertEquals($chestBlueprint->size_tier, $chest->size_tier);
+        $this->assertEquals($chestBlueprint->quality_tier, $chest->quality_tier);
         $this->assertEquals($chestBlueprint->id, $chest->chest_blueprint_id);
         $this->assertNull($chest->opened_at);
     }
@@ -61,7 +61,8 @@ class RewardChestToSquadTest extends TestCase
 
         /** @var ItemBlueprint $hundredChanceItemBlueprint */
         $hundredChanceItemBlueprint = $chestBlueprint->itemBlueprints->first(function (ItemBlueprint $itemBlueprint) {
-            return $itemBlueprint->pivot->chance === 100;
+            $chanceDiff = abs($itemBlueprint->pivot->chance - 100);
+            return $chanceDiff < PHP_FLOAT_EPSILON;
         });
 
         /** @var Item $item */
