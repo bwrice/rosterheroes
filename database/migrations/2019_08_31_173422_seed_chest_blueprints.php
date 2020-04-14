@@ -20,7 +20,8 @@ class SeedChestBlueprints extends Migration
         $chestBlueprintArrays = [
             [
                 'reference_id' => ChestBlueprint::LOW_TIER_WARRIOR_CHEST,
-                'grade' => 10,
+                'quality_tier' => 1,
+                'size_tier' => 3,
                 'min_gold' => 100,
                 'max_gold' => 1000,
                 'item_blueprints' => [
@@ -148,7 +149,8 @@ class SeedChestBlueprints extends Migration
             ],
             [
                 'reference_id' => ChestBlueprint::LOW_TIER_RANGER_CHEST,
-                'grade' => 10,
+                'quality_tier' => 1,
+                'size_tier' => 3,
                 'min_gold' => 100,
                 'max_gold' => 1000,
                 'item_blueprints' => [
@@ -252,7 +254,8 @@ class SeedChestBlueprints extends Migration
             ],
             [
                 'reference_id' => ChestBlueprint::LOW_TIER_SORCERER_CHEST,
-                'grade' => 10,
+                'quality_tier' => 1,
+                'size_tier' => 3,
                 'min_gold' => 100,
                 'max_gold' => 1000,
                 'item_blueprints' => [
@@ -373,7 +376,8 @@ class SeedChestBlueprints extends Migration
             /** @var ChestBlueprint $chestBlueprint */
             $chestBlueprint = ChestBlueprint::query()->create([
                 'reference_id' => $blueprintArray['reference_id'],
-                'grade' => $blueprintArray['grade'],
+                'quality_tier' => $blueprintArray['quality_tier'],
+                'size_tier' => $blueprintArray['size_tier'],
                 'min_gold' => $blueprintArray['min_gold'],
                 'max_gold' => $blueprintArray['max_gold'],
             ]);
