@@ -15,8 +15,8 @@ use Carbon\CarbonInterface;
  * @property int $id
  * @property string $uuid
  * @property int $gold
- * @property int $qualityTier
- * @property int $sizeTier
+ * @property int $quality_tier
+ * @property int $size_tier
  * @property CarbonInterface $opened_at
  * @property int $squad_id
  * @property int|null $chest_blueprint_id
