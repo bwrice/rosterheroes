@@ -16,7 +16,8 @@ class CreateChestsTable extends Migration
         Schema::create('chests', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->uuid('uuid');
-            $table->integer('grade')->unsigned();
+            $table->smallInteger('quality_tier')->unsigned();
+            $table->smallInteger('size_tier')->unsigned();
             $table->bigInteger('squad_id')->unsigned();
             $table->dateTime('opened_at')->nullable();
             $table->bigInteger('gold')->unsigned();
