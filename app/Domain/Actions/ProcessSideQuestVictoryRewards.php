@@ -44,7 +44,10 @@ class ProcessSideQuestVictoryRewards
                 $squad->getAggregate()->increaseExperience($experienceReward)->persist();
 
                 $sideQuest->chestBlueprints->each(function (ChestBlueprint $chestBlueprint) use ($squad) {
-                    $this->rewardChestToSquad->execute($chestBlueprint, $squad);
+                    $count = $chestBlueprint->pivot->count;
+                    for ($i = 1; $i <= $count; $i++) {
+                        $this->rewardChestToSquad->execute($chestBlueprint, $squad);
+                    }
                 });
             });
         } catch (\Throwable $throwable) {
