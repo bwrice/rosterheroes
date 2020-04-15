@@ -46,7 +46,8 @@ class RewardChestToSquad
 
             for ($i = 1; $i <= $count; $i++) {
                 $randomChancePercent = (rand(0, 10000)/100);
-                $rewardItem = $randomChancePercent <= $chance;
+                // We add PHP_FLOAT_EPSILON to guarantee 100% chance item-blueprints always get rewarded
+                $rewardItem = $randomChancePercent <= ($chance + PHP_FLOAT_EPSILON);
                 if ($rewardItem) {
                     $item = $this->generateItem->execute($itemBlueprint);
                     $chest->items()->save($item);
