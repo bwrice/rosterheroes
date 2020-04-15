@@ -65,7 +65,7 @@ class Minion extends Model implements HasAttacks
 
     public function chestBlueprints()
     {
-        return $this->belongsToMany(ChestBlueprint::class)->withTimestamps();
+        return $this->belongsToMany(ChestBlueprint::class)->withPivot(['count'])->withTimestamps();
     }
 
     protected function getEnemyTypeBehavior(): EnemyTypeBehavior

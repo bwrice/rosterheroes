@@ -46,12 +46,12 @@ class SideQuest extends Model
 
     public function minions()
     {
-        return $this->belongsToMany(Minion::class)->withPivot('count')->withTimestamps();
+        return $this->belongsToMany(Minion::class)->withPivot(['count'])->withTimestamps();
     }
 
     public function chestBlueprints()
     {
-        return $this->belongsToMany(ChestBlueprint::class)->withTimestamps();
+        return $this->belongsToMany(ChestBlueprint::class)->withPivot(['count'])->withTimestamps();
     }
 
     public function sideQuestBlueprint()
