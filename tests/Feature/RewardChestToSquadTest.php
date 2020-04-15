@@ -8,6 +8,7 @@ use App\Domain\Models\ItemBlueprint;
 use App\Factories\Models\ChestBlueprintFactory;
 use App\Factories\Models\ItemBlueprintFactory;
 use App\Factories\Models\SquadFactory;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -69,5 +70,43 @@ class RewardChestToSquadTest extends TestCase
         $item = $items->first();
 
         $this->assertEquals($hundredChanceItemBlueprint->id, $item->item_blueprint_id);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_add_items_by_blueprint_count_to_chests()
+    {
+        $singleCountBlueprintFactory = ItemBlueprintFactory::new()
+            ->setChestBlueprintCount(1)
+            ->setChestBlueprintChance(100);
+        $doubleCountBlueprintFactory = ItemBlueprintFactory::new()
+            ->setChestBlueprintCount(2)
+            ->setChestBlueprintChance(100);
+
+        $squad = SquadFactory::new()->create();
+        $chestBlueprint = ChestBlueprintFactory::new()->withItemBlueprints(collect([
+            $singleCountBlueprintFactory,
+            $doubleCountBlueprintFactory
+        ]))->create();
+
+        /** @var RewardChestToSquad $domainAction */
+        $domainAction = app(RewardChestToSquad::class);
+        $chest = $domainAction->execute($chestBlueprint, $squad);
+        $items = $chest->items;
+        $this->assertEquals(3, $items->count());
+
+        /** @var ItemBlueprint $doubleCountItemBlueprint */
+        $doubleCountItemBlueprint = $chestBlueprint->itemBlueprints->first(function (ItemBlueprint $itemBlueprint) {
+            $chanceDiff = abs($itemBlueprint->pivot->chance - 100);
+            return $chanceDiff < PHP_FLOAT_EPSILON;
+        });
+
+        /** @var Collection $item */
+        $itemsFromDoubleCountBlueprint = $items->filter(function (Item $item) use ($doubleCountItemBlueprint) {
+            return $item->item_blueprint_id === $doubleCountItemBlueprint->id;
+        });
+
+        $this->assertEquals(2, $itemsFromDoubleCountBlueprint->count());
     }
 }
