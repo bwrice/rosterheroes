@@ -97,9 +97,8 @@ class RewardChestToSquadTest extends TestCase
         $this->assertEquals(3, $items->count());
 
         /** @var ItemBlueprint $doubleCountItemBlueprint */
-        $doubleCountItemBlueprint = $chestBlueprint->itemBlueprints->first(function (ItemBlueprint $itemBlueprint) {
-            $chanceDiff = abs($itemBlueprint->pivot->chance - 100);
-            return $chanceDiff < PHP_FLOAT_EPSILON;
+        $doubleCountItemBlueprint = $chestBlueprint->itemBlueprints->first(function (ItemBlueprint $itemBlueprint) {;
+            return $itemBlueprint->pivot->count === 2;
         });
 
         /** @var Collection $item */
