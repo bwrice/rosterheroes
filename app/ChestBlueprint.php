@@ -25,9 +25,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ChestBlueprint extends Model
 {
-    public const LOW_TIER_WARRIOR_CHEST = 'A';
-    public const LOW_TIER_RANGER_CHEST = 'B';
-    public const LOW_TIER_SORCERER_CHEST = 'C';
+    public const LOW_TIER_SMALL_WARRIOR_CHEST = 'A';
+    public const LOW_TIER_SMALL_RANGER_CHEST = 'B';
+    public const LOW_TIER_SMALL_SORCERER_CHEST = 'C';
     public const LOW_TIER_MEDIUM_WARRIOR_CHEST = 'D';
     public const LOW_TIER_MEDIUM_RANGER_CHEST = 'E';
     public const LOW_TIER_MEDIUM_SORCERER_CHEST = 'F';
