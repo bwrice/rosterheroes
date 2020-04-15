@@ -54,10 +54,32 @@ class RewardSquadForMinionKillTest extends TestCase
     public function it_will_execute_reward_chest_to_squad_actions_for_each_chest_blueprint_belonging_to_the_minion()
     {
         $chestBlueFactory = ChestBlueprintFactory::new();
-        $this->minion->chestBlueprints()->save($chestBlueFactory->create());
-        $this->minion->chestBlueprints()->save($chestBlueFactory->create());
+        $this->minion->chestBlueprints()->save($chestBlueFactory->create(), [
+            'count' => 1
+        ]);
+        $this->minion->chestBlueprints()->save($chestBlueFactory->create(), [
+            'count' => 1
+        ]);
 
         $rewardChestMock = \Mockery::mock(RewardChestToSquad::class)->shouldReceive('execute')->times(2)->getMock();
+        app()->instance(RewardChestToSquad::class, $rewardChestMock);
+
+        /** @var RewardSquadForMinionKill $domainAction */
+        $domainAction = app(RewardSquadForMinionKill::class);
+        $domainAction->execute($this->squad, $this->minion);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_reward_chests_based_on_the_pivot_count()
+    {
+        $chestBlueFactory = ChestBlueprintFactory::new();
+        $this->minion->chestBlueprints()->save($chestBlueFactory->create(), [
+            'count' => 3
+        ]);
+
+        $rewardChestMock = \Mockery::mock(RewardChestToSquad::class)->shouldReceive('execute')->times(3)->getMock();
         app()->instance(RewardChestToSquad::class, $rewardChestMock);
 
         /** @var RewardSquadForMinionKill $domainAction */

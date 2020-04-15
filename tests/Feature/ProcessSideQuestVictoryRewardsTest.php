@@ -88,8 +88,12 @@ class ProcessSideQuestVictoryRewardsTest extends TestCase
         $blueprintFactory = ChestBlueprintFactory::new();
 
         // Attach 2 chest blueprints
-        $sideQuest->chestBlueprints()->save($blueprintFactory->create());
-        $sideQuest->chestBlueprints()->save($blueprintFactory->create());
+        $sideQuest->chestBlueprints()->save($blueprintFactory->create(), [
+            'count' => 1
+        ]);
+        $sideQuest->chestBlueprints()->save($blueprintFactory->create(), [
+            'count' => 1
+        ]);
 
         $rewardChestMock = \Mockery::mock(RewardChestToSquad::class)->shouldReceive('execute', 2)->getMock();
         app()->instance(RewardChestToSquad::class, $rewardChestMock);
