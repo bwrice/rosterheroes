@@ -38,8 +38,10 @@ class ChestBlueprintFactory
             $this->itemBlueprintFactories->each(function (ItemBlueprintFactory $itemBlueprintFactory) use ($chestBlueprint) {
                 $itemBlueprint = $itemBlueprintFactory->create();
                 $chance = is_null($itemBlueprintFactory->getChestBlueprintChance()) ? rand(1, 100) : $itemBlueprintFactory->getChestBlueprintChance();
+                $count = $itemBlueprintFactory->getChestBlueprintCount() ?: 1;
                 $chestBlueprint->itemBlueprints()->save($itemBlueprint, [
-                    'chance' => $chance
+                    'chance' => $chance,
+                    'count' => $count
                 ]);
             });
         }

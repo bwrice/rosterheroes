@@ -14,6 +14,9 @@ class ItemBlueprintFactory
      */
     protected $chestBlueprintChance;
 
+    /** @var int|null */
+    protected $chestBlueprintCount;
+
     public static function new(): self
     {
         return new self();
@@ -44,7 +47,27 @@ class ItemBlueprintFactory
      */
     public function setChestBlueprintChance(?int $chestBlueprintChance): ItemBlueprintFactory
     {
-        $this->chestBlueprintChance = $chestBlueprintChance;
-        return $this;
+        $clone = clone $this;
+        $clone->chestBlueprintChance = $chestBlueprintChance;
+        return $clone;
+    }
+
+    /**
+     * @param int|null $chestBlueprintCount
+     * @return ItemBlueprintFactory
+     */
+    public function setChestBlueprintCount(?int $chestBlueprintCount): ItemBlueprintFactory
+    {
+        $clone = clone $this;
+        $clone->chestBlueprintCount = $chestBlueprintCount;
+        return $clone;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getChestBlueprintCount(): ?int
+    {
+        return $this->chestBlueprintCount;
     }
 }
