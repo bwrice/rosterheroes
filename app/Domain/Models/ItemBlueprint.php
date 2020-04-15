@@ -2,6 +2,7 @@
 
 namespace App\Domain\Models;
 
+use App\ChestBlueprint;
 use App\Domain\Actions\GenerateItemFromBlueprintAction;
 use App\Domain\Collections\AttackCollection;
 use Illuminate\Database\Eloquent\Collection;
@@ -229,6 +230,11 @@ class ItemBlueprint extends Model
     public function materials()
     {
         return $this->belongsToMany(Material::class)->withTimestamps();
+    }
+
+    public function chestBlueprints()
+    {
+        return $this->belongsToMany(ChestBlueprint::class)->withPivot(['chance', 'count'])->withTimestamps();
     }
 
     /**

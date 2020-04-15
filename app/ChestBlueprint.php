@@ -28,6 +28,9 @@ class ChestBlueprint extends Model
     public const LOW_TIER_WARRIOR_CHEST = 'A';
     public const LOW_TIER_RANGER_CHEST = 'B';
     public const LOW_TIER_SORCERER_CHEST = 'C';
+    public const LOW_TIER_MEDIUM_WARRIOR_CHEST = 'D';
+    public const LOW_TIER_MEDIUM_RANGER_CHEST = 'E';
+    public const LOW_TIER_MEDIUM_SORCERER_CHEST = 'F';
     public const LOW_TIER_LARGE_WARRIOR_CHEST = 'D';
     public const LOW_TIER_LARGE_RANGER_CHEST = 'E';
     public const LOW_TIER_LARGE_SORCERER_CHEST = 'F';
@@ -49,7 +52,7 @@ class ChestBlueprint extends Model
 
     public function itemBlueprints()
     {
-        return $this->belongsToMany(ItemBlueprint::class)->withPivot('chance')->withTimestamps();
+        return $this->belongsToMany(ItemBlueprint::class)->withPivot(['chance', 'count'])->withTimestamps();
     }
 
     public function chests()
