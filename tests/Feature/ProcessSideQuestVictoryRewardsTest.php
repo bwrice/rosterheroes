@@ -102,4 +102,24 @@ class ProcessSideQuestVictoryRewardsTest extends TestCase
         $domainAction = app(ProcessSideQuestVictoryRewards::class);
         $domainAction->execute($this->sideQuestResult->fresh());
     }
+
+    /**
+     * @test
+     */
+    public function it_will_rewards_chests_based_on_the_pivot_count()
+    {
+        $sideQuest = $this->sideQuestResult->sideQuest;
+        $blueprintFactory = ChestBlueprintFactory::new();
+
+        // Attach 2 chest blueprints
+        $sideQuest->chestBlueprints()->save($blueprintFactory->create(), [
+            'count' => 3
+        ]);
+
+        $rewardChestMock = \Mockery::mock(RewardChestToSquad::class)->shouldReceive('execute')->times(3)->getMock();
+        app()->instance(RewardChestToSquad::class, $rewardChestMock);
+        /** @var ProcessSideQuestVictoryRewards $domainAction */
+        $domainAction = app(ProcessSideQuestVictoryRewards::class);
+        $domainAction->execute($this->sideQuestResult->fresh());
+    }
 }
