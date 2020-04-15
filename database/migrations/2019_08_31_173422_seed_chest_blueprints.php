@@ -34,8 +34,8 @@ class SeedChestBlueprints extends Migration
             /** @var ChestBlueprint $chestBlueprint */
             $chestBlueprint = ChestBlueprint::query()->create([
                 'reference_id' => $blueprintArray['reference_id'],
-                'quality_tier' => $blueprintArray['quality_tier'],
-                'size_tier' => $blueprintArray['size_tier'],
+                'quality' => $blueprintArray['quality'],
+                'size' => $blueprintArray['size'],
                 'min_gold' => $blueprintArray['min_gold'],
                 'max_gold' => $blueprintArray['max_gold'],
             ]);
@@ -74,8 +74,8 @@ class SeedChestBlueprints extends Migration
     {
         return [
             'reference_id' => $referenceID,
-            'quality_tier' => 1,
-            'size_tier' => $size,
+            'quality' => 1,
+            'size' => $size,
             'min_gold' => $minGold = (int) ceil(25 * ($size**2) * ($quality**2)),
             'max_gold' => 5 * $size * $quality * $minGold,
             'item_blueprints' => $getItemBlueprintArrays($size)

@@ -18,8 +18,8 @@ final class ChestProjector implements Projector
             'squad_id' => $event->squadID,
             'chest_blueprint_id' => $event->chestBlueprintID,
             'gold' => $event->gold,
-            'quality_tier' => $event->qualityTier,
-            'size_tier' => $event->sizeTier
+            'quality' => $event->quality,
+            'size' => $event->size
         ]);
     }
 }

@@ -34,8 +34,8 @@ class RewardChestToSquadTest extends TestCase
         $this->assertGreaterThan($chestBlueprint->min_gold, $chestGold);
         $this->assertLessThan($chestBlueprint->max_gold, $chestGold);
         $this->assertEquals($squad->id, $chest->squad_id);
-        $this->assertEquals($chestBlueprint->size_tier, $chest->size_tier);
-        $this->assertEquals($chestBlueprint->quality_tier, $chest->quality_tier);
+        $this->assertEquals($chestBlueprint->size, $chest->size);
+        $this->assertEquals($chestBlueprint->quality, $chest->quality);
         $this->assertEquals($chestBlueprint->id, $chest->chest_blueprint_id);
         $this->assertNull($chest->opened_at);
     }
