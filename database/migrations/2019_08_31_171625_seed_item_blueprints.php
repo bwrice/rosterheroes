@@ -171,10 +171,10 @@ class SeedItemBlueprints extends Migration
             ],
         ]);
 
-        $blueprints = $blueprints->union($this->getRandomItemBaseBlueprintArrays($itemBases, $itemClasses));
-        $blueprints = $blueprints->union($this->getLowTierEnchantedBlueprintArrays($itemTypes, $itemBases, $itemClasses));
-        $blueprints = $blueprints->union($this->getMidTierEnchantedBlueprintArrays($itemTypes, $itemBases, $itemClasses));
-        $blueprints = $blueprints->union($this->getHighTierEnchantedBlueprintArrays($itemTypes, $itemBases, $itemClasses));
+        $blueprints = $blueprints->merge($this->getRandomItemBaseBlueprintArrays($itemBases, $itemClasses));
+        $blueprints = $blueprints->merge($this->getLowTierEnchantedBlueprintArrays($itemTypes, $itemBases, $itemClasses));
+        $blueprints = $blueprints->merge($this->getMidTierEnchantedBlueprintArrays($itemTypes, $itemBases, $itemClasses));
+        $blueprints = $blueprints->merge($this->getHighTierEnchantedBlueprintArrays($itemTypes, $itemBases, $itemClasses));
 
         foreach($blueprints as $blueprint) {
 
@@ -311,7 +311,7 @@ class SeedItemBlueprints extends Migration
                 $itemTypes,
                 $itemBases,
                 $itemClasses);
-        })->toArray();
+        })->values();
     }
 
     protected function getMidTierEnchantedBlueprintArrays(Collection $itemTypes, Collection $itemBases, Collection $itemClasses)
@@ -363,7 +363,7 @@ class SeedItemBlueprints extends Migration
                 $itemTypes,
                 $itemBases,
                 $itemClasses);
-        })->toArray();
+        })->values();
     }
 
     protected function getHighTierEnchantedBlueprintArrays(Collection $itemTypes, Collection $itemBases, Collection $itemClasses)
@@ -415,7 +415,7 @@ class SeedItemBlueprints extends Migration
                 $itemTypes,
                 $itemBases,
                 $itemClasses);
-        })->toArray();
+        })->values();
     }
 
     protected function getCreateArrayForEnchantedTieredItemTypes(
