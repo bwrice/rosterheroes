@@ -1,5 +1,6 @@
 <?php
 
+use App\ChestBlueprint;
 use App\Domain\Models\Attack;
 use App\Domain\Models\CombatPosition;
 use App\Domain\Models\EnemyType;
@@ -27,6 +28,12 @@ class SeedMinions extends Migration
                 'attacks' => [
                     'Slash',
                     'Arrow Release',
+                ],
+                'chest_blueprints' => [
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_RANGER_CHEST,
+                        'count' => 1
+                    ]
                 ]
             ],
             [
@@ -37,6 +44,12 @@ class SeedMinions extends Migration
                 'attacks' => [
                     'Slash',
                     'Double Slash',
+                ],
+                'chest_blueprints' => [
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_WARRIOR_CHEST,
+                        'count' => 1
+                    ]
                 ]
             ],
             [
@@ -48,6 +61,12 @@ class SeedMinions extends Migration
                     'Arrow Release',
                     'Double Arrow Release',
                     'Arrow Spray',
+                ],
+                'chest_blueprints' => [
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_RANGER_CHEST,
+                        'count' => 1
+                    ]
                 ]
             ],
             [
@@ -59,6 +78,12 @@ class SeedMinions extends Migration
                     'Magic Dart',
                     'Double Magic Dart',
                     'Magic Burst'
+                ],
+                'chest_blueprints' => [
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_SORCERER_CHEST,
+                        'count' => 1
+                    ]
                 ]
             ],
             [
@@ -71,6 +96,12 @@ class SeedMinions extends Migration
                     'Double Slash',
                     'Triple Slash',
                     'Blade Sweep',
+                ],
+                'chest_blueprints' => [
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_WARRIOR_CHEST,
+                        'count' => 1
+                    ]
                 ]
             ],
             [
@@ -83,6 +114,12 @@ class SeedMinions extends Migration
                     'Double Arrow Release',
                     'Triple Arrow Release',
                     'Arrow Spray',
+                ],
+                'chest_blueprints' => [
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_MEDIUM_RANGER_CHEST,
+                        'count' => 1
+                    ]
                 ]
             ],
             [
@@ -97,6 +134,12 @@ class SeedMinions extends Migration
                     'Double Stab',
                     'Triple Stab',
                     'Polearm Strike',
+                ],
+                'chest_blueprints' => [
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_MEDIUM_WARRIOR_CHEST,
+                        'count' => 1
+                    ]
                 ]
             ],
             [
@@ -111,6 +154,16 @@ class SeedMinions extends Migration
                     'Clobber',
                     'Double Clobber',
                     'Mace Sweep',
+                ],
+                'chest_blueprints' => [
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_MEDIUM_WARRIOR_CHEST,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_WARRIOR_CHEST,
+                        'count' => 1
+                    ],
                 ]
             ],
             [
@@ -122,6 +175,12 @@ class SeedMinions extends Migration
                     'Bite',
                     'Scratch',
                     'Double Scratch'
+                ],
+                'chest_blueprints' => [
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_WARRIOR_CHEST,
+                        'count' => 1
+                    ],
                 ]
             ],
             [
@@ -133,6 +192,12 @@ class SeedMinions extends Migration
                     'Bite',
                     'Scratch',
                     'Double Scratch'
+                ],
+                'chest_blueprints' => [
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_WARRIOR_CHEST,
+                        'count' => 1
+                    ],
                 ]
             ],
             [
@@ -145,6 +210,16 @@ class SeedMinions extends Migration
                     'Fanged Bite',
                     'Scratch',
                     'Double Scratch'
+                ],
+                'chest_blueprints' => [
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_WARRIOR_CHEST,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_RANGER_CHEST,
+                        'count' => 1
+                    ],
                 ]
             ],
             [
@@ -157,6 +232,16 @@ class SeedMinions extends Migration
                     'Fanged Bite',
                     'Scratch',
                     'Double Scratch'
+                ],
+                'chest_blueprints' => [
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_SORCERER_CHEST,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_RANGER_CHEST,
+                        'count' => 1
+                    ],
                 ]
             ],
             [
@@ -169,6 +254,16 @@ class SeedMinions extends Migration
                     'Fanged Bite',
                     'Scratch',
                     'Double Scratch'
+                ],
+                'chest_blueprints' => [
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_WARRIOR_CHEST,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_SORCERER_CHEST,
+                        'count' => 1
+                    ],
                 ]
             ],
             [
@@ -181,6 +276,16 @@ class SeedMinions extends Migration
                     'Fanged Bite',
                     'Scratch',
                     'Double Scratch'
+                ],
+                'chest_blueprints' => [
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_MEDIUM_WARRIOR_CHEST,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_RANGER_CHEST,
+                        'count' => 1
+                    ],
                 ]
             ],
             [
@@ -193,6 +298,9 @@ class SeedMinions extends Migration
                     'Fanged Bite',
                     'Scratch',
                     'Double Scratch'
+                ],
+                'chest_blueprints' => [
+
                 ]
             ],
             [
@@ -205,6 +313,9 @@ class SeedMinions extends Migration
                     'Fanged Bite',
                     'Scratch',
                     'Double Scratch'
+                ],
+                'chest_blueprints' => [
+
                 ]
             ],
         ]);
@@ -230,8 +341,9 @@ class SeedMinions extends Migration
 
         $enemyTypes = EnemyType::all();
         $combatPositions = CombatPosition::all();
+        $chestBlueprints = ChestBlueprint::all();
 
-        $minions->each(function ($minionData) use ($enemyTypes, $combatPositions, $attacks) {
+        $minions->each(function ($minionData) use ($enemyTypes, $combatPositions, $attacks, $chestBlueprints) {
 
             $name = $minionData['name'];
 
@@ -243,11 +355,16 @@ class SeedMinions extends Migration
                 'enemy_type_id' => $enemyTypes->where('name', '=', $minionData['enemy_type'])->first()->id,
                 'combat_position_id' => $combatPositions->where('name', '=', $minionData['combat_position'])->first()->id
             ]);
+
             $attacksToAttach = $attacks->filter(function (Attack $attack) use ($minionData) {
                 return in_array($attack->name, $minionData['attacks']);
             });
-
             $minion->attacks()->saveMany($attacksToAttach);
+
+            $chestBlueprintsToAttach = $chestBlueprints->filter(function (ChestBlueprint $chestBlueprint) use ($minionData) {
+                return in_array($chestBlueprint->reference_id, $minionData['chest_blueprints']);
+            });
+//            $minion->chestBlueprints()->saveMany($chestBlueprintsToAttach);
         });
     }
 

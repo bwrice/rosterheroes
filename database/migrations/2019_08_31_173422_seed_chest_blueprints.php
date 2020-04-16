@@ -101,8 +101,8 @@ class SeedChestBlueprints extends Migration
             }),
         ])->values();
 
-        $goldOnlyBlueprintArrays = $this->getGoldOnlyBlueprintArrays();
-        $chestBlueprintArrays = $chestBlueprintArrays->merge($goldOnlyBlueprintArrays);
+        $chestBlueprintArrays = $chestBlueprintArrays->merge($this->getGoldOnlyBlueprintArrays());
+        $chestBlueprintArrays = $chestBlueprintArrays->merge($this->getFullyRandomBlueprintArrays());
 
         foreach ($chestBlueprintArrays as $blueprintArray) {
 
@@ -163,6 +163,35 @@ class SeedChestBlueprints extends Migration
                 'min_gold' => $minGold,
                 'max_gold' => $maxGold,
                 'item_blueprints' => []
+            ];
+        })->values();
+    }
+
+    protected function getFullyRandomBlueprintArrays()
+    {
+        return collect([
+            1 => ChestBlueprint::FULLY_RANDOM_TINY,
+            2 => ChestBlueprint::FULLY_RANDOM_SMALL,
+            3 => ChestBlueprint::FULLY_RANDOM_MEDIUM,
+            4 => ChestBlueprint::FULLY_RANDOM_LARGE,
+            5 => ChestBlueprint::FULLY_RANDOM_VERY_LARGE,
+            6 => ChestBlueprint::FULLY_RANDOM_GIGANTIC
+        ])->map(function ($referenceID, $level) {
+            $minGold = 5 * $level**2;
+            $maxGold = (int) $minGold * 5;
+            return [
+                'reference_id' => $referenceID,
+                'quality' => 3,
+                'size' => $level,
+                'min_gold' => $minGold,
+                'max_gold' => $maxGold,
+                'item_blueprints' => [
+                    [
+                        'reference_id' => ItemBlueprint::RANDOM_ENCHANTED_ITEM,
+                        'chance' => 40,
+                        'count' => (int) ceil($level**1.5  * 3)
+                    ]
+                ]
             ];
         })->values();
     }
