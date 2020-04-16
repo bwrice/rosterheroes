@@ -101,6 +101,10 @@ class SeedMinions extends Migration
                     [
                         'reference_id' => ChestBlueprint::LOW_TIER_SMALL_WARRIOR_CHEST,
                         'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_1,
+                        'count' => 1
                     ]
                 ]
             ],
@@ -139,7 +143,11 @@ class SeedMinions extends Migration
                     [
                         'reference_id' => ChestBlueprint::LOW_TIER_MEDIUM_WARRIOR_CHEST,
                         'count' => 1
-                    ]
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_1,
+                        'count' => 1
+                    ],
                 ]
             ],
             [
@@ -178,7 +186,7 @@ class SeedMinions extends Migration
                 ],
                 'chest_blueprints' => [
                     [
-                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_WARRIOR_CHEST,
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_1,
                         'count' => 1
                     ],
                 ]
@@ -195,7 +203,7 @@ class SeedMinions extends Migration
                 ],
                 'chest_blueprints' => [
                     [
-                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_WARRIOR_CHEST,
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_2,
                         'count' => 1
                     ],
                 ]
@@ -217,7 +225,7 @@ class SeedMinions extends Migration
                         'count' => 1
                     ],
                     [
-                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_RANGER_CHEST,
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_1,
                         'count' => 1
                     ],
                 ]
@@ -235,11 +243,11 @@ class SeedMinions extends Migration
                 ],
                 'chest_blueprints' => [
                     [
-                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_SORCERER_CHEST,
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_2,
                         'count' => 1
                     ],
                     [
-                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_RANGER_CHEST,
+                        'reference_id' => ChestBlueprint::FULLY_RANDOM_TINY,
                         'count' => 1
                     ],
                 ]
@@ -257,11 +265,11 @@ class SeedMinions extends Migration
                 ],
                 'chest_blueprints' => [
                     [
-                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_WARRIOR_CHEST,
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_2,
                         'count' => 1
                     ],
                     [
-                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_SORCERER_CHEST,
+                        'reference_id' => ChestBlueprint::FULLY_RANDOM_TINY,
                         'count' => 1
                     ],
                 ]
@@ -279,11 +287,15 @@ class SeedMinions extends Migration
                 ],
                 'chest_blueprints' => [
                     [
-                        'reference_id' => ChestBlueprint::LOW_TIER_MEDIUM_WARRIOR_CHEST,
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_2,
                         'count' => 1
                     ],
                     [
-                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_RANGER_CHEST,
+                        'reference_id' => ChestBlueprint::FULLY_RANDOM_TINY,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_MEDIUM_WARRIOR_CHEST,
                         'count' => 1
                     ],
                 ]
@@ -300,7 +312,18 @@ class SeedMinions extends Migration
                     'Double Scratch'
                 ],
                 'chest_blueprints' => [
-
+                    [
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_2,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::FULLY_RANDOM_TINY,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_RANGER_CHEST,
+                        'count' => 1
+                    ],
                 ]
             ],
             [
@@ -315,7 +338,18 @@ class SeedMinions extends Migration
                     'Double Scratch'
                 ],
                 'chest_blueprints' => [
-
+                    [
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_2,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::FULLY_RANDOM_TINY,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_RANGER_CHEST,
+                        'count' => 1
+                    ],
                 ]
             ],
         ]);
@@ -345,8 +379,6 @@ class SeedMinions extends Migration
 
         $minions->each(function ($minionData) use ($enemyTypes, $combatPositions, $attacks, $chestBlueprints) {
 
-            $name = $minionData['name'];
-
             /** @var Minion $minion */
             $minion = Minion::query()->create([
                 'uuid' => Str::uuid(),
@@ -361,10 +393,14 @@ class SeedMinions extends Migration
             });
             $minion->attacks()->saveMany($attacksToAttach);
 
-            $chestBlueprintsToAttach = $chestBlueprints->filter(function (ChestBlueprint $chestBlueprint) use ($minionData) {
-                return in_array($chestBlueprint->reference_id, $minionData['chest_blueprints']);
-            });
-//            $minion->chestBlueprints()->saveMany($chestBlueprintsToAttach);
+            foreach ($minionData['chest_blueprints'] as $blueprintData) {
+                $chestBlueprintToAttach = $chestBlueprints->first(function (ChestBlueprint $chestBlueprint) use ($blueprintData) {
+                    return $chestBlueprint->reference_id === $blueprintData['reference_id'];
+                });
+                $minion->chestBlueprints()->save($chestBlueprintToAttach, [
+                    'count' => $blueprintData['count']
+                ]);
+            }
         });
     }
 
