@@ -52,6 +52,24 @@ class ChestBlueprint extends Model
     public const HIGH_TIER_LARGE_WARRIOR_CHEST = 'Y';
     public const HIGH_TIER_LARGE_RANGER_CHEST = 'Z';
     public const HIGH_TIER_LARGE_SORCERER_CHEST = 'AA';
+    public const GOLD_ONLY_LEVEL_1 = 'AB';
+    public const GOLD_ONLY_LEVEL_2 = 'AC';
+    public const GOLD_ONLY_LEVEL_3 = 'AD';
+    public const GOLD_ONLY_LEVEL_4 = 'AE';
+    public const GOLD_ONLY_LEVEL_5 = 'AF';
+    public const GOLD_ONLY_LEVEL_6 = 'AG';
+    public const GOLD_ONLY_LEVEL_7 = 'AH';
+    public const GOLD_ONLY_LEVEL_8 = 'AI';
+    public const GOLD_ONLY_LEVEL_9 = 'AJ';
+    public const GOLD_ONLY_LEVEL_10 = 'AK';
+    public const GOLD_ONLY_LEVEL_11 = 'AL';
+    public const GOLD_ONLY_LEVEL_12 = 'AM';
+    public const FULLY_RANDOM_TINY = 'AN';
+    public const FULLY_RANDOM_SMALL = 'AO';
+    public const FULLY_RANDOM_MEDIUM = 'AP';
+    public const FULLY_RANDOM_LARGE = 'AQ';
+    public const FULLY_RANDOM_VERY_LARGE = 'AR';
+    public const FULLY_RANDOM_GIGANTIC = 'AS';
 
 
     protected $guarded = [];

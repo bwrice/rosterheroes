@@ -17,7 +17,7 @@ class SeedChestBlueprints extends Migration
     {
         $itemBlueprints = ItemBlueprint::all();
 
-        $chestBlueprintArrays = [
+        $chestBlueprintArrays = collect([
             $this->getChestBlueprintArray(ChestBlueprint::LOW_TIER_SMALL_WARRIOR_CHEST, 2, 1, function ($size) {
                 return $this->getLowTierWarriorItemBlueprintArrays($size);
             }),
@@ -99,7 +99,10 @@ class SeedChestBlueprints extends Migration
             $this->getChestBlueprintArray(ChestBlueprint::HIGH_TIER_LARGE_SORCERER_CHEST, 4, 3, function ($size) {
                 return $this->getHighTierSorcererBlueprintArrays($size);
             }),
-        ];
+        ])->values();
+
+        $goldOnlyBlueprintArrays = $this->getGoldOnlyBlueprintArrays();
+        $chestBlueprintArrays = $chestBlueprintArrays->merge($goldOnlyBlueprintArrays);
 
         foreach ($chestBlueprintArrays as $blueprintArray) {
 
@@ -135,6 +138,35 @@ class SeedChestBlueprints extends Migration
         //
     }
 
+    protected function getGoldOnlyBlueprintArrays()
+    {
+        return collect([
+            1 => ChestBlueprint::GOLD_ONLY_LEVEL_1,
+            2 => ChestBlueprint::GOLD_ONLY_LEVEL_2,
+            3 => ChestBlueprint::GOLD_ONLY_LEVEL_3,
+            4 => ChestBlueprint::GOLD_ONLY_LEVEL_4,
+            5 => ChestBlueprint::GOLD_ONLY_LEVEL_5,
+            6 => ChestBlueprint::GOLD_ONLY_LEVEL_6,
+            7 => ChestBlueprint::GOLD_ONLY_LEVEL_7,
+            8 => ChestBlueprint::GOLD_ONLY_LEVEL_8,
+            9 => ChestBlueprint::GOLD_ONLY_LEVEL_9,
+            10 => ChestBlueprint::GOLD_ONLY_LEVEL_10,
+            11 => ChestBlueprint::GOLD_ONLY_LEVEL_11,
+            12 => ChestBlueprint::GOLD_ONLY_LEVEL_12,
+        ])->map(function ($referenceID, $level) {
+            $minGold = 100 * $level**2;
+            $maxGold = (int) $minGold * 5 * ceil($level/4);
+            return [
+                'reference_id' => $referenceID,
+                'quality' => (int) ceil($level/2),
+                'size' => 1,
+                'min_gold' => $minGold,
+                'max_gold' => $maxGold,
+                'item_blueprints' => []
+            ];
+        })->values();
+    }
+
     /**
      * @param string $referenceID
      * @param int $size
@@ -146,9 +178,9 @@ class SeedChestBlueprints extends Migration
     {
         return [
             'reference_id' => $referenceID,
-            'quality' => 1,
+            'quality' => $quality,
             'size' => $size,
-            'min_gold' => $minGold = (int) ceil(25 * ($size**2) * ($quality**2)),
+            'min_gold' => $minGold = (int) ceil(25 * ($size) * ($quality**2)),
             'max_gold' => 5 * ($size + $quality - 2) * $minGold,
             'item_blueprints' => $getItemBlueprintArrays($size)
         ];
