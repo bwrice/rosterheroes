@@ -2,9 +2,11 @@
 
 namespace App\Domain\Models;
 
+use App\ChestBlueprint;
 use App\Domain\Collections\MinionCollection;
 use App\Domain\Models\Traits\HasUniqueNames;
 use App\Domain\Traits\HasNameSlug;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -14,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property string $name
  * @property MinionCollection $minions
+ * @property Collection $chestBlueprints
  */
 class SideQuestBlueprint extends Model
 {
@@ -23,7 +26,12 @@ class SideQuestBlueprint extends Model
 
     public function minions()
     {
-        return $this->belongsToMany(Minion::class)->withPivot('count');
+        return $this->belongsToMany(Minion::class)->withPivot('count')->withTimestamps();
+    }
+
+    public function chestBlueprints()
+    {
+        return $this->belongsToMany(ChestBlueprint::class)->withPivot('count')->withTimestamps();
     }
 
     public function sideQuests()
