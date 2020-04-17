@@ -2,6 +2,7 @@
 
 namespace App\Domain\Models;
 
+use App\Aggregates\HeroAggregate;
 use App\Domain\Behaviors\HeroClasses\HeroClassBehavior;
 use App\Domain\Behaviors\MeasurableTypes\MeasurableTypeBehavior;
 use App\Domain\Collections\GearSlotCollection;
@@ -388,5 +389,15 @@ class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasItems
             return 0;
         }
         return $gameLog->playerStats->totalPoints();
+    }
+
+    /**
+     * @return HeroAggregate
+     */
+    public function getAggregate()
+    {
+        /** @var HeroAggregate $aggregate */
+        $aggregate = HeroAggregate::retrieve($this->uuid);
+        return $aggregate;
     }
 }
