@@ -7,6 +7,7 @@ use App\Domain\Models\Week;
 use App\Facades\CurrentWeek;
 use App\Factories\Models\HeroFactory;
 use App\Factories\Models\PlayerSpiritFactory;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Date;
@@ -14,6 +15,8 @@ use Tests\TestCase;
 
 class ClearWeeklyPlayerSpiritTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /** @var Week */
     protected $currentWeek;
 
