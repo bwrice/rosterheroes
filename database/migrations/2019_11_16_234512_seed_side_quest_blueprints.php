@@ -1,5 +1,6 @@
 <?php
 
+use App\ChestBlueprint;
 use App\Domain\Models\Minion;
 use App\Domain\Models\SideQuest;
 use App\Domain\Models\SideQuestBlueprint;
@@ -30,6 +31,20 @@ class SeedSideQuestBlueprints extends Migration
                         'name' => 'Skeleton Guard',
                         'count' => 1
                     ]
+                ],
+                'chest_blueprints' => [
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_WARRIOR_CHEST,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_RANGER_CHEST,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_SORCERER_CHEST,
+                        'count' => 1
+                    ],
                 ]
             ],
             [
@@ -48,6 +63,20 @@ class SeedSideQuestBlueprints extends Migration
                         'name' => 'Skeleton Archer',
                         'count' => 1
                     ]
+                ],
+                'chest_blueprints' => [
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_WARRIOR_CHEST,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_MEDIUM_RANGER_CHEST,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_SORCERER_CHEST,
+                        'count' => 1
+                    ],
                 ]
             ],
             [
@@ -62,6 +91,20 @@ class SeedSideQuestBlueprints extends Migration
                         'name' => 'Skeleton Archer',
                         'count' => 2
                     ]
+                ],
+                'chest_blueprints' => [
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_MEDIUM_WARRIOR_CHEST,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_MEDIUM_RANGER_CHEST,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_SORCERER_CHEST,
+                        'count' => 1
+                    ],
                 ]
             ],
             [
@@ -79,6 +122,20 @@ class SeedSideQuestBlueprints extends Migration
                     [
                         'name' => 'Skeleton Mage',
                         'count' => 2
+                    ],
+                ],
+                'chest_blueprints' => [
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_MEDIUM_WARRIOR_CHEST,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_RANGER_CHEST,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_MEDIUM_SORCERER_CHEST,
+                        'count' => 1
                     ],
                 ]
             ],
@@ -102,6 +159,20 @@ class SeedSideQuestBlueprints extends Migration
                         'name' => 'Skeleton Mage',
                         'count' => 1
                     ]
+                ],
+                'chest_blueprints' => [
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_MEDIUM_WARRIOR_CHEST,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_MEDIUM_RANGER_CHEST,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_SORCERER_CHEST,
+                        'count' => 1
+                    ],
                 ]
             ],
             [
@@ -124,6 +195,20 @@ class SeedSideQuestBlueprints extends Migration
                         'name' => 'Skeleton Mage',
                         'count' => 1
                     ]
+                ],
+                'chest_blueprints' => [
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_MEDIUM_WARRIOR_CHEST,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_LARGE_RANGER_CHEST,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_SORCERER_CHEST,
+                        'count' => 1
+                    ],
                 ]
             ],
             [
@@ -143,6 +228,20 @@ class SeedSideQuestBlueprints extends Migration
                         'count' => 1
                     ],
 
+                ],
+                'chest_blueprints' => [
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_WARRIOR_CHEST,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_RANGER_CHEST,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_MEDIUM_SORCERER_CHEST,
+                        'count' => 1
+                    ],
                 ]
             ],
             [
@@ -165,6 +264,20 @@ class SeedSideQuestBlueprints extends Migration
                         'name' => 'Skeleton Soldier',
                         'count' => 2
                     ]
+                ],
+                'chest_blueprints' => [
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_LARGE_WARRIOR_CHEST,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_MEDIUM_RANGER_CHEST,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_MEDIUM_SORCERER_CHEST,
+                        'count' => 1
+                    ],
                 ]
             ],
             [
@@ -174,6 +287,16 @@ class SeedSideQuestBlueprints extends Migration
                     [
                         'name' => 'Skeleton Guard',
                         'count' => 5
+                    ]
+                ],
+                'chest_blueprints' => [
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_WARRIOR_CHEST,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_MEDIUM_WARRIOR_CHEST,
+                        'count' => 1
                     ]
                 ]
             ],
@@ -185,6 +308,16 @@ class SeedSideQuestBlueprints extends Migration
                         'name' => 'Skeleton Soldier',
                         'count' => 3
                     ]
+                ],
+                'chest_blueprints' => [
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_MEDIUM_WARRIOR_CHEST,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_WARRIOR_CHEST,
+                        'count' => 1
+                    ],
                 ]
             ],
             [
@@ -194,6 +327,12 @@ class SeedSideQuestBlueprints extends Migration
                     [
                         'name' => 'Skeleton Guard',
                         'count' => 7
+                    ]
+                ],
+                'chest_blueprints' => [
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_LARGE_WARRIOR_CHEST,
+                        'count' => 1
                     ]
                 ]
             ],
@@ -213,6 +352,20 @@ class SeedSideQuestBlueprints extends Migration
                         'name' => 'Skeleton Battler',
                         'count' => 2
                     ]
+                ],
+                'chest_blueprints' => [
+                    [
+                        'reference_id' => ChestBlueprint::MID_TIER_SMALL_WARRIOR_CHEST,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_MEDIUM_RANGER_CHEST,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_MEDIUM_SORCERER_CHEST,
+                        'count' => 1
+                    ],
                 ]
             ],
             [
@@ -239,6 +392,20 @@ class SeedSideQuestBlueprints extends Migration
                         'name' => 'Skeleton Battler',
                         'count' => 2
                     ]
+                ],
+                'chest_blueprints' => [
+                    [
+                        'reference_id' => ChestBlueprint::MID_TIER_SMALL_WARRIOR_CHEST,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_LARGE_RANGER_CHEST,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_MEDIUM_SORCERER_CHEST,
+                        'count' => 1
+                    ],
                 ]
             ],
             [
@@ -265,6 +432,24 @@ class SeedSideQuestBlueprints extends Migration
                         'name' => 'Skeleton Captain',
                         'count' => 1
                     ],
+                ],
+                'chest_blueprints' => [
+                    [
+                        'reference_id' => ChestBlueprint::MID_TIER_SMALL_WARRIOR_CHEST,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::MID_TIER_MEDIUM_RANGER_CHEST,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::MID_TIER_SMALL_SORCERER_CHEST,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::TINY_MID_TIER_RANDOM,
+                        'count' => 1
+                    ],
                 ]
             ],
             [
@@ -275,6 +460,16 @@ class SeedSideQuestBlueprints extends Migration
                         'name' => 'Werewolf',
                         'count' => 3
                     ]
+                ],
+                'chest_blueprints' => [
+                    [
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_1,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::TINY_LOW_TIER_RANDOM,
+                        'count' => 1
+                    ],
                 ]
             ],
             [
@@ -289,6 +484,16 @@ class SeedSideQuestBlueprints extends Migration
                         'name' => 'Werewolf',
                         'count' => 2
                     ]
+                ],
+                'chest_blueprints' => [
+                    [
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_1,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::SMALL_LOW_TIER_RANDOM,
+                        'count' => 1
+                    ],
                 ]
             ],
             [
@@ -307,6 +512,20 @@ class SeedSideQuestBlueprints extends Migration
                         'name' => 'Werewolf Thrasher',
                         'count' => 2
                     ]
+                ],
+                'chest_blueprints' => [
+                    [
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_1,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::SMALL_LOW_TIER_RANDOM,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::TINY_LOW_TIER_RANDOM,
+                        'count' => 1
+                    ],
                 ]
             ],
             [
@@ -321,6 +540,20 @@ class SeedSideQuestBlueprints extends Migration
                         'name' => 'Werewolf Thrasher',
                         'count' => 3
                     ]
+                ],
+                'chest_blueprints' => [
+                    [
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_2,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::SMALL_LOW_TIER_RANDOM,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::TINY_LOW_TIER_RANDOM,
+                        'count' => 1
+                    ],
                 ]
             ],
             [
@@ -339,6 +572,16 @@ class SeedSideQuestBlueprints extends Migration
                         'name' => 'Werewolf Ravager',
                         'count' => 1
                     ]
+                ],
+                'chest_blueprints' => [
+                    [
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_2,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::SMALL_LOW_TIER_RANDOM,
+                        'count' => 2
+                    ],
                 ]
             ],
             [
@@ -357,6 +600,16 @@ class SeedSideQuestBlueprints extends Migration
                         'name' => 'Werewolf Ravager',
                         'count' => 2
                     ]
+                ],
+                'chest_blueprints' => [
+                    [
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_2,
+                        'count' => 2
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::SMALL_MID_TIER_RANDOM,
+                        'count' => 2
+                    ],
                 ]
             ],
             [
@@ -379,6 +632,16 @@ class SeedSideQuestBlueprints extends Migration
                         'name' => 'Werewolf Mauler',
                         'count' => 1
                     ]
+                ],
+                'chest_blueprints' => [
+                    [
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_2,
+                        'count' => 3
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::MEDIUM_MID_TIER_RANDOM,
+                        'count' => 1
+                    ],
                 ]
             ],
             [
@@ -397,6 +660,20 @@ class SeedSideQuestBlueprints extends Migration
                         'name' => 'Werewolf Maimer',
                         'count' => 1
                     ]
+                ],
+                'chest_blueprints' => [
+                    [
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_2,
+                        'count' => 3
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_1,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::MEDIUM_MID_TIER_RANDOM,
+                        'count' => 1
+                    ],
                 ]
             ],
             [
@@ -415,6 +692,16 @@ class SeedSideQuestBlueprints extends Migration
                         'name' => 'Werewolf Maimer',
                         'count' => 2
                     ]
+                ],
+                'chest_blueprints' => [
+                    [
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_2,
+                        'count' => 3
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::MEDIUM_MID_TIER_RANDOM,
+                        'count' => 2
+                    ],
                 ]
             ],
             [
@@ -445,6 +732,20 @@ class SeedSideQuestBlueprints extends Migration
                         'name' => 'Werewolf Eviscerator',
                         'count' => 1
                     ]
+                ],
+                'chest_blueprints' => [
+                    [
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_3,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::LARGE_MID_TIER_RANDOM,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::TINY_HIGH_TIER_RANDOM,
+                        'count' => 1
+                    ],
                 ]
             ],
             [
@@ -467,6 +768,24 @@ class SeedSideQuestBlueprints extends Migration
                         'name' => 'Werewolf Eviscerator',
                         'count' => 3
                     ]
+                ],
+                'chest_blueprints' => [
+                    [
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_3,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_2,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::LARGE_MID_TIER_RANDOM,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::TINY_HIGH_TIER_RANDOM,
+                        'count' => 2
+                    ],
                 ]
             ],
             [
@@ -481,11 +800,22 @@ class SeedSideQuestBlueprints extends Migration
                         'name' => 'Werewolf Mauler',
                         'count' => 4
                     ]
+                ],
+                'chest_blueprints' => [
+                    [
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_3,
+                        'count' => 1
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::MEDIUM_MID_TIER_RANDOM,
+                        'count' => 1
+                    ],
                 ]
             ],
         ]);
 
         $minions = Minion::all();
+        $chestBlueprints = ChestBlueprint::all();
 
         $sideQuestBlueprints->each(function ($sideQuestBlueprintData) use ($minions) {
             $minionNames = collect($sideQuestBlueprintData['minions'])->map(function ($sideQuestMinion) {
@@ -497,9 +827,9 @@ class SeedSideQuestBlueprints extends Migration
             }
         });
 
-        $sideQuestBlueprints->each(function ($sideQuestBlueprintData) use ($minions) {
-            /** @var SideQuest $sideQuest */
-            $sideQuest = SideQuestBlueprint::query()->create([
+        $sideQuestBlueprints->each(function ($sideQuestBlueprintData) use ($minions, $chestBlueprints) {
+            /** @var SideQuest $sideQuestBlueprint */
+            $sideQuestBlueprint = SideQuestBlueprint::query()->create([
                 'name' => $sideQuestBlueprintData['name'],
                 'reference_id' => $sideQuestBlueprintData['reference_id']
             ]);
@@ -513,9 +843,20 @@ class SeedSideQuestBlueprints extends Migration
                 ];
             });
 
-            $minionAttachArrays->each(function ($attachArray) use ($sideQuest) {
-                $sideQuest->minions()->save($attachArray['minion'], ['count' => $attachArray['count']]);
+            $minionAttachArrays->each(function ($attachArray) use ($sideQuestBlueprint) {
+                $sideQuestBlueprint->minions()->save($attachArray['minion'], ['count' => $attachArray['count']]);
             });
+
+
+            foreach ($sideQuestBlueprintData['chest_blueprints'] as $chestBlueprintData) {
+                $chestBlueprintToAttach = $chestBlueprints->first(function (ChestBlueprint $chestBlueprint) use ($chestBlueprintData) {
+                    return $chestBlueprint->reference_id === $chestBlueprintData['reference_id'];
+                });
+
+                $sideQuestBlueprint->chestBlueprints()->save($chestBlueprintToAttach, [
+                    'count' => $chestBlueprintData['count']
+                ]);
+            }
         });
     }
 
