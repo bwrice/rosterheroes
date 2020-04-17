@@ -25,10 +25,10 @@ class RewardSquadForMinionKill
         $experienceReward = $minion->getExperienceReward();
         $squad->getAggregate()->increaseExperience($experienceReward)->persist();
 
-        $minion->chestBlueprints->each(function (ChestBlueprint $chestBlueprint) use ($squad) {
+        $minion->chestBlueprints->each(function (ChestBlueprint $chestBlueprint) use ($squad, $minion) {
             $count = $chestBlueprint->pivot->count;
             for ($i = 1; $i <= $count; $i++) {
-                $this->rewardChestToSquad->execute($chestBlueprint, $squad);
+                $this->rewardChestToSquad->execute($chestBlueprint, $squad, $minion);
             }
         });
     }
