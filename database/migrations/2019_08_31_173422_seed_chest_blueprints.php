@@ -2,6 +2,7 @@
 
 use App\ChestBlueprint;
 use App\Domain\Models\ItemBlueprint;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -103,6 +104,7 @@ class SeedChestBlueprints extends Migration
 
         $chestBlueprintArrays = $chestBlueprintArrays->merge($this->getGoldOnlyBlueprintArrays());
         $chestBlueprintArrays = $chestBlueprintArrays->merge($this->getFullyRandomBlueprintArrays());
+        $chestBlueprintArrays = $chestBlueprintArrays->merge($this->getRandomTieredBlueprintArrays());
 
         foreach ($chestBlueprintArrays as $blueprintArray) {
 
@@ -190,6 +192,136 @@ class SeedChestBlueprints extends Migration
                         'reference_id' => ItemBlueprint::RANDOM_ENCHANTED_ITEM,
                         'chance' => 40,
                         'count' => (int) ceil($level**1.5  * 3)
+                    ]
+                ]
+            ];
+        })->values();
+    }
+
+    protected function getRandomTieredBlueprintArrays()
+    {
+        return collect([
+            [
+                'size' => 1,
+                'tier' => 1,
+                'reference_id' => ChestBlueprint::TINY_LOW_TIER_RANDOM
+            ],
+            [
+                'size' => 2,
+                'tier' => 1,
+                'reference_id' => ChestBlueprint::SMALL_LOW_TIER_RANDOM
+            ],
+            [
+                'size' => 3,
+                'tier' => 1,
+                'reference_id' => ChestBlueprint::MEDIUM_LOW_TIER_RANDOM
+            ],
+            [
+                'size' => 4,
+                'tier' => 1,
+                'reference_id' => ChestBlueprint::LARGE_LOW_TIER_RANDOM
+            ],
+            [
+                'size' => 5,
+                'tier' => 1,
+                'reference_id' => ChestBlueprint::VERY_LARGE_LOW_TIER_RANDOM
+            ],
+            [
+                'size' => 6,
+                'tier' => 1,
+                'reference_id' => ChestBlueprint::GIGANTIC_LOW_TIER_RANDOM
+            ],
+            [
+                'size' => 1,
+                'tier' => 2,
+                'reference_id' => ChestBlueprint::TINY_MID_TIER_RANDOM
+            ],
+            [
+                'size' => 2,
+                'tier' => 2,
+                'reference_id' => ChestBlueprint::SMALL_MID_TIER_RANDOM
+            ],
+            [
+                'size' => 3,
+                'tier' => 2,
+                'reference_id' => ChestBlueprint::MEDIUM_MID_TIER_RANDOM
+            ],
+            [
+                'size' => 4,
+                'tier' => 2,
+                'reference_id' => ChestBlueprint::LARGE_MID_TIER_RANDOM
+            ],
+            [
+                'size' => 5,
+                'tier' => 2,
+                'reference_id' => ChestBlueprint::VERY_LARGE_MID_TIER_RANDOM
+            ],
+            [
+                'size' => 6,
+                'tier' => 2,
+                'reference_id' => ChestBlueprint::GIGANTIC_MID_TIER_RANDOM
+            ],
+            [
+                'size' => 1,
+                'tier' => 3,
+                'reference_id' => ChestBlueprint::TINY_HIGH_TIER_RANDOM
+            ],
+            [
+                'size' => 2,
+                'tier' => 3,
+                'reference_id' => ChestBlueprint::SMALL_HIGH_TIER_RANDOM
+            ],
+            [
+                'size' => 3,
+                'tier' => 3,
+                'reference_id' => ChestBlueprint::MEDIUM_HIGH_TIER_RANDOM
+            ],
+            [
+                'size' => 4,
+                'tier' => 3,
+                'reference_id' => ChestBlueprint::LARGE_HIGH_TIER_RANDOM
+            ],
+            [
+                'size' => 5,
+                'tier' => 3,
+                'reference_id' => ChestBlueprint::VERY_LARGE_HIGH_TIER_RANDOM
+            ],
+            [
+                'size' => 6,
+                'tier' => 3,
+                'reference_id' => ChestBlueprint::GIGANTIC_HIGH_TIER_RANDOM
+            ],
+        ])->map(function ($dataArray) {
+            $tier = $dataArray['tier'];
+            $size = $dataArray['size'];
+
+            switch ($tier) {
+                case 3:
+                    $itemBlueprintReferenceID = ItemBlueprint::RANDOM_ENCHANTED_HIGH_TIER_ITEM;
+                    break;
+                case 2:
+                    $itemBlueprintReferenceID = ItemBlueprint::RANDOM_ENCHANTED_MID_TIER_ITEM;
+                    break;
+                case 1:
+                default:
+                    $itemBlueprintReferenceID = ItemBlueprint::RANDOM_ENCHANTED_LOW_TIER_ITEM;
+                    break;
+            }
+
+            $minGold = 50 * ($tier**2 + $size**2);
+            $maxGold = (int) ceil($minGold * 4 * ($tier + $size)/2);
+
+            return [
+                'reference_id' => $dataArray['reference_id'],
+                'quality' => $tier,
+                'size' => $size,
+                'min_gold' => $minGold,
+                'max_gold' => $maxGold,
+                'item_blueprints' => [
+                    [
+                        'reference_id' => $itemBlueprintReferenceID,
+                        'chance' => 40,
+                        'count' => (int) ceil($size**1.5  * 3)
                     ]
                 ]
             ];

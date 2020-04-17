@@ -70,6 +70,24 @@ class ChestBlueprint extends Model
     public const FULLY_RANDOM_LARGE = 'AQ';
     public const FULLY_RANDOM_VERY_LARGE = 'AR';
     public const FULLY_RANDOM_GIGANTIC = 'AS';
+    public const TINY_LOW_TIER_RANDOM = 'AT';
+    public const SMALL_LOW_TIER_RANDOM = 'AU';
+    public const MEDIUM_LOW_TIER_RANDOM = 'AV';
+    public const LARGE_LOW_TIER_RANDOM = 'AX';
+    public const VERY_LARGE_LOW_TIER_RANDOM = 'AY';
+    public const GIGANTIC_LOW_TIER_RANDOM = 'AZ';
+    public const TINY_MID_TIER_RANDOM = 'BA';
+    public const SMALL_MID_TIER_RANDOM = 'BB';
+    public const MEDIUM_MID_TIER_RANDOM = 'BC';
+    public const LARGE_MID_TIER_RANDOM = 'BD';
+    public const VERY_LARGE_MID_TIER_RANDOM = 'BE';
+    public const GIGANTIC_MID_TIER_RANDOM = 'BF';
+    public const TINY_HIGH_TIER_RANDOM = 'BH';
+    public const SMALL_HIGH_TIER_RANDOM = 'BI';
+    public const MEDIUM_HIGH_TIER_RANDOM = 'BJ';
+    public const LARGE_HIGH_TIER_RANDOM = 'BK';
+    public const VERY_LARGE_HIGH_TIER_RANDOM = 'BL';
+    public const GIGANTIC_HIGH_TIER_RANDOM = 'BM';
 
 
     protected $guarded = [];
