@@ -20,6 +20,8 @@ use Carbon\CarbonInterface;
  * @property CarbonInterface $opened_at
  * @property int $squad_id
  * @property int|null $chest_blueprint_id
+ * @property string|null $source_type
+ * @property string|null $source_id
  *
  * @property Squad $squad
  * @property ChestBlueprint|null $chestBlueprint
