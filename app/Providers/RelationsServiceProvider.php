@@ -7,7 +7,9 @@ use App\Domain\Models\Enchantment;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Item;
 use App\Domain\Models\ItemBlueprint;
+use App\Domain\Models\Minion;
 use App\Domain\Models\Residence;
+use App\Domain\Models\SideQuest;
 use App\Domain\Models\Spell;
 use App\Domain\Models\Squad;
 use App\Domain\Models\Stash;
@@ -32,7 +34,9 @@ class RelationsServiceProvider extends ServiceProvider
             Item::RELATION_MORPH_MAP_KEY => Item::class,
             Stash::RELATION_MORPH_MAP_KEY => Stash::class,
             Residence::RELATION_MORPH_MAP_KEY => Residence::class,
-            Chest::RELATION_MORPH_MAP_KEY => Chest::class
+            Chest::RELATION_MORPH_MAP_KEY => Chest::class,
+            Minion::RELATION_MORPH_MAP_KEY => Minion::class,
+            SideQuest::RELATION_MORPH_MAP_KEY => SideQuest::class
         ]);
     }
 }
