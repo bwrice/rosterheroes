@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Domain\Actions\SetupNextWeekAction;
+use App\Domain\Actions\WeekFinalizing\ClearWeeklyPlayerSpiritsFromHeroes;
 use App\Domain\Actions\WeekFinalizing\FinalizeWeekFinalStep;
 use App\Domain\Models\Week;
 use App\Factories\Models\CampaignFactory;
@@ -26,7 +27,7 @@ class FinalizeWeekFinalStepTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->currentWeek = factory(Week::class)->state('as-current')->create();
+        $this->currentWeek = factory(Week::class)->states('as-current', 'finalizing')->create();
     }
 
     /**
@@ -37,6 +38,23 @@ class FinalizeWeekFinalStepTest extends TestCase
         $setupNextWeekSpy = \Mockery::spy(SetupNextWeekAction::class);
 
         app()->instance(SetupNextWeekAction::class, $setupNextWeekSpy);
+
+        $nextStep = rand(1,5);
+        /** @var FinalizeWeekFinalStep $domainAction */
+        $domainAction = app(FinalizeWeekFinalStep::class);
+        $domainAction->execute($nextStep);
+
+        $setupNextWeekSpy->shouldHaveReceived('execute');
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_execute_clear_weekly_player_spirits()
+    {
+        $setupNextWeekSpy = \Mockery::spy(ClearWeeklyPlayerSpiritsFromHeroes::class);
+
+        app()->instance(ClearWeeklyPlayerSpiritsFromHeroes::class, $setupNextWeekSpy);
 
         $nextStep = rand(1,5);
         /** @var FinalizeWeekFinalStep $domainAction */

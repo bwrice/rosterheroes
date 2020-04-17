@@ -17,9 +17,16 @@ class FinalizeWeekFinalStep implements FinalizeWeekDomainAction
      * @var SetupNextWeekAction
      */
     protected $setupNextWeekAction;
+    /**
+     * @var ClearWeeklyPlayerSpiritsFromHeroes
+     */
+    protected $clearSpirits;
 
-    public function __construct(SetupNextWeekAction $setupNextWeekAction)
+    public function __construct(
+        ClearWeeklyPlayerSpiritsFromHeroes $clearSpirits,
+        SetupNextWeekAction $setupNextWeekAction)
     {
+        $this->clearSpirits = $clearSpirits;
         $this->setupNextWeekAction = $setupNextWeekAction;
     }
 
@@ -34,6 +41,8 @@ class FinalizeWeekFinalStep implements FinalizeWeekDomainAction
                 ProcessSideQuestRewardsJob::dispatch($sideQuestResult);
             });
         });
+
+        $this->clearSpirits->execute();
 
         $this->setupNextWeekAction->execute();
     }
