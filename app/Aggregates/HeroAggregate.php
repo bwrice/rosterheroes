@@ -5,6 +5,7 @@ namespace App\Aggregates;
 use App\Domain\Models\Hero;
 use App\StorableEvents\HeroCreated;
 use App\StorableEvents\UpdateHeroPlayerSpirit;
+use App\StorableEvents\WeeklyPlayerSpiritClearedFromHero;
 use Spatie\EventSourcing\AggregateRoot;
 
 final class HeroAggregate extends AggregateRoot
@@ -19,6 +20,13 @@ final class HeroAggregate extends AggregateRoot
     public function updatePlayerSpirit(int $playerSpiritID = null)
     {
         $this->recordThat(new UpdateHeroPlayerSpirit($playerSpiritID));
+
+        return $this;
+    }
+
+    public function clearWeeklyPlayerSpirit(int $playerSpiritID)
+    {
+        $this->recordThat(new WeeklyPlayerSpiritClearedFromHero($playerSpiritID));
 
         return $this;
     }

@@ -12,6 +12,7 @@ use App\StorableEvents\HeroKillsMinionSideQuestEvent;
 use App\StorableEvents\MinionDamagesHeroSideQuestEvent;
 use App\StorableEvents\MinionKillsHeroSideQuestEvent;
 use App\StorableEvents\UpdateHeroPlayerSpirit;
+use App\StorableEvents\WeeklyPlayerSpiritClearedFromHero;
 use Spatie\EventSourcing\Projectors\Projector;
 use Spatie\EventSourcing\Projectors\ProjectsEvents;
 
@@ -36,6 +37,13 @@ class HeroProjector implements Projector
     {
         $hero = Hero::findUuid($aggregateUuid);
         $hero->player_spirit_id = $event->playerSpiritID;
+        $hero->save();
+    }
+
+    public function onWeeklyPlayerSpiritClearedFromHero(WeeklyPlayerSpiritClearedFromHero $event, string $aggregateUuid)
+    {
+        $hero = Hero::findUuid($aggregateUuid);
+        $hero->player_spirit_id = null;
         $hero->save();
     }
 
