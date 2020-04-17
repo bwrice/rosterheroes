@@ -10,6 +10,7 @@ use App\Domain\Collections\MinionCollection;
 use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Interfaces\HasAttacks;
 use App\Domain\Interfaces\Morphable;
+use App\Domain\Interfaces\RewardsChests;
 use App\Domain\Traits\HasConfigAttributes;
 use App\Domain\Traits\HasNameSlug;
 use App\Domain\Traits\HasUuid;
@@ -35,7 +36,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property Collection $chestBlueprints
  */
-class Minion extends Model implements HasAttacks, Morphable
+class Minion extends Model implements HasAttacks, RewardsChests
 {
     public const RELATION_MORPH_MAP_KEY = 'minions';
 

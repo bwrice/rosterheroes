@@ -6,6 +6,7 @@ use App\ChestBlueprint;
 use App\Domain\Collections\MinionCollection;
 use App\Domain\Collections\SideQuestCollection;
 use App\Domain\Interfaces\Morphable;
+use App\Domain\Interfaces\RewardsChests;
 use App\Domain\Models\Quest;
 use App\Domain\Traits\HasNameSlug;
 use App\Domain\Traits\HasUuid;
@@ -29,7 +30,7 @@ use Illuminate\Support\Str;
  * @property MinionCollection $minions
  * @property Collection $chestBlueprints
  */
-class SideQuest extends Model implements Morphable
+class SideQuest extends Model implements RewardsChests
 {
     public const RELATION_MORPH_MAP_KEY = 'side-quests';
 
