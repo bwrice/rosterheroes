@@ -23,7 +23,7 @@ class CreateSideQuestBlueprintChestBlueprintPivot extends Migration
 
         Schema::table('chest_blueprint_side_quest_blueprint', function (Blueprint $table) {
             $table->foreign('chest_blueprint_id')->references('id')->on('chest_blueprints');
-            $table->foreign('side_quest_blueprint_id')->references('id')->on('side_quest_blueprints');
+            $table->foreign('side_quest_blueprint_id', 'side_quest_bp_foreign_key')->references('id')->on('side_quest_blueprints');
         });
     }
 
