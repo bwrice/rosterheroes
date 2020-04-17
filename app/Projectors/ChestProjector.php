@@ -16,6 +16,8 @@ final class ChestProjector implements Projector
         Chest::query()->create([
             'uuid' => $aggregateUuid,
             'squad_id' => $event->squadID,
+            'source_type' => $event->sourceType,
+            'source_id' => $event->sourceID,
             'chest_blueprint_id' => $event->chestBlueprintID,
             'gold' => $event->gold,
             'quality' => $event->quality,
