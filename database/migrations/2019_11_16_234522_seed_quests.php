@@ -1,6 +1,6 @@
 <?php
 
-use App\Domain\Actions\CreateSideQuestAction;
+use App\Domain\Actions\CreateSideQuest;
 use App\Domain\Models\Minion;
 use App\Domain\Models\Province;
 use App\Domain\Models\Quest;
@@ -416,8 +416,8 @@ class SeedQuests extends Migration
             }
         });
 
-        /** @var CreateSideQuestAction $createSideQuestAction */
-        $createSideQuestAction = app(CreateSideQuestAction::class);
+        /** @var CreateSideQuest $createSideQuestAction */
+        $createSideQuestAction = app(CreateSideQuest::class);
         $quests->each(function ($questData) use ($sideQuestBlueprints, $minions, $titans, $provinces, $travelTypes, $createSideQuestAction) {
 
             $provinceID = $provinces->firstWhere('name', $questData['starting_province'])->id;

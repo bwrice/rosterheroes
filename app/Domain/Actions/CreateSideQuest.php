@@ -11,7 +11,7 @@ use App\Domain\Models\SideQuestBlueprint;
 use Exception;
 use Illuminate\Support\Str;
 
-class CreateSideQuestAction
+class CreateSideQuest
 {
     /**
      * @param SideQuestBlueprint $blueprint
