@@ -5,6 +5,7 @@ namespace App\Domain\Models;
 use App\ChestBlueprint;
 use App\Domain\Collections\MinionCollection;
 use App\Domain\Collections\SideQuestCollection;
+use App\Domain\Interfaces\Morphable;
 use App\Domain\Models\Quest;
 use App\Domain\Traits\HasNameSlug;
 use App\Domain\Traits\HasUuid;
@@ -28,8 +29,10 @@ use Illuminate\Support\Str;
  * @property MinionCollection $minions
  * @property Collection $chestBlueprints
  */
-class SideQuest extends Model
+class SideQuest extends Model implements Morphable
 {
+    public const RELATION_MORPH_MAP_KEY = 'side-quests';
+
     protected $guarded = [];
 
     use HasUuid;
@@ -105,5 +108,15 @@ class SideQuest extends Model
         }
 
         return 'Minions (Mixed)';
+    }
+
+    public function getMorphType(): string
+    {
+        return self::RELATION_MORPH_MAP_KEY;
+    }
+
+    public function getMorphID(): int
+    {
+        return $this->id;
     }
 }

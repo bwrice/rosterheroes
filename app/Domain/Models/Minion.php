@@ -9,6 +9,7 @@ use App\Domain\Collections\AttackCollection;
 use App\Domain\Collections\MinionCollection;
 use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Interfaces\HasAttacks;
+use App\Domain\Interfaces\Morphable;
 use App\Domain\Traits\HasConfigAttributes;
 use App\Domain\Traits\HasNameSlug;
 use App\Domain\Traits\HasUuid;
@@ -34,8 +35,9 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property Collection $chestBlueprints
  */
-class Minion extends Model implements HasAttacks
+class Minion extends Model implements HasAttacks, Morphable
 {
+    public const RELATION_MORPH_MAP_KEY = 'minions';
 
     use HasConfigAttributes;
     use HasNameSlug;
@@ -130,5 +132,15 @@ class Minion extends Model implements HasAttacks
          * Might have to update this if we add attacks that cost health
          */
         return new ResourceCostsCollection();
+    }
+
+    public function getMorphType(): string
+    {
+        return self::RELATION_MORPH_MAP_KEY;
+    }
+
+    public function getMorphID(): int
+    {
+        return $this->id;
     }
 }
