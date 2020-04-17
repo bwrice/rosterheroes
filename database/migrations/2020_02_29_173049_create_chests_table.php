@@ -16,11 +16,12 @@ class CreateChestsTable extends Migration
         Schema::create('chests', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->uuid('uuid');
+            $table->bigInteger('squad_id')->unsigned();
+            $table->nullableMorphs('source');
             $table->smallInteger('quality')->unsigned();
             $table->smallInteger('size')->unsigned();
-            $table->bigInteger('squad_id')->unsigned();
-            $table->dateTime('opened_at')->nullable();
             $table->bigInteger('gold')->unsigned();
+            $table->dateTime('opened_at')->nullable();
             $table->integer('chest_blueprint_id')->unsigned()->nullable();
             $table->timestamps();
         });
