@@ -7,6 +7,7 @@ namespace App\Domain\Actions;
 use App\Aggregates\ChestAggregate;
 use App\Chest;
 use App\ChestBlueprint;
+use App\Domain\Interfaces\Morphable;
 use App\Domain\Models\ItemBlueprint;
 use App\Domain\Models\Squad;
 use Illuminate\Support\Str;
@@ -26,14 +27,27 @@ class RewardChestToSquad
     /**
      * @param ChestBlueprint $chestBlueprint
      * @param Squad $squad
+     * @param Morphable|null $source
      * @return Chest
      */
-    public function execute(ChestBlueprint $chestBlueprint, Squad $squad)
+    public function execute(ChestBlueprint $chestBlueprint, Squad $squad, ?Morphable $source)
     {
         $uuid = (string) Str::uuid();
         $chestAggregate = ChestAggregate::retrieve($uuid);
         $chestGold = rand($chestBlueprint->min_gold, $chestBlueprint->max_gold);
-        $chestAggregate->createNewChest($chestBlueprint->quality, $chestBlueprint->size, $chestGold, $squad->id, $chestBlueprint->id);
+
+        $sourceType = $source ? $source->getMorphType() : null;
+        $sourceID = $source ? $source->getMorphID() : null;
+
+        $chestAggregate->createNewChest(
+            $chestBlueprint->quality,
+            $chestBlueprint->size,
+            $chestGold,
+            $squad->id,
+            $chestBlueprint->id,
+            $sourceType,
+            $sourceID
+        );
         $chestAggregate->persist();
 
         $chest = Chest::findUuidOrFail($uuid);

@@ -7,6 +7,7 @@ use App\Domain\Models\Item;
 use App\Domain\Models\ItemBlueprint;
 use App\Factories\Models\ChestBlueprintFactory;
 use App\Factories\Models\ItemBlueprintFactory;
+use App\Factories\Models\MinionFactory;
 use App\Factories\Models\SquadFactory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -28,7 +29,7 @@ class RewardChestToSquadTest extends TestCase
 
         /** @var RewardChestToSquad $domainAction */
         $domainAction = app(RewardChestToSquad::class);
-        $chest = $domainAction->execute($chestBlueprint, $squad);
+        $chest = $domainAction->execute($chestBlueprint, $squad, null);
 
         $chestGold = $chest->gold;
         $this->assertGreaterThan($chestBlueprint->min_gold, $chestGold);
@@ -56,7 +57,7 @@ class RewardChestToSquadTest extends TestCase
 
         /** @var RewardChestToSquad $domainAction */
         $domainAction = app(RewardChestToSquad::class);
-        $chest = $domainAction->execute($chestBlueprint, $squad);
+        $chest = $domainAction->execute($chestBlueprint, $squad, null);
         $items = $chest->items;
         $this->assertEquals(1, $items->count());
 
@@ -92,7 +93,7 @@ class RewardChestToSquadTest extends TestCase
 
         /** @var RewardChestToSquad $domainAction */
         $domainAction = app(RewardChestToSquad::class);
-        $chest = $domainAction->execute($chestBlueprint, $squad);
+        $chest = $domainAction->execute($chestBlueprint, $squad, null);
         $items = $chest->items;
         $this->assertEquals(3, $items->count());
 
@@ -107,5 +108,21 @@ class RewardChestToSquadTest extends TestCase
         });
 
         $this->assertEquals(2, $itemsFromDoubleCountBlueprint->count());
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_save_the_source_type_when_rewarding_a_chest()
+    {
+        $squad = SquadFactory::new()->create();
+        $chestBlueprint = ChestBlueprintFactory::new()->create();
+        $minion = MinionFactory::new()->create();
+
+        /** @var RewardChestToSquad $domainAction */
+        $domainAction = app(RewardChestToSquad::class);
+        $chest = $domainAction->execute($chestBlueprint, $squad, $minion);
+        $this->assertEquals($minion->getMorphID(), $chest->source_id);
+        $this->assertEquals($minion->getMorphType(), $chest->source_type);
     }
 }
