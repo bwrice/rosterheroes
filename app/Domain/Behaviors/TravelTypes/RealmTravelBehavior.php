@@ -15,6 +15,6 @@ class RealmTravelBehavior extends TravelTypeBehavior
      */
     public function getRandomProvinceToTravelTo(Province $currentLocation): Province
     {
-        Province::query()->where('id', '!=', $currentLocation->id)->inRandomOrder()->first();
+        return Province::query()->where('id', '!=', $currentLocation->id)->inRandomOrder()->first();
     }
 }
