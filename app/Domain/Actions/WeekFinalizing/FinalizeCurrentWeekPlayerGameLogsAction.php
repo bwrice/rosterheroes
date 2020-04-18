@@ -8,7 +8,6 @@ use App\Domain\Models\Game;
 use App\Exceptions\FinalizeWeekException;
 use App\Facades\CurrentWeek;
 use App\Jobs\FinalizeWeekJob;
-use App\Jobs\FinalizeWeekStepTwoJob;
 use App\Jobs\UpdatePlayerGameLogsJob;
 use Bwrice\LaravelJobChainGroups\Jobs\ChainGroup;
 
