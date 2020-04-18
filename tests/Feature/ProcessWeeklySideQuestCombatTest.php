@@ -147,11 +147,11 @@ class ProcessWeeklySideQuestCombatTest extends TestCase
 
         /** @var ProcessWeeklySideQuestCombat $domainAction */
         $domainAction = app(ProcessWeeklySideQuestCombat::class);
-        $domainAction->setMaxCampaignStopsQueried(2); // set to 2 because we have 3 campaign stops
+        $domainAction->setMaxSideQuestResults(2); // set to 2 because we have 3 campaign stops
         $domainAction->execute($originalStep);
 
         $extra = [
-            'last_campaign_stop_id' => $sideQuestResult2->id
+            'last_' => $sideQuestResult2->id
         ];
 
         foreach ([
@@ -190,7 +190,7 @@ class ProcessWeeklySideQuestCombatTest extends TestCase
 
         /** @var ProcessWeeklySideQuestCombat $domainAction */
         $domainAction = app(ProcessWeeklySideQuestCombat::class);
-        $domainAction->setMaxCampaignStopsQueried(3); // set to 3 for exact amount of stops we have
+        $domainAction->setMaxSideQuestResults(3); // set to 3 for exact amount of stops we have
         $domainAction->execute($originalStep);
 
         foreach ([
@@ -227,7 +227,7 @@ class ProcessWeeklySideQuestCombatTest extends TestCase
         /** @var ProcessWeeklySideQuestCombat $domainAction */
         $domainAction = app(ProcessWeeklySideQuestCombat::class);
         $domainAction->execute($step, [
-            'last_campaign_stop_id' => $sideQuestResult2->id
+            ProcessWeeklySideQuestCombat::EXTRA_LAST_SIDE_QUEST_RESULT_KEY => $sideQuestResult2->id
         ]);
 
         Queue::assertPushedWithChain(AsyncChainedJob::class, [

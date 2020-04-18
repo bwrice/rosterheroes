@@ -16,7 +16,9 @@ use Illuminate\Database\Eloquent\Collection;
 
 class ProcessWeeklySideQuestCombat implements FinalizeWeekDomainAction
 {
-    protected $maxCampaignStopsQueried = 100;
+    public const EXTRA_LAST_SIDE_QUEST_RESULT_KEY = 'last_side_quest_result_id';
+
+    protected $maxSideQuestResults = 100;
 
     /**
      * @param int $finalizeWeekStep
@@ -36,10 +38,10 @@ class ProcessWeeklySideQuestCombat implements FinalizeWeekDomainAction
 
     protected function getSideQuestResults(array $extra)
     {
-        $lastSideQuestResultID = array_key_exists('last_campaign_stop_id', $extra)
-            ? $extra['last_campaign_stop_id'] : false;
+        $lastSideQuestResultID = array_key_exists(self::EXTRA_LAST_SIDE_QUEST_RESULT_KEY, $extra)
+            ? $extra[self::EXTRA_LAST_SIDE_QUEST_RESULT_KEY] : false;
 
-        $query = $this->buildSideQuestResultsQuery($lastSideQuestResultID)->take($this->maxCampaignStopsQueried);
+        $query = $this->buildSideQuestResultsQuery($lastSideQuestResultID)->take($this->maxSideQuestResults);
 
         return $query->get();
     }
@@ -67,13 +69,13 @@ class ProcessWeeklySideQuestCombat implements FinalizeWeekDomainAction
         return $jobs->toArray();
     }
 
-    protected function getFinalizeWeekArgs(Collection $campaignStops, int $currentFinalizeWeekStep)
+    protected function getFinalizeWeekArgs(Collection $sideQuestRsults, int $currentFinalizeWeekStep)
     {
-        if ($this->moreCampaignStopsNeedProcessing($campaignStops)) {
+        if ($this->moreCampaignStopsNeedProcessing($sideQuestRsults)) {
             return [
                 'step' => $currentFinalizeWeekStep,
                 'extra' => [
-                    'last_campaign_stop_id' => $campaignStops->last()->id
+                    self::EXTRA_LAST_SIDE_QUEST_RESULT_KEY => $sideQuestRsults->last()->id
                 ]
             ];
         }
@@ -86,17 +88,17 @@ class ProcessWeeklySideQuestCombat implements FinalizeWeekDomainAction
 
     protected function moreCampaignStopsNeedProcessing(Collection $campaignStops)
     {
-        return $campaignStops->count() >= $this->maxCampaignStopsQueried
+        return $campaignStops->count() >= $this->maxSideQuestResults
             && $this->buildSideQuestResultsQuery($campaignStops->last()->id)->count() > 0;
     }
 
     /**
-     * @param int $maxCampaignStopsQueried
+     * @param int $maxSideQuestResults
      * @return ProcessWeeklySideQuestCombat
      */
-    public function setMaxCampaignStopsQueried(int $maxCampaignStopsQueried): ProcessWeeklySideQuestCombat
+    public function setMaxSideQuestResults(int $maxSideQuestResults): ProcessWeeklySideQuestCombat
     {
-        $this->maxCampaignStopsQueried = $maxCampaignStopsQueried;
+        $this->maxSideQuestResults = $maxSideQuestResults;
         return $this;
     }
 }
