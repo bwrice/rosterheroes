@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Domain\Actions\WeekFinalizing\ProcessWeeklySideQuestCombat;
+use App\Domain\Actions\WeekFinalizing\ProcessWeeklySideQuestsAction;
 use App\Domain\Models\Week;
 use App\Factories\Models\CampaignFactory;
 use App\Factories\Models\CampaignStopFactory;
@@ -68,8 +69,7 @@ class ProcessWeeklySideQuestCombatTest extends TestCase
 
         Queue::fake();
 
-        /** @var ProcessWeeklySideQuestCombat $domainAction */
-        $domainAction = app(ProcessWeeklySideQuestCombat::class);
+        $domainAction = $this->getDomainAction();
         $domainAction->execute($step);
 
         foreach ([
@@ -116,8 +116,8 @@ class ProcessWeeklySideQuestCombatTest extends TestCase
         $step = rand(1, 4);
         Queue::fake();
 
-        /** @var ProcessWeeklySideQuestCombat $domainAction */
-        $domainAction = app(ProcessWeeklySideQuestCombat::class);
+
+        $domainAction = $this->getDomainAction();
         $domainAction->execute($step);
 
         Queue::assertPushed(AsyncChainedJob::class, function (AsyncChainedJob $chainedJob) use ($validSideQuestResult) {
@@ -132,7 +132,7 @@ class ProcessWeeklySideQuestCombatTest extends TestCase
     /**
      * @test
      */
-    public function it_will_dispatch_finalize_week_with_same_step_and_with_last_campaign_stop_id_if_max_jobs_reached()
+    public function it_will_dispatch_finalize_week_with_same_step_and_with_last_side_quest_result_id_if_max_jobs_reached()
     {
         $campaignFactory = CampaignFactory::new()->withWeekID($this->currentWeek->id);
         $campaignStopFactory = CampaignStopFactory::new()->withCampaign($campaignFactory);
@@ -145,13 +145,13 @@ class ProcessWeeklySideQuestCombatTest extends TestCase
         $originalStep = rand(1, 4);
         Queue::fake();
 
-        /** @var ProcessWeeklySideQuestCombat $domainAction */
-        $domainAction = app(ProcessWeeklySideQuestCombat::class);
+
+        $domainAction = $this->getDomainAction();
         $domainAction->setMaxSideQuestResults(2); // set to 2 because we have 3 campaign stops
         $domainAction->execute($originalStep);
 
         $extra = [
-            ProcessWeeklySideQuestCombat::EXTRA_LAST_SIDE_QUEST_RESULT_KEY => $sideQuestResult2->id
+            ProcessWeeklySideQuestsAction::EXTRA_LAST_SIDE_QUEST_RESULT_KEY => $sideQuestResult2->id
         ];
 
         foreach ([
@@ -174,7 +174,7 @@ class ProcessWeeklySideQuestCombatTest extends TestCase
     /**
      * @test
      */
-    public function it_will_increase_next_step_job_without_extra_data_if_exactly_max_stops_needed_for_processing()
+    public function it_will_increase_next_step_job_without_extra_data_if_exactly_max_side_quest_results_needed_for_processing()
     {
         $campaignFactory = CampaignFactory::new()->withWeekID($this->currentWeek->id);
         $campaignStopFactory = CampaignStopFactory::new()->withCampaign($campaignFactory);
@@ -188,8 +188,8 @@ class ProcessWeeklySideQuestCombatTest extends TestCase
         $nextStep = $originalStep + 1;
         Queue::fake();
 
-        /** @var ProcessWeeklySideQuestCombat $domainAction */
-        $domainAction = app(ProcessWeeklySideQuestCombat::class);
+
+        $domainAction = $this->getDomainAction();
         $domainAction->setMaxSideQuestResults(3); // set to 3 for exact amount of stops we have
         $domainAction->execute($originalStep);
 
@@ -210,7 +210,7 @@ class ProcessWeeklySideQuestCombatTest extends TestCase
     /**
      * @test
      */
-    public function it_will_only_query_campaign_stops_with_ids_greater_than_that_given_in_the_extra_data_array()
+    public function it_will_only_query_side_quest_results_with_ids_greater_than_that_given_in_the_extra_data_array()
     {
         $campaignFactory = CampaignFactory::new()->withWeekID($this->currentWeek->id);
         $campaignStopFactory = CampaignStopFactory::new()->withCampaign($campaignFactory);
@@ -224,8 +224,8 @@ class ProcessWeeklySideQuestCombatTest extends TestCase
         $nextStep = $step + 1;
         Queue::fake();
 
-        /** @var ProcessWeeklySideQuestCombat $domainAction */
-        $domainAction = app(ProcessWeeklySideQuestCombat::class);
+
+        $domainAction = $this->getDomainAction();
         $domainAction->execute($step, [
             ProcessWeeklySideQuestCombat::EXTRA_LAST_SIDE_QUEST_RESULT_KEY => $sideQuestResult2->id
         ]);
@@ -245,5 +245,13 @@ class ProcessWeeklySideQuestCombatTest extends TestCase
                 return $chainedJob->getDecoratedJob()->sideQuestResult->id === $sideQuestResult->id;
             });
         }
+    }
+
+    /**
+     * @return ProcessWeeklySideQuestCombat
+     */
+    protected function getDomainAction()
+    {
+        return app(ProcessWeeklySideQuestCombat::class);
     }
 }
