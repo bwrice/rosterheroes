@@ -6,6 +6,7 @@ namespace Tests\Feature;
 use App\Domain\Actions\WeekFinalizing\ProcessWeeklySideQuestCombat;
 use App\Domain\Actions\WeekFinalizing\ProcessWeeklySideQuestsAction;
 use App\Domain\Models\Week;
+use App\Facades\CurrentWeek;
 use App\Factories\Models\CampaignFactory;
 use App\Factories\Models\CampaignStopFactory;
 use App\Factories\Models\SideQuestFactory;
@@ -249,5 +250,21 @@ abstract class ProcessWeeklySideQuestsTest extends TestCase
                 return $chainedJob->getDecoratedJob()->sideQuestResult->id === $sideQuestResult->id;
             });
         }
+    }
+    /**
+     * @test
+     */
+    public function it_will_throw_an_exception_if_the_current_week_is_not_finalizing()
+    {
+        factory(Week::class)->states('as-current', 'adventuring-closed')->create();
+
+        $this->assertFalse(CurrentWeek::finalizing());
+
+        try {
+            $this->getDomainAction()->execute(rand(1,6));
+        } catch (\Exception $exception) {
+            return;
+        }
+        $this->fail("Exception not thrown");
     }
 }
