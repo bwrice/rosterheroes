@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Domain\Actions\WeekFinalizing\ProcessCurrentWeekSideQuestsAction;
+use App\Domain\Actions\WeekFinalizing\ProcessWeeklySideQuestCombat;
 use App\Domain\Models\Week;
 use App\Factories\Models\CampaignFactory;
 use App\Factories\Models\CampaignStopFactory;
@@ -17,7 +17,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
-class ProcessCurrentWeekSideQuestsActionTest extends TestCase
+class ProcessWeeklySideQuestCombatTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -68,8 +68,8 @@ class ProcessCurrentWeekSideQuestsActionTest extends TestCase
 
         Queue::fake();
 
-        /** @var ProcessCurrentWeekSideQuestsAction $domainAction */
-        $domainAction = app(ProcessCurrentWeekSideQuestsAction::class);
+        /** @var ProcessWeeklySideQuestCombat $domainAction */
+        $domainAction = app(ProcessWeeklySideQuestCombat::class);
         $domainAction->execute($step);
 
         foreach ([
@@ -116,8 +116,8 @@ class ProcessCurrentWeekSideQuestsActionTest extends TestCase
         $step = rand(1, 4);
         Queue::fake();
 
-        /** @var ProcessCurrentWeekSideQuestsAction $domainAction */
-        $domainAction = app(ProcessCurrentWeekSideQuestsAction::class);
+        /** @var ProcessWeeklySideQuestCombat $domainAction */
+        $domainAction = app(ProcessWeeklySideQuestCombat::class);
         $domainAction->execute($step);
 
         Queue::assertPushed(AsyncChainedJob::class, function (AsyncChainedJob $chainedJob) use ($validSideQuestResult) {
@@ -145,8 +145,8 @@ class ProcessCurrentWeekSideQuestsActionTest extends TestCase
         $originalStep = rand(1, 4);
         Queue::fake();
 
-        /** @var ProcessCurrentWeekSideQuestsAction $domainAction */
-        $domainAction = app(ProcessCurrentWeekSideQuestsAction::class);
+        /** @var ProcessWeeklySideQuestCombat $domainAction */
+        $domainAction = app(ProcessWeeklySideQuestCombat::class);
         $domainAction->setMaxCampaignStopsQueried(2); // set to 2 because we have 3 campaign stops
         $domainAction->execute($originalStep);
 
@@ -188,8 +188,8 @@ class ProcessCurrentWeekSideQuestsActionTest extends TestCase
         $nextStep = $originalStep + 1;
         Queue::fake();
 
-        /** @var ProcessCurrentWeekSideQuestsAction $domainAction */
-        $domainAction = app(ProcessCurrentWeekSideQuestsAction::class);
+        /** @var ProcessWeeklySideQuestCombat $domainAction */
+        $domainAction = app(ProcessWeeklySideQuestCombat::class);
         $domainAction->setMaxCampaignStopsQueried(3); // set to 3 for exact amount of stops we have
         $domainAction->execute($originalStep);
 
@@ -224,8 +224,8 @@ class ProcessCurrentWeekSideQuestsActionTest extends TestCase
         $nextStep = $step + 1;
         Queue::fake();
 
-        /** @var ProcessCurrentWeekSideQuestsAction $domainAction */
-        $domainAction = app(ProcessCurrentWeekSideQuestsAction::class);
+        /** @var ProcessWeeklySideQuestCombat $domainAction */
+        $domainAction = app(ProcessWeeklySideQuestCombat::class);
         $domainAction->execute($step, [
             'last_campaign_stop_id' => $sideQuestResult2->id
         ]);

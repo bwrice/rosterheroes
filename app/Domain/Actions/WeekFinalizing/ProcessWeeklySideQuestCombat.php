@@ -14,7 +14,7 @@ use Bwrice\LaravelJobChainGroups\Jobs\ChainGroup;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
-class ProcessCurrentWeekSideQuestsAction implements FinalizeWeekDomainAction
+class ProcessWeeklySideQuestCombat implements FinalizeWeekDomainAction
 {
     protected $maxCampaignStopsQueried = 100;
 
@@ -92,9 +92,9 @@ class ProcessCurrentWeekSideQuestsAction implements FinalizeWeekDomainAction
 
     /**
      * @param int $maxCampaignStopsQueried
-     * @return ProcessCurrentWeekSideQuestsAction
+     * @return ProcessWeeklySideQuestCombat
      */
-    public function setMaxCampaignStopsQueried(int $maxCampaignStopsQueried): ProcessCurrentWeekSideQuestsAction
+    public function setMaxCampaignStopsQueried(int $maxCampaignStopsQueried): ProcessWeeklySideQuestCombat
     {
         $this->maxCampaignStopsQueried = $maxCampaignStopsQueried;
         return $this;

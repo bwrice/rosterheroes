@@ -6,7 +6,7 @@ use App\Domain\Actions\WeekFinalizing\FinalizeCurrentWeekPlayerGameLogsAction;
 use App\Domain\Actions\WeekFinalizing\FinalizeCurrentWeekSpiritEnergiesAction;
 use App\Domain\Actions\WeekFinalizing\FinalizeWeekDomainAction;
 use App\Domain\Actions\WeekFinalizing\FinalizeWeekFinalStep;
-use App\Domain\Actions\WeekFinalizing\ProcessCurrentWeekSideQuestsAction;
+use App\Domain\Actions\WeekFinalizing\ProcessWeeklySideQuestCombat;
 use App\Domain\Actions\WeekFinalizing\SetupAllQuestsForNextWeek;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -55,7 +55,7 @@ class FinalizeWeekJob implements ShouldQueue
             case 2:
                 return app(FinalizeCurrentWeekSpiritEnergiesAction::class);
             case 3:
-                return app(ProcessCurrentWeekSideQuestsAction::class);
+                return app(ProcessWeeklySideQuestCombat::class);
             case 4:
                 return app(SetupAllQuestsForNextWeek::class);
             case 5:
