@@ -7,6 +7,7 @@ namespace App\Factories\Models;
 use App\SideQuestResult;
 use Carbon\CarbonInterface;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Str;
 
 class SideQuestResultFactory
@@ -86,6 +87,7 @@ class SideQuestResultFactory
 
     public function combatProcessed(CarbonInterface $processedAt = null)
     {
+        $processedAt = $processedAt ?: Date::now();
         $clone = clone $this;
         $clone->combatProcessedAt = $processedAt;
         return $clone;
@@ -93,6 +95,7 @@ class SideQuestResultFactory
 
     public function rewardsProcessed(CarbonInterface $processedAt = null)
     {
+        $processedAt = $processedAt ?: Date::now();
         $clone = clone $this;
         $clone->rewardsProcessedAt = $processedAt;
         return $clone;
