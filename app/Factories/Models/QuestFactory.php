@@ -17,6 +17,9 @@ class QuestFactory
     /** @var Collection|null */
     protected $sideQuestFactories;
 
+    /** @var string|null */
+    protected $travelTypeName;
+
     public static function new(): self
     {
         return new self();
@@ -38,7 +41,7 @@ class QuestFactory
             'percent' => 100,
             'province_id' => $provinceID,
             'initial_province_id' => $provinceID,
-            'travel_type_id' => TravelType::query()->inRandomOrder()->first()->id,
+            'travel_type_id' => $this->getTravelTypeID(),
         ], $extra));
 
         if ($this->sideQuestFactories) {
@@ -67,5 +70,20 @@ class QuestFactory
         $clone = clone $this;
         $clone->sideQuestFactories = $sideQuestFactories;
         return $clone;
+    }
+
+    public function withTravelType(string $travelTypeName)
+    {
+        $clone = clone $this;
+        $clone->travelTypeName = $travelTypeName;
+        return $clone;
+    }
+
+    protected function getTravelTypeID()
+    {
+        if ($this->travelTypeName) {
+            return TravelType::forName($this->travelTypeName)->id;
+        }
+        return TravelType::query()->inRandomOrder()->first()->id;
     }
 }

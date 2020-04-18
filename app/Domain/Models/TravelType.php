@@ -2,10 +2,19 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Models\Traits\HasUniqueNames;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class TravelType
+ * @package App\Domain\Models
+ *
+ * @property int $id
+ */
 class TravelType extends Model
 {
+    use HasUniqueNames;
+
     protected $guarded = [];
 
     public const STATIONARY = 'Stationary';
