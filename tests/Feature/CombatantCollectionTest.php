@@ -14,7 +14,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use function foo\func;
 
-class AbstractCombatantCollectionTest extends TestCase
+class CombatantCollectionTest extends TestCase
 {
     /**
      * @test
