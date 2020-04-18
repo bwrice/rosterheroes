@@ -32,7 +32,7 @@ class ProcessCombatForSideQuestResultJob implements ShouldQueue
 
     /**
      * @param ProcessCombatForSideQuestResult $processSideQuestResult
-     * @throws \Exception
+     * @throws \Throwable
      */
     public function handle(ProcessCombatForSideQuestResult $processSideQuestResult)
     {

@@ -2,21 +2,11 @@
 
 namespace Tests\Feature;
 
-use App\Domain\Actions\WeekFinalizing\ProcessWeeklySideQuestCombat;
 use App\Domain\Actions\WeekFinalizing\ProcessWeeklySideQuestRewards;
 use App\Domain\Actions\WeekFinalizing\ProcessWeeklySideQuestsAction;
-use App\Domain\Models\Week;
 use App\Factories\Models\CampaignFactory;
 use App\Factories\Models\CampaignStopFactory;
-use App\Factories\Models\SideQuestFactory;
 use App\Factories\Models\SideQuestResultFactory;
-use App\Jobs\FinalizeWeekJob;
-use Bwrice\LaravelJobChainGroups\Jobs\AsyncChainedJob;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\Queue;
-use Tests\TestCase;
 
 class ProcessWeeklySideQuestRewardsTest extends ProcessWeeklySideQuestsTest
 {
