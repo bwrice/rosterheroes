@@ -10,12 +10,16 @@ use App\Domain\Models\Week;
 use App\Facades\CurrentWeek;
 use App\Factories\Models\QuestFactory;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class SetupQuestForNextWeekTest extends TestCase
 {
+
+    use DatabaseTransactions;
+
     /** @var Week */
     protected $currentWeek;
 
