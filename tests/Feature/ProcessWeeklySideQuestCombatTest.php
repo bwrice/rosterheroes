@@ -151,7 +151,7 @@ class ProcessWeeklySideQuestCombatTest extends TestCase
         $domainAction->execute($originalStep);
 
         $extra = [
-            'last_' => $sideQuestResult2->id
+            ProcessWeeklySideQuestCombat::EXTRA_LAST_SIDE_QUEST_RESULT_KEY => $sideQuestResult2->id
         ];
 
         foreach ([
