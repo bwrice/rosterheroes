@@ -15,7 +15,7 @@ class TerritoryTravelBehavior extends TravelTypeBehavior
      */
     public function getRandomProvinceToTravelTo(Province $currentLocation): Province
     {
-        return Province::query()->where('province_id', '!=', $currentLocation->id)
+        return Province::query()->where('id', '!=', $currentLocation->id)
             ->where('territory_id', '=', $currentLocation->territory_id)
             ->inRandomOrder()->first();
     }
