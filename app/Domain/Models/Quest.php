@@ -29,6 +29,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon $completed_at
  *
  * @property Province $province
+ * @property TravelType $travelType
  *
  * @property SideQuestCollection $sideQuests
  * @property MinionCollection $minions
