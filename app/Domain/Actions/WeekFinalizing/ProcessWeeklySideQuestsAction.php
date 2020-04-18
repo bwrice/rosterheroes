@@ -19,9 +19,11 @@ abstract class ProcessWeeklySideQuestsAction implements FinalizeWeekDomainAction
 
     protected $maxSideQuestResults = 100;
 
-    abstract protected function getProcessedAtKey(): string;
+    abstract protected function getBaseQuery(): Builder;
 
     abstract protected function getProcessSideQuestResultJob(SideQuestResult $sideQuestResult): ShouldQueue;
+
+    abstract protected function validateReady();
 
     /**
      * @param int $finalizeWeekStep
@@ -29,6 +31,7 @@ abstract class ProcessWeeklySideQuestsAction implements FinalizeWeekDomainAction
      */
     public function execute(int $finalizeWeekStep, array $extra = [])
     {
+        $this->validateReady();
         $sideQuestResults = $this->getSideQuestResults($extra);
         $asyncJobs = $this->getAsyncProcessSideQuestJobs($sideQuestResults);
 
@@ -51,7 +54,7 @@ abstract class ProcessWeeklySideQuestsAction implements FinalizeWeekDomainAction
 
     protected function buildSideQuestResultsQuery($lastSideQuestResultID)
     {
-        $query = SideQuestResult::query()->whereNull($this->getProcessedAtKey())->whereHas('campaignStop', function (Builder $builder) {
+        $query = $this->getBaseQuery()->whereHas('campaignStop', function (Builder $builder) {
             $builder->whereHas('campaign', function (Builder $builder) {
                 $builder->where('week_id', '=', CurrentWeek::id());
             });
