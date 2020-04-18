@@ -5,6 +5,7 @@ namespace App\Factories\Models;
 
 
 use App\SideQuestResult;
+use Carbon\CarbonInterface;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
@@ -19,6 +20,12 @@ class SideQuestResultFactory
     /** @var Collection|null */
     protected $sideQuestEventFactories;
 
+    /** @var CarbonInterface|null */
+    protected $combatProcessedAt = null;
+
+    /** @var CarbonInterface|null */
+    protected $rewardsProcessedAt = null;
+
     public static function new(): self
     {
         return new self();
@@ -30,7 +37,9 @@ class SideQuestResultFactory
         $sideQuestResult = SideQuestResult::query()->create(array_merge([
             'uuid' => Str::uuid()->toString(),
             'campaign_stop_id' => $this->getCampaignStop()->id,
-            'side_quest_id' => $this->getSideQuest()->id
+            'side_quest_id' => $this->getSideQuest()->id,
+            'combat_processed_at' => $this->combatProcessedAt,
+            'rewards_processed_at' => $this->rewardsProcessedAt,
         ], $extra));
 
         if ($this->sideQuestEventFactories) {
@@ -72,6 +81,20 @@ class SideQuestResultFactory
     {
         $clone = clone $this;
         $clone->sideQuestEventFactories = $sideQuestEventFactories;
+        return $clone;
+    }
+
+    public function combatProcessed(CarbonInterface $processedAt = null)
+    {
+        $clone = clone $this;
+        $clone->combatProcessedAt = $processedAt;
+        return $clone;
+    }
+
+    public function rewardsProcessed(CarbonInterface $processedAt = null)
+    {
+        $clone = clone $this;
+        $clone->rewardsProcessedAt = $processedAt;
         return $clone;
     }
 }
