@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Domain\Collections\ItemCollection;
+use App\Domain\Interfaces\RewardsChests;
 use App\Domain\Models\EventSourcedModel;
 use App\Domain\Models\Item;
 use App\Domain\Models\Squad;
@@ -24,6 +25,7 @@ use Carbon\CarbonInterface;
  * @property string|null $source_id
  *
  * @property Squad $squad
+ * @property RewardsChests $source
  * @property ChestBlueprint|null $chestBlueprint
  *
  * @property ItemCollection $items
@@ -40,6 +42,11 @@ class Chest extends EventSourcedModel
     public function chestBlueprint()
     {
         return $this->belongsTo(ChestBlueprint::class);
+    }
+
+    public function source()
+    {
+        return $this->morphTo();
     }
 
     public function items()
