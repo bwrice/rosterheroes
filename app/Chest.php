@@ -46,4 +46,9 @@ class Chest extends EventSourcedModel
     {
         return $this->morphMany(Item::class, 'has_items');
     }
+
+    public function getDescription()
+    {
+        return $this->chestBlueprint->getChestDescription();
+    }
 }
