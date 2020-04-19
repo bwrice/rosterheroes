@@ -23,21 +23,27 @@ class ItemNameBuilder
     public function getQualityPrefix()
     {
         $boostLevelSum = $this->item->enchantments->boostLevelSum();
-        $value = (int) floor($boostLevelSum**.5);
+        $value = (int) floor(($boostLevelSum/3)**.5);
         switch ($value) {
             case 0:
-                return 'Simple';
+                return 'Poor';
             case 1:
-                return 'Good';
+                return 'Adequate';
             case 2:
                 return 'Great';
             case 3:
                 return 'Excellent';
-            case 4:
-                return 'Fantastic';
             case 5:
-            default:
+                return 'Superb';
+            case 6:
+                return 'Fantastic';
+            case 7:
                 return 'Magnificent';
+            case 8:
+                return 'Remarkable';
+            case 9:
+            default:
+                return 'Unparalleled';
         }
     }
 }
