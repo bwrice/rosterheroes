@@ -5,6 +5,7 @@ namespace App\Factories\Models;
 
 
 use App\Chest;
+use Carbon\CarbonInterface;
 use Illuminate\Support\Str;
 
 class ChestFactory
@@ -13,6 +14,8 @@ class ChestFactory
     protected $squadFactory;
 
     protected $squadID;
+
+    protected $openedAt;
 
     public static function new()
     {
@@ -27,7 +30,8 @@ class ChestFactory
             'squad_id' => $this->getSquadID(),
             'quality' => rand(1, 6),
             'size' => rand(1, 6),
-            'gold' => rand(100, 999)
+            'gold' => rand(100, 999),
+            'opened_at' => $this->openedAt
         ], $extra));
         return $chest;
     }
@@ -53,6 +57,13 @@ class ChestFactory
     {
         $clone = clone $this;
         $clone->squadID = $squadID;
+        return $clone;
+    }
+
+    public function opened(CarbonInterface $openedAt = null)
+    {
+        $clone = clone $this;
+        $clone->openedAt = $openedAt ?: now();
         return $clone;
     }
 }
