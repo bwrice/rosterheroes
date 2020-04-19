@@ -84,6 +84,7 @@
             this.updateTeams();
             this.updateSports();
             this.updateSpellLibrary(route);
+            this.updateUnopenedChests(route);
         },
 
         data: function() {
@@ -115,7 +116,8 @@
                 'updateGames',
                 'updateTeams',
                 'updateSports',
-                'updateSpellLibrary'
+                'updateSpellLibrary',
+                'updateUnopenedChests',
             ])
         },
         computed: {

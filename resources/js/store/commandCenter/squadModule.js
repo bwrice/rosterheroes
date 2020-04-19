@@ -7,6 +7,7 @@ import MobileStorage from "../../models/MobileStorage";
 import Squad from "../../models/Squad";
 import Spell from "../../models/Spell";
 import Campaign from "../../models/Campaign";
+import UnopenedChest from "../../models/UnopenedChest";
 
 export default {
 
@@ -16,7 +17,8 @@ export default {
         mobileStorage: new MobileStorage({}),
         barracksLoading: true,
         currentCampaign: null,
-        spells: []
+        spells: [],
+        unopenedChests: []
     },
 
     getters: {
@@ -25,6 +27,9 @@ export default {
         },
         _spellLibrary(state) {
             return state.spells;
+        },
+        _unopenedChests(state) {
+            return state.unopenedChests;
         },
         _heroes(state) {
             return state.heroes;
@@ -84,6 +89,9 @@ export default {
         SET_SPELL_LIBRARY(state, payload) {
             state.spells = payload;
         },
+        SET_UNOPENED_CHESTS(state, payload) {
+            state.unopenedChests = payload;
+        },
         SET_HEROES(state, payload) {
             state.heroes = payload;
         },
@@ -108,8 +116,14 @@ export default {
 
         async updateSpellLibrary({commit}, route) {
             let response = await squadApi.getSpellLibrary(route.params.squadSlug);
-            let spells = response .data.map(spellData => new Spell(spellData));
+            let spells = response.data.map(spellData => new Spell(spellData));
             commit('SET_SPELL_LIBRARY', spells);
+        },
+
+        async updateUnopenedChests({commit}, route) {
+            let response = await squadApi.getUnopenedChests(route.params.squadSlug);
+            let chests = response.data.map(chestData => new UnopenedChest(chestData));
+            commit('SET_UNOPENED_CHESTS', chests);
         },
 
         async updateHeroes({commit}, route) {

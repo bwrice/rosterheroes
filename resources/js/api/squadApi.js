@@ -33,6 +33,11 @@ export async function getSpellLibrary(squadSlug) {
     return response.data;
 }
 
+export async function getUnopenedChests(squadSlug) {
+    let response = await axios.get(ROUTE_PREFIX + squadSlug + '/unopened-chests');
+    return response.data;
+}
+
 export async function getCurrentLocationProvince(squadSlug) {
     let response = await axios.get(ROUTE_PREFIX + squadSlug + '/current-location/province');
     return response.data;
