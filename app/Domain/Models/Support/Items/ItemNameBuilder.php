@@ -33,17 +33,19 @@ class ItemNameBuilder
                 return 'Great';
             case 3:
                 return 'Excellent';
-            case 5:
+            case 4:
                 return 'Superb';
-            case 6:
+            case 5:
                 return 'Fantastic';
-            case 7:
+            case 6:
                 return 'Magnificent';
-            case 8:
+            case 7:
                 return 'Remarkable';
+            case 8:
+                return 'Unparalleled';
             case 9:
             default:
-                return 'Unparalleled';
+                return 'Celestial';
         }
     }
 }
