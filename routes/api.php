@@ -116,6 +116,7 @@ Route::prefix('v1')->group(function () {
             Route::get('{squadSlug}/border-travel/{borderSlug}', [SquadBorderTravelController::class, 'show']);
 
             Route::get('{squadSlug}/spells', [SquadSpellController::class, 'index']);
+            Route::get('{squadSlug}/unopened-chests', [UnopenedChestController::class, 'index']);
 
             /*
              * CURRENT LOCATION
