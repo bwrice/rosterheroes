@@ -120,4 +120,9 @@ class SideQuest extends Model implements RewardsChests
     {
         return $this->id;
     }
+
+    public function getSourceDescription()
+    {
+        return $this->name;
+    }
 }
