@@ -111,49 +111,4 @@ class ChestBlueprint extends Model
     {
         return $this->belongsToMany(SideQuest::class)->withPivot(['count'])->withTimestamps();
     }
-
-    public function getChestDescription()
-    {
-        return ucfirst($this->getSizeDescription() . ', ' . $this->getQualityDescription() . ' chest');
-    }
-
-    public function getSizeDescription()
-    {
-        switch ($this->size) {
-            case 1:
-                return 'tiny';
-            case 2:
-                return 'small';
-            case 3:
-                return 'medium';
-            case 4:
-                return 'large';
-            case 5:
-                return 'very large';
-            case 6:
-                return 'gigantic';
-            case 7:
-                return 'colossal';
-        }
-        return '';
-    }
-
-    public function getQualityDescription()
-    {
-        switch ($this->quality) {
-            case 1:
-                return 'damaged';
-            case 2:
-                return 'rusty';
-            case 3:
-                return 'fair';
-            case 4:
-                return 'polished';
-            case 5:
-                return 'exquisite';
-            case 6:
-                return 'scintillating';
-        }
-        return '';
-    }
 }
