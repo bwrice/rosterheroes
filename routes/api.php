@@ -26,15 +26,14 @@ use App\Http\Controllers\CurrentLocationProvinceController;
 use App\Http\Controllers\SquadSpellController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TerritoryController;
+use App\Http\Controllers\UnopenedChestController;
 use App\Http\Controllers\WeekController;
 use App\Http\Controllers\SquadBorderTravelController;
 use App\Http\Controllers\SquadController;
 use App\Http\Controllers\SquadHeroRaceController;
 use App\Http\Controllers\SquadHeroClassController;
 use App\Http\Controllers\SquadHeroController;
-use App\Http\Controllers\SquadCampaignController;
 use App\Http\Controllers\HeroPlayerSpiritController;
-use App\Http\Controllers\CampaignQuestController;
 use App\Http\Controllers\WeekGameController;
 use App\Http\Controllers\WeekPlayerSpiritController;
 use Illuminate\Http\Request;
@@ -95,6 +94,14 @@ Route::prefix('v1')->group(function () {
 
     Route::middleware(['auth:api'])->group(function () {
 
+        /*
+         *   _____  ____  _    _         _____   _____
+         *  / ____|/ __ \| |  | |  /\   |  __ \ / ____|
+         * | (___ | |  | | |  | | /  \  | |  | | (___
+         *  \___ \| |  | | |  | |/ /\ \ | |  | |\___ \
+         *  ____) | |__| | |__| / ____ \| |__| |____) |
+         * |_____/ \___\_\\____/_/    \_\_____/|_____/
+         */
         Route::prefix('squads')->group(function() {
 
             Route::post('/', [SquadController::class, 'store']);
@@ -135,7 +142,12 @@ Route::prefix('v1')->group(function () {
 
         Route::prefix('heroes')->group(function () {
             /*
-             * HEROES
+             *  _    _ ______ _____   ____  ______  _____
+             * | |  | |  ____|  __ \ / __ \|  ____|/ ____|
+             * | |__| | |__  | |__) | |  | | |__  | (___
+             * |  __  |  __| |  _  /| |  | |  __|  \___ \
+             * | |  | | |____| | \ \| |__| | |____ ____) |
+             * |_|  |_|______|_|  \_\\____/|______|_____/
              *
              * 'api/v1/heroes'
              */
