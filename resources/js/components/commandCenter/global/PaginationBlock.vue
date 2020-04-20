@@ -4,6 +4,9 @@
         :items-per-page="itemsPerPage"
         :page="page"
         hide-default-footer
+        row
+        no-gutters
+        :no-data-text="noDataText"
     >
         <template v-slot:header v-if="search">
             <v-text-field
@@ -45,7 +48,15 @@
             },
             search: {
                 type: Object
-            }
+            },
+            emptyText: {
+                type: String,
+                default: 'Empty'
+            },
+            noResultsText: {
+                type: String,
+                default: 'Nothing matches the search criteria'
+            },
         },
         data() {
             return {
@@ -78,6 +89,12 @@
                     return this.search.search(this.items, this.searchInput);
                 }
                 return this.items;
+            },
+            noDataText() {
+                if (this.items.length === 0) {
+                    return this.emptyText;
+                }
+                return this.noResultsText;
             }
         }
     }
