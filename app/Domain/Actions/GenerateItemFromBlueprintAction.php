@@ -140,7 +140,7 @@ class GenerateItemFromBlueprintAction
 
     protected function findEnchantments(ItemBlueprint $itemBlueprint)
     {
-        $enchantmentsPower = $itemBlueprint->enchantment_power ?: 10;
+        $enchantmentsPower = $itemBlueprint->enchantment_power ?: $this->getRandomEnchantmentPower();
 
         $enchantments = collect();
 
@@ -154,6 +154,14 @@ class GenerateItemFromBlueprintAction
         }
 
         return $enchantments->unique();
+    }
+
+    protected function getRandomEnchantmentPower()
+    {
+        /*
+         * Will return a number between 1 and 100, weighted heavily toward the lower-bound side
+         */
+        return (int) ceil(100.1 - sqrt(rand(1, 10000)));
     }
 
 }
