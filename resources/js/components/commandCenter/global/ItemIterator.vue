@@ -1,25 +1,8 @@
 <template>
-    <v-data-iterator
-        :items="filteredItems"
-        :items-per-page="itemsPerPage"
-        :page="page"
-        hide-default-footer
-    >
-        <template v-slot:header>
-            <v-text-field
-                v-model="slotSearch"
-                clearable
-                flat
-                solo-inverted
-                hide-details
-                prepend-inner-icon="search"
-                :label="searchLabel"
-                class="my-2"
-            ></v-text-field>
-        </template>
-        <template v-slot:item="props">
+    <PaginationBlock :items="items" :search="search">
+        <template v-slot:default="slotProps">
             <ItemExpandPanel
-                :item="props.item"
+                :item="slotProps.item"
                 :item-name-truncate-extra="itemNameTruncateExtra"
                 :item-card-color="itemCardColor"
             >
@@ -31,20 +14,18 @@
                 </template>
             </ItemExpandPanel>
         </template>
-        <template v-slot:footer>
-            <IteratorFooter :page="page" :number-of-pages="numberOfPages" @formerPage="decreasePage" @nextPage="increasePage"></IteratorFooter>
-        </template>
-    </v-data-iterator>
+    </PaginationBlock>
 </template>
 
 <script>
     import * as jsSearch from 'js-search';
     import ItemExpandPanel from "./ItemExpandPanel";
     import IteratorFooter from "./IteratorFooter";
+    import PaginationBlock from "./PaginationBlock";
 
     export default {
         name: "ItemIterator",
-        components: {IteratorFooter, ItemExpandPanel},
+        components: {PaginationBlock, IteratorFooter, ItemExpandPanel},
         props: {
             items: {
                 type: Array,
@@ -69,40 +50,17 @@
         data() {
             return {
                 page: 1,
-                slotSearch: ''
-            }
-        },
-        methods: {
-            increasePage () {
-                if (this.page + 1 <= this.numberOfPages) this.page += 1
-            },
-            decreasePage () {
-                if (this.page - 1 >= 1) this.page -= 1
-            },
-        },
-        computed: {
-            numberOfPages () {
-                let itemsCount = this.filteredItems.length;
-                if (! itemsCount) return 1;
-                return Math.ceil(itemsCount / this.itemsPerPage)
-            },
-            formerPageDisabled() {
-                return this.page === 1;
-            },
-            nextPageDisabled() {
-                return this.page === this.numberOfPages;
-            },
-            filteredItems() {
-                if (this.slotSearch) {
-                    let search = new jsSearch.Search('uuid');
-                    search.addIndex(['name']);
-                    search.addIndex(['itemType', 'name']);
-                    search.addIndex(['itemClass', 'name']);
-                    search.addIndex(['material', 'name']);
-                    search.addDocuments(this.items);
-                    return search.search(this.slotSearch);
-                } else {
-                    return this.items;
+                search: {
+                    label: 'Search Wagon',
+                    search: function (items, input) {
+                        let search = new jsSearch.Search('uuid');
+                        search.addIndex(['name']);
+                        search.addIndex(['itemType', 'name']);
+                        search.addIndex(['itemClass', 'name']);
+                        search.addIndex(['material', 'name']);
+                        search.addDocuments(items);
+                        return search.search(input);
+                    }
                 }
             }
         }
