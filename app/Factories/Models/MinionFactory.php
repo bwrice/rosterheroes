@@ -35,7 +35,7 @@ class MinionFactory
         /** @var Minion $minion */
         $minion = Minion::query()->create(array_merge([
             'uuid' => (string) Str::uuid(),
-            'name' => 'Test Minion ' . rand(1, 99999),
+            'name' => 'Test Minion ' . Str::random(),
             'level' => rand(5, 20),
             'enemy_type_id' => $this->getEnemyType()->id,
             'combat_position_id' => $combatPosition->id,
