@@ -34,6 +34,8 @@
                     <PaginationBlock
                         :items="playerSpiritsForHero"
                         :items-per-page="itemsPerPage"
+                        :loading="_loadingSpirits"
+                        :search="search"
                         no-results-text="No Spirits Match Criteria"
                         empty-text="No Spirits Found"
                     >
@@ -77,12 +79,15 @@
 
         data() {
             return {
-                search: function (items, input) {
-                    let search = new jsSearch.Search('uuid');
-                    search.addIndex(['playerGameLog', 'player', 'firstName']);
-                    search.addIndex(['playerGameLog', 'player', 'lastName']);
-                    search.addDocuments(items);
-                    return search.search(input);
+                search: {
+                    label: 'Search Player Spirits',
+                    search: function (items, input) {
+                        let search = new jsSearch.Search('uuid');
+                        search.addIndex(['playerGameLog', 'player', 'firstName']);
+                        search.addIndex(['playerGameLog', 'player', 'lastName']);
+                        search.addDocuments(items);
+                        return search.search(input);
+                    }
                 }
             }
         },
