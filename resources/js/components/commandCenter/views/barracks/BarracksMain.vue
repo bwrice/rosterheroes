@@ -16,6 +16,9 @@
                         <v-col cols="12" class="pt-3">
                             <SpellLibraryCard :spells="_spellLibrary"></SpellLibraryCard>
                         </v-col>
+                        <v-col cols="12" class="pt-3">
+                            <Treasury></Treasury>
+                        </v-col>
                     </v-row>
                 </v-col>
             </v-row>
@@ -32,17 +35,20 @@
     import TwoColumnLayout from "../../layouts/TwoColumnLayout";
     import LoadingOverlay from "../../global/LoadingOverlay";
     import SpellLibraryCard from "../../barracks/SpellLibraryCard";
+    import Treasury from "../../barracks/Treasury";
 
     export default {
         name: "BarracksMain",
-        components: {SpellLibraryCard, LoadingOverlay, TwoColumnLayout, HeroesCard, MobileStorageCard, BarracksHeroCard},
+        components: {
+            Treasury,
+            SpellLibraryCard, LoadingOverlay, TwoColumnLayout, HeroesCard, MobileStorageCard, BarracksHeroCard},
 
         computed: {
             ...mapGetters([
                 '_mobileStorage',
                 '_heroes',
                 '_barracksLoading',
-                '_spellLibrary'
+                '_spellLibrary',
             ])
         }
     }
