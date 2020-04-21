@@ -15,11 +15,11 @@ use Illuminate\Support\Facades\DB;
 class EquipMobileStorageItemForHeroAction
 {
     /**
-     * @var AddItemToHasItemsAction
+     * @var AddItemToHasItems
      */
     private $addItemToHasItemsAction;
 
-    public function __construct(AddItemToHasItemsAction $addItemToHasItemsAction)
+    public function __construct(AddItemToHasItems $addItemToHasItemsAction)
     {
         $this->addItemToHasItemsAction = $addItemToHasItemsAction;
     }

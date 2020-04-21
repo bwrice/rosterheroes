@@ -8,7 +8,7 @@ use App\Domain\Collections\HasItemsCollection;
 use App\Domain\Interfaces\HasItems;
 use App\Domain\Models\Item;
 
-class AddItemToHasItemsAction
+class AddItemToHasItems
 {
     /**
      * @var MoveItemToBackupAction

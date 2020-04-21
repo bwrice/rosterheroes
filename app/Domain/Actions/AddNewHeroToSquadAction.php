@@ -29,14 +29,14 @@ class AddNewHeroToSquadAction
      */
     private $generateItemFromBlueprintAction;
     /**
-     * @var AddItemToHasItemsAction
+     * @var AddItemToHasItems
      */
     private $addItemToHasItemsAction;
 
     public function __construct(
         CreateHeroAction $createHeroAction,
         GenerateItemFromBlueprintAction $generateItemFromBlueprintAction,
-        AddItemToHasItemsAction $addItemToHasItemsAction)
+        AddItemToHasItems $addItemToHasItemsAction)
     {
         $this->createHeroAction = $createHeroAction;
         $this->generateItemFromBlueprintAction = $generateItemFromBlueprintAction;
