@@ -20,24 +20,15 @@
 <script>
     import * as jsSearch from 'js-search';
     import ItemExpandPanel from "./ItemExpandPanel";
-    import IteratorFooter from "./IteratorFooter";
     import PaginationBlock from "./PaginationBlock";
 
     export default {
         name: "ItemIterator",
-        components: {PaginationBlock, IteratorFooter, ItemExpandPanel},
+        components: {PaginationBlock, ItemExpandPanel},
         props: {
             items: {
                 type: Array,
                 required: true
-            },
-            searchLabel: {
-                type: String,
-                default: 'Search Items'
-            },
-            itemsPerPage: {
-                type: Number,
-                default: 10
             },
             itemNameTruncateExtra: {
                 type: Number,
@@ -49,7 +40,6 @@
         },
         data() {
             return {
-                page: 1,
                 search: {
                     label: 'Search Wagon',
                     search: function (items, input) {
