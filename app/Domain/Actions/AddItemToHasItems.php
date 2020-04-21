@@ -13,7 +13,7 @@ class AddItemToHasItems
     /**
      * @var MoveItemToBackupAction
      */
-    private $moveItemToBackupAction;
+    protected $moveItemToBackupAction;
 
     /**
      * AddItemToHasItemsAction constructor.
@@ -24,7 +24,8 @@ class AddItemToHasItems
         $this->moveItemToBackupAction = $moveItemToBackupAction;
     }
 
-    public function execute(Item $item, HasItems $hasItems, HasItemsCollection $hasItemsCollection = null): HasItemsCollection
+
+    public function execute(Item $item, HasItems $hasItems, HasItemsCollection $hasItemsCollection = null, $prioritize = true): HasItemsCollection
     {
         $hasItemsCollection = $hasItemsCollection ?: new HasItemsCollection();
 
@@ -34,15 +35,24 @@ class AddItemToHasItems
             $item = $item->clearHasItems();
         }
 
-        if (! $hasItems->hasRoomForItem($item)) {
+        if ($hasItems->hasRoomForItem($item)) {
+            return $this->attachNewItem($item, $hasItems, $hasItemsCollection);
+        }
+
+        if ($prioritize) {
             // Make room for new item
             $items = $hasItems->itemsToMoveForNewItem($item);
             $items->each(function (Item $item) use ($hasItems, &$hasItemsCollection) {
                 $hasItemsCollection = $this->moveItemToBackupAction->execute($item, $hasItems, $hasItemsCollection);
             });
+            return $this->attachNewItem($item, $hasItems, $hasItemsCollection);
         }
 
-        // Attach new item
+        return $this->moveItemToBackupAction->execute($item, $hasItems, $hasItemsCollection);
+    }
+
+    protected function attachNewItem(Item $item, HasItems $hasItems, HasItemsCollection $hasItemsCollection)
+    {
         $item->attachToHasItems($hasItems);
         $hasItemsCollection->push($hasItems);
         return $hasItemsCollection;
