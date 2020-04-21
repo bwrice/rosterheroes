@@ -4,12 +4,8 @@ namespace App\Domain\Models;
 
 use App\Domain\Collections\ItemCollection;
 use App\Domain\Interfaces\HasItems;
-use App\Domain\Interfaces\HasSlots;
 use App\Domain\Models\Province;
-use App\Domain\Models\SlotType;
 use App\Domain\Models\Squad;
-use App\Domain\Models\SlotOld;
-use App\Domain\Collections\SlotCollection;
 use App\Http\Resources\StashResource;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -22,6 +18,7 @@ use Illuminate\Support\Str;
  * @property int $id
  * @property string $uuid;
  *
+ * @property ItemCollection $items
  */
 class Stash extends Model implements HasItems
 {
@@ -37,6 +34,11 @@ class Stash extends Model implements HasItems
     public function province()
     {
         return $this->belongsTo(Province::class);
+    }
+
+    public function items()
+    {
+        return $this->morphMany(Item::class, 'has_items');
     }
 
     public function getBackupHasItems(): ?HasItems
@@ -81,6 +83,6 @@ class Stash extends Model implements HasItems
 
     public function getHasItemsType()
     {
-        // TODO: Implement getHasItemsType() method.
+        return 'stash';
     }
 }
