@@ -31,46 +31,20 @@
             </v-row>
             <v-row no-gutters>
                 <v-col cols="12">
-                    <v-data-iterator
-                        :items="filteredSpirits"
+                    <PaginationBlock
+                        :items="playerSpiritsForHero"
                         :items-per-page="itemsPerPage"
-                        :page="page"
-                        :loading="_loadingSpirits"
-                        hide-default-footer
-                        row
-                        no-gutters
-                        no-data-text="No spirits match the criteria"
-                        no-results-text="No spirits match the criteria"
+                        no-results-text="No Spirits Match Criteria"
+                        empty-text="No Spirits Found"
                     >
-                        <template v-slot:header>
-                            <v-text-field
-                                v-model="spiritSearch"
-                                clearable
-                                flat
-                                solo-inverted
-                                hide-details
-                                prepend-inner-icon="search"
-                                label="Search Player Spirits"
-                                class="my-1"
-                            ></v-text-field>
-                        </template>
-                        <template v-slot:item="props">
-                            <PlayerSpiritPanel :player-spirit="props.item">
+                        <template v-slot:default="slotProps">
+                            <PlayerSpiritPanel :player-spirit="slotProps.item">
                                 <template v-slot:spirit-actions>
-                                    <AddSpiritButton :hero="hero" :player-spirit="props.item"></AddSpiritButton>
+                                    <AddSpiritButton :hero="hero" :player-spirit="slotProps.item"></AddSpiritButton>
                                 </template>
                             </PlayerSpiritPanel>
                         </template>
-                        <template v-slot:loading>
-                            <v-row :justify="'center'" class="py-5">
-                                <v-progress-circular indeterminate size="36"></v-progress-circular>
-                            </v-row>
-                        </template>
-                        <template v-slot:footer>
-                            <IteratorFooter :page="page" :number-of-pages="numberOfPages" @formerPage="decreasePage" @nextPage="increasePage">
-                            </IteratorFooter>
-                        </template>
-                    </v-data-iterator>
+                    </PaginationBlock>
                 </v-col>
             </v-row>
         </template>
@@ -87,13 +61,13 @@
     import RemoveSpiritButton from "../../roster/RemoveSpiritButton";
     import HeroRosterCard from "../../roster/HeroRosterCard";
     import SingleColumnLayout from "../../layouts/SingleColumnLayout";
-    import IteratorFooter from "../../global/IteratorFooter";
+    import PaginationBlock from "../../global/PaginationBlock";
 
     export default {
         name: "RosterHeroView",
 
         components: {
-            IteratorFooter,
+            PaginationBlock,
             SingleColumnLayout,
             HeroRosterCard,
             RemoveSpiritButton,
@@ -101,25 +75,16 @@
             PlayerSpiritPanel
         },
 
-        mounted() {
-            console.log("Height");
-            console.log(window.innerHeight);
-        },
-
         data() {
             return {
-                spiritSearch: '',
-                page: 1
+                search: function (items, input) {
+                    let search = new jsSearch.Search('uuid');
+                    search.addIndex(['playerGameLog', 'player', 'firstName']);
+                    search.addIndex(['playerGameLog', 'player', 'lastName']);
+                    search.addDocuments(items);
+                    return search.search(input);
+                }
             }
-        },
-
-        methods: {
-            increasePage () {
-                if (this.page + 1 <= this.numberOfPages) this.page += 1
-            },
-            decreasePage () {
-                if (this.page - 1 >= 1) this.page -= 1
-            },
         },
 
         computed: {
@@ -140,11 +105,6 @@
             itemsPerPage() {
                 let items = Math.ceil(window.innerHeight/90) - 4;
                 return Math.max(items, 3);
-            },
-            numberOfPages() {
-                let spiritsCount = this.filteredSpirits.length;
-                if (! spiritsCount) return 1;
-                return Math.ceil(spiritsCount / this.itemsPerPage);
             },
             playerSpiritsForHero() {
                 let heroPositionIDs = this._heroRaceByID(this.hero.heroRaceID).positionIDs;
