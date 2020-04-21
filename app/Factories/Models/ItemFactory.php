@@ -219,6 +219,13 @@ class ItemFactory
         return $clone;
     }
 
+    public function withItemType(ItemType $itemType)
+    {
+        $clone = clone $this;
+        $clone->itemType = $itemType;
+        return $clone;
+    }
+
     /**
      * @return ItemType
      */
@@ -246,6 +253,13 @@ class ItemFactory
             $query->where('tier', '>=', $this->minItemTypeGrade);
         }
         return $query->inRandomOrder()->first();
+    }
+
+    public function withMaterial(Material $material)
+    {
+        $clone = clone $this;
+        $clone->material = $material;
+        return $clone;
     }
 
     /**
