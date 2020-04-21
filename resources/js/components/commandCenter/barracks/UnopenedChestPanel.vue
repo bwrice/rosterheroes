@@ -11,6 +11,7 @@
                 dark
                 x-small
                 color="rgba(0, 0, 0, .4)"
+                @click="openChestClicked"
             >
                 <v-icon>lock_open</v-icon>
             </v-btn>
@@ -27,6 +28,11 @@
             unopenedChest: {
                 type: UnopenedChest,
                 required: true
+            }
+        },
+        methods: {
+            openChestClicked(event) {
+                this.$emit('openChestClicked', this.unopenedChest, event);
             }
         }
     }

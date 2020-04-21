@@ -9,7 +9,10 @@
                 :loading="_loadingUnopenedChests"
             >
                 <template v-slot:default="slotProps">
-                    <UnopenedChestPanel :unopened-chest="slotProps.item">
+                    <UnopenedChestPanel
+                        :unopened-chest="slotProps.item"
+                        @openChestClicked="openChest"
+                    >
                     </UnopenedChestPanel>
                 </template>
             </PaginationBlock>
@@ -19,6 +22,21 @@
                 </v-row>
             </v-sheet>
         </v-col>
+        <v-dialog
+            v-model="chestDialog"
+            max-width="600"
+        >
+            <v-sheet>
+                <v-row no-gutters>
+                    <v-col cols="12">
+                        <v-row>
+                            <span class="subtitle-1 font-weight-thin">Opening Chest...</span>
+                        </v-row>
+                    </v-col>
+                </v-row>
+            </v-sheet>
+
+        </v-dialog>
     </v-row>
 </template>
 
@@ -41,6 +59,16 @@
                     return true;
                 }
                 return this._unopenedChests.length > 0;
+            }
+        },
+        data() {
+            return {
+                chestDialog: false
+            }
+        },
+        methods: {
+            openChest(unopenedChest) {
+                this.chestDialog = true;
             }
         }
     }
