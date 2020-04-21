@@ -18,7 +18,8 @@ export default {
         barracksLoading: true,
         currentCampaign: null,
         spells: [],
-        unopenedChests: []
+        unopenedChests: [],
+        loadingUnopenedChests: true
     },
 
     getters: {
@@ -30,6 +31,9 @@ export default {
         },
         _unopenedChests(state) {
             return state.unopenedChests;
+        },
+        _loadingUnopenedChests(state) {
+            return state.loadingUnopenedChests;
         },
         _heroes(state) {
             return state.heroes;
@@ -92,6 +96,9 @@ export default {
         SET_UNOPENED_CHESTS(state, payload) {
             state.unopenedChests = payload;
         },
+        SET_LOADING_UNOPENED_CHESTS(state, payload) {
+            state.loadingUnopenedChests = payload;
+        },
         SET_HEROES(state, payload) {
             state.heroes = payload;
         },
@@ -121,9 +128,14 @@ export default {
         },
 
         async updateUnopenedChests({commit}, route) {
-            let response = await squadApi.getUnopenedChests(route.params.squadSlug);
-            let chests = response.data.map(chestData => new UnopenedChest(chestData));
-            commit('SET_UNOPENED_CHESTS', chests);
+            try {
+                let response = await squadApi.getUnopenedChests(route.params.squadSlug);
+                let chests = response.data.map(chestData => new UnopenedChest(chestData));
+                commit('SET_UNOPENED_CHESTS', chests);
+            } catch (e) {
+                console.warn("Failed to load unopened chests");
+            }
+            commit('SET_LOADING_UNOPENED_CHESTS', false);
         },
 
         async updateHeroes({commit}, route) {
