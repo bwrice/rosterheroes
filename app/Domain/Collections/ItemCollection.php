@@ -56,6 +56,18 @@ class ItemCollection extends Collection
         return $attacks;
     }
 
+    public function sortByWeight($desc = false)
+    {
+        $callBack = function (Item $item) {
+            return $item->weight();
+        };
+
+        if ($desc) {
+            return $this->sortByDesc($callBack);
+        }
+        return $this->sortBy($callBack);
+    }
+
     /**
      * @return int
      */
