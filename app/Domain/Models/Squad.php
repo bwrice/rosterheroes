@@ -382,14 +382,23 @@ class Squad extends EventSourcedModel implements HasItems
     public function itemsToMoveForNewItem(Item $item): ItemCollection
     {
         $overCapacityAmount = $this->getOverCapacityAmount($item);
-        $currentItems = $this->items;
+        $currentItems = $this->items()
+            ->with(['material', 'itemType'])
+            ->limit(200)
+            ->get()
+            ->sortByDesc(function (Item $item) {
+                return $item->weight();
+            });
+
         $itemsToMove = new ItemCollection();
+
         while($overCapacityAmount >= 0) {
             /** @var Item $singleItemToMove */
             $singleItemToMove = $currentItems->shift();
             $itemsToMove->push($singleItemToMove);
             $overCapacityAmount -= $singleItemToMove->weight();
         }
+
         return $itemsToMove;
     }
 
