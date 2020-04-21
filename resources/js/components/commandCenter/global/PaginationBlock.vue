@@ -3,6 +3,7 @@
         :items="filteredItems"
         :items-per-page="itemsPerPage"
         :page="page"
+        :loading="loading"
         hide-default-footer
         row
         no-gutters
@@ -20,9 +21,14 @@
                 class="my-2"
             ></v-text-field>
         </template>
+        <template v-slot:loading>
+            <v-row :justify="'center'" class="py-5">
+                <v-progress-circular indeterminate size="36"></v-progress-circular>
+            </v-row>
+        </template>
         <template v-slot:item="props">
             <slot :item="props.item">
-
+                <!-- Default Slot -->
             </slot>
         </template>
         <template v-slot:footer>
@@ -57,6 +63,10 @@
                 type: String,
                 default: 'Nothing matches the search criteria'
             },
+            loading: {
+                type: Boolean,
+                default: false
+            }
         },
         data() {
             return {
