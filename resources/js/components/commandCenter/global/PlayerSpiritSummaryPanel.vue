@@ -7,7 +7,7 @@
     >
         <v-row no-gutters justify="center" align="center">
             <v-col cols="8">
-                <span class="subtitle-1 font-weight-regular">{{playerSpirit.player.fullName}}</span>
+                <span class="subtitle-1 font-weight-regular">{{playerSpirit.fullName}}</span>
             </v-col>
             <v-col cols="4">
                 <div class="ma-1">
@@ -55,7 +55,7 @@
                 return this.clickable ? 4 : 0;
             },
             gameDescription() {
-                return this._gameDescriptionByGameID(this.playerSpirit.gameID);
+                return this._gameDescriptionByGameID(this.playerSpirit.playerGameLog.gameID);
             }
         }
     }
