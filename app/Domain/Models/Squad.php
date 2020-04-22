@@ -376,7 +376,7 @@ class Squad extends EventSourcedModel implements HasItems
 
     public function hasRoomForItem(Item $item): bool
     {
-        return $this->getOverCapacityAmount($item) < 0;
+        return $this->getOverCapacityAmount($item) <= 0;
     }
 
     public function itemsToMoveForNewItem(Item $item): ItemCollection
