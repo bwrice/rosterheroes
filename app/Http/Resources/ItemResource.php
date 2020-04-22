@@ -5,6 +5,8 @@ namespace App\Http\Resources;
 use App\Domain\Interfaces\HasItems;
 use App\Domain\Interfaces\UsesItems;
 use App\Domain\Models\Item;
+use App\Domain\Models\Squad;
+use App\Domain\Models\Stash;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
@@ -55,7 +57,10 @@ class ItemResource extends JsonResource
             'weight' => $this->weight(),
             'protection' => $this->getProtection(),
             'blockChance' => round($this->getBlockChance(), 2),
-            'value' => $this->getValue()
+            'value' => $this->getValue(),
+            'hasItems' => $this->whenLoaded('hasItems', function () {
+                return $this->getSimpleHasItemsArray();
+            })
         ];
     }
 
@@ -77,5 +82,21 @@ class ItemResource extends JsonResource
     {
         $this->hasItems = $hasItems;
         return $this;
+    }
+
+    /**
+     * @param $hasItems
+     * @return array|null
+     */
+    protected function getSimpleHasItemsArray()
+    {
+        $hasItems = $this->resource->hasItems;
+        if ($hasItems instanceof HasItems) {
+            return [
+                'uuid' => $hasItems->getUniqueIdentifier(),
+                'type' => $hasItems->getHasItemsType()
+            ];
+        }
+        return null;
     }
 }
