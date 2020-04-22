@@ -3,7 +3,10 @@
 namespace Tests\Feature;
 
 use App\Domain\Actions\OpenChest;
+use App\Domain\Collections\ItemCollection;
+use App\Domain\Models\Item;
 use App\Factories\Models\ChestFactory;
+use App\Factories\Models\ItemFactory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -66,5 +69,34 @@ class OpenChestTest extends TestCase
 
         $currentSquadGold = $squad->fresh()->gold;
         $this->assertEquals($chestGold + $squadPreviousGold, $currentSquadGold);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_attach_any_items_in_the_chest_to_the_squad_the_chest_belongs_to()
+    {
+        $chest = ChestFactory::new()->create();
+        $itemFactory = ItemFactory::new();
+        foreach (range(1, rand(2, 5)) as $itemCount) {
+            $chest->items()->save($itemFactory->create());
+        }
+
+        $originalChestItems = $chest->fresh()->items;
+        $this->assertFalse($originalChestItems->isEmpty());
+
+        $this->getDomainAction()->execute($chest);
+
+        $squadItems = $chest->squad->fresh()->items;
+        $this->assertEquals($originalChestItems->count(), $squadItems->count());
+
+        $originalChestItems->each(function (Item $item) use ($squadItems) {
+            $match = $squadItems->first(function (Item $squadItem) use ($item) {
+                return $squadItem->id === $item->id;
+            });
+            $this->assertNotNull($match);
+        });
+
+        $this->assertEquals(0, $chest->fresh()->items()->count());
     }
 }
