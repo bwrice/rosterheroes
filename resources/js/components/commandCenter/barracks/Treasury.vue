@@ -11,7 +11,7 @@
                 <template v-slot:default="slotProps">
                     <UnopenedChestPanel
                         :unopened-chest="slotProps.item"
-                        @openChestClicked="openChest"
+                        @openChestClicked="handleOpenChestClicked"
                     >
                     </UnopenedChestPanel>
                 </template>
@@ -29,9 +29,16 @@
             <v-sheet>
                 <v-row no-gutters>
                     <v-col cols="12">
-                        <v-row>
+                        <v-row no-gutters class="px-2 py-1">
                             <span class="subtitle-1 font-weight-thin">Opening Chest...</span>
                         </v-row>
+                        <v-row
+                            v-if="openingChestPending"
+                            :justify="'center'"
+                            class="py-6">
+                            <v-progress-circular indeterminate size="36"></v-progress-circular>
+                        </v-row>
+                        <OpenedChestResultPanel :opened-chest-result="_lastOpenedChestResult"></OpenedChestResultPanel>
                     </v-col>
                 </v-row>
             </v-sheet>
@@ -43,16 +50,20 @@
 <script>
 
     import {mapGetters} from 'vuex';
+    import {mapActions} from 'vuex';
 
     import PaginationBlock from "../global/PaginationBlock";
     import UnopenedChestPanel from "./UnopenedChestPanel";
+    import OpenedChestResultPanel from "./OpenedChestResultPanel";
+
     export default {
         name: "Treasury",
-        components: {UnopenedChestPanel, PaginationBlock},
+        components: {OpenedChestResultPanel, UnopenedChestPanel, PaginationBlock},
         computed: {
             ...mapGetters([
                 '_unopenedChests',
-                '_loadingUnopenedChests'
+                '_loadingUnopenedChests',
+                '_lastOpenedChestResult'
             ]),
             chestsAvailable() {
                 if (this._loadingUnopenedChests) {
@@ -63,12 +74,22 @@
         },
         data() {
             return {
-                chestDialog: false
+                chestDialog: false,
+                openingChestPending: false
             }
         },
         methods: {
-            openChest(unopenedChest) {
+            ...mapActions([
+                'openChest',
+            ]),
+            async handleOpenChestClicked(unopenedChest) {
+                this.openingChestPending = true;
                 this.chestDialog = true;
+                await this.openChest(unopenedChest);
+                this.openingChestPending = false;
+            },
+            showOpenedChestResult() {
+                return ! this.openingChestPending && this._lastOpenedChestResult;
             }
         }
     }
