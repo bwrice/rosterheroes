@@ -28,6 +28,7 @@ export function syncHasItemsResponse(state, commit, response) {
         let updateMobileStorage = new MobileStorage(mobileStorageResponse.hasItems);
         commit('SET_MOBILE_STORAGE', updateMobileStorage);
     }
+    // TODO local Stash and Residence
 }
 
 export function handleResponseErrors(e, errorKey, dispatch) {
