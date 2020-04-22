@@ -10,8 +10,8 @@ use App\Domain\Models\ItemType;
 use App\Domain\Models\Material;
 use App\Domain\Models\MobileStorageRank;
 use App\Domain\Models\Squad;
-use App\Domain\Models\Stash;
 use App\Factories\Models\ItemFactory;
+use App\Factories\Models\ResidenceFactory;
 use App\Factories\Models\SquadFactory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -49,8 +49,11 @@ class AddItemToHasItemsTest extends TestCase
 
     /**
      * @test
+     * @param $prioritize
+     * @param $withResidence
+     * @dataProvider provides_it_will_properly_move_squad_items_if_no_room_for_current_item
      */
-    public function it_will_move_a_previous_item_to_a_squads_local_stash_if_no_room_for_current_item()
+    public function it_will_properly_move_squad_items_if_no_room_for_current_item($prioritize, $withResidence)
     {
         /** @var Material $material */
         $material = Material::query()->inRandomOrder()->first(); // use the same material for each
@@ -60,16 +63,19 @@ class AddItemToHasItemsTest extends TestCase
         $heaveItemType = ItemBase::forName(ItemBase::SHIELD)->itemTypes()->orderByDesc('id')->first();
         $lightItem = ItemFactory::new()->withMaterial($material)->withItemType($lightItemType)->create();
         $heavyItemFactory = ItemFactory::new()->withMaterial($material)->withItemType($heaveItemType);
-        $heaveItemOne = $heavyItemFactory->create();
+        $heavyItemOne = $heavyItemFactory->create();
         $heavyItemTwo = $heavyItemFactory->create();
 
         $squad = SquadFactory::new()->create();
+        if ($withResidence) {
+            $residence = ResidenceFactory::new()->withSquadID($squad->id)->atProvince($squad->province)->create();
+        }
 
         $squad->items()->save($lightItem);
-        $squad->items()->save($heaveItemOne);
+        $squad->items()->save($heavyItemOne);
 
         $lightItemWeight = $lightItem->weight();
-        $heavyItemWeight = $heaveItemOne->weight();
+        $heavyItemWeight = $heavyItemOne->weight();
 
         $this->assertGreaterThan($lightItemWeight, $heavyItemWeight);
         $this->assertEquals($heavyItemWeight, $heavyItemTwo->weight());
@@ -87,11 +93,17 @@ class AddItemToHasItemsTest extends TestCase
         /*
          * Run the action
          */
-        $this->getDomainAction()->execute($heavyItemTwo, $squad);
+        $this->getDomainAction()->execute($heavyItemTwo, $squad, null, $prioritize);
 
         $squadItems = $squad->fresh()->items;
 
-        $heavyItemAttachedToSquad = $heavyItemTwo;
+        if ($prioritize) {
+            $heavyItemAttachedToSquad = $heavyItemTwo;
+            $itemMovedToBackup = $heavyItemOne;
+        } else {
+            $heavyItemAttachedToSquad = $heavyItemOne;
+            $itemMovedToBackup = $heavyItemTwo;
+        }
 
         foreach ([$lightItem, $heavyItemAttachedToSquad] as $item) {
             /** @var Item $item */
@@ -101,12 +113,43 @@ class AddItemToHasItemsTest extends TestCase
             $this->assertNotNull($match);
         }
 
-        $itemMovedToBackup = $heaveItemOne;
+        if ($withResidence) {
 
-        $stashItem = $squad->getLocalStash()->items->first(function (Item $item) use ($itemMovedToBackup) {
-            return $item->id === $itemMovedToBackup->id;
-        });
+            $match = $residence->items->first(function (Item $item) use ($itemMovedToBackup) {
+                return $item->id === $itemMovedToBackup->id;
+            });
 
-        $this->assertNotNull($stashItem);
+            $this->assertNotNull($match);
+
+        } else {
+
+            $match = $squad->getLocalStash()->items->first(function (Item $item) use ($itemMovedToBackup) {
+                return $item->id === $itemMovedToBackup->id;
+            });
+
+            $this->assertNotNull($match);
+        }
+    }
+
+    public function provides_it_will_properly_move_squad_items_if_no_room_for_current_item()
+    {
+        return [
+            'Prioritized without residence' => [
+                'prioritize' => true,
+                'withResidence' => false
+            ],
+            'Not prioritized without residence' => [
+                'prioritize' => false,
+                'withResidence' => false
+            ],
+            'Prioritized with residence' => [
+                'prioritize' => true,
+                'withResidence' => true
+            ],
+            'Not prioritized with residence' => [
+                'prioritize' => false,
+                'withResidence' => true
+            ],
+        ];
     }
 }
