@@ -25,16 +25,20 @@ class ResidenceFactory
         return new self();
     }
 
+    /**
+     * @param array $extra
+     * @return Residence
+     */
     public function create(array $extra = [])
     {
-        /** @var Residence $team */
-        $team = Residence::query()->create(array_merge([
+        /** @var Residence $residence */
+        $residence = Residence::query()->create(array_merge([
             'uuid' => (string) Str::uuid(),
             'residence_type_id' => ResidenceType::forName(ResidenceType::SHACK)->id,
             'squad_id' => $this->getSquadID(),
             'province_id' => $this->getProvinceID()
         ], $extra));
-        return $team;
+        return $residence;
     }
 
     protected function getSquadID()
@@ -69,7 +73,7 @@ class ResidenceFactory
         return Province::query()->inRandomOrder()->first()->id;
     }
 
-    public function withProvince(Province $province)
+    public function atProvince(Province $province)
     {
         $clone = clone $this;
         $clone->province = $province;
