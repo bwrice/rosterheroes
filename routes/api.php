@@ -5,6 +5,7 @@ use App\Http\Controllers\CombatPositionController;
 use App\Http\Controllers\ContinentController;
 use App\Http\Controllers\CurrentCampaignController;
 use App\Http\Controllers\CurrentLocationQuestsController;
+use App\Http\Controllers\OpenChestController;
 use App\Http\Controllers\SquadQuestController;
 use App\Http\Controllers\UnEquipHeroController;
 use App\Http\Controllers\EquipHeroController;
@@ -173,6 +174,10 @@ Route::prefix('v1')->group(function () {
         Route::prefix('campaign-stops')->group(function () {
             Route::post('{stopUuid}/side-quests', [CampaignStopSideQuestController::class, 'store']);
             Route::delete('{stopUuid}/side-quests', [CampaignStopSideQuestController::class, 'delete']);
+        });
+
+        Route::prefix('chests')->group(function () {
+            Route::post('{chestUuid}/open', OpenChestController::class);
         });
     });
 });
