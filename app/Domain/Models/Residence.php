@@ -4,11 +4,9 @@ namespace App\Domain\Models;
 
 use App\Domain\Collections\ItemCollection;
 use App\Domain\Interfaces\HasItems;
-use App\Domain\Collections\SlotCollection;
 use App\Http\Resources\ResidenceResource;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Str;
 
 /**
  * Class StoreHouse

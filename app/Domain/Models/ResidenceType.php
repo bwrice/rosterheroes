@@ -4,6 +4,7 @@ namespace App\Domain\Models;
 
 use App\Domain\Behaviors\StoreHouses\ShackBehavior;
 use App\Domain\Behaviors\StoreHouses\ResidenceTypeBehavior;
+use App\Domain\Models\Traits\HasUniqueNames;
 use App\Exceptions\UnknownBehaviorException;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,6 +17,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ResidenceType extends Model
 {
+    use HasUniqueNames;
+
     const SHACK = 'shack';
 
     protected $guarded = [];
