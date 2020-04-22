@@ -1,6 +1,7 @@
 import * as squadApi from '../../api/squadApi';
 import * as heroApi from '../../api/heroApi';
 import * as campaignStopApi from '../../api/campaignStopApi';
+import * as chestApi from '../../api/chestApi';
 import * as helpers from '../../helpers/vuexHelpers';
 import Hero from "../../models/Hero";
 import MobileStorage from "../../models/MobileStorage";
@@ -8,6 +9,7 @@ import Squad from "../../models/Squad";
 import Spell from "../../models/Spell";
 import Campaign from "../../models/Campaign";
 import UnopenedChest from "../../models/UnopenedChest";
+import OpenedChestResult from "../../models/OpenedChestResult";
 
 export default {
 
@@ -19,6 +21,7 @@ export default {
         currentCampaign: null,
         spells: [],
         unopenedChests: [],
+        openedChestResults: [],
         loadingUnopenedChests: true
     },
 
@@ -34,6 +37,12 @@ export default {
         },
         _loadingUnopenedChests(state) {
             return state.loadingUnopenedChests;
+        },
+        _lastOpenedChestResult(state) {
+            if (state.openedChestResults.length > 0) {
+                return _.last(state.openedChestResults);
+            }
+            return null;
         },
         _heroes(state) {
             return state.heroes;
@@ -110,6 +119,9 @@ export default {
         },
         SET_BARRACKS_LOADING(state, payload) {
             state.barracksLoading = payload;
+        },
+        ADD_TO_OPENED_CHEST_RESULTS(state, payload) {
+            state.openedChestResults.push(payload);
         }
     },
 
@@ -377,6 +389,16 @@ export default {
 
             } catch (e) {
                 helpers.handleResponseErrors(e, 'campaign', dispatch);
+            }
+        },
+
+        async openChest({state, commit, dispatch}, unopenedChest) {
+            try {
+                let response = await chestApi.open(unopenedChest.uuid);
+                let openedChestResult = new OpenedChestResult(response.data);
+                commit('ADD_TO_OPENED_CHEST_RESULTS', openedChestResult);
+            } catch (e) {
+                dispatch('snackBarError', {text: 'Oops, something went wrong'})
             }
         }
     },
