@@ -24,13 +24,15 @@
         </v-col>
         <v-dialog
             v-model="chestDialog"
-            max-width="600"
+            max-width="500"
         >
-            <v-sheet>
+            <v-sheet
+                color="#67856f"
+            >
                 <v-row no-gutters>
                     <v-col cols="12">
                         <v-row no-gutters class="px-2 py-1">
-                            <span class="subtitle-1 font-weight-thin">Opening Chest...</span>
+                            <span class="title font-weight-light">{{dialogTitle}}</span>
                         </v-row>
                         <v-row
                             v-if="openingChestPending"
@@ -38,7 +40,25 @@
                             class="py-6">
                             <v-progress-circular indeterminate size="36"></v-progress-circular>
                         </v-row>
-                        <OpenedChestResultPanel :opened-chest-result="_lastOpenedChestResult"></OpenedChestResultPanel>
+                        <OpenedChestResultPanel
+                            v-if="! openingChestPending"
+                            :opened-chest-result="_lastOpenedChestResult"
+                        >
+                        </OpenedChestResultPanel>
+                        <v-row
+                            v-if="! openingChestPending"
+                            no-gutters
+                            justify="end"
+                            align="center"
+                            class="pa-2">
+                            <v-btn
+                                color="primary"
+                                @click="chestDialog = false"
+                                class="mx-1"
+                            >
+                                Close
+                            </v-btn>
+                        </v-row>
                     </v-col>
                 </v-row>
             </v-sheet>
@@ -70,6 +90,12 @@
                     return true;
                 }
                 return this._unopenedChests.length > 0;
+            },
+            dialogTitle() {
+                if (this.openingChestPending) {
+                    return 'Opening Chest...';
+                }
+                return 'Check out the loot!'
             }
         },
         data() {
@@ -88,9 +114,6 @@
                 await this.openChest(unopenedChest);
                 this.openingChestPending = false;
             },
-            showOpenedChestResult() {
-                return ! this.openingChestPending && this._lastOpenedChestResult;
-            }
         }
     }
 </script>
