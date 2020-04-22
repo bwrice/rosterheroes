@@ -53,6 +53,9 @@ export default {
         _mobileStorage(state) {
             return state.mobileStorage;
         },
+        _mobileStorageRankName(state) {
+            return state.mobileStorage.mobileStorageRank.name;
+        },
         _barracksLoading(state) {
             return state.heroes.length <= 0;
         },
