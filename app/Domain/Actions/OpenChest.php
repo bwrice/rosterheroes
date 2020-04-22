@@ -6,6 +6,7 @@ namespace App\Domain\Actions;
 
 use App\Chest;
 use App\Domain\Collections\HasItemsCollection;
+use App\Domain\Collections\ItemCollection;
 use App\Domain\DataTransferObjects\OpenedChestResult;
 use App\Domain\Models\Item;
 use Illuminate\Support\Facades\DB;
@@ -43,13 +44,12 @@ class OpenChest
             $gold = $chest->gold;
             $squad->getAggregate()->increaseGold($gold)->persist();
 
-            $hasItemsCollection = new HasItemsCollection();
-
-            $chest->items->each(function (Item $item) use ($squad, &$hasItemsCollection) {
-                $hasItemsCollection = $this->addItemToHasItems->execute($item, $squad, $hasItemsCollection, false);
+            $items = $chest->items;
+            $items->each(function (Item $item) use ($squad) {
+                $this->addItemToHasItems->execute($item, $squad->fresh(), null, false);
             });
 
-            return new OpenedChestResult($gold, $hasItemsCollection);
+            return new OpenedChestResult($gold, $items->fresh());
         });
     }
 }

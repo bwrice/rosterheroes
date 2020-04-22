@@ -4,7 +4,6 @@
 namespace App\Domain\DataTransferObjects;
 
 
-use App\Domain\Collections\HasItemsCollection;
 use App\Domain\Collections\ItemCollection;
 
 class OpenedChestResult
@@ -14,14 +13,14 @@ class OpenedChestResult
      */
     protected $gold;
     /**
-     * @var HasItemsCollection
+     * @var ItemCollection
      */
-    protected $hasItemsCollection;
+    protected $items;
 
-    public function __construct(int $gold, HasItemsCollection $hasItemsCollection)
+    public function __construct(int $gold, ItemCollection $items)
     {
         $this->gold = $gold;
-        $this->hasItemsCollection = $hasItemsCollection;
+        $this->items = $items;
     }
 
     /**
@@ -33,10 +32,10 @@ class OpenedChestResult
     }
 
     /**
-     * @return HasItemsCollection
+     * @return ItemCollection
      */
-    public function getHasItemsCollection(): HasItemsCollection
+    public function getItems(): ItemCollection
     {
-        return $this->hasItemsCollection;
+        return $this->items;
     }
 }
