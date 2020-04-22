@@ -11,7 +11,7 @@
                 <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="5" xl="8">
                     <v-row no-gutters>
                         <v-col cols="12" class="pb-3 pt-xl-3">
-                            <MobileStorageCard :mobile-storage="_mobileStorage"></MobileStorageCard>
+                            <MobileStorageCard></MobileStorageCard>
                         </v-col>
                         <v-col cols="12" class="pt-3">
                             <SpellLibraryCard :spells="_spellLibrary"></SpellLibraryCard>
@@ -29,7 +29,6 @@
 <script>
 
     import {mapGetters} from 'vuex';
-    import BarracksHeroCard from "../../barracks/HeroSummaryPanel";
     import MobileStorageCard from "../../barracks/MobileStorageCard";
     import HeroesCard from "../../barracks/HeroesCard";
     import TwoColumnLayout from "../../layouts/TwoColumnLayout";
@@ -41,11 +40,15 @@
         name: "BarracksMain",
         components: {
             Treasury,
-            SpellLibraryCard, LoadingOverlay, TwoColumnLayout, HeroesCard, MobileStorageCard, BarracksHeroCard},
+            SpellLibraryCard,
+            LoadingOverlay,
+            TwoColumnLayout,
+            HeroesCard,
+            MobileStorageCard
+        },
 
         computed: {
             ...mapGetters([
-                '_mobileStorage',
                 '_heroes',
                 '_barracksLoading',
                 '_spellLibrary',

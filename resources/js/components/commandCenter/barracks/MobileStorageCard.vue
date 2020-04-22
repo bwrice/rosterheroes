@@ -1,32 +1,30 @@
 <template>
     <v-row no-gutters>
         <v-col cols="12">
-            <span class="title font-weight-thin">WAGON</span>
+            <span class="title font-weight-thin">{{storageName}}</span>
         </v-col>
         <v-col cols="12">
             <ItemIterator
-                :items="mobileStorage.items"
+                :items="_mobileStorage.items"
             ></ItemIterator>
         </v-col>
     </v-row>
 </template>
 
 <script>
-    import MobileStorage from "../../../models/MobileStorage";
+    import {mapGetters} from 'vuex';
     import ItemIterator from "../global/ItemIterator";
 
     export default {
         name: "MobileStorageCard",
         components: {ItemIterator},
-        props: {
-            mobileStorage: {
-                type: MobileStorage,
-                required: true
-            }
-        },
         computed: {
+            ...mapGetters([
+                '_mobileStorage',
+                '_mobileStorageRankName',
+            ]),
             storageName() {
-                return this.mobileStorage.mobileStorageRank.name;
+                return this._mobileStorageRankName.toUpperCase();
             }
         }
     }
