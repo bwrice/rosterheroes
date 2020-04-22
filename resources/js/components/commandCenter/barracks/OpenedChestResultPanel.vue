@@ -5,18 +5,18 @@
             v-for="(item, uuid) in openedChestResult.items"
             :key="uuid"
         >
-            <ItemCard :item="item"></ItemCard>
+            <ItemExpandPanel :item="item"></ItemExpandPanel>
         </v-col>
     </v-row>
 </template>
 
 <script>
     import OpenedChestResult from "../../../models/OpenedChestResult";
-    import ItemCard from "../global/ItemCard";
+    import ItemExpandPanel from "../global/ItemExpandPanel";
 
     export default {
         name: "OpenedChestResultPanel",
-        components: {ItemCard},
+        components: {ItemExpandPanel},
         props: {
             openedChestResult: {
                 type: OpenedChestResult,
