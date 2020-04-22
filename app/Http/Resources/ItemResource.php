@@ -39,7 +39,7 @@ class ItemResource extends JsonResource
 
         if ($this->hasItems) {
             /** @var Item $this->resource */
-            $this->resource->setHasItems($this->usesItems);
+            $this->resource->setHasItems($this->hasItems);
         }
 
         return [
