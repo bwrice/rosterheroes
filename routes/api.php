@@ -5,6 +5,7 @@ use App\Http\Controllers\CombatPositionController;
 use App\Http\Controllers\ContinentController;
 use App\Http\Controllers\CurrentCampaignController;
 use App\Http\Controllers\CurrentLocationQuestsController;
+use App\Http\Controllers\CurrentLocationStashController;
 use App\Http\Controllers\OpenChestController;
 use App\Http\Controllers\SquadQuestController;
 use App\Http\Controllers\UnEquipHeroController;
@@ -126,6 +127,7 @@ Route::prefix('v1')->group(function () {
 
                 Route::get('province', CurrentLocationProvinceController::class);
                 Route::get('quests', CurrentLocationQuestsController::class);
+                Route::get('stash', CurrentLocationStashController::class);
             });
 
             /*
