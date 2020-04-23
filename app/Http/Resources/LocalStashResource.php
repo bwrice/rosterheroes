@@ -11,7 +11,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  *
  * @mixin Stash
  */
-class CurrentLocationStashResource extends JsonResource
+class LocalStashResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

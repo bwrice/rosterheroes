@@ -14,7 +14,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
 
-class CurrentLocationStashControllerTest extends TestCase
+class LocalStashControllerTest extends TestCase
 {
     use DatabaseTransactions;
 
