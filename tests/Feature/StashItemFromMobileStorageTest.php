@@ -7,7 +7,6 @@ use App\Factories\Models\ItemFactory;
 use App\Factories\Models\ResidenceFactory;
 use App\Factories\Models\SquadFactory;
 use App\Factories\Models\StashFactory;
-use App\Nova\Squad;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
