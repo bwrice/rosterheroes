@@ -271,7 +271,7 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
         return $this;
     }
 
-    public function doesBelongToMorphable(Morphable $hasItems)
+    public function ownedByMorphable(Morphable $hasItems)
     {
         if (is_null($this->hasItems)) {
             return false;
