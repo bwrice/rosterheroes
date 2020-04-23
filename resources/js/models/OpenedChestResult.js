@@ -8,4 +8,13 @@ export default class OpenedChestResult {
             return new Item(itemData);
         })
     }
+
+    get itemsMovedToMobileStorage() {
+        return this.items.filter(function (item) {
+            if (item.hasItems) {
+                return item.hasItems.type === 'squad';
+            }
+            return false;
+        })
+    }
 }
