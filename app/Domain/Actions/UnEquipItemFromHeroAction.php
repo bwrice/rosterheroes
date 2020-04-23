@@ -32,7 +32,7 @@ class UnEquipItemFromHeroAction
      */
     public function execute(Item $item, Hero $hero, HasItemsCollection $hasSlots = null): HasItemsCollection
     {
-        if (! $item->belongsToHasItems($hero)) {
+        if (! $item->doesBelongToMorphable($hero)) {
             throw new ItemTransactionException($item, "Item does not belong to hero", ItemTransactionException::CODE_INVALID_OWNERSHIP);
         }
         if (CurrentWeek::adventuringLocked()) {

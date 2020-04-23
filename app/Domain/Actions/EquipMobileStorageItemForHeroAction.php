@@ -29,7 +29,7 @@ class EquipMobileStorageItemForHeroAction
         $hasItemsCollection = $hasItemsCollection ?: new HasItemsCollection();
         $squad = $hero->squad;
 
-        if(! $item->belongsToHasItems($squad)) {
+        if(! $item->doesBelongToMorphable($squad)) {
             throw new ItemTransactionException($item, "Item does not belong to wagon", ItemTransactionException::CODE_INVALID_OWNERSHIP);
         }
 

@@ -11,6 +11,7 @@ use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Interfaces\FillsGearSlots;
 use App\Domain\Interfaces\HasAttacks;
 use App\Domain\Interfaces\HasItems;
+use App\Domain\Interfaces\Morphable;
 use App\Domain\Interfaces\UsesItems;
 use App\Domain\Models\Support\Items\ItemNameBuilder;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -270,7 +271,7 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
         return $this;
     }
 
-    public function belongsToHasItems(HasItems $hasItems)
+    public function doesBelongToMorphable(Morphable $hasItems)
     {
         if (is_null($this->hasItems)) {
             return false;
