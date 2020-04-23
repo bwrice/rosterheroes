@@ -4,6 +4,8 @@ use App\Domain\Actions\AddNewHeroToSquadAction;
 use App\Domain\Actions\CreateSquadAction;
 use App\Domain\Actions\CreateUserAction;
 use App\Domain\Actions\GenerateItemFromBlueprintAction;
+use App\Domain\Actions\RewardChestToSquad;
+use App\Domain\Actions\StashItemFromMobileStorage;
 use App\Domain\Models\HeroClass;
 use App\Domain\Models\HeroRace;
 use Illuminate\Database\Seeder;
@@ -15,6 +17,7 @@ class DefaultUsersSeeder extends Seeder
      * @param CreateSquadAction $createSquadAction
      * @param AddNewHeroToSquadAction $addNewHeroToSquadAction
      * @param GenerateItemFromBlueprintAction $generateItemFromBlueprintAction
+     * @param RewardChestToSquad $rewardChestToSquad
      * @throws \App\Exceptions\HeroPostNotFoundException
      * @throws \App\Exceptions\InvalidHeroClassException
      */
@@ -22,7 +25,8 @@ class DefaultUsersSeeder extends Seeder
         CreateUserAction $createUserAction,
         CreateSquadAction $createSquadAction,
         AddNewHeroToSquadAction $addNewHeroToSquadAction,
-        GenerateItemFromBlueprintAction $generateItemFromBlueprintAction)
+        GenerateItemFromBlueprintAction $generateItemFromBlueprintAction,
+        RewardChestToSquad $rewardChestToSquad)
     {
         $user = $createUserAction->execute('bwrice83@gmail.com', 'Brian Rice', 'password');
         $squad = $createSquadAction->execute($user->id, 'My Squad');
@@ -57,10 +61,8 @@ class DefaultUsersSeeder extends Seeder
         /** @var \App\Domain\Models\ItemBlueprint $blueprint */
         $blueprint = \App\Domain\Models\ItemBlueprint::query()->where('reference_id', '=', \App\Domain\Models\ItemBlueprint::RANDOM_ENCHANTED_LOW_TIER_ITEM)->first();
 
-        foreach (range(1,20) as $count) {
-            $item = $generateItemFromBlueprintAction->execute($blueprint);
-            $item->attachToHasItems($squad);
-        }
+        $this->seedRandomItemsForSquad($generateItemFromBlueprintAction, $squad, $blueprint);
+        $this->rewardChestsToSquad($rewardChestToSquad, $squad);
 
 
         $user = $createUserAction->execute('georigin@gmail.com', 'George Paul Puthukkeril', 'password');
@@ -93,9 +95,41 @@ class DefaultUsersSeeder extends Seeder
             $addNewHeroToSquadAction->execute($squad, $hero['name'], $hero['hero_class'], $hero['hero_race']);
         }
 
-        foreach (range(1,20) as $count) {
+        $this->seedRandomItemsForSquad($generateItemFromBlueprintAction, $squad, $blueprint);
+
+        $this->rewardChestsToSquad($rewardChestToSquad, $squad);
+    }
+
+    /**
+     * @param GenerateItemFromBlueprintAction $generateItemFromBlueprintAction
+     * @param \App\Domain\Models\Squad $squad
+     * @param \App\Domain\Models\ItemBlueprint $blueprint
+     */
+    protected function seedRandomItemsForSquad(GenerateItemFromBlueprintAction $generateItemFromBlueprintAction, \App\Domain\Models\Squad $squad, \App\Domain\Models\ItemBlueprint $blueprint)
+    {
+        $localStash = $squad->getLocalStash();
+        foreach (range(1, 20) as $count) {
             $item = $generateItemFromBlueprintAction->execute($blueprint);
-            $item->attachToHasItems($squad);
+            if ($count % 4 === 0) {
+                $item->attachToHasItems($localStash);
+            } else {
+                $item->attachToHasItems($squad);
+            }
+        }
+    }
+
+    /**
+     * @param RewardChestToSquad $rewardChestToSquad
+     * @param \App\Domain\Models\Squad $squad
+     */
+    protected function rewardChestsToSquad(RewardChestToSquad $rewardChestToSquad, \App\Domain\Models\Squad $squad)
+    {
+        /** @var \App\ChestBlueprint $chestBlueprint */
+        $chestBlueprint = \App\ChestBlueprint::query()
+            ->where('reference_id', '=', \App\ChestBlueprint::FULLY_RANDOM_MEDIUM)
+            ->first();
+        foreach (range(1, 5) as $count) {
+            $rewardChestToSquad->execute($chestBlueprint, $squad, null);
         }
     }
 }
