@@ -85,4 +85,19 @@ class Stash extends Model implements HasItems
     {
         return 'stash';
     }
+
+    public static function getResourceRelations()
+    {
+        return [
+            'items.itemType.itemBase',
+            'items.material.materialType',
+            'items.itemClass',
+            'items.attacks.attackerPosition',
+            'items.attacks.targetPosition',
+            'items.attacks.targetPriority',
+            'items.attacks.damageType',
+            'items.enchantments.measurableBoosts.measurableType',
+            'items.enchantments.measurableBoosts.booster',
+        ];
+    }
 }
