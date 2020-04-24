@@ -48,6 +48,11 @@ export async function getCurrentLocationQuests(squadSlug) {
     return response.data;
 }
 
+export async function getLocalStash(squadSlug) {
+    let response = await axios.get(ROUTE_PREFIX + squadSlug + '/current-location/stash');
+    return response.data;
+}
+
 export async function getBorderTravelCost(squadSlug, borderSlug) {
     let response = await axios.get(ROUTE_PREFIX + squadSlug + '/border-travel/' + borderSlug);
     return response.data;

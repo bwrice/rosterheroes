@@ -1,12 +1,14 @@
 import * as squadApi from '../../api/squadApi';
 import Province from "../../models/Province";
 import Quest from "../../models/Quest";
+import LocalStash from "../../models/LocalStash";
 
 export default {
 
     state: {
         quests: [],
-        province: new Province({})
+        province: new Province({}),
+        localStash: new LocalStash({})
     },
 
     getters: {
@@ -15,6 +17,9 @@ export default {
         },
         _currentLocationProvince(state) {
             return state.province;
+        },
+        _localStash(state) {
+            return state.localStash;
         },
         _currentLocationQuestBySlug: (state) => (slug) => {
             let quest = state.quests.find(quest => quest.slug === slug);
@@ -27,6 +32,9 @@ export default {
         },
         SET_CURRENT_LOCATION_PROVINCE(state, payload) {
             state.province = payload;
+        },
+        SET_LOCAL_STASH(state, payload) {
+            state.localStash = payload;
         }
     },
 
@@ -47,6 +55,15 @@ export default {
                 commit('SET_CURRENT_LOCATION_QUESTS', quests)
             } catch (e) {
                 console.warn("Failed to update current location quests");
+            }
+        },
+        async updateLocalStash({commit}, route) {
+            try {
+                let response = await squadApi.getLocalStash(route.params.squadSlug);
+                let localStash = new LocalStash(response.data);
+                commit('SET_LOCAL_STASH', localStash)
+            } catch (e) {
+                console.warn("Failed to update local stash");
             }
         },
         updateCurrentLocation({commit, dispatch}, route, alreadyUpdated = {}) {
