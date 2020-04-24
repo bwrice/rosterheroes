@@ -85,6 +85,7 @@
             this.updateSports();
             this.updateSpellLibrary(route);
             this.updateUnopenedChests(route);
+            this.updateLocalStash(route);
         },
 
         data: function() {
@@ -118,6 +119,7 @@
                 'updateSports',
                 'updateSpellLibrary',
                 'updateUnopenedChests',
+                'updateLocalStash'
             ])
         },
         computed: {
