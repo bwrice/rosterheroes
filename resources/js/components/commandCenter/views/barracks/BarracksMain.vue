@@ -5,19 +5,22 @@
         </template>
         <template v-else>
             <v-row>
-                <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="5" offset-lg="1" xl="4" offset-xl="0">
+                <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="5" offset-lg="1" xl="4" offset-xl="2">
                     <HeroesCard :heroes="_heroes"></HeroesCard>
                 </v-col>
-                <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="5" xl="8">
+                <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="5" xl="4">
                     <v-row no-gutters>
-                        <v-col cols="12" class="pb-3 pt-xl-3">
+                        <v-col cols="12">
                             <MobileStorageCard></MobileStorageCard>
                         </v-col>
-                        <v-col cols="12" class="pt-3">
-                            <SpellLibraryCard :spells="_spellLibrary"></SpellLibraryCard>
+                        <v-col cols="12">
+                            <LocalStashCard></LocalStashCard>
                         </v-col>
-                        <v-col cols="12" class="pt-3">
+                        <v-col cols="12">
                             <Treasury></Treasury>
+                        </v-col>
+                        <v-col cols="12">
+                            <SpellLibraryCard :spells="_spellLibrary"></SpellLibraryCard>
                         </v-col>
                     </v-row>
                 </v-col>
@@ -35,10 +38,12 @@
     import LoadingOverlay from "../../global/LoadingOverlay";
     import SpellLibraryCard from "../../barracks/SpellLibraryCard";
     import Treasury from "../../barracks/Treasury";
+    import LocalStashCard from "./LocalStashCard";
 
     export default {
         name: "BarracksMain",
         components: {
+            LocalStashCard,
             Treasury,
             SpellLibraryCard,
             LoadingOverlay,
