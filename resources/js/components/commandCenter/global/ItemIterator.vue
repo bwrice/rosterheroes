@@ -36,12 +36,16 @@
             },
             itemCardColor: {
                 type: String
+            },
+            searchLabel: {
+                type: String,
+                default: 'Search Wagon'
             }
         },
         data() {
             return {
                 search: {
-                    label: 'Search Wagon',
+                    label: this.searchLabel,
                     search: function (items, input) {
                         let search = new jsSearch.Search('uuid');
                         search.addIndex(['name']);
