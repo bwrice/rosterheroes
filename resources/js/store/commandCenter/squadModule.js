@@ -117,6 +117,9 @@ export default {
         SET_MOBILE_STORAGE(state, payload) {
             state.mobileStorage = payload;
         },
+        ADD_ITEM_TO_MOBILE_STORAGE(state, payload) {
+            state.mobileStorage.items.push(payload);
+        },
         SET_CURRENT_CAMPAIGN(state, payload) {
             state.currentCampaign = payload;
         },
@@ -125,6 +128,11 @@ export default {
         },
         ADD_TO_OPENED_CHEST_RESULTS(state, payload) {
             state.openedChestResults.push(payload);
+        },
+        REMOVE_CHEST_FROM_UNOPENED_CHESTS(state, payload) {
+            state.unopenedChests = state.unopenedChests.filter(function (unopenedChest) {
+                return unopenedChest.uuid !== payload;
+            })
         }
     },
 
@@ -399,8 +407,13 @@ export default {
             try {
                 let response = await chestApi.open(unopenedChest.uuid);
                 let openedChestResult = new OpenedChestResult(response.data);
+                openedChestResult.itemsMovedToMobileStorage.forEach(function (item) {
+                    commit('ADD_ITEM_TO_MOBILE_STORAGE', item);
+                });
+                commit('REMOVE_CHEST_FROM_UNOPENED_CHESTS', unopenedChest.uuid);
                 commit('ADD_TO_OPENED_CHEST_RESULTS', openedChestResult);
             } catch (e) {
+                console.log(e);
                 dispatch('snackBarError', {text: 'Oops, something went wrong'})
             }
         }

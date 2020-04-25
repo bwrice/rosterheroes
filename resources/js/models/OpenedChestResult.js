@@ -15,6 +15,6 @@ export default class OpenedChestResult {
                 return item.hasItems.type === 'squad';
             }
             return false;
-        })
+        });
     }
 }
