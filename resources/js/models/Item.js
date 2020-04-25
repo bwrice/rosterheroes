@@ -6,10 +6,10 @@ import Enchantment from "./Enchantment";
 
 export default class Item {
 
-    constructor({name = '', uuid, attacks = [], enchantments = [], itemType, itemClass, material, burden, protection, blockChance, value, hasItems}) {
+    constructor({name = '', uuid, attacks = [], enchantments = [], itemType, itemClass, material, weight, protection, blockChance, value, hasItems}) {
         this.name = name;
         this.uuid = uuid;
-        this.burden = burden;
+        this.weight = weight;
         this.protection = protection;
         this.blockChance = blockChance;
         this.value = value;

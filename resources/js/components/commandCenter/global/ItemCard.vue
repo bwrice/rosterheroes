@@ -17,7 +17,7 @@
                     <p class="caption ma-0">
                         Protection: {{item.protection}}<br>
                         Block %: {{item.blockChance}}<br>
-                        Burden: {{item.burden}}<br>
+                        Weight: {{item.weight}}<br>
                         Value: {{item.value}}<br>
                     </p>
                 </v-col>
