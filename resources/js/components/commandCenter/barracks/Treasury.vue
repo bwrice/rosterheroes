@@ -27,12 +27,12 @@
             max-width="500"
         >
             <v-sheet
-                color="#67856f"
+                color="#526e5a"
             >
                 <v-row no-gutters>
                     <v-col cols="12">
-                        <v-row no-gutters class="px-2 py-1">
-                            <span class="title font-weight-light">{{dialogTitle}}</span>
+                        <v-row no-gutters justify="center" class="px-2 pt-1">
+                            <span class="title font-weight-bolder">{{dialogTitle}}</span>
                         </v-row>
                         <v-row
                             v-if="openingChestPending"
@@ -95,7 +95,7 @@
                 if (this.openingChestPending) {
                     return 'Opening Chest...';
                 }
-                return 'Check out the loot!'
+                return "Here\'s what you found!";
             }
         },
         data() {
