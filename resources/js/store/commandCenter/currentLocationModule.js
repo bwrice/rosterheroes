@@ -71,10 +71,12 @@ export default {
             let {
                 province,
                 quests,
+                localStash,
             } = alreadyUpdated;
 
             province ? commit('SET_CURRENT_LOCATION_PROVINCE', province) : dispatch('updateCurrentLocationProvince', route);
             quests ? commit('SET_CURRENT_LOCATION_QUESTS', quests) : dispatch('updateCurrentLocationQuests', route);
+            localStash ? commit('SET_LOCAL_STASH', localStash) : dispatch('updateLocalStash', route);
         },
     }
 };
