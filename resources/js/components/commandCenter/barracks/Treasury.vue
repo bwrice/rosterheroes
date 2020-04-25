@@ -41,7 +41,7 @@
                             <v-progress-circular indeterminate size="36"></v-progress-circular>
                         </v-row>
                         <OpenedChestResultPanel
-                            v-if="! openingChestPending"
+                            v-if="! openingChestPending && _lastOpenedChestResult"
                             :opened-chest-result="_lastOpenedChestResult"
                         >
                         </OpenedChestResultPanel>
