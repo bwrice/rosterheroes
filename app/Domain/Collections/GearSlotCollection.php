@@ -95,6 +95,6 @@ class GearSlotCollection extends Collection
         $this->withItem()->each(function (GearSlot $gearSlot) use ($items) {
             $items->push($gearSlot->getItem());
         });
-        return $items;
+        return $items->unique();
     }
 }
