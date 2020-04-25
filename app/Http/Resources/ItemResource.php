@@ -60,7 +60,8 @@ class ItemResource extends JsonResource
             'value' => $this->getValue(),
             'hasItems' => $this->whenLoaded('hasItems', function () {
                 return $this->getSimpleHasItemsArray();
-            })
+            }),
+            'transaction' => $this->getTransaction()
         ];
     }
 

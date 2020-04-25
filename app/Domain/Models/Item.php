@@ -53,6 +53,11 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
     /** @var UsesItems|null */
     protected $usesItems;
 
+    protected $transaction = [
+        'to' => null,
+        'from' => null
+    ];
+
     /**
      * @return BelongsToMany
      */
@@ -288,5 +293,29 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
 
         $costMagnitude = $damageTypeBehavior->getResourceCostMagnitude($attackTier, $targetsCount);
         return $this->getItemBaseBehavior()->getResourceCosts($attackTier, $costMagnitude);
+    }
+
+    /**
+     * @return array
+     */
+    public function getTransaction(): array
+    {
+        return $this->transaction;
+    }
+
+    public function setTransactionTo(Morphable $morphable)
+    {
+        return $this->transaction['to'] = [
+            'id' => $morphable->getMorphID(),
+            'type' => $morphable->getMorphType()
+        ];
+    }
+
+    public function setTransactionFrom(Morphable $morphable)
+    {
+        return $this->transaction['from'] = [
+            'id' => $morphable->getMorphID(),
+            'type' => $morphable->getMorphType()
+        ];
     }
 }
