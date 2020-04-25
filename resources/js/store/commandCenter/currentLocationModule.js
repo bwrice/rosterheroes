@@ -35,6 +35,9 @@ export default {
         },
         SET_LOCAL_STASH(state, payload) {
             state.localStash = payload;
+        },
+        ADD_ITEM_TO_LOCAL_STASH(state, payload) {
+            state.localStash.items.push(payload);
         }
     },
 
