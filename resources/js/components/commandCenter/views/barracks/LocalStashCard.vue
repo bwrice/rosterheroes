@@ -10,9 +10,11 @@
             ></ItemIterator>
         </v-col>
         <v-col v-else cols="12">
-            <span class="title font-weight-light">
-                Stash in {{_currentLocationProvince.name}} is empty
-            </span>
+            <v-sheet color="rgba(255,255,255, 0.25)" class="my-2">
+                <v-row no-gutters class="pa-2" justify="center" align="center">
+                    <span class="subtitle-1 font-weight-light">Stash in {{_currentLocationProvince.name}} is empty</span>
+                </v-row>
+            </v-sheet>
         </v-col>
     </v-row>
 </template>
