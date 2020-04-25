@@ -1,7 +1,7 @@
 <template>
     <v-row no-gutters>
         <v-col cols="12">
-            <span class="title font-weight-thin">{{storageName}}</span>
+            <span class="title font-weight-thin">{{title}}</span>
         </v-col>
         <v-col cols="12">
             <ItemIterator
@@ -23,8 +23,10 @@
                 '_mobileStorage',
                 '_mobileStorageRankName',
             ]),
-            storageName() {
-                return this._mobileStorageRankName.toUpperCase();
+            title() {
+                let title = this._mobileStorageRankName.toUpperCase();
+                title += ' (' + this._mobileStorage.capacityUsed + '/' + this._mobileStorage.maxCapacity + ')';
+                return title;
             }
         }
     }
