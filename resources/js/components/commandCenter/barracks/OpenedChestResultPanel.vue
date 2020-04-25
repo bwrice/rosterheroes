@@ -1,19 +1,23 @@
 <template>
     <v-row no-gutters>
-        <v-col cols="12" v-if="openedChestResult.itemsMovedToMobileStorage.length">
-            <v-row no-gutters>
-                <span class="font-weight-light"></span>
-            </v-row>
-            <v-row no-gutters>
-                <v-col
-                    cols="12"
-                    v-for="(item, uuid) in openedChestResult.itemsMovedToMobileStorage"
-                    :key="uuid"
-                >
-                    <ItemExpandPanel :item="item"></ItemExpandPanel>
-                </v-col>
-            </v-row>
-        </v-col>
+        <template v-for="itemGroup in itemGroups">
+            <v-col cols="12" v-if="itemGroup.items.length">
+                <v-sheet color="rgba(0,0,0, 0.5)" class="ma-1 pa-1">
+                    <v-row no-gutters>
+                        <span class="font-weight-light mx-2">Items moved to {{itemGroup.description}}</span>
+                    </v-row>
+                    <v-row no-gutters>
+                        <v-col
+                            cols="12"
+                            v-for="(item, uuid) in itemGroup.items"
+                            :key="uuid"
+                        >
+                            <ItemExpandPanel :item="item"></ItemExpandPanel>
+                        </v-col>
+                    </v-row>
+                </v-sheet>
+            </v-col>
+        </template>
     </v-row>
 </template>
 
@@ -34,7 +38,24 @@
         computed: {
             ...mapGetters([
                 '_mobileStorageRankName',
+                '_currentLocationProvince'
             ]),
+            itemGroups() {
+                return [
+                    {
+                        description: this._mobileStorageRankName,
+                        items: this.openedChestResult.itemsMovedToMobileStorage
+                    },
+                    {
+                        description: 'Residence (' + this._currentLocationProvince.name + ')',
+                        items: this.openedChestResult.itemsMovedToResidence
+                    },
+                    {
+                        description: 'Stash (' + this._currentLocationProvince.name + ')',
+                        items: this.openedChestResult.itemsMovedToStash
+                    }
+                ];
+            }
         }
     }
 </script>
