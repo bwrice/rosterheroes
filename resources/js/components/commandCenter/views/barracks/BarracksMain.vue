@@ -9,20 +9,10 @@
                     <HeroesCard :heroes="_heroes"></HeroesCard>
                 </v-col>
                 <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="5" xl="4">
-                    <v-row no-gutters>
-                        <v-col cols="12">
-                            <MobileStorageCard></MobileStorageCard>
-                        </v-col>
-                        <v-col cols="12">
-                            <LocalStashCard></LocalStashCard>
-                        </v-col>
-                        <v-col cols="12">
-                            <Treasury></Treasury>
-                        </v-col>
-                        <v-col cols="12">
-                            <SpellLibraryCard :spells="_spellLibrary"></SpellLibraryCard>
-                        </v-col>
-                    </v-row>
+                    <MobileStorageCard></MobileStorageCard>
+                    <LocalStashCard></LocalStashCard>
+                    <Treasury></Treasury>
+                    <SpellLibraryCard :spells="_spellLibrary"></SpellLibraryCard>
                 </v-col>
             </v-row>
         </template>
@@ -56,7 +46,7 @@
             ...mapGetters([
                 '_heroes',
                 '_barracksLoading',
-                '_spellLibrary',
+                '_spellLibrary'
             ])
         }
     }
