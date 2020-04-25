@@ -458,7 +458,7 @@ class Squad extends EventSourcedModel implements HasItems
     /**
      * @return int
      */
-    protected function getMobileStorageCapacityUsed()
+    public function getMobileStorageCapacityUsed()
     {
         $this->loadMissing([
             'items.itemType.itemBase',

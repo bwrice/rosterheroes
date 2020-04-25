@@ -4,7 +4,9 @@ import Item from "./Item";
 
 export default class MobileStorage {
 
-    constructor({mobileStorageRank, items = []}) {
+    constructor({maxCapacity, capacityUsed, mobileStorageRank, items = []}) {
+        this.maxCapacity = maxCapacity;
+        this.capacityUsed = capacityUsed;
         this.mobileStorageRank = mobileStorageRank ? new MobileStorageRank(mobileStorageRank) : new MobileStorageRank({});
         this.items = items.map(function (item) {
             return new Item(item);

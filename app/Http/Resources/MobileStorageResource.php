@@ -22,6 +22,8 @@ class MobileStorageResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'maxCapacity' => $this->mobileStorageRank->getBehavior()->getWeightCapacity(),
+            'capacityUsed' => $this->getMobileStorageCapacityUsed(),
             'mobileStorageRank' => new MobileStorageRankResource($this->mobileStorageRank),
             'items' => ItemResource::collection($this->items)->collection->each(function (ItemResource $itemResource) {
                 $itemResource->setHasItems($this->resource);
