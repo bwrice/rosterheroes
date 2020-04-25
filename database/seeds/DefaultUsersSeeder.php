@@ -128,7 +128,7 @@ class DefaultUsersSeeder extends Seeder
         $chestBlueprint = \App\ChestBlueprint::query()
             ->where('reference_id', '=', \App\ChestBlueprint::FULLY_RANDOM_MEDIUM)
             ->first();
-        foreach (range(1, 5) as $count) {
+        foreach (range(1, 20) as $count) {
             $rewardChestToSquad->execute($chestBlueprint, $squad, null);
         }
     }
