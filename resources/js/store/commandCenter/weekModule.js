@@ -65,9 +65,10 @@ export default {
             let playerSpirits = [];
             let retrieveSpirits = true;
             let offset = 0;
+            let limit = 500;
             try {
                 while (retrieveSpirits || offset > 20000) {
-                    let playerSpiritsResponse = await weekApi.getPlayerSpirits('current', offset, 100);
+                    let playerSpiritsResponse = await weekApi.getPlayerSpirits('current', offset, limit);
                     let retrievedPlayerSpirits = playerSpiritsResponse.data.map(function (playerSpirit) {
                         return new PlayerSpirit(playerSpirit);
                     });
@@ -77,7 +78,7 @@ export default {
                     if (offset === 0) {
                         commit('SET_LOADING_SPIRITS', false);
                     }
-                    offset += 100;
+                    offset += limit;
                 }
             } catch (e) {
                 console.warn("Failed to update player spirits");
