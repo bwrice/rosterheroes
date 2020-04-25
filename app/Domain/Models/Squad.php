@@ -410,12 +410,8 @@ class Squad extends EventSourcedModel implements HasItems
     protected function getOverCapacityAmount(Item $item): int
     {
         $maxWeightCapacity = $this->mobileStorageRank->getBehavior()->getWeightCapacity();
-        $this->loadMissing([
-            'items.itemType.itemBase',
-            'items.material.materialType'
-        ]);
-        $currentCapacity = $this->items->sumOfWeight();
-        return ($currentCapacity + $item->weight()) - $maxWeightCapacity;
+        $currentCapacityUsed = $this->getMobileStorageCapacityUsed();
+        return ($currentCapacityUsed + $item->weight()) - $maxWeightCapacity;
     }
 
     public function getMorphType(): string
@@ -457,5 +453,18 @@ class Squad extends EventSourcedModel implements HasItems
     public function combatReady()
     {
         return SquadService::combatReady($this);
+    }
+
+    /**
+     * @return int
+     */
+    protected function getMobileStorageCapacityUsed()
+    {
+        $this->loadMissing([
+            'items.itemType.itemBase',
+            'items.material.materialType'
+        ]);
+        $currentCapacity = $this->items->sumOfWeight();
+        return $currentCapacity;
     }
 }
