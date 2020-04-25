@@ -117,8 +117,9 @@ export default {
         SET_MOBILE_STORAGE(state, payload) {
             state.mobileStorage = payload;
         },
-        ADD_ITEM_TO_MOBILE_STORAGE(state, payload) {
-            state.mobileStorage.items.push(payload);
+        ADD_ITEM_TO_MOBILE_STORAGE(state, item) {
+            state.mobileStorage.capacityUsed += item.weight;
+            state.mobileStorage.items.push(item);
         },
         SET_CURRENT_CAMPAIGN(state, payload) {
             state.currentCampaign = payload;
