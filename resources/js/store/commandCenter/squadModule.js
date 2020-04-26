@@ -134,6 +134,21 @@ export default {
             state.unopenedChests = state.unopenedChests.filter(function (unopenedChest) {
                 return unopenedChest.uuid !== payload;
             })
+        },
+        REPLACE_UPDATED_HERO(state, updatedHero) {
+            let heroes = _.cloneDeep(state.heroes);
+
+            let index = heroes.findIndex(function (hero) {
+                return hero.uuid === updatedHero.uuid;
+            });
+
+            if (index === -1) {
+                heroes.push(updatedHero);
+            } else {
+                heroes.splice(index, 1, updatedHero);
+            }
+
+            state.heroes = heroes;
         }
     },
 
