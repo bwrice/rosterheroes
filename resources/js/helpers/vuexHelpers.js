@@ -31,6 +31,28 @@ export function syncHasItemsResponse(state, commit, response) {
     // TODO local Stash and Residence
 }
 
+export function handleItemTransactions({state, commit}, items) {
+    let heroUuidsToUpdate = [];
+    items.forEach(function (item) {
+        let transaction = item.transaction;
+        switch(transaction.to.type) {
+            case 'heroes':
+                heroUuidsToUpdate.push(transaction.to.uuid);
+                break;
+            case 'squads':
+                commit('ADD_ITEM_TO_MOBILE_STORAGE', item);
+                break;
+            case 'stashes':
+                commit('ADD_ITEM_TO_LOCAL_STASH', item);
+                break;
+            // TODO: residence
+        }
+    });
+    _.uniq(heroUuidsToUpdate).forEach(function (heroUuid) {
+        // TODO update hero
+    })
+}
+
 export function handleResponseErrors(e, errorKey, dispatch) {
     let snackBarPayload = {};
     if (e.response) {
