@@ -5,7 +5,7 @@ use App\Domain\Actions\CreateSquadAction;
 use App\Domain\Actions\CreateUserAction;
 use App\Domain\Actions\GenerateItemFromBlueprintAction;
 use App\Domain\Actions\RewardChestToSquad;
-use App\Domain\Actions\StashItemFromMobileStorage;
+use App\Domain\Actions\StashItem;
 use App\Domain\Models\HeroClass;
 use App\Domain\Models\HeroRace;
 use Illuminate\Database\Seeder;

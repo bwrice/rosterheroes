@@ -7,7 +7,7 @@ namespace App\Domain\Actions;
 use App\Domain\Models\Item;
 use App\Domain\Models\Squad;
 
-class StashItemFromMobileStorage
+class StashItem
 {
     /**
      * @param Item $item

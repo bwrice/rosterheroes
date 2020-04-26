@@ -8,7 +8,7 @@ use App\Http\Controllers\CurrentLocationQuestsController;
 use App\Http\Controllers\LocalStashController;
 use App\Http\Controllers\OpenChestController;
 use App\Http\Controllers\SquadQuestController;
-use App\Http\Controllers\StashItemFromMobileStorageController;
+use App\Http\Controllers\StashItemController;
 use App\Http\Controllers\UnEquipHeroController;
 use App\Http\Controllers\EquipHeroController;
 use App\Http\Controllers\FastTravelController;
@@ -114,7 +114,7 @@ Route::prefix('v1')->group(function () {
 
             Route::get('{squadSlug}/heroes', [SquadHeroController::class, 'index']);
             Route::get('{squadSlug}/mobile-storage', MobileStorageController::class);
-            Route::post('{squadSlug}/stash-item', StashItemFromMobileStorageController::class);
+            Route::post('{squadSlug}/stash-item', StashItemController::class);
 
             Route::post('{squadSlug}/border-travel/{borderSlug}', [SquadBorderTravelController::class, 'store']);
             Route::get('{squadSlug}/border-travel/{borderSlug}', [SquadBorderTravelController::class, 'show']);

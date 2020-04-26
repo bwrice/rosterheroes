@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Domain\Actions\StashItemFromMobileStorage;
+use App\Domain\Actions\StashItem;
 use App\Domain\Models\Province;
 use App\Factories\Models\ItemFactory;
 use App\Factories\Models\ResidenceFactory;
@@ -14,17 +14,17 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use Tests\Traits\TestsItemsTransactions;
 
-class StashItemFromMobileStorageTest extends TestCase
+class StashItemTest extends TestCase
 {
     use TestsItemsTransactions;
     use DatabaseTransactions;
 
     /**
-     * @return StashItemFromMobileStorage
+     * @return StashItem
      */
     protected function getDomainAction()
     {
-        return app(StashItemFromMobileStorage::class);
+        return app(StashItem::class);
     }
 
     /**
