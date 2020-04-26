@@ -17,11 +17,25 @@ class StashItemFromMobileStorage
      */
     public function execute(Item $item, Squad $squad)
     {
-        if (! $item->ownedByMorphable($squad)) {
-            throw new \Exception("Item is not in the squad's mobile storage");
+        if (! $this->canStashItem($item, $squad)) {
+            throw new \Exception("Item is either not owned or stored locally by Squad");
         }
 
         $stash = $squad->getLocalStash();
         return $item->attachToHasItems($stash);
+    }
+
+    protected function canStashItem(Item $item, Squad $squad)
+    {
+        if ($item->ownedByMorphable($squad)) {
+            return true;
+        }
+
+        $localResidence = $squad->getLocalResidence();
+        if (! $localResidence) {
+            return false;
+        }
+
+        return $localResidence->province_id === $squad->province_id;
     }
 }
