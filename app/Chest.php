@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Domain\Collections\ItemCollection;
+use App\Domain\Interfaces\HasItems;
 use App\Domain\Interfaces\Morphable;
 use App\Domain\Interfaces\RewardsChests;
 use App\Domain\Models\EventSourcedModel;
@@ -31,7 +32,7 @@ use Carbon\CarbonInterface;
  *
  * @property ItemCollection $items
  */
-class Chest extends EventSourcedModel implements Morphable
+class Chest extends EventSourcedModel implements HasItems
 {
     const RELATION_MORPH_MAP_KEY = 'chests';
 
@@ -121,5 +122,25 @@ class Chest extends EventSourcedModel implements Morphable
     public function getMorphID(): int
     {
         return $this->id;
+    }
+
+    public function getBackupHasItems(): ?HasItems
+    {
+        return null;
+    }
+
+    public function hasRoomForItem(Item $item): bool
+    {
+        return true;
+    }
+
+    public function itemsToMoveForNewItem(Item $item): ItemCollection
+    {
+        return new ItemCollection();
+    }
+
+    public function getUniqueIdentifier(): string
+    {
+        return $this->uuid;
     }
 }
