@@ -3,8 +3,7 @@
 
 namespace App\Domain\Actions;
 
-
-use App\Domain\Collections\HasItemsCollection;
+use App\Domain\Collections\ItemCollection;
 use App\Domain\Interfaces\HasItems;
 use App\Domain\Models\Item;
 use App\Exceptions\ItemTransactionException;
@@ -14,28 +13,24 @@ class MoveItemToBackupAction
     /**
      * @param Item $item
      * @param HasItems $hasItems
-     * @param HasItemsCollection|null $hasItemsCollection
-     * @param bool $originalItemSource
-     * @return HasItemsCollection
+     * @param ItemCollection|null $itemsMoved
+     * @return ItemCollection
      */
-    public function execute(Item $item, HasItems $hasItems, HasItemsCollection $hasItemsCollection = null, $originalItemSource = true): HasItemsCollection
+    public function execute(Item $item, HasItems $hasItems, ItemCollection $itemsMoved = null): ItemCollection
     {
-        $hasItemsCollection = $hasItemsCollection ?: new HasItemsCollection();
+        $itemsMoved = $itemsMoved ?: new ItemCollection();
 
         if (! $hasItems->getBackupHasItems()) {
             throw new ItemTransactionException($item,"No backup for item found", ItemTransactionException::CODE_NO_BACKUP);
         }
-        if ($originalItemSource) {
-            $hasItemsCollection->push($hasItems);
-        }
+
         $backup = $hasItems->getBackupHasItems();
         if ($backup->hasRoomForItem($item)) {
-            $item->attachToHasItems($backup);
-            $hasItemsCollection->push($backup);
-            return $hasItemsCollection;
+            $item->attachToMorphable($backup);
+            return $itemsMoved->push($item);
         } else {
             // Call execute recursively to try to attach to the backup's backup
-            return $this->execute($item, $backup, $hasItemsCollection, false);
+            return $this->execute($item, $backup, $itemsMoved);
         }
     }
 }

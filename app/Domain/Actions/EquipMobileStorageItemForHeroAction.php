@@ -4,10 +4,9 @@
 namespace App\Domain\Actions;
 
 
-use App\Domain\Collections\HasItemsCollection;
+use App\Domain\Collections\ItemCollection;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Item;
-use App\Domain\Models\Week;
 use App\Exceptions\ItemTransactionException;
 use App\Facades\CurrentWeek;
 use Illuminate\Support\Facades\DB;
@@ -17,16 +16,16 @@ class EquipMobileStorageItemForHeroAction
     /**
      * @var AddItemToHasItems
      */
-    private $addItemToHasItemsAction;
+    protected $addItemToHasItemsAction;
 
     public function __construct(AddItemToHasItems $addItemToHasItemsAction)
     {
         $this->addItemToHasItemsAction = $addItemToHasItemsAction;
     }
 
-    public function execute(Item $item, Hero $hero, HasItemsCollection $hasItemsCollection = null): HasItemsCollection
+    public function execute(Item $item, Hero $hero, ItemCollection $itemsMoved = null): ItemCollection
     {
-        $hasItemsCollection = $hasItemsCollection ?: new HasItemsCollection();
+        $itemsMoved = $itemsMoved ?: new ItemCollection();
         $squad = $hero->squad;
 
         if(! $item->ownedByMorphable($squad)) {
@@ -37,8 +36,8 @@ class EquipMobileStorageItemForHeroAction
             throw new ItemTransactionException($item, "Week is currently locked", ItemTransactionException::CODE_TRANSACTION_DISABLED);
         }
 
-        return DB::transaction(function () use ($item, $hero, $hasItemsCollection) {
-            return $this->addItemToHasItemsAction->execute($item, $hero, $hasItemsCollection)->removeDuplicates();
+        return DB::transaction(function () use ($item, $hero, $itemsMoved) {
+            return $this->addItemToHasItemsAction->execute($item, $hero, $itemsMoved);
         });
     }
 }

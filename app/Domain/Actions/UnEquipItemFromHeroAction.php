@@ -4,13 +4,11 @@
 namespace App\Domain\Actions;
 
 
-use App\Domain\Collections\HasItemsCollection;
+use App\Domain\Collections\ItemCollection;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Item;
-use App\Domain\Models\Week;
 use App\Exceptions\ItemTransactionException;
 use App\Facades\CurrentWeek;
-use Illuminate\Support\Collection;
 
 class UnEquipItemFromHeroAction
 {
@@ -27,10 +25,10 @@ class UnEquipItemFromHeroAction
     /**
      * @param Item $item
      * @param Hero $hero
-     * @param HasItemsCollection|null $hasSlots
-     * @return HasItemsCollection
+     * @param ItemCollection|null $itemsMoved
+     * @return ItemCollection
      */
-    public function execute(Item $item, Hero $hero, HasItemsCollection $hasSlots = null): HasItemsCollection
+    public function execute(Item $item, Hero $hero, ItemCollection $itemsMoved = null): ItemCollection
     {
         if (! $item->ownedByMorphable($hero)) {
             throw new ItemTransactionException($item, "Item does not belong to hero", ItemTransactionException::CODE_INVALID_OWNERSHIP);
@@ -38,6 +36,6 @@ class UnEquipItemFromHeroAction
         if (CurrentWeek::adventuringLocked()) {
             throw new ItemTransactionException($item, "Current week is locked", ItemTransactionException::CODE_TRANSACTION_DISABLED);
         }
-        return $this->moveItemToBackupAction->execute($item, $hero, $hasSlots);
+        return $this->moveItemToBackupAction->execute($item, $hero, $itemsMoved);
     }
 }
