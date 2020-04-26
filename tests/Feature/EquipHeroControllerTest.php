@@ -37,11 +37,11 @@ class EquipHeroControllerTest extends TestCase
         $this->hero = factory(\App\Domain\Models\Hero::class)->states('with-measurables')->create();
         $this->squad = $this->hero->squad;
         $this->shield = factory(Item::class)->state('shield')->create();
-        $this->shield->attachToHasItems($this->hero);
+        $this->hero->items()->save($this->shield);
         $this->singleHandWeapon = factory(Item::class)->state('single-handed')->create();
-        $this->singleHandWeapon->attachToHasItems($this->hero);
+        $this->hero->items()->save($this->singleHandWeapon);
         $this->twoHandedWeapon = factory(Item::class)->state('two-handed')->create();
-        $this->twoHandedWeapon->attachToHasItems($this->squad);
+        $this->squad->items()->save($this->twoHandedWeapon);
         CurrentWeek::partialMock()->shouldReceive('adventuringOpen')->andReturn(true);
     }
 
@@ -60,25 +60,53 @@ class EquipHeroControllerTest extends TestCase
 
         $response->assertStatus(200);
 
-        $responseArray = json_decode($response->content(), true);
-        $this->assertEquals(2, count($responseArray['data']));
+        $itemsMoved = $response->json('data');
+
+        $this->assertEquals(3, count($itemsMoved));
 
         $response->assertJson([
-                'data' => [
-                    [
-                        'hasItems' => [
-                            'mobileStorageRank' => []
+            'data' => [
+                [
+                    'uuid' => $this->singleHandWeapon->uuid,
+                    'transaction' => [
+                        'to' => [
+                            'type' => $this->squad->getMorphType(),
+                            'id' => $this->squad->getMorphID()
                         ],
-                        'type' => 'squad'
-                    ],
-                    [
-                        'hasItems' => [
-                            'uuid' => $this->hero->uuid
+                        'from' => [
+                            'type' => $this->hero->getMorphType(),
+                            'id' => $this->hero->getMorphID()
+                        ]
+                    ]
+                ],
+                [
+                    'uuid' => $this->shield->uuid,
+                    'transaction' => [
+                        'to' => [
+                            'type' => $this->squad->getMorphType(),
+                            'id' => $this->squad->getMorphID()
                         ],
-                        'type' => 'hero'
-                    ],
-                ]
-            ]);
+                        'from' => [
+                            'type' => $this->hero->getMorphType(),
+                            'id' => $this->hero->getMorphID()
+                        ]
+                    ]
+                ],
+                [
+                    'uuid' => $this->twoHandedWeapon->uuid,
+                    'transaction' => [
+                        'to' => [
+                            'type' => $this->hero->getMorphType(),
+                            'id' => $this->hero->getMorphID()
+                        ],
+                        'from' => [
+                            'type' => $this->squad->getMorphType(),
+                            'id' => $this->squad->getMorphID()
+                        ]
+                    ]
+                ],
+            ]]);
+
     }
 
     /**
