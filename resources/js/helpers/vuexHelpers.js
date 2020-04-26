@@ -31,7 +31,7 @@ export function syncHasItemsResponse(state, commit, response) {
     // TODO local Stash and Residence
 }
 
-export function handleItemTransactions({state, commit}, items) {
+export function handleItemTransactions({state, commit, dispatch}, items) {
     let heroUuidsToUpdate = [];
     items.forEach(function (item) {
         let transaction = item.transaction;
@@ -47,9 +47,31 @@ export function handleItemTransactions({state, commit}, items) {
                 break;
             // TODO: residence
         }
+        switch(transaction.from.type) {
+            case 'heroes':
+                heroUuidsToUpdate.push(transaction.from.uuid);
+                console.log("Adding hero to update: " + transaction.from.uuid);
+                break;
+            // case 'squads':
+            //     commit('ADD_ITEM_TO_MOBILE_STORAGE', item);
+            //     break;
+            // case 'stashes':
+            //     commit('ADD_ITEM_TO_LOCAL_STASH', item);
+            //     break;
+            // // TODO: residence
+        }
     });
     _.uniq(heroUuidsToUpdate).forEach(function (heroUuid) {
-        // TODO update hero
+        console.log("STATE HEROES");
+        console.log(state.heroes);
+        let heroToUpdate = state.heroes.find(function (hero) {
+            return hero.uuid === heroUuid;
+        });
+        if (heroToUpdate) {
+            dispatch('updateHero', heroToUpdate.slug);
+        } else {
+            console.warn("Couldn't find hero to update with uuid: " + heroUuid);
+        }
     })
 }
 
