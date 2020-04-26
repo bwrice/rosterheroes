@@ -6,6 +6,7 @@ use App\Domain\Actions\UnEquipItemFromHeroAction;
 use App\Domain\Behaviors\MobileStorageRank\WagonBehavior;
 use App\Domain\Behaviors\StoreHouses\ShackBehavior;
 use App\Domain\Interfaces\HasItems;
+use App\Domain\Interfaces\Morphable;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Item;
 use App\Domain\Models\Residence;
@@ -86,7 +87,7 @@ class UnEquipItemFromHeroActionTest extends TestCase
     public function it_will_throw_an_exception_if_the_item_does_not_belong_to_the_hero()
     {
         $hero = factory(Hero::class)->create();
-        $this->item = $this->item->attachToHasItems($hero);
+        $this->item = $this->item->attachToMorphable($hero);
 
         try {
             $this->domainAction->execute($this->item->fresh(), $this->hero);
@@ -98,30 +99,34 @@ class UnEquipItemFromHeroActionTest extends TestCase
         $this->fail("Exception not thrown");
     }
 
+
+    protected function assertItemTransactionMatches(Item $item, Morphable $to, Morphable $from)
+    {
+        $this->assertEquals([
+            'to' => [
+                'type' => $to->getMorphType(),
+                'id' => $to->getMorphID()
+            ],
+            'from' => [
+                'type' => $from->getMorphType(),
+                'id' => $from->getMorphID()
+            ]
+        ], $item->getTransaction());
+    }
+
     /**
      * @test
      */
     public function it_will_move_an_item_to_the_squads_wagon()
     {
-        $hasItemsCollection = $this->domainAction->execute($this->item, $this->hero);
+        $itemsMoved = $this->domainAction->execute($this->item, $this->hero);
 
-        $this->item = $this->item->fresh();
-        $this->assertEquals(Squad::RELATION_MORPH_MAP_KEY, $this->item->has_items_type);
+        $this->assertEquals(1, $itemsMoved->count());
 
-        $squad = $this->hero->squad;
-        $this->assertEquals($squad->id, $this->item->has_items_id);
-
-        $this->assertEquals(2, $hasItemsCollection->count());
-
-        $hero = $hasItemsCollection->first(function (HasItems $hasItems) {
-            return $hasItems->getMorphID() === $this->hero->id && $hasItems->getMorphType() === Hero::RELATION_MORPH_MAP_KEY;
-        });
-        $this->assertNotNull($hero);
-
-        $squadHasItems = $hasItemsCollection->first(function (HasItems $hasItems) use ($squad) {
-            return $hasItems->getMorphID() === $squad->id && $hasItems->getMorphType() === Squad::RELATION_MORPH_MAP_KEY;
-        });
-        $this->assertNotNull($squadHasItems);
+        /** @var Item $itemMoved */
+        $itemMoved = $itemsMoved->first();
+        $this->assertEquals($this->item->id, $itemMoved->id);
+        $this->assertItemTransactionMatches($itemMoved, $this->hero->squad, $this->hero);
     }
 
     /**
@@ -133,19 +138,13 @@ class UnEquipItemFromHeroActionTest extends TestCase
         $wagonBehaviorMock->shouldReceive('getWeightCapacity')->andReturn(-1);
         app()->instance(WagonBehavior::class, $wagonBehaviorMock);
 
-        $hasItemsCollection = $this->domainAction->execute($this->item, $this->hero);
-        $this->assertEquals(2, $hasItemsCollection->count());
+        $itemsMoved = $this->domainAction->execute($this->item, $this->hero);
+        $this->assertEquals(1, $itemsMoved->count());
 
-        $hero = $hasItemsCollection->first(function (HasItems $hasItems) {
-            return $hasItems->getMorphID() === $this->hero->id && $hasItems->getMorphType() === Hero::RELATION_MORPH_MAP_KEY;
-        });
-        $this->assertNotNull($hero);
-
-        $stashHasItems = $hasItemsCollection->first(function (HasItems $hasItems) {
-            $stash = $this->hero->squad->getLocalStash();
-            return $hasItems->getMorphID() === $stash->id && $hasItems->getMorphType() === Stash::RELATION_MORPH_MAP_KEY;
-        });
-        $this->assertNotNull($stashHasItems);
+        /** @var Item $itemMoved */
+        $itemMoved = $itemsMoved->first();
+        $this->assertEquals($this->item->id, $itemMoved->id);
+        $this->assertItemTransactionMatches($itemMoved, $this->hero->squad->getLocalStash(), $this->hero);
     }
 
     /**
@@ -163,18 +162,13 @@ class UnEquipItemFromHeroActionTest extends TestCase
             'province_id' => $squad->province_id,
         ]);
 
-        $hasItemsCollection = $this->domainAction->execute($this->item, $this->hero);
-        $this->assertEquals(2, $hasItemsCollection->count());
+        $itemsMoved = $this->domainAction->execute($this->item, $this->hero);
+        $this->assertEquals(1, $itemsMoved->count());
 
-        $hero = $hasItemsCollection->first(function (HasItems $hasItems) {
-            return $hasItems->getMorphID() === $this->hero->id && $hasItems->getMorphType() === Hero::RELATION_MORPH_MAP_KEY;
-        });
-        $this->assertNotNull($hero);
-
-        $residenceHasItems = $hasItemsCollection->first(function (HasItems $hasItems) use ($residence) {
-            return $hasItems->getMorphID() === $residence->id && $hasItems->getMorphType() === Residence::RELATION_MORPH_MAP_KEY;
-        });
-        $this->assertNotNull($residenceHasItems);
+        /** @var Item $itemMoved */
+        $itemMoved = $itemsMoved->first();
+        $this->assertEquals($this->item->id, $itemMoved->id);
+        $this->assertItemTransactionMatches($itemMoved, $residence, $this->hero);
     }
 
     /**
@@ -187,7 +181,7 @@ class UnEquipItemFromHeroActionTest extends TestCase
         app()->instance(WagonBehavior::class, $wagonBehaviorMock);
 
         $shackBehaviorMock = \Mockery::mock(ShackBehavior::class);
-        $shackBehaviorMock->shouldReceive('getMaxItemCount')->andReturn(0);
+        $shackBehaviorMock->shouldReceive('getMaxItemCount')->andReturn(-1);
         app()->instance(ShackBehavior::class, $shackBehaviorMock);
 
         $squad = $this->hero->squad;
@@ -196,18 +190,12 @@ class UnEquipItemFromHeroActionTest extends TestCase
             'province_id' => $squad->province_id,
         ]);
 
-        $hasItemsCollection = $this->domainAction->execute($this->item, $this->hero);
-        $this->assertEquals(2, $hasItemsCollection->count());
+        $itemsMoved = $this->domainAction->execute($this->item, $this->hero);
+        $this->assertEquals(1, $itemsMoved->count());
 
-        $hero = $hasItemsCollection->first(function (HasItems $hasItems) {
-            return $hasItems->getMorphID() === $this->hero->id && $hasItems->getMorphType() === Hero::RELATION_MORPH_MAP_KEY;
-        });
-        $this->assertNotNull($hero);
-
-        $stashHasItems = $hasItemsCollection->first(function (HasItems $hasItems) use ($squad) {
-            $stash = $squad->getLocalStash();
-            return $hasItems->getMorphID() === $stash->id && $hasItems->getMorphType() === Stash::RELATION_MORPH_MAP_KEY;
-        });
-        $this->assertNotNull($stashHasItems);
+        /** @var Item $itemMoved */
+        $itemMoved = $itemsMoved->first();
+        $this->assertEquals($this->item->id, $itemMoved->id);
+        $this->assertItemTransactionMatches($itemMoved, $squad->getLocalStash(), $this->hero);
     }
 }

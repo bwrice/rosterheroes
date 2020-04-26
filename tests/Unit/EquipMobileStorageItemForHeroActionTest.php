@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\Domain\Actions\EquipMobileStorageItemForHeroAction;
 use App\Domain\Interfaces\HasItems;
+use App\Domain\Interfaces\Morphable;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Item;
 use App\Domain\Models\Squad;
@@ -94,7 +95,7 @@ class EquipMobileStorageItemForHeroActionTest extends TestCase
     public function it_will_throw_an_exception_if_the_item_does_not_belong_to_the_wagon_of_the_hero()
     {
         $squad = factory(Squad::class)->create();
-        $this->randomItem = $this->randomItem->attachToHasItems($squad);
+        $this->randomItem = $this->randomItem->attachToMorphable($squad);
 
         try {
             $this->domainAction->execute($this->randomItem->fresh(), $this->hero);
@@ -123,23 +124,32 @@ class EquipMobileStorageItemForHeroActionTest extends TestCase
         $this->fail("Exception not thrown");
     }
 
+    protected function assertItemTransactionMatches(Item $item, Morphable $to, Morphable $from)
+    {
+        $this->assertEquals([
+            'to' => [
+                'type' => $to->getMorphType(),
+                'id' => $to->getMorphID()
+            ],
+            'from' => [
+                'type' => $from->getMorphType(),
+                'id' => $from->getMorphID()
+            ]
+        ], $item->getTransaction());
+    }
+
     /**
      * @test
      */
     public function it_will_equip_an_item_on_an_empty_hero()
     {
-        $hasItemsCollection = $this->domainAction->execute($this->randomItem, $this->hero);
-        $this->assertEquals(2, $hasItemsCollection->count());
+        $itemsMoved = $this->domainAction->execute($this->randomItem, $this->hero);
+        $this->assertEquals(1, $itemsMoved->count());
 
-        $hero = $hasItemsCollection->first(function (HasItems $hasItems) {
-            return $hasItems->getMorphID() === $this->hero->id && $hasItems->getMorphType() === Hero::RELATION_MORPH_MAP_KEY;
-        });
-        $this->assertNotNull($hero);
-
-        $squadHasItems = $hasItemsCollection->first(function (HasItems $hasItems) {
-            return $hasItems->getMorphID() === $this->squad->id && $hasItems->getMorphType() === Squad::RELATION_MORPH_MAP_KEY;
-        });
-        $this->assertNotNull($squadHasItems);
+        /** @var Item $item */
+        $item = $itemsMoved->first();
+        $this->assertTrue($item->ownedByMorphable($this->hero));
+        $this->assertItemTransactionMatches($item, $this->hero, $this->squad);
     }
 
     /**
@@ -149,24 +159,24 @@ class EquipMobileStorageItemForHeroActionTest extends TestCase
     {
         /** @var Item $itemPreviouslyOnHero */
         $itemPreviouslyOnHero = factory(Item::class)->state('head')->create();
-        $itemPreviouslyOnHero = $itemPreviouslyOnHero->attachToHasItems($this->hero);
+        $this->hero->items()->save($itemPreviouslyOnHero);
 
-        $hasItemsCollection = $this->domainAction->execute($this->headItem, $this->hero);
-        $this->assertEquals(2, $hasItemsCollection->count());
+        $itemsMoved = $this->domainAction->execute($this->headItem, $this->hero);
+        $this->assertEquals(2, $itemsMoved->count());
 
-        $squad = $itemPreviouslyOnHero->fresh()->hasItems;
-        $this->assertEquals($squad->getMorphID(), $this->squad->getMorphID());
-        $this->assertEquals($squad->getMorphType(), $this->squad->getMorphType());
-
-        $heroHasItems = $hasItemsCollection->first(function (HasItems $hasItems) {
-            return $hasItems->getMorphID() === $this->hero->id && $hasItems->getMorphType() === Hero::RELATION_MORPH_MAP_KEY;
+        $itemMovedToHero = $itemsMoved->first(function (Item $item) {
+            return $item->ownedByMorphable($this->hero);
         });
-        $this->assertNotNull($heroHasItems);
+        $this->assertNotNull($itemMovedToHero);
+        $this->assertEquals($this->headItem->id, $itemMovedToHero->id);
+        $this->assertItemTransactionMatches($itemMovedToHero, $this->hero, $this->squad);
 
-        $squadHasItems = $hasItemsCollection->first(function (HasItems $hasItems) {
-            return $hasItems->getMorphID() === $this->squad->id && $hasItems->getMorphType() === Squad::RELATION_MORPH_MAP_KEY;
+        $itemMovedToSquad = $itemsMoved->first(function (Item $item) {
+            return $item->ownedByMorphable($this->squad);
         });
-        $this->assertNotNull($squadHasItems);
+        $this->assertNotNull($itemMovedToSquad);
+        $this->assertEquals($itemPreviouslyOnHero->id, $itemMovedToSquad->id);
+        $this->assertItemTransactionMatches($itemMovedToSquad, $this->squad, $this->hero);
     }
 
     /**
@@ -176,24 +186,16 @@ class EquipMobileStorageItemForHeroActionTest extends TestCase
     {
         /** @var Item $itemPreviouslyOnHero */
         $itemPreviouslyOnHero = factory(Item::class)->state('single-handed')->create();
-        $itemPreviouslyOnHero = $itemPreviouslyOnHero->attachToHasItems($this->hero);
+        $this->hero->items()->save($itemPreviouslyOnHero);
 
-        $hasItemsCollection = $this->domainAction->execute($this->singleHandedItem, $this->hero);
-        $this->assertEquals(2, $hasItemsCollection->count());
+        $itemsMoved = $this->domainAction->execute($this->singleHandedItem, $this->hero);
+        $this->assertTrue($itemPreviouslyOnHero->fresh()->ownedByMorphable($this->hero));
+        $this->assertEquals(1, $itemsMoved->count());
 
-        $hero = $itemPreviouslyOnHero->fresh()->hasItems;
-        $this->assertEquals($hero->getMorphID(), $this->hero->getMorphID());
-        $this->assertEquals($hero->getMorphType(), $this->hero->getMorphType());
-
-        $heroHasItems = $hasItemsCollection->first(function (HasItems $hasItems) {
-            return $hasItems->getMorphID() === $this->hero->id && $hasItems->getMorphType() === Hero::RELATION_MORPH_MAP_KEY;
-        });
-        $this->assertNotNull($heroHasItems);
-
-        $squadHasItems = $hasItemsCollection->first(function (HasItems $hasItems) {
-            return $hasItems->getMorphID() === $this->squad->id && $hasItems->getMorphType() === Squad::RELATION_MORPH_MAP_KEY;
-        });
-        $this->assertNotNull($squadHasItems);
+        /** @var Item $item */
+        $item = $itemsMoved->first();
+        $this->assertTrue($item->ownedByMorphable($this->hero));
+        $this->assertItemTransactionMatches($item, $this->hero, $this->squad);
     }
 
     /**
@@ -203,24 +205,17 @@ class EquipMobileStorageItemForHeroActionTest extends TestCase
     {
         /** @var Item $itemPreviouslyOnHero */
         $itemPreviouslyOnHero = factory(Item::class)->state('single-handed')->create();
-        $itemPreviouslyOnHero = $itemPreviouslyOnHero->attachToHasItems($this->hero);
+        $this->hero->items()->save($itemPreviouslyOnHero);
 
-        $hasItemsCollection = $this->domainAction->execute($this->shield, $this->hero);
-        $this->assertEquals(2, $hasItemsCollection->count());
+        $itemsMoved = $this->domainAction->execute($this->shield, $this->hero);
 
-        $hero = $itemPreviouslyOnHero->fresh()->hasItems;
-        $this->assertEquals($hero->getMorphID(), $this->hero->getMorphID());
-        $this->assertEquals($hero->getMorphType(), $this->hero->getMorphType());
+        $this->assertTrue($itemPreviouslyOnHero->fresh()->ownedByMorphable($this->hero));
+        $this->assertEquals(1, $itemsMoved->count());
 
-        $heroHasItems = $hasItemsCollection->first(function (HasItems $hasItems) {
-            return $hasItems->getMorphID() === $this->hero->id && $hasItems->getMorphType() === Hero::RELATION_MORPH_MAP_KEY;
-        });
-        $this->assertNotNull($heroHasItems);
-
-        $squadHasItems = $hasItemsCollection->first(function (HasItems $hasItems) {
-            return $hasItems->getMorphID() === $this->squad->id && $hasItems->getMorphType() === Squad::RELATION_MORPH_MAP_KEY;
-        });
-        $this->assertNotNull($squadHasItems);
+        /** @var Item $item */
+        $item = $itemsMoved->first();
+        $this->assertTrue($item->ownedByMorphable($this->hero));
+        $this->assertItemTransactionMatches($item, $this->hero, $this->squad);
     }
 
     /**
@@ -230,24 +225,23 @@ class EquipMobileStorageItemForHeroActionTest extends TestCase
     {
         /** @var Item $itemPreviouslyOnHero */
         $itemPreviouslyOnHero = factory(Item::class)->state('single-handed')->create();
-        $itemPreviouslyOnHero = $itemPreviouslyOnHero->attachToHasItems($this->hero);
+        $this->hero->items()->save($itemPreviouslyOnHero);
 
-        $hasItemsCollection = $this->domainAction->execute($this->twoHandedItem, $this->hero);
-        $this->assertEquals(2, $hasItemsCollection->count());
+        $itemsMoved = $this->domainAction->execute($this->twoHandedItem, $this->hero);
+        $this->assertEquals(2, $itemsMoved->count());
 
-        $squad = $itemPreviouslyOnHero->fresh()->hasItems;
-        $this->assertEquals($squad->getMorphID(), $this->squad->getMorphID());
-        $this->assertEquals($squad->getMorphType(), $this->squad->getMorphType());
-
-        $heroHasItems = $hasItemsCollection->first(function (HasItems $hasItems) {
-            return $hasItems->getMorphID() === $this->hero->id && $hasItems->getMorphType() === Hero::RELATION_MORPH_MAP_KEY;
+        $itemMovedToHero = $itemsMoved->first(function (Item $item) {
+            return $item->ownedByMorphable($this->hero);
         });
-        $this->assertNotNull($heroHasItems);
+        $this->assertNotNull($itemMovedToHero);
+        $this->assertItemTransactionMatches($itemMovedToHero, $this->hero, $this->squad);
 
-        $squadHasItems = $hasItemsCollection->first(function (HasItems $hasItems) {
-            return $hasItems->getMorphID() === $this->squad->id && $hasItems->getMorphType() === Squad::RELATION_MORPH_MAP_KEY;
+        $itemMovedToSquad = $itemsMoved->first(function (Item $item) {
+            return $item->ownedByMorphable($this->squad);
         });
-        $this->assertNotNull($squadHasItems);
+        $this->assertNotNull($itemMovedToSquad);
+        $this->assertEquals($itemPreviouslyOnHero->id, $itemMovedToSquad->id);
+        $this->assertItemTransactionMatches($itemMovedToSquad, $this->squad, $this->hero);
     }
 
     /**
@@ -257,32 +251,33 @@ class EquipMobileStorageItemForHeroActionTest extends TestCase
     {
         /** @var Item $itemPreviouslyOnHero */
         $itemPreviouslyOnHero = factory(Item::class)->state('single-handed')->create();
-        $itemPreviouslyOnHero = $itemPreviouslyOnHero->attachToHasItems($this->hero);
+        $this->hero->items()->save($itemPreviouslyOnHero);
 
         /** @var Item $itemPreviouslyOnHeroTwo */
         $itemPreviouslyOnHeroTwo = factory(Item::class)->state('single-handed')->create();
-        $itemPreviouslyOnHeroTwo = $itemPreviouslyOnHeroTwo->attachToHasItems($this->hero);
+        $this->hero->items()->save($itemPreviouslyOnHeroTwo);
 
-        $hasItemsCollection = $this->domainAction->execute($this->twoHandedItem, $this->hero);
-        $this->assertEquals(2, $hasItemsCollection->count());
+        $itemsMoved = $this->domainAction->execute($this->twoHandedItem, $this->hero);
+        $this->assertEquals(3, $itemsMoved->count());
 
-        $squad = $itemPreviouslyOnHero->fresh()->hasItems;
-        $this->assertEquals($squad->getMorphID(), $this->squad->getMorphID());
-        $this->assertEquals($squad->getMorphType(), $this->squad->getMorphType());
-
-        $squad = $itemPreviouslyOnHeroTwo->fresh()->hasItems;
-        $this->assertEquals($squad->getMorphID(), $this->squad->getMorphID());
-        $this->assertEquals($squad->getMorphType(), $this->squad->getMorphType());
-
-        $heroHasItems = $hasItemsCollection->first(function (HasItems $hasItems) {
-            return $hasItems->getMorphID() === $this->hero->id && $hasItems->getMorphType() === Hero::RELATION_MORPH_MAP_KEY;
+        $itemMovedToHero = $itemsMoved->first(function (Item $item) {
+            return $item->ownedByMorphable($this->hero);
         });
-        $this->assertNotNull($heroHasItems);
+        $this->assertEquals($itemMovedToHero->id, $this->twoHandedItem->id);
+        $this->assertNotNull($itemMovedToHero);
+        $this->assertItemTransactionMatches($itemMovedToHero, $this->hero, $this->squad);
 
-        $squadHasItems = $hasItemsCollection->first(function (HasItems $hasItems) {
-            return $hasItems->getMorphID() === $this->squad->id && $hasItems->getMorphType() === Squad::RELATION_MORPH_MAP_KEY;
+        $itemsMovedToSquad = $itemsMoved->filter(function (Item $item) {
+            return $item->ownedByMorphable($this->squad);
         });
-        $this->assertNotNull($squadHasItems);
+        $this->assertEquals(2, $itemsMovedToSquad->count());
+        $itemsMovedToSquad->each(function (Item $item) use ($itemPreviouslyOnHero, $itemPreviouslyOnHeroTwo) {
+            $this->assertTrue(in_array($item->id, [
+                $itemPreviouslyOnHero->id,
+                $itemPreviouslyOnHeroTwo->id
+            ]));
+            $this->assertItemTransactionMatches($item, $this->squad, $this->hero);
+        });
     }
 
     /**
@@ -292,32 +287,31 @@ class EquipMobileStorageItemForHeroActionTest extends TestCase
     {
         /** @var Item $itemPreviouslyOnHero */
         $itemPreviouslyOnHero = factory(Item::class)->state('single-handed')->create();
-        $itemPreviouslyOnHero = $itemPreviouslyOnHero->attachToHasItems($this->hero);
+        $this->hero->items()->save($itemPreviouslyOnHero);
 
         /** @var Item $itemPreviouslyOnHeroTwo */
         $itemPreviouslyOnHeroTwo = factory(Item::class)->state('single-handed')->create();
-        $itemPreviouslyOnHeroTwo = $itemPreviouslyOnHeroTwo->attachToHasItems($this->hero);
+        $this->hero->items()->save($itemPreviouslyOnHeroTwo);
 
-        $hasItemsCollection = $this->domainAction->execute($this->shield, $this->hero);
-        $this->assertEquals(2, $hasItemsCollection->count());
+        $itemsMoved = $this->domainAction->execute($this->shield, $this->hero);
+        $this->assertEquals(2, $itemsMoved->count());
 
-        $hero = $itemPreviouslyOnHero->fresh()->hasItems;
-        $this->assertEquals($hero->getMorphID(), $this->hero->getMorphID());
-        $this->assertEquals($hero->getMorphType(), $this->hero->getMorphType());
-
-        $squad = $itemPreviouslyOnHeroTwo->fresh()->hasItems;
-        $this->assertEquals($squad->getMorphID(), $this->squad->getMorphID());
-        $this->assertEquals($squad->getMorphType(), $this->squad->getMorphType());
-
-        $heroHasItems = $hasItemsCollection->first(function (HasItems $hasItems) {
-            return $hasItems->getMorphID() === $this->hero->id && $hasItems->getMorphType() === Hero::RELATION_MORPH_MAP_KEY;
+        $itemMovedToHero = $itemsMoved->first(function (Item $item) {
+            return $item->ownedByMorphable($this->hero);
         });
-        $this->assertNotNull($heroHasItems);
+        $this->assertNotNull($itemMovedToHero);
+        $this->assertEquals($this->shield->id, $itemMovedToHero->id);
+        $this->assertItemTransactionMatches($itemMovedToHero, $this->hero, $this->squad);
 
-        $squadHasItems = $hasItemsCollection->first(function (HasItems $hasItems) {
-            return $hasItems->getMorphID() === $this->squad->id && $hasItems->getMorphType() === Squad::RELATION_MORPH_MAP_KEY;
+        $itemMovedToSquad = $itemsMoved->first(function (Item $item) {
+            return $item->ownedByMorphable($this->squad);
         });
-        $this->assertNotNull($squadHasItems);
+        $this->assertNotNull($itemMovedToSquad);
+        $this->assertEquals($itemPreviouslyOnHeroTwo->id, $itemMovedToSquad->id);
+        $this->assertItemTransactionMatches($itemMovedToSquad, $this->squad, $this->hero);
+
+        //Make sure first single-hand item still attached to hero
+        $this->assertTrue($itemPreviouslyOnHero->fresh()->ownedByMorphable($this->hero));
     }
 
     /**
@@ -327,24 +321,24 @@ class EquipMobileStorageItemForHeroActionTest extends TestCase
     {
         /** @var Item $itemPreviouslyOnHero */
         $itemPreviouslyOnHero = factory(Item::class)->state('two-handed')->create();
-        $itemPreviouslyOnHero = $itemPreviouslyOnHero->attachToHasItems($this->hero);
+        $this->hero->items()->save($itemPreviouslyOnHero);
 
-        $hasItemsCollection = $this->domainAction->execute($this->twoHandedItem, $this->hero);
-        $this->assertEquals(2, $hasItemsCollection->count());
+        $itemsMoved = $this->domainAction->execute($this->twoHandedItem, $this->hero);
+        $this->assertEquals(2, $itemsMoved->count());
 
-        $squad = $itemPreviouslyOnHero->fresh()->hasItems;
-        $this->assertEquals($squad->getMorphID(), $this->squad->getMorphID());
-        $this->assertEquals($squad->getMorphType(), $this->squad->getMorphType());
-
-        $heroHasItems = $hasItemsCollection->first(function (HasItems $hasItems) {
-            return $hasItems->getMorphID() === $this->hero->id && $hasItems->getMorphType() === Hero::RELATION_MORPH_MAP_KEY;
+        $itemMovedToHero = $itemsMoved->first(function (Item $item) {
+            return $item->ownedByMorphable($this->hero);
         });
-        $this->assertNotNull($heroHasItems);
+        $this->assertNotNull($itemMovedToHero);
+        $this->assertEquals($this->twoHandedItem->id, $itemMovedToHero->id);
+        $this->assertItemTransactionMatches($itemMovedToHero, $this->hero, $this->squad);
 
-        $squadHasItems = $hasItemsCollection->first(function (HasItems $hasItems) {
-            return $hasItems->getMorphID() === $this->squad->id && $hasItems->getMorphType() === Squad::RELATION_MORPH_MAP_KEY;
+        $itemMovedToSquad = $itemsMoved->first(function (Item $item) {
+            return $item->ownedByMorphable($this->squad);
         });
-        $this->assertNotNull($squadHasItems);
+        $this->assertNotNull($itemMovedToSquad);
+        $this->assertEquals($itemPreviouslyOnHero->id, $itemMovedToSquad->id);
+        $this->assertItemTransactionMatches($itemMovedToSquad, $this->squad, $this->hero);
     }
 
     /**
@@ -354,23 +348,23 @@ class EquipMobileStorageItemForHeroActionTest extends TestCase
     {
         /** @var Item $itemPreviouslyOnHero */
         $itemPreviouslyOnHero = factory(Item::class)->state('two-handed')->create();
-        $itemPreviouslyOnHero = $itemPreviouslyOnHero->attachToHasItems($this->hero);
+        $itemPreviouslyOnHero = $itemPreviouslyOnHero->attachToMorphable($this->hero);
 
-        $hasItemsCollection = $this->domainAction->execute($this->shield, $this->hero);
-        $this->assertEquals(2, $hasItemsCollection->count());
+        $itemsMoved = $this->domainAction->execute($this->shield, $this->hero);
+        $this->assertEquals(2, $itemsMoved->count());
 
-        $squad = $itemPreviouslyOnHero->fresh()->hasItems;
-        $this->assertEquals($squad->getMorphID(), $this->squad->getMorphID());
-        $this->assertEquals($squad->getMorphType(), $this->squad->getMorphType());
-
-        $heroHasItems = $hasItemsCollection->first(function (HasItems $hasItems) {
-            return $hasItems->getMorphID() === $this->hero->id && $hasItems->getMorphType() === Hero::RELATION_MORPH_MAP_KEY;
+        $itemMovedToHero = $itemsMoved->first(function (Item $item) {
+            return $item->ownedByMorphable($this->hero);
         });
-        $this->assertNotNull($heroHasItems);
+        $this->assertNotNull($itemMovedToHero);
+        $this->assertEquals($this->shield->id, $itemMovedToHero->id);
+        $this->assertItemTransactionMatches($itemMovedToHero, $this->hero, $this->squad);
 
-        $squadHasItems = $hasItemsCollection->first(function (HasItems $hasItems) {
-            return $hasItems->getMorphID() === $this->squad->id && $hasItems->getMorphType() === Squad::RELATION_MORPH_MAP_KEY;
+        $itemMovedToSquad = $itemsMoved->first(function (Item $item) {
+            return $item->ownedByMorphable($this->squad);
         });
-        $this->assertNotNull($squadHasItems);
+        $this->assertNotNull($itemMovedToSquad);
+        $this->assertEquals($itemPreviouslyOnHero->id, $itemMovedToSquad->id);
+        $this->assertItemTransactionMatches($itemMovedToSquad, $this->squad, $this->hero);
     }
 }
