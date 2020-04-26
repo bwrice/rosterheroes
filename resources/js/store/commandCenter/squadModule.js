@@ -408,12 +408,7 @@ export default {
             try {
                 let response = await chestApi.open(unopenedChest.uuid);
                 let openedChestResult = new OpenedChestResult(response.data);
-                openedChestResult.itemsMovedToMobileStorage.forEach(function (item) {
-                    commit('ADD_ITEM_TO_MOBILE_STORAGE', item);
-                });
-                openedChestResult.itemsMovedToStash.forEach(function (item) {
-                    commit('ADD_ITEM_TO_LOCAL_STASH', item);
-                });
+                helpers.handleItemTransactions({state, commit}, openedChestResult.items);
                 commit('REMOVE_CHEST_FROM_UNOPENED_CHESTS', unopenedChest.uuid);
                 commit('ADD_TO_OPENED_CHEST_RESULTS', openedChestResult);
             } catch (e) {
