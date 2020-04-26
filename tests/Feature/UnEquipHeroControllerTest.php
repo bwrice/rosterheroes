@@ -59,14 +59,8 @@ class UnEquipHeroControllerTest extends TestCase
                 [
                     'uuid' => $this->item->uuid,
                     'transaction' => [
-                        'to' => [
-                            'type' => $this->squad->getMorphType(),
-                            'id' => $this->squad->getMorphID()
-                        ],
-                        'from' => [
-                            'type' => $this->hero->getMorphType(),
-                            'id' => $this->hero->getMorphID()
-                        ]
+                        'to' => $this->squad->getTransactionIdentification(),
+                        'from' => $this->hero->getTransactionIdentification()
                     ]
                 ]
             ]

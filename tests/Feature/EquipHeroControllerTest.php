@@ -69,40 +69,22 @@ class EquipHeroControllerTest extends TestCase
                 [
                     'uuid' => $this->singleHandWeapon->uuid,
                     'transaction' => [
-                        'to' => [
-                            'type' => $this->squad->getMorphType(),
-                            'id' => $this->squad->getMorphID()
-                        ],
-                        'from' => [
-                            'type' => $this->hero->getMorphType(),
-                            'id' => $this->hero->getMorphID()
-                        ]
+                        'to' => $this->squad->getTransactionIdentification(),
+                        'from' => $this->hero->getTransactionIdentification()
                     ]
                 ],
                 [
                     'uuid' => $this->shield->uuid,
                     'transaction' => [
-                        'to' => [
-                            'type' => $this->squad->getMorphType(),
-                            'id' => $this->squad->getMorphID()
-                        ],
-                        'from' => [
-                            'type' => $this->hero->getMorphType(),
-                            'id' => $this->hero->getMorphID()
-                        ]
+                        'to' => $this->squad->getTransactionIdentification(),
+                        'from' => $this->hero->getTransactionIdentification()
                     ]
                 ],
                 [
                     'uuid' => $this->twoHandedWeapon->uuid,
                     'transaction' => [
-                        'to' => [
-                            'type' => $this->hero->getMorphType(),
-                            'id' => $this->hero->getMorphID()
-                        ],
-                        'from' => [
-                            'type' => $this->squad->getMorphType(),
-                            'id' => $this->squad->getMorphID()
-                        ]
+                        'to' => $this->hero->getTransactionIdentification(),
+                        'from' => $this->squad->getTransactionIdentification()
                     ]
                 ],
             ]]);

@@ -73,17 +73,17 @@ class OpenChestControllerTest extends TestCase
                     'items' => [
                         [
                             'uuid' => $itemOne->uuid,
-                            'hasItems' => [
-                                'uuid' => $chest->squad->uuid,
-                                'type' => 'squad'
-                            ]
+                            'transaction' => [
+                                'to' => $chest->squad->getTransactionIdentification(),
+                                'from' => $chest->getTransactionIdentification()
+                            ],
                         ],
                         [
                             'uuid' => $itemTwo->uuid,
-                            'hasItems' => [
-                                'uuid' => $chest->squad->getLocalStash()->uuid,
-                                'type' => 'stash'
-                            ]
+                            'transaction' => [
+                                'to' => $chest->squad->getLocalStash()->getTransactionIdentification(),
+                                'from' => $chest->getTransactionIdentification()
+                            ],
                         ]
                     ]
                 ]

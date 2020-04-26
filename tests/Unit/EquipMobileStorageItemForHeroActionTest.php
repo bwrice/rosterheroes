@@ -124,17 +124,11 @@ class EquipMobileStorageItemForHeroActionTest extends TestCase
         $this->fail("Exception not thrown");
     }
 
-    protected function assertItemTransactionMatches(Item $item, Morphable $to, Morphable $from)
+    protected function assertItemTransactionMatches(Item $item, HasItems $to, HasItems $from)
     {
         $this->assertEquals([
-            'to' => [
-                'type' => $to->getMorphType(),
-                'id' => $to->getMorphID()
-            ],
-            'from' => [
-                'type' => $from->getMorphType(),
-                'id' => $from->getMorphID()
-            ]
+            'to' => $to->getTransactionIdentification(),
+            'from' => $from->getTransactionIdentification()
         ], $item->getTransaction());
     }
 
