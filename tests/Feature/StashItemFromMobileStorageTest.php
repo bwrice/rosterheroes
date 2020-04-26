@@ -11,9 +11,11 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use Tests\Traits\TestsItemsTransactions;
 
 class StashItemFromMobileStorageTest extends TestCase
 {
+    use TestsItemsTransactions;
     use DatabaseTransactions;
 
     /**
@@ -53,9 +55,10 @@ class StashItemFromMobileStorageTest extends TestCase
         $squad->items()->save($item);
         $stash = StashFactory::new()->withSquadID($squad->id)->atProvince($squad->province)->create();
 
-        $this->getDomainAction()->execute($item, $squad);
+        $item = $this->getDomainAction()->execute($item, $squad);
 
-        $this->assertTrue($item->fresh()->ownedByMorphable($stash));
+        $this->assertTrue($item->ownedByMorphable($stash));
+        $this->assertItemTransactionMatches($item, $stash, $squad);
     }
 
     /**
@@ -70,9 +73,10 @@ class StashItemFromMobileStorageTest extends TestCase
         $localResidence = ResidenceFactory::new()->withSquadID($squad->id)->atProvince($squad->province)->create();
         $residenceItemsCount = $localResidence->items()->count();
 
-        $this->getDomainAction()->execute($item, $squad);
+        $item = $this->getDomainAction()->execute($item, $squad);
 
-        $this->assertTrue($item->fresh()->ownedByMorphable($stash));
+        $this->assertTrue($item->ownedByMorphable($stash));
+        $this->assertItemTransactionMatches($item, $stash, $squad);
         $this->assertEquals($residenceItemsCount, $localResidence->items()->count());
     }
 }
