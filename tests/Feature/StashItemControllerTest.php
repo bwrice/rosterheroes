@@ -13,7 +13,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
 
-class StashItemFromMobileStorageControllerTest extends TestCase
+class StashItemControllerTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -57,7 +57,11 @@ class StashItemFromMobileStorageControllerTest extends TestCase
         $response->assertStatus(200)
             ->assertJson([
                 'data' => [
-                    'uuid' => $item->uuid
+                    'uuid' => $item->uuid,
+                    'transaction' => [
+                        'to' => $squad->getLocalStash()->getTransactionIdentification(),
+                        'from' => $squad->getTransactionIdentification()
+                    ]
                 ]
             ]);
     }
