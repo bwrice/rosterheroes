@@ -33,7 +33,7 @@ class ItemUnitTest extends TestCase
         parent::setUp();
         $this->item = factory(Item::class)->create();
         $this->hero = factory(Hero::class)->state('with-measurables')->create();
-        $this->item->attachToHasItems($this->hero);
+        $this->item->attachToMorphable($this->hero);
     }
 
     /**

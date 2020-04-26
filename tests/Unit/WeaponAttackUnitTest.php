@@ -35,7 +35,7 @@ class WeaponAttackUnitTest extends TestCase
         $this->attack = factory(Attack::class)->create();
         $this->hero = factory(Hero::class)->states('with-measurables')->create();
         $this->item = factory(Item::class)->create();
-        $this->item->attachToHasItems($this->hero);
+        $this->item->attachToMorphable($this->hero);
     }
 
     /**
