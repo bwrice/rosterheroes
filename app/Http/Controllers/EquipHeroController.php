@@ -6,7 +6,7 @@ use App\Domain\Actions\EquipMobileStorageItemForHeroAction;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Item;
 use App\Exceptions\ItemTransactionException;
-use App\Http\Resources\HasItemsResource;
+use App\Http\Resources\ItemResource;
 use App\Policies\HeroPolicy;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -29,7 +29,7 @@ class EquipHeroController extends Controller
         $item = Item::findUuidOrFail($request->item);
 
         try {
-            $hasItemsCollection = $domainAction->execute($item, $hero);
+            $itemsMoved = $domainAction->execute($item, $hero);
 
         } catch (ItemTransactionException $exception) {
 
@@ -38,6 +38,6 @@ class EquipHeroController extends Controller
             ]);
         }
 
-        return HasItemsResource::collection($hasItemsCollection);
+        return ItemResource::collection($itemsMoved);
     }
 }

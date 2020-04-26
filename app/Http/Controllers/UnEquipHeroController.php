@@ -6,7 +6,7 @@ use App\Domain\Actions\UnEquipItemFromHeroAction;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Item;
 use App\Exceptions\ItemTransactionException;
-use App\Http\Resources\HasItemsResource;
+use App\Http\Resources\ItemResource;
 use App\Policies\HeroPolicy;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -28,8 +28,8 @@ class UnEquipHeroController extends Controller
 
         $item = Item::findUuidOrFail($request->item);
         try {
-            $hasItemsCollection = $domainAction->execute($item, $hero);
-            return HasItemsResource::collection($hasItemsCollection);
+            $itemsMoved = $domainAction->execute($item, $hero);
+            return ItemResource::collection($itemsMoved);
 
         } catch (ItemTransactionException $exception) {
 
