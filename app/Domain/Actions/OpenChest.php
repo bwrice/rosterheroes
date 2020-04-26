@@ -5,8 +5,6 @@ namespace App\Domain\Actions;
 
 
 use App\Chest;
-use App\Domain\Collections\HasItemsCollection;
-use App\Domain\Collections\ItemCollection;
 use App\Domain\DataTransferObjects\OpenedChestResult;
 use App\Domain\Models\Item;
 use Illuminate\Support\Facades\DB;
@@ -49,7 +47,7 @@ class OpenChest
                 $this->addItemToHasItems->execute($item, $squad->fresh(), null, false);
             });
 
-            return new OpenedChestResult($gold, $items->fresh());
+            return new OpenedChestResult($gold, $items);
         });
     }
 }
