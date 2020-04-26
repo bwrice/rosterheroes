@@ -111,9 +111,9 @@ class DefaultUsersSeeder extends Seeder
         foreach (range(1, 20) as $count) {
             $item = $generateItemFromBlueprintAction->execute($blueprint);
             if ($count % 4 === 0) {
-                $item->attachToHasItems($localStash);
+                $item->attachToMorphable($localStash);
             } else {
-                $item->attachToHasItems($squad);
+                $item->attachToMorphable($squad);
             }
         }
     }
