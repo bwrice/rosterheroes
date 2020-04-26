@@ -260,11 +260,15 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
         return $this->uuid;
     }
 
-    public function attachToHasItems(HasItems $hasItems)
+    public function attachToMorphable(Morphable $morphable)
     {
-        $this->has_items_type = $hasItems->getMorphType();
-        $this->has_items_id = $hasItems->getMorphID();
+        if ($this->hasItems) {
+            $this->setTransactionFrom($this->hasItems);
+        }
+        $this->has_items_type = $morphable->getMorphType();
+        $this->has_items_id = $morphable->getMorphID();
         $this->save();
+        $this->setTransactionTo($morphable);
         return $this;
     }
 
