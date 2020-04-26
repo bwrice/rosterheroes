@@ -10,6 +10,7 @@ import Spell from "../../models/Spell";
 import Campaign from "../../models/Campaign";
 import UnopenedChest from "../../models/UnopenedChest";
 import OpenedChestResult from "../../models/OpenedChestResult";
+import Item from "../../models/Item";
 
 export default {
 
@@ -120,6 +121,20 @@ export default {
         ADD_ITEM_TO_MOBILE_STORAGE(state, item) {
             state.mobileStorage.capacityUsed += item.weight;
             state.mobileStorage.items.push(item);
+        },
+        REMOVE_ITEM_FROM_MOBILE_STORAGE(state, itemToRemove) {
+            let mobileStorage = _.cloneDeep(state.mobileStorage);
+
+            let index = mobileStorage.items.findIndex(function (item) {
+                return item.uuid === itemToRemove.uuid;
+            });
+
+            if (index !== -1) {
+                mobileStorage.items.splice(index, 1);
+            }
+
+            mobileStorage.capacityUsed -= itemToRemove.weight;
+            state.mobileStorage = mobileStorage;
         },
         SET_CURRENT_CAMPAIGN(state, payload) {
             state.currentCampaign = payload;
@@ -237,7 +252,10 @@ export default {
 
             try {
                 let response = await heroApi.unequipItem(heroSlug, item.uuid);
-                helpers.handleItemTransactions({state, commit, dispatch}, response.data);
+                let updatedItems = response.data.map(function (itemData) {
+                    return new Item(itemData);
+                });
+                helpers.handleItemTransactions({state, commit, dispatch}, updatedItems);
                 dispatch('snackBarSuccess', {
                     text: item.name + ' moved to ' + state.mobileStorage.mobileStorageRank.name,
                     timeout: 3000
@@ -251,7 +269,10 @@ export default {
 
             try {
                 let response = await heroApi.equipFromWagon(heroSlug, item.uuid);
-                helpers.handleItemTransactions({state, commit, dispatch}, response.data);
+                let updatedItems = response.data.map(function (itemData) {
+                    return new Item(itemData);
+                });
+                helpers.handleItemTransactions({state, commit, dispatch}, updatedItems);
                 dispatch('snackBarSuccess', {
                     text: item.name + ' equipped',
                     timeout: 3000
