@@ -15,8 +15,4 @@ interface HasItems extends Morphable, HasUniqueIdentifier
     public function hasRoomForItem(Item $item): bool;
 
     public function itemsToMoveForNewItem(Item $item): ItemCollection;
-
-    public function getHasItemsResource(): JsonResource;
-
-    public function getHasItemsType();
 }

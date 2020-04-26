@@ -58,9 +58,6 @@ class ItemResource extends JsonResource
             'protection' => $this->getProtection(),
             'blockChance' => round($this->getBlockChance(), 2),
             'value' => $this->getValue(),
-            'hasItems' => $this->whenLoaded('hasItems', function () {
-                return $this->getSimpleHasItemsArray();
-            }),
             'transaction' => $this->getTransaction()
         ];
     }
@@ -83,21 +80,5 @@ class ItemResource extends JsonResource
     {
         $this->hasItems = $hasItems;
         return $this;
-    }
-
-    /**
-     * @param $hasItems
-     * @return array|null
-     */
-    protected function getSimpleHasItemsArray()
-    {
-        $hasItems = $this->resource->hasItems;
-        if ($hasItems instanceof HasItems) {
-            return [
-                'uuid' => $hasItems->getUniqueIdentifier(),
-                'type' => $hasItems->getHasItemsType()
-            ];
-        }
-        return null;
     }
 }
