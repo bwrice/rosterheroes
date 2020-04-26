@@ -260,15 +260,15 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
         return $this->uuid;
     }
 
-    public function attachToMorphable(Morphable $morphable)
+    public function attachToHasItems(HasItems $hasItems)
     {
         if ($this->hasItems) {
             $this->setTransactionFrom($this->hasItems);
         }
-        $this->has_items_type = $morphable->getMorphType();
-        $this->has_items_id = $morphable->getMorphID();
+        $this->has_items_type = $hasItems->getMorphType();
+        $this->has_items_id = $hasItems->getMorphID();
         $this->save();
-        $this->setTransactionTo($morphable);
+        $this->setTransactionTo($hasItems);
         return $this;
     }
 
@@ -307,19 +307,13 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
         return $this->transaction;
     }
 
-    public function setTransactionTo(Morphable $morphable)
+    public function setTransactionTo(HasItems $hasItems)
     {
-        return $this->transaction['to'] = [
-            'id' => $morphable->getMorphID(),
-            'type' => $morphable->getMorphType()
-        ];
+        return $this->transaction['to'] = $hasItems->getTransactionIdentification();
     }
 
-    public function setTransactionFrom(Morphable $morphable)
+    public function setTransactionFrom(HasItems $hasItems)
     {
-        return $this->transaction['from'] = [
-            'id' => $morphable->getMorphID(),
-            'type' => $morphable->getMorphType()
-        ];
+        return $this->transaction['from'] = $hasItems->getTransactionIdentification();
     }
 }
