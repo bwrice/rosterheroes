@@ -364,11 +364,6 @@ class Squad extends EventSourcedModel implements HasItems
             ->persist();
     }
 
-    public function getUniqueIdentifier(): string
-    {
-        return (string) $this->uuid;
-    }
-
     public function getBackupHasItems(): ?HasItems
     {
         return $this->getLocalResidence() ?: $this->getLocalStash();
@@ -424,16 +419,6 @@ class Squad extends EventSourcedModel implements HasItems
         return $this->id;
     }
 
-    public function getHasItemsResource(): JsonResource
-    {
-        return new MobileStorageResource($this->load(static::getMobileStorageResourceRelations()));
-    }
-
-    public function getHasItemsType()
-    {
-        return 'squad';
-    }
-
     public function getLevel(): int
     {
         $exp = $this->experience;
@@ -466,5 +451,13 @@ class Squad extends EventSourcedModel implements HasItems
         ]);
         $currentCapacity = $this->items->sumOfWeight();
         return $currentCapacity;
+    }
+
+    public function getTransactionIdentification(): array
+    {
+        return [
+            'uuid' => $this->uuid,
+            'type' => $this->getMorphType()
+        ];
     }
 }

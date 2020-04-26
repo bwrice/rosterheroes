@@ -100,4 +100,12 @@ class Stash extends Model implements HasItems
             'items.enchantments.measurableBoosts.booster',
         ];
     }
+
+    public function getTransactionIdentification(): array
+    {
+        return [
+            'uuid' => $this->uuid,
+            'type' => $this->getMorphType()
+        ];
+    }
 }

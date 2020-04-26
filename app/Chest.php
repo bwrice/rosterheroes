@@ -139,8 +139,11 @@ class Chest extends EventSourcedModel implements HasItems
         return new ItemCollection();
     }
 
-    public function getUniqueIdentifier(): string
+    public function getTransactionIdentification(): array
     {
-        return $this->uuid;
+        return [
+            'uuid' => $this->uuid,
+            'type' => $this->getMorphType()
+        ];
     }
 }

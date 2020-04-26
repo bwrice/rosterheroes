@@ -80,18 +80,11 @@ class Residence extends Model implements HasItems
         return $this->id;
     }
 
-    public function getUniqueIdentifier(): string
+    public function getTransactionIdentification(): array
     {
-        return $this->uuid;
-    }
-
-    public function getHasItemsResource(): JsonResource
-    {
-        return new ResidenceResource($this);
-    }
-
-    public function getHasItemsType()
-    {
-        return 'residence';
+        return [
+            'uuid' => $this->uuid,
+            'type' => $this->getMorphType()
+        ];
     }
 }

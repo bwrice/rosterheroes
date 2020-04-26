@@ -17,9 +17,7 @@ use App\Domain\Models\Support\GearSlots\GearSlotFactory;
 use App\Domain\QueryBuilders\HeroQueryBuilder;
 use App\Domain\Traits\HasNameSlug;
 use App\Domain\Collections\HeroCollection;
-use App\Http\Resources\HeroResource;
 use App\Facades\HeroService;
-use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
  * Class Hero
@@ -223,11 +221,6 @@ class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasItems
         return $this->getMeasurable($measurableTypeName)->getCurrentAmount();
     }
 
-    public function getUniqueIdentifier(): string
-    {
-        return $this->uuid;
-    }
-
     public function getMeasurableStartingAmount(MeasurableTypeBehavior $measurableTypeBehavior): int
     {
         $startingAmount = $this->getHeroClassBehavior()->getMeasurableStartingAmount($measurableTypeBehavior);
@@ -348,16 +341,6 @@ class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasItems
         return $this->id;
     }
 
-    public function getHasItemsResource(): JsonResource
-    {
-        return new HeroResource($this->load(static::heroResourceRelations()));
-    }
-
-    public function getHasItemsType()
-    {
-        return 'hero';
-    }
-
     public function notCombatReadyReasons(): array
     {
         return HeroService::combatUnReadyReasons($this);
@@ -399,5 +382,13 @@ class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasItems
         /** @var HeroAggregate $aggregate */
         $aggregate = HeroAggregate::retrieve($this->uuid);
         return $aggregate;
+    }
+
+    public function getTransactionIdentification(): array
+    {
+        return [
+            'uuid' => $this->uuid,
+            'type' => $this->getMorphType()
+        ];
     }
 }
