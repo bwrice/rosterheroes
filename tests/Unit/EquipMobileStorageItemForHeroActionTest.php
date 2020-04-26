@@ -95,7 +95,7 @@ class EquipMobileStorageItemForHeroActionTest extends TestCase
     public function it_will_throw_an_exception_if_the_item_does_not_belong_to_the_wagon_of_the_hero()
     {
         $squad = factory(Squad::class)->create();
-        $this->randomItem = $this->randomItem->attachToMorphable($squad);
+        $this->randomItem = $this->randomItem->attachToHasItems($squad);
 
         try {
             $this->domainAction->execute($this->randomItem->fresh(), $this->hero);
@@ -348,7 +348,7 @@ class EquipMobileStorageItemForHeroActionTest extends TestCase
     {
         /** @var Item $itemPreviouslyOnHero */
         $itemPreviouslyOnHero = factory(Item::class)->state('two-handed')->create();
-        $itemPreviouslyOnHero = $itemPreviouslyOnHero->attachToMorphable($this->hero);
+        $itemPreviouslyOnHero = $itemPreviouslyOnHero->attachToHasItems($this->hero);
 
         $itemsMoved = $this->domainAction->execute($this->shield, $this->hero);
         $this->assertEquals(2, $itemsMoved->count());

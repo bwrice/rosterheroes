@@ -34,7 +34,7 @@ class UnEquipHeroControllerTest extends TestCase
         $this->item = factory(Item::class)->create();
         $this->hero = factory(\App\Domain\Models\Hero::class)->states( 'with-measurables')->create();
         $this->squad = $this->hero->squad;
-        $this->item->attachToMorphable($this->hero);
+        $this->item->attachToHasItems($this->hero);
         CurrentWeek::partialMock()->shouldReceive('adventuringOpen')->andReturn(true);
     }
 

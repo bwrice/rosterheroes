@@ -22,6 +22,6 @@ class StashItemFromMobileStorage
         }
 
         $stash = $squad->getLocalStash();
-        return $item->attachToMorphable($stash);
+        return $item->attachToHasItems($stash);
     }
 }

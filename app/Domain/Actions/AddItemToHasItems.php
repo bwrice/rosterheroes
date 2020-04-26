@@ -47,7 +47,7 @@ class AddItemToHasItems
 
     protected function attachNewItem(Item $item, HasItems $hasItems, ItemCollection $itemsMoved)
     {
-        $item->attachToMorphable($hasItems);
+        $item->attachToHasItems($hasItems);
         return $itemsMoved->push($item);
     }
 }

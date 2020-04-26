@@ -26,7 +26,7 @@ class MoveItemToBackupAction
 
         $backup = $hasItems->getBackupHasItems();
         if ($backup->hasRoomForItem($item)) {
-            $item->attachToMorphable($backup);
+            $item->attachToHasItems($backup);
             return $itemsMoved->push($item);
         } else {
             // Call execute recursively to try to attach to the backup's backup
