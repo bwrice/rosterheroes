@@ -190,6 +190,11 @@ export default {
             }
         },
 
+        async updateHero({commit}, heroSlug) {
+            let heroResponse = await heroApi.getHero(heroSlug);
+            commit('REPLACE_UPDATED_HERO', new Hero(heroResponse.data));
+        },
+
         async updateMobileStorage({commit}, route) {
             try {
                 let squadSlug = route.params.squadSlug;
@@ -232,17 +237,11 @@ export default {
 
             try {
                 let response = await heroApi.unequipItem(heroSlug, item.uuid);
-                helpers.syncHasItemsResponse(state, commit, response);
-                let mobileStorageResponse = response.data.find(function (hasItemsResponse) {
-                    return hasItemsResponse.type === 'squad';
+                helpers.handleItemTransactions({state, commit, dispatch}, response.data);
+                dispatch('snackBarSuccess', {
+                    text: item.name + ' moved to ' + state.mobileStorage.mobileStorageRank.name,
+                    timeout: 3000
                 });
-                if (mobileStorageResponse) {
-                    let mobileStorage = new MobileStorage(mobileStorageResponse.hasItems);
-                    dispatch('snackBarSuccess', {
-                        text: mobileStorage.getItemMovedToText(item),
-                        timeout: 3000
-                    });
-                }
             } catch (e) {
                 helpers.handleResponseErrors(e, 'equip', dispatch);
             }
@@ -252,7 +251,7 @@ export default {
 
             try {
                 let response = await heroApi.equipFromWagon(heroSlug, item.uuid);
-                helpers.syncHasItemsResponse(state, commit, response);
+                helpers.handleItemTransactions({state, commit, dispatch}, response.data);
                 dispatch('snackBarSuccess', {
                     text: item.name + ' equipped',
                     timeout: 3000
@@ -423,7 +422,7 @@ export default {
             try {
                 let response = await chestApi.open(unopenedChest.uuid);
                 let openedChestResult = new OpenedChestResult(response.data);
-                helpers.handleItemTransactions({state, commit}, openedChestResult.items);
+                helpers.handleItemTransactions({state, commit, dispatch}, openedChestResult.items);
                 commit('REMOVE_CHEST_FROM_UNOPENED_CHESTS', unopenedChest.uuid);
                 commit('ADD_TO_OPENED_CHEST_RESULTS', openedChestResult);
             } catch (e) {
