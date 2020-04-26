@@ -21,10 +21,4 @@ export default class MobileStorage {
             return slot.item.uuid;
         })
     }
-
-    getItemMovedToText(item) {
-        console.log("Mobile Storage Rank");
-        console.log(this.mobileStorageRank);
-        return item.name + ' moved to ' + this.mobileStorageRank.name;
-    }
 }
