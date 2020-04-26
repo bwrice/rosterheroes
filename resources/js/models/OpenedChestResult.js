@@ -10,21 +10,21 @@ export default class OpenedChestResult {
     }
 
     get itemsMovedToMobileStorage() {
-        return this.itemsMovedByHasItemsType('squad')
+        return this.itemsMovedByHasItemsType('squads')
     }
 
     get itemsMovedToStash() {
-        return this.itemsMovedByHasItemsType('stash')
+        return this.itemsMovedByHasItemsType('stashes')
     }
 
     get itemsMovedToResidence() {
-        return this.itemsMovedByHasItemsType('residence')
+        return this.itemsMovedByHasItemsType('residences')
     }
 
     itemsMovedByHasItemsType(hasItemsType) {
         return this.items.filter(function (item) {
-            if (item.hasItems) {
-                return item.hasItems.type === hasItemsType;
+            if (item.transaction.to) {
+                return item.transaction.to.type === hasItemsType;
             }
             return false;
         });
