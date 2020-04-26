@@ -20,10 +20,12 @@ use Illuminate\Support\Facades\Date;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Traits\TestsItemsTransactions;
 
 class UnEquipItemFromHeroActionTest extends TestCase
 {
     use DatabaseTransactions;
+    use TestsItemsTransactions;
 
     /** @var Hero */
     protected $hero;
@@ -97,14 +99,6 @@ class UnEquipItemFromHeroActionTest extends TestCase
             return;
         }
         $this->fail("Exception not thrown");
-    }
-
-    protected function assertItemTransactionMatches(Item $item, HasItems $to, HasItems $from)
-    {
-        $this->assertEquals([
-            'to' => $to->getTransactionIdentification(),
-            'from' => $from->getTransactionIdentification()
-        ], $item->getTransaction());
     }
 
     /**
