@@ -6,7 +6,16 @@
         <v-col cols="12">
             <ItemIterator
                 :items="_mobileStorage.items"
-            ></ItemIterator>
+            >
+                <template v-slot:before-expand="props">
+                    <div class="px-2">
+                        <StashItemButton
+                            :item="props.item"
+                        >
+                        </StashItemButton>
+                    </div>
+                </template>
+            </ItemIterator>
         </v-col>
     </v-row>
 </template>
@@ -14,10 +23,11 @@
 <script>
     import {mapGetters} from 'vuex';
     import ItemIterator from "../global/ItemIterator";
+    import StashItemButton from "./StashItemButton";
 
     export default {
         name: "MobileStorageCard",
-        components: {ItemIterator},
+        components: {StashItemButton, ItemIterator},
         computed: {
             ...mapGetters([
                 '_mobileStorage',
