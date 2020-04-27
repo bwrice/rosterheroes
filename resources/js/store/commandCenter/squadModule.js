@@ -455,9 +455,27 @@ export default {
         async stashItem({state, commit, dispatch}, item) {
             try {
                 let response = await squadApi.stashItem(state.squad.slug, item.uuid);
-                helpers.handleItemTransactions({state, commit, dispatch}, [new Item(response.data)])
+                helpers.handleItemTransactions({state, commit, dispatch}, [new Item(response.data)]);
                 dispatch('snackBarSuccess', {
                     text: item.name + ' stashed',
+                    timeout: 3000
+                });
+            } catch (e) {
+                console.log(e);
+                dispatch('snackBarError', {text: 'Oops, something went wrong'})
+            }
+        },
+
+        async mobileStoreItem({state, commit, dispatch}, item) {
+            try {
+                let response = await squadApi.mobileStoreItem(state.squad.slug, item.uuid);
+                let items = response.data.map(function (itemData) {
+                    return new Item(itemData);
+                });
+                helpers.handleItemTransactions({state, commit, dispatch}, items);
+                let mobileStorageRankName = state.mobileStorage.mobileStorageRank.name;
+                dispatch('snackBarSuccess', {
+                    text: item.name + ' moved to ' + mobileStorageRankName,
                     timeout: 3000
                 });
             } catch (e) {

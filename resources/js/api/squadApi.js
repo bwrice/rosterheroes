@@ -60,6 +60,13 @@ export async function stashItem(squadSlug, itemUuid) {
     return response.data;
 }
 
+export async function mobileStoreItem(squadSlug, itemUuid) {
+    let response = await axios.post(ROUTE_PREFIX + squadSlug + '/mobile-store-item', {
+        item: itemUuid
+    });
+    return response.data;
+}
+
 export async function getBorderTravelCost(squadSlug, borderSlug) {
     let response = await axios.get(ROUTE_PREFIX + squadSlug + '/border-travel/' + borderSlug);
     return response.data;
