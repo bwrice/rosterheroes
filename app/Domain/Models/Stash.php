@@ -17,6 +17,11 @@ use Illuminate\Support\Str;
  *
  * @property int $id
  * @property string $uuid;
+ * @property int $squad_id
+ * @property int $province_id
+ *
+ * @property Squad $squad
+ * @property Province $province
  *
  * @property ItemCollection $items
  */
