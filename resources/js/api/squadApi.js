@@ -53,6 +53,13 @@ export async function getLocalStash(squadSlug) {
     return response.data;
 }
 
+export async function stashItem(squadSlug, itemUuid) {
+    let response = await axios.post(ROUTE_PREFIX + squadSlug + '/stash-item', {
+        item: itemUuid
+    });
+    return response.data;
+}
+
 export async function getBorderTravelCost(squadSlug, borderSlug) {
     let response = await axios.get(ROUTE_PREFIX + squadSlug + '/border-travel/' + borderSlug);
     return response.data;
