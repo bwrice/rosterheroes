@@ -7,7 +7,16 @@
             <ItemIterator
                 :items="_localStash.items"
                 :search-label="searchLabel"
-            ></ItemIterator>
+            >
+                <template v-slot:before-expand="props">
+                    <div class="px-2">
+                        <MobileStoreItemButton
+                            :item="props.item"
+                        >
+                        </MobileStoreItemButton>
+                    </div>
+                </template>
+            </ItemIterator>
         </v-col>
         <v-col v-else cols="12">
             <v-sheet color="rgba(255,255,255, 0.25)" class="my-2">
@@ -23,10 +32,11 @@
     import { mapGetters } from 'vuex'
     import PaginationBlock from "../../global/PaginationBlock";
     import ItemIterator from "../../global/ItemIterator";
+    import MobileStoreItemButton from "../../barracks/MobileStoreItemButton";
 
     export default {
         name: "LocalStashCard",
-        components: {ItemIterator, PaginationBlock},
+        components: {MobileStoreItemButton, ItemIterator, PaginationBlock},
 
         computed: {
             ...mapGetters([
