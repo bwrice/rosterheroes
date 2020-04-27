@@ -450,6 +450,20 @@ export default {
                 console.log(e);
                 dispatch('snackBarError', {text: 'Oops, something went wrong'})
             }
+        },
+
+        async stashItem({state, commit, dispatch}, item) {
+            try {
+                let response = await squadApi.stashItem(state.squad.slug, item.uuid);
+                helpers.handleItemTransactions({state, commit, dispatch}, [new Item(response.data)])
+                dispatch('snackBarSuccess', {
+                    text: item.name + ' stashed',
+                    timeout: 3000
+                });
+            } catch (e) {
+                console.log(e);
+                dispatch('snackBarError', {text: 'Oops, something went wrong'})
+            }
         }
     },
 };
