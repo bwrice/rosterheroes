@@ -3,14 +3,11 @@
 namespace Tests\Unit;
 
 use App\Domain\Actions\GenerateItemFromBlueprintAction;
-use App\Domain\Models\Attack;
 use App\Domain\Models\Enchantment;
 use App\Domain\Models\Item;
 use App\Domain\Models\ItemBlueprint;
 use App\Domain\Models\ItemClass;
-use App\Domain\Models\ItemGroup;
 use App\Domain\Models\ItemBase;
-use App\Domain\Models\ItemType;
 use App\Factories\Models\AttackFactory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
