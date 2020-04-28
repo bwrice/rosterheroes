@@ -12,7 +12,7 @@ use App\Factories\Models\SquadFactory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Laravel\Passport\Passport;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class OpenChestControllerTest extends TestCase
@@ -27,7 +27,7 @@ class OpenChestControllerTest extends TestCase
         $chest = ChestFactory::new()->create();
         /** @var User $diffUser */
         $diffUser = factory(User::class)->create();
-        Passport::actingAs($diffUser);
+        Sanctum::actingAs($diffUser);
 
         $this->assertNotEquals($chest->squad->user_id, $diffUser->id);
 
@@ -55,7 +55,7 @@ class OpenChestControllerTest extends TestCase
         $chest->items()->save($itemTwo);
         $chestGold = $chest->gold;
 
-        Passport::actingAs($chest->squad->user);
+        Sanctum::actingAs($chest->squad->user);
 
         $wagonBehaviorMock = \Mockery::mock(WagonBehavior::class)
             ->shouldReceive('getWeightCapacity')

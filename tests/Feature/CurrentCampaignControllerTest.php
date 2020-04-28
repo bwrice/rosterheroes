@@ -8,7 +8,7 @@ use App\Domain\Models\Squad;
 use App\Domain\Models\User;
 use App\Domain\Models\Week;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Laravel\Passport\Passport;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -37,7 +37,7 @@ class CurrentCampaignControllerTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        Passport::actingAs($this->squad->user);
+        Sanctum::actingAs($this->squad->user);
 
         $response = $this->get('/api/v1/squads/' . $this->squad->slug . '/current-campaign');
         $response->assertStatus(200)
@@ -51,7 +51,7 @@ class CurrentCampaignControllerTest extends TestCase
      */
     public function user_must_own_squad_to_be_authorized()
     {
-        Passport::actingAs(factory(User::class)->create());
+        Sanctum::actingAs(factory(User::class)->create());
 
         $response = $this->get('/api/v1/squads/' . $this->squad->slug . '/current-campaign');
         $response->assertStatus(403);
@@ -75,7 +75,7 @@ class CurrentCampaignControllerTest extends TestCase
             'campaign_id' => $campaign->id
         ]);
 
-        Passport::actingAs($this->squad->user);
+        Sanctum::actingAs($this->squad->user);
 
         $response = $this->get('/api/v1/squads/' . $this->squad->slug . '/current-campaign');
         $response->assertStatus(200)->assertJson([

@@ -17,7 +17,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Date;
-use Laravel\Passport\Passport;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class CampaignStopSideQuestControllerTest extends TestCase
@@ -74,7 +74,7 @@ class CampaignStopSideQuestControllerTest extends TestCase
      */
     public function a_user_must_own_the_squad_of_the_campaign_stop_to_add_side_quest()
     {
-        Passport::actingAs(factory(User::class)->create());
+        Sanctum::actingAs(factory(User::class)->create());
 
         $campaignStopUuid = $this->campaignStop->uuid;
         $sideQuestUuid = $this->sideQuest->uuid;
@@ -90,7 +90,7 @@ class CampaignStopSideQuestControllerTest extends TestCase
      */
     public function it_will_throw_a_validation_error_if_a_campaign_stop_exception_is_caught()
     {
-        Passport::actingAs($this->squad->user);
+        Sanctum::actingAs($this->squad->user);
 
         $campaignStopUuid = $this->campaignStop->uuid;
         $sideQuestUuid = $this->sideQuest->uuid;
@@ -115,7 +115,7 @@ class CampaignStopSideQuestControllerTest extends TestCase
      */
     public function it_will_add_a_side_quest_and_return_an_updated_campaign_stop()
     {
-        Passport::actingAs($this->squad->user);
+        Sanctum::actingAs($this->squad->user);
 
         $campaignStopUuid = $this->campaignStop->uuid;
         $sideQuestUuid = $this->sideQuest->uuid;
@@ -150,7 +150,7 @@ class CampaignStopSideQuestControllerTest extends TestCase
             'campaign_stop_id' => $this->campaignStop->id
         ]);
 
-        Passport::actingAs($this->squad->user);
+        Sanctum::actingAs($this->squad->user);
 
         $campaignStopUuid = $this->campaignStop->uuid;
         $sideQuestUuid = $this->sideQuest->uuid;

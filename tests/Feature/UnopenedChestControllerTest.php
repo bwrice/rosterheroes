@@ -8,7 +8,7 @@ use App\Factories\Models\SquadFactory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Laravel\Passport\Passport;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class UnopenedChestControllerTest extends TestCase
@@ -20,11 +20,7 @@ class UnopenedChestControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $user = factory(User::class)->create();
-        $this->squad = SquadFactory::new()->create([
-            'user_id' => $user->id
-        ]);
-        Passport::actingAs($user);
+        $this->squad = SquadFactory::new()->create();
     }
 
     /**
@@ -32,6 +28,8 @@ class UnopenedChestControllerTest extends TestCase
      */
     public function it_will_return_a_squads_unopened_chests()
     {
+        $this->withoutExceptionHandling();
+        Sanctum::actingAs($this->squad->user);
         $factory = ChestFactory::new()->withSquadID($this->squad->id);
         $chestForSquadOne = $factory->create();
         $chestForSquadTwo = $factory->create();
@@ -62,7 +60,7 @@ class UnopenedChestControllerTest extends TestCase
     public function it_will_return_unauthorized_response_if_not_the_chests_squads_user()
     {
         $diffUser = factory(User::class)->create();
-        Passport::actingAs($diffUser);
+        Sanctum::actingAs($diffUser);
         $response = $this->get('/api/v1/squads/' . $this->squad->slug . '/unopened-chests');
         $response->assertStatus(403);
     }

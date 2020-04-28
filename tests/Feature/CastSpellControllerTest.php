@@ -11,7 +11,7 @@ use App\Domain\Models\User;
 use App\Domain\Models\Week;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Date;
-use Laravel\Passport\Passport;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class CastSpellControllerTest extends TestCase
@@ -50,7 +50,7 @@ class CastSpellControllerTest extends TestCase
     public function a_user_cannot_cast_a_spell_on_a_hero_it_doesnt_own()
     {
         $user = factory(User::class)->create();
-        Passport::actingAs($user);
+        Sanctum::actingAs($user);
 
         $response = $this->json('POST','/api/v1/heroes/' . $this->hero->slug . '/cast-spell', [
             'spell' => $this->spell->id
@@ -64,7 +64,7 @@ class CastSpellControllerTest extends TestCase
      */
     public function it_will_return_the_correct_hero_response_after_casting_spell()
     {
-        Passport::actingAs($this->squad->user);
+        Sanctum::actingAs($this->squad->user);
 
         $response = $this->json('POST','/api/v1/heroes/' . $this->hero->slug . '/cast-spell', [
             'spell' => $this->spell->id
@@ -97,7 +97,7 @@ class CastSpellControllerTest extends TestCase
         $this->hero->spells()->saveMany($spells);
         $this->assertLessThan($this->spell->manaCost(), $this->hero->getAvailableMana());
 
-        Passport::actingAs($this->squad->user);
+        Sanctum::actingAs($this->squad->user);
 
         $response = $this->json('POST','/api/v1/heroes/' . $this->hero->slug . '/cast-spell', [
             'spell' => $this->spell->id

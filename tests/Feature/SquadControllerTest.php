@@ -7,7 +7,7 @@ use App\Domain\Models\User;
 use App\Domain\Models\Week;
 use Carbon\CarbonImmutable;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Laravel\Passport\Passport;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -23,7 +23,7 @@ class SquadControllerTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        Passport::actingAs(factory(User::class)->create());
+        Sanctum::actingAs(factory(User::class)->create());
 
         $name = 'TestSquad' . rand(1,999999);
 

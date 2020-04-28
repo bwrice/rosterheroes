@@ -10,7 +10,7 @@ use App\Factories\Models\SquadFactory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Laravel\Passport\Passport;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class StashItemControllerTest extends TestCase
@@ -34,7 +34,7 @@ class StashItemControllerTest extends TestCase
         $squad->items()->save($item);
 
         $diffUser = factory(User::class)->create();
-        Passport::actingAs($diffUser);
+        Sanctum::actingAs($diffUser);
 
         $response = $this->getResponse($squad, $item);
 
@@ -51,7 +51,7 @@ class StashItemControllerTest extends TestCase
         $item = ItemFactory::new()->create();
         $squad->items()->save($item);
 
-        Passport::actingAs($squad->user);
+        Sanctum::actingAs($squad->user);
 
         $response = $this->getResponse($squad, $item);
         $response->assertStatus(200)

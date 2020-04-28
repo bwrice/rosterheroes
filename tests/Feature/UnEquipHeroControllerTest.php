@@ -8,7 +8,7 @@ use App\Domain\Models\User;
 use App\Facades\CurrentWeek;
 use App\Nova\Hero;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Laravel\Passport\Passport;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -44,7 +44,7 @@ class UnEquipHeroControllerTest extends TestCase
     public function it_will_unequip_item_and_return_correct_response()
     {
 
-        Passport::actingAs($this->squad->user);
+        Sanctum::actingAs($this->squad->user);
 
         $response = $this->json('POST','api/v1/heroes/' . $this->hero->slug . '/unequip', [
             'item' => $this->item->uuid
@@ -73,7 +73,7 @@ class UnEquipHeroControllerTest extends TestCase
     public function a_user_not_owning_the_hero_will_be_unauthorized_to_un_equip_item()
     {
         $diffUser = factory(User::class)->create();
-        Passport::actingAs($diffUser);
+        Sanctum::actingAs($diffUser);
 
         $response = $this->json('POST','api/v1/heroes/' . $this->hero->slug . '/unequip', [
             'item' => $this->item->uuid

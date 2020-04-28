@@ -13,7 +13,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Date;
-use Laravel\Passport\Passport;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -60,7 +60,7 @@ class HeroChangeCombatPositionControllerTest extends TestCase
         $this->withoutExceptionHandling();
         $user = factory(User::class)->create();
 
-        Passport::actingAs($user);
+        Sanctum::actingAs($user);
         try {
             $this->json('POST', 'api/v1/heroes/' . $this->hero->slug . '/combat-position', [
                 'position' => $this->combatPosition->id
@@ -80,7 +80,7 @@ class HeroChangeCombatPositionControllerTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        Passport::actingAs($this->squad->user);
+        Sanctum::actingAs($this->squad->user);
         $response = $this->json('POST', 'api/v1/heroes/' . $this->hero->slug . '/combat-position', [
             'position' => $this->combatPosition->id
         ]);

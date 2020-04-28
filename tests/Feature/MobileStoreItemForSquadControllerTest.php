@@ -11,7 +11,7 @@ use App\Factories\Models\StashFactory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Laravel\Passport\Passport;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class MobileStoreItemForSquadControllerTest extends TestCase
@@ -28,7 +28,7 @@ class MobileStoreItemForSquadControllerTest extends TestCase
         $squad->getLocalStash()->items()->save($item);
 
         $diffUser = factory(User::class)->create();
-        Passport::actingAs($diffUser);
+        Sanctum::actingAs($diffUser);
 
         $response = $this->json('POST', 'api/v1/squads/' . $squad->slug . '/mobile-store-item', [
             'item' => $item->uuid
@@ -63,7 +63,7 @@ class MobileStoreItemForSquadControllerTest extends TestCase
 
         app()->instance(WagonBehavior::class, $mock);
 
-        Passport::actingAs($squad->user);
+        Sanctum::actingAs($squad->user);
 
         $response = $this->json('POST', 'api/v1/squads/' . $squad->slug . '/mobile-store-item', [
             'item' => $itemToStore->uuid

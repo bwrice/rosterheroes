@@ -4,7 +4,7 @@ namespace Tests\Feature;
 
 use App\Domain\Models\Squad;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Laravel\Passport\Passport;
+use Laravel\Sanctum\Sanctum;
 use Mockery\Generator\StringManipulation\Pass\Pass;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -35,7 +35,7 @@ class SquadFastTravelControllerTest extends TestCase
 
         $finalLocation = $currentLocation;
 
-        Passport::actingAs($squad->user);
+        Sanctum::actingAs($squad->user);
 
         $this->assertEquals(3, $routeProvinces->count());
 

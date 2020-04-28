@@ -11,7 +11,7 @@ use App\Factories\Models\StashFactory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Laravel\Passport\Passport;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class LocalStashControllerTest extends TestCase
@@ -25,7 +25,7 @@ class LocalStashControllerTest extends TestCase
     {
         $squad = SquadFactory::new()->create();
         $diffUser = factory(User::class)->create();
-        Passport::actingAs($diffUser);
+        Sanctum::actingAs($diffUser);
         $response = $this->json('GET', $this->getEndpoint($squad));
         $response->assertStatus(403);
     }
@@ -48,7 +48,7 @@ class LocalStashControllerTest extends TestCase
         $itemTwo = ItemFactory::new()->create();
         $stash->items()->save($itemTwo);
 
-        Passport::actingAs($squad->user);
+        Sanctum::actingAs($squad->user);
         $response = $this->json('GET', $this->getEndpoint($squad));
         $response->assertStatus(200)->assertJson([
             'data' => [
@@ -78,7 +78,7 @@ class LocalStashControllerTest extends TestCase
         $itemTwo = ItemFactory::new()->create();
         $stash->items()->save($itemTwo);
 
-        Passport::actingAs($squad->user);
+        Sanctum::actingAs($squad->user);
         $response = $this->json('GET', $this->getEndpoint($squad));
         $response->assertStatus(201);
 

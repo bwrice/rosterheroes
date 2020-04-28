@@ -11,7 +11,7 @@ use App\Domain\Models\MeasurableType;
 use App\Domain\Models\Squad;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Validation\ValidationException;
-use Laravel\Passport\Passport;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -29,7 +29,7 @@ class SquadHeroControllerTest extends TestCase
 
         /** @var Squad $squad */
         $squad = factory(Squad::class)->states('starting-posts')->create();
-        $user = Passport::actingAs($squad->user);
+        $user = Sanctum::actingAs($squad->user);
 
         $heroName = 'TestHero' . rand(1,999999);
         $heroRace = HeroRace::HUMAN;
@@ -87,7 +87,7 @@ class SquadHeroControllerTest extends TestCase
         $squad = factory(Squad::class)->create();
         $this->assertEquals(0, $squad->heroPosts->count());
 
-        $user = Passport::actingAs($squad->user);
+        $user = Sanctum::actingAs($squad->user);
 
         $heroName = 'TestHero' . rand(1,999999);
         $heroRace = HeroRace::HUMAN;
@@ -127,7 +127,7 @@ class SquadHeroControllerTest extends TestCase
         /** @var \App\Domain\Models\HeroClass $heroClass */
         $heroClass = HeroClass::query()->inRandomOrder()->first();
 
-        $user = Passport::actingAs($squad->user);
+        $user = Sanctum::actingAs($squad->user);
         $heroName = 'TestHero' . rand(1,999999);
 
         try {
@@ -189,7 +189,7 @@ class SquadHeroControllerTest extends TestCase
         $this->assertEquals($sameHeroClassCountToAdd, $heroesWithOverloadedHeroClass->count());
         $this->assertTrue($squad->inCreationState());
 
-        $user = Passport::actingAs($squad->user);
+        $user = Sanctum::actingAs($squad->user);
         $heroName = 'TestHero' . rand(1,999999);
 
         try {
@@ -229,7 +229,7 @@ class SquadHeroControllerTest extends TestCase
             'squad_id' => $squad->id
         ]);
 
-        Passport::actingAs($squad->user);
+        Sanctum::actingAs($squad->user);
 
         $response = $this->get('/api/v1/squads/' . $squad->slug . '/heroes');
 

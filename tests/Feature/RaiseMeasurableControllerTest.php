@@ -8,7 +8,7 @@ use App\Domain\Models\Measurable;
 use App\Domain\Models\User;
 use App\Facades\CurrentWeek;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Laravel\Passport\Passport;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -34,7 +34,7 @@ class RaiseMeasurableControllerTest extends TestCase
     {
         /** @var Measurable $measurable */
         $measurable = $this->hero->measurables()->inRandomOrder()->first();
-        Passport::actingAs($this->hero->squad->user);
+        Sanctum::actingAs($this->hero->squad->user);
 
         $queryVars = "?type=" . $measurable->measurableType->name;
         $response = $this->json('GET', 'api/v1/heroes/' . $this->hero->slug . '/raise-measurable' . $queryVars);
@@ -64,7 +64,7 @@ class RaiseMeasurableControllerTest extends TestCase
         $squad->save();
         $amount = 5;
 
-        Passport::actingAs($this->hero->squad->user);
+        Sanctum::actingAs($this->hero->squad->user);
 
         $response = $this->json('POST', 'api/v1/heroes/' . $this->hero->slug . '/raise-measurable', [
             'type' => $measurable->measurableType->name,
@@ -98,7 +98,7 @@ class RaiseMeasurableControllerTest extends TestCase
 
         // Create random user
         $user = factory(User::class)->create();
-        Passport::actingAs($user);
+        Sanctum::actingAs($user);
 
         $response = $this->json('POST', 'api/v1/heroes/' . $this->hero->slug . '/raise-measurable', [
             'type' => $measurable->measurableType->name,

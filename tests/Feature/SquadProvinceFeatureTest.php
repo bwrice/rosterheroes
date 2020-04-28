@@ -5,7 +5,7 @@ namespace Tests\Feature;
 use App\Domain\Models\Province;
 use App\Domain\Models\Squad;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Laravel\Passport\Passport;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -24,7 +24,7 @@ class SquadProvinceFeatureTest extends TestCase
         /** @var Province $border */
         $border = $squad->province->borders->random();
 
-        Passport::actingAs($squad->user);
+        Sanctum::actingAs($squad->user);
 
         $response = $this->json('POST', 'api/v1/squads/' . $squad->slug . '/border-travel/' . $border->slug );
         $this->assertEquals(201, $response->status());

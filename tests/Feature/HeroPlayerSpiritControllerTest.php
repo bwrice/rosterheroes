@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Date;
-use Laravel\Passport\Passport;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -61,7 +61,7 @@ class HeroPlayerSpiritControllerTest extends TestCase
         $game->starts_at = Week::current()->adventuring_locks_at->addHours(2);
         $game->save();
 
-        Passport::actingAs($hero->squad->user);
+        Sanctum::actingAs($hero->squad->user);
 
         $response = $this->json('POST', 'api/v1/heroes/'. $hero->slug . '/player-spirit', [
             'spirit' => $playerSpirit->uuid
@@ -139,7 +139,7 @@ class HeroPlayerSpiritControllerTest extends TestCase
         $game->starts_at = Week::current()->adventuring_locks_at->addHours(2);
         $game->save();
 
-        Passport::actingAs($hero->squad->user);
+        Sanctum::actingAs($hero->squad->user);
 
         $response = $this->json('POST', 'api/v1/heroes/'. $hero->slug . '/player-spirit', [
             'spirit' => $playerSpirit->uuid
@@ -166,7 +166,7 @@ class HeroPlayerSpiritControllerTest extends TestCase
 
         CurrentWeek::setTestCurrent($playerSpirit->week);
 
-        Passport::actingAs($hero->squad->user);
+        Sanctum::actingAs($hero->squad->user);
 
         // Mock 6 hours before everything locks
         CarbonImmutable::setTestNow(Week::current()->adventuring_locks_at->copy()->subHours(6));

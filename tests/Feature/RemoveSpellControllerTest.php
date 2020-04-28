@@ -10,7 +10,7 @@ use App\Domain\Models\User;
 use App\Domain\Models\Week;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Date;
-use Laravel\Passport\Passport;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -49,7 +49,7 @@ class RemoveSpellControllerTest extends TestCase
     public function a_user_cannot_remove_a_spell_on_a_hero_it_doesnt_own()
     {
         $user = factory(User::class)->create();
-        Passport::actingAs($user);
+        Sanctum::actingAs($user);
 
         $response = $this->json('POST','/api/v1/heroes/' . $this->hero->slug . '/remove-spell', [
             'spell' => $this->spell->id
@@ -62,7 +62,7 @@ class RemoveSpellControllerTest extends TestCase
      */
     public function it_will_return_the_correct_hero_response_after_removing_spell()
     {
-        Passport::actingAs($this->squad->user);
+        Sanctum::actingAs($this->squad->user);
 
         $response = $this->json('POST','/api/v1/heroes/' . $this->hero->slug . '/remove-spell', [
             'spell' => $this->spell->id
@@ -92,7 +92,7 @@ class RemoveSpellControllerTest extends TestCase
     {
         // Clear spells so there's no spell to remove
         $this->hero->spells()->sync([]);
-        Passport::actingAs($this->squad->user);
+        Sanctum::actingAs($this->squad->user);
 
         $response = $this->json('POST','/api/v1/heroes/' . $this->hero->slug . '/remove-spell', [
             'spell' => $this->spell->id

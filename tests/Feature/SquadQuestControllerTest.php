@@ -14,7 +14,7 @@ use App\External\Stats\MySportsFeed\MSFClient;
 use App\Facades\CurrentWeek;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Date;
-use Laravel\Passport\Passport;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -47,7 +47,7 @@ class SquadQuestControllerTest extends TestCase
      */
     public function user_must_own_squad_to_enlist()
     {
-        Passport::actingAs(factory(User::class)->create());
+        Sanctum::actingAs(factory(User::class)->create());
 
             $response = $this->json('POST','/api/v1/squads/' . $this->squad->slug . '/quests', [
             'quest' => $this->quest->uuid
@@ -61,7 +61,7 @@ class SquadQuestControllerTest extends TestCase
      */
     public function it_will_return_the_squads_updated_campaign_response_when_joining_quest()
     {
-        Passport::actingAs($this->squad->user);
+        Sanctum::actingAs($this->squad->user);
 
         $response = $this->json('POST','/api/v1/squads/' . $this->squad->slug . '/quests', [
             'quest' => $this->quest->uuid
@@ -95,7 +95,7 @@ class SquadQuestControllerTest extends TestCase
             'quest_id' => $this->quest->id
         ]);
 
-        Passport::actingAs($this->squad->user);
+        Sanctum::actingAs($this->squad->user);
 
         $response = $this->json('DELETE','/api/v1/squads/' . $this->squad->slug . '/quests', [
             'quest' => $this->quest->uuid
@@ -134,7 +134,7 @@ class SquadQuestControllerTest extends TestCase
             'campaign_id' => $campaign->id,
         ]);
 
-        Passport::actingAs($this->squad->user);
+        Sanctum::actingAs($this->squad->user);
 
         $currentCampaign = $this->squad->fresh()->getCurrentCampaign();
         $this->assertEquals(2, $currentCampaign->fresh()->campaignStops()->count());
@@ -166,7 +166,7 @@ class SquadQuestControllerTest extends TestCase
      */
     public function it_will_return_a_validation_error_if_a_campaign_exception_is_thrown()
     {
-        Passport::actingAs($this->squad->user);
+        Sanctum::actingAs($this->squad->user);
 
         $message = "exception test";
         $actionMock = \Mockery::mock(JoinQuestAction::class)
