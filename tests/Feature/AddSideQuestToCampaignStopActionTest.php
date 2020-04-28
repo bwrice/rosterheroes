@@ -146,7 +146,7 @@ class AddSideQuestToCampaignStopActionTest extends TestCase
      */
     public function it_will_throw_an_exception_if_the_squad_is_not_at_the_side_quest_province()
     {
-        $diffProvince = Province::query()->where('id', '!=', $this->quest->id)->inRandomOrder()->first();
+        $diffProvince = Province::query()->where('id', '!=', $this->quest->province_id)->inRandomOrder()->first();
         $this->squad->province_id = $diffProvince->id;
         $this->squad->save();
         $this->squad = $this->squad->fresh();
