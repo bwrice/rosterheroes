@@ -96,7 +96,7 @@ Route::prefix('v1')->group(function () {
     Route::get('/teams', [TeamController::class, 'index']);
     Route::get('/sports', [SportController::class, 'index']);
 
-    Route::middleware(['auth:api'])->group(function () {
+    Route::middleware(['auth:sanctum'])->group(function () {
 
         /*
          *   _____  ____  _    _         _____   _____
