@@ -10,6 +10,7 @@
         "bwrice/laravel-job-chain-groups": "dev-master",
         "doctrine/dbal": "^2.9",
         "fideloper/proxy": "^4.0",
+        "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^6.3",
         "laravel/framework": "^6.0",
         "laravel/horizon": "^3.2",
