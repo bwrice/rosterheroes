@@ -8,6 +8,7 @@ use App\Domain\Models\Game;
 use App\Domain\Models\League;
 use App\Domain\Models\Team;
 use App\Domain\Models\Week;
+use Carbon\CarbonInterface;
 use Illuminate\Support\Facades\Date;
 
 class GameFactory
@@ -23,6 +24,9 @@ class GameFactory
 
     /** @var Team */
     protected $awayTeam;
+
+    /** @var CarbonInterface|null */
+    protected $startsAt;
 
     public static function new()
     {
@@ -98,8 +102,18 @@ class GameFactory
         return $clone;
     }
 
+    public function withStartTime(CarbonInterface $startsAt)
+    {
+        $clone = clone $this;
+        $clone->startsAt = $startsAt;
+        return $clone;
+    }
+
     protected function getStartsAt()
     {
+        if ($this->startsAt) {
+            return $this->startsAt;
+        }
         if ($this->week) {
             return $this->week->adventuring_locks_at->addHours(3);
         }
