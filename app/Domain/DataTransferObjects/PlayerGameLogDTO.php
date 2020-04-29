@@ -17,25 +17,21 @@ use Illuminate\Support\Collection;
 class PlayerGameLogDTO
 {
     /**
-     * @var string
-     */
-    private $externalID;
-    /**
      * @var Player
      */
-    private $player;
+    protected $player;
     /**
      * @var Game
      */
-    private $game;
+    protected $game;
     /**
      * @var Team
      */
-    private $team;
+    protected $team;
     /**
      * @var Collection
      */
-    private $statAmountDTOs;
+    protected $statAmountDTOs;
 
     public function __construct(
         Player $player,
