@@ -3,11 +3,12 @@
 namespace Tests\Feature;
 
 use App\Domain\DataTransferObjects\PlayerGameLogDTO;
-use App\External\Stats\FakeStats\AddFakeStatsToPlayerGameLogDTO;
+use App\External\Stats\FakeStats\CreateFakeStatAmountDTOsForPlayer;
 use App\External\Stats\FakeStats\FakeStatsIntegration;
 use App\Factories\Models\GameFactory;
 use App\Factories\Models\PlayerFactory;
 use App\Factories\Models\TeamFactory;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Date;
@@ -15,6 +16,8 @@ use Tests\TestCase;
 
 class FakeStatsIntegrationTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /**
      * @return FakeStatsIntegration
      */
@@ -26,7 +29,7 @@ class FakeStatsIntegrationTest extends TestCase
     /**
      * @test
      */
-    public function it_will_call_the_build_fake_game_log_dto_action_for_each_valid_player_for_the_game()
+    public function it_will_execute_the_get_fake_stats_action_for_each_valid_player_for_the_game()
     {
         $game = GameFactory::new()->create();
         $homeTeamPlayerFactory = PlayerFactory::new()->withTeamID($game->home_team_id);
@@ -40,12 +43,12 @@ class FakeStatsIntegrationTest extends TestCase
             $awayTeamPlayerFactor->create();
         }
 
-        $mockAction = \Mockery::mock(AddFakeStatsToPlayerGameLogDTO::class)
+        $mockAction = \Mockery::mock(CreateFakeStatAmountDTOsForPlayer::class)
             ->shouldReceive('execute')
             ->times($homeTeamPlayersCount + $awayTeamPlayerCount)
             ->getMock();
 
-        app()->instance(AddFakeStatsToPlayerGameLogDTO::class, $mockAction);
+        app()->instance(CreateFakeStatAmountDTOsForPlayer::class, $mockAction);
 
         $this->getIntegration()->getGameLogDTOs($game, 0);
     }
@@ -67,19 +70,13 @@ class FakeStatsIntegrationTest extends TestCase
             $awayTeamPlayerFactor->create();
         }
 
-        $fakeDTO = new PlayerGameLogDTO(
-            PlayerFactory::new()->create(),
-            GameFactory::new()->create(),
-            TeamFactory::new()->create(),
-            collect()
-        );
-
-        $mockAction = \Mockery::mock(AddFakeStatsToPlayerGameLogDTO::class)
+        $mockAction = \Mockery::mock(CreateFakeStatAmountDTOsForPlayer::class)
             ->shouldReceive('execute')
-            ->andReturn($fakeDTO)
+            ->times($homeTeamPlayersCount + $awayTeamPlayerCount)
+            ->andReturn(collect())
             ->getMock();
 
-        app()->instance(AddFakeStatsToPlayerGameLogDTO::class, $mockAction);
+        app()->instance(CreateFakeStatAmountDTOsForPlayer::class, $mockAction);
 
         $gameLogDTOs = $this->getIntegration()->getGameLogDTOs($game, 0);
         $this->assertEquals($homeTeamPlayersCount + $awayTeamPlayerCount, $gameLogDTOs->count());
@@ -95,19 +92,13 @@ class FakeStatsIntegrationTest extends TestCase
         PlayerFactory::new()->withTeamID($game->home_team_id)->create();
         PlayerFactory::new()->withTeamID($game->away_team_id)->create();
 
-        $fakeDTO = new PlayerGameLogDTO(
-            PlayerFactory::new()->create(),
-            GameFactory::new()->create(),
-            TeamFactory::new()->create(),
-            collect()
-        );
-
-        $mockAction = \Mockery::mock(AddFakeStatsToPlayerGameLogDTO::class)
+        $mockAction = \Mockery::mock(CreateFakeStatAmountDTOsForPlayer::class)
             ->shouldReceive('execute')
-            ->andReturn($fakeDTO)
+            ->times(2)
+            ->andReturn(collect())
             ->getMock();
 
-        app()->instance(AddFakeStatsToPlayerGameLogDTO::class, $mockAction);
+        app()->instance(CreateFakeStatAmountDTOsForPlayer::class, $mockAction);
 
         $gameLogDTOs = $this->getIntegration()->getGameLogDTOs($game, 0);
         $this->assertFalse($gameLogDTOs->isGameOver());
@@ -123,19 +114,13 @@ class FakeStatsIntegrationTest extends TestCase
         PlayerFactory::new()->withTeamID($game->home_team_id)->create();
         PlayerFactory::new()->withTeamID($game->away_team_id)->create();
 
-        $fakeDTO = new PlayerGameLogDTO(
-            PlayerFactory::new()->create(),
-            GameFactory::new()->create(),
-            TeamFactory::new()->create(),
-            collect()
-        );
-
-        $mockAction = \Mockery::mock(AddFakeStatsToPlayerGameLogDTO::class)
+        $mockAction = \Mockery::mock(CreateFakeStatAmountDTOsForPlayer::class)
             ->shouldReceive('execute')
-            ->andReturn($fakeDTO)
+            ->times(2)
+            ->andReturn(collect())
             ->getMock();
 
-        app()->instance(AddFakeStatsToPlayerGameLogDTO::class, $mockAction);
+        app()->instance(CreateFakeStatAmountDTOsForPlayer::class, $mockAction);
 
         $gameLogDTOs = $this->getIntegration()->getGameLogDTOs($game, 0);
         $this->assertTrue($gameLogDTOs->isGameOver());
