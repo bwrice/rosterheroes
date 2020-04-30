@@ -18,13 +18,13 @@ class FakeStatsIntegration implements StatsIntegration
 {
     const INTEGRATION_NAME = 'fake-stats-integration';
     /**
-     * @var AddFakeStatsToPlayerGameLogDTO
+     * @var CreateFakeStatAmountDTOsForPlayer
      */
-    private $addFakeStatsToPlayerGameLogDTO;
+    private $createFakeStatAmountDTOsForPlayer;
 
-    public function __construct(AddFakeStatsToPlayerGameLogDTO $addFakeStatsToPlayerGameLogDTO)
+    public function __construct(CreateFakeStatAmountDTOsForPlayer $createFakeStatAmountDTOsForPlayer)
     {
-        $this->addFakeStatsToPlayerGameLogDTO = $addFakeStatsToPlayerGameLogDTO;
+        $this->createFakeStatAmountDTOsForPlayer = $createFakeStatAmountDTOsForPlayer;
     }
 
     public function getPlayerDTOs(League $league): Collection
@@ -69,9 +69,16 @@ class FakeStatsIntegration implements StatsIntegration
         $team->players()->with([
             'positions',
             'playerGameLogs.playerStats'
-        ])->chunk(50, function(Collection $players) use (&$gameLogDTOs, $team, $game) {
+        ])->chunk(10, function(Collection $players) use (&$gameLogDTOs, $team, $game) {
             $gameLogDTOs = $gameLogDTOs->merge($players->map(function (Player $player) use ($team, $game) {
-                return $this->addFakeStatsToPlayerGameLogDTO->execute(new PlayerGameLogDTO($player, $game, $team, collect()));
+                // TODO: should we just pass the player to get fake stat-amount-dtos and then build the PlayerGameLogDTO here?
+                $statAmountDTOs = $this->createFakeStatAmountDTOsForPlayer->execute($player);
+                return new PlayerGameLogDTO(
+                    $player,
+                    $game,
+                    $team,
+                    $statAmountDTOs
+                );
             })->values());
         });
         return $gameLogDTOs;
