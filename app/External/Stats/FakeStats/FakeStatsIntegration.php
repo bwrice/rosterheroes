@@ -9,6 +9,7 @@ use App\Domain\Models\Game;
 use App\Domain\Models\League;
 use App\Domain\Models\Player;
 use App\Domain\Models\StatsIntegrationType;
+use App\Domain\Models\Team;
 use App\External\Stats\StatsIntegration;
 use Illuminate\Support\Collection;
 
@@ -40,19 +41,6 @@ class FakeStatsIntegration implements StatsIntegration
         return collect();
     }
 
-    public function getGameLogDTOs(Game $game, int $yearDelta): GameLogDTOCollection
-    {
-        $gameLogDTOs = new GameLogDTOCollection();
-        $game->homeTeam->players->each(function (Player $player) use ($gameLogDTOs) {
-            $gameLogDTOs->push($this->buildFakePlayerGameLogDTO->execute());
-        });
-        $game->awayTeam->players->each(function (Player $player) use ($gameLogDTOs) {
-            $gameLogDTOs->push($this->buildFakePlayerGameLogDTO->execute());
-        });
-
-        return $gameLogDTOs;
-    }
-
     public function getIntegrationType(): StatsIntegrationType
     {
         /** @var StatsIntegrationType $integrationType */
@@ -60,5 +48,31 @@ class FakeStatsIntegration implements StatsIntegration
             'name' => self::INTEGRATION_NAME
         ]);
         return $integrationType;
+    }
+
+    public function getGameLogDTOs(Game $game, int $yearDelta): GameLogDTOCollection
+    {
+        $gameLogDTOs = $this->getGameLogDTOsForTeam($game->homeTeam, $game);
+        $gameLogDTOs = $gameLogDTOs->merge($this->getGameLogDTOsForTeam($game->awayTeam, $game));
+
+        if ($game->starts_at->addHours(3)->isPast()) {
+            $gameLogDTOs->setGameOver(true);
+        }
+
+        return $gameLogDTOs;
+    }
+
+    protected function getGameLogDTOsForTeam(Team $team, Game $game)
+    {
+        $gameLogDTOs = new GameLogDTOCollection();
+        $team->players()->with([
+            'positions',
+            'playerGameLogs.playerStats'
+        ])->chunk(50, function(Collection $players) use (&$gameLogDTOs, $team, $game) {
+            $gameLogDTOs = $gameLogDTOs->merge($players->map(function (Player $player) use ($team, $game) {
+                return $this->buildFakePlayerGameLogDTO->execute($player, $team, $game);
+            })->values());
+        });
+        return $gameLogDTOs;
     }
 }
