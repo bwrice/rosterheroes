@@ -10,6 +10,8 @@ use App\Domain\Models\Game;
 use App\Domain\Models\Player;
 use App\Domain\Models\PlayerGameLog;
 use App\Domain\Models\PlayerStat;
+use App\Domain\Models\Position;
+use App\Domain\Models\StatType;
 use App\Domain\Models\Team;
 use Illuminate\Support\Collection;
 
@@ -32,7 +34,7 @@ class CreateFakeStatAmountDTOsForPlayer
             return $this->getFromExistingGameLogs($validGameLogs);
         }
 
-        return collect();
+        return $this->buildRandomStatDTOsFromPosition($position);
     }
 
     /**
@@ -56,5 +58,114 @@ class CreateFakeStatAmountDTOsForPlayer
         return $gameLog->playerStats->map(function (PlayerStat $playerStat) {
             return new StatAmountDTO($playerStat->statType, $playerStat->amount);
         })->toBase();
+    }
+
+    protected function buildRandomStatDTOsFromPosition(Position $position)
+    {
+        $statTypes = StatType::all();
+        $statAmountDTOs = collect();
+
+        $buildArrays = collect($this->getBuildDTOArrays($position));
+        $buildArrays->each(function ($buildArray) use ($statTypes, $statAmountDTOs) {
+            $dto = $this->buildStatAmountDTO($statTypes, $buildArray['stat_type_name'], $buildArray['min'], $buildArray['max']);
+            if ($dto) {
+                $statAmountDTOs->push($dto);
+            }
+        });
+        return $statAmountDTOs;
+    }
+
+    protected function buildStatAmountDTO(Collection $statTypes, string $statTypeName, int $min, int $max)
+    {
+        $amount = rand($min, $max);
+        if ($amount > 0) {
+            /** @var StatType $statType */
+            $statType = $statTypes->first(function (StatType $statType) use ($statTypeName) {
+                return $statType->name === $statTypeName;
+            });
+            return new StatAmountDTO($statType, $amount);
+        }
+        return null;
+    }
+
+    public function getBuildDTOArrays(Position $position)
+    {
+        switch ($position->name) {
+            case Position::QUARTERBACK:
+                return [
+                    [
+                        'stat_type_name' => StatType::PASS_TD,
+                        'min' => 0,
+                        'max' => 3
+                    ],
+                    [
+                        'stat_type_name' => StatType::PASS_YARD,
+                        'min' => 85,
+                        'max' => 350
+                    ],
+                    [
+                        'stat_type_name' => StatType::INTERCEPTION,
+                        'min' => 0,
+                        'max' => 2
+                    ]
+                ];
+            case Position::RUNNING_BACK:
+                return [
+                    [
+                        'stat_type_name' => StatType::RUSH_TD,
+                        'min' => 0,
+                        'max' => 2
+                    ],
+                    [
+                        'stat_type_name' => StatType::RUSH_YARD,
+                        'min' => 25,
+                        'max' => 110
+                    ],
+                    [
+                        'stat_type_name' => StatType::REC_TD,
+                        'min' => 0,
+                        'max' => 1
+                    ],
+                    [
+                        'stat_type_name' => StatType::REC_YARD,
+                        'min' => 5,
+                        'max' => 50
+                    ],
+                    [
+                        'stat_type_name' => StatType::RECEPTION,
+                        'min' => 1,
+                        'max' => 5
+                    ],
+                    [
+                        'stat_type_name' => StatType::FUMBLE_LOST,
+                        'min' => 0,
+                        'max' => 1
+                    ]
+                ];
+            case Position::WIDE_RECEIVER:
+                return [
+                    [
+                        'stat_type_name' => StatType::REC_TD,
+                        'min' => 0,
+                        'max' => 2
+                    ],
+                    [
+                        'stat_type_name' => StatType::REC_YARD,
+                        'min' => 50,
+                        'max' => 180
+                    ],
+                    [
+                        'stat_type_name' => StatType::RECEPTION,
+                        'min' => 2,
+                        'max' => 12
+                    ],
+                    [
+                        'stat_type_name' => StatType::FUMBLE_LOST,
+                        'min' => 0,
+                        'max' => 1
+                    ]
+                ];
+        }
+        return [];
     }
 }
