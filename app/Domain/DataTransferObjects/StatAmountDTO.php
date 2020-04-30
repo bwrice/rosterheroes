@@ -10,17 +10,18 @@ namespace App\Domain\DataTransferObjects;
 
 
 use App\Domain\Models\StatType;
+use Illuminate\Contracts\Support\Arrayable;
 
-class StatAmountDTO
+class StatAmountDTO implements Arrayable
 {
     /**
      * @var StatType
      */
-    private $statType;
+    protected $statType;
     /**
      * @var float
      */
-    private $amount;
+    protected $amount;
 
     public function __construct(StatType $statType, float $amount)
     {
@@ -42,5 +43,23 @@ class StatAmountDTO
     public function getAmount(): float
     {
         return $this->amount;
+    }
+
+    /**
+     * Get the instance as an array.
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        return [
+            'amount' => $this->amount,
+            'stat_type' => $this->statType->toArray(),
+        ];
+    }
+
+    public function getTotalPoints()
+    {
+        return $this->statType->getBehavior()->getTotalPoints($this->amount);
     }
 }
