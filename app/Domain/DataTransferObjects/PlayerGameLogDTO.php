@@ -76,4 +76,14 @@ class PlayerGameLogDTO
     {
         return $this->statAmountDTOs;
     }
+
+    /**
+     * @param Collection $statAmountDTOs
+     * @return PlayerGameLogDTO
+     */
+    public function setStatAmountDTOs(Collection $statAmountDTOs): PlayerGameLogDTO
+    {
+        $this->statAmountDTOs = $statAmountDTOs;
+        return $this;
+    }
 }
