@@ -5,6 +5,7 @@ namespace App\External\Stats\FakeStats;
 
 
 use App\Domain\Collections\GameLogDTOCollection;
+use App\Domain\DataTransferObjects\PlayerGameLogDTO;
 use App\Domain\Models\Game;
 use App\Domain\Models\League;
 use App\Domain\Models\Player;
@@ -17,13 +18,13 @@ class FakeStatsIntegration implements StatsIntegration
 {
     const INTEGRATION_NAME = 'fake-stats-integration';
     /**
-     * @var BuildFakePlayerGameLogDTO
+     * @var AddFakeStatsToPlayerGameLogDTO
      */
-    private $buildFakePlayerGameLogDTO;
+    private $addFakeStatsToPlayerGameLogDTO;
 
-    public function __construct(BuildFakePlayerGameLogDTO $buildFakePlayerGameLogDTO)
+    public function __construct(AddFakeStatsToPlayerGameLogDTO $addFakeStatsToPlayerGameLogDTO)
     {
-        $this->buildFakePlayerGameLogDTO = $buildFakePlayerGameLogDTO;
+        $this->addFakeStatsToPlayerGameLogDTO = $addFakeStatsToPlayerGameLogDTO;
     }
 
     public function getPlayerDTOs(League $league): Collection
@@ -70,7 +71,7 @@ class FakeStatsIntegration implements StatsIntegration
             'playerGameLogs.playerStats'
         ])->chunk(50, function(Collection $players) use (&$gameLogDTOs, $team, $game) {
             $gameLogDTOs = $gameLogDTOs->merge($players->map(function (Player $player) use ($team, $game) {
-                return $this->buildFakePlayerGameLogDTO->execute($player, $team, $game);
+                return $this->addFakeStatsToPlayerGameLogDTO->execute(new PlayerGameLogDTO($player, $game, $team, collect()));
             })->values());
         });
         return $gameLogDTOs;
