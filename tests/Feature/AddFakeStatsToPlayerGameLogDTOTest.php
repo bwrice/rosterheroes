@@ -68,11 +68,45 @@ class AddFakeStatsToPlayerGameLogDTOTest extends TestCase
         // Execute the action
         $statAmountDTOs = $domainAction->execute($playerGameLog->player);
 
-        // Confirm the stat-amount-dtos are set to what you put in the mock
+        // Confirm the stat-amount-dtos match the game-log we expected to be copied
         $this->assertEquals(1, $statAmountDTOs->count());
         /** @var StatAmountDTO $resultantStatAmountDTO */
         $resultantStatAmountDTO = $statAmountDTOs->first();
         $this->assertEquals($yardsAmount, $resultantStatAmountDTO->getAmount());
         $this->assertEquals(StatType::RUSH_YARD, $resultantStatAmountDTO->getStatType()->name);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_return_random_stat_dtos_based_on_the_player_position_if_not_enough_historic_game_logs_exists()
+    {
+        /*
+         * Make a single historic game log with stats that don't make sense for the position to compare with the one
+         * that should be randomly generated
+         */
+        $yardsAmount = rand(50, 150);
+        $unexpectedStatTypeName = StatType::REC_YARD;
+        $statsFactory = PlayerStatFactory::new()->forStatType($unexpectedStatTypeName)->withAmount($yardsAmount);
+        /** @var Position $position */
+        $position = Position::query()->where('name', '=', Position::QUARTERBACK)->first();
+        $playerFactory = PlayerFactory::new()->withPosition($position);
+        $playerGameLogNotCopied = PlayerGameLogFactory::new()->withPlayer($playerFactory)->withStats(collect([$statsFactory]))->create();
+
+        $domainAction = $this->getDomainAction();
+        /*
+         * Make sure we need 2 historic game logs that way our single historic game log isn't enough to use for copying stats
+         */
+        $domainAction->setAbsoluteMinGameLogsCount(2);
+
+        // Execute the action
+        $statAmountDTOs = $domainAction->execute($playerGameLogNotCopied->player);
+
+        // Confirm the stat-amount-dtos are not empty and different than the historic player-game-log we created
+        $this->assertTrue($statAmountDTOs->isNotEmpty());
+        $matchOfUnexpected = $statAmountDTOs->first(function (StatAmountDTO $statAmountDTO) use ($unexpectedStatTypeName) {
+            return $statAmountDTO->getStatType()->name === $unexpectedStatTypeName;
+        });
+        $this->assertNull($matchOfUnexpected);
     }
 }
