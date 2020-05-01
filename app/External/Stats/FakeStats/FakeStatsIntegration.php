@@ -17,6 +17,8 @@ use Illuminate\Support\Collection;
 class FakeStatsIntegration implements StatsIntegration
 {
     const INTEGRATION_NAME = 'fake-stats-integration';
+    const ENV_KEY = 'fake';
+
     /**
      * @var CreateFakeStatAmountDTOsForPlayer
      */
@@ -71,7 +73,6 @@ class FakeStatsIntegration implements StatsIntegration
             'playerGameLogs.playerStats'
         ])->chunk(10, function(Collection $players) use (&$gameLogDTOs, $team, $game) {
             $gameLogDTOs = $gameLogDTOs->merge($players->map(function (Player $player) use ($team, $game) {
-                // TODO: should we just pass the player to get fake stat-amount-dtos and then build the PlayerGameLogDTO here?
                 $statAmountDTOs = $this->createFakeStatAmountDTOsForPlayer->execute($player);
                 return new PlayerGameLogDTO(
                     $player,

@@ -9,7 +9,6 @@
 namespace App\External\Stats\MySportsFeed;
 
 use App\Domain\Collections\GameLogDTOCollection;
-use App\Domain\Collections\GameCollection;
 use App\Domain\Collections\PlayerCollection;
 use App\Domain\Collections\StatTypeCollection;
 use App\Domain\Collections\TeamCollection;
@@ -22,17 +21,12 @@ use App\Domain\Models\StatType;
 use App\Domain\Models\Team;
 use App\Domain\DataTransferObjects\TeamDTO;
 use App\External\Stats\MySportsFeed\StatAmountDTOs\StatAmountDTOBuilderFactory;
-use App\External\Stats\MySportsFeed\StatAmountDTOs\StatConverterFactory;
 use App\External\Stats\StatsIntegration;
 use App\Domain\Models\League;
-use App\Domain\Models\Position;
 use App\Domain\Collections\PositionCollection;
-use App\Domain\Models\Week;
 use App\Domain\Models\ExternalPlayer;
 use App\Domain\Models\ExternalTeam;
 use App\Domain\Models\StatsIntegrationType;
-use Carbon\Carbon;
-use Carbon\CarbonImmutable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Log;
@@ -40,6 +34,7 @@ use Illuminate\Support\Facades\Log;
 class MySportsFeed implements StatsIntegration
 {
     public const INTEGRATION_NAME = 'my-sports-feed';
+    public const ENV_KEY = 'msf';
 
     /**
      * @var PlayerAPI
