@@ -103,75 +103,148 @@ class CreateFakeStatAmountDTOsForPlayer
                 return [
                     [
                         'stat_type_name' => StatType::PASS_TD,
-                        'min' => 0,
-                        'max' => 3
+                        'min' => .75,
+                        'max' => 5,
+                        'lower_bound_weight' => 10
                     ],
                     [
                         'stat_type_name' => StatType::PASS_YARD,
                         'min' => 85,
-                        'max' => 350
+                        'max' => 400,
+                        'lower_bound_weight' => 5
                     ],
                     [
                         'stat_type_name' => StatType::INTERCEPTION,
                         'min' => 0,
-                        'max' => 2
+                        'max' => 2,
+                        'lower_bound_weight' => 5
                     ]
                 ];
             case Position::RUNNING_BACK:
                 return [
                     [
                         'stat_type_name' => StatType::RUSH_TD,
-                        'min' => 0,
-                        'max' => 2
+                        'min' => .2,
+                        'max' => 2,
+                        'lower_bound_weight' => 10
                     ],
                     [
                         'stat_type_name' => StatType::RUSH_YARD,
-                        'min' => 25,
-                        'max' => 110
+                        'min' => 20,
+                        'max' => 200,
+                        'lower_bound_weight' => 15
                     ],
                     [
                         'stat_type_name' => StatType::REC_TD,
-                        'min' => 0,
-                        'max' => 1
+                        'min' => .1,
+                        'max' => 1,
+                        'lower_bound_weight' => 10
                     ],
                     [
                         'stat_type_name' => StatType::REC_YARD,
                         'min' => 5,
-                        'max' => 50
+                        'max' => 50,
+                        'lower_bound_weight' => 8
                     ],
                     [
                         'stat_type_name' => StatType::RECEPTION,
                         'min' => 1,
-                        'max' => 5
+                        'max' => 8,
+                        'lower_bound_weight' => 15
                     ],
                     [
                         'stat_type_name' => StatType::FUMBLE_LOST,
                         'min' => 0,
-                        'max' => 1
+                        'max' => 2,
+                        'lower_bound_weight' => 10
                     ]
                 ];
             case Position::WIDE_RECEIVER:
                 return [
                     [
                         'stat_type_name' => StatType::REC_TD,
-                        'min' => 0,
-                        'max' => 2
-                    ],
-                    [
-                        'stat_type_name' => StatType::REC_YARD,
-                        'min' => 50,
-                        'max' => 180
+                        'min' => .2,
+                        'max' => 3,
+                        'lower_bound_weight' => 25
                     ],
                     [
                         'stat_type_name' => StatType::RECEPTION,
-                        'min' => 2,
-                        'max' => 12
+                        'min' => 1,
+                        'max' => 14,
+                        'lower_bound_weight' => 10
                     ],
                     [
-                        'stat_type_name' => StatType::FUMBLE_LOST,
-                        'min' => 0,
-                        'max' => 1
+                        'stat_type_name' => StatType::REC_YARD,
+                        'min' => 10,
+                        'max' => 220,
+                        'lower_bound_weight' => 15
                     ]
+                ];
+            case Position::TIGHT_END:
+                return [
+                    [
+                        'stat_type_name' => StatType::REC_TD,
+                        'min' => .1,
+                        'max' => 2,
+                        'lower_bound_weight' => 20
+                    ],
+                    [
+                        'stat_type_name' => StatType::RECEPTION,
+                        'min' => 1,
+                        'max' => 12,
+                        'lower_bound_weight' => 5
+                    ],
+                    [
+                        'stat_type_name' => StatType::REC_YARD,
+                        'min' => 8,
+                        'max' => 140,
+                        'lower_bound_weight' => 20
+                    ]
+                ];
+            case Position::CATCHER:
+                return [
+                    [
+                        'stat_type_name' => StatType::HIT,
+                        'min' => 0.18,
+                        'max' => 3,
+                        'lower_bound_weight' => 15
+                    ],
+                    [
+                        'stat_type_name' => StatType::DOUBLE,
+                        'min' => 0,
+                        'max' => 3,
+                        'lower_bound_weight' => 20
+                    ],
+                    [
+                        'stat_type_name' => StatType::TRIPLE,
+                        'min' => 0,
+                        'max' => 1,
+                        'lower_bound_weight' => 20
+                    ],
+                    [
+                        'stat_type_name' => StatType::HOME_RUN,
+                        'min' => 0.08,
+                        'max' => 2,
+                        'lower_bound_weight' => 20
+                    ],
+                    [
+                        'stat_type_name' => StatType::RUN_BATTED_IN,
+                        'min' => 0.12,
+                        'max' => 4,
+                        'lower_bound_weight' => 25
+                    ],
+                    [
+                        'stat_type_name' => StatType::BASE_ON_BALLS,
+                        'min' => 1,
+                        'max' => 3,
+                        'lower_bound_weight' => 25
+                    ],
+                    [
+                        'stat_type_name' => StatType::STOLEN_BASE,
+                        'min' => 0.08,
+                        'max' => 2,
+                        'lower_bound_weight' => 25
+                    ],
                 ];
         }
         return [];
