@@ -81,10 +81,13 @@ class CreateFakeStatAmountDTOsForPlayer
          * Do some fancy math to make the amount closer to the min based on how high the lowerBoundWeight is
          */
         $minRange = (int) ceil(10000 * ($min**(1/$lowerBoundWeight)));
-        // Add 5% to maxRange so there's at least a small chance of hitting the upper-bound number;
-        $maxRange = (int) ceil(10000 * ($max**(1/$lowerBoundWeight)));
+        // Add 2% to maxRange so there's at least a small chance of hitting the upper-bound number;
+        $maxRange = (int) ceil(10200 * ($max**(1/$lowerBoundWeight)));
         $rand = rand($minRange, $maxRange);
-        $amount = (int) floor(($rand/10000)**$lowerBoundWeight);
+        $amount = floor(($rand/10000)**$lowerBoundWeight);
+
+        // allow float $max values for better results but make sure we don't go over the floor() of $max
+        $amount = (int) min($amount, floor($max));
 
         if ($amount > 0) {
             /** @var StatType $statType */
@@ -201,13 +204,21 @@ class CreateFakeStatAmountDTOsForPlayer
                         'lower_bound_weight' => 20
                     ]
                 ];
+            case Position::OUTFIELD:
+                $bonusMod = 3.2;
+            case Position::FIRST_BASE:
+            case Position::SECOND_BASE:
+            case Position::THIRD_BASE:
+            case Position::SHORTSTOP:
+                $bonusMod = $bonusMod ?? 2;
             case Position::CATCHER:
+                $bonusMod = $bonusMod ?? 1;
                 return [
                     [
                         'stat_type_name' => StatType::HIT,
-                        'min' => 0.18,
-                        'max' => 3,
-                        'lower_bound_weight' => 15
+                        'min' => 0.15 * $bonusMod,
+                        'max' => 4,
+                        'lower_bound_weight' => 25
                     ],
                     [
                         'stat_type_name' => StatType::DOUBLE,
@@ -223,13 +234,13 @@ class CreateFakeStatAmountDTOsForPlayer
                     ],
                     [
                         'stat_type_name' => StatType::HOME_RUN,
-                        'min' => 0.08,
+                        'min' => 0.1 * $bonusMod,
                         'max' => 2,
                         'lower_bound_weight' => 20
                     ],
                     [
                         'stat_type_name' => StatType::RUN_BATTED_IN,
-                        'min' => 0.12,
+                        'min' => 0.12 * $bonusMod,
                         'max' => 4,
                         'lower_bound_weight' => 25
                     ],
@@ -241,9 +252,49 @@ class CreateFakeStatAmountDTOsForPlayer
                     ],
                     [
                         'stat_type_name' => StatType::STOLEN_BASE,
-                        'min' => 0.08,
+                        'min' => 0.08 * $bonusMod,
                         'max' => 2,
                         'lower_bound_weight' => 25
+                    ],
+                ];
+            case Position::PITCHER:
+                return [
+
+                    [
+                        'stat_type_name' => StatType::INNING_PITCHED,
+                        'min' => 2,
+                        'max' => 8,
+                        'lower_bound_weight' => 5
+                    ],
+                    [
+                        'stat_type_name' => StatType::EARNED_RUN_ALLOWED,
+                        'min' => 0.1,
+                        'max' => 5,
+                        'lower_bound_weight' => 25
+                    ],
+                    [
+                        'stat_type_name' => StatType::STRIKEOUT,
+                        'min' => 1,
+                        'max' => 10,
+                        'lower_bound_weight' => 4
+                    ],
+                    [
+                        'stat_type_name' => StatType::HIT_AGAINST,
+                        'min' => .5,
+                        'max' => 6,
+                        'lower_bound_weight' => 25
+                    ],
+                    [
+                        'stat_type_name' => StatType::BASE_ON_BALLS_AGAINST,
+                        'min' => 0.4,
+                        'max' => 5,
+                        'lower_bound_weight' => 25
+                    ],
+                    [
+                        'stat_type_name' => StatType::PITCHING_WIN,
+                        'min' => 0.5, // Needs to be close to one since we use floor() when rounding
+                        'max' => 1.3,
+                        'lower_bound_weight' => 1
                     ],
                 ];
         }
