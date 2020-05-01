@@ -4,15 +4,12 @@
 namespace App\External\Stats\FakeStats;
 
 
-use App\Domain\DataTransferObjects\PlayerGameLogDTO;
 use App\Domain\DataTransferObjects\StatAmountDTO;
-use App\Domain\Models\Game;
 use App\Domain\Models\Player;
 use App\Domain\Models\PlayerGameLog;
 use App\Domain\Models\PlayerStat;
 use App\Domain\Models\Position;
 use App\Domain\Models\StatType;
-use App\Domain\Models\Team;
 use Illuminate\Support\Collection;
 
 class CreateFakeStatAmountDTOsForPlayer
