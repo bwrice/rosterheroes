@@ -107,13 +107,13 @@ class CreateFakeStatAmountDTOsForPlayer
                     [
                         'stat_type_name' => StatType::PASS_TD,
                         'min' => .75,
-                        'max' => 5,
+                        'max' => 4,
                         'lower_bound_weight' => 10
                     ],
                     [
                         'stat_type_name' => StatType::PASS_YARD,
                         'min' => 85,
-                        'max' => 400,
+                        'max' => 350,
                         'lower_bound_weight' => 5
                     ],
                     [
@@ -127,32 +127,32 @@ class CreateFakeStatAmountDTOsForPlayer
                 return [
                     [
                         'stat_type_name' => StatType::RUSH_TD,
-                        'min' => .2,
+                        'min' => .1,
                         'max' => 2,
-                        'lower_bound_weight' => 10
+                        'lower_bound_weight' => 25
                     ],
                     [
                         'stat_type_name' => StatType::RUSH_YARD,
-                        'min' => 20,
-                        'max' => 200,
-                        'lower_bound_weight' => 15
+                        'min' => 10,
+                        'max' => 120,
+                        'lower_bound_weight' => 20
                     ],
                     [
                         'stat_type_name' => StatType::REC_TD,
-                        'min' => .1,
-                        'max' => 1,
+                        'min' => 0,
+                        'max' => 1.5,
                         'lower_bound_weight' => 10
                     ],
                     [
                         'stat_type_name' => StatType::REC_YARD,
-                        'min' => 5,
+                        'min' => 4,
                         'max' => 50,
-                        'lower_bound_weight' => 8
+                        'lower_bound_weight' => 15
                     ],
                     [
                         'stat_type_name' => StatType::RECEPTION,
                         'min' => 1,
-                        'max' => 8,
+                        'max' => 5,
                         'lower_bound_weight' => 15
                     ],
                     [
@@ -166,20 +166,20 @@ class CreateFakeStatAmountDTOsForPlayer
                 return [
                     [
                         'stat_type_name' => StatType::REC_TD,
-                        'min' => .2,
-                        'max' => 3,
+                        'min' => .1,
+                        'max' => 2.5,
                         'lower_bound_weight' => 25
                     ],
                     [
                         'stat_type_name' => StatType::RECEPTION,
-                        'min' => 1,
-                        'max' => 14,
-                        'lower_bound_weight' => 10
+                        'min' => 2,
+                        'max' => 12,
+                        'lower_bound_weight' => 8
                     ],
                     [
                         'stat_type_name' => StatType::REC_YARD,
                         'min' => 10,
-                        'max' => 220,
+                        'max' => 125,
                         'lower_bound_weight' => 15
                     ]
                 ];
@@ -187,21 +187,21 @@ class CreateFakeStatAmountDTOsForPlayer
                 return [
                     [
                         'stat_type_name' => StatType::REC_TD,
-                        'min' => .1,
+                        'min' => 0,
                         'max' => 2,
-                        'lower_bound_weight' => 20
+                        'lower_bound_weight' => 25
                     ],
                     [
                         'stat_type_name' => StatType::RECEPTION,
                         'min' => 1,
-                        'max' => 12,
+                        'max' => 10,
                         'lower_bound_weight' => 5
                     ],
                     [
                         'stat_type_name' => StatType::REC_YARD,
                         'min' => 8,
-                        'max' => 140,
-                        'lower_bound_weight' => 20
+                        'max' => 115,
+                        'lower_bound_weight' => 25
                     ]
                 ];
             case Position::OUTFIELD:
@@ -216,14 +216,14 @@ class CreateFakeStatAmountDTOsForPlayer
                 return [
                     [
                         'stat_type_name' => StatType::HIT,
-                        'min' => 0.15 * $bonusMod,
+                        'min' => 0.12 * $bonusMod,
                         'max' => 4,
                         'lower_bound_weight' => 25
                     ],
                     [
                         'stat_type_name' => StatType::DOUBLE,
                         'min' => 0,
-                        'max' => 3,
+                        'max' => 2,
                         'lower_bound_weight' => 20
                     ],
                     [
@@ -259,43 +259,170 @@ class CreateFakeStatAmountDTOsForPlayer
                 ];
             case Position::PITCHER:
                 return [
-
                     [
                         'stat_type_name' => StatType::INNING_PITCHED,
-                        'min' => 2,
-                        'max' => 8,
+                        'min' => 1,
+                        'max' => 7,
                         'lower_bound_weight' => 5
                     ],
                     [
                         'stat_type_name' => StatType::EARNED_RUN_ALLOWED,
                         'min' => 0.1,
-                        'max' => 5,
+                        'max' => 6,
                         'lower_bound_weight' => 25
                     ],
                     [
                         'stat_type_name' => StatType::STRIKEOUT,
                         'min' => 1,
-                        'max' => 10,
+                        'max' => 8,
                         'lower_bound_weight' => 4
                     ],
                     [
                         'stat_type_name' => StatType::HIT_AGAINST,
                         'min' => .5,
-                        'max' => 6,
+                        'max' => 7,
                         'lower_bound_weight' => 25
                     ],
                     [
                         'stat_type_name' => StatType::BASE_ON_BALLS_AGAINST,
                         'min' => 0.4,
-                        'max' => 5,
+                        'max' => 6,
                         'lower_bound_weight' => 25
                     ],
                     [
                         'stat_type_name' => StatType::PITCHING_WIN,
                         'min' => 0.5, // Needs to be close to one since we use floor() when rounding
-                        'max' => 1.3,
+                        'max' => 1.25,
                         'lower_bound_weight' => 1
                     ],
+                ];
+            case Position::POINT_GUARD:
+            case Position::SMALL_FORWARD:
+            case Position::SHOOTING_GUARD:
+                $bonusMod = 1.5;
+            case Position::POWER_FORWARD:
+            case Position::BASKETBALL_CENTER:
+                $bonusMod = $bonusMod ?? 1;
+                return [
+                    [
+                        'stat_type_name' => StatType::POINT_MADE,
+                        'min' => 5 * $bonusMod,
+                        'max' => 35,
+                        'lower_bound_weight' => 3
+                    ],
+                    [
+                        'stat_type_name' => StatType::THREE_POINTER,
+                        'min' => 0.4 * $bonusMod,
+                        'max' => 5,
+                        'lower_bound_weight' => 6
+                    ],
+                    [
+                        'stat_type_name' => StatType::REBOUND,
+                        'min' => 1 * $bonusMod,
+                        'max' => 12,
+                        'lower_bound_weight' => 3
+                    ],
+                    [
+                        'stat_type_name' => StatType::BASKETBALL_ASSIST,
+                        'min' => 1 * $bonusMod,
+                        'max' => 12,
+                        'lower_bound_weight' => 3
+                    ],
+                    [
+                        'stat_type_name' => StatType::STEAL,
+                        'min' => 0,
+                        'max' => 3,
+                        'lower_bound_weight' => 25
+                    ],
+                    [
+                        'stat_type_name' => StatType::BASKETBALL_BLOCK,
+                        'min' => 0,
+                        'max' => 3,
+                        'lower_bound_weight' => 25
+                    ],
+                    [
+                        'stat_type_name' => StatType::TURNOVER,
+                        'min' => 0,
+                        'max' => 6,
+                        'lower_bound_weight' => 25
+                    ],
+                ];
+            case Position::HOCKEY_CENTER:
+            case Position::LEFT_WING:
+            case Position::RIGHT_WING:
+                return [
+                    [
+                        'stat_type_name' => StatType::GOAL,
+                        'min' => 0,
+                        'max' => 2.4,
+                        'lower_bound_weight' => 25
+                    ],
+                    [
+                        'stat_type_name' => StatType::HOCKEY_ASSIST,
+                        'min' => 0,
+                        'max' => 3,
+                        'lower_bound_weight' => 15
+                    ],
+                    [
+                        'stat_type_name' => StatType::SHOT_ON_GOAL,
+                        'min' => 1,
+                        'max' => 4,
+                        'lower_bound_weight' => 25
+                    ],
+                    [
+                        'stat_type_name' => StatType::HOCKEY_BLOCKED_SHOT,
+                        'min' => 0,
+                        'max' => 4,
+                        'lower_bound_weight' => 15
+                    ]
+                ];
+            case Position::DEFENSEMAN:
+                return [
+                    [
+                        'stat_type_name' => StatType::GOAL,
+                        'min' => 0,
+                        'max' => 1.5,
+                        'lower_bound_weight' => 25
+                    ],
+                    [
+                        'stat_type_name' => StatType::HOCKEY_ASSIST,
+                        'min' => 0,
+                        'max' => 2,
+                        'lower_bound_weight' => 15
+                    ],
+                    [
+                        'stat_type_name' => StatType::SHOT_ON_GOAL,
+                        'min' => 0,
+                        'max' => 2,
+                        'lower_bound_weight' => 25
+                    ],
+                    [
+                        'stat_type_name' => StatType::HOCKEY_BLOCKED_SHOT,
+                        'min' => 1,
+                        'max' => 8,
+                        'lower_bound_weight' => 25
+                    ]
+                ];
+            case Position::GOALIE:
+                return [
+                    [
+                        'stat_type_name' => StatType::GOALIE_WIN,
+                        'min' => .3,
+                        'max' => 1.4,
+                        'lower_bound_weight' => 1
+                    ],
+                    [
+                        'stat_type_name' => StatType::GOALIE_SAVE,
+                        'min' => 3,
+                        'max' => 25,
+                        'lower_bound_weight' => 25
+                    ],
+                    [
+                        'stat_type_name' => StatType::GOAL_AGAINST,
+                        'min' => 0,
+                        'max' => 4,
+                        'lower_bound_weight' => 25
+                    ]
                 ];
         }
         return [];
