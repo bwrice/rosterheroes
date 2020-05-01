@@ -67,7 +67,7 @@ class CreateFakeStatAmountDTOsForPlayer
 
         $buildArrays = collect($this->getBuildDTOArrays($position));
         $buildArrays->each(function ($buildArray) use ($statTypes, $statAmountDTOs) {
-            $dto = $this->buildStatAmountDTO($statTypes, $buildArray['stat_type_name'], $buildArray['min'], $buildArray['max']);
+            $dto = $this->buildStatAmountDTO($statTypes, $buildArray['stat_type_name'], $buildArray['min'], $buildArray['max'], $buildArray['lower_bound_weight']);
             if ($dto) {
                 $statAmountDTOs->push($dto);
             }
@@ -75,9 +75,17 @@ class CreateFakeStatAmountDTOsForPlayer
         return $statAmountDTOs;
     }
 
-    protected function buildStatAmountDTO(Collection $statTypes, string $statTypeName, int $min, int $max)
+    protected function buildStatAmountDTO(Collection $statTypes, string $statTypeName, float $min, float $max, float $lowerBoundWeight = 1)
     {
-        $amount = rand($min, $max);
+        /*
+         * Do some fancy math to make the amount closer to the min based on how high the lowerBoundWeight is
+         */
+        $minRange = (int) ceil(10000 * ($min**(1/$lowerBoundWeight)));
+        // Add 5% to maxRange so there's at least a small chance of hitting the upper-bound number;
+        $maxRange = (int) ceil(10000 * ($max**(1/$lowerBoundWeight)));
+        $rand = rand($minRange, $maxRange);
+        $amount = (int) floor(($rand/10000)**$lowerBoundWeight);
+
         if ($amount > 0) {
             /** @var StatType $statType */
             $statType = $statTypes->first(function (StatType $statType) use ($statTypeName) {
