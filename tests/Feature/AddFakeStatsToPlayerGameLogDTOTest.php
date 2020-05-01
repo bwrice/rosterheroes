@@ -78,18 +78,19 @@ class AddFakeStatsToPlayerGameLogDTOTest extends TestCase
 
     /**
      * @test
+     * @param $positionName
+     * @param $unexpectedStatTypeName
+     * @dataProvider provides_it_will_return_random_stat_dtos_based_on_the_player_position_if_not_enough_historic_game_logs_exists
      */
-    public function it_will_return_random_stat_dtos_based_on_the_player_position_if_not_enough_historic_game_logs_exists()
+    public function it_will_return_random_stat_dtos_based_on_the_player_position_if_not_enough_historic_game_logs_exists($positionName, $unexpectedStatTypeName)
     {
         /*
          * Make a single historic game log with stats that don't make sense for the position to compare with the one
          * that should be randomly generated
          */
-        $yardsAmount = rand(50, 150);
-        $unexpectedStatTypeName = StatType::REC_YARD;
-        $statsFactory = PlayerStatFactory::new()->forStatType($unexpectedStatTypeName)->withAmount($yardsAmount);
+        $statsFactory = PlayerStatFactory::new()->forStatType($unexpectedStatTypeName);
         /** @var Position $position */
-        $position = Position::query()->where('name', '=', Position::QUARTERBACK)->first();
+        $position = Position::query()->where('name', '=', $positionName)->first();
         $playerFactory = PlayerFactory::new()->withPosition($position);
         $playerGameLogNotCopied = PlayerGameLogFactory::new()->withPlayer($playerFactory)->withStats(collect([$statsFactory]))->create();
 
@@ -108,5 +109,95 @@ class AddFakeStatsToPlayerGameLogDTOTest extends TestCase
             return $statAmountDTO->getStatType()->name === $unexpectedStatTypeName;
         });
         $this->assertNull($matchOfUnexpected);
+    }
+
+    public function provides_it_will_return_random_stat_dtos_based_on_the_player_position_if_not_enough_historic_game_logs_exists()
+    {
+        return [
+            Position::QUARTERBACK => [
+                'positionName' => Position::QUARTERBACK,
+                'unexpectedStatTypeName' => StatType::REC_YARD,
+            ],
+            Position::RUNNING_BACK => [
+                'positionName' => Position::RUNNING_BACK,
+                'unexpectedStatTypeName' => StatType::PASS_TD,
+            ],
+            Position::WIDE_RECEIVER => [
+                'positionName' => Position::WIDE_RECEIVER,
+                'unexpectedStatTypeName' => StatType::PASS_YARD,
+            ],
+            Position::TIGHT_END => [
+                'positionName' => Position::TIGHT_END,
+                'unexpectedStatTypeName' => StatType::RUSH_TD,
+            ],
+            Position::CATCHER => [
+                'positionName' => Position::CATCHER,
+                'unexpectedStatTypeName' => StatType::INNING_PITCHED,
+            ],
+            Position::FIRST_BASE => [
+                'positionName' => Position::FIRST_BASE,
+                'unexpectedStatTypeName' => StatType::PITCHING_SAVE,
+            ],
+            Position::SECOND_BASE => [
+                'positionName' => Position::SECOND_BASE,
+                'unexpectedStatTypeName' => StatType::PITCHING_WIN,
+            ],
+            Position::THIRD_BASE => [
+                'positionName' => Position::THIRD_BASE,
+                'unexpectedStatTypeName' => StatType::INNING_PITCHED,
+            ],
+            Position::SHORTSTOP => [
+                'positionName' => Position::SHORTSTOP,
+                'unexpectedStatTypeName' => StatType::PITCHING_WIN,
+            ],
+            Position::OUTFIELD => [
+                'positionName' => Position::OUTFIELD,
+                'unexpectedStatTypeName' => StatType::PITCHING_SAVE,
+            ],
+            Position::PITCHER => [
+                'positionName' => Position::PITCHER,
+                'unexpectedStatTypeName' => StatType::HOME_RUN,
+            ],
+            Position::POINT_GUARD => [
+                'positionName' => Position::POINT_GUARD,
+                'unexpectedStatTypeName' => StatType::RECEPTION,
+            ],
+            Position::SHOOTING_GUARD => [
+                'positionName' => Position::SHOOTING_GUARD,
+                'unexpectedStatTypeName' => StatType::RECEPTION,
+            ],
+            Position::POWER_FORWARD => [
+                'positionName' => Position::POWER_FORWARD,
+                'unexpectedStatTypeName' => StatType::RECEPTION,
+            ],
+            Position::SMALL_FORWARD => [
+                'positionName' => Position::SMALL_FORWARD,
+                'unexpectedStatTypeName' => StatType::RECEPTION,
+            ],
+            Position::BASKETBALL_CENTER => [
+                'positionName' => Position::BASKETBALL_CENTER,
+                'unexpectedStatTypeName' => StatType::RECEPTION,
+            ],
+            Position::LEFT_WING => [
+                'positionName' => Position::LEFT_WING,
+                'unexpectedStatTypeName' => StatType::GOALIE_WIN,
+            ],
+            Position::RIGHT_WING => [
+                'positionName' => Position::RIGHT_WING,
+                'unexpectedStatTypeName' => StatType::GOALIE_SAVE,
+            ],
+            Position::DEFENSEMAN => [
+                'positionName' => Position::DEFENSEMAN,
+                'unexpectedStatTypeName' => StatType::GOALIE_WIN,
+            ],
+            Position::HOCKEY_CENTER => [
+                'positionName' => Position::HOCKEY_CENTER,
+                'unexpectedStatTypeName' => StatType::GOALIE_SAVE,
+            ],
+            Position::GOALIE => [
+                'positionName' => Position::GOALIE,
+                'unexpectedStatTypeName' => StatType::HAT_TRICK,
+            ],
+        ];
     }
 }
