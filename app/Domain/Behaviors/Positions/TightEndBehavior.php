@@ -8,7 +8,7 @@ use App\Domain\Models\StatType;
 
 class TightEndBehavior extends PositionBehavior
 {
-    protected $positionValue = 35;
+    protected $positionValue = 40;
     protected $gamesPerSeason = 14;
     protected $significantAmountOfGamesWithoutStats = 4;
     protected $abbreviation = 'TE';
