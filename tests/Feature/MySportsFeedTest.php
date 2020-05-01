@@ -20,6 +20,7 @@ use App\External\Stats\MySportsFeed\StatAmountDTOs\StatNameConverters\MLBStatNam
 use App\External\Stats\MySportsFeed\StatAmountDTOs\StatNameConverters\NBAStatNameConverter;
 use App\External\Stats\MySportsFeed\StatAmountDTOs\StatNameConverters\NFLStatNameConverter;
 use App\External\Stats\MySportsFeed\StatAmountDTOs\StatNameConverters\NHLStatNameConverter;
+use App\External\Stats\StatsIntegration;
 use Carbon\CarbonImmutable;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Carbon;
@@ -30,6 +31,17 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class MySportsFeedTest extends TestCase
 {
     use DatabaseTransactions;
+
+    /**
+     * @test
+     */
+    public function it_will_be_resolved_out_of_the_container()
+    {
+        config(['stats-integration.driver' => MySportsFeed::ENV_KEY]);
+
+        $integration = app(StatsIntegration::class);
+        $this->assertTrue($integration instanceof MySportsFeed);
+    }
 
     /**
      * @test

@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Domain\DataTransferObjects\PlayerGameLogDTO;
 use App\External\Stats\FakeStats\CreateFakeStatAmountDTOsForPlayer;
 use App\External\Stats\FakeStats\FakeStatsIntegration;
+use App\External\Stats\StatsIntegration;
 use App\Factories\Models\GameFactory;
 use App\Factories\Models\PlayerFactory;
 use App\Factories\Models\TeamFactory;
@@ -24,6 +25,17 @@ class FakeStatsIntegrationTest extends TestCase
     protected function getIntegration()
     {
         return app(FakeStatsIntegration::class);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_be_resolved_out_of_the_container_if_the_config_key_is_set_to_match()
+    {
+        config(['stats-integration.driver' => FakeStatsIntegration::ENV_KEY]);
+
+        $integration = app(StatsIntegration::class);
+        $this->assertTrue($integration instanceof FakeStatsIntegration);
     }
 
     /**
