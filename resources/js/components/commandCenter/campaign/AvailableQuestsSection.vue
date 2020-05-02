@@ -35,7 +35,7 @@
                 '_currentLocationQuests'
             ]),
             title() {
-                return this._currentLocationProvince.name.toUpperCase() + ' QUESTS'
+                return 'QUESTS in ' + this._currentLocationProvince.name.toUpperCase()
             },
             noQuestsMessage() {
                 return 'No quests in ' + this._currentLocationProvince.name;
