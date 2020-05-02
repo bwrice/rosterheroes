@@ -15,7 +15,7 @@ use Illuminate\Support\Collection;
 
 class PlayerGameLogFactory
 {
-    /** @var PlayerFactory */
+    /** @var PlayerFactory|null */
     protected $playerFactory;
 
     /** @var Player */
@@ -23,6 +23,9 @@ class PlayerGameLogFactory
 
     /** @var Team */
     protected $team;
+
+    /** @var GameFactory|null */
+    protected $gameFactory;
 
     /** @var Game */
     protected $game;
@@ -88,7 +91,8 @@ class PlayerGameLogFactory
         if ($this->game) {
             return $this->game;
         }
-        return GameFactory::new()->forEitherTeam($team)->create();
+        $gameFactory = $this->gameFactory ?: GameFactory::new()->forEitherTeam($team);
+        return $gameFactory->create();
     }
 
     public function withPlayer(PlayerFactory $playerFactory)
@@ -109,6 +113,13 @@ class PlayerGameLogFactory
     {
         $clone = clone $this;
         $clone->team = $team;
+        return $clone;
+    }
+
+    public function withGame(GameFactory $gameFactory)
+    {
+        $clone = clone $this;
+        $clone->gameFactory = $gameFactory;
         return $clone;
     }
 
