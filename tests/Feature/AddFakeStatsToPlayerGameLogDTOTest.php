@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use App\Domain\Behaviors\Positions\RunningBackBehavior;
-use App\Domain\DataTransferObjects\PlayerGameLogDTO;
 use App\Domain\DataTransferObjects\StatAmountDTO;
 use App\Domain\Models\Position;
 use App\Domain\Models\StatType;
@@ -12,14 +11,19 @@ use App\Factories\Models\GameFactory;
 use App\Factories\Models\PlayerFactory;
 use App\Factories\Models\PlayerGameLogFactory;
 use App\Factories\Models\PlayerStatFactory;
+use Carbon\CarbonInterface;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Date;
 use Tests\TestCase;
 
 class AddFakeStatsToPlayerGameLogDTOTest extends TestCase
 {
     use DatabaseTransactions;
+
+    /** @var CarbonInterface */
+    protected $fakeStatsIntegrationStart;
 
     /**
      * @return CreateFakeStatAmountDTOsForPlayer
@@ -27,6 +31,13 @@ class AddFakeStatsToPlayerGameLogDTOTest extends TestCase
     protected function getDomainAction()
     {
         return app(CreateFakeStatAmountDTOsForPlayer::class);
+    }
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->fakeStatsIntegrationStart = Date::parse(config('stats-integration.fake_stats.start_date'));
     }
 
     /**
@@ -51,7 +62,13 @@ class AddFakeStatsToPlayerGameLogDTOTest extends TestCase
         /** @var Position $position */
         $position = Position::query()->where('name', '=', Position::RUNNING_BACK)->first();
         $playerFactory = PlayerFactory::new()->withPosition($position);
-        $playerGameLog = PlayerGameLogFactory::new()->withPlayer($playerFactory)->withStats(collect([$statsFactory]))->create();
+
+        $gameFactory = GameFactory::new()->withStartTime($this->fakeStatsIntegrationStart->subDays(5));
+        $playerGameLog = PlayerGameLogFactory::new()
+            ->withPlayer($playerFactory)
+            ->withGame($gameFactory)
+            ->withStats(collect([$statsFactory]))
+            ->create();
 
         /*
          * Do some setup so that our domain action only needs 1 historic game log to use for fake stats
@@ -78,6 +95,50 @@ class AddFakeStatsToPlayerGameLogDTOTest extends TestCase
 
     /**
      * @test
+     */
+    public function it_wont_use_a_game_log_created_after_the_fake_stats_integration_start()
+    {
+        $now = Date::now();
+        config(['stats-integration.fake_stats.start_date' => $now->format('Y-m-d')]);
+
+        $yardsAmount = rand(50, 150);
+        $statsFactory = PlayerStatFactory::new()->forStatType(StatType::PASS_YARD)->withAmount($yardsAmount);
+        /** @var Position $position */
+        $position = Position::query()->where('name', '=', Position::RUNNING_BACK)->first();
+        $playerFactory = PlayerFactory::new()->withPosition($position);
+        $gameFactory = GameFactory::new()->withStartTime($now->addDays(5));
+        $playerGameLog = PlayerGameLogFactory::new()
+            ->withPlayer($playerFactory)
+            ->withGame($gameFactory)
+            ->withStats(collect([$statsFactory]))
+            ->create();
+
+        /*
+         * Do some setup so that our domain action only needs 1 historic game log to use for fake stats
+         */
+        $mockRunningBackBehavior = \Mockery::mock(RunningBackBehavior::class)
+            ->shouldReceive('getGamesPerSeason')
+            ->andReturn(1)
+            ->getMock();
+        app()->instance(RunningBackBehavior::class, $mockRunningBackBehavior);
+
+        $domainAction = $this->getDomainAction();
+        $domainAction->setAbsoluteMinGameLogsCount(0);
+
+        // Execute the action
+        $statAmountDTOs = $domainAction->execute($playerGameLog->player);
+
+        // Confirm the stat-amount-dtos DO NOT MATCH the game created after the fake-stats integration starts
+        $passingYardDTO = $statAmountDTOs->first(function (StatAmountDTO $statAmountDTO) {
+            return $statAmountDTO->getStatType()->name === StatType::PASS_YARD;
+        });
+
+        $this->assertNull($passingYardDTO);
+
+    }
+
+    /**
+     * @test
      * @param $positionName
      * @param $unexpectedStatTypeName
      * @dataProvider provides_it_will_return_random_stat_dtos_based_on_the_player_position_if_not_enough_historic_game_logs_exists
@@ -92,7 +153,12 @@ class AddFakeStatsToPlayerGameLogDTOTest extends TestCase
         /** @var Position $position */
         $position = Position::query()->where('name', '=', $positionName)->first();
         $playerFactory = PlayerFactory::new()->withPosition($position);
-        $playerGameLogNotCopied = PlayerGameLogFactory::new()->withPlayer($playerFactory)->withStats(collect([$statsFactory]))->create();
+        $gameFactory = GameFactory::new()->withStartTime($this->fakeStatsIntegrationStart->subDays(5));
+        $playerGameLogNotCopied = PlayerGameLogFactory::new()
+            ->withPlayer($playerFactory)
+            ->withGame($gameFactory)
+            ->withStats(collect([$statsFactory]))
+            ->create();
 
         $domainAction = $this->getDomainAction();
         /*

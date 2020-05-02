@@ -13,6 +13,7 @@ use App\Domain\Models\PlayerStat;
 use App\Domain\Models\Position;
 use App\Domain\Models\StatType;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Date;
 
 class CreateFakeStatAmountDTOsForPlayer
 {
@@ -25,10 +26,15 @@ class CreateFakeStatAmountDTOsForPlayer
             return collect();
         }
 
-        $gameLogMinimumCount = ceil(($position->getBehavior()->getGamesPerSeason()/10) + $this->absoluteMinGameLogsCount);
-        $validGameLogs = $player->loadMissing(['playerGameLogs.playerStats', 'playerGameLogs.game'])->playerGameLogs->filter(function (PlayerGameLog $playerGameLog) {
-            return $playerGameLog->playerStats->isNotEmpty();
+        $fakeStatsIntegrationStart = Date::parse(config('stats-integration.fake_stats.start_date'));
+
+        $validGameLogs = $player->loadMissing(['playerGameLogs.playerStats', 'playerGameLogs.game'])
+            ->playerGameLogs->filter(function (PlayerGameLog $playerGameLog) use ($fakeStatsIntegrationStart) {
+                return $playerGameLog->playerStats->isNotEmpty() && $playerGameLog->game->starts_at->isBefore($fakeStatsIntegrationStart);
         });
+
+        $gameLogMinimumCount = ceil(($position->getBehavior()->getGamesPerSeason()/10) + $this->absoluteMinGameLogsCount);
+
         if ($validGameLogs->isNotEmpty() && $validGameLogs->count() >= $gameLogMinimumCount) {
             return $this->getFromExistingGameLogs($validGameLogs, $gameLogMinimumCount);
         }
