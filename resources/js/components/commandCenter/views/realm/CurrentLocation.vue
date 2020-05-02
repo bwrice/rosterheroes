@@ -22,7 +22,7 @@
         </v-row>
         <v-row no-gutters>
             <v-col cols="12" md="6" class="pa-1">
-                <MapViewPort :ocean-color="'#000'">
+                <MapViewPort :ocean-color="'#000'" :tile="true">
 
                     <!-- Borders -->
                     <ProvinceVector
@@ -38,7 +38,7 @@
                 </MapViewPort>
             </v-col>
             <v-col cols="12" md="6" class="pa-1">
-                <MapViewPort :view-box="_currentLocationProvince.viewBox">
+                <MapViewPort :view-box="_currentLocationProvince.viewBox" :tile="true">
 
                     <!-- Borders -->
                     <ProvinceVector
