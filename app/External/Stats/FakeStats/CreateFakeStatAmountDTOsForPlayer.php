@@ -4,7 +4,9 @@
 namespace App\External\Stats\FakeStats;
 
 
+use App\Domain\Collections\PlayerGameLogCollection;
 use App\Domain\DataTransferObjects\StatAmountDTO;
+use App\Domain\Math\WeightedValue;
 use App\Domain\Models\Player;
 use App\Domain\Models\PlayerGameLog;
 use App\Domain\Models\PlayerStat;
@@ -23,12 +25,12 @@ class CreateFakeStatAmountDTOsForPlayer
             return collect();
         }
 
-        $gameLogsNeededCount = ceil(($position->getBehavior()->getGamesPerSeason()/10) + $this->absoluteMinGameLogsCount);
-        $validGameLogs = $player->loadMissing('playerGameLogs.playerStats')->playerGameLogs->filter(function (PlayerGameLog $playerGameLog) {
+        $gameLogMinimumCount = ceil(($position->getBehavior()->getGamesPerSeason()/10) + $this->absoluteMinGameLogsCount);
+        $validGameLogs = $player->loadMissing(['playerGameLogs.playerStats', 'playerGameLogs.game'])->playerGameLogs->filter(function (PlayerGameLog $playerGameLog) {
             return $playerGameLog->playerStats->isNotEmpty();
         });
-        if ($validGameLogs->isNotEmpty() && $validGameLogs->count() >= $gameLogsNeededCount) {
-            return $this->getFromExistingGameLogs($validGameLogs);
+        if ($validGameLogs->isNotEmpty() && $validGameLogs->count() >= $gameLogMinimumCount) {
+            return $this->getFromExistingGameLogs($validGameLogs, $gameLogMinimumCount);
         }
 
         return $this->buildRandomStatDTOsFromPosition($position);
@@ -45,13 +47,26 @@ class CreateFakeStatAmountDTOsForPlayer
     }
 
     /**
-     * @param Collection $existingGameLogs
+     * @param PlayerGameLogCollection $existingGameLogs
+     * @param int $gameLogMinimum
      * @return Collection
      */
-    protected function getFromExistingGameLogs(Collection $existingGameLogs)
+    protected function getFromExistingGameLogs(PlayerGameLogCollection $existingGameLogs, int $gameLogMinimum)
     {
+        $gameLogsToChooseFrom = $existingGameLogs->sortByGameTime()->take($gameLogMinimum * 10);
+
+        /** @var PlayerGameLog $oldestGameLog */
+        $oldestGameLog = $gameLogsToChooseFrom->sortByGameTime()->first();
+        /** @var PlayerGameLog $newestGameLog */
+        $newestGameLog = $gameLogsToChooseFrom->sortByGameTime(true)->first();
+
+        $randTimestamp = rand($oldestGameLog->game->starts_at->timestamp, $newestGameLog->game->starts_at->timestamp);
+
         /** @var PlayerGameLog $gameLog */
-        $gameLog = $existingGameLogs->random();
+        $gameLog = $gameLogsToChooseFrom->filter(function (PlayerGameLog $playerGameLog) use ($randTimestamp) {
+            return $playerGameLog->game->starts_at->timestamp >= $randTimestamp;
+        })->random();
+
         return $gameLog->playerStats->map(function (PlayerStat $playerStat) {
             return new StatAmountDTO($playerStat->statType, $playerStat->amount);
         })->toBase();
