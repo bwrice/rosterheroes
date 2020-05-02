@@ -26,6 +26,7 @@ class CampaignStopResource extends JsonResource
             'uuid' => $this->uuid,
             'name' => $this->quest->name,
             'questUuid' => $this->quest->uuid,
+            'compactQuest' => new CompactQuestResource($this->quest),
             'provinceUuid' => $this->province->uuid,
             'campaignUuid' => $this->campaign->uuid,
             'sideQuestUuids' => $this->sideQuests->map(function (SideQuest $sideQuest) {
