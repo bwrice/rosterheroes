@@ -8,7 +8,6 @@ use App\External\Stats\FakeStats\FakeStatsIntegration;
 use App\External\Stats\StatsIntegration;
 use App\Factories\Models\GameFactory;
 use App\Factories\Models\PlayerFactory;
-use App\Factories\Models\TeamFactory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;

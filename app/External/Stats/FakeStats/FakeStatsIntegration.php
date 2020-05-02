@@ -70,7 +70,8 @@ class FakeStatsIntegration implements StatsIntegration
         $gameLogDTOs = new GameLogDTOCollection();
         $team->players()->with([
             'positions',
-            'playerGameLogs.playerStats'
+            'playerGameLogs.playerStats',
+            'playerGameLogs.game'
         ])->chunk(10, function(Collection $players) use (&$gameLogDTOs, $team, $game) {
             $gameLogDTOs = $gameLogDTOs->merge($players->map(function (Player $player) use ($team, $game) {
                 $statAmountDTOs = $this->createFakeStatAmountDTOsForPlayer->execute($player);
