@@ -30,6 +30,10 @@ export default {
         _provincesByTerritoryID: (state) => (territoryID) => {
             return state.provinces.filter(province => province.territoryID === territoryID);
         },
+        _continentByID: (state) => (continentID) => {
+            let continent = state.continents.find(continent => continent.id === continentID);
+            return continent ? continent : new Continent({});
+        },
         _continentBySlug: (state) => (slug) => {
             let continent = state.continents.find(continent => continent.slug === slug);
             return continent ? continent : new Continent({});
