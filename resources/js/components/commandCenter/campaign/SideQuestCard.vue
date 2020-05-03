@@ -81,10 +81,12 @@
         computed: {
             ...mapGetters([
                 '_matchingCampaignStop',
-                '_squadSideQuestUuids'
+                '_squadSideQuestUuids',
+                '_squad'
             ]),
             canJoinSideQuest() {
-                return (this.campaignStop && ! this.hasSideQuest && ! this.pending);
+                let maxReached = this.campaignStop.sideQuestUuids.length >= this._squad.sideQuestsPerQuest;
+                return (this.campaignStop && ! this.hasSideQuest && ! this.pending && ! maxReached);
             },
             campaignStop() {
                 return this._matchingCampaignStop(this.quest.uuid);
