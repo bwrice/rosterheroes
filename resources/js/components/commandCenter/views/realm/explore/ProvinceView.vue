@@ -1,28 +1,29 @@
 <template>
-    <v-container>
-        <v-row>
-            <v-col cols="12" lg="8" offset-lg="2">
-                <v-row no-gutters>
-                    <v-col cols="12">
-                        <MapViewPortWithControls :view-box="province.viewBox" :tile="false">
-                            <!-- Borders -->
-                            <ProvinceVector
-                                v-for="(province, uuid) in borders"
-                                :key="uuid"
-                                :province="province"
-                                :hoverable="true"
-                                @provinceClicked="navigateToProvince"
-                            >
-                            </ProvinceVector>
+    <TwoColumnWideLayout>
+        <template v-slot:column-one>
+            <v-row no-gutters>
+                <v-col cols="12">
+                    <MapViewPortWithControls :view-box="province.viewBox" :tile="false">
+                        <!-- Borders -->
+                        <ProvinceVector
+                            v-for="(province, uuid) in borders"
+                            :key="uuid"
+                            :province="province"
+                            :hoverable="true"
+                            @provinceClicked="navigateToProvince"
+                        >
+                        </ProvinceVector>
 
-                            <!-- Province -->
-                            <ProvinceVector :province="province" :highlight="true"></ProvinceVector>
-                        </MapViewPortWithControls>
-                    </v-col>
-                </v-row>
-            </v-col>
-        </v-row>
-    </v-container>
+                        <!-- Province -->
+                        <ProvinceVector :province="province" :highlight="true"></ProvinceVector>
+                    </MapViewPortWithControls>
+                </v-col>
+            </v-row>
+        </template>
+        <template v-slot:column-two>
+            <!-- TODO -->
+        </template>
+    </TwoColumnWideLayout>
 </template>
 
 <script>
@@ -32,10 +33,12 @@
 
     import {mapGetters} from 'vuex';
     import MapViewPortWithControls from "../../../realm/MapViewPortWithControls";
+    import TwoColumnWideLayout from "../../../layouts/TwoColumnWideLayout";
 
     export default {
         name: "ProvinceView",
         components: {
+            TwoColumnWideLayout,
             MapViewPortWithControls,
             ExploreMapCard,
             ProvinceVector

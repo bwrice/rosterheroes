@@ -1,93 +1,66 @@
 <template>
-    <v-container>
-        <v-row>
-            <v-col cols="12" lg="8" offset-lg="2">
-                <v-row no-gutters>
-                    <v-col cols="12">
-                        <MapViewPortWithControls :view-box="viewBox" :tile="false">
-                            <template v-if="mode === 'continents'">
-                                <ContinentVector v-for="(continent, id) in this._continents" :key="id" :continent="continent"></ContinentVector>
-                            </template>
-                            <template v-else-if="mode === 'territories'">
-                                <TerritoryVector v-for="(territory, id) in this._territories" :key="id" :territory="territory"></TerritoryVector>
-                            </template>
-                            <template v-else-if="mode === 'provinces'">
-                                <ProvinceVector
-                                    v-for="(province, uuid) in this._provinces"
-                                    :key="uuid"
-                                    :province="province"
-                                    :hoverable="true"
-                                    @provinceClicked="province.goToRoute($router, $route)"
-                                ></ProvinceVector>
-                            </template>
-                        </MapViewPortWithControls>
-                    </v-col>
-                </v-row>
-                <v-row no-gutters class="py-2">
-                    <v-col cols="8" offset="2" md="12" offset-md="0">
-                        <v-row no-gutters>
-                            <v-col cols="12" md="4" class="pa-1">
-                                <v-btn
-                                    block
-                                    @click="mode = 'continents'"
-                                    :color="mode === 'continents' ? 'accent darken-1' : 'primary'"
-                                    :depressed="mode === 'continents'"
-                                >
-                                    Continents
-                                </v-btn>
-                            </v-col>
-                            <v-col cols="12" md="4" class="pa-1">
-                                <v-btn
-                                    block
-                                    @click="mode = 'territories'"
-                                    :color="mode === 'territories' ? 'accent darken-1' : 'primary'"
-                                    :depressed="mode === 'territories'"
-                                >
-                                    Territories
-                                </v-btn>
-                            </v-col>
-                            <v-col cols="12" md="4" class="pa-1">
-                                <v-btn
-                                    block
-                                    @click="mode = 'provinces'"
-                                    :color="mode === 'provinces' ? 'accent darken-1' : 'primary'"
-                                    :depressed="mode === 'provinces'"
-                                >
-                                    Provinces
-                                </v-btn>
-                            </v-col>
-                        </v-row>
-                    </v-col>
-                </v-row>
-            </v-col>
-        </v-row>
-    </v-container>
-<!--    <ExploreMapCard>-->
-<!--        <template slot="footer-content">-->
-<!--            <v-row no-gutters>-->
-<!--                <v-col cols="12">-->
-<!--                    <v-chip class="ma-1"-->
-<!--                            :input-value="inContinentMode"-->
-<!--                            @click="setRealmMapMode('continent')"-->
-<!--                            filter-->
-<!--                            filter-icon="mdi-eye"-->
-<!--                            label-->
-<!--                    >-->
-<!--                        Continents-->
-<!--                    </v-chip>-->
-<!--                    <v-chip class="ma-1"-->
-<!--                            :input-value="inTerritoryMode"-->
-<!--                            @click="setRealmMapMode('territory')"-->
-<!--                            filter-->
-<!--                            filter-icon="mdi-eye"-->
-<!--                            label-->
-<!--                    >-->
-<!--                        Territories-->
-<!--                    </v-chip>-->
-<!--                </v-col>-->
-<!--            </v-row>-->
-<!--        </template>-->
-<!--    </ExploreMapCard>-->
+    <TwoColumnWideLayout>
+        <template v-slot:column-one>
+            <v-row no-gutters>
+                <v-col cols="12">
+                    <MapViewPortWithControls :view-box="viewBox" :tile="false">
+                        <template v-if="mode === 'continents'">
+                            <ContinentVector v-for="(continent, id) in _continents" :key="id" :continent="continent"></ContinentVector>
+                        </template>
+                        <template v-else-if="mode === 'territories'">
+                            <TerritoryVector v-for="(territory, id) in _territories" :key="id" :territory="territory"></TerritoryVector>
+                        </template>
+                        <template v-else-if="mode === 'provinces'">
+                            <ProvinceVector
+                                v-for="(province, uuid) in _provinces"
+                                :key="uuid"
+                                :province="province"
+                                :hoverable="true"
+                                @provinceClicked="province.goToRoute($router, $route)"
+                            ></ProvinceVector>
+                        </template>
+                    </MapViewPortWithControls>
+                </v-col>
+                <v-col cols="8" offset="2" md="12" offset-md="0">
+                    <v-row no-gutters class="py-2">
+                        <v-col cols="12" md="4" class="pa-1">
+                            <v-btn
+                                block
+                                @click="mode = 'continents'"
+                                :color="mode === 'continents' ? 'accent darken-1' : 'primary'"
+                                :depressed="mode === 'continents'"
+                            >
+                                Continents
+                            </v-btn>
+                        </v-col>
+                        <v-col cols="12" md="4" class="pa-1">
+                            <v-btn
+                                block
+                                @click="mode = 'territories'"
+                                :color="mode === 'territories' ? 'accent darken-1' : 'primary'"
+                                :depressed="mode === 'territories'"
+                            >
+                                Territories
+                            </v-btn>
+                        </v-col>
+                        <v-col cols="12" md="4" class="pa-1">
+                            <v-btn
+                                block
+                                @click="mode = 'provinces'"
+                                :color="mode === 'provinces' ? 'accent darken-1' : 'primary'"
+                                :depressed="mode === 'provinces'"
+                            >
+                                Provinces
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                </v-col>
+            </v-row>
+        </template>
+        <template v-slot:column-two>
+            <!-- TODO -->
+        </template>
+    </TwoColumnWideLayout>
 </template>
 
 <script>
@@ -100,10 +73,12 @@
     import ExploreMapCard from "../../../realm/ExploreMapCard";
     import ProvinceVector from "../../../realm/ProvinceVector";
     import ViewBox from "../../../../../models/ViewBox";
+    import TwoColumnWideLayout from "../../../layouts/TwoColumnWideLayout";
 
     export default {
         name: "RealmView",
         components: {
+            TwoColumnWideLayout,
             ProvinceVector,
             ExploreMapCard,
             MapControls,
@@ -123,7 +98,6 @@
                 })
             }
         },
-
         computed: {
             ...mapGetters([
                 '_provinces',

@@ -1,23 +1,24 @@
 <template>
-    <v-container>
-        <v-row>
-            <v-col cols="12" lg="8" offset-lg="2">
-                <v-row no-gutters>
-                    <v-col cols="12">
-                        <MapViewPortWithControls :view-box="territory.viewBox">
-                            <ProvinceVector
-                                v-for="(province, uuid) in provinces"
-                                :key="uuid"
-                                :province="province"
-                                :hoverable="true"
-                                @provinceClicked="navigateToProvince"
-                            ></ProvinceVector>
-                        </MapViewPortWithControls>
-                    </v-col>
-                </v-row>
-            </v-col>
-        </v-row>
-    </v-container>
+    <TwoColumnWideLayout>
+        <template v-slot:column-one>
+            <v-row no-gutters>
+                <v-col cols="12">
+                    <MapViewPortWithControls :view-box="territory.viewBox">
+                        <ProvinceVector
+                            v-for="(province, uuid) in provinces"
+                            :key="uuid"
+                            :province="province"
+                            :hoverable="true"
+                            @provinceClicked="navigateToProvince"
+                        ></ProvinceVector>
+                    </MapViewPortWithControls>
+                </v-col>
+            </v-row>
+        </template>
+        <template v-slot:column-two>
+            <!-- TODO -->
+        </template>
+    </TwoColumnWideLayout>
 </template>
 
 <script>
@@ -27,11 +28,13 @@
     import ProvinceVector from "../../../realm/ProvinceVector";
     import ExploreMapCard from "../../../realm/ExploreMapCard";
     import MapViewPortWithControls from "../../../realm/MapViewPortWithControls";
+    import TwoColumnWideLayout from "../../../layouts/TwoColumnWideLayout";
 
     export default {
         name: "TerritoryView",
 
         components: {
+            TwoColumnWideLayout,
             MapViewPortWithControls,
             ExploreMapCard,
             ProvinceVector
