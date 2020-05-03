@@ -2,7 +2,7 @@ import CompactQuest from "./compact/CompactQuest";
 
 export default class CampaignStop {
 
-    constructor({uuid, name, questUuid, provinceUuid, campaignUuid, sideQuestUuids = []}, compactQuest) {
+    constructor({uuid, name, questUuid, provinceUuid, campaignUuid, sideQuestUuids = [], compactQuest}) {
         this.uuid = uuid;
         this.name = name;
         this.questUuid = questUuid;
