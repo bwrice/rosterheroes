@@ -45,6 +45,7 @@ class RewardChestToSquad
             $chestGold,
             $squad->id,
             $chestBlueprint->id,
+            $chestBlueprint->description,
             $sourceType,
             $sourceID
         );
