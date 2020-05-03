@@ -85,7 +85,10 @@
                 '_squad'
             ]),
             canJoinSideQuest() {
-                let maxReached = this.campaignStop.sideQuestUuids.length >= this._squad.sideQuestsPerQuest;
+                let maxReached = false;
+                if (this.campaignStop) {
+                    maxReached = this.campaignStop.sideQuestUuids.length >= this._squad.sideQuestsPerQuest;
+                }
                 return (this.campaignStop && ! this.hasSideQuest && ! this.pending && ! maxReached);
             },
             campaignStop() {
