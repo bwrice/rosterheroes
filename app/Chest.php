@@ -25,6 +25,7 @@ use Carbon\CarbonInterface;
  * @property int|null $chest_blueprint_id
  * @property string|null $source_type
  * @property string|null $source_id
+ * @property string|null $description
  *
  * @property Squad $squad
  * @property RewardsChests $source
@@ -71,6 +72,9 @@ class Chest extends EventSourcedModel implements HasItems
 
     public function getDescription()
     {
+        if ($this->description) {
+            return $this->description;
+        }
         return ucfirst($this->getSizeDescription() . ', ' . $this->getQualityDescription() . ' chest');
     }
 
