@@ -23,6 +23,7 @@ class CreateChestsTable extends Migration
             $table->bigInteger('gold')->unsigned();
             $table->dateTime('opened_at')->nullable();
             $table->integer('chest_blueprint_id')->unsigned()->nullable();
+            $table->string('description')->nullable();
             $table->timestamps();
         });
 
