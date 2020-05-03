@@ -33,6 +33,10 @@ final class ChestCreated implements ShouldBeStored
     /**
      * @var string|null
      */
+    public $description;
+    /**
+     * @var string|null
+     */
     public $sourceType;
     /**
      * @var int|null
@@ -44,7 +48,8 @@ final class ChestCreated implements ShouldBeStored
         int $size,
         int $gold,
         int $squadID,
-        int $chestBlueprintID = null,
+        ?int $chestBlueprintID,
+        ?string $description,
         string $sourceType = null,
         int $sourceID = null)
     {
@@ -53,6 +58,7 @@ final class ChestCreated implements ShouldBeStored
         $this->gold = $gold;
         $this->squadID = $squadID;
         $this->chestBlueprintID = $chestBlueprintID;
+        $this->description = $description;
         $this->sourceType = $sourceType;
         $this->sourceID = $sourceID;
     }

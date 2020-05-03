@@ -19,6 +19,7 @@ final class ChestProjector implements Projector
             'source_type' => $event->sourceType,
             'source_id' => $event->sourceID,
             'chest_blueprint_id' => $event->chestBlueprintID,
+            'description' => $event->description,
             'gold' => $event->gold,
             'quality' => $event->quality,
             'size' => $event->size
