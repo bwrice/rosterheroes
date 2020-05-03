@@ -31,7 +31,8 @@ class ChestBlueprintFactory
             'quality' => $qualityTier,
             'size' => $sizeTier,
             'min_gold' => $minGold,
-            'max_gold' => $maxGold
+            'max_gold' => $maxGold,
+            'description' => 'Test Chest Blueprint ' . Str::random(8)
         ], $extra));
 
         if ($this->itemBlueprintFactories) {

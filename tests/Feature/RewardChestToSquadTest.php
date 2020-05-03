@@ -38,6 +38,7 @@ class RewardChestToSquadTest extends TestCase
         $this->assertEquals($chestBlueprint->size, $chest->size);
         $this->assertEquals($chestBlueprint->quality, $chest->quality);
         $this->assertEquals($chestBlueprint->id, $chest->chest_blueprint_id);
+        $this->assertEquals($chestBlueprint->description, $chest->description);
         $this->assertNull($chest->opened_at);
     }
 
