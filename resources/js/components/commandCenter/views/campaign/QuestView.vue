@@ -1,35 +1,39 @@
 <template>
     <v-container>
         <v-row>
-            <v-col cols="12">
-                <v-row no-gutters justify="center" align="center">
-                    <span class="display-1 rh-op-85 font-weight-bold mx-3 text-center">{{quest.name}}</span>
-                </v-row>
-                <v-row no-gutters align="center" class="mt-2">
-                    <v-col cols="12" md="6" offset-md="3" lg="4" offset-lg="4">
-                        <v-btn v-if="joined"
-                               block
-                               color="error"
-                               :disabled="! canLeave"
-                               @click="leave"
-                        >
-                            Leave Quest
-                        </v-btn>
-                        <v-btn v-else
-                               color="primary"
-                               block
-                               :disabled="! canJoin"
-                               @click="join"
-                        >
-                            Join Quest
-                        </v-btn>
+            <v-col cols="12" sm="10" offset-sm="1" xl="8" offset-xl="2">
+                <v-row>
+                    <v-col cols="12">
+                        <v-row no-gutters justify="center" align="center">
+                            <span class="display-1 rh-op-85 font-weight-bold mx-3 text-center">{{quest.name}}</span>
+                        </v-row>
+                        <v-row no-gutters align="center" class="mt-2">
+                            <v-col cols="12" md="6" offset-md="3" lg="4" offset-lg="4">
+                                <v-btn v-if="joined"
+                                       block
+                                       color="error"
+                                       :disabled="! canLeave"
+                                       @click="leave"
+                                >
+                                    Leave Quest
+                                </v-btn>
+                                <v-btn v-else
+                                       color="primary"
+                                       block
+                                       :disabled="! canJoin"
+                                       @click="join"
+                                >
+                                    Join Quest
+                                </v-btn>
+                            </v-col>
+                        </v-row>
                     </v-col>
                 </v-row>
-            </v-col>
-        </v-row>
-        <v-row>
-            <v-col v-for="(sideQuest, uuid) in quest.sideQuests" :key="uuid" cols="12" sm="6" lg="4" xl="3">
-                <SideQuestCard :side-quest="sideQuest" :quest="quest"></SideQuestCard>
+                <v-row>
+                    <v-col v-for="(sideQuest, uuid) in quest.sideQuests" :key="uuid" cols="12" md="6" xl="4">
+                        <SideQuestCard :side-quest="sideQuest" :quest="quest"></SideQuestCard>
+                    </v-col>
+                </v-row>
             </v-col>
         </v-row>
     </v-container>
