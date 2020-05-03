@@ -14,8 +14,7 @@
                         <ProvinceVector
                             v-for="(province, uuid) in borders"
                             :key="uuid"
-                            :province="province"
-                        >
+                            :province="province">
                         </ProvinceVector>
 
                         <ProvinceVector :province="province" :highlight="true"></ProvinceVector>
@@ -74,7 +73,7 @@
         },
         methods: {
             emitLeaveQuest(event) {
-                this.$emit('leaveQuestClicked', this.campaignStop.compactQuest, event);
+                this.$emit('leaveQuestClicked', this.campaignStop, event);
             }
         },
         computed: {
