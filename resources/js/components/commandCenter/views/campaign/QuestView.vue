@@ -64,7 +64,8 @@
             async leave() {
                 this.pending = true;
                 await this.leaveQuest({
-                    quest: this.quest
+                    questUuid: this.quest.uuid,
+                    questName: this.quest.name
                 });
                 this.pending = false;
             }

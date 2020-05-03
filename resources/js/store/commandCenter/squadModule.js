@@ -387,16 +387,16 @@ export default {
             }
         },
 
-        async leaveQuest({state, commit, dispatch}, {quest}) {
+        async leaveQuest({state, commit, dispatch}, {questUuid, questName}) {
             try {
 
-                let campaignResponse = await squadApi.leaveQuest(state.squad.slug, quest.uuid);
+                let campaignResponse = await squadApi.leaveQuest(state.squad.slug, questUuid);
                 let updatedCampaign = null;
                 if (campaignResponse.data) {
                     updatedCampaign = new Campaign(campaignResponse.data);
                 }
                 commit('SET_CURRENT_CAMPAIGN', updatedCampaign);
-                let text = quest.name + ' removed from campaign';
+                let text = questName + ' removed from campaign';
                 dispatch('snackBarSuccess', {
                     text: text,
                     timeout: 3000
