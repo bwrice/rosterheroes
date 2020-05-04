@@ -24,6 +24,10 @@
             territory: {
                 type: Territory,
                 required: true
+            },
+            interactive: {
+                type: Boolean,
+                default: true
             }
         },
 
@@ -35,10 +39,14 @@
 
         methods: {
             setHovered: function(hoveredState) {
-                this.hovered = hoveredState;
+                if (this.interactive) {
+                    this.hovered = hoveredState;
+                }
             },
             navigateToTerritory() {
-                this.territory.goToRoute(this.$router, this.$route);
+                if (this.interactive) {
+                    this.territory.goToRoute(this.$router, this.$route);
+                }
             }
         },
 
