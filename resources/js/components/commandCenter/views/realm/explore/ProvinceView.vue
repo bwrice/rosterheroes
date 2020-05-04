@@ -26,14 +26,11 @@
                     <span class="title font-weight-thin">BORDERS</span>
                 </v-col>
                 <v-col cols="12">
-                    <PaginationBlock
-                        :items-per-page="6"
-                        :items="borders"
-                    >
-                        <template v-slot:default="slotProps">
-                            <ProvincePanel :province="slotProps.item"></ProvincePanel>
-                        </template>
-                    </PaginationBlock>
+                    <ProvincePanel
+                        v-for="(province, uuid) in borders"
+                        :province="province"
+                        :key="uuid"
+                    ></ProvincePanel>
                 </v-col>
             </v-row>
         </template>
@@ -55,7 +52,6 @@
         name: "ProvinceView",
         components: {
             ProvincePanel,
-            PaginationBlock,
             TwoColumnWideLayout,
             MapViewPortWithControls,
             ExploreMapCard,
