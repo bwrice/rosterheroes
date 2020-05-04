@@ -125,6 +125,58 @@ class SeedItemBlueprints extends Migration
                     "Beginner's Blessing"
                 ]
             ],
+            [
+                'create_array' => [
+                    'name' => ItemBlueprint::STARTER_BELT,
+                    'description' => 'New squad belt',
+                    'reference_id' => ItemBlueprint::STARTER_BELT_REFERENCE,
+                    'item_classes' => $itemClasses->where('name', '=', ItemClass::ENCHANTED),
+                    'item_types' => $itemTypes->where( 'name', '=', 'Light Belt' ),
+                    'materials' => $materials->where( 'name', '=', 'Leather' ),
+                ],
+                'enchantments' => [
+                    "Level 2 Strength"
+                ]
+            ],
+            [
+                'create_array' => [
+                    'name' => ItemBlueprint::STARTER_HELMET,
+                    'description' => 'New squad helmet',
+                    'reference_id' => ItemBlueprint::STARTER_HELMET_REFERENCE,
+                    'item_classes' => $itemClasses->where('name', '=', ItemClass::ENCHANTED),
+                    'item_types' => $itemTypes->where( 'name', '=', 'Skullcap' ),
+                    'materials' => $materials->where( 'name', '=', 'Copper' ),
+                ],
+                'enchantments' => [
+                    "Level 2 Valor"
+                ]
+            ],
+            [
+                'create_array' => [
+                    'name' => ItemBlueprint::STARTER_CAP,
+                    'description' => 'New squad cap',
+                    'reference_id' => ItemBlueprint::STARTER_CAP_REFERENCE,
+                    'item_classes' => $itemClasses->where('name', '=', ItemClass::ENCHANTED),
+                    'item_types' => $itemTypes->where( 'name', '=', 'Fez' ),
+                    'materials' => $materials->where( 'name', '=', 'Cotton' ),
+                ],
+                'enchantments' => [
+                    "Level 2 Intelligence"
+                ]
+            ],
+            [
+                'create_array' => [
+                    'name' => ItemBlueprint::STARTER_BOOTS,
+                    'description' => 'New squad boots',
+                    'reference_id' => ItemBlueprint::STARTER_BOOTS_REFERENCE,
+                    'item_classes' => $itemClasses->where('name', '=', ItemClass::ENCHANTED),
+                    'item_types' => $itemTypes->where( 'name', '=', 'Light Boots' ),
+                    'materials' => $materials->where( 'name', '=', 'Leather' ),
+                ],
+                'enchantments' => [
+                    "Level 2 Agility"
+                ]
+            ],
 
             /*
              * Random Items

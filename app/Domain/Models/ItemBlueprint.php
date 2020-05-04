@@ -41,6 +41,10 @@ class ItemBlueprint extends Model
     public const STARTER_LIGHT_ARMOR = 'Starter Cuirass';
     public const STARTER_HEAVY_ARMOR = 'Starter Breastplate';
     public const STARTER_ROBES = 'Starter Frock';
+    public const STARTER_BELT = 'Starter Belt';
+    public const STARTER_HELMET = 'Starter Helmet';
+    public const STARTER_CAP = 'Starter Cap';
+    public const STARTER_BOOTS = 'Starter Boots';
 
     /*
      * Random Items Reference IDs
@@ -181,6 +185,12 @@ class ItemBlueprint extends Model
     public const RANDOM_ENCHANTED_HIGH_TIER_BRACELET = 'EL';
     public const RANDOM_ENCHANTED_HIGH_TIER_RING = 'EM';
     public const RANDOM_ENCHANTED_HIGH_TIER_CROWN = 'EN';
+
+    public const STARTER_BELT_REFERENCE = 'EO';
+    public const STARTER_HELMET_REFERENCE = 'EP';
+    public const STARTER_CAP_REFERENCE = 'EQ';
+    public const STARTER_BOOTS_REFERENCE = 'ER';
+
 
     protected $guarded = [];
 
