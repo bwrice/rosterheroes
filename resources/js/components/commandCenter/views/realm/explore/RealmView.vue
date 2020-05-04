@@ -60,7 +60,7 @@
         <template v-slot:column-two>
             <v-row no-gutters>
                 <v-col cols="12">
-                    <span class="title font-weight-thin">Continents</span>
+                    <span class="title font-weight-thin">CONTINENTS</span>
                 </v-col>
                 <v-col cols="12">
                     <PaginationBlock
