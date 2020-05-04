@@ -58,7 +58,21 @@
             </v-row>
         </template>
         <template v-slot:column-two>
-            <!-- TODO -->
+            <v-row no-gutters>
+                <v-col cols="12">
+                    <span class="title font-weight-thin">TERRITORIES</span>
+                </v-col>
+                <v-col cols="12">
+                    <PaginationBlock
+                        :items-per-page="4"
+                        :items="_territories"
+                    >
+                        <template v-slot:default="slotProps">
+                            <TerritoryPanel :territory="slotProps.item"></TerritoryPanel>
+                        </template>
+                    </PaginationBlock>
+                </v-col>
+            </v-row>
         </template>
     </TwoColumnWideLayout>
 </template>
@@ -74,10 +88,14 @@
     import ProvinceVector from "../../../realm/ProvinceVector";
     import ViewBox from "../../../../../models/ViewBox";
     import TwoColumnWideLayout from "../../../layouts/TwoColumnWideLayout";
+    import PaginationBlock from "../../../global/PaginationBlock";
+    import TerritoryPanel from "../../../realm/TerritoryPanel";
 
     export default {
         name: "RealmView",
         components: {
+            TerritoryPanel,
+            PaginationBlock,
             TwoColumnWideLayout,
             ProvinceVector,
             ExploreMapCard,
