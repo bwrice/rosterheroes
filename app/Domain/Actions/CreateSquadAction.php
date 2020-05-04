@@ -10,6 +10,7 @@ namespace App\Domain\Actions;
 
 
 use App\Aggregates\SquadAggregate;
+use App\ChestBlueprint;
 use App\Domain\Models\HeroPostType;
 use App\Domain\Models\MobileStorageRank;
 use App\Domain\Models\Province;
@@ -23,12 +24,18 @@ class CreateSquadAction
     /**
      * @var AddSpellToLibraryAction
      */
-    private $addSpellToLibraryAction;
+    protected $addSpellToLibraryAction;
+    /**
+     * @var RewardChestToSquad
+     */
+    protected $rewardChestToSquad;
 
     public function __construct(
-        AddSpellToLibraryAction $addSpellToLibraryAction)
+        AddSpellToLibraryAction $addSpellToLibraryAction,
+        RewardChestToSquad $rewardChestToSquad)
     {
         $this->addSpellToLibraryAction = $addSpellToLibraryAction;
+        $this->rewardChestToSquad = $rewardChestToSquad;
     }
 
     /**
@@ -71,6 +78,10 @@ class CreateSquadAction
         $startingSpells->each(function (Spell $spell) use ($squad) {
             $this->addSpellToLibraryAction->execute($squad, $spell);
         });
+
+        /** @var ChestBlueprint $chestBlueprint */
+        $chestBlueprint = ChestBlueprint::query()->where('reference_id', '=', ChestBlueprint::NEW_SQUAD_QUEST)->first();
+        $this->rewardChestToSquad->execute($chestBlueprint, $squad, null);
 
         return $squad->fresh();
     }
