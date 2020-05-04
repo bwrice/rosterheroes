@@ -2,6 +2,8 @@
 
 namespace Tests\Unit;
 
+use App\Chest;
+use App\ChestBlueprint;
 use App\Domain\Actions\CreateSquadAction;
 use App\Domain\Models\HeroPostType;
 use App\Domain\Models\Squad;
@@ -88,5 +90,24 @@ class CreateSquadActionTest extends TestCase
         $squad = Squad::query()->where('name', '=', $this->squadName)->first();
         $squadSpells = $squad->spells()->whereIn('name', Squad::STARTING_SPELLS)->get();
         $this->assertEquals(count(Squad::STARTING_SPELLS), $squadSpells->count());
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_reward_a_starter_chest_to_the_squad()
+    {
+        $this->domainAction->execute($this->user->id, $this->squadName);
+
+        /** @var Squad $squad */
+        $squad = Squad::query()->where('name', '=', $this->squadName)->first();
+        $chests = $squad->chests;
+        $this->assertEquals(1, $chests->count());
+        /** @var ChestBlueprint $starterChestBlueprint */
+        $starterChestBlueprint = ChestBlueprint::query()->where('reference_id', '=', ChestBlueprint::NEW_SQUAD_QUEST)->first();
+
+        /** @var Chest $chestRewarded */
+        $chestRewarded =$chests->first();
+        $this->assertEquals($starterChestBlueprint->id, $chestRewarded->chest_blueprint_id);
     }
 }
