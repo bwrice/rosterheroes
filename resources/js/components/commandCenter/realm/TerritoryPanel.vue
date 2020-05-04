@@ -13,13 +13,12 @@
 
 <script>
     import Territory from "../../../models/Territory";
-    import MapViewPort from "./MapViewPort";
     import TerritoryVector from "./TerritoryVector";
     import MapLocationPanel from "./MapLocationPanel";
 
     export default {
         name: "TerritoryPanel",
-        components: {MapLocationPanel, TerritoryVector, MapViewPort},
+        components: {MapLocationPanel, TerritoryVector},
         props: {
             territory: {
                 type: Territory,
