@@ -22,7 +22,7 @@
                 </v-col>
                 <v-col cols="12">
                     <PaginationBlock
-                        :items-per-page="4"
+                        :items-per-page="6"
                         :items="provinces"
                     >
                         <template v-slot:default="slotProps">

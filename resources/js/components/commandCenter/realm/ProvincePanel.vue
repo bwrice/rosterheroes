@@ -4,11 +4,22 @@
         :location-name="province.name"
         :handle-explore="exploreProvince"
     >
-        <ProvinceVector :province="province"></ProvinceVector>
+        <!-- Borders -->
+        <ProvinceVector
+            v-for="(province, uuid) in borders"
+            :key="uuid"
+            :province="province"
+            :fill-color="'#808080'"
+        >
+        </ProvinceVector>
+
+        <!-- Province -->
+        <ProvinceVector :province="province" :highlight="true"></ProvinceVector>
     </MapLocationPanel>
 </template>
 
 <script>
+    import {mapGetters} from 'vuex';
     import Province from "../../../models/Province";
     import MapLocationPanel from "./MapLocationPanel";
     import ProvinceVector from "./ProvinceVector";
@@ -20,6 +31,15 @@
             province: {
                 type: Province,
                 required: true
+            }
+        },
+
+        computed: {
+            ...mapGetters([
+                '_provincesByUuids'
+            ]),
+            borders() {
+                return this._provincesByUuids(this.province.borderUuids);
             }
         },
         methods: {
