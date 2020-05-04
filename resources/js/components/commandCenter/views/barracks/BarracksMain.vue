@@ -5,10 +5,10 @@
         </template>
         <template v-else>
             <v-row>
-                <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="5" offset-lg="1" xl="4" offset-xl="2">
+                <v-col cols="12" offset-sm="2" sm="8" md="6" offset-md="0" lg="5" offset-lg="1" xl="4" offset-xl="2">
                     <HeroesCard :heroes="_heroes"></HeroesCard>
                 </v-col>
-                <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="5" xl="4">
+                <v-col cols="12" offset-sm="2" sm="8" md="6" offset-md="0"  lg="5" xl="4">
                     <MobileStorageCard></MobileStorageCard>
                     <LocalStashCard></LocalStashCard>
                     <Treasury></Treasury>
