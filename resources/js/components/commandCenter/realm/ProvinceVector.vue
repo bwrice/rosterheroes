@@ -43,6 +43,13 @@
             }
         },
 
+        watch: {
+            // We need to watch province changes for when this component is reused and remove any hovered state
+            province: function () {
+                this.hovered = false;
+            }
+        },
+
         methods: {
             setHovered (hoveredState) {
                 this.hovered = hoveredState;
