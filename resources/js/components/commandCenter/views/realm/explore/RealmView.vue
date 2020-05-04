@@ -60,6 +60,21 @@
         <template v-slot:column-two>
             <v-row no-gutters>
                 <v-col cols="12">
+                    <span class="title font-weight-thin">Continents</span>
+                </v-col>
+                <v-col cols="12">
+                    <PaginationBlock
+                        :items-per-page="4"
+                        :items="_continents"
+                    >
+                        <template v-slot:default="slotProps">
+                            <ContinentPanel :continent="slotProps.item"></ContinentPanel>
+                        </template>
+                    </PaginationBlock>
+                </v-col>
+            </v-row>
+            <v-row no-gutters>
+                <v-col cols="12">
                     <span class="title font-weight-thin">TERRITORIES</span>
                 </v-col>
                 <v-col cols="12">
@@ -90,10 +105,12 @@
     import TwoColumnWideLayout from "../../../layouts/TwoColumnWideLayout";
     import PaginationBlock from "../../../global/PaginationBlock";
     import TerritoryPanel from "../../../realm/TerritoryPanel";
+    import ContinentPanel from "../../../realm/ContinentPanel";
 
     export default {
         name: "RealmView",
         components: {
+            ContinentPanel,
             TerritoryPanel,
             PaginationBlock,
             TwoColumnWideLayout,
