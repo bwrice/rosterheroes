@@ -6,6 +6,7 @@
     >
         <ContinentVector
             :continent="continent"
+            :interactive="false"
         ></ContinentVector>
     </MapLocationPanel>
 </template>

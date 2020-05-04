@@ -25,11 +25,12 @@
             continent: {
                 type: Continent,
                 required: true
+            },
+            interactive: {
+                type: Boolean,
+                default: true
             }
         },
-        // mixins: [
-        //     continentMixin
-        // ],
 
         data: function() {
             return {
@@ -39,10 +40,14 @@
 
         methods: {
             setHovered: function(hoveredState) {
-                this.hovered = hoveredState;
+                if (this.interactive) {
+                    this.hovered = hoveredState;
+                }
             },
             navigateToContinent() {
-                this.$router.push(this.continentRoute);
+                if (this.interactive) {
+                    this.$router.push(this.continentRoute);
+                }
             }
         },
 
