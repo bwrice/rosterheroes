@@ -106,11 +106,43 @@ class SeedChestBlueprints extends Migration
         $chestBlueprintArrays = $chestBlueprintArrays->merge($this->getFullyRandomBlueprintArrays());
         $chestBlueprintArrays = $chestBlueprintArrays->merge($this->getRandomTieredBlueprintArrays());
 
+        $chestBlueprintArrays->push([
+            'description' => 'Newcomer Chest',
+            'reference_id' => ChestBlueprint::NEW_SQUAD_QUEST,
+            'quality' => 1,
+            'size' => 1,
+            'min_gold' => 250,
+            'max_gold' => 250,
+            'item_blueprints' => [
+                [
+                    'reference_id' => ItemBlueprint::STARTER_BELT_REFERENCE,
+                    'chance' => 100,
+                    'count' => 1
+                ],
+                [
+                    'reference_id' => ItemBlueprint::STARTER_HELMET_REFERENCE,
+                    'chance' => 100,
+                    'count' => 1
+                ],
+                [
+                    'reference_id' => ItemBlueprint::STARTER_CAP_REFERENCE,
+                    'chance' => 100,
+                    'count' => 1
+                ],
+                [
+                    'reference_id' => ItemBlueprint::STARTER_BOOTS_REFERENCE,
+                    'chance' => 100,
+                    'count' => 1
+                ],
+            ]
+        ]);
+
         foreach ($chestBlueprintArrays as $blueprintArray) {
 
             /** @var ChestBlueprint $chestBlueprint */
             $chestBlueprint = ChestBlueprint::query()->create([
                 'reference_id' => $blueprintArray['reference_id'],
+                'description' => $blueprintArray['description'] ?? null,
                 'quality' => $blueprintArray['quality'],
                 'size' => $blueprintArray['size'],
                 'min_gold' => $blueprintArray['min_gold'],
