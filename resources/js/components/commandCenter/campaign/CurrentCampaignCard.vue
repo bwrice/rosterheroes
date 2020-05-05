@@ -59,8 +59,8 @@
                         <v-row no-gutters justify="center" class="px-2 pt-1">
                             <span class="title font-weight-bolder">{{leaveQuestTitle}}</span>
                         </v-row>
-                        <v-row no-gutters justify="center" class="pa-1">
-                            <p class="font-weight-thin">{{leaveQuestMessage}}</p>
+                        <v-row no-gutters justify="center" class="px-3 py-1">
+                            <p class="font-weight-regular">{{leaveQuestMessage}}</p>
                         </v-row>
                     </v-col>
                 </v-row>
@@ -157,7 +157,7 @@
                 message += this.campaignStopToLeave.compactQuest.name + '? ';
                 message += 'You will have to travel back to the province of ';
                 message += this._provinceByUuid(this.campaignStopToLeave.provinceUuid).name;
-                message += ' to add the quest back to your campaign';
+                message += ' if you want to add the quest back to your campaign';
                 return message;
             }
         }
