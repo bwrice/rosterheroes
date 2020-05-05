@@ -4,7 +4,9 @@ namespace Tests\Feature;
 
 use App\Domain\Models\Province;
 use App\Domain\Models\Squad;
+use App\Domain\Models\Stash;
 use App\Domain\Models\User;
+use App\Factories\Models\ItemFactory;
 use App\Factories\Models\SquadFactory;
 use App\Factories\Models\StashFactory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -55,13 +57,20 @@ class ExploredProvinceControllerTest extends TestCase
 
         $stash = StashFactory::new()->withSquadID($this->squad->id)->atProvince($this->province)->create();
 
+        $itemFactory = ItemFactory::new();
+        $itemsCount = rand(1, 4);
+        for($i = 1; $i <= $itemsCount; $i++) {
+            $stash->items()->save($itemFactory->create());
+        }
+
         Passport::actingAs($this->squad->user);
 
         $response = $this->json('GET', $this->getEndpoint($this->squad, $this->province));
         $response->assertStatus(200)->assertJson([
             'data' => [
                 'squadStash' => [
-                    'uuid' => $stash->uuid
+                    'uuid' => $stash->uuid,
+                    'itemsCount' => $itemsCount
                 ]
             ]
         ]);

@@ -33,17 +33,14 @@ class ExploredProvinceResource extends JsonResource
      */
     public function toArray($request)
     {
-        $this->squad->loadMissing([
-            'stashes' => function (HasMany $builder) {
-                return $builder->where('province_id', '=', $this->id);
-            }
-        ]);
 
-        $stashAtProvince = $this->squad->stashes->first();
+        $squadStashAtProvince = $this->squad->stashes()
+            ->withCount('items')
+            ->where('province_id', '=', $this->id)->first();
 
         return [
             'provinceUuid' => $this->uuid,
-            'squadStash' => $stashAtProvince ? new CompactStash($stashAtProvince) : null
+            'squadStash' => $squadStashAtProvince ? new CompactStash($squadStashAtProvince) : null
         ];
     }
 }
