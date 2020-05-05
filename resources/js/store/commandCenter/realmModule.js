@@ -38,6 +38,10 @@ export default {
             let continent = state.continents.find(continent => continent.slug === slug);
             return continent ? continent : new Continent({});
         },
+        _territoryByID: (state) => (territoryID) => {
+            let territory = state.territories.find(territory => territory.id === territoryID);
+            return territory ? territory : new Territory({});
+        },
         _territoryBySlug: (state) => (slug) => {
             let territory = state.territories.find(territory => territory.slug === slug);
             return territory ? territory : new Territory({});
