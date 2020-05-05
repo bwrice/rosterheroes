@@ -5,6 +5,7 @@ use App\Http\Controllers\CombatPositionController;
 use App\Http\Controllers\ContinentController;
 use App\Http\Controllers\CurrentCampaignController;
 use App\Http\Controllers\CurrentLocationQuestsController;
+use App\Http\Controllers\ExploreProvinceController;
 use App\Http\Controllers\LocalStashController;
 use App\Http\Controllers\MobileStoreItemForSquadController;
 use App\Http\Controllers\OpenChestController;
@@ -125,6 +126,7 @@ Route::prefix('v1')->group(function () {
 
             Route::get('{squadSlug}/spells', [SquadSpellController::class, 'index']);
             Route::get('{squadSlug}/unopened-chests', [UnopenedChestController::class, 'index']);
+            Route::get('{squadSlug}/explore-province/{provinceSlug}', [ExploreProvinceController::class, 'show']);
 
             /*
              * CURRENT LOCATION
