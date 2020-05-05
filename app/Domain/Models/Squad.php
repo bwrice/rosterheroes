@@ -55,6 +55,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property ItemCollection $items
  * @property HeroPostCollection $heroPosts
  * @property Collection $chests
+ * @property Collection $stashes
  *
  * @method static SquadQueryBuilder query()
  */

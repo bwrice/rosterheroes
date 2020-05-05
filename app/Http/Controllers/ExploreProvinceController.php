@@ -17,9 +17,6 @@ class ExploreProvinceController extends Controller
         $squad = Squad::findSlugOrFail($squadSlug);
         $this->authorize(SquadPolicy::MANAGE, $squad);
 
-        $province->load(['stashes' => function (HasMany $builder) use ($squad) {
-            return $builder->where('squad_id', '=', $squad->id);
-        }]);
-        return new ExploredProvinceResource($province);
+        return new ExploredProvinceResource($province, $squad);
     }
 }
