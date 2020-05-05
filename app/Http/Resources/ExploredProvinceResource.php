@@ -24,9 +24,11 @@ class ExploredProvinceResource extends JsonResource
             throw new \Exception(self::class . " should be used in conjunction with a single stash belonging to a specific squad");
         }
 
+        $squadStash = $this->stashes->first();
+
         return [
             'provinceUuid' => $this->uuid,
-            'squadStash' => new CompactStash($this->stashes->first())
+            'squadStash' => $squadStash ? new CompactStash($squadStash) : null
         ];
     }
 }

@@ -51,7 +51,8 @@ class ExploredProvinceControllerTest extends TestCase
      */
     public function it_will_return_a_compact_stash_of_the_squad_located_at_the_province()
     {
-        $this->withoutExceptionHandling();
+        $diffStash = StashFactory::new()->atProvince($this->province)->create();
+
         $stash = StashFactory::new()->withSquadID($this->squad->id)->atProvince($this->province)->create();
 
         Passport::actingAs($this->squad->user);
@@ -62,6 +63,23 @@ class ExploredProvinceControllerTest extends TestCase
                 'squadStash' => [
                     'uuid' => $stash->uuid
                 ]
+            ]
+        ]);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_not_return_a_compact_stash_of_a_different_squad_located_at_the_province()
+    {
+        $diffStash = StashFactory::new()->atProvince($this->province)->create();
+
+        Passport::actingAs($this->squad->user);
+
+        $response = $this->json('GET', $this->getEndpoint($this->squad, $this->province));
+        $response->assertStatus(200)->assertJson([
+            'data' => [
+                'squadStash' => null
             ]
         ]);
     }
