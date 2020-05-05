@@ -8,6 +8,7 @@ use App\Domain\Models\Json\ViewBox;
 use App\Domain\QueryBuilders\ProvinceQueryBuilder;
 use App\Domain\Traits\HasNameSlug;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Spatie\Sluggable\SlugOptions;
 
@@ -30,6 +31,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property ProvinceCollection $borders
  * @property ProvinceCollection $borderedBy
  * @property QuestCollection $quests
+ *
+ * @property Collection $stashes
  *
  * @method static Builder bordersCount(int $count)
  * @method static Builder starting
@@ -78,6 +81,11 @@ class Province extends EventSourcedModel
     public function quests()
     {
         return $this->hasMany(Quest::class);
+    }
+
+    public function stashes()
+    {
+        return $this->hasMany(Stash::class);
     }
 
     /**
