@@ -29,11 +29,11 @@
                 switch (this.$vuetify.breakpoint.name) {
                     case 'xs':
                     case 'sm':
-                        return 'font-weight-medium';
+                        return 'font-weight-bold';
                     case 'md':
                     case 'lg':
                     case 'xl':
-                        return 'font-weight-bold'
+                        return 'font-weight-black'
                 }
             }
         }
