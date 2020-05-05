@@ -1,5 +1,8 @@
 <template>
     <TwoColumnWideLayout>
+        <template v-slot:header>
+            <DisplayHeaderText :display-text="province.name"></DisplayHeaderText>
+        </template>
         <template v-slot:column-one>
             <v-row no-gutters>
                 <v-col cols="12">
@@ -57,14 +60,15 @@
     import {mapGetters} from 'vuex';
     import MapViewPortWithControls from "../../../realm/MapViewPortWithControls";
     import TwoColumnWideLayout from "../../../layouts/TwoColumnWideLayout";
-    import PaginationBlock from "../../../global/PaginationBlock";
     import ProvincePanel from "../../../realm/ProvincePanel";
     import TerritoryPanel from "../../../realm/TerritoryPanel";
     import ContinentPanel from "../../../realm/ContinentPanel";
+    import DisplayHeaderText from "../../../global/DisplayHeaderText";
 
     export default {
         name: "ProvinceView",
         components: {
+            DisplayHeaderText,
             ContinentPanel,
             TerritoryPanel,
             ProvincePanel,

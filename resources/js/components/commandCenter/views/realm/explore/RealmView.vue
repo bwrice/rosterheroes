@@ -1,5 +1,8 @@
 <template>
     <TwoColumnWideLayout>
+        <template v-slot:header>
+            <DisplayHeaderText :display-text="'Explore the Realm'"></DisplayHeaderText>
+        </template>
         <template v-slot:column-one>
             <v-row no-gutters>
                 <v-col cols="12">
@@ -106,10 +109,12 @@
     import PaginationBlock from "../../../global/PaginationBlock";
     import TerritoryPanel from "../../../realm/TerritoryPanel";
     import ContinentPanel from "../../../realm/ContinentPanel";
+    import DisplayHeaderText from "../../../global/DisplayHeaderText";
 
     export default {
         name: "RealmView",
         components: {
+            DisplayHeaderText,
             ContinentPanel,
             TerritoryPanel,
             PaginationBlock,

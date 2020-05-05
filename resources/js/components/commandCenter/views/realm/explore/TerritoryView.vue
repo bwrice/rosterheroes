@@ -1,5 +1,8 @@
 <template>
     <TwoColumnWideLayout>
+        <template v-slot:header>
+            <DisplayHeaderText :display-text="territory.name"></DisplayHeaderText>
+        </template>
         <template v-slot:column-one>
             <v-row no-gutters>
                 <v-col cols="12">
@@ -45,11 +48,13 @@
     import TwoColumnWideLayout from "../../../layouts/TwoColumnWideLayout";
     import PaginationBlock from "../../../global/PaginationBlock";
     import ProvincePanel from "../../../realm/ProvincePanel";
+    import DisplayHeaderText from "../../../global/DisplayHeaderText";
 
     export default {
         name: "TerritoryView",
 
         components: {
+            DisplayHeaderText,
             ProvincePanel,
             PaginationBlock,
             TwoColumnWideLayout,
