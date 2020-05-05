@@ -3044,8 +3044,8 @@ class SeedProvinces extends Migration
                         'realm_color' => '#b2204b',
                         'realm_x' => 247.56266,
                         'realm_y' => 177.6002,
-                        'focus_x' => 238,
-                        'focus_y' => 129,
+                        'focus_x' => 232,
+                        'focus_y' => 115,
                         'focus_scale' => 7.6,
                         'vector_paths' => [
                             [
