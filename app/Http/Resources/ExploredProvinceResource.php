@@ -40,6 +40,7 @@ class ExploredProvinceResource extends JsonResource
 
         return [
             'provinceUuid' => $this->uuid,
+            'provinceSlug' => $this->slug,
             'squadStash' => $squadStashAtProvince ? new CompactStash($squadStashAtProvince) : null,
             'quests' => CompactQuestResource::collection($this->quests)
         ];
