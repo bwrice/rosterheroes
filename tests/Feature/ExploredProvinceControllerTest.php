@@ -3,10 +3,11 @@
 namespace Tests\Feature;
 
 use App\Domain\Models\Province;
+use App\Domain\Models\Quest;
 use App\Domain\Models\Squad;
-use App\Domain\Models\Stash;
 use App\Domain\Models\User;
 use App\Factories\Models\ItemFactory;
+use App\Factories\Models\QuestFactory;
 use App\Factories\Models\SquadFactory;
 use App\Factories\Models\StashFactory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -89,6 +90,30 @@ class ExploredProvinceControllerTest extends TestCase
         $response->assertStatus(200)->assertJson([
             'data' => [
                 'squadStash' => null
+            ]
+        ]);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_have_compact_quests_located_at_the_province_in_the_response()
+    {
+        $questOne = QuestFactory::new()->withProvinceID($this->province->id)->create();
+        $questTwo = QuestFactory::new()->withProvinceID($this->province->id)->create();
+        Passport::actingAs($this->squad->user);
+
+        $response = $this->json('GET', $this->getEndpoint($this->squad, $this->province));
+        $response->assertStatus(200)->assertJson([
+            'data' => [
+                'quests' => [
+                    [
+                        'uuid' => $questOne->uuid
+                    ],
+                    [
+                        'uuid' => $questTwo->uuid
+                    ],
+                ]
             ]
         ]);
     }
