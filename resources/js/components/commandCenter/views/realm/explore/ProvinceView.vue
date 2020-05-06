@@ -5,7 +5,7 @@
         </template>
         <template v-slot:column-one>
             <v-row no-gutters>
-                <v-col cols="12">
+                <v-col cols="12" class="mb-3">
                     <MapViewPortWithControls :view-box="province.viewBox" :tile="false">
                         <!-- Borders -->
                         <ProvinceVector
@@ -22,6 +22,25 @@
                     </MapViewPortWithControls>
                 </v-col>
             </v-row>
+            <template v-if="exploredProvince">
+                <CardBlock :title="'Quests'">
+                    <template v-if="exploredProvince.quests.length">
+                        <CompactQuestPanel
+                            v-for="(compactQuest, uuid) in exploredProvince.quests"
+                            :compact-quest="compactQuest"
+                            :key="uuid"
+                        ></CompactQuestPanel>
+                    </template>
+                    <template v-else>
+                        <EmptyNotifier :notification-text="emptyQuestsText"></EmptyNotifier>
+                    </template>
+                </CardBlock>
+            </template>
+            <template v-else>
+                <v-row :justify="'center'" class="py-5">
+                    <v-progress-circular indeterminate size="48"></v-progress-circular>
+                </v-row>
+            </template>
         </template>
         <template v-slot:column-two>
             <v-row no-gutters>
@@ -66,10 +85,14 @@
     import ContinentPanel from "../../../realm/ContinentPanel";
     import DisplayHeaderText from "../../../global/DisplayHeaderText";
     import CardBlock from "../../../global/CardBlock";
+    import EmptyNotifier from "../../../global/EmptyNotifier";
+    import CompactQuestPanel from "../../../realm/CompactQuestPanel";
 
     export default {
         name: "ProvinceView",
         components: {
+            CompactQuestPanel,
+            EmptyNotifier,
             CardBlock,
             DisplayHeaderText,
             ContinentPanel,
@@ -128,6 +151,9 @@
             exploredProvince() {
                 let provinceSlug = this.$route.params.provinceSlug;
                 return this._exploredProvinceByProvinceSlug(provinceSlug);
+            },
+            emptyQuestsText() {
+                return 'No quests located at ' + this.province.name;
             }
         }
     }
