@@ -151,19 +151,8 @@ export default {
             })
         },
         REPLACE_UPDATED_HERO(state, updatedHero) {
-            let heroes = _.cloneDeep(state.heroes);
-
-            let index = heroes.findIndex(function (hero) {
-                return hero.uuid === updatedHero.uuid;
-            });
-
-            if (index === -1) {
-                heroes.push(updatedHero);
-            } else {
-                heroes.splice(index, 1, updatedHero);
-            }
-
-            state.heroes = heroes;
+            
+            state.heroes = helpers.replaceOrPushElement(state.heroes, updatedHero, 'uuid');
         }
     },
 

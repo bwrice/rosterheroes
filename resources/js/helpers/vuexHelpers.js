@@ -86,3 +86,18 @@ export function handleResponseErrors(e, errorKey, dispatch) {
     }
     dispatch('snackBarError', snackBarPayload)
 }
+
+export function replaceOrPushElement(dataArray, updatedElement, key)
+{
+    let newArray = _.cloneDeep(dataArray);
+    let index = newArray.findIndex(function (element) {
+        return element[key] === updatedElement[key]
+    });
+
+    if (index === -1) {
+        newArray.push(updatedElement);
+    } else {
+        newArray.splice(index, 1, updatedElement);
+    }
+    return newArray;
+}
