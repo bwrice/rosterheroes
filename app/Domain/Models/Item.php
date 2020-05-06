@@ -58,6 +58,25 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
         'from' => null
     ];
 
+    public static function resourceRelations()
+    {
+        return [
+            'itemType.itemBase',
+            'itemType.attacks.attackerPosition',
+            'itemType.attacks.targetPosition',
+            'itemType.attacks.targetPriority',
+            'itemType.attacks.damageType',
+            'material.materialType',
+            'itemClass',
+            'attacks.attackerPosition',
+            'attacks.targetPosition',
+            'attacks.targetPriority',
+            'attacks.damageType',
+            'enchantments.measurableBoosts.measurableType',
+            'enchantments.measurableBoosts.booster',
+        ];
+    }
+
     /**
      * @return BelongsToMany
      */
