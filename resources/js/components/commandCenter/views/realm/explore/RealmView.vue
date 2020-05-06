@@ -91,6 +91,14 @@
                     </PaginationBlock>
                 </v-col>
             </v-row>
+            <v-row no-gutters>
+                <v-col cols="12">
+                    <span class="title font-weight-thin">PROVINCES</span>
+                </v-col>
+                <v-col cols="12">
+                    <ProvincePaginationBlock :provinces="_provinces"></ProvincePaginationBlock>
+                </v-col>
+            </v-row>
         </template>
     </TwoColumnWideLayout>
 </template>
@@ -110,10 +118,12 @@
     import TerritoryPanel from "../../../realm/TerritoryPanel";
     import ContinentPanel from "../../../realm/ContinentPanel";
     import DisplayHeaderText from "../../../global/DisplayHeaderText";
+    import ProvincePaginationBlock from "../../../realm/ProvincePaginationBlock";
 
     export default {
         name: "RealmView",
         components: {
+            ProvincePaginationBlock,
             DisplayHeaderText,
             ContinentPanel,
             TerritoryPanel,
