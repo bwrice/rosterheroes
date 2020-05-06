@@ -11,12 +11,10 @@ use Illuminate\Http\Request;
 
 class ExploreProvinceController extends Controller
 {
-    public function show($squadSlug, $provinceSlug)
+    public function show($provinceSlug)
     {
         $province = Province::findSlugOrFail($provinceSlug);
-        $squad = Squad::findSlugOrFail($squadSlug);
-        $this->authorize(SquadPolicy::MANAGE, $squad);
 
-        return new ExploredProvinceResource($province, $squad);
+        return new ExploredProvinceResource($province);
     }
 }

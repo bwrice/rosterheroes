@@ -87,6 +87,7 @@ Route::prefix('v1')->group(function () {
 
     Route::get('/territories', [TerritoryController::class, 'index']);
     Route::get('/continents', [ContinentController::class, 'index']);
+    Route::get('/explore-provinces/{provinceSlug}', [ExploreProvinceController::class, 'show']);
 
     Route::get('/hero-classes', [HeroClassController::class, 'index']);
     Route::get('/hero-races', [HeroRaceController::class, 'index']);
@@ -126,7 +127,6 @@ Route::prefix('v1')->group(function () {
 
             Route::get('{squadSlug}/spells', [SquadSpellController::class, 'index']);
             Route::get('{squadSlug}/unopened-chests', [UnopenedChestController::class, 'index']);
-            Route::get('{squadSlug}/explore-province/{provinceSlug}', [ExploreProvinceController::class, 'show']);
 
             /*
              * CURRENT LOCATION

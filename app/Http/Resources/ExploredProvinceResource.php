@@ -16,17 +16,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class ExploredProvinceResource extends JsonResource
 {
     /**
-     * @var Squad
-     */
-    protected $squad;
-
-    public function __construct(Province $province, Squad $squad)
-    {
-        parent::__construct($province);
-        $this->squad = $squad;
-    }
-
-    /**
      * @param \Illuminate\Http\Request $request
      * @return array
      * @throws \Exception
@@ -34,14 +23,9 @@ class ExploredProvinceResource extends JsonResource
     public function toArray($request)
     {
 
-        $squadStashAtProvince = $this->squad->stashes()
-            ->withCount('items')
-            ->where('province_id', '=', $this->id)->first();
-
         return [
             'provinceUuid' => $this->uuid,
             'provinceSlug' => $this->slug,
-            'squadStash' => $squadStashAtProvince ? new CompactStash($squadStashAtProvince) : null,
             'quests' => CompactQuestResource::collection($this->quests)
         ];
     }
