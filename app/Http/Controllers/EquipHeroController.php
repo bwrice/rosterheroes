@@ -30,6 +30,7 @@ class EquipHeroController extends Controller
 
         try {
             $itemsMoved = $domainAction->execute($item, $hero);
+            $itemsMoved->load(Item::resourceRelations());
 
         } catch (ItemTransactionException $exception) {
 

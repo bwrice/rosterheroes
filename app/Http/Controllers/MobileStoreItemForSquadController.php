@@ -18,6 +18,6 @@ class MobileStoreItemForSquadController extends Controller
 
         $item = Item::findUuidOrFail($request->item);
         $itemsMoved = $mobileStoreItemForSquad->execute($item, $squad);
-        return ItemResource::collection($itemsMoved);
+        return ItemResource::collection($itemsMoved->load(Item::resourceRelations()));
     }
 }

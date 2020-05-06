@@ -19,6 +19,6 @@ class StashItemController extends Controller
         $item = Item::findUuidOrFail($request->item);
 
         $stashedItem = $stashItemFromMobileStorage->execute($item, $squad);
-        return new ItemResource($stashedItem);
+        return new ItemResource($stashedItem->load(Item::resourceRelations()));
     }
 }
