@@ -70,4 +70,9 @@ class User extends Authenticatable
         return $model;
     }
 
+    public function maxSquadsReached()
+    {
+        return $this->squads()->count() >= 1;
+    }
+
 }
