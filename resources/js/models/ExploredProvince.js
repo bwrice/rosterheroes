@@ -1,12 +1,13 @@
 
-import CompactStash from "./compact/CompactStash";
+import CompactQuest from "./compact/CompactQuest";
 
 export default class ExploredProvince {
 
-    constructor({provinceUuid, provinceSlug, squadStash, compactQuests = []}) {
+    constructor({provinceUuid, provinceSlug, compactQuests = []}) {
         this.provinceUuid = provinceUuid;
         this.provinceSlug = provinceSlug;
-        this.squadStash = squadStash ? new CompactStash(squadStash) : new CompactStash({});
-        this.compactQuests = compactQuests;
+        this.compactQuests = compactQuests.map(function (quest) {
+            return new CompactQuest(quest);
+        });
     }
 }
