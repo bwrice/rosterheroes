@@ -6,6 +6,8 @@ use App\Domain\Actions\UpdatePlayerSpiritEnergiesAction;
 use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\Week;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\Log;
 
 class UpdatePlayerSpiritEnergiesCommand extends Command
 {
@@ -38,6 +40,11 @@ class UpdatePlayerSpiritEnergiesCommand extends Command
      */
     public function handle(UpdatePlayerSpiritEnergiesAction $domainAction)
     {
+        $before = Date::now();
+
         $domainAction->execute();
+
+        $diffForHumans = Date::now()->longAbsoluteDiffForHumans($before);
+        Log::alert("Updated spirit energies in " . $diffForHumans);
     }
 }
