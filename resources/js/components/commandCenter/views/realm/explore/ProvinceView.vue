@@ -57,6 +57,7 @@
     import ProvinceVector from "../../../realm/ProvinceVector";
     import ExploreMapCard from "../../../realm/ExploreMapCard";
 
+    import {mapActions} from 'vuex';
     import {mapGetters} from 'vuex';
     import MapViewPortWithControls from "../../../realm/MapViewPortWithControls";
     import TwoColumnWideLayout from "../../../layouts/TwoColumnWideLayout";
@@ -64,10 +65,12 @@
     import TerritoryPanel from "../../../realm/TerritoryPanel";
     import ContinentPanel from "../../../realm/ContinentPanel";
     import DisplayHeaderText from "../../../global/DisplayHeaderText";
+    import CardBlock from "../../../global/CardBlock";
 
     export default {
         name: "ProvinceView",
         components: {
+            CardBlock,
             DisplayHeaderText,
             ContinentPanel,
             TerritoryPanel,
@@ -77,11 +80,29 @@
             ExploreMapCard,
             ProvinceVector
         },
+        watch: {
+            // We need to watch province changes for when this component is reused to possible update exploredProvince
+            province: function () {
+                this.maybeUpdateExploredProvince();
+            }
+        },
 
         methods: {
+            ...mapActions([
+                'updateExploredProvince'
+            ]),
             navigateToProvince(province) {
                 province.goToRoute(this.$router, this.$route);
             },
+            maybeUpdateExploredProvince() {
+                if (! this.exploredProvince) {
+                    this.updateExploredProvince(this.$route.params.provinceSlug)
+                }
+            }
+        },
+
+        mounted() {
+            this.maybeUpdateExploredProvince();
         },
 
         computed: {
@@ -90,6 +111,7 @@
                 '_provincesByUuids',
                 '_continentByID',
                 '_territoryByID',
+                '_exploredProvinceByProvinceSlug'
             ]),
             province() {
                 return this._provinceBySlug(this.$route.params.provinceSlug);
@@ -102,6 +124,10 @@
             },
             territory() {
                 return this._territoryByID(this.province.territoryID);
+            },
+            exploredProvince() {
+                let provinceSlug = this.$route.params.provinceSlug;
+                return this._exploredProvinceByProvinceSlug(provinceSlug);
             }
         }
     }
