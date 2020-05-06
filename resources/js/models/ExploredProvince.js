@@ -3,11 +3,11 @@ import CompactQuest from "./compact/CompactQuest";
 
 export default class ExploredProvince {
 
-    constructor({provinceUuid, provinceSlug, compactQuests = []}) {
+    constructor({provinceUuid, provinceSlug, quests = []}) {
         this.provinceUuid = provinceUuid;
         this.provinceSlug = provinceSlug;
-        this.compactQuests = compactQuests.map(function (quest) {
-            return new CompactQuest(quest);
+        this.quests = quests.map(function (questData) {
+            return new CompactQuest(questData);
         });
     }
 }
