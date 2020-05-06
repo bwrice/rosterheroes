@@ -3,13 +3,9 @@
 namespace App\Console\Commands;
 
 use App\Domain\Actions\UpdateHistoricGameLogsAction;
-use App\Domain\Collections\GameCollection;
-use App\Domain\Models\Game;
 use App\Domain\Models\League;
-use App\Domain\Models\Team;
 use App\Jobs\UpdatePlayerGameLogsJob;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Log;
 
 class UpdateHistoricPlayerGameLogsCommand extends Command
@@ -40,6 +36,7 @@ class UpdateHistoricPlayerGameLogsCommand extends Command
         $leagues = $this->getLeagues();
 
         $count = $domainAction->execute($leagues, false, $yearDelta);
+        Log::alert($count . " " . UpdatePlayerGameLogsJob::class . " jobs dispatched");
         $this->info($count . " jobs dispatched");
     }
 

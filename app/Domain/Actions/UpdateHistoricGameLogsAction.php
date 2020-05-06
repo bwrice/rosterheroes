@@ -33,8 +33,6 @@ class UpdateHistoricGameLogsAction
                 $count++;
             });
         });
-
-        Log::alert($count . " " . UpdatePlayerGameLogsJob::class . " jobs dispatched");
         return $count;
     }
 
