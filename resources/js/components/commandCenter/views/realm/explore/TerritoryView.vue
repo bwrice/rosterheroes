@@ -24,14 +24,7 @@
                     <span class="title font-weight-thin">PROVINCES</span>
                 </v-col>
                 <v-col cols="12">
-                    <PaginationBlock
-                        :items-per-page="6"
-                        :items="provinces"
-                    >
-                        <template v-slot:default="slotProps">
-                            <ProvincePanel :province="slotProps.item"></ProvincePanel>
-                        </template>
-                    </PaginationBlock>
+                    <ProvincePaginationBlock :provinces="provinces"></ProvincePaginationBlock>
                 </v-col>
             </v-row>
         </template>
@@ -49,11 +42,13 @@
     import PaginationBlock from "../../../global/PaginationBlock";
     import ProvincePanel from "../../../realm/ProvincePanel";
     import DisplayHeaderText from "../../../global/DisplayHeaderText";
+    import ProvincePaginationBlock from "../../../realm/ProvincePaginationBlock";
 
     export default {
         name: "TerritoryView",
 
         components: {
+            ProvincePaginationBlock,
             DisplayHeaderText,
             ProvincePanel,
             PaginationBlock,
