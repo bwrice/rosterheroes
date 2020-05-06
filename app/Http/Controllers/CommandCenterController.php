@@ -12,12 +12,12 @@ use Illuminate\Http\Request;
 
 class CommandCenterController extends Controller
 {
-    public function show(Request $request, $squadSlug, $any = null)
+    public function show($squadSlug, $subPage = null)
     {
         $squad = Squad::findSlugOrFail($squadSlug);
         $this->authorize(SquadPolicy::MANAGE, $squad);
 
-        if (! $any) {
+        if (! $subPage) {
             // redirect to barracks if no sub-page is set
             return redirect('/command-center/' . $squadSlug . '/barracks');
         }

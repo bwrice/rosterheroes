@@ -48,4 +48,4 @@ Route::get('/squads/create', [SquadController::class, 'create'])->name('create-s
 /*
  * Command Center
  */
-Route::get('/command-center/{squadSlug}/{any?}', [CommandCenterController::class, 'show'])->middleware('auth')->where('any', '.*')->name('command-center');
+Route::get('/command-center/{squadSlug}/{subPage?}', [CommandCenterController::class, 'show'])->middleware('auth')->where('subPage', '.*')->name('command-center');
