@@ -44,7 +44,7 @@ Route::get('/', [\App\Http\Controllers\HomeController::class, 'index']);
 /*
  * Squad Creation
  */
-Route::get('/squads/create', [SquadController::class, 'create'])->name('create-squad')->middleware('auth');
+Route::get('/squads/create', [SquadController::class, 'create'])->name('create-squad');
 /*
  * Command Center
  */
