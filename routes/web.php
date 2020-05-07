@@ -41,11 +41,8 @@ Route::post('password/reset', [ForgotPasswordController::class, 'reset'])->name(
 
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index']);
 
-/*
- * Squad Creation
- */
+Route::get('/dashboard', \App\Http\Controllers\DashboardController::class)->name('dashboard');
+
 Route::get('/squads/create', [SquadController::class, 'create'])->name('create-squad');
-/*
- * Command Center
- */
+
 Route::get('/command-center/{squadSlug}/{subPage?}', [CommandCenterController::class, 'show'])->middleware('auth')->where('subPage', '.*')->name('command-center');
