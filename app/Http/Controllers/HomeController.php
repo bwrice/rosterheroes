@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Domain\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -16,16 +13,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        /** @var User $user */
-        $user = Auth::user();
-        if (Auth::user()) {
-            $squads = $user->squads;
-        } else {
-            $squads = collect();
+        if (auth()->user()) {
+            return redirect()->route('dashboard');
         }
-        return view('home', [
-            'user' => $user,
-            'squads' => $squads
-        ]);
+        return view('home');
     }
 }
