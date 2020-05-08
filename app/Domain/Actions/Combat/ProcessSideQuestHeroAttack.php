@@ -67,7 +67,14 @@ class ProcessSideQuestHeroAttack
             $combatHero->addDamageDealt($damageReceived);
             $heroCombatAttack->addDamageDealt($damageReceived);
             $data['damageReceived'] = $damageReceived;
-            $eventType = $combatMinion->getCurrentHealth() > 0 ? SideQuestEvent::TYPE_HERO_DAMAGES_MINION: SideQuestEvent::TYPE_HERO_KILLS_MINION;
+
+            if ($combatMinion->getCurrentHealth() > 0) {
+                $eventType = SideQuestEvent::TYPE_HERO_DAMAGES_MINION;
+            } else {
+                $combatHero->addMinionKill();
+                $heroCombatAttack->addMinionKill();
+                $eventType = SideQuestEvent::TYPE_HERO_KILLS_MINION;
+            }
         }
         return new SideQuestEvent([
             'uuid' => (string) Str::uuid(),
