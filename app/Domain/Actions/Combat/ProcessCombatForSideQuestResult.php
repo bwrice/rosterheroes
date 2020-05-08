@@ -228,7 +228,8 @@ class ProcessCombatForSideQuestResult
                 $this->runCombatTurn->execute($combatSquad, $sideQuestGroup, $moment, $combatPositions,
                     function ($damageReceived, HeroCombatAttack $heroCombatAttack, CombatMinion $combatMinion, $block) use ($combatSquad, $sideQuestResult, $moment) {
                         $combatHero = $this->getCombatHeroByHeroCombatAttack($combatSquad, $heroCombatAttack);
-                        $this->processSideQuestHeroAttack->execute($sideQuestResult, $moment, $damageReceived, $combatHero, $heroCombatAttack, $combatMinion, $block);
+                        $sideQuestEvent = $this->processSideQuestHeroAttack->execute($moment, $damageReceived, $combatHero, $heroCombatAttack, $combatMinion, $block);
+                        $sideQuestResult->sideQuestEvents()->save($sideQuestEvent);
                     });
 
                 if ($sideQuestGroup->isDefeated()) {
@@ -241,7 +242,8 @@ class ProcessCombatForSideQuestResult
                     $this->runCombatTurn->execute($sideQuestGroup, $combatSquad, $moment, $combatPositions,
                         function ($damageReceived, MinionCombatAttack $minionCombatAttack, CombatHero $combatHero, $block) use ($sideQuestGroup, $sideQuestResult, $moment) {
                             $combatMinion = $this->getCombatMinionByMinionCombatAttack($sideQuestGroup, $minionCombatAttack);
-                            $this->processSideQuestMinionAttack->execute($sideQuestResult, $moment, $damageReceived, $combatMinion, $minionCombatAttack, $combatHero, $block);
+                            $sideQuestEvent = $this->processSideQuestMinionAttack->execute($moment, $damageReceived, $combatMinion, $minionCombatAttack, $combatHero, $block);
+                            $sideQuestResult->sideQuestEvents()->save($sideQuestEvent);
                         });
                 }
             }
