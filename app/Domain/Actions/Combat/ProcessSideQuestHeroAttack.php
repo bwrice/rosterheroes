@@ -64,6 +64,7 @@ class ProcessSideQuestHeroAttack
         if ($block) {
             $eventType = SideQuestEvent::TYPE_MINION_BLOCKS_HERO;
         } else {
+            $combatHero->addDamageDealt($damageReceived);
             $heroCombatAttack->addDamageDealt($damageReceived);
             $data['damageReceived'] = $damageReceived;
             $eventType = $combatMinion->getCurrentHealth() > 0 ? SideQuestEvent::TYPE_HERO_DAMAGES_MINION: SideQuestEvent::TYPE_HERO_KILLS_MINION;
