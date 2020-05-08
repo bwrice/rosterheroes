@@ -37,6 +37,8 @@ class CombatHero extends AbstractCombatant implements SpendsResources
      */
     protected $currentMana;
 
+    protected $damagesDealt = [];
+
     public function __construct(
         string $heroUuid,
         int $health,
@@ -158,5 +160,18 @@ class CombatHero extends AbstractCombatant implements SpendsResources
     public function getHero()
     {
         return Hero::findUuidOrFail($this->getHeroUuid());
+    }
+    /**
+     * @return array
+     */
+    public function getDamagesDealt(): array
+    {
+        return $this->damagesDealt;
+    }
+
+    public function addDamageDealt(int $damageDealt)
+    {
+        $this->damagesDealt[] = $damageDealt;
+        return $this;
     }
 }

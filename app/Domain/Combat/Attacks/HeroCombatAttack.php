@@ -32,6 +32,8 @@ class HeroCombatAttack extends AbstractCombatAttack
      */
     protected $resourceCosts;
 
+    protected $damagesDealt = [];
+
     public function __construct(
         string $heroUuid,
         string $itemUuid,
@@ -103,5 +105,19 @@ class HeroCombatAttack extends AbstractCombatAttack
             'itemUuid' => $this->itemUuid,
             'resourceCosts' => $this->resourceCosts->toArray()
         ], parent::toArray());
+    }
+
+    /**
+     * @return array
+     */
+    public function getDamagesDealt(): array
+    {
+        return $this->damagesDealt;
+    }
+
+    public function addDamageDealt(int $damageDealt)
+    {
+        $this->damagesDealt[] = $damageDealt;
+        return $this;
     }
 }
