@@ -63,6 +63,8 @@ class ProcessSideQuestHeroAttackTest extends TestCase
 
         $this->assertEquals($moment, $sideQuestEvent->moment);
         $this->assertEquals(SideQuestEvent::TYPE_HERO_DAMAGES_MINION, $sideQuestEvent->event_type);
+        $this->assertEquals($damageReceived, $sideQuestEvent->data['damage']);
+        $this->assertEquals($moment, $sideQuestEvent->moment);
     }
 
     /**
@@ -80,6 +82,8 @@ class ProcessSideQuestHeroAttackTest extends TestCase
 
         $this->assertEquals($moment, $sideQuestEvent->moment);
         $this->assertEquals(SideQuestEvent::TYPE_HERO_KILLS_MINION, $sideQuestEvent->event_type);
+        $this->assertEquals($damageReceived, $sideQuestEvent->data['damage']);
+        $this->assertEquals($moment, $sideQuestEvent->moment);
     }
 
     /**
@@ -96,6 +100,8 @@ class ProcessSideQuestHeroAttackTest extends TestCase
 
         $this->assertEquals($moment, $sideQuestEvent->moment);
         $this->assertEquals(SideQuestEvent::TYPE_MINION_BLOCKS_HERO, $sideQuestEvent->event_type);
+        $this->assertEquals($damageReceived, $sideQuestEvent->data['damage']);
+        $this->assertEquals($moment, $sideQuestEvent->moment);
     }
 
     /**
