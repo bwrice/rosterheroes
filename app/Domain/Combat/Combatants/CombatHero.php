@@ -39,6 +39,8 @@ class CombatHero extends AbstractCombatant implements SpendsResources
 
     protected $damagesDealt = [];
 
+    protected $minionKills = 0;
+
     public function __construct(
         string $heroUuid,
         int $health,
@@ -83,6 +85,20 @@ class CombatHero extends AbstractCombatant implements SpendsResources
     public function getInitialMana(): int
     {
         return $this->initialMana;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMinionKills(): int
+    {
+        return $this->minionKills;
+    }
+
+    public function addMinionKill()
+    {
+        $this->minionKills++;
+        return $this;
     }
 
     protected function getDPS()

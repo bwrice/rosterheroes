@@ -34,6 +34,8 @@ class HeroCombatAttack extends AbstractCombatAttack
 
     protected $damagesDealt = [];
 
+    protected $minionKills = 0;
+
     public function __construct(
         string $heroUuid,
         string $itemUuid,
@@ -118,6 +120,20 @@ class HeroCombatAttack extends AbstractCombatAttack
     public function addDamageDealt(int $damageDealt)
     {
         $this->damagesDealt[] = $damageDealt;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMinionKills(): int
+    {
+        return $this->minionKills;
+    }
+
+    public function addMinionKill()
+    {
+        $this->minionKills++;
         return $this;
     }
 }
