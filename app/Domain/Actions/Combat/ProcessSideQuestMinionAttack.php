@@ -25,7 +25,6 @@ class ProcessSideQuestMinionAttack
      * @return SideQuestEvent
      */
     public function execute(
-        SideQuestResult $sideQuestResult,
         int $moment,
         int $damageReceived,
         CombatMinion $combatMinion,
@@ -33,48 +32,31 @@ class ProcessSideQuestMinionAttack
         CombatHero $combatHero,
         $block)
     {
-        $uuid = (string) Str::uuid();
-        $aggregate = SideQuestEventAggregate::retrieve($uuid);
+        $data = [
+            'minionCombatAttack' => $minionCombatAttack->toArray(),
+            'combatHero' => $combatHero->toArray(),
+            'combatMinion' => $combatMinion->toArray()
+        ];
 
         if ($block) {
-            $aggregate->createHeroBlocksMinionEvent(
-                $sideQuestResult->id,
-                $moment,
-                [
-                    'minionCombatAttack' => $minionCombatAttack->toArray(),
-                    'combatHero' => $combatHero->toArray(),
-                    'combatMinion' => $combatMinion->toArray()
-                ]
-            );
+            $combatHero->addBlock();
+            $eventType = SideQuestEvent::TYPE_HERO_BLOCKS_MINION;
         } else {
+            $data['damage'] = $damageReceived;
+            $combatHero->addDamageReceived($damageReceived);
             if ($combatHero->getCurrentHealth() > 0) {
-                $aggregate->createMinionDamagesHeroEvent(
-                    $sideQuestResult->id,
-                    $moment,
-                    [
-                        'damage' => $damageReceived,
-                        'minionCombatAttack' => $minionCombatAttack->toArray(),
-                        'combatHero' => $combatHero->toArray(),
-                        'combatMinion' => $combatMinion->toArray()
-                    ]
-                );
+                $eventType = SideQuestEvent::TYPE_MINION_DAMAGES_HERO;
             } else {
-                $aggregate->createMinionKillsHeroEvent(
-                    $sideQuestResult->id,
-                    $moment,
-                    [
-                        'damage' => $damageReceived,
-                        'minionCombatAttack' => $minionCombatAttack->toArray(),
-                        'combatHero' => $combatHero->toArray(),
-                        'combatMinion' => $combatMinion->toArray()
-                    ]
-                );
+                $eventType = SideQuestEvent::TYPE_MINION_KILLS_HERO;
             }
         }
 
-        $aggregate->persist();
-
-        return SideQuestEvent::findUuidOrFail($uuid);
+        return new SideQuestEvent([
+            'uuid' => (string) Str::uuid(),
+            'event_type' => $eventType,
+            'moment' => $moment,
+            'data' => $data
+        ]);
     }
 
 }
