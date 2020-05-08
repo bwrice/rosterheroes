@@ -271,7 +271,7 @@ class ProcessCombatForSideQuestResultTest extends TestCase
     /**
      * @test
      * @param $referenceID
-     * @throws \Exception
+     * @throws \Throwable
      * @dataProvider provides_a_beginner_squad_will_be_victorious_against_easy_side_quests
      */
     public function a_beginner_squad_will_be_victorious_against_easy_side_quests($referenceID)
@@ -302,9 +302,19 @@ class ProcessCombatForSideQuestResultTest extends TestCase
         $this->assertNotNull($sideQuestResult);
         $victoryEvent = $sideQuestResult->sideQuestEvents()->where('event_type', '=', SideQuestEvent::TYPE_SIDE_QUEST_VICTORY)->first();
         $this->assertNotNull($victoryEvent);
-        $eventCount = $sideQuestResult->sideQuestEvents()->count();
-        $this->assertGreaterThan(15, $eventCount);
-        $this->assertLessThan(250, $eventCount);
+        $events = $sideQuestResult->sideQuestEvents;
+        foreach([
+            SideQuestEvent::TYPE_HERO_DAMAGES_MINION,
+            SideQuestEvent::TYPE_HERO_KILLS_MINION,
+            SideQuestEvent::TYPE_MINION_DAMAGES_HERO
+                ] as $eventType) {
+            $filtered = $events->filter(function (SideQuestEvent $event) use ($eventType) {
+                return $event->event_type === $eventType;
+            });
+            $this->assertGreaterThan(0, $filtered->count(), 'Has events of type: ' . $eventType);
+        }
+        $this->assertGreaterThan(15, $events->count());
+        $this->assertLessThan(250, $events->count());
     }
 
     public function provides_a_beginner_squad_will_be_victorious_against_easy_side_quests()
@@ -331,7 +341,7 @@ class ProcessCombatForSideQuestResultTest extends TestCase
     /**
      * @test
      * @param $referenceID
-     * @throws \Exception
+     * @throws \Throwable
      * @dataProvider provides_a_beginner_squad_will_be_defeated_by_medium_difficulty_side_quests
      */
     public function a_beginner_squad_will_be_defeated_by_medium_difficulty_side_quests($referenceID)
@@ -362,9 +372,19 @@ class ProcessCombatForSideQuestResultTest extends TestCase
         $this->assertNotNull($sideQuestResult);
         $defeatEvent = $sideQuestResult->sideQuestEvents()->where('event_type', '=', SideQuestEvent::TYPE_SIDE_QUEST_DEFEAT)->first();
         $this->assertNotNull($defeatEvent);
-        $eventCount = $sideQuestResult->sideQuestEvents()->count();
-        $this->assertGreaterThan(15, $eventCount);
-        $this->assertLessThan(250, $eventCount);
+        $events = $sideQuestResult->sideQuestEvents;
+        foreach([
+                    SideQuestEvent::TYPE_HERO_DAMAGES_MINION,
+                    SideQuestEvent::TYPE_MINION_DAMAGES_HERO,
+                    SideQuestEvent::TYPE_MINION_KILLS_HERO
+                ] as $eventType) {
+            $filtered = $events->filter(function (SideQuestEvent $event) use ($eventType) {
+                return $event->event_type === $eventType;
+            });
+            $this->assertGreaterThan(0, $filtered->count(), 'Has events of type: ' . $eventType);
+        }
+        $this->assertGreaterThan(15, $events->count());
+        $this->assertLessThan(250, $events->count());
     }
 
     public function provides_a_beginner_squad_will_be_defeated_by_medium_difficulty_side_quests()
