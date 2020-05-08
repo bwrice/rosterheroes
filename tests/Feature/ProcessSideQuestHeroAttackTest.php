@@ -51,7 +51,7 @@ class ProcessSideQuestHeroAttackTest extends TestCase
     /**
      * @test
      */
-    public function it_will_save_a_hero_damages_minion_event_for_the_side_quest_result()
+    public function it_will_return_a_hero_damages_minion_event_for_the_side_quest_result()
     {
         /** @var ProcessSideQuestHeroAttack $domainAction */
         $domainAction = app(ProcessSideQuestHeroAttack::class);
@@ -59,20 +59,16 @@ class ProcessSideQuestHeroAttackTest extends TestCase
         $moment = rand(1, 99);
         $combatMinion = \Mockery::mock($this->combatMinion)->shouldReceive('getCurrentHealth')->andReturn(999)->getMock();
 
-        $domainAction->execute($this->sideQuestResult, $moment, $damageReceived, $this->combatHero, $this->heroCombatAttack, $combatMinion, false);
+        $sideQuestEvent = $domainAction->execute($moment, $damageReceived, $this->combatHero, $this->heroCombatAttack, $combatMinion, false);
 
-        $sideQuestEvents = $this->sideQuestResult->sideQuestEvents;
-        $this->assertEquals(1, $sideQuestEvents->count());
-        /** @var SideQuestEvent $event */
-        $event = $sideQuestEvents->first();
-        $this->assertEquals($moment, $event->moment);
-        $this->assertEquals(SideQuestEvent::TYPE_HERO_DAMAGES_MINION, $event->event_type);
+        $this->assertEquals($moment, $sideQuestEvent->moment);
+        $this->assertEquals(SideQuestEvent::TYPE_HERO_DAMAGES_MINION, $sideQuestEvent->event_type);
     }
 
     /**
      * @test
      */
-    public function it_will_save_a_hero_kills_minion_event_for_the_side_quest_result()
+    public function it_will_return_a_hero_kills_minion_event_for_the_side_quest_result()
     {
         /** @var ProcessSideQuestHeroAttack $domainAction */
         $domainAction = app(ProcessSideQuestHeroAttack::class);
@@ -80,34 +76,26 @@ class ProcessSideQuestHeroAttackTest extends TestCase
         $moment = rand(1, 99);
         $combatMinion = \Mockery::mock($this->combatMinion)->shouldReceive('getCurrentHealth')->andReturn(0)->getMock();
 
-        $domainAction->execute($this->sideQuestResult, $moment, $damageReceived, $this->combatHero, $this->heroCombatAttack, $combatMinion, false);
+        $sideQuestEvent = $domainAction->execute($moment, $damageReceived, $this->combatHero, $this->heroCombatAttack, $combatMinion, false);
 
-        $sideQuestEvents = $this->sideQuestResult->sideQuestEvents;
-        $this->assertEquals(1, $sideQuestEvents->count());
-        /** @var SideQuestEvent $event */
-        $event = $sideQuestEvents->first();
-        $this->assertEquals($moment, $event->moment);
-        $this->assertEquals(SideQuestEvent::TYPE_HERO_KILLS_MINION, $event->event_type);
+        $this->assertEquals($moment, $sideQuestEvent->moment);
+        $this->assertEquals(SideQuestEvent::TYPE_HERO_KILLS_MINION, $sideQuestEvent->event_type);
     }
 
     /**
      * @test
      */
-    public function it_will_save_a_minion_blocks_hero_event_for_the_side_quest_result()
+    public function it_will_return_a_minion_blocks_hero_event_for_the_side_quest_result()
     {
         /** @var ProcessSideQuestHeroAttack $domainAction */
         $domainAction = app(ProcessSideQuestHeroAttack::class);
         $damageReceived = rand(10, 200);
         $moment = rand(1, 99);
 
-        $domainAction->execute($this->sideQuestResult, $moment, $damageReceived, $this->combatHero, $this->heroCombatAttack, $this->combatMinion, true);
+        $sideQuestEvent = $domainAction->execute($moment, $damageReceived, $this->combatHero, $this->heroCombatAttack, $this->combatMinion, true);
 
-        $sideQuestEvents = $this->sideQuestResult->sideQuestEvents;
-        $this->assertEquals(1, $sideQuestEvents->count());
-        /** @var SideQuestEvent $event */
-        $event = $sideQuestEvents->first();
-        $this->assertEquals($moment, $event->moment);
-        $this->assertEquals(SideQuestEvent::TYPE_MINION_BLOCKS_HERO, $event->event_type);
+        $this->assertEquals($moment, $sideQuestEvent->moment);
+        $this->assertEquals(SideQuestEvent::TYPE_MINION_BLOCKS_HERO, $sideQuestEvent->event_type);
     }
 
     /**
@@ -115,21 +103,20 @@ class ProcessSideQuestHeroAttackTest extends TestCase
      * @param $minionHealthReturned
      * @dataProvider provides_damage_dealt_tests
      */
-    public function it_will_increase_the_damage_dealt_on_the_item($minionHealthReturned)
+    public function it_will_add_to_the_damages_dealt_for_the_hero_combat_attack($minionHealthReturned)
     {
         /** @var ProcessSideQuestHeroAttack $domainAction */
         $domainAction = app(ProcessSideQuestHeroAttack::class);
         $damageReceived = rand(10, 200);
         $moment = rand(1, 99);
 
-        $item = Item::findUuid($this->heroCombatAttack->getItemUuid());
-        $this->assertEquals(0, $item->damage_dealt);
+        $this->assertEquals(0, count($this->heroCombatAttack->getDamagesDealt()));
 
         $combatMinion = \Mockery::mock($this->combatMinion)->shouldReceive('getCurrentHealth')->andReturn($minionHealthReturned)->getMock();
-        $domainAction->execute($this->sideQuestResult, $moment, $damageReceived, $this->combatHero, $this->heroCombatAttack, $combatMinion, false);
+        $domainAction->execute($moment, $damageReceived, $this->combatHero, $this->heroCombatAttack, $combatMinion, false);
 
-        $item = $item->fresh();
-        $this->assertEquals($damageReceived, $item->damage_dealt);
+        $this->assertEquals(1, count($this->heroCombatAttack->getDamagesDealt()));
+        $this->assertEquals($damageReceived, $this->heroCombatAttack->getDamagesDealt()[0]);
     }
 
     /**
@@ -137,21 +124,20 @@ class ProcessSideQuestHeroAttackTest extends TestCase
      * @param $minionHealthReturned
      * @dataProvider provides_damage_dealt_tests
      */
-    public function it_will_increase_damage_dealt_for_the_hero($minionHealthReturned)
+    public function it_will_add_to_the_damages_dealt_for_the_combat_hero($minionHealthReturned)
     {
         /** @var ProcessSideQuestHeroAttack $domainAction */
         $domainAction = app(ProcessSideQuestHeroAttack::class);
         $damageReceived = rand(10, 200);
         $moment = rand(1, 99);
 
-        $hero = Hero::findUuid($this->heroCombatAttack->getHeroUuid());
-        $this->assertEquals(0, $hero->damage_dealt);
+        $this->assertEquals(0, count($this->combatHero->getDamagesDealt()));
 
         $combatMinion = \Mockery::mock($this->combatMinion)->shouldReceive('getCurrentHealth')->andReturn($minionHealthReturned)->getMock();
-        $domainAction->execute($this->sideQuestResult, $moment, $damageReceived, $this->combatHero, $this->heroCombatAttack, $combatMinion, false);
+        $domainAction->execute($moment, $damageReceived, $this->combatHero, $this->heroCombatAttack, $combatMinion, false);
 
-        $hero = $hero->fresh();
-        $this->assertEquals($damageReceived, $hero->damage_dealt);
+        $this->assertEquals(1, count($this->combatHero->getDamagesDealt()));
+        $this->assertEquals($damageReceived, $this->combatHero->getDamagesDealt()[0]);
     }
 
     public function provides_damage_dealt_tests()
@@ -172,7 +158,7 @@ class ProcessSideQuestHeroAttackTest extends TestCase
      * @param $block
      * @dataProvider provides_it_save_resource_costs_to_the_side_quest_event
      */
-    public function it_save_resource_costs_to_the_side_quest_event($minionHealthReturned, $block)
+    public function it_will_return_a_side_quest_event_with_the_correct_resource_costs($minionHealthReturned, $block)
     {
         $resourceCost = new FixedResourceCost(MeasurableType::STAMINA, 50);
         // Contents of the collection (besides the count) don't matter because we're mocking the return value
@@ -201,7 +187,7 @@ class ProcessSideQuestHeroAttackTest extends TestCase
         $moment = rand(1, 99);
 
         $combatMinion = \Mockery::mock($this->combatMinion)->shouldReceive('getCurrentHealth')->andReturn($minionHealthReturned)->getMock();
-        $sideQuestEvent = $domainAction->execute($this->sideQuestResult, $moment, $damageReceived, $this->combatHero, $heroCombatAttack, $combatMinion, $block);
+        $sideQuestEvent = $domainAction->execute($moment, $damageReceived, $this->combatHero, $heroCombatAttack, $combatMinion, $block);
         $this->assertEquals(2 * $staminaCost, $sideQuestEvent->data['staminaCost']);
         $this->assertEquals(2 * $manaCost, $sideQuestEvent->data['manaCost']);
     }
@@ -227,40 +213,36 @@ class ProcessSideQuestHeroAttackTest extends TestCase
     /**
      * @test
      */
-    public function it_will_increase_minion_kills_for_the_hero()
+    public function it_will_add_to_the_minion_kills_of_the_combat_hero()
     {
         /** @var ProcessSideQuestHeroAttack $domainAction */
         $domainAction = app(ProcessSideQuestHeroAttack::class);
         $damageReceived = rand(10, 200);
         $moment = rand(1, 99);
 
-        $hero = Hero::findUuid($this->heroCombatAttack->getHeroUuid());
-        $this->assertEquals(0, $hero->minion_kills);
+        $this->assertEquals(0, $this->combatHero->getMinionKills());
 
         $combatMinion = \Mockery::mock($this->combatMinion)->shouldReceive('getCurrentHealth')->andReturn(0)->getMock();
-        $domainAction->execute($this->sideQuestResult, $moment, $damageReceived, $this->combatHero, $this->heroCombatAttack, $combatMinion, false);
+        $domainAction->execute($moment, $damageReceived, $this->combatHero, $this->heroCombatAttack, $combatMinion, false);
 
-        $hero = $hero->fresh();
-        $this->assertEquals(1, $hero->minion_kills);
+        $this->assertEquals(1, $this->combatHero->getMinionKills());
     }
 
     /**
      * @test
      */
-    public function it_will_increase_minion_kills_for_the_item()
+    public function it_will_add_to_the_minion_kills_of_the_hero_combat_attack()
     {
         /** @var ProcessSideQuestHeroAttack $domainAction */
         $domainAction = app(ProcessSideQuestHeroAttack::class);
         $damageReceived = rand(10, 200);
         $moment = rand(1, 99);
 
-        $item = Item::findUuid($this->heroCombatAttack->getItemUuid());
-        $this->assertEquals(0, $item->minion_kills);
+        $this->assertEquals(0, $this->heroCombatAttack->getMinionKills());
 
         $combatMinion = \Mockery::mock($this->combatMinion)->shouldReceive('getCurrentHealth')->andReturn(0)->getMock();
-        $domainAction->execute($this->sideQuestResult, $moment, $damageReceived, $this->combatHero, $this->heroCombatAttack, $combatMinion, false);
+        $domainAction->execute($moment, $damageReceived, $this->combatHero, $this->heroCombatAttack, $combatMinion, false);
 
-        $item = $item->fresh();
-        $this->assertEquals(1, $item->minion_kills);
+        $this->assertEquals(1, $this->heroCombatAttack->getMinionKills());
     }
 }
