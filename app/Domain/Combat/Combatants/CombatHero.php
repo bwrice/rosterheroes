@@ -39,7 +39,11 @@ class CombatHero extends AbstractCombatant implements SpendsResources
 
     protected $damagesDealt = [];
 
+    protected $damagesReceived = [];
+
     protected $minionKills = 0;
+
+    protected $blocks = 0;
 
     public function __construct(
         string $heroUuid,
@@ -98,6 +102,38 @@ class CombatHero extends AbstractCombatant implements SpendsResources
     public function addMinionKill()
     {
         $this->minionKills++;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getDamagesReceived(): array
+    {
+        return $this->damagesReceived;
+    }
+
+    /**
+     * @param int $damage
+     * @return $this
+     */
+    public function addDamageReceived(int $damage)
+    {
+        $this->damagesReceived[] = $damage;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getBlocks(): int
+    {
+        return $this->blocks;
+    }
+
+    public function addBlock()
+    {
+        $this->blocks++;
         return $this;
     }
 
