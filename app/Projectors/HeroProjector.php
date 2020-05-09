@@ -4,13 +4,8 @@ namespace App\Projectors;
 
 use App\Domain\Combat\Attacks\HeroCombatAttackDataMapper;
 use App\Domain\Combat\Combatants\CombatHeroDataMapper;
-use App\Domain\Models\Item;
 use App\StorableEvents\HeroCreated;
 use App\Domain\Models\Hero;
-use App\StorableEvents\HeroDamagesMinionSideQuestEvent;
-use App\StorableEvents\HeroKillsMinionSideQuestEvent;
-use App\StorableEvents\MinionDamagesHeroSideQuestEvent;
-use App\StorableEvents\MinionKillsHeroSideQuestEvent;
 use App\StorableEvents\UpdateHeroPlayerSpirit;
 use App\StorableEvents\WeeklyPlayerSpiritClearedFromHero;
 use Spatie\EventSourcing\Projectors\Projector;
@@ -44,41 +39,6 @@ class HeroProjector implements Projector
     {
         $hero = Hero::findUuid($aggregateUuid);
         $hero->player_spirit_id = null;
-        $hero->save();
-    }
-
-    public function onHeroDamagesMinionSideQuestEvent(HeroDamagesMinionSideQuestEvent $event)
-    {
-        $heroCombatAttack = $this->getHeroCombatAttackDataMapper()
-            ->getHeroCombatAttack($event->getHeroCombatAttackData());
-
-        $hero = Hero::findUuidOrFail($heroCombatAttack->getHeroUuid());
-        $hero->damage_dealt += $event->getDamage();
-        $hero->save();
-    }
-
-    public function onHeroKillsMinionSideQuestEvent(HeroKillsMinionSideQuestEvent $event)
-    {
-        $heroCombatAttack = $this->getHeroCombatAttackDataMapper()
-            ->getHeroCombatAttack($event->getHeroCombatAttackData());
-
-        $hero = Hero::findUuidOrFail($heroCombatAttack->getHeroUuid());
-        $hero->damage_dealt += $event->getDamage();
-        $hero->minion_kills++;
-        $hero->save();
-    }
-
-    public function onMinionDamagesHeroSideQuestEvent(MinionDamagesHeroSideQuestEvent $event)
-    {
-        $hero = Hero::findUuidOrFail($event->getHeroUuid());
-        $hero->damage_taken += $event->getDamage();
-        $hero->save();
-    }
-
-    public function onMinionKillsHeroSideQuestEvent(MinionKillsHeroSideQuestEvent $event)
-    {
-        $hero = Hero::findUuidOrFail($event->getHeroUuid());
-        $hero->damage_taken += $event->getDamage();
         $hero->save();
     }
 

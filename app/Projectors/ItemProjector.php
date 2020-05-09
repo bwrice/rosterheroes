@@ -4,11 +4,9 @@ namespace App\Projectors;
 
 use App\Domain\Combat\Attacks\HeroCombatAttackDataMapper;
 use App\StorableEvents\AttackAttachedToItem;
-use App\StorableEvents\HeroKillsMinionSideQuestEvent;
 use App\StorableEvents\ItemCreated;
 use App\Domain\Models\Item;
 use App\StorableEvents\EnchantmentAttachedToItem;
-use App\StorableEvents\HeroDamagesMinionSideQuestEvent;
 use Spatie\EventSourcing\Projectors\Projector;
 use Spatie\EventSourcing\Projectors\ProjectsEvents;
 
@@ -38,27 +36,6 @@ class ItemProjector implements Projector
     {
         $item = Item::findUuid($aggregateUuid);
         $item->attacks()->attach($event->attackID);
-    }
-
-    public function onHeroDamagesMinionSideQuestEvent(HeroDamagesMinionSideQuestEvent $event)
-    {
-        $heroCombatAttack = $this->getHeroCombatAttackDataMapper()
-            ->getHeroCombatAttack($event->getHeroCombatAttackData());
-
-        $item = Item::findUuidOrFail($heroCombatAttack->getItemUuid());
-        $item->damage_dealt += $event->getDamage();
-        $item->save();
-    }
-
-    public function onHeroKillsMinionSideQuestEvent(HeroKillsMinionSideQuestEvent $event)
-    {
-        $heroCombatAttack = $this->getHeroCombatAttackDataMapper()
-            ->getHeroCombatAttack($event->getHeroCombatAttackData());
-
-        $item = Item::findUuidOrFail($heroCombatAttack->getItemUuid());
-        $item->damage_dealt += $event->getDamage();
-        $item->minion_kills++;
-        $item->save();
     }
 
     /**
