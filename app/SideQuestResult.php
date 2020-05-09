@@ -39,14 +39,6 @@ class SideQuestResult extends Model
         'rewards_processed_at'
     ];
 
-    /*
-     * Use Model method to override AsPivot trait
-     */
-    public function getTable()
-    {
-        return parent::getTable();
-    }
-
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany|SideQuestEventQueryBuilder
      */
