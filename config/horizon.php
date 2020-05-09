@@ -9,8 +9,9 @@ if (! defined('HORIZON_CONFIG')) {
                     'default'
                 ],
                 'balance' => 'simple',
-                'processes' => 10,
+                'processes' => 5,
                 'tries' => 5,
+                'memory' => 128
             ],
             'supervisor-medium' => [
                 'connection' => 'redis-medium',
@@ -19,8 +20,9 @@ if (! defined('HORIZON_CONFIG')) {
                     'stats-integration'
                 ],
                 'balance' => 'simple',
-                'processes' => 10,
+                'processes' => 5,
                 'tries' => 3,
+                'memory' => 512,
                 'timeout' => 60 * 10
             ],
             'supervisor-long' => [
@@ -31,6 +33,7 @@ if (! defined('HORIZON_CONFIG')) {
                 'balance' => 'simple',
                 'processes' => 2,
                 'tries' => 3,
+                'memory' => 512,
                 'timeout' => 60 * 30
             ],
             'supervisor-event-sourcing' => [
@@ -40,7 +43,8 @@ if (! defined('HORIZON_CONFIG')) {
                 ],
                 'balance' => 'simple',
                 'processes' => 1,
-                'tries' => 3
+                'tries' => 3,
+                'memory' => 256
             ]
         ]);
 }
@@ -170,7 +174,7 @@ return [
     |
     */
 
-    'memory_limit' => 64,
+    'memory_limit' => 128,
 
     /*
     |--------------------------------------------------------------------------
