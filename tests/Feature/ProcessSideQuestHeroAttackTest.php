@@ -8,8 +8,6 @@ use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Combat\Combatants\CombatHero;
 use App\Domain\Combat\Combatants\CombatMinion;
 use App\Domain\Combat\Attacks\HeroCombatAttack;
-use App\Domain\Models\Hero;
-use App\Domain\Models\Item;
 use App\Domain\Models\Json\ResourceCosts\FixedResourceCost;
 use App\Domain\Models\MeasurableType;
 use App\Factories\Combat\CombatHeroFactory;
@@ -61,7 +59,6 @@ class ProcessSideQuestHeroAttackTest extends TestCase
 
         $sideQuestEvent = $domainAction->execute($moment, $damageReceived, $this->combatHero, $this->heroCombatAttack, $combatMinion, false);
 
-        $this->assertEquals($moment, $sideQuestEvent->moment);
         $this->assertEquals(SideQuestEvent::TYPE_HERO_DAMAGES_MINION, $sideQuestEvent->event_type);
         $this->assertEquals($damageReceived, $sideQuestEvent->data['damage']);
         $this->assertEquals($moment, $sideQuestEvent->moment);
@@ -80,7 +77,6 @@ class ProcessSideQuestHeroAttackTest extends TestCase
 
         $sideQuestEvent = $domainAction->execute($moment, $damageReceived, $this->combatHero, $this->heroCombatAttack, $combatMinion, false);
 
-        $this->assertEquals($moment, $sideQuestEvent->moment);
         $this->assertEquals(SideQuestEvent::TYPE_HERO_KILLS_MINION, $sideQuestEvent->event_type);
         $this->assertEquals($damageReceived, $sideQuestEvent->data['damage']);
         $this->assertEquals($moment, $sideQuestEvent->moment);
@@ -98,9 +94,7 @@ class ProcessSideQuestHeroAttackTest extends TestCase
 
         $sideQuestEvent = $domainAction->execute($moment, $damageReceived, $this->combatHero, $this->heroCombatAttack, $this->combatMinion, true);
 
-        $this->assertEquals($moment, $sideQuestEvent->moment);
         $this->assertEquals(SideQuestEvent::TYPE_MINION_BLOCKS_HERO, $sideQuestEvent->event_type);
-        $this->assertEquals($damageReceived, $sideQuestEvent->data['damage']);
         $this->assertEquals($moment, $sideQuestEvent->moment);
     }
 
