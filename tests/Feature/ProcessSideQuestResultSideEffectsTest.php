@@ -93,7 +93,9 @@ class ProcessSideQuestResultSideEffectsTest extends TestCase
             ->create();
 
         $beforeTotalDamageDealtForHero = $hero->damage_dealt;
+
         $this->getDomainAction()->execute($sideQuestResult);
+
         $this->assertEquals($beforeTotalDamageDealtForHero + $damageDealt, $hero->fresh()->damage_dealt);
     }
 
@@ -113,7 +115,30 @@ class ProcessSideQuestResultSideEffectsTest extends TestCase
             ->create();
 
         $beforeTotalDamageDealtForHero = $hero->damage_dealt;
+
         $this->getDomainAction()->execute($sideQuestResult);
+
         $this->assertEquals($beforeTotalDamageDealtForHero + $damageDealt, $hero->fresh()->damage_dealt);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_increase_heroes_minion_kills_from_hero_kills_minion_events()
+    {
+        $sideQuestResult = $this->getValidSideQuestResult();
+        $hero = HeroFactory::new()->create();
+        $combatHero = CombatHeroFactory::new()->forHero($hero->uuid)->create();
+
+        $sideQuestEvent = SideQuestEventFactory::new()
+            ->heroKillsMinion($combatHero)
+            ->withSideQuestResultID($sideQuestResult->id)
+            ->create();
+
+        $previousMinionKills = $hero->minion_kills;
+
+        $this->getDomainAction()->execute($sideQuestResult);
+
+        $this->assertEquals($previousMinionKills + 1, $hero->fresh()->minion_kills);
     }
 }

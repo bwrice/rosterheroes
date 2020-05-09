@@ -64,29 +64,21 @@ class ProcessSideQuestResultSideEffects
 
     protected function handleHeroDamagesMinionEvent(SideQuestEvent $heroDamagesMinionEvent, EloquentCollection $combatPositions)
     {
-        $this->handHeroDealsDamageEvent($heroDamagesMinionEvent, $combatPositions);
+        $minion = $this->getMinion($heroDamagesMinionEvent, $combatPositions);
+        $heroAggregate = $this->getHeroAggregate($heroDamagesMinionEvent, $combatPositions);
+        $heroAggregate->dealDamageToMinion($heroDamagesMinionEvent->getDamage(), $minion)->persist();
     }
 
     protected function handleHeroKillsMinionEvent(SideQuestEvent $heroDamagesMinionEvent, EloquentCollection $combatPositions)
     {
-        $this->handHeroDealsDamageEvent($heroDamagesMinionEvent, $combatPositions);
+        $minion = $this->getMinion($heroDamagesMinionEvent, $combatPositions);
+        $heroAggregate = $this->getHeroAggregate($heroDamagesMinionEvent, $combatPositions);
+        $heroAggregate->dealDamageToMinion($heroDamagesMinionEvent->getDamage(), $minion)->killMinion($minion)->persist();
     }
 
-    /**
-     * @param SideQuestEvent $heroDamagesMinionEvent
-     * @param EloquentCollection $combatPositions
-     */
-    protected function handHeroDealsDamageEvent(SideQuestEvent $heroDamagesMinionEvent, EloquentCollection $combatPositions): void
+    protected function getMinion(SideQuestEvent $sideQuestEvent, EloquentCollection $combatPositions)
     {
-        $combatHero = $heroDamagesMinionEvent->getCombatHero($combatPositions);
-        $heroUuid = $combatHero->getHeroUuid();
-        $minion = $this->getMinion($heroDamagesMinionEvent->getCombatMinion()->getMinionUuid());
-        $heroAggregate = $this->getHeroAggregate($heroUuid);
-        $heroAggregate->dealDamageToMinion($heroDamagesMinionEvent->getDamage(), $minion)->persist();
-    }
-
-    protected function getMinion(string $minionUuid)
-    {
+        $minionUuid = $sideQuestEvent->getCombatMinion($combatPositions)->getMinionUuid();
         $match = $this->minions->first(function (Minion $minion) use ($minionUuid) {
             return ((string)$minion->uuid) === $minionUuid;
         });
@@ -100,8 +92,10 @@ class ProcessSideQuestResultSideEffects
         return $minion;
     }
 
-    protected function getHeroAggregate(string $heroUuid)
+    protected function getHeroAggregate(SideQuestEvent $sideQuestEvent, EloquentCollection $combatPositions)
     {
+        $combatHero = $sideQuestEvent->getCombatHero($combatPositions);
+        $heroUuid = $combatHero->getHeroUuid();
         $match = $this->heroAggregates[$heroUuid] ?? null;
 
         if ($match) {
