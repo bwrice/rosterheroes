@@ -131,6 +131,9 @@ class CombatHeroFactory extends AbstractCombatantFactory
 
     protected function getHeroUuid()
     {
+        if ($this->heroUuid) {
+            return $this->heroUuid;
+        }
         if ($this->heroFactory) {
             $heroFactory = $this->heroFactory;
         } else {
