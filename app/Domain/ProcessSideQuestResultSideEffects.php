@@ -37,6 +37,9 @@ class ProcessSideQuestResultSideEffects
                     case SideQuestEvent::TYPE_HERO_DAMAGES_MINION;
                         $this->handleHeroDamagesMinionEvent($sideQuestEvent, $combatPositions);
                         break;
+                    case SideQuestEvent::TYPE_HERO_KILLS_MINION;
+                        $this->handleHeroKillsMinionEvent($sideQuestEvent, $combatPositions);
+                        break;
                 }
             });
         });
@@ -46,6 +49,20 @@ class ProcessSideQuestResultSideEffects
     }
 
     protected function handleHeroDamagesMinionEvent(SideQuestEvent $heroDamagesMinionEvent, Collection $combatPositions)
+    {
+        $this->handHeroDealsDamageEvent($heroDamagesMinionEvent, $combatPositions);
+    }
+
+    protected function handleHeroKillsMinionEvent(SideQuestEvent $heroDamagesMinionEvent, Collection $combatPositions)
+    {
+        $this->handHeroDealsDamageEvent($heroDamagesMinionEvent, $combatPositions);
+    }
+
+    /**
+     * @param SideQuestEvent $heroDamagesMinionEvent
+     * @param Collection $combatPositions
+     */
+    protected function handHeroDealsDamageEvent(SideQuestEvent $heroDamagesMinionEvent, Collection $combatPositions): void
     {
         $combatHero = $heroDamagesMinionEvent->getCombatHero($combatPositions);
         $heroUuid = $combatHero->getHeroUuid();
