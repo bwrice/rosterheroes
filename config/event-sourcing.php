@@ -24,7 +24,8 @@ return [
         \App\Projectors\CampaignStopProjector::class,
         \App\Projectors\PlayerSpiritProjector::class,
         \App\Projectors\ProvinceProjector::class,
-        \App\Projectors\ChestProjector::class
+        \App\Projectors\ChestProjector::class,
+        \App\Projectors\HeroCombatStatsProjector::class
     ],
 
     /*
