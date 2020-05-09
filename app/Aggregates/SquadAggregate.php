@@ -75,13 +75,6 @@ final class SquadAggregate extends AggregateRoot
         return $this;
     }
 
-    public function addSlots(string $slotTypeName, int $count)
-    {
-        $this->recordThat(new SquadSlotsAdded($slotTypeName, $count));
-
-        return $this;
-    }
-
     public function updateLocation(int $fromProvinceID, int $toProvinceID)
     {
         $this->recordThat(new SquadLocationUpdated($fromProvinceID, $toProvinceID));
