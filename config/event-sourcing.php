@@ -17,11 +17,6 @@ return [
     'projectors' => [
         \App\Projectors\UserProjector::class,
         \App\Projectors\SquadProjector::class,
-        \App\Projectors\SquadEssenceProjector::class,
-        \App\Projectors\SquadGoldProjector::class,
-        \App\Projectors\SquadExperienceProjector::class,
-        \App\Projectors\SquadFavorProjector::class,
-        \App\Projectors\SquadHeroPostsProjector::class,
         \App\Projectors\HeroProjector::class,
         \App\Projectors\ItemProjector::class,
         \App\Projectors\MeasurableProjector::class,
