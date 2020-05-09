@@ -45,23 +45,17 @@ class ProcessCombatForSideQuestResult
      * @var ProcessSideQuestMinionAttack
      */
     protected $processSideQuestMinionAttack;
-    /**
-     * @var CreateBattlefieldSetForSideQuestEvent
-     */
-    protected $createBattlefieldSetForSideQuestEvent;
 
     public function __construct(
         BuildCombatSquad $buildCombatSquadAction,
         BuildSideQuestGroup $buildSideQuestGroup,
         RunCombatTurn $runCombatTurn,
-        CreateBattlefieldSetForSideQuestEvent $createBattlefieldSetForSideQuestEvent,
         ProcessSideQuestHeroAttack $processSideQuestHeroAttack,
         ProcessSideQuestMinionAttack $processSideQuestMinionAttack)
     {
         $this->buildCombatSquadAction = $buildCombatSquadAction;
         $this->buildSideQuestGroup = $buildSideQuestGroup;
         $this->runCombatTurn = $runCombatTurn;
-        $this->createBattlefieldSetForSideQuestEvent = $createBattlefieldSetForSideQuestEvent;
         $this->processSideQuestHeroAttack = $processSideQuestHeroAttack;
         $this->processSideQuestMinionAttack = $processSideQuestMinionAttack;
     }
