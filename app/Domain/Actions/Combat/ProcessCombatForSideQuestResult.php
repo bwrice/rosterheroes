@@ -3,8 +3,6 @@
 
 namespace App\Domain\Actions\Combat;
 
-
-use App\Aggregates\SideQuestEventAggregate;
 use App\Domain\Collections\CombatPositionCollection;
 use App\Domain\Combat\Attacks\MinionCombatAttack;
 use App\Domain\Combat\Combatants\CombatHero;
@@ -15,11 +13,11 @@ use App\Domain\Combat\CombatGroups\SideQuestGroup;
 use App\Domain\Models\CombatPosition;
 use App\Domain\Models\DamageType;
 use App\Domain\Models\TargetPriority;
+use App\SideQuestEvent;
 use App\SideQuestResult;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use function foo\func;
 
 class ProcessCombatForSideQuestResult
 {
@@ -93,9 +91,12 @@ class ProcessCombatForSideQuestResult
         try {
             return DB::transaction(function () use ($sideQuestResult, $combatSquad, $sideQuestGroup, $combatPositions) {
 
-                $this->createBattlefieldSetEvent($sideQuestResult, $combatSquad, $sideQuestGroup);
+                $battlegroundSetEvent = $this->getSideQuestEvent(SideQuestEvent::TYPE_BATTLEGROUND_SET, 0, $combatSquad, $sideQuestGroup);
+                $sideQuestResult->sideQuestEvents()->save($battlegroundSetEvent);
 
-                $this->loopCombat($sideQuestResult, $combatSquad, $sideQuestGroup, $combatPositions);
+                 list($moment, $eventType) = $this->loopCombat($sideQuestResult, $combatSquad, $sideQuestGroup, $combatPositions);
+                 $finalEventType = $this->getSideQuestEvent($eventType, $moment, $combatSquad, $sideQuestGroup);
+                 $sideQuestResult->sideQuestEvents()->save($finalEventType);
 
                 return $sideQuestResult->fresh();
             });
@@ -141,67 +142,17 @@ class ProcessCombatForSideQuestResult
         });
     }
 
-    /**
-     * @param SideQuestResult $sideQuestResult
-     * @param CombatSquad $combatSquad
-     * @param SideQuestGroup $sideQuestGroup
-     */
-    protected function createBattlefieldSetEvent(SideQuestResult $sideQuestResult, CombatSquad $combatSquad, SideQuestGroup $sideQuestGroup)
+    protected function getSideQuestEvent(string $eventType, int $moment, CombatSquad $combatSquad, SideQuestGroup $sideQuestGroup)
     {
-        $uuid = (string) Str::uuid();
-        $aggregate = SideQuestEventAggregate::retrieve($uuid);
-        $aggregate->createBattlefieldSetEvent($sideQuestResult->id, [
-            'combatSquad' => $combatSquad->toArray(),
-            'sideQuestGroup' => $sideQuestGroup->toArray()
-        ])->persist();
-    }
-
-    /**
-     * @param SideQuestResult $sideQuestResult
-     * @param int $moment
-     * @param CombatSquad $combatSquad
-     * @param SideQuestGroup $sideQuestGroup
-     */
-    protected function createSideQuestDefeatEvent(SideQuestResult $sideQuestResult, int $moment, CombatSquad $combatSquad, SideQuestGroup $sideQuestGroup)
-    {
-        $uuid = (string) Str::uuid();
-        $aggregate = SideQuestEventAggregate::retrieve($uuid);
-        $aggregate->recordSideQuestDefeat($sideQuestResult->id, $moment, [
-            'combatSquad' => $combatSquad->toArray(),
-            'sideQuestGroup' => $sideQuestGroup->toArray()
-        ])->persist();
-    }
-
-    /**
-     * @param SideQuestResult $sideQuestResult
-     * @param int $moment
-     * @param CombatSquad $combatSquad
-     * @param SideQuestGroup $sideQuestGroup
-     */
-    protected function createSideQuestVictory(SideQuestResult $sideQuestResult, int $moment, CombatSquad $combatSquad, SideQuestGroup $sideQuestGroup)
-    {
-        $uuid = (string) Str::uuid();
-        $aggregate = SideQuestEventAggregate::retrieve($uuid);
-        $aggregate->recordSideQuestVictory($sideQuestResult->id, $moment, [
-            'combatSquad' => $combatSquad->toArray(),
-            'sideQuestGroup' => $sideQuestGroup->toArray()
-        ])->persist();
-    }
-
-    /**
-     * @param SideQuestResult $sideQuestResult
-     * @param int $moment
-     * @param CombatSquad $combatSquad
-     * @param SideQuestGroup $sideQuestGroup
-     */
-    protected function createSideQuestDraw(SideQuestResult $sideQuestResult, int $moment, CombatSquad $combatSquad, SideQuestGroup $sideQuestGroup)
-    {
-        $uuid = (string) Str::uuid();
-        $aggregate = SideQuestEventAggregate::retrieve($uuid);
-        $aggregate->recordSideQuestDraw($sideQuestResult->id, $moment, [
-            'combatSquad' => $combatSquad->toArray(),
-            'sideQuestGroup' => $sideQuestGroup->toArray()
-        ])->persist();
+        return new SideQuestEvent([
+            'uuid' => (string) Str::uuid(),
+            'event_type' => $eventType,
+            'moment' => $moment,
+            'data' => [
+                'combatSquad' => $combatSquad->toArray(),
+                'sideQuestGroup' => $sideQuestGroup->toArray()
+            ]
+        ]);
     }
 
     /**
@@ -209,17 +160,18 @@ class ProcessCombatForSideQuestResult
      * @param CombatSquad $combatSquad
      * @param SideQuestGroup $sideQuestGroup
      * @param CombatPositionCollection $combatPositions
+     * @return array
      */
     protected function loopCombat(SideQuestResult $sideQuestResult, CombatSquad $combatSquad, SideQuestGroup $sideQuestGroup, CombatPositionCollection $combatPositions)
     {
         $moment = 1;
-        $continueBattle = true;
-
-        while ($continueBattle) {
+        while (true) {
 
             if ($combatSquad->isDefeated()) {
-                $continueBattle = false;
-                $this->createSideQuestDefeatEvent($sideQuestResult, $moment, $combatSquad, $sideQuestGroup);
+                return [
+                    $moment,
+                    SideQuestEvent::TYPE_SIDE_QUEST_DEFEAT
+                ];
             } else {
 
                 /*
@@ -233,8 +185,10 @@ class ProcessCombatForSideQuestResult
                     });
 
                 if ($sideQuestGroup->isDefeated()) {
-                    $continueBattle = false;
-                    $this->createSideQuestVictory($sideQuestResult, $moment, $combatSquad, $sideQuestGroup);
+                    return [
+                        $moment,
+                        SideQuestEvent::TYPE_SIDE_QUEST_VICTORY
+                    ];
                 } else {
                     /*
                      * SideQuestGroup Turn
@@ -248,12 +202,16 @@ class ProcessCombatForSideQuestResult
                 }
             }
 
-            if ($continueBattle && $moment >= $this->maxMoments) {
-                $continueBattle = false;
-                $this->createSideQuestDraw($sideQuestResult, $moment, $combatSquad, $sideQuestGroup);
+            if ($moment >= $this->maxMoments) {
+                return [
+                    $moment,
+                    SideQuestEvent::TYPE_SIDE_QUEST_DRAW
+                ];
             }
 
             $moment++;
         }
+        // This return needed for phpStorm analyzer
+        return [];
     }
 }

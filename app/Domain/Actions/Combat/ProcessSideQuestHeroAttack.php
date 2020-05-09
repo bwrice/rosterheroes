@@ -4,13 +4,11 @@
 namespace App\Domain\Actions\Combat;
 
 
-use App\Aggregates\SideQuestEventAggregate;
 use App\Domain\Combat\Combatants\CombatHero;
 use App\Domain\Combat\Combatants\CombatMinion;
 use App\Domain\Combat\Attacks\HeroCombatAttack;
 use App\Domain\Models\Json\ResourceCosts\ResourceCost;
 use App\SideQuestEvent;
-use App\SideQuestResult;
 use Illuminate\Support\Str;
 
 class ProcessSideQuestHeroAttack
