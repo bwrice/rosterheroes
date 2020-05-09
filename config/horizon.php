@@ -265,6 +265,46 @@ return [
             ]
         ],
 
-        // TODO: beta
+        'beta' => [
+            'supervisor-fast' => [
+                'connection' => 'redis',
+                'queue' => [
+                    'default'
+                ],
+                'balance' => 'simple',
+                'processes' => 10,
+                'tries' => 5,
+            ],
+            'supervisor-medium' => [
+                'connection' => 'redis-medium',
+                'queue' => [
+                    'medium',
+                    'stats-integration'
+                ],
+                'balance' => 'simple',
+                'processes' => 10,
+                'tries' => 3,
+                'timeout' => 60 * 10
+            ],
+            'supervisor-long' => [
+                'connection' => 'redis-long',
+                'queue' => [
+                    'long'
+                ],
+                'balance' => 'simple',
+                'processes' => 2,
+                'tries' => 3,
+                'timeout' => 60 * 30
+            ],
+            'supervisor-event-sourcing' => [
+                'connection' => 'redis-event-sourcing',
+                'queue' => [
+                    'event-sourcing'
+                ],
+                'balance' => 'simple',
+                'processes' => 1,
+                'tries' => 3
+            ]
+        ],
     ],
 ];
