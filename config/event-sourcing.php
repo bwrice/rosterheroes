@@ -29,7 +29,6 @@ return [
         \App\Projectors\CampaignStopProjector::class,
         \App\Projectors\PlayerSpiritProjector::class,
         \App\Projectors\ProvinceProjector::class,
-        \App\Projectors\SideQuestEventProjector::class,
         \App\Projectors\ChestProjector::class
     ],
 
