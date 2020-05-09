@@ -1,4 +1,49 @@
 <?php
+if (! defined('HORIZON_CONFIG')) {
+
+    define('HORIZON_CONFIG',
+        [
+            'supervisor-fast' => [
+                'connection' => 'redis',
+                'queue' => [
+                    'default'
+                ],
+                'balance' => 'simple',
+                'processes' => 10,
+                'tries' => 5,
+            ],
+            'supervisor-medium' => [
+                'connection' => 'redis-medium',
+                'queue' => [
+                    'medium',
+                    'stats-integration'
+                ],
+                'balance' => 'simple',
+                'processes' => 10,
+                'tries' => 3,
+                'timeout' => 60 * 10
+            ],
+            'supervisor-long' => [
+                'connection' => 'redis-long',
+                'queue' => [
+                    'long'
+                ],
+                'balance' => 'simple',
+                'processes' => 2,
+                'tries' => 3,
+                'timeout' => 60 * 30
+            ],
+            'supervisor-event-sourcing' => [
+                'connection' => 'redis-event-sourcing',
+                'queue' => [
+                    'event-sourcing'
+                ],
+                'balance' => 'simple',
+                'processes' => 1,
+                'tries' => 3
+            ]
+        ]);
+}
 
 return [
 
@@ -139,172 +184,9 @@ return [
     */
 
     'environments' => [
-        'production' => [
-            'supervisor-fast' => [
-                'connection' => 'redis',
-                'queue' => [
-                    'default'
-                ],
-                'balance' => 'simple',
-                'processes' => 10,
-                'tries' => 5,
-            ],
-            'supervisor-medium' => [
-                'connection' => 'redis-medium',
-                'queue' => [
-                    'medium',
-                    'stats-integration'
-                ],
-                'balance' => 'simple',
-                'processes' => 10,
-                'tries' => 3,
-                'timeout' => 60 * 10
-            ],
-            'supervisor-long' => [
-                'connection' => 'redis-long',
-                'queue' => [
-                    'long'
-                ],
-                'balance' => 'simple',
-                'processes' => 2,
-                'tries' => 3,
-                'timeout' => 60 * 30
-            ],
-            'supervisor-event-sourcing' => [
-                'connection' => 'redis-event-sourcing',
-                'queue' => [
-                    'event-sourcing'
-                ],
-                'balance' => 'simple',
-                'processes' => 1,
-                'tries' => 3
-            ]
-        ],
-
-        'local' => [
-            'supervisor-fast' => [
-                'connection' => 'redis',
-                'queue' => [
-                    'default'
-                ],
-                'balance' => 'simple',
-                'processes' => 10,
-                'tries' => 5,
-            ],
-            'supervisor-medium' => [
-                'connection' => 'redis-medium',
-                'queue' => [
-                    'medium',
-                    'stats-integration'
-                ],
-                'balance' => 'simple',
-                'processes' => 10,
-                'tries' => 3,
-                'timeout' => 60 * 10
-            ],
-            'supervisor-long' => [
-                'connection' => 'redis-long',
-                'queue' => [
-                    'long'
-                ],
-                'balance' => 'simple',
-                'processes' => 2,
-                'tries' => 3,
-                'timeout' => 60 * 30
-            ],
-            'supervisor-event-sourcing' => [
-                'connection' => 'redis-event-sourcing',
-                'queue' => [
-                    'event-sourcing'
-                ],
-                'balance' => 'simple',
-                'processes' => 1,
-                'tries' => 3
-            ]
-        ],
-
-        'staging' => [
-            'supervisor-fast' => [
-                'connection' => 'redis',
-                'queue' => [
-                    'default'
-                ],
-                'balance' => 'simple',
-                'processes' => 10,
-                'tries' => 5,
-            ],
-            'supervisor-medium' => [
-                'connection' => 'redis-medium',
-                'queue' => [
-                    'medium',
-                    'stats-integration'
-                ],
-                'balance' => 'simple',
-                'processes' => 10,
-                'tries' => 3,
-                'timeout' => 60 * 10
-            ],
-            'supervisor-long' => [
-                'connection' => 'redis-long',
-                'queue' => [
-                    'long'
-                ],
-                'balance' => 'simple',
-                'processes' => 2,
-                'tries' => 3,
-                'timeout' => 60 * 30
-            ],
-            'supervisor-event-sourcing' => [
-                'connection' => 'redis-event-sourcing',
-                'queue' => [
-                    'event-sourcing'
-                ],
-                'balance' => 'simple',
-                'processes' => 1,
-                'tries' => 3
-            ]
-        ],
-
-        'beta' => [
-            'supervisor-fast' => [
-                'connection' => 'redis',
-                'queue' => [
-                    'default'
-                ],
-                'balance' => 'simple',
-                'processes' => 10,
-                'tries' => 5,
-            ],
-            'supervisor-medium' => [
-                'connection' => 'redis-medium',
-                'queue' => [
-                    'medium',
-                    'stats-integration'
-                ],
-                'balance' => 'simple',
-                'processes' => 10,
-                'tries' => 3,
-                'timeout' => 60 * 10
-            ],
-            'supervisor-long' => [
-                'connection' => 'redis-long',
-                'queue' => [
-                    'long'
-                ],
-                'balance' => 'simple',
-                'processes' => 2,
-                'tries' => 3,
-                'timeout' => 60 * 30
-            ],
-            'supervisor-event-sourcing' => [
-                'connection' => 'redis-event-sourcing',
-                'queue' => [
-                    'event-sourcing'
-                ],
-                'balance' => 'simple',
-                'processes' => 1,
-                'tries' => 3
-            ]
-        ],
-    ],
+        'production' => HORIZON_CONFIG,
+        'local' => HORIZON_CONFIG,
+        'staging' => HORIZON_CONFIG,
+        'beta' => HORIZON_CONFIG
+    ]
 ];
