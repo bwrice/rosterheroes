@@ -22,6 +22,7 @@ use PhpParser\Node\Expr\AssignOp\Mod;
  * @property int $side_quest_id
  * @property CarbonInterface|null $combat_processed_at
  * @property CarbonInterface|null $rewards_processed_at
+ * @property CarbonInterface|null $side_effects_processed_at
  *
  * @property SideQuest $sideQuest
  * @property CampaignStop $campaignStop
@@ -36,7 +37,8 @@ class SideQuestResult extends Model
         'created_at',
         'updated_at',
         'combat_processed_at',
-        'rewards_processed_at'
+        'rewards_processed_at',
+        'side_effects_processed_at'
     ];
 
     /**
