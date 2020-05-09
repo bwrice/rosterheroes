@@ -27,6 +27,9 @@ class SideQuestResultFactory
     /** @var CarbonInterface|null */
     protected $rewardsProcessedAt = null;
 
+    /** @var CarbonInterface|null */
+    protected $sideEffectsProcessedAt = null;
+
     public static function new(): self
     {
         return new self();
@@ -41,6 +44,7 @@ class SideQuestResultFactory
             'side_quest_id' => $this->getSideQuest()->id,
             'combat_processed_at' => $this->combatProcessedAt,
             'rewards_processed_at' => $this->rewardsProcessedAt,
+            'side_effects_processed_at' => $this->sideEffectsProcessedAt,
         ], $extra));
 
         if ($this->sideQuestEventFactories) {
@@ -98,6 +102,14 @@ class SideQuestResultFactory
         $processedAt = $processedAt ?: Date::now();
         $clone = clone $this;
         $clone->rewardsProcessedAt = $processedAt;
+        return $clone;
+    }
+
+    public function sideEffectsProcessed(CarbonInterface $processedAt = null)
+    {
+        $processedAt = $processedAt ?: Date::now();
+        $clone = clone $this;
+        $clone->sideEffectsProcessedAt = $processedAt;
         return $clone;
     }
 }
