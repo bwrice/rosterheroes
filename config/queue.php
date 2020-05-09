@@ -77,6 +77,13 @@ return [
             'queue' => env('REDIS_QUEUE', 'default'),
             'retry_after' => 60 * 35,
             'block_for' => null,
+        ],
+        'redis-event-sourcing' => [
+            'driver' => 'redis',
+            'connection' => 'default',
+            'queue' => env('REDIS_QUEUE', 'default'),
+            'retry_after' => 90,
+            'block_for' => null,
         ]
     ],
 

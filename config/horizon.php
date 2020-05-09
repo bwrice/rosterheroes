@@ -143,8 +143,7 @@ return [
             'supervisor-fast' => [
                 'connection' => 'redis',
                 'queue' => [
-                    'default',
-                    'event-projector'
+                    'default'
                 ],
                 'balance' => 'simple',
                 'processes' => 10,
@@ -170,6 +169,15 @@ return [
                 'processes' => 2,
                 'tries' => 3,
                 'timeout' => 60 * 30
+            ],
+            'supervisor-event-sourcing' => [
+                'connection' => 'redis-event-sourcing',
+                'queue' => [
+                    'event-sourcing'
+                ],
+                'balance' => 'simple',
+                'processes' => 1,
+                'tries' => 3
             ]
         ],
 
@@ -177,8 +185,7 @@ return [
             'supervisor-fast' => [
                 'connection' => 'redis',
                 'queue' => [
-                    'default',
-                    'event-projector'
+                    'default'
                 ],
                 'balance' => 'simple',
                 'processes' => 10,
@@ -204,6 +211,15 @@ return [
                 'processes' => 2,
                 'tries' => 3,
                 'timeout' => 60 * 30
+            ],
+            'supervisor-event-sourcing' => [
+                'connection' => 'redis-event-sourcing',
+                'queue' => [
+                    'event-sourcing'
+                ],
+                'balance' => 'simple',
+                'processes' => 1,
+                'tries' => 3
             ]
         ],
 
@@ -211,8 +227,7 @@ return [
             'supervisor-fast' => [
                 'connection' => 'redis',
                 'queue' => [
-                    'default',
-                    'event-projector'
+                    'default'
                 ],
                 'balance' => 'simple',
                 'processes' => 10,
@@ -238,6 +253,15 @@ return [
                 'processes' => 2,
                 'tries' => 3,
                 'timeout' => 60 * 30
+            ],
+            'supervisor-event-sourcing' => [
+                'connection' => 'redis-event-sourcing',
+                'queue' => [
+                    'event-sourcing'
+                ],
+                'balance' => 'simple',
+                'processes' => 1,
+                'tries' => 3
             ]
         ],
 
