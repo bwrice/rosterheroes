@@ -6,6 +6,7 @@ use App\Domain\Combat\Combatants\CombatHeroDataMapper;
 use App\Domain\Combat\Combatants\CombatMinionDataMapper;
 use App\Domain\Models\EventSourcedModel;
 use App\Domain\QueryBuilders\SideQuestEventQueryBuilder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -58,17 +59,22 @@ class SideQuestEvent extends EventSourcedModel
         return $mappedData;
     }
 
-    public function getCombatMinion()
+    public function getCombatMinion(Collection $combatPositions = null)
     {
         /** @var CombatMinionDataMapper $dataMapper */
         $dataMapper = app(CombatMinionDataMapper::class);
-        return $dataMapper->getCombatMinion($this->data['combatMinion']);
+        return $dataMapper->getCombatMinion($this->data['combatMinion'], $combatPositions);
     }
 
-    public function getCombatHero()
+    public function getCombatHero(Collection $combatPositions = null)
     {
         /** @var CombatHeroDataMapper $dataMapper */
         $dataMapper = app(CombatHeroDataMapper::class);
-        return $dataMapper->getCombatHero($this->data['combatHero']);
+        return $dataMapper->getCombatHero($this->data['combatHero'], $combatPositions);
+    }
+
+    public function getDamage()
+    {
+        return $this->data['damage'];
     }
 }
