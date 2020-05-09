@@ -4,7 +4,12 @@
 namespace App\Domain;
 
 
+use App\Aggregates\HeroAggregate;
+use App\Domain\Models\CombatPosition;
+use App\Domain\Models\Minion;
+use App\SideQuestEvent;
 use App\SideQuestResult;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Date;
 
 class ProcessSideQuestResultSideEffects
@@ -23,7 +28,29 @@ class ProcessSideQuestResultSideEffects
             throw new \Exception("Cannot process side effects because combat not processed for side quest result: " . $sideQuestResult->id);
         }
 
+        $combatPositions = CombatPosition::all();
+
+        $sideQuestResult->sideQuestEvents()->chunk(100, function (Collection $sideQuestEvents) use ($combatPositions) {
+            $sideQuestEvents->each(function (SideQuestEvent $sideQuestEvent) use ($combatPositions) {
+
+                switch ($sideQuestEvent->event_type) {
+                    case SideQuestEvent::TYPE_HERO_DAMAGES_MINION;
+                        $this->handleHeroDamagesMinionEvent($sideQuestEvent, $combatPositions);
+                        break;
+                }
+            });
+        });
+
         $sideQuestResult->side_effects_processed_at = Date::now();
         $sideQuestResult->save();
+    }
+
+    protected function handleHeroDamagesMinionEvent(SideQuestEvent $heroDamagesMinionEvent, Collection $combatPositions)
+    {
+        $combatHero = $heroDamagesMinionEvent->getCombatHero($combatPositions);
+        $heroUuid = $combatHero->getHeroUuid();
+        $minion = Minion::findUuidOrFail($heroDamagesMinionEvent->getCombatMinion()->getMinionUuid());
+        $heroAggregate = HeroAggregate::retrieve($heroUuid);
+        $heroAggregate->dealDamageToMinion($heroDamagesMinionEvent->getDamage(), $minion)->persist();
     }
 }

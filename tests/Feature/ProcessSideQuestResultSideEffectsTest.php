@@ -3,7 +3,11 @@
 namespace Tests\Feature;
 
 use App\Domain\ProcessSideQuestResultSideEffects;
+use App\Factories\Combat\CombatHeroFactory;
+use App\Factories\Models\HeroFactory;
+use App\Factories\Models\SideQuestEventFactory;
 use App\Factories\Models\SideQuestResultFactory;
+use App\SideQuestResult;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -20,6 +24,15 @@ class ProcessSideQuestResultSideEffectsTest extends TestCase
     protected function getDomainAction()
     {
         return app(ProcessSideQuestResultSideEffects::class);
+    }
+
+    /**
+     * @return SideQuestResult
+     */
+    protected function getValidSideQuestResult(): SideQuestResult
+    {
+        $sideQuestResult = SideQuestResultFactory::new()->combatProcessed()->rewardsProcessed()->create();
+        return $sideQuestResult;
     }
 
     /**
@@ -59,8 +72,28 @@ class ProcessSideQuestResultSideEffectsTest extends TestCase
      */
     public function it_will_update_side_effects_processed_at()
     {
-        $sideQuestResult = SideQuestResultFactory::new()->combatProcessed()->rewardsProcessed()->create();
+        $sideQuestResult = $this->getValidSideQuestResult();
         $this->getDomainAction()->execute($sideQuestResult);
         $this->assertNotNull($sideQuestResult->fresh()->side_effects_processed_at);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_increase_heroes_damage_dealt_from_hero_damages_minion_events()
+    {
+        $sideQuestResult = $this->getValidSideQuestResult();
+        $hero = HeroFactory::new()->create();
+        $combatHero = CombatHeroFactory::new()->forHero($hero->uuid)->create();
+
+        $damageDealt = rand(50, 1000);
+        $sideQuestEvent = SideQuestEventFactory::new()
+            ->heroDamagesMinion($combatHero, null, null, $damageDealt)
+            ->withSideQuestResultID($sideQuestResult->id)
+            ->create();
+
+        $beforeTotalDamageDealtForHero = $hero->damage_dealt;
+        $this->getDomainAction()->execute($sideQuestResult);
+        $this->assertEquals($beforeTotalDamageDealtForHero + $damageDealt, $hero->fresh()->damage_dealt);
     }
 }

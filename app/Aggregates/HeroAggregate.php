@@ -3,7 +3,9 @@
 namespace App\Aggregates;
 
 use App\Domain\Models\Hero;
+use App\Domain\Models\Minion;
 use App\StorableEvents\HeroCreated;
+use App\StorableEvents\HeroDealsDamageToMinion;
 use App\StorableEvents\UpdateHeroPlayerSpirit;
 use App\StorableEvents\WeeklyPlayerSpiritClearedFromHero;
 use Spatie\EventSourcing\AggregateRoot;
@@ -28,6 +30,12 @@ final class HeroAggregate extends AggregateRoot
     {
         $this->recordThat(new WeeklyPlayerSpiritClearedFromHero($playerSpiritID));
 
+        return $this;
+    }
+
+    public function dealDamageToMinion(int $damage, Minion $minion)
+    {
+        $this->recordThat(new HeroDealsDamageToMinion($damage, $minion));
         return $this;
     }
 }
