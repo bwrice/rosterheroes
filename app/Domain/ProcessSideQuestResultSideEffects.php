@@ -76,6 +76,10 @@ class ProcessSideQuestResultSideEffects
                             break;
                         case SideQuestEvent::TYPE_MINION_DAMAGES_HERO;
                             $this->handleMinionDamagesHero($sideQuestEvent, $combatPositions);
+                            break;
+                        case SideQuestEvent::TYPE_MINION_KILLS_HERO;
+                            $this->handleMinionKillsHero($sideQuestEvent, $combatPositions);
+                            break;
                     }
                 });
             });
@@ -130,6 +134,17 @@ class ProcessSideQuestResultSideEffects
     }
 
     protected function handleMinionDamagesHero(
+        SideQuestEvent $minionDamagesHeroEvent,
+        EloquentCollection $combatPositions)
+    {
+        $minion = $this->getMinion($minionDamagesHeroEvent, $combatPositions);
+        $damage = $minionDamagesHeroEvent->getDamage();
+        $this->squadAggregate->takeDamageFromMinion($damage, $minion);
+        $heroAggregate = $this->getHeroAggregate($minionDamagesHeroEvent, $combatPositions);
+        $heroAggregate->takeDamageFromMinion($damage, $minion);
+    }
+
+    protected function handleMinionKillsHero(
         SideQuestEvent $minionDamagesHeroEvent,
         EloquentCollection $combatPositions)
     {
