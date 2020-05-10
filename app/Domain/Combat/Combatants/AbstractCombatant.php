@@ -64,7 +64,7 @@ abstract class AbstractCombatant implements Combatant, Arrayable
     public function calculateDamageToReceive(int $initialDamage): int
     {
         $multiplier = 500 / (500 + $this->protection);
-        return (int) ceil($multiplier * $initialDamage);
+        return (int) min(ceil($multiplier * $initialDamage), $this->currentHealth);
     }
 
     /**
