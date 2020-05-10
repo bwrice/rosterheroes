@@ -17,6 +17,8 @@ class HeroCombatAttackFactory extends AbstractCombatAttackFactory
 {
     protected $heroUuid;
 
+    protected $itemUuid;
+
     /** @var AbstractCombatAttackFactory */
     protected $combatAttackFactory;
 
@@ -94,8 +96,18 @@ class HeroCombatAttackFactory extends AbstractCombatAttackFactory
         return $clone;
     }
 
+    public function forItem(string $itemUuid)
+    {
+        $clone = clone $this;
+        $clone->itemUuid = $itemUuid;
+        return $clone;
+    }
+
     protected function getItemUuid()
     {
+        if ($this->itemUuid) {
+            return $this->itemUuid;
+        }
         $itemFactory = $this->itemFactory ?: ItemFactory::new();
         return $itemFactory->create()->uuid;
     }
