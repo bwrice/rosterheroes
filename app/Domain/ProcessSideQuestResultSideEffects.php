@@ -90,6 +90,9 @@ class ProcessSideQuestResultSideEffects
                         case SideQuestEvent::TYPE_SIDE_QUEST_VICTORY:
                             $this->squadAggregate->sideQuestVictory($this->sideQuestResult->sideQuest);
                             break;
+                        case SideQuestEvent::TYPE_SIDE_QUEST_DEFEAT:
+                            $this->squadAggregate->sideQuestDefeat($this->sideQuestResult->sideQuest);
+                            break;
                     }
                 });
             });

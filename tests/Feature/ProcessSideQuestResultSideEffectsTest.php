@@ -484,6 +484,27 @@ class ProcessSideQuestResultSideEffectsTest extends TestCase
     /**
      * @test
      */
+    public function it_will_increase_a_squad_side_quest_defeats_if_defeated_event()
+    {
+        $sideQuestResult = $this->getValidSideQuestResult();
+
+        $sideQuestEvent = SideQuestEventFactory::new()
+            ->sideQuestDefeat()
+            ->withSideQuestResultID($sideQuestResult->id)
+            ->create();
+
+        $squad = $sideQuestResult->campaignStop->campaign->squad;
+
+        $previousVictories = $squad->side_quest_defeats;
+
+        $this->getDomainAction()->execute($sideQuestResult);
+
+        $this->assertEquals($previousVictories + 1, $squad->fresh()->side_quest_defeats);
+    }
+
+    /**
+     * @test
+     */
     public function it_will_increase_items_damage_dealt_from_hero_damages_minion_events()
     {
         $sideQuestResult = $this->getValidSideQuestResult();

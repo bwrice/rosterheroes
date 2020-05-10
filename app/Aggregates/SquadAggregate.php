@@ -8,6 +8,7 @@ use App\StorableEvents\SideQuestMinionKillsSquadMember;
 use App\StorableEvents\SpellAddedToLibrary;
 use App\StorableEvents\SquadCreated;
 use App\StorableEvents\SquadDealsDamageToSideQuestMinion;
+use App\StorableEvents\SquadDefeatedInSideQuest;
 use App\StorableEvents\SquadEssenceIncreased;
 use App\StorableEvents\SquadExperienceIncreased;
 use App\StorableEvents\SquadFavorIncreased;
@@ -118,6 +119,12 @@ final class SquadAggregate extends AggregateRoot
     public function sideQuestVictory(SideQuest $sideQuest)
     {
         $this->recordThat(new SquadVictoriousInSideQuest($sideQuest));
+        return $this;
+    }
+
+    public function sideQuestDefeat(SideQuest $sideQuest)
+    {
+        $this->recordThat(new SquadDefeatedInSideQuest($sideQuest));
         return $this;
     }
 

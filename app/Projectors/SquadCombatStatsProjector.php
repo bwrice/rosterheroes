@@ -5,6 +5,7 @@ namespace App\Projectors;
 use App\Domain\Models\Squad;
 use App\StorableEvents\SideQuestMinionKillsSquadMember;
 use App\StorableEvents\SquadDealsDamageToSideQuestMinion;
+use App\StorableEvents\SquadDefeatedInSideQuest;
 use App\StorableEvents\SquadKillsSideQuestMinion;
 use App\StorableEvents\SquadMemberBlocksSideQuestMinion;
 use App\StorableEvents\SquadTakesDamageFromSideQuestMinion;
@@ -63,6 +64,13 @@ final class SquadCombatStatsProjector implements QueuedProjector
     {
         $squad = Squad::findUuidOrFail($aggregateUuid);
         $squad->side_quest_victories++;
+        $squad->save();
+    }
+
+    public function onSquadDefeatedInSideQuest(SquadDefeatedInSideQuest $event, string $aggregateUuid)
+    {
+        $squad = Squad::findUuidOrFail($aggregateUuid);
+        $squad->side_quest_defeats++;
         $squad->save();
     }
 }
