@@ -46,6 +46,11 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $gold
  * @property int $favor
  * @property int $hero_posts
+ * @property int $damage_dealt
+ * @property int $damage_taken
+ * @property int $attacks_blocked
+ * @property int $minion_kills
+ * @property int $titan_kills
  *
  * @property User $user
  * @property Province $province

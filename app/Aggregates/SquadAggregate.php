@@ -2,16 +2,19 @@
 
 namespace App\Aggregates;
 
+use App\Domain\Models\Minion;
 use App\StorableEvents\CampaignCreated;
 use App\StorableEvents\CampaignStopCreated;
 use App\StorableEvents\SpellAddedToLibrary;
 use App\StorableEvents\SquadCreated;
+use App\StorableEvents\SquadDealsDamageToMinion;
 use App\StorableEvents\SquadEssenceIncreased;
 use App\StorableEvents\SquadExperienceIncreased;
 use App\StorableEvents\SquadFavorIncreased;
 use App\StorableEvents\SquadGoldDecreased;
 use App\StorableEvents\SquadGoldIncreased;
 use App\StorableEvents\SquadHeroPostAdded;
+use App\StorableEvents\SquadKillsMinion;
 use App\StorableEvents\SquadLocationUpdated;
 use App\StorableEvents\SquadSlotsAdded;
 use Spatie\EventSourcing\AggregateRoot;
@@ -86,6 +89,18 @@ final class SquadAggregate extends AggregateRoot
     {
         $this->recordThat(new SpellAddedToLibrary($spellID));
 
+        return $this;
+    }
+
+    public function killMinion(Minion $minion)
+    {
+        $this->recordThat(new SquadKillsMinion($minion));
+        return $this;
+    }
+
+    public function dealDamageToMinion(int $damage, Minion $minion)
+    {
+        $this->recordThat(new SquadDealsDamageToMinion($damage, $minion));
         return $this;
     }
 

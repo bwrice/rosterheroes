@@ -25,6 +25,7 @@ return [
         \App\Projectors\PlayerSpiritProjector::class,
         \App\Projectors\ProvinceProjector::class,
         \App\Projectors\ChestProjector::class,
+        \App\Projectors\SquadCombatStatsProjector::class,
         \App\Projectors\HeroCombatStatsProjector::class
     ],
 
