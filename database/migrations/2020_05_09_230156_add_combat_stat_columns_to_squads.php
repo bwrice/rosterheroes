@@ -33,6 +33,8 @@ class AddCombatStatColumnsToSquads extends Migration
             $table->bigInteger('titan_deaths')->default(0);
             $table->bigInteger('combat_deaths')->default(0);
             $table->bigInteger('attacks_blocked')->default(0);
+            $table->bigInteger('side_quest_victories')->default(0);
+            $table->bigInteger('side_quest_defeats')->default(0);
         });
     }
 

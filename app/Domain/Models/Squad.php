@@ -66,6 +66,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $minion_deaths
  * @property int $titan_deaths
  * @property int $combat_deaths
+ * @property int $side_quest_victories
+ * @property int $side_quest_defeats
  *
  * @property User $user
  * @property Province $province
