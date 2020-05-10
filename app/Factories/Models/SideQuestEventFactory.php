@@ -137,9 +137,7 @@ class SideQuestEventFactory
         CombatMinion $combatMinion = null,
         MinionCombatAttack $minionCombatAttack = null,
         CombatHero $combatHero = null,
-        $damage = null,
-        $staminaCost = null,
-        $manaCost = null)
+        $damage = null)
     {
         $eventType = SideQuestEvent::TYPE_MINION_DAMAGES_HERO;
         return $this->minionAttacksHero($eventType, $combatMinion, $minionCombatAttack, $combatHero, $damage, $staminaCost, $manaCost);
@@ -149,9 +147,7 @@ class SideQuestEventFactory
         CombatMinion $combatMinion = null,
         MinionCombatAttack $minionCombatAttack = null,
         CombatHero $combatHero = null,
-        $damage = null,
-        $staminaCost = null,
-        $manaCost = null)
+        $damage = null)
     {
         $eventType = SideQuestEvent::TYPE_MINION_KILLS_HERO;
         return $this->minionAttacksHero($eventType, $combatMinion, $minionCombatAttack, $combatHero, $damage, $staminaCost, $manaCost);
@@ -162,9 +158,7 @@ class SideQuestEventFactory
         CombatMinion $combatMinion = null,
         MinionCombatAttack $minionCombatAttack = null,
         CombatHero $combatHero = null,
-        $damage = null,
-        $staminaCost = null,
-        $manaCost = null)
+        $damage = null)
     {
         $combatMinion = $combatMinion ?: CombatMinionFactory::new()->create();
         $minionCombatAttack = $minionCombatAttack ?: MinionCombatAttackFactory::new()->create();
@@ -176,9 +170,26 @@ class SideQuestEventFactory
             'damage' => $damage ?: rand(10, 999),
             'combatHero' => $combatHero->toArray(),
             'minionCombatAttack' => $minionCombatAttack->toArray(),
-            'combatMinion' => $combatMinion->toArray(),
-            'staminaCost' => $staminaCost ?: rand(5, 15),
-            'manaCost' => $manaCost ?: rand(2, 10)
+            'combatMinion' => $combatMinion->toArray()
+        ];
+        return $clone;
+    }
+
+    public function heroBlocksMinion(
+        CombatHero $combatHero = null,
+        MinionCombatAttack $minionCombatAttack = null,
+        CombatMinion $combatMinion = null)
+    {
+        $combatMinion = $combatMinion ?: CombatMinionFactory::new()->create();
+        $minionCombatAttack = $minionCombatAttack ?: MinionCombatAttackFactory::new()->create();
+        $combatHero = $combatHero ?: CombatHeroFactory::new()->create();
+
+        $clone = clone $this;
+        $clone->eventType = SideQuestEvent::TYPE_HERO_BLOCKS_MINION;
+        $clone->data = [
+            'combatHero' => $combatHero->toArray(),
+            'minionCombatAttack' => $minionCombatAttack->toArray(),
+            'combatMinion' => $combatMinion->toArray()
         ];
         return $clone;
     }
