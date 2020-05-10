@@ -6,7 +6,7 @@ use App\Domain\Models\Minion;
 use Illuminate\Queue\SerializesModels;
 use Spatie\EventSourcing\ShouldBeStored;
 
-final class SquadTakesDamageFromMinion implements ShouldBeStored
+final class SquadTakesDamageFromSideQuestMinion implements ShouldBeStored
 {
     use SerializesModels;
 
