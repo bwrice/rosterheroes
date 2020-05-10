@@ -5,10 +5,13 @@ namespace App\Domain;
 
 
 use App\Aggregates\HeroAggregate;
+use App\Aggregates\ItemAggregate;
 use App\Aggregates\SquadAggregate;
 use App\Domain\Collections\MinionCollection;
 use App\Domain\Models\CombatPosition;
+use App\Domain\Models\DamageType;
 use App\Domain\Models\Minion;
+use App\Domain\Models\TargetPriority;
 use App\SideQuestEvent;
 use App\SideQuestResult;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
@@ -21,6 +24,9 @@ class ProcessSideQuestResultSideEffects
     /** @var Collection */
     protected $heroAggregates;
 
+    /** @var Collection */
+    protected $itemAggregates;
+
     /** @var SquadAggregate|null */
     protected $squadAggregate;
 
@@ -30,12 +36,13 @@ class ProcessSideQuestResultSideEffects
     public function __construct()
     {
         $this->heroAggregates = collect();
+        $this->itemAggregates = collect();
         $this->minions = new MinionCollection();
     }
 
     /**
      * @param SideQuestResult $sideQuestResult
-     * @throws \Exception
+     * @throws \Throwable
      */
     public function execute(SideQuestResult $sideQuestResult)
     {
@@ -54,16 +61,18 @@ class ProcessSideQuestResultSideEffects
             $this->setSquadAggregate($sideQuestResult);
 
             $combatPositions = CombatPosition::all();
+            $targetPriorities = TargetPriority::all();
+            $damageTypes = DamageType::all();
 
-            $sideQuestResult->sideQuestEvents()->chunk(100, function (EloquentCollection $sideQuestEvents) use ($combatPositions) {
-                $sideQuestEvents->each(function (SideQuestEvent $sideQuestEvent) use ($combatPositions) {
+            $sideQuestResult->sideQuestEvents()->chunk(100, function (EloquentCollection $sideQuestEvents) use ($combatPositions, $targetPriorities, $damageTypes) {
+                $sideQuestEvents->each(function (SideQuestEvent $sideQuestEvent) use ($combatPositions, $targetPriorities, $damageTypes) {
 
                     switch ($sideQuestEvent->event_type) {
                         case SideQuestEvent::TYPE_HERO_DAMAGES_MINION;
-                            $this->handleHeroDamagesMinionEvent($sideQuestEvent, $combatPositions);
+                            $this->handleHeroDamagesMinionEvent($sideQuestEvent, $combatPositions, $targetPriorities, $damageTypes);
                             break;
                         case SideQuestEvent::TYPE_HERO_KILLS_MINION;
-                            $this->handleHeroKillsMinionEvent($sideQuestEvent, $combatPositions);
+                            $this->handleHeroKillsMinionEvent($sideQuestEvent, $combatPositions, $targetPriorities, $damageTypes);
                             break;
                     }
                 });
@@ -74,32 +83,48 @@ class ProcessSideQuestResultSideEffects
                 $this->heroAggregates->each(function (HeroAggregate $heroAggregate) {
                     $heroAggregate->persist();
                 });
+                $this->itemAggregates->each(function (ItemAggregate $itemAggregate) {
+                    $itemAggregate->persist();
+                });
             });
 
-        } catch (\Throwable $exception) {
+        } catch (\Throwable $throwable) {
             $sideQuestResult->side_effects_processed_at = null;
             $sideQuestResult->save();
+            throw $throwable;
         }
     }
 
-    protected function handleHeroDamagesMinionEvent(SideQuestEvent $heroDamagesMinionEvent, EloquentCollection $combatPositions)
+    protected function handleHeroDamagesMinionEvent(
+        SideQuestEvent $heroDamagesMinionEvent,
+        EloquentCollection $combatPositions,
+        EloquentCollection $targetPriorities,
+        EloquentCollection $damageTypes)
     {
         $minion = $this->getMinion($heroDamagesMinionEvent, $combatPositions);
         $damage = $heroDamagesMinionEvent->getDamage();
         $this->squadAggregate->dealDamageToMinion($damage, $minion);
         $heroAggregate = $this->getHeroAggregate($heroDamagesMinionEvent, $combatPositions);
         $heroAggregate->dealDamageToMinion($damage, $minion);
+        $itemAggregate = $this->getItemAggregate($heroDamagesMinionEvent, $combatPositions, $targetPriorities, $damageTypes);
+        $itemAggregate->damageMinion($damage, $minion);
     }
 
-    protected function handleHeroKillsMinionEvent(SideQuestEvent $heroDamagesMinionEvent, EloquentCollection $combatPositions)
+    protected function handleHeroKillsMinionEvent(
+        SideQuestEvent $heroKillsMinionEvent,
+        EloquentCollection $combatPositions,
+        EloquentCollection $targetPriorities,
+        EloquentCollection $damageTypes)
     {
-        $minion = $this->getMinion($heroDamagesMinionEvent, $combatPositions);
-        $damage = $heroDamagesMinionEvent->getDamage();
+        $minion = $this->getMinion($heroKillsMinionEvent, $combatPositions);
+        $damage = $heroKillsMinionEvent->getDamage();
         $this->squadAggregate->dealDamageToMinion($damage, $minion)
             ->killMinion($minion);
-        $heroAggregate = $this->getHeroAggregate($heroDamagesMinionEvent, $combatPositions);
-        $heroAggregate->dealDamageToMinion($heroDamagesMinionEvent->getDamage(), $minion)
+        $heroAggregate = $this->getHeroAggregate($heroKillsMinionEvent, $combatPositions);
+        $heroAggregate->dealDamageToMinion($heroKillsMinionEvent->getDamage(), $minion)
             ->killMinion($minion);
+        $itemAggregate = $this->getItemAggregate($heroKillsMinionEvent, $combatPositions, $targetPriorities, $damageTypes);
+        $itemAggregate->damageMinion($damage, $minion)->killMinion($minion);
     }
 
     protected function getMinion(SideQuestEvent $sideQuestEvent, EloquentCollection $combatPositions)
@@ -131,6 +156,21 @@ class ProcessSideQuestResultSideEffects
         $heroAggregate = HeroAggregate::retrieve($heroUuid);
         $this->heroAggregates[$heroUuid] = $heroAggregate;
         return $heroAggregate;
+    }
+
+    protected function getItemAggregate(SideQuestEvent $sideQuestEvent, EloquentCollection $combatPositions, EloquentCollection $targetPriorities, EloquentCollection $damageTypes)
+    {
+        $heroCombatAttack = $sideQuestEvent->getHeroCombatAttack($combatPositions, $targetPriorities, $damageTypes);
+        $itemUuid = $heroCombatAttack->getItemUuid();
+        $match = $this->itemAggregates[$itemUuid] ?? null;
+
+        if ($match) {
+            return $match;
+        }
+
+        $itemAggregate = ItemAggregate::retrieve($itemUuid);
+        $this->itemAggregates[$itemUuid] = $itemAggregate;
+        return $itemAggregate;
     }
 
     protected function setSquadAggregate(SideQuestResult $sideQuestResult)

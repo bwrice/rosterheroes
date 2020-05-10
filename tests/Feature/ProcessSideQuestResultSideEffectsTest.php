@@ -4,7 +4,9 @@ namespace Tests\Feature;
 
 use App\Domain\ProcessSideQuestResultSideEffects;
 use App\Factories\Combat\CombatHeroFactory;
+use App\Factories\Combat\HeroCombatAttackFactory;
 use App\Factories\Models\HeroFactory;
+use App\Factories\Models\ItemFactory;
 use App\Factories\Models\SideQuestEventFactory;
 use App\Factories\Models\SideQuestResultFactory;
 use App\SideQuestResult;
@@ -205,5 +207,71 @@ class ProcessSideQuestResultSideEffectsTest extends TestCase
         $this->getDomainAction()->execute($sideQuestResult);
 
         $this->assertEquals($previousMinionKills + 1, $squad->fresh()->minion_kills);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_increase_items_damage_dealt_from_hero_damages_minion_events()
+    {
+        $sideQuestResult = $this->getValidSideQuestResult();
+
+        $damageDealt = rand(50, 1000);
+        $item = ItemFactory::new()->create();
+        $heroCombatAttack = HeroCombatAttackFactory::new()->forItem($item->uuid)->create();
+        $sideQuestEvent = SideQuestEventFactory::new()
+            ->heroDamagesMinion(null, $heroCombatAttack, null, $damageDealt)
+            ->withSideQuestResultID($sideQuestResult->id)
+            ->create();
+
+        $beforeDamageDealt = $item->damage_dealt;
+
+        $this->getDomainAction()->execute($sideQuestResult);
+
+        $this->assertEquals($beforeDamageDealt + $damageDealt, $item->fresh()->damage_dealt);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_increase_items_damage_dealt_from_hero_kills_minion_events()
+    {
+        $sideQuestResult = $this->getValidSideQuestResult();
+
+        $damageDealt = rand(50, 1000);
+        $item = ItemFactory::new()->create();
+        $heroCombatAttack = HeroCombatAttackFactory::new()->forItem($item->uuid)->create();
+        $sideQuestEvent = SideQuestEventFactory::new()
+            ->heroKillsMinion(null, $heroCombatAttack, null, $damageDealt)
+            ->withSideQuestResultID($sideQuestResult->id)
+            ->create();
+
+        $beforeDamageDealt = $item->damage_dealt;
+
+        $this->getDomainAction()->execute($sideQuestResult);
+
+        $this->assertEquals($beforeDamageDealt + $damageDealt, $item->fresh()->damage_dealt);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_increase_items_minion_kills_from_hero_kills_minion_events()
+    {
+        $sideQuestResult = $this->getValidSideQuestResult();
+
+        $damageDealt = rand(50, 1000);
+        $item = ItemFactory::new()->create();
+        $heroCombatAttack = HeroCombatAttackFactory::new()->forItem($item->uuid)->create();
+        $sideQuestEvent = SideQuestEventFactory::new()
+            ->heroKillsMinion(null, $heroCombatAttack, null, $damageDealt)
+            ->withSideQuestResultID($sideQuestResult->id)
+            ->create();
+
+        $previousMinionKills = $item->minion_kills;
+
+        $this->getDomainAction()->execute($sideQuestResult);
+
+        $this->assertEquals($previousMinionKills + 1, $item->fresh()->minion_kills);
     }
 }

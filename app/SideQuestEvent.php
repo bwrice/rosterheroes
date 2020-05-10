@@ -2,7 +2,10 @@
 
 namespace App;
 
+use App\Domain\Combat\Attacks\HeroCombatAttackDataMapper;
+use App\Domain\Combat\Combatants\CombatHero;
 use App\Domain\Combat\Combatants\CombatHeroDataMapper;
+use App\Domain\Combat\Combatants\CombatMinion;
 use App\Domain\Combat\Combatants\CombatMinionDataMapper;
 use App\Domain\Models\EventSourcedModel;
 use App\Domain\QueryBuilders\SideQuestEventQueryBuilder;
@@ -59,6 +62,10 @@ class SideQuestEvent extends EventSourcedModel
         return $mappedData;
     }
 
+    /**
+     * @param Collection|null $combatPositions
+     * @return CombatMinion
+     */
     public function getCombatMinion(Collection $combatPositions = null)
     {
         /** @var CombatMinionDataMapper $dataMapper */
@@ -66,11 +73,28 @@ class SideQuestEvent extends EventSourcedModel
         return $dataMapper->getCombatMinion($this->data['combatMinion'], $combatPositions);
     }
 
+    /**
+     * @param Collection|null $combatPositions
+     * @return CombatHero
+     */
     public function getCombatHero(Collection $combatPositions = null)
     {
         /** @var CombatHeroDataMapper $dataMapper */
         $dataMapper = app(CombatHeroDataMapper::class);
         return $dataMapper->getCombatHero($this->data['combatHero'], $combatPositions);
+    }
+
+    /**
+     * @param Collection|null $combatPositions
+     * @param Collection|null $targetPriorities
+     * @param Collection|null $damageTypes
+     * @return Domain\Combat\Attacks\HeroCombatAttack
+     */
+    public function getHeroCombatAttack(Collection $combatPositions = null, Collection $targetPriorities = null, Collection $damageTypes = null)
+    {
+        /** @var HeroCombatAttackDataMapper $dataMapper */
+        $dataMapper = app(HeroCombatAttackDataMapper::class);
+        return $dataMapper->getHeroCombatAttack($this->data['heroCombatAttack'], $combatPositions, $targetPriorities, $damageTypes);
     }
 
     public function getDamage()
