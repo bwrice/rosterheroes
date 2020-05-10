@@ -135,6 +135,7 @@ class ProcessSideQuestResultSideEffects
     {
         $minion = $this->getMinion($minionDamagesHeroEvent, $combatPositions);
         $damage = $minionDamagesHeroEvent->getDamage();
+        $this->squadAggregate->takeDamageFromMinion($damage, $minion);
         $heroAggregate = $this->getHeroAggregate($minionDamagesHeroEvent, $combatPositions);
         $heroAggregate->takeDamageFromMinion($damage, $minion);
     }

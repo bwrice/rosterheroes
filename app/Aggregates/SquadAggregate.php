@@ -17,6 +17,7 @@ use App\StorableEvents\SquadHeroPostAdded;
 use App\StorableEvents\SquadKillsMinion;
 use App\StorableEvents\SquadLocationUpdated;
 use App\StorableEvents\SquadSlotsAdded;
+use App\StorableEvents\SquadTakesDamageFromMinion;
 use Spatie\EventSourcing\AggregateRoot;
 
 final class SquadAggregate extends AggregateRoot
@@ -101,6 +102,12 @@ final class SquadAggregate extends AggregateRoot
     public function dealDamageToMinion(int $damage, Minion $minion)
     {
         $this->recordThat(new SquadDealsDamageToMinion($damage, $minion));
+        return $this;
+    }
+
+    public function takeDamageFromMinion(int $damage, Minion $minion)
+    {
+        $this->recordThat(new SquadTakesDamageFromMinion($damage, $minion));
         return $this;
     }
 
