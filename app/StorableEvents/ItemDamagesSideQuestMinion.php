@@ -6,17 +6,22 @@ use App\Domain\Models\Minion;
 use Illuminate\Queue\SerializesModels;
 use Spatie\EventSourcing\ShouldBeStored;
 
-final class ItemKillsMinion implements ShouldBeStored
+final class ItemDamagesSideQuestMinion implements ShouldBeStored
 {
     use SerializesModels;
 
+    /**
+     * @var int
+     */
+    public $damage;
     /**
      * @var Minion
      */
     public $minion;
 
-    public function __construct(Minion $minion)
+    public function __construct(int $damage, Minion $minion)
     {
+        $this->damage = $damage;
         $this->minion = $minion;
     }
 }
