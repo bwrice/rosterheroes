@@ -8,6 +8,7 @@ use App\Domain\Actions\WeekFinalizing\FinalizeWeekDomainAction;
 use App\Domain\Actions\WeekFinalizing\FinalizeWeekFinalStep;
 use App\Domain\Actions\WeekFinalizing\ProcessWeeklySideQuestCombat;
 use App\Domain\Actions\WeekFinalizing\ProcessWeeklySideQuestRewards;
+use App\Domain\Actions\WeekFinalizing\ProcessWeeklySideQuestSideEffects;
 use App\Domain\Actions\WeekFinalizing\SetupAllQuestsForNextWeek;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -60,8 +61,10 @@ class FinalizeWeekJob implements ShouldQueue
             case 4:
                 return app(ProcessWeeklySideQuestRewards::class);
             case 5:
-                return app(SetupAllQuestsForNextWeek::class);
+                return app(ProcessWeeklySideQuestSideEffects::class);
             case 6:
+                return app(SetupAllQuestsForNextWeek::class);
+            case 7:
                 return app(FinalizeWeekFinalStep::class);
         }
         throw new \InvalidArgumentException("Unknown finalize action for step: " . $this->step);

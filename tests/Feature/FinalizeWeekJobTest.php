@@ -8,6 +8,7 @@ use App\Domain\Actions\WeekFinalizing\FinalizeCurrentWeekSpiritEnergiesAction;
 use App\Domain\Actions\WeekFinalizing\FinalizeWeekFinalStep;
 use App\Domain\Actions\WeekFinalizing\ProcessWeeklySideQuestCombat;
 use App\Domain\Actions\WeekFinalizing\ProcessWeeklySideQuestRewards;
+use App\Domain\Actions\WeekFinalizing\ProcessWeeklySideQuestSideEffects;
 use App\Domain\Actions\WeekFinalizing\SetupAllQuestsForNextWeek;
 use App\Jobs\FinalizeWeekJob;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -55,10 +56,14 @@ class FinalizeWeekJobTest extends TestCase
             ],
             'Step 5' => [
                 'step' => 5,
-                'domainAction' => SetupAllQuestsForNextWeek::class
+                'domainAction' => ProcessWeeklySideQuestSideEffects::class
             ],
             'Step 6' => [
                 'step' => 6,
+                'domainAction' => SetupAllQuestsForNextWeek::class
+            ],
+            'Step 7' => [
+                'step' => 7,
                 'domainAction' => FinalizeWeekFinalStep::class
             ],
         ];
