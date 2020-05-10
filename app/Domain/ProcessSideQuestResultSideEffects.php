@@ -150,9 +150,11 @@ class ProcessSideQuestResultSideEffects
     {
         $minion = $this->getMinion($minionDamagesHeroEvent, $combatPositions);
         $damage = $minionDamagesHeroEvent->getDamage();
-        $this->squadAggregate->takeDamageFromMinion($damage, $minion);
+        $this->squadAggregate->takeDamageFromMinion($damage, $minion)
+            ->memberKilledFromSideQuestMinion($minion);
         $heroAggregate = $this->getHeroAggregate($minionDamagesHeroEvent, $combatPositions);
-        $heroAggregate->takeDamageFromMinion($damage, $minion);
+        $heroAggregate->takeDamageFromMinion($damage, $minion)
+            ->killedBySideQuestMinion($minion);
     }
 
     protected function getMinion(SideQuestEvent $sideQuestEvent, EloquentCollection $combatPositions)

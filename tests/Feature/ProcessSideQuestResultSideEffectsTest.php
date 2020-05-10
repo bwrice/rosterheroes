@@ -196,6 +196,32 @@ class ProcessSideQuestResultSideEffectsTest extends TestCase
     /**
      * @test
      */
+    public function it_will_increase_hero_death_counts_on_minion_kills_hero_events()
+    {
+        $sideQuestResult = $this->getValidSideQuestResult();
+        $squad = $sideQuestResult->campaignStop->campaign->squad;
+        $hero = HeroFactory::new()->forSquad($squad)->create();
+        $combatHero = CombatHeroFactory::new()->forHero($hero->uuid)->create();
+
+        $sideQuestEvent = SideQuestEventFactory::new()
+            ->minionKillsHero(null, null, $combatHero)
+            ->withSideQuestResultID($sideQuestResult->id)
+            ->create();
+
+        $beforeSideQuestDeaths = $hero->side_quest_deaths;
+        $beforeMinionDeaths = $hero->minion_deaths;
+        $beforeCombatDeaths = $hero->combat_deaths;
+
+        $this->getDomainAction()->execute($sideQuestResult);
+
+        $this->assertEquals($beforeSideQuestDeaths + 1, $hero->fresh()->side_quest_deaths);
+        $this->assertEquals($beforeMinionDeaths + 1, $hero->fresh()->minion_deaths);
+        $this->assertEquals($beforeCombatDeaths + 1, $hero->fresh()->combat_deaths);
+    }
+
+    /**
+     * @test
+     */
     public function it_will_increase_squads_damage_dealt_from_hero_damages_minion_events()
     {
         $sideQuestResult = $this->getValidSideQuestResult();
@@ -317,6 +343,30 @@ class ProcessSideQuestResultSideEffectsTest extends TestCase
         $this->getDomainAction()->execute($sideQuestResult);
 
         $this->assertEquals($beforeDamageTake + $damageDealt, $squad->fresh()->damage_taken);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_increase_squad_death_counts_from_minion_kills_hero_events()
+    {
+        $sideQuestResult = $this->getValidSideQuestResult();
+
+        $sideQuestEvent = SideQuestEventFactory::new()
+            ->minionKillsHero()
+            ->withSideQuestResultID($sideQuestResult->id)
+            ->create();
+
+        $squad = $sideQuestResult->campaignStop->campaign->squad;
+        $beforeSideQuestDeaths = $squad->side_quest_deaths;
+        $beforeMinionDeaths = $squad->minion_deaths;
+        $beforeCombatDeaths = $squad->combat_deaths;
+
+        $this->getDomainAction()->execute($sideQuestResult);
+
+        $this->assertEquals($beforeSideQuestDeaths + 1, $squad->fresh()->side_quest_deaths);
+        $this->assertEquals($beforeMinionDeaths + 1, $squad->fresh()->minion_deaths);
+        $this->assertEquals($beforeCombatDeaths + 1, $squad->fresh()->combat_deaths);
     }
 
     /**
