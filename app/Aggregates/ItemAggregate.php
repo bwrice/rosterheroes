@@ -6,8 +6,8 @@ use App\Domain\Models\Minion;
 use App\StorableEvents\AttackAttachedToItem;
 use App\StorableEvents\ItemCreated;
 use App\StorableEvents\EnchantmentAttachedToItem;
-use App\StorableEvents\ItemDamagesMinion;
-use App\StorableEvents\ItemKillsMinion;
+use App\StorableEvents\ItemDamagesSideQuestMinion;
+use App\StorableEvents\ItemKillsSideQuestMinion;
 use Spatie\EventSourcing\AggregateRoot;
 
 final class ItemAggregate extends AggregateRoot
@@ -33,15 +33,15 @@ final class ItemAggregate extends AggregateRoot
         return $this;
     }
 
-    public function damageMinion(int $damage, Minion $minion)
+    public function damagesSideQuestMinion(int $damage, Minion $minion)
     {
-        $this->recordThat(new ItemDamagesMinion($damage, $minion));
+        $this->recordThat(new ItemDamagesSideQuestMinion($damage, $minion));
         return $this;
     }
 
-    public function killMinion(Minion $minion)
+    public function killsSideQuestMinion(Minion $minion)
     {
-        $this->recordThat(new ItemKillsMinion($minion));
+        $this->recordThat(new ItemKillsSideQuestMinion($minion));
         return $this;
     }
 }

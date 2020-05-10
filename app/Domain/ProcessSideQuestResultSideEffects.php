@@ -113,7 +113,7 @@ class ProcessSideQuestResultSideEffects
         $heroAggregate = $this->getHeroAggregate($heroDamagesMinionEvent, $combatPositions);
         $heroAggregate->dealDamageToSideQuestMinion($damage, $minion);
         $itemAggregate = $this->getItemAggregate($heroDamagesMinionEvent, $combatPositions, $targetPriorities, $damageTypes);
-        $itemAggregate->damageMinion($damage, $minion);
+        $itemAggregate->damagesSideQuestMinion($damage, $minion);
     }
 
     protected function handleHeroKillsMinionEvent(
@@ -130,7 +130,7 @@ class ProcessSideQuestResultSideEffects
         $heroAggregate->dealDamageToSideQuestMinion($heroKillsMinionEvent->getDamage(), $minion)
             ->killsSideQuestMinion($minion);
         $itemAggregate = $this->getItemAggregate($heroKillsMinionEvent, $combatPositions, $targetPriorities, $damageTypes);
-        $itemAggregate->damageMinion($damage, $minion)->killMinion($minion);
+        $itemAggregate->damagesSideQuestMinion($damage, $minion)->killsSideQuestMinion($minion);
     }
 
     protected function handleMinionDamagesHero(

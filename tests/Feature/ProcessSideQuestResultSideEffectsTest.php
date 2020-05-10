@@ -429,11 +429,17 @@ class ProcessSideQuestResultSideEffectsTest extends TestCase
             ->withSideQuestResultID($sideQuestResult->id)
             ->create();
 
-        $beforeDamageDealt = $item->damage_dealt;
+        $beforeTotalDamage = $item->damage_dealt;
+        $beforeMinionDamageDealt = $item->minion_damage_dealt;
+        $beforeSideQuestDamageDealt = $item->side_quest_damage_dealt;
 
         $this->getDomainAction()->execute($sideQuestResult);
 
-        $this->assertEquals($beforeDamageDealt + $damageDealt, $item->fresh()->damage_dealt);
+        $item = $item->fresh();
+
+        $this->assertEquals($beforeTotalDamage + $damageDealt, $item->damage_dealt);
+        $this->assertEquals($beforeMinionDamageDealt + $damageDealt, $item->minion_damage_dealt);
+        $this->assertEquals($beforeSideQuestDamageDealt + $damageDealt, $item->side_quest_damage_dealt);
     }
 
 
@@ -452,11 +458,17 @@ class ProcessSideQuestResultSideEffectsTest extends TestCase
             ->withSideQuestResultID($sideQuestResult->id)
             ->create();
 
-        $beforeDamageDealt = $item->damage_dealt;
+        $beforeTotalDamage = $item->damage_dealt;
+        $beforeMinionDamageDealt = $item->minion_damage_dealt;
+        $beforeSideQuestDamageDealt = $item->side_quest_damage_dealt;
 
         $this->getDomainAction()->execute($sideQuestResult);
 
-        $this->assertEquals($beforeDamageDealt + $damageDealt, $item->fresh()->damage_dealt);
+        $item = $item->fresh();
+
+        $this->assertEquals($beforeTotalDamage + $damageDealt, $item->damage_dealt);
+        $this->assertEquals($beforeMinionDamageDealt + $damageDealt, $item->minion_damage_dealt);
+        $this->assertEquals($beforeSideQuestDamageDealt + $damageDealt, $item->side_quest_damage_dealt);
     }
 
     /**
@@ -474,10 +486,16 @@ class ProcessSideQuestResultSideEffectsTest extends TestCase
             ->withSideQuestResultID($sideQuestResult->id)
             ->create();
 
+        $previousKills = $item->combat_kills;
         $previousMinionKills = $item->minion_kills;
+        $previousSideQuestKills = $item->side_quest_kills;
 
         $this->getDomainAction()->execute($sideQuestResult);
 
-        $this->assertEquals($previousMinionKills + 1, $item->fresh()->minion_kills);
+        $item = $item->fresh();
+
+        $this->assertEquals($previousKills + 1, $item->combat_kills);
+        $this->assertEquals($previousMinionKills + 1, $item->minion_kills);
+        $this->assertEquals($previousSideQuestKills + 1, $item->side_quest_kills);
     }
 }
