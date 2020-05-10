@@ -47,10 +47,21 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $favor
  * @property int $hero_posts
  * @property int $damage_dealt
+ * @property int $minion_damage_dealt
+ * @property int $titan_damage_dealt
+ * @property int $side_quest_damage_dealt
+ * @property int $quest_damage_dealt
  * @property int $damage_taken
+ * @property int $minion_damage_taken
+ * @property int $titan_damage_taken
+ * @property int $side_quest_damage_taken
+ * @property int $quest_damage_taken
  * @property int $attacks_blocked
  * @property int $minion_kills
  * @property int $titan_kills
+ * @property int $combat_kills
+ * @property int $side_quest_kills
+ * @property int $quest_kills
  * @property int $side_quest_deaths
  * @property int $minion_deaths
  * @property int $titan_deaths
