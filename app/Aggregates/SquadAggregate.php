@@ -3,6 +3,7 @@
 namespace App\Aggregates;
 
 use App\Domain\Models\Minion;
+use App\Domain\Models\SideQuest;
 use App\StorableEvents\SideQuestMinionKillsSquadMember;
 use App\StorableEvents\SpellAddedToLibrary;
 use App\StorableEvents\SquadCreated;
@@ -17,6 +18,7 @@ use App\StorableEvents\SquadKillsSideQuestMinion;
 use App\StorableEvents\SquadLocationUpdated;
 use App\StorableEvents\SquadMemberBlocksSideQuestMinion;
 use App\StorableEvents\SquadTakesDamageFromSideQuestMinion;
+use App\StorableEvents\SquadVictoriousInSideQuest;
 use Spatie\EventSourcing\AggregateRoot;
 
 final class SquadAggregate extends AggregateRoot
@@ -110,6 +112,12 @@ final class SquadAggregate extends AggregateRoot
     public function memberBlocksSideQuestMinion(Minion $minion)
     {
         $this->recordThat(new SquadMemberBlocksSideQuestMinion($minion));
+        return $this;
+    }
+
+    public function sideQuestVictory(SideQuest $sideQuest)
+    {
+        $this->recordThat(new SquadVictoriousInSideQuest($sideQuest));
         return $this;
     }
 

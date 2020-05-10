@@ -21,6 +21,9 @@ use Illuminate\Support\Facades\DB;
 
 class ProcessSideQuestResultSideEffects
 {
+    /** @var SideQuestResult */
+    protected $sideQuestResult;
+
     /** @var Collection */
     protected $heroAggregates;
 
@@ -58,6 +61,7 @@ class ProcessSideQuestResultSideEffects
         $sideQuestResult->save();
 
         try {
+            $this->sideQuestResult = $sideQuestResult;
             $this->setSquadAggregate($sideQuestResult);
 
             $combatPositions = CombatPosition::all();
@@ -82,6 +86,9 @@ class ProcessSideQuestResultSideEffects
                             break;
                         case SideQuestEvent::TYPE_HERO_BLOCKS_MINION:
                             $this->handleHeroBlocksMinion($sideQuestEvent, $combatPositions);
+                            break;
+                        case SideQuestEvent::TYPE_SIDE_QUEST_VICTORY:
+                            $this->squadAggregate->sideQuestVictory($this->sideQuestResult->sideQuest);
                             break;
                     }
                 });
