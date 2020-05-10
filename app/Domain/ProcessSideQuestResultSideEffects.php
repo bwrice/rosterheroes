@@ -5,6 +5,7 @@ namespace App\Domain;
 
 
 use App\Aggregates\HeroAggregate;
+use App\Aggregates\SquadAggregate;
 use App\Domain\Collections\MinionCollection;
 use App\Domain\Models\CombatPosition;
 use App\Domain\Models\Minion;
@@ -18,6 +19,9 @@ class ProcessSideQuestResultSideEffects
 {
     /** @var Collection */
     protected $heroAggregates;
+
+    /** @var SquadAggregate|null */
+    protected $squadAggregate;
 
     /** @var MinionCollection */
     protected $minions;
@@ -42,6 +46,8 @@ class ProcessSideQuestResultSideEffects
             throw new \Exception("Cannot process side effects because combat not processed for side quest result: " . $sideQuestResult->id);
         }
 
+        $this->setSquadAggregate($sideQuestResult);
+
         $combatPositions = CombatPosition::all();
 
         $sideQuestResult->sideQuestEvents()->chunk(100, function (EloquentCollection $sideQuestEvents) use ($combatPositions) {
@@ -65,15 +71,21 @@ class ProcessSideQuestResultSideEffects
     protected function handleHeroDamagesMinionEvent(SideQuestEvent $heroDamagesMinionEvent, EloquentCollection $combatPositions)
     {
         $minion = $this->getMinion($heroDamagesMinionEvent, $combatPositions);
+        $damage = $heroDamagesMinionEvent->getDamage();
+        $this->squadAggregate->dealDamageToMinion($damage, $minion)->persist();
         $heroAggregate = $this->getHeroAggregate($heroDamagesMinionEvent, $combatPositions);
-        $heroAggregate->dealDamageToMinion($heroDamagesMinionEvent->getDamage(), $minion)->persist();
+        $heroAggregate->dealDamageToMinion($damage, $minion)->persist();
     }
 
     protected function handleHeroKillsMinionEvent(SideQuestEvent $heroDamagesMinionEvent, EloquentCollection $combatPositions)
     {
         $minion = $this->getMinion($heroDamagesMinionEvent, $combatPositions);
+        $damage = $heroDamagesMinionEvent->getDamage();
+        $this->squadAggregate->dealDamageToMinion($damage, $minion)
+            ->killMinion($minion)->persist();
         $heroAggregate = $this->getHeroAggregate($heroDamagesMinionEvent, $combatPositions);
-        $heroAggregate->dealDamageToMinion($heroDamagesMinionEvent->getDamage(), $minion)->killMinion($minion)->persist();
+        $heroAggregate->dealDamageToMinion($heroDamagesMinionEvent->getDamage(), $minion)
+            ->killMinion($minion)->persist();
     }
 
     protected function getMinion(SideQuestEvent $sideQuestEvent, EloquentCollection $combatPositions)
@@ -105,5 +117,11 @@ class ProcessSideQuestResultSideEffects
         $heroAggregate = HeroAggregate::retrieve($heroUuid);
         $this->heroAggregates[$heroUuid] = $heroAggregate;
         return $heroAggregate;
+    }
+
+    protected function setSquadAggregate(SideQuestResult $sideQuestResult)
+    {
+        $squad = $sideQuestResult->campaignStop->campaign->squad;
+        $this->squadAggregate = SquadAggregate::retrieve($squad->uuid);
     }
 }
