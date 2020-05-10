@@ -5,11 +5,13 @@ namespace App\Factories\Models;
 
 
 use App\Domain\Combat\Attacks\HeroCombatAttack;
+use App\Domain\Combat\Attacks\MinionCombatAttack;
 use App\Domain\Combat\Combatants\CombatHero;
 use App\Domain\Combat\Combatants\CombatMinion;
 use App\Factories\Combat\CombatHeroFactory;
 use App\Factories\Combat\CombatMinionFactory;
 use App\Factories\Combat\HeroCombatAttackFactory;
+use App\Factories\Combat\MinionCombatAttackFactory;
 use App\SideQuestEvent;
 use Illuminate\Support\Str;
 
@@ -124,6 +126,56 @@ class SideQuestEventFactory
             'damage' => $damage ?: rand(10, 999),
             'combatHero' => $combatHero->toArray(),
             'heroCombatAttack' => $heroCombatAttack->toArray(),
+            'combatMinion' => $combatMinion->toArray(),
+            'staminaCost' => $staminaCost ?: rand(5, 15),
+            'manaCost' => $manaCost ?: rand(2, 10)
+        ];
+        return $clone;
+    }
+
+    public function minionDamagesHero(
+        CombatHero $combatHero = null,
+        MinionCombatAttack $minionCombatAttack = null,
+        CombatMinion $combatMinion = null,
+        $damage = null,
+        $staminaCost = null,
+        $manaCost = null)
+    {
+        $eventType = SideQuestEvent::TYPE_MINION_DAMAGES_HERO;
+        return $this->minionAttacksHero($eventType, $combatHero, $minionCombatAttack, $combatMinion, $damage, $staminaCost, $manaCost);
+    }
+
+    public function minionKillsHero(
+        CombatHero $combatHero = null,
+        MinionCombatAttack $minionCombatAttack = null,
+        CombatMinion $combatMinion = null,
+        $damage = null,
+        $staminaCost = null,
+        $manaCost = null)
+    {
+        $eventType = SideQuestEvent::TYPE_MINION_KILLS_HERO;
+        return $this->minionAttacksHero($eventType, $combatHero, $minionCombatAttack, $combatMinion, $damage, $staminaCost, $manaCost);
+    }
+
+    protected function minionAttacksHero(
+        string $eventType,
+        CombatHero $combatHero = null,
+        MinionCombatAttack $minionCombatAttack = null,
+        CombatMinion $combatMinion = null,
+        $damage = null,
+        $staminaCost = null,
+        $manaCost = null)
+    {
+        $combatMinion = $combatMinion ?: CombatMinionFactory::new()->create();
+        $minionCombatAttack = $minionCombatAttack ?: MinionCombatAttackFactory::new()->create();
+        $combatHero = $combatHero ?: CombatHeroFactory::new()->create();
+
+        $clone = clone $this;
+        $clone->eventType = $eventType;
+        $clone->data = [
+            'damage' => $damage ?: rand(10, 999),
+            'combatHero' => $combatHero->toArray(),
+            'minionCombatAttack' => $minionCombatAttack->toArray(),
             'combatMinion' => $combatMinion->toArray(),
             'staminaCost' => $staminaCost ?: rand(5, 15),
             'manaCost' => $manaCost ?: rand(2, 10)
