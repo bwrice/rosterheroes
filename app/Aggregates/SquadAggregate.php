@@ -8,17 +8,17 @@ use App\StorableEvents\CampaignStopCreated;
 use App\StorableEvents\SideQuestMinionKillsSquadMember;
 use App\StorableEvents\SpellAddedToLibrary;
 use App\StorableEvents\SquadCreated;
-use App\StorableEvents\SquadDealsDamageToMinion;
+use App\StorableEvents\SquadDealsDamageToSideQuestMinion;
 use App\StorableEvents\SquadEssenceIncreased;
 use App\StorableEvents\SquadExperienceIncreased;
 use App\StorableEvents\SquadFavorIncreased;
 use App\StorableEvents\SquadGoldDecreased;
 use App\StorableEvents\SquadGoldIncreased;
 use App\StorableEvents\SquadHeroPostAdded;
-use App\StorableEvents\SquadKillsMinion;
+use App\StorableEvents\SquadKillsSideQuestMinion;
 use App\StorableEvents\SquadLocationUpdated;
 use App\StorableEvents\SquadSlotsAdded;
-use App\StorableEvents\SquadTakesDamageFromMinion;
+use App\StorableEvents\SquadTakesDamageFromSideQuestMinion;
 use Spatie\EventSourcing\AggregateRoot;
 
 final class SquadAggregate extends AggregateRoot
@@ -94,21 +94,21 @@ final class SquadAggregate extends AggregateRoot
         return $this;
     }
 
-    public function killMinion(Minion $minion)
+    public function killsSideQuestMinion(Minion $minion)
     {
-        $this->recordThat(new SquadKillsMinion($minion));
+        $this->recordThat(new SquadKillsSideQuestMinion($minion));
         return $this;
     }
 
-    public function dealDamageToMinion(int $damage, Minion $minion)
+    public function dealsDamageToSideQuestMinion(int $damage, Minion $minion)
     {
-        $this->recordThat(new SquadDealsDamageToMinion($damage, $minion));
+        $this->recordThat(new SquadDealsDamageToSideQuestMinion($damage, $minion));
         return $this;
     }
 
-    public function takeDamageFromMinion(int $damage, Minion $minion)
+    public function takesDamageFromMinion(int $damage, Minion $minion)
     {
-        $this->recordThat(new SquadTakesDamageFromMinion($damage, $minion));
+        $this->recordThat(new SquadTakesDamageFromSideQuestMinion($damage, $minion));
         return $this;
     }
 

@@ -3,10 +3,10 @@
 namespace App\Projectors;
 
 use App\Domain\Models\Hero;
-use App\StorableEvents\HeroDealsDamageToMinion;
-use App\StorableEvents\HeroKillsMinion;
+use App\StorableEvents\HeroDealsDamageToSideQuestMinion;
+use App\StorableEvents\HeroKillsSideQuestMinion;
 use App\StorableEvents\SideQuestMinionKillsHero;
-use App\StorableEvents\HeroTakesDamageFromMinion;
+use App\StorableEvents\HeroTakesDamageFromSideQuestMinion;
 use Spatie\EventSourcing\Projectors\ProjectsEvents;
 use Spatie\EventSourcing\Projectors\QueuedProjector;
 
@@ -14,24 +14,30 @@ final class HeroCombatStatsProjector implements QueuedProjector
 {
     use ProjectsEvents;
 
-    public function onHeroDealsDamageToMinion(HeroDealsDamageToMinion $event, string $aggregateUuid)
+    public function onHeroDealsDamageToSideQuestMinion(HeroDealsDamageToSideQuestMinion $event, string $aggregateUuid)
     {
         $hero = Hero::findUuidOrFail($aggregateUuid);
         $hero->damage_dealt += $event->damage;
+        $hero->minion_damage_dealt += $event->damage;
+        $hero->side_quest_damage_dealt += $event->damage;
         $hero->save();
     }
 
-    public function onHeroKillsMinion(HeroKillsMinion $event, string $aggregateUuid)
+    public function onHeroKillsSideQuestMinion(HeroKillsSideQuestMinion $event, string $aggregateUuid)
     {
         $hero = Hero::findUuidOrFail($aggregateUuid);
         $hero->minion_kills++;
+        $hero->combat_kills++;
+        $hero->side_quest_kills++;
         $hero->save();
     }
 
-    public function onHeroTakesDamageFromMinion(HeroTakesDamageFromMinion $event, string $aggregateUuid)
+    public function onHeroTakesDamageFromSideQuestMinion(HeroTakesDamageFromSideQuestMinion $event, string $aggregateUuid)
     {
         $hero = Hero::findUuidOrFail($aggregateUuid);
         $hero->damage_taken += $event->damage;
+        $hero->minion_damage_taken += $event->damage;
+        $hero->side_quest_damage_taken += $event->damage;
         $hero->save();
     }
 

@@ -5,9 +5,9 @@ namespace App\Aggregates;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Minion;
 use App\StorableEvents\HeroCreated;
-use App\StorableEvents\HeroDealsDamageToMinion;
-use App\StorableEvents\HeroKillsMinion;
-use App\StorableEvents\HeroTakesDamageFromMinion;
+use App\StorableEvents\HeroDealsDamageToSideQuestMinion;
+use App\StorableEvents\HeroKillsSideQuestMinion;
+use App\StorableEvents\HeroTakesDamageFromSideQuestMinion;
 use App\StorableEvents\SideQuestMinionKillsHero;
 use App\StorableEvents\UpdateHeroPlayerSpirit;
 use App\StorableEvents\WeeklyPlayerSpiritClearedFromHero;
@@ -36,21 +36,21 @@ final class HeroAggregate extends AggregateRoot
         return $this;
     }
 
-    public function dealDamageToMinion(int $damage, Minion $minion)
+    public function dealDamageToSideQuestMinion(int $damage, Minion $minion)
     {
-        $this->recordThat(new HeroDealsDamageToMinion($damage, $minion));
+        $this->recordThat(new HeroDealsDamageToSideQuestMinion($damage, $minion));
         return $this;
     }
 
-    public function killMinion(Minion $minion)
+    public function killsSideQuestMinion(Minion $minion)
     {
-        $this->recordThat(new HeroKillsMinion($minion));
+        $this->recordThat(new HeroKillsSideQuestMinion($minion));
         return $this;
     }
 
-    public function takeDamageFromMinion(int $damage, Minion $minion)
+    public function takesDamageFromSideQuestMinion(int $damage, Minion $minion)
     {
-        $this->recordThat(new HeroTakesDamageFromMinion($damage, $minion));
+        $this->recordThat(new HeroTakesDamageFromSideQuestMinion($damage, $minion));
         return $this;
     }
 
