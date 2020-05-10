@@ -165,6 +165,7 @@ class ProcessSideQuestResultSideEffects
         EloquentCollection $combatPositions)
     {
         $minion = $this->getMinion($minionDamagesHeroEvent, $combatPositions);
+        $this->squadAggregate->memberBlocksSideQuestMinion($minion);
         $heroAggregate = $this->getHeroAggregate($minionDamagesHeroEvent, $combatPositions);
         $heroAggregate->blocksSideQuestMinion($minion);
     }

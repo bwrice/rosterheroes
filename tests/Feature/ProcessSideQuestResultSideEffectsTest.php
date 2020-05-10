@@ -427,6 +427,7 @@ class ProcessSideQuestResultSideEffectsTest extends TestCase
             ->create();
 
         $squad = $sideQuestResult->campaignStop->campaign->squad;
+
         $beforeSideQuestDeaths = $squad->side_quest_deaths;
         $beforeMinionDeaths = $squad->minion_deaths;
         $beforeCombatDeaths = $squad->combat_deaths;
@@ -436,6 +437,27 @@ class ProcessSideQuestResultSideEffectsTest extends TestCase
         $this->assertEquals($beforeSideQuestDeaths + 1, $squad->fresh()->side_quest_deaths);
         $this->assertEquals($beforeMinionDeaths + 1, $squad->fresh()->minion_deaths);
         $this->assertEquals($beforeCombatDeaths + 1, $squad->fresh()->combat_deaths);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_increase_blocks_for_a_squad_for_hero_blocks_minion_events()
+    {
+        $sideQuestResult = $this->getValidSideQuestResult();
+
+        $sideQuestEvent = SideQuestEventFactory::new()
+            ->heroBlocksMinion()
+            ->withSideQuestResultID($sideQuestResult->id)
+            ->create();
+
+        $squad = $sideQuestResult->campaignStop->campaign->squad;
+
+        $beforeBlocks = $squad->attacks_blocked;
+
+        $this->getDomainAction()->execute($sideQuestResult);
+
+        $this->assertEquals($beforeBlocks + 1, $squad->fresh()->attacks_blocked);
     }
 
     /**
