@@ -176,7 +176,7 @@ class SideQuestEventFactory
         $damage = null)
     {
         $eventType = SideQuestEvent::TYPE_MINION_DAMAGES_HERO;
-        return $this->minionAttacksHero($eventType, $combatMinion, $minionCombatAttack, $combatHero, $damage, $staminaCost, $manaCost);
+        return $this->minionAttacksHero($eventType, $combatMinion, $minionCombatAttack, $combatHero, $damage);
     }
 
     public function minionKillsHero(
@@ -186,7 +186,7 @@ class SideQuestEventFactory
         $damage = null)
     {
         $eventType = SideQuestEvent::TYPE_MINION_KILLS_HERO;
-        return $this->minionAttacksHero($eventType, $combatMinion, $minionCombatAttack, $combatHero, $damage, $staminaCost, $manaCost);
+        return $this->minionAttacksHero($eventType, $combatMinion, $minionCombatAttack, $combatHero, $damage);
     }
 
     protected function minionAttacksHero(
