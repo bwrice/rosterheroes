@@ -8,10 +8,14 @@ use App\Domain\Combat\Attacks\HeroCombatAttack;
 use App\Domain\Combat\Attacks\MinionCombatAttack;
 use App\Domain\Combat\Combatants\CombatHero;
 use App\Domain\Combat\Combatants\CombatMinion;
+use App\Domain\Combat\CombatGroups\CombatSquad;
+use App\Domain\Combat\CombatGroups\SideQuestGroup;
 use App\Factories\Combat\CombatHeroFactory;
 use App\Factories\Combat\CombatMinionFactory;
+use App\Factories\Combat\CombatSquadFactory;
 use App\Factories\Combat\HeroCombatAttackFactory;
 use App\Factories\Combat\MinionCombatAttackFactory;
+use App\Factories\Combat\SideQuestGroupFactory;
 use App\SideQuestEvent;
 use Illuminate\Support\Str;
 
@@ -71,6 +75,38 @@ class SideQuestEventFactory
             return $this->sideQuestResultID;
         }
         return SideQuestResultFactory::new()->create()->id;
+    }
+
+    public function sideQuestVictory(CombatSquad $combatSquad = null, SideQuestGroup $sideQuestGroup = null)
+    {
+        $eventType = SideQuestEvent::TYPE_SIDE_QUEST_VICTORY;
+        return $this->sideQuestEndEvent($eventType, $combatSquad, $sideQuestGroup);
+    }
+
+    public function sideQuestDefeat(CombatSquad $combatSquad = null, SideQuestGroup $sideQuestGroup = null)
+    {
+        $eventType = SideQuestEvent::TYPE_SIDE_QUEST_DEFEAT;
+        return $this->sideQuestEndEvent($eventType, $combatSquad, $sideQuestGroup);
+    }
+
+    public function sideQuestDraw(CombatSquad $combatSquad = null, SideQuestGroup $sideQuestGroup = null)
+    {
+        $eventType = SideQuestEvent::TYPE_SIDE_QUEST_DRAW;
+        return $this->sideQuestEndEvent($eventType, $combatSquad, $sideQuestGroup);
+    }
+
+    protected function sideQuestEndEvent(string $eventType, CombatSquad $combatSquad = null, SideQuestGroup $sideQuestGroup = null)
+    {
+        $combatSquad = $combatSquad ?: CombatSquadFactory::new()->create();
+        $sideQuestGroup = $sideQuestGroup ?: SideQuestGroupFactory::new()->create();
+
+        $clone = clone $this;
+        $clone->eventType = $eventType;
+        $clone->data = [
+            'combatSquad' => $combatSquad->toArray(),
+            'sideQuestGroup' => $sideQuestGroup->toArray()
+        ];
+        return $clone;
     }
 
     public function heroKillsMinion(
