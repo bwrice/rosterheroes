@@ -150,6 +150,29 @@ class ProcessSideQuestResultSideEffectsTest extends TestCase
     /**
      * @test
      */
+    public function it_will_increase_heroes_damage_taken_on_minion_damages_hero_side_quest_events()
+    {
+        $sideQuestResult = $this->getValidSideQuestResult();
+        $squad = $sideQuestResult->campaignStop->campaign->squad;
+        $hero = HeroFactory::new()->forSquad($squad)->create();
+        $combatHero = CombatHeroFactory::new()->forHero($hero->uuid)->create();
+
+        $damageDealt = rand(50, 1000);
+        $sideQuestEvent = SideQuestEventFactory::new()
+            ->minionDamagesHero(null, null, $combatHero, $damageDealt)
+            ->withSideQuestResultID($sideQuestResult->id)
+            ->create();
+
+        $previousDamageTaken = $hero->damage_taken;
+
+        $this->getDomainAction()->execute($sideQuestResult);
+
+        $this->assertEquals($previousDamageTaken + $damageDealt, $hero->fresh()->damage_taken);
+    }
+
+    /**
+     * @test
+     */
     public function it_will_increase_squads_damage_dealt_from_hero_damages_minion_events()
     {
         $sideQuestResult = $this->getValidSideQuestResult();
