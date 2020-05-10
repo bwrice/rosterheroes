@@ -5,6 +5,7 @@ namespace App\Aggregates;
 use App\Domain\Models\Minion;
 use App\StorableEvents\CampaignCreated;
 use App\StorableEvents\CampaignStopCreated;
+use App\StorableEvents\SideQuestMinionKillsSquadMember;
 use App\StorableEvents\SpellAddedToLibrary;
 use App\StorableEvents\SquadCreated;
 use App\StorableEvents\SquadDealsDamageToMinion;
@@ -108,6 +109,12 @@ final class SquadAggregate extends AggregateRoot
     public function takeDamageFromMinion(int $damage, Minion $minion)
     {
         $this->recordThat(new SquadTakesDamageFromMinion($damage, $minion));
+        return $this;
+    }
+
+    public function memberKilledFromSideQuestMinion(Minion $minion)
+    {
+        $this->recordThat(new SideQuestMinionKillsSquadMember($minion));
         return $this;
     }
 
