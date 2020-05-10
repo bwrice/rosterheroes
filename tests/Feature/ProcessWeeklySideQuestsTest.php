@@ -13,12 +13,12 @@ use App\Factories\Models\SideQuestFactory;
 use App\Factories\Models\SideQuestResultFactory;
 use App\Jobs\FinalizeWeekJob;
 use Bwrice\LaravelJobChainGroups\Jobs\AsyncChainedJob;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
 abstract class ProcessWeeklySideQuestsTest extends TestCase
 {
-    /**
     use DatabaseTransactions;
 
     /** @var Week */
