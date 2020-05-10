@@ -19,6 +19,10 @@ class AddCombatStatColumnsToSquads extends Migration
             $table->bigInteger('attacks_blocked')->default(0);
             $table->bigInteger('minion_kills')->default(0);
             $table->bigInteger('titan_kills')->default(0);
+            $table->bigInteger('side_quest_deaths')->default(0);
+            $table->bigInteger('minion_deaths')->default(0);
+            $table->bigInteger('titan_deaths')->default(0);
+            $table->bigInteger('combat_deaths')->default(0);
         });
     }
 
