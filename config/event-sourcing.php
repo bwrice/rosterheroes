@@ -26,7 +26,8 @@ return [
         \App\Projectors\ProvinceProjector::class,
         \App\Projectors\ChestProjector::class,
         \App\Projectors\SquadCombatStatsProjector::class,
-        \App\Projectors\HeroCombatStatsProjector::class
+        \App\Projectors\HeroCombatStatsProjector::class,
+        \App\Projectors\ItemCombatStatsProjector::class
     ],
 
     /*
