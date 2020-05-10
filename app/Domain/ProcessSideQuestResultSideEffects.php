@@ -14,6 +14,7 @@ use App\SideQuestResult;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\DB;
 
 class ProcessSideQuestResultSideEffects
 {
@@ -46,35 +47,48 @@ class ProcessSideQuestResultSideEffects
             throw new \Exception("Cannot process side effects because combat not processed for side quest result: " . $sideQuestResult->id);
         }
 
-        $this->setSquadAggregate($sideQuestResult);
-
-        $combatPositions = CombatPosition::all();
-
-        $sideQuestResult->sideQuestEvents()->chunk(100, function (EloquentCollection $sideQuestEvents) use ($combatPositions) {
-            $sideQuestEvents->each(function (SideQuestEvent $sideQuestEvent) use ($combatPositions) {
-
-                switch ($sideQuestEvent->event_type) {
-                    case SideQuestEvent::TYPE_HERO_DAMAGES_MINION;
-                        $this->handleHeroDamagesMinionEvent($sideQuestEvent, $combatPositions);
-                        break;
-                    case SideQuestEvent::TYPE_HERO_KILLS_MINION;
-                        $this->handleHeroKillsMinionEvent($sideQuestEvent, $combatPositions);
-                        break;
-                }
-            });
-        });
-
         $sideQuestResult->side_effects_processed_at = Date::now();
         $sideQuestResult->save();
+
+        try {
+            $this->setSquadAggregate($sideQuestResult);
+
+            $combatPositions = CombatPosition::all();
+
+            $sideQuestResult->sideQuestEvents()->chunk(100, function (EloquentCollection $sideQuestEvents) use ($combatPositions) {
+                $sideQuestEvents->each(function (SideQuestEvent $sideQuestEvent) use ($combatPositions) {
+
+                    switch ($sideQuestEvent->event_type) {
+                        case SideQuestEvent::TYPE_HERO_DAMAGES_MINION;
+                            $this->handleHeroDamagesMinionEvent($sideQuestEvent, $combatPositions);
+                            break;
+                        case SideQuestEvent::TYPE_HERO_KILLS_MINION;
+                            $this->handleHeroKillsMinionEvent($sideQuestEvent, $combatPositions);
+                            break;
+                    }
+                });
+            });
+
+            DB::transaction(function () {
+                $this->squadAggregate->persist();
+                $this->heroAggregates->each(function (HeroAggregate $heroAggregate) {
+                    $heroAggregate->persist();
+                });
+            });
+
+        } catch (\Throwable $exception) {
+            $sideQuestResult->side_effects_processed_at = null;
+            $sideQuestResult->save();
+        }
     }
 
     protected function handleHeroDamagesMinionEvent(SideQuestEvent $heroDamagesMinionEvent, EloquentCollection $combatPositions)
     {
         $minion = $this->getMinion($heroDamagesMinionEvent, $combatPositions);
         $damage = $heroDamagesMinionEvent->getDamage();
-        $this->squadAggregate->dealDamageToMinion($damage, $minion)->persist();
+        $this->squadAggregate->dealDamageToMinion($damage, $minion);
         $heroAggregate = $this->getHeroAggregate($heroDamagesMinionEvent, $combatPositions);
-        $heroAggregate->dealDamageToMinion($damage, $minion)->persist();
+        $heroAggregate->dealDamageToMinion($damage, $minion);
     }
 
     protected function handleHeroKillsMinionEvent(SideQuestEvent $heroDamagesMinionEvent, EloquentCollection $combatPositions)
@@ -82,10 +96,10 @@ class ProcessSideQuestResultSideEffects
         $minion = $this->getMinion($heroDamagesMinionEvent, $combatPositions);
         $damage = $heroDamagesMinionEvent->getDamage();
         $this->squadAggregate->dealDamageToMinion($damage, $minion)
-            ->killMinion($minion)->persist();
+            ->killMinion($minion);
         $heroAggregate = $this->getHeroAggregate($heroDamagesMinionEvent, $combatPositions);
         $heroAggregate->dealDamageToMinion($heroDamagesMinionEvent->getDamage(), $minion)
-            ->killMinion($minion)->persist();
+            ->killMinion($minion);
     }
 
     protected function getMinion(SideQuestEvent $sideQuestEvent, EloquentCollection $combatPositions)
