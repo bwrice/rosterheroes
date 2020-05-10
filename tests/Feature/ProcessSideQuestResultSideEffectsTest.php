@@ -254,6 +254,30 @@ class ProcessSideQuestResultSideEffectsTest extends TestCase
     /**
      * @test
      */
+    public function it_will_increase_blocks_for_a_hero_for_hero_blocks_minion_events()
+    {
+        $sideQuestResult = $this->getValidSideQuestResult();
+        $squad = $sideQuestResult->campaignStop->campaign->squad;
+        $hero = HeroFactory::new()->forSquad($squad)->create();
+        $combatHero = CombatHeroFactory::new()->forHero($hero->uuid)->create();
+
+        $sideQuestEvent = SideQuestEventFactory::new()
+            ->heroBlocksMinion($combatHero)
+            ->withSideQuestResultID($sideQuestResult->id)
+            ->create();
+
+        $beforeBlocks = $hero->attacks_blocked;
+
+        $this->getDomainAction()->execute($sideQuestResult);
+
+        $hero = $hero->fresh();
+
+        $this->assertEquals($beforeBlocks + 1, $hero->attacks_blocked);
+    }
+
+    /**
+     * @test
+     */
     public function it_will_increase_squads_damage_dealt_from_hero_damages_minion_events()
     {
         $sideQuestResult = $this->getValidSideQuestResult();

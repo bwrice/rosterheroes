@@ -4,6 +4,7 @@ namespace App\Aggregates;
 
 use App\Domain\Models\Hero;
 use App\Domain\Models\Minion;
+use App\StorableEvents\HeroBlocksSideQuestMinion;
 use App\StorableEvents\HeroCreated;
 use App\StorableEvents\HeroDealsDamageToSideQuestMinion;
 use App\StorableEvents\HeroKillsSideQuestMinion;
@@ -18,21 +19,18 @@ final class HeroAggregate extends AggregateRoot
     public function createHero(string $name, int $squadID, int $heroClassID, int $heroRaceID, int $heroRankID, int $combatPositionID)
     {
         $this->recordThat(new HeroCreated($name, $squadID, $heroClassID, $heroRaceID, $heroRankID, $combatPositionID));
-
         return $this;
     }
 
     public function updatePlayerSpirit(int $playerSpiritID = null)
     {
         $this->recordThat(new UpdateHeroPlayerSpirit($playerSpiritID));
-
         return $this;
     }
 
     public function clearWeeklyPlayerSpirit(int $playerSpiritID)
     {
         $this->recordThat(new WeeklyPlayerSpiritClearedFromHero($playerSpiritID));
-
         return $this;
     }
 
@@ -57,6 +55,12 @@ final class HeroAggregate extends AggregateRoot
     public function killedBySideQuestMinion(Minion $minion)
     {
         $this->recordThat(new SideQuestMinionKillsHero($minion));
+        return $this;
+    }
+
+    public function blocksSideQuestMinion(Minion $minion)
+    {
+        $this->recordThat(new HeroBlocksSideQuestMinion($minion));
         return $this;
     }
 }

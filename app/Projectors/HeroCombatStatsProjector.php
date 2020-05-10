@@ -3,6 +3,7 @@
 namespace App\Projectors;
 
 use App\Domain\Models\Hero;
+use App\StorableEvents\HeroBlocksSideQuestMinion;
 use App\StorableEvents\HeroDealsDamageToSideQuestMinion;
 use App\StorableEvents\HeroKillsSideQuestMinion;
 use App\StorableEvents\SideQuestMinionKillsHero;
@@ -47,6 +48,13 @@ final class HeroCombatStatsProjector implements QueuedProjector
         $hero->side_quest_deaths++;
         $hero->minion_deaths++;
         $hero->combat_deaths++;
+        $hero->save();
+    }
+
+    public function onHeroBlocksSideQuestMinion(HeroBlocksSideQuestMinion $event, string $aggregateUuid)
+    {
+        $hero = Hero::findUuidOrFail($aggregateUuid);
+        $hero->attacks_blocked++;
         $hero->save();
     }
 }
