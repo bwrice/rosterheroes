@@ -38,6 +38,10 @@ use App\Facades\HeroService;
  * @property int $attacks_blocked
  * @property int $minion_kills
  * @property int $titan_kills
+ * @property int $side_quest_deaths
+ * @property int $minion_deaths
+ * @property int $titan_deaths
+ * @property int $combat_deaths
  *
  * @property Squad $squad
  * @property HeroClass $heroClass
