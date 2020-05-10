@@ -8,6 +8,7 @@ use App\StorableEvents\HeroCreated;
 use App\StorableEvents\HeroDealsDamageToMinion;
 use App\StorableEvents\HeroKillsMinion;
 use App\StorableEvents\HeroTakesDamageFromMinion;
+use App\StorableEvents\SideQuestMinionKillsHero;
 use App\StorableEvents\UpdateHeroPlayerSpirit;
 use App\StorableEvents\WeeklyPlayerSpiritClearedFromHero;
 use Spatie\EventSourcing\AggregateRoot;
@@ -50,6 +51,12 @@ final class HeroAggregate extends AggregateRoot
     public function takeDamageFromMinion(int $damage, Minion $minion)
     {
         $this->recordThat(new HeroTakesDamageFromMinion($damage, $minion));
+        return $this;
+    }
+
+    public function killedBySideQuestMinion(Minion $minion)
+    {
+        $this->recordThat(new SideQuestMinionKillsHero($minion));
         return $this;
     }
 }
