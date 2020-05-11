@@ -14,6 +14,7 @@
         <v-navigation-drawer
                 fixed
                 v-model="drawer"
+                style="background-image: linear-gradient(#234a4a, #222626); background-attachment: fixed"
                 app
         >
             <router-view name="drawer"></router-view>
