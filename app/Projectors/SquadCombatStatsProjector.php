@@ -60,7 +60,7 @@ final class SquadCombatStatsProjector implements QueuedProjector
         $squad->save();
     }
 
-    public function onSquadVictoriousInSideQUest(SquadVictoriousInSideQuest $event, string $aggregateUuid)
+    public function onSquadVictoriousInSideQuest(SquadVictoriousInSideQuest $event, string $aggregateUuid)
     {
         $squad = Squad::findUuidOrFail($aggregateUuid);
         $squad->side_quest_victories++;
