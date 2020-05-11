@@ -27,6 +27,28 @@ class CreateSquadsTable extends Migration
             $table->bigInteger('experience')->unsigned()->default(0);
             $table->bigInteger('gold')->unsigned()->default(0);
             $table->bigInteger('favor')->unsigned()->default(0);
+            $table->bigInteger('damage_dealt')->unsigned()->default(0);
+            $table->bigInteger('minion_damage_dealt')->unsigned()->default(0);
+            $table->bigInteger('titan_damage_dealt')->unsigned()->default(0);
+            $table->bigInteger('side_quest_damage_dealt')->unsigned()->default(0);
+            $table->bigInteger('quest_damage_dealt')->unsigned()->default(0);
+            $table->bigInteger('damage_taken')->unsigned()->default(0);
+            $table->bigInteger('side_quest_damage_taken')->unsigned()->default(0);
+            $table->bigInteger('minion_damage_taken')->unsigned()->default(0);
+            $table->bigInteger('titan_damage_taken')->unsigned()->default(0);
+            $table->bigInteger('minion_kills')->unsigned()->default(0);
+            $table->bigInteger('side_quest_kills')->unsigned()->default(0);
+            $table->bigInteger('quest_kills')->unsigned()->default(0);
+            $table->bigInteger('titan_kills')->unsigned()->default(0);
+            $table->bigInteger('combat_kills')->unsigned()->default(0);
+            $table->bigInteger('side_quest_deaths')->unsigned()->default(0);
+            $table->bigInteger('quest_deaths')->unsigned()->default(0);
+            $table->bigInteger('minion_deaths')->unsigned()->default(0);
+            $table->bigInteger('titan_deaths')->unsigned()->default(0);
+            $table->bigInteger('combat_deaths')->unsigned()->default(0);
+            $table->bigInteger('attacks_blocked')->unsigned()->default(0);
+            $table->bigInteger('side_quest_victories')->unsigned()->default(0);
+            $table->bigInteger('side_quest_defeats')->unsigned()->default(0);
             $table->timestamps();
         });
 
