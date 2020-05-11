@@ -5,10 +5,10 @@ namespace App\Projectors;
 use App\Domain\Models\Item;
 use App\StorableEvents\ItemDamagesSideQuestMinion;
 use App\StorableEvents\ItemKillsSideQuestMinion;
-use Spatie\EventSourcing\Projectors\Projector;
 use Spatie\EventSourcing\Projectors\ProjectsEvents;
+use Spatie\EventSourcing\Projectors\QueuedProjector;
 
-final class ItemCombatStatsProjector implements Projector
+final class ItemCombatStatsProjector implements QueuedProjector
 {
     use ProjectsEvents;
 
