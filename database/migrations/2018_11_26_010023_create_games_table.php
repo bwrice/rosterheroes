@@ -19,6 +19,7 @@ class CreateGamesTable extends Migration
             $table->integer('away_team_id')->unsigned();
             $table->dateTime('starts_at');
             $table->dateTime('finalized_at')->nullable();
+            $table->string('schedule_status')->default('NORMAL');
             $table->timestamps();
         });
 
