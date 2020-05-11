@@ -19,7 +19,7 @@ class CreateTestSquadsCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Create auto-manageable Squads for testing';
 
     /**
      * Create a new command instance.
