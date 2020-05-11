@@ -15,6 +15,8 @@ class CurrentWeek
 
     protected static $testCurrent = null;
 
+    protected static $testFinalizing = null;
+
     /**
      * @return Week|null
      */
@@ -31,6 +33,16 @@ class CurrentWeek
     {
         self::$testCurrent = $week;
 
+        return $this;
+    }
+
+    /**
+     * @param bool $finalizing
+     * @return $this
+     */
+    public function setTestFinalizing(bool $finalizing)
+    {
+        self::$testFinalizing = $finalizing;
         return $this;
     }
 
@@ -52,7 +64,10 @@ class CurrentWeek
      */
     public function finalizing()
     {
-        return Date::now()->isAfter($this->finalizingStartsAt());
+        if (is_null(self::$testFinalizing)) {
+            return Date::now()->isAfter($this->finalizingStartsAt());
+        }
+        return self::$testFinalizing;
     }
 
     /**
