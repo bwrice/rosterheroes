@@ -47,7 +47,7 @@
                 switch (this.$vuetify.breakpoint.name) {
                     case 'xs':
                     case 'sm':
-                        return 'display-1';
+                        return 'headline';
                     case 'md':
                     case 'lg':
                     case 'xl':
