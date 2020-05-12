@@ -1,5 +1,5 @@
 <template>
-    <v-list-item :to="to" color="accent">
+    <v-list-item :to="to" color="accent" exact>
         <span class="font-weight-light">{{title}}</span>
     </v-list-item>
 </template>
