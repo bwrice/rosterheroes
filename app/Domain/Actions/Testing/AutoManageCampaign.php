@@ -9,6 +9,7 @@ use App\Domain\Actions\JoinSideQuestAction;
 use App\Domain\Actions\SquadBorderTravelAction;
 use App\Domain\Collections\ProvinceCollection;
 use App\Domain\Collections\QuestCollection;
+use App\Domain\Models\CampaignStop;
 use App\Domain\Models\Province;
 use App\Domain\Models\Quest;
 use App\Domain\Models\Squad;
@@ -64,6 +65,8 @@ class AutoManageCampaign
         $this->sideQuestsPerQuest = $squad->getSideQuestsPerQuest();
         $this->joinedQuests = $this->getInitialJoinedQuests();
 
+
+
         DB::transaction(function () {
             foreach (range (1, $this->questsPerWeek) as $questCount) {
 
@@ -94,7 +97,10 @@ class AutoManageCampaign
     {
         $currentWeeksCampaign = $this->squad->getThisWeeksCampaign();
         if ($currentWeeksCampaign) {
-            return $currentWeeksCampaign->quests;
+            $quests = $currentWeeksCampaign->campaignStops->map(function (CampaignStop $campaignStop) {
+                return $campaignStop->quest;
+            });
+            return new QuestCollection($quests);
         }
         return new QuestCollection();
     }

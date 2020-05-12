@@ -23,8 +23,15 @@ class CreateItemsTable extends Migration
             $table->nullableMorphs('has_items');
             $table->string('name')->nullable();
             $table->bigInteger('damage_dealt')->unsigned()->default(0);
-            $table->bigInteger('minion_kills')->default(0);
-            $table->bigInteger('titan_kills')->default(0);
+            $table->bigInteger('minion_damage_dealt')->unsigned()->default(0);
+            $table->bigInteger('titan_damage_dealt')->unsigned()->default(0);
+            $table->bigInteger('side_quest_damage_dealt')->unsigned()->default(0);
+            $table->bigInteger('quest_damage_dealt')->unsigned()->default(0);
+            $table->bigInteger('minion_kills')->unsigned()->default(0);
+            $table->bigInteger('titan_kills')->unsigned()->default(0);
+            $table->bigInteger('combat_kills')->unsigned()->default(0);
+            $table->bigInteger('side_quest_kills')->unsigned()->default(0);
+            $table->bigInteger('quest_kills')->unsigned()->default(0);
             $table->timestamps();
         });
 

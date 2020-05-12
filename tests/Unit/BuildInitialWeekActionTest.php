@@ -10,8 +10,8 @@ use App\Facades\CurrentWeek;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Queue;
-use Mockery\Mock;
 use Tests\TestCase;
 
 class BuildInitialWeekActionTest extends TestCase
@@ -49,10 +49,36 @@ class BuildInitialWeekActionTest extends TestCase
     {
         CurrentWeek::partialMock()->shouldReceive('exists')->andReturn(false);
 
-        $mock = \Mockery::mock(BuildNewCurrentWeekAction::class)->shouldReceive('execute', 1)->getMock();
+        $week = factory(Week::class)->create();
+        $mock = \Mockery::mock(BuildNewCurrentWeekAction::class)
+            ->shouldReceive('execute', 1)
+            ->andReturn($week)
+            ->getMock();
         app()->instance(BuildNewCurrentWeekAction::class, $mock);
         /** @var BuildInitialWeekAction $domainAction */
         $domainAction = app(BuildInitialWeekAction::class);
         $domainAction->execute();
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_set_made_current_at()
+    {
+        CurrentWeek::partialMock()->shouldReceive('exists')->andReturn(false);
+
+        /** @var Week $week */
+        $week = factory(Week::class)->create();
+        $mock = \Mockery::mock(BuildNewCurrentWeekAction::class)
+            ->shouldReceive('execute', 1)
+            ->andReturn($week)
+            ->getMock();
+        app()->instance(BuildNewCurrentWeekAction::class, $mock);
+        /** @var BuildInitialWeekAction $domainAction */
+        $domainAction = app(BuildInitialWeekAction::class);
+        $domainAction->execute();
+
+        $week = $week->fresh();
+        $this->assertNotNull($week->made_current_at);
     }
 }

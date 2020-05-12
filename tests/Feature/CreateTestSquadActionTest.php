@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use App\Domain\Actions\Testing\AddTestHeroToTestSquadAction;
-use App\Domain\Actions\Testing\CreateTestSquadsAction;
+use App\Domain\Actions\Testing\CreateTestSquadAction;
 use App\Domain\Models\Hero;
 use App\Domain\Models\HeroRace;
 use App\Domain\Models\Squad;
@@ -21,27 +21,13 @@ class CreateTestSquadActionTest extends TestCase
     /**
     * @test
     */
-    public function it_will_create_squads_for_the_amount_given()
-    {
-        Queue::fake();
-        /** @var CreateTestSquadsAction $domainAction */
-        $domainAction = app(CreateTestSquadsAction::class);
-        $count = 2;
-        $squads = $domainAction->execute($count);
-        $this->assertEquals($count, $squads->count());
-    }
-
-    /**
-    * @test
-    */
     public function it_will_give_the_squad_and_user_test_names()
     {
         Queue::fake();
-        /** @var CreateTestSquadsAction $domainAction */
-        $domainAction = app(CreateTestSquadsAction::class);
-        $squads = $domainAction->execute(1);
-        /** @var Squad $squad */
-        $squad = $squads->first();
+        /** @var CreateTestSquadAction $domainAction */
+        $domainAction = app(CreateTestSquadAction::class);
+        $testID = rand(9999, 999999);
+        $squad = $domainAction->execute($testID);
         $this->assertTrue(strpos($squad->name, "TestSquad") === 0);
         $this->assertTrue(strpos($squad->user->name, "TestUser") === 0);
     }
@@ -53,19 +39,17 @@ class CreateTestSquadActionTest extends TestCase
     {
         Queue::fake();
 
-        /** @var CreateTestSquadsAction $domainAction */
-        $domainAction = app(CreateTestSquadsAction::class);
-        $squadsCount = 2;
         $heroRaces = HeroRace::starting()->get();
-        $squads = $domainAction->execute($squadsCount);
+        $testID = rand(9999, 999999);
+        /** @var CreateTestSquadAction $domainAction */
+        $domainAction = app(CreateTestSquadAction::class);
+        $squad = $domainAction->execute($testID);
 
-        Queue::assertPushed(AddTestHeroToTestSquadJob::class, $squadsCount * $heroRaces->count());
+        Queue::assertPushed(AddTestHeroToTestSquadJob::class, $heroRaces->count());
 
-        $squads->each(function (Squad $squad) use ($heroRaces) {
-            $heroRaces->each(function (HeroRace $heroRace) use ($squad) {
-                Queue::assertPushed(AddTestHeroToTestSquadJob::class, function (AddTestHeroToTestSquadJob $job) use ($squad, $heroRace) {
-                    return ($squad->id === $job->squad->id) && ($heroRace->id === $job->heroRace->id);
-                });
+        $heroRaces->each(function (HeroRace $heroRace) use ($squad) {
+            Queue::assertPushed(AddTestHeroToTestSquadJob::class, function (AddTestHeroToTestSquadJob $job) use ($squad, $heroRace) {
+                return ($squad->id === $job->squad->id) && ($heroRace->id === $job->heroRace->id);
             });
         });
     }

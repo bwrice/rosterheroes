@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static bool finalizing()
  * @method static int id()
  * @method static CurrentWeek setTestCurrent(Week $week)
+ * @method static CurrentWeek setTestFinalizing(bool $finalizing)
  * @method static CarbonImmutable adventuringLocksAt()
  * @method static CarbonImmutable finalizingStartsAt()
  * @method static CarbonPeriod validGamePeriod()

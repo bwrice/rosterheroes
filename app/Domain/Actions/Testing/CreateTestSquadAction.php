@@ -13,7 +13,7 @@ use App\Domain\Models\HeroRace;
 use App\Domain\Models\Squad;
 use App\Jobs\AddTestHeroToTestSquadJob;
 
-class CreateTestSquadsAction
+class CreateTestSquadAction
 {
     /**
      * @var CreateUserAction
@@ -32,21 +32,15 @@ class CreateTestSquadsAction
         $this->createSquadAction = $createSquadAction;
     }
 
-    public function execute($amount = 1): SquadCollection
+    public function execute(int $testID): Squad
     {
-        $squads = new SquadCollection();
-        $offset = Squad::query()->count();
-        foreach (range(1, $amount) as $count) {
-            $testID = $offset + $count;
-            $user = $this->createUserAction->execute('testUser' . $testID . '@test.com', 'TestUser' . $testID, 'password');
-            $squad = $this->createSquadAction->execute($user->id, 'TestSquad' . $testID);
+        $user = $this->createUserAction->execute('testUser' . $testID . '@test.com', 'TestUser' . $testID, 'password');
+        $squad = $this->createSquadAction->execute($user->id, 'TestSquad' . $testID);
 
-            HeroRace::starting()->get()->each(function (HeroRace $heroRace) use ($squad, $testID) {
-                AddTestHeroToTestSquadJob::dispatch($squad, $heroRace, $testID);
-            });
+        HeroRace::starting()->get()->each(function (HeroRace $heroRace) use ($squad, $testID) {
+            AddTestHeroToTestSquadJob::dispatch($squad, $heroRace, $testID);
+        });
 
-            $squads->push($squad);
-        }
-        return $squads;
+        return $squad;
     }
 }

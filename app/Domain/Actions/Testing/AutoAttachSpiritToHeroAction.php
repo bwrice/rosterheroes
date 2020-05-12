@@ -15,6 +15,8 @@ class AutoAttachSpiritToHeroAction
 {
     public const TOP_SPIRITS_TO_CONSIDER_COUNT = 40;
 
+    protected $randEssenceRange = 1000;
+
     /**
      * @var AddSpiritToHeroAction
      */
@@ -69,8 +71,11 @@ class AutoAttachSpiritToHeroAction
             });
             return $squadSpiritEssence - $essenceUsed;
         } else {
-            // If multiple heroes need player spirits, divide essence cost evenly among heroes
-            return (int) floor($squadSpiritEssence / $squadHeroes->count());
+            /*
+             * If multiple heroes need player spirits, divide essence cost evenly among heroes,
+             * but with a random amount subtracted from the max cost so the same players aren't always used
+             */
+            return (int) floor($squadSpiritEssence / $squadHeroes->count()) - rand(0, $this->getRandEssenceRange());
         }
     }
 
@@ -95,5 +100,23 @@ class AutoAttachSpiritToHeroAction
     protected function getRandomSpiritFromTopChoices(Builder $baseQuery)
     {
         return $baseQuery->take(self::TOP_SPIRITS_TO_CONSIDER_COUNT)->inRandomOrder()->first();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRandEssenceRange()
+    {
+        return $this->randEssenceRange;
+    }
+
+    /**
+     * @param $randEssenceRange
+     * @return $this
+     */
+    public function setRandEssenceRange($randEssenceRange)
+    {
+        $this->randEssenceRange = $randEssenceRange;
+        return $this;
     }
 }
