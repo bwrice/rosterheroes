@@ -45,11 +45,37 @@ class SetupNextWeekActionTest extends TestCase
     {
         CurrentWeek::partialMock()->shouldReceive('exists')->andReturn(true);
 
-        $mock = \Mockery::mock(BuildNewCurrentWeekAction::class)->shouldReceive('execute', 1)->getMock();
+        /** @var Week $week */
+        $week = factory(Week::class)->create();
+        $mock = \Mockery::mock(BuildNewCurrentWeekAction::class)
+            ->shouldReceive('execute', 1)
+            ->andReturn($week)
+            ->getMock();
         app()->instance(BuildNewCurrentWeekAction::class, $mock);
 
         /** @var SetupNextWeekAction $domainAction */
         $domainAction = app(SetupNextWeekAction::class);
         $domainAction->execute();
+    }
+
+    /**
+    * @test
+    */
+    public function it_will_set_made_current_at_date()
+    {
+        CurrentWeek::partialMock()->shouldReceive('exists')->andReturn(true);
+
+        /** @var Week $week */
+        $week = factory(Week::class)->create();
+        $mock = \Mockery::mock(BuildNewCurrentWeekAction::class)
+            ->shouldReceive('execute', 1)
+            ->andReturn($week)
+            ->getMock();
+        app()->instance(BuildNewCurrentWeekAction::class, $mock);
+
+        /** @var SetupNextWeekAction $domainAction */
+        $domainAction = app(SetupNextWeekAction::class);
+        $domainAction->execute();
+        $this->assertNotNull($week->fresh()->made_current_at);
     }
 }

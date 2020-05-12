@@ -111,9 +111,9 @@ class AutoAttachSpiritToHeroActionTest extends TestCase
         $spy = \Mockery::spy(AddSpiritToHeroAction::class);
         app()->instance(AddSpiritToHeroAction::class, $spy);
 
-        /** @var AutoAttachSpiritToHeroAction $domainAction */
-        $domainAction = app(AutoAttachSpiritToHeroAction::class);
+        $domainAction = $this->getDomainAction();
         $domainAction->execute($this->hero);
+
         $spy->shouldHaveReceived('execute')->with(EloquentMatcher::withExpected($this->hero), EloquentMatcher::withExpected($validPositionPlayerSpirit));
     }
 
@@ -152,9 +152,9 @@ class AutoAttachSpiritToHeroActionTest extends TestCase
         $spy = \Mockery::spy(AddSpiritToHeroAction::class);
         app()->instance(AddSpiritToHeroAction::class, $spy);
 
-        /** @var AutoAttachSpiritToHeroAction $domainAction */
-        $domainAction = app(AutoAttachSpiritToHeroAction::class);
+        $domainAction = $this->getDomainAction();
         $domainAction->execute($this->hero);
+
         $spy->shouldHaveReceived('execute')->with(EloquentMatcher::withExpected($this->hero), EloquentMatcher::withExpected($optimalEssencePlayerSpirit));
     }
 
@@ -213,9 +213,9 @@ class AutoAttachSpiritToHeroActionTest extends TestCase
         $spy = \Mockery::spy(AddSpiritToHeroAction::class);
         app()->instance(AddSpiritToHeroAction::class, $spy);
 
-        /** @var AutoAttachSpiritToHeroAction $domainAction */
-        $domainAction = app(AutoAttachSpiritToHeroAction::class);
+        $domainAction = $this->getDomainAction();
         $domainAction->execute($this->hero);
+
         $spy->shouldHaveReceived('execute')->with(EloquentMatcher::withExpected($this->hero), EloquentMatcher::withExpected($expectedPlayerSpirit));
     }
 
@@ -241,9 +241,9 @@ class AutoAttachSpiritToHeroActionTest extends TestCase
         $spy = \Mockery::spy(AddSpiritToHeroAction::class);
         app()->instance(AddSpiritToHeroAction::class, $spy);
 
-        /** @var AutoAttachSpiritToHeroAction $domainAction */
-        $domainAction = app(AutoAttachSpiritToHeroAction::class);
+        $domainAction = $this->getDomainAction();
         $domainAction->execute($this->hero);
+
         $spy->shouldNotHaveReceived('execute');
     }
 
@@ -274,9 +274,19 @@ class AutoAttachSpiritToHeroActionTest extends TestCase
         $spy = \Mockery::spy(AddSpiritToHeroAction::class);
         app()->instance(AddSpiritToHeroAction::class, $spy);
 
-        /** @var AutoAttachSpiritToHeroAction $domainAction */
-        $domainAction = app(AutoAttachSpiritToHeroAction::class);
+        $domainAction = $this->getDomainAction();
         $domainAction->execute($this->hero);
+
         $spy->shouldNotHaveReceived('execute');
+    }
+
+    /**
+     * @return AutoAttachSpiritToHeroAction
+     */
+    protected function getDomainAction()
+    {
+        $domainAction = app(AutoAttachSpiritToHeroAction::class);
+        // set rand essence range to 0 so we can guarantee expectations
+        return $domainAction->setRandEssenceRange(0);
     }
 }
