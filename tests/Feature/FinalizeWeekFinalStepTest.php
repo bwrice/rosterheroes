@@ -63,48 +63,4 @@ class FinalizeWeekFinalStepTest extends TestCase
 
         $setupNextWeekSpy->shouldHaveReceived('execute');
     }
-
-
-    /**
-     * @test
-     */
-    public function it_will_dispatch_process_side_quest_reward_jobs_for_the_current_week()
-    {
-        $campaignFactory = CampaignFactory::new()->withWeekID($this->currentWeek->id);
-        $campaignStopFactory = CampaignStopFactory::new()->withCampaign($campaignFactory);
-        $sideQuestResultFactory = SideQuestResultFactory::new()->withCampaignStop($campaignStopFactory);
-
-        $sideQuestResultOne = $sideQuestResultFactory->create();
-        $sideQuestResultTwo = $sideQuestResultFactory->create();
-        $sideQuestResultThree = $sideQuestResultFactory->create();
-
-        foreach([
-            $sideQuestResultOne,
-            $sideQuestResultTwo,
-            $sideQuestResultThree
-                ] as $sideQuestResult) {
-            /** @var SideQuestResult $sideQuestResult */
-            $this->assertNull($sideQuestResult->rewards_processed_at);
-        }
-
-        Queue::fake();
-
-        $nextStep = rand(1,5);
-        /** @var FinalizeWeekFinalStep $domainAction */
-        $domainAction = app(FinalizeWeekFinalStep::class);
-        $domainAction->execute($nextStep);
-
-
-        foreach([
-                    $sideQuestResultOne,
-                    $sideQuestResultTwo,
-                    $sideQuestResultThree
-                ] as $sideQuestResult) {
-
-            /** @var SideQuestResult $sideQuestResult */
-            Queue::assertPushed(ProcessSideQuestRewardsJob::class, function (ProcessSideQuestRewardsJob $job) use ($sideQuestResult) {
-                return $sideQuestResult->id === $job->sideQuestResult->id;
-            });
-        }
-    }
 }
