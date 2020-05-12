@@ -78,6 +78,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property HeroPostCollection $heroPosts
  * @property Collection $chests
  * @property Collection $stashes
+ * @property Collection $campaigns
  *
  * @method static SquadQueryBuilder query()
  */
