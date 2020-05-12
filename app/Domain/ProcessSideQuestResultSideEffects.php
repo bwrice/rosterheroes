@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ProcessSideQuestResultSideEffects
 {
@@ -108,6 +109,7 @@ class ProcessSideQuestResultSideEffects
             });
 
         } catch (\Throwable $throwable) {
+            Log::debug("Throwable caught in process side-effects with message: " . $throwable->getMessage());
             $sideQuestResult->side_effects_processed_at = null;
             $sideQuestResult->save();
             throw $throwable;
