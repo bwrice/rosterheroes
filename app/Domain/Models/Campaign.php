@@ -39,7 +39,6 @@ use Ramsey\Uuid\Uuid;
  * @property \App\Domain\Models\Week $week
  * @property Continent $continent
  *
- * @property \App\Domain\Collections\QuestCollection $quests
  * @property Collection $campaignStops
  *
  * @method static Builder forSquadWeek(Squad $squad, Week $week)
@@ -60,11 +59,6 @@ class Campaign extends EventSourcedModel
     public function squad()
     {
         return $this->belongsTo(Squad::class);
-    }
-
-    public function quests()
-    {
-        return $this->belongsToMany(Quest::class);
     }
 
     /**
