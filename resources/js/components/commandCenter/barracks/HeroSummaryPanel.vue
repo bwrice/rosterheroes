@@ -63,6 +63,7 @@
 </template>
 
 <script>
+    import * as routerHelpers from "../../../helpers/routerHelpers"
     import SvgIconSheet from "../global/SvgIconSheet";
     import HeroGearSVG from "./gear/HeroGearSVG";
     import PlayerSpiritSummaryPanel from "../global/PlayerSpiritSummaryPanel";
@@ -116,14 +117,7 @@
                 return this.hero.getMeasurableByTypeID(measurableType.id)
             },
             barracksHeroRoute() {
-                let squadSlugParam = this.$route.params.squadSlug;
-                return {
-                    name: 'barracks-hero',
-                    params: {
-                        squadSlug: squadSlugParam,
-                        heroSlug: this.hero.slug
-                    }
-                }
+                return routerHelpers.getBarracksHeroRoute(this.hero, this.$route);
             },
             heroRace() {
                 return this._heroRaceByID(this.hero.heroRaceID);
