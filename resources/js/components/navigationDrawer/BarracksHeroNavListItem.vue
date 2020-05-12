@@ -1,32 +1,27 @@
 <template>
-    <v-list-item :to="barracksRoute" color="accent">
-        <span class="font-weight-light">{{hero.name}}</span>
-    </v-list-item>
+    <NavListItem
+        :to="barracksRoute"
+        :title="hero.name"
+    ></NavListItem>
 </template>
 
 <script>
     import * as routerHelpers from "../../helpers/routerHelpers"
     import Hero from "../../models/Hero";
+    import NavListItem from "./NavListItem";
 
     export default {
         name: "BarracksHeroNavListItem",
+        components: {NavListItem},
         props: {
             hero: {
                 type: Hero,
                 required: true
             }
         },
-        methods: {
-            goToBarracksRoute() {
-                this.$router.push(this.barracksRoute);
-            }
-        },
         computed: {
             barracksRoute() {
                 return routerHelpers.getBarracksHeroRoute(this.hero, this.$route);
-            },
-            isCurrentRoute() {
-                return routerHelpers.routesMatch(this.$route, this.barracksRoute);
             }
         }
     }
