@@ -1,17 +1,13 @@
 <template>
     <v-list nav>
-        <v-list-group color="primary">
-            <template v-slot:activator>
-                <v-list-item-content>
-                    <v-list-item-title>Barracks</v-list-item-title>
-                </v-list-item-content>
-            </template>
+        <NavListGroup :group-title="'Barracks'">
+
             <BarracksHeroNavListItem
                 v-for="(hero, uuid) in _heroes"
                 :key="uuid"
                 :hero="hero"
             ></BarracksHeroNavListItem>
-        </v-list-group>
+        </NavListGroup>
         <v-list-item>
             <v-list-item-content>Roster</v-list-item-content>
         </v-list-item>
@@ -30,9 +26,10 @@
 <script>
     import {mapGetters} from 'vuex';
     import BarracksHeroNavListItem from "./BarracksHeroNavListItem";
+    import NavListGroup from "./NavListGroup";
     export default {
         name: "BaseNavigationDrawerContent",
-        components: {BarracksHeroNavListItem},
+        components: {NavListGroup, BarracksHeroNavListItem},
         computed: {
             ...mapGetters([
                 '_heroes',
