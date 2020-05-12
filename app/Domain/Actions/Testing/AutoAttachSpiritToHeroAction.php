@@ -69,8 +69,11 @@ class AutoAttachSpiritToHeroAction
             });
             return $squadSpiritEssence - $essenceUsed;
         } else {
-            // If multiple heroes need player spirits, divide essence cost evenly among heroes
-            return (int) floor($squadSpiritEssence / $squadHeroes->count());
+            /*
+             * If multiple heroes need player spirits, divide essence cost evenly among heroes,
+             * but with a random amount subtracted from the max cost so the same players aren't always used
+             */
+            return (int) floor($squadSpiritEssence / $squadHeroes->count()) - rand(0, 500);
         }
     }
 
