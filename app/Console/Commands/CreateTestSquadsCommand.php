@@ -2,7 +2,9 @@
 
 namespace App\Console\Commands;
 
-use App\Domain\Actions\Testing\CreateTestSquadsAction;
+use App\Domain\Actions\Testing\CreateTestSquadAction;
+use App\Domain\Models\Squad;
+use App\Jobs\CreateTestSquadJob;
 use Illuminate\Console\Command;
 
 class CreateTestSquadsCommand extends Command
@@ -32,11 +34,15 @@ class CreateTestSquadsCommand extends Command
     }
 
     /**
-     * @param CreateTestSquadsAction $domainAction
+     * @param CreateTestSquadAction $domainAction
      */
-    public function handle(CreateTestSquadsAction $domainAction)
+    public function handle(CreateTestSquadAction $domainAction)
     {
-        $squads = $domainAction->execute((int) $this->argument('amount'));
-        $this->info($squads->count() . " squads created");
+        $offset = Squad::query()->count();
+        $amount = (int) $this->argument('amount');
+        for ($i = 1; $i <= $amount; $i++) {
+            CreateTestSquadJob::dispatch($offset + $i);
+        }
+        $this->info($amount . " create test-squad jobs dispatched");
     }
 }
