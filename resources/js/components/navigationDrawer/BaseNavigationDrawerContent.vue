@@ -1,7 +1,10 @@
 <template>
     <v-list nav>
         <NavListGroup :group-title="'Barracks'">
-
+            <NavListItem
+                :title="'Barracks Home'"
+                :to="barracksMainRoute"
+            ></NavListItem>
             <BarracksHeroNavListItem
                 v-for="(hero, uuid) in _heroes"
                 :key="uuid"
@@ -27,13 +30,23 @@
     import {mapGetters} from 'vuex';
     import BarracksHeroNavListItem from "./BarracksHeroNavListItem";
     import NavListGroup from "./NavListGroup";
+    import NavListItem from "./NavListItem";
     export default {
         name: "BaseNavigationDrawerContent",
-        components: {NavListGroup, BarracksHeroNavListItem},
+        components: {NavListItem, NavListGroup, BarracksHeroNavListItem},
         computed: {
             ...mapGetters([
                 '_heroes',
             ]),
+            barracksMainRoute() {
+                let squadSlug = this.$route.params.squadSlug
+                return {
+                    name: 'barracks-main',
+                    params: {
+                        squadSlug
+                    }
+                }
+            }
         }
     }
 </script>
