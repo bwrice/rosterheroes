@@ -3,9 +3,8 @@
 
 namespace App\Domain\Actions;
 
-
 use App\Domain\Models\Week;
-use App\Facades\CurrentWeek;
+use App\Facades\WeekService;
 use App\Jobs\FinalizeWeekJob;
 use Carbon\CarbonInterface;
 use Illuminate\Support\Facades\Date;
@@ -29,12 +28,11 @@ class BuildNewCurrentWeekAction
         /** @var Week $newCurrentWeek */
         $newCurrentWeek = Week::query()->create([
             'uuid' => Str::uuid(),
-            'adventuring_locks_at' => $adventuringLocksAt,
-            'made_current_at' => $now
+            'adventuring_locks_at' => $adventuringLocksAt
         ]);
 
         $step = 1;
-        FinalizeWeekJob::dispatch($step)->delay(CurrentWeek::finalizingStartsAt());
+        FinalizeWeekJob::dispatch($step)->delay(WeekService::finalizingStartsAt($adventuringLocksAt));
         return $newCurrentWeek;
     }
 }
