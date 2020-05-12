@@ -41,15 +41,4 @@ export default class Hero {
         let measurable = this.measurables.find(measurable => measurable.measurableTypeID === measurableTypeID);
         return measurable ? measurable : new Measurable({});
     }
-
-    getBarracksRoute(route) {
-        let squadSlugParam = route.params.squadSlug;
-        return {
-            name: 'barracks-hero',
-            params: {
-                squadSlug: squadSlugParam,
-                heroSlug: this.slug
-            }
-        }
-    }
 }
