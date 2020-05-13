@@ -20,7 +20,14 @@
             :group-title="'Realm'"
             :main-route-name="'realm-main'"
         >
-
+            <NavListItem
+                :title="'Explore'"
+                :to="exploreRoute"
+            ></NavListItem>
+            <NavListItem
+                :title="'Travel'"
+                :to="travelRoute"
+            ></NavListItem>
         </NavListGroup>
         <NavListGroup
             :group-title="'Campaign'"
@@ -39,6 +46,7 @@
 
 <script>
     import {mapGetters} from 'vuex';
+    import * as routerHelpers from "../../helpers/routerHelpers"
     import BarracksHeroNavListItem from "./BarracksHeroNavListItem";
     import NavListGroup from "./NavListGroup";
     import NavListItem from "./NavListItem";
@@ -49,14 +57,11 @@
             ...mapGetters([
                 '_heroes',
             ]),
-            barracksMainRoute() {
-                let squadSlug = this.$route.params.squadSlug
-                return {
-                    name: 'barracks-main',
-                    params: {
-                        squadSlug
-                    }
-                }
+            travelRoute() {
+                return routerHelpers.getBaseRoute(this.$route, 'travel');
+            },
+            exploreRoute() {
+                return routerHelpers.getBaseRoute(this.$route, 'explore');
             }
         }
     }
