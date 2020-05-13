@@ -13,6 +13,7 @@ use App\Domain\Models\Squad;
 use App\Domain\Models\Stash;
 use App\Domain\Models\Residence;
 use App\Domain\Models\Week;
+use App\Factories\Models\SquadFactory;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -152,5 +153,61 @@ class SquadUnitTest extends TestCase
         }
 
         $this->fail("Exception was not thrown");
+    }
+
+    /**
+     * @test
+     */
+    public function a_new_squad_will_be_level_1()
+    {
+        $squad = SquadFactory::new()->create();
+        $squad->experience = Squad::STARTING_EXPERIENCE;
+        $squad->save();
+        $this->assertEquals(1, $squad->level());
+        $this->assertEquals(0, $squad->experienceOverLevel());
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_calculate_level_and_experience_until_next_correctly()
+    {
+        $squad = SquadFactory::new()->create();
+        $squad->experience = rand(5000, 99999);
+        $squad->save();
+        $originalLevel = $squad->level();
+
+        for ($i = 1; $i <= 5; $i++) {
+            /*
+             * Verify still the same level if we increase experience by
+             * one less than experience needed until next level
+             */
+            $expUntilNextLevel = $squad->experienceUntilNextLevel();
+            $squad->experience += ($expUntilNextLevel - 1);
+            $squad->save();
+            $this->assertEquals($originalLevel, $squad->level());
+            /*
+             * Verify adding the last point of experience increases level
+             */
+            $squad->experience++;
+            $squad->save();
+            $newLevel = $squad->level();
+            $this->assertEquals($originalLevel + 1, $newLevel);
+            $originalLevel = $newLevel;
+        }
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_calculate_level_an_experience_over_level_correctly()
+    {
+        $squad = SquadFactory::new()->create();
+        $level = rand(5, 25);
+        $expOver = rand(100, 999);
+        $squad->experience = Squad::totalExperienceNeededForLevel($level) + $expOver;
+        $squad->save();
+        $this->assertEquals($level, $squad->level());
+        $this->assertEquals($expOver, $squad->experienceOverLevel());
     }
 }
