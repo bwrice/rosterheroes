@@ -17,7 +17,7 @@
                 style="background-image: linear-gradient(#234a4a, #222626); background-attachment: fixed"
                 app
         >
-            <router-view name="drawer"></router-view>
+            <NavigationDrawerContent></NavigationDrawerContent>
         </v-navigation-drawer>
         <v-content style="background-image: linear-gradient(#234a4a, #222626); background-attachment: fixed">
             <router-view></router-view>
@@ -51,11 +51,13 @@
     import { mapActions } from 'vuex'
 
     import RhSnackBarAlert from "../components/commandCenter/global/SnackBarAlert";
+    import NavigationDrawerContent from "../components/navigationDrawer/NavigationDrawerContent";
 
     export default {
         name: "CommandCenter",
 
         components: {
+            NavigationDrawerContent,
             RhSnackBarAlert,
             BarracksFooterButton,
             RosterFooterButton,

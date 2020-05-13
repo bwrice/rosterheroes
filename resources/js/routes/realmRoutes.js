@@ -1,5 +1,4 @@
 import CurrentLocation from "../components/commandCenter/views/realm/CurrentLocation";
-import MapNavigationDrawer from "../components/commandCenter/views/realm/MapNavigationDrawer";
 import ContinentView from "../components/commandCenter/views/realm/explore/ContinentView";
 import TerritoryView from "../components/commandCenter/views/realm/explore/TerritoryView";
 import ProvinceView from "../components/commandCenter/views/realm/explore/ProvinceView";
@@ -19,7 +18,6 @@ export const realmRoutes = {
             path: '',
             components: {
                 default: CurrentLocation,
-                drawer: MapNavigationDrawer,
                 appBarContent: SquadAppBarContent
             },
             component: CurrentLocation,
@@ -32,7 +30,6 @@ export const realmRoutes = {
             path: 'travel',
             components: {
                 default: TravelView,
-                drawer: MapNavigationDrawer,
                 appBarContent: SquadAppBarContent
             },
             name: 'travel',
@@ -44,7 +41,6 @@ export const realmRoutes = {
             path: 'explore',
             components: {
                 default: RealmView,
-                drawer: MapNavigationDrawer,
                 appBarContent: SquadAppBarContent
             },
             name: 'explore-realm',
@@ -56,7 +52,6 @@ export const realmRoutes = {
             path: 'explore/continents/:continentSlug',
             components: {
                 default: ContinentView,
-                drawer: MapNavigationDrawer,
                 appBarContent: SquadAppBarContent
             },
             name: 'explore-continent',
@@ -68,7 +63,6 @@ export const realmRoutes = {
             path: 'explore/territories/:territorySlug',
             components: {
                 default: TerritoryView,
-                drawer: MapNavigationDrawer,
                 appBarContent: SquadAppBarContent
             },
             name: 'explore-territory',
@@ -80,7 +74,6 @@ export const realmRoutes = {
             path: 'explore/provinces/:provinceSlug',
             components: {
                 default: ProvinceView,
-                drawer: MapNavigationDrawer,
                 appBarContent: SquadAppBarContent
             },
             name: 'explore-province',

@@ -1,4 +1,3 @@
-import BarracksNavigationDrawer from "../components/commandCenter/views/barracks/BarracksNavigationDrawer";
 import BarracksMain from "../components/commandCenter/views/barracks/BarracksMain";
 import BarracksHeroView from "../components/commandCenter/views/barracks/BarracksHeroView";
 import CommandCenter from "../views/CommandCenter";
@@ -16,7 +15,6 @@ export const barracksRoutes = {
             path: '',
             components: {
                 default: BarracksMain,
-                drawer: BarracksNavigationDrawer,
                 appBarContent: SquadAppBarContent
             },
             name: 'barracks-main',
@@ -28,7 +26,6 @@ export const barracksRoutes = {
             path: 'hero/:heroSlug',
             components: {
                 default: BarracksHeroView,
-                drawer: BarracksNavigationDrawer,
                 appBarContent: HeroAppBarContent
             },
             name: 'barracks-hero',
