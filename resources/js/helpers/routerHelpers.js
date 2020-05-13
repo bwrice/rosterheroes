@@ -11,6 +11,17 @@ export function getBarracksHeroRoute(hero, route) {
     }
 }
 
+export function getRosterHeroRoute(hero, route) {
+    let squadSlugParam = route.params.squadSlug;
+    return {
+        name: 'roster-hero',
+        params: {
+            squadSlug: squadSlugParam,
+            heroSlug: hero.slug
+        }
+    }
+}
+
 export function routesMatch(routeOne, routeTwo){
     if (routeOne.name !== routeTwo.name) {
         return false;

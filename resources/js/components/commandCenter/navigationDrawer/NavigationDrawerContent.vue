@@ -14,7 +14,11 @@
             :group-title="'Roster'"
             :main-route-name="'roster-main'"
         >
-
+            <RosterHeroNavListItem
+                v-for="(hero, uuid) in _heroes"
+                :key="uuid"
+                :hero="hero"
+            ></RosterHeroNavListItem>
         </NavListGroup>
         <NavListGroup
             :group-title="'Realm'"
@@ -50,9 +54,10 @@
     import BarracksHeroNavListItem from "./BarracksHeroNavListItem";
     import NavListGroup from "./NavListGroup";
     import NavListItem from "./NavListItem";
+    import RosterHeroNavListItem from "./RosterHeroNavListItem";
     export default {
         name: "NavigationDrawerContent",
-        components: {NavListItem, NavListGroup, BarracksHeroNavListItem},
+        components: {RosterHeroNavListItem, NavListItem, NavListGroup, BarracksHeroNavListItem},
         computed: {
             ...mapGetters([
                 '_heroes',
