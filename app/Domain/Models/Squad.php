@@ -484,4 +484,31 @@ class Squad extends EventSourcedModel implements HasItems
             'type' => $this->getMorphType()
         ];
     }
+
+    public function level()
+    {
+        return (int) floor(sqrt($this->experience/1000));
+    }
+
+    /**
+     * @param int $level
+     * @return int
+     */
+    public static function totalExperienceNeededForLevel(int $level)
+    {
+        return ($level ** 2) * 1000;
+    }
+
+    public function experienceOverLevel()
+    {
+        $currentLevel = $this->level();
+        return $this->experience - self::totalExperienceNeededForLevel($currentLevel);
+    }
+
+    public function experienceUntilNextLevel()
+    {
+        $nextLevel = $this->level() + 1;
+        $nextLevelExperience = self::totalExperienceNeededForLevel($nextLevel);
+        return (int) $nextLevelExperience - $this->experience;
+    }
 }
