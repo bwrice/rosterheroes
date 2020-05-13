@@ -1,28 +1,39 @@
 <template>
     <v-list nav>
-        <NavListGroup :group-title="'Barracks'">
-            <NavListItem
-                :title="'Barracks Home'"
-                :to="barracksMainRoute"
-            ></NavListItem>
+        <NavListGroup
+            :group-title="'Barracks'"
+            :main-route-name="'barracks-main'"
+        >
             <BarracksHeroNavListItem
                 v-for="(hero, uuid) in _heroes"
                 :key="uuid"
                 :hero="hero"
             ></BarracksHeroNavListItem>
         </NavListGroup>
-        <v-list-item>
-            <v-list-item-content>Roster</v-list-item-content>
-        </v-list-item>
-        <v-list-item>
-            <v-list-item-content>Realm</v-list-item-content>
-        </v-list-item>
-        <v-list-item>
-            <v-list-item-content>Campaign</v-list-item-content>
-        </v-list-item>
-        <v-list-item>
-            <v-list-item-content>Nation</v-list-item-content>
-        </v-list-item>
+        <NavListGroup
+            :group-title="'Roster'"
+            :main-route-name="'roster-main'"
+        >
+
+        </NavListGroup>
+        <NavListGroup
+            :group-title="'Realm'"
+            :main-route-name="'realm-main'"
+        >
+
+        </NavListGroup>
+        <NavListGroup
+            :group-title="'Campaign'"
+            :main-route-name="'roster-main'"
+        >
+
+        </NavListGroup>
+        <NavListGroup
+            :group-title="'Nation'"
+            :main-route-name="'nation-main'"
+        >
+
+        </NavListGroup>
     </v-list>
 </template>
 
