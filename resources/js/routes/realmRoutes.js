@@ -23,7 +23,7 @@ export const realmRoutes = {
                 appBarContent: SquadAppBarContent
             },
             component: CurrentLocation,
-            name: 'map-main',
+            name: 'realm-main',
             meta: {
                 footerButton: 'realm'
             }
