@@ -16,6 +16,7 @@
 </template>
 
 <script>
+    import * as routerHelpers from "../../helpers/routerHelpers"
     import NavListItem from "./NavListItem";
     export default {
         name: "NavListGroup",
@@ -35,13 +36,7 @@
                 return this.groupTitle + ' Home';
             },
             homeRoute() {
-                let squadSlug = this.$route.params.squadSlug;
-                return {
-                    name: this.mainRouteName,
-                    params: {
-                        squadSlug
-                    }
-                }
+                return routerHelpers.getBaseRoute(this.$route, this.mainRouteName);
             }
         }
     }

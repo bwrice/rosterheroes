@@ -17,3 +17,13 @@ export function routesMatch(routeOne, routeTwo){
     }
     return _.isEqual(routeOne.params, routeTwo.params);
 }
+
+export function getBaseRoute(route, routeName) {
+    let squadSlug = route.params.squadSlug;
+    return {
+        name: routeName,
+        params: {
+            squadSlug
+        }
+    }
+}
