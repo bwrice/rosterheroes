@@ -27,7 +27,10 @@ class SquadResource extends JsonResource
             'name' => $this->name,
             'spiritEssence' => $this->spirit_essence,
             'gold' => $this->gold,
+            'level' => $this->level(),
             'experience' => $this->experience,
+            'experienceOverLevel' => $this->experienceOverLevel(),
+            'experienceUntilNextLevel' => $this->experienceUntilNextLevel(),
             'favor' => $this->favor,
             'questsPerWeek' => $this->getQuestsPerWeek(),
             'sideQuestsPerQuest' => $this->getSideQuestsPerQuest()
