@@ -6,8 +6,8 @@
 </template>
 
 <script>
-    import * as routerHelpers from "../../helpers/routerHelpers"
-    import Hero from "../../models/Hero";
+    import * as routerHelpers from "../../../helpers/routerHelpers"
+    import Hero from "../../../models/Hero";
     import NavListItem from "./NavListItem";
 
     export default {

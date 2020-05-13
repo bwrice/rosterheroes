@@ -46,7 +46,7 @@
 
 <script>
     import {mapGetters} from 'vuex';
-    import * as routerHelpers from "../../helpers/routerHelpers"
+    import * as routerHelpers from "../../../helpers/routerHelpers"
     import BarracksHeroNavListItem from "./BarracksHeroNavListItem";
     import NavListGroup from "./NavListGroup";
     import NavListItem from "./NavListItem";

@@ -51,7 +51,7 @@
     import { mapActions } from 'vuex'
 
     import RhSnackBarAlert from "../components/commandCenter/global/SnackBarAlert";
-    import NavigationDrawerContent from "../components/navigationDrawer/NavigationDrawerContent";
+    import NavigationDrawerContent from "../components/commandCenter/navigationDrawer/NavigationDrawerContent";
 
     export default {
         name: "CommandCenter",

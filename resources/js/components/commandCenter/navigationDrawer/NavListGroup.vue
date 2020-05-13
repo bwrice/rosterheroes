@@ -16,7 +16,7 @@
 </template>
 
 <script>
-    import * as routerHelpers from "../../helpers/routerHelpers"
+    import * as routerHelpers from "../../../helpers/routerHelpers"
     import NavListItem from "./NavListItem";
     export default {
         name: "NavListGroup",
