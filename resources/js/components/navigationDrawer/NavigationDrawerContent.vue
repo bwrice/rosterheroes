@@ -31,7 +31,7 @@
         </NavListGroup>
         <NavListGroup
             :group-title="'Campaign'"
-            :main-route-name="'roster-main'"
+            :main-route-name="'campaign-main'"
         >
 
         </NavListGroup>
@@ -51,7 +51,7 @@
     import NavListGroup from "./NavListGroup";
     import NavListItem from "./NavListItem";
     export default {
-        name: "BaseNavigationDrawerContent",
+        name: "NavigationDrawerContent",
         components: {NavListItem, NavListGroup, BarracksHeroNavListItem},
         computed: {
             ...mapGetters([
@@ -61,7 +61,7 @@
                 return routerHelpers.getBaseRoute(this.$route, 'travel');
             },
             exploreRoute() {
-                return routerHelpers.getBaseRoute(this.$route, 'explore');
+                return routerHelpers.getBaseRoute(this.$route, 'explore-realm');
             }
         }
     }
