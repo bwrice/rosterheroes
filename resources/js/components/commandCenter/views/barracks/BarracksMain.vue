@@ -27,7 +27,7 @@
     import LoadingOverlay from "../../global/LoadingOverlay";
     import SpellLibraryCard from "../../barracks/SpellLibraryCard";
     import Treasury from "../../barracks/Treasury";
-    import LocalStashCard from "./LocalStashCard";
+    import LocalStashCard from "../../barracks/LocalStashCard";
 
     export default {
         name: "BarracksMain",

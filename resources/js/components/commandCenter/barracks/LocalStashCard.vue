@@ -30,9 +30,9 @@
 
 <script>
     import { mapGetters } from 'vuex'
-    import PaginationBlock from "../../global/PaginationBlock";
-    import ItemIterator from "../../global/ItemIterator";
-    import MobileStoreItemButton from "../../barracks/MobileStoreItemButton";
+    import PaginationBlock from "../global/PaginationBlock";
+    import ItemIterator from "../global/ItemIterator";
+    import MobileStoreItemButton from "./MobileStoreItemButton";
 
     export default {
         name: "LocalStashCard",
