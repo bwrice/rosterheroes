@@ -1,6 +1,6 @@
 <template>
-    <div class="v-progress-linear rh-gradient-progress" :style="progressStyles">
-        <div class="v-progress-linear__determinate rh-progress-missing" :style="progressMissingStyles">
+    <div class="v-progress-linear" :style="progressStyles">
+        <div class="v-progress-linear__determinate" :style="progressMissingStyles">
         </div>
         <div class="v-progress-linear__content">
             <slot>
@@ -21,21 +21,50 @@
             percent: {
                 type: Number,
                 required: true
+            },
+            progressGradientOne: {
+                type: String,
+                default: '#cfc07e'
+            },
+            progressGradientTwo: {
+                type: String,
+                default: '#e0a06c'
+            },
+            progressGradientThree: {
+                type: String,
+                default: '#ed4040'
+            },
+            progressGradientFour: {
+                type: String,
+                default: '#fc00c5'
+            },
+            progressMissingBackground: {
+                type: String,
+                default: '#424242'
             }
         },
         computed: {
             progressStyles() {
+                let backGroundImage = 'linear-gradient(to right, ';
+                backGroundImage += this.progressGradientOne + ', ';
+                backGroundImage += this.progressGradientTwo + ', ';
+                backGroundImage += this.progressGradientThree + ', ';
+                backGroundImage += this.progressGradientFour + ')';
                 return {
-                    height: this.height + 'px'
+                    height: this.height + 'px',
+                    'background-image': backGroundImage
                 }
             },
             progressMissing() {
                 return 100 - this.percent;
             },
             progressMissingStyles() {
+
                 return {
                     left: this.percent + '%',
-                    width: this.progressMissing + '%'
+                    width: this.progressMissing + '%',
+                    position: 'absolute',
+                    'background-color': this.progressMissingBackground
                 }
             }
         }
@@ -43,12 +72,5 @@
 </script>
 
 <style scoped>
-    .rh-gradient-progress {
-        /*background-image: linear-gradient(to right, #333491, #6024ad, #9c13cf, #f500f5);*/
-        background-image: linear-gradient(to right, #cfc07e, #e0a06c, #ed4040, #fc00c5);
-    }
-    .rh-progress-missing {
-        position: absolute;
-        background-color: #424242
-    }
+
 </style>
