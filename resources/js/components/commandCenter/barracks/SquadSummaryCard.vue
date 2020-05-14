@@ -39,11 +39,11 @@
                     <v-col cols="12">
                         <v-progress-linear
                             color="#3d4a6e"
-                            height="16"
+                            :height="experienceProgressHeight"
                             :value="experienceProgressValue"
                         >
                             <template v-slot="{ value }">
-                                <span class="caption font-weight-bold">{{ experienceText }}</span>
+                                <span class="font-weight-bold" :class="[experienceProgressTextSize]">{{ experienceText }}</span>
                             </template>
                         </v-progress-linear>
                     </v-col>
@@ -74,6 +74,28 @@
                     case 'lg':
                     case 'xl':
                         return 'title'
+                }
+            },
+            experienceProgressHeight() {
+                switch (this.$vuetify.breakpoint.name) {
+                    case 'xs':
+                    case 'sm':
+                        return 16;
+                    case 'md':
+                    case 'lg':
+                    case 'xl':
+                        return 24
+                }
+            },
+            experienceProgressTextSize() {
+                switch (this.$vuetify.breakpoint.name) {
+                    case 'xs':
+                    case 'sm':
+                        return 'caption';
+                    case 'md':
+                    case 'lg':
+                    case 'xl':
+                        return 'body-2'
                 }
             },
             squadStats() {
