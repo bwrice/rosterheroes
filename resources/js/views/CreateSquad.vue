@@ -44,27 +44,7 @@
                                         Create Your First Hero
                                     </CreateHeroStep>
 
-                                    <v-stepper-content :step="6">
-                                        <v-row no-gutters class="flex-column pt-6" align="center" justify="center">
-                                            <span class="subtitle-2" style="color: rgba(255, 255, 255, .85)">
-                                                Congrats!!!, Your squad,
-                                            </span>
-                                            <span class="title font-weight-bold py-4">
-                                                {{ squadClone.name }}
-                                            </span>
-                                            <span class="subtitle-2 px-4 text-center" style="color: rgba(255, 255, 255, .85)">
-                                                is all set up. You can now head over to the
-                                                command center to begin your journey.
-                                            </span>
-                                            <v-btn
-                                                :href="'/command-center/' + this.squadClone.slug"
-                                                color="primary"
-                                                class="mt-6"
-                                            >
-                                                Go to Command Center
-                                            </v-btn>
-                                        </v-row>
-                                    </v-stepper-content>
+                                    <CreationCompleteStep :squad="squad"></CreationCompleteStep>
 
                                 </v-stepper-items>
                             </v-stepper>
@@ -84,6 +64,8 @@
     import * as referenceApi from '../api/referenceApi';
     import HeroRace from "../models/HeroRace";
     import HeroClass from "../models/HeroClass";
+    import SquadCreationStep from "../components/squadCreation/SquadCreationStep";
+    import CreationCompleteStep from "../components/squadCreation/CreationCompleteStep";
 
     export default {
 
@@ -141,6 +123,8 @@
         },
 
         components: {
+            CreationCompleteStep,
+            SquadCreationStep,
             NameSquadStep,
             CreateHeroStep
         },
