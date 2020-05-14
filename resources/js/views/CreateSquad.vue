@@ -44,7 +44,7 @@
                                         Create Your First Hero
                                     </CreateHeroStep>
 
-                                    <CreationCompleteStep :squad="squad"></CreationCompleteStep>
+                                    <CreationCompleteStep :squad="squadClone"></CreationCompleteStep>
 
                                 </v-stepper-items>
                             </v-stepper>

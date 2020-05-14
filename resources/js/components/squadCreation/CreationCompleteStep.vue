@@ -11,7 +11,7 @@
             </span>
             <v-sheet color="rgba(255, 255, 255, 0.15)" :class="squadSheetClasses">
                 <span class="font-weight-bold" :class="squadNameClasses">
-                    {{ squadClone.name }}
+                    {{ squad.name }}
                 </span>
             </v-sheet>
             <span class="px-6 text-center" :class="textClasses" style="color: rgba(255, 255, 255, .85)">
@@ -19,7 +19,7 @@
                 command center to begin your journey.
             </span>
             <v-btn
-                :href="'/command-center/' + this.squadClone.slug"
+                :href="'/command-center/' + this.squad.slug"
                 color="primary"
                 class="my-6"
                 :x-large="! isMobile"
@@ -44,9 +44,6 @@
             },
         },
 
-        created() {
-            this.squadClone = _.cloneDeep(this.squad);
-        },
         computed: {
             checkMarkStyles() {
                 return {
@@ -63,7 +60,7 @@
                     }
                 }
                 return {
-                    'display-3': true,
+                    'display-2': true,
                 }
             },
             squadSheetClasses() {
