@@ -77,7 +77,7 @@ export default {
 
                 });
                 router.push({
-                    name: 'map-main',
+                    name: 'realm-main',
                     params: {
                         squadSlug: squadSlug
                     }});
