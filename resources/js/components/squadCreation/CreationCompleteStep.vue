@@ -1,20 +1,20 @@
 <template>
     <SquadCreationStep :step="6">
-        <v-row no-gutters class="flex-column" align="center" justify="center" style="padding-bottom: 160px">
+        <v-row no-gutters class="flex-column" align="center" justify="center" :style="mainRowStyles">
             <v-icon
                 color="success"
-                style="font-size: 160px"
+                :style="checkMarkStyles"
                 class="mb-6"
             >check</v-icon>
-            <span class="body-1" style="color: rgba(255, 255, 255, .85)">
+            <span :class="textClasses" style="color: rgba(255, 255, 255, .85)">
                 Congrats!!!, Your squad,
             </span>
-            <v-sheet color="rgba(255, 255, 255, 0.15)" class="px-3 py-1 my-2">
-                <span class="title font-weight-bold">
+            <v-sheet color="rgba(255, 255, 255, 0.15)" :class="squadSheetClasses">
+                <span class="font-weight-bold" :class="squadNameClasses">
                     {{ squadClone.name }}
                 </span>
             </v-sheet>
-            <span class="body-1 px-4 text-center" style="color: rgba(255, 255, 255, .85)">
+            <span class="px-6 text-center" :class="textClasses" style="color: rgba(255, 255, 255, .85)">
                 is all set up. You can now head over to the
                 command center to begin your journey.
             </span>
@@ -22,6 +22,7 @@
                 :href="'/command-center/' + this.squadClone.slug"
                 color="primary"
                 class="my-6"
+                :x-large="! isMobile"
             >
                 Command Center
             </v-btn>
@@ -46,6 +47,65 @@
         created() {
             this.squadClone = _.cloneDeep(this.squad);
         },
+        computed: {
+            checkMarkStyles() {
+                return {
+                    'font-size': this.checkMarkHeight + 'px'
+                }
+            },
+            checkMarkHeight() {
+                return this.isMobile ? 160 : 240;
+            },
+            squadNameClasses() {
+                if (this.isMobile) {
+                    return {
+                        'title': true,
+                    }
+                }
+                return {
+                    'display-3': true,
+                }
+            },
+            squadSheetClasses() {
+                if (this.isMobile) {
+                    return {
+                        'px-3': true,
+                        'py-1': true,
+                        'my-2': true,
+                    }
+                }
+                return {
+                    'px-4': true,
+                    'py-3': true,
+                    'my-4': true,
+                }
+            },
+            isMobile() {
+                switch (this.$vuetify.breakpoint.name) {
+                    case 'xs':
+                    case 'sm':
+                        return true;
+                }
+                return false;
+            },
+            mainRowStyles() {
+                let padding = this.isMobile ? 160 : 360;
+                return {
+                    'padding-bottom' : padding + 'px'
+                }
+            },
+            textClasses() {
+                if (this.isMobile) {
+                    return {
+                        'body-1': true,
+                    }
+                }
+                return {
+                    'headline': true,
+                }
+            }
+
+        }
     }
 </script>
 
