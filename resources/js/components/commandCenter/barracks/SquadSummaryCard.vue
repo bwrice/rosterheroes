@@ -9,14 +9,14 @@
                 class="my-1"
             >
                 <v-row no-gutters align="center">
-                    <v-col cols="4">
+                    <v-col cols="4" md="3">
                         <v-row no-gutters class="pa-2">
                             <v-col cols="12">
                                 <LevelIcon :level="_squad.level"></LevelIcon>
                             </v-col>
                         </v-row>
                     </v-col>
-                    <v-col cols="8">
+                    <v-col cols="8" md="9">
                         <v-row no-gutters class="pa-2">
                             <v-col cols="12">
                                 <v-sheet
@@ -27,7 +27,7 @@
                                     class="px-2"
                                     style="margin-bottom: 2px">
                                     <v-row no-gutters justify="space-between">
-                                        <span class="font-weight-regular" :class="[textSizeClass]" style="color: rgba(255,255,255,0.8)">{{stat.name}}:</span>
+                                        <span class="font-weight-thin" :class="[textSizeClass]">{{stat.name.toUpperCase()}}</span>
                                         <span class="font-weight-regular" :class="[textSizeClass]" style="color: rgba(255,255,255,0.8)">{{stat.value}}</span>
                                     </v-row>
                                 </v-sheet>
@@ -69,11 +69,11 @@
                 switch (this.$vuetify.breakpoint.name) {
                     case 'xs':
                     case 'sm':
-                        return 'sub-title';
+                        return 'body-2';
                     case 'md':
                     case 'lg':
                     case 'xl':
-                        return 'title'
+                        return 'sub-title'
                 }
             },
             experienceProgressHeight() {
