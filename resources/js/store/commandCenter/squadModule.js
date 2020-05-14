@@ -103,6 +103,9 @@ export default {
         SET_SQUAD(state, payload) {
             state.squad = payload;
         },
+        INCREASE_SQUAD_GOLD(state, gold) {
+            state.squad.gold += gold;
+        },
         SET_SPELL_LIBRARY(state, payload) {
             state.spells = payload;
         },
@@ -151,7 +154,7 @@ export default {
             })
         },
         REPLACE_UPDATED_HERO(state, updatedHero) {
-            
+
             state.heroes = helpers.replaceOrPushElement(state.heroes, updatedHero, 'uuid');
         }
     },
@@ -435,6 +438,7 @@ export default {
                 helpers.handleItemTransactions({state, commit, dispatch}, openedChestResult.items);
                 commit('REMOVE_CHEST_FROM_UNOPENED_CHESTS', unopenedChest.uuid);
                 commit('ADD_TO_OPENED_CHEST_RESULTS', openedChestResult);
+                commit('INCREASE_SQUAD_GOLD', openedChestResult.gold);
             } catch (e) {
                 console.log(e);
                 dispatch('snackBarError', {text: 'Oops, something went wrong'})
