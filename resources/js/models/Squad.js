@@ -10,7 +10,7 @@ export default class Squad {
         this.level = level;
         this.experience = experience;
         this.experienceOverLevel = experienceOverLevel;
-        this.experienceUntilNextLevel = experienceOverLevel;
+        this.experienceUntilNextLevel = experienceUntilNextLevel;
         this.favor = favor;
         this.questsPerWeek = questsPerWeek;
         this.sideQuestsPerQuest = sideQuestsPerQuest;
