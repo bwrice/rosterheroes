@@ -5,7 +5,7 @@
         </v-col>
         <v-col cols="12">
             <v-sheet
-                color="#4c7c7d"
+                color="#5c707d"
                 class="my-1"
             >
                 <v-row no-gutters align="center">
