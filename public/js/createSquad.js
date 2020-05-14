@@ -87236,8 +87236,14 @@ var Squad = function Squad(_ref) {
       spiritEssence = _ref$spiritEssence === void 0 ? 0 : _ref$spiritEssence,
       _ref$gold = _ref.gold,
       gold = _ref$gold === void 0 ? 0 : _ref$gold,
+      _ref$level = _ref.level,
+      level = _ref$level === void 0 ? 1 : _ref$level,
       _ref$experience = _ref.experience,
       experience = _ref$experience === void 0 ? 0 : _ref$experience,
+      _ref$experienceOverLe = _ref.experienceOverLevel,
+      experienceOverLevel = _ref$experienceOverLe === void 0 ? 0 : _ref$experienceOverLe,
+      _ref$experienceUntilN = _ref.experienceUntilNextLevel,
+      experienceUntilNextLevel = _ref$experienceUntilN === void 0 ? 1 : _ref$experienceUntilN,
       _ref$favor = _ref.favor,
       favor = _ref$favor === void 0 ? 0 : _ref$favor,
       questsPerWeek = _ref.questsPerWeek,
@@ -87250,7 +87256,10 @@ var Squad = function Squad(_ref) {
   this.slug = slug;
   this.spiritEssence = spiritEssence;
   this.gold = gold;
+  this.level = level;
   this.experience = experience;
+  this.experienceOverLevel = experienceOverLevel;
+  this.experienceUntilNextLevel = experienceUntilNextLevel;
   this.favor = favor;
   this.questsPerWeek = questsPerWeek;
   this.sideQuestsPerQuest = sideQuestsPerQuest;
