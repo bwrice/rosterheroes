@@ -8,7 +8,7 @@
         @click="navigateToBarracksHero"
     >
         <v-row no-gutters align="center">
-            <v-col cols="4" class="pt-1 px-1">
+            <v-col cols="4" md="3" class="pt-1 px-1">
                 <v-row no-gutters>
                     <v-col cols="6">
                         <HeroRaceIcon :hero-race="heroRace"></HeroRaceIcon>
@@ -18,7 +18,7 @@
                     </v-col>
                 </v-row>
             </v-col>
-            <v-col cols="6">
+            <v-col cols="6" md="7">
                 <v-row align="center" justify="center">
                     <span class="title font-weight-regular">{{hero.name}}</span>
                 </v-row>
@@ -28,12 +28,12 @@
             </v-col>
         </v-row>
         <v-row no-gutters align="center">
-            <v-col cols="4">
+            <v-col cols="4" md="3">
                 <v-sheet class="py-0 ma-1" style="background-image: linear-gradient(to bottom right, #393142, #5e526b , #393142)">
                     <HeroGearSVG :hero="hero"></HeroGearSVG>
                 </v-sheet>
             </v-col>
-            <v-col cols="8">
+            <v-col cols="8" md="9">
                 <v-row no-gutters>
                     <v-col cols="12">
                         <PlayerSpiritSummaryPanel
