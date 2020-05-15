@@ -36,7 +36,7 @@
 
         <div class="pl-4 flex items-center">
             <a class="toggleColour text-white no-underline hover:no-underline font-bold text-2xl lg:text-4xl"  href="#">
-                @include('components.simple-logo')ROSTER HEROES
+                @svg('rh-nav-logo', 'h-12 fill-current inline') ROSTER HEROES
             </a>
         </div>
 
