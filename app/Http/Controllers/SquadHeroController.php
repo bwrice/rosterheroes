@@ -38,7 +38,7 @@ class SquadHeroController extends Controller
         $this->authorize(SquadPolicy::MANAGE, $squad);
 
         $this->validate($request, [
-            'name' => 'required|regex:/^[\w\-\s]+$/|between:4,20|unique:heroes,name',
+            'name' => 'required|regex:/^[\w\-\s]+$/|between:4,16|unique:heroes,name',
             'race' => 'required|exists:hero_races,name',
             'class' => 'required|exists:hero_classes,name'
         ]);

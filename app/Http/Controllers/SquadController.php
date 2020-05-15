@@ -34,7 +34,7 @@ class SquadController extends Controller
             ]);
         }
         $request->validate([
-            'name' => 'required|unique:squads|between:4,20|regex:/^[\w\s]+$/'
+            'name' => 'required|unique:squads|between:4,16|regex:/^[\w\s]+$/'
         ]);
 
         $squad = $createSquadAction->execute(auth()->user()->id, $request->name);

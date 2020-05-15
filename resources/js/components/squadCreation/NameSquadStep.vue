@@ -50,7 +50,7 @@
             name: {
                 required,
                 minLength: minLength(4),
-                maxLength: maxLength(20),
+                maxLength: maxLength(16),
                 format: helpers.regex('format', /^[\w\s]+$/)
             },
         },
