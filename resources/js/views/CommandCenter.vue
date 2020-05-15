@@ -14,6 +14,7 @@
             <v-menu
                 bottom
                 left
+                v-model="settings"
             >
                 <template v-slot:activator="{ on }">
                     <v-btn
@@ -26,9 +27,11 @@
                 </template>
 
                 <v-list>
-                    <v-list-item
-                        @click=""
-                    >
+                    <v-list-item>
+                        <v-spacer></v-spacer>
+                        <v-icon @click="settings = false">close</v-icon>
+                    </v-list-item>
+                    <v-list-item>
                         <v-btn color="info" @click="logout">sign-out</v-btn>
                     </v-list-item>
                 </v-list>
@@ -116,7 +119,8 @@
 
         data: function() {
             return {
-                drawer: false
+                drawer: false,
+                settings: false
             }
         },
         methods: {
