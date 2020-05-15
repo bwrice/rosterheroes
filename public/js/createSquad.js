@@ -2089,7 +2089,7 @@ __webpack_require__.r(__webpack_exports__);
     name: {
       required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"],
       minLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["minLength"])(4),
-      maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["maxLength"])(20),
+      maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["maxLength"])(16),
       format: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["helpers"].regex('format', /^[\w\s]+$/)
     },
     heroClassSelection: {
@@ -2149,7 +2149,7 @@ __webpack_require__.r(__webpack_exports__);
       if (!this.$v.name.$dirty) return errors;
       !this.$v.name.required && errors.push('Name is required');
       !this.$v.name.minLength && errors.push('Must be at least 4 characters');
-      !this.$v.name.maxLength && errors.push('Cannot be more than 20 characters');
+      !this.$v.name.maxLength && errors.push('Cannot be more than 16 characters');
       !this.$v.name.format && errors.push('Only letters, number and spaces allowed');
 
       if (this.serverErrors.has('name')) {
@@ -2237,6 +2237,128 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/squadCreation/CreationCompleteStep.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/squadCreation/CreationCompleteStep.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _SquadCreationStep__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SquadCreationStep */ "./resources/js/components/squadCreation/SquadCreationStep.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "CreationCompleteStep",
+  components: {
+    SquadCreationStep: _SquadCreationStep__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  props: {
+    squad: {
+      type: Object,
+      "default": function _default() {
+        return {};
+      }
+    }
+  },
+  computed: {
+    checkMarkStyles: function checkMarkStyles() {
+      return {
+        'font-size': this.checkMarkHeight + 'px'
+      };
+    },
+    checkMarkHeight: function checkMarkHeight() {
+      return this.isMobile ? 160 : 240;
+    },
+    squadNameClasses: function squadNameClasses() {
+      if (this.isMobile) {
+        return {
+          'title': true
+        };
+      }
+
+      return {
+        'display-2': true
+      };
+    },
+    squadSheetClasses: function squadSheetClasses() {
+      if (this.isMobile) {
+        return {
+          'px-3': true,
+          'py-1': true,
+          'my-2': true
+        };
+      }
+
+      return {
+        'px-4': true,
+        'py-3': true,
+        'my-4': true
+      };
+    },
+    isMobile: function isMobile() {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs':
+        case 'sm':
+          return true;
+      }
+
+      return false;
+    },
+    mainRowStyles: function mainRowStyles() {
+      var padding = this.isMobile ? 160 : 360;
+      return {
+        'padding-bottom': padding + 'px'
+      };
+    },
+    textClasses: function textClasses() {
+      if (this.isMobile) {
+        return {
+          'body-1': true
+        };
+      }
+
+      return {
+        'headline': true
+      };
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/squadCreation/NameSquadStep.vue?vue&type=script&lang=js&":
 /*!**************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/squadCreation/NameSquadStep.vue?vue&type=script&lang=js& ***!
@@ -2301,7 +2423,7 @@ __webpack_require__.r(__webpack_exports__);
     name: {
       required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"],
       minLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["minLength"])(4),
-      maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["maxLength"])(20),
+      maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["maxLength"])(16),
       format: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["helpers"].regex('format', /^[\w\s]+$/)
     }
   },
@@ -2334,7 +2456,7 @@ __webpack_require__.r(__webpack_exports__);
       if (!this.$v.name.$dirty) return errors;
       !this.$v.name.required && errors.push('Name is required');
       !this.$v.name.minLength && errors.push('Must be at least 4 characters');
-      !this.$v.name.maxLength && errors.push('Cannot be more than 20 characters');
+      !this.$v.name.maxLength && errors.push('Cannot be more than 16 characters');
       !this.$v.name.format && errors.push('Only letters, number and spaces allowed');
 
       if (this.serverErrors.has('name')) {
@@ -2385,7 +2507,7 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     stepStyles: function stepStyles() {
       return {
-        // 200 px is enough to account for other element heights plus chrome bar at bottom of screens
+        // 120 px is enough to account for other element heights plus chrome bar at bottom of screens
         height: window.innerHeight - 120 + 'px'
       };
     }
@@ -2411,6 +2533,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _api_referenceApi__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../api/referenceApi */ "./resources/js/api/referenceApi.js");
 /* harmony import */ var _models_HeroRace__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../models/HeroRace */ "./resources/js/models/HeroRace.js");
 /* harmony import */ var _models_HeroClass__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../models/HeroClass */ "./resources/js/models/HeroClass.js");
+/* harmony import */ var _components_squadCreation_SquadCreationStep__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/squadCreation/SquadCreationStep */ "./resources/js/components/squadCreation/SquadCreationStep.vue");
+/* harmony import */ var _components_squadCreation_CreationCompleteStep__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/squadCreation/CreationCompleteStep */ "./resources/js/components/squadCreation/CreationCompleteStep.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2475,26 +2599,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
+
 
 
 
@@ -2562,6 +2668,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   components: {
+    CreationCompleteStep: _components_squadCreation_CreationCompleteStep__WEBPACK_IMPORTED_MODULE_7__["default"],
+    SquadCreationStep: _components_squadCreation_SquadCreationStep__WEBPACK_IMPORTED_MODULE_6__["default"],
     NameSquadStep: _components_squadCreation_NameSquadStep__WEBPACK_IMPORTED_MODULE_1__["default"],
     CreateHeroStep: _components_squadCreation_CreateHeroStep__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
@@ -35427,6 +35535,116 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/squadCreation/CreationCompleteStep.vue?vue&type=template&id=2e1959e5&scoped=true&":
+/*!*************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/squadCreation/CreationCompleteStep.vue?vue&type=template&id=2e1959e5&scoped=true& ***!
+  \*************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "SquadCreationStep",
+    { attrs: { step: 6 } },
+    [
+      _c(
+        "v-row",
+        {
+          staticClass: "flex-column",
+          style: _vm.mainRowStyles,
+          attrs: { "no-gutters": "", align: "center", justify: "center" }
+        },
+        [
+          _c(
+            "v-icon",
+            {
+              staticClass: "mb-6",
+              style: _vm.checkMarkStyles,
+              attrs: { color: "success" }
+            },
+            [_vm._v("check")]
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            {
+              class: _vm.textClasses,
+              staticStyle: { color: "rgba(255, 255, 255, .85)" }
+            },
+            [_vm._v("\n            Congrats!!!, Your squad,\n        ")]
+          ),
+          _vm._v(" "),
+          _c(
+            "v-sheet",
+            {
+              class: _vm.squadSheetClasses,
+              attrs: { color: "rgba(255, 255, 255, 0.15)" }
+            },
+            [
+              _c(
+                "span",
+                {
+                  staticClass: "font-weight-bold",
+                  class: _vm.squadNameClasses
+                },
+                [
+                  _vm._v(
+                    "\n                " +
+                      _vm._s(_vm.squad.name) +
+                      "\n            "
+                  )
+                ]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            {
+              staticClass: "px-6 text-center",
+              class: _vm.textClasses,
+              staticStyle: { color: "rgba(255, 255, 255, .85)" }
+            },
+            [
+              _vm._v(
+                "\n            is all set up. You can now head over to the\n            command center to begin your journey.\n        "
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "v-btn",
+            {
+              staticClass: "my-6",
+              attrs: {
+                href: "/command-center/" + this.squad.slug,
+                color: "primary",
+                "x-large": !_vm.isMobile
+              }
+            },
+            [_vm._v("\n            Command Center\n        ")]
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/squadCreation/NameSquadStep.vue?vue&type=template&id=4abfb82c&scoped=true&":
 /*!******************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/squadCreation/NameSquadStep.vue?vue&type=template&id=4abfb82c&scoped=true& ***!
@@ -35718,92 +35936,9 @@ var render = function() {
                                     )
                                   }),
                                   _vm._v(" "),
-                                  _c(
-                                    "v-stepper-content",
-                                    { attrs: { step: 6 } },
-                                    [
-                                      _c(
-                                        "v-row",
-                                        {
-                                          staticClass: "flex-column pt-6",
-                                          attrs: {
-                                            "no-gutters": "",
-                                            align: "center",
-                                            justify: "center"
-                                          }
-                                        },
-                                        [
-                                          _c(
-                                            "span",
-                                            {
-                                              staticClass: "subtitle-2",
-                                              staticStyle: {
-                                                color:
-                                                  "rgba(255, 255, 255, .85)"
-                                              }
-                                            },
-                                            [
-                                              _vm._v(
-                                                "\n                                            Congrats!!!, Your squad,\n                                        "
-                                              )
-                                            ]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "span",
-                                            {
-                                              staticClass:
-                                                "title font-weight-bold py-4"
-                                            },
-                                            [
-                                              _vm._v(
-                                                "\n                                            " +
-                                                  _vm._s(_vm.squadClone.name) +
-                                                  "\n                                        "
-                                              )
-                                            ]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "span",
-                                            {
-                                              staticClass:
-                                                "subtitle-2 px-4 text-center",
-                                              staticStyle: {
-                                                color:
-                                                  "rgba(255, 255, 255, .85)"
-                                              }
-                                            },
-                                            [
-                                              _vm._v(
-                                                "\n                                            is all set up. You can now head over to the\n                                            command center to begin your journey.\n                                        "
-                                              )
-                                            ]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-btn",
-                                            {
-                                              staticClass: "mt-6",
-                                              attrs: {
-                                                href:
-                                                  "/command-center/" +
-                                                  this.squadClone.slug,
-                                                color: "primary"
-                                              }
-                                            },
-                                            [
-                                              _vm._v(
-                                                "\n                                            Go to Command Center\n                                        "
-                                              )
-                                            ]
-                                          )
-                                        ],
-                                        1
-                                      )
-                                    ],
-                                    1
-                                  )
+                                  _c("CreationCompleteStep", {
+                                    attrs: { squad: _vm.squadClone }
+                                  })
                                 ],
                                 2
                               )
@@ -86969,6 +87104,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateHeroStep_vue_vue_type_template_id_10e94083_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateHeroStep_vue_vue_type_template_id_10e94083_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/squadCreation/CreationCompleteStep.vue":
+/*!************************************************************************!*\
+  !*** ./resources/js/components/squadCreation/CreationCompleteStep.vue ***!
+  \************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _CreationCompleteStep_vue_vue_type_template_id_2e1959e5_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreationCompleteStep.vue?vue&type=template&id=2e1959e5&scoped=true& */ "./resources/js/components/squadCreation/CreationCompleteStep.vue?vue&type=template&id=2e1959e5&scoped=true&");
+/* harmony import */ var _CreationCompleteStep_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreationCompleteStep.vue?vue&type=script&lang=js& */ "./resources/js/components/squadCreation/CreationCompleteStep.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _CreationCompleteStep_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CreationCompleteStep_vue_vue_type_template_id_2e1959e5_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _CreationCompleteStep_vue_vue_type_template_id_2e1959e5_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "2e1959e5",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/squadCreation/CreationCompleteStep.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/squadCreation/CreationCompleteStep.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/squadCreation/CreationCompleteStep.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreationCompleteStep_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./CreationCompleteStep.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/squadCreation/CreationCompleteStep.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreationCompleteStep_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/squadCreation/CreationCompleteStep.vue?vue&type=template&id=2e1959e5&scoped=true&":
+/*!*******************************************************************************************************************!*\
+  !*** ./resources/js/components/squadCreation/CreationCompleteStep.vue?vue&type=template&id=2e1959e5&scoped=true& ***!
+  \*******************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreationCompleteStep_vue_vue_type_template_id_2e1959e5_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./CreationCompleteStep.vue?vue&type=template&id=2e1959e5&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/squadCreation/CreationCompleteStep.vue?vue&type=template&id=2e1959e5&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreationCompleteStep_vue_vue_type_template_id_2e1959e5_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreationCompleteStep_vue_vue_type_template_id_2e1959e5_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
