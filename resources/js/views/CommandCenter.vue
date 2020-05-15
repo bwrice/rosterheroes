@@ -10,6 +10,29 @@
                 class="accent--text"
             ></v-app-bar-nav-icon>
             <router-view name="appBarContent"></router-view>
+            <v-spacer></v-spacer>
+            <v-menu
+                bottom
+                left
+            >
+                <template v-slot:activator="{ on }">
+                    <v-btn
+                        color="accent"
+                        icon
+                        v-on="on"
+                    >
+                        <v-icon>settings</v-icon>
+                    </v-btn>
+                </template>
+
+                <v-list>
+                    <v-list-item
+                        @click=""
+                    >
+                        <v-btn color="info" @click="logout">sign-out</v-btn>
+                    </v-list-item>
+                </v-list>
+            </v-menu>
         </v-app-bar>
         <v-navigation-drawer
                 fixed
@@ -123,7 +146,11 @@
                 'updateSpellLibrary',
                 'updateUnopenedChests',
                 'updateLocalStash'
-            ])
+            ]),
+            async logout() {
+                await axios.post('/logout');
+                window.location.replace('/');
+            }
         },
         computed: {
 
