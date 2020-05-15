@@ -87,7 +87,7 @@
 
                 !this.$v.name.required && errors.push('Name is required');
                 !this.$v.name.minLength && errors.push('Must be at least 4 characters');
-                !this.$v.name.maxLength && errors.push('Cannot be more than 20 characters');
+                !this.$v.name.maxLength && errors.push('Cannot be more than 16 characters');
                 !this.$v.name.format && errors.push('Only letters, number and spaces allowed');
 
                 if (this.serverErrors.has('name')) {
