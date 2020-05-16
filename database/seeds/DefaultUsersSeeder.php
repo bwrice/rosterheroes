@@ -29,28 +29,28 @@ class DefaultUsersSeeder extends Seeder
         RewardChestToSquad $rewardChestToSquad)
     {
         $user = $createUserAction->execute('bwrice83@gmail.com', 'Brian Rice', 'password');
-        $squad = $createSquadAction->execute($user->id, 'My Squad');
+        $squad = $createSquadAction->execute($user->id, 'Middle Earthers');
 
         $heroes = [
             [
-                'name' => 'My Human',
+                'name' => 'Aragorn',
                 'hero_race' => HeroRace::human(),
                 'hero_class' => HeroClass::ranger()
             ],
             [
-                'name' => 'My Elf',
+                'name' => 'Legolas',
                 'hero_race' => HeroRace::elf(),
-                'hero_class' => HeroClass::sorcerer()
+                'hero_class' => HeroClass::ranger()
             ],
             [
-                'name' => 'My Dwarf',
+                'name' => 'Gimli',
                 'hero_race' => HeroRace::dwarf(),
                 'hero_class' => HeroClass::warrior()
             ],
             [
-                'name' => 'My Orc',
+                'name' => 'Uruk Hai',
                 'hero_race' => HeroRace::orc(),
-                'hero_class' => HeroClass::warrior()
+                'hero_class' => HeroClass::sorcerer()
             ]
         ];
 
