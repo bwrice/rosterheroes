@@ -9,11 +9,6 @@ class SuperstarSpiritsSeeder extends Seeder
      */
     public function run(\App\Domain\Actions\CreatePlayerSpiritAction $createPlayerSpiritAction)
     {
-        $this->createMahomes($createPlayerSpiritAction);
-    }
-
-    protected function createMahomes(\App\Domain\Actions\CreatePlayerSpiritAction $createPlayerSpiritAction)
-    {
         $this->createSpirit(
             $createPlayerSpiritAction,
             [
@@ -32,8 +27,74 @@ class SuperstarSpiritsSeeder extends Seeder
             ],
             \App\Domain\Models\League::NFL,
             \App\Domain\Models\Position::QUARTERBACK,
-            10698,
-            63,
+            8073,
+            129,
+            false
+        );
+        $this->createSpirit(
+            $createPlayerSpiritAction,
+            [
+                'first_name' => 'Lebron',
+                'last_name' => 'James'
+            ],
+            [
+                'name' => 'Lakers',
+                'location' => 'Los Angeles',
+                'abbreviation' => 'LAL'
+            ],
+            [
+                'name' => 'Warriors',
+                'location' => 'Golden State',
+                'abbreviation' => 'GSW'
+            ],
+            \App\Domain\Models\League::NBA,
+            \App\Domain\Models\Position::POWER_FORWARD,
+            10118,
+            371,
+            false
+        );
+        $this->createSpirit(
+            $createPlayerSpiritAction,
+            [
+                'first_name' => 'Mike',
+                'last_name' => 'Trout'
+            ],
+            [
+                'name' => 'Angels',
+                'location' => 'Los Angeles',
+                'abbreviation' => 'LAA'
+            ],
+            [
+                'name' => 'Baltimore',
+                'location' => 'Orioles',
+                'abbreviation' => 'BAL'
+            ],
+            \App\Domain\Models\League::MLB,
+            \App\Domain\Models\Position::OUTFIELD,
+            6392,
+            235,
+            true
+        );
+        $this->createSpirit(
+            $createPlayerSpiritAction,
+            [
+                'first_name' => 'Sidney',
+                'last_name' => 'Crosby'
+            ],
+            [
+                'name' => 'Penguins',
+                'location' => 'Pittsburgh',
+                'abbreviation' => 'PIT'
+            ],
+            [
+                'name' => 'Capitols',
+                'location' => 'Washington',
+                'abbreviation' => 'WAS'
+            ],
+            \App\Domain\Models\League::NHL,
+            \App\Domain\Models\Position::HOCKEY_CENTER,
+            4156,
+            72,
             true
         );
     }
