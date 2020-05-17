@@ -25,13 +25,13 @@
                                 </v-sheet>
                                 <v-sheet color="rgba(0,0,0, 0.5)" class="px-2 mx-2 my-1">
                                     <v-row no-gutters class="d-flex flex-column justify-center align-end">
-                                        <span class="overline">Tot./Player</span>
+                                        <span class="overline">Tot./Hero</span>
                                         <span class="caption">7,500</span>
                                     </v-row>
                                 </v-sheet>
                                 <v-sheet color="rgba(0,0,0, 0.5)" class="px-2 mx-2 mt-1 mb-2">
                                     <v-row no-gutters class="d-flex flex-column justify-center align-end">
-                                        <span class="overline">Rem./Player</span>
+                                        <span class="overline">Rem./Hero</span>
                                         <span class="caption">5,391</span>
                                     </v-row>
                                 </v-sheet>
