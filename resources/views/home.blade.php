@@ -125,10 +125,25 @@
 
         <div class="flex flex-wrap">
             <div class="w-5/6 sm:w-1/2 p-6">
+                <h3 class="text-3xl text-gray-800 font-bold leading-none mb-3">Command a squad of heroes</h3>
+                <p class="text-gray-700 mb-8">With nearly 500 unique locations, there's a near endless amount of things to discover.
+                    From dungeons, castles and secret caves, to shops, academies and forges.
+                    Not to mention, the titans and minions that are also roaming the lands.
+                </p>
+            </div>
+            <div class="w-full sm:w-1/2 p-6">
+                @svg('squad_ready')
+            </div>
+        </div>
+
+
+        <div class="flex flex-wrap">
+            <div class="w-5/6 sm:w-1/2 p-6">
                 <h3 class="text-3xl text-gray-800 font-bold leading-none mb-3">Explore a massive realm</h3>
                 <p class="text-gray-700 mb-8">With nearly 500 unique locations, there's a near endless amount of things to discover.
                     From dungeons, castles and secret caves, to shops, academies and forges.
                     Not to mention, the titans and minions that are also roaming the lands.
+                </p>
             </div>
             <div class="w-full sm:w-1/2 p-6">
                 @svg('realm')
@@ -136,23 +151,36 @@
         </div>
 
 
-        <div class="flex flex-wrap flex-col-reverse sm:flex-row">
+        <div class="flex flex-wrap flex-col-reverse sm:flex-row md:pb-16">
             <div class="w-full sm:w-1/2 px-6 mt-3 lg:py-6 lg:mt-6">
                 <img class="w-full z-50" src="{{asset('/images/embody_heroes.png')}}">
             </div>
             <div class="w-full sm:w-1/2 p-6 mt-6">
                 <div class="align-middle">
                     <h3 class="text-3xl text-gray-800 font-bold leading-none mb-3">Four fantasy sports combined into one</h3>
-                    <p class="text-gray-700 mb-8">Embody your heroes with players from the NFL, NBA, MLB and NHL. The better the player's stats, the better your hero's stats.
+                    <p class="text-gray-700 mb-8">Embody your heroes with players from the NFL, NBA, MLB and NHL. The better the player's stats, the better your hero's stats.</p>
                 </div>
             </div>
 
+        </div>
+
+
+        <div class="flex flex-wrap">
+            <div class="w-5/6 sm:w-1/2 p-6">
+                <h3 class="text-3xl text-gray-800 font-bold leading-none mb-3">Earn countless treasures</h3>
+                <p class="text-gray-700 mb-8">Kill monsters and complete quests to earn treasure chests. They're full of 100's of different types of items
+                    with a near infinite combination of stats and enchantments. And don't forget gold! There's tons of gold!
+                </p>
+            </div>
+            <div class="w-full sm:w-1/2 py-6 px-6 md:pl-16">
+                @svg('treasure')
+            </div>
         </div>
     </div>
 </section>
 
 
-<!-- Change the colour #f8fafc to match the previous section colour -->
+<!-- Change the colour #d5e1e8 to match the previous section colour -->
 <svg class="wave-top" viewBox="0 0 1439 147" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g transform="translate(-1.000000, -14.000000)" fill-rule="nonzero">
