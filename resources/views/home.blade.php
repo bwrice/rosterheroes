@@ -36,7 +36,7 @@
 
         <div class="pl-4 flex items-center">
             <a class="toggleColour text-white no-underline hover:no-underline font-bold text-2xl lg:text-4xl"  href="#">
-                @svg('rh-nav-logo', 'h-12 fill-current inline') ROSTER HEROES
+                ROSTER HEROES
             </a>
         </div>
 
@@ -73,7 +73,7 @@
     <div class="bg-orange-300 text-center py-4 lg:px-4">
         <div class="p-2 bg-orange-600 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex" role="alert">
             <span class="flex rounded-full bg-orange-900 uppercase px-2 py-1 text-xs font-bold mr-3">Beta</span>
-            <span class="md:font-semibold mr-2 text-left flex-auto">Roster Heroes is currently in beta. There will possibly be roll-backs (likely) or complete server resets (less likely)</span>
+            <span class="md:font-semibold mr-2 text-left flex-auto">Roster Heroes is currently in beta. There will possibly be rollbacks (likely) or complete server resets (less likely)</span>
         </div>
     </div>
 
@@ -124,11 +124,12 @@
         </div>
 
         <div class="flex flex-wrap">
-            <div class="w-5/6 sm:w-1/2 p-6">
+            <div class="w-5/6 sm:w-1/2 p-6 md:pt-48">
                 <h3 class="text-3xl text-gray-800 font-bold leading-none mb-3">Command a squad of heroes</h3>
-                <p class="text-gray-700 mb-8">With nearly 500 unique locations, there's a near endless amount of things to discover.
-                    From dungeons, castles and secret caves, to shops, academies and forges.
-                    Not to mention, the titans and minions that are also roaming the lands.
+                <p class="text-gray-700 mb-8">Just like you would have a fantasy team, here you'll have a fantasy squad
+                    of heroes embodied by players from various sports. Choose from the classes of warriors, sorcerers, and rangers,
+                    which will determine your various hero stats, as well as the races of human, elven, dwarf and orc which will
+                    determine the position and sports of the players you'll have available to embody them.
                 </p>
             </div>
             <div class="w-full sm:w-1/2 p-6">
@@ -137,43 +138,43 @@
         </div>
 
 
-        <div class="flex flex-wrap">
-            <div class="w-5/6 sm:w-1/2 p-6">
+        <div class="flex flex-wrap flex-col-reverse sm:flex-row">
+            <div class="w-full sm:w-1/2 p-6">
+                @svg('realm')
+            </div>
+            <div class="w-5/6 sm:w-1/2 p-6 md:pt-24">
                 <h3 class="text-3xl text-gray-800 font-bold leading-none mb-3">Explore a massive realm</h3>
                 <p class="text-gray-700 mb-8">With nearly 500 unique locations, there's a near endless amount of things to discover.
                     From dungeons, castles and secret caves, to shops, academies and forges.
                     Not to mention, the titans and minions that are also roaming the lands.
                 </p>
             </div>
-            <div class="w-full sm:w-1/2 p-6">
-                @svg('realm')
-            </div>
         </div>
 
 
-        <div class="flex flex-wrap flex-col-reverse sm:flex-row md:pb-16">
+        <div class="flex flex-wrap md:pb-16">
+            <div class="w-full sm:w-1/2 p-6 mt-6 md:pt-16">
+                <div class="align-middle">
+                    <h3 class="text-3xl text-gray-800 font-bold leading-none mb-3">Four fantasy sports combined into one</h3>
+                    <p class="text-gray-700 mb-8">Embody your heroes with players from the NFL, NBA, MLB and NHL. There's no longer an off-season in fantasy
+                    because games from these leagues are happening all year long... Well... with the exception of a global pandemic.</p>
+                </div>
+            </div>
             <div class="w-full sm:w-1/2 px-6 mt-3 lg:py-6 lg:mt-6">
                 <img class="w-full z-50" src="{{asset('/images/embody_heroes.png')}}">
             </div>
-            <div class="w-full sm:w-1/2 p-6 mt-6">
-                <div class="align-middle">
-                    <h3 class="text-3xl text-gray-800 font-bold leading-none mb-3">Four fantasy sports combined into one</h3>
-                    <p class="text-gray-700 mb-8">Embody your heroes with players from the NFL, NBA, MLB and NHL. The better the player's stats, the better your hero's stats.</p>
-                </div>
-            </div>
-
         </div>
 
 
-        <div class="flex flex-wrap">
-            <div class="w-5/6 sm:w-1/2 p-6">
+        <div class="flex flex-wrap flex-col-reverse sm:flex-row">
+            <div class="w-full sm:w-1/2 py-6 px-6 md:pl-16">
+                @svg('treasure')
+            </div>
+            <div class="w-5/6 sm:w-1/2 p-6 md:pt-24">
                 <h3 class="text-3xl text-gray-800 font-bold leading-none mb-3">Earn countless treasures</h3>
                 <p class="text-gray-700 mb-8">Kill monsters and complete quests to earn treasure chests. They're full of 100's of different types of items
                     with a near infinite combination of stats and enchantments. And don't forget gold! There's tons of gold!
                 </p>
-            </div>
-            <div class="w-full sm:w-1/2 py-6 px-6 md:pl-16">
-                @svg('treasure')
             </div>
         </div>
     </div>
