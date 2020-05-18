@@ -172,8 +172,8 @@
             </div>
             <div class="w-full sm:w-1/2 p-6 mt-6 md:pt-16">
                 <div class="align-middle">
-                    <h3 class="text-3xl text-gray-800 font-bold leading-none mb-3">Four fantasy sports combined into one</h3>
-                    <p class="text-gray-700 mb-8">Embody your heroes with players from the NFL, NBA, MLB and NHL. There's no longer an off-season in fantasy
+                    <h3 class="text-3xl text-gray-800 font-bold leading-none mb-3">Four sports combined into one</h3>
+                    <p class="text-gray-700 mb-8">Embody your heroes with any combination of players from the NFL, NBA, MLB and NHL. There's no longer an off-season in fantasy
                     because games from these leagues are happening all year long... Well... with the exception of a global pandemic.</p>
                 </div>
             </div>
@@ -200,9 +200,10 @@
             </div>
             <div class="w-full sm:w-1/2 p-6 mt-6 md:pt-16">
                 <div class="align-middle">
-                    <h3 class="text-3xl text-gray-800 font-bold leading-none mb-3">Cheer on your heroes during game day</h3>
-                    <p class="text-gray-700 mb-8">Embody your heroes with players from the NFL, NBA, MLB and NHL. There's no longer an off-season in fantasy
-                        because games from these leagues are happening all year long... Well... with the exception of a global pandemic.</p>
+                    <h3 class="text-3xl text-gray-800 font-bold leading-none mb-3">Game Day means a whole lot more</h3>
+                    <p class="text-gray-700 mb-8">That Christian McCaffrey touchdown no longer just means you've crushed Bob from Accounting,
+                    who hasn't set his lineup in over a month. Now it could be the difference between slaying
+                    an elder vampire or falling in battle to a lowly skeleton scout.</p>
                 </div>
             </div>
         </div>
