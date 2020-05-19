@@ -77,7 +77,7 @@
 
         <div class="text-gray-400 mt-6">
             Already have an account?
-            <a class="no-underline border-b border-teal-300 text-teal-300" href="../login/">
+            <a class="no-underline border-b border-teal-300 text-teal-300" href="/login">
                 Log in
             </a>.
         </div>
