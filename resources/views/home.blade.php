@@ -130,7 +130,7 @@
                 <div class="align-middle">
                     <h3 class="text-3xl text-gray-800 font-bold leading-none mb-3">Community-driven content</h3>
                     <p class="text-gray-700 mb-8">Team up with allies to take on the hardest quests. Build a nation, conquer territories
-                    and invade rival nations. Build markets as well as trade and sell loot in the player driven economy.</p>
+                    and invade rival nations. Build markets as well as trade and sell goods in the player driven economy.</p>
                 </div>
             </div>
             <div class="w-full sm:w-1/2 px-6 lg:py-6">
@@ -155,9 +155,10 @@
 
         <div class="flex flex-wrap">
             <div class="w-5/6 sm:w-1/2 p-6 md:pt-24">
-                <h3 class="text-3xl text-gray-800 font-bold leading-none mb-3">Earn countless treasures</h3>
+                <h3 class="text-3xl text-gray-800 font-bold leading-none mb-3">Earn tons of loot</h3>
                 <p class="text-gray-700 mb-8">Kill monsters and complete quests to earn treasure chests. They're full of 100's of different types of items
-                    with a near infinite combination of stats and enchantments. And don't forget gold! There's tons of gold!
+                    with a near infinite combination of stats and enchantments. If you're really lucky, you'll find a rare legendary or even mythical item.
+                    And don't forget gold! There's tons of gold!
                 </p>
             </div>
             <div class="w-full sm:w-1/2 py-6 px-6 md:pl-16">
