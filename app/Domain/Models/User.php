@@ -20,7 +20,7 @@ use Laravel\Passport\HasApiTokens;
  *
  * @property EloquentCollection $squads
  */
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, Notifiable;
 
