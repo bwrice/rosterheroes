@@ -23,6 +23,7 @@
                     <span class="block sm:inline">{{ $errors->first('name') }}</span>
                 </div>
             @endif
+
             <input
                 id="email"
                 type="email"
@@ -37,6 +38,7 @@
                     <span class="block sm:inline">{{ $errors->first('email') }}</span>
                 </div>
             @endif
+
             <input
                 type="password"
                 class="block border w-full p-3 rounded mb-4 {{ $errors->has('password') ? 'border-red-700' : 'border-gray-500' }}"
