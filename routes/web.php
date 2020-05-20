@@ -56,4 +56,4 @@ Route::get('/dashboard', \App\Http\Controllers\DashboardController::class)->name
 
 Route::get('/squads/create', [SquadController::class, 'create'])->name('create-squad');
 
-Route::get('/command-center/{squadSlug}/{subPage?}', [CommandCenterController::class, 'show'])->middleware('auth')->where('subPage', '.*')->name('command-center');
+Route::get('/command-center/{squadSlug}/{subPage?}', [CommandCenterController::class, 'show'])->where('subPage', '.*')->name('command-center');
