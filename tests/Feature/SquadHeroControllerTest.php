@@ -10,6 +10,7 @@ use App\Domain\Models\Measurable;
 use App\Domain\Models\MeasurableType;
 use App\Domain\Models\Squad;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
@@ -205,6 +206,70 @@ class SquadHeroControllerTest extends TestCase
             $this->assertNotEmpty($heroRaceErrors);
             // We should only have the original heroes for the overloaded hero class
             $this->assertEquals($sameHeroClassCountToAdd, $squad->heroes->count());
+            return;
+        }
+
+        $this->fail("Exception Not Thrown");
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_not_create_a_hero_with_white_space_name()
+    {
+        $this->withoutExceptionHandling();
+
+        /** @var Squad $squad */
+        $squad = factory(Squad::class)->states('starting-posts')->create();
+
+        $user = Passport::actingAs($squad->user);
+        $whiteSpaceName = '        A';
+        $heroClassName = HeroClass::requiredStarting()->inRandomOrder()->first()->name;
+        $heroRaceName = HeroRace::starting()->inRandomOrder()->first()->name;
+
+        $this->assertEquals(0, $squad->heroes()->count());
+        try {
+            $response = $this->json('POST','api/v1/squad/' . $squad->slug .  '/heroes', [
+                'name' => $whiteSpaceName,
+                'race' => $heroRaceName,
+                'class' => $heroClassName
+            ]);
+        } catch (ValidationException $exception) {
+            $nameErrors = $exception->validator->errors()->get('name');
+            $this->assertNotEmpty($nameErrors);
+            $this->assertEquals(0, $squad->heroes()->count());
+            return;
+        }
+
+        $this->fail("Exception Not Thrown");
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_not_create_a_hero_with_special_characters()
+    {
+        $this->withoutExceptionHandling();
+
+        /** @var Squad $squad */
+        $squad = factory(Squad::class)->states('starting-posts')->create();
+
+        $user = Passport::actingAs($squad->user);
+        $specialCharacterName = 'hero' . rand(1, 999999) . '&'; // add ampersand (special char) at end of hero name
+        $heroClassName = HeroClass::requiredStarting()->inRandomOrder()->first()->name;
+        $heroRaceName = HeroRace::starting()->inRandomOrder()->first()->name;
+
+        $this->assertEquals(0, $squad->heroes()->count());
+        try {
+            $response = $this->json('POST','api/v1/squad/' . $squad->slug .  '/heroes', [
+                'name' => $specialCharacterName,
+                'race' => $heroRaceName,
+                'class' => $heroClassName
+            ]);
+        } catch (ValidationException $exception) {
+            $nameErrors = $exception->validator->errors()->get('name');
+            $this->assertNotEmpty($nameErrors);
+            $this->assertEquals(0, $squad->heroes()->count());
             return;
         }
 
