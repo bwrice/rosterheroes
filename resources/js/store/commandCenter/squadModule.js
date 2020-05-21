@@ -81,6 +81,9 @@ export default {
             }, 0);
             return state.squad.spiritEssence - essenceUsed;
         },
+        _totalSpiritEssence(state) {
+            return state.squad.spiritEssence;
+        },
         _matchingCampaignStop: (state) => (questUuid) => {
             if (! state.currentCampaign) {
                 return false;
