@@ -35,6 +35,7 @@
                             <span class="title font-weight-bolder">{{dialogTitle}}</span>
                         </v-row>
                         <v-row
+                            no-gutters
                             v-if="openingChestPending"
                             :justify="'center'"
                             class="py-6">

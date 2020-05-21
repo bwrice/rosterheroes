@@ -1,5 +1,5 @@
 <template>
-    <v-row>
+    <v-row no-gutters>
         <v-col cols="12">
             <v-row no-gutters justify="center" align="center">
                 <span class="headline text-center mx-3 my-2">{{item.name}}</span>

@@ -3,7 +3,7 @@
              tile
              style="margin: 1px 0 1px 0"
     >
-        <v-row align="center" justify="center" class="mx-2">
+        <v-row align="center" justify="center" class="mx-2" no-gutters>
             <span class="subtitle-2 font-weight-light pa-2">{{itemName}}</span>
             <div class="flex-grow-1"></div>
             <slot name="before-expand" :item="item">
