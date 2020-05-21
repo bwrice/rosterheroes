@@ -11,19 +11,19 @@
                 <v-sheet color="rgba(0,0,0, 0.5)" class="px-2 mx-2 mt-2 mb-1">
                     <v-row no-gutters class="d-flex flex-column justify-center align-end">
                         <span class="overline">Total</span>
-                        <span class="caption">30,000</span>
+                        <span class="caption">{{_totalSpiritEssence.toLocaleString()}}</span>
                     </v-row>
                 </v-sheet>
                 <v-sheet color="rgba(0,0,0, 0.5)" class="px-2 mx-2 my-1">
                     <v-row no-gutters class="d-flex flex-column justify-center align-end">
                         <span class="overline">Tot./Hero</span>
-                        <span class="caption">7,500</span>
+                        <span class="caption">{{totalPerHero}}</span>
                     </v-row>
                 </v-sheet>
                 <v-sheet color="rgba(0,0,0, 0.5)" class="px-2 mx-2 mt-1 mb-2">
                     <v-row no-gutters class="d-flex flex-column justify-center align-end">
                         <span class="overline">Rem./Hero</span>
-                        <span class="caption">5,391</span>
+                        <span class="caption">{{remainingPerHero}}</span>
                     </v-row>
                 </v-sheet>
             </v-col>
@@ -39,8 +39,27 @@
         computed: {
             ...mapGetters([
                 '_heroes',
-                '_availableSpiritEssence'
-            ])
+                '_availableSpiritEssence',
+                '_totalSpiritEssence'
+            ]),
+            totalPerHero() {
+                let heroesCount = this._heroes.length;
+                if (heroesCount > 0) {
+                    let amount = Math.round(this._totalSpiritEssence/heroesCount);
+                    return amount.toLocaleString();
+                }
+                return 'N/A';
+            },
+            remainingPerHero() {
+                let emptyHeroesCount = this._heroes.filter(function (hero) {
+                    return hero.playerSpirit === null;
+                }).length;
+                if (emptyHeroesCount > 0) {
+                    let amount = Math.round(this._availableSpiritEssence/emptyHeroesCount);
+                    return amount.toLocaleString();
+                }
+                return 'N/A';
+            }
         },
     }
 </script>
