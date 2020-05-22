@@ -30,11 +30,7 @@ class CalculateHeroFantasyPower
                 })->toArray();
                 return in_array($playerStat->statType->name, $statTypeNames);
             });
-            $fantasyPoints = $playerStat->statType->getBehavior()->getTotalPoints($playerStat->amount);
-            $pointsModifier = $matchingMeasurable
-                ->getMeasurableTypeBehavior()
-                ->getFantasyPointsModifier($matchingMeasurable->getBuffedAmount());
-            return $fantasyPoints * $pointsModifier;
+            return $playerStat->getFantasyPoints() * $matchingMeasurable->getFantasyPointsModifier();
         });
 
         return max(0, $this->getFantasyPower($fantasyPoints));
