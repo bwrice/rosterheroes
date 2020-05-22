@@ -9,6 +9,7 @@ use App\Domain\Collections\GearSlotCollection;
 use App\Domain\Collections\ItemCollection;
 use App\Domain\Collections\MeasurableCollection;
 use App\Domain\Collections\SpellCollection;
+use App\Domain\DataTransferObjects\StatMeasurableBonus;
 use App\Domain\Interfaces\HasItems;
 use App\Domain\Interfaces\SpellCaster;
 use App\Domain\Interfaces\UsesItems;
@@ -104,7 +105,7 @@ class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasItems
             'items.enchantments.measurableBoosts.booster',
             'spells.measurableBoosts.measurableType',
             'spells.measurableBoosts.booster',
-            'measurables.measurableType'
+            'measurables.measurableType.statTypes',
         ];
     }
 
@@ -397,5 +398,16 @@ class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasItems
             'uuid' => $this->uuid,
             'type' => $this->getMorphType()
         ];
+    }
+
+    public function getStatMeasurableBonuses()
+    {
+        $this->measurables->loadMissing('measurableType.statTypes');
+        return $this->measurables->map(function (Measurable $measurable) {
+            $statTypes = $measurable->measurableType->statTypes;
+            return $statTypes->map(function (StatType $statType) use ($measurable) {
+                return new StatMeasurableBonus($statType, $measurable);
+            });
+        })->flatten();
     }
 }

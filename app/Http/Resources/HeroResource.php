@@ -38,7 +38,8 @@ class HeroResource extends JsonResource
                 $spellResource->resource->setSpellCaster($this->resource);
             }),
             'spellPower' => $this->getSpellPower(),
-            'manaUsed' => $this->getManaUsed()
+            'manaUsed' => $this->getManaUsed(),
+            'statBonuses' => StatMeasurableBonusResource::collection($this->getStatMeasurableBonuses())
         ];
     }
 }
