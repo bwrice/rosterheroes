@@ -104,7 +104,7 @@ class CalculateHeroFantasyPowerTest extends TestCase
         // get positive stat type
         do {
             /** @var StatType $statType */
-            $statType = StatType::query()->whereIn('name', $measurableType->getBehavior()->getStatTypeNames())->inRandomOrder()->first();
+            $statType = $measurableType->statTypes()->inRandomOrder()->first();
         } while($statType->getBehavior()->getPointsPer() < 0);
 
         $playerStatFactory = PlayerStatFactory::new()->forStatType($statType->name);

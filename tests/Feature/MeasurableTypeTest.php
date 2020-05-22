@@ -21,16 +21,13 @@ class MeasurableTypeTest extends TestCase
     {
         $statTypes = StatType::all();
 
-        $qualities = MeasurableType::all()->filter(function (MeasurableType $measurableType) {
-            return $measurableType->getBehavior()->getGroupName() === QualityBehavior::GROUP_NAME;
-        });
-
-        $statTypes->each(function (StatType $statType) use ($qualities) {
-            $matchingQualities = $qualities->filter(function (MeasurableType $measurableType) use ($statType) {
-                return in_array($statType->name, $measurableType->getBehavior()->getStatTypeNames());
-            });
-            $count = $matchingQualities->count();
+        $statTypes->each(function (StatType $statType) {
+            $measurableTypes = $statType->measurableTypes;
+            $count = $measurableTypes->count();
             $this->assertEquals(1, $count, $statType->name . ' has ' . $count . ' matching qualities');
+            /** @var MeasurableType $quality */
+            $quality = $measurableTypes->first();
+            $this->assertEquals($quality->getMeasurableGroup(), QualityBehavior::GROUP_NAME);
         });
     }
 }

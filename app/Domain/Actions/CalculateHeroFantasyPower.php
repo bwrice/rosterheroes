@@ -7,6 +7,7 @@ namespace App\Domain\Actions;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Measurable;
 use App\Domain\Models\PlayerStat;
+use App\Domain\Models\StatType;
 use App\Exceptions\CalculateHeroFantasyPowerException;
 
 class CalculateHeroFantasyPower
@@ -24,7 +25,9 @@ class CalculateHeroFantasyPower
         $fantasyPoints = $playerGameLog->playerStats->sum(function (PlayerStat $playerStat) use ($heroMeasurables) {
             /** @var Measurable $matchingMeasurable */
             $matchingMeasurable = $heroMeasurables->first(function (Measurable $measurable) use ($playerStat) {
-                $statTypeNames = $measurable->measurableType->getBehavior()->getStatTypeNames();
+                $statTypeNames = $measurable->measurableType->statTypes->map(function (StatType $statType) {
+                    return $statType->name;
+                })->toArray();
                 return in_array($playerStat->statType->name, $statTypeNames);
             });
             $fantasyPoints = $playerStat->statType->getBehavior()->getTotalPoints($playerStat->amount);
