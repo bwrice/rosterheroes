@@ -665,7 +665,7 @@ class SeedItemTypes extends Migration
             ],
             [
                 'base' => ItemBase::GLOVES,
-                'name' => 'Gages',
+                'name' => 'Heavy Gloves',
                 'tier' => 3,
             ],
             [
