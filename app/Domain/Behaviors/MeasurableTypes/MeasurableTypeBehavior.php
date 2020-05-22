@@ -8,7 +8,7 @@ abstract class MeasurableTypeBehavior
 
     protected $name = '';
     protected $group = '';
-    
+
     public function getTypeName(): string
     {
         return $this->name;
@@ -17,5 +17,10 @@ abstract class MeasurableTypeBehavior
     public function getGroupName(): string
     {
         return $this->group;
+    }
+
+    public function getFantasyPointsModifier(int $buffedAmount)
+    {
+        return $buffedAmount/100;
     }
 }
