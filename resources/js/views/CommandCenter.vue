@@ -112,6 +112,8 @@
             this.updateGames();
             this.updateTeams();
             this.updateSports();
+            this.updateLeagues();
+            this.updateStatTypes();
             this.updateSpellLibrary(route);
             this.updateUnopenedChests(route);
             this.updateLocalStash(route);
@@ -149,7 +151,9 @@
                 'updateSports',
                 'updateSpellLibrary',
                 'updateUnopenedChests',
-                'updateLocalStash'
+                'updateLocalStash',
+                'updateLeagues',
+                'updateStatTypes',
             ]),
             async logout() {
                 await axios.post('/logout');

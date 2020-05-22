@@ -6,6 +6,8 @@ import Position from "../../models/Position";
 import Team from "../../models/Team";
 import Sport from "../../models/Sport";
 import MeasurableType from "../../models/MeasurableType";
+import League from "../../models/League";
+import StatType from "../../models/StatType";
 
 export default {
 
@@ -16,7 +18,9 @@ export default {
         combatPositions: [],
         teams: [],
         sports: [],
-        measurableTypes: []
+        measurableTypes: [],
+        leagues: [],
+        statTypes: []
     },
 
     getters: {
@@ -40,6 +44,12 @@ export default {
         },
         _sports(state) {
             return state.sports;
+        },
+        _leagues(state) {
+            return state.leagues;
+        },
+        _statTypes(state) {
+            return state.statTypes;
         },
         _heroClassByID: (state) => (heroClassID) => {
             let heroClass = state.heroClasses.find(function (heroClass) {
@@ -112,6 +122,12 @@ export default {
         },
         SET_SPORTS(state, payload) {
             state.sports = payload;
+        },
+        SET_LEAGUES(state, leagues) {
+            state.leagues = leagues;
+        },
+        SET_STAT_TYPES(state, statTypes) {
+            state.statTypes = statTypes;
         },
     },
 
@@ -191,6 +207,28 @@ export default {
                 commit('SET_SPORTS', sports);
             } catch (e) {
                 console.warn("Failed to update sports");
+            }
+        },
+        async updateLeagues({commit}) {
+            try {
+                let leaguesResponse = await referenceApi.getLeagues();
+                let leagues = leaguesResponse.data.map(function (league) {
+                    return new League(league);
+                });
+                commit('SET_LEAGUES', leagues);
+            } catch (e) {
+                console.warn("Failed to update leagues");
+            }
+        },
+        async updateStatTypes({commit}) {
+            try {
+                let statTypesResponse = await referenceApi.getStatTypes();
+                let statTypes = statTypesResponse.data.map(function (statType) {
+                    return new StatType(statType);
+                });
+                commit('SET_STAT_TYPES', statTypes);
+            } catch (e) {
+                console.warn("Failed to update stat types");
             }
         },
     }
