@@ -29,6 +29,8 @@ class DefaultUsersSeeder extends Seeder
         RewardChestToSquad $rewardChestToSquad)
     {
         $user = $createUserAction->execute('bwrice83@gmail.com', 'Brian Rice', 'password');
+        $user->email_verified_at = now();
+        $user->save();
         $squad = $createSquadAction->execute($user->id, 'Middle Earthers');
 
         $heroes = [
@@ -66,6 +68,8 @@ class DefaultUsersSeeder extends Seeder
 
 
         $user = $createUserAction->execute('georigin@gmail.com', 'George Paul Puthukkeril', 'password');
+        $user->email_verified_at = now();
+        $user->save();
         $squad = $createSquadAction->execute($user->id, 'Squad of George');
 
         $heroes = [
