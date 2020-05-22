@@ -380,19 +380,6 @@ class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasItems
         return min(60, $this->items->blockChance());
     }
 
-    public function getFantasyPoints(): float
-    {
-        $playerSpirit = $this->playerSpirit;
-        if (! $playerSpirit) {
-            return 0;
-        }
-        $gameLog = $playerSpirit->playerGameLog;
-        if (! $gameLog) {
-            return 0;
-        }
-        return $gameLog->playerStats->totalPoints();
-    }
-
     /**
      * @return HeroAggregate
      */
