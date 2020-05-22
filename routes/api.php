@@ -6,6 +6,7 @@ use App\Http\Controllers\ContinentController;
 use App\Http\Controllers\CurrentCampaignController;
 use App\Http\Controllers\CurrentLocationQuestsController;
 use App\Http\Controllers\ExploreProvinceController;
+use App\Http\Controllers\LeagueController;
 use App\Http\Controllers\LocalStashController;
 use App\Http\Controllers\MobileStoreItemForSquadController;
 use App\Http\Controllers\OpenChestController;
@@ -97,6 +98,7 @@ Route::prefix('v1')->group(function () {
     Route::get('/positions', [PositionController::class, 'index']);
     Route::get('/teams', [TeamController::class, 'index']);
     Route::get('/sports', [SportController::class, 'index']);
+    Route::get('/leagues', [LeagueController::class, 'index']);
 
     Route::middleware(['auth:api'])->group(function () {
 
