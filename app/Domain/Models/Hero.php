@@ -103,7 +103,8 @@ class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasItems
             'items.enchantments.measurableBoosts.measurableType',
             'items.enchantments.measurableBoosts.booster',
             'spells.measurableBoosts.measurableType',
-            'spells.measurableBoosts.booster'
+            'spells.measurableBoosts.booster',
+            'measurables.measurableType'
         ];
     }
 
