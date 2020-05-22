@@ -59,6 +59,7 @@ use Illuminate\Database\Eloquent\Model;
  * @package App\Domain\Models
  *
  * @property int $id
+ * @property int $sport_id
  * @property string $name
  *
  * @property Collection $measurableTypes
