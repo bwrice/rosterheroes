@@ -7,7 +7,7 @@
         <form  method="POST" action="{{ route('login') }}" class="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
             @csrf
             <div class="px-6 py-8 rounded shadow-md text-black w-full" style="background-color: #d5e1e8">
-                <h1 class="mb-8 text-3xl text-center text-teal-900">Login</h1>
+                <h1 class="mb-8 text-3xl text-center text-teal-900">Log In</h1>
                 <input
                     id="email"
                     type="email"
@@ -43,7 +43,9 @@
                 <button
                     type="submit"
                     class="w-full text-center py-3 rounded bg-teal-700 text-white hover:bg-teal-600 focus:outline-none my-1"
-                >Login</button>
+                >
+                    Log In
+                </button>
 
                 <div class="text-center text-sm text-grey-dark mt-4">
                     <a class="no-underline border-b border-teal-900 text-teal-900" href="{{ route('password.request') }}">
