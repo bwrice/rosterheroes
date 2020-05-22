@@ -8,8 +8,7 @@ abstract class MeasurableTypeBehavior
 
     protected $name = '';
     protected $group = '';
-    protected $statTypeNames = [];
-
+    
     public function getTypeName(): string
     {
         return $this->name;
@@ -18,13 +17,5 @@ abstract class MeasurableTypeBehavior
     public function getGroupName(): string
     {
         return $this->group;
-    }
-
-    /**
-     * @return array
-     */
-    public function getStatTypeNames(): array
-    {
-        return $this->statTypeNames;
     }
 }
