@@ -39,4 +39,9 @@ class PlayerStat extends Model
     {
         return $this->statType->getBehavior()->getTotalPoints($this->amount);
     }
+
+    public function getFantasyPoints()
+    {
+        return $this->statType->getBehavior()->getTotalPoints($this->amount);
+    }
 }

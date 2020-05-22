@@ -74,4 +74,9 @@ class Measurable extends EventSourcedModel
     {
         return $this->hero->getMeasurableStartingAmount($this->getMeasurableTypeBehavior());
     }
+
+    public function getFantasyPointsModifier()
+    {
+        return $this->getMeasurableTypeBehavior()->getFantasyPointsModifier($this->getBuffedAmount());
+    }
 }
