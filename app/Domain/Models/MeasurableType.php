@@ -19,6 +19,7 @@ use App\Domain\Behaviors\MeasurableTypes\Resources\ManaBehavior;
 use App\Domain\Behaviors\MeasurableTypes\Resources\StaminaBehavior;
 use App\Exceptions\UnknownBehaviorException;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -27,6 +28,8 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property string $name
+ *
+ * @property Collection $statTypes
  *
  * @method static Builder heroTypes()
  */
@@ -117,5 +120,10 @@ class MeasurableType extends Model
     public function getMeasurableGroup()
     {
         return $this->getBehavior()->getGroupName();
+    }
+
+    public function statTypes()
+    {
+        return $this->belongsToMany(StatType::class);
     }
 }

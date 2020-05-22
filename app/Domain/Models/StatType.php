@@ -50,6 +50,7 @@ use App\Domain\Behaviors\StatTypes\StatTypeBehavior;
 use App\Domain\Collections\StatTypeCollection;
 use App\Domain\Models\Traits\HasUniqueNames;
 use App\Exceptions\UnknownBehaviorException;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 
@@ -59,6 +60,8 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property string $name
+ *
+ * @property Collection $measurableTypes
  *
  * @method static StatTypeCollection all($columns = ['*'])
  */
@@ -224,5 +227,10 @@ class StatType extends Model
     public function getDescription()
     {
         return ucwords(str_replace('-',' ', $this->name)) . ' [' . $this->getBehavior()->getPointsPer() . ']';
+    }
+
+    public function measurableTypes()
+    {
+        return $this->belongsToMany(MeasurableType::class);
     }
 }
