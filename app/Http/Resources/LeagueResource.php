@@ -22,6 +22,7 @@ class LeagueResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'sportID' => $this->sport_id,
             'abbreviation' => $this->abbreviation
         ];
