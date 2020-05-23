@@ -86431,7 +86431,7 @@ module.exports = function(module) {
 /*!******************************************!*\
   !*** ./resources/js/api/referenceApi.js ***!
   \******************************************/
-/*! exports provided: getHeroClasses, getHeroRaces, getMeasurableTypes, getCombatPositions, getPositions, getTeams, getSports */
+/*! exports provided: getHeroClasses, getHeroRaces, getMeasurableTypes, getCombatPositions, getPositions, getTeams, getSports, getLeagues, getStatTypes */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -86443,6 +86443,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getPositions", function() { return getPositions; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getTeams", function() { return getTeams; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getSports", function() { return getSports; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getLeagues", function() { return getLeagues; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getStatTypes", function() { return getStatTypes; });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 
@@ -86451,6 +86453,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+var ROUTE_PREFIX = '/api/v1/';
 function getHeroClasses() {
   return _getHeroClasses.apply(this, arguments);
 }
@@ -86465,7 +86468,7 @@ function _getHeroClasses() {
         switch (_context.prev = _context.next) {
           case 0:
             _context.next = 2;
-            return axios.get('/api/v1/hero-classes');
+            return axios.get(ROUTE_PREFIX + 'hero-classes');
 
           case 2:
             response = _context.sent;
@@ -86495,7 +86498,7 @@ function _getHeroRaces() {
         switch (_context2.prev = _context2.next) {
           case 0:
             _context2.next = 2;
-            return axios.get('/api/v1/hero-races');
+            return axios.get(ROUTE_PREFIX + 'hero-races');
 
           case 2:
             response = _context2.sent;
@@ -86525,7 +86528,7 @@ function _getMeasurableTypes() {
         switch (_context3.prev = _context3.next) {
           case 0:
             _context3.next = 2;
-            return axios.get('/api/v1/measurable-types');
+            return axios.get(ROUTE_PREFIX + 'measurable-types');
 
           case 2:
             response = _context3.sent;
@@ -86555,7 +86558,7 @@ function _getCombatPositions() {
         switch (_context4.prev = _context4.next) {
           case 0:
             _context4.next = 2;
-            return axios.get('/api/v1/combat-positions');
+            return axios.get(ROUTE_PREFIX + 'combat-positions');
 
           case 2:
             response = _context4.sent;
@@ -86585,7 +86588,7 @@ function _getPositions() {
         switch (_context5.prev = _context5.next) {
           case 0:
             _context5.next = 2;
-            return axios.get('/api/v1/positions');
+            return axios.get(ROUTE_PREFIX + 'positions');
 
           case 2:
             response = _context5.sent;
@@ -86615,7 +86618,7 @@ function _getTeams() {
         switch (_context6.prev = _context6.next) {
           case 0:
             _context6.next = 2;
-            return axios.get('/api/v1/teams');
+            return axios.get(ROUTE_PREFIX + 'teams');
 
           case 2:
             response = _context6.sent;
@@ -86645,7 +86648,7 @@ function _getSports() {
         switch (_context7.prev = _context7.next) {
           case 0:
             _context7.next = 2;
-            return axios.get('/api/v1/sports');
+            return axios.get(ROUTE_PREFIX + 'sports');
 
           case 2:
             response = _context7.sent;
@@ -86659,6 +86662,66 @@ function _getSports() {
     }, _callee7);
   }));
   return _getSports.apply(this, arguments);
+}
+
+function getLeagues() {
+  return _getLeagues.apply(this, arguments);
+}
+
+function _getLeagues() {
+  _getLeagues = _asyncToGenerator(
+  /*#__PURE__*/
+  _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
+    var response;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+      while (1) {
+        switch (_context8.prev = _context8.next) {
+          case 0:
+            _context8.next = 2;
+            return axios.get(ROUTE_PREFIX + 'leagues');
+
+          case 2:
+            response = _context8.sent;
+            return _context8.abrupt("return", response.data);
+
+          case 4:
+          case "end":
+            return _context8.stop();
+        }
+      }
+    }, _callee8);
+  }));
+  return _getLeagues.apply(this, arguments);
+}
+
+function getStatTypes() {
+  return _getStatTypes.apply(this, arguments);
+}
+
+function _getStatTypes() {
+  _getStatTypes = _asyncToGenerator(
+  /*#__PURE__*/
+  _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9() {
+    var response;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
+      while (1) {
+        switch (_context9.prev = _context9.next) {
+          case 0:
+            _context9.next = 2;
+            return axios.get(ROUTE_PREFIX + 'stat-types');
+
+          case 2:
+            response = _context9.sent;
+            return _context9.abrupt("return", response.data);
+
+          case 4:
+          case "end":
+            return _context9.stop();
+        }
+      }
+    }, _callee9);
+  }));
+  return _getStatTypes.apply(this, arguments);
 }
 
 /***/ }),
