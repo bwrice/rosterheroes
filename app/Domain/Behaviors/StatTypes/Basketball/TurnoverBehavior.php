@@ -9,4 +9,5 @@ use App\Domain\Behaviors\StatTypes\StatTypeBehavior;
 class TurnoverBehavior extends StatTypeBehavior
 {
     protected $pointsPer = -.2;
+    protected $simpleName = 'Turnover';
 }

@@ -9,4 +9,5 @@ use App\Domain\Behaviors\StatTypes\StatTypeBehavior;
 class DoubleBehavior extends StatTypeBehavior
 {
     protected $pointsPer = 3;
+    protected $simpleName = 'Double';
 }

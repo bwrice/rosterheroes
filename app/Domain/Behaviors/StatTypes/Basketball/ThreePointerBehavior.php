@@ -9,4 +9,5 @@ use App\Domain\Behaviors\StatTypes\StatTypeBehavior;
 class ThreePointerBehavior extends StatTypeBehavior
 {
     protected $pointsPer = .25;
+    protected $simpleName = '3-Pointer';
 }

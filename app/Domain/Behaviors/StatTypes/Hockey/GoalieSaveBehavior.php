@@ -9,4 +9,5 @@ use App\Domain\Behaviors\StatTypes\StatTypeBehavior;
 class GoalieSaveBehavior extends StatTypeBehavior
 {
     protected $pointsPer = .75;
+    protected $simpleName = 'Save';
 }

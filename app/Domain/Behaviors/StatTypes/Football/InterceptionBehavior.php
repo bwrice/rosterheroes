@@ -9,4 +9,5 @@ use App\Domain\Behaviors\StatTypes\StatTypeBehavior;
 class InterceptionBehavior extends StatTypeBehavior
 {
     protected $pointsPer = -1;
+    protected $simpleName = 'Interception';
 }

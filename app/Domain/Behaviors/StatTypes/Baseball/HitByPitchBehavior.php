@@ -9,4 +9,5 @@ use App\Domain\Behaviors\StatTypes\StatTypeBehavior;
 class HitByPitchBehavior extends StatTypeBehavior
 {
     protected $pointsPer = 2;
+    protected $simpleName = 'Hit by Pitch';
 }

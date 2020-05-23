@@ -9,4 +9,5 @@ use App\Domain\Behaviors\StatTypes\StatTypeBehavior;
 class HockeyAssistBehavior extends StatTypeBehavior
 {
     protected $pointsPer = 3;
+    protected $simpleName = 'Assist';
 }

@@ -9,4 +9,5 @@ use App\Domain\Behaviors\StatTypes\StatTypeBehavior;
 class ReboundBehavior extends StatTypeBehavior
 {
     protected $pointsPer = .8;
+    protected $simpleName = 'Rebound';
 }

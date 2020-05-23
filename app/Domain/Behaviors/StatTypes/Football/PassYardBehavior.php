@@ -9,4 +9,5 @@ use App\Domain\Behaviors\StatTypes\StatTypeBehavior;
 class PassYardBehavior extends StatTypeBehavior
 {
     protected $pointsPer = .04;
+    protected $simpleName = 'Passing Yard';
 }

@@ -12,6 +12,7 @@ namespace App\Domain\Behaviors\StatTypes;
 class StatTypeBehavior
 {
     protected $pointsPer;
+    protected $simpleName = '';
 
     /**
      * @var PointsCalculator
@@ -38,5 +39,13 @@ class StatTypeBehavior
     public function getPointsPer()
     {
         return $this->pointsPer;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSimpleName()
+    {
+        return $this->simpleName;
     }
 }

@@ -9,4 +9,5 @@ use App\Domain\Behaviors\StatTypes\StatTypeBehavior;
 class FumbleLostBehavior extends StatTypeBehavior
 {
     protected $pointsPer = -2;
+    protected $simpleName = 'Fumble Lost';
 }
