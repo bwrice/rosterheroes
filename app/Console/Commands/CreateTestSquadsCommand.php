@@ -33,10 +33,7 @@ class CreateTestSquadsCommand extends Command
         parent::__construct();
     }
 
-    /**
-     * @param CreateTestSquadAction $domainAction
-     */
-    public function handle(CreateTestSquadAction $domainAction)
+    public function handle()
     {
         $offset = Squad::query()->count();
         $amount = (int) $this->argument('amount');
