@@ -7,7 +7,7 @@
             <v-col cols="12">
                 <v-row no-gutters align="center" class="px-2 py-3">
                     <v-col cols="5" sm="4">
-                        <span class="title font-weight-bold pl-4" style="color: rgba(255, 255, 255, .8)">{{qualityType.name.toUpperCase()}}</span>
+                        <span :class="qualityNameClasses" style="color: rgba(255, 255, 255, .8)">{{qualityType.name.toUpperCase()}}</span>
                     </v-col>
                     <v-col cols="7" sm="8">
                         <GradientBar
@@ -66,7 +66,28 @@
             },
             bonusPercent() {
                 return this.percentModifier - 100;
-            }
+            },
+            qualityNameClasses() {
+                let textSizeClass = '';
+                let textWeightClass = '';
+                let paddingClass = '';
+                switch (this.$vuetify.breakpoint.name) {
+                    case 'xs':
+                        textSizeClass = 'subtitle-1';
+                        textWeightClass = 'font-weight-regular';
+                        paddingClass = 'pl-2';
+                        break;
+                    case 'sm':
+                    case 'md':
+                    case 'lg':
+                    case 'xl':
+                    default:
+                        textSizeClass = 'title';
+                        textWeightClass = 'font-weight-bold';
+                        paddingClass = 'pl-4';
+                }
+                return [textSizeClass, textWeightClass, paddingClass];
+            },
         }
     }
 </script>
