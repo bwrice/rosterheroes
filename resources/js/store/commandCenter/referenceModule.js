@@ -33,6 +33,11 @@ export default {
         _measurableTypes(state) {
             return state.measurableTypes;
         },
+        _qualityTypes(state) {
+            return state.measurableTypes.filter(function (measurableType) {
+                return measurableType.group === 'quality';
+            })
+        },
         _positions(state) {
             return state.positions;
         },
@@ -99,6 +104,10 @@ export default {
         _sportByID: (state) => (sportID) => {
             let sport = state.sports.find(sport => sport.id === sportID);
             return sport ? sport : new Sport({});
+        },
+        _statTypeByID: (state) => (statTypeID) => {
+            let statType = state.statTypes.find(statType => statType.id === statTypeID);
+            return statType ? statType : new StatType({});
         }
     },
     mutations: {
