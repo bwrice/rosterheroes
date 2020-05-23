@@ -1,0 +1,76 @@
+<template>
+    <v-sheet
+        class="mx-2 mb-2"
+        color="#4c6973"
+    >
+        <v-row no-gutters>
+            <v-col cols="12">
+                <v-row no-gutters align="center" class="px-2 py-3">
+                    <v-col cols="5" sm="4">
+                        <span class="title font-weight-bold pl-4" style="color: rgba(255, 255, 255, .8)">{{qualityType.name.toUpperCase()}}</span>
+                    </v-col>
+                    <v-col cols="7" sm="8">
+                        <GradientBar
+                            :percent="progressBarValue"
+                            :height="32"
+                        >
+                            <span class="caption font-weight-bold">+{{ bonusPercent }}%</span>
+                        </GradientBar>
+                    </v-col>
+                </v-row>
+            </v-col>
+            <v-col
+                cols="12"
+                sm="6"
+                v-for="(statType, id) in statTypes"
+                :key="id"
+            >
+                <v-sheet
+                    color="rgba(0,0,0,.3)"
+                    class="mx-2 mb-1"
+                >
+                    <v-row no-gutters justify="space-between" class="pa-2">
+                        <span>{{statType.simpleName}}</span>
+                        <span>{{statType.pointsPer}}</span>
+                    </v-row>
+                </v-sheet>
+            </v-col>
+        </v-row>
+    </v-sheet>
+</template>
+
+<script>
+    import MeasurableType from "../../../models/MeasurableType";
+    import GradientBar from "../global/GradientBar";
+
+    export default {
+        name: "QualityStatBonusGroup",
+        components: {GradientBar},
+        props: {
+            qualityType: {
+                type: MeasurableType,
+                required: true
+            },
+            statTypes: {
+                type: Array,
+                required: true
+            },
+            percentModifier: {
+                type: Number,
+                required: true
+            }
+        },
+        computed: {
+            progressBarValue() {
+                return Math.ceil(this.bonusPercent * (1/2)); // range of (0 - 200) over 100 base value
+            },
+            bonusPercent() {
+                return this.percentModifier - 100;
+            }
+        }
+    }
+</script>
+
+<style scoped>
+
+</style>
