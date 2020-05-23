@@ -31,7 +31,7 @@
                 >
                     <v-row no-gutters justify="space-between" class="pa-2">
                         <span>{{statType.simpleName}}</span>
-                        <span>{{statType.pointsPer}}</span>
+                        <span :class="statType.pointsPer < 0 ? 'error--text' : 'success--text'">{{statType.pointsPer}}</span>
                     </v-row>
                 </v-sheet>
             </v-col>
@@ -71,23 +71,27 @@
                 let textSizeClass = '';
                 let textWeightClass = '';
                 let paddingClass = '';
-                switch (this.$vuetify.breakpoint.name) {
-                    case 'xs':
-                        textSizeClass = 'subtitle-1';
-                        textWeightClass = 'font-weight-regular';
-                        paddingClass = 'pl-2';
-                        break;
-                    case 'sm':
-                    case 'md':
-                    case 'lg':
-                    case 'xl':
-                    default:
-                        textSizeClass = 'title';
-                        textWeightClass = 'font-weight-bold';
-                        paddingClass = 'pl-4';
+                if (this.$vuetify.breakpoint.name === 'xs') {
+
+                    textSizeClass = 'subtitle-1';
+                    textWeightClass = 'font-weight-regular';
+                    paddingClass = 'pl-2';
+                } else {
+
+                    textSizeClass = 'title';
+                    textWeightClass = 'font-weight-bold';
+                    paddingClass = 'pl-4';
                 }
+
                 return [textSizeClass, textWeightClass, paddingClass];
             },
+            pointsPerClasses() {
+                let textColorClass = 'text--primary';
+                if (this.percentModifier < 0) {
+                    return textColorClass = 'text--error';
+                }
+                return [textColorClass];
+            }
         }
     }
 </script>
