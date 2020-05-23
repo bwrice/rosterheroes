@@ -25,6 +25,7 @@ class StatTypeResource extends JsonResource
             'id' => $this->id,
             'sportID' => $this->sport_id,
             'name' => $this->name,
+            'simpleName' => $this->getBehavior()->getSimpleName(),
             'pointsPer' => $this->getBehavior()->getPointsPer()
         ];
     }
