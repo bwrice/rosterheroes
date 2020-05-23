@@ -5,13 +5,13 @@
         </v-col>
         <v-col cols="12">
             <v-card
-                color="#3c4d4c"
+                color="#32343d"
             >
                 <v-tabs
                     v-model="tab"
                     mobile-break-point="10"
                     centered
-                    background-color="#3c4d4c"
+                    background-color="#32343d"
                     color="#b3c9c3"
                     slider-color="primary"
                 >
