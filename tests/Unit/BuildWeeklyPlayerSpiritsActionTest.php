@@ -57,6 +57,8 @@ class BuildWeeklyPlayerSpiritsActionTest extends TestCase
         $domainAction = app(BuildWeeklyPlayerSpiritsAction::class);
         $domainAction->execute($this->week);
 
+        Queue::assertPushed(CreatePlayerSpiritJob::class, 2);
+
         Queue::assertPushed(CreatePlayerSpiritJob::class, function (CreatePlayerSpiritJob $job) use ($playerOne, $game) {
             return $job->player->id === $playerOne->id
                 && $job->game->id === $game->id
