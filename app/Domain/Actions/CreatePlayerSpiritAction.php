@@ -70,12 +70,20 @@ class CreatePlayerSpiritAction
         /** @var PlayerSpiritAggregate $aggregate */
         $aggregate = PlayerSpiritAggregate::retrieve($playerSpiritUuid);
 
+        /** @var PlayerGameLog $gameLog */
         $gameLog = PlayerGameLog::query()->firstOrCreate([
             'player_id' => $this->player->id,
             'game_id' => $this->game->id
         ], [
             'team_id' => $this->player->team_id
         ]);
+
+        $existingSpirit = $gameLog->playerSpirit;
+
+        if ($existingSpirit) {
+            $message = "Player Spirit with ID: " . $existingSpirit->id . " exists for game log: " . $gameLog->id;
+            throw new CreatePlayerSpiritException($message, CreatePlayerSpiritException::CODE_SPIRIT_FOR_GAME_LOG_ALREADY_EXISTS);
+        }
 
         $aggregate->createPlayerSpirit($this->week->id, $gameLog->id, $essenceCost, PlayerSpirit::STARTING_ENERGY)
             ->persist();
