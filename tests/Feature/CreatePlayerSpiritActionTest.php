@@ -7,11 +7,14 @@ use App\Domain\Collections\PositionCollection;
 use App\Domain\Models\Game;
 use App\Domain\Models\Player;
 use App\Domain\Models\PlayerGameLog;
+use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\PlayerStat;
 use App\Domain\Models\Position;
 use App\Domain\Models\StatType;
 use App\Domain\Models\Week;
 use App\Exceptions\CreatePlayerSpiritException;
+use App\Factories\Models\PlayerGameLogFactory;
+use App\Factories\Models\PlayerSpiritFactory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Date;
@@ -60,6 +63,37 @@ class CreatePlayerSpiritActionTest extends TestCase
         } catch (CreatePlayerSpiritException $exception) {
 
             $this->assertEquals(CreatePlayerSpiritException::CODE_INVALID_GAME_TIME, $exception->getCode());
+            return;
+        }
+        $this->fail("Exception not thrown");
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_throw_an_exception_if_there_is_an_existing_player_spirit_for_the_game_log()
+    {
+        $playerGameLog = PlayerGameLogFactory::new()
+            ->forGame($this->game)
+            ->forPlayer($this->player)
+            ->forTeam($this->player->team)
+            ->create();
+        PlayerSpiritFactory::new()->create([
+            'player_game_log_id' => $playerGameLog->id
+        ]);
+
+        $spiritsQuery = PlayerSpirit::query()->where('player_game_log_id', '=', $playerGameLog->id);
+        $this->assertEquals(1, $spiritsQuery->count());
+
+        try {
+            /** @var CreatePlayerSpiritAction $domainAction */
+            $domainAction = app(CreatePlayerSpiritAction::class);
+            $domainAction->execute($this->week, $this->game, $this->player);
+
+        } catch (CreatePlayerSpiritException $exception) {
+
+            $this->assertEquals(CreatePlayerSpiritException::CODE_SPIRIT_FOR_GAME_LOG_ALREADY_EXISTS, $exception->getCode());
+            $this->assertEquals(1, $spiritsQuery->count());
             return;
         }
         $this->fail("Exception not thrown");
@@ -259,9 +293,13 @@ class CreatePlayerSpiritActionTest extends TestCase
         $newPlayerGameLog->playerStats()->saveMany([$moreGoals, $evenMoreShotsOnGoal]);
         $this->assertEquals(2, $newPlayerGameLog->playerStats->count());
 
-
         /** @var CreatePlayerSpiritAction $domainAction */
         $domainAction = app(CreatePlayerSpiritAction::class);
+        // Need a new game so we're not using identical player-game-logs
+        $this->game = factory(Game::class)->create([
+            'starts_at' => $this->week->adventuring_locks_at->addHour(),
+            'home_team_id' => $this->player->team->id
+        ]);
         $secondPlayerSpirit = $domainAction->execute($this->week, $this->game, $this->player->fresh());
 
         $this->assertGreaterThan($firstPlayerSpirit->essence_cost, $secondPlayerSpirit->essence_cost);
@@ -316,6 +354,11 @@ class CreatePlayerSpiritActionTest extends TestCase
 
         /** @var CreatePlayerSpiritAction $domainAction */
         $domainAction = app(CreatePlayerSpiritAction::class);
+        // Need a new game so we're not using identical player-game-logs
+        $this->game = factory(Game::class)->create([
+            'starts_at' => $this->week->adventuring_locks_at->addHour(),
+            'home_team_id' => $this->player->team->id
+        ]);
         $secondPlayerSpirit = $domainAction->execute($this->week, $this->game, $this->player->fresh());
         $this->assertLessThan($firstPlayerSpirit->essence_cost, $secondPlayerSpirit->essence_cost);
     }
@@ -405,8 +448,28 @@ class CreatePlayerSpiritActionTest extends TestCase
 
         /** @var CreatePlayerSpiritAction $domainAction */
         $domainAction = app(CreatePlayerSpiritAction::class);
+        // Need a new game so we're not using identical player-game-logs
+        $this->game = factory(Game::class)->create([
+            'starts_at' => $this->week->adventuring_locks_at->addHour(),
+            'home_team_id' => $this->player->team->id
+        ]);
         $goodRecentPlayerSpirit = $domainAction->execute($this->week, $this->game, $this->player->fresh());
 
         $this->assertGreaterThan($badRecentGamePlayerSpirit->essence_cost, $goodRecentPlayerSpirit->essence_cost);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_create_a_single_player_spirit_for_the_game_log_created()
+    {
+        /** @var CreatePlayerSpiritAction $domainAction */
+        $domainAction = app(CreatePlayerSpiritAction::class);
+        $playerSpirit = $domainAction->execute($this->week, $this->game, $this->player);
+
+        $gameLog = $playerSpirit->playerGameLog;
+        $playerSpirits = PlayerSpirit::query()->where('player_game_log_id', '=', $gameLog->id);
+        $this->assertEquals(1, $playerSpirits->count());
+
     }
 }
