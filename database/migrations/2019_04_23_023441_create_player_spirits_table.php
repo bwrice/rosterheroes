@@ -17,7 +17,7 @@ class CreatePlayerSpiritsTable extends Migration
             $table->bigIncrements('id');
             $table->uuid('uuid');
             $table->integer('week_id')->unsigned();
-            $table->bigInteger('player_game_log_id')->unsigned();
+            $table->bigInteger('player_game_log_id')->unique()->unsigned();
             $table->integer('essence_cost');
             $table->integer('energy');
             $table->dateTime('disabled_at')->nullable();
