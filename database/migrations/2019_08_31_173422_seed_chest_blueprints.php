@@ -134,6 +134,11 @@ class SeedChestBlueprints extends Migration
                     'chance' => 100,
                     'count' => 1
                 ],
+                [
+                    'reference_id' => ItemBlueprint::STARTER_GLOVES_REFERENCE,
+                    'chance' => 100,
+                    'count' => 1
+                ],
             ]
         ]);
 
