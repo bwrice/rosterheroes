@@ -135,7 +135,7 @@ class SeedItemBlueprints extends Migration
                     'materials' => $materials->where( 'name', '=', 'Leather' ),
                 ],
                 'enchantments' => [
-                    "Level 2 Strength"
+                    "Level 10 Passion"
                 ]
             ],
             [
@@ -148,7 +148,7 @@ class SeedItemBlueprints extends Migration
                     'materials' => $materials->where( 'name', '=', 'Copper' ),
                 ],
                 'enchantments' => [
-                    "Level 2 Valor"
+                    "Level 10 Balance"
                 ]
             ],
             [
@@ -161,7 +161,7 @@ class SeedItemBlueprints extends Migration
                     'materials' => $materials->where( 'name', '=', 'Cotton' ),
                 ],
                 'enchantments' => [
-                    "Level 2 Intelligence"
+                    "Level 10 Honor"
                 ]
             ],
             [
@@ -174,7 +174,20 @@ class SeedItemBlueprints extends Migration
                     'materials' => $materials->where( 'name', '=', 'Leather' ),
                 ],
                 'enchantments' => [
-                    "Level 2 Agility"
+                    "Level 10 Prestige"
+                ]
+            ],
+            [
+                'create_array' => [
+                    'name' => ItemBlueprint::STARTER_GLOVES,
+                    'description' => 'New squad gloves',
+                    'reference_id' => ItemBlueprint::STARTER_GLOVES_REFERENCE,
+                    'item_classes' => $itemClasses->where('name', '=', ItemClass::ENCHANTED),
+                    'item_types' => $itemTypes->where( 'name', '=', 'Light Gloves' ),
+                    'materials' => $materials->where( 'name', '=', 'Leather' ),
+                ],
+                'enchantments' => [
+                    "Level 10 Wrath"
                 ]
             ],
 

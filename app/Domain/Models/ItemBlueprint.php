@@ -45,6 +45,7 @@ class ItemBlueprint extends Model
     public const STARTER_HELMET = 'Starter Helmet';
     public const STARTER_CAP = 'Starter Cap';
     public const STARTER_BOOTS = 'Starter Boots';
+    public const STARTER_GLOVES = 'Starter Gloves';
 
     /*
      * Random Items Reference IDs
@@ -190,6 +191,7 @@ class ItemBlueprint extends Model
     public const STARTER_HELMET_REFERENCE = 'EP';
     public const STARTER_CAP_REFERENCE = 'EQ';
     public const STARTER_BOOTS_REFERENCE = 'ER';
+    public const STARTER_GLOVES_REFERENCE = 'ES';
 
 
     protected $guarded = [];
