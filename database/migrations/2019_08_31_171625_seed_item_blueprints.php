@@ -186,7 +186,6 @@ class SeedItemBlueprints extends Migration
                     'name' => null,
                     'description' => 'random enchanted item',
                     'reference_id' => ItemBlueprint::RANDOM_ENCHANTED_ITEM,
-                    'enchantment_power' => 100,
                     'item_classes' => $itemClasses->where('name', '=', ItemClass::ENCHANTED),
                 ],
                 'enchantments' => []
@@ -196,8 +195,8 @@ class SeedItemBlueprints extends Migration
                     'name' => null,
                     'description' => 'random low tier enchanted item',
                     'reference_id' => ItemBlueprint::RANDOM_ENCHANTED_LOW_TIER_ITEM,
+                    'enchantment_power' => 10,
                     'item_classes' => $itemClasses->where('name', '=', ItemClass::ENCHANTED),
-                    'enchantment_power' => 25,
                 ],
                 'enchantments' => []
             ],
@@ -206,8 +205,8 @@ class SeedItemBlueprints extends Migration
                     'name' => null,
                     'description' => 'random mid tier enchanted item',
                     'reference_id' => ItemBlueprint::RANDOM_ENCHANTED_MID_TIER_ITEM,
+                    'enchantment_power' => 25,
                     'item_classes' => $itemClasses->where('name', '=', ItemClass::ENCHANTED),
-                    'enchantment_power' => 50,
                 ],
                 'enchantments' => []
             ],
@@ -216,8 +215,8 @@ class SeedItemBlueprints extends Migration
                     'name' => null,
                     'description' => 'random high tier enchanted item',
                     'reference_id' => ItemBlueprint::RANDOM_ENCHANTED_HIGH_TIER_ITEM,
-                    'item_classes' => $itemClasses->where('name', '=', ItemClass::ENCHANTED),
                     'enchantment_power' => 50,
+                    'item_classes' => $itemClasses->where('name', '=', ItemClass::ENCHANTED),
                 ],
                 'enchantments' => []
             ],
@@ -307,8 +306,7 @@ class SeedItemBlueprints extends Migration
                 'description' => 'random enchanted '. $itemBaseName,
                 'reference_id' => $blueprintReferenceID,
                 'item_classes' => $itemClasses->where('name', '=', ItemClass::ENCHANTED),
-                'item_bases' => $itemBases->where('name', '=', $itemBaseName),
-                'enchantment_power' => 100
+                'item_bases' => $itemBases->where('name', '=', $itemBaseName)
             ],
             'enchantments' => []
         ];
@@ -359,7 +357,7 @@ class SeedItemBlueprints extends Migration
                 'low tier',
                 1,
                 2,
-                25,
+                10,
                 $itemTypes,
                 $itemBases,
                 $itemClasses);
@@ -411,7 +409,7 @@ class SeedItemBlueprints extends Migration
                 'mid tier',
                 3,
                 4,
-                50,
+                25,
                 $itemTypes,
                 $itemBases,
                 $itemClasses);
@@ -463,7 +461,7 @@ class SeedItemBlueprints extends Migration
                 'high tier',
                 5,
                 6,
-                100,
+                50,
                 $itemTypes,
                 $itemBases,
                 $itemClasses);
@@ -476,7 +474,7 @@ class SeedItemBlueprints extends Migration
         string $tierName,
         int $minTier,
         int $maxTier,
-        int $enchantmentPower,
+        ?int $enchantmentPower,
         Collection $itemTypes,
         Collection $itemBases,
         Collection $itemClasses)
