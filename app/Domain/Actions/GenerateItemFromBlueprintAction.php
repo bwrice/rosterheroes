@@ -141,14 +141,14 @@ class GenerateItemFromBlueprintAction
     protected function findEnchantments(ItemBlueprint $itemBlueprint)
     {
         $enchantmentsPower = $itemBlueprint->enchantment_power ?: $this->getRandomEnchantmentPower();
-
+        $maxBoostLevel = $this->getMaxBoostLevel($enchantmentsPower);
         $enchantments = collect();
 
         while ($enchantmentsPower > 0) {
 
             /** @var Enchantment $enchantment */
-            $enchantment = Enchantment::query()->inRandomOrder()->whereDoesntHave('measurableBoosts', function (Builder $builder) {
-                $builder->where('boost_level', '>', $this->getMaxBoostLevel());
+            $enchantment = Enchantment::query()->inRandomOrder()->whereDoesntHave('measurableBoosts', function (Builder $builder) use ($maxBoostLevel) {
+                $builder->where('boost_level', '>', $maxBoostLevel);
             })->first();
             $enchantments->push($enchantment);
 
@@ -166,11 +166,17 @@ class GenerateItemFromBlueprintAction
         return (int) max(ceil(100.1 - sqrt(rand(1, 10000))), 1);
     }
 
-    protected function getMaxBoostLevel()
-    {/*
+    protected function getMaxBoostLevel(int $enchantmentPower)
+    {
+        /*
+         * With higher enchantment power, we want to guarantee a higher max-boost-level
+         * Assume max enchantment power is 100
+         */
+        $sqrtMax = (int) max(ceil(2501 - ($enchantmentPower**2/4)), 1);
+        /*
          * Will return a number between 1 and 50, weighted heavily toward the lower-bound side
          */
-        return (int) max(ceil(50.1 - sqrt(rand(1, 2500))), 1);
+        return (int) max(ceil(50.1 - sqrt(rand(1, $sqrtMax))), 1);
     }
 
 }
