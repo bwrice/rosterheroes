@@ -11,6 +11,9 @@ use App\Domain\Models\SideQuest;
 use App\Domain\Models\Squad;
 use App\Domain\Models\Week;
 use App\Exceptions\CampaignException;
+use App\Factories\Models\SideQuestResultFactory;
+use App\SideQuestResult;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -147,23 +150,32 @@ class LeaveQuestActionTest extends TestCase
     /**
      * @test
      */
-    public function leaving_a_quest_will_remove_side_quests_from_the_campaign_stop()
+    public function leaving_a_quest_will_delete_the_side_quest_results_for_the_campaign_stop()
     {
         $stopUuid = $this->campaignStop->uuid;
+
+        $sideQuest = SideQuestResultFactory::new()->create([
+            'campaign_stop_id' => $this->campaignStop->id,
+            'side_quest_id' => $this->sideQuest->id
+        ]);
+
+        $sideQuestCount = SideQuestResult::query()->whereHas(('campaignStop'), function (Builder $builder) use ($stopUuid) {
+            $builder->where('uuid', '=', $stopUuid);
+        })->count();
+        $this->assertEquals(1, $sideQuestCount);
+
 
         /** @var LeaveQuestAction $domainAction */
         $domainAction = app(LeaveQuestAction::class);
         $domainAction->execute($this->squad, $this->quest);
 
-        /*
-         * We need to retrieve the trashed campaign stop to verify it's pivot relations are gone
-         */
-        /** @var CampaignStop $campaignStop */
-        $campaignStop = CampaignStop::withTrashed()->where('uuid', '=', $stopUuid)->first();
-        $this->assertEquals(0, $campaignStop->sideQuests()->count());
-
         $campaignStop = CampaignStop::findUuid($stopUuid);
         $this->assertNull($campaignStop);
+
+        $sideQuestCount = SideQuestResult::query()->whereHas(('campaignStop'), function (Builder $builder) use ($stopUuid) {
+            $builder->where('uuid', '=', $stopUuid);
+        })->count();
+        $this->assertEquals(0, $sideQuestCount);
     }
 
     /**
@@ -184,13 +196,6 @@ class LeaveQuestActionTest extends TestCase
         /** @var LeaveQuestAction $domainAction */
         $domainAction = app(LeaveQuestAction::class);
         $domainAction->execute($this->squad, $this->quest);
-
-        /*
-         * We need to retrieve the trashed campaign stop to verify it's pivot relations are gone
-         */
-        /** @var CampaignStop $campaignStop */
-        $campaignStop = CampaignStop::withTrashed()->where('uuid', '=', $stopUuid)->first();
-        $this->assertEquals(0, $campaignStop->sideQuests()->count());
 
         $campaignStop = CampaignStop::findUuid($stopUuid);
         $this->assertNull($campaignStop);

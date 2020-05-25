@@ -47,8 +47,6 @@ use Ramsey\Uuid\Uuid;
  */
 class Campaign extends EventSourcedModel
 {
-    use SoftDeletes;
-
     protected $guarded = [];
 
     public function week()

@@ -29,7 +29,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class CampaignStop extends EventSourcedModel
 {
-    use SoftDeletes;
 
     public function campaign()
     {

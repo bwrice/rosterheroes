@@ -20,7 +20,6 @@ class CreateCampaignsTable extends Migration
             $table->integer('week_id')->unsigned();
             $table->integer('continent_id')->unsigned();
             $table->unique(['squad_id', 'week_id']);
-            $table->softDeletes();
             $table->timestamps();
         });
 
