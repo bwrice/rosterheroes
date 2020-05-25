@@ -83,7 +83,7 @@ class SideQuest extends Model implements RewardsChests
 
     public function getExperiencePerMoment()
     {
-        return $this->floatDifficulty()/4;
+        return $this->floatDifficulty()/10;
     }
 
     public function buildName()
