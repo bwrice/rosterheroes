@@ -16,6 +16,7 @@ class CreateSideQuestBlueprintChestBlueprintPivot extends Migration
         Schema::create('chest_blueprint_side_quest_blueprint', function (Blueprint $table) {
             $table->integer('chest_blueprint_id')->unsigned();
             $table->integer('side_quest_blueprint_id')->unsigned();
+            $table->float('chance');
             $table->integer('count');
             $table->primary(['chest_blueprint_id', 'side_quest_blueprint_id'], 'chest_bp_side_quest_bp_primary');
             $table->timestamps();
