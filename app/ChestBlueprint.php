@@ -106,7 +106,7 @@ class ChestBlueprint extends Model
 
     public function minions()
     {
-        return $this->belongsToMany(Minion::class)->withPivot(['count'])->withTimestamps();
+        return $this->belongsToMany(Minion::class)->withPivot(['chance', 'count'])->withTimestamps();
     }
 
     public function sideQuests()

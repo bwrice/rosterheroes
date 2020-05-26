@@ -68,7 +68,7 @@ class Minion extends Model implements HasAttacks, RewardsChests
 
     public function chestBlueprints()
     {
-        return $this->belongsToMany(ChestBlueprint::class)->withPivot(['count'])->withTimestamps();
+        return $this->belongsToMany(ChestBlueprint::class)->withPivot(['chance', 'count'])->withTimestamps();
     }
 
     protected function getEnemyTypeBehavior(): EnemyTypeBehavior
