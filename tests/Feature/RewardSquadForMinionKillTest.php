@@ -55,10 +55,12 @@ class RewardSquadForMinionKillTest extends TestCase
     {
         $chestBlueFactory = ChestBlueprintFactory::new();
         $this->minion->chestBlueprints()->save($chestBlueFactory->create(), [
-            'count' => 1
+            'count' => 1,
+            'chance' => 100 // make chance 100 to guarantee rewarded
         ]);
         $this->minion->chestBlueprints()->save($chestBlueFactory->create(), [
-            'count' => 1
+            'count' => 1,
+            'chance' => 100 // make chance 100 to guarantee rewarded
         ]);
 
         $rewardChestMock = \Mockery::mock(RewardChestToSquad::class)->shouldReceive('execute')->times(2)->getMock();
@@ -76,7 +78,8 @@ class RewardSquadForMinionKillTest extends TestCase
     {
         $chestBlueFactory = ChestBlueprintFactory::new();
         $this->minion->chestBlueprints()->save($chestBlueFactory->create(), [
-            'count' => 3
+            'count' => 3,
+            'chance' => 100 // make chance 100 to guarantee rewarded
         ]);
 
         $rewardChestMock = \Mockery::mock(RewardChestToSquad::class)->shouldReceive('execute')->times(3)->getMock();
