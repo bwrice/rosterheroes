@@ -16,6 +16,7 @@ class CreateChestBlueprintsToMinionsPivot extends Migration
         Schema::create('chest_blueprint_minion', function (Blueprint $table) {
             $table->integer('chest_blueprint_id')->unsigned();
             $table->integer('minion_id')->unsigned();
+            $table->float('chance');
             $table->integer('count')->unsigned();
             $table->primary(['chest_blueprint_id', 'minion_id']);
             $table->timestamps();
