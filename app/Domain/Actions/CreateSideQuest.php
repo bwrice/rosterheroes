@@ -49,6 +49,7 @@ class CreateSideQuest
 
         $chestBlueprints->each(function (ChestBlueprint $chestBlueprint) use ($sideQuest) {
             $sideQuest->chestBlueprints()->save($chestBlueprint, [
+                'chance' => $chestBlueprint->pivot->chance,
                 'count' => $chestBlueprint->pivot->count
             ]);
         });
