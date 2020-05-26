@@ -12,6 +12,7 @@ use App\Domain\Models\Quest;
 use App\Domain\Models\Squad;
 use App\Domain\Models\Week;
 use App\Exceptions\CampaignException;
+use App\Facades\CurrentWeek;
 use Illuminate\Support\Str;
 
 class JoinQuestAction extends SquadQuestAction
@@ -31,15 +32,23 @@ class JoinQuestAction extends SquadQuestAction
             $this->campaign = $campaign;
             $this->validateCampaign();
         } else {
-            $campaign = $this->createCampaign();
+            $campaign = Campaign::query()->create([
+                'uuid' => (string) Str::uuid(),
+                'squad_id' => $squad->id,
+                'week_id' => $this->week->id,
+                'continent_id' => $quest->province->continent_id
+            ]);
         }
 
-        $uuid = Str::uuid();
-        /** @var CampaignStopAggregate $campaignStopAggregate */
-        $campaignStopAggregate = CampaignStopAggregate::retrieve($uuid);
-        $campaignStopAggregate->createCampaignStop($campaign->id, $this->quest->id, $this->quest->province_id)
-            ->persist();
-        return CampaignStop::findUuid($uuid);
+        /** @var CampaignStop $campaignStop */
+        $campaignStop = CampaignStop::query()->create([
+            'uuid' => (string) Str::uuid(),
+            'campaign_id' => $campaign->id,
+            'quest_id' => $quest->id,
+            'province_id' => $quest->province_id
+        ]);
+
+        return $campaignStop;
     }
 
     protected function validateQuestLocation(): void
@@ -77,15 +86,5 @@ class JoinQuestAction extends SquadQuestAction
                 ->setSquad($this->squad)
                 ->setQuest($this->quest);
         }
-    }
-
-    protected function createCampaign(): Campaign
-    {
-        $campaignUuid = Str::uuid();
-        /** @var CampaignAggregate $campaignAggregate */
-        $campaignAggregate = CampaignAggregate::retrieve($campaignUuid);
-        $campaignAggregate->createCampaign($this->squad->id, $this->week->id, $this->quest->province->continent_id)
-            ->persist();
-        return Campaign::findUuid($campaignUuid);
     }
 }

@@ -40,10 +40,10 @@ class LeaveQuestAction extends SquadQuestAction
                 $this->leaveSideQuestAction->execute($this->campaignStop, $sideQuest);
             });
 
-            $this->campaignStop->getAggregate()->deleteCampaignStop()->persist();
+            $this->campaignStop->delete();
 
             if (! $this->campaign->campaignStops()->count()) {
-                $this->campaign->getAggregate()->deleteCampaign()->persist();
+                $this->campaign->delete();
             }
         });
     }
