@@ -34,16 +34,24 @@ class SeedSideQuestBlueprints extends Migration
                 ],
                 'chest_blueprints' => [
                     [
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_1,
+                        'count' => 1,
+                        'chance' => 100
+                    ],
+                    [
                         'reference_id' => ChestBlueprint::LOW_TIER_SMALL_WARRIOR_CHEST,
-                        'count' => 1
+                        'count' => 1,
+                        'chance' => 20
                     ],
                     [
                         'reference_id' => ChestBlueprint::LOW_TIER_SMALL_RANGER_CHEST,
-                        'count' => 1
+                        'count' => 1,
+                        'chance' => 20
                     ],
                     [
                         'reference_id' => ChestBlueprint::LOW_TIER_SMALL_SORCERER_CHEST,
-                        'count' => 1
+                        'count' => 1,
+                        'chance' => 20
                     ],
                 ]
             ],
@@ -66,16 +74,24 @@ class SeedSideQuestBlueprints extends Migration
                 ],
                 'chest_blueprints' => [
                     [
-                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_WARRIOR_CHEST,
-                        'count' => 1
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_1,
+                        'count' => 1,
+                        'chance' => 100
                     ],
                     [
-                        'reference_id' => ChestBlueprint::LOW_TIER_MEDIUM_RANGER_CHEST,
-                        'count' => 1
+                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_WARRIOR_CHEST,
+                        'count' => 1,
+                        'chance' => 25
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_RANGER_CHEST,
+                        'count' => 1,
+                        'chance' => 25
                     ],
                     [
                         'reference_id' => ChestBlueprint::LOW_TIER_SMALL_SORCERER_CHEST,
-                        'count' => 1
+                        'count' => 1,
+                        'chance' => 25
                     ],
                 ]
             ],
@@ -94,16 +110,24 @@ class SeedSideQuestBlueprints extends Migration
                 ],
                 'chest_blueprints' => [
                     [
-                        'reference_id' => ChestBlueprint::LOW_TIER_MEDIUM_WARRIOR_CHEST,
-                        'count' => 1
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_2,
+                        'count' => 1,
+                        'chance' => 100
                     ],
                     [
-                        'reference_id' => ChestBlueprint::LOW_TIER_MEDIUM_RANGER_CHEST,
-                        'count' => 1
+                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_WARRIOR_CHEST,
+                        'count' => 1,
+                        'chance' => 20
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_RANGER_CHEST,
+                        'count' => 1,
+                        'chance' => 20
                     ],
                     [
                         'reference_id' => ChestBlueprint::LOW_TIER_SMALL_SORCERER_CHEST,
-                        'count' => 1
+                        'count' => 1,
+                        'chance' => 20
                     ],
                 ]
             ],
@@ -126,16 +150,24 @@ class SeedSideQuestBlueprints extends Migration
                 ],
                 'chest_blueprints' => [
                     [
-                        'reference_id' => ChestBlueprint::LOW_TIER_MEDIUM_WARRIOR_CHEST,
-                        'count' => 1
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_2,
+                        'count' => 1,
+                        'chance' => 100
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_WARRIOR_CHEST,
+                        'count' => 1,
+                        'chance' => 25
                     ],
                     [
                         'reference_id' => ChestBlueprint::LOW_TIER_SMALL_RANGER_CHEST,
-                        'count' => 1
+                        'count' => 1,
+                        'chance' => 25
                     ],
                     [
-                        'reference_id' => ChestBlueprint::LOW_TIER_MEDIUM_SORCERER_CHEST,
-                        'count' => 1
+                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_SORCERER_CHEST,
+                        'count' => 1,
+                        'chance' => 25
                     ],
                 ]
             ],
@@ -162,16 +194,24 @@ class SeedSideQuestBlueprints extends Migration
                 ],
                 'chest_blueprints' => [
                     [
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_2,
+                        'count' => 1,
+                        'chance' => 100
+                    ],
+                    [
                         'reference_id' => ChestBlueprint::LOW_TIER_MEDIUM_WARRIOR_CHEST,
-                        'count' => 1
+                        'count' => 1,
+                        'chance' => 25
                     ],
                     [
                         'reference_id' => ChestBlueprint::LOW_TIER_MEDIUM_RANGER_CHEST,
-                        'count' => 1
+                        'count' => 1,
+                        'chance' => 25
                     ],
                     [
-                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_SORCERER_CHEST,
-                        'count' => 1
+                        'reference_id' => ChestBlueprint::LOW_TIER_MEDIUM_SORCERER_CHEST,
+                        'count' => 1,
+                        'chance' => 25
                     ],
                 ]
             ],
@@ -198,16 +238,24 @@ class SeedSideQuestBlueprints extends Migration
                 ],
                 'chest_blueprints' => [
                     [
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_2,
+                        'count' => 1,
+                        'chance' => 100
+                    ],
+                    [
                         'reference_id' => ChestBlueprint::LOW_TIER_MEDIUM_WARRIOR_CHEST,
-                        'count' => 1
+                        'count' => 1,
+                        'chance' => 28
                     ],
                     [
-                        'reference_id' => ChestBlueprint::LOW_TIER_LARGE_RANGER_CHEST,
-                        'count' => 1
+                        'reference_id' => ChestBlueprint::LOW_TIER_MEDIUM_RANGER_CHEST,
+                        'count' => 1,
+                        'chance' => 28
                     ],
                     [
-                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_SORCERER_CHEST,
-                        'count' => 1
+                        'reference_id' => ChestBlueprint::LOW_TIER_MEDIUM_SORCERER_CHEST,
+                        'count' => 1,
+                        'chance' => 28
                     ],
                 ]
             ],
@@ -231,16 +279,24 @@ class SeedSideQuestBlueprints extends Migration
                 ],
                 'chest_blueprints' => [
                     [
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_2,
+                        'count' => 1,
+                        'chance' => 100
+                    ],
+                    [
                         'reference_id' => ChestBlueprint::LOW_TIER_SMALL_WARRIOR_CHEST,
-                        'count' => 1
+                        'count' => 1,
+                        'chance' => 25
                     ],
                     [
                         'reference_id' => ChestBlueprint::LOW_TIER_SMALL_RANGER_CHEST,
-                        'count' => 1
+                        'count' => 1,
+                        'chance' => 25
                     ],
                     [
-                        'reference_id' => ChestBlueprint::LOW_TIER_MEDIUM_SORCERER_CHEST,
-                        'count' => 1
+                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_SORCERER_CHEST,
+                        'count' => 1,
+                        'chance' => 25
                     ],
                 ]
             ],
@@ -267,16 +323,24 @@ class SeedSideQuestBlueprints extends Migration
                 ],
                 'chest_blueprints' => [
                     [
-                        'reference_id' => ChestBlueprint::LOW_TIER_LARGE_WARRIOR_CHEST,
-                        'count' => 1
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_2,
+                        'count' => 1,
+                        'chance' => 100
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_MEDIUM_WARRIOR_CHEST,
+                        'count' => 1,
+                        'chance' => 30
                     ],
                     [
                         'reference_id' => ChestBlueprint::LOW_TIER_MEDIUM_RANGER_CHEST,
-                        'count' => 1
+                        'count' => 1,
+                        'chance' => 30
                     ],
                     [
                         'reference_id' => ChestBlueprint::LOW_TIER_MEDIUM_SORCERER_CHEST,
-                        'count' => 1
+                        'count' => 1,
+                        'chance' => 30
                     ],
                 ]
             ],
@@ -291,12 +355,14 @@ class SeedSideQuestBlueprints extends Migration
                 ],
                 'chest_blueprints' => [
                     [
-                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_WARRIOR_CHEST,
-                        'count' => 1
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_1,
+                        'count' => 1,
+                        'chance' => 100
                     ],
                     [
-                        'reference_id' => ChestBlueprint::LOW_TIER_MEDIUM_WARRIOR_CHEST,
-                        'count' => 1
+                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_WARRIOR_CHEST,
+                        'count' => 2,
+                        'chance' => 30
                     ]
                 ]
             ],
@@ -311,13 +377,15 @@ class SeedSideQuestBlueprints extends Migration
                 ],
                 'chest_blueprints' => [
                     [
-                        'reference_id' => ChestBlueprint::LOW_TIER_MEDIUM_WARRIOR_CHEST,
-                        'count' => 1
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_1,
+                        'count' => 1,
+                        'chance' => 100
                     ],
                     [
                         'reference_id' => ChestBlueprint::LOW_TIER_SMALL_WARRIOR_CHEST,
-                        'count' => 1
-                    ],
+                        'count' => 2,
+                        'chance' => 40
+                    ]
                 ]
             ],
             [
@@ -331,8 +399,14 @@ class SeedSideQuestBlueprints extends Migration
                 ],
                 'chest_blueprints' => [
                     [
-                        'reference_id' => ChestBlueprint::LOW_TIER_LARGE_WARRIOR_CHEST,
-                        'count' => 1
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_2,
+                        'count' => 1,
+                        'chance' => 100
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_SMALL_WARRIOR_CHEST,
+                        'count' => 3,
+                        'chance' => 30
                     ]
                 ]
             ],
@@ -355,16 +429,24 @@ class SeedSideQuestBlueprints extends Migration
                 ],
                 'chest_blueprints' => [
                     [
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_2,
+                        'count' => 1,
+                        'chance' => 100
+                    ],
+                    [
                         'reference_id' => ChestBlueprint::MID_TIER_SMALL_WARRIOR_CHEST,
-                        'count' => 1
+                        'count' => 1,
+                        'chance' => 35
                     ],
                     [
                         'reference_id' => ChestBlueprint::LOW_TIER_MEDIUM_RANGER_CHEST,
-                        'count' => 1
+                        'count' => 1,
+                        'chance' => 15
                     ],
                     [
                         'reference_id' => ChestBlueprint::LOW_TIER_MEDIUM_SORCERER_CHEST,
-                        'count' => 1
+                        'count' => 1,
+                        'chance' => 15
                     ],
                 ]
             ],
@@ -395,16 +477,24 @@ class SeedSideQuestBlueprints extends Migration
                 ],
                 'chest_blueprints' => [
                     [
-                        'reference_id' => ChestBlueprint::MID_TIER_SMALL_WARRIOR_CHEST,
-                        'count' => 1
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_3,
+                        'count' => 1,
+                        'chance' => 100
                     ],
                     [
-                        'reference_id' => ChestBlueprint::LOW_TIER_LARGE_RANGER_CHEST,
-                        'count' => 1
+                        'reference_id' => ChestBlueprint::MID_TIER_SMALL_WARRIOR_CHEST,
+                        'count' => 1,
+                        'chance' => 35
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::LOW_TIER_MEDIUM_RANGER_CHEST,
+                        'count' => 1,
+                        'chance' => 22
                     ],
                     [
                         'reference_id' => ChestBlueprint::LOW_TIER_MEDIUM_SORCERER_CHEST,
-                        'count' => 1
+                        'count' => 1,
+                        'chance' => 22
                     ],
                 ]
             ],
@@ -435,20 +525,29 @@ class SeedSideQuestBlueprints extends Migration
                 ],
                 'chest_blueprints' => [
                     [
-                        'reference_id' => ChestBlueprint::MID_TIER_SMALL_WARRIOR_CHEST,
-                        'count' => 1
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_4,
+                        'count' => 1,
+                        'chance' => 100
                     ],
                     [
-                        'reference_id' => ChestBlueprint::MID_TIER_MEDIUM_RANGER_CHEST,
-                        'count' => 1
+                        'reference_id' => ChestBlueprint::MID_TIER_SMALL_WARRIOR_CHEST,
+                        'count' => 1,
+                        'chance' => 25
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::MID_TIER_SMALL_RANGER_CHEST,
+                        'count' => 1,
+                        'chance' => 25
                     ],
                     [
                         'reference_id' => ChestBlueprint::MID_TIER_SMALL_SORCERER_CHEST,
-                        'count' => 1
+                        'count' => 1,
+                        'chance' => 25
                     ],
                     [
                         'reference_id' => ChestBlueprint::TINY_MID_TIER_RANDOM,
-                        'count' => 1
+                        'count' => 1,
+                        'chance' => 10
                     ],
                 ]
             ],
@@ -464,11 +563,13 @@ class SeedSideQuestBlueprints extends Migration
                 'chest_blueprints' => [
                     [
                         'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_1,
-                        'count' => 1
+                        'count' => 1,
+                        'chance' => 100
                     ],
                     [
                         'reference_id' => ChestBlueprint::TINY_LOW_TIER_RANDOM,
-                        'count' => 1
+                        'count' => 1,
+                        'chance' => 30
                     ],
                 ]
             ],
@@ -488,11 +589,13 @@ class SeedSideQuestBlueprints extends Migration
                 'chest_blueprints' => [
                     [
                         'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_1,
-                        'count' => 1
+                        'count' => 1,
+                        'chance' => 100
                     ],
                     [
                         'reference_id' => ChestBlueprint::SMALL_LOW_TIER_RANDOM,
-                        'count' => 1
+                        'count' => 1,
+                        'chance' => 22
                     ],
                 ]
             ],
@@ -515,16 +618,19 @@ class SeedSideQuestBlueprints extends Migration
                 ],
                 'chest_blueprints' => [
                     [
-                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_1,
-                        'count' => 1
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_2,
+                        'count' => 1,
+                        'chance' => 100
                     ],
                     [
                         'reference_id' => ChestBlueprint::SMALL_LOW_TIER_RANDOM,
-                        'count' => 1
+                        'count' => 1,
+                        'chance' => 25
                     ],
                     [
                         'reference_id' => ChestBlueprint::TINY_LOW_TIER_RANDOM,
-                        'count' => 1
+                        'count' => 1,
+                        'chance' => 35
                     ],
                 ]
             ],
@@ -544,15 +650,18 @@ class SeedSideQuestBlueprints extends Migration
                 'chest_blueprints' => [
                     [
                         'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_2,
-                        'count' => 1
+                        'count' => 1,
+                        'chance' => 100
                     ],
                     [
                         'reference_id' => ChestBlueprint::SMALL_LOW_TIER_RANDOM,
-                        'count' => 1
+                        'count' => 1,
+                        'chance' => 35
                     ],
                     [
                         'reference_id' => ChestBlueprint::TINY_LOW_TIER_RANDOM,
-                        'count' => 1
+                        'count' => 1,
+                        'chance' => 35
                     ],
                 ]
             ],
@@ -575,12 +684,14 @@ class SeedSideQuestBlueprints extends Migration
                 ],
                 'chest_blueprints' => [
                     [
-                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_2,
-                        'count' => 1
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_3,
+                        'count' => 1,
+                        'chance' => 100
                     ],
                     [
                         'reference_id' => ChestBlueprint::SMALL_LOW_TIER_RANDOM,
-                        'count' => 2
+                        'count' => 2,
+                        'chance' => 30
                     ],
                 ]
             ],
@@ -603,12 +714,14 @@ class SeedSideQuestBlueprints extends Migration
                 ],
                 'chest_blueprints' => [
                     [
-                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_2,
-                        'count' => 2
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_3,
+                        'count' => 1,
+                        'chance' => 100
                     ],
                     [
                         'reference_id' => ChestBlueprint::SMALL_MID_TIER_RANDOM,
-                        'count' => 2
+                        'count' => 2,
+                        'chance' => 25
                     ],
                 ]
             ],
@@ -635,12 +748,14 @@ class SeedSideQuestBlueprints extends Migration
                 ],
                 'chest_blueprints' => [
                     [
-                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_2,
-                        'count' => 3
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_3,
+                        'count' => 1,
+                        'chance' => 100
                     ],
                     [
                         'reference_id' => ChestBlueprint::MEDIUM_MID_TIER_RANDOM,
-                        'count' => 1
+                        'count' => 2,
+                        'chance' => 30
                     ],
                 ]
             ],
@@ -663,16 +778,14 @@ class SeedSideQuestBlueprints extends Migration
                 ],
                 'chest_blueprints' => [
                     [
-                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_2,
-                        'count' => 3
-                    ],
-                    [
-                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_1,
-                        'count' => 1
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_3,
+                        'count' => 1,
+                        'chance' => 100
                     ],
                     [
                         'reference_id' => ChestBlueprint::MEDIUM_MID_TIER_RANDOM,
-                        'count' => 1
+                        'count' => 1,
+                        'chance' => 35
                     ],
                 ]
             ],
@@ -695,12 +808,14 @@ class SeedSideQuestBlueprints extends Migration
                 ],
                 'chest_blueprints' => [
                     [
-                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_2,
-                        'count' => 3
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_3,
+                        'count' => 1,
+                        'chance' => 100
                     ],
                     [
                         'reference_id' => ChestBlueprint::MEDIUM_MID_TIER_RANDOM,
-                        'count' => 2
+                        'count' => 2,
+                        'chance' => 20
                     ],
                 ]
             ],
@@ -736,15 +851,23 @@ class SeedSideQuestBlueprints extends Migration
                 'chest_blueprints' => [
                     [
                         'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_3,
-                        'count' => 1
+                        'count' => 1,
+                        'chance' => 100
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_2,
+                        'count' => 2,
+                        'chance' => 55
                     ],
                     [
                         'reference_id' => ChestBlueprint::LARGE_MID_TIER_RANDOM,
-                        'count' => 1
+                        'count' => 1,
+                        'chance' => 25
                     ],
                     [
                         'reference_id' => ChestBlueprint::TINY_HIGH_TIER_RANDOM,
-                        'count' => 1
+                        'count' => 1,
+                        'chance' => 5
                     ],
                 ]
             ],
@@ -771,20 +894,24 @@ class SeedSideQuestBlueprints extends Migration
                 ],
                 'chest_blueprints' => [
                     [
-                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_3,
-                        'count' => 1
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_4,
+                        'count' => 1,
+                        'chance' => 100
                     ],
                     [
-                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_2,
-                        'count' => 1
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_3,
+                        'count' => 2,
+                        'chance' => 45
                     ],
                     [
                         'reference_id' => ChestBlueprint::LARGE_MID_TIER_RANDOM,
-                        'count' => 1
+                        'count' => 2,
+                        'chance' => 30
                     ],
                     [
                         'reference_id' => ChestBlueprint::TINY_HIGH_TIER_RANDOM,
-                        'count' => 2
+                        'count' => 1,
+                        'chance' => 15
                     ],
                 ]
             ],
@@ -804,11 +931,13 @@ class SeedSideQuestBlueprints extends Migration
                 'chest_blueprints' => [
                     [
                         'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_3,
-                        'count' => 1
+                        'count' => 1,
+                        'chance' => 100
                     ],
                     [
                         'reference_id' => ChestBlueprint::MEDIUM_MID_TIER_RANDOM,
-                        'count' => 1
+                        'count' => 2,
+                        'chance' => 22
                     ],
                 ]
             ],
@@ -854,7 +983,8 @@ class SeedSideQuestBlueprints extends Migration
                 });
 
                 $sideQuestBlueprint->chestBlueprints()->save($chestBlueprintToAttach, [
-                    'count' => $chestBlueprintData['count']
+                    'count' => $chestBlueprintData['count'],
+                    'chance' => $chestBlueprintData['chance'],
                 ]);
             }
         });
