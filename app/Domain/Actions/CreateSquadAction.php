@@ -56,7 +56,6 @@ class CreateSquadAction
             MobileStorageRank::getStarting()->id,
             Province::getStarting()->id
         )->increaseEssence(Squad::STARTING_ESSENCE)
-            ->increaseGold(Squad::STARTING_GOLD)
             ->increaseFavor(Squad::STARTING_FAVOR)
             ->increaseExperience(Squad::STARTING_EXPERIENCE);
 
@@ -73,6 +72,7 @@ class CreateSquadAction
          */
         $aggregate->persist();
         $squad = Squad::findUuid($squadUuid);
+        $squad->increaseGold(Squad::STARTING_GOLD);
 
         $startingSpells = Spell::query()->whereIn('name', Squad::STARTING_SPELLS)->get();
         $startingSpells->each(function (Spell $spell) use ($squad) {

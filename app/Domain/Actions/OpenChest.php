@@ -40,7 +40,7 @@ class OpenChest
             $squad = $chest->squad;
 
             $gold = $chest->gold;
-            $squad->getAggregate()->increaseGold($gold)->persist();
+            $squad->increaseGold($gold);
 
             $items = $chest->items;
             $items->each(function (Item $item) use ($squad) {

@@ -369,16 +369,14 @@ class Squad extends EventSourcedModel implements HasItems
 
     public function increaseGold(int $amount)
     {
-        $this->getAggregate()
-            ->increaseGold($amount)
-            ->persist();
+        $this->gold += $amount;
+        $this->save();
     }
 
     public function decreaseGold(int $amount)
     {
-        $this->getAggregate()
-            ->decreaseGold($amount)
-            ->persist();
+        $this->gold -= $amount;
+        $this->save();
     }
 
     public function getBackupHasItems(): ?HasItems

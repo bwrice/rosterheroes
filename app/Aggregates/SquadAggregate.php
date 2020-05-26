@@ -44,18 +44,6 @@ final class SquadAggregate extends AggregateRoot
         return $this;
     }
 
-    public function increaseGold(int $amount)
-    {
-        $this->recordThat(new SquadGoldIncreased($amount));
-        return $this;
-    }
-
-    public function decreaseGold(int $amount)
-    {
-        $this->recordThat(new SquadGoldDecreased($amount));
-        return $this;
-    }
-
     public function increaseFavor(int $amount)
     {
         $this->recordThat(new SquadFavorIncreased($amount));
