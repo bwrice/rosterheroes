@@ -381,13 +381,6 @@ class Squad extends EventSourcedModel implements HasItems
             ->persist();
     }
 
-    public function updateLocation(Province $newLocation)
-    {
-        $this->getAggregate()
-            ->updateLocation($this->province_id, $newLocation->id)
-            ->persist();
-    }
-
     public function getBackupHasItems(): ?HasItems
     {
         return $this->getLocalResidence() ?: $this->getLocalStash();
