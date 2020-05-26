@@ -55,7 +55,7 @@ class SideQuest extends Model implements RewardsChests
 
     public function chestBlueprints()
     {
-        return $this->belongsToMany(ChestBlueprint::class)->withPivot(['count'])->withTimestamps();
+        return $this->belongsToMany(ChestBlueprint::class)->withPivot(['chance', 'count'])->withTimestamps();
     }
 
     public function sideQuestBlueprint()

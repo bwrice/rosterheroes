@@ -111,6 +111,6 @@ class ChestBlueprint extends Model
 
     public function sideQuests()
     {
-        return $this->belongsToMany(SideQuest::class)->withPivot(['count'])->withTimestamps();
+        return $this->belongsToMany(SideQuest::class)->withPivot(['chance', 'count'])->withTimestamps();
     }
 }
