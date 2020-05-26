@@ -89,10 +89,12 @@ class ProcessSideQuestVictoryRewardsTest extends TestCase
 
         // Attach 2 chest blueprints
         $sideQuest->chestBlueprints()->save($blueprintFactory->create(), [
-            'count' => 1
+            'count' => 1,
+            'chance' => 100, // 100% chance to guarantee rewarded
         ]);
         $sideQuest->chestBlueprints()->save($blueprintFactory->create(), [
-            'count' => 1
+            'count' => 1,
+            'chance' => 100, // 100% chance to guarantee rewarded
         ]);
 
         $rewardChestMock = \Mockery::mock(RewardChestToSquad::class)->shouldReceive('execute', 2)->getMock();
@@ -113,10 +115,32 @@ class ProcessSideQuestVictoryRewardsTest extends TestCase
 
         // Attach 2 chest blueprints
         $sideQuest->chestBlueprints()->save($blueprintFactory->create(), [
-            'count' => 3
+            'count' => 3,
+            'chance' => 100, // 100% chance to guarantee rewarded
         ]);
 
         $rewardChestMock = \Mockery::mock(RewardChestToSquad::class)->shouldReceive('execute')->times(3)->getMock();
+        app()->instance(RewardChestToSquad::class, $rewardChestMock);
+        /** @var ProcessSideQuestVictoryRewards $domainAction */
+        $domainAction = app(ProcessSideQuestVictoryRewards::class);
+        $domainAction->execute($this->sideQuestResult->fresh());
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_not_reward_chests_with_zero_chance()
+    {
+        $sideQuest = $this->sideQuestResult->sideQuest;
+        $blueprintFactory = ChestBlueprintFactory::new();
+
+        // Attach 2 chest blueprints
+        $sideQuest->chestBlueprints()->save($blueprintFactory->create(), [
+            'count' => 1,
+            'chance' => 0
+        ]);
+
+        $rewardChestMock = \Mockery::mock(RewardChestToSquad::class)->shouldReceive('execute')->times(0)->getMock();
         app()->instance(RewardChestToSquad::class, $rewardChestMock);
         /** @var ProcessSideQuestVictoryRewards $domainAction */
         $domainAction = app(ProcessSideQuestVictoryRewards::class);
