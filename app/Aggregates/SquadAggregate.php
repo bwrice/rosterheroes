@@ -6,17 +6,10 @@ use App\Domain\Models\Minion;
 use App\Domain\Models\SideQuest;
 use App\StorableEvents\SideQuestMinionKillsSquadMember;
 use App\StorableEvents\SpellAddedToLibrary;
-use App\StorableEvents\SquadCreated;
 use App\StorableEvents\SquadDealsDamageToSideQuestMinion;
 use App\StorableEvents\SquadDefeatedInSideQuest;
-use App\StorableEvents\SquadEssenceIncreased;
 use App\StorableEvents\SquadExperienceIncreased;
-use App\StorableEvents\SquadFavorIncreased;
-use App\StorableEvents\SquadGoldDecreased;
-use App\StorableEvents\SquadGoldIncreased;
-use App\StorableEvents\SquadHeroPostAdded;
 use App\StorableEvents\SquadKillsSideQuestMinion;
-use App\StorableEvents\SquadLocationUpdated;
 use App\StorableEvents\SquadMemberBlocksSideQuestMinion;
 use App\StorableEvents\SquadTakesDamageFromSideQuestMinion;
 use App\StorableEvents\SquadVictoriousInSideQuest;
@@ -24,41 +17,10 @@ use Spatie\EventSourcing\AggregateRoot;
 
 final class SquadAggregate extends AggregateRoot
 {
-    /**
-     * @param int $userID
-     * @param string $name
-     * @param int $squadRankID
-     * @param int $mobilStorageRankID
-     * @param int $provinceID
-     * @return $this
-     */
-    public function createSquad(int $userID, string $name, int $squadRankID, int $mobilStorageRankID, int $provinceID)
-    {
-        $this->recordThat(new SquadCreated($userID, $name, $squadRankID, $mobilStorageRankID, $provinceID));
-        return $this;
-    }
-
-    public function increaseEssence(int $amount)
-    {
-        $this->recordThat(new SquadEssenceIncreased($amount));
-        return $this;
-    }
-
-    public function increaseFavor(int $amount)
-    {
-        $this->recordThat(new SquadFavorIncreased($amount));
-        return $this;
-    }
 
     public function increaseExperience(int $amount)
     {
         $this->recordThat(new SquadExperienceIncreased($amount));
-        return $this;
-    }
-
-    public function addHeroPost(string $heroPostTypeName)
-    {
-        $this->recordThat(new SquadHeroPostAdded($heroPostTypeName));
         return $this;
     }
 
