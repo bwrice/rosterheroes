@@ -89,4 +89,24 @@ class RewardSquadForMinionKillTest extends TestCase
         $domainAction = app(RewardSquadForMinionKill::class);
         $domainAction->execute($this->squad, $this->minion);
     }
+
+    /**
+     * @test
+     */
+    public function it_will_not_reward_a_zero_chance_chest()
+    {
+
+        $chestBlueFactory = ChestBlueprintFactory::new();
+        $this->minion->chestBlueprints()->save($chestBlueFactory->create(), [
+            'count' => 1,
+            'chance' => 0
+        ]);
+
+        $rewardChestMock = \Mockery::mock(RewardChestToSquad::class)->shouldReceive('execute')->times(0)->getMock();
+        app()->instance(RewardChestToSquad::class, $rewardChestMock);
+
+        /** @var RewardSquadForMinionKill $domainAction */
+        $domainAction = app(RewardSquadForMinionKill::class);
+        $domainAction->execute($this->squad, $this->minion);
+    }
 }
