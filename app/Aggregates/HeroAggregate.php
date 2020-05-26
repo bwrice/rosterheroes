@@ -22,12 +22,6 @@ final class HeroAggregate extends AggregateRoot
         return $this;
     }
 
-    public function updatePlayerSpirit(int $playerSpiritID = null)
-    {
-        $this->recordThat(new UpdateHeroPlayerSpirit($playerSpiritID));
-        return $this;
-    }
-
     public function clearWeeklyPlayerSpirit(int $playerSpiritID)
     {
         $this->recordThat(new WeeklyPlayerSpiritClearedFromHero($playerSpiritID));
