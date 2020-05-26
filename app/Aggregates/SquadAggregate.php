@@ -24,12 +24,6 @@ final class SquadAggregate extends AggregateRoot
         return $this;
     }
 
-    public function addSpellToLibrary(int $spellID)
-    {
-        $this->recordThat(new SpellAddedToLibrary($spellID));
-        return $this;
-    }
-
     public function killsSideQuestMinion(Minion $minion)
     {
         $this->recordThat(new SquadKillsSideQuestMinion($minion));
