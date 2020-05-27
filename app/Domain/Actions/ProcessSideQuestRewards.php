@@ -42,25 +42,37 @@ class ProcessSideQuestRewards
         DB::transaction(function () use ($sideQuestResult) {
             $squad = $sideQuestResult->campaignStop->campaign->squad;
 
+            $experienceEarned = 0;
+            $favorEarned = 0;
             $finalEvent = $sideQuestResult->sideQuestEvents()->finalEvent();
+
             if ($finalEvent) {
                 $experienceForMoments = (int) ceil($finalEvent->moment * $sideQuestResult->sideQuest->getExperiencePerMoment());
                 $squad->experience += $experienceForMoments;
                 $squad->save();
+
+                $experienceEarned += $experienceForMoments;
             }
 
             $minionKillEvents = $sideQuestResult->sideQuestEvents()->heroKillsMinion()->get();
-            $minionKillEvents->each(function (SideQuestEvent $sideQuestEvent) use ($squad) {
+
+            $minionKillEvents->each(function (SideQuestEvent $sideQuestEvent) use ($squad, &$experienceEarned, &$favorEarned) {
                 $minion = $sideQuestEvent->getCombatMinion()->getMinion();
-                $this->rewardSquadForMinionKill->execute($squad->fresh(), $minion);
+                $earnings = $this->rewardSquadForMinionKill->execute($squad->fresh(), $minion);
+                $experienceEarned += $earnings['experience'];
+                $favorEarned += $earnings['favor'];
             });
 
             $victoryEvent = $sideQuestResult->sideQuestEvents()->victoryEvent();
             if ($victoryEvent) {
-                $this->processSideQuestVictoryRewards->execute($sideQuestResult);
+                $earnings = $this->processSideQuestVictoryRewards->execute($sideQuestResult);
+                $experienceEarned += $earnings['experience'];
+                $favorEarned += $earnings['favor'];
             }
 
             $sideQuestResult->rewards_processed_at = Date::now();
+            $sideQuestResult->experience_rewarded = $experienceEarned;
+            $sideQuestResult->favor_rewarded = $favorEarned;
             $sideQuestResult->save();
         });
     }
