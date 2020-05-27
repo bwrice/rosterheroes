@@ -41,7 +41,8 @@ class ProcessSideQuestVictoryRewards
                 $experienceReward = $sideQuest->getExperienceReward();
 
                 $squad = $sideQuestResult->campaignStop->campaign->squad;
-                $squad->getAggregate()->increaseExperience($experienceReward)->persist();
+                $squad->experience += $experienceReward;
+                $squad->save();
 
                 $sideQuest->chestBlueprints->each(function (ChestBlueprint $chestBlueprint) use ($squad, $sideQuestResult) {
                     $count = $chestBlueprint->pivot->count;

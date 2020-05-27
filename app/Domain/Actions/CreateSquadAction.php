@@ -45,34 +45,33 @@ class CreateSquadAction
      */
     public function execute(int $userID, string $name): Squad
     {
-        $squadUuid = Str::uuid();
-        /** @var SquadAggregate $aggregate */
-        $aggregate = SquadAggregate::retrieve($squadUuid);
-
-        $aggregate->createSquad(
-            $userID,
-            $name,
-            SquadRank::getStarting()->id,
-            MobileStorageRank::getStarting()->id,
-            Province::getStarting()->id
-        )->increaseEssence(Squad::STARTING_ESSENCE)
-            ->increaseGold(Squad::STARTING_GOLD)
-            ->increaseFavor(Squad::STARTING_FAVOR)
-            ->increaseExperience(Squad::STARTING_EXPERIENCE);
+        /** @var Squad $squad */
+        $squad = Squad::query()->create([
+            'uuid' => (string) Str::uuid(),
+            'user_id' => $userID,
+            'name' => $name,
+            'squad_rank_id' => SquadRank::getStarting()->id,
+            'mobile_storage_rank_id' => MobileStorageRank::getStarting()->id,
+            'province_id' => Province::getStarting()->id,
+            'gold' => Squad::STARTING_GOLD,
+            'spirit_essence' => Squad::STARTING_ESSENCE,
+            'favor' => Squad::STARTING_FAVOR,
+            'experience' => Squad::STARTING_EXPERIENCE
+        ]);
 
         $startingHeroPostTypes = HeroPostType::squadStarting();
-        $startingHeroPostTypes->each(function (array $startingHeroPostType) use ($aggregate) {
-            foreach (range(1, $startingHeroPostType['count']) as $count) {
-                $aggregate->addHeroPost($startingHeroPostType['name']);
+
+        $heroPostTypes = HeroPostType::all();
+        $startingHeroPostTypes->each(function (array $startingHeroPostType) use ($squad, $heroPostTypes) {
+
+            for ($i = 1; $i <= $startingHeroPostType['count']; $i++) {
+                /** @var HeroPostType $heroPostType */
+                $heroPostType = $heroPostTypes->where('name', '=', $startingHeroPostType['name'])->first();
+                $squad->heroPosts()->create([
+                    'hero_post_type_id' => $heroPostType->id
+                ]);
             }
         });
-
-        /*
-         * We need to persist before we can add spells,
-         * because that action will query the DB
-         */
-        $aggregate->persist();
-        $squad = Squad::findUuid($squadUuid);
 
         $startingSpells = Spell::query()->whereIn('name', Squad::STARTING_SPELLS)->get();
         $startingSpells->each(function (Spell $spell) use ($squad) {

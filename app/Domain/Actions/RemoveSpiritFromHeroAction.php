@@ -23,9 +23,10 @@ class RemoveSpiritFromHeroAction extends HeroSpiritAction
         $this->validateEmbodiedBy($hero, $playerSpirit);
         $this->validateWeek($hero, $playerSpirit);
         $this->validateGameTime($hero, $playerSpirit);
-        /** @var HeroAggregate $heroAggregate */
-        $heroAggregate = HeroAggregate::retrieve($hero->uuid);
-        $heroAggregate->updatePlayerSpirit(null)->persist();
+
+        $hero->player_spirit_id = null;
+        $hero->save();
+
         return $hero->fresh();
     }
 

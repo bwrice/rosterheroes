@@ -1,8 +1,10 @@
 <?php
 
+use App\Domain\Models\Province;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Str;
 
 class SeedProvinces extends Migration
 {
@@ -7753,9 +7755,6 @@ class SeedProvinces extends Migration
         $territoriesCollection = \App\Domain\Models\Territory::all();
         $continents = \App\Domain\Models\Continent::all();
 
-        /** @var \App\Domain\Actions\CreateProvinceAction $createProvinceAction */
-        $createProvinceAction = app(\App\Domain\Actions\CreateProvinceAction::class);
-
         foreach ($territories as $territory) {
 
             /** @var \App\Domain\Models\Territory $territoryModel */
@@ -7784,19 +7783,20 @@ class SeedProvinces extends Migration
                 $zoomX = round(315/($focusScale * .9), 2);
                 $zoomY = round(240/($focusScale * .9), 2);
 
-                $provinceCreated = $createProvinceAction->execute(
-                    $province['name'],
-                    $province['realm_color'],
-                    [
+                Province::query()->create([
+                    'uuid' => (string) Str::uuid(),
+                    'name' => $province['name'],
+                    'color' => $province['realm_color'],
+                    'view_box' => json_encode([
                         'pan_x' => $panX,
                         'pan_y' => $panY,
                         'zoom_x' => $zoomX,
                         'zoom_y' => $zoomY
-                    ],
-                    $pathsText,
-                    $continent,
-                    $territoryModel
-                );
+                    ]),
+                    'vector_paths' => $pathsText,
+                    'continent_id' => $continent->id,
+                    'territory_id' => $territoryModel->id
+                ]);
             }
         }
 

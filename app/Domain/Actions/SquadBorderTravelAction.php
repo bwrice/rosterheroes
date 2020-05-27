@@ -7,6 +7,7 @@ use App\Domain\Models\Province;
 use App\Domain\Models\Squad;
 use App\Domain\Models\Support\Squads\SquadBorderTravelCostCalculator;
 use App\Exceptions\SquadTravelException;
+use Illuminate\Support\Facades\DB;
 
 class SquadBorderTravelAction
 {
@@ -35,10 +36,13 @@ class SquadBorderTravelAction
 
         $this->validateTravelCost($squad, $border, $availableGold, $costToTravel);
 
-        if ($costToTravel > 0) {
-            $squad->decreaseGold($costToTravel);
-        }
-        $squad->updateLocation($border);
+        DB::transaction(function() use ($squad, $border, $costToTravel) {
+            if ($costToTravel > 0) {
+                $squad->decreaseGold($costToTravel);
+            }
+            $squad->province_id = $border->id;
+            $squad->save();
+        });
     }
 
     /**

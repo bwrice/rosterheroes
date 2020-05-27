@@ -8,8 +8,6 @@
 
 namespace App\Domain\Actions;
 
-
-use App\Aggregates\PlayerSpiritAggregate;
 use App\Domain\Collections\PlayerGameLogCollection;
 use App\Domain\Math\WeightedValue;
 use App\Domain\Models\Game;
@@ -64,12 +62,6 @@ class CreatePlayerSpiritAction
         $this->validateTeam();
         $this->position = $this->validatePosition();
 
-        $essenceCost = $this->calculateEssenceCost();
-        $playerSpiritUuid = Str::uuid();
-
-        /** @var PlayerSpiritAggregate $aggregate */
-        $aggregate = PlayerSpiritAggregate::retrieve($playerSpiritUuid);
-
         /** @var PlayerGameLog $gameLog */
         $gameLog = PlayerGameLog::query()->firstOrCreate([
             'player_id' => $this->player->id,
@@ -85,10 +77,17 @@ class CreatePlayerSpiritAction
             throw new CreatePlayerSpiritException($message, CreatePlayerSpiritException::CODE_SPIRIT_FOR_GAME_LOG_ALREADY_EXISTS);
         }
 
-        $aggregate->createPlayerSpirit($this->week->id, $gameLog->id, $essenceCost, PlayerSpirit::STARTING_ENERGY)
-            ->persist();
+        $essenceCost = $this->calculateEssenceCost();
 
-        $playerSpirit = PlayerSpirit::findUuid($playerSpiritUuid);
+        /** @var PlayerSpirit $playerSpirit */
+        $playerSpirit = PlayerSpirit::query()->create([
+            'uuid' => (string) Str::uuid(),
+            'week_id' => $this->week->id,
+            'player_game_log_id' => $gameLog->id,
+            'essence_cost' => $essenceCost,
+            'energy' => PlayerSpirit::STARTING_ENERGY
+        ]);
+
         $this->disableInsignificantPlayerSpirit->execute($playerSpirit);
         return $playerSpirit->fresh();
     }

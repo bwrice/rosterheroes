@@ -37,24 +37,25 @@ class GenerateItemFromBlueprintAction
         $itemType = $this->getItemType($itemBlueprint);
         $materialType = $this->getMaterial($itemBlueprint, $itemType->itemBase);
 
-        $uuid = Str::uuid();
-        /** @var ItemAggregate $itemAggregate */
-        $itemAggregate = ItemAggregate::retrieve($uuid);
-        $itemAggregate->createItem($itemClass->id, $itemType->id, $materialType->id, $itemBlueprint->id, $itemBlueprint->item_name);
-        $itemAggregate->persist();
-
-        $item = Item::findUuid($uuid);
+        /** @var Item $item */
+        $item = Item::query()->create([
+            'uuid' => (string) Str::uuid(),
+            'item_class_id' => $itemClass->id,
+            'item_type_id' => $itemType->id,
+            'material_id' => $materialType->id,
+            'item_blueprint_id' => $itemBlueprint->id,
+            'name' => $itemBlueprint->item_name
+        ]);
 
         $enchantments = $this->getEnchantments($itemBlueprint, $item->itemClass->name);
-        $enchantments->each(function (Enchantment $enchantment) use ($itemAggregate) {
-            $itemAggregate->attachEnchantment($enchantment->id);
+        $enchantments->each(function (Enchantment $enchantment) use ($item) {
+            $item->enchantments()->save($enchantment);
         });
 
-        $itemBlueprint->attacks->each(function (Attack $attack) use ($itemAggregate) {
-            $itemAggregate->attachAttack($attack->id);
+        $itemBlueprint->attacks->each(function (Attack $attack) use ($item) {
+            $item->attacks()->save($attack);
         });
 
-        $itemAggregate->persist(); // persist enchantment and attack events
         return $item->fresh();
     }
 

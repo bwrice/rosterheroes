@@ -18,6 +18,7 @@ class ClearWeeklyPlayerSpirit
         if (CurrentWeek::id() === $playerSpirit->week_id && ! CurrentWeek::finalizing()) {
             throw new \Exception("Week not finalizing: Cannot remove player-spirit for hero: " . $hero->id);
         }
-        $hero->getAggregate()->clearWeeklyPlayerSpirit($playerSpirit->id)->persist();
+        $hero->player_spirit_id = null;
+        $hero->save();
     }
 }

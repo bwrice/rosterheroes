@@ -23,7 +23,8 @@ class RewardSquadForMinionKill
     public function execute(Squad $squad, Minion $minion)
     {
         $experienceReward = $minion->getExperienceReward();
-        $squad->getAggregate()->increaseExperience($experienceReward)->persist();
+        $squad->experience += $experienceReward;
+        $squad->save();
 
         $minion->chestBlueprints->each(function (ChestBlueprint $chestBlueprint) use ($squad, $minion) {
 

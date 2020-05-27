@@ -17,6 +17,6 @@ class AddSpellToLibraryAction
             throw new AddSpellException($squad, $spell, $squad->name ." already owns " . $spell->name, AddSpellException::CODE_ALREADY_OWNS);
         }
 
-        $squad->getAggregate()->addSpellToLibrary($spell->id)->persist();
+        $squad->spells()->save($spell);
     }
 }

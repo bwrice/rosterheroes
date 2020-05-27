@@ -41,9 +41,8 @@ class AddSpiritToHeroAction extends HeroSpiritAction
             $this->removeSpiritFromHeroAction->execute($hero, $hero->playerSpirit);
         }
 
-        /** @var HeroAggregate $heroAggregate */
-        $heroAggregate = HeroAggregate::retrieve($hero->uuid);
-        $heroAggregate->updatePlayerSpirit($playerSpirit->id)->persist();
+        $hero->player_spirit_id = $playerSpirit->id;
+        $hero->save();
 
         return $hero->fresh();
     }
