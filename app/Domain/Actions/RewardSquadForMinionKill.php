@@ -46,5 +46,10 @@ class RewardSquadForMinionKill
                 }
             }
         });
+
+        return [
+            'experience' => $experienceReward,
+            'favor' => $favorReward
+        ];
     }
 }

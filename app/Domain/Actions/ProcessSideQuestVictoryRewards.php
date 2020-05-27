@@ -23,6 +23,7 @@ class ProcessSideQuestVictoryRewards
 
     /**
      * @param SideQuestResult $sideQuestResult
+     * @return array
      * @throws \Throwable
      */
     public function execute(SideQuestResult $sideQuestResult)
@@ -35,7 +36,7 @@ class ProcessSideQuestVictoryRewards
         $sideQuestResult->save();
 
         try {
-            DB::transaction(function () use ($sideQuestResult) {
+            return DB::transaction(function () use ($sideQuestResult) {
 
                 $sideQuest = $sideQuestResult->sideQuest;
                 $squad = $sideQuestResult->campaignStop->campaign->squad;
@@ -62,6 +63,11 @@ class ProcessSideQuestVictoryRewards
                         }
                     }
                 });
+
+                return [
+                    'experience' => $experienceReward,
+                    'favor' => $favorReward
+                ];
             });
         } catch (\Throwable $throwable) {
 
