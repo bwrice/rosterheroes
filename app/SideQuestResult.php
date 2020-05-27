@@ -23,6 +23,8 @@ use PhpParser\Node\Expr\AssignOp\Mod;
  * @property CarbonInterface|null $combat_processed_at
  * @property CarbonInterface|null $rewards_processed_at
  * @property CarbonInterface|null $side_effects_processed_at
+ * @property int|null $experience_rewarded
+ * @property int|null $favor_rewarded
  *
  * @property SideQuest $sideQuest
  * @property CampaignStop $campaignStop
