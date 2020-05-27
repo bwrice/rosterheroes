@@ -51,6 +51,28 @@ class RewardSquadForMinionKillTest extends TestCase
     /**
      * @test
      */
+    public function it_will_increase_the_squads_favor_by_the_minions_experience_reward()
+    {
+        // make sure minion level is high enough that we get more than 1 point in favor
+        $this->minion->level = rand(50, 200);
+        $this->minion->save();
+        $this->minion = $this->minion->fresh();
+
+        $beginningFavor = $this->squad->favor;
+        $FavorReward = $this->minion->getFavorReward();
+        $this->assertGreaterThan(0, $FavorReward);
+
+        /** @var RewardSquadForMinionKill $domainAction */
+        $domainAction = app(RewardSquadForMinionKill::class);
+        $domainAction->execute($this->squad, $this->minion);
+
+        $newFavor = $this->squad->fresh()->favor;
+        $this->assertEquals($beginningFavor + $FavorReward, $newFavor);
+    }
+
+    /**
+     * @test
+     */
     public function it_will_execute_reward_chest_to_squad_actions_for_each_chest_blueprint_belonging_to_the_minion()
     {
         $chestBlueFactory = ChestBlueprintFactory::new();

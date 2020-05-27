@@ -3,8 +3,6 @@
 
 namespace App\Domain\Actions;
 
-
-use App\Aggregates\ChestAggregate;
 use App\Chest;
 use App\ChestBlueprint;
 use App\Domain\Interfaces\RewardsChests;

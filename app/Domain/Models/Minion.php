@@ -126,6 +126,11 @@ class Minion extends Model implements HasAttacks, RewardsChests
         return (int) ceil(($this->level * 4) + ($this->level**2)/2);
     }
 
+    public function getFavorReward()
+    {
+        return (int) ceil(sqrt($this->level)/4);
+    }
+
     public function getResourceCosts(int $attackTier, DamageTypeBehavior $damageTypeBehavior, ?int $targetsCount): ResourceCostsCollection
     {
         /*
