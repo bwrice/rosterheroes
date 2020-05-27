@@ -32,37 +32,32 @@ class RewardChestToSquad
      */
     public function execute(ChestBlueprint $chestBlueprint, Squad $squad, ?RewardsChests $source)
     {
-        $uuid = (string) Str::uuid();
-        $chestAggregate = ChestAggregate::retrieve($uuid);
         $chestGold = rand($chestBlueprint->min_gold, $chestBlueprint->max_gold);
 
         $sourceType = $source ? $source->getMorphType() : null;
         $sourceID = $source ? $source->getMorphID() : null;
 
-        $chestAggregate->createNewChest(
-            $chestBlueprint->quality,
-            $chestBlueprint->size,
-            $chestGold,
-            $squad->id,
-            $chestBlueprint->id,
-            $chestBlueprint->description,
-            $sourceType,
-            $sourceID
-        );
-        $chestAggregate->persist();
-
-        $chest = Chest::findUuidOrFail($uuid);
+        /** @var Chest $chest */
+        $chest = Chest::query()->create([
+            'uuid' => (string) Str::uuid(),
+            'squad_id' => $squad->id,
+            'source_type' => $sourceType,
+            'source_id' => $sourceID,
+            'chest_blueprint_id' => $chestBlueprint->id,
+            'description' => $chestBlueprint->description,
+            'gold' => $chestGold,
+            'quality' => $chestBlueprint->quality,
+            'size' => $chestBlueprint->size
+        ]);
 
         $itemBlueprints = $chestBlueprint->itemBlueprints;
         $itemBlueprints->each(function (ItemBlueprint $itemBlueprint) use ($chest) {
 
             $count = $itemBlueprint->pivot->count;
-            $chance = $itemBlueprint->pivot->chance;
+            $percentChanceTimes100 = $itemBlueprint->pivot->chance * 100;
 
             for ($i = 1; $i <= $count; $i++) {
-                $randomChancePercent = (rand(0, 10000)/100);
-                // We add PHP_FLOAT_EPSILON to guarantee 100% chance item-blueprints always get rewarded
-                $rewardItem = $randomChancePercent <= ($chance + PHP_FLOAT_EPSILON);
+                $rewardItem = (rand(1, 10000) <= $percentChanceTimes100);
                 if ($rewardItem) {
                     $item = $this->generateItem->execute($itemBlueprint);
                     $chest->items()->save($item);
