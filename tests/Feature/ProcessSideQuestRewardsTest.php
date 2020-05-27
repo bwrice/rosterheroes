@@ -160,4 +160,56 @@ class ProcessSideQuestRewardsTest extends TestCase
         }
         $this->fail('Exception not thrown');
     }
+
+    /**
+     * @test
+     */
+    public function it_will_save_the_experience_rewarded_to_the_side_quest_result()
+    {
+        $minionFactory = MinionFactory::new();
+        $sideQuestFactory = SideQuestFactory::new()->withMinions(collect([
+            $minionFactory,
+            $minionFactory
+        ]));
+
+        $finalMoment = rand(6, 50);
+        $heroKillsMinionEvent = SideQuestEventFactory::new()->heroKillsMinion()->withMoment(5);
+        $victoryEvent = SideQuestEventFactory::new()->sideQuestVictory()->withMoment($finalMoment);
+
+        $sideQuestResult = SideQuestResultFactory::new()->withSideQuest($sideQuestFactory)->withEvents(collect([
+            $heroKillsMinionEvent,
+            $heroKillsMinionEvent,
+            $victoryEvent
+        ]))->create();
+
+        $experienceForMoments = (int) ceil($sideQuestResult->sideQuest->getExperiencePerMoment() * $finalMoment);
+        $this->assertGreaterThan(0, $experienceForMoments);
+
+        $this->assertNull($sideQuestResult->experience_rewarded);
+
+        $rewardMinionKillMock = \Mockery::mock(RewardSquadForMinionKill::class)
+            ->shouldReceive('execute')
+            ->times(2)
+            ->andReturn([
+                'experience' => $minionKillExperience = rand(10, 999),
+                'favor' => 0
+            ])->getMock();
+
+        $this->app->instance(RewardSquadForMinionKill::class, $rewardMinionKillMock);
+
+        $victoryMock = \Mockery::mock(ProcessSideQuestVictoryRewards::class)
+            ->shouldReceive('execute')
+            ->andReturn([
+                'experience' => $victoryExperience = rand(100, 9999),
+                'favor' => 0
+            ])->getMock();
+
+        $this->app->instance(ProcessSideQuestVictoryRewards::class, $victoryMock);
+
+        /** @var ProcessSideQuestRewards $domainAction */
+        $domainAction = app(ProcessSideQuestRewards::class);
+        $domainAction->execute($sideQuestResult);
+
+        $this->assertEquals($experienceForMoments + (2 * $minionKillExperience) + $victoryExperience, $sideQuestResult->fresh()->experience_rewarded);
+    }
 }
