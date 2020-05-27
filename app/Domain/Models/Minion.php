@@ -123,7 +123,7 @@ class Minion extends Model implements HasAttacks, RewardsChests
 
     public function getExperienceReward()
     {
-        return (int) ceil(($this->level * 4) + ($this->level**2)/2);
+        return (int) ceil(($this->level * 4) + $this->level**1.25);
     }
 
     public function getFavorReward()
