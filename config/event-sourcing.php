@@ -19,7 +19,6 @@ return [
         \App\Projectors\HeroProjector::class,
         \App\Projectors\ItemProjector::class,
         \App\Projectors\MeasurableProjector::class,
-        \App\Projectors\ProvinceProjector::class,
         \App\Projectors\ChestProjector::class,
         \App\Projectors\SquadCombatStatsProjector::class,
         \App\Projectors\HeroCombatStatsProjector::class,
