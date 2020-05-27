@@ -17,7 +17,6 @@ return [
     'projectors' => [
         \App\Projectors\SquadProjector::class,
         \App\Projectors\HeroProjector::class,
-        \App\Projectors\ItemProjector::class,
         \App\Projectors\SquadCombatStatsProjector::class,
         \App\Projectors\HeroCombatStatsProjector::class,
         \App\Projectors\ItemCombatStatsProjector::class
