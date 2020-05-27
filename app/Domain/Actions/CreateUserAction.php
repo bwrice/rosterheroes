@@ -6,17 +6,21 @@ namespace App\Domain\Actions;
 
 use App\Aggregates\UserAggregate;
 use App\Domain\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class CreateUserAction
 {
     public function execute(string $email, string $name, string $password = null, string $emailVerifiedAt = null): User
     {
-        $uuid = Str::uuid();
-        /** @var UserAggregate $userAggregate */
-        $userAggregate = UserAggregate::retrieve($uuid);
-        $userAggregate->createUser($email, $name, $password, $emailVerifiedAt)->persist();
-        $user = User::uuid($uuid);
+        /** @var User $user */
+        $user = User::query()->create([
+            'uuid' => (string) Str::uuid(),
+            'email' => $email,
+            'password' => Hash::make($password),
+            'name' => $name,
+            'email_verified_at' => $emailVerifiedAt
+        ]);
         return $user;
     }
 }
