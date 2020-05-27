@@ -21,6 +21,8 @@ class CreateSideQuestResultsTable extends Migration
             $table->dateTime('combat_processed_at')->nullable();
             $table->dateTime('rewards_processed_at')->nullable();
             $table->dateTime('side_effects_processed_at')->nullable();
+            $table->integer('experience_rewarded')->nullable();
+            $table->integer('favor_rewarded')->nullable();
             $table->unique(['campaign_stop_id', 'side_quest_id']);
             $table->timestamps();
         });
