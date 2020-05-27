@@ -212,4 +212,53 @@ class ProcessSideQuestRewardsTest extends TestCase
 
         $this->assertEquals($experienceForMoments + (2 * $minionKillExperience) + $victoryExperience, $sideQuestResult->fresh()->experience_rewarded);
     }
+
+    /**
+     * @test
+     */
+    public function it_will_save_the_favor_rewarded_to_the_side_quest_result()
+    {
+        $minionFactory = MinionFactory::new();
+        $sideQuestFactory = SideQuestFactory::new()->withMinions(collect([
+            $minionFactory,
+            $minionFactory
+        ]));
+
+        $finalMoment = rand(6, 50);
+        $heroKillsMinionEvent = SideQuestEventFactory::new()->heroKillsMinion()->withMoment(5);
+        $victoryEvent = SideQuestEventFactory::new()->sideQuestVictory()->withMoment($finalMoment);
+
+        $sideQuestResult = SideQuestResultFactory::new()->withSideQuest($sideQuestFactory)->withEvents(collect([
+            $heroKillsMinionEvent,
+            $heroKillsMinionEvent,
+            $victoryEvent
+        ]))->create();
+
+        $this->assertNull($sideQuestResult->favor_rewarded);
+
+        $rewardMinionKillMock = \Mockery::mock(RewardSquadForMinionKill::class)
+            ->shouldReceive('execute')
+            ->times(2)
+            ->andReturn([
+                'experience' => 0,
+                'favor' => $minionKillFavor = rand(1, 10)
+            ])->getMock();
+
+        $this->app->instance(RewardSquadForMinionKill::class, $rewardMinionKillMock);
+
+        $victoryMock = \Mockery::mock(ProcessSideQuestVictoryRewards::class)
+            ->shouldReceive('execute')
+            ->andReturn([
+                'experience' => 0,
+                'favor' => $victoryFavor = rand(9, 99)
+            ])->getMock();
+
+        $this->app->instance(ProcessSideQuestVictoryRewards::class, $victoryMock);
+
+        /** @var ProcessSideQuestRewards $domainAction */
+        $domainAction = app(ProcessSideQuestRewards::class);
+        $domainAction->execute($sideQuestResult);
+
+        $this->assertEquals( (2 * $minionKillFavor) + $victoryFavor, $sideQuestResult->fresh()->favor_rewarded);
+    }
 }
