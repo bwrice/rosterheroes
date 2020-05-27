@@ -38,9 +38,8 @@ class RaiseMeasurableAction
             throw new RaiseMeasurableException($measurable, $amount, $message, $code);
         }
 
-        /** @var MeasurableAggregate $aggregate */
-        $aggregate = MeasurableAggregate::retrieve($measurable->uuid);
-        $aggregate->raiseMeasurable($amount)->persist();
+        $measurable->amount_raised += $amount;
+        $measurable->save();
         return $measurable->fresh();
     }
 

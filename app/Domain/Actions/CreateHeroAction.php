@@ -15,6 +15,7 @@ use App\Domain\Models\Hero;
 use App\Domain\Models\HeroClass;
 use App\Domain\Models\HeroRace;
 use App\Domain\Models\HeroRank;
+use App\Domain\Models\Measurable;
 use App\Domain\Models\MeasurableType;
 use App\Domain\Models\SlotType;
 use App\Domain\Models\Squad;
@@ -53,11 +54,13 @@ class CreateHeroAction
         $hero = Hero::findUuid($heroUuid);
 
         MeasurableType::heroTypes()->each(function (MeasurableType $measurableType) use ($hero) {
-            $measurableUuid = Str::uuid();
-            /** @var MeasurableAggregate $measurableAggregate */
-            $measurableAggregate = MeasurableAggregate::retrieve($measurableUuid);
-            $measurableAggregate->createMeasurable($measurableType->id, $hero->id, 0)
-                ->persist();
+
+            Measurable::query()->create([
+                'uuid' => (string) Str::uuid(),
+                'measurable_type_id' => $measurableType->id,
+                'hero_id' => $hero->id,
+                'amount_raised' => 0
+            ]);
         });
 
         // Persist slots
