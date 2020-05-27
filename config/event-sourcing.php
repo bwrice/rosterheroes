@@ -15,8 +15,6 @@ return [
      * can be registered in this array or a service provider.
      */
     'projectors' => [
-        \App\Projectors\SquadProjector::class,
-        \App\Projectors\HeroProjector::class,
         \App\Projectors\SquadCombatStatsProjector::class,
         \App\Projectors\HeroCombatStatsProjector::class,
         \App\Projectors\ItemCombatStatsProjector::class

@@ -34,24 +34,16 @@ class CreateHeroAction
      */
     public function execute(string $name, Squad $squad, HeroClass $heroClass, HeroRace $heroRace, HeroRank $heroRank): Hero
     {
-        $heroUuid = Str::uuid();
-        /** @var HeroAggregate $heroAggregate */
-        $heroAggregate = HeroAggregate::retrieve($heroUuid);
-        $heroAggregate->createHero(
-            $name,
-            $squad->id,
-            $heroClass->id,
-            $heroRace->id,
-            $heroRank->id,
-            $heroClass->getBehavior()->getStartingCombatPosition()->id
-        );
-
-        /*
-         * Persist aggregate because we need an hero in the DB
-         * for the rest of the creation process
-         */
-        $heroAggregate->persist();
-        $hero = Hero::findUuid($heroUuid);
+        /** @var Hero $hero */
+        $hero = Hero::query()->create([
+            'uuid' => (string) Str::uuid(),
+            'name' => $name,
+            'squad_id' => $squad->id,
+            'hero_class_id' => $heroClass->id,
+            'hero_race_id' => $heroRace->id,
+            'hero_rank_id' => $heroRank->id,
+            'combat_position_id' => $heroClass->getBehavior()->getStartingCombatPosition()->id
+        ]);
 
         MeasurableType::heroTypes()->each(function (MeasurableType $measurableType) use ($hero) {
 
@@ -63,8 +55,6 @@ class CreateHeroAction
             ]);
         });
 
-        // Persist slots
-        $heroAggregate->persist();
-        return Hero::findUuid($heroUuid);
+        return $hero->fresh();
     }
 }

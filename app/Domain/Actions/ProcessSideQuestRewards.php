@@ -45,8 +45,8 @@ class ProcessSideQuestRewards
             $finalEvent = $sideQuestResult->sideQuestEvents()->finalEvent();
             if ($finalEvent) {
                 $experienceForMoments = (int) ceil($finalEvent->moment * $sideQuestResult->sideQuest->getExperiencePerMoment());
-                $squadAggregate = $squad->getAggregate();
-                $squadAggregate->increaseExperience($experienceForMoments)->persist();
+                $squad->experience += $experienceForMoments;
+                $squad->save();
             }
 
             $minionKillEvents = $sideQuestResult->sideQuestEvents()->heroKillsMinion()->get();

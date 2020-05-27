@@ -5,10 +5,8 @@ namespace App\Aggregates;
 use App\Domain\Models\Minion;
 use App\Domain\Models\SideQuest;
 use App\StorableEvents\SideQuestMinionKillsSquadMember;
-use App\StorableEvents\SpellAddedToLibrary;
 use App\StorableEvents\SquadDealsDamageToSideQuestMinion;
 use App\StorableEvents\SquadDefeatedInSideQuest;
-use App\StorableEvents\SquadExperienceIncreased;
 use App\StorableEvents\SquadKillsSideQuestMinion;
 use App\StorableEvents\SquadMemberBlocksSideQuestMinion;
 use App\StorableEvents\SquadTakesDamageFromSideQuestMinion;
@@ -17,12 +15,6 @@ use Spatie\EventSourcing\AggregateRoot;
 
 final class SquadAggregate extends AggregateRoot
 {
-
-    public function increaseExperience(int $amount)
-    {
-        $this->recordThat(new SquadExperienceIncreased($amount));
-        return $this;
-    }
 
     public function killsSideQuestMinion(Minion $minion)
     {
