@@ -38,10 +38,12 @@ class ProcessSideQuestVictoryRewards
             DB::transaction(function () use ($sideQuestResult) {
 
                 $sideQuest = $sideQuestResult->sideQuest;
-                $experienceReward = $sideQuest->getExperienceReward();
-
                 $squad = $sideQuestResult->campaignStop->campaign->squad;
+
+                $experienceReward = $sideQuest->getExperienceReward();
+                $favorReward = $sideQuest->getFavorReward();
                 $squad->experience += $experienceReward;
+                $squad->favor += $favorReward;
                 $squad->save();
 
                 $sideQuest->chestBlueprints->each(function (ChestBlueprint $chestBlueprint) use ($squad, $sideQuestResult) {

@@ -81,6 +81,11 @@ class SideQuest extends Model implements RewardsChests
         return (int) ceil($difficult * 25 + ($difficult**2));
     }
 
+    public function getFavorReward()
+    {
+        return (int) ceil(2.5 * sqrt($this->difficulty()));
+    }
+
     public function getExperiencePerMoment()
     {
         return $this->floatDifficulty()/10;

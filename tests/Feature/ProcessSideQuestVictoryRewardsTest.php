@@ -82,6 +82,27 @@ class ProcessSideQuestVictoryRewardsTest extends TestCase
     /**
      * @test
      */
+    public function it_will_increase_the_squads_favor_by_the_side_quests_favor_reward()
+    {
+        $sideQuestFactory = SideQuestFactory::new()->withMinions();
+        $sideQuestResult = SideQuestResultFactory::new()->withSideQuest($sideQuestFactory)->create();
+        $squad = $sideQuestResult->campaignStop->campaign->squad;
+
+        $originalFavor = $squad->favor;
+
+        $favorReward = $sideQuestResult->sideQuest->getFavorReward();
+        $this->assertGreaterThan(0, $favorReward);
+
+        /** @var ProcessSideQuestVictoryRewards $domainAction */
+        $domainAction = app(ProcessSideQuestVictoryRewards::class);
+        $domainAction->execute($sideQuestResult);
+
+        $this->assertEquals($originalFavor + $favorReward, $squad->fresh()->favor);
+    }
+
+    /**
+     * @test
+     */
     public function it_will_execute_reward_chest_for_each_of_the_side_quests_chest_blueprints()
     {
         $sideQuest = $this->sideQuestResult->sideQuest;
