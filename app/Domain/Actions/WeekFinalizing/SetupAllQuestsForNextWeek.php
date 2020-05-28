@@ -4,11 +4,10 @@
 namespace App\Domain\Actions\WeekFinalizing;
 
 
-use App\Domain\Actions\SetupQuestForNextWeek;
 use App\Domain\Models\Quest;
 use App\Jobs\FinalizeWeekJob;
 use App\Jobs\SetupQuestForNextWeekJob;
-use Bwrice\LaravelJobChainGroups\Jobs\ChainGroup;
+use Bwrice\LaravelJobChainGroups\Facades\JobChainGroups;
 
 class SetupAllQuestsForNextWeek implements FinalizeWeekDomainAction
 {
@@ -19,7 +18,7 @@ class SetupAllQuestsForNextWeek implements FinalizeWeekDomainAction
             return new SetupQuestForNextWeekJob($quest);
         })->toArray();
 
-        ChainGroup::create($asyncJobs, [
+        JobChainGroups::create($asyncJobs, [
             new FinalizeWeekJob($finalizeWeekStep + 1)
         ])->dispatch();
     }

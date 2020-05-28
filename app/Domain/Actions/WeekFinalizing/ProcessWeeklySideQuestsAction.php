@@ -6,9 +6,8 @@ namespace App\Domain\Actions\WeekFinalizing;
 
 use App\Facades\CurrentWeek;
 use App\Jobs\FinalizeWeekJob;
-use App\Jobs\ProcessCombatForSideQuestResultJob;
 use App\SideQuestResult;
-use Bwrice\LaravelJobChainGroups\Jobs\ChainGroup;
+use Bwrice\LaravelJobChainGroups\Facades\JobChainGroups;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -37,7 +36,7 @@ abstract class ProcessWeeklySideQuestsAction implements FinalizeWeekDomainAction
 
         $finalizeWeekArgs = $this->getFinalizeWeekArgs($sideQuestResults, $finalizeWeekStep);
 
-        ChainGroup::create($asyncJobs, [
+        JobChainGroups::create($asyncJobs, [
             new FinalizeWeekJob($finalizeWeekArgs['step'], $finalizeWeekArgs['extra'])
         ])->onQueue('medium')->dispatch();;
     }

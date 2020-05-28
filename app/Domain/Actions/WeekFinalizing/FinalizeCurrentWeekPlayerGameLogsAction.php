@@ -9,7 +9,7 @@ use App\Exceptions\FinalizeWeekException;
 use App\Facades\CurrentWeek;
 use App\Jobs\FinalizeWeekJob;
 use App\Jobs\UpdatePlayerGameLogsJob;
-use Bwrice\LaravelJobChainGroups\Jobs\ChainGroup;
+use Bwrice\LaravelJobChainGroups\Facades\JobChainGroups;
 
 class FinalizeCurrentWeekPlayerGameLogsAction implements FinalizeWeekDomainAction
 {
@@ -18,7 +18,7 @@ class FinalizeCurrentWeekPlayerGameLogsAction implements FinalizeWeekDomainActio
         if (! CurrentWeek::finalizing()) {
             throw new FinalizeWeekException(CurrentWeek::get(), "Week is not ready to be finalized", FinalizeWeekException::INVALID_TIME_TO_FINALIZE);
         }
-        ChainGroup::create($this->getUpdatePlayerGameLogsForGameJobs(), [
+        JobChainGroups::create($this->getUpdatePlayerGameLogsForGameJobs(), [
             new FinalizeWeekJob($finalizeWeekStep + 1)
         ])->dispatch();
     }
