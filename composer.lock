@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bwrice/laravel-job-chain-groups.git",
-                "reference": "f229ad828786fd475e0d8f2f39083e240c3c4796"
+                "reference": "4ebd073054781e0ab0f5666612df55b24c3b1322"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bwrice/laravel-job-chain-groups/zipball/f229ad828786fd475e0d8f2f39083e240c3c4796",
-                "reference": "f229ad828786fd475e0d8f2f39083e240c3c4796",
+                "url": "https://api.github.com/repos/bwrice/laravel-job-chain-groups/zipball/4ebd073054781e0ab0f5666612df55b24c3b1322",
+                "reference": "4ebd073054781e0ab0f5666612df55b24c3b1322",
                 "shasum": ""
             },
             "require": {
@@ -60,7 +60,7 @@
                 "bwrice",
                 "laravel-job-chain-groups"
             ],
-            "time": "2020-05-28T00:00:21+00:00"
+            "time": "2020-05-28T06:00:34+00:00"
         },
         {
             "name": "cakephp/chronos",
