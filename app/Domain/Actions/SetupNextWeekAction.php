@@ -10,6 +10,7 @@ use App\Domain\Models\Week;
 use App\Exceptions\BuildNextWeekException;
 use App\Exceptions\BuildWeekException;
 use App\Facades\CurrentWeek;
+use App\Jobs\MakeWeekCurrentJob;
 use Illuminate\Support\Facades\Date;
 
 class SetupNextWeekAction
@@ -39,8 +40,10 @@ class SetupNextWeekAction
 
         $nextWeek = $this->buildWeekAction->execute();
         $this->buildWeeklyPlayerSpiritsAction->execute($nextWeek);
-        $nextWeek->made_current_at = Date::now()->addMinutes(30); // Give a little time for all the jobs to catch-up
-        $nextWeek->save();
-        return $nextWeek;
+
+        /*
+         * Make next week current, but delay to allow other jobs to catch up
+         */
+        MakeWeekCurrentJob::dispatch($nextWeek)->delay(now()->addMinutes(15));
     }
 }
