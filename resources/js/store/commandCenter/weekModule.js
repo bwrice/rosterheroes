@@ -1,11 +1,12 @@
 import * as weekApi from '../../api/weekApi';
 import PlayerSpirit from "../../models/PlayerSpirit";
 import Game from "../../models/Game";
+import Week from "../../models/Week";
 
 export default {
 
     state: {
-        week: null,
+        week: new Week({}),
         playerSpirits: [],
         games: [],
         loadingSpirits: true
@@ -56,7 +57,7 @@ export default {
         async updateCurrentWeek({commit}) {
             try {
                 let weekResponse = await weekApi.getCurrentWeek();
-                commit('SET_CURRENT_WEEK', weekResponse.data);
+                commit('SET_CURRENT_WEEK', new Week(weekResponse.data));
             } catch (e) {
                 console.warn("Failed to update current week");
             }
