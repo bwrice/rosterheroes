@@ -25,10 +25,8 @@ class WeekQueryBuilder extends Builder
      */
     public function current()
     {
-        $now = now();
         return $this->whereNotNull('made_current_at')
             ->orderByDesc('made_current_at')
-            ->where('made_current_at', '<=', $now)
             ->first();
     }
 }
