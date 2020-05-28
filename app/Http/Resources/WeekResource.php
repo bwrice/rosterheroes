@@ -21,8 +21,12 @@ class WeekResource extends JsonResource
      */
     public function toArray($request)
     {
+        $adventuringLocksAt = $this->adventuring_locks_at;
+
         return [
-            'uuid' => $this->uuid
+            'uuid' => $this->uuid,
+            'adventuringLocksAt' => $adventuringLocksAt,
+            'secondsUntilAdventuringLocks' => now()->diffInSeconds($adventuringLocksAt, false)
         ];
     }
 }
