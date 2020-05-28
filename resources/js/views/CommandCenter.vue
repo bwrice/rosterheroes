@@ -11,6 +11,8 @@
             ></v-app-bar-nav-icon>
             <router-view name="appBarContent"></router-view>
             <v-spacer></v-spacer>
+
+            <NavBarWeekInfo></NavBarWeekInfo>
             <v-menu
                 bottom
                 left
@@ -78,11 +80,13 @@
 
     import RhSnackBarAlert from "../components/commandCenter/global/SnackBarAlert";
     import NavigationDrawerContent from "../components/commandCenter/navigationDrawer/NavigationDrawerContent";
+    import NavBarWeekInfo from "../components/NavBarWeekInfo";
 
     export default {
         name: "CommandCenter",
 
         components: {
+            NavBarWeekInfo,
             NavigationDrawerContent,
             RhSnackBarAlert,
             BarracksFooterButton,
