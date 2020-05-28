@@ -109,6 +109,10 @@
                         value: this._squad.experience.toLocaleString()
                     },
                     {
+                        name: 'Favor',
+                        value: this._squad.favor.toLocaleString()
+                    },
+                    {
                         name: 'Spirit Essence',
                         value: this._squad.spiritEssence.toLocaleString()
                     },
