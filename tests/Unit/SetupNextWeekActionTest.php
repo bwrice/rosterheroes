@@ -9,15 +9,23 @@ use App\Domain\Models\Week;
 use App\Exceptions\BuildNextWeekException;
 use App\Exceptions\BuildWeekException;
 use App\Facades\CurrentWeek;
+use App\Jobs\MakeWeekCurrentJob;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
 class SetupNextWeekActionTest extends TestCase
 {
     use DatabaseTransactions;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        Queue::fake();
+    }
 
     /**
     * @test
@@ -61,7 +69,7 @@ class SetupNextWeekActionTest extends TestCase
     /**
     * @test
     */
-    public function it_will_set_made_current_at_date()
+    public function it_will_dispatch_make_week_current()
     {
         CurrentWeek::partialMock()->shouldReceive('exists')->andReturn(true);
 
@@ -76,6 +84,9 @@ class SetupNextWeekActionTest extends TestCase
         /** @var SetupNextWeekAction $domainAction */
         $domainAction = app(SetupNextWeekAction::class);
         $domainAction->execute();
-        $this->assertNotNull($week->fresh()->made_current_at);
+
+        Queue::assertPushed(MakeWeekCurrentJob::class, function (MakeWeekCurrentJob $job) use ($week) {
+            return $job->week->id === $week->id;
+        });
     }
 }
