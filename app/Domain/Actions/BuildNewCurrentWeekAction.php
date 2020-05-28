@@ -18,7 +18,7 @@ class BuildNewCurrentWeekAction
     public function execute(): Week
     {
         $now = Date::now();
-        if ($now->dayOfWeek >= CarbonInterface::THURSDAY) {
+        if ($now->dayOfWeek >= CarbonInterface::FRIDAY) {
             $startingPoint = $now->next(CarbonInterface::WEDNESDAY);
         } else {
             $startingPoint = $now;
