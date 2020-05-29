@@ -40,4 +40,8 @@ export default class Hero {
         let measurable = this.measurables.find(measurable => measurable.measurableTypeID === measurableTypeID);
         return measurable ? measurable : new Measurable({});
     }
+
+    readyForCombat() {
+        return this.playerSpirit !== null;
+    }
 }
