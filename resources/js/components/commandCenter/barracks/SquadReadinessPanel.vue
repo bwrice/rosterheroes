@@ -3,9 +3,27 @@
         <v-row no-gutters align="center">
             <v-col cols="3" sm="2">
                 <v-row no-gutters justify="center">
-                    <slot>
-                        <!-- Default Slot -->
-                    </slot>
+                    <v-icon
+                        v-if="readiness === 'full'"
+                        x-large
+                        color="success"
+                    >
+                        check_circle
+                    </v-icon>
+                    <v-icon
+                        v-else-if="readiness === 'partial'"
+                        x-large
+                        color="accent"
+                    >
+                        error
+                    </v-icon>
+                    <v-icon
+                        v-else
+                        x-large
+                        color="error"
+                    >
+                        cancel
+                    </v-icon>
                 </v-row>
             </v-col>
             <v-col cols="9" sm="10">
@@ -22,6 +40,10 @@
         name: "SquadReadinessPanel",
         props: {
             name: {
+                type: String,
+                required: true
+            },
+            readiness: {
                 type: String,
                 required: true
             }

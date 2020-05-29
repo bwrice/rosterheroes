@@ -1,27 +1,5 @@
 <template>
-    <SquadReadinessPanel name="heroes">
-        <v-icon
-            v-if="readiness === 'full'"
-            x-large
-            color="success"
-        >
-            check_circle
-        </v-icon>
-        <v-icon
-            v-else-if="readiness === 'partial'"
-            x-large
-            color="accent"
-        >
-            error
-        </v-icon>
-        <v-icon
-            v-else
-            x-large
-            color="error"
-        >
-            cancel
-        </v-icon>
-    </SquadReadinessPanel>
+    <SquadReadinessPanel name="heroes" :readiness="readiness"></SquadReadinessPanel>
 </template>
 
 <script>
