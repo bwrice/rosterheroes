@@ -18,20 +18,41 @@
                 <v-spacer></v-spacer>
                 <v-icon @click="opened = false" color="rgba(0,0,0,.7)">close</v-icon>
             </v-list-item>
-            <v-list-item>
-                <v-row no="gutters" justify="center">
+            <template v-if="secondsRemaining > 0">
+                <v-list-item>
+                    <v-row no="gutters" justify="center">
                     <span
                         class="font-weight-bold"
                         :class="[$vuetify.breakpoint.name === 'xs' ? 'subtitle-1' : 'headline' ]"
                         style="color: rgba(0,0,0,.7)"
                     >WEEK LOCKS IN</span>
-                </v-row>
-            </v-list-item>
-            <v-list-item>
-                <div :style="countdownDivStyles">
-                    <FlipCountdown :deadline="deadline"></FlipCountdown>
-                </div>
-            </v-list-item>
+                    </v-row>
+                </v-list-item>
+                <v-list-item>
+                    <div :style="countdownDivStyles">
+                        <FlipCountdown :deadline="deadline"></FlipCountdown>
+                    </div>
+                </v-list-item>
+            </template>
+            <template v-else>
+                <v-list-item>
+                    <v-row no="gutters" justify="center">
+                    <span
+                        class="font-weight-bold"
+                        :class="[$vuetify.breakpoint.name === 'xs' ? 'subtitle-1' : 'headline' ]"
+                        style="color: rgba(0,0,0,.7)"
+                    >WEEK LOCKED</span>
+                    </v-row>
+                </v-list-item>
+                <v-list-item>
+                    <v-row no="gutters" justify="center" class="pa-3">
+                    <p
+                        :class="[$vuetify.breakpoint.name === 'xs' ? 'body-2' : 'body-1' ]"
+                        style="color: rgba(0,0,0,.7)"
+                    >Campaigns are being processed. <br> Tomorrow a new week starts!</p>
+                    </v-row>
+                </v-list-item>
+            </template>
         </v-list>
     </v-menu>
 </template>
@@ -57,7 +78,19 @@
                 '_currentWeek'
             ]),
             iconColor() {
-                return 'success';
+                if (this.daysRemaining > 1) {
+                    return 'primary';
+                }
+                if (this.daysRemaining > 0) {
+                    return 'success';
+                }
+                if (this.hoursRemaining > 3) {
+                    return 'accent';
+                }
+                if (this._currentWeek.secondsUntilAdventuringLocks > 0) {
+                    return 'error';
+                }
+                return '#fc00c5';
             },
             deadline() {
                 if (this._currentWeek.adventuringLocksAt) {
@@ -73,6 +106,21 @@
                     styles['max-width'] = '200px';
                 }
                 return styles;
+            },
+            diff() {
+                if (this._currentWeek.adventuringLocksAt) {
+                    return this._currentWeek.adventuringLocksAt - Date.now();
+                }
+                return 0;
+            },
+            daysRemaining() {
+                return Math.trunc(this._currentWeek.secondsUntilAdventuringLocks/(60 * 60 * 24));
+            },
+            hoursRemaining() {
+                return Math.trunc(this._currentWeek.secondsUntilAdventuringLocks/(60 * 60));
+            },
+            secondsRemaining() {
+                return this._currentWeek.secondsUntilAdventuringLocks;
             }
         }
     }
