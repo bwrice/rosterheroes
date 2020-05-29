@@ -20,7 +20,9 @@
                 <v-icon @click="opened = false">close</v-icon>
             </v-list-item>
             <v-list-item>
-                {{countdown}}
+                <div style="max-width: 200px">
+                    <FlipCountdown :deadline="deadline"></FlipCountdown>
+                </div>
             </v-list-item>
         </v-list>
     </v-menu>
@@ -30,8 +32,13 @@
 
     import {mapGetters} from 'vuex';
 
+    import FlipCountdown from 'vue2-flip-countdown';
+
     export default {
         name: "NavBarWeekInfo",
+        components: {
+            FlipCountdown
+        },
         data() {
             return {
                 opened: false
@@ -75,6 +82,15 @@
                 countdown += this.timeUntilWeekLocks.minutes + 'm ';
                 countdown += this.timeUntilWeekLocks.seconds + 's';
                 return countdown;
+            },
+            deadline() {
+                if (this._currentWeek.adventuringLocksAt) {
+                    let value = this._currentWeek.adventuringLocksAt.format('YYYY-MM-DD hh:mm:ss');
+                    console.log("VALUE");
+                    console.log(value);
+                    return value;
+                }
+                return moment().format('YYYY-MM-DD hh:mm:ss');
             }
         }
     }
