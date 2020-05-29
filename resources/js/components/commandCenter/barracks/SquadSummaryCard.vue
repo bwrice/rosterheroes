@@ -48,6 +48,14 @@
                         </v-progress-linear>
                     </v-col>
                 </v-row>
+                <v-row no-gutters>
+                    <v-col cols="6">
+                        <HeroesReadinessPanel></HeroesReadinessPanel>
+                    </v-col>
+                    <v-col cols="6">
+                        <CampaignReadinessPanel></CampaignReadinessPanel>
+                    </v-col>
+                </v-row>
             </v-sheet>
         </v-col>
     </v-row>
@@ -57,9 +65,11 @@
     import {mapGetters} from 'vuex';
     import LevelIcon from "../../icons/LevelIcon";
     import GradientBar from "../global/GradientBar";
+    import CampaignReadinessPanel from "./CampaignReadinessPanel";
+    import HeroesReadinessPanel from "./HeroesReadinessPanel";
     export default {
         name: "SquadSummaryCard",
-        components: {GradientBar, LevelIcon},
+        components: {HeroesReadinessPanel, CampaignReadinessPanel, GradientBar, LevelIcon},
         computed: {
             ...mapGetters([
                 '_squad',
