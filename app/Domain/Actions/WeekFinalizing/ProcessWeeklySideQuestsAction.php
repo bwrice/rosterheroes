@@ -38,7 +38,7 @@ abstract class ProcessWeeklySideQuestsAction implements FinalizeWeekDomainAction
 
         JobChainGroups::create($asyncJobs, [
             new FinalizeWeekJob($finalizeWeekArgs['step'], $finalizeWeekArgs['extra'])
-        ])->onQueue('medium')->dispatch();;
+        ])->onQueue('medium')->dispatch();
     }
 
     protected function getSideQuestResults(array $extra)
