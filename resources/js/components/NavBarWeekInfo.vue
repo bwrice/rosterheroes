@@ -13,14 +13,22 @@
                 <v-icon>schedule</v-icon>
             </v-btn>
         </template>
-
-        <v-list>
+        <v-list color="#778f85">
             <v-list-item>
                 <v-spacer></v-spacer>
-                <v-icon @click="opened = false">close</v-icon>
+                <v-icon @click="opened = false" color="rgba(0,0,0,.7)">close</v-icon>
             </v-list-item>
             <v-list-item>
-                <div style="max-width: 200px">
+                <v-row no="gutters" justify="center">
+                    <span
+                        class="font-weight-bold"
+                        :class="[$vuetify.breakpoint.name === 'xs' ? 'subtitle-1' : 'headline' ]"
+                        style="color: rgba(0,0,0,.7)"
+                    >WEEK LOCKS IN</span>
+                </v-row>
+            </v-list-item>
+            <v-list-item>
+                <div :style="countdownDivStyles">
                     <FlipCountdown :deadline="deadline"></FlipCountdown>
                 </div>
             </v-list-item>
@@ -51,46 +59,20 @@
             iconColor() {
                 return 'success';
             },
-            timeUntilWeekLocks() {
-                let totalSeconds = this._currentWeek.secondsUntilAdventuringLocks;
-                if (totalSeconds > 0) {
-                    let secondsInDays = 60 * 60 * 24;
-                    let days = Math.floor(totalSeconds/secondsInDays);
-                    totalSeconds -=  (days * secondsInDays);
-                    let secondsInHours = 60 * 60;
-                    let hours = Math.floor(totalSeconds/secondsInHours);
-                    totalSeconds -=  (hours * secondsInHours);
-                    let secondsInMinutes = 60;
-                    let minutes = Math.floor(totalSeconds/secondsInMinutes);
-                    totalSeconds -= (secondsInMinutes * minutes);
-                    let seconds = totalSeconds;
-                    return {
-                        days,
-                        hours,
-                        minutes,
-                        seconds
-                    }
-                }
-                return null;
-            },
-            countdown() {
-                if (! this.timeUntilWeekLocks) {
-                    return "Week Locked";
-                }
-                let countdown = this.timeUntilWeekLocks.days + 'd ';
-                countdown += this.timeUntilWeekLocks.hours + 'h ';
-                countdown += this.timeUntilWeekLocks.minutes + 'm ';
-                countdown += this.timeUntilWeekLocks.seconds + 's';
-                return countdown;
-            },
             deadline() {
                 if (this._currentWeek.adventuringLocksAt) {
-                    let value = this._currentWeek.adventuringLocksAt.format('YYYY-MM-DD hh:mm:ss');
-                    console.log("VALUE");
-                    console.log(value);
-                    return value;
+                    return this._currentWeek.adventuringLocksAt.format('YYYY-MM-DD hh:mm:ss');
                 }
                 return moment().format('YYYY-MM-DD hh:mm:ss');
+            },
+            countdownDivStyles() {
+                let styles = {
+                    'color': "rgba(0,0,0,.85)"
+                };
+                if (this.$vuetify.breakpoint.name === 'xs') {
+                    styles['max-width'] = '200px';
+                }
+                return styles;
             }
         }
     }
