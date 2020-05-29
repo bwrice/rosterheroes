@@ -191,24 +191,6 @@ class Week extends EventSourcedModel
 //        return self::query()->orderByDesc('ends_at')->first();
 //    }
 
-    /**
-     * @return Week
-     */
-    public static function makeForNow()
-    {
-        $start = Date::now()->next(3);
-
-        $sunday = $start->copy()->addDays(4)->setTimezone('America/New_York');
-        $offset = $sunday->getOffset();
-        $sunday = $sunday->addHours(9)->subSeconds($offset)->setTimezone('UTC');
-
-        return self::make([
-            'uuid' => Str::uuid(),
-            'adventuring_locks_at' => $sunday,
-            'made_current_at' => Date::now()
-        ]);
-    }
-
     public static function computeAdventuringLocksAt(CarbonInterface $fromDate = null)
     {
         $fromDate = $fromDate ? $fromDate->toImmutable() : Date::now();

@@ -1,5 +1,6 @@
 <?php
 
+use App\Domain\Actions\BuildNewCurrentWeekAction;
 use App\Domain\Collections\PositionCollection;
 use App\Domain\Models\Game;
 use App\Domain\Models\League;
@@ -13,11 +14,13 @@ use Illuminate\Database\Seeder;
 class PlayerSpiritsSeeder extends Seeder
 {
     /**
+     * @param BuildNewCurrentWeekAction $buildNewCurrentWeekAction
      * @throws Exception
      */
-    public function run()
+    public function run(BuildNewCurrentWeekAction $buildNewCurrentWeekAction)
     {
-        $week = Week::makeForNow();
+        $week = $buildNewCurrentWeekAction->execute();
+        $week->made_current_at = now();
         $week->save();
 
         $leagues = League::query()->with('sport')->get();
