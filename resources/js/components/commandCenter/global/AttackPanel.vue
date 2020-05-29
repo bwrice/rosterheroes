@@ -1,6 +1,19 @@
 <template>
-    <v-sheet color="rgba(60, 46, 92, .75)" class="px-2 mb-1">
-        <v-row>
+    <v-sheet color="rgba(60, 46, 92, .75)" class="mb-1">
+        <v-row align="center" justify="center" class="mx-2" no-gutters>
+            <span class="subtitle-2 pa-2">{{attack.name}}</span>
+            <div class="flex-grow-1"></div>
+            <v-btn @click="expanded = ! expanded"
+                   fab
+                   dark
+                   x-small
+                   color="rgba(0, 0, 0, .4)"
+            >
+                <v-icon v-if="expanded">expand_less</v-icon>
+                <v-icon v-else>expand_more</v-icon>
+            </v-btn>
+        </v-row>
+        <v-row v-if="expanded" no-gutters class="px-2">
             <v-col cols="7" class="py-1 px-2">
                 <v-row class="no-gutters">
                     <v-col cols="3" class="pa-0">
@@ -76,6 +89,11 @@
             attack: {
                 type: Attack,
                 required: true
+            }
+        },
+        data() {
+            return {
+                expanded: false
             }
         }
     }
