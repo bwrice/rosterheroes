@@ -16,6 +16,7 @@ class CreateEnchantmentsTable extends Migration
         Schema::create('enchantments', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->tinyInteger('restriction_level')->unsigned()->default(0);
             $table->timestamps();
         });
     }
