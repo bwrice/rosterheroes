@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property string $name
  * @property string $email
- * @property string $reason
  * @property string $message
  * @property string $type
  *
