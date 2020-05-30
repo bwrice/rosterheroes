@@ -52,11 +52,14 @@ class ContactSubmissionController extends Controller
             'type' => 'required',
         ]);
 
+        $user = Auth::user();
+
         ContactSubmission::query()->create([
             'name' => $request->name,
             'email' => $request->email,
             'message' => $request->message,
-            'type' => $request->type
+            'type' => $request->type,
+            'user_id' => $user ? $user->id : null
         ]);
 
         return view('contact-thankyou');

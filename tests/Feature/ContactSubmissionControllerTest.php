@@ -3,10 +3,12 @@
 namespace Tests\Feature;
 
 use App\ContactSubmission;
+use App\Domain\Models\User;
 use Faker\Factory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Laravel\Passport\Passport;
 use Tests\TestCase;
 
 class ContactSubmissionControllerTest extends TestCase
@@ -64,5 +66,30 @@ class ContactSubmissionControllerTest extends TestCase
                 'type' => 'support'
             ]
         ];
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_save_the_user_trying_to_contact_us_if_they_are_logged_in()
+    {
+        $user = factory(User::class)->create();
+        Passport::actingAs($user);
+
+        $faker = Factory::create();
+        $message = $faker->text();
+        $type = 'contact';
+
+        $this->post('/contact', [
+            'name' => $user->name,
+            'email' => $user->email,
+            'type' => $type,
+            'message' => $message
+        ]);
+
+        /** @var ContactSubmission $contactSubmission */
+        $contactSubmission = ContactSubmission::query()->where('user_id', '=', $user->id)->first();
+        $this->assertNotNull($contactSubmission);
+
     }
 }
