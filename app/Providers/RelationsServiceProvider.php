@@ -25,7 +25,6 @@ class RelationsServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // TODO: add any other model with potential polymorphic relationships
         Relation::morphMap([
             Squad::RELATION_MORPH_MAP_KEY => Squad::class,
             Hero::RELATION_MORPH_MAP_KEY => Hero::class,
