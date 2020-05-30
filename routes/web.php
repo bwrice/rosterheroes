@@ -16,14 +16,15 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\CommandCenterController;
+use App\Http\Controllers\ContactSubmissionController;
 use App\Http\Controllers\SquadController;
 
-Route::get('/terms', function () {
-    return view('terms');
-});
-Route::get('/privacy', function () {
-    return view('privacy');
-});
+
+/*
+ * Landing Page & Dashboard
+ */
+Route::get('/', [\App\Http\Controllers\HomeController::class, 'index']);
+Route::get('/dashboard', \App\Http\Controllers\DashboardController::class)->name('dashboard');
 
 /*
  * Register
@@ -57,9 +58,19 @@ Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEm
 Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
 Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
 
-Route::get('/', [\App\Http\Controllers\HomeController::class, 'index']);
+Route::get('contact', [ContactSubmissionController::class, 'create']);
+Route::post('contact', [ContactSubmissionController::class, 'store']);
 
-Route::get('/dashboard', \App\Http\Controllers\DashboardController::class)->name('dashboard');
+/*
+ * Terms & Privacy
+ */
+Route::get('/terms', function () {
+    return view('terms');
+});
+Route::get('/privacy', function () {
+    return view('privacy');
+});
+
 
 Route::get('/squads/create', [SquadController::class, 'create'])->name('create-squad');
 
