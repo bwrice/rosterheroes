@@ -21,6 +21,9 @@ use App\Http\Controllers\SquadController;
 Route::get('/terms', function () {
     return view('terms');
 });
+Route::get('/privacy', function () {
+    return view('privacy');
+});
 
 /*
  * Register
@@ -61,3 +64,44 @@ Route::get('/dashboard', \App\Http\Controllers\DashboardController::class)->name
 Route::get('/squads/create', [SquadController::class, 'create'])->name('create-squad');
 
 Route::get('/command-center/{squadSlug}/{subPage?}', [CommandCenterController::class, 'show'])->where('subPage', '.*')->name('command-center');
+
+if (! function_exists('getSpiritInfo')) {
+
+    function getSpiritInfo(int $playerID)
+    {
+        $playerSpirits = \App\Domain\Models\PlayerSpirit::query()->whereHas('playerGameLog', function (\Illuminate\Database\Eloquent\Builder $builder) use ($playerID) {
+            return $builder->where('player_id', '=', $playerID);
+        })->where('week_id', '=', \App\Facades\CurrentWeek::id())->get();
+
+
+        return $playerSpirits->map(function (\App\Domain\Models\PlayerSpirit $playerSpirit) {
+            return $playerSpirit->playerGameLog;
+        })->toArray();
+    }
+}
+if (! function_exists('getQueryInfo')) {
+
+    function getQueryInfo(int $squadID)
+    {
+        $builder = \App\SideQuestEvent::query()->whereHas('sideQuestResult', function (\Illuminate\Database\Eloquent\Builder $builder) use ($squadID) {
+            $builder->whereHas('campaignStop', function (\Illuminate\Database\Eloquent\Builder $builder) use ($squadID) {
+                $builder->whereHas('campaign', function (\Illuminate\Database\Eloquent\Builder $builder) use ($squadID) {
+                    $builder->where('squad_id', '=', $squadID);
+                });
+            });
+        });
+
+        return $builder->toSql();
+    }
+}
+if (! function_exists('diffHelper')) {
+
+    function diffHelper(string $referenceID)
+    {
+        /** @var \App\Domain\Models\SideQuest $sideQuest */
+        $sideQuest = \App\Domain\Models\SideQuest::query()->whereHas('sideQuestBlueprint', function (\Illuminate\Database\Eloquent\Builder $builder) use ($referenceID) {
+            $builder->where('reference_id', '=', $referenceID);
+        })->first();
+        return $sideQuest->difficulty();
+    }
+}
