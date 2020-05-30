@@ -68,10 +68,10 @@
 
             <div class="text-center text-sm text-grey-dark mt-4">
                 By registering, you agree to the
-                <a class="no-underline border-b border-teal-900 text-teal-900" href="#">
+                <a class="no-underline border-b border-teal-900 text-teal-900" href="/terms">
                     Terms of Service
                 </a> and
-                <a class="no-underline border-b border-teal-900 text-teal-900" href="#">
+                <a class="no-underline border-b border-teal-900 text-teal-900" href="/privacy">
                     Privacy Policy
                 </a>
             </div>
