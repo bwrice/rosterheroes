@@ -18,6 +18,10 @@ use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\CommandCenterController;
 use App\Http\Controllers\SquadController;
 
+Route::get('/terms', function () {
+    return view('terms');
+});
+
 /*
  * Register
  */
