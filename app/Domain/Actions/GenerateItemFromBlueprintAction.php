@@ -148,9 +148,12 @@ class GenerateItemFromBlueprintAction
         while ($enchantmentsPower > 0) {
 
             /** @var Enchantment $enchantment */
-            $enchantment = Enchantment::query()->inRandomOrder()->whereDoesntHave('measurableBoosts', function (Builder $builder) use ($maxBoostLevel) {
+            $enchantment = Enchantment::query()
+                ->whereDoesntHave('measurableBoosts', function (Builder $builder) use ($maxBoostLevel) {
                 $builder->where('boost_level', '>', $maxBoostLevel);
-            })->first();
+            })->where('restriction_level', '=', 0)
+                ->inRandomOrder()
+                ->first();
             $enchantments->push($enchantment);
 
             $enchantmentsPower -= $enchantment->measurableBoosts->boostLevelSum();
