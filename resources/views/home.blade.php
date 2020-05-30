@@ -222,66 +222,36 @@
 
 <!--Footer-->
 <footer style="background-color: #d5e1e8">
-    <div class="container mx-auto  px-8">
+    <div class="container mx-auto px-8">
 
-        <div class="w-full flex flex-col md:flex-row py-6">
-
-            <div class="flex-1 mb-6">
-
+        <div class="flex flex-wrap py-6 pl-md-12">
+            <div class="w-1/5 md:w-1/12 justify-center items-center pb-2 px-2 md:pb-6">
                 @svg('rh_color_simple_logo')
             </div>
 
+            <div class="w-4/5 md:w-7/12 flex justify-center items-center">
+                <p class="text-sm md:text-lg text-center text-teal-900 md:mb-6">© {{now()->year}} Roster Heroes. All Rights Reserved</p>
+            </div>
 
-            <div class="flex-1">
-                <p class="uppercase text-gray-500 md:mb-6">Links</p>
+            <div class="ml-auto w-1/3 md:w-1/6">
+                <p class="uppercase text-teal-700 md:mb-6">Legal</p>
                 <ul class="list-reset mb-6">
                     <li class="mt-2 inline-block mr-2 md:block md:mr-0">
-                        <a href="#" class="no-underline hover:underline text-gray-800 hover:text-orange-500">FAQ</a>
+                        <a href="/terms" class="no-underline hover:underline text-teal-900 hover:text-orange-500">Terms of Use</a>
                     </li>
                     <li class="mt-2 inline-block mr-2 md:block md:mr-0">
-                        <a href="#" class="no-underline hover:underline text-gray-800 hover:text-orange-500">Help</a>
-                    </li>
-                    <li class="mt-2 inline-block mr-2 md:block md:mr-0">
-                        <a href="#" class="no-underline hover:underline text-gray-800 hover:text-orange-500">Support</a>
+                        <a href="/privacy" class="no-underline hover:underline text-teal-900 hover:text-orange-500">Privacy Policy</a>
                     </li>
                 </ul>
             </div>
-            <div class="flex-1">
-                <p class="uppercase text-gray-500 md:mb-6">Legal</p>
+            <div class="ml-auto w-1/3 md:w-1/6">
+                <p class="uppercase text-teal-700 md:mb-6">Links</p>
                 <ul class="list-reset mb-6">
                     <li class="mt-2 inline-block mr-2 md:block md:mr-0">
-                        <a href="#" class="no-underline hover:underline text-gray-800 hover:text-orange-500">Terms</a>
+                        <a href="/contact?type=contact" class="no-underline hover:underline text-teal-900 hover:text-orange-500">Contact</a>
                     </li>
                     <li class="mt-2 inline-block mr-2 md:block md:mr-0">
-                        <a href="#" class="no-underline hover:underline text-gray-800 hover:text-orange-500">Privacy</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="flex-1">
-                <p class="uppercase text-gray-500 md:mb-6">Social</p>
-                <ul class="list-reset mb-6">
-                    <li class="mt-2 inline-block mr-2 md:block md:mr-0">
-                        <a href="#" class="no-underline hover:underline text-gray-800 hover:text-orange-500">Facebook</a>
-                    </li>
-                    <li class="mt-2 inline-block mr-2 md:block md:mr-0">
-                        <a href="#" class="no-underline hover:underline text-gray-800 hover:text-orange-500">Linkedin</a>
-                    </li>
-                    <li class="mt-2 inline-block mr-2 md:block md:mr-0">
-                        <a href="#" class="no-underline hover:underline text-gray-800 hover:text-orange-500">Twitter</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="flex-1">
-                <p class="uppercase text-gray-500 md:mb-6">Company</p>
-                <ul class="list-reset mb-6">
-                    <li class="mt-2 inline-block mr-2 md:block md:mr-0">
-                        <a href="#" class="no-underline hover:underline text-gray-800 hover:text-orange-500">Official Blog</a>
-                    </li>
-                    <li class="mt-2 inline-block mr-2 md:block md:mr-0">
-                        <a href="#" class="no-underline hover:underline text-gray-800 hover:text-orange-500">About Us</a>
-                    </li>
-                    <li class="mt-2 inline-block mr-2 md:block md:mr-0">
-                        <a href="#" class="no-underline hover:underline text-gray-800 hover:text-orange-500">Contact</a>
+                        <a href="/contact?type=support" class="no-underline hover:underline text-teal-900 hover:text-orange-500">Support</a>
                     </li>
                 </ul>
             </div>
