@@ -10,7 +10,7 @@ namespace App\Domain\Actions;
 
 
 use App\Aggregates\SquadAggregate;
-use App\ChestBlueprint;
+use App\Domain\Models\ChestBlueprint;
 use App\Domain\Models\HeroPostType;
 use App\Domain\Models\MobileStorageRank;
 use App\Domain\Models\Province;

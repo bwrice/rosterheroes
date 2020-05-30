@@ -94,7 +94,7 @@ if (! function_exists('getQueryInfo')) {
 
     function getQueryInfo(int $squadID)
     {
-        $builder = \App\SideQuestEvent::query()->whereHas('sideQuestResult', function (\Illuminate\Database\Eloquent\Builder $builder) use ($squadID) {
+        $builder = \App\Domain\Models\SideQuestEvent::query()->whereHas('sideQuestResult', function (\Illuminate\Database\Eloquent\Builder $builder) use ($squadID) {
             $builder->whereHas('campaignStop', function (\Illuminate\Database\Eloquent\Builder $builder) use ($squadID) {
                 $builder->whereHas('campaign', function (\Illuminate\Database\Eloquent\Builder $builder) use ($squadID) {
                     $builder->where('squad_id', '=', $squadID);

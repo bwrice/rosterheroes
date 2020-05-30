@@ -4,7 +4,7 @@
 namespace App\Domain\QueryBuilders;
 
 
-use App\SideQuestEvent;
+use App\Domain\Models\SideQuestEvent;
 use Illuminate\Database\Eloquent\Builder;
 
 class SideQuestEventQueryBuilder extends Builder

@@ -5,7 +5,7 @@ namespace App\Domain\Models;
 use App\Aggregates\CampaignStopAggregate;
 use App\Domain\Collections\SideQuestCollection;
 use App\Domain\QueryBuilders\CampaignStopQueryBuilder;
-use App\SideQuestResult;
+use App\Domain\Models\SideQuestResult;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;

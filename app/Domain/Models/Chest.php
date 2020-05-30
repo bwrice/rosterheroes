@@ -1,7 +1,8 @@
 <?php
 
-namespace App;
+namespace App\Domain\Models;
 
+use App\Domain\Models\ChestBlueprint;
 use App\Domain\Collections\ItemCollection;
 use App\Domain\Interfaces\HasItems;
 use App\Domain\Interfaces\Morphable;

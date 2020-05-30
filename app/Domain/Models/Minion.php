@@ -2,7 +2,7 @@
 
 namespace App\Domain\Models;
 
-use App\ChestBlueprint;
+use App\Domain\Models\ChestBlueprint;
 use App\Domain\Behaviors\DamageTypes\DamageTypeBehavior;
 use App\Domain\Behaviors\EnemyTypes\EnemyTypeBehavior;
 use App\Domain\Collections\AttackCollection;

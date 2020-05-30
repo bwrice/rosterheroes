@@ -4,7 +4,7 @@
 namespace App\Factories\Models;
 
 
-use App\SideQuestResult;
+use App\Domain\Models\SideQuestResult;
 use Carbon\CarbonInterface;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Date;

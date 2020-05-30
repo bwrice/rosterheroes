@@ -17,7 +17,7 @@ class ProcessSideQuestVictoryRewardsTest extends TestCase
 {
     use DatabaseTransactions;
 
-    /** @var \App\SideQuestResult */
+    /** @var \App\Domain\Models\SideQuestResult */
     protected $sideQuestResult;
 
     public function setUp(): void

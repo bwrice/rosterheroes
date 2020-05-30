@@ -1,9 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Domain\Models;
 
 use App\Domain\Models\CampaignStop;
 use App\Domain\Models\SideQuest;
+use App\Domain\Models\SideQuestEvent;
 use App\Domain\QueryBuilders\SideQuestEventQueryBuilder;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Collection;

@@ -3,7 +3,7 @@
 namespace App\Jobs;
 
 use App\Domain\ProcessSideQuestResultSideEffects;
-use App\SideQuestResult;
+use App\Domain\Models\SideQuestResult;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;

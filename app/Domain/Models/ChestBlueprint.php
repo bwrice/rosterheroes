@@ -1,11 +1,8 @@
 <?php
 
-namespace App;
+namespace App\Domain\Models;
 
 use App\Domain\Collections\MinionCollection;
-use App\Domain\Models\ItemBlueprint;
-use App\Domain\Models\Minion;
-use App\Domain\Models\SideQuest;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 

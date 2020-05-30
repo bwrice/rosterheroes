@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\ContactSubmission;
+use App\Domain\Models\ContactSubmission;
 use App\Domain\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

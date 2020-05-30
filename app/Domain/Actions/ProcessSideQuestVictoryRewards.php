@@ -4,8 +4,8 @@
 namespace App\Domain\Actions;
 
 
-use App\ChestBlueprint;
-use App\SideQuestResult;
+use App\Domain\Models\ChestBlueprint;
+use App\Domain\Models\SideQuestResult;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 

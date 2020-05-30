@@ -5,8 +5,8 @@ namespace App\Domain\Actions;
 
 
 use App\Domain\Models\Minion;
-use App\SideQuestEvent;
-use App\SideQuestResult;
+use App\Domain\Models\SideQuestEvent;
+use App\Domain\Models\SideQuestResult;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 

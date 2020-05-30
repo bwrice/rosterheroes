@@ -9,7 +9,7 @@ use App\Factories\Combat\CombatHeroFactory;
 use App\Factories\Combat\CombatMinionFactory;
 use App\Factories\Combat\MinionCombatAttackFactory;
 use App\Factories\Models\SideQuestResultFactory;
-use App\SideQuestEvent;
+use App\Domain\Models\SideQuestEvent;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -20,7 +20,7 @@ class ProcessSideQuestMinionAttackTest extends TestCase
     use DatabaseTransactions;
 
     /**
-     * @var \App\SideQuestResult
+     * @var \App\Domain\Models\SideQuestResult
      */
     protected $sideQuestResult;
     /**

@@ -11,7 +11,7 @@ use App\Domain\Models\SideQuest;
 use App\Domain\Models\Week;
 use App\Exceptions\CampaignException;
 use App\Exceptions\CampaignStopException;
-use App\SideQuestResult;
+use App\Domain\Models\SideQuestResult;
 use Illuminate\Support\Str;
 
 class JoinSideQuestAction extends CampaignStopAction

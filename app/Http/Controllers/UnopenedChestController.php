@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Chest;
+use App\Domain\Models\Chest;
 use App\Domain\Models\Squad;
 use App\Http\Resources\UnopenedChestResource;
 use App\Policies\SquadPolicy;

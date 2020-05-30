@@ -5,7 +5,7 @@ namespace App\Jobs;
 use App\Domain\Actions\Combat\ProcessCombatForSideQuestResult;
 use App\Domain\Models\CampaignStop;
 use App\Domain\Models\SideQuest;
-use App\SideQuestResult;
+use App\Domain\Models\SideQuestResult;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;

@@ -2,8 +2,8 @@
 
 namespace Tests\Unit;
 
-use App\Chest;
-use App\ChestBlueprint;
+use App\Domain\Models\Chest;
+use App\Domain\Models\ChestBlueprint;
 use App\Domain\Actions\CreateSquadAction;
 use App\Domain\Models\HeroPostType;
 use App\Domain\Models\Squad;

@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources;
 
-use App\Chest;
+use App\Domain\Models\Chest;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 

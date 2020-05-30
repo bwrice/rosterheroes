@@ -16,7 +16,7 @@ use App\Factories\Combat\CombatSquadFactory;
 use App\Factories\Combat\HeroCombatAttackFactory;
 use App\Factories\Combat\MinionCombatAttackFactory;
 use App\Factories\Combat\SideQuestGroupFactory;
-use App\SideQuestEvent;
+use App\Domain\Models\SideQuestEvent;
 use Illuminate\Support\Str;
 
 class SideQuestEventFactory

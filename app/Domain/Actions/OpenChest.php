@@ -4,7 +4,7 @@
 namespace App\Domain\Actions;
 
 
-use App\Chest;
+use App\Domain\Models\Chest;
 use App\Domain\DataTransferObjects\OpenedChestResult;
 use App\Domain\Models\Item;
 use Illuminate\Support\Facades\DB;

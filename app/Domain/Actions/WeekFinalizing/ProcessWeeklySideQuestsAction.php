@@ -6,7 +6,7 @@ namespace App\Domain\Actions\WeekFinalizing;
 
 use App\Facades\CurrentWeek;
 use App\Jobs\FinalizeWeekJob;
-use App\SideQuestResult;
+use App\Domain\Models\SideQuestResult;
 use Bwrice\LaravelJobChainGroups\Facades\JobChainGroups;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Builder;

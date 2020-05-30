@@ -3,7 +3,7 @@
 namespace App\Domain\Models;
 
 use App\Aggregates\SquadAggregate;
-use App\Chest;
+use App\Domain\Models\Chest;
 use App\Domain\Actions\CreateCampaignAction;
 use App\Domain\Collections\ItemCollection;
 use App\Domain\Collections\SquadCollection;

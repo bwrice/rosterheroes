@@ -1,7 +1,8 @@
 <?php
 
-namespace App;
+namespace App\Domain\Models;
 
+use App\Domain;
 use App\Domain\Combat\Attacks\HeroCombatAttackDataMapper;
 use App\Domain\Combat\Combatants\CombatHero;
 use App\Domain\Combat\Combatants\CombatHeroDataMapper;
@@ -9,6 +10,7 @@ use App\Domain\Combat\Combatants\CombatMinion;
 use App\Domain\Combat\Combatants\CombatMinionDataMapper;
 use App\Domain\Models\EventSourcedModel;
 use App\Domain\QueryBuilders\SideQuestEventQueryBuilder;
+use App\Domain\Models\SideQuestResult;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 

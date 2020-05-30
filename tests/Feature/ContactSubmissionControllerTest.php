@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\ContactSubmission;
+use App\Domain\Models\ContactSubmission;
 use App\Domain\Models\User;
 use Faker\Factory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;

@@ -4,7 +4,7 @@
 namespace App\Factories\Models;
 
 
-use App\Chest;
+use App\Domain\Models\Chest;
 use Carbon\CarbonInterface;
 use Illuminate\Support\Str;
 

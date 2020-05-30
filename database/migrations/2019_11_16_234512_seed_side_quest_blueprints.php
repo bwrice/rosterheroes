@@ -1,6 +1,6 @@
 <?php
 
-use App\ChestBlueprint;
+use App\Domain\Models\ChestBlueprint;
 use App\Domain\Models\Minion;
 use App\Domain\Models\SideQuest;
 use App\Domain\Models\SideQuestBlueprint;

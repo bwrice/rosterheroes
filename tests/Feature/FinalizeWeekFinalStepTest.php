@@ -10,7 +10,7 @@ use App\Factories\Models\CampaignFactory;
 use App\Factories\Models\CampaignStopFactory;
 use App\Factories\Models\SideQuestResultFactory;
 use App\Jobs\ProcessSideQuestRewardsJob;
-use App\SideQuestResult;
+use App\Domain\Models\SideQuestResult;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;

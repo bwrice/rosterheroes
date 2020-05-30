@@ -1,6 +1,6 @@
 <?php
 
-use App\ChestBlueprint;
+use App\Domain\Models\ChestBlueprint;
 use App\Domain\Models\ItemBlueprint;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Migrations\Migration;

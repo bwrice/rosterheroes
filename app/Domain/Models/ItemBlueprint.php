@@ -2,7 +2,7 @@
 
 namespace App\Domain\Models;
 
-use App\ChestBlueprint;
+use App\Domain\Models\ChestBlueprint;
 use App\Domain\Actions\GenerateItemFromBlueprintAction;
 use App\Domain\Collections\AttackCollection;
 use Illuminate\Database\Eloquent\Collection;

@@ -12,7 +12,7 @@ use App\Domain\Models\Squad;
 use App\Domain\Models\Week;
 use App\Exceptions\CampaignException;
 use App\Factories\Models\SideQuestResultFactory;
-use App\SideQuestResult;
+use App\Domain\Models\SideQuestResult;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;

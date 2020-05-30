@@ -4,7 +4,7 @@
 namespace App\Domain\Actions;
 
 
-use App\ChestBlueprint;
+use App\Domain\Models\ChestBlueprint;
 use App\Domain\Models\Minion;
 use App\Domain\Models\Quest;
 use App\Domain\Models\SideQuest;

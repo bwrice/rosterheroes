@@ -2,7 +2,7 @@
 
 namespace App\Domain\Models;
 
-use App\ChestBlueprint;
+use App\Domain\Models\ChestBlueprint;
 use App\Domain\Collections\MinionCollection;
 use App\Domain\Models\Traits\HasUniqueNames;
 use App\Domain\Traits\HasNameSlug;

@@ -3,8 +3,8 @@
 
 namespace App\Domain\Actions;
 
-use App\Chest;
-use App\ChestBlueprint;
+use App\Domain\Models\Chest;
+use App\Domain\Models\ChestBlueprint;
 use App\Domain\Interfaces\RewardsChests;
 use App\Domain\Models\ItemBlueprint;
 use App\Domain\Models\Squad;

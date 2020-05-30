@@ -8,7 +8,7 @@ use App\Domain\Combat\Combatants\CombatHero;
 use App\Domain\Combat\Combatants\CombatMinion;
 use App\Domain\Combat\Attacks\HeroCombatAttack;
 use App\Domain\Models\Json\ResourceCosts\ResourceCost;
-use App\SideQuestEvent;
+use App\Domain\Models\SideQuestEvent;
 use Illuminate\Support\Str;
 
 class ProcessSideQuestHeroAttack

@@ -9,7 +9,7 @@ use App\Factories\Models\HeroFactory;
 use App\Factories\Models\ItemFactory;
 use App\Factories\Models\SideQuestEventFactory;
 use App\Factories\Models\SideQuestResultFactory;
-use App\SideQuestResult;
+use App\Domain\Models\SideQuestResult;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;

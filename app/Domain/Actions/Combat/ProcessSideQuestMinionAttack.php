@@ -8,8 +8,8 @@ use App\Aggregates\SideQuestEventAggregate;
 use App\Domain\Combat\Attacks\MinionCombatAttack;
 use App\Domain\Combat\Combatants\CombatHero;
 use App\Domain\Combat\Combatants\CombatMinion;
-use App\SideQuestEvent;
-use App\SideQuestResult;
+use App\Domain\Models\SideQuestEvent;
+use App\Domain\Models\SideQuestResult;
 use Illuminate\Support\Str;
 
 class ProcessSideQuestMinionAttack

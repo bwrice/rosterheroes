@@ -1,6 +1,6 @@
 <?php
 
-use App\ChestBlueprint;
+use App\Domain\Models\ChestBlueprint;
 use App\Domain\Models\Attack;
 use App\Domain\Models\CombatPosition;
 use App\Domain\Models\EnemyType;

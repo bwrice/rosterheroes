@@ -4,7 +4,7 @@
 namespace App\Factories\Models;
 
 
-use App\ChestBlueprint;
+use App\Domain\Models\ChestBlueprint;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 

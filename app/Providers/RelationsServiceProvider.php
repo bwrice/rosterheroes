@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Chest;
+use App\Domain\Models\Chest;
 use App\Domain\Models\Enchantment;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Item;

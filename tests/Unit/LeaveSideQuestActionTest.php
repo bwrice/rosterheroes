@@ -11,7 +11,7 @@ use App\Domain\Models\Squad;
 use App\Domain\Models\Week;
 use App\Exceptions\CampaignStopException;
 use App\Factories\Models\SideQuestResultFactory;
-use App\SideQuestResult;
+use App\Domain\Models\SideQuestResult;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
