@@ -48,7 +48,6 @@ class ContactSubmissionController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email',
-            'reason' => 'required',
             'message' => 'required',
             'type' => 'required',
         ]);
@@ -56,11 +55,10 @@ class ContactSubmissionController extends Controller
         ContactSubmission::query()->create([
             'name' => $request->name,
             'email' => $request->email,
-            'reason' => $request->reason,
             'message' => $request->message,
             'type' => $request->type
         ]);
 
-        return redirect('/');
+        return view('contact-thankyou');
     }
 }
