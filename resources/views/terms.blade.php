@@ -111,8 +111,8 @@
 
         <h2 class="font-semibold text-xl my-1 underline">Governing Law & Jurisdiction</h2>
 
-        <p>These Terms will be governed by and interpreted in accordance with the laws of the State of us, and you
-            submit to the non-exclusive jurisdiction of the state and federal courts located in us for the resolution of
+        <p>These Terms will be governed by and interpreted in accordance with the laws of the United States of America, and you
+            submit to the non-exclusive jurisdiction of the state and federal courts located in United States of American for the resolution of
             any disputes.</p>
 
         </div>
