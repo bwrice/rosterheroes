@@ -42,7 +42,8 @@ class SeedEnchantments extends Migration
 
                 /** @var Enchantment $enchantment */
                 $enchantment = Enchantment::create([
-                    'name' => $name
+                    'name' => $name,
+                    'restriction_level' => 0
                 ]);
 
                 $enchantment->measurableBoosts()->create([
@@ -58,8 +59,9 @@ class SeedEnchantments extends Migration
     protected function createBeginnersBlessing(Collection $measurableTypes)
     {
         /** @var Enchantment $enchantment */
-        $enchantment = Enchantment::create([
-            'name' => "Beginner's Blessing"
+        $enchantment = Enchantment::query()->create([
+            'name' => "Beginner's Blessing",
+            'restriction_level' => 1
         ]);
 
         $qualities = [
