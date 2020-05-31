@@ -11,7 +11,13 @@
                 <!-- default slot for svg paths-->
             </slot>
         </g>
-        <g @click="emitHeroSlotClicked" fill-opacity="0">
+        <g
+            @click="emitHeroSlotClicked"
+            class="rh-clickable"
+            @mouseenter="handleMouseOverClickArea"
+            @mouseleave="handleMouseLeaveClickArea"
+            fill-opacity="0"
+        >
             <slot name="click-area">
                 <!-- slot for clickable rectangle(s)-->
             </slot>
@@ -34,11 +40,22 @@
                 required: true
             }
         },
+        data() {
+            return {
+                hovered: false
+            }
+        },
         methods: {
             emitHeroSlotClicked() {
                 this.$emit('heroSlotClicked', {
                     gearSlot: this.gearSlot
                 })
+            },
+            handleMouseOverClickArea() {
+                this.hovered = true;
+            },
+            handleMouseLeaveClickArea() {
+                this.hovered = false;
             }
         },
         computed: {
@@ -50,6 +67,9 @@
                 return ! this.gearSlot.item;
             },
             svgFill() {
+                if (this.hovered) {
+                    return '#3fa391';
+                }
                 if (this.empty) {
                     return '#fff';
                 }
@@ -62,7 +82,7 @@
                 return this.empty? 2.3 : 2.3;
             },
             svgFillOpacity() {
-                return this.empty? .15 : 1;
+                return (this.empty && ! this.hovered) ? .15 : 1;
             },
             svgStrokeOpacity() {
                 return this.empty? .6 : 1;
@@ -72,5 +92,7 @@
 </script>
 
 <style scoped>
-
+    .rh-clickable:hover {
+        opacity: 0.3;
+    }
 </style>
