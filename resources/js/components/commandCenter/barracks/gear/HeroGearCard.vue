@@ -34,6 +34,27 @@
                             <span class="subtitle-1 font-weight-light">(empty)</span>
                         </template>
                     </v-row>
+                    <v-row justify="center" no-gutters>
+                        <v-col cols="12">
+                            <ItemIterator
+                                :items="itemsForSlot"
+                                :items-per-page="6"
+                                :search-label="'Search Wagon'"
+                                :key="'uuid'"
+                                :item-name-truncate-extra="4"
+                            >
+                                <template v-slot:before-expand="props">
+                                    <div class="px-2">
+                                        <EquipFromMobileStorageButton
+                                            :hero="hero"
+                                            :item="props.item"
+                                        >
+                                        </EquipFromMobileStorageButton>
+                                    </div>
+                                </template>
+                            </ItemIterator>
+                        </v-col>
+                    </v-row>
                 </v-card-text>
                 <v-card-actions>
                     <v-btn href="#hero-gear-card" @click="focusedSlotType = null" block>Close</v-btn>
@@ -126,6 +147,13 @@
                 }
                 let focusedGearSlot = this.hero.getGearSlotByType(this.focusedSlotType);
                 return focusedGearSlot ? focusedGearSlot : new GearSlot({});
+            },
+            itemsForSlot() {
+                if (! this.focusedSlotType) {
+                    return [];
+                }
+
+                return this.gearSlot.filterItemsAvailableForHero(this._mobileStorage.items, this.hero);
             }
         }
     }

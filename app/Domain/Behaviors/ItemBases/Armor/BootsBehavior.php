@@ -9,8 +9,6 @@
 namespace App\Domain\Behaviors\ItemBases\Armor;
 
 
-use App\Domain\Behaviors\ItemBases\Armor\ArmorBehavior;
-use App\Domain\Models\SlotType;
 use App\Domain\Models\Support\GearSlots\GearSlot;
 
 class BootsBehavior extends ArmorBehavior
