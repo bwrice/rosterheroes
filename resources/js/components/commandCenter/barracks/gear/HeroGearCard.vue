@@ -55,7 +55,6 @@
             </v-row>
             <v-row justify="center" no-gutters>
                 <v-col cols="12">
-                    <!-- key on FilledSlotIterator prevents pagination persisting -->
                     <ItemIterator
                         :items="_mobileStorage.items"
                         :items-per-page="6"
@@ -127,15 +126,6 @@
                 }
                 let focusedGearSlot = this.hero.getGearSlotByType(this.focusedSlotType);
                 return focusedGearSlot ? focusedGearSlot : new GearSlot({});
-            },
-            mobileStorageSlots() {
-                let focusedSlot = this.gearSlot;
-                return this._mobileStorage.filledSlots.filter(function (filledSlot) {
-                    let itemBaseSlotTypeNames = filledSlot.item.itemType.itemBase.slotTypeNames;
-                    return itemBaseSlotTypeNames.find(function (slotTypeName) {
-                        return slotTypeName === focusedSlot.slotType.name;
-                    });
-                })
             }
         }
     }
