@@ -50,7 +50,6 @@ export function handleItemTransactions({state, commit, dispatch}, items) {
         switch(transaction.from.type) {
             case 'heroes':
                 heroUuidsToUpdate.push(transaction.from.uuid);
-                console.log("Adding hero to update: " + transaction.from.uuid);
                 break;
             case 'squads':
                 commit('REMOVE_ITEM_FROM_MOBILE_STORAGE', item);
