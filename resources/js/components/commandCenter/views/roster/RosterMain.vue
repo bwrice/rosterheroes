@@ -2,38 +2,7 @@
     <v-container>
         <v-row>
             <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" offset-lg="2" lg="4" offset-xl="3" xl="3">
-                <v-row class="no-gutters">
-                    <v-col cols="12">
-                        <v-row no-gutters class="mb-2">
-                            <span class="title font-weight-thin">SPIRIT ESSENCE</span>
-                        </v-row>
-                    </v-col>
-                    <v-col cols="12">
-                        <SpiritEssenceCard></SpiritEssenceCard>
-                    </v-col>
-                    <v-col cols="12">
-                        <v-row no-gutters class="my-2">
-                            <span class="title font-weight-thin">ROSTER</span>
-                        </v-row>
-                    </v-col>
-                    <v-col cols="12" v-for="(hero, uuid) in _heroes" :key="uuid">
-                        <HeroRosterCard :hero="hero">
-                            <template slot="body">
-                                <div class="mx-1" v-if="hero.playerSpirit">
-                                    <PlayerSpiritPanel :player-spirit="hero.playerSpirit">
-                                        <template v-slot:spirit-actions>
-                                            <EditSpiritButton :hero="hero"></EditSpiritButton>
-                                            <RemoveSpiritButton :hero="hero" :player-spirit="hero.playerSpirit"></RemoveSpiritButton>
-                                        </template>
-                                    </PlayerSpiritPanel>
-                                </div>
-                                <v-row v-else justify="center" align="center" no-gutters class="mx-2">
-                                    <AddSpiritRouterButton :hero-slug="hero.slug" :btn-classes="{'mx-2': true}"></AddSpiritRouterButton>
-                                </v-row>
-                            </template>
-                        </HeroRosterCard>
-                    </v-col>
-                </v-row>
+                <EssenceAndRosterColumn :heroes="_heroes"></EssenceAndRosterColumn>
             </v-col>
             <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="4" xl="3">
                 <v-row no-gutters>
@@ -79,10 +48,12 @@
     import PaginationBlock from "../../global/PaginationBlock";
     import HeroRosterCard from '../../roster/HeroRosterCard';
     import RemoveSpiritButton from "../../roster/RemoveSpiritButton";
+    import EssenceAndRosterColumn from "../../roster/EssenceAndRosterColumn";
 
     export default {
         name: "RosterMain",
         components: {
+            EssenceAndRosterColumn,
             PaginationBlock,
             SpiritEssenceCard,
             AddSpiritRouterButton,
