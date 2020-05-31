@@ -48,6 +48,7 @@
                         <HeroGearSVG
                             :hero="hero"
                             @heroSlotClicked="handleHeroSlotClicked"
+                            :interactive="true"
                         ></HeroGearSVG>
                     </v-sheet>
                 </v-col>

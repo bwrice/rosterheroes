@@ -13,7 +13,7 @@
         </g>
         <g
             @click="emitHeroSlotClicked"
-            class="rh-clickable"
+            :class="[interactive ? 'rh-clickable' : '']"
             @mouseenter="handleMouseOverClickArea"
             @mouseleave="handleMouseLeaveClickArea"
             fill-opacity="0"
@@ -38,6 +38,10 @@
             gearSlotType: {
                 type: String,
                 required: true
+            },
+            interactive: {
+                type: Boolean,
+                default: false
             }
         },
         data() {
@@ -52,10 +56,14 @@
                 })
             },
             handleMouseOverClickArea() {
-                this.hovered = true;
+                if (this.interactive) {
+                    this.hovered = true;
+                }
             },
             handleMouseLeaveClickArea() {
-                this.hovered = false;
+                if (this.interactive) {
+                    this.hovered = false;
+                }
             }
         },
         computed: {
