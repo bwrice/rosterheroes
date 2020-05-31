@@ -23,7 +23,8 @@ class GearSlotResource extends JsonResource
     {
         return [
             'type' => $this->getType(),
-            'item' => $this->getItem() ? new ItemResource($this->getItem()) : null
+            'item' => $this->getItem() ? new ItemResource($this->getItem()) : null,
+            'priority' => $this->getPriority(),
         ];
     }
 }
