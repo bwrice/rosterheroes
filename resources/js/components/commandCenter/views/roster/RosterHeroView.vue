@@ -53,6 +53,7 @@
             </v-col>
 
             <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="4" xl="3">
+                <EssenceAndRosterColumn :heroes="otherSquadHeroes"></EssenceAndRosterColumn>
             </v-col>
         </v-row>
     </v-container>
@@ -69,11 +70,13 @@
     import HeroRosterCard from "../../roster/HeroRosterCard";
     import SingleColumnLayout from "../../layouts/SingleColumnLayout";
     import PaginationBlock from "../../global/PaginationBlock";
+    import EssenceAndRosterColumn from "../../roster/EssenceAndRosterColumn";
 
     export default {
         name: "RosterHeroView",
 
         components: {
+            EssenceAndRosterColumn,
             PaginationBlock,
             SingleColumnLayout,
             HeroRosterCard,
@@ -100,6 +103,7 @@
         computed: {
             ...mapGetters([
                 '_squad',
+                '_heroes',
                 '_currentWeek',
                 '_focusedHero',
                 '_loadingSpirits',
@@ -111,6 +115,10 @@
             },
             hero() {
                 return this._focusedHero(this.$route);
+            },
+            otherSquadHeroes() {
+                let currentHero = this.hero;
+                return this._heroes.filter((hero) => hero.uuid !== currentHero.uuid);
             },
             itemsPerPage() {
                 let items = Math.ceil(window.innerHeight/90) - 4;
