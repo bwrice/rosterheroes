@@ -68,7 +68,7 @@
             },
             svgFill() {
                 if (this.hovered) {
-                    return '#3fa391';
+                    return '#5f7ca3';
                 }
                 if (this.empty) {
                     return '#fff';
