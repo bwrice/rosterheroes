@@ -16,7 +16,7 @@ class GearSlotCollection extends Collection
 {
     public function setItems(ItemCollection $items)
     {
-        $items->each(function (Item $item) {
+        $items->sortByMostRecentlyUpdated()->each(function (Item $item) {
             $availableGearSlots = $this->slotEmpty()->byPriority()->forGearSlotTypes($item->getValidGearSlotTypes());
             $slotsNeededCount = $item->getGearSlotsNeededCount();
             if ($availableGearSlots->count() < $slotsNeededCount) {

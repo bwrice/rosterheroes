@@ -14,6 +14,7 @@ use App\Domain\Interfaces\HasItems;
 use App\Domain\Interfaces\Morphable;
 use App\Domain\Interfaces\UsesItems;
 use App\Domain\Models\Support\Items\ItemNameBuilder;
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use phpDocumentor\Reflection\Types\Static_;
 
@@ -38,6 +39,7 @@ use phpDocumentor\Reflection\Types\Static_;
  * @property int $quest_kills
  * @property int $attacks_blocked
  * @property int|null $item_blueprint_id
+ * @property CarbonInterface $updated_at
  *
  * @property string $has_items_type
  * @property string $has_items_id

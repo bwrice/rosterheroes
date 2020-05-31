@@ -84,4 +84,11 @@ class ItemCollection extends Collection
             return $item->getBlockChance();
         });
     }
+
+    public function sortByMostRecentlyUpdated()
+    {
+        return $this->sortByDesc(function (Item $item) {
+            return $item->updated_at->timestamp;
+        });
+    }
 }
