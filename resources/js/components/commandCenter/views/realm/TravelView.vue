@@ -13,6 +13,7 @@
                                 @provinceClicked="addToRoute"
                                 :fill-color="borderColor(province)"
                                 :highlight="provinceInRoute(province)"
+                                :hoverable="true"
                             >
                             </ProvinceVector>
 

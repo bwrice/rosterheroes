@@ -1,5 +1,5 @@
 <template>
-    <g @mouseover="setHovered(true)" @mouseleave="setHovered(false)" @click="navigateToContinent">
+    <g @mouseover="setHovered(true)" @mouseleave="setHovered(false)" @click="navigateToContinent" :class="[interactive ? 'rh-clickable' : '']">
         <ProvinceVector
                 v-for="(province, uuid) in provincesForContinent"
                 :key="uuid"

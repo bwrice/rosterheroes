@@ -9,6 +9,7 @@
         @click="clicked"
         @mouseover="setHovered(true)"
         @mouseleave="setHovered(false)"
+        :class="[hoverable ? 'rh-clickable' : '']"
     >
     </g>
 </template>
@@ -69,7 +70,7 @@
 
             opacity() {
                 if (this.parentHovered || (this.hoverable && this.hovered)) {
-                    return .6;
+                    return .75;
                 }
                 return 1;
             },
