@@ -1,13 +1,14 @@
 <template>
     <v-row no-gutters align="center" class="py-2">
         <v-col cols="9" class="pl-2">
-            <PlayerSpiritSummaryPanel
-                v-if="hero.playerSpirit"
-                :player-spirit="hero.playerSpirit"
-                :clickable="true"
-                @playerSpiritClicked="goToEditRoster"
-            >
-            </PlayerSpiritSummaryPanel>
+            <div v-if="hero.playerSpirit" class="rh-clickable">
+                <PlayerSpiritSummaryPanel
+                    :player-spirit="hero.playerSpirit"
+                    :clickable="true"
+                    @playerSpiritClicked="goToEditRoster"
+                >
+                </PlayerSpiritSummaryPanel>
+            </div>
             <AddSpiritRouterButton
                 v-else
                 :hero-slug="hero.slug"
@@ -15,13 +16,15 @@
             </AddSpiritRouterButton>
         </v-col>
         <v-col cols="3" class="px-2">
-            <CombatPositionIcon
-                :combat-position-id="hero.combatPositionID"
-                :attacker-mode="true"
-                :clickable="true"
-                @combatPositionClicked="combatPositionDialog = true"
-            >
-            </CombatPositionIcon>
+            <div class="rh-clickable">
+                <CombatPositionIcon
+                    :combat-position-id="hero.combatPositionID"
+                    :attacker-mode="true"
+                    :clickable="true"
+                    @combatPositionClicked="combatPositionDialog = true"
+                >
+                </CombatPositionIcon>
+            </div>
             <v-dialog v-model="combatPositionDialog" max-width="600">
                 <CombatPositionDialog
                     @close="combatPositionDialog = false"

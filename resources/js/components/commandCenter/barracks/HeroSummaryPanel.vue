@@ -1,7 +1,7 @@
 <template>
     <v-sheet
         :color="sheetColor"
-        class="my-1"
+        class="my-1 rh-clickable"
         :elevation="elevation"
         @mouseenter="hovered = true"
         @mouseleave="hovered = false"
