@@ -43,10 +43,10 @@ class GearSlotCollection extends Collection
         });
     }
 
-    public function sortedByEquipPriority()
+    public function sortedByUnEquipPriority()
     {
-        return $this->sortBy(function (GearSlot $gearSlot) {
-            $emptyPriority = is_null($gearSlot->getItem()) ? 0 : 99;
+        return $this->sortByDesc(function (GearSlot $gearSlot) {
+            $emptyPriority = is_null($gearSlot->getItem()) ? 99 : 0;
             return $gearSlot->getPriority() + $emptyPriority;
         });
     }
@@ -79,7 +79,7 @@ class GearSlotCollection extends Collection
         $slotsNeededCount = $itemBaseBehavior->getGearSlotsCount();
 
         $filtered = $this->forGearSlotTypes($validSlotTypes)
-            ->sortedByEquipPriority()
+            ->sortedByUnEquipPriority()
             ->withItemOrEmpty()
             ->take($slotsNeededCount);
 
