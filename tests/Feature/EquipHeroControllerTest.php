@@ -60,35 +60,35 @@ class EquipHeroControllerTest extends TestCase
 
         $response->assertStatus(200);
 
-        $itemsMoved = $response->json('data');
+        $itemsMoved = collect($response->json('data'));
 
-        $this->assertEquals(3, count($itemsMoved));
+        $this->assertEquals(3, $itemsMoved->count());
 
-        $response->assertJson([
-            'data' => [
-                [
-                    'uuid' => $this->singleHandWeapon->uuid,
-                    'transaction' => [
-                        'to' => $this->squad->getTransactionIdentification(),
-                        'from' => $this->hero->getTransactionIdentification()
-                    ]
-                ],
-                [
-                    'uuid' => $this->shield->uuid,
-                    'transaction' => [
-                        'to' => $this->squad->getTransactionIdentification(),
-                        'from' => $this->hero->getTransactionIdentification()
-                    ]
-                ],
-                [
-                    'uuid' => $this->twoHandedWeapon->uuid,
-                    'transaction' => [
-                        'to' => $this->hero->getTransactionIdentification(),
-                        'from' => $this->squad->getTransactionIdentification()
-                    ]
-                ],
-            ]]);
+        foreach([
+            [
+                'uuid' => (string) $this->singleHandWeapon->uuid,
+                'to' => $this->squad->getTransactionIdentification(),
+                'from' => $this->hero->getTransactionIdentification()
+            ],
+            [
+                'uuid' => (string) $this->shield->uuid,
+                'to' => $this->squad->getTransactionIdentification(),
+                'from' => $this->hero->getTransactionIdentification()
+            ],
+            [
+                'uuid' => (string) $this->twoHandedWeapon->uuid,
+                'to' => $this->hero->getTransactionIdentification(),
+                'from' => $this->squad->getTransactionIdentification()
+            ],
+                ] as $itemTransaction) {
+            $matchingTransaction = $itemsMoved->first(function ($responseTransaction) use ($itemTransaction) {
+                return $responseTransaction['uuid'] === $itemTransaction['uuid']
+                    && $responseTransaction['transaction']['to'] === $itemTransaction['to']
+                    && $responseTransaction['transaction']['from'] === $itemTransaction['from'];
+            });
 
+            $this->assertNotNull($matchingTransaction);
+        }
     }
 
     /**
