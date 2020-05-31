@@ -1,56 +1,61 @@
 <template>
-    <SingleColumnLayout>
-        <template v-slot:column-one>
-            <v-row no-gutters>
-                <v-col cols="12">
-                    <HeroRosterCard :hero="hero">
-                        <template slot="body">
-                            <div class="mx-1" v-if="hero.playerSpirit">
-                                <PlayerSpiritPanel :player-spirit="hero.playerSpirit">
+    <v-container>
+        <v-row>
+            <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" offset-lg="2" lg="4" offset-xl="3" xl="3">
+                <v-row no-gutters>
+                    <v-col cols="12">
+                        <HeroRosterCard :hero="hero">
+                            <template slot="body">
+                                <div class="mx-1" v-if="hero.playerSpirit">
+                                    <PlayerSpiritPanel :player-spirit="hero.playerSpirit">
+                                        <template v-slot:spirit-actions>
+                                            <RemoveSpiritButton
+                                                :hero="hero"
+                                                :player-spirit="hero.playerSpirit"
+                                            >
+                                            </RemoveSpiritButton>
+                                        </template>
+                                    </PlayerSpiritPanel>
+                                </div>
+                                <v-row v-else no-gutters justify="center" align="center">
+                                    <v-col cols="12">
+                                        <v-sheet color="rgba(0, 0, 0, .3)" class="mx-2 my-1">
+                                            <v-row no-gutters justify="center" align="center">
+                                                <span class="title pa-2 font-weight-thin">(empty)</span>
+                                            </v-row>
+                                        </v-sheet>
+                                    </v-col>
+                                </v-row>
+                            </template>
+                        </HeroRosterCard>
+                    </v-col>
+                </v-row>
+                <v-row no-gutters>
+                    <v-col cols="12">
+                        <PaginationBlock
+                            :items="playerSpiritsForHero"
+                            :items-per-page="itemsPerPage"
+                            :loading="_loadingSpirits"
+                            :search="search"
+                            no-results-text="No Spirits Match Criteria"
+                            empty-text="No Spirits Found"
+                        >
+                            <template v-slot:default="slotProps">
+                                <PlayerSpiritPanel :player-spirit="slotProps.item">
                                     <template v-slot:spirit-actions>
-                                        <RemoveSpiritButton
-                                            :hero="hero"
-                                            :player-spirit="hero.playerSpirit"
-                                        >
-                                        </RemoveSpiritButton>
+                                        <AddSpiritButton :hero="hero" :player-spirit="slotProps.item"></AddSpiritButton>
                                     </template>
                                 </PlayerSpiritPanel>
-                            </div>
-                            <v-row v-else no-gutters justify="center" align="center">
-                                <v-col cols="12">
-                                    <v-sheet color="rgba(0, 0, 0, .3)" class="mx-2 my-1">
-                                        <v-row no-gutters justify="center" align="center">
-                                            <span class="title pa-2 font-weight-thin">(empty)</span>
-                                        </v-row>
-                                    </v-sheet>
-                                </v-col>
-                            </v-row>
-                        </template>
-                    </HeroRosterCard>
-                </v-col>
-            </v-row>
-            <v-row no-gutters>
-                <v-col cols="12">
-                    <PaginationBlock
-                        :items="playerSpiritsForHero"
-                        :items-per-page="itemsPerPage"
-                        :loading="_loadingSpirits"
-                        :search="search"
-                        no-results-text="No Spirits Match Criteria"
-                        empty-text="No Spirits Found"
-                    >
-                        <template v-slot:default="slotProps">
-                            <PlayerSpiritPanel :player-spirit="slotProps.item">
-                                <template v-slot:spirit-actions>
-                                    <AddSpiritButton :hero="hero" :player-spirit="slotProps.item"></AddSpiritButton>
-                                </template>
-                            </PlayerSpiritPanel>
-                        </template>
-                    </PaginationBlock>
-                </v-col>
-            </v-row>
-        </template>
-    </SingleColumnLayout>
+                            </template>
+                        </PaginationBlock>
+                    </v-col>
+                </v-row>
+            </v-col>
+
+            <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="4" xl="3">
+            </v-col>
+        </v-row>
+    </v-container>
 </template>
 
 <script>
