@@ -6,10 +6,13 @@
         <v-col cols="12" v-if="focusedSlotType">
             <v-card>
                 <v-card-title class="pb-0">
-                    <v-row align="center" justify="center" class="px-2">
-                        <span>{{gearSlot.type}}</span>
+                    <v-row justify="center" class="px-2">
+                        <v-row no-gutters class="flex-column">
+                            <span>{{gearSlot.type}}</span>
+                            <span class="caption">Note: loren ispum blah la do you onioief ergerg oijoijiojrig ohio</span>
+                        </v-row>
                         <div class="flex-grow-1"></div>
-                        <v-icon @click="focusedSlotType = null">close</v-icon>
+                        <v-icon class="align-self-baseline" @click="focusedSlotType = null">close</v-icon>
                     </v-row>
                 </v-card-title>
                 <v-card-text class="px-2 pb-0">
