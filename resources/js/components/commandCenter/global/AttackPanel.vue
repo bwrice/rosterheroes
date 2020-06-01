@@ -36,7 +36,7 @@
                 </v-row>
                 <v-row no-gutters>
                     <v-col cols="12" class="py-1 px-3 caption">
-                        Resource Costs:
+                        {{resourceCostsTitle}}
                         <ul>
                             <li v-for="resourceCost in attack.resourceCosts">
                                 {{resourceCost.description}}
@@ -94,6 +94,14 @@
         data() {
             return {
                 expanded: false
+            }
+        },
+        computed: {
+            resourceCostsTitle() {
+                if (this.attack.resourceCosts.length > 0) {
+                    return 'Resource Costs:';
+                }
+                return 'Resource Costs: (none)'
             }
         }
     }
