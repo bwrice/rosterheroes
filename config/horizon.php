@@ -21,7 +21,7 @@ if (! defined('HORIZON_CONFIG')) {
                 ],
                 'balance' => 'simple',
                 'processes' => 5,
-                'tries' => 3,
+                'tries' => 1,
                 'memory' => 512,
                 'timeout' => 60 * 10
             ],
@@ -32,7 +32,7 @@ if (! defined('HORIZON_CONFIG')) {
                 ],
                 'balance' => 'simple',
                 'processes' => 2,
-                'tries' => 3,
+                'tries' => 1,
                 'memory' => 512,
                 'timeout' => 60 * 30
             ],
