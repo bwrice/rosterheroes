@@ -189,4 +189,46 @@ abstract class ProcessWeeklySideQuestsTest extends TestCase
         }
         $this->fail("Exception not thrown");
     }
+
+    /**
+     * @test
+     */
+    public function it_will_increases_the_cycle_count_when_chaining_the_same_finalize_week_job()
+    {
+        $campaignFactory = CampaignFactory::new()->withWeekID($this->currentWeek->id);
+        $campaignStopFactory = CampaignStopFactory::new()->withCampaign($campaignFactory);
+        $sideQuestResultFactory = $this->getBaseSideQuestResultFactory()->withCampaignStop($campaignStopFactory);
+
+        $sideQuestResult1 = $sideQuestResultFactory->create();
+        $sideQuestResult2 = $sideQuestResultFactory->create();
+        $sideQuestResult3 = $sideQuestResultFactory->create();
+
+        $originalStep = rand(1, 4);
+        Queue::fake();
+
+        $cycleCount = rand(3, 10);
+        $extra[ProcessWeeklySideQuestsAction::EXTRA_LAST_CYCLE_COUNT_KEY] = $cycleCount;
+
+        $domainAction = $this->getDomainAction();
+        $domainAction->setMaxSideQuestResults(2); // set to 2 because we have 3 campaign stops
+        $domainAction->execute($originalStep, $extra);
+
+        $expectedExtra[ProcessWeeklySideQuestsAction::EXTRA_LAST_CYCLE_COUNT_KEY] = $cycleCount + 1;
+
+        foreach ([
+                     $sideQuestResult1,
+                     $sideQuestResult2
+                 ] as $sideQuestResult) {
+
+            Queue::assertPushedWithChain(AsyncChainedJob::class, [
+                new FinalizeWeekJob($originalStep, $expectedExtra)
+            ], function (AsyncChainedJob $chainedJob) use ($sideQuestResult) {
+                return $chainedJob->getDecoratedJob()->sideQuestResult->id === $sideQuestResult->id;
+            });
+        }
+
+        Queue::assertNotPushed(AsyncChainedJob::class, function (AsyncChainedJob $chainedJob) use ($sideQuestResult3) {
+            return $chainedJob->getDecoratedJob()->sideQuestResult->id === $sideQuestResult3->id;
+        });
+    }
 }
