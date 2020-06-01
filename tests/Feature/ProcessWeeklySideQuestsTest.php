@@ -137,7 +137,7 @@ abstract class ProcessWeeklySideQuestsTest extends TestCase
     /**
      * @test
      */
-    public function it_will_dispatch_finalize_week_with_same_step_and_with_last_side_quest_result_id_if_max_jobs_reached()
+    public function it_will_dispatch_finalize_week_with_same_step_if_max_jobs_reached()
     {
         $campaignFactory = CampaignFactory::new()->withWeekID($this->currentWeek->id);
         $campaignStopFactory = CampaignStopFactory::new()->withCampaign($campaignFactory);
@@ -150,14 +150,11 @@ abstract class ProcessWeeklySideQuestsTest extends TestCase
         $originalStep = rand(1, 4);
         Queue::fake();
 
-
         $domainAction = $this->getDomainAction();
         $domainAction->setMaxSideQuestResults(2); // set to 2 because we have 3 campaign stops
         $domainAction->execute($originalStep);
 
-        $extra = [
-            ProcessWeeklySideQuestsAction::EXTRA_LAST_SIDE_QUEST_RESULT_KEY => $sideQuestResult2->id
-        ];
+        $extra[ProcessWeeklySideQuestsAction::EXTRA_LAST_CYCLE_COUNT_KEY] = 1;
 
         foreach ([
                      $sideQuestResult1,
@@ -176,81 +173,6 @@ abstract class ProcessWeeklySideQuestsTest extends TestCase
         });
     }
 
-    /**
-     * @test
-     */
-    public function it_will_increase_next_step_job_without_extra_data_if_exactly_max_side_quest_results_needed_for_processing()
-    {
-        $campaignFactory = CampaignFactory::new()->withWeekID($this->currentWeek->id);
-        $campaignStopFactory = CampaignStopFactory::new()->withCampaign($campaignFactory);
-        $sideQuestResultFactory = $this->getBaseSideQuestResultFactory()->withCampaignStop($campaignStopFactory);
-
-        $sideQuestResult1 = $sideQuestResultFactory->create();
-        $sideQuestResult2 = $sideQuestResultFactory->create();
-        $sideQuestResult3 = $sideQuestResultFactory->create();
-
-        $originalStep = rand(1, 4);
-        $nextStep = $originalStep + 1;
-        Queue::fake();
-
-
-        $domainAction = $this->getDomainAction();
-        $domainAction->setMaxSideQuestResults(3); // set to 3 for exact amount of stops we have
-        $domainAction->execute($originalStep);
-
-        foreach ([
-                     $sideQuestResult1,
-                     $sideQuestResult2,
-                     $sideQuestResult3
-                 ] as $sideQuestResult) {
-
-            Queue::assertPushedWithChain(AsyncChainedJob::class, [
-                new FinalizeWeekJob($nextStep)
-            ], function (AsyncChainedJob $chainedJob) use ($sideQuestResult) {
-                return $chainedJob->getDecoratedJob()->sideQuestResult->id === $sideQuestResult->id;
-            });
-        }
-    }
-
-    /**
-     * @test
-     */
-    public function it_will_only_query_side_quest_results_with_ids_greater_than_that_given_in_the_extra_data_array()
-    {
-        $campaignFactory = CampaignFactory::new()->withWeekID($this->currentWeek->id);
-        $campaignStopFactory = CampaignStopFactory::new()->withCampaign($campaignFactory);
-        $sideQuestResultFactory = $this->getBaseSideQuestResultFactory()->withCampaignStop($campaignStopFactory);
-
-        $sideQuestResult1 = $sideQuestResultFactory->create();
-        $sideQuestResult2 = $sideQuestResultFactory->create();
-        $sideQuestResult3 = $sideQuestResultFactory->create();
-
-        $step = rand(1, 4);
-        $nextStep = $step + 1;
-        Queue::fake();
-
-
-        $domainAction = $this->getDomainAction();
-        $domainAction->execute($step, [
-            ProcessWeeklySideQuestCombat::EXTRA_LAST_SIDE_QUEST_RESULT_KEY => $sideQuestResult2->id
-        ]);
-
-        Queue::assertPushedWithChain(AsyncChainedJob::class, [
-            new FinalizeWeekJob($nextStep)
-        ], function (AsyncChainedJob $chainedJob) use ($sideQuestResult3) {
-            return $chainedJob->getDecoratedJob()->sideQuestResult->id === $sideQuestResult3->id;
-        });
-
-        foreach ([
-                     $sideQuestResult1,
-                     $sideQuestResult2
-                 ] as $sideQuestResult) {
-
-            Queue::assertNotPushed(AsyncChainedJob::class, function (AsyncChainedJob $chainedJob) use ($sideQuestResult) {
-                return $chainedJob->getDecoratedJob()->sideQuestResult->id === $sideQuestResult->id;
-            });
-        }
-    }
     /**
      * @test
      */
