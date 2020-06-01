@@ -11,12 +11,14 @@ use Bwrice\LaravelJobChainGroups\Facades\JobChainGroups;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Log;
 
 abstract class ProcessWeeklySideQuestsAction implements FinalizeWeekDomainAction
 {
     public const EXTRA_LAST_SIDE_QUEST_RESULT_KEY = 'last_side_quest_result_id';
+    public const EXTRA_LAST_CYCLE_COUNT_KEY = 'last_cycle_count';
 
-    protected $maxSideQuestResults = 100;
+    protected $maxSideQuestResults = 500;
 
     abstract protected function getBaseQuery(): Builder;
 
@@ -31,70 +33,44 @@ abstract class ProcessWeeklySideQuestsAction implements FinalizeWeekDomainAction
     public function execute(int $finalizeWeekStep, array $extra = [])
     {
         $this->validateReady();
-        $sideQuestResults = $this->getSideQuestResults($extra);
-        $asyncJobs = $this->getAsyncProcessSideQuestJobs($sideQuestResults);
+        $asyncJobs = $this->getAsyncProcessSideQuestJobs();
 
-        $finalizeWeekArgs = $this->getFinalizeWeekArgs($sideQuestResults, $finalizeWeekStep);
+        $finalGroupToProcess = $asyncJobs->count() < $this->maxSideQuestResults;
+
+        $cycleCount = array_key_exists(self::EXTRA_LAST_CYCLE_COUNT_KEY, $extra)
+            ? $extra[self::EXTRA_LAST_CYCLE_COUNT_KEY]++ : 1;
+
+        if ($finalGroupToProcess) {
+            $finalizeWeekStep++;
+            $extra = [];
+        } else {
+            $extra[self::EXTRA_LAST_CYCLE_COUNT_KEY] = $cycleCount;
+        }
+
+        Log::alert("Dispatching " . $asyncJobs->count() . " jobs on cycle " . $cycleCount . " of " . static::class);
 
         JobChainGroups::create($asyncJobs, [
-            new FinalizeWeekJob($finalizeWeekArgs['step'], $finalizeWeekArgs['extra'])
+            new FinalizeWeekJob($finalizeWeekStep, $extra)
         ])->onQueue('medium')->dispatch();
     }
 
-    protected function getSideQuestResults(array $extra)
-    {
-        $lastSideQuestResultID = array_key_exists(self::EXTRA_LAST_SIDE_QUEST_RESULT_KEY, $extra)
-            ? $extra[self::EXTRA_LAST_SIDE_QUEST_RESULT_KEY] : false;
-
-        $query = $this->buildSideQuestResultsQuery($lastSideQuestResultID)->take($this->maxSideQuestResults);
-
-        return $query->get();
-    }
-
-    protected function buildSideQuestResultsQuery($lastSideQuestResultID)
+    protected function buildSideQuestResultsQuery()
     {
         $query = $this->getBaseQuery()->whereHas('campaignStop', function (Builder $builder) {
             $builder->whereHas('campaign', function (Builder $builder) {
                 $builder->where('week_id', '=', CurrentWeek::id());
             });
-        })->orderBy('id');
-
-        if ($lastSideQuestResultID) {
-            $query->where('id', '>', $lastSideQuestResultID);
-        }
+        });
         return $query;
     }
 
-    protected function getAsyncProcessSideQuestJobs(Collection $sideQuestResults)
+    protected function getAsyncProcessSideQuestJobs()
     {
-        $jobs = collect();
-        $sideQuestResults->map(function (SideQuestResult $sideQuestResult) use ($jobs) {
-            $jobs->push($this->getProcessSideQuestResultJob($sideQuestResult));
+        return $this->buildSideQuestResultsQuery()
+            ->take($this->maxSideQuestResults)
+            ->get()->map(function (SideQuestResult $sideQuestResult) {
+             return $this->getProcessSideQuestResultJob($sideQuestResult);
         });
-        return $jobs->toArray();
-    }
-
-    protected function getFinalizeWeekArgs(Collection $sideQuestResults, int $currentFinalizeWeekStep)
-    {
-        if ($this->moreCampaignStopsNeedProcessing($sideQuestResults)) {
-            return [
-                'step' => $currentFinalizeWeekStep,
-                'extra' => [
-                    self::EXTRA_LAST_SIDE_QUEST_RESULT_KEY => $sideQuestResults->last()->id
-                ]
-            ];
-        }
-
-        return [
-            'step' => $currentFinalizeWeekStep + 1,
-            'extra' => []
-        ];
-    }
-
-    protected function moreCampaignStopsNeedProcessing(Collection $campaignStops)
-    {
-        return $campaignStops->count() >= $this->maxSideQuestResults
-            && $this->buildSideQuestResultsQuery($campaignStops->last()->id)->count() > 0;
     }
 
     /**
