@@ -9,7 +9,6 @@
                     <v-row justify="center" class="px-2">
                         <v-row no-gutters class="flex-column">
                             <span>{{gearSlot.type}}</span>
-                            <span class="caption">Note: loren ispum blah la do you onioief ergerg oijoijiojrig ohio</span>
                         </v-row>
                         <div class="flex-grow-1"></div>
                         <v-icon class="align-self-baseline" @click="focusedSlotType = null">close</v-icon>
@@ -156,7 +155,12 @@
                     return [];
                 }
 
-                return this.gearSlot.filterItemsAvailableForHero(this._mobileStorage.items, this.hero);
+                let type = this.gearSlot.type;
+
+                return this._mobileStorage.items.filter(function (item) {
+                    let slotTypeNames = item.itemType.itemBase.slotTypeNames;
+                    return slotTypeNames.includes(type);
+                });
             }
         }
     }
