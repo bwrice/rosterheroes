@@ -58,62 +58,55 @@ class ProcessSideQuestResultSideEffects
             throw new \Exception("Cannot process side effects because combat not processed for side quest result: " . $sideQuestResult->id);
         }
 
-        $sideQuestResult->side_effects_processed_at = Date::now();
-        $sideQuestResult->save();
+        $this->sideQuestResult = $sideQuestResult;
+        $this->setSquadAggregate($sideQuestResult);
 
-        try {
-            $this->sideQuestResult = $sideQuestResult;
-            $this->setSquadAggregate($sideQuestResult);
+        $combatPositions = CombatPosition::all();
+        $targetPriorities = TargetPriority::all();
+        $damageTypes = DamageType::all();
 
-            $combatPositions = CombatPosition::all();
-            $targetPriorities = TargetPriority::all();
-            $damageTypes = DamageType::all();
+        $sideQuestResult->sideQuestEvents()->chunk(100, function (EloquentCollection $sideQuestEvents) use ($combatPositions, $targetPriorities, $damageTypes) {
+            $sideQuestEvents->each(function (SideQuestEvent $sideQuestEvent) use ($combatPositions, $targetPriorities, $damageTypes) {
 
-            $sideQuestResult->sideQuestEvents()->chunk(100, function (EloquentCollection $sideQuestEvents) use ($combatPositions, $targetPriorities, $damageTypes) {
-                $sideQuestEvents->each(function (SideQuestEvent $sideQuestEvent) use ($combatPositions, $targetPriorities, $damageTypes) {
-
-                    switch ($sideQuestEvent->event_type) {
-                        case SideQuestEvent::TYPE_HERO_DAMAGES_MINION;
-                            $this->handleHeroDamagesMinionEvent($sideQuestEvent, $combatPositions, $targetPriorities, $damageTypes);
-                            break;
-                        case SideQuestEvent::TYPE_HERO_KILLS_MINION;
-                            $this->handleHeroKillsMinionEvent($sideQuestEvent, $combatPositions, $targetPriorities, $damageTypes);
-                            break;
-                        case SideQuestEvent::TYPE_MINION_DAMAGES_HERO;
-                            $this->handleMinionDamagesHero($sideQuestEvent, $combatPositions);
-                            break;
-                        case SideQuestEvent::TYPE_MINION_KILLS_HERO;
-                            $this->handleMinionKillsHero($sideQuestEvent, $combatPositions);
-                            break;
-                        case SideQuestEvent::TYPE_HERO_BLOCKS_MINION:
-                            $this->handleHeroBlocksMinion($sideQuestEvent, $combatPositions);
-                            break;
-                        case SideQuestEvent::TYPE_SIDE_QUEST_VICTORY:
-                            $this->squadAggregate->sideQuestVictory($this->sideQuestResult->sideQuest);
-                            break;
-                        case SideQuestEvent::TYPE_SIDE_QUEST_DEFEAT:
-                            $this->squadAggregate->sideQuestDefeat($this->sideQuestResult->sideQuest);
-                            break;
-                    }
-                });
+                switch ($sideQuestEvent->event_type) {
+                    case SideQuestEvent::TYPE_HERO_DAMAGES_MINION;
+                        $this->handleHeroDamagesMinionEvent($sideQuestEvent, $combatPositions, $targetPriorities, $damageTypes);
+                        break;
+                    case SideQuestEvent::TYPE_HERO_KILLS_MINION;
+                        $this->handleHeroKillsMinionEvent($sideQuestEvent, $combatPositions, $targetPriorities, $damageTypes);
+                        break;
+                    case SideQuestEvent::TYPE_MINION_DAMAGES_HERO;
+                        $this->handleMinionDamagesHero($sideQuestEvent, $combatPositions);
+                        break;
+                    case SideQuestEvent::TYPE_MINION_KILLS_HERO;
+                        $this->handleMinionKillsHero($sideQuestEvent, $combatPositions);
+                        break;
+                    case SideQuestEvent::TYPE_HERO_BLOCKS_MINION:
+                        $this->handleHeroBlocksMinion($sideQuestEvent, $combatPositions);
+                        break;
+                    case SideQuestEvent::TYPE_SIDE_QUEST_VICTORY:
+                        $this->squadAggregate->sideQuestVictory($this->sideQuestResult->sideQuest);
+                        break;
+                    case SideQuestEvent::TYPE_SIDE_QUEST_DEFEAT:
+                        $this->squadAggregate->sideQuestDefeat($this->sideQuestResult->sideQuest);
+                        break;
+                }
             });
+        });
 
-            DB::transaction(function () {
-                $this->squadAggregate->persist();
-                $this->heroAggregates->each(function (HeroAggregate $heroAggregate) {
-                    $heroAggregate->persist();
-                });
-                $this->itemAggregates->each(function (ItemAggregate $itemAggregate) {
-                    $itemAggregate->persist();
-                });
+        DB::transaction(function () {
+
+            $this->sideQuestResult->side_effects_processed_at = Date::now();
+            $this->sideQuestResult->save();
+
+            $this->squadAggregate->persist();
+            $this->heroAggregates->each(function (HeroAggregate $heroAggregate) {
+                $heroAggregate->persist();
             });
-
-        } catch (\Throwable $throwable) {
-            Log::debug("Throwable caught in process side-effects with message: " . $throwable->getMessage());
-            $sideQuestResult->side_effects_processed_at = null;
-            $sideQuestResult->save();
-            throw $throwable;
-        }
+            $this->itemAggregates->each(function (ItemAggregate $itemAggregate) {
+                $itemAggregate->persist();
+            });
+        });
     }
 
     protected function handleHeroDamagesMinionEvent(
