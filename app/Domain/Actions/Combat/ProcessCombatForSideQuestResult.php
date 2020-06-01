@@ -71,6 +71,7 @@ class ProcessCombatForSideQuestResult
             throw new \Exception("Combat already processed for side-quest-result: " . $sideQuestResult->id);
         }
 
+        // Immediately set combat-processed so it can't be processed concurrently elsewhere
         $sideQuestResult->combat_processed_at = Date::now();
         $sideQuestResult->save();
 
@@ -82,20 +83,22 @@ class ProcessCombatForSideQuestResult
         $combatSquad = $this->buildCombatSquadAction->execute($sideQuestResult->campaignStop->campaign->squad, $combatPositions, $targetPriorities, $damageTypes);
         $sideQuestGroup = $this->buildSideQuestGroup->execute($sideQuestResult->sideQuest, $combatPositions, $targetPriorities, $damageTypes);
 
+        /*
+         * A DB transaction can be potentially too long for InnoDB Log Buffer.
+         * So we'll handle rolling back everything manually with a try-catch
+         */
         try {
-            return DB::transaction(function () use ($sideQuestResult, $combatSquad, $sideQuestGroup, $combatPositions) {
+            $battlegroundSetEvent = $this->getSideQuestEvent(SideQuestEvent::TYPE_BATTLEGROUND_SET, 0, $combatSquad, $sideQuestGroup);
+            $sideQuestResult->sideQuestEvents()->save($battlegroundSetEvent);
 
-                $battlegroundSetEvent = $this->getSideQuestEvent(SideQuestEvent::TYPE_BATTLEGROUND_SET, 0, $combatSquad, $sideQuestGroup);
-                $sideQuestResult->sideQuestEvents()->save($battlegroundSetEvent);
+            list($moment, $eventType) = $this->loopCombat($sideQuestResult, $combatSquad, $sideQuestGroup, $combatPositions);
+            $finalEventType = $this->getSideQuestEvent($eventType, $moment, $combatSquad, $sideQuestGroup);
+            $sideQuestResult->sideQuestEvents()->save($finalEventType);
 
-                 list($moment, $eventType) = $this->loopCombat($sideQuestResult, $combatSquad, $sideQuestGroup, $combatPositions);
-                 $finalEventType = $this->getSideQuestEvent($eventType, $moment, $combatSquad, $sideQuestGroup);
-                 $sideQuestResult->sideQuestEvents()->save($finalEventType);
-
-                return $sideQuestResult->fresh();
-            });
+            return $sideQuestResult->fresh();
         } catch (\Throwable $exception) {
 
+            $sideQuestResult->sideQuestEvents()->delete();
             $sideQuestResult->combat_processed_at = null;
             $sideQuestResult->save();
             throw $exception;
