@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Log;
 
 abstract class ProcessWeeklySideQuestsAction implements FinalizeWeekDomainAction
 {
-    public const EXTRA_LAST_SIDE_QUEST_RESULT_KEY = 'last_side_quest_result_id';
     public const EXTRA_LAST_CYCLE_COUNT_KEY = 'last_cycle_count';
 
     protected $maxSideQuestResults = 500;
@@ -38,7 +37,7 @@ abstract class ProcessWeeklySideQuestsAction implements FinalizeWeekDomainAction
         $finalGroupToProcess = $asyncJobs->count() < $this->maxSideQuestResults;
 
         $cycleCount = array_key_exists(self::EXTRA_LAST_CYCLE_COUNT_KEY, $extra)
-            ? $extra[self::EXTRA_LAST_CYCLE_COUNT_KEY]++ : 1;
+            ? $extra[self::EXTRA_LAST_CYCLE_COUNT_KEY] + 1 : 1;
 
         if ($finalGroupToProcess) {
             $finalizeWeekStep++;
