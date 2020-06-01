@@ -405,4 +405,40 @@ class ProcessCombatForSideQuestResultTest extends TestCase
         ];
     }
 
+    /**
+     * @test
+     */
+    public function it_will_rollback_the_processed_at_any_any_side_quest_events_if_an_exception_is_thrown()
+    {
+        $heroFactory = HeroFactory::new();
+        $squad = SquadFactory::new()->withHeroes(collect([
+            $heroFactory->beginnerWarrior()->withCompletedGamePlayerSpirit()
+        ]))->create();
+
+        $campaignStop = CampaignStopFactory::new()->withCampaign(CampaignFactory::new()->withSquadID($squad->id))->create();
+
+        $sideQuestResult = SideQuestResultFactory::new()->create([
+            'campaign_stop_id' => $campaignStop->id
+        ]);
+
+        $exception = new \Exception();
+        $runCombatTurnMock = \Mockery::mock(RunCombatTurn::class)
+            ->shouldReceive('execute')->andThrow($exception)->getMock();
+
+        app()->instance(RunCombatTurn::class, $runCombatTurnMock);
+
+        /** @var ProcessCombatForSideQuestResult $domainAction */
+        $domainAction = app(ProcessCombatForSideQuestResult::class);
+        $this->assertNull($this->sideQuestResult->combat_processed_at);
+        try {
+            $domainAction->execute($sideQuestResult);
+        } catch (\Exception $exception) {
+            $sideQuestResult = $sideQuestResult->fresh();
+            $this->assertEquals(0, $sideQuestResult->sideQuestEvents()->count());
+            $this->assertNull($sideQuestResult->combat_processed_at);
+            return;
+        }
+        $this->fail("Exception not thrown");
+    }
+
 }
