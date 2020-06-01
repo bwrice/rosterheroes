@@ -9,6 +9,7 @@
                     <v-row justify="center" class="px-2">
                         <v-row no-gutters class="flex-column">
                             <span>{{gearSlot.type}}</span>
+                            <span v-if="gearSlotCaption" class="caption">{{gearSlotCaption}}</span>
                         </v-row>
                         <div class="flex-grow-1"></div>
                         <v-icon class="align-self-baseline" @click="focusedSlotType = null">close</v-icon>
@@ -161,6 +162,18 @@
                     let slotTypeNames = item.itemType.itemBase.slotTypeNames;
                     return slotTypeNames.includes(type);
                 });
+            },
+            gearSlotCaption() {
+                if (this.gearSlot.type === 'Off-Arm') {
+                    return 'Equipped items will prioritize Primary Arm';
+                }
+                if (this.gearSlot.type === 'Off-Wrist') {
+                    return 'Equipped items will prioritize Primary Wrist';
+                }
+                if (this.gearSlot.type === 'Ring Two') {
+                    return 'Equipped items will prioritize Ring One';
+                }
+                return null;
             }
         }
     }
