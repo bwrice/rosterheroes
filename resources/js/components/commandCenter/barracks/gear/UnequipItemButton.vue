@@ -1,6 +1,5 @@
 <template>
     <v-btn
-        small
         @click="emptySlot"
         :disabled="pending"
         color="accent darken-1"
