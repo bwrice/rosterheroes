@@ -19,6 +19,8 @@ abstract class ProcessWeeklySideQuestsAction implements FinalizeWeekDomainAction
 
     protected $maxSideQuestResults = 500;
 
+    protected $delayInMinutes = null;
+
     abstract protected function getBaseQuery(): Builder;
 
     abstract protected function getProcessSideQuestResultJob(SideQuestResult $sideQuestResult): ShouldQueue;
@@ -48,9 +50,15 @@ abstract class ProcessWeeklySideQuestsAction implements FinalizeWeekDomainAction
 
         Log::alert("Dispatching " . $asyncJobs->count() . " jobs on cycle " . $cycleCount . " of " . static::class);
 
-        JobChainGroups::create($asyncJobs, [
+        $jobChain = JobChainGroups::create($asyncJobs, [
             new FinalizeWeekJob($finalizeWeekStep, $extra)
-        ])->onQueue('medium')->dispatch();
+        ])->onQueue('medium');
+
+        if ($cycleCount > 1 && $this->delayInMinutes) {
+            $jobChain->delay(now()->addMinutes($this->delayInMinutes));
+        }
+
+        $jobChain->dispatch();
     }
 
     protected function buildSideQuestResultsQuery()
