@@ -90,18 +90,18 @@ class ProcessSideQuestResultSideEffects
                         break;
                 }
             });
+
+            $this->squadAggregate->persist();
+            $this->heroAggregates->each(function (HeroAggregate $heroAggregate) {
+                $heroAggregate->persist();
+            });
+            $this->itemAggregates->each(function (ItemAggregate $itemAggregate) {
+                $itemAggregate->persist();
+            });
         });
 
         $this->sideQuestResult->side_effects_processed_at = Date::now();
         $this->sideQuestResult->save();
-
-        $this->squadAggregate->persist();
-        $this->heroAggregates->each(function (HeroAggregate $heroAggregate) {
-            $heroAggregate->persist();
-        });
-        $this->itemAggregates->each(function (ItemAggregate $itemAggregate) {
-            $itemAggregate->persist();
-        });
     }
 
     protected function handleHeroDamagesMinionEvent(
