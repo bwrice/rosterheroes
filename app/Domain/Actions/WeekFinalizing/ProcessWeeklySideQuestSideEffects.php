@@ -12,6 +12,10 @@ use Illuminate\Database\Eloquent\Builder;
 
 class ProcessWeeklySideQuestSideEffects extends ProcessWeeklySideQuestsAction
 {
+    protected $maxSideQuestResults = 100;
+
+    protected $delayInMinutes = 5;
+
     protected function getBaseQuery(): Builder
     {
         return SideQuestResult::query()
