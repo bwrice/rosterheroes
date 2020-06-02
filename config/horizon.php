@@ -1,8 +1,8 @@
 <?php
-if (! defined('HORIZON_CONFIG')) {
 
-    define('HORIZON_CONFIG',
-        [
+if (! function_exists('getHorizonConfig')) {
+    function getHorizonConfig(string $environment) {
+        return [
             'supervisor-fast' => [
                 'connection' => 'redis',
                 'queue' => [
@@ -20,7 +20,7 @@ if (! defined('HORIZON_CONFIG')) {
                     'stats-integration'
                 ],
                 'balance' => 'simple',
-                'processes' => 5,
+                'processes' => ($environment === 'production' || $environment === 'beta') ? 5 : 1,
                 'tries' => 1,
                 'memory' => 512,
                 'timeout' => 60 * 10
@@ -31,7 +31,7 @@ if (! defined('HORIZON_CONFIG')) {
                     'long'
                 ],
                 'balance' => 'simple',
-                'processes' => 2,
+                'processes' => ($environment === 'production' || $environment === 'beta') ? 3 : 1,
                 'tries' => 1,
                 'memory' => 512,
                 'timeout' => 60 * 30
@@ -46,8 +46,9 @@ if (! defined('HORIZON_CONFIG')) {
                 'tries' => 3,
                 'memory' => 256
             ]
-        ]);
-}
+        ];
+    }
+};
 
 return [
 
@@ -188,9 +189,9 @@ return [
     */
 
     'environments' => [
-        'production' => HORIZON_CONFIG,
-        'local' => HORIZON_CONFIG,
-        'staging' => HORIZON_CONFIG,
-        'beta' => HORIZON_CONFIG
+        'production' => getHorizonConfig('production'),
+        'local' => getHorizonConfig('local'),
+        'staging' => getHorizonConfig('staging'),
+        'beta' => getHorizonConfig('beta')
     ]
 ];
