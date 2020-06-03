@@ -7,7 +7,7 @@
         </v-card-title>
         <v-row no-gutters>
             <v-col cols="8" offset="2" class="pa-2">
-                <CombatPositionIcon :combat-position-id="selectedCombatPositionID"></CombatPositionIcon>
+                <CombatPositionIcon :combat-position-id="selectedCombatPositionID" :tool-tip="false"></CombatPositionIcon>
             </v-col>
             <v-col cols="8" offset="2">
                 <v-row justify="center" align="center">

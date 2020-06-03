@@ -21,7 +21,7 @@
                     </v-row>
                     <v-row no-gutters justify="end">
                         <div style="width: 70px">
-                            <CombatPositionIcon :combat-position-id="minion.combatPositionID" :attacker-mode="false"></CombatPositionIcon>
+                            <CombatPositionIcon :combat-position-id="minion.combatPositionID" :with-prefix="false" :attacker-mode="false"></CombatPositionIcon>
                         </div>
                     </v-row>
                 </v-row>

@@ -22,6 +22,7 @@
                 :elevation="4"
                 @click.native="combatPositionDialog = true"
                 class="rh-clickable"
+                :tool-tip="false"
             >
             </CombatPositionIcon>
             <v-dialog v-model="combatPositionDialog" max-width="600">

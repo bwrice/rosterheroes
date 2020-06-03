@@ -24,7 +24,7 @@
                 </v-row>
             </v-col>
             <v-col cols="2" :class="[$vuetify.breakpoint.name === 'xs' ? '' : 'pa-1']">
-                <CombatPositionIcon :combat-position-id="hero.combatPositionID" :attacker-mode="true"></CombatPositionIcon>
+                <CombatPositionIcon :combat-position-id="hero.combatPositionID" :attacker-mode="true" :tool-tip="false"></CombatPositionIcon>
             </v-col>
         </v-row>
         <v-row no-gutters align="center">
