@@ -3,10 +3,23 @@
         :elevation="elevation"
         :color="color"
         style="margin: 2px"
+        @mouseenter.native="showToolTip = true" @mouseleave.native="showToolTip = false"
     >
-        <slot>
-            <!-- Default Slot -->
-        </slot>
+        <template v-if="toolTipMessage">
+            <v-tooltip v-model="showToolTip" bottom>
+                <template v-slot:activator="{ on }">
+                    <slot>
+                        <!-- Default Slot -->
+                    </slot>
+                </template>
+                <span>{{toolTipMessage}}</span>
+            </v-tooltip>
+        </template>
+        <template v-else>
+            <slot>
+                <!-- Default Slot -->
+            </slot>
+        </template>
     </v-sheet>
 </template>
 
@@ -22,6 +35,15 @@
             elevation: {
                 type: Number,
                 default: 0
+            },
+            toolTipMessage: {
+                type: String,
+                default: ""
+            }
+        },
+        data() {
+            return {
+                showToolTip: false
             }
         }
     }
