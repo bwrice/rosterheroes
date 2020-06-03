@@ -77,10 +77,7 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
             'itemType.attacks.damageType',
             'material.materialType',
             'itemClass',
-            'attacks.attackerPosition',
-            'attacks.targetPosition',
-            'attacks.targetPriority',
-            'attacks.damageType',
+            'attacks',
             'enchantments.measurableBoosts.measurableType',
             'enchantments.measurableBoosts.booster',
         ];
