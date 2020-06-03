@@ -7,11 +7,12 @@
 <script>
     import SvgIconSheet from "../../commandCenter/global/SvgIconSheet";
     import FixedTargetIcon from "./FixedTargetIcon";
+    import AreaOfEffect from "./AreaOfEffect";
 
     import {mapGetters} from 'vuex';
     export default {
         name: "DamageTypeIcon",
-        components: {SvgIconSheet, FixedTargetIcon},
+        components: {SvgIconSheet, FixedTargetIcon, AreaOfEffect},
         props: {
             damageTypeId: {
                 type: Number,
@@ -26,10 +27,15 @@
                 '_damageTypeByID'
             ]),
             damageType() {
-                return this._damageTypeByID(this.damageTypeID);
+                return this._damageTypeByID(this.damageTypeId);
             },
             damageTypeComponent() {
-                return 'FixedTargetIcon'
+                if (this.damageType.name === 'Fixed Target') {
+                    return 'FixedTargetIcon';
+                }
+                if (this.damageType.name === 'Area of Effect') {
+                    return 'AreaOfEffect';
+                }
             },
             properties() {
                 return {
