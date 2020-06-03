@@ -13,12 +13,13 @@
     import WarriorIcon from "./WarriorIcon";
     import RangerIcon from "./RangerIcon";
     import SorcererIcon from "./SorcererIcon";
+    import HeroClass from "../../../models/HeroClass";
     export default {
         name: "HeroClassIcon",
         components: {SvgIconSheet, WarriorIcon, RangerIcon, SorcererIcon},
         props: {
-            heroClassId: {
-                type: Number,
+            heroClass: {
+                type: HeroClass,
                 required: true
             },
         },
@@ -26,9 +27,6 @@
             ...mapGetters([
                 '_heroClassByID'
             ]),
-            heroClass() {
-                return this._heroClassByID(this.heroClassId);
-            },
             classTypeComponent() {
                 if (this.heroClass.name === 'warrior') {
                     return 'WarriorIcon';
