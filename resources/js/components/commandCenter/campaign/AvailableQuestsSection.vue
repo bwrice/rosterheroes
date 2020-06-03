@@ -12,7 +12,7 @@
                     <span class="rh-op-70 subtitle-1">{{noQuestsMessage}}</span>
                 </v-row>
             </v-sheet>
-            <v-row no-gutters>
+            <v-row v-if="showTravelButton" no-gutters>
                 <v-col cols="8" offset="2">
                     <v-btn :to="travelRoute" block color="primary" class="my-2">Travel to find Quests</v-btn>
                 </v-col>
@@ -29,12 +29,25 @@
     export default {
         name: "AvailableQuestsSection",
         components: {QuestSummaryPanel},
+        props: {
+            showTravelButton: {
+                type: Boolean,
+                default: true
+            },
+            titleOverride: {
+                type: String,
+                default: ""
+            }
+        },
         computed: {
             ...mapGetters([
                 '_currentLocationProvince',
                 '_currentLocationQuests'
             ]),
             title() {
+                if (this.titleOverride) {
+                    return this.titleOverride;
+                }
                 return 'QUESTS in ' + this._currentLocationProvince.name.toUpperCase()
             },
             noQuestsMessage() {
