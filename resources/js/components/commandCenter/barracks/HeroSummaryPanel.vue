@@ -23,7 +23,7 @@
                     <span class="title font-weight-regular">{{hero.name}}</span>
                 </v-row>
             </v-col>
-            <v-col cols="2">
+            <v-col cols="2" :class="[$vuetify.breakpoint.name === 'xs' ? '' : 'pa-1']">
                 <CombatPositionIcon :combat-position-id="hero.combatPositionID" :attacker-mode="true"></CombatPositionIcon>
             </v-col>
         </v-row>
@@ -71,7 +71,7 @@
 
     import {mapGetters} from 'vuex';
     import RelativeMeasurableBar from "./RelativeMeasurableBar";
-    import HeroClassIcon from "../../icons/HeroClassIcon";
+    import HeroClassIcon from "../../icons/heroClasses/HeroClassIcon";
     import HeroRaceIcon from "../../icons/HeroRaceIcon";
     import CombatPositionIcon from "../global/CombatPositionIcon";
 
@@ -80,7 +80,12 @@
         components: {
             CombatPositionIcon,
             HeroRaceIcon,
-            HeroClassIcon, RelativeMeasurableBar, PlayerSpiritSummaryPanel, HeroGearSVG, SvgIconSheet},
+            HeroClassIcon,
+            RelativeMeasurableBar,
+            PlayerSpiritSummaryPanel,
+            HeroGearSVG,
+            SvgIconSheet
+        },
         props: {
             hero: {
                 type: Hero,

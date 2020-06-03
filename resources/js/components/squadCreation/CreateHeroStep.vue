@@ -117,7 +117,7 @@
     import SquadCreationStep from "./SquadCreationStep";
     import HeroClass from "../../models/HeroClass";
     import HeroRace from "../../models/HeroRace";
-    import HeroClassIcon from "../icons/HeroClassIcon";
+    import HeroClassIcon from "../icons/heroClasses/HeroClassIcon";
     import HeroRaceIcon from "../icons/HeroRaceIcon";
 
     export default {
