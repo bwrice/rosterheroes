@@ -30,7 +30,12 @@
                             <v-chip x-small label color="rgba(0, 0, 0, .3)" class="px-1" text-color="#FFFFFF">+</v-chip>
                             {{attack.damageMultiplier}}
                             <v-chip x-small label color="rgba(0, 0, 0, .3)" class="px-1" text-color="#FFFFFF">×</v-chip>
-                            <v-chip label color="primary" class="px-2" text-color="#FFFFFF">FP</v-chip>
+                            <v-tooltip bottom>
+                                <template v-slot:activator="{ on }">
+                                    <v-chip label color="primary" class="px-2" text-color="#FFFFFF" v-on="on">FP</v-chip>
+                                </template>
+                                <span>Fantasy Power</span>
+                            </v-tooltip>
                         </v-sheet>
                     </v-col>
                 </v-row>
