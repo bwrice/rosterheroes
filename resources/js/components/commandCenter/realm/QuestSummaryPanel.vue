@@ -1,6 +1,6 @@
 <template>
     <ClickableSheet
-        :classes-object="{'ma-1': true}"
+        :classes-object="{'my-1': true}"
         @click="routeToQuestView"
     >
         <v-row no-gutters>

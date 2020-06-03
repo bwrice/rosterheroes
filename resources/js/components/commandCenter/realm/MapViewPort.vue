@@ -1,5 +1,5 @@
 <template>
-    <v-row no-gutters>
+    <v-row no-gutters class="py-2">
         <v-col cols="12">
             <v-sheet
                 id="map-sheet"

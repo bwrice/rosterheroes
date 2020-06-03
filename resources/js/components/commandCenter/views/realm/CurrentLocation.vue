@@ -20,8 +20,33 @@
                 </v-row>
             </v-col>
         </v-row>
-        <v-row no-gutters>
-            <v-col cols="12" md="6" class="pa-1">
+        <v-row>
+            <v-col cols="12" offset-sm="2" sm="8" md="6" offset-md="0" lg="5" offset-lg="1" xl="4" offset-xl="2">
+                <v-row no-gutters>
+                    <v-col cols="12">
+                        <span class="title font-weight-thin">LOCAL: {{province.name}}</span>
+                    </v-col>
+                </v-row>
+                <MapViewPort :view-box="_currentLocationProvince.viewBox" :tile="true">
+
+                    <!-- Borders -->
+                    <ProvinceVector
+                        v-for="(province, uuid) in borders"
+                        :key="uuid"
+                        :province="province"
+                    >
+                    </ProvinceVector>
+
+                    <ProvinceVector :province="_currentLocationProvince" :highlight="true"></ProvinceVector>
+                </MapViewPort>
+                <AvailableQuestsSection :show-travel-button="false" :title-override="'QUESTS'"></AvailableQuestsSection>
+            </v-col>
+            <v-col cols="12" offset-sm="2" sm="8" md="6" offset-md="0"  lg="5" xl="4">
+                <v-row no-gutters>
+                    <v-col cols="12">
+                        <span class="title font-weight-thin">GLOBAL</span>
+                    </v-col>
+                </v-row>
                 <MapViewPort :ocean-color="'#000'" :tile="true">
 
                     <!-- Borders -->
@@ -37,30 +62,6 @@
                     <MapWindow :view-box="_currentLocationProvince.viewBox"></MapWindow>
                 </MapViewPort>
             </v-col>
-            <v-col cols="12" md="6" class="pa-1">
-                <MapViewPort :view-box="_currentLocationProvince.viewBox" :tile="true">
-
-                    <!-- Borders -->
-                    <ProvinceVector
-                        v-for="(province, uuid) in borders"
-                        :key="uuid"
-                        :province="province"
-                    >
-                    </ProvinceVector>
-
-                    <ProvinceVector :province="_currentLocationProvince" :highlight="true"></ProvinceVector>
-                </MapViewPort>
-            </v-col>
-        </v-row>
-        <v-row>
-            <v-col cols="12" md="6">
-                <v-row no-gutters>
-                    <v-col cols="12">
-                        <span class="title font-weight-thin">QUESTS</span>
-                    </v-col>
-                </v-row>
-                <QuestSummaryPanel v-for="(quest, uuid) in _currentLocationQuests" :key="uuid" :quest="quest"></QuestSummaryPanel>
-            </v-col>
         </v-row>
     </v-container>
 </template>
@@ -73,10 +74,12 @@
     import MapViewPort from "../../realm/MapViewPort";
     import MapWindow from "../../realm/MapWindow";
     import QuestSummaryPanel from "../../realm/QuestSummaryPanel";
+    import AvailableQuestsSection from "../../campaign/AvailableQuestsSection";
 
     export default {
         name: "CurrentLocation",
         components: {
+            AvailableQuestsSection,
             QuestSummaryPanel,
             MapWindow,
             MapViewPort,
