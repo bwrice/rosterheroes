@@ -3,13 +3,13 @@
         xmlns="http://www.w3.org/2000/svg"
         id="svg890"
         preserveAspectRatio="xMidYMid meet"
-        viewBox="0 0 1600 1600"
+        viewBox="0 0 2000 2000"
         version="1.0">
         <defs
             id="defs894" />
         <g
             style="fill:#ffc747;fill-opacity:1"
-            transform="matrix(0.07479432,0,0,-0.07479432,-136.18844,1183.6552)"
+            transform="matrix(0.07479432,0,0,-0.07479432,42.101563,1409.0281)"
             fill="#000000"
             stroke="none"
             id="g912">
@@ -27,7 +27,7 @@
             id="g924"
             stroke="none"
             fill="#000000"
-            transform="matrix(0.07479432,0,0,-0.07479432,799.23973,1183.6552)">
+            transform="matrix(0.07479432,0,0,-0.07479432,977.52973,1409.0281)">
             <path
                 style="fill:#52b266;fill-opacity:1"
                 id="path920"
@@ -42,7 +42,7 @@
             id="g888"
             stroke="none"
             fill="#000000"
-            transform="matrix(0.11535124,0,0,-0.11535124,72.624508,1556.2322)">
+            transform="matrix(0.11535124,0,0,-0.11535124,250.91451,1781.6051)">
             <path
                 style="fill:#00ffd1;fill-opacity:1"
                 id="path884"
