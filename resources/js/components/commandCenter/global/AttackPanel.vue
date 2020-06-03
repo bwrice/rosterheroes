@@ -63,6 +63,9 @@
                     <v-col cols="6" class="pa-0">
                         <CombatPositionIcon :attacker-mode="false" :combat-position-id="attack.targetPositionID"></CombatPositionIcon>
                     </v-col>
+                    <v-col cols="6" class="pa-0">
+                        <DamageTypeIcon :damage-type-id="attack.damageTypeID" :targets-count="attack.targetsCount"></DamageTypeIcon>
+                    </v-col>
                 </v-row>
 <!--                <v-row class="no-gutters">-->
 <!--                    <v-col cols="6" class="pa-0">-->
@@ -81,10 +84,11 @@
     import Attack from "../../../models/Attack";
     import SvgIconSheet from "./SvgIconSheet";
     import CombatPositionIcon from "../../icons/CombatPositionIcon";
+    import DamageTypeIcon from "../../icons/damageTypes/DamageTypeIcon";
 
     export default {
         name: "AttackPanel",
-        components: {CombatPositionIcon, SvgIconSheet},
+        components: {DamageTypeIcon, CombatPositionIcon, SvgIconSheet},
         props: {
             attack: {
                 type: Attack,
