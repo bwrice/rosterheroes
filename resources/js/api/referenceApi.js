@@ -21,6 +21,11 @@ export async function getCombatPositions() {
     return response.data;
 }
 
+export async function getDamageTypes() {
+    let response = await axios.get(ROUTE_PREFIX + 'damage-types');
+    return response.data;
+}
+
 export async function getPositions() {
     let response = await axios.get(ROUTE_PREFIX + 'positions');
     return response.data;

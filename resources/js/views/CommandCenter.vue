@@ -112,6 +112,7 @@
             this.updateMeasurableTypes();
             this.updatePositions();
             this.updateCombatPositions();
+            this.updateDamageTypes();
             this.updatePlayerSpirits();
             this.updateGames();
             this.updateTeams();
@@ -149,6 +150,7 @@
                 'updateMeasurableTypes',
                 'updatePositions',
                 'updateCombatPositions',
+                'updateDamageTypes',
                 'updatePlayerSpirits',
                 'updateGames',
                 'updateTeams',

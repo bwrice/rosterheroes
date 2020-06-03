@@ -8,6 +8,7 @@ import Sport from "../../models/Sport";
 import MeasurableType from "../../models/MeasurableType";
 import League from "../../models/League";
 import StatType from "../../models/StatType";
+import DamageType from "../../models/DamageType";
 
 export default {
 
@@ -16,6 +17,7 @@ export default {
         heroRaces: [],
         positions: [],
         combatPositions: [],
+        damageTypes: [],
         teams: [],
         sports: [],
         measurableTypes: [],
@@ -43,6 +45,9 @@ export default {
         },
         _combatPositions(state) {
             return state.combatPositions;
+        },
+        _damageTypes(state) {
+            return state.damageTypes;
         },
         _teams(state) {
             return state.teams;
@@ -97,6 +102,12 @@ export default {
             });
             return combatPosition ? combatPosition : new CombatPosition({});
         },
+        _damageTypeByID: (state) => (damageTypeID) => {
+            let damageType = state.damageTypes.find(function (damageType) {
+                return damageType.id === damageTypeID;
+            });
+            return damageType ? damageType : new DamageType({});
+        },
         _teamByID: (state) => (teamID) => {
             let team = state.teams.find(team => team.id === teamID);
             return team ? team : new Team({});
@@ -125,6 +136,9 @@ export default {
         },
         SET_COMBAT_POSITIONS(state, payload) {
             state.combatPositions = payload;
+        },
+        SET_DAMAGE_TYPES(state, damageTypes) {
+            state.damageTypes = damageTypes;
         },
         SET_TEAMS(state, payload) {
             state.teams = payload;
@@ -194,6 +208,17 @@ export default {
                 commit('SET_COMBAT_POSITIONS', combatPositions);
             } catch (e) {
                 console.warn("Failed to update combat positions");
+            }
+        },
+        async updateDamageTypes({commit}) {
+            try {
+                let damageTypesResponse = await referenceApi.getDamageTypes();
+                let damageTypes = damageTypesResponse.data.map(function (damageType) {
+                    return new DamageType(damageType)
+                });
+                commit('SET_DAMAGE_TYPES', damageTypes);
+            } catch (e) {
+                console.warn("Failed to update damage types");
             }
         },
         async updateTeams({commit}) {
