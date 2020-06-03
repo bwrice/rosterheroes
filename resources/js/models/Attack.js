@@ -11,6 +11,7 @@ export default class Attack {
                     targetPositionID,
                     damageTypeID,
                     targetPriorityID,
+                    targetsCount,
                     resourceCosts = [],
                     requirements = [],
                 }) {
@@ -24,6 +25,7 @@ export default class Attack {
         this.targetPositionID = targetPositionID;
         this.damageTypeID = damageTypeID;
         this.targetPriorityID = targetPriorityID;
+        this.targetsCount = targetsCount;
         this.resourceCosts = resourceCosts;
         this.requirments = requirements;
     }
