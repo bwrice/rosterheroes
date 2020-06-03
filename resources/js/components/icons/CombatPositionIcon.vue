@@ -60,7 +60,7 @@
                 }
                 if (this.withPrefix) {
 
-                    message += this.attackerMode ? 'Attacker ': 'Defender ';
+                    message += this.attackerMode ? 'Attacker ': 'Target ';
                 }
                 return message += this.combatPosition.name;
             }
