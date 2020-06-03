@@ -39,7 +39,7 @@
 
 <script>
     import Minion from "../../../../models/Minion";
-    import CombatPositionIcon from "../../global/CombatPositionIcon";
+    import CombatPositionIcon from "../../../icons/CombatPositionIcon";
     import AttackPanel from "../../global/AttackPanel";
 
     export default {

@@ -30,7 +30,7 @@
 
 <script>
     import Hero from "../../../models/Hero";
-    import CombatPositionIcon from "../global/CombatPositionIcon";
+    import CombatPositionIcon from "../../icons/CombatPositionIcon";
     import {mapGetters} from 'vuex';
     import {mapActions} from 'vuex';
 

@@ -1,15 +1,18 @@
 <template>
-    <SvgIconSheet :svg="svg" :clickable="clickable" @iconClicked="emitClicked">
+    <SvgIconSheet :elevation="elevation">
+        <component :is="combatPositionTypeComponent" v-bind="properties"></component>
     </SvgIconSheet>
 </template>
 
 <script>
-    import SvgIconSheet from "./SvgIconSheet";
+    import SvgIconSheet from "../commandCenter/global/SvgIconSheet";
+    import AttackerIcon from "./combatPositions/AttackerIcon";
+    import DefenderIcon from "./combatPositions/DefenderIcon";
     import {mapGetters} from 'vuex';
 
     export default {
         name: "CombatPositionIcon",
-        components: {SvgIconSheet},
+        components: {SvgIconSheet, AttackerIcon, DefenderIcon},
         props: {
             combatPositionId: {
                 type: Number,
@@ -19,14 +22,9 @@
                 type: Boolean,
                 default: true
             },
-            clickable: {
-                type: Boolean,
-                default: false
-            }
-        },
-        methods: {
-            emitClicked() {
-                this.$emit('combatPositionClicked');
+            elevation: {
+                type: Number,
+                default: 0
             }
         },
         computed: {
@@ -36,11 +34,16 @@
             combatPosition() {
                 return this._combatPositionByID(this.combatPositionId);
             },
-            svg() {
+            combatPositionTypeComponent() {
                 if (this.attackerMode) {
-                    return this.combatPosition.attackerSVG;
+                    return 'AttackerIcon';
                 }
-                return this.combatPosition.targetSVG;
+                return 'DefenderIcon';
+            },
+            properties() {
+                return {
+                    'combatPositionName' : this.combatPosition.name
+                }
             }
         }
     }

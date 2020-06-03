@@ -16,15 +16,14 @@
             </AddSpiritRouterButton>
         </v-col>
         <v-col cols="3" class="px-2">
-            <div class="rh-clickable">
-                <CombatPositionIcon
-                    :combat-position-id="hero.combatPositionID"
-                    :attacker-mode="true"
-                    :clickable="true"
-                    @combatPositionClicked="combatPositionDialog = true"
-                >
-                </CombatPositionIcon>
-            </div>
+            <CombatPositionIcon
+                :combat-position-id="hero.combatPositionID"
+                :attacker-mode="true"
+                :elevation="4"
+                @click.native="combatPositionDialog = true"
+                class="rh-clickable"
+            >
+            </CombatPositionIcon>
             <v-dialog v-model="combatPositionDialog" max-width="600">
                 <CombatPositionDialog
                     @close="combatPositionDialog = false"
@@ -39,7 +38,7 @@
 <script>
     import Hero from "../../../models/Hero";
     import PlayerSpiritSummaryPanel from "../global/PlayerSpiritSummaryPanel";
-    import CombatPositionIcon from "../global/CombatPositionIcon";
+    import CombatPositionIcon from "../../icons/CombatPositionIcon";
     import AddSpiritRouterButton from "../global/AddSpiritRouterButton";
     import CombatPositionDialog from "./CombatPositionDialog";
 

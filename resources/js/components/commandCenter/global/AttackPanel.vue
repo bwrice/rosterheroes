@@ -80,7 +80,7 @@
 <script>
     import Attack from "../../../models/Attack";
     import SvgIconSheet from "./SvgIconSheet";
-    import CombatPositionIcon from "./CombatPositionIcon";
+    import CombatPositionIcon from "../../icons/CombatPositionIcon";
 
     export default {
         name: "AttackPanel",
