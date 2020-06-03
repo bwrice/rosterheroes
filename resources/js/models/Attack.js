@@ -1,6 +1,3 @@
-import CombatPosition from "./CombatPosition";
-import DamageType from "./DamageType";
-import TargetPriority from "./TargetPriority";
 
 export default class Attack {
 
@@ -12,8 +9,8 @@ export default class Attack {
                     grade,
                     attackerPositionID,
                     targetPositionID,
-                    damageType,
-                    targetPriority,
+                    damageTypeID,
+                    targetPriorityID,
                     resourceCosts = [],
                     requirements = [],
                 }) {
@@ -25,8 +22,8 @@ export default class Attack {
         this.grade = grade;
         this.attackerPositionID = attackerPositionID;
         this.targetPositionID = targetPositionID;
-        this.damageType = new DamageType(damageType);
-        this.targetPriority = new TargetPriority(targetPriority);
+        this.damageTypeID = damageTypeID;
+        this.targetPriorityID = targetPriorityID;
         this.resourceCosts = resourceCosts;
         this.requirments = requirements;
     }
