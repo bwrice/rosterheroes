@@ -57,24 +57,19 @@
                     </v-col>
                 </v-row>
                 <v-row class="no-gutters">
-                    <v-col cols="6" class="pa-0">
+                    <v-col cols="6">
                         <CombatPositionIcon :attacker-mode="true" :combat-position-id="attack.attackerPositionID"></CombatPositionIcon>
                     </v-col>
-                    <v-col cols="6" class="pa-0">
+                    <v-col cols="6">
                         <CombatPositionIcon :attacker-mode="false" :combat-position-id="attack.targetPositionID"></CombatPositionIcon>
                     </v-col>
-                    <v-col cols="6" class="pa-0">
+                    <v-col cols="6">
                         <DamageTypeIcon :damage-type-id="attack.damageTypeID" :targets-count="attack.targetsCount"></DamageTypeIcon>
                     </v-col>
+                    <v-col cols="6">
+                        <TargetPriorityIcon :target-priority-id="attack.targetPriorityID"></TargetPriorityIcon>
+                    </v-col>
                 </v-row>
-<!--                <v-row class="no-gutters">-->
-<!--                    <v-col cols="6" class="pa-0">-->
-<!--                        <SvgIconSheet :svg-icon="attack.attackerPosition.icon"></SvgIconSheet>-->
-<!--                    </v-col>-->
-<!--                    <v-col cols="6" class="pa-0">-->
-<!--                        <SvgIconSheet :svg-icon="attack.targetPosition.icon"></SvgIconSheet>-->
-<!--                    </v-col>-->
-<!--                </v-row>-->
             </v-col>
         </v-row>
     </v-sheet>
@@ -85,10 +80,11 @@
     import SvgIconSheet from "./SvgIconSheet";
     import CombatPositionIcon from "../../icons/CombatPositionIcon";
     import DamageTypeIcon from "../../icons/damageTypes/DamageTypeIcon";
+    import TargetPriorityIcon from "../../icons/targetPriorities/TargetPriorityIcon";
 
     export default {
         name: "AttackPanel",
-        components: {DamageTypeIcon, CombatPositionIcon, SvgIconSheet},
+        components: {TargetPriorityIcon, DamageTypeIcon, CombatPositionIcon, SvgIconSheet},
         props: {
             attack: {
                 type: Attack,
