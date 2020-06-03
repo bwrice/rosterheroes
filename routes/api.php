@@ -14,6 +14,7 @@ use App\Http\Controllers\OpenChestController;
 use App\Http\Controllers\SquadQuestController;
 use App\Http\Controllers\StashItemController;
 use App\Http\Controllers\StatTypeController;
+use App\Http\Controllers\TargetPriorityController;
 use App\Http\Controllers\UnEquipHeroController;
 use App\Http\Controllers\EquipHeroController;
 use App\Http\Controllers\FastTravelController;
@@ -94,6 +95,7 @@ Route::prefix('v1')->group(function () {
 
     Route::get('/combat-positions', [CombatPositionController::class, 'index']);
     Route::get('/damage-types', [DamageTypeController::class, 'index']);
+    Route::get('/target-priorities', [TargetPriorityController::class, 'index']);
     Route::get('/positions', [PositionController::class, 'index']);
     Route::get('/teams', [TeamController::class, 'index']);
     Route::get('/sports', [SportController::class, 'index']);
