@@ -9,6 +9,7 @@ import MeasurableType from "../../models/MeasurableType";
 import League from "../../models/League";
 import StatType from "../../models/StatType";
 import DamageType from "../../models/DamageType";
+import TargetPriority from "../../models/TargetPriority";
 
 export default {
 
@@ -18,6 +19,7 @@ export default {
         positions: [],
         combatPositions: [],
         damageTypes: [],
+        targetPriorities: [],
         teams: [],
         sports: [],
         measurableTypes: [],
@@ -48,6 +50,9 @@ export default {
         },
         _damageTypes(state) {
             return state.damageTypes;
+        },
+        _targetPriorities(state) {
+            return state.targetPriorities;
         },
         _teams(state) {
             return state.teams;
@@ -108,6 +113,12 @@ export default {
             });
             return damageType ? damageType : new DamageType({});
         },
+        _targetPriorityByID: (state) => (targetPriorityID) => {
+            let targetPriority = state.targetPriorities.find(function (targetPriority) {
+                return targetPriority.id === targetPriorityID;
+            });
+            return targetPriority ? targetPriority : new TargetPriority({});
+        },
         _teamByID: (state) => (teamID) => {
             let team = state.teams.find(team => team.id === teamID);
             return team ? team : new Team({});
@@ -139,6 +150,9 @@ export default {
         },
         SET_DAMAGE_TYPES(state, damageTypes) {
             state.damageTypes = damageTypes;
+        },
+        SET_TARGET_PRIORITIES(state, targetPriorities) {
+            state.targetPriorities = targetPriorities;
         },
         SET_TEAMS(state, payload) {
             state.teams = payload;
@@ -219,6 +233,17 @@ export default {
                 commit('SET_DAMAGE_TYPES', damageTypes);
             } catch (e) {
                 console.warn("Failed to update damage types");
+            }
+        },
+        async updateTargetPriorities({commit}) {
+            try {
+                let targetPrioritiesResponse = await referenceApi.getTargetPriorities();
+                let targetPriorities = targetPrioritiesResponse.data.map(function (targetPriority) {
+                    return new TargetPriority(targetPriority)
+                });
+                commit('SET_TARGET_PRIORITIES', targetPriorities);
+            } catch (e) {
+                console.warn("Failed to update target priorities");
             }
         },
         async updateTeams({commit}) {

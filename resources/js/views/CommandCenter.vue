@@ -113,6 +113,7 @@
             this.updatePositions();
             this.updateCombatPositions();
             this.updateDamageTypes();
+            this.updateTargetPriorities();
             this.updatePlayerSpirits();
             this.updateGames();
             this.updateTeams();
@@ -151,6 +152,7 @@
                 'updatePositions',
                 'updateCombatPositions',
                 'updateDamageTypes',
+                'updateTargetPriorities',
                 'updatePlayerSpirits',
                 'updateGames',
                 'updateTeams',
