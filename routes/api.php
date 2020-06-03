@@ -5,6 +5,7 @@ use App\Http\Controllers\CombatPositionController;
 use App\Http\Controllers\ContinentController;
 use App\Http\Controllers\CurrentCampaignController;
 use App\Http\Controllers\CurrentLocationQuestsController;
+use App\Http\Controllers\DamageTypeController;
 use App\Http\Controllers\ExploreProvinceController;
 use App\Http\Controllers\LeagueController;
 use App\Http\Controllers\LocalStashController;
@@ -96,6 +97,7 @@ Route::prefix('v1')->group(function () {
     Route::get('/measurable-types', [MeasurableTypeController::class, 'index']);
 
     Route::get('/combat-positions', [CombatPositionController::class, 'index']);
+    Route::get('/damage-types', [DamageTypeController::class, 'index']);
     Route::get('/positions', [PositionController::class, 'index']);
     Route::get('/teams', [TeamController::class, 'index']);
     Route::get('/sports', [SportController::class, 'index']);
