@@ -118,7 +118,7 @@
     import HeroClass from "../../models/HeroClass";
     import HeroRace from "../../models/HeroRace";
     import HeroClassIcon from "../icons/heroClasses/HeroClassIcon";
-    import HeroRaceIcon from "../icons/HeroRaceIcon";
+    import HeroRaceIcon from "../icons/heroRaces/HeroRaceIcon";
 
     export default {
         name: "CreateHeroStep",

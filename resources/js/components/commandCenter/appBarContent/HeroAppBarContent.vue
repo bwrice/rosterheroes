@@ -16,7 +16,7 @@
 
 <script>
     import {mapGetters} from 'vuex';
-    import HeroRaceIcon from "../../icons/HeroRaceIcon";
+    import HeroRaceIcon from "../../icons/heroRaces/HeroRaceIcon";
     import HeroClassIcon from "../../icons/heroClasses/HeroClassIcon";
 
     export default {

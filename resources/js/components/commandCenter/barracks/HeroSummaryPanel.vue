@@ -72,7 +72,7 @@
     import {mapGetters} from 'vuex';
     import RelativeMeasurableBar from "./RelativeMeasurableBar";
     import HeroClassIcon from "../../icons/heroClasses/HeroClassIcon";
-    import HeroRaceIcon from "../../icons/HeroRaceIcon";
+    import HeroRaceIcon from "../../icons/heroRaces/HeroRaceIcon";
     import CombatPositionIcon from "../../icons/CombatPositionIcon";
 
     export default {
