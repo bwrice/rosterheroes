@@ -1,5 +1,5 @@
 <template>
-    <SvgIconSheet>
+    <SvgIconSheet :tool-tip-message="toolTipMessage">
         <component :is="targetPriorityComponent"></component>
     </SvgIconSheet>
 </template>
@@ -30,6 +30,9 @@
                 if (this.targetPriority.name === 'Any') {
                     return 'AnyTargetIcon';
                 }
+            },
+            toolTipMessage() {
+                return this.targetPriority.name + ' Target';
             }
         }
     }

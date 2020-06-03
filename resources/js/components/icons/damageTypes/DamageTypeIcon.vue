@@ -1,5 +1,5 @@
 <template>
-    <SvgIconSheet>
+    <SvgIconSheet :tool-tip-message="toolTipMessage">
         <component :is="damageTypeComponent" v-bind="properties"></component>
     </SvgIconSheet>
 </template>
@@ -41,6 +41,13 @@
                 return {
                     'targetsCount': this.targetsCount
                 }
+            },
+            toolTipMessage() {
+                let message = this.damageType.name;
+                if (this.targetsCount) {
+                    message += ' (' + this.targetsCount + ')';
+                }
+                return message;
             }
         }
     }
