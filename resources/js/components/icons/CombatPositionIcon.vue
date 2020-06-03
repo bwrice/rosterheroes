@@ -1,5 +1,5 @@
 <template>
-    <SvgIconSheet :elevation="elevation">
+    <SvgIconSheet :elevation="elevation" :tool-tip-message="toolTipMessage">
         <component :is="combatPositionTypeComponent" v-bind="properties"></component>
     </SvgIconSheet>
 </template>
@@ -25,6 +25,14 @@
             elevation: {
                 type: Number,
                 default: 0
+            },
+            toolTip: {
+                type: Boolean,
+                default: true
+            },
+            withPrefix: {
+                type: Boolean,
+                default: true
             }
         },
         computed: {
@@ -44,6 +52,17 @@
                 return {
                     'combatPositionName' : this.combatPosition.name
                 }
+            },
+            toolTipMessage() {
+                let message = "";
+                if (! this.toolTip) {
+                    return message;
+                }
+                if (this.withPrefix) {
+
+                    message += this.attackerMode ? 'Attacker ': 'Defender ';
+                }
+                return message += this.combatPosition.name;
             }
         }
     }
