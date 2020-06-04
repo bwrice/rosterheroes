@@ -16,11 +16,11 @@ class UndeadBehavior extends EnemyTypeBehavior
     public function getStartingHealth(int $enemyLevel, CombatPosition $startingCombatPosition): int
     {
         $base = 400;
-        $levelModifier = 10;
+        $levelModifier = 20;
         switch ($startingCombatPosition->name) {
             case CombatPosition::FRONT_LINE:
                 $base += 400;
-                $levelModifier += 20;
+                $levelModifier += 25;
                 break;
             case CombatPosition::BACK_LINE:
                 $base += 150;
