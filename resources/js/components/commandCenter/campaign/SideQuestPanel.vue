@@ -71,7 +71,7 @@
     import Quest from "../../../models/Quest";
 
     export default {
-        name: "SideQuestCard",
+        name: "SideQuestPanel",
         components: {MinionPanel},
         props: {
             sideQuest: {

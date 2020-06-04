@@ -39,12 +39,12 @@
                         <span class="title font-weight-thin">SIDE QUESTS</span>
                     </v-col>
                 </v-row>
-                <SideQuestCard
+                <SideQuestPanel
                     v-for="(sideQuest, uuid) in quest.sideQuests"
                     :key="uuid"
                     :side-quest="sideQuest"
                     :quest="quest"
-                ></SideQuestCard>
+                ></SideQuestPanel>
             </v-col>
         </v-row>
     </v-container>
@@ -54,11 +54,11 @@
 
     import {mapGetters} from 'vuex';
     import {mapActions} from 'vuex';
-    import SideQuestCard from "../../campaign/SideQuestCard";
+    import SideQuestPanel from "../../campaign/SideQuestPanel";
 
     export default {
         name: "QuestView",
-        components: {SideQuestCard},
+        components: {SideQuestPanel},
         data() {
             return {
                 pending: false
