@@ -45,18 +45,34 @@
             </v-btn>
         </v-row>
         <v-row no-gutters v-if="expanded">
-            <v-carousel
-                :height="height"
-                hide-delimiter-background
-                show-arrows-on-hover
-            >
-                <v-carousel-item
-                    v-for="(minion, uuid) in sideQuest.minions"
-                    :key="uuid"
+            <v-col cols="12" class="pa-1">
+                <v-card
+                    color="#32343d"
                 >
-                    <MinionPanel :minion="minion" :height="height"></MinionPanel>
-                </v-carousel-item>
-            </v-carousel>
+                    <v-tabs
+                        v-model="tab"
+                        mobile-break-point="10"
+                        centered
+                        background-color="#32343d"
+                        color="#b3c9c3"
+                        slider-color="primary"
+                    >
+                        <v-tab
+                            v-for="(minion, uuid) in sideQuest.minions"
+                            :key="uuid"
+                        >
+                            {{ minion.name }}
+                        </v-tab>
+                    </v-tabs>
+                    <v-tabs-items v-model="tab" style="background-color: transparent">
+                        <MinionPanel
+                            v-for="(minion, uuid) in sideQuest.minions"
+                            :key="uuid"
+                            :minion="minion"
+                        ></MinionPanel>
+                    </v-tabs-items>
+                </v-card>
+            </v-col>
         </v-row>
     </v-sheet>
 </template>
@@ -90,7 +106,8 @@
         data() {
             return {
                 pending: false,
-                expanded: false
+                expanded: false,
+                tab: null
             }
         },
         computed: {
