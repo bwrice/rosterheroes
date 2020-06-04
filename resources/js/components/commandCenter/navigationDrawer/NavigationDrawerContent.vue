@@ -25,7 +25,7 @@
             :main-route-name="'realm-main'"
         >
             <NavListItem
-                :title="'Explore'"
+                :title="'Map'"
                 :to="exploreRoute"
             ></NavListItem>
             <NavListItem
@@ -66,7 +66,7 @@
                 return routerHelpers.getBaseRoute(this.$route, 'travel');
             },
             exploreRoute() {
-                return routerHelpers.getBaseRoute(this.$route, 'explore-realm');
+                return routerHelpers.getBaseRoute(this.$route, 'realm-map');
             }
         }
     }
