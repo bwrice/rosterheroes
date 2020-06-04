@@ -2,14 +2,14 @@
 
 namespace App\Http\Resources;
 
-use App\Domain\Models\HeroPost;
+use App\Domain\Models\Squad;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * Class Squad
+ * Class SquadResource
  * @package App\Http\Resources
  *
- * @mixin \App\Domain\Models\Squad
+ * @mixin Squad
  */
 class SquadResource extends JsonResource
 {
