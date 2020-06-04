@@ -7,7 +7,7 @@
             dark
             x-small
             color="primary darken-1"
-            class="mr-1"
+            class="mr-1 rh-dbl-tap-disabled"
             :disabled="formerPageDisabled"
             @click="emitFormerPage"
         >
@@ -18,7 +18,7 @@
             dark
             x-small
             color="primary darken-1"
-            class="ml-1"
+            class="ml-1 rh-dbl-tap-disabled"
             :disabled="nextPageDisabled"
             @click="emitNextPage"
         >

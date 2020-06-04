@@ -10,6 +10,10 @@
   cursor: pointer;
 }
 
+.rh-dbl-tap-disabled {
+  touch-action: manipulation;
+}
+
 .rh-op-5 {
   opacity: 0.05 !important;
 }
