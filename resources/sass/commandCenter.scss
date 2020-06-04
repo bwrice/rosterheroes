@@ -19,6 +19,10 @@ $rhLightBlueGrey: #6f808c;
     cursor: pointer;
 }
 
+.rh-dbl-tap-disabled {
+    touch-action: manipulation;
+}
+
 @mixin rh-op-x {
     @for $i from 1 through 19 {
         .rh-op-#{$i * 5} {
