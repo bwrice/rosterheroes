@@ -5,6 +5,7 @@ use App\Http\Controllers\CombatPositionController;
 use App\Http\Controllers\ContinentController;
 use App\Http\Controllers\CurrentCampaignController;
 use App\Http\Controllers\CurrentLocationQuestsController;
+use App\Http\Controllers\CurrentLocationSquadsController;
 use App\Http\Controllers\DamageTypeController;
 use App\Http\Controllers\ExploreProvinceController;
 use App\Http\Controllers\LeagueController;
@@ -139,6 +140,7 @@ Route::prefix('v1')->group(function () {
 
                 Route::get('province', CurrentLocationProvinceController::class);
                 Route::get('quests', CurrentLocationQuestsController::class);
+                Route::get('squads', CurrentLocationSquadsController::class);
                 Route::get('stash', LocalStashController::class);
             });
 
