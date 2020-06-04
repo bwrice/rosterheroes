@@ -40,6 +40,18 @@
                     <ProvinceVector :province="_currentLocationProvince" :highlight="true"></ProvinceVector>
                 </MapViewPort>
                 <AvailableQuestsSection :show-travel-button="false" :title-override="'QUESTS'"></AvailableQuestsSection>
+                <v-row no-gutters>
+                    <v-col cols="12">
+                        <span class="title font-weight-thin">MERCHANTS</span>
+                    </v-col>
+                    <v-col cols="12">
+                        <v-sheet color="rgba(255,255,255, 0.25)">
+                            <v-row no-gutters class="pa-2" justify="center" align="center">
+                                <span class="rh-op-70 subtitle-1">No merchants in {{province.name}}</span>
+                            </v-row>
+                        </v-sheet>
+                    </v-col>
+                </v-row>
             </v-col>
             <v-col cols="12" offset-sm="2" sm="8" md="6" offset-md="0"  lg="5" xl="4">
                 <v-row no-gutters>
@@ -61,6 +73,18 @@
                     <ProvinceVector :province="_currentLocationProvince" :fill-color="'#28bf5b'"></ProvinceVector>
                     <MapWindow :view-box="_currentLocationProvince.viewBox"></MapWindow>
                 </MapViewPort>
+                <v-row no-gutters>
+                    <v-col cols="12">
+                        <span class="title font-weight-thin">NEWS</span>
+                    </v-col>
+                    <v-col cols="12">
+                        <v-sheet color="rgba(255,255,255, 0.25)">
+                            <v-row no-gutters class="pa-2" justify="center" align="center">
+                                <span class="rh-op-70 subtitle-1">No Global News</span>
+                            </v-row>
+                        </v-sheet>
+                    </v-col>
+                </v-row>
             </v-col>
         </v-row>
     </v-container>
