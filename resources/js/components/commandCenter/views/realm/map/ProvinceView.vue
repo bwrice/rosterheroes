@@ -22,27 +22,18 @@
                     </MapViewPortWithControls>
                 </v-col>
             </v-row>
+        </template>
+        <template v-slot:column-two>
             <template v-if="mapProvince">
-                <CardBlock :title="'Quests'">
-                    <template v-if="mapProvince.quests.length">
-                        <CompactQuestPanel
-                            v-for="(compactQuest, uuid) in mapProvince.quests"
-                            :compact-quest="compactQuest"
-                            :key="uuid"
-                        ></CompactQuestPanel>
-                    </template>
-                    <template v-else>
-                        <EmptyNotifier :notification-text="emptyQuestsText"></EmptyNotifier>
-                    </template>
-                </CardBlock>
+                <div class="mb-2">
+                    <MapProvinceInfoCard :map-province="mapProvince"></MapProvinceInfoCard>
+                </div>
             </template>
             <template v-else>
-                <v-row :justify="'center'" class="py-5">
+                <v-row justify="center" class="py-5">
                     <v-progress-circular indeterminate size="48"></v-progress-circular>
                 </v-row>
             </template>
-        </template>
-        <template v-slot:column-two>
             <v-row no-gutters>
                 <v-col cols="12">
                     <span class="title font-weight-thin">CONTINENT: {{continent.name}}</span>
@@ -86,10 +77,12 @@
     import CardBlock from "../../../global/CardBlock";
     import EmptyNotifier from "../../../global/EmptyNotifier";
     import CompactQuestPanel from "../../../realm/CompactQuestPanel";
+    import MapProvinceInfoCard from "../../../realm/MapProvinceInfoCard";
 
     export default {
         name: "ProvinceView",
         components: {
+            MapProvinceInfoCard,
             CompactQuestPanel,
             EmptyNotifier,
             CardBlock,

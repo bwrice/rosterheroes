@@ -1,13 +1,11 @@
 
-import CompactQuest from "./compact/CompactQuest";
-
 export default class MapProvince {
 
-    constructor({provinceUuid, provinceSlug, quests = []}) {
+    constructor({provinceUuid, provinceSlug, questsCount, squadsCount, merchantsCount}) {
         this.provinceUuid = provinceUuid;
         this.provinceSlug = provinceSlug;
-        this.quests = quests.map(function (questData) {
-            return new CompactQuest(questData);
-        });
+        this.questsCount = questsCount;
+        this.squadsCount = squadsCount;
+        this.merchantsCount = merchantsCount;
     }
 }
