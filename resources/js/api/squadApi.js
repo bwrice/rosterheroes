@@ -53,6 +53,11 @@ export async function getLocalStash(squadSlug) {
     return response.data;
 }
 
+export async function getCurrentLocationSquads(squadSlug) {
+    let response = await axios.get(ROUTE_PREFIX + squadSlug + '/current-location/squads');
+    return response.data;
+}
+
 export async function stashItem(squadSlug, itemUuid) {
     let response = await axios.post(ROUTE_PREFIX + squadSlug + '/stash-item', {
         item: itemUuid

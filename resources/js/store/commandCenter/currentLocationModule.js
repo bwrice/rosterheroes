@@ -2,13 +2,15 @@ import * as squadApi from '../../api/squadApi';
 import Province from "../../models/Province";
 import Quest from "../../models/Quest";
 import LocalStash from "../../models/LocalStash";
+import LocalSquad from "../../models/LocalSquad";
 
 export default {
 
     state: {
         quests: [],
         province: new Province({}),
-        localStash: new LocalStash({})
+        localStash: new LocalStash({}),
+        localSquads: [],
     },
 
     getters: {
@@ -20,6 +22,9 @@ export default {
         },
         _localStash(state) {
             return state.localStash;
+        },
+        _localSquads(state) {
+            return state.localSquads;
         },
         _currentLocationQuestBySlug: (state) => (slug) => {
             let quest = state.quests.find(quest => quest.slug === slug);
@@ -35,6 +40,9 @@ export default {
         },
         SET_LOCAL_STASH(state, payload) {
             state.localStash = payload;
+        },
+        SET_LOCAL_SQUADS(state, localSquads) {
+            state.localSquads = localSquads;
         },
         ADD_ITEM_TO_LOCAL_STASH(state, payload) {
             state.localStash.items.push(payload);
@@ -74,6 +82,15 @@ export default {
                 console.warn("Failed to update current location quests");
             }
         },
+        async updateLocalSquads({commit}, route) {
+            try {
+                let response = await squadApi.getCurrentLocationSquads(route.params.squadSlug);
+                let localSquads = response.data.map(localSquad => new LocalSquad(localSquad));
+                commit('SET_LOCAL_SQUADS', localSquads)
+            } catch (e) {
+                console.warn("Failed to update local squads");
+            }
+        },
         async updateLocalStash({commit}, route) {
             try {
                 let response = await squadApi.getLocalStash(route.params.squadSlug);
@@ -89,11 +106,13 @@ export default {
                 province,
                 quests,
                 localStash,
+                localSquads,
             } = alreadyUpdated;
 
             province ? commit('SET_CURRENT_LOCATION_PROVINCE', province) : dispatch('updateCurrentLocationProvince', route);
             quests ? commit('SET_CURRENT_LOCATION_QUESTS', quests) : dispatch('updateCurrentLocationQuests', route);
             localStash ? commit('SET_LOCAL_STASH', localStash) : dispatch('updateLocalStash', route);
+            localSquads ? commit('SET_LOCAL_SQUADS', localStash) : dispatch('updateLocalSquads', route);
         },
     }
 };
