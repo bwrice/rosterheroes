@@ -26,17 +26,17 @@ class ItemNameBuilder
         $value = (int) floor(($boostLevelSum/3)**.5);
         switch ($value) {
             case 0:
-                return 'Poor';
+                return 'Fine';
             case 1:
-                return 'Adequate';
+                return 'Worthy';
             case 2:
-                return 'Great';
-            case 3:
                 return 'Excellent';
-            case 4:
+            case 3:
                 return 'Superb';
-            case 5:
+            case 4:
                 return 'Fantastic';
+            case 5:
+                return 'Superior';
             case 6:
                 return 'Magnificent';
             case 7:
