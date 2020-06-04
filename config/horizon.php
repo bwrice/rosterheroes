@@ -2,6 +2,22 @@
 
 if (! function_exists('getHorizonConfig')) {
     function getHorizonConfig(string $environment) {
+
+        switch ($environment) {
+            case 'production':
+                $mediumProcesses = 4;
+                $longProcesses = 2;
+                break;
+            case 'beta':
+                $mediumProcesses = 2;
+                $longProcesses = 1;
+                break;
+            default:
+                $mediumProcesses = 1;
+                $longProcesses = 1;
+                break;
+        }
+
         return [
             'supervisor-fast' => [
                 'connection' => 'redis',
@@ -20,7 +36,7 @@ if (! function_exists('getHorizonConfig')) {
                     'stats-integration'
                 ],
                 'balance' => 'simple',
-                'processes' => ($environment === 'production' || $environment === 'beta') ? 5 : 1,
+                'processes' => $mediumProcesses,
                 'tries' => 1,
                 'memory' => 512,
                 'timeout' => 60 * 10
@@ -31,7 +47,7 @@ if (! function_exists('getHorizonConfig')) {
                     'long'
                 ],
                 'balance' => 'simple',
-                'processes' => ($environment === 'production' || $environment === 'beta') ? 3 : 1,
+                'processes' => $longProcesses,
                 'tries' => 1,
                 'memory' => 512,
                 'timeout' => 60 * 30
