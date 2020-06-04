@@ -13,7 +13,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  *
  * @mixin Province
  */
-class ExploredProvinceResource extends JsonResource
+class MapProvinceResource extends JsonResource
 {
     /**
      * @param \Illuminate\Http\Request $request
@@ -26,7 +26,10 @@ class ExploredProvinceResource extends JsonResource
         return [
             'provinceUuid' => $this->uuid,
             'provinceSlug' => $this->slug,
-            'quests' => CompactQuestResource::collection($this->quests)
+            'questsCount' => $this->quests()->count(),
+            'squadsCount' => $this->squads()->count(),
+            // TODO
+            'merchantsCount' => 0
         ];
     }
 }
