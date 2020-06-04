@@ -7,7 +7,7 @@ use App\Http\Controllers\CurrentCampaignController;
 use App\Http\Controllers\CurrentLocationQuestsController;
 use App\Http\Controllers\CurrentLocationSquadsController;
 use App\Http\Controllers\DamageTypeController;
-use App\Http\Controllers\ExploreProvinceController;
+use App\Http\Controllers\MapProvinceController;
 use App\Http\Controllers\LeagueController;
 use App\Http\Controllers\LocalStashController;
 use App\Http\Controllers\MobileStoreItemForSquadController;
@@ -88,7 +88,7 @@ Route::prefix('v1')->group(function () {
 
     Route::get('/territories', [TerritoryController::class, 'index']);
     Route::get('/continents', [ContinentController::class, 'index']);
-    Route::get('/explore-provinces/{provinceSlug}', [ExploreProvinceController::class, 'show']);
+    Route::get('/map/province/{provinceSlug}', [MapProvinceController::class, 'show']);
 
     Route::get('/hero-classes', [HeroClassController::class, 'index']);
     Route::get('/hero-races', [HeroRaceController::class, 'index']);

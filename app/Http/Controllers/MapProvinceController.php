@@ -9,7 +9,7 @@ use App\Policies\SquadPolicy;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
 
-class ExploreProvinceController extends Controller
+class MapProvinceController extends Controller
 {
     public function show($provinceSlug)
     {
