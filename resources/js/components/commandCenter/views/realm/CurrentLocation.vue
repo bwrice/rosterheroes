@@ -52,6 +52,25 @@
                         </v-sheet>
                     </v-col>
                 </v-row>
+                <v-row no-gutters>
+                    <v-col cols="12">
+                        <span class="title font-weight-thin">SQUADS</span>
+                    </v-col>
+                    <v-col cols="12" v-if="_localSquads.length > 0" class="pb-2">
+                        <PaginationBlock :items="_localSquads" :items-per-page="5">
+                            <template v-slot:default="slotProps">
+                                <LocalSquadPanel :local-squad="slotProps.item"></LocalSquadPanel>
+                            </template>
+                        </PaginationBlock>
+                    </v-col>
+                    <v-col cols="12" v-else>
+                        <v-sheet color="rgba(255,255,255, 0.25)">
+                            <v-row no-gutters class="pa-2" justify="center" align="center">
+                                <span class="rh-op-70 subtitle-1">You're the lone squad in {{province.name}}</span>
+                            </v-row>
+                        </v-sheet>
+                    </v-col>
+                </v-row>
             </v-col>
             <v-col cols="12" offset-sm="2" sm="8" md="6" offset-md="0"  lg="5" xl="4">
                 <v-row no-gutters>
@@ -99,10 +118,14 @@
     import MapWindow from "../../realm/MapWindow";
     import QuestSummaryPanel from "../../realm/QuestSummaryPanel";
     import AvailableQuestsSection from "../../campaign/AvailableQuestsSection";
+    import PaginationBlock from "../../global/PaginationBlock";
+    import LocalSquadPanel from "../../realm/LocalSquadPanel";
 
     export default {
         name: "CurrentLocation",
         components: {
+            LocalSquadPanel,
+            PaginationBlock,
             AvailableQuestsSection,
             QuestSummaryPanel,
             MapWindow,
@@ -115,7 +138,8 @@
                 '_currentLocationProvince',
                 '_currentLocationQuests',
                 '_provincesByUuids',
-                '_provinces'
+                '_provinces',
+                '_localSquads'
             ]),
             bordersCount() {
                 return this._currentLocationProvince.borderUuids.length;
