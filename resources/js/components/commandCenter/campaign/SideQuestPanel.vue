@@ -11,7 +11,7 @@
                         {{sideQuest.difficulty}}
                     </v-chip>
                 </template>
-                <span>difficulty</span>
+                <span>difficulty ({{sideQuest.difficulty}})</span>
             </v-tooltip>
             <v-col cols="5 subtitle-1 rh-op-90 font-weight-regular mx-1 text-truncate">
                 {{sideQuest.name}}
