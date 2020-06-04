@@ -36,7 +36,6 @@
     import {mapGetters} from 'vuex';
 
     import ProvinceVector from "../../../realm/ProvinceVector";
-    import ExploreMapCard from "../../../realm/ExploreMapCard";
     import MapViewPortWithControls from "../../../realm/MapViewPortWithControls";
     import TwoColumnWideLayout from "../../../layouts/TwoColumnWideLayout";
     import PaginationBlock from "../../../global/PaginationBlock";
@@ -54,7 +53,6 @@
             PaginationBlock,
             TwoColumnWideLayout,
             MapViewPortWithControls,
-            ExploreMapCard,
             ProvinceVector
         },
 

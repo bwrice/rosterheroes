@@ -110,7 +110,6 @@
     import TerritoryVector from "../../../realm/TerritoryVector";
     import MapViewPortWithControls from "../../../realm/MapViewPortWithControls";
     import MapControls from "../../../realm/MapControls";
-    import ExploreMapCard from "../../../realm/ExploreMapCard";
     import ProvinceVector from "../../../realm/ProvinceVector";
     import ViewBox from "../../../../../models/ViewBox";
     import TwoColumnWideLayout from "../../../layouts/TwoColumnWideLayout";
@@ -130,7 +129,6 @@
             PaginationBlock,
             TwoColumnWideLayout,
             ProvinceVector,
-            ExploreMapCard,
             MapControls,
             MapViewPortWithControls,
             TerritoryVector,

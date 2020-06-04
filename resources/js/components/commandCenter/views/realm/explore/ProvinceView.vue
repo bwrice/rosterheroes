@@ -74,7 +74,6 @@
 <script>
 
     import ProvinceVector from "../../../realm/ProvinceVector";
-    import ExploreMapCard from "../../../realm/ExploreMapCard";
 
     import {mapActions} from 'vuex';
     import {mapGetters} from 'vuex';
@@ -100,7 +99,6 @@
             ProvincePanel,
             TwoColumnWideLayout,
             MapViewPortWithControls,
-            ExploreMapCard,
             ProvinceVector
         },
         watch: {
