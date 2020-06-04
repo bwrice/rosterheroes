@@ -1,7 +1,7 @@
 <template>
     <TwoColumnWideLayout>
         <template v-slot:header>
-            <DisplayHeaderText :display-text="'Explore the Realm'"></DisplayHeaderText>
+            <DisplayHeaderText :display-text="'Map of the Realm'"></DisplayHeaderText>
         </template>
         <template v-slot:column-one>
             <v-row no-gutters>

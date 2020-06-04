@@ -15,7 +15,7 @@
                             block
                             :color="'primary'"
                             :to="mapRoute"
-                        >Explore</v-btn>
+                        >Map</v-btn>
                     </v-col>
                 </v-row>
             </v-col>

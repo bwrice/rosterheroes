@@ -74,8 +74,8 @@ export default {
         SET_REALM_LOADING(state, payload) {
             state.loading = payload;
         },
-        REPLACE_UPDATED_MAP_PROVINCE(state, updatedExploredProvince) {
-            state.exploredProvinces = helpers.replaceOrPushElement(state.exploredProvinces, updatedExploredProvince, 'provinceUuid')
+        REPLACE_UPDATED_MAP_PROVINCE(state, updatedMapProvince) {
+            state.mapProvinces = helpers.replaceOrPushElement(state.mapProvinces, updatedMapProvince, 'provinceUuid')
         }
     },
 
