@@ -1,39 +1,50 @@
 <template>
     <v-container>
         <v-row>
-            <v-col cols="12" sm="10" offset-sm="1" xl="8" offset-xl="2">
-                <v-row>
+            <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="5" offset-lg="1" xl="4" offset-xl="2">
+                <v-row no-gutters>
                     <v-col cols="12">
-                        <v-row no-gutters justify="center" align="center">
-                            <span class="display-1 rh-op-85 font-weight-bold mx-3 text-center">{{quest.name}}</span>
-                        </v-row>
-                        <v-row no-gutters align="center" class="mt-2">
-                            <v-col cols="12" md="6" offset-md="3" lg="4" offset-lg="4">
-                                <v-btn v-if="joined"
-                                       block
-                                       color="error"
-                                       :disabled="! canLeave"
-                                       @click="leave"
-                                >
-                                    Leave Quest
-                                </v-btn>
-                                <v-btn v-else
-                                       color="primary"
-                                       block
-                                       :disabled="! canJoin"
-                                       @click="join"
-                                >
-                                    Join Quest
-                                </v-btn>
-                            </v-col>
-                        </v-row>
+                        <span class="title font-weight-thin">MAIN QUEST</span>
                     </v-col>
                 </v-row>
-                <v-row>
-                    <v-col v-for="(sideQuest, uuid) in quest.sideQuests" :key="uuid" cols="12" md="6" xl="4">
-                        <SideQuestCard :side-quest="sideQuest" :quest="quest"></SideQuestCard>
+                <v-sheet color="#5c707d" class="pa-2">
+                    <v-row no-gutters justify="center">
+                        <span class="display-1 rh-op-85 font-weight-bold mx-3 text-center">{{quest.name}}</span>
+                    </v-row>
+                    <v-row no-gutters align="center" class="mt-2">
+                        <v-col cols="12" md="6" offset-md="3" lg="4" offset-lg="4">
+                            <v-btn v-if="joined"
+                                   block
+                                   color="error"
+                                   :disabled="! canLeave"
+                                   @click="leave"
+                            >
+                                Leave Quest
+                            </v-btn>
+                            <v-btn v-else
+                                   color="primary"
+                                   block
+                                   :disabled="! canJoin"
+                                   @click="join"
+                            >
+                                Join Quest
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                </v-sheet>
+            </v-col>
+            <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="5" xl="4">
+                <v-row no-gutters>
+                    <v-col cols="12">
+                        <span class="title font-weight-thin">SIDE QUESTS</span>
                     </v-col>
                 </v-row>
+                <SideQuestCard
+                    v-for="(sideQuest, uuid) in quest.sideQuests"
+                    :key="uuid"
+                    :side-quest="sideQuest"
+                    :quest="quest"
+                ></SideQuestCard>
             </v-col>
         </v-row>
     </v-container>

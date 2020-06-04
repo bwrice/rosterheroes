@@ -1,5 +1,5 @@
 <template>
-    <v-sheet color="#5c707d" class="pa-2">
+    <v-sheet color="#5c707d" class="pa-2 my-1">
         <v-row no-gutters class="py-2" justify="space-between" align="center">
             <span class="title rh-op-85 font-weight-regular">
                 {{sideQuest.name}}
