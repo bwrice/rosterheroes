@@ -13,9 +13,9 @@
                 </template>
                 <span>difficulty</span>
             </v-tooltip>
-            <span class="subtitle-1 rh-op-90 font-weight-regular mx-1">
+            <v-col cols="5 subtitle-1 rh-op-90 font-weight-regular mx-1 text-truncate">
                 {{sideQuest.name}}
-            </span>
+            </v-col>
             <div class="flex flex-grow-1"></div>
             <v-btn
                 v-if="hasSideQuest"
@@ -49,6 +49,12 @@
                 <v-card
                     color="#32343d"
                 >
+                    <v-card-title>
+                        <span class="text-center rh-op-85">
+                            {{sideQuest.name}}
+                        </span>
+                    </v-card-title>
+                    <v-divider></v-divider>
                     <v-tabs
                         v-model="tab"
                         mobile-break-point="10"
@@ -65,11 +71,11 @@
                         </v-tab>
                     </v-tabs>
                     <v-tabs-items v-model="tab" style="background-color: transparent">
-                        <MinionPanel
+                        <SideQuestMinionTab
                             v-for="(minion, uuid) in sideQuest.minions"
                             :key="uuid"
                             :minion="minion"
-                        ></MinionPanel>
+                        ></SideQuestMinionTab>
                     </v-tabs-items>
                 </v-card>
             </v-col>
@@ -83,12 +89,12 @@
     import {mapActions} from 'vuex';
 
     import SideQuest from "../../../models/SideQuest";
-    import MinionPanel from "../views/campaign/MinionPanel";
+    import SideQuestMinionTab from "../views/campaign/SideQuestMinionTab";
     import Quest from "../../../models/Quest";
 
     export default {
         name: "SideQuestPanel",
-        components: {MinionPanel},
+        components: {SideQuestMinionTab},
         props: {
             sideQuest: {
                 type: SideQuest,

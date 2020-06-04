@@ -1,6 +1,6 @@
 <template>
     <v-tab-item class="pa-1">
-        <v-sheet color="#3a474a" class="pa-1" :style="sheetStyles">
+        <v-sheet color="#4b6475" class="pa-1" :style="sheetStyles">
             <v-row no-gutters justify="center" align="center">
                 <v-chip
                     label
@@ -46,7 +46,7 @@
     import AttackPanel from "../../global/AttackPanel";
 
     export default {
-        name: "MinionPanel",
+        name: "SideQuestMinionTab",
         components: {AttackPanel, CombatPositionIcon},
         props: {
             minion: {
