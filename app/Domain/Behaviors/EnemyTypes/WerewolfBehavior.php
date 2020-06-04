@@ -16,8 +16,8 @@ class WerewolfBehavior extends EnemyTypeBehavior
      */
     public function getStartingHealth(int $enemyLevel, CombatPosition $startingCombatPosition): int
     {
-        $base = 500;
-        $levelModifier = 15;
+        $base = 350;
+        $levelModifier = 37;
         return $base + ($levelModifier * $enemyLevel);
     }
 
@@ -29,7 +29,7 @@ class WerewolfBehavior extends EnemyTypeBehavior
     public function getProtection(int $enemyLevel, CombatPosition $startingCombatPosition): int
     {
         $base = 5;
-        $levelModifier = .15;
+        $levelModifier = .25;
         return (int) ceil($base + ($levelModifier * $enemyLevel));
     }
 
@@ -41,7 +41,7 @@ class WerewolfBehavior extends EnemyTypeBehavior
      */
     protected function adjustDamageProperty(float $damageProperty, int $enemyLevel, CombatPosition $startingCombatPosition)
     {
-        return $damageProperty * (1.15 + ($enemyLevel / 35));
+        return $damageProperty * (1.18 + ($enemyLevel / 30));
     }
 
     /**

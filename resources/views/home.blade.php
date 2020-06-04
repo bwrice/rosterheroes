@@ -117,9 +117,8 @@
             </div>
             <div class="w-5/6 sm:w-1/2 px-6 pt-6 pb-2 md:pt-24">
                 <h3 class="text-3xl text-gray-800 font-bold leading-none mb-3">Explore a massive realm</h3>
-                <p class="text-gray-700 mb-8">With nearly 500 unique locations, there's a near endless amount of things to discover.
-                    From dungeons, castles and secret caves, to shops, academies and forges.
-                    Not to mention, the titans and minions that are also roaming the lands.
+                <p class="text-gray-700 mb-8">With close to 500 unique locations, there's nearly an endless amount of things to discover:
+                    from dungeons, castles and secret caves to shops, academies and forges, not to mention, the titans and minions that are also roaming the lands.
                 </p>
             </div>
         </div>
@@ -130,7 +129,7 @@
                 <div class="align-middle">
                     <h3 class="text-3xl text-gray-800 font-bold leading-none mb-3">Community-driven content</h3>
                     <p class="text-gray-700 mb-8">Team up with allies to take on the hardest quests. Build a nation, conquer territories
-                    and invade rival nations. Build markets as well as trade and sell goods in the player driven economy.</p>
+                    and invade rival nations. Set up merchants and trade and sell goods in the player driven economy.</p>
                 </div>
             </div>
             <div class="w-full sm:w-1/2 px-6 lg:py-6">
@@ -147,7 +146,7 @@
                 <div class="align-middle">
                     <h3 class="text-3xl text-gray-800 font-bold leading-none mb-3">Four sports combined into one</h3>
                     <p class="text-gray-700 mb-8">Embody your heroes with any combination of players from the NFL, NBA, MLB and NHL. There's no longer an off-season in fantasy
-                    because games from these leagues are happening all year long... Well... with the exception of a global pandemic.</p>
+                    because games from these leagues are happening all year long. (Well, except of a global pandemic.)</p>
                 </div>
             </div>
         </div>
@@ -156,9 +155,9 @@
         <div class="flex flex-wrap">
             <div class="w-5/6 sm:w-1/2 p-6 md:pt-24">
                 <h3 class="text-3xl text-gray-800 font-bold leading-none mb-3">Earn tons of loot</h3>
-                <p class="text-gray-700 mb-8">Kill monsters and complete quests to earn treasure chests. They're full of 100's of different types of items
-                    with a near infinite combination of stats and enchantments. If you're really lucky, you'll find a rare legendary or even mythical item.
-                    And don't forget gold! There's tons of gold!
+                <p class="text-gray-700 mb-8">Kill monsters and complete quests to earn treasure chests. They're full of hundreds of different types of items
+                    with nearly an infinite combination of stats and enchantments. If you're lucky, you might even find a rare legendary or even mythical item.
+                    And don't forget gold! There are tons of gold!
                 </p>
             </div>
             <div class="w-full sm:w-1/2 py-6 px-6 md:pl-16">

@@ -10,10 +10,10 @@
                 <v-row no-gutters justify="center" align="center">
                     <v-col cols="3">
                         <v-row no-gutters class="flex-column" align="center">
-                            <v-btn small outlined color="#bababa" @click="zoomIn()" class="my-1">
+                            <v-btn small outlined color="#bababa" @click="zoomIn()" class="my-1 rh-dbl-tap-disabled">
                                 <v-icon dark>zoom_in</v-icon>
                             </v-btn>
-                            <v-btn small outlined color="#bababa" @click="zoomOut()" class="my-1">
+                            <v-btn small outlined color="#bababa" @click="zoomOut()" class="my-1 rh-dbl-tap-disabled">
                                 <v-icon dark>zoom_out</v-icon>
                             </v-btn>
                         </v-row>
@@ -27,20 +27,20 @@
                     </v-col>
                     <v-col cols="5">
                         <v-row no-gutters justify="center">
-                            <v-btn small outlined color="#bababa" @click="panUp">
+                            <v-btn small outlined color="#bababa" @click="panUp" class="rh-dbl-tap-disabled">
                                 <v-icon dark>arrow_drop_up</v-icon>
                             </v-btn>
                         </v-row>
                         <v-row no-gutters justify="center">
-                            <v-btn small outlined color="#bababa" @click="panLeft">
+                            <v-btn small outlined color="#bababa" @click="panLeft" class="rh-dbl-tap-disabled">
                                 <v-icon dark>arrow_left</v-icon>
                             </v-btn>
-                            <v-btn small outlined color="#bababa" @click="panRight">
+                            <v-btn small outlined color="#bababa" @click="panRight" class="rh-dbl-tap-disabled">
                                 <v-icon dark>arrow_right</v-icon>
                             </v-btn>
                         </v-row>
                         <v-row no-gutters justify="center">
-                            <v-btn small outlined color="#bababa" @click="panDown">
+                            <v-btn small outlined color="#bababa" @click="panDown" class="rh-dbl-tap-disabled">
                                 <v-icon dark>arrow_drop_down</v-icon>
                             </v-btn>
                         </v-row>
