@@ -34,9 +34,9 @@ class BuildInitialWeekAction
             throw new BuildWeekException("There should be no current week when building the first week", BuildWeekException::CODE_INVALID_CURRENT_WEEK);
         }
         $week = $this->buildWeekAction->execute();
-        $this->buildWeeklyPlayerSpiritsAction->execute($week);
         $week->made_current_at = Date::now();
         $week->save();
+        $this->buildWeeklyPlayerSpiritsAction->execute($week);
         return $week;
     }
 }
