@@ -24,7 +24,7 @@ export default class Continent {
 
     getRoute(route) {
         return {
-            name: 'explore-continent',
+            name: 'continent-map',
             params: {
                 squadSlug: route.params.squadSlug,
                 continentSlug: this.slug

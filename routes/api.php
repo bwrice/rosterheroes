@@ -88,7 +88,7 @@ Route::prefix('v1')->group(function () {
 
     Route::get('/territories', [TerritoryController::class, 'index']);
     Route::get('/continents', [ContinentController::class, 'index']);
-    Route::get('/map/province/{provinceSlug}', [MapProvinceController::class, 'show']);
+    Route::get('/map/provinces/{provinceSlug}', [MapProvinceController::class, 'show']);
 
     Route::get('/hero-classes', [HeroClassController::class, 'index']);
     Route::get('/hero-races', [HeroRaceController::class, 'index']);

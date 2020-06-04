@@ -46,7 +46,7 @@
             },
             navigateToContinent() {
                 if (this.interactive) {
-                    this.$router.push(this.continentRoute);
+                    this.$router.push(this.continent.getRoute(this.$route));
                 }
             }
         },
@@ -60,15 +60,6 @@
             },
             provincesForContinent() {
                 return this._provincesByContinentID(this.continent.id);
-            },
-            continentRoute() {
-                return {
-                    name: 'explore-continent',
-                    params: {
-                        squadSlug: this.$route.params.squadSlug,
-                        continentSlug: this.continent.slug
-                    }
-                }
             }
         }
     }

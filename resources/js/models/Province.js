@@ -21,7 +21,7 @@ export default class Province {
 
     getRoute(route) {
         return {
-            name: 'explore-province',
+            name: 'province-map',
             params: {
                 squadSlug: route.params.squadSlug,
                 provinceSlug: this.slug

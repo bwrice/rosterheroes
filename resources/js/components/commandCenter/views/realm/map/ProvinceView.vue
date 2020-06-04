@@ -22,11 +22,11 @@
                     </MapViewPortWithControls>
                 </v-col>
             </v-row>
-            <template v-if="exploredProvince">
+            <template v-if="mapProvince">
                 <CardBlock :title="'Quests'">
-                    <template v-if="exploredProvince.quests.length">
+                    <template v-if="mapProvince.quests.length">
                         <CompactQuestPanel
-                            v-for="(compactQuest, uuid) in exploredProvince.quests"
+                            v-for="(compactQuest, uuid) in mapProvince.quests"
                             :compact-quest="compactQuest"
                             :key="uuid"
                         ></CompactQuestPanel>
@@ -102,28 +102,28 @@
             ProvinceVector
         },
         watch: {
-            // We need to watch province changes for when this component is reused to possible update exploredProvince
+            // We need to watch province changes for when this component is reused to possible update mapProvince
             province: function () {
-                this.maybeUpdateExploredProvince();
+                this.maybeUpdateMapProvince();
             }
         },
 
         methods: {
             ...mapActions([
-                'updateExploredProvince'
+                'updateMapProvince'
             ]),
             navigateToProvince(province) {
                 province.goToRoute(this.$router, this.$route);
             },
-            maybeUpdateExploredProvince() {
-                if (! this.exploredProvince) {
-                    this.updateExploredProvince(this.$route.params.provinceSlug)
+            maybeUpdateMapProvince() {
+                if (! this.mapProvince) {
+                    this.updateMapProvince(this.$route.params.provinceSlug)
                 }
             }
         },
 
         mounted() {
-            this.maybeUpdateExploredProvince();
+            this.maybeUpdateMapProvince();
         },
 
         computed: {
@@ -132,7 +132,7 @@
                 '_provincesByUuids',
                 '_continentByID',
                 '_territoryByID',
-                '_exploredProvinceByProvinceSlug'
+                '_mapProvinceByProvinceSlug'
             ]),
             province() {
                 return this._provinceBySlug(this.$route.params.provinceSlug);
@@ -146,9 +146,9 @@
             territory() {
                 return this._territoryByID(this.province.territoryID);
             },
-            exploredProvince() {
+            mapProvince() {
                 let provinceSlug = this.$route.params.provinceSlug;
-                return this._exploredProvinceByProvinceSlug(provinceSlug);
+                return this._mapProvinceByProvinceSlug(provinceSlug);
             },
             emptyQuestsText() {
                 return 'No quests located at ' + this.province.name;

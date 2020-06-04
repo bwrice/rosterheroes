@@ -24,7 +24,7 @@ export default class Territory {
 
     getRoute(route) {
         return {
-            name: 'explore-territory',
+            name: 'territory-map',
             params: {
                 squadSlug: route.params.squadSlug,
                 territorySlug: this.slug

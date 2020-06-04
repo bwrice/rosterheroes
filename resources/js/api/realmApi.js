@@ -14,7 +14,7 @@ export async function getContinents() {
     return response.data;
 }
 
-export async function getExploredProvince(provinceSlug) {
-    let response = await axios.get('/api/v1/explore-provinces/' + provinceSlug);
+export async function getMapProvince(provinceSlug) {
+    let response = await axios.get('/api/v1/map/provinces/' + provinceSlug);
     return response.data;
 }

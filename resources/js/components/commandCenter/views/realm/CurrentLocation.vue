@@ -14,7 +14,7 @@
                         <v-btn
                             block
                             :color="'primary'"
-                            :to="exploreRoute"
+                            :to="mapRoute"
                         >Explore</v-btn>
                     </v-col>
                 </v-row>
@@ -150,9 +150,9 @@
             provinces() {
                 return this._provinces.filter((province) => province.uuid !== this._currentLocationProvince.uuid);
             },
-            exploreRoute() {
+            mapRoute() {
                 return {
-                    name: 'explore-realm',
+                    name: 'realm-map',
                     params: {
                         squadSlug: this.$route.params.squadSlug
                     }

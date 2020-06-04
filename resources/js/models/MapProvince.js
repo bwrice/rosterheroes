@@ -1,7 +1,7 @@
 
 import CompactQuest from "./compact/CompactQuest";
 
-export default class ExploredProvince {
+export default class MapProvince {
 
     constructor({provinceUuid, provinceSlug, quests = []}) {
         this.provinceUuid = provinceUuid;

@@ -1,8 +1,8 @@
 import CurrentLocation from "../components/commandCenter/views/realm/CurrentLocation";
-import ContinentView from "../components/commandCenter/views/realm/explore/ContinentView";
-import TerritoryView from "../components/commandCenter/views/realm/explore/TerritoryView";
-import ProvinceView from "../components/commandCenter/views/realm/explore/ProvinceView";
-import RealmView from "../components/commandCenter/views/realm/explore/RealmView";
+import ContinentView from "../components/commandCenter/views/realm/map/ContinentView";
+import TerritoryView from "../components/commandCenter/views/realm/map/TerritoryView";
+import ProvinceView from "../components/commandCenter/views/realm/map/ProvinceView";
+import RealmView from "../components/commandCenter/views/realm/map/RealmView";
 import TravelView from "../components/commandCenter/views/realm/TravelView";
 import CommandCenter from "../views/CommandCenter";
 import SquadAppBarContent from "../components/commandCenter/appBarContent/SquadAppBarContent";
@@ -38,45 +38,45 @@ export const realmRoutes = {
             }
         },
         {
-            path: 'explore',
+            path: 'map',
             components: {
                 default: RealmView,
                 appBarContent: SquadAppBarContent
             },
-            name: 'explore-realm',
+            name: 'realm-map',
             meta: {
                 footerButton: 'realm'
             }
         },
         {
-            path: 'explore/continents/:continentSlug',
+            path: 'map/continents/:continentSlug',
             components: {
                 default: ContinentView,
                 appBarContent: SquadAppBarContent
             },
-            name: 'explore-continent',
+            name: 'continent-map',
             meta: {
                 footerButton: 'realm'
             }
         },
         {
-            path: 'explore/territories/:territorySlug',
+            path: 'map/territories/:territorySlug',
             components: {
                 default: TerritoryView,
                 appBarContent: SquadAppBarContent
             },
-            name: 'explore-territory',
+            name: 'territory-map',
             meta: {
                 footerButton: 'realm'
             }
         },
         {
-            path: 'explore/provinces/:provinceSlug',
+            path: 'map/provinces/:provinceSlug',
             components: {
                 default: ProvinceView,
                 appBarContent: SquadAppBarContent
             },
-            name: 'explore-province',
+            name: 'province-map',
             meta: {
                 footerButton: 'realm'
             }

@@ -3,7 +3,7 @@ import * as helpers from '../../helpers/vuexHelpers';
 import Province from "../../models/Province";
 import Territory from "../../models/Territory";
 import Continent from "../../models/Continent";
-import ExploredProvince from "../../models/ExploredProvince";
+import MapProvince from "../../models/MapProvince";
 
 export default {
 
@@ -11,7 +11,7 @@ export default {
         provinces: [],
         territories: [],
         continents: [],
-        exploredProvinces: []
+        mapProvinces: []
     },
 
     getters: {
@@ -57,8 +57,8 @@ export default {
             let province = state.provinces.find(province => province.uuid === uuid);
             return province ? province : new Province({});
         },
-        _exploredProvinceByProvinceSlug: (state) => (provinceSlug) =>  {
-            return state.exploredProvinces.find(explored => explored.provinceSlug === provinceSlug);
+        _mapProvinceByProvinceSlug: (state) => (provinceSlug) =>  {
+            return state.mapProvinces.find(mapProvince => mapProvince.provinceSlug === provinceSlug);
         }
     },
     mutations: {
@@ -74,7 +74,7 @@ export default {
         SET_REALM_LOADING(state, payload) {
             state.loading = payload;
         },
-        REPLACE_UPDATED_EXPLORED_PROVINCE(state, updatedExploredProvince) {
+        REPLACE_UPDATED_MAP_PROVINCE(state, updatedExploredProvince) {
             state.exploredProvinces = helpers.replaceOrPushElement(state.exploredProvinces, updatedExploredProvince, 'provinceUuid')
         }
     },
@@ -114,11 +114,11 @@ export default {
             }
         },
 
-        async updateExploredProvince({state, commit, dispatch}, provinceSlug) {
+        async updateMapProvince({state, commit, dispatch}, provinceSlug) {
 
-            let response = await realmApi.getExploredProvince(provinceSlug);
-            let exploredProvince = new ExploredProvince(response.data);
-            commit('REPLACE_UPDATED_EXPLORED_PROVINCE', exploredProvince);
+            let response = await realmApi.getMapProvince(provinceSlug);
+            let mapProvince = new MapProvince(response.data);
+            commit('REPLACE_UPDATED_MAP_PROVINCE', mapProvince);
         }
     }
 };
