@@ -16,7 +16,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
 
-class ExploredProvinceControllerTest extends TestCase
+class MapProvinceControllerTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -31,13 +31,13 @@ class ExploredProvinceControllerTest extends TestCase
 
     protected function getEndpoint(Province $province)
     {
-        return '/api/v1/explore-provinces/' . $province->slug;
+        return '/api/v1/map/provinces/' . $province->slug;
     }
 
     /**
      * @test
      */
-    public function it_will_have_compact_quests_located_at_the_province_in_the_response()
+    public function it_will_have_the_local_quests_count_with_the_response()
     {
         $questOne = QuestFactory::new()->withProvinceID($this->province->id)->create();
         $questTwo = QuestFactory::new()->withProvinceID($this->province->id)->create();
@@ -45,14 +45,7 @@ class ExploredProvinceControllerTest extends TestCase
         $response = $this->json('GET', $this->getEndpoint($this->province));
         $response->assertStatus(200)->assertJson([
             'data' => [
-                'quests' => [
-                    [
-                        'uuid' => $questOne->uuid
-                    ],
-                    [
-                        'uuid' => $questTwo->uuid
-                    ],
-                ]
+                'questsCount' => 2
             ]
         ]);
     }
