@@ -26,7 +26,7 @@ class LocalSquadResource extends JsonResource
             'slug' => $this->slug,
             'name' => $this->name,
             'level' => $this->level(),
-            'heroes' => LocalHeroResource::collection($this->heroes)
+            'localHeroes' => LocalHeroResource::collection($this->heroes)
         ];
     }
 }
