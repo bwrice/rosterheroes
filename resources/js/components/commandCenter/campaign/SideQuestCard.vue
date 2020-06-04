@@ -1,17 +1,50 @@
 <template>
-    <v-sheet color="#5c707d" class="pa-2 my-1">
-        <v-row no-gutters class="py-2" justify="space-between" align="center">
-            <span class="title rh-op-85 font-weight-regular">
+    <v-sheet color="#466661" class="my-1">
+        <v-row no-gutters class="pa-1" justify="center" align="center">
+            <v-tooltip bottom>
+                <template v-slot:activator="{ on }">
+                    <v-chip
+                        label
+                        color="rgba(0,0,0,.25)"
+                        v-on="on"
+                    >
+                        {{sideQuest.difficulty}}
+                    </v-chip>
+                </template>
+                <span>difficulty</span>
+            </v-tooltip>
+            <span class="subtitle-1 rh-op-90 font-weight-regular mx-1">
                 {{sideQuest.name}}
             </span>
-            <v-chip
-                label
-                color="rgba(0,0,0,.25)"
+            <div class="flex flex-grow-1"></div>
+            <v-btn
+                v-if="hasSideQuest"
+                color="error"
+                class="mx-1"
+                @click="handleLeaveSideQuestClicked"
             >
-                {{sideQuest.difficulty}}
-            </v-chip>
+                Leave
+            </v-btn>
+            <v-btn
+                v-else
+                color="primary"
+                class="mx-1"
+                :disabled="! canJoinSideQuest"
+                @click="handleJoinSideQuestClicked"
+            >
+                Join
+            </v-btn>
+            <v-btn @click="expanded = ! expanded"
+                   fab
+                   dark
+                   x-small
+                   color="rgba(0, 0, 0, .4)"
+            >
+                <v-icon v-if="expanded">expand_less</v-icon>
+                <v-icon v-else>expand_more</v-icon>
+            </v-btn>
         </v-row>
-        <v-row no-gutters>
+        <v-row no-gutters v-if="expanded">
             <v-carousel
                 :height="height"
                 hide-delimiter-background
@@ -24,25 +57,6 @@
                     <MinionPanel :minion="minion" :height="height"></MinionPanel>
                 </v-carousel-item>
             </v-carousel>
-        </v-row>
-        <v-row no-gutters justify="end">
-            <v-btn
-                v-if="hasSideQuest"
-                color="error"
-                class="mt-2"
-                @click="handleLeaveSideQuestClicked"
-            >
-                Leave Side Quest
-            </v-btn>
-            <v-btn
-                v-else
-                color="primary"
-                class="mt-2"
-                :disabled="! canJoinSideQuest"
-                @click="handleJoinSideQuestClicked"
-            >
-                Join Side Quest
-            </v-btn>
         </v-row>
     </v-sheet>
 </template>
@@ -75,7 +89,8 @@
         },
         data() {
             return {
-                pending: false
+                pending: false,
+                expanded: false
             }
         },
         computed: {
