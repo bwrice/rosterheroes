@@ -176,6 +176,7 @@ return [
         App\Providers\HorizonServiceProvider::class,
         App\Providers\NovaServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        \Rollbar\Laravel\RollbarServiceProvider::class,
 
         /*
          * Custom Service Providers
@@ -184,7 +185,7 @@ return [
         \App\Providers\StatsIntegrationServiceProvider::class,
         \App\Providers\PointsCalculatorServiceProvider::class,
         \App\Providers\FacadeServiceProvider::class,
-        \App\Providers\EnumServiceProvider::class,
+        \App\Providers\EnumServiceProvider::class
 //        \App\Providers\ProjectorServiceProvider::class
     ],
 
