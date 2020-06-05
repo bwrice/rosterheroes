@@ -45,7 +45,7 @@ class BuildNewCurrentWeekActionTest extends TestCase
     */
     public function adventuring_will_lock_the_following_sunday_if_starting_point_is_after_friday()
     {
-        $testNow = Date::now()->next(CarbonInterface::FRIDAY);
+        $testNow = Date::now()->next(CarbonInterface::SATURDAY);
         $followingSunday = $testNow->next(CarbonInterface::SUNDAY)->addWeek();
         Date::setTestNow($testNow);
 
