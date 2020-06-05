@@ -3,8 +3,6 @@
 
 namespace App\Domain\Actions;
 
-
-use App\Aggregates\UserAggregate;
 use App\Domain\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;

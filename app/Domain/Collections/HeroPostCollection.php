@@ -71,7 +71,11 @@ class HeroPostCollection extends Collection
             /** @var HeroPost $heroPost */
             $heroPost = $this->postEmpty()->filterByHeroRace($hero->heroRace)->first();
             if (! $heroPost) {
-                Log::warning("Couldn't fill hero post for hero: " . $hero->uuid);
+                Log::warning("Couldn't fill hero post for hero", [
+                    'hero' => $hero,
+                    'heroPosts' => $this,
+                    'emptyPosts' => $this->postEmpty()
+                ]);
             } else {
                 $heroPost->setHero($hero);
             }
