@@ -6,6 +6,11 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
+/**
+ * Class SeedHeroRanksPositionsRelations
+ *
+ * Note should be HeroRacePosition. Leaving to not interfere with production migrations
+ */
 class SeedHeroRanksPositionsRelations extends Migration
 {
     /**
