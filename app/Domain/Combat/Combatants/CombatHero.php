@@ -44,6 +44,10 @@ class CombatHero extends AbstractCombatant implements SpendsResources
     protected $minionKills = 0;
 
     protected $blocks = 0;
+    /**
+     * @var string
+     */
+    private $playerSpiritUuid;
 
     public function __construct(
         string $heroUuid,
@@ -53,11 +57,13 @@ class CombatHero extends AbstractCombatant implements SpendsResources
         int $protection,
         float $blockChancePercent,
         CombatPosition $combatPosition,
-        AbstractCombatAttackCollection $combatAttacks)
+        AbstractCombatAttackCollection $combatAttacks,
+        string $playerSpiritUuid)
     {
         $this->heroUuid = $heroUuid;
         $this->initialStamina = $this->currentStamina = $stamina;
         $this->initialMana = $this->currentMana = $mana;
+        $this->playerSpiritUuid = $playerSpiritUuid;
         parent::__construct(
             $health,
             $protection,
@@ -179,6 +185,7 @@ class CombatHero extends AbstractCombatant implements SpendsResources
             'currentStamina' => $this->currentStamina,
             'initialMana' => $this->initialMana,
             'currentMana' => $this->currentMana,
+            'playerSpiritUuid' => $this->playerSpiritUuid,
         ], parent::toArray());
     }
 

@@ -24,6 +24,7 @@ class CombatHeroDataMapper extends AbstractCombatantDataMapper
     public function getCombatHero(array $data, Collection $combatPositions = null)
     {
         $combatPositions = $combatPositions ?: CombatPosition::all();
+        /** @var CombatPosition $initialCombatPosition */
         $initialCombatPosition = $this->getInitialCombatPosition($data, $combatPositions);
 
         $combatAttacks = collect($data['combatAttacks'])->map(function ($combatAttackData) {
@@ -38,7 +39,8 @@ class CombatHeroDataMapper extends AbstractCombatantDataMapper
             $this->getProtection($data),
             $this->getBlockChancePercent($data),
             $initialCombatPosition,
-            new AbstractCombatAttackCollection($combatAttacks)
+            new AbstractCombatAttackCollection($combatAttacks),
+            $data['playerSpiritUuid']
         );
 
         $combatHero->setCurrentStamina($data['currentStamina']);
