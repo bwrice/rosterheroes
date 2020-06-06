@@ -22,6 +22,7 @@ class PlayerSpiritsSeeder extends Seeder
         $week = $buildNewCurrentWeekAction->execute();
         $week->made_current_at = now();
         $week->save();
+        $gameStartsAt = $week->adventuring_locks_at->clone()->addHours(2);
 
         $leagues = League::query()->with('sport')->get();
         /** @var PositionCollection $positions */
@@ -40,9 +41,6 @@ class PlayerSpiritsSeeder extends Seeder
             $awayTeam = factory(Team::class)->create([
                 'league_id' => $league->id
             ]);
-
-            $hoursToAdd = random_int(0, 12);
-            $gameStartsAt = $week->adventuring_locks_at->addHours($hoursToAdd);
 
             $game = factory(Game::class)->create([
                 'home_team_id' => $homeTeam->id,
