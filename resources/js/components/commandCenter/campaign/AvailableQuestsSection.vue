@@ -1,8 +1,5 @@
 <template>
-    <v-row no-gutters>
-        <v-col cols="12">
-            <span class="title font-weight-thin">{{title}}</span>
-        </v-col>
+    <CardSection :title="title">
         <v-col cols="12" v-if="_currentLocationQuests.length">
             <QuestSummaryPanel v-for="(quest, uuid) in _currentLocationQuests" :key="uuid" :quest="quest"></QuestSummaryPanel>
         </v-col>
@@ -18,17 +15,18 @@
                 </v-col>
             </v-row>
         </v-col>
-    </v-row>
+    </CardSection>
 </template>
 
 <script>
 
     import {mapGetters} from 'vuex';
     import QuestSummaryPanel from "../realm/QuestSummaryPanel";
+    import CardSection from "../global/CardSection";
 
     export default {
         name: "AvailableQuestsSection",
-        components: {QuestSummaryPanel},
+        components: {CardSection, QuestSummaryPanel},
         props: {
             showTravelButton: {
                 type: Boolean,
