@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CampaignHistoryController;
 use App\Http\Controllers\CampaignStopSideQuestController;
 use App\Http\Controllers\CombatPositionController;
 use App\Http\Controllers\ContinentController;
@@ -132,6 +133,8 @@ Route::prefix('v1')->group(function () {
 
             Route::get('{squadSlug}/spells', [SquadSpellController::class, 'index']);
             Route::get('{squadSlug}/unopened-chests', [UnopenedChestController::class, 'index']);
+
+            Route::get('{squadSlug}/campaign-history', CampaignHistoryController::class);
 
             /*
              * CURRENT LOCATION
