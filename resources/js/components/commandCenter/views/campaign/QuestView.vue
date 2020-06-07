@@ -44,7 +44,14 @@
                     :key="uuid"
                     :side-quest="sideQuest"
                     :quest="quest"
-                ></SideQuestPanel>
+                >
+                    <template v-slot:action>
+                        <JoinSideQuestButton
+                            :side-quest="sideQuest"
+                            :quest="quest"
+                        ></JoinSideQuestButton>
+                    </template>
+                </SideQuestPanel>
             </v-col>
         </v-row>
     </v-container>
@@ -55,10 +62,11 @@
     import {mapGetters} from 'vuex';
     import {mapActions} from 'vuex';
     import SideQuestPanel from "../../campaign/SideQuestPanel";
+    import JoinSideQuestButton from "../../campaign/JoinSideQuestButton";
 
     export default {
         name: "QuestView",
-        components: {SideQuestPanel},
+        components: {JoinSideQuestButton, SideQuestPanel},
         data() {
             return {
                 pending: false
