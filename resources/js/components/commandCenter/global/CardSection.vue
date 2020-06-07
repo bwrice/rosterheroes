@@ -3,9 +3,11 @@
         <v-col cols="12">
             <span class="title font-weight-thin">{{title}}</span>
         </v-col>
-        <slot>
-            <!-- Default Slot -->
-        </slot>
+        <v-col cols="12">
+            <slot>
+                <!-- Default Slot -->
+            </slot>
+        </v-col>
     </v-row>
 </template>
 
