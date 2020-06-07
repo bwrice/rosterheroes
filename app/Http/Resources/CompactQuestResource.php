@@ -10,8 +10,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @package App\Http\Resources
  *
  * @mixin Quest
- *
- * TODO: delete?
  */
 class CompactQuestResource extends JsonResource
 {
