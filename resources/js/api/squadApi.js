@@ -38,6 +38,11 @@ export async function getUnopenedChests(squadSlug) {
     return response.data;
 }
 
+export async function getCampaignHistory(squadSlug) {
+    let response = await axios.get(ROUTE_PREFIX + squadSlug + '/campaign-history');
+    return response.data;
+}
+
 export async function getCurrentLocationProvince(squadSlug) {
     let response = await axios.get(ROUTE_PREFIX + squadSlug + '/current-location/province');
     return response.data;

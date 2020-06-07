@@ -123,6 +123,7 @@
             this.updateSpellLibrary(route);
             this.updateUnopenedChests(route);
             this.updateLocalStash(route);
+            this.updateHistoricCampaigns(route);
         },
 
         data: function() {
@@ -162,6 +163,7 @@
                 'updateLocalStash',
                 'updateLeagues',
                 'updateStatTypes',
+                'updateHistoricCampaigns'
             ]),
             async logout() {
                 await axios.post('/logout');

@@ -11,6 +11,7 @@ import Campaign from "../../models/Campaign";
 import UnopenedChest from "../../models/UnopenedChest";
 import OpenedChestResult from "../../models/OpenedChestResult";
 import Item from "../../models/Item";
+import HistoricCampaign from "../../models/HistoricCampaign";
 
 export default {
 
@@ -117,7 +118,7 @@ export default {
             state.spells = payload;
         },
         SET_HISTORIC_CAMPAIGNS(state, historicCampaigns) {
-            state.unopenedChests = historicCampaigns;
+            state.historicCampaigns = historicCampaigns;
         },
         SET_UNOPENED_CHESTS(state, payload) {
             state.unopenedChests = payload;
@@ -219,6 +220,19 @@ export default {
                 commit('SET_MOBILE_STORAGE', new MobileStorage(mobileStorageResponse.data));
             } catch (e) {
                 console.warn("Failed to update mobile storage");
+            }
+        },
+
+        async updateHistoricCampaigns({commit}, route) {
+            try {
+                let squadSlug = route.params.squadSlug;
+                let campaignHistoryResponse = await squadApi.getCampaignHistory(squadSlug);
+                let historicCampaigns = campaignHistoryResponse.data.map(function (historicCampaign) {
+                    return new HistoricCampaign(historicCampaign);
+                });
+                commit('SET_HISTORIC_CAMPAIGNS', historicCampaigns);
+            } catch (e) {
+                console.warn("Failed to update historic campaigns");
             }
         },
 
