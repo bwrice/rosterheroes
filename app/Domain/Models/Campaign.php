@@ -85,8 +85,16 @@ class Campaign extends EventSourcedModel
         ];
     }
 
-    public function getAggregate()
+    public static function historyResourceRelations()
     {
-        return CampaignAggregate::retrieve($this->uuid);
+        return [
+            'week',
+            'campaignStops.quest',
+        ];
+    }
+
+    public function getDescription()
+    {
+        return 'Week ending ' . $this->week->adventuring_locks_at->format('m-d-y');
     }
 }
