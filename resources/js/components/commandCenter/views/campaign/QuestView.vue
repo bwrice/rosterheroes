@@ -43,7 +43,6 @@
                     v-for="(sideQuest, uuid) in quest.sideQuests"
                     :key="uuid"
                     :side-quest="sideQuest"
-                    :quest="quest"
                 >
                     <template v-slot:action>
                         <JoinSideQuestButton
