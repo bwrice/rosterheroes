@@ -7,6 +7,7 @@ use App\Factories\Models\CampaignFactory;
 use App\Factories\Models\CampaignStopFactory;
 use App\Factories\Models\SideQuestResultFactory;
 use App\Factories\Models\SquadFactory;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Laravel\Passport\Passport;
@@ -14,6 +15,8 @@ use Tests\TestCase;
 
 class CampaignHistoryControllerTest extends TestCase
 {
+
+    use DatabaseTransactions;
 
     /**
      * @test
