@@ -23,7 +23,8 @@ export default {
         spells: [],
         unopenedChests: [],
         openedChestResults: [],
-        loadingUnopenedChests: true
+        loadingUnopenedChests: true,
+        historicCampaigns: []
     },
 
     getters: {
@@ -38,6 +39,9 @@ export default {
         },
         _loadingUnopenedChests(state) {
             return state.loadingUnopenedChests;
+        },
+        _historicCampaigns(state) {
+            return state.historicCampaigns;
         },
         _lastOpenedChestResult(state) {
             if (state.openedChestResults.length > 0) {
@@ -111,6 +115,9 @@ export default {
         },
         SET_SPELL_LIBRARY(state, payload) {
             state.spells = payload;
+        },
+        SET_HISTORIC_CAMPAIGNS(state, historicCampaigns) {
+            state.unopenedChests = historicCampaigns;
         },
         SET_UNOPENED_CHESTS(state, payload) {
             state.unopenedChests = payload;
