@@ -54,6 +54,9 @@ export default {
         _heroes(state) {
             return state.heroes;
         },
+        _heroByUuid: (state) => (uuid) => {
+            return state.heroes.find((hero) => hero.uuid === uuid);
+        },
         _currentCampaign(state) {
             return state.currentCampaign;
         },
