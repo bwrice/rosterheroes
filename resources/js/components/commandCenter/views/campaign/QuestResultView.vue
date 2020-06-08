@@ -15,8 +15,8 @@
                             <v-btn
                                 color="primary"
                                 class="mx-1"
-                                @click="loadSideQuestResult(sideQuestResult.uuid)"
-                                :disabled="sideQuestResultLoadedUuid === sideQuestResult.uuid"
+                                @click="loadSideQuestResult(sideQuestResult)"
+                                :disabled="focusedSideQuestResultUuid === sideQuestResult.uuid"
                                 href="#replay"
                             >
                                 replay
@@ -27,7 +27,7 @@
             </v-col>
             <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="5" xl="4">
                 <CardSection :title="'SIDE QUEST RESULT REPLAY'" id="replay">
-                    <template v-if="! sideQuestResultLoadedUuid">
+                    <template v-if="! focusedSideQuestResult">
                         <v-sheet color="rgba(255,255,255, 0.25)">
                             <v-row no-gutters class="pa-2" justify="center" align="center">
                                 <span class="rh-op-70 subtitle-1">Click replay on a side-quest-result</span>
@@ -36,6 +36,13 @@
                     </template>
                     <template v-else-if="pending">
                         <LoadingOverlay :show-overlay="pending"></LoadingOverlay>
+                    </template>
+                    <template v-else>
+                        <SideQuestResultReplay
+                            :side-quest-result="focusedSideQuestResult"
+                            :side-quest-events="sideQuestEvents"
+                        >
+                        </SideQuestResultReplay>
                     </template>
                 </CardSection>
             </v-col>
@@ -49,21 +56,22 @@
     import CardSection from "../../global/CardSection";
     import SideQuestEvent from "../../../../models/SideQuestEvent";
     import LoadingOverlay from "../../global/LoadingOverlay";
+    import SideQuestResultReplay from "../../campaign/SideQuestResultReplay";
     export default {
         name: "QuestResultView",
-        components: {LoadingOverlay, CardSection, SideQuestPanel},
+        components: {SideQuestResultReplay, LoadingOverlay, CardSection, SideQuestPanel},
         data() {
             return {
-                sideQuestResultLoadedUuid: null,
+                focusedSideQuestResult: null,
+                sideQuestEvents: [],
                 pending: false,
-                sideQuestEvents: []
             }
         },
         methods: {
-            async loadSideQuestResult(sideQuestResultUuid) {
-                this.sideQuestResultLoadedUuid = sideQuestResultUuid;
+            async loadSideQuestResult(sideQuestResult) {
+                this.focusedSideQuestResult = sideQuestResult;
                 this.pending = true;
-                let response = await axios.get('/api/v1/side-quest-results/' + sideQuestResultUuid + '/events');
+                let response = await axios.get('/api/v1/side-quest-results/' + sideQuestResult.uuid + '/events');
                 this.sideQuestEvents = response.data.data.map((sideQuestEvent) => new SideQuestEvent(sideQuestEvent));
                 this.pending = false;
             }
@@ -74,6 +82,12 @@
             ]),
             campaignStopResult() {
                 return this._campaignStopResultByUuid(this.$route.params.campaignStopUuid);
+            },
+            focusedSideQuestResultUuid() {
+                if (this.focusedSideQuestResult) {
+                    return this.focusedSideQuestResult.uuid;
+                }
+                return null;
             }
         }
     }
