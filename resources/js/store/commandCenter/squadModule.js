@@ -12,6 +12,7 @@ import UnopenedChest from "../../models/UnopenedChest";
 import OpenedChestResult from "../../models/OpenedChestResult";
 import Item from "../../models/Item";
 import HistoricCampaign from "../../models/HistoricCampaign";
+import CampaignStopResult from "../../models/CampaignStopResult";
 
 export default {
 
@@ -105,6 +106,11 @@ export default {
                 uuids = _.merge(uuids, campaignStop.sideQuestUuids);
             });
             return uuids;
+        },
+        _campaignStopResultByUuid: (state) => (stopUuid) => {
+            let campaignStopResults = _.flatten(state.historicCampaigns.map((historicCampaign) => historicCampaign.campaignStopResults));
+            let foundCampaignStopResult = campaignStopResults.find((campaignStopResult) => campaignStopResult.uuid === stopUuid);
+            return foundCampaignStopResult ? new CampaignStopResult(foundCampaignStopResult) : new CampaignStopResult({});
         }
     },
     mutations: {
