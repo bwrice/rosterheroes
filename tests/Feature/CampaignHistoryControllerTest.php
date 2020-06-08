@@ -55,7 +55,7 @@ class CampaignHistoryControllerTest extends TestCase
             'data' => [
                 [
                     'uuid' => (string) $campaign->uuid,
-                    'stops' => [
+                    'campaignStopResults' => [
                         [
                             'uuid' => (string) $campaignStop->uuid
                         ]
