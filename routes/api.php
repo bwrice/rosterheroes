@@ -13,6 +13,7 @@ use App\Http\Controllers\LeagueController;
 use App\Http\Controllers\LocalStashController;
 use App\Http\Controllers\MobileStoreItemForSquadController;
 use App\Http\Controllers\OpenChestController;
+use App\Http\Controllers\SideQuestResultEventsController;
 use App\Http\Controllers\SquadQuestController;
 use App\Http\Controllers\StashItemController;
 use App\Http\Controllers\StatTypeController;
@@ -198,5 +199,7 @@ Route::prefix('v1')->group(function () {
         Route::prefix('chests')->group(function () {
             Route::post('{chestUuid}/open', OpenChestController::class);
         });
+
+        route::get('/side-quest-results/{sideQuestResultUuid}/events', SideQuestResultEventsController::class);
     });
 });
