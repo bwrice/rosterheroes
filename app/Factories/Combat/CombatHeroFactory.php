@@ -21,6 +21,7 @@ use App\Domain\Models\MeasurableType;
 use App\Domain\Models\Squad;
 use App\Domain\Models\TargetPriority;
 use App\Factories\Models\HeroFactory;
+use App\Factories\Models\PlayerSpiritFactory;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
@@ -62,7 +63,8 @@ class CombatHeroFactory extends AbstractCombatantFactory
             is_null($this->protection) ? 100 : $this->protection,
             is_null($this->blockChancePercent) ? 10: $this->blockChancePercent,
             $combatPosition,
-            $heroCombatAttacks
+            $heroCombatAttacks,
+            PlayerSpiritFactory::new()->create()->uuid
         );
     }
 

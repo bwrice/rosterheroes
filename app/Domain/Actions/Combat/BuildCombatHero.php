@@ -61,7 +61,8 @@ class BuildCombatHero
             $hero->getProtection(),
             $hero->getBlockChance(),
             $heroCombatPosition,
-            $combatAttacks
+            $combatAttacks,
+            $hero->playerSpirit->uuid
         );
     }
 }
