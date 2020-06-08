@@ -1,18 +1,43 @@
 <template>
     <v-container>
-        <v-row justify="center">
-            <span class="headline">{{historicCampaignStop.questName}}</span>
+        <v-row justify="center" class="my-2">
+            <span class="headline">{{campaignStopResult.questName}}</span>
         </v-row>
         <v-row>
             <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="5" offset-lg="1" xl="4" offset-xl="2">
+                <CardSection :title="'SIDE QUEST RESULTS'">
+                    <SideQuestPanel
+                        v-for="(sideQuestResult, uuid) in campaignStopResult.sideQuestResults"
+                        :key="uuid"
+                        :side-quest="sideQuestResult.sideQuest"
+                    >
+                        <template v-slot:action>
+                            <v-btn
+                                color="primary"
+                                class="mx-1"
+                                @click="loadSideQuestResult(sideQuestResult.uuid)"
+                                :disabled="sideQuestResultLoadedUuid === sideQuestResult.uuid"
+                                href="#replay"
+                            >
+                                replay
+                            </v-btn>
+                        </template>
+                    </SideQuestPanel>
+                </CardSection>
             </v-col>
             <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="5" xl="4">
-                <v-row no-gutters>
-                    <v-col cols="12" class="pb-3">
-                    </v-col>
-                    <v-col cols="12" class="pt-3">
-                    </v-col>
-                </v-row>
+                <CardSection :title="'SIDE QUEST RESULT REPLAY'" id="replay">
+                    <template v-if="! sideQuestResultLoadedUuid">
+                        <v-sheet color="rgba(255,255,255, 0.25)">
+                            <v-row no-gutters class="pa-2" justify="center" align="center">
+                                <span class="rh-op-70 subtitle-1">Click replay on a side-quest-result</span>
+                            </v-row>
+                        </v-sheet>
+                    </template>
+                    <template v-else-if="pending">
+                        <LoadingOverlay :show-overlay="pending"></LoadingOverlay>
+                    </template>
+                </CardSection>
             </v-col>
         </v-row>
     </v-container>
@@ -20,14 +45,35 @@
 
 <script>
     import {mapGetters} from 'vuex';
+    import SideQuestPanel from "../../campaign/SideQuestPanel";
+    import CardSection from "../../global/CardSection";
+    import SideQuestEvent from "../../../../models/SideQuestEvent";
+    import LoadingOverlay from "../../global/LoadingOverlay";
     export default {
         name: "QuestResultView",
+        components: {LoadingOverlay, CardSection, SideQuestPanel},
+        data() {
+            return {
+                sideQuestResultLoadedUuid: null,
+                pending: false,
+                sideQuestEvents: []
+            }
+        },
+        methods: {
+            async loadSideQuestResult(sideQuestResultUuid) {
+                this.sideQuestResultLoadedUuid = sideQuestResultUuid;
+                this.pending = true;
+                let response = await axios.get('/api/v1/side-quest-results/' + sideQuestResultUuid + '/events');
+                this.sideQuestEvents = response.data.data.map((sideQuestEvent) => new SideQuestEvent(sideQuestEvent));
+                this.pending = false;
+            }
+        },
         computed: {
             ...mapGetters([
-                '_historicCampaignStopByUuid',
+                '_campaignStopResultByUuid',
             ]),
-            historicCampaignStop() {
-                return this._historicCampaignStopByUuid(this.$route.params.campaignStopUuid);
+            campaignStopResult() {
+                return this._campaignStopResultByUuid(this.$route.params.campaignStopUuid);
             }
         }
     }
