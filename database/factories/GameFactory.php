@@ -20,7 +20,7 @@ $factory->define(\App\Domain\Models\Game::class, function (Faker $faker) {
         'starts_at' => function() {
             /** @var \App\Domain\Models\Week $week */
             $week = factory(\App\Domain\Models\Week::class)->create();
-            $week->adventuring_locks_at->copy()->addHours(6);
+            return $week->adventuring_locks_at->copy()->addHours(6);
         }
     ];
 });
