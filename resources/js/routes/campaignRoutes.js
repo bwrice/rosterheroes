@@ -2,6 +2,7 @@ import CampaignMain from "../components/commandCenter/views/campaign/CampaignMai
 import SquadAppBarContent from "../components/commandCenter/appBarContent/SquadAppBarContent";
 import CommandCenter from "../views/CommandCenter";
 import QuestView from "../components/commandCenter/views/campaign/QuestView";
+import QuestResultView from "../components/commandCenter/views/campaign/QuestResultView";
 
 export const campaignRoutes = {
     path: '/command-center/:squadSlug/campaign',
@@ -28,6 +29,17 @@ export const campaignRoutes = {
                 appBarContent: SquadAppBarContent
             },
             name: 'campaign-quest',
+            meta: {
+                footerButton: 'campaign'
+            }
+        },
+        {
+            path: 'quest-result/:campaignStopUuid',
+            components: {
+                default: QuestResultView,
+                appBarContent: SquadAppBarContent
+            },
+            name: 'quest-result',
             meta: {
                 footerButton: 'campaign'
             }

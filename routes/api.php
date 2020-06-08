@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CampaignHistoryController;
 use App\Http\Controllers\CampaignStopSideQuestController;
 use App\Http\Controllers\CombatPositionController;
 use App\Http\Controllers\ContinentController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\LeagueController;
 use App\Http\Controllers\LocalStashController;
 use App\Http\Controllers\MobileStoreItemForSquadController;
 use App\Http\Controllers\OpenChestController;
+use App\Http\Controllers\SideQuestResultEventsController;
 use App\Http\Controllers\SquadQuestController;
 use App\Http\Controllers\StashItemController;
 use App\Http\Controllers\StatTypeController;
@@ -133,6 +135,8 @@ Route::prefix('v1')->group(function () {
             Route::get('{squadSlug}/spells', [SquadSpellController::class, 'index']);
             Route::get('{squadSlug}/unopened-chests', [UnopenedChestController::class, 'index']);
 
+            Route::get('{squadSlug}/campaign-history', CampaignHistoryController::class);
+
             /*
              * CURRENT LOCATION
              */
@@ -195,5 +199,7 @@ Route::prefix('v1')->group(function () {
         Route::prefix('chests')->group(function () {
             Route::post('{chestUuid}/open', OpenChestController::class);
         });
+
+        route::get('/side-quest-results/{sideQuestResultUuid}/events', SideQuestResultEventsController::class);
     });
 });

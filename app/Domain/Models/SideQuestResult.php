@@ -6,6 +6,7 @@ use App\Domain\Models\CampaignStop;
 use App\Domain\Models\SideQuest;
 use App\Domain\Models\SideQuestEvent;
 use App\Domain\QueryBuilders\SideQuestEventQueryBuilder;
+use App\Domain\Traits\HasUuid;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -34,6 +35,8 @@ use PhpParser\Node\Expr\AssignOp\Mod;
  */
 class SideQuestResult extends Model
 {
+    use HasUuid;
+
     protected $guarded = [];
 
     protected $dates = [

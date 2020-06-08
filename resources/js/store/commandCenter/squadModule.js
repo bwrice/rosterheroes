@@ -11,6 +11,8 @@ import Campaign from "../../models/Campaign";
 import UnopenedChest from "../../models/UnopenedChest";
 import OpenedChestResult from "../../models/OpenedChestResult";
 import Item from "../../models/Item";
+import HistoricCampaign from "../../models/HistoricCampaign";
+import CampaignStopResult from "../../models/CampaignStopResult";
 
 export default {
 
@@ -23,7 +25,8 @@ export default {
         spells: [],
         unopenedChests: [],
         openedChestResults: [],
-        loadingUnopenedChests: true
+        loadingUnopenedChests: true,
+        historicCampaigns: []
     },
 
     getters: {
@@ -39,6 +42,9 @@ export default {
         _loadingUnopenedChests(state) {
             return state.loadingUnopenedChests;
         },
+        _historicCampaigns(state) {
+            return state.historicCampaigns;
+        },
         _lastOpenedChestResult(state) {
             if (state.openedChestResults.length > 0) {
                 return _.last(state.openedChestResults);
@@ -47,6 +53,9 @@ export default {
         },
         _heroes(state) {
             return state.heroes;
+        },
+        _heroByUuid: (state) => (uuid) => {
+            return state.heroes.find((hero) => hero.uuid === uuid);
         },
         _currentCampaign(state) {
             return state.currentCampaign;
@@ -100,6 +109,11 @@ export default {
                 uuids = _.merge(uuids, campaignStop.sideQuestUuids);
             });
             return uuids;
+        },
+        _campaignStopResultByUuid: (state) => (stopUuid) => {
+            let campaignStopResults = _.flatten(state.historicCampaigns.map((historicCampaign) => historicCampaign.campaignStopResults));
+            let foundCampaignStopResult = campaignStopResults.find((campaignStopResult) => campaignStopResult.uuid === stopUuid);
+            return foundCampaignStopResult ? new CampaignStopResult(foundCampaignStopResult) : new CampaignStopResult({});
         }
     },
     mutations: {
@@ -111,6 +125,9 @@ export default {
         },
         SET_SPELL_LIBRARY(state, payload) {
             state.spells = payload;
+        },
+        SET_HISTORIC_CAMPAIGNS(state, historicCampaigns) {
+            state.historicCampaigns = historicCampaigns;
         },
         SET_UNOPENED_CHESTS(state, payload) {
             state.unopenedChests = payload;
@@ -212,6 +229,19 @@ export default {
                 commit('SET_MOBILE_STORAGE', new MobileStorage(mobileStorageResponse.data));
             } catch (e) {
                 console.warn("Failed to update mobile storage");
+            }
+        },
+
+        async updateHistoricCampaigns({commit}, route) {
+            try {
+                let squadSlug = route.params.squadSlug;
+                let campaignHistoryResponse = await squadApi.getCampaignHistory(squadSlug);
+                let historicCampaigns = campaignHistoryResponse.data.map(function (historicCampaign) {
+                    return new HistoricCampaign(historicCampaign);
+                });
+                commit('SET_HISTORIC_CAMPAIGNS', historicCampaigns);
+            } catch (e) {
+                console.warn("Failed to update historic campaigns");
             }
         },
 

@@ -85,8 +85,22 @@ class Campaign extends EventSourcedModel
         ];
     }
 
-    public function getAggregate()
+    public static function historyResourceRelations()
     {
-        return CampaignAggregate::retrieve($this->uuid);
+        return [
+            'week',
+            'campaignStops.quest',
+            'campaignStops.sideQuestResults.sideQuest.minions.enemyType',
+            'campaignStops.sideQuestResults.sideQuest.minions.combatPosition',
+            'campaignStops.sideQuestResults.sideQuest.minions.attacks.attackerPosition',
+            'campaignStops.sideQuestResults.sideQuest.minions.attacks.targetPosition',
+            'campaignStops.sideQuestResults.sideQuest.minions.attacks.targetPriority',
+            'campaignStops.sideQuestResults.sideQuest.minions.attacks.damageType'
+        ];
+    }
+
+    public function getDescription()
+    {
+        return 'Week ending ' . $this->week->adventuring_locks_at->format('m-d-y');
     }
 }

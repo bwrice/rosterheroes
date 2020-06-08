@@ -2,16 +2,16 @@
 
 namespace App\Http\Resources;
 
-use App\Domain\Models\Quest;
+use App\Domain\Models\CampaignStop;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * Class CompactQuestResource
+ * Class CampaignStopResultResource
  * @package App\Http\Resources
  *
- * @mixin Quest
+ * @mixin CampaignStop
  */
-class CompactQuestResource extends JsonResource
+class CampaignStopResultResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -23,11 +23,8 @@ class CompactQuestResource extends JsonResource
     {
         return [
             'uuid' => $this->uuid,
-            'name' => $this->name,
-            'slug' => $this->slug,
-            'level' => $this->level,
-            'provinceID' => $this->province_id,
-            'percent' => round($this->percent, 2),
+            'questName' => $this->quest->name,
+            'sideQuestResults' => SideQuestResultResource::collection($this->sideQuestResults)
         ];
     }
 }

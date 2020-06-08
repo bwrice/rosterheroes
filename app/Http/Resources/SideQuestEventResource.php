@@ -2,16 +2,16 @@
 
 namespace App\Http\Resources;
 
-use App\Domain\Models\Quest;
+use App\Domain\Models\SideQuestEvent;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * Class CompactQuestResource
+ * Class SideQuestEventResource
  * @package App\Http\Resources
  *
- * @mixin Quest
+ * @mixin SideQuestEvent
  */
-class CompactQuestResource extends JsonResource
+class SideQuestEventResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -23,11 +23,9 @@ class CompactQuestResource extends JsonResource
     {
         return [
             'uuid' => $this->uuid,
-            'name' => $this->name,
-            'slug' => $this->slug,
-            'level' => $this->level,
-            'provinceID' => $this->province_id,
-            'percent' => round($this->percent, 2),
+            'moment' => $this->moment,
+            'eventType' => $this->event_type,
+            'data' => $this->data
         ];
     }
 }

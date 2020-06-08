@@ -51,12 +51,14 @@ class Quest extends EventSourcedModel
     {
         return [
             'minions.enemyType',
+            'minions.combatPosition',
             'minions.attacks.attackerPosition',
             'minions.attacks.targetPosition',
             'minions.attacks.targetPriority',
             'minions.attacks.damageType',
             'titans',
             'sideQuests.minions.enemyType',
+            'sideQuests.minions.combatPosition',
             'sideQuests.minions.attacks.attackerPosition',
             'sideQuests.minions.attacks.targetPosition',
             'sideQuests.minions.attacks.targetPriority',
