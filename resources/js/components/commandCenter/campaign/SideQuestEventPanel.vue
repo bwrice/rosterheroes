@@ -6,6 +6,7 @@
         }"
         min-height="10"
         transition="fade-transition"
+        class="px-2"
     >
         <span v-if="description" :class="descriptionClasses">
             {{description}}
