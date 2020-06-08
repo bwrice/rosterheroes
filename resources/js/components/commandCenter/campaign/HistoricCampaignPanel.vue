@@ -4,7 +4,7 @@
             <span class="title rh-op-90">{{historicCampaign.description}}</span>
         </v-row>
         <v-sheet
-            v-for="(campaignStop, uuid) in historicCampaign.stops"
+            v-for="(campaignStopResult, uuid) in historicCampaign.campaignStopResults"
             :key="uuid"
             color="rgba(0,0,0,.2)"
             class="px-2 py-1 mb-1"
@@ -15,8 +15,11 @@
                 justify="space-between"
                 align="center"
             >
-                <span class="subtitle-2 rh-op-85">{{campaignStop.questName}}</span>
-                <v-btn color="primary">
+                <span class="subtitle-2 rh-op-85">{{campaignStopResult.questName}}</span>
+                <v-btn
+                    :to="campaignStopResultRoute(campaignStopResult.uuid)"
+                    color="primary"
+                >
                     view
                 </v-btn>
             </v-row>
@@ -33,6 +36,16 @@
             historicCampaign: {
                 type: HistoricCampaign,
                 required: true
+            }
+        },
+        methods: {
+            campaignStopResultRoute(campaignStopUuid) {
+                return {
+                    name: 'quest-result',
+                    params: {
+                        campaignStopUuid: campaignStopUuid
+                    }
+                }
             }
         }
 
