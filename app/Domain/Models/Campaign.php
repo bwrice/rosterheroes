@@ -90,6 +90,12 @@ class Campaign extends EventSourcedModel
         return [
             'week',
             'campaignStops.quest',
+            'campaignStops.sideQuestResults.sideQuest.minions.enemyType',
+            'campaignStops.sideQuestResults.sideQuest.minions.combatPosition',
+            'campaignStops.sideQuestResults.sideQuest.minions.attacks.attackerPosition',
+            'campaignStops.sideQuestResults.sideQuest.minions.attacks.targetPosition',
+            'campaignStops.sideQuestResults.sideQuest.minions.attacks.targetPriority',
+            'campaignStops.sideQuestResults.sideQuest.minions.attacks.damageType'
         ];
     }
 
