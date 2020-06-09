@@ -6,7 +6,8 @@ import * as helpers from "../../helpers/vuexHelpers";
 export default {
 
     state: {
-        travelRoute: []
+        travelRoute: [],
+        destinationUuid: null
     },
 
     getters: {
@@ -22,6 +23,9 @@ export default {
         _travelRoute(state) {
             return state.travelRoute;
         },
+        _destinationUuid(state) {
+            return state.destinationUuid;
+        }
     },
     mutations: {
         ADD_TO_TRAVEL_ROUTE(state, payload) {
@@ -32,6 +36,9 @@ export default {
         },
         REMOVE_LAST_ROUTE_POSITION(state) {
             state.travelRoute.pop();
+        },
+        SET_DESTINATION_UUID(state, destinationUuid) {
+            state.destinationUuid = destinationUuid;
         }
     },
 
@@ -48,11 +55,17 @@ export default {
                 //
             }
         },
+        markTravelDestination({commit}, destinationUuid) {
+            commit('SET_DESTINATION_UUID', destinationUuid);
+        },
         clearTravelRoute({commit}) {
             commit('CLEAR_TRAVEL_ROUTE');
         },
         removeLastRoutePosition({commit}) {
             commit('REMOVE_LAST_ROUTE_POSITION');
+        },
+        clearTravelDestination({commit}) {
+            commit('SET_DESTINATION_UUID', null);
         },
         async confirmTravel({state, commit, dispatch}, {route, router}) {
 
