@@ -17,11 +17,21 @@
                     </v-row>
                 </v-sheet>
             </v-col>
+            <v-col cols="12">
+                <v-row no-gutters justify="center" class="py-1">
+                    <v-btn
+                        color="primary"
+                        @click="markForTravel"
+                    >mark for travel</v-btn>
+                </v-row>
+            </v-col>
         </v-row>
     </v-sheet>
 </template>
 
 <script>
+    import {mapActions} from 'vuex';
+    import {mapGetters} from 'vuex';
     import MapProvince from "../../../models/MapProvince";
 
     export default {
@@ -32,7 +42,31 @@
                 required: true
             }
         },
+        methods: {
+            ...mapActions([
+                'markTravelDestination',
+                'snackBarError'
+            ]),
+            markForTravel() {
+                if (this._currentLocationProvince.uuid === this.mapProvince.provinceUuid) {
+                    this.snackBarError({
+                        text: "You're already in " + this._currentLocationProvince.name
+                    });
+                    return;
+                }
+                this.markTravelDestination(this.mapProvince.provinceUuid);
+                this.$router.push({
+                    name: 'travel',
+                    params: {
+                        squadSlug: this.$route.params.squadSlug
+                    }
+                })
+            }
+        },
         computed: {
+            ...mapGetters([
+                '_currentLocationProvince'
+            ]),
             information() {
                 return [
                     {
