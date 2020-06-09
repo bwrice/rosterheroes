@@ -40,7 +40,18 @@
                         </MapViewPort>
                     </v-col>
                     <v-col cols="6">
-                        <v-row no-gutters class="pa-1">
+                        <v-row no-gutters class="px-1 pb-1">
+                            <v-btn
+                                :disabled="! _destinationUuid"
+                                color="warning"
+                                block
+                                outlined
+                                @click="clearTravelDestination"
+                            >
+                                Clear Dest.
+                            </v-btn>
+                        </v-row>
+                        <v-row no-gutters class="px-1 pb-1">
                             <v-btn
                                 :disabled="emptyRoute"
                                 color="warning"
@@ -51,7 +62,7 @@
                                 Undo
                             </v-btn>
                         </v-row>
-                        <v-row no-gutters class="pa-1">
+                        <v-row no-gutters class="px-1 pb-1">
                             <v-btn
                                 :disabled="emptyRoute"
                                 color="error"
@@ -62,7 +73,7 @@
                                 Clear Route
                             </v-btn>
                         </v-row>
-                        <v-row no-gutters class="pa-1">
+                        <v-row no-gutters class="px-1">
                             <v-btn
                                 :disabled="emptyRoute"
                                 color="success"
@@ -129,7 +140,7 @@
                                 @click="travelDialog = false"
                                 class="mx-1"
                             >
-                                Cancel
+                                Close
                             </v-btn>
                             <v-btn
                                 color="success"
@@ -184,6 +195,7 @@
                 'snackBarError',
                 'snackBarSuccess',
                 'confirmTravel',
+                'clearTravelDestination',
             ]),
             routeItemColor(travelRouteDestination) {
                 if (travelRouteDestination.province.uuid === this.focusedProvince.uuid) {
@@ -212,11 +224,16 @@
             },
             minimMapProvinceColor(province) {
                 if (province.uuid === this._currentLocationProvince.uuid) {
-                    return '#dd00ff';
-                } else if (province.uuid === this.focusedProvince.uuid) {
                     return '#4ef542';
-                } else if (this.provinceInRoute(province)) {
+                } else if (province.uuid === this.focusedProvince.uuid) {
+                    if (province.uuid === this._destinationUuid) {
+                        return '#da19fc';
+                    }
+                    return '#1ac4b3';
+                } else if (province.uuid === this._destinationUuid) {
                     return '#035afc'
+                } else if (this.provinceInRoute(province)) {
+                    return '#ed7a28'
                 }
                 return '#dedede';
             },
@@ -238,7 +255,8 @@
                 '_currentLocationProvince',
                 '_finalDestination',
                 '_provinces',
-                '_travelRoute'
+                '_travelRoute',
+                '_destinationUuid'
             ]),
             routeList() {
                 let travelRoute = _.cloneDeep(this._travelRoute);
