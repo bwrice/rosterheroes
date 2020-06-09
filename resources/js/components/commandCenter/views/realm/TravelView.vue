@@ -28,7 +28,7 @@
                 </v-row>
                 <v-row no-gutters class="py-2">
                     <v-col cols="6">
-                        <MapViewPort :ocean-color="'#000'" @click="travelDialog = true">
+                        <MapViewPort :ocean-color="'#000'" @click="travelDialog = true" class="rh-clickable">
                             <ProvinceVector
                                 v-for="(province, uuid) in this._provinces"
                                 :key="uuid"
