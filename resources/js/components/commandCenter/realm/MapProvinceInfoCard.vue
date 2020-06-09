@@ -9,7 +9,7 @@
                     v-for="(info, title) in information"
                     :key="title"
                     tile
-                    color="rgba(255,255,255, 0.2)"
+                    color="rgba(0,0,0, 0.25)"
                     class="mx-2 mb-1 px-2">
                     <v-row no-gutters justify="space-between" align="center">
                         <span class="subtitle-1 font-weight-light">{{info.title.toUpperCase()}}:</span>
