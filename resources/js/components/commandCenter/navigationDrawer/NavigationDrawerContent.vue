@@ -45,6 +45,10 @@
         >
 
         </NavListGroup>
+
+        <a href="https://discord.gg/3UJCajV" target="_blank">
+            <v-img src="/images/discordButton.png" alt="discord" class="ma-6"></v-img>
+        </a>
     </v-list>
 </template>
 
