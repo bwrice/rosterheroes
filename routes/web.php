@@ -17,6 +17,7 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\CommandCenterController;
 use App\Http\Controllers\ContactSubmissionController;
+use App\Http\Controllers\PagesController;
 use App\Http\Controllers\SquadController;
 
 
@@ -70,6 +71,7 @@ Route::get('/terms', function () {
 Route::get('/privacy', function () {
     return view('privacy');
 });
+Route::get('/faq', [PagesController::class, 'faq'])->name('faq');
 
 
 Route::get('/squads/create', [SquadController::class, 'create'])->name('create-squad');
