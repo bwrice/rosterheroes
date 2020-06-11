@@ -45,6 +45,11 @@
         >
 
         </NavListGroup>
+        <a href="/faq" target="_blank">
+            <v-list-item color="accent" exact>
+                <span class="font-weight-light">F.A.Q.</span>
+            </v-list-item>
+        </a>
 
         <a href="https://discord.gg/3UJCajV" target="_blank">
             <v-img src="/images/discordButton.png" alt="discord" class="ma-6"></v-img>
