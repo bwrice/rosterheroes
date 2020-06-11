@@ -10,6 +10,8 @@
                 <li><a href="#hero-race">What are hero races?</a></li>
                 <li><a href="#player-spirit">What is a player spirit?</a></li>
                 <li><a href="#spirit-essence">What is spirit essence?</a></li>
+                <li><a href="#spirit-energy">What does player spirit energy do?</a></li>
+                <li><a href="#campaign">What is a campaign?</a></li>
                 <li><a href="#quests">What are quests and side-quests?</a></li>
                 <li><a href="#join-quest">I've joined a quest or side-quest, now what?</a></li>
                 <li><a href="#find-quest">How can I find a quest?</a></li>
@@ -17,6 +19,15 @@
                 <li><a href="#gold">What is gold used for?</a></li>
                 <li><a href="#favor">What is favor used for?</a></li>
                 <li><a href="#combat-positions">How do combat positions work?</a></li>
+                <li><a href="#attributes">What are attributes for?</a></li>
+                <li><a href="#resources">What are resources for?</a></li>
+                <li><a href="#attacks">What are an item's attacks?</a></li>
+                <li><a href="#attack-damage">How is attack damage calculated?</a></li>
+                <li><a href="#fantasy-power">How is fantasy power calculated?</a></li>
+                <li><a href="#attack-speed">What is attack speed?</a></li>
+                <li><a href="#speed-calculation">How is attack speed calculated?</a></li>
+                <li><a href="#wagon">What is a wagon?</a></li>
+                <li><a href="#stash">What is a stash?</a></li>
             </ul>
 
             <h2 id="hero-class" class="font-bold text-1xl mt-3 mb-1 text-teal-900 underline">What are hero classes?</h2>
@@ -75,11 +86,16 @@
                 all of your heroes. If you've ever played salary cap league, think of spirit essence as your salary cap. Your squad's
                 spirit essence will reset each week, so use as much as needed to build the perfect roster.
             </p>
-            <h2 id="spirit-essence" class="font-bold text-1xl mt-3 mb-1 text-teal-900 underline">What is spirit essence?</h2>
+            <h2 id="spirit-energy" class="font-bold text-1xl mt-3 mb-1 text-teal-900 underline">What does player spirit energy do?</h2>
             <p>
-                Spirit essence is the cost to embody a hero with a player spirit. You'll have a limited amount for your squad to use on
-                all of your heroes. If you've ever played salary cap league, think of spirit essence as your salary cap. Your squad's
-                spirit essence will reset each week, so use as much as needed to build the perfect roster.
+                Spirit energy rangers from 25 to 400. When a player's stats are converted into fantasy points, a higher spirit energy
+                will result in more fantasy points. Spirit energy is calculated based on how popular a player spirit is. If a lot of
+                heroes embody the same player spirit, it will have a lower spirit energy and if few or no heroes are embodied by a player spirit,
+                it will have a higher energy.
+            </p>
+            <h2 id="campaign" class="font-bold text-1xl mt-3 mb-1 text-teal-900 underline">What is a campaign?</h2>
+            <p>
+                A campaign is the combination of quests and side-quests joined by squad each week.
             </p>
             <h2 id="quests" class="font-bold text-1xl mt-3 mb-1 text-teal-900 underline">What are quests and side-quests?</h2>
             <p>
@@ -135,6 +151,66 @@
                 of werewolves, where all the werewolves fight from the front-line, it's perfectly fine to have heroes on the high-ground using bows,
                 which have attacks that target the enemy's back-line, because even though there are no werewolves fighting from the back-line,
                 the front-line werewolves inherited both the back-line and high-ground combat positions.
+            </p>
+            <h2 id="attributes" class="font-bold text-1xl mt-3 mb-1 text-teal-900 underline">What are attributes for?</h2>
+            <p>
+                Attributes include Strength, Valor, Agility, Focus and Intelligence. All six attributes are used in calculating the damage modifier
+                for an item's attacks. For example, axes damage modifier is improved by raising strength and valor, daggers by raising agility and focus,
+                and wands by raising aptitude and intelligence.
+            </p><br>
+            <p>
+                Each attribute also has a special characteristic. Strength increase the capacity for a hero to carry more and heavier items. Valor will
+                increase a hero's Health. Agility increase the combat speed of an item's attacks as well as increasing Stamina. Focus, and Aptitude will
+                increase a hero's spell power. Finally, Intelligence will increase a hero's Mana.
+            </p>
+            <h2 id="resources" class="font-bold text-1xl mt-3 mb-1 text-teal-900 underline">What are resources for?</h2>
+            <p>
+                Resources include Health, Stamina and Mana. Health is the most important resource. If a hero loses all of its health during combat,
+                it will have fallen in battle. Stamina and Mana are used by attacks during combat. Running out of stamina or mana will limit a hero's
+                attacks. Mana is also used to cast spells. The more powerful the spell, the more mana it will cost.
+            </p>
+            <h2 id="qualities" class="font-bold text-1xl mt-3 mb-1 text-teal-900 underline">What are qualities for?</h2>
+            <p>
+                Qualities include Passion, Balance, Honor, Prestige and Wrath. Qualities will increase the amount of fantasy points given for a particular
+                stat, such as rushing touchdown, or home-run. You can see how many fantasy points a given stat type will give a hero, and the
+                bonus % from the hero's qualities on the stat bonuses card of a hero.
+            </p>
+            <h2 id="attacks" class="font-bold text-1xl mt-3 mb-1 text-teal-900 underline">What are an item's attacks?</h2>
+            <p>
+                Weapon type items will have various attacks. When a weapon is equipped, if the hero has the resources to use the attack, meets the attack's
+                requirements and fights from, or inherited, a combat position within the attacker combat-position, it can use the attack.
+            </p>
+            <h2 id="attack-damage" class="font-bold text-1xl mt-3 mb-1 text-teal-900 underline">How is attack damage calculated?</h2>
+            <p>
+                Damage is calculated from a base-damage amount plus a damage modifier, which is affected by a hero's attributes, and fantasy power.
+            </p>
+            <h2 id="fantasy-power" class="font-bold text-1xl mt-3 mb-1 text-teal-900 underline">How is fantasy power calculated?</h2>
+            <p>
+                Fantasy power is calculated from the sum of each player spirit's stat amount by the points-per-amount as well as multiplied by
+                the hero's quality bonus percent which coincides with that stat-type. That sum is then increased or decreased based on the player spirit's energy.
+                Fantasy power can never be less than zero.
+            </p>
+            <h2 id="attack-speed" class="font-bold text-1xl mt-3 mb-1 text-teal-900 underline">What is attack speed?</h2>
+            <p>
+                Combat is fought in moments. For each moment a combatant's attacks have a chance of triggering. An attack's speed
+                is the chance it has of triggering in a given moment. An attack speed of 5 will have a 5% chance of triggering at any
+                given moment, or an expectation of triggering about once per 20 moments.
+            </p>
+            <h2 id="speed-calculation" class="font-bold text-1xl mt-3 mb-1 text-teal-900 underline">How is attack speed calculated?</h2>
+            <p>
+                Attack speed is dependent on the attack, the item base of the item with the attack, and can be increased by a hero's Agility.
+            </p>
+            <h2 id="wagon" class="font-bold text-1xl mt-3 mb-1 text-teal-900 underline">What is a wagon?</h2>
+            <p>
+                A wagon is your squad's mobile storage. It will travel with your squad and you can store a limited amount of items
+                in it. Items unequipped from hero's on received from opening treasure chests will prioritize going into a squad's wagon,
+                but if there is no room it will end up in a stash.
+            </p>
+            <h2 id="stash" class="font-bold text-1xl mt-3 mb-1 text-teal-900 underline">What is a stash?</h2>
+            <p>
+                A stash is a place where squads can hide items in a province. A squad can only have one stash per province, but it has no
+                maximum capacity. At the end of the week, scavengers might come across and steal items from your stash. It's best
+                to move items from your squad's stashes before the week ends.
             </p>
         </div>
     </div>
