@@ -3,10 +3,14 @@
 namespace App\Listeners;
 
 use App\Domain\Models\User;
+use App\Facades\Admin;
+use App\Notifications\AdminNotifiable;
+use App\Notifications\NewVerifiedUserNotification;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Notification;
 
 class AlertOfNewVerifiedUser implements ShouldQueue
 {
@@ -18,9 +22,6 @@ class AlertOfNewVerifiedUser implements ShouldQueue
     {
         /** @var User $user */
         $user = $verifiedEvent->user;
-        Log::alert("New user verified!", [
-            'name' => $user->name,
-            'email' => $user->email
-        ]);
+        Admin::notify(new NewVerifiedUserNotification($user));
     }
 }
