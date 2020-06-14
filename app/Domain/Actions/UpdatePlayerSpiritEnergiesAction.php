@@ -10,12 +10,17 @@ use App\Domain\Models\Hero;
 use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\Week;
 use App\Domain\QueryBuilders\PlayerSpiritQueryBuilder;
+use App\Events\SpiritEnergiesUpdated;
+use App\Facades\Admin;
+use App\Notifications\SpiritEnergiesUpdatedNotification;
+use Illuminate\Support\Facades\Date;
 
 class UpdatePlayerSpiritEnergiesAction
 {
 
     public function execute()
     {
+        $start = Date::now();
         $week = Week::current();
         $spiritsInUseCount = $this->getSpiritsInUseCount($week);
 
@@ -24,19 +29,41 @@ class UpdatePlayerSpiritEnergiesAction
         // If we have enough spirits in use, we'll adjust energies, otherwise reset them to the default amount
         if (($spiritsInUseCount - PlayerSpirit::MAX_USAGE_BEFORE_ENERGY_ADJUSTMENT) > 0) {
 
+            $lowestEnergy = 99999;
+            $highestEnergy = 0;
 
             $sumOfEssencePaidFor =  $this->getGlobalEssencePaidFor($week);
 
             $sumOfSpiritsWithHeroesEssenceCost = (int) (clone $spiritsForWeekQuery)->has('heroes')->sum('essence_cost');
 
-            $spiritsForWeekQuery->withCount('heroes')->chunkById(100, function(PlayerSpiritCollection $playerSpirits) use ($sumOfSpiritsWithHeroesEssenceCost, $sumOfEssencePaidFor, $spiritsInUseCount) {
+            $spiritsForWeekQuery->withCount('heroes')
+                ->chunkById(100, function(PlayerSpiritCollection $playerSpirits) use (
+                    $sumOfSpiritsWithHeroesEssenceCost,
+                    $sumOfEssencePaidFor,
+                    $spiritsInUseCount,
+                    &$lowestEnergy,
+                    &$highestEnergy
+                ) {
 
-                $playerSpirits->each(function (PlayerSpirit $playerSpirit) use ($sumOfSpiritsWithHeroesEssenceCost, $sumOfEssencePaidFor, $spiritsInUseCount) {
-
-                    $playerSpirit->energy = $this->getUpdatedEnergy($playerSpirit, $sumOfSpiritsWithHeroesEssenceCost, $sumOfEssencePaidFor, $spiritsInUseCount);
+                $playerSpirits->each(function (PlayerSpirit $playerSpirit) use (
+                    $sumOfSpiritsWithHeroesEssenceCost,
+                    $sumOfEssencePaidFor,
+                    $spiritsInUseCount,
+                    &$lowestEnergy,
+                    &$highestEnergy
+                ) {
+                    $spiritEnergy = $this->getUpdatedEnergy($playerSpirit, $sumOfSpiritsWithHeroesEssenceCost, $sumOfEssencePaidFor, $spiritsInUseCount);
+                    $playerSpirit->energy = $spiritEnergy;
                     $playerSpirit->save();
+                    $lowestEnergy = $spiritEnergy < $lowestEnergy ? $spiritEnergy : $lowestEnergy;
+                    $highestEnergy = $spiritEnergy > $highestEnergy ? $spiritEnergy : $highestEnergy;
                 });
             });
+
+            $secondsToProcess = Date::now()->diffInSeconds($start);
+            $notification = new SpiritEnergiesUpdatedNotification($secondsToProcess, $spiritsInUseCount, $lowestEnergy, $highestEnergy);
+            Admin::notify($notification);
+
         } else {
             $spiritsForWeekQuery->where('energy', '<>', PlayerSpirit::STARTING_ENERGY)
                 ->update([
