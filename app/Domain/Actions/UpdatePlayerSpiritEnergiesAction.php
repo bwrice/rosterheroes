@@ -18,22 +18,22 @@ class UpdatePlayerSpiritEnergiesAction
     {
         $week = Week::current();
         $spiritsInUseCount = $this->getSpiritsInUseCount($week);
-        $spiritsInUseOverEnergyAdjustmentMin = $spiritsInUseCount - PlayerSpirit::MAX_USAGE_BEFORE_ENERGY_ADJUSTMENT;
 
         $spiritsForWeekQuery = PlayerSpirit::query()->forWeek($week);
 
         // If we have enough spirits in use, we'll adjust energies, otherwise reset them to the default amount
-        if ($spiritsInUseOverEnergyAdjustmentMin > 0) {
+        if (($spiritsInUseCount - PlayerSpirit::MAX_USAGE_BEFORE_ENERGY_ADJUSTMENT) > 0) {
 
-            $sumOfEssencePaidFor = $this->getGlobalEssencePaidFor($week);
 
-            $sumOfSpiritsWithHeroesEssenceCost = (clone $spiritsForWeekQuery)->has('heroes')->sum('essence_cost');
+            $sumOfEssencePaidFor =  $this->getGlobalEssencePaidFor($week);
 
-            $spiritsForWeekQuery->withCount('heroes')->chunkById(100, function(PlayerSpiritCollection $playerSpirits) use ($sumOfSpiritsWithHeroesEssenceCost, $sumOfEssencePaidFor, $spiritsInUseOverEnergyAdjustmentMin) {
+            $sumOfSpiritsWithHeroesEssenceCost = (int) (clone $spiritsForWeekQuery)->has('heroes')->sum('essence_cost');
 
-                $playerSpirits->each(function (PlayerSpirit $playerSpirit) use ($sumOfSpiritsWithHeroesEssenceCost, $sumOfEssencePaidFor, $spiritsInUseOverEnergyAdjustmentMin) {
+            $spiritsForWeekQuery->withCount('heroes')->chunkById(100, function(PlayerSpiritCollection $playerSpirits) use ($sumOfSpiritsWithHeroesEssenceCost, $sumOfEssencePaidFor, $spiritsInUseCount) {
 
-                    $playerSpirit->energy = $this->getUpdatedEnergy($playerSpirit, $sumOfSpiritsWithHeroesEssenceCost, $sumOfEssencePaidFor, $spiritsInUseOverEnergyAdjustmentMin);
+                $playerSpirits->each(function (PlayerSpirit $playerSpirit) use ($sumOfSpiritsWithHeroesEssenceCost, $sumOfEssencePaidFor, $spiritsInUseCount) {
+
+                    $playerSpirit->energy = $this->getUpdatedEnergy($playerSpirit, $sumOfSpiritsWithHeroesEssenceCost, $sumOfEssencePaidFor, $spiritsInUseCount);
                     $playerSpirit->save();
                 });
             });
@@ -81,12 +81,12 @@ class UpdatePlayerSpiritEnergiesAction
      * @param PlayerSpirit $playerSpirit
      * @param int $sumOfSpiritsWithHeroesEssenceCost
      * @param int $sumOfEssencePaidFor
-     * @param int $spiritsInUseOverEnergyAdjustmentMin
+     * @param int $spiritsInUseCount
      * @return int
      */
-    protected function getUpdatedEnergy(PlayerSpirit $playerSpirit, int $sumOfSpiritsWithHeroesEssenceCost, int $sumOfEssencePaidFor, int $spiritsInUseOverEnergyAdjustmentMin): int
+    protected function getUpdatedEnergy(PlayerSpirit $playerSpirit, int $sumOfSpiritsWithHeroesEssenceCost, int $sumOfEssencePaidFor, int $spiritsInUseCount): int
     {
-        $energyDelta = $this->getEnergyDelta($playerSpirit, $sumOfSpiritsWithHeroesEssenceCost, $sumOfEssencePaidFor, $spiritsInUseOverEnergyAdjustmentMin);
+        $energyDelta = $this->getEnergyDelta($playerSpirit, $sumOfSpiritsWithHeroesEssenceCost, $sumOfEssencePaidFor, $spiritsInUseCount);
         return $energyDelta + PlayerSpirit::STARTING_ENERGY;
     }
 
@@ -94,10 +94,10 @@ class UpdatePlayerSpiritEnergiesAction
      * @param PlayerSpirit $playerSpirit
      * @param $sumOfSpiritsWithHeroesEssenceCost
      * @param $sumOfEssencePaidFor
-     * @param $spiritsInUseOverEnergyAdjustmentMin
+     * @param $spiritsInUseCount
      * @return int
      */
-    protected function getEnergyDelta(PlayerSpirit $playerSpirit, int $sumOfSpiritsWithHeroesEssenceCost, int $sumOfEssencePaidFor, int $spiritsInUseOverEnergyAdjustmentMin): int
+    protected function getEnergyDelta(PlayerSpirit $playerSpirit, int $sumOfSpiritsWithHeroesEssenceCost, int $sumOfEssencePaidFor, int $spiritsInUseCount): int
     {
         $essenceCostRatio = $playerSpirit->essence_cost / $sumOfSpiritsWithHeroesEssenceCost;
 
@@ -111,7 +111,7 @@ class UpdatePlayerSpiritEnergiesAction
 
         $deltaRatio = abs($essenceCostRatio - $essencePaidForRatio);
 
-        $coefficient = 20 * ((1000 * $spiritsInUseOverEnergyAdjustmentMin) ** .4);
+        $coefficient = 10 * ((5000 * $spiritsInUseCount) ** .35);
 
         $energyDelta = $coefficient * $deltaRatio;
 
