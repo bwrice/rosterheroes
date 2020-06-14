@@ -40,11 +40,6 @@ class UpdatePlayerSpiritEnergiesCommand extends Command
      */
     public function handle(UpdatePlayerSpiritEnergiesAction $domainAction)
     {
-        $before = Date::now();
-
         $domainAction->execute();
-
-        $diffForHumans = Date::now()->longAbsoluteDiffForHumans($before);
-        Log::alert("Updated spirit energies in " . $diffForHumans);
     }
 }

@@ -10,41 +10,62 @@ use App\Domain\Models\Hero;
 use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\Week;
 use App\Domain\QueryBuilders\PlayerSpiritQueryBuilder;
+use App\Events\SpiritEnergiesUpdated;
+use App\Facades\Admin;
+use App\Notifications\SpiritEnergiesUpdatedNotification;
+use Illuminate\Support\Facades\Date;
 
 class UpdatePlayerSpiritEnergiesAction
 {
-    public const ENERGY_COEFFICIENT_CONSTANT = PlayerSpirit::STARTING_ENERGY/5;
-    public const ENERGY_COEFFICIENT_EXPONENT = .5;
 
     public function execute()
     {
+        $start = Date::now();
         $week = Week::current();
         $spiritsInUseCount = $this->getSpiritsInUseCount($week);
-        $spiritsInUseOverEnergyAdjustmentMin = $spiritsInUseCount - PlayerSpirit::MAX_USAGE_BEFORE_ENERGY_ADJUSTMENT;
+
+        $spiritsForWeekQuery = PlayerSpirit::query()->forWeek($week);
 
         // If we have enough spirits in use, we'll adjust energies, otherwise reset them to the default amount
-        if ($spiritsInUseOverEnergyAdjustmentMin > 0) {
+        if (($spiritsInUseCount - PlayerSpirit::MAX_USAGE_BEFORE_ENERGY_ADJUSTMENT) > 0) {
 
-            $globalEssencePaidFor = $this->getGlobalEssencePaidFor($week);
+            $lowestEnergy = 99999;
+            $highestEnergy = 0;
 
-            $query = PlayerSpirit::query()->forWeek($week);
-            $globalSpiritEssenceCost = $query->sum('essence_cost');
+            $sumOfEssencePaidFor =  $this->getGlobalEssencePaidFor($week);
 
-            if ($globalSpiritEssenceCost <= 0) {
-                throw new \InvalidArgumentException('Global spirit essence cost is NOT greater than zero');
-            }
+            $sumOfSpiritsWithHeroesEssenceCost = (int) (clone $spiritsForWeekQuery)->has('heroes')->sum('essence_cost');
 
-            $query->withCount('heroes')->chunkById(100, function(PlayerSpiritCollection $playerSpirits) use ($globalSpiritEssenceCost, $globalEssencePaidFor, $spiritsInUseOverEnergyAdjustmentMin) {
+            $spiritsForWeekQuery->withCount('heroes')
+                ->chunkById(100, function(PlayerSpiritCollection $playerSpirits) use (
+                    $sumOfSpiritsWithHeroesEssenceCost,
+                    $sumOfEssencePaidFor,
+                    $spiritsInUseCount,
+                    &$lowestEnergy,
+                    &$highestEnergy
+                ) {
 
-                $playerSpirits->each(function (PlayerSpirit $playerSpirit) use ($globalSpiritEssenceCost, $globalEssencePaidFor, $spiritsInUseOverEnergyAdjustmentMin) {
-
-                    $playerSpirit->energy = $this->getUpdatedEnergy($playerSpirit, $globalSpiritEssenceCost, $globalEssencePaidFor, $spiritsInUseOverEnergyAdjustmentMin);
+                $playerSpirits->each(function (PlayerSpirit $playerSpirit) use (
+                    $sumOfSpiritsWithHeroesEssenceCost,
+                    $sumOfEssencePaidFor,
+                    $spiritsInUseCount,
+                    &$lowestEnergy,
+                    &$highestEnergy
+                ) {
+                    $spiritEnergy = $this->getUpdatedEnergy($playerSpirit, $sumOfSpiritsWithHeroesEssenceCost, $sumOfEssencePaidFor, $spiritsInUseCount);
+                    $playerSpirit->energy = $spiritEnergy;
                     $playerSpirit->save();
+                    $lowestEnergy = $spiritEnergy < $lowestEnergy ? $spiritEnergy : $lowestEnergy;
+                    $highestEnergy = $spiritEnergy > $highestEnergy ? $spiritEnergy : $highestEnergy;
                 });
             });
+
+            $secondsToProcess = Date::now()->diffInSeconds($start);
+            $notification = new SpiritEnergiesUpdatedNotification($secondsToProcess, $spiritsInUseCount, $lowestEnergy, $highestEnergy);
+            Admin::notify($notification);
+
         } else {
-            PlayerSpirit::query()->forWeek($week)
-                ->where('energy', '<>', PlayerSpirit::STARTING_ENERGY)
+            $spiritsForWeekQuery->where('energy', '<>', PlayerSpirit::STARTING_ENERGY)
                 ->update([
                     'energy' => PlayerSpirit::STARTING_ENERGY
                 ]);
@@ -85,35 +106,40 @@ class UpdatePlayerSpiritEnergiesAction
 
     /**
      * @param PlayerSpirit $playerSpirit
-     * @param int $globalSpiritEssenceCost
-     * @param int $globalEssencePaidFor
-     * @param int $spiritsInUseOverEnergyAdjustmentMin
+     * @param int $sumOfSpiritsWithHeroesEssenceCost
+     * @param int $sumOfEssencePaidFor
+     * @param int $spiritsInUseCount
      * @return int
      */
-    protected function getUpdatedEnergy(PlayerSpirit $playerSpirit, int $globalSpiritEssenceCost, int $globalEssencePaidFor, int $spiritsInUseOverEnergyAdjustmentMin): int
+    protected function getUpdatedEnergy(PlayerSpirit $playerSpirit, int $sumOfSpiritsWithHeroesEssenceCost, int $sumOfEssencePaidFor, int $spiritsInUseCount): int
     {
-        $energyDelta = $this->getEnergyDelta($playerSpirit, $globalSpiritEssenceCost, $globalEssencePaidFor, $spiritsInUseOverEnergyAdjustmentMin);
+        $energyDelta = $this->getEnergyDelta($playerSpirit, $sumOfSpiritsWithHeroesEssenceCost, $sumOfEssencePaidFor, $spiritsInUseCount);
         return $energyDelta + PlayerSpirit::STARTING_ENERGY;
     }
 
     /**
      * @param PlayerSpirit $playerSpirit
-     * @param $globalSpiritEssenceCost
-     * @param $globalEssencePaidFor
-     * @param $spiritsInUseOverEnergyAdjustmentMin
+     * @param $sumOfSpiritsWithHeroesEssenceCost
+     * @param $sumOfEssencePaidFor
+     * @param $spiritsInUseCount
      * @return int
      */
-    protected function getEnergyDelta(PlayerSpirit $playerSpirit, int $globalSpiritEssenceCost, int $globalEssencePaidFor, int $spiritsInUseOverEnergyAdjustmentMin): int
+    protected function getEnergyDelta(PlayerSpirit $playerSpirit, int $sumOfSpiritsWithHeroesEssenceCost, int $sumOfEssencePaidFor, int $spiritsInUseCount): int
     {
-        $coefficient = self::ENERGY_COEFFICIENT_CONSTANT * ($spiritsInUseOverEnergyAdjustmentMin ** self::ENERGY_COEFFICIENT_EXPONENT);
+        $essenceCostRatio = $playerSpirit->essence_cost / $sumOfSpiritsWithHeroesEssenceCost;
 
-        $essenceCostRatio = $playerSpirit->essence_cost / $globalSpiritEssenceCost;
-
-        // heroes_count comes from withCount() method
-        $totalEssencePaidForSpirit = $playerSpirit->essence_cost * $playerSpirit->heroes_count;
-        $essencePaidForRatio = $totalEssencePaidForSpirit / $globalEssencePaidFor;
+        /*
+         * heroes_count comes from withCount() method
+         * Treat spirits without any heroes as if they had 1
+         */
+        $heroesCount = $playerSpirit->heroes_count ?: 1;
+        $totalEssencePaidForSpirit = $playerSpirit->essence_cost * $heroesCount;
+        $essencePaidForRatio = $totalEssencePaidForSpirit / $sumOfEssencePaidFor;
 
         $deltaRatio = abs($essenceCostRatio - $essencePaidForRatio);
+
+        $coefficient = 10 * ((5000 * $spiritsInUseCount) ** .35);
+
         $energyDelta = $coefficient * $deltaRatio;
 
         /*
