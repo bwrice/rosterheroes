@@ -8,7 +8,7 @@ use App\Notifications\NewVerifiedUserNotification;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class HandleUserVerified implements ShouldQueue
+class NotifyAdminOfVerifiedUser implements ShouldQueue
 {
 
     /**

@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Listeners\HandleUserVerified;
+use App\Listeners\NotifyAdminOfVerifiedUser;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -20,7 +20,7 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
         Verified::class => [
-            HandleUserVerified::class
+            NotifyAdminOfVerifiedUser::class
         ]
     ];
 
