@@ -22,19 +22,20 @@ class UpdatePlayerSpiritEnergiesAction
         $spiritsInUseCount = $this->getSpiritsInUseCount($week);
         $spiritsInUseOverEnergyAdjustmentMin = $spiritsInUseCount - PlayerSpirit::MAX_USAGE_BEFORE_ENERGY_ADJUSTMENT;
 
+        $spiritsForWeekQuery = PlayerSpirit::query()->forWeek($week);
+
         // If we have enough spirits in use, we'll adjust energies, otherwise reset them to the default amount
         if ($spiritsInUseOverEnergyAdjustmentMin > 0) {
 
             $globalEssencePaidFor = $this->getGlobalEssencePaidFor($week);
 
-            $query = PlayerSpirit::query()->forWeek($week);
-            $globalSpiritEssenceCost = $query->sum('essence_cost');
+            $globalSpiritEssenceCost = $spiritsForWeekQuery->sum('essence_cost');
 
             if ($globalSpiritEssenceCost <= 0) {
                 throw new \InvalidArgumentException('Global spirit essence cost is NOT greater than zero');
             }
 
-            $query->withCount('heroes')->chunkById(100, function(PlayerSpiritCollection $playerSpirits) use ($globalSpiritEssenceCost, $globalEssencePaidFor, $spiritsInUseOverEnergyAdjustmentMin) {
+            $spiritsForWeekQuery->withCount('heroes')->chunkById(100, function(PlayerSpiritCollection $playerSpirits) use ($globalSpiritEssenceCost, $globalEssencePaidFor, $spiritsInUseOverEnergyAdjustmentMin) {
 
                 $playerSpirits->each(function (PlayerSpirit $playerSpirit) use ($globalSpiritEssenceCost, $globalEssencePaidFor, $spiritsInUseOverEnergyAdjustmentMin) {
 
@@ -43,8 +44,7 @@ class UpdatePlayerSpiritEnergiesAction
                 });
             });
         } else {
-            PlayerSpirit::query()->forWeek($week)
-                ->where('energy', '<>', PlayerSpirit::STARTING_ENERGY)
+            $spiritsForWeekQuery->where('energy', '<>', PlayerSpirit::STARTING_ENERGY)
                 ->update([
                     'energy' => PlayerSpirit::STARTING_ENERGY
                 ]);
