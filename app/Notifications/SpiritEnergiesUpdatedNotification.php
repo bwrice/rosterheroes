@@ -50,9 +50,9 @@ class SpiritEnergiesUpdatedNotification extends Notification implements ShouldQu
             ->content("Spirit energies updated in " . $this->secondsToProcess . " seconds.")
             ->attachment(function (SlackAttachment $attachment) {
                 $attachment->fields([
-                    'spirits_with_heroes_count' => $this->spiritsWithHeroesCount,
-                    'lowest_energy' => $this->lowestEnergy,
-                    'highest_energy' => $this->highestEnergy
+                    'spirits with heroes' => $this->spiritsWithHeroesCount,
+                    'lowest energy' => $this->lowestEnergy,
+                    'highest energy' => $this->highestEnergy
                 ]);
             });
     }
