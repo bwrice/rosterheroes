@@ -26,8 +26,8 @@ class GolemBehavior extends EnemyTypeBehavior
      */
     public function getProtection(int $enemyLevel, CombatPosition $startingCombatPosition): int
     {
-        $base = 800;
-        $levelModifier = 15;
+        $base = 250;
+        $levelModifier = 5;
 
         return $base + ($levelModifier * $enemyLevel);
     }
