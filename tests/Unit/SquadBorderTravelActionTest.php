@@ -145,7 +145,7 @@ class SquadBorderTravelActionTest extends TestCase
          * Mock the squad so that it returns a level under the minimum level requirement of the continent
          */
         /** @var Squad $mockedSquad */
-        $mockedSquad = \Mockery::mock($this->squad->fresh())->shouldReceive('getLevel')->andReturn($minLevel - 1)->getMock();
+        $mockedSquad = \Mockery::mock($this->squad->fresh())->shouldReceive('level')->andReturn($minLevel - 1)->getMock();
 
         $exceptionThrown = false;
         try {
@@ -162,7 +162,7 @@ class SquadBorderTravelActionTest extends TestCase
          * requirement and forcing the travel cost to be zero
          */
         /** @var Squad $mockedSquad */
-        $mockedSquad = \Mockery::mock($this->squad->fresh())->shouldReceive('getLevel')->andReturn($minLevel)->getMock();
+        $mockedSquad = \Mockery::mock($this->squad->fresh())->shouldReceive('level')->andReturn($minLevel)->getMock();
         $costCalculatorMock = \Mockery::mock(SquadBorderTravelCostCalculator::class);
         $costCalculatorMock->shouldReceive('calculateGoldCost')->andReturn(0);
         // put the mock into the container
