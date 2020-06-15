@@ -16,18 +16,18 @@ class GargoyleBehavior extends EnemyTypeBehavior
     public function getStartingHealth(int $enemyLevel, CombatPosition $startingCombatPosition): int
     {
         $base = 600;
-        $levelModifier = 12;
+        $levelModifier = 35;
         switch ($startingCombatPosition->name) {
             case CombatPosition::FRONT_LINE:
                 $base += 400;
-                $levelModifier += 25;
+                $levelModifier += 10;
                 break;
             case CombatPosition::BACK_LINE:
                 $base += 150;
-                $levelModifier += 12;
+                $levelModifier += 5;
                 break;
         }
-        return $base + ($levelModifier * $enemyLevel);
+        return $base + ($levelModifier * ($enemyLevel ** 1.3));
     }
 
     /**
@@ -37,8 +37,8 @@ class GargoyleBehavior extends EnemyTypeBehavior
      */
     public function getProtection(int $enemyLevel, CombatPosition $startingCombatPosition): int
     {
-        $base = 3;
-        $levelModifier = .1;
+        $base = 5;
+        $levelModifier = .12;
         return (int) ceil($base + ($levelModifier * $enemyLevel));
     }
 
@@ -50,7 +50,7 @@ class GargoyleBehavior extends EnemyTypeBehavior
      */
     protected function adjustDamageProperty(float $damageProperty, int $enemyLevel, CombatPosition $startingCombatPosition)
     {
-        $modifier = 1 + ($enemyLevel / 50);
+        $modifier = 1 + (0.02 * $enemyLevel ** 1.21);
         switch ($startingCombatPosition->name) {
             case CombatPosition::HIGH_GROUND:
                 $modifier *= 1.2;
@@ -92,7 +92,7 @@ class GargoyleBehavior extends EnemyTypeBehavior
      */
     public function adjustCombatSpeed(float $combatSpeed, int $enemyLevel, CombatPosition $startingCombatPosition): float
     {
-        return $combatSpeed * (1.1 + $enemyLevel/200);
+        return $combatSpeed * (1.14 + $enemyLevel/200);
     }
 
     /**
