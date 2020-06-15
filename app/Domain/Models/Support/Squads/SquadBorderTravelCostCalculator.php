@@ -11,7 +11,7 @@ class SquadBorderTravelCostCalculator
 {
     public function calculateGoldCost(Squad $squad, Province $border)
     {
-        $level = $squad->getLevel();
+        $level = $squad->level();
         if ($level < 10) {
             return 0;
         }
