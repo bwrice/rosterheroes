@@ -17,8 +17,8 @@ class WerewolfBehavior extends EnemyTypeBehavior
     public function getStartingHealth(int $enemyLevel, CombatPosition $startingCombatPosition): int
     {
         $base = 350;
-        $levelModifier = 37;
-        return $base + ($levelModifier * ($enemyLevel ** 1.14));
+        $levelModifier = 32;
+        return $base + ($levelModifier * ($enemyLevel ** 1.16));
     }
 
     /**
