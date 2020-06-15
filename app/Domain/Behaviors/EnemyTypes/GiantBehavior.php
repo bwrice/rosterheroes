@@ -27,7 +27,7 @@ class GiantBehavior extends EnemyTypeBehavior
                 $levelModifier += 20;
                 break;
         }
-        return $base + ($levelModifier * $enemyLevel);
+        return $base + ($levelModifier * ($enemyLevel ** 1.35));
     }
 
     /**
@@ -60,7 +60,7 @@ class GiantBehavior extends EnemyTypeBehavior
      */
     protected function adjustDamageProperty(float $damageProperty, int $enemyLevel, CombatPosition $startingCombatPosition)
     {
-        $modifier = 1.2 + ($enemyLevel / 45);
+        $modifier = 1 + (.19 * ($enemyLevel ** 1.16));
         switch ($startingCombatPosition->name) {
             case CombatPosition::HIGH_GROUND:
                 $modifier *= 1.25;
@@ -102,7 +102,7 @@ class GiantBehavior extends EnemyTypeBehavior
      */
     public function adjustCombatSpeed(float $combatSpeed, int $enemyLevel, CombatPosition $startingCombatPosition): float
     {
-        return $combatSpeed * (.4 + $enemyLevel/300);
+        return $combatSpeed * (.4 + $enemyLevel/500);
     }
 
     /**

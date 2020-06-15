@@ -27,7 +27,7 @@ class VampireBehavior extends EnemyTypeBehavior
                 $levelModifier += 11;
                 break;
         }
-        return $base + ($levelModifier * $enemyLevel);
+        return $base + ($levelModifier * ($enemyLevel ** 1.22));
     }
 
     /**
@@ -60,13 +60,13 @@ class VampireBehavior extends EnemyTypeBehavior
      */
     protected function adjustDamageProperty(float $damageProperty, int $enemyLevel, CombatPosition $startingCombatPosition)
     {
-        $modifier = 1.65 + ($enemyLevel / 30);
+        $modifier = 1 + (.028 * ($enemyLevel ** 1.25));
         switch ($startingCombatPosition->name) {
             case CombatPosition::HIGH_GROUND:
                 $modifier *= 1.8;
                 break;
             case CombatPosition::BACK_LINE:
-                $modifier *= 1.7;
+                $modifier *= 1.5;
                 break;
         }
         return $damageProperty * $modifier;
@@ -102,7 +102,7 @@ class VampireBehavior extends EnemyTypeBehavior
      */
     public function adjustCombatSpeed(float $combatSpeed, int $enemyLevel, CombatPosition $startingCombatPosition): float
     {
-        return $combatSpeed * (.75 + $enemyLevel/200);
+        return $combatSpeed * (.75 + $enemyLevel/400);
     }
 
     /**

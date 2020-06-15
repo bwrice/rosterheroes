@@ -27,7 +27,7 @@ class UndeadBehavior extends EnemyTypeBehavior
                 $levelModifier += 10;
                 break;
         }
-        return $base + ($levelModifier * ($enemyLevel ** 1.16));
+        return $base + ($levelModifier * ($enemyLevel ** 1.18));
     }
 
     /**
@@ -60,7 +60,7 @@ class UndeadBehavior extends EnemyTypeBehavior
      */
     protected function adjustDamageProperty(float $damageProperty, int $enemyLevel, CombatPosition $startingCombatPosition)
     {
-        $modifier = 1 + (.018 * ($enemyLevel ** 1.14));
+        $modifier = 1 + (.018 * ($enemyLevel ** 1.15));
         switch ($startingCombatPosition->name) {
             case CombatPosition::HIGH_GROUND:
                 $modifier *= 1.2;
@@ -102,7 +102,7 @@ class UndeadBehavior extends EnemyTypeBehavior
      */
     public function adjustCombatSpeed(float $combatSpeed, int $enemyLevel, CombatPosition $startingCombatPosition): float
     {
-        return $combatSpeed * (1 + $enemyLevel/200);
+        return $combatSpeed * (1.15 + $enemyLevel/200);
     }
 
     /**

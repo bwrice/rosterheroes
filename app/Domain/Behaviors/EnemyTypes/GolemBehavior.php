@@ -16,7 +16,7 @@ class GolemBehavior extends EnemyTypeBehavior
     public function getStartingHealth(int $enemyLevel, CombatPosition $startingCombatPosition): int
     {
         $base = 2000;
-        return $base + (100 * ($enemyLevel**1.35));
+        return $base + (100 * ($enemyLevel**1.4));
     }
 
     /**

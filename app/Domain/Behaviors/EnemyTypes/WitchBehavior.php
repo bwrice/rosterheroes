@@ -27,7 +27,7 @@ class WitchBehavior extends EnemyTypeBehavior
                 $levelModifier += 5;
                 break;
         }
-        return $base + ($levelModifier * $enemyLevel);
+        return $base + ($levelModifier * ($enemyLevel ** 1.15));
     }
 
     /**
@@ -56,7 +56,7 @@ class WitchBehavior extends EnemyTypeBehavior
      */
     protected function adjustDamageProperty(float $damageProperty, int $enemyLevel, CombatPosition $startingCombatPosition)
     {
-        $modifier = 1.5 + ($enemyLevel / 38);
+        $modifier = 1 + (0.32 * ($enemyLevel ** 1.27));
         switch ($startingCombatPosition->name) {
             case CombatPosition::HIGH_GROUND:
             case CombatPosition::BACK_LINE:
@@ -99,7 +99,7 @@ class WitchBehavior extends EnemyTypeBehavior
      */
     public function adjustCombatSpeed(float $combatSpeed, int $enemyLevel, CombatPosition $startingCombatPosition): float
     {
-        return $combatSpeed * (1.15 + $enemyLevel/95);
+        return $combatSpeed * (1.15 + $enemyLevel/125);
     }
 
     /**
