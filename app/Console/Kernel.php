@@ -44,6 +44,9 @@ class Kernel extends ConsoleKernel
             return app()->environment('local', 'staging');
         });
 
+        /*
+         * Spatie back-up package. Backs up files and DB daily.
+         */
         $schedule->command('backup:run')->when(function() {
             return ! app()->environment('local');
         })->cron('0 5 * * *');
