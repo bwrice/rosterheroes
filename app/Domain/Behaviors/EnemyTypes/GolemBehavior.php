@@ -16,7 +16,7 @@ class GolemBehavior extends EnemyTypeBehavior
     public function getStartingHealth(int $enemyLevel, CombatPosition $startingCombatPosition): int
     {
         $base = 2000;
-        return $base + (50 * ($enemyLevel**1.3));
+        return $base + (100 * ($enemyLevel**1.35));
     }
 
     /**
@@ -35,12 +35,11 @@ class GolemBehavior extends EnemyTypeBehavior
     /**
      * @param float $damageProperty
      * @param int $enemyLevel
-     * @param CombatPosition $startingCombatPosition
      * @return int|float
      */
-    protected function adjustDamageProperty(float $damageProperty, int $enemyLevel, CombatPosition $startingCombatPosition)
+    protected function adjustDamageProperty(float $damageProperty, int $enemyLevel)
     {
-        $modifier = 1 + ($enemyLevel / 35);
+        $modifier = 1 + (.03 * ($enemyLevel ** 1.22));
         return $damageProperty * $modifier;
     }
 
@@ -52,7 +51,7 @@ class GolemBehavior extends EnemyTypeBehavior
      */
     public function adjustBaseDamage(float $baseDamage, int $enemyLevel, CombatPosition $startingCombatPosition): float
     {
-        return $this->adjustDamageProperty($baseDamage, $enemyLevel, $startingCombatPosition);
+        return $this->adjustDamageProperty($baseDamage, $enemyLevel);
     }
 
     /**
@@ -63,7 +62,7 @@ class GolemBehavior extends EnemyTypeBehavior
      */
     public function adjustDamageMultiplier(float $damageMultiplier, int $enemyLevel, CombatPosition $startingCombatPosition): float
     {
-        return $this->adjustDamageProperty($damageMultiplier, $enemyLevel, $startingCombatPosition);
+        return $this->adjustDamageProperty($damageMultiplier, $enemyLevel);
     }
 
     /**
@@ -74,7 +73,7 @@ class GolemBehavior extends EnemyTypeBehavior
      */
     public function adjustCombatSpeed(float $combatSpeed, int $enemyLevel, CombatPosition $startingCombatPosition): float
     {
-        return $combatSpeed * (.25 + $enemyLevel/1000);
+        return $combatSpeed * (.22 + $enemyLevel/1000);
     }
 
     /**
