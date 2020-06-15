@@ -41,7 +41,7 @@ class WerewolfBehavior extends EnemyTypeBehavior
      */
     protected function adjustDamageProperty(float $damageProperty, int $enemyLevel, CombatPosition $startingCombatPosition)
     {
-        return $damageProperty * (1 + (.025 * ($enemyLevel ** 1.18)));
+        return $damageProperty * (1 + (.028 * ($enemyLevel ** 1.19)));
     }
 
     /**
