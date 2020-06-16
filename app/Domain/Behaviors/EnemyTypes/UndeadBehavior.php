@@ -15,19 +15,19 @@ class UndeadBehavior extends EnemyTypeBehavior
      */
     public function getStartingHealth(int $enemyLevel, CombatPosition $startingCombatPosition): int
     {
-        $base = 400;
+        $base = 350;
         $levelModifier = 20;
         switch ($startingCombatPosition->name) {
             case CombatPosition::FRONT_LINE:
-                $base += 400;
-                $levelModifier += 25;
+                $base += 300;
+                $levelModifier += 24;
                 break;
             case CombatPosition::BACK_LINE:
                 $base += 150;
                 $levelModifier += 10;
                 break;
         }
-        return $base + ($levelModifier * $enemyLevel);
+        return $base + ($levelModifier * ($enemyLevel ** 1.18));
     }
 
     /**
@@ -60,7 +60,7 @@ class UndeadBehavior extends EnemyTypeBehavior
      */
     protected function adjustDamageProperty(float $damageProperty, int $enemyLevel, CombatPosition $startingCombatPosition)
     {
-        $modifier = 1 + ($enemyLevel / 50);
+        $modifier = 1 + (.018 * ($enemyLevel ** 1.15));
         switch ($startingCombatPosition->name) {
             case CombatPosition::HIGH_GROUND:
                 $modifier *= 1.2;
@@ -102,7 +102,7 @@ class UndeadBehavior extends EnemyTypeBehavior
      */
     public function adjustCombatSpeed(float $combatSpeed, int $enemyLevel, CombatPosition $startingCombatPosition): float
     {
-        return $combatSpeed * (1 + $enemyLevel/200);
+        return $combatSpeed * (1.15 + $enemyLevel/200);
     }
 
     /**

@@ -1,5 +1,5 @@
 <template>
-    <v-sheet color="#524c59" class="py-1 px-2">
+    <v-sheet color="#524c59" class="py-1 px-2 mb-1">
         <v-row no-gutters justify="center" class="pb-1">
             <span class="title rh-op-90">{{historicCampaign.description}}</span>
         </v-row>

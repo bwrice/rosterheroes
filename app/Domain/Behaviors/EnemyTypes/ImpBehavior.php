@@ -6,7 +6,7 @@ namespace App\Domain\Behaviors\EnemyTypes;
 
 use App\Domain\Models\CombatPosition;
 
-class GolemBehavior extends EnemyTypeBehavior
+class ImpBehavior extends EnemyTypeBehavior
 {
     /**
      * @param int $enemyLevel
@@ -15,8 +15,9 @@ class GolemBehavior extends EnemyTypeBehavior
      */
     public function getStartingHealth(int $enemyLevel, CombatPosition $startingCombatPosition): int
     {
-        $base = 2000;
-        return $base + (100 * ($enemyLevel**1.4));
+        $base = 75;
+        $levelModifier = 14;
+        return $base + ($levelModifier * ($enemyLevel ** 1.14));
     }
 
     /**
@@ -26,10 +27,9 @@ class GolemBehavior extends EnemyTypeBehavior
      */
     public function getProtection(int $enemyLevel, CombatPosition $startingCombatPosition): int
     {
-        $base = 250;
-        $levelModifier = 5;
-
-        return $base + ($levelModifier * $enemyLevel);
+        $base = 0;
+        $levelModifier = .05;
+        return (int) ceil($base + ($levelModifier * $enemyLevel));
     }
 
     /**
@@ -39,8 +39,7 @@ class GolemBehavior extends EnemyTypeBehavior
      */
     protected function adjustDamageProperty(float $damageProperty, int $enemyLevel)
     {
-        $modifier = 1 + (.022 * ($enemyLevel ** 1.18));
-        return $damageProperty * $modifier;
+        return $damageProperty * (1 + (.036 * ($enemyLevel ** 1.25)));
     }
 
     /**
@@ -73,7 +72,7 @@ class GolemBehavior extends EnemyTypeBehavior
      */
     public function adjustCombatSpeed(float $combatSpeed, int $enemyLevel, CombatPosition $startingCombatPosition): float
     {
-        return $combatSpeed * (.18 + $enemyLevel/1000);
+        return $combatSpeed * (1.25 + $enemyLevel/250);
     }
 
     /**
@@ -83,7 +82,6 @@ class GolemBehavior extends EnemyTypeBehavior
      */
     public function getBlockChancePercent(int $enemyLevel, CombatPosition $startingCombatPosition): float
     {
-        $blockChance = 5 + $enemyLevel/25;
-        return min(70, $blockChance);
+        return 0;
     }
 }

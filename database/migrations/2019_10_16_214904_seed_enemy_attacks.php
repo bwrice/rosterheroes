@@ -166,7 +166,7 @@ class SeedEnemyAttacks extends Migration
             [
                 'name' => 'Blood Swell',
                 'damage_type' => DamageType::AREA_OF_EFFECT,
-                'attacker_position' => CombatPosition::FRONT_LINE,
+                'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 4,
@@ -175,7 +175,7 @@ class SeedEnemyAttacks extends Migration
             [
                 'name' => 'Blood Boil',
                 'damage_type' => DamageType::AREA_OF_EFFECT,
-                'attacker_position' => CombatPosition::FRONT_LINE,
+                'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 5,
@@ -184,7 +184,7 @@ class SeedEnemyAttacks extends Migration
             [
                 'name' => 'Blood Conflagrate',
                 'damage_type' => DamageType::AREA_OF_EFFECT,
-                'attacker_position' => CombatPosition::FRONT_LINE,
+                'attacker_position' => CombatPosition::BACK_LINE,
                 'target_position' => CombatPosition::FRONT_LINE,
                 'target_priority' => TargetPriority::ANY,
                 'tier' => 6,

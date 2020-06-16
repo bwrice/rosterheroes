@@ -18,6 +18,10 @@ class EnemyTypeBehaviorFactory
                 return app(GiantBehavior::class);
             case EnemyType::GOLEM:
                 return app(GolemBehavior::class);
+            case EnemyType::IMP:
+                return app(ImpBehavior::class);
+            case EnemyType::TROLL:
+                return app(TrollBehavior::class);
             case EnemyType::UNDEAD:
                 return app(UndeadBehavior::class);
             case EnemyType::VAMPIRE:
