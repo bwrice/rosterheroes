@@ -39,7 +39,7 @@ class GolemBehavior extends EnemyTypeBehavior
      */
     protected function adjustDamageProperty(float $damageProperty, int $enemyLevel)
     {
-        $modifier = 1 + (.03 * ($enemyLevel ** 1.22));
+        $modifier = 1 + (.022 * ($enemyLevel ** 1.18));
         return $damageProperty * $modifier;
     }
 
@@ -73,7 +73,7 @@ class GolemBehavior extends EnemyTypeBehavior
      */
     public function adjustCombatSpeed(float $combatSpeed, int $enemyLevel, CombatPosition $startingCombatPosition): float
     {
-        return $combatSpeed * (.22 + $enemyLevel/1000);
+        return $combatSpeed * (.18 + $enemyLevel/1000);
     }
 
     /**
