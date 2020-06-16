@@ -117,7 +117,7 @@ class VampireBehavior extends EnemyTypeBehavior
             case CombatPosition::BACK_LINE:
                 return 0;
         }
-        $blockChance = 20 + $enemyLevel/5;
+        $blockChance = 14 + $enemyLevel/9;
         return min(70, $blockChance);
     }
 }
