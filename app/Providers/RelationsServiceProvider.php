@@ -13,6 +13,7 @@ use App\Domain\Models\SideQuest;
 use App\Domain\Models\Spell;
 use App\Domain\Models\Squad;
 use App\Domain\Models\Stash;
+use App\Domain\Models\Shop;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 
@@ -35,7 +36,8 @@ class RelationsServiceProvider extends ServiceProvider
             Residence::RELATION_MORPH_MAP_KEY => Residence::class,
             Chest::RELATION_MORPH_MAP_KEY => Chest::class,
             Minion::RELATION_MORPH_MAP_KEY => Minion::class,
-            SideQuest::RELATION_MORPH_MAP_KEY => SideQuest::class
+            SideQuest::RELATION_MORPH_MAP_KEY => SideQuest::class,
+            Shop::RELATION_MORPH_MAP_KEY => Shop::class
         ]);
     }
 }
