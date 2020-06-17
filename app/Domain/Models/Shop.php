@@ -4,6 +4,9 @@ namespace App\Domain\Models;
 
 use App\Domain\Collections\ItemCollection;
 use App\Domain\Interfaces\HasItems;
+use App\Domain\Models\Traits\HasUniqueNames;
+use App\Domain\Traits\HasNameSlug;
+use App\Domain\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -20,6 +23,10 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Shop extends Model implements HasItems
 {
+    use HasNameSlug;
+    use HasUuid;
+    use HasUniqueNames;
+
     public const RELATION_MORPH_MAP_KEY = 'shops';
 
     protected $guarded = [];
