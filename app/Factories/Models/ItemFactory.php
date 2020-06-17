@@ -11,6 +11,7 @@ use App\Domain\Models\ItemBase;
 use App\Domain\Models\ItemClass;
 use App\Domain\Models\ItemType;
 use App\Domain\Models\Material;
+use App\Domain\Models\Squad;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -100,6 +101,16 @@ class ItemFactory
         $clone->hasItems = [
             'id' => $hero->id,
             'type' => Hero::RELATION_MORPH_MAP_KEY
+        ];
+        return $clone;
+    }
+
+    public function forSquad(Squad $squad)
+    {
+        $clone = clone $this;
+        $clone->hasItems = [
+            'id' => $squad->id,
+            'type' => Squad::RELATION_MORPH_MAP_KEY
         ];
         return $clone;
     }
