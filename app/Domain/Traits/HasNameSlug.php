@@ -10,9 +10,16 @@ namespace App\Domain\Traits;
 
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
+/**
+ * Trait HasNameSlug
+ * @package App\Domain\Traits
+ *
+ * @mixin Model
+ */
 trait HasNameSlug
 {
     use HasSlug;
@@ -26,7 +33,7 @@ trait HasNameSlug
 
     /**
      * @param $slug
-     * @return static
+     * @return static|Model
      */
     public static function findSlugOrFail($slug)
     {
