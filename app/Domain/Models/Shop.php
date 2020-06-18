@@ -4,6 +4,7 @@ namespace App\Domain\Models;
 
 use App\Domain\Collections\ItemCollection;
 use App\Domain\Interfaces\HasItems;
+use App\Domain\Interfaces\Merchant;
 use App\Domain\Models\Traits\HasUniqueNames;
 use App\Domain\Traits\HasNameSlug;
 use App\Domain\Traits\HasUuid;
@@ -25,7 +26,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property ItemCollection $items
  * @property ItemCollection $availableItems
  */
-class Shop extends Model implements HasItems
+class Shop extends Model implements HasItems, Merchant
 {
     use HasNameSlug;
     use HasUuid;
@@ -88,5 +89,15 @@ class Shop extends Model implements HasItems
         return array_map(function ($relation) {
             return 'availableItems.' . $relation;
         }, Item::resourceRelations());
+    }
+
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
+    public function getMerchantType(): string
+    {
+        return 'shop';
     }
 }
