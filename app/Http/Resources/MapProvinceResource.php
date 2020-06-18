@@ -28,8 +28,7 @@ class MapProvinceResource extends JsonResource
             'provinceSlug' => $this->slug,
             'questsCount' => $this->quests()->count(),
             'squadsCount' => $this->squads()->count(),
-            // TODO
-            'merchantsCount' => 0
+            'hasShops' => $this->hasShops()
         ];
     }
 }

@@ -143,4 +143,12 @@ class Province extends EventSourcedModel
     {
         return $builder->whereIn('name', self::STARTING_PROVINCES);
     }
+
+    public function hasShops()
+    {
+        if ($this->relationLoaded('shops')) {
+            return $this->shops->count() > 0;
+        }
+        return $this->shops()->count() > 0;
+    }
 }
