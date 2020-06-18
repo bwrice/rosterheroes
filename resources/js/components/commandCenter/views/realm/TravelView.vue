@@ -1,7 +1,7 @@
 <template>
     <v-container>
         <v-row>
-            <v-col cols="12" md="6" lg="4" offset-lg="2">
+            <v-col cols="12" md="6" lg="5" offset-lg="1" xl="4" offset-xl="2">
                 <v-row no-gutters>
                     <v-col cols="12">
                         <MapViewPort :view-box="focusedProvince.viewBox">
@@ -86,7 +86,7 @@
                     </v-col>
                 </v-row>
             </v-col>
-            <v-col cols="12" md="6" lg="4">
+            <v-col cols="12" md="6" lg="5" xl="4">
                 <v-row no-gutters>
                     <span class="title font-weight-thin">TRAVEL ROUTE</span>
                 </v-row>
