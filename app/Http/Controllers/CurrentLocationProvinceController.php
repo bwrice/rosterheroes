@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Domain\Models\Squad;
-use App\Http\Resources\CurrentLocationResource;
 use App\Http\Resources\ProvinceResource;
 use App\Policies\SquadPolicy;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
