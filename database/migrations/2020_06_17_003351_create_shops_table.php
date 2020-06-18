@@ -19,6 +19,7 @@ class CreateShopsTable extends Migration
             $table->integer('province_id')->unsigned();
             $table->string('name')->unique();
             $table->string('slug');
+            $table->smallInteger('tier')->unsigned();
             $table->timestamps();
 
             $table->foreign('province_id')->references('id')->on('provinces');
