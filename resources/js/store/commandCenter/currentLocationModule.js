@@ -3,6 +3,7 @@ import Province from "../../models/Province";
 import Quest from "../../models/Quest";
 import LocalStash from "../../models/LocalStash";
 import LocalSquad from "../../models/LocalSquad";
+import Merchant from "../../models/Merchant";
 
 export default {
 
@@ -11,6 +12,7 @@ export default {
         province: new Province({}),
         localStash: new LocalStash({}),
         localSquads: [],
+        localMerchants: []
     },
 
     getters: {
@@ -25,6 +27,9 @@ export default {
         },
         _localSquads(state) {
             return state.localSquads;
+        },
+        _localMerchants(state) {
+            return state.localMerchants;
         },
         _currentLocationQuestBySlug: (state) => (slug) => {
             let quest = state.quests.find(quest => quest.slug === slug);
@@ -43,6 +48,9 @@ export default {
         },
         SET_LOCAL_SQUADS(state, localSquads) {
             state.localSquads = localSquads;
+        },
+        SET_LOCAL_MERCHANTS(state, localMerchants) {
+            state.localMerchants = localMerchants;
         },
         ADD_ITEM_TO_LOCAL_STASH(state, payload) {
             state.localStash.items.push(payload);
@@ -91,6 +99,15 @@ export default {
                 console.warn("Failed to update local squads");
             }
         },
+        async updateLocalMerchants({commit}, route) {
+            try {
+                let response = await squadApi.getLocalMerchants(route.params.squadSlug);
+                let localMerchants = response.data.map(merchant => new Merchant(merchant));
+                commit('SET_LOCAL_MERCHANTS', localMerchants)
+            } catch (e) {
+                console.warn("Failed to update local merchants");
+            }
+        },
         async updateLocalStash({commit}, route) {
             try {
                 let response = await squadApi.getLocalStash(route.params.squadSlug);
@@ -107,12 +124,14 @@ export default {
                 quests,
                 localStash,
                 localSquads,
+                localMerchants,
             } = alreadyUpdated;
 
             province ? commit('SET_CURRENT_LOCATION_PROVINCE', province) : dispatch('updateCurrentLocationProvince', route);
             quests ? commit('SET_CURRENT_LOCATION_QUESTS', quests) : dispatch('updateCurrentLocationQuests', route);
             localStash ? commit('SET_LOCAL_STASH', localStash) : dispatch('updateLocalStash', route);
             localSquads ? commit('SET_LOCAL_SQUADS', localStash) : dispatch('updateLocalSquads', route);
+            localMerchants ? commit('SET_LOCAL_MERCHANTS', localMerchants) : dispatch('updateLocalMerchants', route);
         },
     }
 };

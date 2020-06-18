@@ -122,7 +122,6 @@
             this.updateStatTypes();
             this.updateSpellLibrary(route);
             this.updateUnopenedChests(route);
-            this.updateLocalStash(route);
             this.updateHistoricCampaigns(route);
         },
 
