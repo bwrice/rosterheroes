@@ -28,6 +28,7 @@ class ShopFactory
             'uuid' => (string) Str::uuid(),
             'name' => 'Test Shop ' . rand(1, 999999),
             'province_id' => $this->getProvinceID(),
+            'tier' => 1
         ], $extra));
 
 

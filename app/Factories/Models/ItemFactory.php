@@ -13,7 +13,9 @@ use App\Domain\Models\ItemType;
 use App\Domain\Models\Material;
 use App\Domain\Models\Squad;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Str;
 
 class ItemFactory
@@ -61,6 +63,10 @@ class ItemFactory
 
     protected $lowestItemTypeTier = false;
 
+    protected $shopAvailable = false;
+
+    protected $hasItemRelations = null;
+
     public function __construct()
     {
         $this->enchantments = collect();
@@ -83,8 +89,15 @@ class ItemFactory
             'item_type_id' => $itemType->id,
             'material_id' => $material->id,
             'has_items_id' => $this->hasItems['id'] ?? null,
-            'has_items_type' => $this->hasItems['type'] ?? null
+            'has_items_type' => $this->hasItems['type'] ?? null,
+            'made_shop_available_at' => $this->shopAvailable ? Date::now() : null
         ], $extra));
+
+        if ($this->hasItemRelations) {
+            $item->hasItems()->associate($this->hasItemRelations);
+            $item->save();
+            $item = $item->fresh();
+        }
 
         $item->enchantments()->saveMany($this->enchantments);
         if ($this->withAttacks) {
@@ -270,6 +283,20 @@ class ItemFactory
     {
         $clone = clone $this;
         $clone->material = $material;
+        return $clone;
+    }
+
+    public function shopAvailable($available = true)
+    {
+        $clone = clone $this;
+        $clone->shopAvailable = $available;
+        return $clone;
+    }
+
+    public function forHasItems(Model $model)
+    {
+        $clone = clone $this;
+        $clone->hasItemRelations = $model;
         return $clone;
     }
 
