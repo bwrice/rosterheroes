@@ -19,9 +19,12 @@ class PlayerSpiritsSeeder extends Seeder
      */
     public function run(BuildNewCurrentWeekAction $buildNewCurrentWeekAction)
     {
-        $week = $buildNewCurrentWeekAction->execute();
-        $week->made_current_at = now();
-        $week->save();
+        $week = \App\Facades\CurrentWeek::get();
+        if (! $week) {
+            $week = $buildNewCurrentWeekAction->execute();
+            $week->made_current_at = now();
+            $week->save();
+        }
         $gameStartsAt = $week->adventuring_locks_at->clone()->addHours(2);
 
         $leagues = League::query()->with('sport')->get();
