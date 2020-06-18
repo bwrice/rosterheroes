@@ -4,7 +4,7 @@
             <v-col cols="12" class="px-2">
                 <span class="title">PROVINCE INFO</span>
             </v-col>
-            <v-col cols="12">
+            <v-col cols="6">
                 <v-sheet
                     v-for="(info, title) in information"
                     :key="title"
@@ -16,6 +16,27 @@
                         <span class="subtitle-1 font-weight-light">{{info.count}}</span>
                     </v-row>
                 </v-sheet>
+            </v-col>
+            <v-col cols="6">
+                <v-row no-gutters justify="center">
+                    <span class="subtitle-2 underline rh-op-90">
+                        Merchants
+                    </span>
+                </v-row>
+                <template v-if="mapProvince.hasShops">
+                    <v-row no-gutters justify="center" align="center">
+                        <v-icon color="accent">storefront</v-icon>
+                    </v-row>
+                </template>
+                <template v-else>
+                    <v-sheet color="rgba(255, 255, 255, 0.2)" class="mx-2 my-1">
+                        <v-row no-gutters justify="center" align="center">
+                            <span class="body-2 my-1">
+                                none
+                            </span>
+                        </v-row>
+                    </v-sheet>
+                </template>
             </v-col>
             <v-col cols="12">
                 <v-row no-gutters justify="center" class="py-1">
@@ -72,10 +93,6 @@
                     {
                         title: 'quests',
                         count: this.mapProvince.questsCount
-                    },
-                    {
-                        title: 'merchants',
-                        count: this.mapProvince.merchantsCount
                     },
                     {
                         title: 'squads',
