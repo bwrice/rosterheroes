@@ -33,10 +33,12 @@ use Spatie\Sluggable\SlugOptions;
  * @property QuestCollection $quests
  *
  * @property Collection $stashes
+ * @property Collection $shops
  *
  * @method static Builder bordersCount(int $count)
  * @method static Builder starting
  * @method static ProvinceQueryBuilder query()
+ *
  */
 class Province extends EventSourcedModel
 {
@@ -86,6 +88,11 @@ class Province extends EventSourcedModel
     public function stashes()
     {
         return $this->hasMany(Stash::class);
+    }
+
+    public function shops()
+    {
+        return $this->hasMany(Shop::class);
     }
 
     /**
