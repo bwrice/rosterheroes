@@ -40,6 +40,7 @@ use phpDocumentor\Reflection\Types\Static_;
  * @property int $attacks_blocked
  * @property int|null $item_blueprint_id
  * @property CarbonInterface $updated_at
+ * @property CarbonInterface $made_shop_available_at
  *
  * @property string $has_items_type
  * @property string $has_items_id

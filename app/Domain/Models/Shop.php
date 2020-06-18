@@ -16,10 +16,14 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property string $uuid
  * @property int $province_id
+ * @property string $name
+ * @property string $slug
+ * @property int $tier
  *
  * @property Province $province
  *
  * @property ItemCollection $items
+ * @property ItemCollection $availableItems
  */
 class Shop extends Model implements HasItems
 {
@@ -39,6 +43,11 @@ class Shop extends Model implements HasItems
     public function items()
     {
         return $this->morphMany(Item::class, 'has_items');
+    }
+
+    public function availableItems()
+    {
+        return $this->items()->where('made_shop_available_at', '!=', null);
     }
 
     public function getBackupHasItems(): ?HasItems
@@ -72,5 +81,12 @@ class Shop extends Model implements HasItems
     public function getMorphID(): int
     {
         return $this->id;
+    }
+
+    public static function getResourceRelations()
+    {
+        return array_map(function ($relation) {
+            return 'availableItems.' . $relation;
+        }, Item::resourceRelations());
     }
 }
