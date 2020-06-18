@@ -91,6 +91,11 @@ class Shop extends Model implements HasItems, Merchant
         }, Item::resourceRelations());
     }
 
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
     public function getSlug(): string
     {
         return $this->slug;

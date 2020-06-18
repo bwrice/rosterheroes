@@ -22,6 +22,7 @@ class MerchantResource extends JsonResource
         /** @var Merchant $merchant */
         $merchant = $this;
         return [
+            'name' => $merchant->getName(),
             'slug' => $merchant->getSlug(),
             'type' => $merchant->getMerchantType()
         ];
