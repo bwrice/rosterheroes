@@ -40,18 +40,7 @@
                     <ProvinceVector :province="_currentLocationProvince" :highlight="true"></ProvinceVector>
                 </MapViewPort>
                 <AvailableQuestsSection :show-travel-button="false" :title-override="'QUESTS'"></AvailableQuestsSection>
-                <v-row no-gutters>
-                    <v-col cols="12">
-                        <span class="title font-weight-thin">MERCHANTS</span>
-                    </v-col>
-                    <v-col cols="12">
-                        <v-sheet color="rgba(255,255,255, 0.25)">
-                            <v-row no-gutters class="pa-2" justify="center" align="center">
-                                <span class="rh-op-70 subtitle-1">No merchants in {{province.name}}</span>
-                            </v-row>
-                        </v-sheet>
-                    </v-col>
-                </v-row>
+                <LocalMerchants></LocalMerchants>
                 <v-row no-gutters>
                     <v-col cols="12">
                         <span class="title font-weight-thin">SQUADS</span>
@@ -120,10 +109,12 @@
     import AvailableQuestsSection from "../../campaign/AvailableQuestsSection";
     import PaginationBlock from "../../global/PaginationBlock";
     import LocalSquadPanel from "../../realm/LocalSquadPanel";
+    import LocalMerchants from "../../realm/LocalMerchants";
 
     export default {
         name: "CurrentLocation",
         components: {
+            LocalMerchants,
             LocalSquadPanel,
             PaginationBlock,
             AvailableQuestsSection,
