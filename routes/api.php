@@ -8,6 +8,7 @@ use App\Http\Controllers\CurrentCampaignController;
 use App\Http\Controllers\CurrentLocationQuestsController;
 use App\Http\Controllers\CurrentLocationSquadsController;
 use App\Http\Controllers\DamageTypeController;
+use App\Http\Controllers\LocalMerchantsController;
 use App\Http\Controllers\MapProvinceController;
 use App\Http\Controllers\LeagueController;
 use App\Http\Controllers\LocalStashController;
@@ -147,6 +148,7 @@ Route::prefix('v1')->group(function () {
                 Route::get('quests', CurrentLocationQuestsController::class);
                 Route::get('squads', CurrentLocationSquadsController::class);
                 Route::get('stash', LocalStashController::class);
+                Route::get('merchants', LocalMerchantsController::class);
             });
 
             /*

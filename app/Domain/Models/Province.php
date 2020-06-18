@@ -151,4 +151,9 @@ class Province extends EventSourcedModel
         }
         return $this->shops()->count() > 0;
     }
+
+    public function getMerchants()
+    {
+        return $this->shops;
+    }
 }
