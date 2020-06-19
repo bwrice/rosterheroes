@@ -3,8 +3,8 @@
              tile
              style="margin: 1px 0 1px 0"
     >
-        <v-row align="center" justify="center" class="mx-2" no-gutters>
-            <span class="subtitle-2 font-weight-light pa-2">{{itemName}}</span>
+        <v-row ref="row" align="center" justify="center" class="mx-2 text-truncate" no-gutters>
+            <span class="subtitle-2 font-weight-light pa-2 d-inline-block text-truncate" :style="[itemNameStyleObject]">{{item.name}}</span>
             <div class="flex-grow-1"></div>
             <slot name="before-expand" :item="item">
                 <!-- Slot -->
@@ -29,7 +29,6 @@
 
 <script>
     import ItemCard from "./ItemCard";
-    import Slot from "../../../models/Slot";
     import Item from "../../../models/Item";
     export default {
         name: "ItemExpandPanel",
@@ -47,22 +46,18 @@
                 type: String
             }
         },
+        mounted() {
+            let itemNameMaxWidth = this.$refs.row.clientWidth - 120;
+            this.itemNameStyleObject['max-width'] = itemNameMaxWidth + 'px';
+        },
         data() {
             return {
-                expanded: false
+                expanded: false,
+                itemNameStyleObject: {
+                    'max-width': '100px'
+                }
             }
         },
-        computed: {
-            itemName() {
-                let windowWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
-                let maxLength = Math.floor(windowWidth/12);
-                maxLength -= this.itemNameTruncateExtra;
-                maxLength = Math.min(maxLength, 40);
-                return _.truncate(this.item.name, {
-                    length: maxLength
-                })
-            }
-        }
     }
 </script>
 
