@@ -24,9 +24,11 @@ class ShopsSeeder extends Seeder
 
             $shop = $shopFactory->withProvinceID($province->id)->create();
 
+            $now = \Illuminate\Support\Facades\Date::now();
             $itemsCount = rand(5, 15);
             for($i = 1; $i <= $itemsCount; $i++) {
                 $item = $generateItemFromBlueprintAction->execute($blueprint);
+                $item->made_shop_available_at = $now;
                 $item->hasItems()->associate($shop);
                 $item->save();
             }
