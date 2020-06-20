@@ -12,7 +12,6 @@
 
 <script>
     import Hero from "../../../../models/Hero";
-    import Slot from "../../../../models/Slot";
     import Item from "../../../../models/Item";
 
     import {mapActions} from 'vuex';
