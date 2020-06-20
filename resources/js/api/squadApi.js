@@ -102,3 +102,8 @@ export async function leaveQuest(squadSlug, questUuid) {
     });
     return response.data;
 }
+
+export async function getShop(squadSlug, shopSlug) {
+    let response = await axios.get(ROUTE_PREFIX + squadSlug + '/shops/' + shopSlug);
+    return response.data;
+}
