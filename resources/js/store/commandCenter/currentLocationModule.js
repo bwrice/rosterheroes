@@ -4,6 +4,7 @@ import Quest from "../../models/Quest";
 import LocalStash from "../../models/LocalStash";
 import LocalSquad from "../../models/LocalSquad";
 import Merchant from "../../models/Merchant";
+import Shop from "../../models/Shop";
 
 export default {
 
@@ -126,6 +127,8 @@ export default {
                 localSquads,
                 localMerchants,
             } = alreadyUpdated;
+
+            commit('SET_SHOP', new Shop({}));
 
             province ? commit('SET_CURRENT_LOCATION_PROVINCE', province) : dispatch('updateCurrentLocationProvince', route);
             quests ? commit('SET_CURRENT_LOCATION_QUESTS', quests) : dispatch('updateCurrentLocationQuests', route);
