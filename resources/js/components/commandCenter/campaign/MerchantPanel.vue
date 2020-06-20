@@ -28,6 +28,11 @@
                 required: true
             }
         },
+        methods: {
+            handleClick() {
+                this.$router.push(this.merchantRoute);
+            }
+        },
         computed: {
             iconName() {
                 if (this.merchant.type === 'shop') {
@@ -38,6 +43,18 @@
                 if (this.merchant.type === 'shop') {
                     return 'accent';
                 }
+            },
+            merchantRoute() {
+                if (this.merchant.type === 'shop') {
+                    return {
+                        name: 'shop',
+                        params: {
+                            squadSlug: this.$route.params.squadSlug,
+                            shopSlug: this.merchant.slug
+                        }
+                    }
+                }
+                return {};
             }
         }
     }
