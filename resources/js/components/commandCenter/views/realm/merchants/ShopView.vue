@@ -4,6 +4,23 @@
             <v-row no-gutters justify="center">
                 <span class="rh-op-85" :class="[titleSizeClass, titleFontWeightClass]">{{_shop.name}}</span>
             </v-row>
+            <v-row>
+                <v-col cols="12" md="8" offset-md="2">
+                    <ItemIterator :items="_shop.items" search-label="Search Shop">
+                        <template v-slot:before-expand="props">
+                            <div class="px-2">
+                                <v-btn
+                                    x-small
+                                    color="success"
+                                    @click="handleBuyClick(props.item)"
+                                >
+                                    buy
+                                </v-btn>
+                            </div>
+                        </template>
+                    </ItemIterator>
+                </v-col>
+            </v-row>
         </template>
         <template v-slot:column-two>
             <v-row no-gutters>
@@ -74,7 +91,13 @@
     import RemoveItemToSellButton from "../../../realm/RemoveItemToSellButton";
     export default {
         name: "ShopView",
-        components: {RemoveItemToSellButton, AddItemToSellButton, ItemIterator, DisplayHeaderText, TwoColumnWideLayout},
+        components: {
+            RemoveItemToSellButton,
+            AddItemToSellButton,
+            ItemIterator,
+            DisplayHeaderText,
+            TwoColumnWideLayout
+        },
         mounted() {
             this.maybeUpdateShop();
         },
@@ -88,6 +111,9 @@
                 if (this._shop.slug !== shopSlug) {
                     this.updateShop(this.$route);
                 }
+            },
+            handleBuyClick(item) {
+                alert(item.name);
             }
         },
         computed: {

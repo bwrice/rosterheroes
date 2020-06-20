@@ -1,7 +1,7 @@
 <template>
     <v-btn
         x-small
-        color="accent"
+        color="accent darken-1"
         @click="handleClick"
     >
         remove
