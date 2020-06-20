@@ -40,11 +40,18 @@
             searchLabel: {
                 type: String,
                 default: 'Search Wagon'
+            },
+            withSearch: {
+                type: Boolean,
+                default: true
             }
         },
-        data() {
-            return {
-                search: {
+        computed: {
+            search() {
+                if (! this.withSearch) {
+                    return null;
+                }
+                return {
                     label: this.searchLabel,
                     search: function (items, input) {
                         let search = new jsSearch.Search('uuid');
