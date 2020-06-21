@@ -8,6 +8,9 @@ use App\Domain\Models\Player;
 use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\Team;
 use App\Domain\Models\Week;
+use App\Facades\CurrentWeek;
+use App\Factories\Models\GameFactory;
+use App\Factories\Models\PlayerFactory;
 use App\Factories\Models\PlayerGameLogFactory;
 use App\Factories\Models\PlayerSpiritFactory;
 use App\Jobs\CreatePlayerSpiritJob;
@@ -228,6 +231,35 @@ class BuildWeeklyPlayerSpiritsActionTest extends TestCase
         Queue::assertPushed(CreatePlayerSpiritJob::class, function (CreatePlayerSpiritJob $job) use ($player, $gameTwo) {
             return $job->player->id === $player->id
                 && $job->game->id === $gameTwo->id;
+        });
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_not_push_a_job_if_the_player_has_a_non_roster_status()
+    {
+        $RetiredPlayer = PlayerFactory::new()->retired()->create();
+        $activePlayer = PlayerFactory::new()->withTeamID($RetiredPlayer->team_id)->create();
+
+        $game = GameFactory::new()->forEitherTeam($RetiredPlayer->team)->forWeek($this->week)->create();
+
+        Queue::fake();
+
+        /** @var BuildWeeklyPlayerSpiritsAction $domainAction */
+        $domainAction = app(BuildWeeklyPlayerSpiritsAction::class);
+        $domainAction->execute($this->week);
+
+        // Retired player
+        Queue::assertNotPushed(CreatePlayerSpiritJob::class, function (CreatePlayerSpiritJob $job) use ($RetiredPlayer, $game) {
+            return $job->player->id === $RetiredPlayer->id
+                && $job->game->id === $game->id;
+        });
+
+        // Active Player
+        Queue::assertPushed(CreatePlayerSpiritJob::class, function (CreatePlayerSpiritJob $job) use ($activePlayer, $game) {
+            return $job->player->id === $activePlayer->id
+                && $job->game->id === $game->id;
         });
     }
 }
