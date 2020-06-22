@@ -39,6 +39,7 @@ class Player extends Model
 {
     public const STATUS_ROSTER = 'roster';
     public const STATUS_RETIRED = 'retired';
+    public const STATUS_FREE_AGENT = 'free-agent';
     public const STATUS_MINORS = 'minors';
 
     protected $guarded = [];
