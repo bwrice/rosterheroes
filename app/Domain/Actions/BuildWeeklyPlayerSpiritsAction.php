@@ -22,7 +22,10 @@ class BuildWeeklyPlayerSpiritsAction
             'awayTeam.players'
         ])->chunk(10, function (GameCollection $games) use ($week) {
             $games->each(function (Game $game) use ($week) {
-                Player::query()->withNoSpiritForGame($game)->chunk(100, function (PlayerCollection $players) use ($game, $week) {
+                Player::query()
+                    ->withNoSpiritForGame($game)
+                    ->where('status', '=', Player::STATUS_ROSTER)
+                    ->chunk(100, function (PlayerCollection $players) use ($game, $week) {
                     $players ->each(function (Player $player) use ($game, $week) {
                         CreatePlayerSpiritJob::dispatch($week, $game, $player);
                     });

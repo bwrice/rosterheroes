@@ -22,10 +22,10 @@ class PlayerAPI
         $this->client = $client;
     }
 
-    public function getData(League $league)
+    public function getData(League $league, $queryArgs = [])
     {
         $subURL = $league->abbreviation . '/players.json';
-        $responseData = $this->client->getData($subURL);
+        $responseData = $this->client->getData($subURL, $queryArgs);
         return $responseData['players'];
     }
 }
