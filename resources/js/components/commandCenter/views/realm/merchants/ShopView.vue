@@ -34,10 +34,26 @@
                             </v-text-field>
                         </v-col>
                         <v-col cols="6" sm="12">
-                            Filter Two
+                            <v-text-field
+                                outlined
+                                clearable
+                                type="number"
+                                v-model="maxValue"
+                                :label="'Max Value'"
+                                step="25"
+                            >
+                            </v-text-field>
                         </v-col>
                         <v-col cols="6" sm="12">
-                            Filter Three
+                            <v-select
+                                v-model="selectedItemBases"
+                                :items="['A', 'Psionic Two-Hand Sword', 'Psionice Single-Arm', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L']"
+                                :menu-props="{ maxHeight: '300' }"
+                                label="Item Bases"
+                                multiple
+                                outlined
+                                clearable
+                            ></v-select>
                         </v-col>
                         <v-col cols="6" sm="12">
                             Filter Four
@@ -128,14 +144,18 @@
         data() {
             return {
                 minValue: null,
-                debounceMinValue: _.debounce(this.updateShopMinValue, 400)
+                maxValue: null,
+                selectedItemBases: [],
+                debounceMinValue: _.debounce(this.updateShopMinValue, 400),
+                debounceMaxValue: _.debounce(this.updateShopMaxValue, 400),
             }
         },
         methods: {
             ...mapActions([
                 'updateShop',
                 'clearItemsToSell',
-                'updateShopMinValue'
+                'updateShopMinValue',
+                'updateShopMaxValue'
             ]),
             maybeUpdateShop() {
                 let shopSlug = this.$route.params.shopSlug;
@@ -150,7 +170,10 @@
         watch: {
             minValue: function (newAmount, oldAmount) {
                 this.debounceMinValue(newAmount);
-            }
+            },
+            maxValue: function (newAmount, oldAmount) {
+                this.debounceMaxValue(newAmount);
+            },
         },
         computed: {
             ...mapGetters([
@@ -192,9 +215,6 @@
                     }, 0)
                 }
                 return 0;
-            },
-            shopItems() {
-
             }
         }
     }

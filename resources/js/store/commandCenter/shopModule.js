@@ -12,7 +12,13 @@ export default {
                 method: function (item, value) {
                     return item.value >= value;
                 }
-            }
+            },
+            maxValue: {
+                value: null,
+                method: function (item, value) {
+                    return item.value <= value;
+                }
+            },
         }
     },
 
@@ -27,7 +33,7 @@ export default {
             let items = state.shop.items;
             for (let key in state.shopFilters) {
                 let filter = state.shopFilters[key];
-                if (filter.value !== null) {
+                if ( ! (filter.value === null || filter.value.length === 0)) {
                     items = items.filter((item) => filter.method(item, filter.value));
                 }
             }
@@ -54,6 +60,11 @@ export default {
             let updateShopFilters = _.cloneDeep(state.shopFilters);
             updateShopFilters.minValue.value = minValue;
             state.shopFilters = updateShopFilters;
+        },
+        SET_SHOP_MAX_VALUE(state, maxValue) {
+            let updateShopFilters = _.cloneDeep(state.shopFilters);
+            updateShopFilters.maxValue.value = maxValue;
+            state.shopFilters = updateShopFilters;
         }
     },
 
@@ -78,6 +89,9 @@ export default {
         },
         updateShopMinValue({commit}, minValue) {
             commit('SET_SHOP_MIN_VALUE', minValue);
+        },
+        updateShopMaxValue({commit}, maxValue) {
+            commit('SET_SHOP_MAX_VALUE', maxValue);
         }
     }
 };
