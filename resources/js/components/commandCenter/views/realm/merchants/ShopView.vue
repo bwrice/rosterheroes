@@ -1,74 +1,80 @@
 <template>
     <TwoColumnWideLayout>
         <template v-slot:column-one>
-            <v-row no-gutters justify="center">
-                <span class="rh-op-85" :class="[titleSizeClass, titleFontWeightClass]">{{_shop.name}}</span>
-            </v-row>
-            <v-row no-gutters>
-                <v-col cols="12" sm="8" class="pr-sm-2">
-                    <ItemIterator :items="_shopItems" search-label="Search Shop">
-                        <template v-slot:before-expand="props">
-                            <div class="px-2">
-                                <v-btn
-                                    x-small
-                                    color="success"
-                                    @click="handleBuyClick(props.item)"
+            <v-sheet color="rgba(0, 20, 50, 0.4)" class="pa-2">
+                <v-row no-gutters justify="center">
+                    <span class="rh-op-85" :class="[titleSizeClass, titleFontWeightClass]">{{_shop.name}}</span>
+                </v-row>
+                <v-row no-gutters>
+                    <v-col cols="12" lg="8" order="2" order-lg="1" class="pr-sm-2">
+                        <ItemIterator :items="_shopItems" search-label="Search Shop">
+                            <template v-slot:before-expand="props">
+                                <div class="px-2">
+                                    <v-btn
+                                        x-small
+                                        color="success"
+                                        @click="handleBuyClick(props.item)"
+                                    >
+                                        buy
+                                    </v-btn>
+                                </div>
+                            </template>
+                        </ItemIterator>
+                    </v-col>
+                    <v-col cols="12" lg="4" order="1" order-lg="2">
+                        <v-row no-gutters class="pt-4">
+                            <v-col cols="6" lg="12">
+                                <v-select
+                                    v-model="selectedItemBases"
+                                    :items="itemBaseNames"
+                                    :menu-props="{ maxHeight: '300' }"
+                                    label="Item Bases"
+                                    multiple
+                                    outlined
+                                    clearable
+                                    class="mx-1"
+                                ></v-select>
+                            </v-col>
+                            <v-col cols="6" lg="12">
+                                <v-select
+                                    v-model="selectedItemClasses"
+                                    :items="itemClassNames"
+                                    :menu-props="{ maxHeight: '300' }"
+                                    label="Item Classes"
+                                    multiple
+                                    outlined
+                                    clearable
+                                    class="mx-1"
+                                ></v-select>
+                            </v-col>
+                            <v-col cols="6" lg="12">
+                                <v-text-field
+                                    outlined
+                                    clearable
+                                    type="number"
+                                    v-model="minValue"
+                                    :label="'Min Value'"
+                                    step="25"
+                                    class="mx-1"
                                 >
-                                    buy
-                                </v-btn>
-                            </div>
-                        </template>
-                    </ItemIterator>
-                </v-col>
-                <v-col cols="12" sm="4">
-                    <v-row no-gutters>
-                        <v-col cols="6" sm="12">
-                            <v-text-field
-                                outlined
-                                clearable
-                                type="number"
-                                v-model="minValue"
-                                :label="'Min Value'"
-                                step="25"
-                            >
-                            </v-text-field>
-                        </v-col>
-                        <v-col cols="6" sm="12">
-                            <v-text-field
-                                outlined
-                                clearable
-                                type="number"
-                                v-model="maxValue"
-                                :label="'Max Value'"
-                                step="25"
-                            >
-                            </v-text-field>
-                        </v-col>
-                        <v-col cols="6" sm="12">
-                            <v-select
-                                v-model="selectedItemBases"
-                                :items="itemBaseNames"
-                                :menu-props="{ maxHeight: '300' }"
-                                label="Item Bases"
-                                multiple
-                                outlined
-                                clearable
-                            ></v-select>
-                        </v-col>
-                        <v-col cols="6" sm="12">
-                            <v-select
-                                v-model="selectedItemClasses"
-                                :items="itemClassNames"
-                                :menu-props="{ maxHeight: '300' }"
-                                label="Item Classes"
-                                multiple
-                                outlined
-                                clearable
-                            ></v-select>
-                        </v-col>
-                    </v-row>
-                </v-col>
-            </v-row>
+                                </v-text-field>
+                            </v-col>
+                            <v-col cols="6" lg="12">
+                                <v-text-field
+                                    outlined
+                                    clearable
+                                    type="number"
+                                    v-model="maxValue"
+                                    :label="'Max Value'"
+                                    step="25"
+                                    class="mx-1"
+                                >
+                                </v-text-field>
+                            </v-col>
+                        </v-row>
+                    </v-col>
+                </v-row>
+            </v-sheet>
         </template>
         <template v-slot:column-two>
             <v-row no-gutters>
@@ -210,7 +216,7 @@
                 switch (this.$vuetify.breakpoint.name) {
                     case 'xs':
                     case 'sm':
-                        return 'title';
+                        return 'display-1';
                     case 'md':
                     case 'lg':
                     case 'xl':
