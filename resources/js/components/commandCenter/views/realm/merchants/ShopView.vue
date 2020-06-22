@@ -4,9 +4,9 @@
             <v-row no-gutters justify="center">
                 <span class="rh-op-85" :class="[titleSizeClass, titleFontWeightClass]">{{_shop.name}}</span>
             </v-row>
-            <v-row>
-                <v-col cols="12" md="8" offset-md="2">
-                    <ItemIterator :items="_shop.items" search-label="Search Shop">
+            <v-row no-gutters>
+                <v-col cols="12" sm="8" class="pr-sm-2">
+                    <ItemIterator :items="_shopItems" search-label="Search Shop">
                         <template v-slot:before-expand="props">
                             <div class="px-2">
                                 <v-btn
@@ -19,6 +19,30 @@
                             </div>
                         </template>
                     </ItemIterator>
+                </v-col>
+                <v-col cols="12" sm="4">
+                    <v-row no-gutters>
+                        <v-col cols="6" sm="12">
+                            <v-text-field
+                                outlined
+                                clearable
+                                type="number"
+                                v-model="minValue"
+                                :label="'Min Value'"
+                                step="25"
+                            >
+                            </v-text-field>
+                        </v-col>
+                        <v-col cols="6" sm="12">
+                            Filter Two
+                        </v-col>
+                        <v-col cols="6" sm="12">
+                            Filter Three
+                        </v-col>
+                        <v-col cols="6" sm="12">
+                            Filter Four
+                        </v-col>
+                    </v-row>
                 </v-col>
             </v-row>
         </template>
@@ -101,10 +125,17 @@
         mounted() {
             this.maybeUpdateShop();
         },
+        data() {
+            return {
+                minValue: null,
+                debounceMinValue: _.debounce(this.updateShopMinValue, 400)
+            }
+        },
         methods: {
             ...mapActions([
                 'updateShop',
-                'clearItemsToSell'
+                'clearItemsToSell',
+                'updateShopMinValue'
             ]),
             maybeUpdateShop() {
                 let shopSlug = this.$route.params.shopSlug;
@@ -116,11 +147,18 @@
                 alert(item.name);
             }
         },
+        watch: {
+            minValue: function (newAmount, oldAmount) {
+                this.debounceMinValue(newAmount);
+            }
+        },
         computed: {
             ...mapGetters([
                 '_shop',
+                '_shopItems',
                 '_mobileStorage',
-                '_itemsToSell'
+                '_itemsToSell',
+                '_shopFilters'
             ]),
             titleSizeClass() {
                 switch (this.$vuetify.breakpoint.name) {
@@ -154,6 +192,9 @@
                     }, 0)
                 }
                 return 0;
+            },
+            shopItems() {
+
             }
         }
     }

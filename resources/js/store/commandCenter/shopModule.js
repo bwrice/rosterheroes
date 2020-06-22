@@ -5,7 +5,15 @@ export default {
 
     state: {
         shop: new Shop({}),
-        itemsToSell: []
+        itemsToSell: [],
+        shopFilters: {
+            minValue: {
+                value: null,
+                method: function (item, value) {
+                    return item.value >= value;
+                }
+            }
+        }
     },
 
     getters: {
@@ -14,6 +22,19 @@ export default {
         },
         _itemsToSell(state) {
             return state.itemsToSell;
+        },
+        _shopItems(state) {
+            let items = state.shop.items;
+            for (let key in state.shopFilters) {
+                let filter = state.shopFilters[key];
+                if (filter.value !== null) {
+                    items = items.filter((item) => filter.method(item, filter.value));
+                }
+            }
+            return items;
+        },
+        _shopFilters(state) {
+            return state.shopFilters;
         }
     },
     mutations: {
@@ -28,6 +49,11 @@ export default {
         },
         CLEAR_ITEMS_TO_SELL(state) {
             state.itemsToSell = [];
+        },
+        SET_SHOP_MIN_VALUE(state, minValue) {
+            let updateShopFilters = _.cloneDeep(state.shopFilters);
+            updateShopFilters.minValue.value = minValue;
+            state.shopFilters = updateShopFilters;
         }
     },
 
@@ -49,6 +75,9 @@ export default {
         },
         clearItemsToSell({commit}) {
             commit('CLEAR_ITEMS_TO_SELL');
+        },
+        updateShopMinValue({commit}, minValue) {
+            commit('SET_SHOP_MIN_VALUE', minValue);
         }
     }
 };
