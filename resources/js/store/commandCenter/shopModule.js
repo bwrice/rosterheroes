@@ -9,16 +9,30 @@ export default {
         shopFilters: {
             minValue: {
                 value: null,
-                method: function (item, value) {
-                    return item.value >= value;
+                method: function (item, minValue) {
+                    return item.value >= minValue;
                 }
             },
             maxValue: {
                 value: null,
-                method: function (item, value) {
-                    return item.value <= value;
+                method: function (item, maxValues) {
+                    return item.value <= maxValues;
                 }
             },
+            itemBases: {
+                value: [],
+                method: function (item, itemBaseNames) {
+                    let baseName = item.itemType.itemBase.name;
+                    return itemBaseNames.includes(baseName);
+                }
+            },
+            itemClasses: {
+                value: [],
+                method: function (item, itemClassNames) {
+                    let className = item.itemClass.name;
+                    return itemClassNames.includes(className);
+                }
+            }
         }
     },
 
@@ -65,6 +79,16 @@ export default {
             let updateShopFilters = _.cloneDeep(state.shopFilters);
             updateShopFilters.maxValue.value = maxValue;
             state.shopFilters = updateShopFilters;
+        },
+        SET_SHOP_ITEM_BASE_NAMES(state, itemBaseNames) {
+            let updateShopFilters = _.cloneDeep(state.shopFilters);
+            updateShopFilters.itemBases.value = itemBaseNames;
+            state.shopFilters = updateShopFilters;
+        },
+        SET_SHOP_ITEM_CLASS_NAMES(state, itemClassNames) {
+            let updateShopFilters = _.cloneDeep(state.shopFilters);
+            updateShopFilters.itemClasses.value = itemClassNames;
+            state.shopFilters = updateShopFilters;
         }
     },
 
@@ -92,6 +116,12 @@ export default {
         },
         updateShopMaxValue({commit}, maxValue) {
             commit('SET_SHOP_MAX_VALUE', maxValue);
+        },
+        updateShopItemBases({commit}, itemBaseNames) {
+            commit('SET_SHOP_ITEM_BASE_NAMES', itemBaseNames);
+        },
+        updateShopItemClasses({commit}, itemClassNames) {
+            commit('SET_SHOP_ITEM_CLASS_NAMES', itemClassNames);
         }
     }
 };

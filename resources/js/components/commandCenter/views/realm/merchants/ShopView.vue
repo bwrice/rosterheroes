@@ -47,7 +47,7 @@
                         <v-col cols="6" sm="12">
                             <v-select
                                 v-model="selectedItemBases"
-                                :items="['A', 'Psionic Two-Hand Sword', 'Psionice Single-Arm', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L']"
+                                :items="itemBaseNames"
                                 :menu-props="{ maxHeight: '300' }"
                                 label="Item Bases"
                                 multiple
@@ -56,7 +56,15 @@
                             ></v-select>
                         </v-col>
                         <v-col cols="6" sm="12">
-                            Filter Four
+                            <v-select
+                                v-model="selectedItemClasses"
+                                :items="itemClassNames"
+                                :menu-props="{ maxHeight: '300' }"
+                                label="Item Classes"
+                                multiple
+                                outlined
+                                clearable
+                            ></v-select>
                         </v-col>
                     </v-row>
                 </v-col>
@@ -146,8 +154,15 @@
                 minValue: null,
                 maxValue: null,
                 selectedItemBases: [],
+                itemClassNames: [
+                    'Generic',
+                    'Enchanted',
+                    'Legendary',
+                    'Mythical'
+                ],
+                selectedItemClasses: [],
                 debounceMinValue: _.debounce(this.updateShopMinValue, 400),
-                debounceMaxValue: _.debounce(this.updateShopMaxValue, 400),
+                debounceMaxValue: _.debounce(this.updateShopMaxValue, 400)
             }
         },
         methods: {
@@ -155,7 +170,9 @@
                 'updateShop',
                 'clearItemsToSell',
                 'updateShopMinValue',
-                'updateShopMaxValue'
+                'updateShopMaxValue',
+                'updateShopItemBases',
+                'updateShopItemClasses'
             ]),
             maybeUpdateShop() {
                 let shopSlug = this.$route.params.shopSlug;
@@ -168,11 +185,17 @@
             }
         },
         watch: {
-            minValue: function (newAmount, oldAmount) {
+            minValue: function (newAmount) {
                 this.debounceMinValue(newAmount);
             },
-            maxValue: function (newAmount, oldAmount) {
+            maxValue: function (newAmount) {
                 this.debounceMaxValue(newAmount);
+            },
+            selectedItemBases: function (newItemBaseNames) {
+                this.updateShopItemBases(newItemBaseNames);
+            },
+            selectedItemClasses: function (newItemClassNames) {
+                this.updateShopItemClasses(newItemClassNames);
             },
         },
         computed: {
@@ -215,6 +238,11 @@
                     }, 0)
                 }
                 return 0;
+            },
+            itemBaseNames() {
+                return this._shop.items.map(function (item) {
+                    return item.itemType.itemBase.name;
+                }).sort();
             }
         }
     }
