@@ -28,6 +28,8 @@ class PlayerFactory
     /** @var Position|null */
     protected $position;
 
+    protected $status = Player::STATUS_ROSTER;
+
     public function __construct(Generator $faker)
     {
         $this->faker = $faker;
@@ -44,7 +46,8 @@ class PlayerFactory
         $player = Player::query()->create(array_merge([
             'team_id' => $this->getTeamID(),
             'first_name' => $this->faker->firstNameMale,
-            'last_name' => $this->faker->lastName
+            'last_name' => $this->faker->lastName,
+            'status' => $this->status
         ], $extra));
 
         if ($this->withPosition) {
@@ -97,6 +100,13 @@ class PlayerFactory
             return $this->position;
         }
         return $player->team->league->sport->positions()->inRandomOrder()->first();
+    }
+
+    public function retired()
+    {
+        $clone = clone $this;
+        $clone->status = Player::STATUS_RETIRED;
+        return $clone;
     }
 
 }

@@ -25,6 +25,7 @@ use Illuminate\Support\Carbon;
  * @property string $last_name
  * @property string $external_id
  * @property int $team_id
+ * @property string $status
  *
  * @property Team $team
  * @property PositionCollection $positions
@@ -36,6 +37,11 @@ use Illuminate\Support\Carbon;
  */
 class Player extends Model
 {
+    public const STATUS_ROSTER = 'roster';
+    public const STATUS_RETIRED = 'retired';
+    public const STATUS_FREE_AGENT = 'free-agent';
+    public const STATUS_MINORS = 'minors';
+
     protected $guarded = [];
 
     public function newCollection(array $models = [])

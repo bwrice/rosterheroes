@@ -4,7 +4,7 @@
             <span class="title font-weight-thin">GEAR</span>
         </v-col>
         <v-col cols="12" v-if="focusedSlotType">
-            <v-card>
+            <v-card color="#524c59">
                 <v-card-title class="pb-0">
                     <v-row justify="center" class="px-2">
                         <v-row no-gutters class="flex-column">
@@ -60,7 +60,11 @@
                     </v-row>
                 </v-card-text>
                 <v-card-actions>
-                    <v-btn href="#hero-gear-card" @click="focusedSlotType = null" block>Close</v-btn>
+                    <v-btn
+                        href="#hero-gear-card"
+                        @click="focusedSlotType = null"
+                        block
+                    >Close</v-btn>
                 </v-card-actions>
             </v-card>
         </v-col>

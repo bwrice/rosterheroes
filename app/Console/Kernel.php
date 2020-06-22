@@ -43,6 +43,17 @@ class Kernel extends ConsoleKernel
         $schedule->job(new InitiateTestSquadManagementJob())->cron('0 12 * * 4')->when(function () {
             return app()->environment('local', 'staging');
         });
+
+        /*
+         * Spatie back-up package. Backs up files and DB daily.
+         */
+        $schedule->command('backup:run')->when(function() {
+            return ! app()->environment('local');
+        })->cron('0 5 * * *');
+
+        $schedule->command('backup:clean')->when(function() {
+            return ! app()->environment('local');
+        })->cron('30 5 * * *');
     }
 
     /**
