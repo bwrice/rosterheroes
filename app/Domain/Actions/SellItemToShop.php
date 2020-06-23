@@ -4,6 +4,7 @@
 namespace App\Domain\Actions;
 
 
+use App\Domain\Collections\ItemCollection;
 use App\Domain\Models\Item;
 use App\Domain\Models\Shop;
 use App\Domain\Models\Squad;
@@ -14,10 +15,21 @@ use Illuminate\Support\Facades\DB;
 class SellItemToShop
 {
     /**
+     * @var AddItemToHasItems
+     */
+    protected $addItemToHasItems;
+
+    public function __construct(AddItemToHasItems $addItemToHasItems)
+    {
+        $this->addItemToHasItems = $addItemToHasItems;
+    }
+
+    /**
      * @param Item $item
      * @param Squad $squad
      * @param Shop $shop
      * @throws SellItemToShopException
+     * @return ItemCollection
      */
     public function execute(Item $item, Squad $squad, Shop $shop)
     {
@@ -33,15 +45,14 @@ class SellItemToShop
 
         $salePrice = $shop->getSalePrice($item);
 
-        DB::transaction(function () use ($item, $squad, $shop, $salePrice) {
+        return DB::transaction(function () use ($item, $squad, $shop, $salePrice) {
 
             $squad->gold += $salePrice;
             $squad->save();
 
             $item->shop_acquired_at = Date::now();
             $item->shop_acquisition_cost = $salePrice;
-            $item->hasItems()->associate($shop);
-            $item->save();
+            return $this->addItemToHasItems->execute($item, $shop);
         });
     }
 
