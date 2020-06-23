@@ -174,8 +174,12 @@ export default {
             })
         },
         REPLACE_UPDATED_HERO(state, updatedHero) {
-
             state.heroes = helpers.replaceOrPushElement(state.heroes, updatedHero, 'uuid');
+        },
+        DECREASE_SQUAD_GOLD(state, amount) {
+            let updatedSquad = _.cloneDeep(state.squad);
+            updatedSquad.gold -= amount;
+            state.squad = updatedSquad;
         }
     },
 
@@ -300,7 +304,7 @@ export default {
                 helpers.handleItemTransactions({state, commit, dispatch}, updatedItems);
                 dispatch('snackBarSuccess', {
                     text: item.name + ' equipped',
-                    timeout: 3000
+                    timeout: 2000
                 });
             } catch (e) {
                 helpers.handleResponseErrors(e, 'equip', dispatch);
