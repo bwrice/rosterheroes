@@ -108,4 +108,28 @@ class SellItemToShopTest extends TestCase
         $squad = $squad->fresh();
         $this->assertEquals($previousGold + $salePrice, $squad->gold);
     }
+
+    /**
+     * @test
+     */
+    public function it_will_set_the_shop_attributes_on_the_item_correctly()
+    {
+        $squad = SquadFactory::new()->create();
+        $shop = ShopFactory::new()->withProvinceID($squad->province_id)->create();
+
+        $salePrice = rand(10, 500);
+        $shopMock = \Mockery::mock($shop)->shouldReceive('getSalePrice')->andReturn($salePrice)->getMock();
+        $item = ItemFactory::new()->forSquad($squad)->create();
+
+
+        $this->getDomainAction()->execute($item, $squad, $shopMock);
+
+        $item = $item->fresh();
+
+        // Shouldn't be shop available yet
+        $this->assertNull($item->made_shop_available_at);
+
+        $this->assertNotNull($item->shop_acquired_at);
+        $this->assertEquals($salePrice, $item->shop_acquisition_cost);
+    }
 }

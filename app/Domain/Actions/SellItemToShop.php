@@ -8,11 +8,11 @@ use App\Domain\Models\Item;
 use App\Domain\Models\Shop;
 use App\Domain\Models\Squad;
 use App\Exceptions\SellItemToShopException;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 
 class SellItemToShop
 {
-
     /**
      * @param Item $item
      * @param Squad $squad
@@ -37,6 +37,9 @@ class SellItemToShop
 
             $squad->gold += $salePrice;
             $squad->save();
+
+            $item->shop_acquired_at = Date::now();
+            $item->shop_acquisition_cost = $salePrice;
             $item->hasItems()->associate($shop);
             $item->save();
         });
