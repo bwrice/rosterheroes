@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BuyItemFromShopController;
 use App\Http\Controllers\CampaignHistoryController;
 use App\Http\Controllers\CampaignStopSideQuestController;
 use App\Http\Controllers\CombatPositionController;
@@ -163,6 +164,7 @@ Route::prefix('v1')->group(function () {
              * SHOPS
              */
             Route::get('{squadSlug}/shops/{shopSlug}', [SquadShopController::class, 'show']);
+            Route::post('{squadSlug}/shops/{shopSlug}/buy', BuyItemFromShopController::class);
         });
 
         Route::get('/squad/{squadSlug}/hero-classes', SquadHeroClassController::class);
