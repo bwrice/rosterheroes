@@ -31,7 +31,7 @@ class SellItemToShop
             throw new SellItemToShopException($item, $squad, $shop, $message, SellItemToShopException::CODE_INVALID_PROVINCE);
         }
 
-        $salePrice = floor(0.6 * $item->getValue());
+        $salePrice = $shop->getSalePrice($item);
 
         DB::transaction(function () use ($item, $squad, $shop, $salePrice) {
 
