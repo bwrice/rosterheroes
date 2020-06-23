@@ -130,8 +130,11 @@
                 <v-col cols="12">
                     <v-sheet class="my-1 px-2 py-1" color="rgba(255,255,255, 0.25)">
                         <v-row no-gutters align="center" justify="center">
+                            <div style="width: 48px" class="px-2 pt-2">
+                                <GoldIcon></GoldIcon>
+                            </div>
                             <span class="subtitle-1">
-                                Gold: {{sellGold.toLocaleString()}}
+                                {{sellGold.toLocaleString()}}
                             </span>
                             <v-spacer></v-spacer>
                             <v-btn
