@@ -114,4 +114,13 @@ class Shop extends Model implements HasItems, Merchant
     {
         return (int) floor(0.6 * $item->getValue());
     }
+
+    /**
+     * @param Item $item
+     * @return int
+     */
+    public function getPurchasePrice(Item $item)
+    {
+        return (int) ceil(1.6 * $item->getValue());
+    }
 }
