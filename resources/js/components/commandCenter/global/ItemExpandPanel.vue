@@ -47,7 +47,11 @@
             }
         },
         mounted() {
-            let itemNameMaxWidth = this.$refs.row.clientWidth - 120;
+            let clientWidth = this.$refs.row.clientWidth;
+            let itemNameMaxWidth = 250;
+            if (clientWidth > 250) {
+                itemNameMaxWidth = this.$refs.row.clientWidth - 120;
+            }
             this.itemNameStyleObject['max-width'] = itemNameMaxWidth + 'px';
         },
         data() {
