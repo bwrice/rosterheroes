@@ -15,6 +15,8 @@ class AddShopColumnsToItemsTable extends Migration
     {
         Schema::table('items', function (Blueprint $table) {
             $table->dateTime('made_shop_available_at')->after('name')->nullable();
+            $table->dateTime('shop_acquired_at')->after('made_shop_available_at')->nullable();
+            $table->integer('shop_acquisition_cost')->after('shop_acquired_at')->unsigned()->nullable();
         });
     }
 
