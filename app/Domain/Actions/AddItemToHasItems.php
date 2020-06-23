@@ -24,7 +24,13 @@ class AddItemToHasItems
         $this->moveItemToBackupAction = $moveItemToBackupAction;
     }
 
-
+    /**
+     * @param Item $item
+     * @param HasItems $hasItems
+     * @param ItemCollection|null $itemsMoved
+     * @param bool $prioritize
+     * @return ItemCollection
+     */
     public function execute(Item $item, HasItems $hasItems, ItemCollection $itemsMoved = null, $prioritize = true): ItemCollection
     {
         $itemsMoved = $itemsMoved ?: new ItemCollection();
