@@ -41,6 +41,8 @@ use phpDocumentor\Reflection\Types\Static_;
  * @property int|null $item_blueprint_id
  * @property CarbonInterface $updated_at
  * @property CarbonInterface $made_shop_available_at
+ * @property CarbonInterface $shop_acquired_at
+ * @property int|null $shop_acquisition_cost
  *
  * @property string $has_items_type
  * @property string $has_items_id
@@ -62,6 +64,13 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
 
     /** @var UsesItems|null */
     protected $usesItems;
+
+    protected $dates = [
+        'updated_at',
+        'created_at',
+        'made_shop_available_at',
+        'shop_acquired_at'
+    ];
 
     protected $transaction = [
         'to' => null,
