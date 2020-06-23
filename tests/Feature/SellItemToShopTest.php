@@ -12,6 +12,7 @@ use App\Factories\Models\SquadFactory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Mockery\Mock;
 use Tests\TestCase;
 
 class SellItemToShopTest extends TestCase
@@ -91,18 +92,20 @@ class SellItemToShopTest extends TestCase
     /**
      * @test
      */
-    public function it_will_increase_the_squads_gold_by_an_amount_less_than_the_item_value()
+    public function it_will_increase_the_squads_gold_by_the_sale_price()
     {
         $squad = SquadFactory::new()->create();
         $shop = ShopFactory::new()->withProvinceID($squad->province_id)->create();
+
+        $salePrice = rand(10, 500);
+        $shopMock = \Mockery::mock($shop)->shouldReceive('getSalePrice')->andReturn($salePrice)->getMock();
         $item = ItemFactory::new()->forSquad($squad)->create();
 
         $previousGold = $squad->gold;
 
-        $this->getDomainAction()->execute($item, $squad, $shop);
+        $this->getDomainAction()->execute($item, $squad, $shopMock);
 
         $squad = $squad->fresh();
-        $this->assertGreaterThan($previousGold, $squad->gold);
-        $this->assertLessThan($previousGold + $item->getValue(), $squad->gold);
+        $this->assertEquals($previousGold + $salePrice, $squad->gold);
     }
 }
