@@ -107,3 +107,10 @@ export async function getShop(squadSlug, shopSlug) {
     let response = await axios.get(ROUTE_PREFIX + squadSlug + '/shops/' + shopSlug);
     return response.data;
 }
+
+export async function buyItemFromShop(squadSlug, shopSlug, itemUuid) {
+    let response = await axios.post(ROUTE_PREFIX + squadSlug + '/shops/' + shopSlug + '/buy', {
+        item: itemUuid
+    });
+    return response.data;
+}
