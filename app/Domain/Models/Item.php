@@ -77,6 +77,8 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
         'from' => null
     ];
 
+    protected $shopPrice = null;
+
     public static function resourceRelations()
     {
         return [
@@ -350,5 +352,23 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
     public function setTransactionFrom(HasItems $hasItems)
     {
         return $this->transaction['from'] = $hasItems->getTransactionIdentification();
+    }
+
+    /**
+     * @param int $shopPrice
+     * @return Item
+     */
+    public function setShopPrice(int $shopPrice = null)
+    {
+        $this->shopPrice = $shopPrice;
+        return $this;
+    }
+
+    /**
+     * @return null|int
+     */
+    public function getShopPrice()
+    {
+        return $this->shopPrice;
     }
 }

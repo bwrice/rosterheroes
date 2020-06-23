@@ -6,7 +6,7 @@ import Enchantment from "./Enchantment";
 
 export default class Item {
 
-    constructor({name = '', uuid, attacks = [], enchantments = [], itemType, itemClass, material, weight, protection, blockChance, value, transaction}) {
+    constructor({name = '', uuid, attacks = [], enchantments = [], itemType, itemClass, material, weight, protection, blockChance, value, transaction, shopPrice = 0}) {
         this.name = name;
         this.uuid = uuid;
         this.weight = weight;
@@ -23,5 +23,6 @@ export default class Item {
         this.itemClass = itemClass ? new ItemClass(itemClass) : new ItemClass({});
         this.material = material ? new Material(material) : new Material({});
         this.transaction = transaction;
+        this.shopPrice = shopPrice;
     }
 }

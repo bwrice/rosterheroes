@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Domain\Models\Item;
 use App\Domain\Models\Shop;
 use App\Domain\Models\Squad;
 use App\Http\Resources\ShopResource;
@@ -19,7 +20,12 @@ class SquadShopController extends Controller
             $squad,
             $shop
         ]);
+        $shop->load(Shop::getResourceRelations());
+        $shop->availableItems->each(function (Item $item) use ($shop) {
+            $price = $shop->getPurchasePrice($item);
+            $item->setShopPrice($price);
+        });
 
-        return new ShopResource($shop->load(Shop::getResourceRelations()));
+        return new ShopResource($shop);
     }
 }
