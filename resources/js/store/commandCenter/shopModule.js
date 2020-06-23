@@ -1,5 +1,7 @@
 import * as squadApi from '../../api/squadApi';
 import Shop from "../../models/Shop";
+import * as helpers from "../../helpers/vuexHelpers";
+import Item from "../../models/Item";
 
 export default {
 
@@ -89,6 +91,11 @@ export default {
             let updateShopFilters = _.cloneDeep(state.shopFilters);
             updateShopFilters.itemClasses.value = itemClassNames;
             state.shopFilters = updateShopFilters;
+        },
+        REMOVE_ITEM_FROM_SHOP(state, item) {
+            let updatedShop = _.cloneDeep(state.shop);
+            updatedShop.items = updatedShop.items.filter((shopItem) => shopItem.uuid !== item.uuid);
+            state.shop = updatedShop;
         }
     },
 
@@ -100,6 +107,28 @@ export default {
                 commit('SET_SHOP', shop)
             } catch (e) {
                 console.warn("Failed to update shop");
+            }
+        },
+
+        async squadBuyItemFromShop({state, commit, dispatch}, {route, item}) {
+            try {
+                console.log("ITEM");
+                console.log(item);
+                let response = await squadApi.buyItemFromShop(route.params.squadSlug, route.params.shopSlug, item.uuid);
+                let updatedItems = response.data.map(function (itemData) {
+                    return new Item(itemData);
+                });
+
+                helpers.handleItemTransactions({state, commit, dispatch}, updatedItems);
+                commit('REMOVE_ITEM_FROM_SHOP', item);
+                commit('DECREASE_SQUAD_GOLD', item.shopPrice);
+
+                dispatch('snackBarSuccess', {
+                    text: item.name + ' purchased',
+                    timeout: 2000
+                });
+            } catch (e) {
+                helpers.handleResponseErrors(e, 'buy', dispatch);
             }
         },
         addItemToSell({commit}, item) {

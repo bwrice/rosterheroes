@@ -14,6 +14,7 @@
                                         x-small
                                         color="success"
                                         @click="handleBuyClick(props.item)"
+                                        :disabled="buyItemDisabled(props.item)"
                                     >
                                         buy
                                     </v-btn>
@@ -23,6 +24,18 @@
                     </v-col>
                     <v-col cols="12" lg="4" order="1" order-lg="2">
                         <v-row no-gutters class="pt-4">
+                            <v-col cols="6" offset="3" lg="12" offset-lg="0" order-lg="5">
+                                <v-row no-gutters align="center">
+                                    <v-col cols="4" class="pt-4 px-4 pb-2">
+                                        <GoldIcon></GoldIcon>
+                                    </v-col>
+                                    <v-col cols="8">
+                                        <v-row no-gutters>
+                                            <span class="headline font-weight-bold rh-op-80">{{_squad.gold.toLocaleString()}}</span>
+                                        </v-row>
+                                    </v-col>
+                                </v-row>
+                            </v-col>
                             <v-col cols="6" lg="12">
                                 <v-select
                                     v-model="selectedItemBases"
@@ -75,6 +88,39 @@
                     </v-col>
                 </v-row>
             </v-sheet>
+            <v-dialog
+                v-model="buyItemDialog"
+                max-width="400"
+            >
+                <v-card class="pa-2" color="#323f54">
+                    <v-card-title>
+                        <v-row no-gutters justify="center">
+                            Buy Item for {{itemToBuy.shopPrice.toLocaleString()}} gold?
+                        </v-row>
+                    </v-card-title>
+                    <ItemExpandPanel :item="itemToBuy"></ItemExpandPanel>
+                    <v-card-actions justify="end">
+                        <v-row no-gutters justify="end">
+                            <v-btn
+                                outlined
+                                color="error"
+                                @click="buyItemDialog = false"
+                                class="mx-1"
+                            >
+                                Cancel
+                            </v-btn>
+                            <v-btn
+                                color="success"
+                                class="mx-1"
+                                @click="handleConfirmBuy"
+                                :disabled="pending"
+                            >
+                                Buy
+                            </v-btn>
+                        </v-row>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
         </template>
         <template v-slot:column-two>
             <v-row no-gutters>
@@ -143,9 +189,14 @@
     import ItemIterator from "../../../global/ItemIterator";
     import AddItemToSellButton from "../../../realm/AddItemToSellButton";
     import RemoveItemToSellButton from "../../../realm/RemoveItemToSellButton";
+    import Item from "../../../../../models/Item";
+    import ItemExpandPanel from "../../../global/ItemExpandPanel";
+    import GoldIcon from "../../../../icons/GoldIcon";
     export default {
         name: "ShopView",
         components: {
+            GoldIcon,
+            ItemExpandPanel,
             RemoveItemToSellButton,
             AddItemToSellButton,
             ItemIterator,
@@ -159,6 +210,7 @@
             return {
                 minValue: null,
                 maxValue: null,
+                pending: false,
                 selectedItemBases: [],
                 itemClassNames: [
                     'Generic',
@@ -167,6 +219,8 @@
                     'Mythical'
                 ],
                 selectedItemClasses: [],
+                itemToBuy: new Item({}),
+                buyItemDialog: false,
                 debounceMinValue: _.debounce(this.updateShopMinValue, 400),
                 debounceMaxValue: _.debounce(this.updateShopMaxValue, 400)
             }
@@ -178,7 +232,8 @@
                 'updateShopMinValue',
                 'updateShopMaxValue',
                 'updateShopItemBases',
-                'updateShopItemClasses'
+                'updateShopItemClasses',
+                'squadBuyItemFromShop'
             ]),
             maybeUpdateShop() {
                 let shopSlug = this.$route.params.shopSlug;
@@ -187,7 +242,23 @@
                 }
             },
             handleBuyClick(item) {
-                alert(item.name);
+                this.buyItemDialog = true;
+                this.itemToBuy = item;
+            },
+            async handleConfirmBuy() {
+                this.pending = true;
+                await this.squadBuyItemFromShop({
+                    route: this.$route,
+                    item: this.itemToBuy
+                });
+                this.pending = false;
+                this.buyItemDialog = false;
+            },
+            buyItemDisabled(item) {
+                if (this.pending) {
+                    return true;
+                }
+                return this._squad.gold < item.shopPrice;
             }
         },
         watch: {
@@ -210,7 +281,8 @@
                 '_shopItems',
                 '_mobileStorage',
                 '_itemsToSell',
-                '_shopFilters'
+                '_shopFilters',
+                '_squad'
             ]),
             titleSizeClass() {
                 switch (this.$vuetify.breakpoint.name) {
