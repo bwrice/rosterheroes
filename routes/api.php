@@ -15,6 +15,7 @@ use App\Http\Controllers\LeagueController;
 use App\Http\Controllers\LocalStashController;
 use App\Http\Controllers\MobileStoreItemForSquadController;
 use App\Http\Controllers\OpenChestController;
+use App\Http\Controllers\SellToShopController;
 use App\Http\Controllers\SideQuestResultEventsController;
 use App\Http\Controllers\SquadQuestController;
 use App\Http\Controllers\SquadShopController;
@@ -165,6 +166,7 @@ Route::prefix('v1')->group(function () {
              */
             Route::get('{squadSlug}/shops/{shopSlug}', [SquadShopController::class, 'show']);
             Route::post('{squadSlug}/shops/{shopSlug}/buy', BuyItemFromShopController::class);
+            Route::post('{squadSlug}/shops/{shopSlug}/sell', SellToShopController::class);
         });
 
         Route::get('/squad/{squadSlug}/hero-classes', SquadHeroClassController::class);
