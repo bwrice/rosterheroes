@@ -3,6 +3,7 @@
         x-small
         color="accent darken-1"
         @click="handleClick"
+        :disabled="disabled"
     >
         remove
     </v-btn>
@@ -19,6 +20,10 @@
             item: {
                 type: Item,
                 required: true
+            },
+            disabled: {
+                type: Boolean,
+                default: false
             }
         },
         methods: {

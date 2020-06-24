@@ -112,8 +112,6 @@ export default {
 
         async squadBuyItemFromShop({state, commit, dispatch}, {route, item}) {
             try {
-                console.log("ITEM");
-                console.log(item);
                 let response = await squadApi.buyItemFromShop(route.params.squadSlug, route.params.shopSlug, item.uuid);
                 let updatedItems = response.data.map(function (itemData) {
                     return new Item(itemData);
@@ -129,6 +127,28 @@ export default {
                 });
             } catch (e) {
                 helpers.handleResponseErrors(e, 'buy', dispatch);
+            }
+        },
+        async squadSellItemBundleToShop({state, commit, dispatch}, {squad, shop, items}) {
+            try {
+                let itemUuids = items.map((item) => item.uuid);
+                let response = await squadApi.sellItemBundleToShop(squad.slug, shop.slug, itemUuids);
+                let updatedItems = response.data.map(function (itemData) {
+                    return new Item(itemData);
+                });
+
+                let gold = shop.golfForItems(items);
+                helpers.handleItemTransactions({state, commit, dispatch}, updatedItems);
+
+                commit('INCREASE_SQUAD_GOLD', gold);
+                dispatch('snackBarSuccess', {
+                    text: items.length + ' items sold for ' + gold + ' gold',
+                    timeout: 2000
+                });
+
+            } catch (e) {
+                console.log(e);
+                helpers.handleResponseErrors(e, 'sell', dispatch);
             }
         },
         addItemToSell({commit}, item) {

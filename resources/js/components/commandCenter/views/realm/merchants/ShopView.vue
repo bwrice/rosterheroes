@@ -134,19 +134,20 @@
                                 <GoldIcon></GoldIcon>
                             </div>
                             <span class="subtitle-1">
-                                {{sellGold.toLocaleString()}}
+                                {{_shop.golfForItems(_itemsToSell).toLocaleString()}}
                             </span>
                             <v-spacer></v-spacer>
                             <v-btn
                                 @click="clearItemsToSell"
                                 color="error"
                                 class="mx-1"
-                                :disabled="_itemsToSell.length === 0"
+                                :disabled="_itemsToSell.length === 0 || pending"
                             >clear</v-btn>
                             <v-btn
                                 color="primary"
                                 class="mx-1"
-                                :disabled="_itemsToSell.length === 0"
+                                @click="sellItemDialog = true"
+                                :disabled="_itemsToSell.length === 0 || pending"
                             >sell</v-btn>
                         </v-row>
                     </v-sheet>
@@ -158,7 +159,10 @@
                     >
                         <template v-slot:before-expand="props">
                             <div class="px-2">
-                                <RemoveItemToSellButton :item="props.item"></RemoveItemToSellButton>
+                                <RemoveItemToSellButton
+                                    :item="props.item"
+                                    :disabled="pending"
+                                ></RemoveItemToSellButton>
                             </div>
                         </template>
                     </ItemIterator>
@@ -180,6 +184,43 @@
                     </ItemIterator>
                 </v-col>
             </v-row>
+            <v-dialog
+                v-model="sellItemDialog"
+                max-width="400"
+            >
+                <v-card class="pa-2" color="#323f54">
+                    <v-card-title>
+                        <v-row no-gutters justify="center">
+                            Sell {{_itemsToSell.length}} items?
+                        </v-row>
+                    </v-card-title>
+                    <ItemIterator
+                        :items="_itemsToSell"
+                        :with-search="false"
+                    >
+                    </ItemIterator>
+                    <v-card-actions justify="end">
+                        <v-row no-gutters justify="end">
+                            <v-btn
+                                outlined
+                                color="error"
+                                @click="sellItemDialog = false"
+                                class="mx-1"
+                            >
+                                Cancel
+                            </v-btn>
+                            <v-btn
+                                color="success"
+                                class="mx-1"
+                                @click="handleConfirmSell"
+                                :disabled="pending"
+                            >
+                                Sell
+                            </v-btn>
+                        </v-row>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
         </template>
     </TwoColumnWideLayout>
 </template>
@@ -224,6 +265,7 @@
                 selectedItemClasses: [],
                 itemToBuy: new Item({}),
                 buyItemDialog: false,
+                sellItemDialog: false,
                 debounceMinValue: _.debounce(this.updateShopMinValue, 400),
                 debounceMaxValue: _.debounce(this.updateShopMaxValue, 400)
             }
@@ -236,7 +278,8 @@
                 'updateShopMaxValue',
                 'updateShopItemBases',
                 'updateShopItemClasses',
-                'squadBuyItemFromShop'
+                'squadBuyItemFromShop',
+                'squadSellItemBundleToShop'
             ]),
             maybeUpdateShop() {
                 let shopSlug = this.$route.params.shopSlug;
@@ -256,6 +299,21 @@
                 });
                 this.pending = false;
                 this.buyItemDialog = false;
+            },
+            async handleConfirmSell() {
+                this.pending = true;
+                await this.squadSellItemBundleToShop({
+                    squad: this._squad,
+                    shop: this._shop,
+                    items: this._itemsToSell
+                });
+                this.sellItemDialog = false;
+                // Needed to close dialog in time for items to clear
+                await setTimeout(() => {
+                    this.clearItemsToSell();
+                    this.pending = false;
+                }, 250);
+
             },
             buyItemDisabled(item) {
                 if (this.pending) {
@@ -311,14 +369,6 @@
             },
             filteredMobileStorageItems() {
                 return _.differenceBy(this._mobileStorage.items, this._itemsToSell, 'uuid');
-            },
-            sellGold() {
-                if (this._itemsToSell.length > 0) {
-                    return this._itemsToSell.reduce(function (total, itemToSell) {
-                        return total + Math.floor(itemToSell.value * 0.6);
-                    }, 0)
-                }
-                return 0;
             },
             itemBaseNames() {
                 return this._shop.items.map(function (item) {
