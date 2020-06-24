@@ -65,8 +65,8 @@
                                     outlined
                                     clearable
                                     type="number"
-                                    v-model="minValue"
-                                    :label="'Min Value'"
+                                    v-model="minPrice"
+                                    :label="'Min Price'"
                                     step="25"
                                     class="mx-1"
                                 >
@@ -77,8 +77,8 @@
                                     outlined
                                     clearable
                                     type="number"
-                                    v-model="maxValue"
-                                    :label="'Max Value'"
+                                    v-model="maxPrice"
+                                    :label="'Max Price'"
                                     step="25"
                                     class="mx-1"
                                 >
@@ -252,8 +252,8 @@
         },
         data() {
             return {
-                minValue: null,
-                maxValue: null,
+                minPrice: null,
+                maxPrice: null,
                 pending: false,
                 selectedItemBases: [],
                 itemClassNames: [
@@ -266,16 +266,16 @@
                 itemToBuy: new Item({}),
                 buyItemDialog: false,
                 sellItemDialog: false,
-                debounceMinValue: _.debounce(this.updateShopMinValue, 400),
-                debounceMaxValue: _.debounce(this.updateShopMaxValue, 400)
+                debounceMinPrice: _.debounce(this.updateShopMinPrice, 400),
+                debounceMaxPrice: _.debounce(this.updateShopMaxPrice, 400)
             }
         },
         methods: {
             ...mapActions([
                 'updateShop',
                 'clearItemsToSell',
-                'updateShopMinValue',
-                'updateShopMaxValue',
+                'updateShopMinPrice',
+                'updateShopMaxPrice',
                 'updateShopItemBases',
                 'updateShopItemClasses',
                 'squadBuyItemFromShop',
@@ -323,11 +323,11 @@
             }
         },
         watch: {
-            minValue: function (newAmount) {
-                this.debounceMinValue(newAmount);
+            minPrice: function (newAmount) {
+                this.debounceMinPrice(newAmount);
             },
-            maxValue: function (newAmount) {
-                this.debounceMaxValue(newAmount);
+            maxPrice: function (newAmount) {
+                this.debounceMaxPrice(newAmount);
             },
             selectedItemBases: function (newItemBaseNames) {
                 this.updateShopItemBases(newItemBaseNames);

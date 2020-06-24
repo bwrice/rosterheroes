@@ -9,16 +9,16 @@ export default {
         shop: new Shop({}),
         itemsToSell: [],
         shopFilters: {
-            minValue: {
+            minPrice: {
                 value: null,
-                method: function (item, minValue) {
-                    return item.value >= minValue;
+                method: function (item, minPrice) {
+                    return item.shopPrice >= minPrice;
                 }
             },
-            maxValue: {
+            maxPrice: {
                 value: null,
-                method: function (item, maxValues) {
-                    return item.value <= maxValues;
+                method: function (item, maxPrice) {
+                    return item.shopPrice <= maxPrice;
                 }
             },
             itemBases: {
@@ -72,14 +72,14 @@ export default {
         CLEAR_ITEMS_TO_SELL(state) {
             state.itemsToSell = [];
         },
-        SET_SHOP_MIN_VALUE(state, minValue) {
+        SET_SHOP_MIN_VALUE(state, minPrice) {
             let updateShopFilters = _.cloneDeep(state.shopFilters);
-            updateShopFilters.minValue.value = minValue;
+            updateShopFilters.minPrice.value = minPrice;
             state.shopFilters = updateShopFilters;
         },
-        SET_SHOP_MAX_VALUE(state, maxValue) {
+        SET_SHOP_MAX_VALUE(state, maxPrice) {
             let updateShopFilters = _.cloneDeep(state.shopFilters);
-            updateShopFilters.maxValue.value = maxValue;
+            updateShopFilters.maxPrice.value = maxPrice;
             state.shopFilters = updateShopFilters;
         },
         SET_SHOP_ITEM_BASE_NAMES(state, itemBaseNames) {
@@ -160,11 +160,11 @@ export default {
         clearItemsToSell({commit}) {
             commit('CLEAR_ITEMS_TO_SELL');
         },
-        updateShopMinValue({commit}, minValue) {
-            commit('SET_SHOP_MIN_VALUE', minValue);
+        updateShopMinPrice({commit}, minPrice) {
+            commit('SET_SHOP_MIN_VALUE', minPrice);
         },
-        updateShopMaxValue({commit}, maxValue) {
-            commit('SET_SHOP_MAX_VALUE', maxValue);
+        updateShopMaxPrice({commit}, maxPrice) {
+            commit('SET_SHOP_MAX_VALUE', maxPrice);
         },
         updateShopItemBases({commit}, itemBaseNames) {
             commit('SET_SHOP_ITEM_BASE_NAMES', itemBaseNames);
