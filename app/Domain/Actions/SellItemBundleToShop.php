@@ -34,10 +34,12 @@ class SellItemBundleToShop
 
             $itemsSold = new ItemCollection();
 
-            $items->each(function (Item $item) use ($itemsSold, $squad, $shop) {
+            $items->each(function (Item $item) use (&$itemsSold, $squad, $shop) {
                 $items = $this->sellItemToShop->execute($item, $squad, $shop);
-                $itemsSold->merge($items);
+                $itemsSold = $itemsSold->merge($items);
             });
+
+            return $itemsSold;
         });
     }
 }
