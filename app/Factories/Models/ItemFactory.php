@@ -11,7 +11,9 @@ use App\Domain\Models\ItemBase;
 use App\Domain\Models\ItemClass;
 use App\Domain\Models\ItemType;
 use App\Domain\Models\Material;
+use App\Domain\Models\Shop;
 use App\Domain\Models\Squad;
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -65,6 +67,10 @@ class ItemFactory
 
     protected $shopAvailable = false;
 
+    protected $shopAcquiredAt = null;
+
+    protected $shopAcquisitionCost = null;
+
     protected $hasItemRelations = null;
 
     public function __construct()
@@ -90,7 +96,9 @@ class ItemFactory
             'material_id' => $material->id,
             'has_items_id' => $this->hasItems['id'] ?? null,
             'has_items_type' => $this->hasItems['type'] ?? null,
-            'made_shop_available_at' => $this->shopAvailable ? Date::now() : null
+            'made_shop_available_at' => $this->shopAvailable ? Date::now() : null,
+            'shop_acquired_at' => $this->shopAcquiredAt,
+            'shop_acquisition_cost' => $this->shopAcquisitionCost
         ], $extra));
 
         if ($this->hasItemRelations) {
@@ -125,6 +133,14 @@ class ItemFactory
             'id' => $squad->id,
             'type' => Squad::RELATION_MORPH_MAP_KEY
         ];
+        return $clone;
+    }
+
+    public function forShop(Shop $shop, CarbonInterface $acquiredAt = null, $acquisitionCost = null)
+    {
+        $clone = clone ($this->forHasItems($shop));
+        $clone->shopAcquisitionCost = ! is_null($acquisitionCost) ? $acquisitionCost : rand(10, 9999);
+        $clone->shopAcquiredAt = $acquiredAt ?: Date::now();
         return $clone;
     }
 
