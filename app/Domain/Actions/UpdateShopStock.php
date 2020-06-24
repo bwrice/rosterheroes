@@ -16,19 +16,54 @@ class UpdateShopStock
     /** @var int */
     protected $backInventoryCapacity;
     /** @var int */
-    protected $totalInventory;
+    protected $backInventory;
+    /**
+     * @var GenerateItemFromBlueprintAction
+     */
+    private $generateItemFromBlueprintAction;
 
+    public function __construct(GenerateItemFromBlueprintAction $generateItemFromBlueprintAction)
+    {
+        $this->generateItemFromBlueprintAction = $generateItemFromBlueprintAction;
+    }
+
+    /**
+     * @param Shop $shop
+     * @return int
+     * @throws \Exception
+     */
     public function execute(Shop $shop)
     {
         $this->shop = $shop;
         $this->stockCapacity = $this->shop->getStockCapacity();
         $this->backInventoryCapacity = $this->shop->getBackInventoryCapacity();
 
-        $this->totalInventory = $this->shop->items()->count();
+        $this->backInventory = $this->shop->items()->whereNull('made_shop_available_at')->count();
 
-        if ($this->totalInventory >= ($this->stockCapacity + $this->backInventoryCapacity)) {
+        $backInventoryDiff = $this->stockCapacity - $this->backInventory;
+
+        if ($backInventoryDiff <= 0) {
+
             $this->stockShelvesFromCurrentInventory();
+            return 0;
         }
+
+        $itemBlueprint = $this->shop->getStockFillingBlueprint();
+
+        if (! $itemBlueprint) {
+            throw new \Exception("No blueprint found for restocking shop: " . $this->shop->id);
+        }
+
+        for ($i = 1; $i <= $backInventoryDiff; $i++) {
+            $item = $this->generateItemFromBlueprintAction->execute($itemBlueprint);
+            $item->shop_acquired_at = Date::now();
+            $item->shop_acquisition_cost = $item->getValue();
+            $item->hasItems()->associate($this->shop);
+            $item->save();
+        }
+
+        $this->stockShelvesFromCurrentInventory();
+        return $backInventoryDiff;
     }
 
     protected function stockShelvesFromCurrentInventory()

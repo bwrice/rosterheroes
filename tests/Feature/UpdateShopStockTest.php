@@ -4,6 +4,8 @@ namespace Tests\Feature;
 
 use App\Domain\Actions\UpdateShopStock;
 use App\Domain\Models\Item;
+use App\Domain\Models\ItemClass;
+use App\Factories\Models\ItemBlueprintFactory;
 use App\Factories\Models\ItemFactory;
 use App\Factories\Models\ShopFactory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -51,7 +53,6 @@ class UpdateShopStockTest extends TestCase
      */
     public function it_will_move_current_available_items_to_the_back_inventory()
     {
-
         $capacity = rand(3, 8);
 
         $shop = ShopFactory::new()->create();
@@ -72,6 +73,34 @@ class UpdateShopStockTest extends TestCase
         });
         $backInventoryItems->fresh()->each(function (Item $item) {
             $this->assertNotNull($item->made_shop_available_at);
+        });
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_create_items_using_blueprint_to_fill_capacity()
+    {
+        $shop = ShopFactory::new()->create();
+
+        $capacity = rand(3, 8);
+
+        $itemBlueprint = ItemBlueprintFactory::new()->create();
+
+        $shopMock = \Mockery::mock($shop)->shouldReceive(
+            [
+                'getStockCapacity' => $capacity,
+                'getBackInventoryCapacity' => 0,
+                'getStockFillingBlueprint' => $itemBlueprint
+            ])->getMock();
+
+        $this->getDomainAction()->execute($shopMock);
+
+        $availableItems = $shop->availableItems()->get();
+        $this->assertEquals($capacity, $availableItems->count());
+
+        $availableItems->each(function (Item $item) use ($itemBlueprint) {
+            return $item->item_blueprint_id === $itemBlueprint->id;
         });
     }
 }
