@@ -4,6 +4,7 @@
 namespace App\Factories\Models;
 
 
+use App\Domain\Collections\ItemCollection;
 use App\Domain\Models\Enchantment;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Item;
@@ -83,7 +84,28 @@ class ItemFactory
         return new self();
     }
 
-    public function create(array $extra = [])
+    /**
+     * @param array $extra
+     * @param int $count
+     * @return ItemCollection|Item
+     */
+    public function create(array $extra = [], $count = 1)
+    {
+        if ($count === 1) {
+            return $this->createSingle($extra);
+        }
+        $items = new ItemCollection();
+        for ($i = 1; $i <= $count; $i++) {
+            $items->push($this->createSingle($extra));
+        }
+        return $items;
+    }
+
+    /**
+     * @param array $extra
+     * @return Item
+     */
+    protected function createSingle(array $extra = [])
     {
         $itemType = $this->getItemType();
         $material = $this->getMaterial($itemType->itemBase);
