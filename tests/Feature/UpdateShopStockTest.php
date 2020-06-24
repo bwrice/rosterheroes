@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Domain\Actions\UpdateShopStock;
+use App\Domain\Collections\ItemBlueprintCollection;
 use App\Domain\Models\Item;
 use App\Domain\Models\ItemClass;
 use App\Factories\Models\ItemBlueprintFactory;
@@ -86,12 +87,15 @@ class UpdateShopStockTest extends TestCase
         $capacity = rand(3, 8);
 
         $itemBlueprint = ItemBlueprintFactory::new()->create();
+        $blueprints = new ItemBlueprintCollection([
+            $itemBlueprint
+        ]);
 
         $shopMock = \Mockery::mock($shop)->shouldReceive(
             [
                 'getStockCapacity' => $capacity,
                 'getBackInventoryCapacity' => 0,
-                'getStockFillingBlueprint' => $itemBlueprint
+                'getStockFillingBlueprints' => $blueprints
             ])->getMock();
 
         $this->getDomainAction()->execute($shopMock);

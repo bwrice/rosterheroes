@@ -48,14 +48,15 @@ class UpdateShopStock
             return 0;
         }
 
-        $itemBlueprint = $this->shop->getStockFillingBlueprint();
+        $blueprints = $this->shop->getStockFillingBlueprints();
 
-        if (! $itemBlueprint) {
-            throw new \Exception("No blueprint found for restocking shop: " . $this->shop->id);
+        if ($blueprints->isEmpty()) {
+            throw new \Exception("No blueprints found for restocking shop: " . $this->shop->id);
         }
 
         for ($i = 1; $i <= $backInventoryDiff; $i++) {
-            $item = $this->generateItemFromBlueprintAction->execute($itemBlueprint);
+            $blueprint = $blueprints->random();
+            $item = $this->generateItemFromBlueprintAction->execute($blueprint);
             $item->shop_acquired_at = Date::now();
             $item->shop_acquisition_cost = $item->getValue();
             $item->hasItems()->associate($this->shop);
