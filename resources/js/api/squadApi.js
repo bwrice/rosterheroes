@@ -114,3 +114,10 @@ export async function buyItemFromShop(squadSlug, shopSlug, itemUuid) {
     });
     return response.data;
 }
+
+export async function sellItemBundleToShop(squadSlug, shopSlug, itemUuids) {
+    let response = await axios.post(ROUTE_PREFIX + squadSlug + '/shops/' + shopSlug + '/sell', {
+        items: itemUuids
+    });
+    return response.data;
+}
