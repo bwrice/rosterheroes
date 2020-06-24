@@ -9,4 +9,18 @@ export default class Shop {
         this.tier = tier;
         this.items = items.map((item) => new Item(item));
     }
+
+    goldForItem(itemToSell) {
+        return Math.floor(itemToSell.value * 0.6);
+    }
+
+    golfForItems(itemsToSell) {
+        if (itemsToSell.length > 0) {
+            let self = this;
+            return itemsToSell.reduce(function (total, itemToSell) {
+                return total + self.goldForItem(itemToSell);
+            }, 0)
+        }
+        return 0;
+    }
 }
