@@ -91,4 +91,11 @@ class ItemCollection extends Collection
             return $item->updated_at->timestamp;
         });
     }
+
+    public function shopAvailable()
+    {
+        return $this->filter(function (Item $item) {
+            return ! is_null($item->made_shop_available_at);
+        });
+    }
 }
