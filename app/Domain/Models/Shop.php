@@ -123,4 +123,17 @@ class Shop extends Model implements HasItems, Merchant
     {
         return (int) ceil(1.6 * $item->getValue());
     }
+
+    /**
+     * @return int
+     */
+    public function getStockCapacity()
+    {
+        return (int) $this->tier * 100;
+    }
+
+    public function getBackInventoryCapacity()
+    {
+        return (int) floor($this->getStockCapacity() * 3);
+    }
 }
