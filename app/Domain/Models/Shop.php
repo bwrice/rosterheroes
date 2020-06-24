@@ -2,12 +2,14 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Collections\ItemBlueprintCollection;
 use App\Domain\Collections\ItemCollection;
 use App\Domain\Interfaces\HasItems;
 use App\Domain\Interfaces\Merchant;
 use App\Domain\Models\Traits\HasUniqueNames;
 use App\Domain\Traits\HasNameSlug;
 use App\Domain\Traits\HasUuid;
+use App\Factories\Models\ItemBlueprintFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -25,6 +27,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property ItemCollection $items
  * @property ItemCollection $availableItems
+ * @property ItemBlueprintCollection $itemBlueprints
  */
 class Shop extends Model implements HasItems, Merchant
 {
@@ -44,6 +47,11 @@ class Shop extends Model implements HasItems, Merchant
     public function items()
     {
         return $this->morphMany(Item::class, 'has_items');
+    }
+
+    public function itemBlueprints()
+    {
+        return $this->belongsToMany(ItemBlueprint::class)->withTimestamps();
     }
 
     public function availableItems()
@@ -135,5 +143,13 @@ class Shop extends Model implements HasItems, Merchant
     public function getBackInventoryCapacity()
     {
         return (int) floor($this->getStockCapacity() * 3);
+    }
+
+    /**
+     * @return ItemBlueprintCollection
+     */
+    public function getStockFillingBlueprints()
+    {
+        return $this->itemBlueprints;
     }
 }
