@@ -2,8 +2,8 @@
     <TwoColumnWideLayout>
         <template v-slot:column-one>
             <v-sheet color="rgba(0, 20, 50, 0.4)" class="pa-2">
-                <v-row no-gutters justify="center">
-                    <span class="rh-op-85" :class="[titleSizeClass, titleFontWeightClass]">{{_shop.name}}</span>
+                <v-row no-gutters justify="center" class="py-md-2">
+                    <span class="rh-op-85 text-center" :class="[titleSizeClass, titleFontWeightClass]">{{_shop.name}}</span>
                 </v-row>
                 <v-row no-gutters>
                     <v-col cols="12" lg="8" order="2" order-lg="1" class="pr-sm-2">
@@ -188,10 +188,10 @@
                 v-model="sellItemDialog"
                 max-width="400"
             >
-                <v-card class="pa-2" color="#323f54">
+                <v-card class="pa-2" color="#363b45">
                     <v-card-title>
                         <v-row no-gutters justify="center">
-                            Sell {{_itemsToSell.length}} items?
+                            {{sellItemMessage}}
                         </v-row>
                     </v-card-title>
                     <ItemIterator
@@ -374,6 +374,20 @@
                 return this._shop.items.map(function (item) {
                     return item.itemType.itemBase.name;
                 }).sort();
+            },
+            sellItemText() {
+                return this._itemsToSell.length === 1 ? 'item' : 'items';
+            },
+            sellItemMessage() {
+                let message = 'Sell ';
+                let count = this._itemsToSell.length;
+                if (count === 1) {
+                    message += 'item';
+                } else {
+                    message += count + ' items';
+                }
+                message += ' for ' + this._shop.golfForItems(this._itemsToSell).toLocaleString() + ' gold?';
+                return message;
             }
         }
     }
