@@ -2,6 +2,7 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Collections\ItemBlueprintCollection;
 use App\Domain\Models\ChestBlueprint;
 use App\Domain\Actions\GenerateItemFromBlueprintAction;
 use App\Domain\Collections\AttackCollection;
@@ -207,7 +208,7 @@ class ItemBlueprint extends Model
     public const GENERIC_LOW_TIER_ROBES = 'FE';
     public const GENERIC_LOW_TIER_GLOVES = 'FF';
     public const GENERIC_LOW_TIER_GAUNTLETS = 'FG';
-    public const GENERIC_LOW_TIER_SHOES= 'FH';
+    public const GENERIC_LOW_TIER_SHOES = 'FH';
     public const GENERIC_LOW_TIER_BOOTS = 'FI';
     public const GENERIC_LOW_TIER_BELT = 'FJ';
     public const GENERIC_LOW_TIER_SASH = 'FK';
@@ -215,6 +216,11 @@ class ItemBlueprint extends Model
 
 
     protected $guarded = [];
+
+    public function newCollection(array $models = [])
+    {
+        return new ItemBlueprintCollection($models);
+    }
 
     /**
      * @return BelongsToMany
