@@ -17,6 +17,7 @@ class CreateItemBlueprintShopPivot extends Migration
             $table->integer('item_blueprint_id')->unsigned();
             $table->bigInteger('shop_id')->unsigned();
             $table->primary(['item_blueprint_id', 'shop_id']);
+            $table->timestamps();
 
             $table->foreign('item_blueprint_id')->references('id')->on('item_blueprints');
             $table->foreign('shop_id')->references('id')->on('shops');
