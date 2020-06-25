@@ -22,6 +22,16 @@ class DispatchUpdateShopStockJobsCommand extends Command
     protected $description = 'Dispatch jobs to refill stocks of all shops';
 
     /**
+     * Create a new command instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
      * @param DispatchUpdateShopStockJobs $dispatchUpdateShopStockJobs
      */
     public function handle(DispatchUpdateShopStockJobs $dispatchUpdateShopStockJobs)
