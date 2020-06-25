@@ -193,6 +193,26 @@ class ItemBlueprint extends Model
     public const STARTER_BOOTS_REFERENCE = 'ER';
     public const STARTER_GLOVES_REFERENCE = 'ES';
 
+    public const GENERIC_LOW_TIER_DAGGER = 'ET';
+    public const GENERIC_LOW_TIER_SWORD = 'EU';
+    public const GENERIC_LOW_TIER_AXE = 'EV';
+    public const GENERIC_LOW_TIER_BOW = 'EW';
+    public const GENERIC_LOW_TIER_POLEARM = 'EX';
+    public const GENERIC_LOW_TIER_WAND = 'EY';
+    public const GENERIC_LOW_TIER_STAFF = 'EZ';
+    public const GENERIC_LOW_TIER_SHIELD = 'FA';
+    public const GENERIC_LOW_TIER_HELMET = 'FB';
+    public const GENERIC_LOW_TIER_HEAVY_ARMOR = 'FC';
+    public const GENERIC_LOW_TIER_LIGHT_ARMOR = 'FD';
+    public const GENERIC_LOW_TIER_ROBES = 'FE';
+    public const GENERIC_LOW_TIER_GLOVES = 'FF';
+    public const GENERIC_LOW_TIER_GAUNTLETS = 'FG';
+    public const GENERIC_LOW_TIER_SHOES= 'FH';
+    public const GENERIC_LOW_TIER_BOOTS = 'FI';
+    public const GENERIC_LOW_TIER_BELT = 'FJ';
+    public const GENERIC_LOW_TIER_SASH = 'FK';
+    public const GENERIC_LOW_TIER_LEGGINGS = 'FL';
+
 
     protected $guarded = [];
 
