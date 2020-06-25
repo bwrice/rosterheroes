@@ -8,6 +8,7 @@ use App\Console\Commands\UpdateHistoricPlayerGameLogsCommand;
 use App\Console\Commands\UpdatePlayersCommand;
 use App\Console\Commands\UpdatePlayerSpiritEnergiesCommand;
 use App\Console\Commands\UpdateTeamsCommand;
+use App\Domain\Actions\DispatchUpdateShopStockJobs;
 use App\Jobs\InitiateTestSquadManagementJob;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -39,6 +40,8 @@ class Kernel extends ConsoleKernel
 
         $schedule->command(BuildWeeklyPlayerSpiritsCommand::class)->cron('0 */12 * * *');
         $schedule->command(UpdatePlayerSpiritEnergiesCommand::class)->cron('0 */2 * * *');
+
+        $schedule->command(DispatchUpdateShopStockJobs::class)->cron('0 */3 * * *');
 
         $schedule->job(new InitiateTestSquadManagementJob())->cron('0 12 * * 4')->when(function () {
             return app()->environment('local', 'staging');
