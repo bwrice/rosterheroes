@@ -4,26 +4,29 @@
 namespace App\Domain\Models\Support\Items;
 
 
+use App\Domain\Collections\EnchantmentCollection;
 use App\Domain\Models\Item;
 
 class ItemNameBuilder
 {
-    /** @var Item */
-    protected $item;
 
     public function buildItemName(Item $item)
     {
-        $this->item = $item;
-        $name = $this->getQualityPrefix();
-        $name .= ', ' . $item->material->name;
-        $name .= ' ' . $this->item->itemType->name;
+        $name = '';
+        $enchantments = $item->enchantments;
+        if ($enchantments->isNotEmpty()) {
+            $name .= $this->getQualityPrefix($enchantments) . ', ';
+        }
+        $name .= $item->material->name;
+        $name .= ' ' . $item->itemType->name;
         return $name;
     }
 
-    public function getQualityPrefix()
+    public function getQualityPrefix(EnchantmentCollection $enchantments)
     {
-        $boostLevelSum = $this->item->enchantments->boostLevelSum();
-        $value = (int) floor(($boostLevelSum/3)**.5);
+        // Less than 5 boost level sum automatically gets a "Fine" prefix
+        $numerator = max(0, $enchantments->boostLevelSum() - 5);
+        $value = (int) floor(($numerator/3)**.5);
         switch ($value) {
             case 0:
                 return 'Fine';
