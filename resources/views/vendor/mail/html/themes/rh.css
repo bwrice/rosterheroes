@@ -8,7 +8,7 @@ body *:not(html):not(style):not(br):not(tr):not(code) {
 }
 
 body {
-    background-color: #f8fafc;
+    background-color: #d5e1e8;
     color: #74787e;
     height: 100%;
     hyphens: auto;
@@ -42,7 +42,7 @@ a img {
 /* Typography */
 
 h1 {
-    color: #3d4852;
+    color: #2f524e;
     font-size: 19px;
     font-weight: bold;
     margin-top: 0;
@@ -50,7 +50,7 @@ h1 {
 }
 
 h2 {
-    color: #3d4852;
+    color: #2f524e;
     font-size: 16px;
     font-weight: bold;
     margin-top: 0;
@@ -58,7 +58,7 @@ h2 {
 }
 
 h3 {
-    color: #3d4852;
+    color: #2f524e;
     font-size: 14px;
     font-weight: bold;
     margin-top: 0;
@@ -66,7 +66,7 @@ h3 {
 }
 
 p {
-    color: #3d4852;
+    color: #3c5250;
     font-size: 16px;
     line-height: 1.5em;
     margin-top: 0;
@@ -94,6 +94,7 @@ img {
 }
 
 .content {
+    background-color: #3a474a;
     margin: 0;
     padding: 0;
     width: 100%;
@@ -110,19 +111,20 @@ img {
 }
 
 .header a {
-    color: #bbbfc3;
+    color: #ffc747;
     font-size: 19px;
     font-weight: bold;
     text-decoration: none;
-    text-shadow: 0 1px 0 white;
+    /*text-shadow: 0 1px 0 #c79522;*/
 }
 
 /* Body */
 
 .body {
-    background-color: #ffffff;
-    border-bottom: 1px solid #edeff2;
-    border-top: 1px solid #edeff2;
+    background-image: linear-gradient(#234a4a, #222626);
+    background-attachment: fixed;
+    border-bottom: 1px solid #4a6f78;
+    border-top: 1px solid #4a6f78;
     margin: 0;
     padding: 0;
     width: 100%;
@@ -132,7 +134,7 @@ img {
 }
 
 .inner-body {
-    background-color: #ffffff;
+    background-color: #d5e1e8;
     margin: 0 auto;
     padding: 0;
     width: 570px;
@@ -222,20 +224,20 @@ img {
 
 .button-blue,
 .button-primary {
-    background-color: #3490dc;
-    border-top: 10px solid #3490dc;
-    border-right: 18px solid #3490dc;
-    border-bottom: 10px solid #3490dc;
-    border-left: 18px solid #3490dc;
+    background-color: #3fa391;
+    border-top: 10px solid #3fa391;
+    border-right: 18px solid #3fa391;
+    border-bottom: 10px solid #3fa391;
+    border-left: 18px solid #3fa391;
 }
 
 .button-green,
 .button-success {
-    background-color: #38c172;
-    border-top: 10px solid #38c172;
-    border-right: 18px solid #38c172;
-    border-bottom: 10px solid #38c172;
-    border-left: 18px solid #38c172;
+    background-color: #52b266;
+    border-top: 10px solid #52b266;
+    border-right: 18px solid #52b266;
+    border-bottom: 10px solid #52b266;
+    border-left: 18px solid #52b266;
 }
 
 .button-red,
