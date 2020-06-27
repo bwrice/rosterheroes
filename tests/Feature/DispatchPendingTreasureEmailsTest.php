@@ -10,7 +10,6 @@ use App\Mail\TreasuresPending;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 
@@ -75,8 +74,6 @@ class DispatchPendingTreasureEmailsTest extends TestCase
         for ($i = 1; $i <= $chestsCount; $i++) {
             $chestFactory->create();
         }
-
-//        dd($squad->unopenedChests->toArray());
 
         $this->getDomainAction()->execute();
 
