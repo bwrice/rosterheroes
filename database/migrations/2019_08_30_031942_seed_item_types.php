@@ -896,7 +896,7 @@ class SeedItemTypes extends Migration
 
             [
                 'base' => ItemBase::NECKLACE,
-                'name' => 'Beeds',
+                'name' => 'Beads',
                 'tier' => 1,
             ],
             [
