@@ -106,20 +106,33 @@ class GenerateItemFromBlueprintAction
         $material = null;
         $materials = $itemBlueprint->materials;
 
-        $materialQueryForBase = $materialIDsForBase = Material::query()->whereHas('materialType', function (Builder $builder) use ($itemBase) {
-            return $builder->whereIn('id', $itemBase->materialTypes()->pluck('id')->toArray());
-        });
-
-        if ($materials->count() > 0) {
-            $materialIDsForBase = $materialQueryForBase->pluck('id')->toArray();
-
-            $material = $materials->shuffle()->first(function (Material $materialType) use ($materialIDsForBase) {
-                return in_array($materialType->id, $materialIDsForBase);
-            });
+        if ($materials->isNotEmpty()) {
+            return $materials->random();
         }
 
+        // No materials attached to blueprint, so we'll retrieve all for the item base
+        $materialsForBase = $materialIDsForBase = Material::query()->whereHas('materialType', function (Builder $builder) use ($itemBase) {
+            return $builder->whereIn('id', $itemBase->materialTypes()->pluck('id')->toArray());
+        })->get();
+
+        $randRangeMax = 8100; // 90 ^ 2
+        $num = rand(1, $randRangeMax);
+        // Get a number between 10 and 100 weighted towards the lower bound
+        $maxMaterialGrade = 100 - sqrt($num);
+
+        $materials = $materialsForBase->filter(function (Material $material) use ($maxMaterialGrade) {
+            return $material->grade <= $maxMaterialGrade;
+        });
+
+        if ($materials->isNotEmpty()) {
+            return $materials->random();
+        }
+
+        // If we still don't have a material, as a last ditch effort, we'll grab the lowest grade one
         /** @var Material $material */
-        $material = $material ?: $materialQueryForBase->inRandomOrder()->first();
+        $material = $materialsForBase->sortBy(function (Material $material) {
+            return $material->grade;
+        })->first();
 
         return $material;
     }
