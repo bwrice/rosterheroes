@@ -47,10 +47,16 @@ class UpdateNonRosteredStatusesForMSF extends Command
     {
         League::all()->each(function (League $league) {
 
-            foreach([
+            $playerStatuses = [
                 Player::STATUS_RETIRED => 'RETIRED',
                 Player::STATUS_FREE_AGENT => 'UFA'
-                    ] as $localStatus => $externalStatus) {
+            ];
+
+            if ($league->abbreviation === League::MLB) {
+                $playerStatuses[Player::STATUS_MINORS] = 'ASSIGNED-TO-MINORS';
+            }
+
+            foreach($playerStatuses as $localStatus => $externalStatus) {
 
                 $this->info("Handling status " . $localStatus . " for league " . $league->abbreviation);
 
