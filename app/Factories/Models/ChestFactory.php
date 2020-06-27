@@ -17,6 +17,8 @@ class ChestFactory
 
     protected $openedAt;
 
+    protected $chestBlueprintID = null;
+
     public static function new()
     {
         return new self();
@@ -31,7 +33,8 @@ class ChestFactory
             'quality' => rand(1, 6),
             'size' => rand(1, 6),
             'gold' => rand(100, 999),
-            'opened_at' => $this->openedAt
+            'opened_at' => $this->openedAt,
+            'chest_blueprint_id' => $this->chestBlueprintID
         ], $extra));
         return $chest;
     }
@@ -64,6 +67,13 @@ class ChestFactory
     {
         $clone = clone $this;
         $clone->openedAt = $openedAt ?: now();
+        return $clone;
+    }
+
+    public function withChestBlueprintID(int $chestBlueprintID)
+    {
+        $clone = clone $this;
+        $clone->chestBlueprintID = $chestBlueprintID;
         return $clone;
     }
 }
