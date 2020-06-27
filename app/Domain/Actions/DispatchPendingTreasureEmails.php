@@ -6,7 +6,9 @@ namespace App\Domain\Actions;
 
 use App\Domain\Models\ChestBlueprint;
 use App\Domain\Models\Squad;
+use App\Facades\Admin;
 use App\Mail\TreasuresPending;
+use App\Notifications\BulkEmailsDispatched;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Mail;
@@ -37,6 +39,8 @@ class DispatchPendingTreasureEmails
             });
             $count += $squads->count();
         });
+
+        Admin::notify(new BulkEmailsDispatched('Pending Treasures', $count));
         return $count;
     }
 
