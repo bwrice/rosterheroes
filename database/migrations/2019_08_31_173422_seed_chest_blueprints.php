@@ -108,7 +108,7 @@ class SeedChestBlueprints extends Migration
 
         $chestBlueprintArrays->push([
             'description' => 'Newcomer Chest',
-            'reference_id' => ChestBlueprint::NEW_SQUAD_QUEST,
+            'reference_id' => ChestBlueprint::NEWCOMER_CHEST,
             'quality' => 1,
             'size' => 1,
             'min_gold' => 250,

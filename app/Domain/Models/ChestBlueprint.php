@@ -86,7 +86,7 @@ class ChestBlueprint extends Model
     public const LARGE_HIGH_TIER_RANDOM = 'BK';
     public const VERY_LARGE_HIGH_TIER_RANDOM = 'BL';
     public const GIGANTIC_HIGH_TIER_RANDOM = 'BM';
-    public const NEW_SQUAD_QUEST = 'BN';
+    public const NEWCOMER_CHEST = 'BN';
 
 
     protected $guarded = [];
