@@ -4,6 +4,7 @@
 namespace App\Domain\Actions\Combat;
 
 
+use App\Domain\Actions\CalculateFantasyPower;
 use App\Domain\Combat\Attacks\HeroCombatAttack;
 use App\Domain\Combat\Attacks\MinionCombatAttack;
 use App\Domain\Models\Attack;
@@ -15,6 +16,19 @@ use Illuminate\Database\Eloquent\Collection;
 
 class BuildMinionCombatAttack extends AbstractBuildCombatAttack
 {
+    /**
+     * @var CalculateFantasyPower
+     */
+    protected $calculateFantasyPower;
+
+    public function __construct(
+        CalculateCombatDamage $calculateCombatDamage,
+        CalculateFantasyPower $calculateFantasyPower)
+    {
+        parent::__construct($calculateCombatDamage);
+        $this->calculateFantasyPower = $calculateFantasyPower;
+    }
+
 
     /**
      * @param Attack $attack
@@ -38,7 +52,8 @@ class BuildMinionCombatAttack extends AbstractBuildCombatAttack
         $targetPriorities = $targetPriorities ?: TargetPriority::all();
         $damageTypes = $damageTypes ?: DamageType::all();
 
-        $damage = $this->calculateCombatDamage->execute($attack, $minion->getFantasyPoints());
+        $fantasyPower = $this->calculateFantasyPower->execute($minion->getFantasyPoints());
+        $damage = $this->calculateCombatDamage->execute($attack, $fantasyPower);
         return new MinionCombatAttack(
             $minion->uuid,
             $combatantUuid,

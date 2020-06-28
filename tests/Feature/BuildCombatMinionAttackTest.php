@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Domain\Actions\CalculateFantasyPower;
 use App\Domain\Actions\Combat\BuildMinionCombatAttack;
 use App\Domain\Actions\Combat\CalculateCombatDamage;
 use App\Domain\Combat\Attacks\CombatAttackInterface;
@@ -74,7 +75,10 @@ class BuildCombatMinionAttackTest extends TestCase
 
         /** @var CalculateCombatDamage $calculateDamage */
         $calculateDamage = app(CalculateCombatDamage::class);
-        $expectedDamage = $calculateDamage->execute($this->attack, $this->minion->getFantasyPoints());
+        /** @var CalculateFantasyPower $calculateFantasyPower */
+        $calculateFantasyPower = app(CalculateFantasyPower::class);
+        $fantasyPower = $calculateFantasyPower->execute($this->minion->getFantasyPoints());
+        $expectedDamage = $calculateDamage->execute($this->attack, $fantasyPower);
 
         $this->assertEquals($expectedDamage, $minionCombatAttack->getDamage());
     }
