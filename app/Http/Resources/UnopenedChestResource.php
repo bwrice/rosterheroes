@@ -25,7 +25,7 @@ class UnopenedChestResource extends JsonResource
         return [
             'uuid' => $this->uuid,
             'description' => $this->getDescription(),
-            'sourceDescription' => $this->source ? $this->source->getSourceDescription() : null
+            'source' => $this->source ? new ChestSourceResource($this->source): null
         ];
     }
 }
