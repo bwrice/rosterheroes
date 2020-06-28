@@ -119,7 +119,7 @@ class Minion extends Model implements HasAttacks, RewardsChests
 
     public function getFantasyPoints(): float
     {
-        return $this->level/5 + (sqrt($this->level) * 6);
+        return $this->level/4 + (sqrt($this->level) * 6);
     }
 
     public function getExperienceReward()
