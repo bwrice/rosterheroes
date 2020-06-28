@@ -2,6 +2,8 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Actions\CalculateFantasyPower;
+use App\Domain\Actions\Combat\CalculateCombatDamage;
 use App\Domain\Collections\AttackCollection;
 use App\Domain\Collections\ItemCollection;
 use App\Domain\Collections\ResourceCostsCollection;
@@ -167,5 +169,30 @@ class Attack extends Model
     public function getMaxTargetsCount()
     {
         return $this->damageType->getBehavior()->getMaxTargetCount($this->tier, $this->targets_count);
+    }
+
+    public function getDamagePerTarget(int $damage, int $targetsCount)
+    {
+        return $this->damageType->getBehavior()->getDamagePerTarget($damage, $targetsCount);
+    }
+
+    public function getDamagePerMoment()
+    {
+        if (! $this->hasAttacks) {
+            return 0;
+        }
+        /** @var CalculateFantasyPower $calculateFantasyPower */
+        $calculateFantasyPower = app(CalculateFantasyPower::class);
+        /** @var CalculateCombatDamage $calculateDamage */
+        $calculateDamage = app(CalculateCombatDamage::class);
+
+        $fantasyPower = $calculateFantasyPower->execute($this->hasAttacks->getExpectedFantasyPoints());
+        $damage = $calculateDamage->execute($this, $fantasyPower);
+        $maxTargetsCount = $this->getMaxTargetsCount();
+        $damagePerTarget = $this->getDamagePerTarget($damage, $maxTargetsCount);
+        $totalDamage = $maxTargetsCount * $damagePerTarget;
+        $speed = $this->getCombatSpeed();
+
+        return round($totalDamage * ($speed/100), 2);
     }
 }
