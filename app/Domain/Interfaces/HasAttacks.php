@@ -8,7 +8,7 @@ use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Behaviors\DamageTypes\DamageTypeBehavior;
 use App\Domain\Models\DamageType;
 
-interface HasAttacks
+interface HasAttacks extends HasExpectedFantasyPoints
 {
     public function adjustBaseDamage(float $baseDamage): float;
 
@@ -21,6 +21,4 @@ interface HasAttacks
     public function adjustResourceCostPercent(float $amount): float;
 
     public function getResourceCosts(int $attackTier, DamageTypeBehavior $damageTypeBehavior, ?int $targetsCount): ResourceCostsCollection;
-
-    public function getExpectedFantasyPoints(): float;
 }
