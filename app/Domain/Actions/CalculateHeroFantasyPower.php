@@ -12,6 +12,17 @@ use App\Exceptions\CalculateHeroFantasyPowerException;
 
 class CalculateHeroFantasyPower
 {
+    /**
+     * @var CalculateHeroFantasyPower
+     */
+    protected $calculateFantasyPower;
+
+    public function __construct(CalculateHeroFantasyPower $calculateFantasyPower)
+    {
+        $this->calculateFantasyPower = $calculateFantasyPower;
+    }
+
+
     public function execute(Hero $hero)
     {
         $playerSpirit = $hero->playerSpirit;
@@ -33,20 +44,6 @@ class CalculateHeroFantasyPower
             return $playerStat->getFantasyPoints() * $matchingMeasurable->getFantasyPointsModifier();
         });
 
-        return max(0, $this->getFantasyPower($fantasyPoints));
-    }
-
-    protected function getFantasyPower(float $totalPoints)
-    {
-        $fantasyPower = 0;
-        $coefficient = 1;
-        $remaining = $totalPoints;
-        while ($remaining > 0) {
-            $pointsToMultiply = $remaining < 10 ? $remaining : 10;
-            $fantasyPower += ($coefficient * $pointsToMultiply);
-            $remaining -= 10;
-            $coefficient *= .8;
-        }
-        return $fantasyPower;
+        return max(0, $this->calculateFantasyPower->execute($fantasyPoints));
     }
 }
