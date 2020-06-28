@@ -53,6 +53,8 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property string $name
+ *
+ * @property Collection $itemTypes
  */
 class ItemBase extends Model
 {

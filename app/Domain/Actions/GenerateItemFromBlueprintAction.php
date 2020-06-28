@@ -74,18 +74,16 @@ class GenerateItemFromBlueprintAction
     protected function getItemType(ItemBlueprint $itemBlueprint): ItemType
     {
         $itemTypes = $itemBlueprint->itemTypes;
-        if ($itemTypes->count() > 0) {
+        if ($itemTypes->isNotEmpty()) {
             return $itemTypes->random();
         }
 
         $itemBases = $itemBlueprint->itemBases;
-        if ($itemBases->count() > 0) {
+        if ($itemBases->isNotEmpty()) {
             return $this->getItemTypeFromBases($itemBases);
         }
 
-        /** @var ItemType $itemType */
-        $itemType = ItemType::query()->inRandomOrder()->first();
-        return $itemType;
+        return $this->getRandomItemType();
     }
 
     /**
@@ -97,8 +95,7 @@ class GenerateItemFromBlueprintAction
         /** @var ItemBase $randomItemBase */
         $randomItemBase = $itemBases->random();
 
-        $itemType = $randomItemBase->itemTypes()->inRandomOrder()->first();
-        return $itemType;
+        return $this->getRandomItemType($randomItemBase->itemTypes);
     }
 
     protected function getMaterial(ItemBlueprint $itemBlueprint, ItemBase $itemBase): Material
@@ -194,6 +191,26 @@ class GenerateItemFromBlueprintAction
          * Will return a number between 1 and 50, weighted heavily toward the lower-bound side
          */
         return (int) max(ceil(50.1 - sqrt(rand(1, $sqrtMax))), 1);
+    }
+
+    protected function getRandomItemType(Collection $itemTypes = null)
+    {
+        $itemTypes = $itemTypes ?: ItemType::all();
+
+        $randRangeMax = 36; // 6 ^ 2
+        $num = rand(1, $randRangeMax);
+        // Get a number between 1 and 6 weighted towards the lower bound
+        $maxItemTypeTier = (int) ceil(7 - sqrt($num));
+
+        $filtered = $itemTypes->filter(function (ItemType $itemType) use ($maxItemTypeTier) {
+            return $itemType->tier <= $maxItemTypeTier;
+        });
+
+        if ($filtered->isNotEmpty()) {
+            return $filtered->random();
+        }
+
+        return $itemTypes->random();
     }
 
 }
