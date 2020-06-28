@@ -371,4 +371,9 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
     {
         return $this->shopPrice;
     }
+
+    public function getExpectedFantasyPoints(): float
+    {
+        return 15;
+    }
 }

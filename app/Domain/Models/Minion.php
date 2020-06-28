@@ -2,6 +2,7 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Actions\CalculateFantasyPower;
 use App\Domain\Models\ChestBlueprint;
 use App\Domain\Behaviors\DamageTypes\DamageTypeBehavior;
 use App\Domain\Behaviors\EnemyTypes\EnemyTypeBehavior;
@@ -158,5 +159,10 @@ class Minion extends Model implements HasAttacks, RewardsChests
     public function getChestSourceType(): string
     {
         return 'Minion';
+    }
+
+    public function getExpectedFantasyPoints(): float
+    {
+        return $this->getFantasyPoints();
     }
 }
