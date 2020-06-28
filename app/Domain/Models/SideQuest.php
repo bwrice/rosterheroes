@@ -126,8 +126,13 @@ class SideQuest extends Model implements RewardsChests
         return $this->id;
     }
 
-    public function getSourceDescription()
+    public function getChestSourceName(): string
     {
-        return $this->name;
+        return $this->buildName();
+    }
+
+    public function getChestSourceType(): string
+    {
+        return 'Side Quest';
     }
 }

@@ -6,5 +6,7 @@ namespace App\Domain\Interfaces;
 
 interface RewardsChests extends Morphable
 {
-    public function getSourceDescription();
+    public function getChestSourceType(): string;
+
+    public function getChestSourceName(): string;
 }

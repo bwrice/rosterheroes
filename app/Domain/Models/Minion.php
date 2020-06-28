@@ -150,8 +150,13 @@ class Minion extends Model implements HasAttacks, RewardsChests
         return $this->id;
     }
 
-    public function getSourceDescription()
+    public function getChestSourceName(): string
     {
         return $this->name;
+    }
+
+    public function getChestSourceType(): string
+    {
+        return 'Minion';
     }
 }
