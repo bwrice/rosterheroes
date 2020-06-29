@@ -15,4 +15,14 @@ class MeasurableCollection extends Collection
             return $measurable->spentOnRaising();
         });
     }
+
+    /**
+     * @return mixed
+     */
+    public function currentAmountAverage()
+    {
+        return $this->average(function (Measurable $measurable) {
+            return $measurable->getCurrentAmount();
+        });
+    }
 }
