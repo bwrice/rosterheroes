@@ -7,7 +7,6 @@ namespace App\Domain\Actions\Combat;
 use App\Domain\Actions\CalculateHeroFantasyPower;
 use App\Domain\Collections\AbstractCombatAttackCollection;
 use App\Domain\Combat\Combatants\CombatHero;
-use App\Domain\Combat\Attacks\HeroCombatAttack;
 use App\Domain\Models\Attack;
 use App\Domain\Models\CombatPosition;
 use App\Domain\Models\DamageType;
@@ -15,7 +14,6 @@ use App\Domain\Models\Hero;
 use App\Domain\Models\Item;
 use App\Domain\Models\MeasurableType;
 use App\Domain\Models\TargetPriority;
-use App\Facades\FantasyPower;
 use Illuminate\Database\Eloquent\Collection;
 
 class BuildCombatHero
