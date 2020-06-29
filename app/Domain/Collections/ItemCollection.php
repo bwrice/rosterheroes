@@ -8,10 +8,7 @@
 
 namespace App\Domain\Collections;
 
-
-use App\Domain\Interfaces\Slottable;
 use App\Domain\Interfaces\UsesItems;
-use App\Domain\Models\Attack;
 use App\Domain\Models\Enchantment;
 use App\Domain\Models\Item;
 use Illuminate\Database\Eloquent\Collection;
@@ -99,5 +96,19 @@ class ItemCollection extends Collection
             $item->setUsesItems($usesItems);
         });
         return $this;
+    }
+
+    public function staminaPerMoment()
+    {
+        return $this->sum(function (Item $item) {
+            return $item->staminaPerMoment();
+        });
+    }
+
+    public function manaPerMoment()
+    {
+        return $this->sum(function (Item $item) {
+            return $item->manaPerMoment();
+        });
     }
 }

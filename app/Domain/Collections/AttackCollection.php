@@ -33,4 +33,19 @@ class AttackCollection extends Collection
             return $attack->attacker_position_id === $attackerPosition->id;
         });
     }
+
+    public function staminaPerMoment()
+    {
+        return $this->sum(function (Attack $attack) {
+            return $attack->getStaminaPerMoment();
+        });
+    }
+
+    public function manaPerMoment()
+    {
+        return $this->sum(function (Attack $attack) {
+            return $attack->getManaPerMoment();
+        });
+    }
+
 }

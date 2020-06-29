@@ -195,4 +195,20 @@ class Attack extends Model
 
         return round($totalDamage * ($speed/100), 2);
     }
+
+    public function getStaminaPerMoment(): float
+    {
+        $staminaCost = $this->getResourceCosts()->sum(function (ResourceCost $resourceCost) {
+            return $resourceCost->getExpectedStaminaCost();
+        });
+        return round($staminaCost * $this->getCombatSpeed()/100, 2);
+    }
+
+    public function getManaPerMoment(): float
+    {
+        $manaCost = $this->getResourceCosts()->sum(function (ResourceCost $resourceCost) {
+            return $resourceCost->getExpectedManaCost();
+        });
+        return round($manaCost * $this->getCombatSpeed()/100, 2);
+    }
 }

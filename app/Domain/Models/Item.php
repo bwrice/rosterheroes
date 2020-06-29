@@ -387,4 +387,14 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
         $attacks = $this->usesItems ? $this->usesItems->filterUsableAttacks($this->getAttacks()) : $this->getAttacks();
         return $attacks->setHasAttacks($this)->getDamagePerMoment();
     }
+
+    public function staminaPerMoment()
+    {
+        return $this->getAttacks()->staminaPerMoment();
+    }
+
+    public function manaPerMoment()
+    {
+        return $this->getAttacks()->manaPerMoment();
+    }
 }

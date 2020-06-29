@@ -48,4 +48,9 @@ abstract class ResourceCost implements Arrayable
     {
         return $this->resourceName === $resourceType;
     }
+
+    abstract public function getExpectedStaminaCost(): float;
+
+    abstract public function getExpectedManaCost(): float;
+
 }

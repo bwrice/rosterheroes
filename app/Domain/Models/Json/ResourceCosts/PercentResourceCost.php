@@ -51,4 +51,14 @@ class PercentResourceCost extends ResourceCost
             'percent' => $this->percent
         ], parent::toArray());
     }
+
+    public function getExpectedStaminaCost(): float
+    {
+        return 800 * ($this->percent/100);
+    }
+
+    public function getExpectedManaCost(): float
+    {
+        return 250 * ($this->percent/100);
+    }
 }
