@@ -5,11 +5,13 @@ namespace App\Domain\Models;
 use App\Aggregates\HeroAggregate;
 use App\Domain\Behaviors\HeroClasses\HeroClassBehavior;
 use App\Domain\Behaviors\MeasurableTypes\MeasurableTypeBehavior;
+use App\Domain\Behaviors\MeasurableTypes\Qualities\QualityBehavior;
 use App\Domain\Collections\GearSlotCollection;
 use App\Domain\Collections\ItemCollection;
 use App\Domain\Collections\MeasurableCollection;
 use App\Domain\Collections\SpellCollection;
 use App\Domain\DataTransferObjects\StatMeasurableBonus;
+use App\Domain\Interfaces\HasExpectedFantasyPoints;
 use App\Domain\Interfaces\HasItems;
 use App\Domain\Interfaces\SpellCaster;
 use App\Domain\Interfaces\UsesItems;
@@ -68,7 +70,7 @@ use App\Facades\HeroService;
  *
  * @method static HeroQueryBuilder query();
  */
-class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasItems
+class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasItems, HasExpectedFantasyPoints
 {
     use HasNameSlug;
 
@@ -383,6 +385,16 @@ class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasItems
     }
 
     /**
+     * @return MeasurableCollection
+     */
+    public function getQualities()
+    {
+        return $this->measurables->filter(function (Measurable $measurable) {
+            return $measurable->measurableType->getBehavior()->getGroupName() === QualityBehavior::GROUP_NAME;
+        });
+    }
+
+    /**
      * @return HeroAggregate
      */
     public function getAggregate()
@@ -409,5 +421,16 @@ class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasItems
                 return new StatMeasurableBonus($statType, $measurable);
             });
         })->flatten();
+    }
+
+    public function getExpectedFantasyPoints(): float
+    {
+        $multiplier = $this->getQualities()->currentAmountAverage()/100;
+        return $multiplier * 15;
+    }
+
+    public function getDamagePerMoment()
+    {
+        return $this->items->setUsesItems($this)->getDamagePerMoment();
     }
 }

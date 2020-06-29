@@ -10,6 +10,7 @@ namespace App\Domain\Collections;
 
 
 use App\Domain\Interfaces\Slottable;
+use App\Domain\Interfaces\UsesItems;
 use App\Domain\Models\Attack;
 use App\Domain\Models\Enchantment;
 use App\Domain\Models\Item;
@@ -90,5 +91,13 @@ class ItemCollection extends Collection
         return $this->sum(function (Item $item) {
             return $item->getDamagePerMoment();
         });
+    }
+
+    public function setUsesItems(UsesItems $usesItems)
+    {
+        $this->each(function (Item $item) use ($usesItems) {
+            $item->setUsesItems($usesItems);
+        });
+        return $this;
     }
 }

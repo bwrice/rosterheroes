@@ -10,6 +10,7 @@ use App\Domain\Collections\ItemCollection;
 use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Interfaces\FillsGearSlots;
 use App\Domain\Interfaces\HasAttacks;
+use App\Domain\Interfaces\HasExpectedFantasyPoints;
 use App\Domain\Interfaces\HasItems;
 use App\Domain\Interfaces\Morphable;
 use App\Domain\Interfaces\UsesItems;
@@ -374,6 +375,15 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
 
     public function getExpectedFantasyPoints(): float
     {
+        $hasItems = $this->hasItems;
+        if ($hasItems && $hasItems instanceof HasExpectedFantasyPoints) {
+            return $hasItems->getExpectedFantasyPoints();
+        }
         return 15;
+    }
+
+    public function getDamagePerMoment()
+    {
+        return $this->getAttacks()->setHasAttacks($this)->getDamagePerMoment();
     }
 }
