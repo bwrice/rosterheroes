@@ -42,20 +42,6 @@ class ItemCollection extends Collection
         });
     }
 
-    public function getAttacks()
-    {
-        $attacks = new AttackCollection();
-        $this->loadMissing([
-            'itemType.attacks',
-            'attacks'
-        ])->each(function (Item $item) use ($attacks) {
-            $item->getAttacks()->each(function (Attack $attack) use ($attacks) {
-                $attacks->push($attack);
-            });
-        });
-        return $attacks;
-    }
-
     public function sortByWeight($desc = false)
     {
         $callBack = function (Item $item) {
@@ -96,6 +82,13 @@ class ItemCollection extends Collection
     {
         return $this->filter(function (Item $item) {
             return ! is_null($item->made_shop_available_at);
+        });
+    }
+
+    public function getDamagePerMoment()
+    {
+        return $this->sum(function (Item $item) {
+            return $item->getDamagePerMoment();
         });
     }
 }

@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Domain\Actions\Combat\BuildCombatHero;
 use App\Domain\Actions\Combat\BuildHeroCombatAttack;
 use App\Domain\Combat\Combatants\Combatant;
+use App\Domain\Models\Item;
 use App\Factories\Combat\HeroCombatAttackFactory;
 use App\Factories\Models\HeroFactory;
 use App\Factories\Models\PlayerFactory;
@@ -51,6 +52,11 @@ class BuildCombatHeroTest extends TestCase
         $hero = $this->heroFactory->create();
         $combatHero = $domainAction->execute($hero);
         $this->assertTrue($combatHero instanceof Combatant);
-        $this->assertEquals($hero->items->getAttacks()->count(), $combatHero->getCombatAttacks()->count());
+
+        $attacksCount = $hero->items->sum(function (Item $item) {
+            return $item->getAttacks()->count();
+        });
+
+        $this->assertEquals($attacksCount, $combatHero->getCombatAttacks()->count());
     }
 }
