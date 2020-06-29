@@ -13,11 +13,11 @@ use App\Exceptions\CalculateHeroFantasyPowerException;
 class CalculateHeroFantasyPower
 {
     /**
-     * @var CalculateHeroFantasyPower
+     * @var CalculateFantasyPower
      */
     protected $calculateFantasyPower;
 
-    public function __construct(CalculateHeroFantasyPower $calculateFantasyPower)
+    public function __construct(CalculateFantasyPower $calculateFantasyPower)
     {
         $this->calculateFantasyPower = $calculateFantasyPower;
     }
