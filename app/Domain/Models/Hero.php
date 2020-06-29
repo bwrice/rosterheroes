@@ -6,6 +6,7 @@ use App\Aggregates\HeroAggregate;
 use App\Domain\Behaviors\HeroClasses\HeroClassBehavior;
 use App\Domain\Behaviors\MeasurableTypes\MeasurableTypeBehavior;
 use App\Domain\Behaviors\MeasurableTypes\Qualities\QualityBehavior;
+use App\Domain\Collections\AttackCollection;
 use App\Domain\Collections\GearSlotCollection;
 use App\Domain\Collections\ItemCollection;
 use App\Domain\Collections\MeasurableCollection;
@@ -70,7 +71,7 @@ use App\Facades\HeroService;
  *
  * @method static HeroQueryBuilder query();
  */
-class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasItems, HasExpectedFantasyPoints
+class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasExpectedFantasyPoints
 {
     use HasNameSlug;
 
@@ -432,5 +433,11 @@ class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasItems
     public function getDamagePerMoment()
     {
         return $this->items->setUsesItems($this)->getDamagePerMoment();
+    }
+
+    public function filterUsableAttacks(AttackCollection $attacks): AttackCollection
+    {
+        // TODO: attack requirements
+        return $attacks->attackerPosition($this->combatPosition);
     }
 }

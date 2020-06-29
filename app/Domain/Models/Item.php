@@ -384,6 +384,7 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
 
     public function getDamagePerMoment()
     {
-        return $this->getAttacks()->setHasAttacks($this)->getDamagePerMoment();
+        $attacks = $this->usesItems ? $this->usesItems->filterUsableAttacks($this->getAttacks()) : $this->getAttacks();
+        return $attacks->setHasAttacks($this)->getDamagePerMoment();
     }
 }
