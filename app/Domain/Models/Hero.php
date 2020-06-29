@@ -435,6 +435,24 @@ class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasExpec
         return $this->items->setUsesItems($this)->getDamagePerMoment();
     }
 
+    public function momentsWithStamina()
+    {
+        $currentStamina = $this->getCurrentMeasurableAmount(MeasurableType::STAMINA);
+        if ($currentStamina <= 0) {
+            return 0;
+        }
+        return $this->items->staminaPerMoment()/$currentStamina;
+    }
+
+    public function momentsWithMana()
+    {
+        $currentMana = $this->getCurrentMeasurableAmount(MeasurableType::MANA);
+        if ($currentMana <= 0) {
+            return 0;
+        }
+        return $this->items->manaPerMoment()/$currentMana;
+    }
+
     public function filterUsableAttacks(AttackCollection $attacks): AttackCollection
     {
         // TODO: attack requirements
