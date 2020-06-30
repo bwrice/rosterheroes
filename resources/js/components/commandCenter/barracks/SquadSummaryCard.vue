@@ -16,23 +16,19 @@
                             </v-col>
                         </v-row>
                     </v-col>
-                    <v-col cols="8" md="9">
-                        <v-row no-gutters class="pa-2">
-                            <v-col cols="12">
-                                <v-sheet
-                                    tile
-                                    v-for="(stat, name) in squadStats"
-                                    :key="name"
-                                    color="rgba(0,0,0,.4)"
-                                    class="px-2"
-                                    style="margin-bottom: 2px">
-                                    <v-row no-gutters justify="space-between">
-                                        <span class="font-weight-thin" :class="[textSizeClass]">{{stat.name.toUpperCase()}}</span>
-                                        <span class="font-weight-regular" :class="[textSizeClass]" style="color: rgba(255,255,255,0.8)">{{stat.value}}</span>
-                                    </v-row>
-                                </v-sheet>
-                            </v-col>
-                        </v-row>
+                    <v-col cols="8" md="9" class="pa-2">
+                        <v-sheet
+                            tile
+                            v-for="(stat, name) in squadStats"
+                            :key="name"
+                            color="rgba(0,0,0,.4)"
+                            class="px-2"
+                            style="margin-bottom: 2px">
+                            <v-row no-gutters justify="space-between">
+                                <span class="font-weight-thin" :class="[textSizeClass]">{{stat.name.toUpperCase()}}</span>
+                                <span class="font-weight-regular" :class="[textSizeClass]" style="color: rgba(255,255,255,0.8)">{{stat.value}}</span>
+                            </v-row>
+                        </v-sheet>
                     </v-col>
                 </v-row>
                 <v-row no-gutters class="pb-2 px-2">
