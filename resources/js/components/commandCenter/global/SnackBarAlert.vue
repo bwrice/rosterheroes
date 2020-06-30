@@ -1,11 +1,12 @@
 <template>
     <v-snackbar
-            v-model="snackBar"
-            :color="this.color"
-            :multi-line="true"
-            :timeout="this.timeout"
-            :absolute="false"
-            :top="true"
+        app
+        v-model="snackBar"
+        :color="this.color"
+        :multi-line="true"
+        :timeout="this.timeout"
+        :absolute="false"
+        :top="true"
     >
         {{ this._snackBar.text }}
         <v-btn
