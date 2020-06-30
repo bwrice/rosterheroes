@@ -8,7 +8,7 @@ use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Behaviors\DamageTypes\DamageTypeBehavior;
 use App\Domain\Models\DamageType;
 
-interface HasAttacks extends HasExpectedFantasyPoints
+interface HasAttacks
 {
     public function adjustBaseDamage(float $baseDamage): float;
 

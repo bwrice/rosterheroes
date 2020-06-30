@@ -9,6 +9,4 @@ use App\Domain\Collections\AttackCollection;
 interface UsesItems extends HasItems
 {
     public function getBuffedMeasurableAmount(string $measurableTypeName): int;
-
-    public function filterUsableAttacks(AttackCollection $attacks): AttackCollection;
 }

@@ -160,9 +160,4 @@ class Minion extends Model implements HasAttacks, RewardsChests
     {
         return 'Minion';
     }
-
-    public function getExpectedFantasyPoints(): float
-    {
-        return $this->getFantasyPoints();
-    }
 }

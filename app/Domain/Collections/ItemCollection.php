@@ -83,13 +83,6 @@ class ItemCollection extends Collection
         });
     }
 
-    public function getDamagePerMoment()
-    {
-        return $this->sum(function (Item $item) {
-            return $item->getDamagePerMoment();
-        });
-    }
-
     public function setUsesItems(UsesItems $usesItems)
     {
         $this->each(function (Item $item) use ($usesItems) {
