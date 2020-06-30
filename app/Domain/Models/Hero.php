@@ -3,6 +3,7 @@
 namespace App\Domain\Models;
 
 use App\Aggregates\HeroAggregate;
+use App\Domain\Actions\CalculateFantasyPower;
 use App\Domain\Behaviors\HeroClasses\HeroClassBehavior;
 use App\Domain\Behaviors\MeasurableTypes\MeasurableTypeBehavior;
 use App\Domain\Behaviors\MeasurableTypes\Qualities\QualityBehavior;
@@ -22,6 +23,7 @@ use App\Domain\QueryBuilders\HeroQueryBuilder;
 use App\Domain\Traits\HasNameSlug;
 use App\Domain\Collections\HeroCollection;
 use App\Facades\HeroService;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class Hero
@@ -71,7 +73,7 @@ use App\Facades\HeroService;
  *
  * @method static HeroQueryBuilder query();
  */
-class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasExpectedFantasyPoints
+class Hero extends EventSourcedModel implements UsesItems, SpellCaster
 {
     use HasNameSlug;
 
@@ -432,30 +434,36 @@ class Hero extends EventSourcedModel implements UsesItems, SpellCaster, HasExpec
 
     public function getDamagePerMoment()
     {
-        return $this->items->setUsesItems($this)->getDamagePerMoment();
+        /** @var CalculateFantasyPower $calculateFantasyPower */
+        $calculateFantasyPower = app(CalculateFantasyPower::class);
+        $fantasyPower = $calculateFantasyPower->execute($this->getExpectedFantasyPoints());
+
+        return $this->items->sum(function (Item $item) use ($fantasyPower) {
+            $item->setUsesItems($this);
+            $filteredAttacks = $item->getAttacks()->each(function (Attack $attack) use ($item) {
+                $attack->setHasAttacks($item);
+            })->withAttackerPosition($this->combatPosition);
+            return $filteredAttacks->getDamagePerMoment($fantasyPower);
+        });
     }
 
     public function momentsWithStamina()
     {
-        $currentStamina = $this->getCurrentMeasurableAmount(MeasurableType::STAMINA);
-        if ($currentStamina <= 0) {
-            return 0;
+        $staminaPerMoment = $this->items->staminaPerMoment();
+        if ($staminaPerMoment <= 0) {
+            return 'infinite';
         }
-        return $this->items->staminaPerMoment()/$currentStamina;
+        $currentStamina = $this->getCurrentMeasurableAmount(MeasurableType::STAMINA);
+        return $currentStamina/$staminaPerMoment;
     }
 
     public function momentsWithMana()
     {
-        $currentMana = $this->getCurrentMeasurableAmount(MeasurableType::MANA);
-        if ($currentMana <= 0) {
-            return 0;
+        $manaPerMoment = $this->items->manaPerMoment();
+        if ($manaPerMoment <= 0) {
+            return 'infinite';
         }
-        return $this->items->manaPerMoment()/$currentMana;
-    }
-
-    public function filterUsableAttacks(AttackCollection $attacks): AttackCollection
-    {
-        // TODO: attack requirements
-        return $attacks->attackerPosition($this->combatPosition);
+        $currentMana = $this->getCurrentMeasurableAmount(MeasurableType::MANA);
+        return $currentMana/$manaPerMoment;
     }
 }

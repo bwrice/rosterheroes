@@ -17,7 +17,6 @@ use App\Domain\Interfaces\UsesItems;
 use App\Domain\Models\Support\Items\ItemNameBuilder;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use phpDocumentor\Reflection\Types\Static_;
 
 /**
  * Class Item
@@ -373,19 +372,15 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
         return $this->shopPrice;
     }
 
-    public function getExpectedFantasyPoints(): float
+    public function getDamagePerMoment($fantasyPower, callable $filterMethod = null)
     {
-        $hasItems = $this->hasItems;
-        if ($hasItems && $hasItems instanceof HasExpectedFantasyPoints) {
-            return $hasItems->getExpectedFantasyPoints();
+        $attacks = $this->getAttacks();
+        if ($filterMethod) {
+            $attacks = $attacks->filter(function (Attack $attack) use ($filterMethod) {
+                return $filterMethod($attack);
+            });
         }
-        return 15;
-    }
-
-    public function getDamagePerMoment()
-    {
-        $attacks = $this->usesItems ? $this->usesItems->filterUsableAttacks($this->getAttacks()) : $this->getAttacks();
-        return $attacks->setHasAttacks($this)->getDamagePerMoment();
+        return $attacks->getDamagePerMoment($fantasyPower);
     }
 
     public function staminaPerMoment()

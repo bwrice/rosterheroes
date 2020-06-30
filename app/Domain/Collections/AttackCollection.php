@@ -11,23 +11,14 @@ use Illuminate\Database\Eloquent\Collection;
 
 class AttackCollection extends Collection
 {
-    public function getDamagePerMoment()
+    public function getDamagePerMoment(float $fantasyPower)
     {
-        return $this->sum(function (Attack $attack) {
-            $damage = $attack->getDamagePerMoment();
-            return $damage;
+        return $this->sum(function (Attack $attack) use ($fantasyPower) {
+            return $attack->getDamagePerMoment($fantasyPower);
         });
     }
 
-    public function setHasAttacks(HasAttacks $hasAttacks)
-    {
-        $this->each(function (Attack $attack) use ($hasAttacks) {
-            $attack->setHasAttacks($hasAttacks);
-        });
-        return $this;
-    }
-
-    public function attackerPosition(CombatPosition $attackerPosition)
+    public function withAttackerPosition(CombatPosition $attackerPosition)
     {
         return $this->filter(function (Attack $attack) use ($attackerPosition) {
             return $attack->attacker_position_id === $attackerPosition->id;

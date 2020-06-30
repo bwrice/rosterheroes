@@ -176,24 +176,18 @@ class Attack extends Model
         return $this->damageType->getBehavior()->getDamagePerTarget($damage, $targetsCount);
     }
 
-    public function getDamagePerMoment()
+    public function getDamagePerMoment(float $fantasyPower)
     {
-        if (! $this->hasAttacks) {
-            return 0;
-        }
-        /** @var CalculateFantasyPower $calculateFantasyPower */
-        $calculateFantasyPower = app(CalculateFantasyPower::class);
         /** @var CalculateCombatDamage $calculateDamage */
         $calculateDamage = app(CalculateCombatDamage::class);
 
-        $fantasyPower = $calculateFantasyPower->execute($this->hasAttacks->getExpectedFantasyPoints());
         $damage = $calculateDamage->execute($this, $fantasyPower);
         $maxTargetsCount = $this->getMaxTargetsCount();
         $damagePerTarget = $this->getDamagePerTarget($damage, $maxTargetsCount);
         $totalDamage = $maxTargetsCount * $damagePerTarget;
         $speed = $this->getCombatSpeed();
 
-        return round($totalDamage * ($speed/100), 2);
+        return $totalDamage * ($speed/100);
     }
 
     public function getStaminaPerMoment(): float
