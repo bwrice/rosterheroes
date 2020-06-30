@@ -17,18 +17,12 @@
                         </v-row>
                     </v-col>
                     <v-col cols="8" md="9" class="pa-2">
-                        <v-sheet
-                            tile
+                        <StatRow
                             v-for="(stat, name) in squadStats"
                             :key="name"
-                            color="rgba(0,0,0,.4)"
-                            class="px-2"
-                            style="margin-bottom: 2px">
-                            <v-row no-gutters justify="space-between">
-                                <span class="font-weight-thin" :class="[textSizeClass]">{{stat.name.toUpperCase()}}</span>
-                                <span class="font-weight-regular" :class="[textSizeClass]" style="color: rgba(255,255,255,0.8)">{{stat.value}}</span>
-                            </v-row>
-                        </v-sheet>
+                            :name="stat.name"
+                            :value="stat.value"
+                        ></StatRow>
                     </v-col>
                 </v-row>
                 <v-row no-gutters class="pb-2 px-2">
@@ -63,25 +57,15 @@
     import GradientBar from "../global/GradientBar";
     import CampaignReadinessPanel from "./CampaignReadinessPanel";
     import HeroesReadinessPanel from "./HeroesReadinessPanel";
+    import StatRow from "../global/StatRow";
     export default {
         name: "SquadSummaryCard",
-        components: {HeroesReadinessPanel, CampaignReadinessPanel, GradientBar, LevelIcon},
+        components: {StatRow, HeroesReadinessPanel, CampaignReadinessPanel, GradientBar, LevelIcon},
         computed: {
             ...mapGetters([
                 '_squad',
                 '_currentLocationProvince'
             ]),
-            textSizeClass() {
-                switch (this.$vuetify.breakpoint.name) {
-                    case 'xs':
-                    case 'sm':
-                        return 'body-2';
-                    case 'md':
-                    case 'lg':
-                    case 'xl':
-                        return 'sub-title'
-                }
-            },
             experienceProgressHeight() {
                 switch (this.$vuetify.breakpoint.name) {
                     case 'xs':
