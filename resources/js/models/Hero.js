@@ -7,7 +7,25 @@ import StatMeasurableBonus from "./StatMeasurableBonus";
 
 export default class Hero {
 
-    constructor({name = '', uuid, slug = '', measurables = [], gearSlots = [], heroClassID = 0, heroRaceID = 0, combatPositionID = 0, playerSpirit, spells = [], spellPower, manaUsed, statMeasurableBonuses = []}) {
+    constructor({
+        name = '', uuid,
+        slug = '',
+        measurables = [],
+        gearSlots = [],
+        heroClassID = 0,
+        heroRaceID = 0,
+        combatPositionID = 0,
+        playerSpirit,
+        spells = [],
+        spellPower,
+        manaUsed,
+        statMeasurableBonuses = [],
+        protection,
+        blockChance,
+        damagePerMoment,
+        momentsWithStamina,
+        momentsWithMana
+    }) {
         this.name = name;
         this.uuid = uuid;
         this.slug = slug;
@@ -29,6 +47,11 @@ export default class Hero {
         this.statMeasurableBonuses = statMeasurableBonuses.map(function (statMeasurableBonus) {
             return new StatMeasurableBonus(statMeasurableBonus);
         });
+        this.protection = protection;
+        this.blockChance = blockChance;
+        this.damagePerMoment = damagePerMoment;
+        this.momentsWithStamina = momentsWithStamina;
+        this.momentsWithMana = momentsWithMana;
     }
 
     getGearSlotByType(slotType) {

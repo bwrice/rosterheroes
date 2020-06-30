@@ -2,7 +2,9 @@
 
 namespace App\Http\Resources;
 
+use App\Domain\Models\Attack;
 use App\Domain\Models\Hero;
+use App\Domain\Models\Item;
 use Illuminate\Http\Resources\Json\JsonResource;
 use function foo\func;
 
@@ -22,6 +24,13 @@ class HeroResource extends JsonResource
      */
     public function toArray($request)
     {
+        $this->resource->items->each(function (Item $item) {
+            $item->setUsesItems($this->resource);
+            $item->attacks->each(function (Attack $attack) use ($item) {
+                $attack->setHasAttacks($item);
+            });
+        });
+
         return [
             'name' => $this->name,
             'uuid' => $this->uuid,
@@ -39,7 +48,12 @@ class HeroResource extends JsonResource
             }),
             'spellPower' => $this->getSpellPower(),
             'manaUsed' => $this->getManaUsed(),
-            'statMeasurableBonuses' => StatMeasurableBonusResource::collection($this->getStatMeasurableBonuses())
+            'statMeasurableBonuses' => StatMeasurableBonusResource::collection($this->getStatMeasurableBonuses()),
+            'protection' => $this->getProtection(),
+            'blockChance' => round($this->getBlockChance(), 2),
+            'damagePerMoment' => round($this->getDamagePerMoment(), 1),
+            'momentsWithStamina' => (int) round($this->momentsWithStamina()),
+            'momentsWithMana' => (int) round($this->momentsWithMana())
         ];
     }
 }
