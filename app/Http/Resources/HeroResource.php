@@ -52,8 +52,10 @@ class HeroResource extends JsonResource
             'protection' => $this->getProtection(),
             'blockChance' => round($this->getBlockChance(), 2),
             'damagePerMoment' => round($this->getDamagePerMoment(), 1),
-            'momentsWithStamina' => (int) round($this->momentsWithStamina()),
-            'momentsWithMana' => (int) round($this->momentsWithMana())
+            'staminaPerMoment' => round($this->staminaPerMoment(), 2),
+            'momentsWithStamina' => $this->momentsWithStamina(),
+            'manaPerMoment' => round($this->manaPerMoment(), 2),
+            'momentsWithMana' => $this->momentsWithMana()
         ];
     }
 }
