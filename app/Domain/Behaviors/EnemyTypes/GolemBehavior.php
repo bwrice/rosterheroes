@@ -15,8 +15,8 @@ class GolemBehavior extends EnemyTypeBehavior
      */
     public function getStartingHealth(int $enemyLevel, CombatPosition $startingCombatPosition): int
     {
-        $base = 2000;
-        return $base + (100 * ($enemyLevel**1.4));
+        $base = 1800;
+        return $base + (100 * ($enemyLevel**1.36));
     }
 
     /**
@@ -73,7 +73,7 @@ class GolemBehavior extends EnemyTypeBehavior
      */
     public function adjustCombatSpeed(float $combatSpeed, int $enemyLevel, CombatPosition $startingCombatPosition): float
     {
-        return $combatSpeed * (.18 + $enemyLevel/1000);
+        return $combatSpeed * (.17 + $enemyLevel/1000);
     }
 
     /**
@@ -83,7 +83,7 @@ class GolemBehavior extends EnemyTypeBehavior
      */
     public function getBlockChancePercent(int $enemyLevel, CombatPosition $startingCombatPosition): float
     {
-        $blockChance = 5 + $enemyLevel/25;
+        $blockChance = 4 + $enemyLevel/40;
         return min(70, $blockChance);
     }
 }
