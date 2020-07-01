@@ -1,7 +1,7 @@
 <template>
-    <v-sheet color="#5c707d" class="rounded">
+    <v-sheet color="#445866" class="rounded">
         <v-row no-gutters align="center" class="py-2">
-            <v-col cols="9" class="pl-2">
+            <v-col cols="8" md="9" class="pl-2">
                 <v-row no-gutters class="mb-2">
                     <v-col cols="12">
                         <div v-if="hero.playerSpirit" class="rh-clickable">
@@ -26,7 +26,7 @@
                     :value="stat.value"
                 ></StatRow>
             </v-col>
-            <v-col cols="3" class="px-2">
+            <v-col cols="4" md="3" class="px-2">
                 <CombatPositionIcon
                     :combat-position-id="hero.combatPositionID"
                     :attacker-mode="true"
@@ -43,6 +43,54 @@
                     >
                     </CombatPositionDialog>
                 </v-dialog>
+            </v-col>
+            <v-col cols="12" class="pt-2">
+                <v-row no-gutters class="px-2 py-1" align="center">
+                    <v-col cols="2">
+                        <v-tooltip bottom>
+                            <template v-slot:activator="{ on }">
+                                <v-sheet v-on="on" class="mx-1 rounded-sm" color="rgba(255,255,255, 0.25)">
+                                    <v-row no-gutters justify="center">
+                                        <span class="text-body-2" style="cursor: default">MwS</span>
+                                    </v-row>
+                                </v-sheet>
+                            </template>
+                            <span>Moments with Stamina</span>
+                        </v-tooltip>
+                    </v-col>
+                    <v-col cols="10" class="pr-1">
+                        <v-progress-linear
+                            :value="momentsWithStaminaProgress"
+                            color="#cfc07e"
+                            height="20"
+                        >
+                            <strong>{{ momentsWithStamina }}</strong>
+                        </v-progress-linear>
+                    </v-col>
+                </v-row>
+                <v-row no-gutters class="px-2 py-1" align="center">
+                    <v-col cols="2">
+                        <v-tooltip bottom>
+                            <template v-slot:activator="{ on }">
+                                <v-sheet v-on="on" class="mx-1 rounded-sm" color="rgba(255,255,255, 0.25)">
+                                    <v-row no-gutters justify="center">
+                                        <span class="text-body-2" style="cursor: default">MwM</span>
+                                    </v-row>
+                                </v-sheet>
+                            </template>
+                            <span>Moments with Mana</span>
+                        </v-tooltip>
+                    </v-col>
+                    <v-col cols="10" class="pr-1">
+                        <v-progress-linear
+                            :value="momentsWithManaProgress"
+                            color="#7e95cf"
+                            height="20"
+                        >
+                            <strong>{{ momentsWithMana }}</strong>
+                        </v-progress-linear>
+                    </v-col>
+                </v-row>
             </v-col>
         </v-row>
     </v-sheet>
@@ -101,6 +149,30 @@
                         value: this.hero.blockChance
                     }
                 ]
+            },
+            momentsWithStaminaProgress() {
+                if (this.hero.momentsWithStamina === 'infinite') {
+                    return 100;
+                }
+                return 5 * Math.sqrt(this.hero.momentsWithStamina);
+            },
+            momentsWithStamina() {
+                if (this.hero.momentsWithStamina === 'infinite') {
+                    return '∞';
+                }
+                return this.hero.momentsWithStamina;
+            },
+            momentsWithManaProgress() {
+                if (this.hero.momentsWithMana === 'infinite') {
+                    return 100;
+                }
+                return 5 * Math.sqrt(this.hero.momentsWithMana);
+            },
+            momentsWithMana() {
+                if (this.hero.momentsWithMana === 'infinite') {
+                    return '∞';
+                }
+                return this.hero.momentsWithMana;
             }
         }
     }
