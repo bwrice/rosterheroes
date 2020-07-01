@@ -23,7 +23,9 @@ export default class Hero {
         protection,
         blockChance,
         damagePerMoment,
+        staminaPerMoment,
         momentsWithStamina,
+        manaPerMoment,
         momentsWithMana
     }) {
         this.name = name;
@@ -50,7 +52,9 @@ export default class Hero {
         this.protection = protection;
         this.blockChance = blockChance;
         this.damagePerMoment = damagePerMoment;
+        this.staminaPerMoment = staminaPerMoment;
         this.momentsWithStamina = momentsWithStamina;
+        this.manaPerMoment = manaPerMoment;
         this.momentsWithMana = momentsWithMana;
     }
 
