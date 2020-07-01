@@ -9,7 +9,7 @@
             <span :class="textClasses" style="color: rgba(255, 255, 255, .85)">
                 Congrats!!!, Your squad,
             </span>
-            <v-sheet color="rgba(255, 255, 255, 0.15)" :class="squadSheetClasses">
+            <v-sheet color="rgba(255, 255, 255, 0.15)" :class="squadSheetClasses" class="rounded">
                 <span class="font-weight-bold" :class="squadNameClasses">
                     {{ squad.name }}
                 </span>

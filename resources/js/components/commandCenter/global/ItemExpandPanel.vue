@@ -1,5 +1,5 @@
 <template>
-    <v-sheet color="#576269" style="margin: 1px 0 1px 0" class="py-1">
+    <v-sheet color="#576269" style="margin: 1px 0 1px 0" class="py-1 rounded-sm">
         <v-row ref="row" align="center" class="mx-2" no-gutters>
             <v-col cols="8">
                 <template v-if="item.shopPrice">

@@ -1,5 +1,5 @@
 <template>
-    <v-sheet flat color="#576269" class="py-1 px-2 my-1">
+    <v-sheet color="#576269" class="py-1 px-2 rounded-sm" style="margin: 1px 0 1px 0">
         <v-row no-gutters align="center">
             <v-col cols="4">
                 <span class="subtitle-2 font-weight-bold">{{measurableName}}</span>

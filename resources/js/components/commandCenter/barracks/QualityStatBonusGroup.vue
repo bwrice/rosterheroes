@@ -1,6 +1,6 @@
 <template>
     <v-sheet
-        class="mx-2 mb-2"
+        class="mx-2 mb-2 rounded"
         color="#4c6973"
     >
         <v-row no-gutters>
@@ -27,7 +27,7 @@
             >
                 <v-sheet
                     color="rgba(0,0,0,.3)"
-                    class="mx-2 mb-1"
+                    class="mx-2 mb-1 rounded-sm"
                 >
                     <v-row no-gutters justify="space-between" class="pa-2">
                         <span>{{statType.simpleName}}</span>

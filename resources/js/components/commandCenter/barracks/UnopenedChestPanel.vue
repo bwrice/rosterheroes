@@ -1,13 +1,13 @@
 <template>
     <v-sheet color="#526e5a"
-             tile
              style="margin: 1px 0 1px 0"
+             class="py-1 rounded-sm"
     >
         <v-row no-gutters align="center" justify="center" class="mx-2">
             <v-col cols="8">
                 <v-row no-gutters align="center" justify="center" class="py-1">
                     <v-col cols="12" class="text-truncate">
-                        <span class="subtitle-1 font-weight-regular">{{unopenedChest.description}}</span>
+                        <span class="text-body-2 font-weight-light px-2">{{unopenedChest.description}}</span>
                     </v-col>
                     <v-col cols="12" class="text-truncate rh-op-90 pb-1" v-if="unopenedChest.source">
                         <span class="caption font-weight-light">{{unopenedChest.source.type}}: </span>
@@ -20,7 +20,7 @@
                     <v-btn
                         fab
                         dark
-                        small
+                        x-small
                         color="rgba(0, 0, 0, .4)"
                         @click="openChestClicked"
                         class="py-1"
