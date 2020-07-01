@@ -5,21 +5,17 @@
                 <span class="headline text-center mx-3 my-2">{{item.name}}</span>
             </v-row>
             <v-row no-gutters class="pb-2">
-                <v-col cols="6" class="px-2">
-                    <p class="caption ma-0">
-                        Type: {{item.itemType.name}}<br>
-                        Base: {{item.itemType.itemBase.name}}<br>
-                        Class: {{item.itemClass.name}}<br>
-                        Material: {{item.material.name}}<br>
-                    </p>
-                </v-col>
-                <v-col cols="6" class="px-2">
-                    <p class="caption ma-0">
-                        Protection: {{item.protection}}<br>
-                        Block %: {{item.blockChance}}<br>
-                        Weight: {{item.weight}}<br>
-                        Value: {{item.value}}<br>
-                    </p>
+                <v-col
+                    cols="6"
+                    v-for="stat in stats"
+                    :key="stat.name"
+                >
+                    <v-sheet class="rounded-sm mx-1 px-1" style="margin-bottom: 1px" color="rgba(0,0,0,.3)">
+                        <v-row class="no-gutters" justify="space-between">
+                            <span class="text-body-2 font-weight-light">{{stat.name.toUpperCase()}}:</span>
+                            <span class="text-body-2 font-weight-bold rh-op-85">{{stat.value}}</span>
+                        </v-row>
+                    </v-sheet>
                 </v-col>
             </v-row>
             <v-row class="no-gutters">
@@ -57,6 +53,42 @@
         computed: {
             sheetColor() {
                 return this.color ? this.color : '#576269';
+            },
+            stats() {
+                return [
+                    {
+                        name: 'type',
+                        value: this.item.itemType.name
+                    },
+                    {
+                        name: 'base',
+                        value: this.item.itemType.itemBase.name
+                    },
+                    {
+                        name: 'class',
+                        value: this.item.itemClass.name
+                    },
+                    {
+                        name: 'material',
+                        value: this.item.material.name
+                    },
+                    {
+                        name: 'protection',
+                        value: this.item.protection
+                    },
+                    {
+                        name: 'block %',
+                        value: this.item.blockChance
+                    },
+                    {
+                        name: 'weight',
+                        value: this.item.weight
+                    },
+                    {
+                        name: 'value',
+                        value: this.item.value
+                    },
+                ]
             }
         }
     }
