@@ -1,11 +1,11 @@
 <template>
-    <v-row no-gutters class="pb-2">
+    <v-row no-gutters>
         <v-col cols="12">
             <v-sheet
                 id="map-sheet"
-                :tile="tile"
                 :color="oceanColor"
                 @click="click"
+                :class="[roundedClass]"
             >
                 <svg xmlns="http://www.w3.org/2000/svg"
                      version="1.1"
@@ -42,14 +42,23 @@
                 type: String,
                 default: '#d5f5f5'
             },
-            tile: {
-                type: Boolean,
-                default: false
+            roundedSize: {
+                type: String,
+                default: 'normal'
             }
         },
         computed: {
             viewBoxString() {
                 return this.viewBox.panX + ' ' + this.viewBox.panY + ' ' + this.viewBox.zoomX + ' ' + this.viewBox.zoomY;
+            },
+            roundedClass() {
+                if (this.roundedSize === 'normal') {
+                    return 'rounded';
+                }
+                if (this.roundedSize === 'small') {
+                    return 'rounded-sm'
+                }
+                return '';
             }
         },
         methods: {

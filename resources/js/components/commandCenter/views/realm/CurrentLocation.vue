@@ -27,7 +27,7 @@
                         <span class="title font-weight-thin">LOCAL: {{province.name}}</span>
                     </v-col>
                 </v-row>
-                <MapViewPort :view-box="_currentLocationProvince.viewBox" :tile="true">
+                <MapViewPort :view-box="_currentLocationProvince.viewBox">
 
                     <!-- Borders -->
                     <ProvinceVector
@@ -67,7 +67,7 @@
                         <span class="title font-weight-thin">GLOBAL</span>
                     </v-col>
                 </v-row>
-                <MapViewPort :ocean-color="'#000'" :tile="true">
+                <MapViewPort :ocean-color="'#000'">
 
                     <!-- Borders -->
                     <ProvinceVector

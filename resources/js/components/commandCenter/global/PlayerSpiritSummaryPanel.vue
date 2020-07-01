@@ -2,7 +2,7 @@
     <v-sheet
         color="#29272b"
         :elevation="elevation"
-        class="ma-1 px-2"
+        class="ma-1 px-2 rounded"
         @click="emitClick"
     >
         <v-row no-gutters justify="center" align="center">

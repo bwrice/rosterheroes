@@ -1,10 +1,10 @@
 <template>
-    <v-sheet color="#466661" class="my-1">
+    <v-sheet color="#466661" class="my-1 rounded-sm">
         <v-row no-gutters>
             <v-col cols="12">
                 <v-row no-gutters align="center">
                     <v-col cols="3" class="pa-1">
-                        <MapViewPort :view-box="viewBox">
+                        <MapViewPort :view-box="viewBox" :rounded-size="'small'">
                             <slot>
                                 <!-- Default Slot -->
                             </slot>

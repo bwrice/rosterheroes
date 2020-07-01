@@ -71,7 +71,7 @@
         <v-col cols="12" v-else>
             <v-row no-gutters>
                 <v-col cols="12">
-                    <v-sheet class="py-5"
+                    <v-sheet class="py-5 rounded"
                              style="background-image: linear-gradient(to bottom right, #524c59, #7c7287 , #524c59)">
                         <HeroGearSVG
                             :hero="hero"

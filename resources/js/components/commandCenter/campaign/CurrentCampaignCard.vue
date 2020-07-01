@@ -4,7 +4,7 @@
             <span class="title font-weight-thin">CURRENT CAMPAIGN</span>
         </v-col>
         <v-col cols="12" v-if="_currentCampaign">
-            <v-sheet :color="'#5c707d'" class="my-1">
+            <v-sheet :color="'#5c707d'" class="my-1 rounded">
                 <v-row no-gutters>
                     <v-col cols="12">
                         <v-row class="px-2">
@@ -20,8 +20,8 @@
                             </v-col>
                         </v-row>
                     </v-col>
-                    <v-col cols="12">
-                        <MapViewPort :view-box="continent.viewBox" :tile="true" :ocean-color="'#000'">
+                    <v-col cols="12" class="px-1">
+                        <MapViewPort :view-box="continent.viewBox" :tile="true" :ocean-color="'#000'" :rounded-size="'none'">
                             <ProvinceVector
                                 v-for="(province, uuid) in provincesForContinent"
                                 :key="uuid"

@@ -1,5 +1,5 @@
 <template>
-    <v-sheet color="rgba(60, 46, 92, .75)" class="mb-1">
+    <v-sheet color="rgba(60, 46, 92, .75)" class="mb-1 rounded">
         <v-row align="center" justify="center" class="mx-2" no-gutters>
             <span class="subtitle-2 pa-2">{{attack.name}}</span>
             <div class="flex-grow-1"></div>

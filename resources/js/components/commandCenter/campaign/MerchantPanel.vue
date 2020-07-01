@@ -1,7 +1,7 @@
 <template>
     <v-sheet
         color="#5c707d"
-        class="rh-clickable mb-1"
+        class="rh-clickable mb-1 rounded"
         elevation="4"
         @click.native="handleClick"
     >

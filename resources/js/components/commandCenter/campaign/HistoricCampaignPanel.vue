@@ -1,5 +1,5 @@
 <template>
-    <v-sheet color="#524c59" class="py-1 px-2 mb-1">
+    <v-sheet color="#524c59" class="py-1 px-2 mb-1 rounded">
         <v-row no-gutters justify="center" class="pb-1">
             <span class="title rh-op-90">{{historicCampaign.description}}</span>
         </v-row>
@@ -7,8 +7,7 @@
             v-for="(campaignStopResult, uuid) in historicCampaign.campaignStopResults"
             :key="uuid"
             color="rgba(0,0,0,.2)"
-            class="px-2 py-1 mb-1"
-
+            class="px-2 py-1 mb-1 rounded-sm"
         >
             <v-row
                 no-gutters

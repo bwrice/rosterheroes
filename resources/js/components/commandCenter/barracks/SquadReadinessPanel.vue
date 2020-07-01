@@ -1,5 +1,5 @@
 <template>
-    <v-sheet color="rgba(0,0,0,.4)" class="ma-1 pa-1">
+    <v-sheet color="rgba(0,0,0,.4)" class="ma-1 pa-1 rounded-sm">
         <v-row no-gutters align="center">
             <v-col cols="3" sm="2">
                 <v-row no-gutters justify="center">

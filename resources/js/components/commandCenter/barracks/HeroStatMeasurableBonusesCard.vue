@@ -9,7 +9,7 @@
             >
                 <v-tabs
                     v-model="tab"
-                    mobile-break-point="10"
+                    mobile-breakpoint="10"
                     centered
                     background-color="#32343d"
                     color="#b3c9c3"

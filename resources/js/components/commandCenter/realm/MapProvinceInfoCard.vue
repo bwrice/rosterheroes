@@ -1,5 +1,5 @@
 <template>
-    <v-sheet color="#466661" class="py-1">
+    <v-sheet color="#466661" class="py-1 rounded">
         <v-row no-gutters>
             <v-col cols="12" class="px-2">
                 <span class="title">PROVINCE INFO</span>
@@ -10,7 +10,7 @@
                     :key="title"
                     tile
                     color="rgba(0,0,0, 0.25)"
-                    class="mx-2 mb-1 px-2">
+                    class="mx-2 mb-1 px-2 rounded-sm">
                     <v-row no-gutters justify="space-between" align="center">
                         <span class="subtitle-1 font-weight-light">{{info.title.toUpperCase()}}:</span>
                         <span class="subtitle-1 font-weight-light">{{info.count}}</span>
@@ -29,7 +29,7 @@
                     </v-row>
                 </template>
                 <template v-else>
-                    <v-sheet color="rgba(255, 255, 255, 0.2)" class="mx-2 my-1">
+                    <v-sheet color="rgba(255, 255, 255, 0.2)" class="mx-2 my-1 rounded-sm">
                         <v-row no-gutters justify="center" align="center">
                             <span class="body-2 my-1">
                                 none

@@ -7,7 +7,7 @@
                         <span class="title font-weight-thin">MAIN QUEST</span>
                     </v-col>
                 </v-row>
-                <v-sheet color="#466661" class="pa-2">
+                <v-sheet color="#466661" class="pa-2 rounded">
                     <v-row no-gutters justify="center">
                         <span class="display-1 rh-op-85 font-weight-bold mx-3 text-center">{{quest.name}}</span>
                     </v-row>

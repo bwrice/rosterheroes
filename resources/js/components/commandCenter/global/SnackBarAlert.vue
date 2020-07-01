@@ -9,13 +9,16 @@
         :top="true"
     >
         {{ this._snackBar.text }}
-        <v-btn
+
+        <template v-slot:action>
+            <v-btn
                 dark
                 text
                 @click="snackBar = false"
-        >
-            Close
-        </v-btn>
+            >
+                Close
+            </v-btn>
+        </template>
     </v-snackbar>
 </template>
 

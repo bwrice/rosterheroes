@@ -1,6 +1,7 @@
 <template>
     <v-sheet color="#536a80"
              style="margin: 2px 0 2px 0"
+             class="rounded"
     >
         <v-row no-gutters align="center" justify="center" class="mx-2">
             <div style="flex: 0 0 15%" class="pt-2">

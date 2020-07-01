@@ -3,7 +3,7 @@
         <v-sheet
             color="rgba(0,0,0,.3)"
             tile
-            class="ma-1"
+            class="ma-1 rounded"
         >
             <v-row no-gutters align="center">
                 <v-col cols="4" class="pa-1">

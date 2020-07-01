@@ -1,5 +1,6 @@
 <template>
     <v-sheet
+        class="rounded"
         :elevation="elevation"
         :color="color"
         style="margin: 2px"

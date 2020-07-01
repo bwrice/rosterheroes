@@ -1,5 +1,5 @@
 <template>
-    <v-sheet color="#466661" class="my-1">
+    <v-sheet color="#466661" class="my-1 rounded-sm">
         <v-row no-gutters class="pa-1" justify="center" align="center">
             <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
@@ -43,7 +43,7 @@
                     <v-divider></v-divider>
                     <v-tabs
                         v-model="tab"
-                        mobile-break-point="10"
+                        mobile-breakpoint="10"
                         centered
                         background-color="#32343d"
                         color="#b3c9c3"

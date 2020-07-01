@@ -1,7 +1,7 @@
 <template>
     <v-sheet
         :color="sheetColor"
-        class="my-1 rh-clickable"
+        class="my-1 rh-clickable rounded"
         :elevation="elevation"
         @mouseenter="hovered = true"
         @mouseleave="hovered = false"
@@ -29,7 +29,7 @@
         </v-row>
         <v-row no-gutters align="center">
             <v-col cols="4" md="3">
-                <v-sheet class="py-0 ma-1" style="background-image: linear-gradient(to bottom right, #393142, #5e526b , #393142)">
+                <v-sheet class="pt-2 ma-1 rounded" style="background-image: linear-gradient(to bottom right, #393142, #5e526b , #393142)">
                     <HeroGearSVG :hero="hero"></HeroGearSVG>
                 </v-sheet>
             </v-col>

@@ -6,7 +6,7 @@
         <v-col cols="12">
             <v-sheet
                 color="#5c707d"
-                class="my-1"
+                class="my-1 rounded"
             >
                 <v-row no-gutters align="center">
                     <v-col cols="4" md="3">

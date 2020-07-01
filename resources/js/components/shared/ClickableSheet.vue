@@ -3,6 +3,7 @@
         :color="color"
         :elevation="elevation"
         :class="classes"
+        class="rounded"
         @mouseenter="hovered = true"
         @mouseleave="hovered = false"
         @click="emitClick"
