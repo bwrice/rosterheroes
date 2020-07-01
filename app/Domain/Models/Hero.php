@@ -440,30 +440,50 @@ class Hero extends EventSourcedModel implements UsesItems, SpellCaster
 
         return $this->items->sum(function (Item $item) use ($fantasyPower) {
             $item->setUsesItems($this);
-            $filteredAttacks = $item->getAttacks()->each(function (Attack $attack) use ($item) {
+            $attacks = $item->getAttacks()->each(function (Attack $attack) use ($item) {
                 $attack->setHasAttacks($item);
-            })->withAttackerPosition($this->combatPosition);
+            });
+            $filteredAttacks = $this->filterCombatReadyAttacks($attacks);
             return $filteredAttacks->getDamagePerMoment($fantasyPower);
+        });
+    }
+
+    protected function filterCombatReadyAttacks(AttackCollection $attacks)
+    {
+        return $attacks->withAttackerPosition($this->combatPosition);
+    }
+
+    public function staminaPerMoment()
+    {
+        return $this->items->sum(function (Item $item) {
+            return $this->filterCombatReadyAttacks($item->getAttacks())->staminaPerMoment();
         });
     }
 
     public function momentsWithStamina()
     {
-        $staminaPerMoment = $this->items->staminaPerMoment();
+        $staminaPerMoment = $this->staminaPerMoment();
         if ($staminaPerMoment <= 0) {
             return 'infinite';
         }
         $currentStamina = $this->getCurrentMeasurableAmount(MeasurableType::STAMINA);
-        return $currentStamina/$staminaPerMoment;
+        return (int) ceil($currentStamina/$staminaPerMoment);
+    }
+
+    public function manaPerMoment()
+    {
+        return $this->items->sum(function (Item $item) {
+            return $this->filterCombatReadyAttacks($item->getAttacks())->manaPerMoment();
+        });
     }
 
     public function momentsWithMana()
     {
-        $manaPerMoment = $this->items->manaPerMoment();
+        $manaPerMoment = $this->manaPerMoment();
         if ($manaPerMoment <= 0) {
             return 'infinite';
         }
         $currentMana = $this->getCurrentMeasurableAmount(MeasurableType::MANA);
-        return $currentMana/$manaPerMoment;
+        return (int) ceil($currentMana/$manaPerMoment);
     }
 }
