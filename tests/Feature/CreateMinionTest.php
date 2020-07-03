@@ -37,7 +37,7 @@ class CreateMinionTest extends TestCase
             ->inRandomOrder()->take(rand(2,5))->get()
             ->map(function (ChestBlueprint $chestBlueprint) {
                 return [
-                    'chest_blueprint' => $chestBlueprint->reference_id,
+                    'reference_id' => $chestBlueprint->reference_id,
                     'count' => rand(1,3),
                     'chance' => rand(1, 100)
                 ];
@@ -208,7 +208,7 @@ class CreateMinionTest extends TestCase
         $this->assertEquals(count($this->chestBlueprintSeedArrays), $chestBlueprints->count());
         $chestBlueprints->each(function (ChestBlueprint $chestBlueprint) {
             $matchingSeedArray = collect($this->chestBlueprintSeedArrays)->first(function ($blueprintSeedArray) use ($chestBlueprint) {
-                return $blueprintSeedArray['chest_blueprint'] === $chestBlueprint->reference_id;
+                return $blueprintSeedArray['reference_id'] === $chestBlueprint->reference_id;
             });
             $this->assertNotNull($matchingSeedArray);
             $this->assertEquals($matchingSeedArray['count'], $chestBlueprint->pivot->count);

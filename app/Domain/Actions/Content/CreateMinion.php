@@ -99,7 +99,7 @@ class CreateMinion
         }
 
         $referenceIDs = $chestBlueprintSeedArrays->map(function ($blueprintArray) {
-            return $blueprintArray['chest_blueprint'];
+            return $blueprintArray['reference_id'];
         });
 
         $chestBlueprints = ChestBlueprint::query()->whereIn('reference_id', $referenceIDs->toArray())->get();
@@ -116,7 +116,7 @@ class CreateMinion
 
         return $chestBlueprintSeedArrays->map(function ($seedArray) use ($chestBlueprints) {
             $matchingBlueprint = $chestBlueprints->first(function (ChestBlueprint $chestBlueprint) use ($seedArray) {
-                return $chestBlueprint->reference_id === $seedArray['chest_blueprint'];
+                return $chestBlueprint->reference_id === $seedArray['reference_id'];
             });
             $seedArray['chest_blueprint'] = $matchingBlueprint;
             return $seedArray;
