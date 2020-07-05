@@ -115,7 +115,7 @@ class SeedContent070320 extends Migration
             ],
             [
                 'name' => 'Gargoyle Bludgeoner',
-                'level' => 86,
+                'level' => 90,
                 'enemy_type' => EnemyType::GARGOYLE,
                 'combat_position' => CombatPosition::FRONT_LINE,
                 'attacks' => [
