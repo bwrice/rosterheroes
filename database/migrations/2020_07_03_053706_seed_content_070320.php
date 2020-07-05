@@ -173,6 +173,72 @@ class SeedContent070320 extends Migration
                     ]
                 ]
             ],
+            [
+                'name' => 'Vampire Marksman',
+                'level' => 112,
+                'enemy_type' => EnemyType::VAMPIRE,
+                'combat_position' => CombatPosition::HIGH_GROUND,
+                'attacks' => [
+                    'Severe Bite',
+                    'Vicious Bite',
+                    'Bolt Shot',
+                    'Double Bolt Shot',
+                    'Triple Bolt Release',
+                    'Bolt Spray',
+                    'Bolt Barrage'
+                ],
+                'chest_blueprints' => [
+                    [
+                        'reference_id' => ChestBlueprint::TINY_MID_TIER_RANDOM,
+                        'count' => 1,
+                        'chance' => 15
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::FULLY_RANDOM_TINY,
+                        'count' => 1,
+                        'chance' => 10
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_3,
+                        'count' => 1,
+                        'chance' => 25
+                    ]
+                ]
+            ],
+            [
+                'name' => 'Vampire Elder',
+                'level' => 182,
+                'enemy_type' => EnemyType::VAMPIRE,
+                'combat_position' => CombatPosition::BACK_LINE,
+                'attacks' => [
+                    'Severe Bite',
+                    'Vicious Bite',
+                    'Vampiric Bite',
+                    'Magic Bullet',
+                    'Double Magic Bullet',
+                    'Triple Magic Bullet',
+                    'Magic Torpedo',
+                    'Blood Swell',
+                    'Blood Boil'
+                ],
+                'chest_blueprints' => [
+                    [
+                        'reference_id' => ChestBlueprint::TINY_HIGH_TIER_RANDOM,
+                        'count' => 1,
+                        'chance' => 25
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::FULLY_RANDOM_TINY,
+                        'count' => 1,
+                        'chance' => 40
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_4,
+                        'count' => 1,
+                        'chance' => 25
+                    ]
+                ]
+            ],
         ]);
 
         /** @var CreateMinion $domainAction */
