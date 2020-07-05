@@ -270,7 +270,7 @@ class SeedMinionsA extends Migration
              */
             [
                 'name' => 'Young Vampire',
-                'level' => 38,
+                'level' => 34,
                 'enemy_type' => EnemyType::VAMPIRE,
                 'combat_position' => CombatPosition::FRONT_LINE,
                 'attacks' => [
@@ -293,7 +293,7 @@ class SeedMinionsA extends Migration
             ],
             [
                 'name' => 'Vampire',
-                'level' => 61,
+                'level' => 47,
                 'enemy_type' => EnemyType::VAMPIRE,
                 'combat_position' => CombatPosition::FRONT_LINE,
                 'attacks' => [
@@ -318,7 +318,7 @@ class SeedMinionsA extends Migration
             ],
             [
                 'name' => 'Vampire Veteran',
-                'level' => 91,
+                'level' => 63,
                 'enemy_type' => EnemyType::VAMPIRE,
                 'combat_position' => CombatPosition::FRONT_LINE,
                 'attacks' => [
@@ -343,7 +343,7 @@ class SeedMinionsA extends Migration
             ],
             [
                 'name' => 'Vampire Magus',
-                'level' => 134,
+                'level' => 87,
                 'enemy_type' => EnemyType::VAMPIRE,
                 'combat_position' => CombatPosition::BACK_LINE,
                 'attacks' => [
@@ -370,7 +370,7 @@ class SeedMinionsA extends Migration
             ],
             [
                 'name' => 'Vampire Knight',
-                'level' => 139,
+                'level' => 93,
                 'enemy_type' => EnemyType::VAMPIRE,
                 'combat_position' => CombatPosition::FRONT_LINE,
                 'attacks' => [
