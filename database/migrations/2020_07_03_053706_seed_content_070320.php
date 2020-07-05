@@ -174,8 +174,40 @@ class SeedContent070320 extends Migration
                 ]
             ],
             [
+                'name' => 'Vampire Guard',
+                'level' => 51,
+                'enemy_type' => EnemyType::VAMPIRE,
+                'combat_position' => CombatPosition::HIGH_GROUND,
+                'attacks' => [
+                    'Severe Bite',
+                    'Vicious Bite',
+                    'Bolt Shot',
+                    'Stab',
+                    'Double Stab',
+                    'Polearm Strike',
+                    'Polearm Blitz'
+                ],
+                'chest_blueprints' => [
+                    [
+                        'reference_id' => ChestBlueprint::TINY_MID_TIER_RANDOM,
+                        'count' => 1,
+                        'chance' => 10
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::FULLY_RANDOM_TINY,
+                        'count' => 1,
+                        'chance' => 5
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_3,
+                        'count' => 1,
+                        'chance' => 20
+                    ]
+                ]
+            ],
+            [
                 'name' => 'Vampire Marksman',
-                'level' => 112,
+                'level' => 72,
                 'enemy_type' => EnemyType::VAMPIRE,
                 'combat_position' => CombatPosition::HIGH_GROUND,
                 'attacks' => [
@@ -196,7 +228,7 @@ class SeedContent070320 extends Migration
                     [
                         'reference_id' => ChestBlueprint::FULLY_RANDOM_TINY,
                         'count' => 1,
-                        'chance' => 10
+                        'chance' => 8
                     ],
                     [
                         'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_3,
@@ -207,13 +239,15 @@ class SeedContent070320 extends Migration
             ],
             [
                 'name' => 'Vampire Elder',
-                'level' => 182,
+                'level' => 120,
                 'enemy_type' => EnemyType::VAMPIRE,
                 'combat_position' => CombatPosition::BACK_LINE,
                 'attacks' => [
                     'Severe Bite',
                     'Vicious Bite',
                     'Vampiric Bite',
+                    'Cleave',
+                    'Double Cleave',
                     'Magic Bullet',
                     'Double Magic Bullet',
                     'Triple Magic Bullet',
@@ -234,6 +268,39 @@ class SeedContent070320 extends Migration
                     ],
                     [
                         'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_4,
+                        'count' => 1,
+                        'chance' => 25
+                    ]
+                ]
+            ],
+            [
+                'name' => 'Vampire Commander',
+                'level' => 137,
+                'enemy_type' => EnemyType::VAMPIRE,
+                'combat_position' => CombatPosition::HIGH_GROUND,
+                'attacks' => [
+                    'Severe Bite',
+                    'Vicious Bite',
+                    'Vampiric Bite',
+                    'Clobber',
+                    'Double Clobber',
+                    'Triple Clobber',
+                    'Mace Whirlwind',
+                    'Mace Tornado'
+                ],
+                'chest_blueprints' => [
+                    [
+                        'reference_id' => ChestBlueprint::TINY_HIGH_TIER_RANDOM,
+                        'count' => 1,
+                        'chance' => 25
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::FULLY_RANDOM_TINY,
+                        'count' => 1,
+                        'chance' => 35
+                    ],
+                    [
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_3,
                         'count' => 1,
                         'chance' => 25
                     ]
