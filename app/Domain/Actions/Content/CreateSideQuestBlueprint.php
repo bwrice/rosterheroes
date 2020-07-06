@@ -12,13 +12,13 @@ use Illuminate\Support\Facades\DB;
 class CreateSideQuestBlueprint
 {
     /**
-     * @param string $name
+     * @param string|null $name
      * @param string $referenceID
      * @param array $minionArrays
      * @param array $chestBlueprintArrays
      * @return SideQuestBlueprint
      */
-    public function execute(string $name, string $referenceID, array $minionArrays, array $chestBlueprintArrays)
+    public function execute(?string $name, string $referenceID, array $minionArrays, array $chestBlueprintArrays)
     {
         return DB::transaction(function () use ($name, $referenceID, $minionArrays, $chestBlueprintArrays) {
 
@@ -37,7 +37,10 @@ class CreateSideQuestBlueprint
             ]);
 
             foreach ($minionArrays as $minionArray) {
-                $minion = Minion::query()->where('name', '=', $minionArray['name'])->firstOrFail();
+                $minion = Minion::query()->where('name', '=', $minionArray['name'])->first();
+                if (! $minion) {
+                    throw new \Exception("Couldn't find minion with name" . $minionArray['name']);
+                }
                 $sideQuestBlueprint->minions()->save($minion, [
                     'count' => $minionArray['count']
                 ]);
