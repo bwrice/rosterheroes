@@ -11,7 +11,6 @@ use App\Facades\CurrentWeek;
 use App\Factories\Models\PlayerGameLogFactory;
 use App\Factories\Models\PlayerSpiritFactory;
 use App\Jobs\FinalizeWeekJob;
-use App\Jobs\FinalizeWeekStepTwoJob;
 use Bwrice\LaravelJobChainGroups\Jobs\AsyncChainedJob;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;

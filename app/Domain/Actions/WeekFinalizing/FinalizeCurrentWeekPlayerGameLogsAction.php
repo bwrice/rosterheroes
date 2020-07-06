@@ -27,8 +27,14 @@ class FinalizeCurrentWeekPlayerGameLogsAction implements FinalizeWeekDomainActio
     {
         $currentWeekID = CurrentWeek::id();
         $games = Game::query()->withPlayerSpiritsForWeeks([$currentWeekID])->get();
-        return $games->map(function (Game $game) {
+        $jobs = $games->map(function (Game $game) {
             return new UpdatePlayerGameLogsJob($game);
-        })->toArray();
+        });
+        $now = now();
+        $secondsDelay = 0;
+        return $jobs->each(function (UpdatePlayerGameLogsJob $job) use ($now, &$secondsDelay) {
+            $job->delay($now->addSeconds($secondsDelay));
+            $secondsDelay += 15;
+        });
     }
 }
