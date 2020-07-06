@@ -276,8 +276,8 @@ class SeedContent070320 extends Migration
                 ]
             ],
             [
-                'name' => 'Vampire Commander',
-                'level' => 137,
+                'name' => 'Vampire Captain',
+                'level' => 113,
                 'enemy_type' => EnemyType::VAMPIRE,
                 'combat_position' => CombatPosition::HIGH_GROUND,
                 'attacks' => [
@@ -1621,19 +1621,19 @@ class SeedContent070320 extends Migration
                     ],
                     [
                         'name' => 'Skeleton Mage',
-                        'count' => 4
-                    ],
-                    [
-                        'name' => 'Skeleton Battler',
-                        'count' => 2
-                    ],
-                    [
-                        'name' => 'Lich',
                         'count' => 5
                     ],
                     [
-                        'name' => 'Lich Mage',
+                        'name' => 'Skeleton Battler',
                         'count' => 3
+                    ],
+                    [
+                        'name' => 'Lich',
+                        'count' => 8
+                    ],
+                    [
+                        'name' => 'Lich Mage',
+                        'count' => 4
                     ],
                 ],
                 'chest_blueprints' => [
@@ -1648,7 +1648,7 @@ class SeedContent070320 extends Migration
                         'chance' => 30
                     ],
                     [
-                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_4,
+                        'reference_id' => ChestBlueprint::GOLD_ONLY_LEVEL_5,
                         'count' => 1,
                         'chance' => 100
                     ]
@@ -1683,7 +1683,7 @@ class SeedContent070320 extends Migration
                         'count' => 2
                     ],
                     [
-                        'name' => 'Vampire Commander',
+                        'name' => 'Vampire Captain',
                         'count' => 1
                     ],
                 ],
@@ -1718,6 +1718,30 @@ class SeedContent070320 extends Migration
                 $blueprintData['chest_blueprints']
             );
         });
+    }
+
+    protected function seedQuests()
+    {
+        $questData = collect([
+            [
+                'name' => 'Gabrielle Night Wing',
+            ],
+            [
+                'name' => 'Gabrielle Blood Wing',
+            ],
+            [
+                'name' => 'Gabrielle Death Wing',
+            ],
+            [
+                'name' => 'North Gabrielle Castle',
+            ],
+            [
+                'name' => 'East Gabrielle Castle',
+            ],
+            [
+                'name' => 'Gabrielle High Castle',
+            ],
+        ]);
     }
 
     /**
