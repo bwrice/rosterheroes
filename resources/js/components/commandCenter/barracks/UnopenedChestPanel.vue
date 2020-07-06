@@ -9,7 +9,7 @@
                     <v-col cols="12" class="text-truncate">
                         <span class="text-body-2 font-weight-light px-2">{{unopenedChest.description}}</span>
                     </v-col>
-                    <v-col cols="12" class="text-truncate rh-op-90 pb-1" v-if="unopenedChest.source">
+                    <v-col cols="12" class="text-truncate rh-op-90 pb-1 px-2" v-if="unopenedChest.source">
                         <span class="caption font-weight-light">{{unopenedChest.source.type}}: </span>
                         <span class="caption font-weight-regular">{{unopenedChest.source.name}}</span>
                     </v-col>
@@ -20,7 +20,7 @@
                     <v-btn
                         fab
                         dark
-                        x-small
+                        small
                         color="rgba(0, 0, 0, .4)"
                         @click="openChestClicked"
                         class="py-1"
