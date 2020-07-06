@@ -16,7 +16,7 @@ class GargoyleBehavior extends EnemyTypeBehavior
     public function getStartingHealth(int $enemyLevel, CombatPosition $startingCombatPosition): int
     {
         $base = 800;
-        $levelModifier = 35;
+        $levelModifier = 36;
         return $base + ($levelModifier * ($enemyLevel ** 1.27));
     }
 
@@ -74,7 +74,7 @@ class GargoyleBehavior extends EnemyTypeBehavior
      */
     public function adjustCombatSpeed(float $combatSpeed, int $enemyLevel, CombatPosition $startingCombatPosition): float
     {
-        return $combatSpeed * (1.18 + $enemyLevel/200);
+        return $combatSpeed * (1.19 + $enemyLevel/200);
     }
 
     /**
@@ -84,6 +84,6 @@ class GargoyleBehavior extends EnemyTypeBehavior
      */
     public function getBlockChancePercent(int $enemyLevel, CombatPosition $startingCombatPosition): float
     {
-        return 8;
+        return 8 + $enemyLevel/30;
     }
 }
