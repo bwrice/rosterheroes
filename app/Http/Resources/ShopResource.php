@@ -26,7 +26,7 @@ class ShopResource extends JsonResource
             'name' => $this->name,
             'slug' => $this->slug,
             'tier' => $this->tier,
-            'items' => ItemResource::collection($this->availableItems)
+            'items' => ItemResource::collection($this->availableItems->shuffle())
         ];
     }
 }
