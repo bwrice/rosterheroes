@@ -11,12 +11,13 @@ class SquadBorderTravelCostCalculator
 {
     public function calculateGoldCost(Squad $squad, Province $border)
     {
-        $level = $squad->level();
-        if ($level < 10) {
-            return 0;
-        }
-
         // TODO calculate based on mobile storage weight + level
-        return $level;
+        return 0;
+
+//        $level = $squad->level();
+//        if ($level < 10) {
+//            return 0;
+//        }
+//        return $level;
     }
 }
