@@ -2,12 +2,20 @@
 
 use App\Domain\Actions\Content\CreateMinion;
 use App\Domain\Actions\Content\CreateSideQuestBlueprint;
+use App\Domain\Actions\CreateSideQuest;
 use App\Domain\Models\ChestBlueprint;
 use App\Domain\Models\CombatPosition;
 use App\Domain\Models\EnemyType;
+use App\Domain\Models\Minion;
+use App\Domain\Models\Province;
+use App\Domain\Models\Quest;
+use App\Domain\Models\SideQuestBlueprint;
+use App\Domain\Models\Titan;
+use App\Domain\Models\TravelType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 class SeedContent070320 extends Migration
 {
@@ -20,6 +28,7 @@ class SeedContent070320 extends Migration
     {
         $this->seedMinions();
         $this->seedSideQuestBlueprints();
+        $this->seedQuests();
     }
 
     protected function seedMinions()
@@ -179,7 +188,7 @@ class SeedContent070320 extends Migration
                 'name' => 'Vampire Guard',
                 'level' => 51,
                 'enemy_type' => EnemyType::VAMPIRE,
-                'combat_position' => CombatPosition::HIGH_GROUND,
+                'combat_position' => CombatPosition::FRONT_LINE,
                 'attacks' => [
                     'Severe Bite',
                     'Vicious Bite',
@@ -279,7 +288,7 @@ class SeedContent070320 extends Migration
                 'name' => 'Vampire Captain',
                 'level' => 113,
                 'enemy_type' => EnemyType::VAMPIRE,
-                'combat_position' => CombatPosition::HIGH_GROUND,
+                'combat_position' => CombatPosition::FRONT_LINE,
                 'attacks' => [
                     'Severe Bite',
                     'Vicious Bite',
@@ -1722,26 +1731,574 @@ class SeedContent070320 extends Migration
 
     protected function seedQuests()
     {
-        $questData = collect([
+        $quests = collect([
             [
-                'name' => 'Gabrielle Night Wing',
+                'name' => 'Fetroya Vampire Night Wing',
+                'travel_type' => TravelType::CONTINENT,
+                'level' => 297,
+                'starting_province' => 'Moskia',
+                'titans' => [
+                    [
+                        'name' => 'Vampire Noble',
+                        'count' => 3
+                    ]
+                ],
+                'minions' => [
+                    [
+                        'name' => 'Young Vampire',
+                        'weight' => 15
+                    ],
+                    [
+                        'name' => 'Vampire',
+                        'weight' => 15
+                    ],
+                    [
+                        'name' => 'Vampire Veteran',
+                        'weight' => 10
+                    ],
+                    [
+                        'name' => 'Vampire Marksman',
+                        'weight' => 15
+                    ],
+                    [
+                        'name' => 'Vampire Magus',
+                        'weight' => 10
+                    ],
+                    [
+                        'name' => 'Vampire Knight',
+                        'weight' => 8
+                    ],
+                    [
+                        'name' => 'Vampire Captain',
+                        'weight' => 2
+                    ],
+                    [
+                        'name' => 'Gargoyle',
+                        'weight' => 10
+                    ],
+                    [
+                        'name' => 'Gargoyle Flanker',
+                        'weight' => 5
+                    ],
+                    [
+                        'name' => 'Gargoyle Pummeler',
+                        'weight' => 5
+                    ],
+                    [
+                        'name' => 'Gargoyle Bludgeoner',
+                        'weight' => 5
+                    ],
+                ],
+                'side_quest_blueprints' => [
+                    'AX',
+                    'AY',
+                    'AZ',
+                    'BB',
+                    'BC',
+                    'BE',
+                    'BF',
+                    'BH',
+                    'BI',
+                    'BK',
+                    'BL',
+                    'BN',
+                    'BO',
+                    'BQ',
+                    'BR',
+                    'BT',
+                    'BU',
+                    'BV',
+                    'CG'
+                ]
             ],
             [
-                'name' => 'Gabrielle Blood Wing',
+                'name' => 'Fetroya Vampire Blood Wing',
+                'travel_type' => TravelType::CONTINENT,
+                'level' => 309,
+                'starting_province' => 'Keplyos',
+                'titans' => [
+                    [
+                        'name' => 'Vampire Noble',
+                        'count' => 4
+                    ]
+                ],
+                'minions' => [
+                    [
+                        'name' => 'Young Vampire',
+                        'weight' => 10
+                    ],
+                    [
+                        'name' => 'Vampire',
+                        'weight' => 10
+                    ],
+                    [
+                        'name' => 'Vampire Veteran',
+                        'weight' => 10
+                    ],
+                    [
+                        'name' => 'Vampire Marksman',
+                        'weight' => 15
+                    ],
+                    [
+                        'name' => 'Vampire Magus',
+                        'weight' => 10
+                    ],
+                    [
+                        'name' => 'Vampire Knight',
+                        'weight' => 10
+                    ],
+                    [
+                        'name' => 'Vampire Captain',
+                        'weight' => 5
+                    ],
+                    [
+                        'name' => 'Gargoyle',
+                        'weight' => 10
+                    ],
+                    [
+                        'name' => 'Gargoyle Flanker',
+                        'weight' => 5
+                    ],
+                    [
+                        'name' => 'Gargoyle Pummeler',
+                        'weight' => 8
+                    ],
+                    [
+                        'name' => 'Gargoyle Bludgeoner',
+                        'weight' => 7
+                    ],
+                ],
+                'side_quest_blueprints' => [
+                    'AX',
+                    'AY',
+                    'AZ',
+                    'BA',
+                    'BC',
+                    'BD',
+                    'BE',
+                    'BF',
+                    'BG',
+                    'BI',
+                    'BJ',
+                    'BL',
+                    'BM',
+                    'BO',
+                    'BP',
+                    'BQ',
+                    'BR',
+                    'BS',
+                    'BU',
+                    'BV',
+                    'BW',
+                    'CG'
+                ]
             ],
             [
-                'name' => 'Gabrielle Death Wing',
+                'name' => 'Fetroya Vampire Death Wing',
+                'travel_type' => TravelType::CONTINENT,
+                'level' => 359,
+                'starting_province' => 'Padrana',
+                'titans' => [
+                    [
+                        'name' => 'Vampire Noble',
+                        'count' => 6
+                    ]
+                ],
+                'minions' => [
+                    [
+                        'name' => 'Vampire',
+                        'weight' => 5
+                    ],
+                    [
+                        'name' => 'Vampire Veteran',
+                        'weight' => 10
+                    ],
+                    [
+                        'name' => 'Vampire Marksman',
+                        'weight' => 15
+                    ],
+                    [
+                        'name' => 'Vampire Magus',
+                        'weight' => 10
+                    ],
+                    [
+                        'name' => 'Vampire Knight',
+                        'weight' => 15
+                    ],
+                    [
+                        'name' => 'Vampire Captain',
+                        'weight' => 5
+                    ],
+                    [
+                        'name' => 'Gargoyle',
+                        'weight' => 15
+                    ],
+                    [
+                        'name' => 'Gargoyle Flanker',
+                        'weight' => 10
+                    ],
+                    [
+                        'name' => 'Gargoyle Pummeler',
+                        'weight' => 8
+                    ],
+                    [
+                        'name' => 'Gargoyle Bludgeoner',
+                        'weight' => 7
+                    ],
+                ],
+                'side_quest_blueprints' => [
+                    'AX',
+                    'AY',
+                    'BA',
+                    'BB',
+                    'BC',
+                    'BD',
+                    'BE',
+                    'BF',
+                    'BG',
+                    'BH',
+                    'BJ',
+                    'BK',
+                    'BM',
+                    'BN',
+                    'BP',
+                    'BQ',
+                    'BR',
+                    'BS',
+                    'BT',
+                    'BU',
+                    'BW',
+                    'CG'
+                ]
             ],
             [
-                'name' => 'North Gabrielle Castle',
+                'name' => 'North Fetroya Vampire Castle',
+                'travel_type' => TravelType::STATIONARY,
+                'level' => 345,
+                'starting_province' => 'Rusceron',
+                'titans' => [
+                    [
+                        'name' => 'Vampire Noble',
+                        'count' => 4
+                    ],
+                    [
+                        'name' => 'Vampire Lord',
+                        'count' => 1
+                    ],
+                ],
+                'minions' => [
+                    [
+                        'name' => 'Vampire Guard',
+                        'weight' => 15
+                    ],
+                    [
+                        'name' => 'Vampire Marksman',
+                        'weight' => 15
+                    ],
+                    [
+                        'name' => 'Vampire Magus',
+                        'weight' => 10
+                    ],
+                    [
+                        'name' => 'Vampire Knight',
+                        'weight' => 15
+                    ],
+                    [
+                        'name' => 'Gargoyle',
+                        'weight' => 15
+                    ],
+                    [
+                        'name' => 'Gargoyle Flanker',
+                        'weight' => 15
+                    ],
+                    [
+                        'name' => 'Gargoyle Pummeler',
+                        'weight' => 10
+                    ],
+                    [
+                        'name' => 'Gargoyle Bludgeoner',
+                        'weight' => 5
+                    ],
+                ],
+                'side_quest_blueprints' => [
+                    'AX',
+                    'AY',
+                    'BB',
+                    'BC',
+                    'BD',
+                    'BE',
+                    'BF',
+                    'BG',
+                    'BJ',
+                    'BK',
+                    'BL',
+                    'BM',
+                    'BN',
+                    'BO',
+                    'BP',
+                    'BR',
+                    'BS',
+                    'BU',
+                    'BV',
+                    'BX',
+                    'BY',
+                    'CB',
+                    'CD',
+                    'CE',
+                    'CF'
+                ]
             ],
             [
-                'name' => 'East Gabrielle Castle',
+                'name' => 'South Fetroya Vampire Castle',
+                'travel_type' => TravelType::STATIONARY,
+                'level' => 371,
+                'starting_province' => 'Eoflor',
+                'titans' => [
+                    [
+                        'name' => 'Vampire Noble',
+                        'count' => 5
+                    ],
+                    [
+                        'name' => 'Vampire Lord',
+                        'count' => 2
+                    ],
+                ],
+                'minions' => [
+                    [
+                        'name' => 'Vampire Guard',
+                        'weight' => 10
+                    ],
+                    [
+                        'name' => 'Vampire Marksman',
+                        'weight' => 15
+                    ],
+                    [
+                        'name' => 'Vampire Magus',
+                        'weight' => 10
+                    ],
+                    [
+                        'name' => 'Vampire Knight',
+                        'weight' => 20
+                    ],
+                    [
+                        'name' => 'Gargoyle',
+                        'weight' => 15
+                    ],
+                    [
+                        'name' => 'Gargoyle Flanker',
+                        'weight' => 10
+                    ],
+                    [
+                        'name' => 'Gargoyle Pummeler',
+                        'weight' => 10
+                    ],
+                    [
+                        'name' => 'Gargoyle Bludgeoner',
+                        'weight' => 10
+                    ],
+                ],
+                'side_quest_blueprints' => [
+                    'AX',
+                    'AY',
+                    'AZ',
+                    'BB',
+                    'BC',
+                    'BD',
+                    'BF',
+                    'BG',
+                    'BH',
+                    'BK',
+                    'BL',
+                    'BM',
+                    'BN',
+                    'BO',
+                    'BP',
+                    'BQ',
+                    'BS',
+                    'BV',
+                    'BW',
+                    'BX',
+                    'BY',
+                    'CB',
+                    'CD',
+                    'CE',
+                    'CF'
+                ]
             ],
             [
-                'name' => 'Gabrielle High Castle',
+                'name' => 'Fetroya Vampire High Castle',
+                'travel_type' => TravelType::STATIONARY,
+                'level' => 411,
+                'starting_province' => 'Trovubar',
+                'titans' => [
+                    [
+                        'name' => 'Vampire Noble',
+                        'count' => 7
+                    ],
+                    [
+                        'name' => 'Vampire Lord',
+                        'count' => 3
+                    ],
+                ],
+                'minions' => [
+                    [
+                        'name' => 'Vampire Guard',
+                        'weight' => 10
+                    ],
+                    [
+                        'name' => 'Vampire Marksman',
+                        'weight' => 15
+                    ],
+                    [
+                        'name' => 'Vampire Magus',
+                        'weight' => 15
+                    ],
+                    [
+                        'name' => 'Vampire Knight',
+                        'weight' => 20
+                    ],
+                    [
+                        'name' => 'Vampire Elder',
+                        'weight' => 5
+                    ],
+                    [
+                        'name' => 'Gargoyle Flanker',
+                        'weight' => 10
+                    ],
+                    [
+                        'name' => 'Gargoyle Pummeler',
+                        'weight' => 10
+                    ],
+                    [
+                        'name' => 'Gargoyle Bludgeoner',
+                        'weight' => 10
+                    ],
+                    [
+                        'name' => 'Gargoyle Sentinel',
+                        'weight' => 5
+                    ],
+                ],
+                'side_quest_blueprints' => [
+                    'AZ',
+                    'BA',
+                    'BC',
+                    'BE',
+                    'BF',
+                    'BH',
+                    'BI',
+                    'BK',
+                    'BL',
+                    'BM',
+                    'BO',
+                    'BP',
+                    'BQ',
+                    'BR',
+                    'BS',
+                    'BT',
+                    'BV',
+                    'BX',
+                    'BZ',
+                    'CA',
+                    'CB',
+                    'CC',
+                    'CD',
+                    'CE',
+                    'CF'
+                ]
             ],
         ]);
+
+
+
+        $minions = Minion::all();
+        $titans = Titan::all();
+        $sideQuestBlueprints = SideQuestBlueprint::all();
+        $provinces = Province::all();
+        $travelTypes = TravelType::all();
+
+        $quests->each(function ($questData) {
+            $weightSum = collect($questData['minions'])->sum(function ($minionData) {
+                return $minionData['weight'];
+            });
+            if ($weightSum != 100) {
+                throw new RuntimeException("Minion weight of " . $weightSum . " does not equal 100 for quest: " . $questData['name']);
+            }
+        });
+
+        $quests->each(function ($questData) use ($minions) {
+            $minionNames = array_map(function ($minionData) {
+                return $minionData['name'];
+            }, $questData['minions']);
+
+            $minionsToAttach = $minions->whereIn('name', $minionNames);
+            if ($minionsToAttach->count() != count($minionNames)) {
+                throw new RuntimeException("Couldn't find all the minions for quest: " . $questData['name']);
+            }
+        });
+
+        $quests->each(function ($questData) use ($titans) {
+            $titanNames = array_map(function ($minionData) {
+                return $minionData['name'];
+            }, $questData['titans']);
+
+            $titansToAttach = $titans->whereIn('name', $titanNames);
+            if ($titansToAttach->count() != count($titanNames)) {
+                throw new RuntimeException("Couldn't find all the titans for quest: " . $questData['name']);
+            }
+        });
+
+        $quests->each(function ($questData) use ($sideQuestBlueprints) {
+
+            $blueprintsForQuest = $sideQuestBlueprints->whereIn('reference_id', $questData['side_quest_blueprints']);
+            if ($blueprintsForQuest->count() != count($questData['side_quest_blueprints'])) {
+
+                $referenceIDs = $blueprintsForQuest->pluck('reference_id')->toArray();
+                $missing = collect($questData['side_quest_blueprints'])->reject(function ($referenceID) use ($referenceIDs) {
+                    return in_array($referenceID, $referenceIDs);
+                });
+                throw new RuntimeException("Couldn't find all the side-quests for quest: " . $questData['name'] . ' : ' . print_r($missing->toArray(), true));
+            }
+        });
+
+        $quests->each(function ($questData) use ($provinces) {
+            $province = $provinces->firstWhere('name', $questData['starting_province']);
+            if (! $province) {
+                throw new RuntimeException("Couldn't find province for quest: " . $questData['name']);
+            }
+        });
+
+        /** @var CreateSideQuest $createSideQuestAction */
+        $createSideQuestAction = app(CreateSideQuest::class);
+        $quests->each(function ($questData) use ($sideQuestBlueprints, $minions, $titans, $provinces, $travelTypes, $createSideQuestAction) {
+
+            $provinceID = $provinces->firstWhere('name', $questData['starting_province'])->id;
+
+            /** @var Quest $quest */
+            $quest = Quest::query()->create([
+                'uuid' => Str::uuid(),
+                'name' => $questData['name'],
+                'level' => $questData['level'],
+                'percent' => 100,
+                'province_id' => $provinceID,
+                'initial_province_id' => $provinceID,
+                'travel_type_id' => $travelTypes->firstWhere('name', $questData['travel_type'])->id,
+            ]);
+
+            collect($questData['minions'])->each(function ($minionData) use ($quest, $minions) {
+                $minion = $minions->firstWhere('name', $minionData['name']);
+                $quest->minions()->save($minion, ['weight' => $minionData['weight']]);
+            });
+
+            collect($questData['titans'])->each(function ($titanData) use ($quest, $titans) {
+                $titan = $titans->firstWhere('name', $titanData['name']);
+                $quest->titans()->save($titan, ['count' => $titanData['count']]);
+            });
+
+            $blueprintsForQuest = $sideQuestBlueprints->whereIn('reference_id', $questData['side_quest_blueprints']);
+            $blueprintsForQuest->each(function (SideQuestBlueprint $sideQuestBlueprint) use ($quest, $createSideQuestAction) {
+                $createSideQuestAction->execute($sideQuestBlueprint, $quest);
+            });
+        });
     }
 
     /**
