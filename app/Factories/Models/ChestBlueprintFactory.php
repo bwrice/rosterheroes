@@ -27,7 +27,7 @@ class ChestBlueprintFactory
 
         /** @var ChestBlueprint $chestBlueprint */
         $chestBlueprint = ChestBlueprint::query()->create(array_merge([
-            'reference_id' => (string) Str::uuid(),
+            'uuid' => (string) Str::uuid(),
             'quality' => $qualityTier,
             'size' => $sizeTier,
             'min_gold' => $minGold,

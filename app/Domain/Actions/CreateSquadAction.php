@@ -79,7 +79,7 @@ class CreateSquadAction
         });
 
         /** @var ChestBlueprint $chestBlueprint */
-        $chestBlueprint = ChestBlueprint::query()->where('reference_id', '=', ChestBlueprint::NEWCOMER_CHEST)->first();
+        $chestBlueprint = ChestBlueprint::query()->where('description', '=', 'Newcomer Chest')->first();
         $this->rewardChestToSquad->execute($chestBlueprint, $squad, null);
 
         return $squad->fresh();

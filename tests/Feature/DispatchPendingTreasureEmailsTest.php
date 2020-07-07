@@ -89,7 +89,7 @@ class DispatchPendingTreasureEmailsTest extends TestCase
     {
         Mail::fake();
         $newcomerBlueprint = ChestBlueprint::query()
-            ->where('reference_id', '=', ChestBlueprint::NEWCOMER_CHEST)
+            ->where('description', '=', 'Newcomer Chest')
             ->first();
 
         $chest = ChestFactory::new()->withChestBlueprintID($newcomerBlueprint->id)->create();

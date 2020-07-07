@@ -21,7 +21,7 @@ class DispatchPendingTreasureEmails
     {
         $count = 0;
         $newcomerChestBlueprintID = ChestBlueprint::query()
-            ->where('reference_id', '=', ChestBlueprint::NEWCOMER_CHEST)
+            ->where('description', '=', 'Newcomer Chest')
             ->first()->id;
 
         Squad::query()->whereHas('unopenedChests', function (Builder $builder) use ($newcomerChestBlueprintID) {
