@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $min_gold
  * @property int $max_gold
  * @property string $reference_id
+ * @property string $uuid
  * @property string|null $description
  *
  * @property Collection $itemBlueprints
