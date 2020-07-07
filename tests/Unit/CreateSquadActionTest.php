@@ -104,7 +104,7 @@ class CreateSquadActionTest extends TestCase
         $chests = $squad->chests;
         $this->assertEquals(1, $chests->count());
         /** @var ChestBlueprint $starterChestBlueprint */
-        $starterChestBlueprint = ChestBlueprint::query()->where('reference_id', '=', ChestBlueprint::NEWCOMER_CHEST)->first();
+        $starterChestBlueprint = ChestBlueprint::query()->where('description', '=', 'Newcomer Chest')->first();
 
         /** @var Chest $chestRewarded */
         $chestRewarded =$chests->first();
