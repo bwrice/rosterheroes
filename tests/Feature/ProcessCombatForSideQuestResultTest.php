@@ -267,143 +267,143 @@ class ProcessCombatForSideQuestResultTest extends TestCase
         $drawEvent = $sideQuestResult->sideQuestEvents()->where('event_type', '=', SideQuestEvent::TYPE_SIDE_QUEST_DRAW)->first();
         $this->assertNull($drawEvent);
     }
-
-    /**
-     * @test
-     * @param $referenceID
-     * @throws \Throwable
-     * @dataProvider provides_a_beginner_squad_will_be_victorious_against_easy_side_quests
-     */
-    public function a_beginner_squad_will_be_victorious_against_easy_side_quests($referenceID)
-    {
-        $heroFactory = HeroFactory::new();
-        $squad = SquadFactory::new()->withHeroes(collect([
-            $heroFactory->beginnerWarrior()->withCompletedGamePlayerSpirit(),
-            $heroFactory->beginnerWarrior()->withCompletedGamePlayerSpirit(),
-            $heroFactory->beginnerRanger()->withCompletedGamePlayerSpirit(),
-            $heroFactory->beginnerSorcerer()->withCompletedGamePlayerSpirit(),
-        ]))->create();
-
-        $campaignStop = CampaignStopFactory::new()->withCampaign(CampaignFactory::new()->withSquadID($squad->id))->create();
-
-        /** @var SideQuest $sideQuest */
-        $sideQuest = SideQuest::query()->whereHas('sideQuestBlueprint', function (Builder $builder) use ($referenceID) {
-            return $builder->where('reference_id', '=', $referenceID);
-        })->first();
-
-        $sideQuestResult = SideQuestResultFactory::new()->create([
-            'campaign_stop_id' => $campaignStop->id,
-            'side_quest_id' => $sideQuest->id
-        ]);
-
-        /** @var ProcessCombatForSideQuestResult $domainAction */
-        $domainAction = app(ProcessCombatForSideQuestResult::class);
-        $sideQuestResult = $domainAction->execute($sideQuestResult);
-        $this->assertNotNull($sideQuestResult);
-        $victoryEvent = $sideQuestResult->sideQuestEvents()->where('event_type', '=', SideQuestEvent::TYPE_SIDE_QUEST_VICTORY)->first();
-        $this->assertNotNull($victoryEvent);
-        $events = $sideQuestResult->sideQuestEvents;
-        foreach([
-            SideQuestEvent::TYPE_HERO_DAMAGES_MINION,
-            SideQuestEvent::TYPE_HERO_KILLS_MINION,
-            SideQuestEvent::TYPE_MINION_DAMAGES_HERO
-                ] as $eventType) {
-            $filtered = $events->filter(function (SideQuestEvent $event) use ($eventType) {
-                return $event->event_type === $eventType;
-            });
-            $this->assertGreaterThan(0, $filtered->count(), 'Has events of type: ' . $eventType);
-        }
-        $this->assertGreaterThan(15, $events->count());
-        $this->assertLessThan(250, $events->count());
-    }
-
-    public function provides_a_beginner_squad_will_be_victorious_against_easy_side_quests()
-    {
-        return [
-            [
-                'referenceID' => 'A',
-            ],
-            [
-                'referenceID' => 'B',
-            ],
-            [
-                'referenceID' => 'C',
-            ],
-            [
-                'referenceID' => 'O',
-            ],
-            [
-                'referenceID' => 'P',
-            ],
-        ];
-    }
-
-    /**
-     * @test
-     * @param $referenceID
-     * @throws \Throwable
-     * @dataProvider provides_a_beginner_squad_will_be_defeated_by_medium_difficulty_side_quests
-     */
-    public function a_beginner_squad_will_be_defeated_by_medium_difficulty_side_quests($referenceID)
-    {
-        $heroFactory = HeroFactory::new();
-        $squad = SquadFactory::new()->withHeroes(collect([
-            $heroFactory->beginnerWarrior()->withCompletedGamePlayerSpirit(),
-            $heroFactory->beginnerWarrior()->withCompletedGamePlayerSpirit(),
-            $heroFactory->beginnerRanger()->withCompletedGamePlayerSpirit(),
-            $heroFactory->beginnerSorcerer()->withCompletedGamePlayerSpirit(),
-        ]))->create();
-
-        $campaignStop = CampaignStopFactory::new()->withCampaign(CampaignFactory::new()->withSquadID($squad->id))->create();
-
-        /** @var SideQuest $sideQuest */
-        $sideQuest = SideQuest::query()->whereHas('sideQuestBlueprint', function (Builder $builder) use ($referenceID) {
-            return $builder->where('reference_id', '=', $referenceID);
-        })->first();
-
-        $sideQuestResult = SideQuestResultFactory::new()->create([
-            'campaign_stop_id' => $campaignStop->id,
-            'side_quest_id' => $sideQuest->id
-        ]);
-
-        /** @var ProcessCombatForSideQuestResult $domainAction */
-        $domainAction = app(ProcessCombatForSideQuestResult::class);
-        $sideQuestResult = $domainAction->execute($sideQuestResult);
-        $this->assertNotNull($sideQuestResult);
-        $defeatEvent = $sideQuestResult->sideQuestEvents()->where('event_type', '=', SideQuestEvent::TYPE_SIDE_QUEST_DEFEAT)->first();
-        $this->assertNotNull($defeatEvent);
-        $events = $sideQuestResult->sideQuestEvents;
-        foreach([
-                    SideQuestEvent::TYPE_HERO_DAMAGES_MINION,
-                    SideQuestEvent::TYPE_MINION_DAMAGES_HERO,
-                    SideQuestEvent::TYPE_MINION_KILLS_HERO
-                ] as $eventType) {
-            $filtered = $events->filter(function (SideQuestEvent $event) use ($eventType) {
-                return $event->event_type === $eventType;
-            });
-            $this->assertGreaterThan(0, $filtered->count(), 'Has events of type: ' . $eventType);
-        }
-        $this->assertGreaterThan(15, $events->count());
-        $this->assertLessThan(250, $events->count());
-    }
-
-    public function provides_a_beginner_squad_will_be_defeated_by_medium_difficulty_side_quests()
-    {
-        return [
-            [
-                'referenceID' => 'H',
-            ],
-            [
-                'referenceID' => 'L',
-            ],
-            [
-                'referenceID' => 'T',
-            ],
-            [
-                'referenceID' => 'V',
-            ],
-        ];
-    }
+//
+//    /**
+//     * @test
+//     * @param $referenceID
+//     * @throws \Throwable
+//     * @dataProvider provides_a_beginner_squad_will_be_victorious_against_easy_side_quests
+//     */
+//    public function a_beginner_squad_will_be_victorious_against_easy_side_quests($referenceID)
+//    {
+//        $heroFactory = HeroFactory::new();
+//        $squad = SquadFactory::new()->withHeroes(collect([
+//            $heroFactory->beginnerWarrior()->withCompletedGamePlayerSpirit(),
+//            $heroFactory->beginnerWarrior()->withCompletedGamePlayerSpirit(),
+//            $heroFactory->beginnerRanger()->withCompletedGamePlayerSpirit(),
+//            $heroFactory->beginnerSorcerer()->withCompletedGamePlayerSpirit(),
+//        ]))->create();
+//
+//        $campaignStop = CampaignStopFactory::new()->withCampaign(CampaignFactory::new()->withSquadID($squad->id))->create();
+//
+//        /** @var SideQuest $sideQuest */
+//        $sideQuest = SideQuest::query()->whereHas('sideQuestBlueprint', function (Builder $builder) use ($referenceID) {
+//            return $builder->where('reference_id', '=', $referenceID);
+//        })->first();
+//
+//        $sideQuestResult = SideQuestResultFactory::new()->create([
+//            'campaign_stop_id' => $campaignStop->id,
+//            'side_quest_id' => $sideQuest->id
+//        ]);
+//
+//        /** @var ProcessCombatForSideQuestResult $domainAction */
+//        $domainAction = app(ProcessCombatForSideQuestResult::class);
+//        $sideQuestResult = $domainAction->execute($sideQuestResult);
+//        $this->assertNotNull($sideQuestResult);
+//        $victoryEvent = $sideQuestResult->sideQuestEvents()->where('event_type', '=', SideQuestEvent::TYPE_SIDE_QUEST_VICTORY)->first();
+//        $this->assertNotNull($victoryEvent);
+//        $events = $sideQuestResult->sideQuestEvents;
+//        foreach([
+//            SideQuestEvent::TYPE_HERO_DAMAGES_MINION,
+//            SideQuestEvent::TYPE_HERO_KILLS_MINION,
+//            SideQuestEvent::TYPE_MINION_DAMAGES_HERO
+//                ] as $eventType) {
+//            $filtered = $events->filter(function (SideQuestEvent $event) use ($eventType) {
+//                return $event->event_type === $eventType;
+//            });
+//            $this->assertGreaterThan(0, $filtered->count(), 'Has events of type: ' . $eventType);
+//        }
+//        $this->assertGreaterThan(15, $events->count());
+//        $this->assertLessThan(250, $events->count());
+//    }
+//
+//    public function provides_a_beginner_squad_will_be_victorious_against_easy_side_quests()
+//    {
+//        return [
+//            [
+//                'referenceID' => 'A',
+//            ],
+//            [
+//                'referenceID' => 'B',
+//            ],
+//            [
+//                'referenceID' => 'C',
+//            ],
+//            [
+//                'referenceID' => 'O',
+//            ],
+//            [
+//                'referenceID' => 'P',
+//            ],
+//        ];
+//    }
+//
+//    /**
+//     * @test
+//     * @param $referenceID
+//     * @throws \Throwable
+//     * @dataProvider provides_a_beginner_squad_will_be_defeated_by_medium_difficulty_side_quests
+//     */
+//    public function a_beginner_squad_will_be_defeated_by_medium_difficulty_side_quests($referenceID)
+//    {
+//        $heroFactory = HeroFactory::new();
+//        $squad = SquadFactory::new()->withHeroes(collect([
+//            $heroFactory->beginnerWarrior()->withCompletedGamePlayerSpirit(),
+//            $heroFactory->beginnerWarrior()->withCompletedGamePlayerSpirit(),
+//            $heroFactory->beginnerRanger()->withCompletedGamePlayerSpirit(),
+//            $heroFactory->beginnerSorcerer()->withCompletedGamePlayerSpirit(),
+//        ]))->create();
+//
+//        $campaignStop = CampaignStopFactory::new()->withCampaign(CampaignFactory::new()->withSquadID($squad->id))->create();
+//
+//        /** @var SideQuest $sideQuest */
+//        $sideQuest = SideQuest::query()->whereHas('sideQuestBlueprint', function (Builder $builder) use ($referenceID) {
+//            return $builder->where('reference_id', '=', $referenceID);
+//        })->first();
+//
+//        $sideQuestResult = SideQuestResultFactory::new()->create([
+//            'campaign_stop_id' => $campaignStop->id,
+//            'side_quest_id' => $sideQuest->id
+//        ]);
+//
+//        /** @var ProcessCombatForSideQuestResult $domainAction */
+//        $domainAction = app(ProcessCombatForSideQuestResult::class);
+//        $sideQuestResult = $domainAction->execute($sideQuestResult);
+//        $this->assertNotNull($sideQuestResult);
+//        $defeatEvent = $sideQuestResult->sideQuestEvents()->where('event_type', '=', SideQuestEvent::TYPE_SIDE_QUEST_DEFEAT)->first();
+//        $this->assertNotNull($defeatEvent);
+//        $events = $sideQuestResult->sideQuestEvents;
+//        foreach([
+//                    SideQuestEvent::TYPE_HERO_DAMAGES_MINION,
+//                    SideQuestEvent::TYPE_MINION_DAMAGES_HERO,
+//                    SideQuestEvent::TYPE_MINION_KILLS_HERO
+//                ] as $eventType) {
+//            $filtered = $events->filter(function (SideQuestEvent $event) use ($eventType) {
+//                return $event->event_type === $eventType;
+//            });
+//            $this->assertGreaterThan(0, $filtered->count(), 'Has events of type: ' . $eventType);
+//        }
+//        $this->assertGreaterThan(15, $events->count());
+//        $this->assertLessThan(250, $events->count());
+//    }
+//
+//    public function provides_a_beginner_squad_will_be_defeated_by_medium_difficulty_side_quests()
+//    {
+//        return [
+//            [
+//                'referenceID' => 'H',
+//            ],
+//            [
+//                'referenceID' => 'L',
+//            ],
+//            [
+//                'referenceID' => 'T',
+//            ],
+//            [
+//                'referenceID' => 'V',
+//            ],
+//        ];
+//    }
 
     /**
      * @test
