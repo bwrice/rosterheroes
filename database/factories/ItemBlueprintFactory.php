@@ -10,7 +10,7 @@ $factory->define( ItemBlueprint::class, function(Faker $faker) {
 
     return [
         'item_name' => 'Blueprint Test Item',
-        'reference_id' => (string) Str::uuid(),
+        'uuid' => (string) Str::uuid(),
         'enchantment_power' => null,
     ];
 });
