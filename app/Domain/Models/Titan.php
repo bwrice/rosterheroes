@@ -2,8 +2,10 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Collections\AttackCollection;
 use App\Domain\Collections\TitanCollection;
 use App\Domain\Traits\HasNameSlug;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\SlugOptions;
 
@@ -15,15 +17,12 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $uuid
  * @property string $name
  * @property string $slug
- * @property int $base_level
- * @property int $base_damage_rating
- * @property int $damage_multiplier_rating
- * @property int $health_rating
- * @property int $protection_rating
- * @property int $combat_speed_rating
- * @property int $block_rating
+ * @property int $level
  * @property int $enemy_type_id
  * @property int $combat_position_id
+ *
+ * @property AttackCollection $attacks
+ * @property Collection $chestBlueprints
  */
 class Titan extends Model
 {
@@ -33,7 +32,12 @@ class Titan extends Model
 
     public function attacks()
     {
-        return $this->belongsToMany(Attack::class);
+        return $this->belongsToMany(Attack::class)->withTimestamps();
+    }
+
+    public function chestBlueprints()
+    {
+        return $this->belongsToMany(ChestBlueprint::class)->withTimestamps();
     }
 
     public function newCollection(array $models = [])
