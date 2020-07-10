@@ -24,14 +24,12 @@ use Symfony\Component\Yaml\Yaml;
  * @property int $id
  * @property string $uuid
  * @property string $name
- * @property int $fixed_target_count
  * @property int $attacker_position_id
  * @property int $target_position_id
  * @property int $target_priority_id
  * @property int $damage_type_id
  * @property int $tier
  * @property int|null $targets_count
- * @property string $config_path
  *
  * @property DamageType $damageType
  * @property CombatPosition $attackerPosition

@@ -21,9 +21,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property string $uuid
  * @property string $reference_id
  *
- * @property ItemClass|null $itemClass
- * @property ItemType|null $itemType
- *
  * @property Collection $enchantments
  * @property Collection $itemTypes
  * @property Collection $itemBases
