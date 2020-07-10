@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @package App\Domain\Models
  *
  * @property int $id
- * @property string $name
+ * @property string|null $name
  * @property string $reference_id
  * @property string $uuid
  * @property MinionCollection $minions

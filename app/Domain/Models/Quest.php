@@ -10,6 +10,7 @@ use App\Domain\Models\EventSourcedModel;
 use App\Domain\Models\Province;
 use App\Domain\Traits\HasNameSlug;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -34,6 +35,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property SideQuestCollection $sideQuests
  * @property MinionCollection $minions
  * @property TitanCollection $titans
+ * @property Collection $chestBlueprints
  */
 class Quest extends EventSourcedModel
 {
@@ -89,6 +91,11 @@ class Quest extends EventSourcedModel
     public function titans()
     {
         return $this->belongsToMany(Titan::class)->withPivot('count')->withTimestamps();
+    }
+
+    public function chestBlueprints()
+    {
+        return $this->belongsToMany(ChestBlueprint::class)->withPivot(['chance', 'count'])->withTimestamps();
     }
 
     public function sideQuests()
