@@ -28,6 +28,17 @@ class AttackContentController extends Controller
             'targetPosition' => 'required', 'exists:combat_positions,id',
             'targetPriority' => 'required', 'exists:target_priorities,id',
             'damageType' => 'required', 'exists:damage_types,id',
+            'targetsCount' => function ($attribute, $value, $fail) use ($request) {
+                /** @var DamageType $damageType */
+                $damageType = DamageType::query()->find($request->damageType);
+                if ($damageType->name === DamageType::FIXED_TARGET) {
+                    if (is_null($value)) {
+                        $fail($attribute.' is required for fixed target damage types');
+                    } elseif ($value < 1 || $value > 10) {
+                        $fail($attribute.' must be between 1 and 10');
+                    }
+                }
+            },
         ]);
 
         $attackerPosition = CombatPosition::query()->find($request->attackerPosition);
@@ -36,5 +47,8 @@ class AttackContentController extends Controller
         $damageType = DamageType::query()->find($request->damageType);
 
         $createAttack->execute($request->name, $request->tier, $request->targetsCount, $attackerPosition, $targetPosition, $targetPriority, $damageType);
+
+        $request->session()->flash('success', $request->name . ' created');
+        return redirect('admin/content/attacks/create');
     }
 }
