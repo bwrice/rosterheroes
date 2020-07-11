@@ -88,6 +88,7 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->group(function () 
 
         Route::prefix('attacks')->group(function () {
             Route::get('/create', [AttackContentController::class, 'create']);
+            Route::post('/', [AttackContentController::class, 'store']);
         });
     });
 });

@@ -6,32 +6,37 @@
         <div class="row m-4">
             <div class="col-12">
                 <h1 class="display-4 text-center my-6">Create a New Attack</h1>
+{{--                <div class="alert-danger">{{$errors->count()}}</div>--}}
+{{--                <div class="alert-danger">{{$errors->first()}}</div>--}}
+                @foreach($errors->all() as $message)
+                    <div class="alert-danger">{{$message}}</div>
+                @endforeach
             </div>
         </div>
         <div class="row">
             <div class="col-8 offset-2">
-                <form>
+                <form method="post" action="/admin/content/attacks">
+                    @csrf
                     <div class="row">
-
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="name">Attack Name</label>
-                                <input class="form-control" id="name" aria-describedby="name" required>
+                                <input class="form-control" name="name" id="name" aria-describedby="name" required>
                             </div>
                             <div class="form-group">
                                 <label for="tier">Tier</label>
-                                <input type="number" class="form-control" id="tier" aria-describedby="tier"
+                                <input type="number" name="tier" class="form-control" id="tier" aria-describedby="tier"
                                        required>
                             </div>
                             <div class="form-group">
                                 <label for="targetsCount">Targets Count</label>
-                                <input type="number" class="form-control" id="targetsCount" aria-describedby="targetsCount">
+                                <input type="number" name="targetsCount" class="form-control" id="targetsCount" aria-describedby="targetsCount">
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="attackerPosition">Attacker Position</label>
-                                <select class="form-control" id="attackerPosition">
+                                <select class="form-control" name="attackerPosition" id="attackerPosition">
                                     @foreach($combatPositions as $combatPosition)
                                         <?php /** @var \App\Domain\Models\CombatPosition $combatPosition */ ?>
                                         <option value="{{$combatPosition->id}}">{{$combatPosition->name}}</option>
@@ -40,7 +45,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="targetPosition">Target Position</label>
-                                <select class="form-control" id="targetPosition">
+                                <select class="form-control" name="targetPosition" id="targetPosition">
                                     @foreach($combatPositions as $combatPosition)
                                         <?php /** @var \App\Domain\Models\CombatPosition $combatPosition */ ?>
                                         <option value="{{$combatPosition->id}}">{{$combatPosition->name}}</option>
@@ -48,8 +53,8 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="targetPosition">Target Priority</label>
-                                <select class="form-control" id="targetPosition">
+                                <label for="targetPriority">Target Priority</label>
+                                <select class="form-control" name="targetPriority" id="targetPriority">
                                     @foreach($targetPriorities as $targetPriority)
                                         <?php /** @var \App\Domain\Models\TargetPriority $targetPriority */ ?>
                                         <option value="{{$targetPriority->id}}">{{$targetPriority->name}}</option>
@@ -57,8 +62,8 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="targetPosition">Damage Type</label>
-                                <select class="form-control" id="targetPosition">
+                                <label for="damageType">Damage Type</label>
+                                <select class="form-control" name="damageType" id="damageType">
                                     @foreach($damageTypes as $damageType)
                                         <?php /** @var \App\Domain\Models\DamageType $damageType */ ?>
                                         <option value="{{$damageType->id}}">{{$damageType->name}}</option>
