@@ -10,6 +10,7 @@
 |
 */
 
+use App\Http\Controllers\AttackContentController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -84,5 +85,9 @@ Route::get('/command-center/{squadSlug}/{subPage?}', [CommandCenterController::c
 Route::middleware([AdminMiddleware::class])->prefix('admin')->group(function () {
     Route::prefix('content')->group(function () {
         Route::get('/', [ContentController::class, 'show']);
+
+        Route::prefix('attacks')->group(function () {
+            Route::get('/create', [AttackContentController::class, 'create']);
+        });
     });
 });
