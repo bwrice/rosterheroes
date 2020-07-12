@@ -68,4 +68,43 @@ class SyncAttacksTest extends TestCase
         $this->assertEquals($newAttack->tier, $newAttackSource->getTier());
         $this->assertEquals($newAttack->targets_count, $newAttackSource->getTargetsCount());
     }
+
+    /**
+     * @test
+     */
+    public function it_will_update_a_changed_attack()
+    {
+        $attackSources = Content::attacks();
+        $attacks = Attack::all();
+        $count = $attacks->count();
+        $this->assertEquals($attackSources->count(), $count);
+
+        $newAttackSource = new AttackSource(
+            (string) Str::uuid(),
+            'Test Attack ' . Str::random(8),
+            CombatPosition::query()->inRandomOrder()->first()->id,
+            CombatPosition::query()->inRandomOrder()->first()->id,
+            TargetPriority::query()->inRandomOrder()->first()->id,
+            DamageType::query()->inRandomOrder()->first()->id,
+            rand(1,6),
+            rand(1,3)
+        );
+
+        $mockedSources = $attackSources->push($newAttackSource);
+
+        Content::partialMock()->shouldReceive('attacks')->andReturn($mockedSources);
+
+        // Create the initial new attack
+        $this->getDomainAction()->execute();
+
+        // Change the new attack's name
+        $newAttackSource->setName('Test Attack ' . Str::random(8));
+
+        // Execute action again to update name
+        $this->getDomainAction()->execute();
+
+        /** @var Attack $updatedAttack */
+        $updatedAttack = Attack::query()->where('uuid', '=', $newAttackSource->getUuid())->first();
+        $this->assertEquals($updatedAttack->name, $newAttackSource->getName());
+    }
 }
