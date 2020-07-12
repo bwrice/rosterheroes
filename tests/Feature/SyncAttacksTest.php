@@ -32,10 +32,6 @@ class SyncAttacksTest extends TestCase
      */
     public function it_will_add_a_missing_attack_to_the_db()
     {
-        $attackSources = Content::attacks();
-        $attacks = Attack::all();
-        $count = $attacks->count();
-        $this->assertEquals($attackSources->count(), $count);
 
         $newAttackSource = new AttackSource(
             (string) Str::uuid(),
@@ -48,13 +44,10 @@ class SyncAttacksTest extends TestCase
             rand(1,3)
         );
 
-        $mockedSources = $attackSources->push($newAttackSource);
-
-        Content::partialMock()->shouldReceive('attacks')->andReturn($mockedSources);
+        Content::partialMock()->shouldReceive('unSyncedAttacks')->andReturn(collect([$newAttackSource]));
 
         $this->getDomainAction()->execute();
 
-        $this->assertEquals($count + 1, Attack::query()->count());
 
         /** @var Attack $newAttack */
         $newAttack = Attack::query()->where('uuid', '=', $newAttackSource->getUuid())->first();
@@ -74,11 +67,6 @@ class SyncAttacksTest extends TestCase
      */
     public function it_will_update_a_changed_attack()
     {
-        $attackSources = Content::attacks();
-        $attacks = Attack::all();
-        $count = $attacks->count();
-        $this->assertEquals($attackSources->count(), $count);
-
         $newAttackSource = new AttackSource(
             (string) Str::uuid(),
             'Test Attack ' . Str::random(8),
@@ -90,9 +78,7 @@ class SyncAttacksTest extends TestCase
             rand(1,3)
         );
 
-        $mockedSources = $attackSources->push($newAttackSource);
-
-        Content::partialMock()->shouldReceive('attacks')->andReturn($mockedSources);
+        Content::partialMock()->shouldReceive('unSyncedAttacks')->andReturn(collect([$newAttackSource]));
 
         // Create the initial new attack
         $this->getDomainAction()->execute();
