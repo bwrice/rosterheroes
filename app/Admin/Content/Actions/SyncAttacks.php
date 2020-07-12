@@ -39,5 +39,7 @@ class SyncAttacks
                     'targets_count' => $attackSource->getTargetsCount()
                 ]);
         });
+
+        return $unSyncedSources;
     }
 }
