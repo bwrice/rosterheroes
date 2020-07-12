@@ -5,6 +5,7 @@ namespace App\Services;
 
 
 use App\Admin\Content\Sources\AttackSource;
+use App\Domain\Models\Attack;
 use Illuminate\Support\Facades\Date;
 
 class ContentService
@@ -30,6 +31,21 @@ class ContentService
                 $attackData['tier'],
                 $attackData['targets_count'],
             );
+        });
+    }
+
+    public function unSyncedAttacks()
+    {
+        $attackSources = $this->attacks();
+        $attacks = Attack::all();
+        return $attackSources->filter(function (AttackSource $attackSource) use ($attacks) {
+            $match = $attacks->first(function (Attack $attack) use ($attackSource) {
+                return $attackSource->getUuid() === (string) $attack->uuid;
+            });
+            if (! $match) {
+                return true;
+            }
+            return ! $attackSource->isSynced($match);
         });
     }
 

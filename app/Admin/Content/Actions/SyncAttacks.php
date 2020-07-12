@@ -12,17 +12,7 @@ class SyncAttacks
 {
     public function execute()
     {
-        $attackSources = Content::attacks();
-        $attacks = Attack::all();
-        $unSyncedSources = $attackSources->filter(function (AttackSource $attackSource) use ($attacks) {
-            $match = $attacks->first(function (Attack $attack) use ($attackSource) {
-                return $attackSource->getUuid() === (string) $attack->uuid;
-            });
-            if (! $match) {
-                return true;
-            }
-            return ! $attackSource->isSynced($match);
-        });
+        $unSyncedSources = Content::unSyncedAttacks();
 
         $unSyncedSources->each(function (AttackSource $attackSource) {
             Attack::query()->updateOrCreate(
