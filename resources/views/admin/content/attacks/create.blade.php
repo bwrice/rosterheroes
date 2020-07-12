@@ -6,11 +6,12 @@
         <div class="row m-4">
             <div class="col-12">
                 <h1 class="display-4 text-center my-6">Create a New Attack</h1>
-{{--                <div class="alert-danger">{{$errors->count()}}</div>--}}
-{{--                <div class="alert-danger">{{$errors->first()}}</div>--}}
                 @foreach($errors->all() as $message)
-                    <div class="alert-danger">{{$message}}</div>
+                    <div class="alert alert-danger">{{$message}}</div>
                 @endforeach
+                @if(\Illuminate\Support\Facades\Session::has('success'))
+                    <div class="alert alert-success">{{ \Illuminate\Support\Facades\Session::get('success') }}</div>
+                @endif
             </div>
         </div>
         <div class="row">
