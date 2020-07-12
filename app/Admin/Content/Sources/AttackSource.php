@@ -5,6 +5,8 @@ namespace App\Admin\Content\Sources;
 
 
 
+use App\Domain\Models\Attack;
+
 class AttackSource
 {
     /**
@@ -122,5 +124,41 @@ class AttackSource
     public function getTargetsCount(): ?int
     {
         return $this->targetsCount;
+    }
+
+    /**
+     * @param string $name
+     * @return AttackSource
+     */
+    public function setName(string $name): AttackSource
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    public function isSynced(Attack $attack)
+    {
+        if ($attack->name !== $this->getName()) {
+            return false;
+        }
+        if ($attack->attacker_position_id !== $this->getAttackerPositionID()) {
+            return false;
+        }
+        if ($attack->target_position_id !== $this->getTargetPositionID()) {
+            return false;
+        }
+        if ($attack->target_priority_id !== $this->getTargetPriorityID()) {
+            return false;
+        }
+        if ($attack->damage_type_id !== $this->getDamageTypeID()) {
+            return false;
+        }
+        if ($attack->tier !== $this->getTier()) {
+            return false;
+        }
+        if ($attack->targets_count !== $this->getTargetsCount()) {
+            return false;
+        }
+        return true;
     }
 }
