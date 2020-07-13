@@ -6,10 +6,26 @@ use App\Admin\Content\Actions\CreateAttack;
 use App\Domain\Models\CombatPosition;
 use App\Domain\Models\DamageType;
 use App\Domain\Models\TargetPriority;
+use App\Facades\Content;
 use Illuminate\Http\Request;
 
 class AttackContentController extends Controller
 {
+    public function index(Request $request)
+    {
+        $page = $request->page ?: 1;
+        $attackSources = Content::attacks();
+        $totalPages = (int) ceil($attackSources->count()/9);
+        return view('admin.content.attacks.index', [
+            'attacks' => $attackSources->forPage($page, 9),
+            'page' => $page,
+            'totalPages' => $totalPages,
+            'combatPositions' => CombatPosition::all(),
+            'targetPriorities' => TargetPriority::all(),
+            'damageTypes' => DamageType::all()
+        ]);
+    }
+
     public function create()
     {
         return view('admin.content.attacks.create', [

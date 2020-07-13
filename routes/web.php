@@ -21,7 +21,9 @@ use App\Http\Controllers\ContactSubmissionController;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\SquadController;
+use App\Http\Controllers\SyncAttacksController;
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\ContentMiddleware;
 use Illuminate\Support\Facades\Route;
 
 
@@ -83,12 +85,23 @@ Route::get('/squads/create', [SquadController::class, 'create'])->name('create-s
 Route::get('/command-center/{squadSlug}/{subPage?}', [CommandCenterController::class, 'show'])->where('subPage', '.*')->name('command-center');
 
 Route::middleware([AdminMiddleware::class])->prefix('admin')->group(function () {
+
     Route::prefix('content')->group(function () {
+
         Route::get('/', [ContentController::class, 'show']);
 
         Route::prefix('attacks')->group(function () {
+
+            Route::get('/', [AttackContentController::class, 'index']);
             Route::get('/create', [AttackContentController::class, 'create']);
-            Route::post('/', [AttackContentController::class, 'store']);
+
+            Route::post('/sync', SyncAttacksController::class);
+
+            Route::middleware([ContentMiddleware::class])->group(function () {
+
+                Route::get('/create', [AttackContentController::class, 'create']);
+                Route::post('/', [AttackContentController::class, 'store']);
+            });
         });
     });
 });
