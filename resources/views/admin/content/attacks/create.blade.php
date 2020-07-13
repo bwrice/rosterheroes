@@ -10,7 +10,7 @@
                     <div class="alert alert-danger">{{$message}}</div>
                 @endforeach
                 @if(\Illuminate\Support\Facades\Session::has('success'))
-                    <div class="alert alert-success">{{ \Illuminate\Support\Facades\Session::get('success') }}</div>
+                    <div class="alert alert-success alert-dismissible">{{ \Illuminate\Support\Facades\Session::get('success') }}</div>
                 @endif
             </div>
         </div>

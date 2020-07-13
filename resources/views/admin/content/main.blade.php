@@ -6,6 +6,9 @@
         <div class="row m-4">
             <div class="col-12">
                 <h1 class="display-4 text-center my-6">Create and Sync Content</h1>
+                @if(\Illuminate\Support\Facades\Session::has('success'))
+                    <div class="alert alert-success alert-dismissible">{{ \Illuminate\Support\Facades\Session::get('success') }}</div>
+                @endif
             </div>
         </div>
         <div class="row">
@@ -19,8 +22,11 @@
                             <h6 class="card-subtitle mb-2 text-muted">Out of Sync: {{$viewModel->outOfSynCount()}}</h6>
                             <h6 class="card-subtitle mb-2 text-muted">Last Updated: {{$viewModel->lastUpdated()->diffForHumans()}}</h6>
 
-                            <button type="button" class="btn btn-primary btn-block">Create Attack</button>
-                            <button type="button" class="btn btn-outline-info btn-block" {{ $viewModel->totalCount() === $viewModel->outOfSynCount() ? 'disabled' : '' }}>Sync Attacks</button>
+                            <a href="{{$viewModel->createURL()}}" class="btn btn-primary btn-block mb-2">Create</a>
+                            <form method="post" action="{{$viewModel->syncActionURL()}}">
+                                @csrf
+                                <button type="submit" class="btn btn-outline-info btn-block" {{ $viewModel->outOfSynCount() > 0 ? '' : 'disabled' }}>Sync</button>
+                            </form>
                         </div>
                     </div>
                 </div>

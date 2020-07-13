@@ -17,4 +17,6 @@ interface ContentViewModel
     public function lastUpdated(): CarbonInterface;
 
     public function createURL(): string;
+
+    public function syncActionURL(): string;
 }
