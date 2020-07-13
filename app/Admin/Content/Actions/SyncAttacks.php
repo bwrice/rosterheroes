@@ -10,6 +10,9 @@ use App\Facades\Content;
 
 class SyncAttacks
 {
+    /**
+     * @return \Illuminate\Support\Collection
+     */
     public function execute()
     {
         $unSyncedSources = Content::unSyncedAttacks();
