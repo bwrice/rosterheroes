@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @package App\Domain\Models
  *
  * @property int $id
+ * @property string $uuid
  * @property int $restriction_level
  * @property string $name
  *
