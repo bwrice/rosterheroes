@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static Collection attacks()
  * @method static Collection unSyncedAttacks()
  * @method static CarbonInterface attacksLastUpdated()
+ * @method static string attacksPath()
  *
  * @see ContentService
  */

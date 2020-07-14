@@ -12,7 +12,12 @@ class ContentService
 {
     protected function getAttackDataFromJSON()
     {
-        return json_decode(file_get_contents(resource_path('json/content/attacks.json')), true);
+        return json_decode(file_get_contents($this->attacksPath()), true);
+    }
+
+    public function attacksPath()
+    {
+        return resource_path('json/content/attacks.json');
     }
 
     public function attacks()
