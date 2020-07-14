@@ -19,6 +19,7 @@ use App\Http\Controllers\SellToShopController;
 use App\Http\Controllers\SideQuestResultEventsController;
 use App\Http\Controllers\SquadQuestController;
 use App\Http\Controllers\SquadShopController;
+use App\Http\Controllers\SquadStashController;
 use App\Http\Controllers\StashItemController;
 use App\Http\Controllers\StatTypeController;
 use App\Http\Controllers\TargetPriorityController;
@@ -129,6 +130,7 @@ Route::prefix('v1')->group(function () {
             Route::get('{squadSlug}/heroes', [SquadHeroController::class, 'index']);
 
             Route::get('{squadSlug}/mobile-storage', MobileStorageController::class);
+            Route::get('{squadSlug}/stashes', SquadStashController::class);
 
             Route::post('{squadSlug}/mobile-store-item', MobileStoreItemForSquadController::class);
             Route::post('{squadSlug}/stash-item', StashItemController::class);
