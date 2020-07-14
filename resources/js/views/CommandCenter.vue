@@ -47,9 +47,9 @@
         >
             <NavigationDrawerContent></NavigationDrawerContent>
         </v-navigation-drawer>
-        <v-content style="background-image: linear-gradient(#234a4a, #222626); background-attachment: fixed">
+        <v-main style="background-image: linear-gradient(#234a4a, #222626); background-attachment: fixed">
             <router-view></router-view>
-        </v-content>
+        </v-main>
         <v-bottom-navigation
                 :value="true"
                 :height="76"
