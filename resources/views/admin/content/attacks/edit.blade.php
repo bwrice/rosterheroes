@@ -1,3 +1,7 @@
+@extends('admin.admin')
+
+@section('content')
+
 <?php
 /**
  * @var \App\Admin\Content\Sources\AttackSource $attackSource
@@ -18,7 +22,8 @@
     </div>
     <div class="row">
         <div class="col-8 offset-2">
-            <form method="post" action="/admin/content/attacks">
+            <form action="/admin/content/attacks/{{$attackSource->getUuid()}}">
+                @method('PUT')
                 @csrf
                 <div class="row">
                     <div class="col-6">
@@ -80,3 +85,5 @@
         </div>
     </div>
 </div>
+
+@endsection

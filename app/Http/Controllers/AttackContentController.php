@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Admin\Content\Actions\CreateAttack;
+use App\Admin\Content\Sources\AttackSource;
+use App\Domain\Models\Attack;
 use App\Domain\Models\CombatPosition;
 use App\Domain\Models\DamageType;
 use App\Domain\Models\TargetPriority;
@@ -29,6 +31,20 @@ class AttackContentController extends Controller
     public function create()
     {
         return view('admin.content.attacks.create', [
+            'combatPositions' => CombatPosition::all(),
+            'targetPriorities' => TargetPriority::all(),
+            'damageTypes' => DamageType::all()
+        ]);
+    }
+
+    public function edit($attackUuid)
+    {
+        $attackSource =Content::attacks()->first(function (AttackSource $attackSource) use ($attackUuid) {
+            return $attackUuid === (string) $attackSource->getUuid();
+        });
+
+        return view('admin.content.attacks.edit', [
+            'attackSource' => $attackSource,
             'combatPositions' => CombatPosition::all(),
             'targetPriorities' => TargetPriority::all(),
             'damageTypes' => DamageType::all()
