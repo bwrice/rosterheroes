@@ -6,6 +6,9 @@
         <div class="row my-4">
             <div class="col-12">
                 <h1 class="text-center">Attacks</h1>
+                @if(\Illuminate\Support\Facades\Session::has('success'))
+                    <div class="alert alert-success alert-dismissible">{{ \Illuminate\Support\Facades\Session::get('success') }}</div>
+                @endif
             </div>
         </div>
         <div class="row">
