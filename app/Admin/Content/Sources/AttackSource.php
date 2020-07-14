@@ -62,6 +62,20 @@ class AttackSource
         $this->targetsCount = $targetsCount;
     }
 
+    public static function build(string $name, int $attackerPositionID, int $targetPositionID, int $targetPriorityID, int $damageTypeID, int $tier, ?int $targetsCount)
+    {
+        return new static(
+            Str::uuid(),
+            $name,
+            $attackerPositionID,
+            $targetPositionID,
+            $targetPriorityID,
+            $damageTypeID,
+            $tier,
+            $targetsCount
+        );
+    }
+
     /**
      * @return string
      */
