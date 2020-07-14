@@ -79,6 +79,17 @@ class AttackSource implements Arrayable, Jsonable
         );
     }
 
+    public function update(AttackSource $attackSource)
+    {
+        $this->name = $attackSource->name;
+        $this->attackerPositionID = $attackSource->attackerPositionID;
+        $this->targetPositionID = $attackSource->targetPositionID;
+        $this->targetPriorityID = $attackSource->targetPriorityID;
+        $this->damageTypeID = $attackSource->damageTypeID;
+        $this->tier = $attackSource->tier;
+        $this->targetsCount = $attackSource->targetsCount;
+    }
+
     /**
      * @return string
      */
@@ -207,5 +218,15 @@ class AttackSource implements Arrayable, Jsonable
     public function toJson($options = 0)
     {
         return json_encode($this->toArray(), $options);
+    }
+
+    /**
+     * @param string $uuid
+     * @return AttackSource
+     */
+    public function setUuid(string $uuid): AttackSource
+    {
+        $this->uuid = $uuid;
+        return $this;
     }
 }
