@@ -102,6 +102,7 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->group(function () 
                 Route::get('/create', [AttackContentController::class, 'create']);
                 Route::post('/', [AttackContentController::class, 'store']);
                 Route::get('/{attackUuid}/edit', [AttackContentController::class, 'edit']);
+                Route::put('/{attackUuid}', [AttackContentController::class, 'update']);
             });
         });
     });

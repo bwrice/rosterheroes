@@ -15,14 +15,11 @@
             @foreach($errors->all() as $message)
                 <div class="alert alert-danger">{{$message}}</div>
             @endforeach
-            @if(\Illuminate\Support\Facades\Session::has('success'))
-                <div class="alert alert-success alert-dismissible">{{ \Illuminate\Support\Facades\Session::get('success') }}</div>
-            @endif
         </div>
     </div>
     <div class="row">
         <div class="col-8 offset-2">
-            <form action="/admin/content/attacks/{{$attackSource->getUuid()}}">
+            <form method="post" action="/admin/content/attacks/{{$attackSource->getUuid()}}">
                 @method('PUT')
                 @csrf
                 <div class="row">

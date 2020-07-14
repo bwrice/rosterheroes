@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Admin\Content\Actions\CreateAttack;
+use App\Admin\Content\Actions\UpdateAttack;
 use App\Admin\Content\Sources\AttackSource;
 use App\Domain\Models\Attack;
 use App\Domain\Models\CombatPosition;
@@ -57,6 +58,17 @@ class AttackContentController extends Controller
 
         $request->session()->flash('success', $request->name . ' created');
         return redirect('admin/content/attacks/create');
+    }
+
+    public function update($attackUuid, Request $request, UpdateAttack $updateAttack)
+    {
+        $attackSource = $this->buildAttackSourceFromRequest($request);
+        $attackSource->setUuid($attackUuid);
+
+        $updateAttack->execute($attackSource);
+
+        $request->session()->flash('success', $attackSource->getName() . ' updated');
+        return redirect('admin/content/attacks');
     }
 
     protected function buildAttackSourceFromRequest(Request $request)
