@@ -11,12 +11,7 @@ class ContentController extends Controller
     {
         return view('admin.content.main', [
             'contentViewModels' => collect([
-                AttackContentViewModel::build(),
-                AttackContentViewModel::build(),
-                AttackContentViewModel::build(),
-                AttackContentViewModel::build(),
-                AttackContentViewModel::build(),
-                AttackContentViewModel::build()
+                new AttackContentViewModel(),
             ])
         ]);
     }
