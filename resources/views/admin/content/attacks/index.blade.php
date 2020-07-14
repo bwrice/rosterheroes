@@ -19,7 +19,7 @@
                             <h6 class="card-subtitle mb-2 text-muted">Target Position: {{$combatPositions->find($attack->getTargetPositionID())->name}}</h6>
                             <h6 class="card-subtitle mb-2 text-muted">Target Priority: {{$targetPriorities->find($attack->getTargetPriorityID())->name}}</h6>
                             <h6 class="card-subtitle mb-2 text-muted">Damage Type: {{$damageTypes->find($attack->getDamageTypeID())->name}}</h6>
-                            <h6 class="card-subtitle mb-2 text-muted">Targets Count: {{$attack->getTargetsCount()}}</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">Targets Count: {{$attack->getTargetsCount() ?: 'N/A'}}</h6>
                             <a href="/admin/content/attacks/{{$attack->getUuid()}}" class="btn btn-block btn-outline-primary">Edit</a>
                         </div>
                     </div>
