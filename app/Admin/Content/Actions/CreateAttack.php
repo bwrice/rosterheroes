@@ -4,36 +4,21 @@
 namespace App\Admin\Content\Actions;
 
 
-use App\Domain\Models\CombatPosition;
-use App\Domain\Models\DamageType;
-use App\Domain\Models\TargetPriority;
-use Illuminate\Support\Str;
+use App\Admin\Content\Sources\AttackSource;
+use App\Facades\Content;
 
 class CreateAttack
 {
-    public function execute(
-        string $name,
-        int $tier,
-        ?int $targetsCount,
-        CombatPosition $attackerPosition,
-        CombatPosition $targetPosition,
-        TargetPriority $targetPriority,
-        DamageType $damageType)
+    public function execute(AttackSource $attackSource)
     {
+        $attacks = Content::attacks();
+        $attacks->push($attackSource);
 
-        $dataArray = json_decode(file_get_contents(resource_path('json/content/attacks.json')), true);
-        $dataArray['last_updated'] = now()->timestamp;
-        $dataArray['data'][] = [
-            'uuid' => (string) Str::uuid(),
-            'name' => $name,
-            'attacker_position_id' => $attackerPosition->id,
-            'target_position_id' => $targetPosition->id,
-            'target_priority_id' => $targetPriority->id,
-            'damage_type_id' => $damageType->id,
-            'tier' => $tier,
-            'targets_count' => $targetsCount
-        ];
+        $lastUpdated = now()->timestamp;
 
-        file_put_contents(resource_path('json/content/attacks.json'), json_encode($dataArray, JSON_PRETTY_PRINT));
+        file_put_contents(Content::attacksPath(), json_encode([
+            'last_updated' => $lastUpdated,
+            'data' => $attacks->toArray()
+        ], JSON_PRETTY_PRINT));
     }
 }
