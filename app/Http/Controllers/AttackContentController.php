@@ -53,6 +53,14 @@ class AttackContentController extends Controller
 
     public function store(Request $request, CreateAttack $createAttack)
     {
+        $createAttack->execute($this->buildAttackSourceFromRequest($request));
+
+        $request->session()->flash('success', $request->name . ' created');
+        return redirect('admin/content/attacks/create');
+    }
+
+    protected function buildAttackSourceFromRequest(Request $request)
+    {
         $request->validate([
             'name' => 'required', 'string', 'unique:attacks',
             'tier' => 'required', 'integer', 'between:1,10',
@@ -73,14 +81,14 @@ class AttackContentController extends Controller
             },
         ]);
 
-        $attackerPosition = CombatPosition::query()->find($request->attackerPosition);
-        $targetPosition = CombatPosition::query()->find($request->targetPosition);
-        $targetPriority = TargetPriority::query()->find($request->targetPriority);
-        $damageType = DamageType::query()->find($request->damageType);
-
-        $createAttack->execute($request->name, $request->tier, $request->targetsCount, $attackerPosition, $targetPosition, $targetPriority, $damageType);
-
-        $request->session()->flash('success', $request->name . ' created');
-        return redirect('admin/content/attacks/create');
+        return AttackSource::build(
+            $request->name,
+            $request->attackerPosition,
+            $request->targetPosition,
+            $request->targetPriority,
+            $request->damageType,
+            $request->tier,
+            $request->targetsCount
+        );
     }
 }
