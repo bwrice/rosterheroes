@@ -102,6 +102,7 @@
             this.updateCurrentWeek();
             this.updateHeroes(route);
             this.updateMobileStorage(route);
+            this.updateGlobalStashes(route);
             this.updateCurrentCampaign(route);
             this.updateCurrentLocation(route);
             this.updateProvinces();
@@ -138,6 +139,7 @@
                 'updateCurrentWeek',
                 'updateHeroes',
                 'updateMobileStorage',
+                'updateGlobalStashes',
                 'updateCurrentCampaign',
                 'updateRoster',
                 'setPlayerSpiritsPool',

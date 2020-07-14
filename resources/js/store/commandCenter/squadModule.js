@@ -13,6 +13,7 @@ import OpenedChestResult from "../../models/OpenedChestResult";
 import Item from "../../models/Item";
 import HistoricCampaign from "../../models/HistoricCampaign";
 import CampaignStopResult from "../../models/CampaignStopResult";
+import GlobalStash from "../../models/GlobalStash";
 
 export default {
 
@@ -26,7 +27,8 @@ export default {
         unopenedChests: [],
         openedChestResults: [],
         loadingUnopenedChests: true,
-        historicCampaigns: []
+        historicCampaigns: [],
+        globalStashes: []
     },
 
     getters: {
@@ -62,6 +64,9 @@ export default {
         },
         _mobileStorage(state) {
             return state.mobileStorage;
+        },
+        _globalStashes(state) {
+            return state.globalStashes;
         },
         _mobileStorageRankName(state) {
             return state.mobileStorage.mobileStorageRank.name;
@@ -140,6 +145,9 @@ export default {
         },
         SET_MOBILE_STORAGE(state, payload) {
             state.mobileStorage = payload;
+        },
+        SET_GLOBAL_STASHES(state, globalStashes) {
+            state.globalStashes = globalStashes;
         },
         ADD_ITEM_TO_MOBILE_STORAGE(state, item) {
             state.mobileStorage.capacityUsed += item.weight;
@@ -233,6 +241,19 @@ export default {
                 commit('SET_MOBILE_STORAGE', new MobileStorage(mobileStorageResponse.data));
             } catch (e) {
                 console.warn("Failed to update mobile storage");
+            }
+        },
+
+        async updateGlobalStashes({commit}, route) {
+            try {
+                let squadSlug = route.params.squadSlug;
+                let stashesResponse = await squadApi.getGlobalStashes(squadSlug);
+                let globalStashes = stashesResponse.data.map(function (stashData) {
+                    return new GlobalStash(stashData);
+                });
+                commit('SET_GLOBAL_STASHES', globalStashes);
+            } catch (e) {
+                console.warn("Failed to update global stashes");
             }
         },
 
