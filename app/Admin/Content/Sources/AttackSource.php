@@ -6,8 +6,11 @@ namespace App\Admin\Content\Sources;
 
 
 use App\Domain\Models\Attack;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
+use Illuminate\Support\Str;
 
-class AttackSource
+class AttackSource implements Arrayable, Jsonable
 {
     /**
      * @var string
@@ -174,5 +177,35 @@ class AttackSource
             return false;
         }
         return true;
+    }
+
+    /**
+     * Get the instance as an array.
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        return [
+            'uuid' => $this->getUuid(),
+            'name' => $this->getName(),
+            'attacker_position_id' => $this->getAttackerPositionID(),
+            'target_position_id' => $this->getTargetPositionID(),
+            'target_priority_id' => $this->getTargetPriorityID(),
+            'damage_type_id' => $this->getDamageTypeID(),
+            'tier' => $this->getTier(),
+            'targets_count' => $this->getTargetsCount()
+        ];
+    }
+
+    /**
+     * Convert the object to its JSON representation.
+     *
+     * @param int $options
+     * @return string
+     */
+    public function toJson($options = 0)
+    {
+        return json_encode($this->toArray(), $options);
     }
 }
