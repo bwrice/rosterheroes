@@ -139,6 +139,23 @@ export default {
         SET_LOCAL_STASH(state, payload) {
             state.localStash = payload;
         },
+        ADD_ITEM_TO_LOCAL_STASH(state, payload) {
+            state.localStash.items.push(payload);
+        },
+        REMOVE_ITEM_FROM_LOCAL_STASH(state, itemToRemove) {
+            let localStash = _.cloneDeep(state.localStash);
+
+            let index = localStash.items.findIndex(function (item) {
+                return item.uuid === itemToRemove.uuid;
+            });
+
+            if (index !== -1) {
+                localStash.items.splice(index, 1);
+            }
+
+            localStash.capacityUsed -= itemToRemove.weight;
+            state.localStash = localStash;
+        },
         SET_HISTORIC_CAMPAIGNS(state, historicCampaigns) {
             state.historicCampaigns = historicCampaigns;
         },
