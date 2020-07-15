@@ -6,4 +6,12 @@ export default class GlobalStash {
         this.provinceUuid = provinceUuid;
         this.itemsCount = itemsCount;
     }
+
+    increaseItemsCount() {
+        this.itemsCount++;
+    }
+
+    decreaseItemsCount() {
+        this.itemsCount--;
+    }
 }
