@@ -14,6 +14,7 @@ import Item from "../../models/Item";
 import HistoricCampaign from "../../models/HistoricCampaign";
 import CampaignStopResult from "../../models/CampaignStopResult";
 import GlobalStash from "../../models/GlobalStash";
+import LocalStash from "../../models/LocalStash";
 
 export default {
 
@@ -21,6 +22,7 @@ export default {
         squad: new Squad({}),
         heroes: [],
         mobileStorage: new MobileStorage({}),
+        localStash: new LocalStash({}),
         barracksLoading: true,
         currentCampaign: null,
         spells: [],
@@ -64,6 +66,9 @@ export default {
         },
         _mobileStorage(state) {
             return state.mobileStorage;
+        },
+        _localStash(state) {
+            return state.localStash;
         },
         _globalStashes(state) {
             return state.globalStashes;
@@ -130,6 +135,9 @@ export default {
         },
         SET_SPELL_LIBRARY(state, payload) {
             state.spells = payload;
+        },
+        SET_LOCAL_STASH(state, payload) {
+            state.localStash = payload;
         },
         SET_HISTORIC_CAMPAIGNS(state, historicCampaigns) {
             state.historicCampaigns = historicCampaigns;
@@ -203,6 +211,16 @@ export default {
             let response = await squadApi.getSpellLibrary(route.params.squadSlug);
             let spells = response.data.map(spellData => new Spell(spellData));
             commit('SET_SPELL_LIBRARY', spells);
+        },
+
+        async updateLocalStash({commit}, route) {
+            try {
+                let response = await squadApi.getLocalStash(route.params.squadSlug);
+                let localStash = new LocalStash(response.data);
+                commit('SET_LOCAL_STASH', localStash)
+            } catch (e) {
+                console.warn("Failed to update local stash");
+            }
         },
 
         async updateUnopenedChests({commit}, route) {

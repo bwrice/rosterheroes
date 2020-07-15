@@ -11,7 +11,6 @@ export default {
     state: {
         quests: [],
         province: new Province({}),
-        localStash: new LocalStash({}),
         localSquads: [],
         localMerchants: []
     },
@@ -22,9 +21,6 @@ export default {
         },
         _currentLocationProvince(state) {
             return state.province;
-        },
-        _localStash(state) {
-            return state.localStash;
         },
         _localSquads(state) {
             return state.localSquads;
@@ -43,9 +39,6 @@ export default {
         },
         SET_CURRENT_LOCATION_PROVINCE(state, payload) {
             state.province = payload;
-        },
-        SET_LOCAL_STASH(state, payload) {
-            state.localStash = payload;
         },
         SET_LOCAL_SQUADS(state, localSquads) {
             state.localSquads = localSquads;
@@ -107,15 +100,6 @@ export default {
                 commit('SET_LOCAL_MERCHANTS', localMerchants)
             } catch (e) {
                 console.warn("Failed to update local merchants");
-            }
-        },
-        async updateLocalStash({commit}, route) {
-            try {
-                let response = await squadApi.getLocalStash(route.params.squadSlug);
-                let localStash = new LocalStash(response.data);
-                commit('SET_LOCAL_STASH', localStash)
-            } catch (e) {
-                console.warn("Failed to update local stash");
             }
         },
         updateCurrentLocation({commit, dispatch}, route, alreadyUpdated = {}) {
