@@ -140,9 +140,29 @@ export default {
             state.localStash = payload;
         },
         ADD_ITEM_TO_LOCAL_STASH(state, payload) {
+            /*
+             * Add item to local stash
+             */
             state.localStash.items.push(payload);
+            /*
+             * Find or create new global stash
+             * and increment item count
+             */
+            let globalStash = state.globalStashes.find(globalStash => globalStash.uuid === state.localStash.uuid);
+            if (! globalStash) {
+                globalStash = new GlobalStash({
+                    uuid: state.localStash.uuid,
+                    provinceUuid: state.localStash.provinceUuid,
+                    itemsCount: 0
+                });
+                state.globalStashes.push(globalStash);
+            }
+            globalStash.increaseItemsCount();
         },
         REMOVE_ITEM_FROM_LOCAL_STASH(state, itemToRemove) {
+            /*
+             * Find and remove item from local stash
+             */
             let localStash = _.cloneDeep(state.localStash);
 
             let index = localStash.items.findIndex(function (item) {
@@ -155,6 +175,22 @@ export default {
 
             localStash.capacityUsed -= itemToRemove.weight;
             state.localStash = localStash;
+
+            /*
+             * Find global stash and decrement items count.
+             */
+            let globalStash = state.globalStashes.find(globalStash => globalStash.uuid === state.localStash.uuid);
+            if (globalStash) {
+                globalStash.decreaseItemsCount();
+
+                /*
+                 * If stash is empty we can remove it from global stashes
+                 */
+                if (globalStash.itemsCount <= 0) {
+                    let globalStashIndex = state.globalStashes.findIndex(globalStash => globalStash.uuid === state.localStash.uuid);
+                    state.globalStashes.splice(globalStashIndex, 1);
+                }
+            }
         },
         SET_HISTORIC_CAMPAIGNS(state, historicCampaigns) {
             state.historicCampaigns = historicCampaigns;
