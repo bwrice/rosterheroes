@@ -23,6 +23,7 @@ class LocalStashResource extends JsonResource
     {
         return [
             'uuid' => $this->uuid,
+            'provinceUuid' => $this->province->uuid,
             'items' => ItemResource::collection($this->items)
         ];
     }

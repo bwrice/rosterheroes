@@ -79,6 +79,7 @@ class Stash extends Model implements HasItems
     public static function getResourceRelations()
     {
         return [
+            'province',
             'items.itemType.itemBase',
             'items.material.materialType',
             'items.itemClass',
