@@ -34,6 +34,7 @@
                                     color="rgba(0, 0, 0, .3)"
                                     :disabled="increaseDisabled"
                                     @click="increaseRaiseAmount"
+                                    class="rh-dbl-tap-disabled"
                                 >
                                     <v-icon dark>add</v-icon>
                                 </v-btn>
@@ -42,6 +43,7 @@
                                     color="rgba(0, 0, 0, .3)"
                                     :disabled="decreaseDisabled"
                                     @click="decreaseRaiseAmount"
+                                    class="rh-dbl-tap-disabled"
                                 >
                                     <v-icon dark>remove</v-icon>
                                 </v-btn>
