@@ -46,14 +46,10 @@
             item: {
                 type: Item,
                 required: true
-            },
-            color: String
+            }
         },
 
         computed: {
-            sheetColor() {
-                return this.color ? this.color : '#576269';
-            },
             stats() {
                 return [
                     {

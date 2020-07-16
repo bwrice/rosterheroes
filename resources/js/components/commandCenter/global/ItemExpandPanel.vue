@@ -45,7 +45,7 @@
         </v-row>
         <v-row v-if="expanded" no-gutters>
             <v-col cols="12">
-                <ItemCard :item="item" :color="itemCardColor"></ItemCard>
+                <ItemCard :item="item"></ItemCard>
             </v-col>
         </v-row>
     </v-sheet>
@@ -65,9 +65,6 @@
             itemNameTruncateExtra: {
                 type: Number,
                 default: 0
-            },
-            itemCardColor: {
-                type: String
             }
         },
         data() {
