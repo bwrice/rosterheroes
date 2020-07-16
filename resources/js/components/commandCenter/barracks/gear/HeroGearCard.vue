@@ -45,12 +45,17 @@
             <v-card color="#524c59">
                 <v-card-title class="pb-0">
                     <v-row no-gutters justify="center" class="px-2">
-                        <v-row no-gutters class="flex-column">
+                        <v-col cols="10">
                             <span>{{gearSlot.type}}</span>
-                            <span v-if="gearSlotCaption" class="caption">{{gearSlotCaption}}</span>
-                        </v-row>
-                        <div class="flex-grow-1"></div>
-                        <v-icon class="align-self-baseline" @click="slotDialog = false">close</v-icon>
+                        </v-col>
+                        <v-col cols="2">
+                            <v-row no-gutters justify="end">
+                                <v-icon @click="slotDialog = false">close</v-icon>
+                            </v-row>
+                        </v-col>
+                    </v-row>
+                    <v-row v-if="gearSlotCaption" no-gutters class="px-2">
+                        <p class="caption">{{gearSlotCaption}}</p>
                     </v-row>
                 </v-card-title>
                 <v-card-text class="px-2 pb-0">
@@ -59,16 +64,17 @@
                             <v-col cols="12" class="pt-2">
                                 <v-row no-gutters align="center" justify="center">
                                     <v-col cols="12">
+                                        <ItemExpandPanel :item="gearSlot.item" :item-card-color="'#456d87'"></ItemExpandPanel>
+<!--                                        <v-sheet color="#456d87" class="my-2">-->
+<!--                                            <ItemCard :item="gearSlot.item"></ItemCard>-->
+<!--                                        </v-sheet>-->
+                                    </v-col>
+                                    <v-col cols="12">
                                         <UnequipItemButton
                                             :item="gearSlot.item"
                                             :hero="hero"
                                         >
                                         </UnequipItemButton>
-                                    </v-col>
-                                    <v-col cols="12">
-                                        <v-sheet color="#456d87" class="my-2">
-                                            <ItemCard :item="gearSlot.item"></ItemCard>
-                                        </v-sheet>
                                     </v-col>
                                 </v-row>
                             </v-col>
@@ -121,10 +127,12 @@
     import ItemIterator from "../../global/ItemIterator";
     import EquipFromMobileStorageButton from "./EquipFromMobileStorageButton";
     import GearSlot from "../../../../models/GearSlot";
+    import ItemExpandPanel from "../../global/ItemExpandPanel";
 
     export default {
         name: "HeroGearCard",
         components: {
+            ItemExpandPanel,
             EquipFromMobileStorageButton,
             ItemIterator,
             UnequipItemButton,
