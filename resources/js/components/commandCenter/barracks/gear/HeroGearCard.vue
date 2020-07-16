@@ -42,9 +42,9 @@
             v-model="slotDialog"
             max-width="500"
         >
-            <v-card color="#524c59">
+            <v-card color="#313c40">
                 <v-card-title class="pb-0">
-                    <v-row no-gutters justify="center" class="px-2">
+                    <v-row no-gutters class="px-2">
                         <v-col cols="10">
                             <span>{{gearSlot.type}}</span>
                         </v-col>
@@ -53,9 +53,9 @@
                                 <v-icon @click="slotDialog = false">close</v-icon>
                             </v-row>
                         </v-col>
-                    </v-row>
-                    <v-row v-if="gearSlotCaption" no-gutters class="px-2">
-                        <p class="caption">{{gearSlotCaption}}</p>
+                        <v-col cols="12" v-if="gearSlotCaption">
+                            <span class="caption">{{gearSlotCaption}}</span>
+                        </v-col>
                     </v-row>
                 </v-card-title>
                 <v-card-text class="px-2 pb-0">
@@ -64,10 +64,7 @@
                             <v-col cols="12" class="pt-2">
                                 <v-row no-gutters align="center" justify="center">
                                     <v-col cols="12">
-                                        <ItemExpandPanel :item="gearSlot.item" :item-card-color="'#456d87'"></ItemExpandPanel>
-<!--                                        <v-sheet color="#456d87" class="my-2">-->
-<!--                                            <ItemCard :item="gearSlot.item"></ItemCard>-->
-<!--                                        </v-sheet>-->
+                                        <ItemExpandPanel :item="gearSlot.item" :color="'#456d87'"></ItemExpandPanel>
                                     </v-col>
                                     <v-col cols="12">
                                         <UnequipItemButton
@@ -83,6 +80,7 @@
                             <span class="subtitle-1 font-weight-light">(empty)</span>
                         </template>
                     </v-row>
+                    <v-divider></v-divider>
                     <v-row no-gutters>
                         <v-col cols="12">
                             <ItemIterator

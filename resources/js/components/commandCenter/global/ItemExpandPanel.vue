@@ -1,5 +1,5 @@
 <template>
-    <v-sheet color="#576269" style="margin: 1px 0 1px 0" class="py-1 rounded-sm">
+    <v-sheet :color="color" style="margin: 1px 0 1px 0" class="py-1 rounded-sm">
         <v-row ref="row" align="center" class="mx-2" no-gutters>
             <v-col cols="8">
                 <template v-if="item.shopPrice">
@@ -62,9 +62,9 @@
                 type: Item,
                 required: true
             },
-            itemNameTruncateExtra: {
-                type: Number,
-                default: 0
+            color: {
+                type: String,
+                default: '#576269'
             }
         },
         data() {
