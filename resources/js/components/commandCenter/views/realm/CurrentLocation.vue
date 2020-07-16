@@ -94,7 +94,7 @@
                             </GlobalStashPanel>
                         </template>
                     </PaginationBlock>
-                    <EmptyNotifier :notification-text="'No global stashes'"></EmptyNotifier>
+                    <EmptyNotifier v-else :notification-text="'No global stashes'"></EmptyNotifier>
                 </CardSection>
             </v-col>
         </v-row>
