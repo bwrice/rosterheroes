@@ -4,6 +4,7 @@
         :disabled="pending"
         color="accent darken-1"
         block
+        class="my-2"
     >
         Un-Equip {{itemName}}
     </v-btn>
