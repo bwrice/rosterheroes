@@ -23,6 +23,18 @@ use App\Http\Controllers\SquadController;
 
 
 /*
+ * Temp redirect until initial beta is over
+ */
+Route::any('{any}', function($any = null) {
+    $url = 'https://beta.rosterheroes.com';
+    if ($any) {
+        $url .= '/' . $any;
+    }
+    return redirect($url);
+})->where('any', '.*');
+
+
+/*
  * Landing Page & Dashboard
  */
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index']);
