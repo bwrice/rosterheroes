@@ -10,6 +10,7 @@ use App\Domain\Models\ExternalGame;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -26,6 +27,8 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property \App\Domain\Models\Team $homeTeam
  * @property \App\Domain\Models\Team $awayTeam
+ *
+ * @property Collection $externalGames
  *
  * @method static GameQueryBuilder query()
  */
