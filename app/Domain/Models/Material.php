@@ -60,7 +60,7 @@ class Material extends Model
 
     public function getValueModifier()
     {
-        $valueModifier = 1 + $this->grade/100;
+        $valueModifier = 1 + ($this->grade**1.2)/100;
         return $valueModifier;
     }
 }
