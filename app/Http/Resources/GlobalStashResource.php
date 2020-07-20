@@ -6,12 +6,12 @@ use App\Domain\Models\Stash;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * Class CurrentLocationStashResource
+ * Class GlobalStashResource
  * @package App\Http\Resources
  *
  * @mixin Stash
  */
-class LocalStashResource extends JsonResource
+class GlobalStashResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -24,7 +24,7 @@ class LocalStashResource extends JsonResource
         return [
             'uuid' => $this->uuid,
             'provinceUuid' => $this->province->uuid,
-            'items' => ItemResource::collection($this->items)
+            'itemsCount' => $this->items_count,
         ];
     }
 }

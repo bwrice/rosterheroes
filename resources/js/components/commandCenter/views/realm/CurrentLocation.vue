@@ -81,18 +81,21 @@
                     <ProvinceVector :province="_currentLocationProvince" :fill-color="'#28bf5b'"></ProvinceVector>
                     <MapWindow :view-box="_currentLocationProvince.viewBox"></MapWindow>
                 </MapViewPort>
-                <v-row no-gutters>
-                    <v-col cols="12">
-                        <span class="title font-weight-thin">NEWS</span>
-                    </v-col>
-                    <v-col cols="12">
-                        <v-sheet color="rgba(255,255,255, 0.25)">
-                            <v-row no-gutters class="pa-2" justify="center" align="center">
-                                <span class="rh-op-70 subtitle-1">No Global News</span>
-                            </v-row>
-                        </v-sheet>
-                    </v-col>
-                </v-row>
+                <CardSection :title="'STASHES'">
+                    <PaginationBlock
+                        v-if="_globalStashes.length"
+                        :items="_globalStashes"
+                        :items-per-page="6"
+                    >
+                        <template v-slot:default="slotProps">
+                            <GlobalStashPanel
+                                :global-stash="slotProps.item"
+                            >
+                            </GlobalStashPanel>
+                        </template>
+                    </PaginationBlock>
+                    <EmptyNotifier v-else :notification-text="'No global stashes'"></EmptyNotifier>
+                </CardSection>
             </v-col>
         </v-row>
     </v-container>
@@ -110,10 +113,16 @@
     import PaginationBlock from "../../global/PaginationBlock";
     import LocalSquadPanel from "../../realm/LocalSquadPanel";
     import LocalMerchants from "../../realm/LocalMerchants";
+    import CardSection from "../../global/CardSection";
+    import GlobalStashPanel from "../../realm/GlobalStashPanel";
+    import EmptyNotifier from "../../global/EmptyNotifier";
 
     export default {
         name: "CurrentLocation",
         components: {
+            EmptyNotifier,
+            GlobalStashPanel,
+            CardSection,
             LocalMerchants,
             LocalSquadPanel,
             PaginationBlock,
@@ -130,7 +139,8 @@
                 '_currentLocationQuests',
                 '_provincesByUuids',
                 '_provinces',
-                '_localSquads'
+                '_localSquads',
+                '_globalStashes'
             ]),
             bordersCount() {
                 return this._currentLocationProvince.borderUuids.length;

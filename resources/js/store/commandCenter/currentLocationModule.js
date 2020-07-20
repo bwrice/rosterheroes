@@ -11,7 +11,6 @@ export default {
     state: {
         quests: [],
         province: new Province({}),
-        localStash: new LocalStash({}),
         localSquads: [],
         localMerchants: []
     },
@@ -22,9 +21,6 @@ export default {
         },
         _currentLocationProvince(state) {
             return state.province;
-        },
-        _localStash(state) {
-            return state.localStash;
         },
         _localSquads(state) {
             return state.localSquads;
@@ -44,31 +40,11 @@ export default {
         SET_CURRENT_LOCATION_PROVINCE(state, payload) {
             state.province = payload;
         },
-        SET_LOCAL_STASH(state, payload) {
-            state.localStash = payload;
-        },
         SET_LOCAL_SQUADS(state, localSquads) {
             state.localSquads = localSquads;
         },
         SET_LOCAL_MERCHANTS(state, localMerchants) {
             state.localMerchants = localMerchants;
-        },
-        ADD_ITEM_TO_LOCAL_STASH(state, payload) {
-            state.localStash.items.push(payload);
-        },
-        REMOVE_ITEM_FROM_LOCAL_STASH(state, itemToRemove) {
-            let localStash = _.cloneDeep(state.localStash);
-
-            let index = localStash.items.findIndex(function (item) {
-                return item.uuid === itemToRemove.uuid;
-            });
-
-            if (index !== -1) {
-                localStash.items.splice(index, 1);
-            }
-
-            localStash.capacityUsed -= itemToRemove.weight;
-            state.localStash = localStash;
         },
     },
 
@@ -107,15 +83,6 @@ export default {
                 commit('SET_LOCAL_MERCHANTS', localMerchants)
             } catch (e) {
                 console.warn("Failed to update local merchants");
-            }
-        },
-        async updateLocalStash({commit}, route) {
-            try {
-                let response = await squadApi.getLocalStash(route.params.squadSlug);
-                let localStash = new LocalStash(response.data);
-                commit('SET_LOCAL_STASH', localStash)
-            } catch (e) {
-                console.warn("Failed to update local stash");
             }
         },
         updateCurrentLocation({commit, dispatch}, route, alreadyUpdated = {}) {

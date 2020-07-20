@@ -23,6 +23,11 @@ export async function getMobileStorage(squadSlug) {
     return response.data;
 }
 
+export async function getGlobalStashes(squadSlug) {
+    let response = await axios.get(ROUTE_PREFIX + squadSlug + '/stashes');
+    return response.data;
+}
+
 export async function getCurrentCampaign(squadSlug) {
     let response = await axios.get(ROUTE_PREFIX + squadSlug + '/current-campaign');
     return response.data;

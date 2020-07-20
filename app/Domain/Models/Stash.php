@@ -6,7 +6,7 @@ use App\Domain\Collections\ItemCollection;
 use App\Domain\Interfaces\HasItems;
 use App\Domain\Models\Province;
 use App\Domain\Models\Squad;
-use App\Http\Resources\StashResource;
+use App\Http\Resources\GlobalStashResource;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Str;
@@ -76,24 +76,10 @@ class Stash extends Model implements HasItems
         return $this->id;
     }
 
-    public function getUniqueIdentifier(): string
-    {
-        return $this->uuid;
-    }
-
-    public function getHasItemsResource(): JsonResource
-    {
-        return new StashResource($this);
-    }
-
-    public function getHasItemsType()
-    {
-        return 'stash';
-    }
-
     public static function getResourceRelations()
     {
         return [
+            'province',
             'items.itemType.itemBase',
             'items.material.materialType',
             'items.itemClass',

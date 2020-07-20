@@ -1,5 +1,5 @@
 <template>
-    <v-row class="mt-2" align="center" justify="center">
+    <v-row no-gutters class="mt-2" align="center" justify="center">
         <div class="flex-grow-1"></div>
         <span class="mr-4 grey--text">Page {{ page }} of {{ numberOfPages }}</span>
         <v-btn

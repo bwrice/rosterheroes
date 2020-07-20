@@ -47,9 +47,9 @@
         >
             <NavigationDrawerContent></NavigationDrawerContent>
         </v-navigation-drawer>
-        <v-content style="background-image: linear-gradient(#234a4a, #222626); background-attachment: fixed">
+        <v-main style="background-image: linear-gradient(#234a4a, #222626); background-attachment: fixed">
             <router-view></router-view>
-        </v-content>
+        </v-main>
         <v-bottom-navigation
                 :value="true"
                 :height="76"
@@ -102,6 +102,7 @@
             this.updateCurrentWeek();
             this.updateHeroes(route);
             this.updateMobileStorage(route);
+            this.updateGlobalStashes(route);
             this.updateCurrentCampaign(route);
             this.updateCurrentLocation(route);
             this.updateProvinces();
@@ -138,6 +139,7 @@
                 'updateCurrentWeek',
                 'updateHeroes',
                 'updateMobileStorage',
+                'updateGlobalStashes',
                 'updateCurrentCampaign',
                 'updateRoster',
                 'setPlayerSpiritsPool',

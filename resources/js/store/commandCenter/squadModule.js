@@ -13,6 +13,8 @@ import OpenedChestResult from "../../models/OpenedChestResult";
 import Item from "../../models/Item";
 import HistoricCampaign from "../../models/HistoricCampaign";
 import CampaignStopResult from "../../models/CampaignStopResult";
+import GlobalStash from "../../models/GlobalStash";
+import LocalStash from "../../models/LocalStash";
 
 export default {
 
@@ -20,13 +22,15 @@ export default {
         squad: new Squad({}),
         heroes: [],
         mobileStorage: new MobileStorage({}),
+        localStash: new LocalStash({}),
         barracksLoading: true,
         currentCampaign: null,
         spells: [],
         unopenedChests: [],
         openedChestResults: [],
         loadingUnopenedChests: true,
-        historicCampaigns: []
+        historicCampaigns: [],
+        globalStashes: []
     },
 
     getters: {
@@ -62,6 +66,12 @@ export default {
         },
         _mobileStorage(state) {
             return state.mobileStorage;
+        },
+        _localStash(state) {
+            return state.localStash;
+        },
+        _globalStashes(state) {
+            return state.globalStashes;
         },
         _mobileStorageRankName(state) {
             return state.mobileStorage.mobileStorageRank.name;
@@ -126,6 +136,62 @@ export default {
         SET_SPELL_LIBRARY(state, payload) {
             state.spells = payload;
         },
+        SET_LOCAL_STASH(state, payload) {
+            state.localStash = payload;
+        },
+        ADD_ITEM_TO_LOCAL_STASH(state, payload) {
+            /*
+             * Add item to local stash
+             */
+            state.localStash.items.push(payload);
+            /*
+             * Find or create new global stash
+             * and increment item count
+             */
+            let globalStash = state.globalStashes.find(globalStash => globalStash.uuid === state.localStash.uuid);
+            if (! globalStash) {
+                globalStash = new GlobalStash({
+                    uuid: state.localStash.uuid,
+                    provinceUuid: state.localStash.provinceUuid,
+                    itemsCount: 0
+                });
+                state.globalStashes.push(globalStash);
+            }
+            globalStash.increaseItemsCount();
+        },
+        REMOVE_ITEM_FROM_LOCAL_STASH(state, itemToRemove) {
+            /*
+             * Find and remove item from local stash
+             */
+            let localStash = _.cloneDeep(state.localStash);
+
+            let index = localStash.items.findIndex(function (item) {
+                return item.uuid === itemToRemove.uuid;
+            });
+
+            if (index !== -1) {
+                localStash.items.splice(index, 1);
+            }
+
+            localStash.capacityUsed -= itemToRemove.weight;
+            state.localStash = localStash;
+
+            /*
+             * Find global stash and decrement items count.
+             */
+            let globalStash = state.globalStashes.find(globalStash => globalStash.uuid === state.localStash.uuid);
+            if (globalStash) {
+                globalStash.decreaseItemsCount();
+
+                /*
+                 * If stash is empty we can remove it from global stashes
+                 */
+                if (globalStash.itemsCount <= 0) {
+                    let globalStashIndex = state.globalStashes.findIndex(globalStash => globalStash.uuid === state.localStash.uuid);
+                    state.globalStashes.splice(globalStashIndex, 1);
+                }
+            }
+        },
         SET_HISTORIC_CAMPAIGNS(state, historicCampaigns) {
             state.historicCampaigns = historicCampaigns;
         },
@@ -140,6 +206,9 @@ export default {
         },
         SET_MOBILE_STORAGE(state, payload) {
             state.mobileStorage = payload;
+        },
+        SET_GLOBAL_STASHES(state, globalStashes) {
+            state.globalStashes = globalStashes;
         },
         ADD_ITEM_TO_MOBILE_STORAGE(state, item) {
             state.mobileStorage.capacityUsed += item.weight;
@@ -197,6 +266,16 @@ export default {
             commit('SET_SPELL_LIBRARY', spells);
         },
 
+        async updateLocalStash({commit}, route) {
+            try {
+                let response = await squadApi.getLocalStash(route.params.squadSlug);
+                let localStash = new LocalStash(response.data);
+                commit('SET_LOCAL_STASH', localStash)
+            } catch (e) {
+                console.warn("Failed to update local stash");
+            }
+        },
+
         async updateUnopenedChests({commit}, route) {
             try {
                 let response = await squadApi.getUnopenedChests(route.params.squadSlug);
@@ -233,6 +312,19 @@ export default {
                 commit('SET_MOBILE_STORAGE', new MobileStorage(mobileStorageResponse.data));
             } catch (e) {
                 console.warn("Failed to update mobile storage");
+            }
+        },
+
+        async updateGlobalStashes({commit}, route) {
+            try {
+                let squadSlug = route.params.squadSlug;
+                let stashesResponse = await squadApi.getGlobalStashes(squadSlug);
+                let globalStashes = stashesResponse.data.map(function (stashData) {
+                    return new GlobalStash(stashData);
+                });
+                commit('SET_GLOBAL_STASHES', globalStashes);
+            } catch (e) {
+                console.warn("Failed to update global stashes");
             }
         },
 

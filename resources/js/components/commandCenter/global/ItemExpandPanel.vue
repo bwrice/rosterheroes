@@ -1,5 +1,5 @@
 <template>
-    <v-sheet color="#576269" style="margin: 1px 0 1px 0" class="py-1 rounded-sm">
+    <v-sheet :color="color" style="margin: 1px 0 1px 0" class="py-1 rounded-sm">
         <v-row ref="row" align="center" class="mx-2" no-gutters>
             <v-col cols="8">
                 <template v-if="item.shopPrice">
@@ -45,7 +45,7 @@
         </v-row>
         <v-row v-if="expanded" no-gutters>
             <v-col cols="12">
-                <ItemCard :item="item" :color="itemCardColor"></ItemCard>
+                <ItemCard :item="item"></ItemCard>
             </v-col>
         </v-row>
     </v-sheet>
@@ -62,12 +62,9 @@
                 type: Item,
                 required: true
             },
-            itemNameTruncateExtra: {
-                type: Number,
-                default: 0
-            },
-            itemCardColor: {
-                type: String
+            color: {
+                type: String,
+                default: '#576269'
             }
         },
         data() {
