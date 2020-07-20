@@ -20,6 +20,7 @@ class AttackContentController extends Controller
         $attackSources = Content::attacks();
         $totalPages = (int) ceil($attackSources->count()/9);
         return view('admin.content.attacks.index', [
+            'contentType' => 'attacks',
             'attacks' => $attackSources->forPage($page, 9),
             'page' => $page,
             'totalPages' => $totalPages,
