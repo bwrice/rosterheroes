@@ -17,6 +17,11 @@ use Illuminate\Support\Facades\Facade;
  * @method static CarbonInterface attacksLastUpdated()
  * @method static string attacksPath()
  *
+ * @method static Collection itemTypes()
+ * @method static Collection unSyncedItemTypes()
+ * @method static CarbonInterface itemTypesLastUpdated()
+ * @method static string itemTypesPath()
+ *
  * @see ContentService
  */
 class Content extends Facade

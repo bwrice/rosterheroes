@@ -5,7 +5,9 @@ namespace App\Services;
 
 
 use App\Admin\Content\Sources\AttackSource;
+use App\Admin\Content\Sources\ItemTypeSource;
 use App\Domain\Models\Attack;
+use App\Domain\Models\ItemType;
 use Illuminate\Support\Facades\Date;
 
 class ContentService
@@ -51,6 +53,52 @@ class ContentService
                 return true;
             }
             return ! $attackSource->isSynced($match);
+        });
+    }
+
+    public function itemTypesLastUpdated()
+    {
+        $dataArray = $this->getItemTypeDataFromJSON();
+        return Date::createFromTimestamp($dataArray['last_updated']);
+    }
+    protected function getItemTypeDataFromJSON()
+    {
+        return json_decode(file_get_contents($this->itemTypesPath()), true);
+    }
+
+    public function itemTypesPath()
+    {
+        return resource_path('json/content/item_types.json');
+    }
+
+    public function itemTypes()
+    {
+        $dataArray = $this->getItemTypeDataFromJSON();
+
+        return collect($dataArray['data'])->map(function ($itemTypeData) {
+
+            return new ItemTypeSource(
+                $itemTypeData['uuid'],
+                $itemTypeData['name'],
+                $itemTypeData['tier'],
+                $itemTypeData['item_base_id'],
+                $itemTypeData['attacks']
+            );
+        });
+    }
+
+    public function unSyncedItemTypes()
+    {
+        $itemTypeSources = $this->itemTypes();
+        $itemTypes = ItemType::all();
+        return $itemTypeSources->filter(function (ItemTypeSource $itemTypeSource) use ($itemTypes) {
+            $match = $itemTypes->first(function (ItemType $itemType) use ($itemTypeSource) {
+                return $itemTypeSource->getUuid() === (string) $itemType->uuid;
+            });
+            if (! $match) {
+                return true;
+            }
+            return ! $itemTypeSource->isSynced($match);
         });
     }
 
