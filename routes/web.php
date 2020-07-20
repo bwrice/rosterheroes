@@ -11,6 +11,7 @@
 */
 
 use App\Http\Controllers\AttackContentController;
+use App\Http\Controllers\ItemTypeContentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
@@ -104,6 +105,11 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->group(function () 
                 Route::get('/{attackUuid}/edit', [AttackContentController::class, 'edit']);
                 Route::put('/{attackUuid}', [AttackContentController::class, 'update']);
             });
+        });
+
+        Route::prefix('item-types')->group(function () {
+
+            Route::get('/', [ItemTypeContentController::class, 'index']);
         });
     });
 });
