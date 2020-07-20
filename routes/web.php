@@ -25,7 +25,6 @@ use App\Http\Controllers\SquadController;
 use App\Http\Controllers\SyncAttacksController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\ContentMiddleware;
-use Illuminate\Support\Facades\Route;
 
 
 /*
