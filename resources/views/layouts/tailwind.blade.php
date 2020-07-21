@@ -9,7 +9,7 @@
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
 
-        gtag('config', {{config('app.g_tag_id')}});
+        gtag('config', '{{config('app.g_tag_id')}}');
     </script>
 
     <meta charset="UTF-8">
