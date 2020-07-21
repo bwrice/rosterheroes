@@ -24,12 +24,12 @@ class InitializeItemBlueprints
                 'description' => $itemBlueprint->description,
                 'uuid' => $itemBlueprint->uuid,
                 'enchantment_power' => $itemBlueprint->enchantment_power,
-                'attacks' => $itemBlueprint->attacks->pluck('uuid')->values(),
-                'item_types' => $itemBlueprint->itemTypes->pluck('id')->toArray(),
                 'item_bases' => $itemBlueprint->itemBases->pluck('id')->toArray(),
                 'item_classes' => $itemBlueprint->itemClasses->pluck('id')->toArray(),
-                'materials' => $itemBlueprint->materials->pluck('id')->toArray(),
-                'enchantments' => $itemBlueprint->enchantments->pluck('id')->toArray()
+                'item_types' => $itemBlueprint->itemTypes->pluck('uuid')->toArray(),
+                'attacks' => $itemBlueprint->attacks->pluck('uuid')->values(),
+                'materials' => $itemBlueprint->materials->pluck('uuid')->toArray(),
+                'enchantments' => $itemBlueprint->enchantments->pluck('uuid')->toArray()
             ];
         })->values();
         $contents = [
