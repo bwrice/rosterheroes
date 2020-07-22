@@ -10,6 +10,7 @@
 |
 */
 
+use App\Http\Controllers\UnsubscribeToEmailsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
@@ -51,6 +52,12 @@ Route::get('/email/verify', [VerificationController::class, 'show'])->name('veri
 Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
 Route::post('/email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
 
+/*
+ * Email Subscriptions
+ */
+Route::get('unsubscribe/{user}/emails/{emailSubscription}', UnsubscribeToEmailsController::class)
+    ->name('emails.unsubscribe')
+    ->middleware('signed');
 
 /*
  * Password Reset
