@@ -3,7 +3,7 @@
 namespace App\Domain\Models;
 
 use App\Domain\Traits\HasUuid;
-use App\EmailSubscription;
+use App\Domain\Models\EmailSubscription;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
