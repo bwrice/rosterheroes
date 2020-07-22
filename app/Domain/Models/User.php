@@ -3,6 +3,7 @@
 namespace App\Domain\Models;
 
 use App\Domain\Traits\HasUuid;
+use App\EmailSubscription;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -19,6 +20,7 @@ use Laravel\Passport\HasApiTokens;
  * @property string $name
  *
  * @property EloquentCollection $squads
+ * @property EloquentCollection $emailSubscriptions
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -61,4 +63,8 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->squads()->count() >= 1;
     }
 
+    public function emailSubscriptions()
+    {
+        return $this->belongsToMany(EmailSubscription::class)->withTimestamps();
+    }
 }
