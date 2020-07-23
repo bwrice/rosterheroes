@@ -60,10 +60,6 @@ class DefaultUsersSeeder extends Seeder
             $addNewHeroToSquadAction->execute($squad, $hero['name'], $hero['hero_class'], $hero['hero_race']);
         }
 
-        /** @var \App\Domain\Models\ItemBlueprint $blueprint */
-        $blueprint = \App\Domain\Models\ItemBlueprint::query()->where('reference_id', '=', \App\Domain\Models\ItemBlueprint::RANDOM_ENCHANTED_LOW_TIER_ITEM)->first();
-
-        $this->seedRandomItemsForSquad($generateItemFromBlueprintAction, $squad, $blueprint);
         $this->rewardChestsToSquad($rewardChestToSquad, $squad);
 
 
@@ -99,27 +95,7 @@ class DefaultUsersSeeder extends Seeder
             $addNewHeroToSquadAction->execute($squad, $hero['name'], $hero['hero_class'], $hero['hero_race']);
         }
 
-        $this->seedRandomItemsForSquad($generateItemFromBlueprintAction, $squad, $blueprint);
-
         $this->rewardChestsToSquad($rewardChestToSquad, $squad);
-    }
-
-    /**
-     * @param GenerateItemFromBlueprintAction $generateItemFromBlueprintAction
-     * @param \App\Domain\Models\Squad $squad
-     * @param \App\Domain\Models\ItemBlueprint $blueprint
-     */
-    protected function seedRandomItemsForSquad(GenerateItemFromBlueprintAction $generateItemFromBlueprintAction, \App\Domain\Models\Squad $squad, \App\Domain\Models\ItemBlueprint $blueprint)
-    {
-        $localStash = $squad->getLocalStash();
-        foreach (range(1, 20) as $count) {
-            $item = $generateItemFromBlueprintAction->execute($blueprint);
-            if ($count % 4 === 0) {
-                $item->attachToHasItems($localStash);
-            } else {
-                $item->attachToHasItems($squad);
-            }
-        }
     }
 
     /**
@@ -129,9 +105,7 @@ class DefaultUsersSeeder extends Seeder
     protected function rewardChestsToSquad(RewardChestToSquad $rewardChestToSquad, \App\Domain\Models\Squad $squad)
     {
         /** @var \App\Domain\Models\ChestBlueprint $chestBlueprint */
-        $chestBlueprint = \App\Domain\Models\ChestBlueprint::query()
-            ->where('reference_id', '=', \App\Domain\Models\ChestBlueprint::FULLY_RANDOM_MEDIUM)
-            ->first();
+        $chestBlueprint = \App\Domain\Models\ChestBlueprint::query()->first();
         foreach (range(1, 20) as $count) {
             $rewardChestToSquad->execute($chestBlueprint, $squad, null);
         }
