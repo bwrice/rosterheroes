@@ -18,7 +18,11 @@
 @component('mail::button', ['url' => url('/command-center/' . $squad->slug)])
 Visit Command Center
 @endcomponent
+@slot('subcopy')
+Want to stop receiving these types of emails?
+<br>
 <a href="{{Illuminate\Support\Facades\URL::signedRoute('emails.unsubscribe', ['user' => $squad->user->uuid, 'emailSubscription' => $emailSub->id])}}">Unsubscribe to {{$emailSub->name}} emails</a>
 <br>
 <a href="{{Illuminate\Support\Facades\URL::signedRoute('emails.unsubscribe', ['user' => $squad->user->uuid, 'emailSubscription' => 'all'])}}">Unsubscribe to all emails from Roster Heroes</a>
+@endslot
 @endcomponent
