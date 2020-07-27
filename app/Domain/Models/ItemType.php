@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @package App
  *
  * @property int $id
+ * @property string $uuid
  * @property string $name
  * @property int $tier
  * @property int $item_base_id

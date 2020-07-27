@@ -14,8 +14,6 @@ use Illuminate\Support\Facades\Log;
 
 class UpdateHistoricGameLogsAction
 {
-    public const DAYS_BEFORE_QUERY_ARG = 2;
-
     /**
      * @param LeagueCollection|null $leagues
      * @param bool $force
@@ -43,7 +41,7 @@ class UpdateHistoricGameLogsAction
      */
     protected function getGameQuery(LeagueCollection $leagues = null, $force = false)
     {
-        $query = Game::query()->whereDate('starts_at', '<', Date::now()->subDays(self::DAYS_BEFORE_QUERY_ARG));
+        $query = Game::query()->whereDate('starts_at', '<', now()->subHours(6));
         if ($leagues) {
             $query = $query->forLeagues($leagues->pluck('id')->toArray());
         }

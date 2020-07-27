@@ -17,6 +17,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Date;
 use Tests\TestCase;
 
+// TODO: Delete?
 class DisableInsignificantPlayerSpiritTest extends TestCase
 {
     use DatabaseTransactions;
