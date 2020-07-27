@@ -18,6 +18,7 @@ use App\Domain\Models\Week;
 use App\Domain\Models\PlayerSpirit;
 use App\Exceptions\CreatePlayerSpiritException;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Str;
 
 class CreatePlayerSpiritAction
@@ -124,9 +125,15 @@ class CreatePlayerSpiritAction
 
         /** @var PlayerGameLogCollection $gameLogs */
         $gameLogs = PlayerGameLog::query()->where('player_id', '=', $this->player->id)
-            ->whereHas('game', function (\Illuminate\Database\Eloquent\Builder $builder) {
-                return $builder->where('starts_at', '<', now()->subHours(5));
+            ->whereHas('game', function (Builder $builder) {
+
+                $fakeStatsStartDate = Date::create(2020, 3, 14);
+                $fakeStatsEndDate = Date::create(2020, 7, 22);
+
+                return $builder->where('starts_at', '<', now()->subHours(5))
+                    ->whereNotBetween('starts_at', [$fakeStatsStartDate, $fakeStatsEndDate]);
             })
+            ->whereHas('playerStats')
             ->join('games', 'games.id', '=', 'player_game_logs.game_id')
             ->orderByDesc('games.starts_at')
             ->select('player_game_logs.*')
