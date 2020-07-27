@@ -21,15 +21,6 @@ use Illuminate\Support\Str;
 
 class CreatePlayerSpiritAction
 {
-    /**
-     * @var DisableInsignificantPlayerSpirit
-     */
-    protected $disableInsignificantPlayerSpirit;
-
-    public function __construct(DisableInsignificantPlayerSpirit $disableInsignificantPlayerSpirit)
-    {
-        $this->disableInsignificantPlayerSpirit = $disableInsignificantPlayerSpirit;
-    }
 
     /**
      * @var Week
@@ -88,8 +79,7 @@ class CreatePlayerSpiritAction
             'energy' => PlayerSpirit::STARTING_ENERGY
         ]);
 
-        $this->disableInsignificantPlayerSpirit->execute($playerSpirit);
-        return $playerSpirit->fresh();
+        return $playerSpirit;
     }
 
     protected function setProperties(Week $week, Game $game, Player $player)
