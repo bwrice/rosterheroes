@@ -17,6 +17,7 @@ use App\Domain\Models\Position;
 use App\Domain\Models\Week;
 use App\Domain\Models\PlayerSpirit;
 use App\Exceptions\CreatePlayerSpiritException;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
 class CreatePlayerSpiritAction
@@ -119,13 +120,21 @@ class CreatePlayerSpiritAction
      */
     protected function getPlayerGameLogs()
     {
-        if ($this->player->relationLoaded('playerGameLogs')) {
-            return $this->player->playerGameLogs->take($this->getGamesToConsider());
-        }
+        $amount = $this->getAmountOfGamesToConsider();
 
-        /** @var PlayerGameLogCollection $playerGameLogs */
-        $playerGameLogs = $this->player->playerGameLogs()->take($this->getGamesToConsider())->get();
-        return $playerGameLogs;
+        /** @var PlayerGameLogCollection $gameLogs */
+        $gameLogs = PlayerGameLog::query()->where('player_id', '=', $this->player->id)
+            ->whereHas('game', function (\Illuminate\Database\Eloquent\Builder $builder) {
+                return $builder->where('starts_at', '<', now()->subHours(5));
+            })
+            ->join('games', 'games.id', '=', 'player_game_logs.game_id')
+            ->orderByDesc('games.starts_at')
+            ->select('player_game_logs.*')
+            ->with('game')
+            ->take($amount)
+            ->get();
+
+        return $gameLogs;
     }
 
     /**
@@ -163,7 +172,7 @@ class CreatePlayerSpiritAction
     /**
      * @return int
      */
-    protected function getGamesToConsider()
+    protected function getAmountOfGamesToConsider()
     {
         $gamesPerSeason = $this->position->getGamesPerSeason();
         return $gamesPerSeason > 0 ? (int) ceil($gamesPerSeason/2) : 1;
