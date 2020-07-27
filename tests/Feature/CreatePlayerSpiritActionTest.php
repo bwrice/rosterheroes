@@ -13,6 +13,7 @@ use App\Domain\Models\Position;
 use App\Domain\Models\StatType;
 use App\Domain\Models\Week;
 use App\Exceptions\CreatePlayerSpiritException;
+use App\Factories\Models\GameFactory;
 use App\Factories\Models\PlayerGameLogFactory;
 use App\Factories\Models\PlayerSpiritFactory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -188,7 +189,8 @@ class CreatePlayerSpiritActionTest extends TestCase
 
         /** @var PlayerGameLog $playerGameLog */
         $playerGameLog = factory(PlayerGameLog::class)->create([
-            'player_id' => $this->player->id
+            'player_id' => $this->player->id,
+            'game_id' => GameFactory::new()->withStartTime(now()->subDays(rand(1, 10)))->create()->id
         ]);
 
         $this->player = $this->player->fresh();
@@ -222,7 +224,8 @@ class CreatePlayerSpiritActionTest extends TestCase
 
         /** @var PlayerGameLog $playerGameLog */
         $playerGameLog = factory(PlayerGameLog::class)->create([
-            'player_id' => $this->player->id
+            'player_id' => $this->player->id,
+            'game_id' => GameFactory::new()->withStartTime(now()->subDays(rand(1, 10)))->create()->id
         ]);
 
         $playerGameLog->playerStats()->save($pointsMade);
@@ -259,7 +262,8 @@ class CreatePlayerSpiritActionTest extends TestCase
 
         /** @var PlayerGameLog $playerGameLog */
         $playerGameLog = factory(PlayerGameLog::class)->create([
-            'player_id' => $this->player->id
+            'player_id' => $this->player->id,
+            'game_id' => GameFactory::new()->withStartTime(now()->subDays(rand(1, 10)))->create()->id
         ]);
 
         $playerGameLog->playerStats()->saveMany([$goals, $shotsOnGoal]);
@@ -276,7 +280,8 @@ class CreatePlayerSpiritActionTest extends TestCase
         // Add another player game log with loaded stats and create a new player spirit
         /** @var PlayerGameLog $playerGameLog */
         $newPlayerGameLog = factory(PlayerGameLog::class)->create([
-            'player_id' => $this->player->id
+            'player_id' => $this->player->id,
+            'game_id' => GameFactory::new()->withStartTime(now()->subDays(rand(1, 10)))->create()->id
         ]);
 
         $moreGoals = factory(PlayerStat::class)->make([
@@ -323,7 +328,8 @@ class CreatePlayerSpiritActionTest extends TestCase
 
         /** @var PlayerGameLog $playerGameLog */
         $playerGameLog = factory(PlayerGameLog::class)->create([
-            'player_id' => $this->player->id
+            'player_id' => $this->player->id,
+            'game_id' => GameFactory::new()->withStartTime(now()->subDays(rand(1, 10)))->create()->id
         ]);
 
         $playerGameLog->playerStats()->save($rushingYards);
@@ -340,7 +346,8 @@ class CreatePlayerSpiritActionTest extends TestCase
         // Add another player game log with terrible stats and create a new player spirit
         /** @var PlayerGameLog $playerGameLog */
         $newPlayerGameLog = factory(PlayerGameLog::class)->create([
-            'player_id' => $this->player->id
+            'player_id' => $this->player->id,
+            'game_id' => GameFactory::new()->withStartTime(now()->subDays(rand(1, 10)))->create()->id
         ]);
 
         $moreBadRushingYards = factory(PlayerStat::class)->make([
