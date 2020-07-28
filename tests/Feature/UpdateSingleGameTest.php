@@ -10,6 +10,7 @@ use App\Domain\Models\Game;
 use App\Domain\Models\League;
 use App\Domain\Models\StatsIntegrationType;
 use App\Domain\Models\Week;
+use App\External\Stats\StatsIntegration;
 use App\Factories\Models\GameFactory;
 use App\Factories\Models\TeamFactory;
 use App\Jobs\DisableSpiritsForGameJob;
@@ -17,6 +18,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Queue;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class UpdateSingleGameTest extends TestCase
@@ -26,11 +28,22 @@ class UpdateSingleGameTest extends TestCase
     /** @var Week */
     protected $week;
 
+    /** @var StatsIntegrationType */
+    protected $integrationType;
+
     public function setUp(): void
     {
         parent::setUp();
 
         $this->week = factory(Week::class)->states('as-current')->create();
+
+        $this->integrationType = StatsIntegrationType::query()->create([
+            'name' => Str::random(10)
+        ]);
+
+        $this->mock(StatsIntegration::class)
+            ->shouldReceive('getIntegrationType')
+            ->andReturn($this->integrationType);
     }
 
     /**
@@ -53,12 +66,9 @@ class UpdateSingleGameTest extends TestCase
 
         $gameDTO = new GameDTO(now(), $homeTeam, $awayTeam, uniqid(), Game::SCHEDULE_STATUS_NORMAL);
 
-        /** @var StatsIntegrationType $integrationType */
-        $integrationType = StatsIntegrationType::query()->first();
+        $this->getDomainAction()->execute($gameDTO);
 
-        $this->getDomainAction()->execute($integrationType, $gameDTO);
-
-        $game = Game::query()->forIntegration($integrationType->id, $gameDTO->getExternalID())->first();
+        $game = Game::query()->forIntegration($this->integrationType->id, $gameDTO->getExternalID())->first();
         $this->assertNotNull($game);
     }
 
@@ -72,13 +82,11 @@ class UpdateSingleGameTest extends TestCase
             'schedule_status' => Game::SCHEDULE_STATUS_NORMAL
         ]);
 
-        /** @var StatsIntegrationType $integrationType */
-        $integrationType = StatsIntegrationType::query()->first();
         $externalID = uniqid();
 
         $externalGame = ExternalGame::query()->create([
             'game_id' => $game->id,
-            'integration_type_id' => $integrationType->id,
+            'integration_type_id' => $this->integrationType->id,
             'external_id' => $externalID
         ]);
 
@@ -87,7 +95,7 @@ class UpdateSingleGameTest extends TestCase
         $updatedGameDTO = new GameDTO($updatedStarTime, $game->homeTeam, $game->awayTeam, $externalID, Game::SCHEDULE_STATUS_NORMAL);
         $game->externalGames()->save($externalGame);
 
-        $this->getDomainAction()->execute($integrationType, $updatedGameDTO);
+        $this->getDomainAction()->execute($updatedGameDTO);
 
         $game = $game->fresh();
         $this->assertEquals($game->starts_at->timestamp, $updatedStarTime->timestamp);
@@ -105,13 +113,11 @@ class UpdateSingleGameTest extends TestCase
             'schedule_status' => Game::SCHEDULE_STATUS_NORMAL
         ]);
 
-        /** @var StatsIntegrationType $integrationType */
-        $integrationType = StatsIntegrationType::query()->first();
         $externalID = uniqid();
 
         $externalGame = ExternalGame::query()->create([
             'game_id' => $game->id,
-            'integration_type_id' => $integrationType->id,
+            'integration_type_id' => $this->integrationType->id,
             'external_id' => $externalID
         ]);
 
@@ -122,7 +128,7 @@ class UpdateSingleGameTest extends TestCase
 
         Queue::fake();
 
-        $this->getDomainAction()->execute($integrationType, $updatedGameDTO);
+        $this->getDomainAction()->execute($updatedGameDTO);
 
         Queue::assertPushed(DisableSpiritsForGameJob::class, function (DisableSpiritsForGameJob $job) use ($game) {
             return $job->game->id === $game->id;
@@ -147,7 +153,7 @@ class UpdateSingleGameTest extends TestCase
 
         $externalGame = ExternalGame::query()->create([
             'game_id' => $game->id,
-            'integration_type_id' => $integrationType->id,
+            'integration_type_id' => $this->integrationType->id,
             'external_id' => $externalID
         ]);
 
@@ -158,7 +164,7 @@ class UpdateSingleGameTest extends TestCase
 
         Queue::fake();
 
-        $this->getDomainAction()->execute($integrationType, $updatedGameDTO);
+        $this->getDomainAction()->execute($updatedGameDTO);
 
         Queue::assertNotPushed(DisableSpiritsForGameJob::class, function (DisableSpiritsForGameJob $job) use ($game) {
             return $job->game->id === $game->id;
@@ -180,13 +186,11 @@ class UpdateSingleGameTest extends TestCase
             'schedule_status' => Game::SCHEDULE_STATUS_NORMAL
         ]);
 
-        /** @var StatsIntegrationType $integrationType */
-        $integrationType = StatsIntegrationType::query()->first();
         $externalID = uniqid();
 
         $externalGame = ExternalGame::query()->create([
             'game_id' => $game->id,
-            'integration_type_id' => $integrationType->id,
+            'integration_type_id' => $this->integrationType->id,
             'external_id' => $externalID
         ]);
 
@@ -195,7 +199,7 @@ class UpdateSingleGameTest extends TestCase
 
         Queue::fake();
 
-        $this->getDomainAction()->execute($integrationType, $updatedGameDTO);
+        $this->getDomainAction()->execute($updatedGameDTO);
 
         Queue::assertPushed(DisableSpiritsForGameJob::class, function (DisableSpiritsForGameJob $job) use ($game) {
             return $job->game->id === $game->id;

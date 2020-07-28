@@ -7,23 +7,30 @@ namespace App\Domain\Actions;
 use App\Domain\DataTransferObjects\GameDTO;
 use App\Domain\Models\Game;
 use App\Domain\Models\StatsIntegrationType;
+use App\External\Stats\StatsIntegration;
 use App\Facades\CurrentWeek;
 use App\Jobs\DisableSpiritsForGameJob;
 
 class UpdateSingleGame
 {
     /**
+     * @var StatsIntegration
+     */
+    protected $statsIntegration;
+    /**
      * @var DisableSpiritsForGame
      */
-    private $disableSpiritsForGame;
+    protected $disableSpiritsForGame;
 
-    public function __construct(DisableSpiritsForGame $disableSpiritsForGame)
+    public function __construct(StatsIntegration $statsIntegration, DisableSpiritsForGame $disableSpiritsForGame)
     {
+        $this->statsIntegration = $statsIntegration;
         $this->disableSpiritsForGame = $disableSpiritsForGame;
     }
 
-    public function execute(StatsIntegrationType $integrationType, GameDTO $gameDTO)
+    public function execute(GameDTO $gameDTO)
     {
+        $integrationType = $this->statsIntegration->getIntegrationType();
         $game = Game::query()->forIntegration($integrationType->id, $gameDTO->getExternalID())->first();
 
         if ($game) {
