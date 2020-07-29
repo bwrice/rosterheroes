@@ -109,4 +109,11 @@ class PlayerFactory
         return $clone;
     }
 
+    public function withStatus(string $status)
+    {
+        $clone = clone $this;
+        $clone->status = $status;
+        return $clone;
+    }
+
 }
