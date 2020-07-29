@@ -17,14 +17,20 @@ class LeagueSeasonConverter
     /**
      * @param League $league
      * @param int $yearDelta
+     * @param bool $regularSeason
      * @return string
      */
-    public function getSeason(League $league, int $yearDelta = 0)
+    public function getSeason(League $league, int $yearDelta, $regularSeason = true)
     {
         switch($league->abbreviation) {
             case League::NHL:
             case League::NBA:
-                return ($league->getBehavior()->getSeason() + $yearDelta) . '-' . ($league->getBehavior()->getSeason() + 1 + $yearDelta);
+                // NHL and NBA regular seasons span multiple years, so we need to return both
+                if ($regularSeason) {
+                    return ($league->getBehavior()->getSeason() + $yearDelta) . '-' . ($league->getBehavior()->getSeason() + 1 + $yearDelta);
+                } else {
+                    return (string) ($league->getBehavior()->getSeason() + $yearDelta);
+                }
             case League::NFL:
             case League::MLB:
                 return (string) ($league->getBehavior()->getSeason() + $yearDelta);
