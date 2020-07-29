@@ -20,13 +20,14 @@ class SpiritsCreatedForGame extends Notification implements ShouldQueue
      */
     public $game;
     /**
-     * @var string
+     * @var int
      */
-    public $reason;
+    public $spiritsCreatedCount;
 
-    public function __construct(Game $game)
+    public function __construct(Game $game, int $spiritsCreatedCount)
     {
         $this->game = $game;
+        $this->spiritsCreatedCount = $spiritsCreatedCount;
     }
 
     public function via()
@@ -47,7 +48,8 @@ class SpiritsCreatedForGame extends Notification implements ShouldQueue
                 $attachment->fields([
                     'home team' => $this->game->homeTeam->location . ' ' . $this->game->homeTeam->name,
                     'away team' => $this->game->awayTeam->location . ' ' . $this->game->awayTeam->name,
-                    'game time' => $this->game->starts_at->clone()->timezone("America/New_York")->toDayDateTimeString()
+                    'game time' => $this->game->starts_at->clone()->timezone("America/New_York")->toDayDateTimeString(),
+                    'spirits count' => $this->spiritsCreatedCount
                 ]);
             });
     }
