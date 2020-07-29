@@ -15,19 +15,13 @@ class UpdateSingleGameJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-
-    /**
-     * @var StatsIntegrationType
-     */
-    public $statsIntegrationType;
     /**
      * @var GameDTO
      */
     public $gameDTO;
 
-    public function __construct(StatsIntegrationType $statsIntegrationType, GameDTO $gameDTO)
+    public function __construct(GameDTO $gameDTO)
     {
-        $this->statsIntegrationType = $statsIntegrationType;
         $this->gameDTO = $gameDTO;
     }
 
@@ -36,6 +30,6 @@ class UpdateSingleGameJob implements ShouldQueue
      */
     public function handle(UpdateSingleGame $domainAction)
     {
-        $domainAction->execute($this->statsIntegrationType, $this->gameDTO);
+        $domainAction->execute($this->gameDTO);
     }
 }
