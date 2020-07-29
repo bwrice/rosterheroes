@@ -32,8 +32,17 @@ class GameAPI
 
     public function getData(League $league, int $yearDelta = 0)
     {
-        $season = $this->leagueSeasonConverter->getSeason($league, $yearDelta);
-        $subURL = strtolower($league->abbreviation) . '/'. $season . '-regular/games.json';
+        $regularSeasonGames = $this->getGames($league, $yearDelta, true);
+        $postSeasonGames = $this->getGames($league, $yearDelta, false);
+        return array_merge($regularSeasonGames, $postSeasonGames);
+    }
+
+    protected function getGames(League $league, int $yearDelta, $regularSeason = true)
+    {
+        $season = $this->leagueSeasonConverter->getSeason($league, $yearDelta, $regularSeason);
+        $subURL = strtolower($league->abbreviation) . '/'. $season;
+        $subURL .= $regularSeason ? '-regular' : '-playoffs';
+        $subURL .= '/games.json';
         $responseData = $this->client->getData($subURL);
         return $responseData['games'];
     }
