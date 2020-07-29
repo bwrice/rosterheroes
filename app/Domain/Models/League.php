@@ -9,6 +9,7 @@ use App\Domain\Behaviors\Leagues\NFLBehavior;
 use App\Domain\Behaviors\Leagues\NHLBehavior;
 use App\Domain\Collections\TeamCollection;
 use App\Exceptions\UnknownBehaviorException;
+use Carbon\CarbonInterface;
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -43,6 +44,11 @@ class League extends Model
     public function sport()
     {
         return $this->belongsTo(Sport::class);
+    }
+
+    public function getSeason(CarbonInterface $date = null)
+    {
+        return $this->getBehavior()->getSeason($date);
     }
 
     public function getBehavior(): LeagueBehavior
