@@ -6,7 +6,7 @@ use App\Domain\Models\League;
 use App\Domain\Models\Player;
 use App\Domain\Models\StatsIntegrationType;
 use App\External\Stats\MySportsFeed\MySportsFeed;
-use App\External\Stats\MySportsFeed\PlayerAPI;
+use App\External\Stats\MySportsFeed\APIs\PlayerAPI;
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Builder;
 

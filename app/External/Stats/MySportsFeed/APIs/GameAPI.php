@@ -2,15 +2,18 @@
 /**
  * Created by PhpStorm.
  * User: bwrice
- * Date: 3/20/19
- * Time: 10:07 PM
+ * Date: 3/24/19
+ * Time: 9:58 PM
  */
 
-namespace App\External\Stats\MySportsFeed;
+namespace App\External\Stats\MySportsFeed\APIs;
+
 
 use App\Domain\Models\League;
+use App\External\Stats\MySportsFeed\LeagueSeasonConverter;
+use App\External\Stats\MySportsFeed\MSFClient;
 
-class TeamAPI
+class GameAPI
 {
     /**
      * @var MSFClient
@@ -30,8 +33,8 @@ class TeamAPI
     public function getData(League $league, int $yearDelta = 0)
     {
         $season = $this->leagueSeasonConverter->getSeason($league, $yearDelta);
-        $subURL = strtolower($league->abbreviation) . '/'. $season . '-regular/team_stats_totals.json';
+        $subURL = strtolower($league->abbreviation) . '/'. $season . '-regular/games.json';
         $responseData = $this->client->getData($subURL);
-        return $responseData['teamStatsTotals'];
+        return $responseData['games'];
     }
 }
