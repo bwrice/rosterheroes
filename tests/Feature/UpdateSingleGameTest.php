@@ -228,4 +228,77 @@ class UpdateSingleGameTest extends TestCase
             return $job->game->id === $game->id;
         });
     }
+
+    /**
+     * @test
+     * @param string $status
+     * @dataProvider provides_it_will_not_dispatch_create_spirits_for_a_new_game_with_valid_start_time_but_invalid_status
+     */
+    public function it_will_not_dispatch_create_spirits_for_a_new_game_with_valid_start_time_but_invalid_status($status)
+    {
+        $teamFactory = TeamFactory::new()->forLeague(League::NHL);
+
+        $homeTeam = $teamFactory->create();
+        $awayTeam = $teamFactory->create();
+
+        $startsAt = $this->week->adventuring_locks_at->addHour();
+
+        $gameDTO = new GameDTO($startsAt, $homeTeam, $awayTeam, uniqid(), $status);
+
+        Queue::fake();
+
+        $this->getDomainAction()->execute($gameDTO);
+
+        $game = Game::query()->forIntegration($this->integrationType->id, $gameDTO->getExternalID())->first();
+
+        Queue::assertNotPushed(CreateSpiritsForGameJob::class, function (CreateSpiritsForGameJob $job) use ($game) {
+            return $job->game->id === $game->id;
+        });
+    }
+
+    public function provides_it_will_not_dispatch_create_spirits_for_a_new_game_with_valid_start_time_but_invalid_status()
+    {
+        return [
+            Game::SCHEDULE_STATUS_POSTPONED => [
+                'status' => Game::SCHEDULE_STATUS_POSTPONED
+            ],
+            Game::SCHEDULE_STATUS_CANCELED => [
+                'status' => Game::SCHEDULE_STATUS_CANCELED
+            ],
+        ];
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_dispatch_create_spirits_if_an_updated_game_is_now_valid_for_current_week_when_it_previously_was_not()
+    {
+        // Make start time after week locks
+        $startsAt = $this->week->adventuring_locks_at->clone()->subHours(2);
+
+        $game = GameFactory::new()->withStartTime($startsAt)->create([
+            'schedule_status' => Game::SCHEDULE_STATUS_NORMAL
+        ]);
+
+        $externalID = uniqid();
+
+        $externalGame = ExternalGame::query()->create([
+            'game_id' => $game->id,
+            'integration_type_id' => $this->integrationType->id,
+            'external_id' => $externalID
+        ]);
+
+        $updatedStartsAt = $this->week->adventuring_locks_at->clone()->addHour();
+
+        // Change status to postponed
+        $updatedGameDTO = new GameDTO($updatedStartsAt, $game->homeTeam, $game->awayTeam, $externalID, Game::SCHEDULE_STATUS_NORMAL);
+
+        Queue::fake();
+
+        $this->getDomainAction()->execute($updatedGameDTO);
+
+        Queue::assertPushed(CreateSpiritsForGameJob::class, function (CreateSpiritsForGameJob $job) use ($game) {
+            return $job->game->id === $game->id && $job->week->id === $this->week->id;
+        });
+    }
 }

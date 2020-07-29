@@ -45,6 +45,7 @@ class UpdateSingleGame
                 'starts_at' => $gameDTO->getStartsAt(),
                 'home_team_id' => $gameDTO->getHomeTeam()->id,
                 'away_team_id' => $gameDTO->getAwayTeam()->id,
+                'schedule_status' => $gameDTO->getStatus()
             ]);
 
             $game->externalGames()->create([
@@ -52,8 +53,7 @@ class UpdateSingleGame
                 'external_id' => $gameDTO->getExternalID()
             ]);
 
-            $validPeriodForWeek = CurrentWeek::validGamePeriod();
-            if ($game->starts_at->isBetween($validPeriodForWeek->getStartDate(), $validPeriodForWeek->getEndDate())) {
+            if ($this->gameShouldHaveSpirits($game)) {
                 CreateSpiritsForGameJob::dispatch($game, CurrentWeek::get());
             }
         }
@@ -62,8 +62,10 @@ class UpdateSingleGame
     protected function updateGame(Game $game, GameDTO $gameDTO)
     {
         $disableSpirits = false;
+        $gameChanged = false;
 
         if ($game->starts_at->timestamp !== $gameDTO->getStartsAt()->timestamp) {
+            $gameChanged = true;
             if ($this->disableSpiritsBasedOffGameTime($game, $gameDTO)) {
                 $disableSpirits = true;
             }
@@ -72,6 +74,7 @@ class UpdateSingleGame
         }
 
         if ($game->schedule_status !== $gameDTO->getStatus()) {
+            $gameChanged = true;
             if ($this->disableSpiritsBasedOffStatus($game, $gameDTO)) {
                 $disableSpirits = true;
             }
@@ -81,6 +84,10 @@ class UpdateSingleGame
 
         if ($disableSpirits) {
             DisableSpiritsForGameJob::dispatch($game);
+        }
+
+        if ($gameChanged && $this->gameShouldHaveSpirits($game)) {
+            CreateSpiritsForGameJob::dispatch($game, CurrentWeek::get());
         }
 
         return $game;
@@ -117,6 +124,19 @@ class UpdateSingleGame
             Game::SCHEDULE_STATUS_POSTPONED,
             Game::SCHEDULE_STATUS_CANCELED
         ]);
+    }
+
+    protected function gameShouldHaveSpirits(Game $game)
+    {
+        if (!in_array($game->schedule_status, [
+            Game::SCHEDULE_STATUS_NORMAL,
+            Game::SCHEDULE_STATUS_DELAYED
+        ])) {
+            return false;
+        }
+        $validPeriodForWeek = CurrentWeek::validGamePeriod();
+
+        return $game->starts_at->isBetween($validPeriodForWeek->getStartDate(), $validPeriodForWeek->getEndDate());
     }
 
 }
