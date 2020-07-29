@@ -16,19 +16,19 @@ class LeagueBehavior
     /**
      * @var string
      */
-    private $key;
+    protected $key;
     /**
      * @var int
      */
-    private $dayOfYearStart;
+    protected $dayOfYearStart;
     /**
      * @var int
      */
-    private $dayOfYearEnd;
+    protected $dayOfYearEnd;
     /**
      * @var int
      */
-    private $totalTeams;
+    protected $totalTeams;
 
     public function __construct(string $key, int $dayOfYearStart, int $dayOfYearEnd, int $totalTeams)
     {

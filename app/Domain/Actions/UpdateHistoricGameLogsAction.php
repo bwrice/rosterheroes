@@ -5,22 +5,22 @@ namespace App\Domain\Actions;
 
 
 use App\Domain\Collections\GameCollection;
-use App\Domain\Collections\LeagueCollection;
 use App\Domain\Models\Game;
 use App\Domain\QueryBuilders\GameQueryBuilder;
 use App\Jobs\UpdatePlayerGameLogsJob;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Log;
 
 class UpdateHistoricGameLogsAction
 {
     /**
-     * @param LeagueCollection|null $leagues
+     * @param Collection|null $leagues
      * @param bool $force
      * @param int $yearDelta
      * @return int
      */
-    public function execute(LeagueCollection $leagues = null, $force = false, int $yearDelta = 0): int
+    public function execute(Collection $leagues = null, $force = false, int $yearDelta = 0): int
     {
         $count = 0;
         $this->getGameQuery($leagues, $force)->chunk(100, function (GameCollection $games) use (&$count, $yearDelta) {
@@ -35,11 +35,11 @@ class UpdateHistoricGameLogsAction
     }
 
     /**
-     * @param LeagueCollection|null $leagues
+     * @param Collection|null $leagues
      * @param bool $force
      * @return GameQueryBuilder
      */
-    protected function getGameQuery(LeagueCollection $leagues = null, $force = false)
+    protected function getGameQuery(Collection $leagues = null, $force = false)
     {
         $query = Game::query()->whereDate('starts_at', '<', now()->subHours(6));
         if ($leagues) {

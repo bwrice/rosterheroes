@@ -3,11 +3,6 @@
 namespace App\Domain\Models;
 
 use App\Domain\Behaviors\Leagues\LeagueBehavior;
-use App\Domain\Behaviors\Leagues\MLBBehavior;
-use App\Domain\Behaviors\Leagues\NBABehavior;
-use App\Domain\Behaviors\Leagues\NFLBehavior;
-use App\Domain\Behaviors\Leagues\NHLBehavior;
-use App\Domain\Collections\LeagueCollection;
 use App\Domain\Collections\TeamCollection;
 use App\Domain\Models\Team;
 use App\Domain\Models\Sport;
@@ -38,11 +33,6 @@ class League extends Model
 
     protected $guarded = [];
 
-    public function newCollection(array $models = [])
-    {
-        return new LeagueCollection($models);
-    }
-
     public function teams()
     {
         return $this->hasMany(Team::class);
@@ -66,11 +56,6 @@ class League extends Model
                 return new LeagueBehavior(self::NHL, 250, 170, 31);
         }
         throw new UnknownBehaviorException($this->abbreviation, LeagueBehavior::class);
-    }
-
-    public function isLive()
-    {
-        return $this->getBehavior()->isLive();
     }
 
     /**
@@ -116,18 +101,5 @@ class League extends Model
     public function scopeAbbreviation(Builder $builder, array $abbreviations)
     {
         return $builder->whereIn('abbreviation', $abbreviations);
-    }
-
-    /**
-     * @param bool $live
-     * @return LeagueCollection
-     */
-    public static function live(bool $live = true): LeagueCollection
-    {
-        /** @var LeagueCollection $leagues */
-        $leagues = self::all()->filter(function (League $league) use ($live) {
-            return $live ? $league->isLive() : ! $league->isLive();
-        });
-        return $leagues;
     }
 }
