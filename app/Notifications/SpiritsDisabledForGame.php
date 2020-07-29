@@ -54,8 +54,9 @@ class SpiritsDisabledForGame extends Notification implements ShouldQueue
             ->content("Spirits Disabled for Game")
             ->attachment(function (SlackAttachment $attachment) {
                 $attachment->fields([
+                    'home team' => $this->game->homeTeam->location . ' ' . $this->game->homeTeam->name,
+                    'away team' => $this->game->awayTeam->location . ' ' . $this->game->awayTeam->name,
                     'reason' => $this->reason,
-                    'game' => $this->game->getSimpleDescription(),
                     'game time' => $this->game->starts_at->clone()->timezone("America/New_York")->toDayDateTimeString(),
                     'spirits removed' => $this->spiritsRemoved,
                     'heroes cleared' => $this->heroesCleared
