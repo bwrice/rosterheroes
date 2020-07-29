@@ -3,9 +3,11 @@
 namespace App\Domain\Models;
 
 use App\Domain\Behaviors\Leagues\LeagueBehavior;
+use App\Domain\Behaviors\Leagues\MLBBehavior;
+use App\Domain\Behaviors\Leagues\NBABehavior;
+use App\Domain\Behaviors\Leagues\NFLBehavior;
+use App\Domain\Behaviors\Leagues\NHLBehavior;
 use App\Domain\Collections\TeamCollection;
-use App\Domain\Models\Team;
-use App\Domain\Models\Sport;
 use App\Exceptions\UnknownBehaviorException;
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Builder;
@@ -47,13 +49,13 @@ class League extends Model
     {
         switch ($this->abbreviation) {
             case self::NFL:
-                return new LeagueBehavior(self::NFL, 225, 50, 32);
+                return app(NFLBehavior::class);
             case self::MLB:
-                return new LeagueBehavior(self::MLB, 70, 290, 30);
+                return app(MLBBehavior::class);
             case self::NBA:
-                return new LeagueBehavior(self::NBA, 260, 180, 30);
+                return app(NBABehavior::class);
             case self::NHL:
-                return new LeagueBehavior(self::NHL, 250, 170, 31);
+                return app(NHLBehavior::class);
         }
         throw new UnknownBehaviorException($this->abbreviation, LeagueBehavior::class);
     }
