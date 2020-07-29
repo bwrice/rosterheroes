@@ -13,6 +13,7 @@ use App\Domain\Models\Week;
 use App\External\Stats\StatsIntegration;
 use App\Factories\Models\GameFactory;
 use App\Factories\Models\TeamFactory;
+use App\Jobs\CreateSpiritsForGameJob;
 use App\Jobs\DisableSpiritsForGameJob;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -176,9 +177,6 @@ class UpdateSingleGameTest extends TestCase
      */
     public function it_will_dispatch_disable_spirits_for_game_job_if_updating_a_game_that_is_postponed()
     {
-        /** @var Week $week */
-        $week = factory(Week::class)->states('as-current')->create();
-
         // Make start time after week locks
         $startsAt = $this->week->adventuring_locks_at->clone()->addHours(2);
 
@@ -202,6 +200,31 @@ class UpdateSingleGameTest extends TestCase
         $this->getDomainAction()->execute($updatedGameDTO);
 
         Queue::assertPushed(DisableSpiritsForGameJob::class, function (DisableSpiritsForGameJob $job) use ($game) {
+            return $job->game->id === $game->id;
+        });
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_dispatch_create_spirits_for_game_if_a_new_game_is_valid_for_the_week()
+    {
+        $teamFactory = TeamFactory::new()->forLeague(League::NHL);
+
+        $homeTeam = $teamFactory->create();
+        $awayTeam = $teamFactory->create();
+
+        $startsAt = $this->week->adventuring_locks_at->addHour();
+
+        $gameDTO = new GameDTO($startsAt, $homeTeam, $awayTeam, uniqid(), Game::SCHEDULE_STATUS_NORMAL);
+
+        Queue::fake();
+
+        $this->getDomainAction()->execute($gameDTO);
+
+        $game = Game::query()->forIntegration($this->integrationType->id, $gameDTO->getExternalID())->first();
+
+        Queue::assertPushed(CreateSpiritsForGameJob::class, function (CreateSpiritsForGameJob $job) use ($game) {
             return $job->game->id === $game->id;
         });
     }

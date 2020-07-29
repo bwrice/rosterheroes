@@ -7,8 +7,10 @@ namespace App\Domain\Actions;
 use App\Domain\DataTransferObjects\GameDTO;
 use App\Domain\Models\Game;
 use App\Domain\Models\StatsIntegrationType;
+use App\Domain\Models\Week;
 use App\External\Stats\StatsIntegration;
 use App\Facades\CurrentWeek;
+use App\Jobs\CreateSpiritsForGameJob;
 use App\Jobs\DisableSpiritsForGameJob;
 
 class UpdateSingleGame
@@ -49,6 +51,11 @@ class UpdateSingleGame
                 'integration_type_id' => $integrationType->id,
                 'external_id' => $gameDTO->getExternalID()
             ]);
+
+            $validPeriodForWeek = CurrentWeek::validGamePeriod();
+            if ($game->starts_at->isBetween($validPeriodForWeek->getStartDate(), $validPeriodForWeek->getEndDate())) {
+                CreateSpiritsForGameJob::dispatch($game, CurrentWeek::get());
+            }
         }
     }
 
