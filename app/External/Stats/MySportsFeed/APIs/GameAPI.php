@@ -41,7 +41,7 @@ class GameAPI
     {
         $season = $this->leagueSeasonConverter->getSeason($league, $yearDelta, $regularSeason);
         $subURL = strtolower($league->abbreviation) . '/'. $season;
-        $subURL .= $regularSeason ? '-regular' : '-playoffs';
+        $subURL .= $regularSeason ? '-regular' : '-playoff';
         $subURL .= '/games.json';
         $responseData = $this->client->getData($subURL);
         return $responseData['games'];
