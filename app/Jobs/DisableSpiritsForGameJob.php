@@ -32,6 +32,6 @@ class DisableSpiritsForGameJob implements ShouldQueue
      */
     public function handle(DisableSpiritsForGame $domainAction)
     {
-        $domainAction->execute($this->game);
+        $domainAction->execute($this->game, $this->reason);
     }
 }

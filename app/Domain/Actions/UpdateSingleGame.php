@@ -61,13 +61,13 @@ class UpdateSingleGame
 
     protected function updateGame(Game $game, GameDTO $gameDTO)
     {
-        $disableSpirits = false;
+        $disableSpiritsReason = null;
         $gameChanged = false;
 
         if ($game->starts_at->timestamp !== $gameDTO->getStartsAt()->timestamp) {
             $gameChanged = true;
             if ($this->disableSpiritsBasedOffGameTime($game, $gameDTO)) {
-                $disableSpirits = true;
+                $disableSpiritsReason = 'Game time no longer valid';
             }
             $game->starts_at = $gameDTO->getStartsAt();
             $game->save();
@@ -76,14 +76,14 @@ class UpdateSingleGame
         if ($game->schedule_status !== $gameDTO->getStatus()) {
             $gameChanged = true;
             if ($this->disableSpiritsBasedOffStatus($game, $gameDTO)) {
-                $disableSpirits = true;
+                $disableSpiritsReason = 'Status changed to ' . $gameDTO->getStatus();
             }
             $game->schedule_status = $gameDTO->getStatus();
             $game->save();
         }
 
-        if ($disableSpirits) {
-            DisableSpiritsForGameJob::dispatch($game);
+        if ($disableSpiritsReason) {
+            DisableSpiritsForGameJob::dispatch($game, $disableSpiritsReason);
         }
 
         if ($gameChanged && $this->gameShouldHaveSpirits($game)) {
