@@ -74,7 +74,7 @@ class LoginController extends Controller
                 $user->markEmailAsVerified();
                 event(new Verified($user));
             }
-            Auth::login($user);
+            Auth::login($user, true);
             return redirect('/');
         }
 
