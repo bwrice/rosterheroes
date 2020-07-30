@@ -52,7 +52,7 @@ class UpdateNonRosteredStatusesForMSF extends Command
                 Player::STATUS_FREE_AGENT => 'UFA'
             ];
 
-            if ($league->abbreviation === League::MLB) {
+            if (in_array($league->abbreviation, [League::MLB, League::NHL]) {
                 $playerStatuses[Player::STATUS_MINORS] = 'ASSIGNED-TO-MINORS';
             }
 
