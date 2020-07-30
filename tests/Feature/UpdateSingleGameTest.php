@@ -301,4 +301,36 @@ class UpdateSingleGameTest extends TestCase
             return $job->game->id === $game->id && $job->week->id === $this->week->id;
         });
     }
+
+    /**
+     * @test
+     */
+    public function it_wont_dispatch_disable_spirits_if_the_updated_game_status_is_invalid_but_the_game_was_not_valid_to_being_with()
+    {
+        // Give the original game an invalid start time for spirits
+        $startsAt = $this->week->adventuring_locks_at->clone()->subDays(1);
+
+        $game = GameFactory::new()->withStartTime($startsAt)->create([
+            'schedule_status' => Game::SCHEDULE_STATUS_NORMAL
+        ]);
+
+        $externalID = uniqid();
+
+        $externalGame = ExternalGame::query()->create([
+            'game_id' => $game->id,
+            'integration_type_id' => $this->integrationType->id,
+            'external_id' => $externalID
+        ]);
+
+        // Change status to postponed
+        $updatedGameDTO = new GameDTO($startsAt, $game->homeTeam, $game->awayTeam, $externalID, Game::SCHEDULE_STATUS_POSTPONED);
+
+        Queue::fake();
+
+        $this->getDomainAction()->execute($updatedGameDTO);
+
+        Queue::assertNotPushed(DisableSpiritsForGameJob::class, function (DisableSpiritsForGameJob $job) use ($game) {
+            return $job->game->id === $game->id;
+        });
+    }
 }

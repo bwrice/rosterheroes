@@ -61,32 +61,37 @@ class UpdateSingleGame
 
     protected function updateGame(Game $game, GameDTO $gameDTO)
     {
+        $originalGameShouldHaveSpirits = $this->gameShouldHaveSpirits($game);
         $disableSpiritsReason = null;
-        $gameChanged = false;
 
         if ($game->starts_at->timestamp !== $gameDTO->getStartsAt()->timestamp) {
-            $gameChanged = true;
-            if ($this->disableSpiritsBasedOffGameTime($game, $gameDTO)) {
-                $disableSpiritsReason = 'Game time no longer valid';
-            }
+
             $game->starts_at = $gameDTO->getStartsAt();
             $game->save();
+
+            // If original game had spirits and now it shouldn't, we need to disable
+            if ($originalGameShouldHaveSpirits && $this->disableSpiritsBasedOffGameTime($game)) {
+                $disableSpiritsReason = 'Game time no longer valid';
+            }
         }
 
         if ($game->schedule_status !== $gameDTO->getStatus()) {
-            $gameChanged = true;
-            if ($this->disableSpiritsBasedOffStatus($game, $gameDTO)) {
-                $disableSpiritsReason = 'Status changed to ' . $gameDTO->getStatus();
-            }
+
             $game->schedule_status = $gameDTO->getStatus();
             $game->save();
+
+            // If original game had spirits and now it shouldn't, we need to disable
+            if ($originalGameShouldHaveSpirits && $this->disableSpiritsBasedOffStatus($game)) {
+                $disableSpiritsReason = 'Status changed to ' . $gameDTO->getStatus();
+            }
         }
 
         if ($disableSpiritsReason) {
             DisableSpiritsForGameJob::dispatch($game, $disableSpiritsReason);
         }
 
-        if ($gameChanged && $this->gameShouldHaveSpirits($game)) {
+        // Only if the original game did NOT already have spirits and it now should, do we need to create spirits
+        if (!$originalGameShouldHaveSpirits && $this->gameShouldHaveSpirits($game)) {
             CreateSpiritsForGameJob::dispatch($game, CurrentWeek::get());
         }
 
@@ -95,32 +100,21 @@ class UpdateSingleGame
 
     /**
      * @param Game $game
-     * @param GameDTO $gameDTO
      * @return bool
      */
-    protected function disableSpiritsBasedOffGameTime(Game $game, GameDTO $gameDTO)
+    protected function disableSpiritsBasedOffGameTime(Game $game)
     {
         $validPeriod = CurrentWeek::validGamePeriod();
-
-        // If original game time wasn't valid for week, we don't need to worry about disabling spirits
-        if (! $game->starts_at->isBetween($validPeriod->getStartDate(), $validPeriod->getEndDate())) {
-            return false;
-        }
-
-        return ! $gameDTO->getStartsAt()->isBetween($validPeriod->getStartDate(), $validPeriod->getEndDate());
+        return ! $game->starts_at->isBetween($validPeriod->getStartDate(), $validPeriod->getEndDate());
     }
 
-    protected function disableSpiritsBasedOffStatus(Game $game, GameDTO $gameDTO)
+    /**
+     * @param Game $game
+     * @return bool
+     */
+    protected function disableSpiritsBasedOffStatus(Game $game)
     {
-        // If original status wasn't valid for spirits, we don't need to worry about disabling spirits
-        if (! in_array($game->schedule_status, [
-            Game::SCHEDULE_STATUS_NORMAL,
-            Game::SCHEDULE_STATUS_DELAYED
-        ])) {
-            return false;
-        }
-
-        return in_array($gameDTO->getStatus(), [
+        return in_array($game->schedule_status, [
             Game::SCHEDULE_STATUS_POSTPONED,
             Game::SCHEDULE_STATUS_CANCELED
         ]);
