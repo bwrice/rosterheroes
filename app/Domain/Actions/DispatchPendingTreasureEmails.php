@@ -25,6 +25,8 @@ class DispatchPendingTreasureEmails
             ->where('description', '=', 'Newcomer Chest')
             ->first()->id;
 
+        $now = now();
+
         Squad::query()->whereHas('unopenedChests', function (Builder $builder) use ($newcomerChestBlueprintID) {
 
             $builder->where(function (Builder $builder) use ($newcomerChestBlueprintID) {
@@ -38,10 +40,15 @@ class DispatchPendingTreasureEmails
                 $builder->where('name', '=', EmailSubscription::SQUAD_NOTIFICATIONS);
             });
 
-        })->withCount('unopenedChests')->chunk(200, function (Collection $squads) use (&$count) {
+        })->withCount('unopenedChests')->chunk(200, function (Collection $squads) use (&$count, $now) {
 
-            $squads->each(function (Squad $squad) {
-                Mail::to($squad->user)->queue(new TreasuresPending($squad, $squad->unopened_chests_count));
+            $delayCounter = 0;
+            $squads->each(function (Squad $squad) use ($now, &$delayCounter) {
+                // add some randomized time in minutes and seconds to delay emails
+                $secondsDelay = (60 * ($delayCounter + rand(0,3))) + rand(1,59);
+                $when = $now->clone()->addSeconds($secondsDelay);
+                Mail::to($squad->user)->later($when, new TreasuresPending($squad, $squad->unopened_chests_count));
+                $delayCounter++;
             });
             $count += $squads->count();
         });
