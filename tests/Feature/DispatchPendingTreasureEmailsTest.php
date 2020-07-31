@@ -59,23 +59,6 @@ class DispatchPendingTreasureEmailsTest extends TestCase
     /**
      * @test
      */
-    public function it_will_not_queue_emails_to_squads_with_a_non_recent_unopened_chest()
-    {
-        Mail::fake();
-        $chest = ChestFactory::new()->withSquadID($this->squad->id)->create([
-            'created_at' => now()->subMonths(2)
-        ]);
-
-        $this->getDomainAction()->execute();
-
-        Mail::assertNotQueued(TreasuresPending::class, function (TreasuresPending $mail) {
-            return $mail->squad->id === $this->squad->id;
-        });
-    }
-
-    /**
-     * @test
-     */
     public function it_will_not_queue_emails_for_squads_with_only_the_newcomer_chest_unopened()
     {
         Mail::fake();

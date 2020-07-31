@@ -27,8 +27,7 @@ class DispatchPendingTreasureEmails
 
         Squad::query()->whereHas('unopenedChests', function (Builder $builder) use ($newcomerChestBlueprintID) {
 
-            $builder->where('created_at', '>=', now()->subWeeks($this->weeksBack))
-                ->where(function (Builder $builder) use ($newcomerChestBlueprintID) {
+            $builder->where(function (Builder $builder) use ($newcomerChestBlueprintID) {
                     $builder->where('chest_blueprint_id', '!=', $newcomerChestBlueprintID)
                         ->orWhereNull('chest_blueprint_id');
                 });
