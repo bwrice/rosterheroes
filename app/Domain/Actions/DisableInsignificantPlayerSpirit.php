@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Date;
 
+// TODO: Delete?
 class DisableInsignificantPlayerSpirit
 {
     /**

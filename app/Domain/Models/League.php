@@ -7,11 +7,9 @@ use App\Domain\Behaviors\Leagues\MLBBehavior;
 use App\Domain\Behaviors\Leagues\NBABehavior;
 use App\Domain\Behaviors\Leagues\NFLBehavior;
 use App\Domain\Behaviors\Leagues\NHLBehavior;
-use App\Domain\Collections\LeagueCollection;
 use App\Domain\Collections\TeamCollection;
-use App\Domain\Models\Team;
-use App\Domain\Models\Sport;
 use App\Exceptions\UnknownBehaviorException;
+use Carbon\CarbonInterface;
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -38,11 +36,6 @@ class League extends Model
 
     protected $guarded = [];
 
-    public function newCollection(array $models = [])
-    {
-        return new LeagueCollection($models);
-    }
-
     public function teams()
     {
         return $this->hasMany(Team::class);
@@ -53,24 +46,24 @@ class League extends Model
         return $this->belongsTo(Sport::class);
     }
 
+    public function getSeason(CarbonInterface $date = null)
+    {
+        return $this->getBehavior()->getSeason($date);
+    }
+
     public function getBehavior(): LeagueBehavior
     {
         switch ($this->abbreviation) {
             case self::NFL:
-                return new LeagueBehavior(self::NFL, 225, 50, 32);
+                return app(NFLBehavior::class);
             case self::MLB:
-                return new LeagueBehavior(self::MLB, 70, 290, 30);
+                return app(MLBBehavior::class);
             case self::NBA:
-                return new LeagueBehavior(self::NBA, 260, 180, 30);
+                return app(NBABehavior::class);
             case self::NHL:
-                return new LeagueBehavior(self::NHL, 250, 170, 31);
+                return app(NHLBehavior::class);
         }
         throw new UnknownBehaviorException($this->abbreviation, LeagueBehavior::class);
-    }
-
-    public function isLive()
-    {
-        return $this->getBehavior()->isLive();
     }
 
     /**
@@ -116,18 +109,5 @@ class League extends Model
     public function scopeAbbreviation(Builder $builder, array $abbreviations)
     {
         return $builder->whereIn('abbreviation', $abbreviations);
-    }
-
-    /**
-     * @param bool $live
-     * @return LeagueCollection
-     */
-    public static function live(bool $live = true): LeagueCollection
-    {
-        /** @var LeagueCollection $leagues */
-        $leagues = self::all()->filter(function (League $league) use ($live) {
-            return $live ? $league->isLive() : ! $league->isLive();
-        });
-        return $leagues;
     }
 }

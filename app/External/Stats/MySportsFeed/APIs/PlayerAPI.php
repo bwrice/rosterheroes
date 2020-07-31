@@ -6,9 +6,10 @@
  * Time: 10:06 PM
  */
 
-namespace App\External\Stats\MySportsFeed;
+namespace App\External\Stats\MySportsFeed\APIs;
 
 use App\Domain\Models\League;
+use App\External\Stats\MySportsFeed\MSFClient;
 
 class PlayerAPI
 {

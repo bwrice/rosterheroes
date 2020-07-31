@@ -61,6 +61,14 @@
             <a class="mx-auto" href="/register">
                 <button class="hover:underline bg-white text-gray-800 font-bold rounded-full my-4 py-4 px-8 shadow-lg">Register</button>
             </a>
+
+            <div class="w-full mb-2 px-2">
+                <div class="h-1 mx-auto bg-white w-2/3 sm:w-1/2 opacity-25 my-0 py-0 rounded-t"></div>
+            </div>
+
+            <a class="mx-auto w-2/3 sm:w-1/2" href="/login/google">
+                <img alt="signup through google" src="{{asset('/images/btn_google_signin_dark_normal_web@2x.png')}}">
+            </a>
         </div>
         <!--Right Col-->
         <div class="w-full md:w-2/3 py-6 text-center">
