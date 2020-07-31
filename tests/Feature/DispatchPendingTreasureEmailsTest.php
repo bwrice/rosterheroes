@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Domain\Actions\DispatchPendingTreasureEmails;
 use App\Domain\Models\ChestBlueprint;
+use App\Domain\Models\EmailSubscription;
 use App\Factories\Models\ChestFactory;
 use App\Factories\Models\SquadFactory;
 use App\Mail\TreasuresPending;
@@ -94,6 +95,36 @@ class DispatchPendingTreasureEmailsTest extends TestCase
 
         $chest = ChestFactory::new()->withChestBlueprintID($newcomerBlueprint->id)->create();
         $squad = $chest->squad;
+
+        $this->getDomainAction()->execute();
+
+        Mail::assertNotQueued(TreasuresPending::class, function (TreasuresPending $mail) use ($squad) {
+            return $mail->squad->id === $squad->id;
+        });
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_not_queue_emails_for_users_not_subscribed_to_squad_notifications()
+    {
+        Mail::fake();
+        $squad = SquadFactory::new()->create();
+        $chestsCount = rand(2, 5);
+        $chestFactory = ChestFactory::new()->withSquadID($squad->id);
+        for ($i = 1; $i <= $chestsCount; $i++) {
+            $chestFactory->create();
+        }
+
+        $user = $squad->user;
+
+        // Subscribe to everything
+        $emailSubs = EmailSubscription::all();
+        $user->emailSubscriptions()->saveMany($emailSubs);
+
+        // Unsubscribe to squad notifications
+        $squadNotificationsEmailSub = EmailSubscription::squadNotifications();
+        $user->emailSubscriptions()->detach([$squadNotificationsEmailSub->id]);
 
         $this->getDomainAction()->execute();
 

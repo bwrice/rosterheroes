@@ -5,6 +5,7 @@ namespace App\Domain\Actions;
 
 
 use App\Domain\Models\ChestBlueprint;
+use App\Domain\Models\EmailSubscription;
 use App\Domain\Models\Squad;
 use App\Facades\Admin;
 use App\Mail\TreasuresPending;
@@ -31,6 +32,12 @@ class DispatchPendingTreasureEmails
                     $builder->where('chest_blueprint_id', '!=', $newcomerChestBlueprintID)
                         ->orWhereNull('chest_blueprint_id');
                 });
+
+        })->whereHas('user', function (Builder $builder) {
+
+            $builder->whereHas('emailSubscriptions', function (Builder $builder) {
+                $builder->where('name', '=', EmailSubscription::SQUAD_NOTIFICATIONS);
+            });
 
         })->withCount('unopenedChests')->chunk(200, function (Collection $squads) use (&$count) {
 
