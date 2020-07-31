@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Domain\Actions\DispatchPendingTreasureEmails;
 use App\Domain\Models\ChestBlueprint;
 use App\Domain\Models\EmailSubscription;
+use App\Domain\Models\Squad;
 use App\Factories\Models\ChestFactory;
 use App\Factories\Models\SquadFactory;
 use App\Mail\TreasuresPending;
@@ -17,6 +18,17 @@ use Tests\TestCase;
 class DispatchPendingTreasureEmailsTest extends TestCase
 {
     use DatabaseTransactions;
+
+    /** @var Squad */
+    protected $squad;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->squad = SquadFactory::new()->create();
+        $squadNotificationSub = EmailSubscription::squadNotifications();
+        $this->squad->user->emailSubscriptions()->save($squadNotificationSub);
+    }
 
     /**
      * @param int $weeksBack
@@ -35,13 +47,12 @@ class DispatchPendingTreasureEmailsTest extends TestCase
     public function it_will_not_queue_emails_to_squads_with_a_recent_opened_chest()
     {
         Mail::fake();
-        $chest = ChestFactory::new()->opened()->create();
-        $squad = $chest->squad;
+        $chest = ChestFactory::new()->opened()->withSquadID($this->squad->id)->create();
 
         $this->getDomainAction()->execute();
 
-        Mail::assertNotQueued(TreasuresPending::class, function (TreasuresPending $mail) use ($squad) {
-            return $mail->squad->id === $squad->id;
+        Mail::assertNotQueued(TreasuresPending::class, function (TreasuresPending $mail) {
+            return $mail->squad->id === $this->squad->id;
         });
     }
 
@@ -51,35 +62,14 @@ class DispatchPendingTreasureEmailsTest extends TestCase
     public function it_will_not_queue_emails_to_squads_with_a_non_recent_unopened_chest()
     {
         Mail::fake();
-        $chest = ChestFactory::new()->create([
+        $chest = ChestFactory::new()->withSquadID($this->squad->id)->create([
             'created_at' => now()->subMonths(2)
         ]);
-        $squad = $chest->squad;
 
         $this->getDomainAction()->execute();
 
-        Mail::assertNotQueued(TreasuresPending::class, function (TreasuresPending $mail) use ($squad) {
-            return $mail->squad->id === $squad->id;
-        });
-    }
-
-    /**
-     * @test
-     */
-    public function it_will_queue_emails_to_squads_with_a_recent_unopened_chest()
-    {
-        Mail::fake();
-        $squad = SquadFactory::new()->create();
-        $chestsCount = rand(2, 5);
-        $chestFactory = ChestFactory::new()->withSquadID($squad->id);
-        for ($i = 1; $i <= $chestsCount; $i++) {
-            $chestFactory->create();
-        }
-
-        $this->getDomainAction()->execute();
-
-        Mail::assertQueued(TreasuresPending::class, function (TreasuresPending $mail) use ($squad, $chestsCount) {
-            return $mail->squad->id === $squad->id && $mail->unopenedChestsCount === $chestsCount;
+        Mail::assertNotQueued(TreasuresPending::class, function (TreasuresPending $mail) {
+            return $mail->squad->id === $this->squad->id;
         });
     }
 
@@ -93,13 +83,31 @@ class DispatchPendingTreasureEmailsTest extends TestCase
             ->where('description', '=', 'Newcomer Chest')
             ->first();
 
-        $chest = ChestFactory::new()->withChestBlueprintID($newcomerBlueprint->id)->create();
-        $squad = $chest->squad;
+        $chest = ChestFactory::new()->withChestBlueprintID($newcomerBlueprint->id)->withSquadID($this->squad->id)->create();
 
         $this->getDomainAction()->execute();
 
-        Mail::assertNotQueued(TreasuresPending::class, function (TreasuresPending $mail) use ($squad) {
-            return $mail->squad->id === $squad->id;
+        Mail::assertNotQueued(TreasuresPending::class, function (TreasuresPending $mail) {
+            return $mail->squad->id === $this->squad->id;
+        });
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_queue_emails_to_squads_with_a_recent_unopened_chest()
+    {
+        Mail::fake();
+        $chestsCount = rand(2, 5);
+        $chestFactory = ChestFactory::new()->withSquadID($this->squad->id);
+        for ($i = 1; $i <= $chestsCount; $i++) {
+            $chestFactory->create();
+        }
+
+        $this->getDomainAction()->execute();
+
+        Mail::assertQueued(TreasuresPending::class, function (TreasuresPending $mail) use ($chestsCount) {
+            return $mail->squad->id === $this->squad->id && $mail->unopenedChestsCount === $chestsCount;
         });
     }
 
