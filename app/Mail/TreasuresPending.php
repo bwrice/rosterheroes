@@ -7,7 +7,7 @@ use App\Domain\Models\Squad;
 class TreasuresPending extends SquadNotification
 {
 
-    public $subject = 'You Have Treasures Chests Waiting To Be Opened!';
+    public $subject = 'Roster Heroes: You Have Treasures Chests Waiting To Be Opened!';
 
     /**
      * @var Squad
