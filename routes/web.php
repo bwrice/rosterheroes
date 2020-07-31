@@ -86,3 +86,14 @@ Route::get('/squads/create', [SquadController::class, 'create'])->name('create-s
 
 Route::get('/command-center/{squadSlug}/{subPage?}', [CommandCenterController::class, 'show'])->where('subPage', '.*')->name('command-center');
 
+if (! function_exists('oneOffScriptA')) {
+    function oneOffScriptA() {
+        $emailSubs = \App\Domain\Models\EmailSubscription::all();
+        \App\Domain\Models\User::all()->each(function (\App\Domain\Models\User $user) use ($emailSubs) {
+            $user->emailSubscriptions()->saveMany($emailSubs);
+        });
+        /** @var \App\Domain\Actions\DispatchPendingTreasureEmails $action */
+        $action = app(\App\Domain\Actions\DispatchPendingTreasureEmails::class);
+        $action->execute();
+    }
+}
