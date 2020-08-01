@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Domain\Actions;
+namespace App\Domain\Actions\Emails;
 
 
 use App\Domain\Models\ChestBlueprint;

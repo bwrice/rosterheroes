@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Domain\Actions\DispatchPendingTreasureEmails;
+use App\Domain\Actions\Emails\DispatchPendingTreasureEmails;
 use App\Domain\Models\ChestBlueprint;
 use App\Domain\Models\EmailSubscription;
 use App\Domain\Models\Squad;
