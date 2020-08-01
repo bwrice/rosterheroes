@@ -3,6 +3,7 @@
 
 namespace App\Domain\Actions;
 
+use App\Domain\Models\EmailSubscription;
 use App\Domain\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -19,6 +20,9 @@ class CreateUserAction
             'name' => $name,
             'email_verified_at' => $emailVerifiedAt
         ]);
-        return $user;
+
+        $user->emailSubscriptions()->saveMany(EmailSubscription::all());
+
+        return $user->fresh();
     }
 }

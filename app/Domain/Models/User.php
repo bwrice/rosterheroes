@@ -2,7 +2,8 @@
 
 namespace App\Domain\Models;
 
-use App\Domain\Models\Squad;
+use App\Domain\Traits\HasUuid;
+use App\Domain\Models\EmailSubscription;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -19,10 +20,11 @@ use Laravel\Passport\HasApiTokens;
  * @property string $name
  *
  * @property EloquentCollection $squads
+ * @property EloquentCollection $emailSubscriptions
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, Notifiable;
+    use HasApiTokens, Notifiable, HasUuid;
 
     /**
      * The attributes that are mass assignable.
@@ -56,23 +58,13 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
-    /**
-     *
-     * A helper method to quickly retrieve by uuid.
-     *
-     * @param string $uuid
-     * @return static|null
-     */
-    public static function uuid(string $uuid)
-    {
-        /** @var static $model */
-        $model = static::query()->where('uuid', $uuid)->first();
-        return $model;
-    }
-
     public function maxSquadsReached()
     {
         return $this->squads()->count() >= 1;
     }
 
+    public function emailSubscriptions()
+    {
+        return $this->belongsToMany(EmailSubscription::class)->withTimestamps();
+    }
 }

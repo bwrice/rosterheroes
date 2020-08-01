@@ -75,6 +75,17 @@
                     Privacy Policy
                 </a>
             </div>
+
+            <div class="w-full mt-4 mb-1">
+                <div class="h-1 mx-auto bg-teal-800 opacity-50 my-0 py-0 rounded"></div>
+            </div>
+
+            <div class="flex pt-2 flex-col w-full justify-center">
+
+                <a class="mx-auto w-2/3 sm:w-3/4" href="/login/google">
+                    <img alt="signup through google" src="{{asset('/images/btn_google_signin_dark_normal_web@2x.png')}}">
+                </a>
+            </div>
         </div>
 
         <div class="text-gray-400 mt-6">

@@ -5,6 +5,7 @@ namespace App\Domain\Actions;
 
 
 use App\Domain\Models\ChestBlueprint;
+use App\Domain\Models\EmailSubscription;
 use App\Domain\Models\Squad;
 use App\Facades\Admin;
 use App\Mail\TreasuresPending;
@@ -24,18 +25,30 @@ class DispatchPendingTreasureEmails
             ->where('description', '=', 'Newcomer Chest')
             ->first()->id;
 
+        $now = now();
+
         Squad::query()->whereHas('unopenedChests', function (Builder $builder) use ($newcomerChestBlueprintID) {
 
-            $builder->where('created_at', '>=', now()->subWeeks($this->weeksBack))
-                ->where(function (Builder $builder) use ($newcomerChestBlueprintID) {
+            $builder->where(function (Builder $builder) use ($newcomerChestBlueprintID) {
                     $builder->where('chest_blueprint_id', '!=', $newcomerChestBlueprintID)
                         ->orWhereNull('chest_blueprint_id');
                 });
 
-        })->withCount('unopenedChests')->chunk(200, function (Collection $squads) use (&$count) {
+        })->whereHas('user', function (Builder $builder) {
 
-            $squads->each(function (Squad $squad) {
-                Mail::to($squad->user)->queue(new TreasuresPending($squad, $squad->unopened_chests_count));
+            $builder->whereHas('emailSubscriptions', function (Builder $builder) {
+                $builder->where('name', '=', EmailSubscription::SQUAD_NOTIFICATIONS);
+            });
+
+        })->withCount('unopenedChests')->chunk(200, function (Collection $squads) use (&$count, $now) {
+
+            $delayCounter = 0;
+            $squads->each(function (Squad $squad) use ($now, &$delayCounter) {
+                // add some randomized time in minutes and seconds to delay emails
+                $secondsDelay = (60 * ($delayCounter + rand(0,3))) + rand(1,59);
+                $when = $now->clone()->addSeconds($secondsDelay);
+                Mail::to($squad->user)->later($when, new TreasuresPending($squad, $squad->unopened_chests_count));
+                $delayCounter++;
             });
             $count += $squads->count();
         });

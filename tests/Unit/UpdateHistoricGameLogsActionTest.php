@@ -102,7 +102,7 @@ class UpdateHistoricGameLogsActionTest extends TestCase
         $awayTeam->league_id = $differentLeague->id;
         $awayTeam->save();
 
-        $leagues = (new LeagueCollection())->push($this->league);
+        $leagues = League::query()->where('id', '=', $this->league->id)->get();
 
         Queue::fake();
 

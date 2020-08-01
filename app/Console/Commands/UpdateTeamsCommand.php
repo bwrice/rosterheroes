@@ -56,6 +56,6 @@ class UpdateTeamsCommand extends Command
             return League::abbreviation($leagueAbbreviations)->get();
 
         }
-        return League::live();
+        return League::all();
     }
 }
