@@ -30,15 +30,10 @@ class DispatchPendingTreasureEmailsTest extends TestCase
         $this->squad->user->emailSubscriptions()->save($squadNotificationSub);
     }
 
-    /**
-     * @param int $weeksBack
-     * @return DispatchPendingTreasureEmails
-     */
-    protected function getDomainAction(int $weeksBack = 1)
+    protected function getDomainAction()
     {
         /** @var DispatchPendingTreasureEmails $domainAction */
-        $domainAction = app(DispatchPendingTreasureEmails::class);
-        return $domainAction->setWeeksBack($weeksBack);
+        return app(DispatchPendingTreasureEmails::class);
     }
 
     /**
