@@ -3,17 +3,22 @@
 namespace App\Mail;
 
 use App\Domain\Collections\HeroCollection;
+use App\Domain\Models\Campaign;
+use App\Domain\Models\CampaignStop;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Squad;
 use App\Domain\Models\Week;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
 class AlmostReadyForWeek extends SquadNotification
 {
     use Queueable, SerializesModels;
+
+    public $subject;
     /**
      * @var Squad
      */
@@ -26,6 +31,18 @@ class AlmostReadyForWeek extends SquadNotification
      * @var HeroCollection
      */
     public $heroesWithoutSpirits;
+    /**
+     * @var int
+     */
+    public $questsAvailable;
+    /**
+     * @var int
+     */
+    public $sideQuestsAvailable;
+    /**
+     * @var Collection
+     */
+    public $campaignStops;
 
     /**
      * AlmostReadyForWeek constructor.
@@ -37,14 +54,41 @@ class AlmostReadyForWeek extends SquadNotification
         parent::__construct();
         $this->squad = $squad;
         $this->week = $week;
-        $this->heroesWithoutSpirits = $this->setHeroesWithoutSpirits();
+        $this->setSubject();
+        $this->setHeroesWithoutSpirits();
+        $this->campaignStops = $squad->getCurrentCampaign() ? $squad->getCurrentCampaign()->campaignStops : new Collection();
+        $this->setQuestAvailability();
     }
 
     protected function setHeroesWithoutSpirits()
     {
-        return $this->squad->heroes->filter(function (Hero $hero) {
+        $this->heroesWithoutSpirits = $this->squad->heroes->filter(function (Hero $hero) {
             return is_null($hero->player_spirit_id);
         });
+    }
+
+    protected function setQuestAvailability()
+    {
+        $questsPerWeek = $this->squad->getQuestsPerWeek();
+        $sideQuestsPerWeek = $this->squad->getSideQuestsPerQuest() * $questsPerWeek;
+        $currentCampaign = $this->squad->getCurrentCampaign();
+        if ($currentCampaign) {
+            $campaignStops = $currentCampaign->campaignStops;
+            $this->questsAvailable = $questsPerWeek - $campaignStops->count();
+            $this->sideQuestsAvailable = $sideQuestsPerWeek - $campaignStops->sum(function (CampaignStop $campaignStop) {
+                    return $campaignStop->sideQuestResults->count();
+                });
+        } else {
+            $this->questsAvailable = $questsPerWeek;
+            $this->sideQuestsAvailable = $sideQuestsPerWeek;
+        }
+    }
+
+    protected function setSubject()
+    {
+        $subject = 'Roster Heroes: ';
+        $subject .= $this->squad->name . ' almost ready for week!';
+        return $subject;
     }
 
     /**
@@ -54,6 +98,6 @@ class AlmostReadyForWeek extends SquadNotification
      */
     public function build()
     {
-        return $this->view('view.name');
+        return $this->markdown('emails.almost-ready-for-week');
     }
 }
