@@ -54,6 +54,12 @@ class PlayerSpirit extends EventSourcedModel
         return $this->belongsTo(PlayerGameLog::class);
     }
 
+    public function playerFullName()
+    {
+        $player = $this->playerGameLog->player;
+        return $player->first_name . ' ' . $player->last_name;
+    }
+
     public function week()
     {
         return $this->belongsTo(Week::class);
