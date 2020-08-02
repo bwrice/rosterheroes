@@ -27,15 +27,20 @@ class UpdateGamesJob implements ShouldQueue
      * @var int
      */
     public $yearDelta;
+    /**
+     * @var bool
+     */
+    public $regularSeason;
 
-    public function __construct(League $league, int $yearDelta = 0)
+    public function __construct(League $league, int $yearDelta = 0, $regularSeason = true)
     {
         $this->league = $league;
         $this->yearDelta = $yearDelta;
+        $this->regularSeason = $regularSeason;
     }
 
     public function handle(UpdateGames $domainAction)
     {
-        $domainAction->execute($this->league, $this->yearDelta);
+        $domainAction->execute($this->league, $this->yearDelta, $this->regularSeason);
     }
 }
