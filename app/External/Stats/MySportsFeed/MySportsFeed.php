@@ -169,7 +169,7 @@ class MySportsFeed implements StatsIntegration
         $teams = $league->teams()->with('externalTeams')->get();
         $data = $this->gameAPI->getData($league, $yearDelta, $regularSeason);
         $integrationType = $this->getIntegrationType();
-        return collect($data)->map(function ($gameData) use ($teams, $integrationType) {
+        return collect($data)->map(function ($gameData) use ($teams, $integrationType, $regularSeason) {
             try {
                 $scheduleData = $gameData['schedule'];
                 $homeAndAwayTeams = $this->getTeamsFromSchedule($scheduleData, $teams, $integrationType);
@@ -179,7 +179,8 @@ class MySportsFeed implements StatsIntegration
                     $homeAndAwayTeams['home_team'],
                     $homeAndAwayTeams['away_team'],
                     $scheduleData['id'],
-                    $scheduleData['scheduleStatus']
+                    $scheduleData['scheduleStatus'],
+                    $regularSeason ? Game::SEASON_TYPE_REGULAR : Game::SEASON_TYPE_POSTSEASON
                 );
 
             } catch (\Exception $exception) {

@@ -1208,4 +1208,85 @@ class MySportsFeedTest extends TestCase
             ]
         ];
     }
+
+    /**
+     * @test
+     * @dataProvider provides_it_will_season_type_correctly_on_game_dtos_when_updating_games
+     * @param $regularSeason
+     * @param $seasonType
+     */
+    public function it_will_season_type_correctly_on_game_dtos_when_updating_games($regularSeason, $seasonType)
+    {
+        /** @var MySportsFeed $msfIntegration */
+        $msfIntegration = app(MySportsFeed::class);
+        $integrationType = $msfIntegration->getIntegrationType();
+        $mlb = League::mlb();
+
+        /** @var Team $homeTeamOne */
+        $homeTeamOne = factory(Team::class)->create([
+            'league_id' => $mlb->id
+        ]);
+
+        $homeTeamOne->externalTeams()->create([
+            'integration_type_id' => $integrationType->id,
+            'external_id' => $homeTeamOneExternalID = uniqid()
+        ]);
+
+        /** @var Team $awayTeamOne */
+        $awayTeamOne = factory(Team::class)->create([
+            'league_id' => $mlb->id
+        ]);
+
+        $awayTeamOne->externalTeams()->create([
+            'integration_type_id' => $integrationType->id,
+            'external_id' => $awayTeamOneExternalID = uniqid()
+        ]);
+
+        $gameOneID = uniqid();
+
+        $clientMock = \Mockery::mock(MSFClient::class);
+        $clientMock->shouldReceive('getData')->andReturn([
+            'games' => [
+                [
+                    'schedule' => [
+                        'homeTeam' => [
+                            'id' => $homeTeamOneExternalID
+                        ],
+                        'awayTeam' => [
+                            'id' => $awayTeamOneExternalID
+                        ],
+                        'startTime' => '2019-5-10 16:40:00',
+                        'scheduleStatus' => Game::SCHEDULE_STATUS_NORMAL,
+                        'id' => $gameOneID
+                    ],
+                ]
+            ]
+        ]);
+
+        // put the mock into the container
+        app()->instance(MSFClient::class, $clientMock);
+
+
+        /** @var MySportsFeed $msfIntegration */
+        $msfIntegration = app(MySportsFeed::class);
+        $gameDTOs = $msfIntegration->getGameDTOs($mlb, 0, $regularSeason);
+
+        /** @var GameDTO $gameDTO */
+        $gameDTO = $gameDTOs->first();
+        $this->assertEquals($seasonType, $gameDTO->getSeasonType());
+    }
+
+    public function provides_it_will_season_type_correctly_on_game_dtos_when_updating_games()
+    {
+        return [
+            Game::SEASON_TYPE_REGULAR => [
+                'regularSeason' => true,
+                'seasonType' => Game::SEASON_TYPE_REGULAR
+            ],
+            Game::SEASON_TYPE_POSTSEASON => [
+                'regularSeason' => false,
+                'seasonType' => Game::SEASON_TYPE_POSTSEASON
+            ],
+        ];
+    }
 }
