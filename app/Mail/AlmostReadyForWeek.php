@@ -54,10 +54,7 @@ class AlmostReadyForWeek extends SquadNotification
         parent::__construct();
         $this->squad = $squad;
         $this->week = $week;
-        $this->setSubject();
-        $this->setHeroesWithoutSpirits();
-        $this->campaignStops = $squad->getCurrentCampaign() ? $squad->getCurrentCampaign()->campaignStops : new Collection();
-        $this->setQuestAvailability();
+        $this->subject = $this->setSubject();
     }
 
     protected function setHeroesWithoutSpirits()
@@ -100,6 +97,9 @@ class AlmostReadyForWeek extends SquadNotification
      */
     public function build()
     {
+        $this->setHeroesWithoutSpirits();
+        $this->campaignStops = $this->squad->getCurrentCampaign() ? $this->squad->getCurrentCampaign()->campaignStops : new Collection();
+        $this->setQuestAvailability();
         return $this->markdown('emails.almost-ready-for-week');
     }
 }
