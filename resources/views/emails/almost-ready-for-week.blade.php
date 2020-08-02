@@ -38,8 +38,8 @@ in your campaign for the week.
 Your squad, {{$squad->name}}, has not joined any quests or side-quests for the current week. Without joining any quests, you cannot
 gain experience or earn any treasures. Head to the command center and build your campaign to join quests and side-quests.
 @else
-{{$squad->name}}'s campaign has available quests and side-quest to join. More quests means
-more experience and more treasures! Head over to the command center and finish building out your campaign.
+{{$squad->name}}'s campaign has available quests and side-quest to join. There's no penalty for joining as many quests as possible each week.
+More quests means more experience and more treasures! Head over to the command center and finish building out your campaign.
 @endif
 @component('mail::table')
 | Quest | Side Quests Available |
