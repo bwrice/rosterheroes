@@ -58,7 +58,7 @@ class UpdateGamesCommand extends Command
 
             UpdateGamesJob::dispatch($league, $yearDelta, true)->onQueue('stats-integration')->delay($now->clone()->addSeconds($count * 30));
             UpdateGamesJob::dispatch($league, $yearDelta, false)->onQueue('stats-integration')->delay($now->clone()->addSeconds(($count * 30) + 15));
-            $count++;
+            $count += 2;
         });
 
         return $count;
