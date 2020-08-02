@@ -50,7 +50,7 @@ class DispatchAlmostReadyForWeekEmailsTest extends TestCase
     /**
      * @test
      */
-    public function it_will_send_an_email_to_a_squad_with_no_campaign_for_the_current_week()
+    public function it_will_send_an_email_to_a_squad_with_filled_heroes_but_no_campaign_for_the_current_week()
     {
         // Create a hero with a player spirit
         $playerSpirit = PlayerSpiritFactory::new()->forWeek($this->currentWeek)->create();
@@ -74,6 +74,12 @@ class DispatchAlmostReadyForWeekEmailsTest extends TestCase
      */
     public function it_will_not_send_an_email_to_a_user_unsubscribed_to_squad_notifications()
     {
+        // Create a hero with a player spirit to make the squad seem active
+        $playerSpirit = PlayerSpiritFactory::new()->forWeek($this->currentWeek)->create();
+        $hero = HeroFactory::new()->forSquad($this->squad)->create();
+        $hero->player_spirit_id = $playerSpirit->id;
+        $hero->save();
+
         // Subscribe user to everything EXCEPT squad notifications
         $subs = EmailSubscription::all()->reject(function (EmailSubscription $emailSubscription) {
             return $emailSubscription->name === EmailSubscription::SQUAD_NOTIFICATIONS;
