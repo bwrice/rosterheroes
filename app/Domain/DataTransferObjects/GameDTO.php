@@ -9,8 +9,8 @@
 namespace App\Domain\DataTransferObjects;
 
 
+use App\Domain\Models\Game;
 use App\Domain\Models\Team;
-use Carbon\CarbonImmutable;
 use Carbon\CarbonInterface;
 
 class GameDTO
@@ -19,36 +19,42 @@ class GameDTO
     /**
      * @var Team
      */
-    private $homeTeam;
+    protected $homeTeam;
     /**
      * @var Team
      */
-    private $awayTeam;
+    protected $awayTeam;
     /**
      * @var CarbonInterface
      */
-    private $startsAt;
+    protected $startsAt;
     /**
      * @var string
      */
-    private $externalID;
+    protected $externalID;
     /**
      * @var string
      */
-    private $status;
+    protected $status;
+    /**
+     * @var string
+     */
+    protected $seasonType;
 
     public function __construct(
         CarbonInterface $startsAt,
         Team $homeTeam,
         Team $awayTeam,
         string $externalID,
-        string $status)
+        string $status,
+        string $seasonType = Game::SEASON_TYPE_REGULAR)
     {
         $this->startsAt = $startsAt;
         $this->homeTeam = $homeTeam;
         $this->awayTeam = $awayTeam;
         $this->externalID = $externalID;
         $this->status = $status;
+        $this->seasonType = $seasonType;
     }
 
     /**
@@ -89,5 +95,13 @@ class GameDTO
     public function getStatus(): string
     {
         return $this->status;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSeasonType(): string
+    {
+        return $this->seasonType;
     }
 }
