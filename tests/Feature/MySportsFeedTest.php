@@ -12,8 +12,10 @@ use App\Domain\Models\League;
 use App\Domain\Models\Player;
 use App\Domain\Models\PlayerGameLog;
 use App\Domain\Models\Position;
+use App\Domain\Models\StatsIntegrationType;
 use App\Domain\Models\StatType;
 use App\Domain\Models\Team;
+use App\External\Stats\MySportsFeed\BoxScoreAPI;
 use App\External\Stats\MySportsFeed\MSFClient;
 use App\External\Stats\MySportsFeed\MySportsFeed;
 use App\External\Stats\MySportsFeed\StatAmountDTOs\StatNameConverters\MLBStatNameConverter;
@@ -21,9 +23,11 @@ use App\External\Stats\MySportsFeed\StatAmountDTOs\StatNameConverters\NBAStatNam
 use App\External\Stats\MySportsFeed\StatAmountDTOs\StatNameConverters\NFLStatNameConverter;
 use App\External\Stats\MySportsFeed\StatAmountDTOs\StatNameConverters\NHLStatNameConverter;
 use App\External\Stats\StatsIntegration;
+use App\Factories\Models\GameFactory;
 use Carbon\CarbonImmutable;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -1159,5 +1163,49 @@ class MySportsFeedTest extends TestCase
         $playerGameLogDTOs = $msfIntegration->getGameLogDTOs($game, 0);
 
         $this->assertFalse($playerGameLogDTOs->isGameOver());
+    }
+
+    /**
+     * @test
+     * @dataProvider provides_the_game_log_boxscore_api_will_hit_the_correct_endpoint_based_on_the_game_season_type
+     * @param $seasonType
+     * @param $expectedEndpointString
+     */
+    public function the_game_log_boxscore_api_will_hit_the_correct_endpoint_based_on_the_game_season_type($seasonType, $expectedEndpointString)
+    {
+
+        $integrationID = StatsIntegrationType::query()->where('name', '=', MySportsFeed::INTEGRATION_NAME)->first()->id;
+        $game = GameFactory::new()->withSeasonType($seasonType)->create();
+        $game->externalGames()->create([
+            'external_id' => Str::random(),
+            'integration_type_id' => $integrationID
+        ]);
+
+        /*
+         * Mock the client and add expectation the url contains the correct season-type based on the game's season type
+         */
+        $this->mock(MSFClient::class)->shouldReceive('getData')->withArgs(function ($url) use ($expectedEndpointString) {
+            $pos = strpos($url, $expectedEndpointString);
+            return $pos != false;
+        })->andReturn([]);
+
+        /** @var BoxScoreAPI $boxScoreAPI */
+        $boxScoreAPI = app(BoxScoreAPI::class);
+
+        $boxScoreAPI->getData($game, $integrationID);
+    }
+
+    public function provides_the_game_log_boxscore_api_will_hit_the_correct_endpoint_based_on_the_game_season_type()
+    {
+        return [
+            Game::SEASON_TYPE_REGULAR => [
+                'seasonType' => Game::SEASON_TYPE_REGULAR,
+                'expectedEndpointString' => 'regular'
+            ],
+            Game::SEASON_TYPE_POSTSEASON => [
+                'seasonType' => Game::SEASON_TYPE_POSTSEASON,
+                'expectedEndpointString' => 'playoffs'
+            ]
+        ];
     }
 }
