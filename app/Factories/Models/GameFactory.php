@@ -28,6 +28,8 @@ class GameFactory
     /** @var CarbonInterface|null */
     protected $startsAt;
 
+    protected $seasonType = Game::SEASON_TYPE_REGULAR;
+
     public static function new()
     {
         return new self();
@@ -43,7 +45,7 @@ class GameFactory
             'home_team_id' => $homeTeam->id,
             'away_team_id' => $awayTeam->id,
             'starts_at' => $this->getStartsAt(),
-            'season_type' => Game::SEASON_TYPE_REGULAR
+            'season_type' => $this->seasonType
         ], $extra));
         return $game;
     }
@@ -119,5 +121,19 @@ class GameFactory
             return $this->week->adventuring_locks_at->addHours(3);
         }
         return Date::now()->addHours(3);
+    }
+
+    public function regularSeason()
+    {
+        $clone = clone $this;
+        $clone->seasonType = Game::SEASON_TYPE_REGULAR;
+        return $clone;
+    }
+
+    public function postSeason()
+    {
+        $clone = clone $this;
+        $clone->seasonType = Game::SEASON_TYPE_POSTSEASON;
+        return $clone;
     }
 }
