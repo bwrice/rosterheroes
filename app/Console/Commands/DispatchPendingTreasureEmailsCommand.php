@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Domain\Actions\DispatchPendingTreasureEmails;
+use App\Domain\Actions\Emails\DispatchPendingTreasureEmails;
 use Illuminate\Console\Command;
 
 class DispatchPendingTreasureEmailsCommand extends Command

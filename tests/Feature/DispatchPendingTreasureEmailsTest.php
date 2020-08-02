@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Domain\Actions\DispatchPendingTreasureEmails;
+use App\Domain\Actions\Emails\DispatchPendingTreasureEmails;
 use App\Domain\Models\ChestBlueprint;
 use App\Domain\Models\EmailSubscription;
 use App\Domain\Models\Squad;
@@ -30,15 +30,10 @@ class DispatchPendingTreasureEmailsTest extends TestCase
         $this->squad->user->emailSubscriptions()->save($squadNotificationSub);
     }
 
-    /**
-     * @param int $weeksBack
-     * @return DispatchPendingTreasureEmails
-     */
-    protected function getDomainAction(int $weeksBack = 1)
+    protected function getDomainAction()
     {
         /** @var DispatchPendingTreasureEmails $domainAction */
-        $domainAction = app(DispatchPendingTreasureEmails::class);
-        return $domainAction->setWeeksBack($weeksBack);
+        return app(DispatchPendingTreasureEmails::class);
     }
 
     /**

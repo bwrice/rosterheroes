@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Domain\Actions;
+namespace App\Domain\Actions\Emails;
 
 
 use App\Domain\Models\ChestBlueprint;
@@ -16,8 +16,6 @@ use Illuminate\Support\Facades\Mail;
 
 class DispatchPendingTreasureEmails
 {
-    protected $weeksBack = 6;
-
     public function execute()
     {
         $count = 0;
@@ -55,15 +53,5 @@ class DispatchPendingTreasureEmails
 
         Admin::notify(new BulkEmailsDispatched('Pending Treasures', $count));
         return $count;
-    }
-
-    /**
-     * @param int $weeksBack
-     * @return DispatchPendingTreasureEmails
-     */
-    public function setWeeksBack(int $weeksBack): DispatchPendingTreasureEmails
-    {
-        $this->weeksBack = $weeksBack;
-        return $this;
     }
 }
