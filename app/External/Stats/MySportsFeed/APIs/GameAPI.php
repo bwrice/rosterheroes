@@ -30,14 +30,7 @@ class GameAPI
         $this->leagueSeasonConverter = $leagueSeasonConverter;
     }
 
-    public function getData(League $league, int $yearDelta = 0)
-    {
-        $regularSeasonGames = $this->getGames($league, $yearDelta, true);
-        $postSeasonGames = $this->getGames($league, $yearDelta, false);
-        return array_merge($regularSeasonGames, $postSeasonGames);
-    }
-
-    protected function getGames(League $league, int $yearDelta, $regularSeason = true)
+    public function getData(League $league, int $yearDelta = 0, $regularSeason = true)
     {
         $season = $this->leagueSeasonConverter->getSeason($league, $yearDelta, $regularSeason);
         $subURL = strtolower($league->abbreviation) . '/'. $season;
