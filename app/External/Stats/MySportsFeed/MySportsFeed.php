@@ -163,11 +163,11 @@ class MySportsFeed implements StatsIntegration
         });
     }
 
-    public function getGameDTOs(League $league, int $yearDelta = 0): Collection
+    public function getGameDTOs(League $league, int $yearDelta = 0, bool $regularSeason = true): Collection
     {
         /** @var TeamCollection $teams */
         $teams = $league->teams()->with('externalTeams')->get();
-        $data = $this->gameAPI->getData($league, $yearDelta);
+        $data = $this->gameAPI->getData($league, $yearDelta, $regularSeason);
         $integrationType = $this->getIntegrationType();
         return collect($data)->map(function ($gameData) use ($teams, $integrationType) {
             try {

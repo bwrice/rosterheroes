@@ -21,12 +21,12 @@ class UpdateGames
         $this->statsIntegration = $statsIntegration;
     }
 
-    public function execute(League $league, int $yearDelta = 0)
+    public function execute(League $league, int $yearDelta = 0, $regularSeason = true)
     {
         if ( $yearDelta > 0 ) {
             throw new \RuntimeException("Year delta must be negative, " . $yearDelta . " was passed");
         }
-        $gameDTOs = $this->statsIntegration->getGameDTOs($league, $yearDelta);
+        $gameDTOs = $this->statsIntegration->getGameDTOs($league, $yearDelta, $regularSeason);
         $gameDTOs->each(function (GameDTO $gameDTO) {
             UpdateSingleGameJob::dispatch($gameDTO);
         });

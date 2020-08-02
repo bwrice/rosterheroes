@@ -13,6 +13,8 @@ class CampaignStopFactory
     /** @var CampaignFactory|null */
     protected $campaignFactory;
 
+    protected $campaignID;
+
     public static function new()
     {
         return new self();
@@ -32,6 +34,9 @@ class CampaignStopFactory
 
     protected function getCampaignID()
     {
+        if ($this->campaignID) {
+            return $this->campaignID;
+        }
         if ($this->campaignFactory) {
             return $this->campaignFactory->create()->id;
         }
@@ -42,6 +47,13 @@ class CampaignStopFactory
     {
         $clone = clone $this;
         $clone->campaignFactory = $campaignFactory;
+        return $clone;
+    }
+
+    public function withCampaignID(int $campaignID)
+    {
+        $clone = clone $this;
+        $clone->campaignID = $campaignID;
         return $clone;
     }
 

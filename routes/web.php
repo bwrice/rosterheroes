@@ -104,8 +104,8 @@ if (! function_exists('oneOffScriptA')) {
         \App\Domain\Models\User::all()->each(function (\App\Domain\Models\User $user) use ($emailSubs) {
             $user->emailSubscriptions()->saveMany($emailSubs);
         });
-        /** @var \App\Domain\Actions\DispatchPendingTreasureEmails $action */
-        $action = app(\App\Domain\Actions\DispatchPendingTreasureEmails::class);
+        /** @var \App\Domain\Actions\Emails\DispatchPendingTreasureEmails $action */
+        $action = app(\App\Domain\Actions\Emails\DispatchPendingTreasureEmails::class);
         $action->execute();
     }
 }

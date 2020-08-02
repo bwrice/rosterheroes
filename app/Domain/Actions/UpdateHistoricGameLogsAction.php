@@ -23,11 +23,12 @@ class UpdateHistoricGameLogsAction
     public function execute(Collection $leagues = null, $force = false, int $yearDelta = 0): int
     {
         $count = 0;
-        $this->getGameQuery($leagues, $force)->chunk(100, function (GameCollection $games) use (&$count, $yearDelta) {
+        $now = now();
+        $this->getGameQuery($leagues, $force)->chunk(100, function (GameCollection $games) use (&$count, $yearDelta, $now) {
 
-            $games->each(function (Game $game) use (&$count, $yearDelta) {
+            $games->each(function (Game $game) use (&$count, $yearDelta, $now) {
 
-                UpdatePlayerGameLogsJob::dispatch($game, $yearDelta)->onQueue('stats-integration')->delay($count * 10);
+                UpdatePlayerGameLogsJob::dispatch($game, $yearDelta)->onQueue('stats-integration')->delay($now->clone()->addSeconds($count * 10));
                 $count++;
             });
         });
