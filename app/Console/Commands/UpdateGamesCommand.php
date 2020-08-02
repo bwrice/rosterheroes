@@ -56,7 +56,8 @@ class UpdateGamesCommand extends Command
         $yearDelta = - (int) $this->argument('yearsAgo');
         $this->getLeagues()->each(function (League $league) use (&$count, $yearDelta, $now) {
 
-            UpdateGamesJob::dispatch($league, $yearDelta)->onQueue('stats-integration')->delay($now->clone()->addSeconds(30));
+            UpdateGamesJob::dispatch($league, $yearDelta, true)->onQueue('stats-integration')->delay($now->clone()->addSeconds($count * 30));
+            UpdateGamesJob::dispatch($league, $yearDelta, false)->onQueue('stats-integration')->delay($now->clone()->addSeconds(($count * 30) + 15));
             $count++;
         });
 
