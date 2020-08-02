@@ -22,7 +22,7 @@ interface StatsIntegration
 
     public function getTeamDTOs(League $league, int $yearDelta): Collection;
 
-    public function getGameDTOs(League $league, int $yearDelta): Collection;
+    public function getGameDTOs(League $league, int $yearDelta, bool $regularSeason): Collection;
 
     public function getGameLogDTOs(Game $game, int $yearDelta): GameLogDTOCollection;
 
