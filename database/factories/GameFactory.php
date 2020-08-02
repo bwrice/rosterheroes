@@ -21,6 +21,7 @@ $factory->define(\App\Domain\Models\Game::class, function (Faker $faker) {
             /** @var \App\Domain\Models\Week $week */
             $week = factory(\App\Domain\Models\Week::class)->create();
             return $week->adventuring_locks_at->copy()->addHours(6);
-        }
+        },
+        'season_type' => \App\Domain\Models\Game::SEASON_TYPE_REGULAR
     ];
 });

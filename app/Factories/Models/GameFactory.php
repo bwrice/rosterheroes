@@ -42,7 +42,8 @@ class GameFactory
         $game = Game::query()->create(array_merge([
             'home_team_id' => $homeTeam->id,
             'away_team_id' => $awayTeam->id,
-            'starts_at' => $this->getStartsAt()
+            'starts_at' => $this->getStartsAt(),
+            'season_type' => Game::SEASON_TYPE_REGULAR
         ], $extra));
         return $game;
     }
