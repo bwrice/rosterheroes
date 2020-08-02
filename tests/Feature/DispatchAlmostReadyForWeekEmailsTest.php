@@ -52,6 +52,12 @@ class DispatchAlmostReadyForWeekEmailsTest extends TestCase
      */
     public function it_will_send_an_email_to_a_squad_with_no_campaign_for_the_current_week()
     {
+        // Create a hero with a player spirit
+        $playerSpirit = PlayerSpiritFactory::new()->forWeek($this->currentWeek)->create();
+        $hero = HeroFactory::new()->forSquad($this->squad)->create();
+        $hero->player_spirit_id = $playerSpirit->id;
+        $hero->save();
+
         $this->assertNull($this->squad->getCurrentCampaign());
 
         Mail::fake();
@@ -126,7 +132,7 @@ class DispatchAlmostReadyForWeekEmailsTest extends TestCase
 
         for ($i = 1; $i <= $this->squad->getQuestsPerWeek(); $i++) {
             $campaignStop = CampaignStopFactory::new()->withCampaignID($campaign->id)->create();
-            for ($i = 1; $i <= $this->squad->getSideQuestsPerQuest(); $i++) {
+            for ($j = 1; $j <= $this->squad->getSideQuestsPerQuest(); $j++) {
                 SideQuestResultFactory::new()->withCampaignStopID($campaignStop->id)->create();
             }
         }
@@ -136,6 +142,25 @@ class DispatchAlmostReadyForWeekEmailsTest extends TestCase
         $hero = HeroFactory::new()->forSquad($this->squad)->create();
         $hero->player_spirit_id = $playerSpirit->id;
         $hero->save();
+
+        Mail::fake();
+
+        $this->getDomainAction()->execute();
+
+        Mail::assertNotQueued(AlmostReadyForWeek::class, function (AlmostReadyForWeek $almostReadyForWeek) {
+            return $this->squad->id === $almostReadyForWeek->squad->id;
+        });
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_not_email_a_squad_with_all_empty_heroes_an_no_campaign_for_week()
+    {
+        // Create an empty hero
+        $hero = HeroFactory::new()->forSquad($this->squad)->create();
+
+        $this->assertNull($this->squad->getCurrentCampaign());
 
         Mail::fake();
 
