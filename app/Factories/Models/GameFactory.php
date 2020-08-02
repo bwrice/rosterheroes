@@ -123,6 +123,13 @@ class GameFactory
         return Date::now()->addHours(3);
     }
 
+    public function withSeasonType(string $seasonType)
+    {
+        $clone = clone $this;
+        $clone->seasonType = $seasonType;
+        return $clone;
+    }
+
     public function regularSeason()
     {
         $clone = clone $this;
