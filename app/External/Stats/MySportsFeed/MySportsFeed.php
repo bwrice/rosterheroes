@@ -163,7 +163,7 @@ class MySportsFeed implements StatsIntegration
         });
     }
 
-    public function getGameDTOs(League $league, int $yearDelta, bool $regularSeason): Collection
+    public function getGameDTOs(League $league, int $yearDelta = 0, bool $regularSeason = true): Collection
     {
         /** @var TeamCollection $teams */
         $teams = $league->teams()->with('externalTeams')->get();
