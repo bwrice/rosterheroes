@@ -1204,7 +1204,7 @@ class MySportsFeedTest extends TestCase
             ],
             Game::SEASON_TYPE_POSTSEASON => [
                 'seasonType' => Game::SEASON_TYPE_POSTSEASON,
-                'expectedEndpointString' => 'playoffs'
+                'expectedEndpointString' => 'playoff'
             ]
         ];
     }
