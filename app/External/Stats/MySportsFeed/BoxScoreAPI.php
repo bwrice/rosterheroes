@@ -43,10 +43,12 @@ class BoxScoreAPI
         $queryArgs['playerStats'] = $this->statTypeArgs($league);
         $queryArgs['teamStats'] = 'none';
 
-        $season = $this->leagueSeasonConverter->getSeason($league, $yearDelta);
+
+        $regularSeason = $game->season_type === Game::SEASON_TYPE_REGULAR;
+        $season = $this->leagueSeasonConverter->getSeason($league, $yearDelta, $regularSeason);
 
         $subURL = strtolower($league->abbreviation) . '/'. $season;
-        $subURL .= $game->season_type === Game::SEASON_TYPE_POSTSEASON ? '-playoffs' : '-regular';
+        $subURL .= $regularSeason ? '-regular' : '-playoff';
         $subURL .= '/games/' . $externalGame->external_id . '/boxscore.json';
 
         $responseData = $this->client->getData($subURL, $queryArgs);
