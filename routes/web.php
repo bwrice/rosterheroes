@@ -10,6 +10,7 @@
 |
 */
 
+use App\Facades\CurrentWeek;
 use App\Http\Controllers\UnsubscribeToEmailsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\ForgotPasswordController;
@@ -86,3 +87,19 @@ Route::get('/squads/create', [SquadController::class, 'create'])->name('create-s
 
 Route::get('/command-center/{squadSlug}/{subPage?}', [CommandCenterController::class, 'show'])->where('subPage', '.*')->name('command-center');
 
+if (! function_exists('myHelper')) {
+    function myHelper() {
+        $currentWeekID = \App\Facades\CurrentWeek::id();
+        $validPeriodForWeek = CurrentWeek::validGamePeriod();
+
+        $games = \App\Domain\Models\Game::query()->whereHas('playerGameLogs', function (\Illuminate\Database\Eloquent\Builder $builder) use ($currentWeekID) {
+            $builder->whereHas('playerSpirit', function (\Illuminate\Database\Eloquent\Builder $builder) use ($currentWeekID) {
+                $builder->where('week_id', '=', $currentWeekID);
+            });
+        })->where(function (\Illuminate\Database\Eloquent\Builder $builder) use ($validPeriodForWeek) {
+            $builder->where('starts_at', '<', $validPeriodForWeek->getStartDate())->orWhere('starts_at', '>', $validPeriodForWeek->getEndDate());
+        })->get();
+
+        return $games;
+    }
+}
