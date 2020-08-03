@@ -43,7 +43,6 @@ class BoxScoreAPI
         $queryArgs['playerStats'] = $this->statTypeArgs($league);
         $queryArgs['teamStats'] = 'none';
 
-
         $regularSeason = $game->season_type === Game::SEASON_TYPE_REGULAR;
         $season = $this->leagueSeasonConverter->getSeason($league, $yearDelta, $regularSeason);
 
