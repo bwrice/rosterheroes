@@ -32,7 +32,9 @@ class BuildNewCurrentWeekAction
         ]);
 
         $step = 1;
-        FinalizeWeekJob::dispatch($step)->delay(WeekService::finalizingStartsAt($adventuringLocksAt));
+        $extraHoursToAdd = config('week.finalize_extra_hours_delay');
+        $delay = WeekService::finalizingStartsAt($adventuringLocksAt)->clone()->addHours($extraHoursToAdd);
+        FinalizeWeekJob::dispatch($step)->delay($delay);
         return $newCurrentWeek;
     }
 }

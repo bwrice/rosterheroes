@@ -10,6 +10,7 @@ use Carbon\CarbonInterface;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
@@ -74,14 +75,18 @@ class BuildNewCurrentWeekActionTest extends TestCase
     */
     public function it_will_dispatch_finalize_week_step_on_correctly_delayed()
     {
+        $extraHoursDelay = rand(2, 8);
+        Config::set('week.finalize_extra_hours_delay', $extraHoursDelay);
+
         /** @var BuildNewCurrentWeekAction $domainAction */
         $domainAction = app(BuildNewCurrentWeekAction::class);
         $weekCreated = $domainAction->execute();
         Queue::assertPushed(FinalizeWeekJob::class, 1);
-        Queue::assertPushed(FinalizeWeekJob::class, function (FinalizeWeekJob $job) use ($weekCreated) {
+        Queue::assertPushed(FinalizeWeekJob::class, function (FinalizeWeekJob $job) use ($weekCreated, $extraHoursDelay) {
             /** @var CarbonInterface $delay */
             $delay = $job->delay;
-            return ($delay->timestamp === WeekService::finalizingStartsAt($weekCreated->adventuring_locks_at)->timestamp) && ($job->step === 1);
+            $expectedDelay = WeekService::finalizingStartsAt($weekCreated->adventuring_locks_at)->clone()->addHours($extraHoursDelay);
+            return ($delay->timestamp === $expectedDelay->timestamp) && ($job->step === 1);
         });
     }
 }
