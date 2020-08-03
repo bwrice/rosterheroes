@@ -9,7 +9,7 @@ use App\Facades\CurrentWeek;
 use App\Facades\WeekService;
 use App\Jobs\FinalizeWeekJob;
 
-class DispatchUpcomingFinalizeWeekJob
+class DispatchJobToFinalizeWeek
 {
     public function execute(Week $week = null)
     {

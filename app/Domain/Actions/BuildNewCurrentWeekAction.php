@@ -13,11 +13,11 @@ use Illuminate\Support\Str;
 class BuildNewCurrentWeekAction
 {
     /**
-     * @var DispatchUpcomingFinalizeWeekJob
+     * @var DispatchJobToFinalizeWeek
      */
     protected $dispatchUpcomingFinalizeWeekJob;
 
-    public function __construct(DispatchUpcomingFinalizeWeekJob $dispatchUpcomingFinalizeWeekJob)
+    public function __construct(DispatchJobToFinalizeWeek $dispatchUpcomingFinalizeWeekJob)
     {
         $this->dispatchUpcomingFinalizeWeekJob = $dispatchUpcomingFinalizeWeekJob;
     }
