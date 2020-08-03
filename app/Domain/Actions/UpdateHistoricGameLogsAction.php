@@ -47,7 +47,7 @@ class UpdateHistoricGameLogsAction
             $query = $query->forLeagues($leagues->pluck('id')->toArray());
         }
         if (! $force) {
-            $query = $query->whereNull('finalized_at')->where('schedule_status', '=', Game::SCHEDULE_STATUS_NORMAL);
+            $query = $query->whereNull('finalized_at');
         }
         return $query;
     }
