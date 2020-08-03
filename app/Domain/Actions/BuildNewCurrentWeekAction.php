@@ -13,6 +13,16 @@ use Illuminate\Support\Str;
 class BuildNewCurrentWeekAction
 {
     /**
+     * @var DispatchUpcomingFinalizeWeekJob
+     */
+    protected $dispatchUpcomingFinalizeWeekJob;
+
+    public function __construct(DispatchUpcomingFinalizeWeekJob $dispatchUpcomingFinalizeWeekJob)
+    {
+        $this->dispatchUpcomingFinalizeWeekJob = $dispatchUpcomingFinalizeWeekJob;
+    }
+
+    /**
      * @return Week
      */
     public function execute(): Week
@@ -31,10 +41,8 @@ class BuildNewCurrentWeekAction
             'adventuring_locks_at' => $adventuringLocksAt
         ]);
 
-        $step = 1;
-        $extraHoursToAdd = config('week.finalize_extra_hours_delay');
-        $delay = WeekService::finalizingStartsAt($adventuringLocksAt)->clone()->addHours($extraHoursToAdd);
-        FinalizeWeekJob::dispatch($step)->delay($delay);
+        $this->dispatchUpcomingFinalizeWeekJob->execute($newCurrentWeek);
+
         return $newCurrentWeek;
     }
 }
