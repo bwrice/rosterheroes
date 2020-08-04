@@ -3,10 +3,12 @@
 namespace App;
 
 use App\Domain\Interfaces\Merchant;
+use App\Domain\Models\HeroPostType;
 use App\Domain\Models\Province;
 use App\Domain\Models\Traits\HasUniqueNames;
 use App\Domain\Traits\HasNameSlug;
 use App\Domain\Traits\HasUuid;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -20,6 +22,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $slug
  *
  * @property Province $province
+ *
+ * @property Collection $heroPostTypes
  */
 class RecruitmentCamp extends Model implements Merchant
 {
@@ -47,5 +51,10 @@ class RecruitmentCamp extends Model implements Merchant
     public function getMerchantType(): string
     {
         return 'recruitment camp';
+    }
+
+    public function heroPostTypes()
+    {
+        return $this->belongsToMany(HeroPostType::class);
     }
 }
