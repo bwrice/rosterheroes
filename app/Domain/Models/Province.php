@@ -2,11 +2,13 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Collections\MerchantCollection;
 use App\Domain\Collections\ProvinceCollection;
 use App\Domain\Collections\QuestCollection;
 use App\Domain\Models\Json\ViewBox;
 use App\Domain\QueryBuilders\ProvinceQueryBuilder;
 use App\Domain\Traits\HasNameSlug;
+use App\RecruitmentCamp;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -34,6 +36,7 @@ use Spatie\Sluggable\SlugOptions;
  *
  * @property Collection $stashes
  * @property Collection $shops
+ * @property Collection $recruitmentCamps
  *
  * @method static Builder bordersCount(int $count)
  * @method static Builder starting
@@ -95,6 +98,11 @@ class Province extends EventSourcedModel
         return $this->hasMany(Shop::class);
     }
 
+    public function recruitmentCamps()
+    {
+        return $this->hasMany(RecruitmentCamp::class);
+    }
+
     /**
      * @return BelongsToMany|ProvinceQueryBuilder
      */
@@ -154,6 +162,7 @@ class Province extends EventSourcedModel
 
     public function getMerchants()
     {
-        return $this->shops;
+        $merchants = new MerchantCollection($this->shops);
+        return $merchants->merge($this->recruitmentCamps);
     }
 }
