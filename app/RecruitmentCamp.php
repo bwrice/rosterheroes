@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Domain\Interfaces\Merchant;
+use App\Domain\Models\HeroClass;
 use App\Domain\Models\HeroPostType;
 use App\Domain\Models\Province;
 use App\Domain\Models\Traits\HasUniqueNames;
@@ -24,6 +25,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Province $province
  *
  * @property Collection $heroPostTypes
+ * @property Collection $heroClasses
  */
 class RecruitmentCamp extends Model implements Merchant
 {
@@ -55,6 +57,11 @@ class RecruitmentCamp extends Model implements Merchant
 
     public function heroPostTypes()
     {
-        return $this->belongsToMany(HeroPostType::class);
+        return $this->belongsToMany(HeroPostType::class)->withTimestamps();
+    }
+
+    public function heroClasses()
+    {
+        return $this->belongsToMany(HeroClass::class)->withTimestamps();
     }
 }
