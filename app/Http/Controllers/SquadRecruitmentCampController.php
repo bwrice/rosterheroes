@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Domain\Models\Item;
+use App\Domain\Models\RecruitmentCamp;
+use App\Domain\Models\Shop;
+use App\Domain\Models\Squad;
+use App\Http\Resources\RecruitmentCampResource;
+use App\Policies\SquadPolicy;
+use Illuminate\Http\Request;
+
+class SquadRecruitmentCampController extends Controller
+{
+
+    public function show($squadSlug, $recruitmentCampSlug)
+    {
+        $squad = Squad::findSlugOrFail($squadSlug);
+        $recruitmentCamp = RecruitmentCamp::findSlugOrFail($recruitmentCampSlug);
+
+        $this->authorize(SquadPolicy::VISIT_MERCHANT, [
+            $squad,
+            $recruitmentCamp
+        ]);
+
+        return new RecruitmentCampResource($recruitmentCamp->load(['heroPostTypes.heroRaces', 'heroClasses']));
+    }
+}

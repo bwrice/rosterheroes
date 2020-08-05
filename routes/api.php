@@ -18,6 +18,7 @@ use App\Http\Controllers\OpenChestController;
 use App\Http\Controllers\SellToShopController;
 use App\Http\Controllers\SideQuestResultEventsController;
 use App\Http\Controllers\SquadQuestController;
+use App\Http\Controllers\SquadRecruitmentCampController;
 use App\Http\Controllers\SquadShopController;
 use App\Http\Controllers\SquadStashController;
 use App\Http\Controllers\StashItemController;
@@ -169,6 +170,11 @@ Route::prefix('v1')->group(function () {
             Route::get('{squadSlug}/shops/{shopSlug}', [SquadShopController::class, 'show']);
             Route::post('{squadSlug}/shops/{shopSlug}/buy', BuyItemFromShopController::class);
             Route::post('{squadSlug}/shops/{shopSlug}/sell', SellToShopController::class);
+
+            /*
+             * RECRUITMENT CAMPS
+             */
+            Route::get('{squadSlug}/recruitment-camps/{recruitmentCampSlug}', [SquadRecruitmentCampController::class, 'show']);
         });
 
         Route::get('/squad/{squadSlug}/hero-classes', SquadHeroClassController::class);
