@@ -26,7 +26,7 @@ class SquadPolicy
         return $user->id === $squad->user_id;
     }
 
-    public function visitShop(User $user, Squad $squad, Merchant $merchant)
+    public function visitMerchant(User $user, Squad $squad, Merchant $merchant)
     {
         if ($squad->user_id !== $user->id) {
             return false;
