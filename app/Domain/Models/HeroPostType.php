@@ -2,8 +2,13 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Behaviors\HeroPostTypes\DwarfPostTypeBehavior;
+use App\Domain\Behaviors\HeroPostTypes\ElfPostTypeBehavior;
+use App\Domain\Behaviors\HeroPostTypes\HeroPostTypeBehavior;
+use App\Domain\Behaviors\HeroPostTypes\HumanPostTypeBehavior;
+use App\Domain\Behaviors\HeroPostTypes\OrcPostTypeBehavior;
 use App\Domain\Collections\HeroRaceCollection;
-use App\Domain\Models\HeroRace;
+use App\Exceptions\UnknownBehaviorException;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use phpDocumentor\Reflection\Types\Self_;
@@ -60,5 +65,23 @@ class HeroPostType extends Model
     public static function squadStarting()
     {
         return collect(self::SQUAD_STARTING_HERO_POST_TYPES);
+    }
+
+    /**
+     * @return HeroPostTypeBehavior
+     */
+    public function getBehavior(): HeroPostTypeBehavior
+    {
+        switch ($this->name) {
+            case self::HUMAN:
+                return app(HumanPostTypeBehavior::class);
+            case self::ELF:
+                return app(ElfPostTypeBehavior::class);
+            case self::DWARF:
+                return app(DwarfPostTypeBehavior::class);
+            case self::ORC:
+                return app(OrcPostTypeBehavior::class);
+        }
+        throw new UnknownBehaviorException($this->name, HeroPostTypeBehavior::class);
     }
 }
