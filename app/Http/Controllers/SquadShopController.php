@@ -16,7 +16,7 @@ class SquadShopController extends Controller
         $squad = Squad::findSlugOrFail($squadSlug);
         $shop = Shop::findSlugOrFail($shopSlug);
 
-        $this->authorize(SquadPolicy::VISIT_SHOP, [
+        $this->authorize(SquadPolicy::VISIT_MERCHANT, [
             $squad,
             $shop
         ]);

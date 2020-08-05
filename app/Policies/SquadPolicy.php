@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Domain\Interfaces\Merchant;
 use App\Domain\Models\Shop;
 use App\Domain\Models\User;
 use App\Domain\Models\Squad;
@@ -11,7 +12,7 @@ class SquadPolicy
 {
     public const MANAGE = 'manage';
     public const VIEW = 'view';
-    public const VISIT_SHOP = 'visit-shop';
+    public const VISIT_MERCHANT = 'visit-merchant';
 
     use HandlesAuthorization;
 
@@ -25,12 +26,12 @@ class SquadPolicy
         return $user->id === $squad->user_id;
     }
 
-    public function visitShop(User $user, Squad $squad, Shop $shop)
+    public function visitShop(User $user, Squad $squad, Merchant $merchant)
     {
         if ($squad->user_id !== $user->id) {
             return false;
         }
 
-        return $squad->province_id === $shop->province_id;
+        return $squad->province_id === $merchant->getProvinceID();
     }
 }
