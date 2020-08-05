@@ -9,11 +9,9 @@ use App\Domain\Interfaces\Merchant;
 use App\Domain\Models\Json\ViewBox;
 use App\Domain\QueryBuilders\ProvinceQueryBuilder;
 use App\Domain\Traits\HasNameSlug;
-use App\RecruitmentCamp;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Spatie\Sluggable\SlugOptions;
 
 /**
  * Class Province

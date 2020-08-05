@@ -1,11 +1,8 @@
 <?php
 
-namespace App;
+namespace App\Domain\Models;
 
 use App\Domain\Interfaces\Merchant;
-use App\Domain\Models\HeroClass;
-use App\Domain\Models\HeroPostType;
-use App\Domain\Models\Province;
 use App\Domain\Models\Traits\HasUniqueNames;
 use App\Domain\Traits\HasNameSlug;
 use App\Domain\Traits\HasUuid;
