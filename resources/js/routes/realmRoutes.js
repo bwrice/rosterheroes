@@ -7,6 +7,7 @@ import TravelView from "../components/commandCenter/views/realm/TravelView";
 import CommandCenter from "../views/CommandCenter";
 import SquadAppBarContent from "../components/commandCenter/appBarContent/SquadAppBarContent";
 import ShopView from "../components/commandCenter/views/realm/merchants/ShopView";
+import RecruitmentCampView from "../components/commandCenter/views/realm/merchants/RecruitmentCampView";
 
 export const realmRoutes = {
     path: '/command-center/:squadSlug/realm',
@@ -39,12 +40,23 @@ export const realmRoutes = {
             }
         },
         {
-            path: 'shops/:shopSlug',
+            path: 'shops/:merchantSlug',
             components: {
                 default: ShopView,
                 appBarContent: SquadAppBarContent
             },
             name: 'shop',
+            meta: {
+                footerButton: 'realm'
+            }
+        },
+        {
+            path: 'recruitment-camps/:merchantSlug',
+            components: {
+                default: RecruitmentCampView,
+                appBarContent: SquadAppBarContent
+            },
+            name: 'recruitment-camp',
             meta: {
                 footerButton: 'realm'
             }
