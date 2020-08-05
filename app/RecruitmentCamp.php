@@ -40,6 +40,16 @@ class RecruitmentCamp extends Model implements Merchant
         return $this->belongsTo(Province::class);
     }
 
+    public function heroPostTypes()
+    {
+        return $this->belongsToMany(HeroPostType::class)->withTimestamps();
+    }
+
+    public function heroClasses()
+    {
+        return $this->belongsToMany(HeroClass::class)->withTimestamps();
+    }
+
     public function getName(): string
     {
         return $this->name;
@@ -55,13 +65,13 @@ class RecruitmentCamp extends Model implements Merchant
         return 'recruitment-camp';
     }
 
-    public function heroPostTypes()
+    public function getProvince(): Province
     {
-        return $this->belongsToMany(HeroPostType::class)->withTimestamps();
+        return $this->province;
     }
 
-    public function heroClasses()
+    public function getProvinceID(): int
     {
-        return $this->belongsToMany(HeroClass::class)->withTimestamps();
+        return $this->province_id;
     }
 }
