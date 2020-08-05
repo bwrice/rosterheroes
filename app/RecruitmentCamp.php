@@ -52,7 +52,7 @@ class RecruitmentCamp extends Model implements Merchant
 
     public function getMerchantType(): string
     {
-        return 'recruitment camp';
+        return 'recruitment-camp';
     }
 
     public function heroPostTypes()

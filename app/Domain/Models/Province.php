@@ -5,6 +5,7 @@ namespace App\Domain\Models;
 use App\Domain\Collections\MerchantCollection;
 use App\Domain\Collections\ProvinceCollection;
 use App\Domain\Collections\QuestCollection;
+use App\Domain\Interfaces\Merchant;
 use App\Domain\Models\Json\ViewBox;
 use App\Domain\QueryBuilders\ProvinceQueryBuilder;
 use App\Domain\Traits\HasNameSlug;
@@ -164,5 +165,12 @@ class Province extends EventSourcedModel
     {
         $merchants = new MerchantCollection($this->shops);
         return $merchants->merge($this->recruitmentCamps);
+    }
+
+    public function availableMerchants()
+    {
+        return $this->getMerchants()->map(function (Merchant $merchant) {
+            return $merchant->getMerchantType();
+        })->unique();
     }
 }
