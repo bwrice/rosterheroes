@@ -22,12 +22,19 @@ export default class Merchant {
     }
 
     getRoute(squadSlug) {
+
+        let merchantSlugKey = 'shopSlug';
+        if (this.type === 'recruitment-camp') {
+            merchantSlugKey = 'recruitmentCampSlug'
+        }
+        let params = {
+            squadSlug: squadSlug
+        };
+        params[merchantSlugKey] = this.slug;
+
         return {
             name: this.type,
-            params: {
-                squadSlug: squadSlug,
-                merchantSlug: this.slug
-            }
-        }
+            params: params
+        };
     }
 }
