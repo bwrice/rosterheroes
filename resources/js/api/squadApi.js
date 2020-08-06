@@ -126,3 +126,8 @@ export async function sellItemBundleToShop(squadSlug, shopSlug, itemUuids) {
     });
     return response.data;
 }
+
+export async function getRecruitmentCamp(squadSlug, recruitmentCampSlug) {
+    let response = await axios.get(ROUTE_PREFIX + squadSlug + '/recruitment-camps/' + recruitmentCampSlug);
+    return response.data;
+}
