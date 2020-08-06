@@ -25,6 +25,7 @@ class HeroPostTypeResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'recruitmentCost' => $this->recruitmentCost,
             'heroRaceIDs' => $this->heroRaces->map(function (HeroRace $heroRace) {
                 return $heroRace->id;
             })

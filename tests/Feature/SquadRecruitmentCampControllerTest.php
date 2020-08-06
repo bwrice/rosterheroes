@@ -73,7 +73,21 @@ class SquadRecruitmentCampControllerTest extends TestCase
 
         $this->assertEquals($data['uuid'], $recruitmentCamp->uuid);
 
-        $this->assertEquals(count($data['heroPostTypes']), $heroPostTypes->count());
         $this->assertEquals(count($data['heroClassIDs']), $heroClasses->count());
+
+        $heroPostTypeArrays = $data['heroPostTypes'];
+        $this->assertEquals(count($heroPostTypeArrays), $heroPostTypes->count());
+
+        foreach ($heroPostTypeArrays as $heroPostTypeArray) {
+            /** @var HeroPostType $heroPostType */
+            $heroPostType = $heroPostTypes->first(function (HeroPostType $heroPostType) use ($heroPostTypeArray) {
+                return $heroPostType->id === $heroPostTypeArray['id'];
+            });
+
+            $this->assertGreaterThan(10000, $heroPostTypeArray['recruitmentCost']);
+
+            $recruitmentCost = $heroPostType->getRecruitmentCost($squad);
+            $this->assertEquals($recruitmentCost, $heroPostTypeArray['recruitmentCost']);
+        }
     }
 }

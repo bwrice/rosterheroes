@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Domain\Models\HeroPostType;
 use App\Domain\Models\Item;
 use App\Domain\Models\RecruitmentCamp;
 use App\Domain\Models\Shop;
@@ -23,6 +24,12 @@ class SquadRecruitmentCampController extends Controller
             $recruitmentCamp
         ]);
 
-        return new RecruitmentCampResource($recruitmentCamp->load(['heroPostTypes.heroRaces', 'heroClasses']));
+        $recruitmentCamp->load(['heroPostTypes.heroRaces', 'heroClasses']);
+
+        $recruitmentCamp->heroPostTypes->each(function (HeroPostType $heroPostType) use ($squad) {
+            $heroPostType->setRecruitmentCost($squad);
+        });
+
+        return new RecruitmentCampResource($recruitmentCamp);
     }
 }

@@ -29,6 +29,8 @@ class HeroPostType extends Model
     public const DWARF = 'dwarf';
     public const ORC = 'orc';
 
+    public $recruitmentCost = 0;
+
     public const SQUAD_STARTING_HERO_POST_TYPES = [
         [
             'name' => self::HUMAN,
@@ -100,6 +102,11 @@ class HeroPostType extends Model
 
         $overInitialOwnershipCount = $matches->count() - $this->squadStartingCount();
         return $this->getBehavior()->getRecruitmentCost($overInitialOwnershipCount);
+    }
+
+    public function setRecruitmentCost(Squad $squad)
+    {
+        $this->recruitmentCost = $this->getRecruitmentCost($squad);
     }
 
     public function squadStartingCount()
