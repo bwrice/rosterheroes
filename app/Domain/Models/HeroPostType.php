@@ -11,7 +11,6 @@ use App\Domain\Collections\HeroRaceCollection;
 use App\Exceptions\UnknownBehaviorException;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use phpDocumentor\Reflection\Types\Self_;
 
 
 /**
@@ -83,5 +82,32 @@ class HeroPostType extends Model
                 return app(OrcPostTypeBehavior::class);
         }
         throw new UnknownBehaviorException($this->name, HeroPostTypeBehavior::class);
+    }
+
+    /**
+     * @param Squad $squad
+     * @return int
+     */
+    public function getRecruitmentCost(Squad $squad)
+    {
+        $matches = $squad->heroPosts->filter(function (HeroPost $heroPost) {
+            return $heroPost->hero_post_type_id === $this->id;
+        });
+
+        if ($matches->isEmpty()) {
+            return $this->getBehavior()->getRecruitmentCost(0);
+        }
+
+        $overInitialOwnershipCount = $matches->count() - $this->squadStartingCount();
+        return $this->getBehavior()->getRecruitmentCost($overInitialOwnershipCount);
+    }
+
+    public function squadStartingCount()
+    {
+        $match = self::squadStarting()->first(function ($starting) {
+            return $this->name === $starting['name'];
+        });
+
+        return $match ? $match['count'] : 0;
     }
 }

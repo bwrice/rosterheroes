@@ -8,14 +8,18 @@ abstract class HeroPostTypeBehavior
 {
     protected $baseCost = 250000;
 
-    public function getRecruitmentCost(int $overInitialOwnershipCount = 1)
+    /**
+     * @param int $overInitialOwnershipCount
+     * @return int
+     */
+    public function getRecruitmentCost(int $overInitialOwnershipCount = 0)
     {
         switch ($overInitialOwnershipCount) {
-            case 1:
+            case 0:
                 return $this->baseCost;
-            case 2:
+            case 1:
                 return $this->baseCost * 4;
-            case 3:
+            case 2:
             default:
                 return $this->baseCost * 4 * (5 ** $overInitialOwnershipCount - 1);
         }
