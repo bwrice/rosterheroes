@@ -40,7 +40,7 @@ export const realmRoutes = {
             }
         },
         {
-            path: 'shops/:merchantSlug',
+            path: 'shops/:shopSlug',
             components: {
                 default: ShopView,
                 appBarContent: SquadAppBarContent
@@ -51,7 +51,7 @@ export const realmRoutes = {
             }
         },
         {
-            path: 'recruitment-camps/:merchantSlug',
+            path: 'recruitment-camps/:recruitmentCampSlug',
             components: {
                 default: RecruitmentCampView,
                 appBarContent: SquadAppBarContent
