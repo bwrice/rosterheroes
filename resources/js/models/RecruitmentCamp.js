@@ -1,4 +1,6 @@
-export default class HeroPostType {
+import HeroPostType from "./HeroPostType";
+
+export default class RecruitmentCamp {
 
     constructor({uuid, name = '', slug = '', heroPostTypes = [], heroClassIDs = []}) {
         this.uuid = uuid;
