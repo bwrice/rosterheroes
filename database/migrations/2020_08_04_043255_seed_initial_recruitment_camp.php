@@ -15,8 +15,8 @@ class SeedInitialRecruitmentCamp extends Migration
     {
         $province = \App\Domain\Models\Province::query()->where('name', '=', 'Febrijan')->first();
 
-        /** @var \App\RecruitmentCamp $camp */
-        $camp = \App\RecruitmentCamp::query()->create([
+        /** @var \App\Domain\Models\RecruitmentCamp $camp */
+        $camp = \App\Domain\Models\RecruitmentCamp::query()->create([
             'name' => 'Febrijan Recruitment Camp',
             'uuid' => \Illuminate\Support\Str::uuid(),
             'province_id' => $province->id,
