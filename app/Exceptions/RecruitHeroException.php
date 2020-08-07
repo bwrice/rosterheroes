@@ -13,7 +13,11 @@ use Throwable;
 
 class RecruitHeroException extends \Exception
 {
-    public const CODE_INVALID_SQUAD_LOCATION = 1;
+    public const CODE_WEEK_LOCKED = 1;
+    public const CODE_INVALID_SQUAD_LOCATION = 2;
+    public const CODE_INVALID_HERO_RACE = 3;
+    public const CODE_NOT_ENOUGH_GOLD = 4;
+
     /**
      * @var Squad
      */
