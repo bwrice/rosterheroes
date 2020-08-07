@@ -29,26 +29,45 @@ class RecruitHero
     /** @var HeroClass */
     protected $heroClass;
 
+    /** @var string $heroName */
+    protected $heroName;
+    /**
+     * @var AddNewHeroToSquadAction
+     */
+    private $addNewHeroToSquadAction;
+
+    public function __construct(AddNewHeroToSquadAction $addNewHeroToSquadAction)
+    {
+        $this->addNewHeroToSquadAction = $addNewHeroToSquadAction;
+    }
+
     /**
      * @param Squad $squad
      * @param RecruitmentCamp $recruitmentCamp
      * @param HeroPostType $heroPostType
      * @param HeroRace $heroRace
      * @param HeroClass $heroClass
+     * @param string $heroName
+     * @return \App\Domain\Models\Hero
      * @throws RecruitHeroException
+     * @throws \App\Exceptions\HeroPostNotFoundException
+     * @throws \App\Exceptions\InvalidHeroClassException
      */
     public function execute(
         Squad $squad,
         RecruitmentCamp $recruitmentCamp,
         HeroPostType $heroPostType,
         HeroRace $heroRace,
-        HeroClass $heroClass)
+        HeroClass $heroClass,
+        string $heroName)
     {
         $this->squad = $squad;
         $this->recruitmentCamp = $recruitmentCamp;
         $this->heroPostType = $heroPostType;
         $this->heroRace = $heroRace;
         $this->heroClass = $heroClass;
+        $this->heroName = $heroName;
+
         $this->validateWeek();
         $this->validateLocation();
         $this->validateHeroRace();
@@ -57,6 +76,8 @@ class RecruitHero
         $squad->heroPosts()->create([
             'hero_post_type_id' => $this->heroPostType->id
         ]);
+
+        return $this->addNewHeroToSquadAction->execute($this->squad->fresh(), $this->heroName, $this->heroClass, $this->heroRace);
     }
 
     /**

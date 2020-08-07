@@ -17,6 +17,7 @@ use App\Factories\Models\SquadFactory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class RecruitHeroTest extends TestCase
@@ -38,6 +39,9 @@ class RecruitHeroTest extends TestCase
     /** @var HeroRace */
     protected $heroRace;
 
+    /** @var string */
+    protected $heroName;
+
     public function setUp(): void
     {
         parent::setUp();
@@ -54,6 +58,8 @@ class RecruitHeroTest extends TestCase
         $cost = $this->heroPostType->getRecruitmentCost($this->squad);
         $this->squad->gold = $cost;
         $this->squad->save();
+
+        $this->heroName = (string) Str::random();
     }
 
     /**
@@ -71,7 +77,7 @@ class RecruitHeroTest extends TestCase
     {
         CurrentWeek::shouldReceive('adventuringLocked')->andReturn(true);
         try {
-            $this->getDomainAction()->execute($this->squad, $this->recruitmentCamp, $this->heroPostType, $this->heroRace, $this->heroClass);
+            $this->getDomainAction()->execute($this->squad, $this->recruitmentCamp, $this->heroPostType, $this->heroRace, $this->heroClass, $this->heroName);
         } catch (RecruitHeroException $exception) {
             $this->assertEquals($exception->getCode(), RecruitHeroException::CODE_WEEK_LOCKED);
             return;
@@ -90,7 +96,7 @@ class RecruitHeroTest extends TestCase
         $this->squad->save();
 
         try {
-            $this->getDomainAction()->execute($this->squad, $this->recruitmentCamp, $this->heroPostType, $this->heroRace, $this->heroClass);
+            $this->getDomainAction()->execute($this->squad, $this->recruitmentCamp, $this->heroPostType, $this->heroRace, $this->heroClass, $this->heroName);
         } catch (RecruitHeroException $exception) {
             $this->assertEquals($exception->getCode(), RecruitHeroException::CODE_INVALID_SQUAD_LOCATION);
             return;
@@ -104,13 +110,15 @@ class RecruitHeroTest extends TestCase
     public function it_will_throw_an_exception_if_the_hero_race_does_not_belong_to_the_hero_post_type()
     {
         CurrentWeek::shouldReceive('adventuringLocked')->andReturn(false);
+
+        /** @var HeroRace $invalidHeroRace */
         $invalidHeroRace = HeroRace::query()
             ->whereNotIn('id', $this->heroPostType->heroRaces->pluck('id')->toArray())
             ->inRandomOrder()
             ->first();
 
         try {
-            $this->getDomainAction()->execute($this->squad, $this->recruitmentCamp, $this->heroPostType, $invalidHeroRace, $this->heroClass);
+            $this->getDomainAction()->execute($this->squad, $this->recruitmentCamp, $this->heroPostType, $invalidHeroRace, $this->heroClass, $this->heroName);
         } catch (RecruitHeroException $exception) {
             $this->assertEquals($exception->getCode(), RecruitHeroException::CODE_INVALID_HERO_RACE);
             return;
@@ -128,7 +136,7 @@ class RecruitHeroTest extends TestCase
         $this->squad->save();
 
         try {
-            $this->getDomainAction()->execute($this->squad, $this->recruitmentCamp, $this->heroPostType, $this->heroRace, $this->heroClass);
+            $this->getDomainAction()->execute($this->squad, $this->recruitmentCamp, $this->heroPostType, $this->heroRace, $this->heroClass, $this->heroName);
         } catch (RecruitHeroException $exception) {
             $this->assertEquals($exception->getCode(), RecruitHeroException::CODE_NOT_ENOUGH_GOLD);
             return;
@@ -146,7 +154,7 @@ class RecruitHeroTest extends TestCase
         })->count();
 
 
-        $this->getDomainAction()->execute($this->squad, $this->recruitmentCamp, $this->heroPostType, $this->heroRace, $this->heroClass);
+        $this->getDomainAction()->execute($this->squad, $this->recruitmentCamp, $this->heroPostType, $this->heroRace, $this->heroClass, $this->heroName);
 
         $squad = $this->squad->fresh();
 
@@ -155,5 +163,22 @@ class RecruitHeroTest extends TestCase
         })->count();
 
         $this->assertEquals($initialPostTypesCount + 1, $currentCount);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_create_a_new_hero_for_the_squad_recruiting()
+    {
+        $initialHeroesCount = $this->squad->heroes()->count();
+
+        $heroCreated = $this->getDomainAction()->execute($this->squad, $this->recruitmentCamp, $this->heroPostType, $this->heroRace, $this->heroClass, $this->heroName);
+
+        $this->assertEquals($initialHeroesCount + 1, $this->squad->heroes()->count());
+
+        $this->assertEquals($this->heroName, $heroCreated->name);
+        $this->assertEquals($this->heroRace->id, $heroCreated->hero_race_id);
+        $this->assertEquals($this->heroClass->id, $heroCreated->hero_class_id);
+        $this->assertEquals($this->squad->id, $heroCreated->squad_id);
     }
 }
