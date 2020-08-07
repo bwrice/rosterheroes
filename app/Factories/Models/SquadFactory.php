@@ -4,6 +4,9 @@
 namespace App\Factories\Models;
 
 
+use App\Domain\Models\HeroClass;
+use App\Domain\Models\HeroPostType;
+use App\Domain\Models\HeroRace;
 use App\Domain\Models\MobileStorageRank;
 use App\Domain\Models\Province;
 use App\Domain\Models\Squad;
@@ -24,6 +27,8 @@ class SquadFactory
     protected $squadRankID;
 
     protected $mobileStorageRankID;
+
+    protected $withStartingHeroes = false;
 
     public static function new(): self
     {
@@ -56,6 +61,30 @@ class SquadFactory
             $this->heroFactories->each(function (HeroFactory $heroFactory) use ($squad) {
                 $heroFactory->forSquad($squad)->create();
             });
+        } elseif ($this->withStartingHeroes) {
+
+            $heroClasses = HeroClass::requiredStarting()->get();
+            $heroPostTypes = HeroPostType::query()->with('heroRaces')->get();
+
+            HeroPostType::squadStarting()->each(function ($squadStarting) use ($heroPostTypes, $heroClasses, $squad) {
+                /** @var HeroPostType $postType */
+                $postType = $heroPostTypes->first(function (HeroPostType $heroPostType) use ($squadStarting) {
+                    return $heroPostType->name === $squadStarting['name'];
+                });
+
+                // Create valid hero post
+                HeroPostFactory::new()->forSquad($squad->id)->forHeroPostType($postType->id)->create();
+
+                // Creat hero
+                /** @var HeroRace $heroRace */
+                $heroRace = $postType->heroRaces()->first();
+                $heroFactory = HeroFactory::new()->forSquad($squad)->heroRace($heroRace->name);
+                $heroClass = $heroClasses->shift();
+                if ($heroClass) {
+                    $heroFactory->heroClass($heroClass->name);
+                }
+                $heroFactory->create();
+            });
         }
 
         return $squad;
@@ -65,6 +94,13 @@ class SquadFactory
     {
         $clone = clone $this;
         $clone->heroFactories = $heroFactories;
+        return $clone;
+    }
+
+    public function withStartingHeroes()
+    {
+        $clone = clone $this;
+        $clone->withStartingHeroes = true;
         return $clone;
     }
 }
