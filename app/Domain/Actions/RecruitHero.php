@@ -11,6 +11,7 @@ use App\Domain\Models\RecruitmentCamp;
 use App\Domain\Models\Squad;
 use App\Exceptions\RecruitHeroException;
 use App\Facades\CurrentWeek;
+use Illuminate\Support\Facades\DB;
 
 class RecruitHero
 {
@@ -73,19 +74,22 @@ class RecruitHero
         $this->validateHeroRace();
         $this->validateGold();
 
-        $squad->heroPosts()->create([
-            'hero_post_type_id' => $this->heroPostType->id
-        ]);
+        return DB::transaction(function () {
 
-        $bonusSpiritsEssence = $this->heroPostType->getRecruitmentBonusSpiritEssence($this->squad);
-        $squad->spirit_essence += $bonusSpiritsEssence;
-        $squad->save();
+            $this->squad->heroPosts()->create([
+                'hero_post_type_id' => $this->heroPostType->id
+            ]);
 
-        $goldCost = $this->heroPostType->getRecruitmentCost($this->squad);
-        $squad->gold -= $goldCost;
-        $squad->save();
+            $bonusSpiritsEssence = $this->heroPostType->getRecruitmentBonusSpiritEssence($this->squad);
+            $this->squad->spirit_essence += $bonusSpiritsEssence;
+            $this->squad->save();
 
-        return $this->addNewHeroToSquadAction->execute($this->squad->fresh(), $this->heroName, $this->heroClass, $this->heroRace);
+            $goldCost = $this->heroPostType->getRecruitmentCost($this->squad);
+            $this->squad->gold -= $goldCost;
+            $this->squad->save();
+
+            return $this->addNewHeroToSquadAction->execute($this->squad->fresh(), $this->heroName, $this->heroClass, $this->heroRace);
+        });
     }
 
     /**

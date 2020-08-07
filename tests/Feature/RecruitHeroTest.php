@@ -42,6 +42,18 @@ class RecruitHeroTest extends TestCase
     /** @var string */
     protected $heroName;
 
+    /** @var int */
+    protected $initialGold;
+
+    /** @var int */
+    protected $initialSpiritEssence;
+
+    /** @var int */
+    protected $initialHeroPostsCount;
+
+    /** @var int */
+    protected $initialHeroesCount;
+
     public function setUp(): void
     {
         parent::setUp();
@@ -56,10 +68,23 @@ class RecruitHeroTest extends TestCase
         $this->heroClass = HeroClass::query()->inRandomOrder()->first();
 
         $cost = $this->heroPostType->getRecruitmentCost($this->squad);
-        $this->squad->gold = $cost + rand(0, 100);
+        $this->squad->gold = $this->initialGold = $cost + rand(0, 100);
         $this->squad->save();
 
+        $this->initialSpiritEssence = $this->squad->spirit_essence;
+        $this->initialHeroesCount = $this->squad->heroes()->count();
+        $this->initialHeroPostsCount = $this->squad->heroPosts()->count();
+
         $this->heroName = (string) Str::random();
+    }
+
+    protected function squadUnchanged()
+    {
+        $this->squad = $this->squad->fresh();
+        $this->assertEquals($this->initialGold, $this->squad->gold);
+        $this->assertEquals($this->initialSpiritEssence, $this->squad->spirit_essence);
+        $this->assertEquals($this->initialHeroesCount, $this->squad->heroes()->count());
+        $this->assertEquals($this->initialHeroPostsCount, $this->squad->heroPosts()->count());
     }
 
     /**
@@ -80,6 +105,7 @@ class RecruitHeroTest extends TestCase
             $this->getDomainAction()->execute($this->squad, $this->recruitmentCamp, $this->heroPostType, $this->heroRace, $this->heroClass, $this->heroName);
         } catch (RecruitHeroException $exception) {
             $this->assertEquals($exception->getCode(), RecruitHeroException::CODE_WEEK_LOCKED);
+            $this->squadUnchanged();
             return;
         }
         $this->fail("Exception not thrown");
@@ -99,6 +125,7 @@ class RecruitHeroTest extends TestCase
             $this->getDomainAction()->execute($this->squad, $this->recruitmentCamp, $this->heroPostType, $this->heroRace, $this->heroClass, $this->heroName);
         } catch (RecruitHeroException $exception) {
             $this->assertEquals($exception->getCode(), RecruitHeroException::CODE_INVALID_SQUAD_LOCATION);
+            $this->squadUnchanged();
             return;
         }
         $this->fail("Exception not thrown");
@@ -121,6 +148,7 @@ class RecruitHeroTest extends TestCase
             $this->getDomainAction()->execute($this->squad, $this->recruitmentCamp, $this->heroPostType, $invalidHeroRace, $this->heroClass, $this->heroName);
         } catch (RecruitHeroException $exception) {
             $this->assertEquals($exception->getCode(), RecruitHeroException::CODE_INVALID_HERO_RACE);
+            $this->squadUnchanged();
             return;
         }
         $this->fail("Exception not thrown");
@@ -132,13 +160,14 @@ class RecruitHeroTest extends TestCase
     public function it_will_throw_an_exception_if_the_squad_does_not_have_enough_gold_to_recruit_hero()
     {
         $goldCost = $this->heroPostType->getRecruitmentCost($this->squad);
-        $this->squad->gold = $goldCost - 1;
+        $this->squad->gold = $this->initialGold = $goldCost - 1;
         $this->squad->save();
 
         try {
             $this->getDomainAction()->execute($this->squad, $this->recruitmentCamp, $this->heroPostType, $this->heroRace, $this->heroClass, $this->heroName);
         } catch (RecruitHeroException $exception) {
             $this->assertEquals($exception->getCode(), RecruitHeroException::CODE_NOT_ENOUGH_GOLD);
+            $this->squadUnchanged();
             return;
         }
         $this->fail("Exception not thrown");
