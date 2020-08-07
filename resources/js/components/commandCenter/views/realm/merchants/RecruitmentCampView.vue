@@ -7,6 +7,11 @@
                     </v-row>
                 </v-col>
                 <v-col cols="12" offset-sm="2" sm="8" md="5" offset-md="1" lg="4" offset-lg="2" xl="3" offset-xl="3">
+                    <v-row no-gutters>
+                        <v-col cols="12">
+                            <span class="title font-weight-thin">HERO RACE</span>
+                        </v-col>
+                    </v-row>
                     <HeroPostTypeSelectorPanel
                         v-for="(heroPostType, id) in _recruitmentCamp.heroPostTypes"
                         :key="id"
@@ -15,21 +20,37 @@
                 </v-col>
                 <v-col cols="12" offset-sm="2" sm="8" md="5" offset-md="0" lg="4" xl="3">
                     <v-row no-gutters>
+                        <v-col cols="12">
+                            <span class="title font-weight-thin">HERO CLASS</span>
+                        </v-col>
+                    </v-row>
+                    <v-row no-gutters>
                         <v-col cols="4" v-for="(heroClass, id) in heroClasses" :key="id" class="px-1">
                             <RecruitmentCampHeroClassSelector
                                 :hero-class="heroClass"
                             ></RecruitmentCampHeroClassSelector>
                         </v-col>
                     </v-row>
+                    <v-row no-gutters class="pt-4">
+                        <v-col cols="12">
+                            <span class="title font-weight-thin">HERO</span>
+                        </v-col>
+                    </v-row>
                     <v-row no-gutters justify="center">
-                        <div v-if="_recruitmentHeroRace" class="hero-type-icon">
+                        <div v-if="_recruitmentHeroRace" :style="heroIconStyles">
                             <HeroRaceIcon :hero-race="_recruitmentHeroRace"></HeroRaceIcon>
                         </div>
-                        <div v-else class="empty-hero-type"></div>
-                        <div v-if="_recruitmentHeroClass" class="hero-type-icon">
+                        <div v-else class="empty-hero-type" :style="emptyHeroStyles"></div>
+                        <div v-if="_recruitmentHeroClass" :style="heroIconStyles">
                             <HeroClassIcon :hero-class="_recruitmentHeroClass"></HeroClassIcon>
                         </div>
-                        <div v-else class="empty-hero-type"></div>
+                        <div v-else class="empty-hero-type" :style="emptyHeroStyles"></div>
+                        <v-text-field
+                            label="Hero Name"
+                            name="hero-name"
+                            outlined
+                            messages="Letters, numbers and spaces allowed"
+                        ></v-text-field>
                     </v-row>
                 </v-col>
             </v-row>
@@ -76,6 +97,30 @@
             ]),
             heroClasses() {
                 return this._recruitmentCamp.heroClassIDs.map(heroClassID => this._heroClassByID(heroClassID));
+            },
+            emptyHeroStyles() {
+                if (this.$vuetify.breakpoint.name === 'xs') {
+                    return {
+                        height: '53px',
+                        width: '44px'
+                    }
+                }
+                return {
+                    height: '80px',
+                    width: '66px'
+                }
+            },
+            heroIconStyles() {
+                if (this.$vuetify.breakpoint.name === 'xs') {
+                    return {
+                        height: '60px',
+                        width: '48px'
+                    }
+                }
+                return {
+                    height: '88px',
+                    width: '70px'
+                }
             }
         }
     }
@@ -83,16 +128,10 @@
 
 <style scoped>
     .empty-hero-type {
-        height: 53px;
-        width: 44px;
         border-radius: 4px;
         border-style: dotted;
         border-color: rgba(168, 168, 168, 0.8);
         border-width: thin;
         margin: 2px;
-    }
-    .hero-type-icon {
-        height: 60px;
-        width: 48px;
     }
 </style>
