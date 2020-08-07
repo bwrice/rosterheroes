@@ -25,6 +25,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static bool adventuringOpen()
  * @method static bool adventuringLocked()
  * @method static void clearTestCurrent()
+ *
+ * @see \App\Services\CurrentWeek
  */
 class CurrentWeek extends Facade
 {
