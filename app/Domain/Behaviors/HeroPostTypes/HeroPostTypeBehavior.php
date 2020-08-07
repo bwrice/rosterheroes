@@ -24,4 +24,17 @@ abstract class HeroPostTypeBehavior
                 return $this->baseCost * 4 * (5 ** $overInitialOwnershipCount - 1);
         }
     }
+
+    public function getRecruitmentBonusSpiritEssence(int $overInitialOwnershipCount = 0)
+    {
+        switch ($overInitialOwnershipCount) {
+            case 0:
+                return 6000;
+            case 1:
+                return 5000;
+            case 2:
+            default:
+                return 4000;
+        }
+    }
 }

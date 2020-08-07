@@ -92,21 +92,32 @@ class HeroPostType extends Model
      */
     public function getRecruitmentCost(Squad $squad)
     {
-        $matches = $squad->heroPosts->filter(function (HeroPost $heroPost) {
-            return $heroPost->hero_post_type_id === $this->id;
-        });
-
-        if ($matches->isEmpty()) {
-            return $this->getBehavior()->getRecruitmentCost(0);
-        }
-
-        $overInitialOwnershipCount = $matches->count() - $this->squadStartingCount();
+        $overInitialOwnershipCount = $this->getOverInitialOwnershipCount($squad);
         return $this->getBehavior()->getRecruitmentCost($overInitialOwnershipCount);
     }
 
     public function setRecruitmentCost(Squad $squad)
     {
         $this->recruitmentCost = $this->getRecruitmentCost($squad);
+    }
+
+    public function getRecruitmentBonusSpiritEssence(Squad $squad)
+    {
+        $overInitialOwnershipCount = $this->getOverInitialOwnershipCount($squad);
+        return $this->getBehavior()->getRecruitmentBonusSpiritEssence($overInitialOwnershipCount);
+    }
+
+    public function getOverInitialOwnershipCount(Squad $squad)
+    {
+        $matches = $squad->heroPosts->filter(function (HeroPost $heroPost) {
+            return $heroPost->hero_post_type_id === $this->id;
+        });
+
+        if ($matches->isEmpty()) {
+            return 0;
+        }
+
+        return $matches->count() - $this->squadStartingCount();
     }
 
     public function squadStartingCount()
