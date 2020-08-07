@@ -43,7 +43,7 @@ class DispatchPendingTreasureEmails
             $delayCounter = 0;
             $squads->each(function (Squad $squad) use ($now, &$delayCounter) {
                 // add some randomized time in minutes and seconds to delay emails
-                $secondsDelay = (60 * ($delayCounter + rand(0,3))) + rand(1,59);
+                $secondsDelay = (15 * ($delayCounter + rand(0,3))) + rand(1,5);
                 $when = $now->clone()->addSeconds($secondsDelay);
                 Mail::to($squad->user)->later($when, new TreasuresPending($squad, $squad->unopened_chests_count));
                 $delayCounter++;
