@@ -7,7 +7,7 @@ use App\Domain\Models\Squad;
 class TreasuresPending extends SquadNotification
 {
 
-    public $subject = 'Roster Heroes: You Have Treasures Chests Waiting To Be Opened!';
+    public $subject = '';
 
     /**
      * @var Squad
@@ -27,8 +27,14 @@ class TreasuresPending extends SquadNotification
         parent::__construct();
         $this->squad = $squad;
         $this->unopenedChestsCount = $unopenedChestsCount;
+        $this->setSubject();
         $this->title = $this->buildTitle();
         $this->message = $this->buildMessage();
+    }
+
+    protected function setSubject()
+    {
+        $this->subject = $this->squad->name . ' has Treasures Chests Waiting to be Opened!';
     }
 
     protected function buildTitle()
