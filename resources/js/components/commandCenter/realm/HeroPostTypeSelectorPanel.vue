@@ -1,5 +1,11 @@
 <template>
-    <v-sheet color="#445866" class="rounded mb-2" elevation="6" style="cursor: pointer">
+    <v-sheet
+        :color="sheetColor"
+        class="rounded mb-2"
+        :elevation="elevation"
+        style="cursor: pointer"
+        @click.native="handleClick"
+    >
         <v-row no-gutters justify="center" align="center">
             <v-col cols="3">
                 <HeroRaceIcon :hero-race="heroRace" class="ma-2 ma-md-4"></HeroRaceIcon>
@@ -27,16 +33,6 @@
                         <span class="text-caption font-weight-bold">{{position.abbreviation}}</span>
                     </div>
                 </v-row>
-                <v-row no-gutters justify="center">
-                    <div v-if="heroRaceSelection" class="hero-type-icon">
-                        <HeroRaceIcon :hero-race="heroRace"></HeroRaceIcon>
-                    </div>
-                    <div v-else class="empty-hero-type"></div>
-                    <div v-if="heroClassSelection" class="hero-type-icon">
-                        <HeroClassIcon :hero-class="heroClass"></HeroClassIcon>
-                    </div>
-                    <div v-else class="empty-hero-type"></div>
-                </v-row>
             </v-col>
         </v-row>
     </v-sheet>
@@ -50,11 +46,10 @@
     import GoldIcon from "../../icons/GoldIcon";
     import PositionIcon from "../../icons/PositionIcon";
     import PositionChip from "../roster/PositionChip";
-    import HeroClassIcon from "../../icons/heroClasses/HeroClassIcon";
 
     export default {
         name: "HeroPostTypeSelectorPanel",
-        components: {HeroClassIcon, PositionChip, PositionIcon, GoldIcon, HeroRaceIcon},
+        components: {PositionChip, PositionIcon, GoldIcon, HeroRaceIcon},
         props: {
             heroPostType: {
                 type: HeroPostType,
@@ -62,6 +57,10 @@
             }
         },
         methods: {
+            ...mapActions([
+                'setRecruitmentHeroRace',
+                'setRecruitmentHeroPostType'
+            ]),
             positionColor(position) {
                 switch (position.sportID) {
                     case 1:
@@ -74,12 +73,17 @@
                     default:
                         return 'orange';
                 }
+            },
+            handleClick() {
+                this.setRecruitmentHeroRace(this.heroRace);
+                this.setRecruitmentHeroPostType(this.heroPostType);
             }
         },
         computed: {
             ...mapGetters([
                 '_heroRaceByID',
-                '_positionByID'
+                '_positionByID',
+                '_recruitmentHeroPostType'
             ]),
             heroRace() {
                 let heroRaceID = this.heroPostType.heroRaceIDs[0];
@@ -87,23 +91,23 @@
             },
             positions() {
                 return this.heroRace.positionIDs.map(positionID => this._positionByID(positionID));
+            },
+            isSelected() {
+                if (! this._recruitmentHeroPostType) {
+                    return false;
+                }
+                return this._recruitmentHeroPostType.id === this.heroPostType.id;
+            },
+            elevation() {
+                return this.isSelected ? 0 : 6;
+            },
+            sheetColor() {
+                return this.isSelected ? '#447075' : '#445866';
             }
         }
     }
 </script>
 
 <style scoped>
-    .empty-hero-type {
-        height: 53px;
-        width: 44px;
-        border-radius: 4px;
-        border-style: dotted;
-        border-color: rgba(168, 168, 168, 0.8);
-        border-width: thin;
-        margin: 2px;
-    }
-    .hero-type-icon {
-        height: 60px;
-        width: 48px;
-    }
+
 </style>
