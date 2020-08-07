@@ -181,4 +181,16 @@ class RecruitHeroTest extends TestCase
         $this->assertEquals($this->heroClass->id, $heroCreated->hero_class_id);
         $this->assertEquals($this->squad->id, $heroCreated->squad_id);
     }
+
+    /**
+     * @test
+     */
+    public function it_will_increase_a_squads_spirit_essence_by_the_correct_amount()
+    {
+        $initialSquadEssence = $this->squad->spirit_essence;
+
+        $this->getDomainAction()->execute($this->squad, $this->recruitmentCamp, $this->heroPostType, $this->heroRace, $this->heroClass, $this->heroName);
+
+        $this->assertEquals($initialSquadEssence + $this->heroPostType->getRecruitmentBonusSpiritEssence($this->squad), $this->squad->fresh()->spirit_essence);
+    }
 }

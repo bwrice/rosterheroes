@@ -77,6 +77,10 @@ class RecruitHero
             'hero_post_type_id' => $this->heroPostType->id
         ]);
 
+        $bonusSpiritsEssence = $this->heroPostType->getRecruitmentBonusSpiritEssence($this->squad);
+        $squad->spirit_essence += $bonusSpiritsEssence;
+        $squad->save();
+
         return $this->addNewHeroToSquadAction->execute($this->squad->fresh(), $this->heroName, $this->heroClass, $this->heroRace);
     }
 
