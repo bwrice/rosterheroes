@@ -56,7 +56,7 @@ class RecruitHeroTest extends TestCase
         $this->heroClass = HeroClass::query()->inRandomOrder()->first();
 
         $cost = $this->heroPostType->getRecruitmentCost($this->squad);
-        $this->squad->gold = $cost;
+        $this->squad->gold = $cost + rand(0, 100);
         $this->squad->save();
 
         $this->heroName = (string) Str::random();
@@ -192,5 +192,17 @@ class RecruitHeroTest extends TestCase
         $this->getDomainAction()->execute($this->squad, $this->recruitmentCamp, $this->heroPostType, $this->heroRace, $this->heroClass, $this->heroName);
 
         $this->assertEquals($initialSquadEssence + $this->heroPostType->getRecruitmentBonusSpiritEssence($this->squad), $this->squad->fresh()->spirit_essence);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_decrease_the_squads_gold_by_the_cost_of_recruitment()
+    {
+        $initialSquadGold = $this->squad->gold;
+
+        $this->getDomainAction()->execute($this->squad, $this->recruitmentCamp, $this->heroPostType, $this->heroRace, $this->heroClass, $this->heroName);
+
+        $this->assertEquals($initialSquadGold - $this->heroPostType->getRecruitmentCost($this->squad), $this->squad->fresh()->gold);
     }
 }

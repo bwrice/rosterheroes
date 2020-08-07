@@ -81,6 +81,10 @@ class RecruitHero
         $squad->spirit_essence += $bonusSpiritsEssence;
         $squad->save();
 
+        $goldCost = $this->heroPostType->getRecruitmentCost($this->squad);
+        $squad->gold -= $goldCost;
+        $squad->save();
+
         return $this->addNewHeroToSquadAction->execute($this->squad->fresh(), $this->heroName, $this->heroClass, $this->heroRace);
     }
 
