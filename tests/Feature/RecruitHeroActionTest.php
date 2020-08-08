@@ -9,6 +9,7 @@ use App\Domain\Models\HeroPostType;
 use App\Domain\Models\HeroRace;
 use App\Domain\Models\RecruitmentCamp;
 use App\Domain\Models\Squad;
+use App\Domain\Models\Week;
 use App\Exceptions\RecruitHeroException;
 use App\Facades\CurrentWeek;
 use App\Factories\Models\HeroFactory;
@@ -46,7 +47,8 @@ class RecruitHeroActionTest extends RecruitHeroTest
      */
     public function it_will_throw_an_exception_if_the_current_week_is_locked()
     {
-        CurrentWeek::shouldReceive('adventuringLocked')->andReturn(true);
+        factory(Week::class)->states('adventuring-closed', 'as-current')->create();
+
         try {
             $this->getDomainAction()->execute($this->squad, $this->recruitmentCamp, $this->heroPostType, $this->heroRace, $this->heroClass, $this->heroName);
         } catch (RecruitHeroException $exception) {
@@ -62,7 +64,6 @@ class RecruitHeroActionTest extends RecruitHeroTest
      */
     public function it_will_throw_an_exception_if_the_squad_is_not_at_the_same_province_as_the_camp()
     {
-        CurrentWeek::shouldReceive('adventuringLocked')->andReturn(false);
         $recruitmentCampProvinceID = $this->recruitmentCamp->province_id;
         $this->squad->province_id = $recruitmentCampProvinceID == 1 ? 2 : $recruitmentCampProvinceID - 1;
         $this->squad->save();
@@ -82,7 +83,6 @@ class RecruitHeroActionTest extends RecruitHeroTest
      */
     public function it_will_throw_an_exception_if_the_hero_race_does_not_belong_to_the_hero_post_type()
     {
-        CurrentWeek::shouldReceive('adventuringLocked')->andReturn(false);
 
         /** @var HeroRace $invalidHeroRace */
         $invalidHeroRace = HeroRace::query()

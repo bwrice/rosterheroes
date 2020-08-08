@@ -7,6 +7,7 @@ use App\Domain\Models\HeroPostType;
 use App\Domain\Models\HeroRace;
 use App\Domain\Models\RecruitmentCamp;
 use App\Domain\Models\Squad;
+use App\Domain\Models\Week;
 use App\Factories\Models\RecruitmentCampFactory;
 use App\Factories\Models\SquadFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -46,6 +47,9 @@ abstract class RecruitHeroTest extends TestCase
     /** @var int */
     protected $initialHeroesCount;
 
+    /** @var Week */
+    protected $currentWeek;
+
     public function setUp(): void
     {
         parent::setUp();
@@ -68,5 +72,6 @@ abstract class RecruitHeroTest extends TestCase
         $this->initialHeroPostsCount = $this->squad->heroPosts()->count();
 
         $this->heroName = (string) Str::random();
+        $this->currentWeek = factory(Week::class)->states('as-current', 'adventuring-open')->create();
     }
 }
