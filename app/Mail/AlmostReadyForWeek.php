@@ -85,8 +85,8 @@ class AlmostReadyForWeek extends SquadNotification
     {
         $subject = 'Roster Heroes: ';
         $subject .= $this->squad->name . ' almost ready for week. ';
-        $hoursUntilLock = $this->week->adventuring_locks_at->diffInHours(now());
-        $subject .= 'Campaigns lock in ' . $hoursUntilLock . ' hours!';
+//        $hoursUntilLock = $this->week->adventuring_locks_at->diffInHours(now());
+        $subject .= 'Campaigns lock in less than 24 hours!';
         return $subject;
     }
 
