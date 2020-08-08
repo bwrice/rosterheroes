@@ -20,7 +20,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
-class RecruitHeroTest extends TestCase
+class RecruitHeroActionTest extends TestCase
 {
     use DatabaseTransactions;
 
