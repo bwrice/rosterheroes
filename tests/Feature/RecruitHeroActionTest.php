@@ -24,8 +24,6 @@ class RecruitHeroActionTest extends RecruitHeroTest
 {
     use DatabaseTransactions;
 
-
-
     protected function squadUnchanged()
     {
         $this->squad = $this->squad->fresh();
