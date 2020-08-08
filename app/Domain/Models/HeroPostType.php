@@ -30,6 +30,7 @@ class HeroPostType extends Model
     public const ORC = 'orc';
 
     public $recruitmentCost = 0;
+    public $recruitmentBonusSpiritEssence = 0;
 
     public const SQUAD_STARTING_HERO_POST_TYPES = [
         [
@@ -99,6 +100,11 @@ class HeroPostType extends Model
     public function setRecruitmentCost(Squad $squad)
     {
         $this->recruitmentCost = $this->getRecruitmentCost($squad);
+    }
+
+    public function setRecruitmentBonusSpiritEssence(Squad $squad)
+    {
+        $this->recruitmentBonusSpiritEssence = $this->getRecruitmentBonusSpiritEssence($squad);
     }
 
     public function getRecruitmentBonusSpiritEssence(Squad $squad)

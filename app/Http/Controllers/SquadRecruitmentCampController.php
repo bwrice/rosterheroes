@@ -26,6 +26,7 @@ class SquadRecruitmentCampController extends Controller
 
         $recruitmentCamp->heroPostTypes->each(function (HeroPostType $heroPostType) use ($squad) {
             $heroPostType->setRecruitmentCost($squad);
+            $heroPostType->setRecruitmentBonusSpiritEssence($squad);
         });
 
         return new RecruitmentCampResource($recruitmentCamp);
