@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Domain\Actions\RecruitHero;
+use App\Domain\Models\Hero;
 use App\Domain\Models\HeroClass;
 use App\Domain\Models\HeroPostType;
 use App\Domain\Models\HeroRace;
 use App\Domain\Models\RecruitmentCamp;
 use App\Domain\Models\Squad;
 use App\Exceptions\RecruitHeroException;
+use App\Http\Resources\HeroResource;
 use App\Policies\SquadPolicy;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -20,6 +22,7 @@ class RecruitHeroController extends Controller
      * @param $recruitmentCampSlug
      * @param Request $request
      * @param RecruitHero $domainAction
+     * @return HeroResource
      * @throws ValidationException
      * @throws \App\Exceptions\HeroPostNotFoundException
      * @throws \App\Exceptions\InvalidHeroClassException
@@ -44,8 +47,8 @@ class RecruitHeroController extends Controller
         $heroClass = HeroClass::query()->findOrFail($request->heroClass);
 
         try {
-
-            $domainAction->execute($squad, $recruitmentCamp, $heroPostType, $heroRace, $heroClass, $request->heroName);
+            $hero = $domainAction->execute($squad, $recruitmentCamp, $heroPostType, $heroRace, $heroClass, $request->heroName);
+            return new HeroResource($hero->load(Hero::heroResourceRelations()));
 
         } catch (RecruitHeroException $recruitHeroException) {
 
