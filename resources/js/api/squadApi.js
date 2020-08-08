@@ -131,3 +131,15 @@ export async function getRecruitmentCamp(squadSlug, recruitmentCampSlug) {
     let response = await axios.get(ROUTE_PREFIX + squadSlug + '/recruitment-camps/' + recruitmentCampSlug);
     return response.data;
 }
+
+export async function recruitHero(squadSlug, recruitmentCampSlug, {heroPostTypeID, heroRaceID, heroClassID, heroName}) {
+
+    let response = await axios.post(ROUTE_PREFIX + squadSlug + '/recruitment-camps/' + recruitmentCampSlug + '/recruit', {
+        heroPostType: heroPostTypeID,
+        heroRace: heroRaceID,
+        heroClass: heroClassID,
+        heroName: heroName
+    });
+
+    return response.data;
+}

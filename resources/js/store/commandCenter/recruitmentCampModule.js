@@ -1,4 +1,5 @@
 import * as squadApi from '../../api/squadApi';
+import * as helpers from '../../helpers/vuexHelpers';
 import RecruitmentCamp from "../../models/RecruitmentCamp";
 
 export default {
@@ -56,6 +57,22 @@ export default {
         },
         setRecruitmentHeroPostType({commit}, heroPostType) {
             commit('SET_RECRUITMENT_HERO_POST_TYPE', heroPostType);
+        },
+        async recruitHero({commit, state, dispatch}, {route, heroName}) {
+            try {
+                let response = await squadApi.recruitHero(route.params.squadSlug, route.params.recruitmentCampSlug, {
+                    heroPostTypeID: state.recruitmentHeroPostType.id,
+                    heroRaceID: state.recruitmentHeroRace.id,
+                    heroClassID: state.recruitmentHeroClass.id,
+                    heroName: heroName
+                });
+
+                console.log(response.data);
+
+            } catch (e) {
+                console.log(e);
+                helpers.handleResponseErrors(e, 'recruit', dispatch);
+            }
         }
     }
 };
