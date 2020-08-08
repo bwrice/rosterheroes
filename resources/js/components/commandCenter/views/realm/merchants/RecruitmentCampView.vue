@@ -51,7 +51,7 @@
                         outlined
                         v-model="name"
                         @blur="$v.name.$touch()"
-                        @input="clearRecruitmentServerNameErrors"
+                        @input="handleNameInput"
                         :error-messages="nameErrors"
                         messages="Letters, numbers and spaces allowed"
                     ></v-text-field>
@@ -162,7 +162,8 @@
             return {
                 name: '',
                 recruitDialog: false,
-                pending: false
+                pending: false,
+                considerNameErrors: true
             }
         },
         methods: {
@@ -183,7 +184,14 @@
                     route: this.$route,
                     heroName: this.name
                 });
+                this.recruitDialog = false;
+                this.name = '';
                 this.pending = false;
+                this.considerNameErrors = false;
+            },
+            handleNameInput() {
+                this.clearRecruitmentServerNameErrors();
+                this.considerNameErrors = true;
             }
         },
         computed: {
@@ -238,6 +246,9 @@
                 return this.nameErrors.length > 0;
             },
             nameErrors() {
+                if (! this.considerNameErrors) {
+                    return [];
+                }
                 const errors = [];
                 if (!this.$v.name.$dirty) return errors;
                 !this.$v.name.required && errors.push('Name is required');

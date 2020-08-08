@@ -1,6 +1,7 @@
 import * as squadApi from '../../api/squadApi';
 import * as helpers from '../../helpers/vuexHelpers';
 import RecruitmentCamp from "../../models/RecruitmentCamp";
+import Hero from "../../models/Hero";
 
 export default {
 
@@ -48,6 +49,11 @@ export default {
         CLEAR_SERVER_NAME_ERRORS(state) {
             state.serverNameErrors = [];
         },
+        CLEAR_RECRUITMENT_SELECTIONS(state) {
+            state.recruitmentHeroRace = null;
+            state.recruitmentHeroPostType = null;
+            state.recruitmentHeroClass = null;
+        }
     },
     actions: {
         async updateRecruitmentCamp({commit}, route) {
@@ -70,14 +76,30 @@ export default {
         },
         async recruitHero({commit, state, dispatch}, {route, heroName}) {
             try {
-                let response = await squadApi.recruitHero(route.params.squadSlug, route.params.recruitmentCampSlug, {
+                let heroResponse = await squadApi.recruitHero(route.params.squadSlug, route.params.recruitmentCampSlug, {
                     heroPostTypeID: state.recruitmentHeroPostType.id,
                     heroRaceID: state.recruitmentHeroRace.id,
                     heroClassID: state.recruitmentHeroClass.id,
                     heroName: heroName
                 });
 
-                console.log(response.data);
+                commit('DECREASE_SQUAD_GOLD', state.recruitmentHeroPostType.recruitmentCost);
+                commit('INCREASE_SQUAD_ESSENCE', state.recruitmentHeroPostType.recruitmentBonusSpiritEssence);
+
+                let recruitedHero = new Hero(heroResponse.data);
+                commit('REPLACE_UPDATED_HERO', recruitedHero);
+
+                // Have to update the recruitment camp for new cost and bonus essence amounts
+                let campResponse = await squadApi.getRecruitmentCamp(route.params.squadSlug, route.params.recruitmentCampSlug);
+                let recruitmentCamp = new RecruitmentCamp(campResponse.data);
+                commit('SET_RECRUITMENT_CAMP', recruitmentCamp);
+
+                dispatch('snackBarSuccess', {
+                    text: heroName + ' recruited!',
+                    timeout: 3000
+                });
+
+                commit('CLEAR_RECRUITMENT_SELECTIONS');
 
             } catch (e) {
                 if (e.response) {
