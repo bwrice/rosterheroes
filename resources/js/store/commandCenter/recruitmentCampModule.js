@@ -9,6 +9,7 @@ export default {
         recruitmentHeroRace: null,
         recruitmentHeroPostType: null,
         recruitmentHeroClass: null,
+        serverNameErrors: []
     },
 
     getters: {
@@ -23,6 +24,9 @@ export default {
         },
         _recruitmentHeroClass(state) {
             return state.recruitmentHeroClass;
+        },
+        _recruitmentServerNameErrors(state) {
+            return state.serverNameErrors;
         }
     },
     mutations: {
@@ -37,6 +41,12 @@ export default {
         },
         SET_RECRUITMENT_HERO_POST_TYPE(state, heroPostType) {
             state.recruitmentHeroPostType = heroPostType;
+        },
+        SET_SERVER_NAME_ERRORS(state, nameErrors) {
+            state.serverNameErrors = nameErrors;
+        },
+        CLEAR_SERVER_NAME_ERRORS(state) {
+            state.serverNameErrors = [];
         },
     },
     actions: {
@@ -70,9 +80,19 @@ export default {
                 console.log(response.data);
 
             } catch (e) {
-                console.log(e);
-                helpers.handleResponseErrors(e, 'recruit', dispatch);
+                if (e.response) {
+                    let errors = e.response.data.errors;
+                    if (errors['heroName']) {
+                        commit('SET_SERVER_NAME_ERRORS', errors['heroName']);
+                        helpers.handleResponseErrors(e, 'heroName', dispatch);
+                    } else {
+                        helpers.handleResponseErrors(e, 'recruit', dispatch);
+                    }
+                }
             }
+        },
+        clearRecruitmentServerNameErrors({commit}) {
+            commit('CLEAR_SERVER_NAME_ERRORS');
         }
     }
 };
