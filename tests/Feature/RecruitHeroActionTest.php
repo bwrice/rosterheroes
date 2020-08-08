@@ -20,63 +20,11 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
-class RecruitHeroActionTest extends TestCase
+class RecruitHeroActionTest extends RecruitHeroTest
 {
     use DatabaseTransactions;
 
-    /** @var Squad */
-    protected $squad;
 
-    /** @var RecruitmentCamp */
-    protected $recruitmentCamp;
-
-    /** @var HeroPostType */
-    protected $heroPostType;
-
-    /** @var HeroClass */
-    protected $heroClass;
-
-    /** @var HeroRace */
-    protected $heroRace;
-
-    /** @var string */
-    protected $heroName;
-
-    /** @var int */
-    protected $initialGold;
-
-    /** @var int */
-    protected $initialSpiritEssence;
-
-    /** @var int */
-    protected $initialHeroPostsCount;
-
-    /** @var int */
-    protected $initialHeroesCount;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->squad = SquadFactory::new()->withStartingHeroes()->create();
-        $this->recruitmentCamp = RecruitmentCampFactory::new()->withProvinceID($this->squad->province_id)->create();
-
-        $starting = collect(HeroPostType::squadStarting())->map(function ($startingTypes) {
-            return $startingTypes['name'];
-        });
-        $this->heroPostType = HeroPostType::query()->whereIn('name', $starting->toArray())->inRandomOrder()->first();
-        $this->heroRace = $this->heroPostType->heroRaces()->inRandomOrder()->first();
-        $this->heroClass = HeroClass::query()->inRandomOrder()->first();
-
-        $cost = $this->heroPostType->getRecruitmentCost($this->squad);
-        $this->squad->gold = $this->initialGold = $cost + rand(0, 100);
-        $this->squad->save();
-
-        $this->initialSpiritEssence = $this->squad->spirit_essence;
-        $this->initialHeroesCount = $this->squad->heroes()->count();
-        $this->initialHeroPostsCount = $this->squad->heroPosts()->count();
-
-        $this->heroName = (string) Str::random();
-    }
 
     protected function squadUnchanged()
     {
