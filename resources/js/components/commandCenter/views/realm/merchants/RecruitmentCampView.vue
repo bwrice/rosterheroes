@@ -33,7 +33,7 @@
                 </v-row>
                 <v-row no-gutters class="pt-4">
                     <v-col cols="12">
-                        <span class="title font-weight-thin">HERO</span>
+                        <span class="title font-weight-thin">RECRUIT</span>
                     </v-col>
                 </v-row>
                 <v-row no-gutters justify="center">
@@ -51,11 +51,16 @@
                         outlined
                         v-model="name"
                         @blur="$v.name.$touch()"
+                        @input="clearRecruitmentServerNameErrors"
                         :error-messages="nameErrors"
                         messages="Letters, numbers and spaces allowed"
                     ></v-text-field>
                 </v-row>
-                <v-row no-gutters justify="center" class="pt-6">
+                <v-row no-gutters justify="center" class="pt-4">
+                    <span class="text-h6 font-weight-light pr-2">BONUS SPIRIT ESSENCE: </span>
+                    <span class="text-h6 font-weight-bold">{{_recruitmentHeroPostType ? _recruitmentHeroPostType.recruitmentBonusSpiritEssence.toLocaleString() : 'N/A'}}</span>
+                </v-row>
+                <v-row no-gutters justify="center" class="pt-4">
                     <v-btn
                         color="primary"
                         x-large
@@ -71,38 +76,55 @@
             v-model="recruitDialog"
             max-width="500"
         >
-            <v-sheet>
-                <v-row no-gutters>
-                    <v-col cols="12">
-                        <v-row no-gutters justify="center">
-                            <v-col cols="6">
-                                <span class="text-body-1 font-weight-light">RACE: </span>
-                                <span class="text-body-1 font-weight-bolder">{{_recruitmentHeroRace ? _recruitmentHeroRace.name.toUpperCase() : ''}}</span>
-                            </v-col>
-                            <v-col cols="6">
-                                <span class="text-body-1 font-weight-light">CLASS: </span>
-                                <span class="text-body-1 font-weight-bolder">{{_recruitmentHeroClass ? _recruitmentHeroClass.name.toUpperCase() : ''}}</span>
-                            </v-col>
+            <v-card class="pa-2" color="#363b45">
+                <v-card-title>
+                    <v-row no-gutters justify="center">
+                        Confirm Recruit
+                    </v-row>
+                </v-card-title>
+                <v-row no-gutters justify="center" class="py-4">
+                    <v-col cols="2">
+                        <HeroRaceIcon v-if="_recruitmentHeroRace" :hero-race="_recruitmentHeroRace"></HeroRaceIcon>
+                    </v-col>
+                    <v-col cols="2">
+                        <HeroClassIcon v-if="_recruitmentHeroClass" :hero-class="_recruitmentHeroClass"></HeroClassIcon>
+                    </v-col>
+                    <v-col cols="6">
+                        <v-row no-gutters justify="space-between" class="pl-1 pl-sm-6">
+                            <span class="text-body-2 text-sm-body-1 font-weight-light">NAME: </span>
+                            <span class="text-body-2 text-sm-body-1 font-weight-bolder">{{name}}</span>
+                        </v-row>
+                        <v-row no-gutters justify="space-between" class="pl-1 pl-sm-6">
+                            <span class="text-body-2 text-sm-body-1 font-weight-light">COST: </span>
+                            <span class="text-body-2 text-sm-body-1 font-weight-bolder">{{costOfGold.toLocaleString()}}</span>
+                        </v-row>
+                        <v-row no-gutters justify="space-between" class="pl-1 pl-sm-6">
+                            <span class="text-body-2 text-sm-body-1 font-weight-light">ESSENCE: </span>
+                            <span class="text-body-2 text-sm-body-1 font-weight-bolder">{{_recruitmentHeroPostType ? _recruitmentHeroPostType.recruitmentBonusSpiritEssence.toLocaleString() : 'N/A'}}</span>
                         </v-row>
                     </v-col>
                 </v-row>
-                <v-row no-gutters justify="center" class="pa-2">
-                    <v-btn
-                        outlined
-                        color="error"
-                        @click="recruitDialog = false"
-                        class="mx-1"
-                    >
-                        Cancel
-                    </v-btn>
-                    <v-btn
-                        color="success"
-                        class="mx-1"
-                    >
-                        Recruit Hero
-                    </v-btn>
-                </v-row>
-            </v-sheet>
+                <v-card-actions>
+                    <v-row no-gutters justify="center">
+                        <v-btn
+                            outlined
+                            color="error"
+                            @click="recruitDialog = false"
+                            class="mx-1"
+                        >
+                            Cancel
+                        </v-btn>
+                        <v-btn
+                            color="success"
+                            class="mx-1"
+                            :disabled="disabled"
+                            @click="confirmRecruit"
+                        >
+                            Confirm
+                        </v-btn>
+                    </v-row>
+                </v-card-actions>
+            </v-card>
         </v-dialog>
     </v-container>
 </template>
@@ -139,13 +161,15 @@
         data () {
             return {
                 name: '',
-                recruitDialog: false
+                recruitDialog: false,
+                pending: false
             }
         },
         methods: {
             ...mapActions([
                 'updateRecruitmentCamp',
-                'recruitHero'
+                'recruitHero',
+                'clearRecruitmentServerNameErrors'
             ]),
             maybeUpdateRecruitmentCamp() {
                 let recruitmentCampSlug = this.$route.params.recruitmentCampSlug;
@@ -153,11 +177,13 @@
                     this.updateRecruitmentCamp(this.$route);
                 }
             },
-            handleClick() {
-                this.recruitHero({
+            async confirmRecruit() {
+                this.pending = true;
+                await this.recruitHero({
                     route: this.$route,
                     heroName: this.name
                 });
+                this.pending = false;
             }
         },
         computed: {
@@ -166,7 +192,8 @@
                 '_heroClassByID',
                 '_recruitmentHeroRace',
                 '_recruitmentHeroClass',
-                '_recruitmentHeroPostType'
+                '_recruitmentHeroPostType',
+                '_recruitmentServerNameErrors'
             ]),
             heroClasses() {
                 return this._recruitmentCamp.heroClassIDs.map(heroClassID => this._heroClassByID(heroClassID));
@@ -196,6 +223,9 @@
                 }
             },
             disabled() {
+                if (this.pending) {
+                    return true;
+                }
                 if (! this._recruitmentHeroRace) {
                     return true;
                 }
@@ -213,14 +243,15 @@
                 !this.$v.name.required && errors.push('Name is required');
                 !this.$v.name.minLength && errors.push('Must be at least 4 characters');
                 !this.$v.name.maxLength && errors.push('Cannot be more than 16 characters');
-                !this.$v.name.format && errors.push('Only letters, number and spaces allowed');
-                // if (this.serverErrors.has('name')) {
-                //     this.serverErrors.get('name').forEach(function(error) {
-                //         errors.push(error);
-                //     })
-                // }
-                return errors
+                !this.$v.name.format && errors.push('Invalid character');
+                return errors.concat(this._recruitmentServerNameErrors)
             },
+            costOfGold() {
+                return this._recruitmentHeroPostType ? this._recruitmentHeroPostType.recruitmentCost : 0;
+            },
+            dialogTitle() {
+                return 'Recruit Hero for ' + this.costOfGold.toLocaleString() + ' gold?';
+            }
         }
     }
 </script>
