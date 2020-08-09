@@ -8,9 +8,11 @@ use App\Factories\Models\GameFactory;
 use App\Factories\Models\HeroFactory;
 use App\Factories\Models\PlayerGameLogFactory;
 use App\Factories\Models\PlayerSpiritFactory;
+use App\Mail\SpiritRemovedFromHero;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 
 class DisableSpiritsForGameTest extends TestCase
@@ -67,5 +69,39 @@ class DisableSpiritsForGameTest extends TestCase
 
         $this->assertNull($heroOne->fresh()->player_spirit_id);
         $this->assertNull($heroTwo->fresh()->player_spirit_id);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_queue_spirit_removed_for_hero_emails()
+    {
+
+        $game = GameFactory::new()->create();
+        $playerGameLog = PlayerGameLogFactory::new()->forGame($game);
+        $spiritFactory = PlayerSpiritFactory::new()->withPlayerGameLog($playerGameLog);
+
+        $spiritOne = $spiritFactory->create();
+        $spiritTWo = $spiritFactory->create();
+
+        $heroOne = HeroFactory::new()->create([
+            'player_spirit_id' => $spiritOne->id
+        ]);
+
+        $heroTwo = HeroFactory::new()->create([
+            'player_spirit_id' => $spiritTWo->id
+        ]);
+
+        Mail::fake();
+
+        $this->getDomainAction()->execute($game);
+
+        Mail::assertQueued(SpiritRemovedFromHero::class, function (SpiritRemovedFromHero $mail) use ($heroOne, $spiritOne) {
+            return $mail->hero->id === $heroOne->id && $mail->playerSpirit->id === $spiritOne->id;
+        });
+
+        Mail::assertQueued(SpiritRemovedFromHero::class, function (SpiritRemovedFromHero $mail) use ($heroTwo, $spiritTWo) {
+            return $mail->hero->id === $heroTwo->id && $mail->playerSpirit->id === $spiritTWo->id;
+        });
     }
 }
