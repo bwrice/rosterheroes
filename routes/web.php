@@ -10,6 +10,7 @@
 |
 */
 
+use App\Domain\Models\Game;
 use App\Facades\CurrentWeek;
 use App\Http\Controllers\UnsubscribeToEmailsController;
 use Illuminate\Support\Facades\Route;
@@ -101,5 +102,48 @@ if (! function_exists('myHelper')) {
         })->get();
 
         return $games;
+    }
+}
+
+if (! function_exists('myHelper2')) {
+    function myHelper2() {
+
+        $missing = collect();
+
+        /** @var \App\External\Stats\StatsIntegration $statsIntegration */
+        $statsIntegration = app(\App\External\Stats\StatsIntegration::class);
+
+        $games = Game::query()->with(['homeTeam', 'externalGames'])->where('starts_at', '>', now()->subDays(7))->where('starts_at', '<' , now()->addDays(2))->get();
+
+        $games->groupBy(function (Game $game) {
+            return $game->homeTeam->league_id;
+        })->each(function (\Illuminate\Database\Eloquent\Collection $groupedByLeague, $leagueID) use ($statsIntegration, &$missing) {
+
+            $league = \App\Domain\Models\League::query()->find($leagueID);
+
+            $groupedByLeague->groupBy(function (Game $game) {
+                return $game->season_type;
+            })->each(function (\Illuminate\Support\Collection $groupedBySeasonTypeGames, $seasonType) use ($league, $statsIntegration, &$missing) {
+
+                $regularSeason = $seasonType === Game::SEASON_TYPE_REGULAR;
+
+                $gameDTOS = $statsIntegration->getGameDTOs($league, 0, $regularSeason);
+
+                $missing = $missing->merge($groupedBySeasonTypeGames->filter(function (Game $game) use ($gameDTOS) {
+
+                    $match = $gameDTOS->first(function (\App\Domain\DataTransferObjects\GameDTO $gameDTO) use ($game) {
+                        $matchingExternalGame = $game->externalGames->first(function (\App\Domain\Models\ExternalGame $externalGame) use ($gameDTO) {
+                            return $externalGame->external_id === $gameDTO->getExternalID();
+                        });
+
+                        return ! is_null($matchingExternalGame);
+                    });
+
+                    return is_null($match);
+                }));
+            });
+        });
+
+        return $missing;
     }
 }
