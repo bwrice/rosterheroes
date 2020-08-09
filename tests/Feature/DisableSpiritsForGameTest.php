@@ -82,26 +82,26 @@ class DisableSpiritsForGameTest extends TestCase
         $spiritFactory = PlayerSpiritFactory::new()->withPlayerGameLog($playerGameLog);
 
         $spiritOne = $spiritFactory->create();
-        $spiritTWo = $spiritFactory->create();
+        $spiritTwo = $spiritFactory->create();
 
         $heroOne = HeroFactory::new()->create([
             'player_spirit_id' => $spiritOne->id
         ]);
 
         $heroTwo = HeroFactory::new()->create([
-            'player_spirit_id' => $spiritTWo->id
+            'player_spirit_id' => $spiritTwo->id
         ]);
 
         Mail::fake();
 
         $this->getDomainAction()->execute($game);
 
-        Mail::assertQueued(SpiritRemovedFromHero::class, function (SpiritRemovedFromHero $mail) use ($heroOne, $spiritOne) {
-            return $mail->hero->id === $heroOne->id && $mail->playerSpirit->id === $spiritOne->id;
+        Mail::assertQueued(SpiritRemovedFromHero::class, function (SpiritRemovedFromHero $mail) use ($heroOne) {
+            return $mail->hero->id === $heroOne->id;
         });
 
-        Mail::assertQueued(SpiritRemovedFromHero::class, function (SpiritRemovedFromHero $mail) use ($heroTwo, $spiritTWo) {
-            return $mail->hero->id === $heroTwo->id && $mail->playerSpirit->id === $spiritTWo->id;
+        Mail::assertQueued(SpiritRemovedFromHero::class, function (SpiritRemovedFromHero $mail) use ($heroTwo) {
+            return $mail->hero->id === $heroTwo->id;
         });
     }
 }
