@@ -45,6 +45,11 @@ class DeleteGame
             throw new DeleteGameException($game, $message, DeleteGameException::CODE_GAME_HAS_STATS);
         }
         $game->playerGameLogs()->delete();
+
+        // Delete external games
+        $game->externalGames()->delete();
+
+        // delete game
         return $game->delete();
     }
 }

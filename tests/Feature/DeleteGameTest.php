@@ -3,6 +3,8 @@
 namespace Tests\Feature;
 
 use App\Domain\Actions\DeleteGame;
+use App\Domain\Models\ExternalGame;
+use App\Domain\Models\StatsIntegrationType;
 use App\Exceptions\DeleteGameException;
 use App\Factories\Models\GameFactory;
 use App\Factories\Models\HeroFactory;
@@ -11,6 +13,7 @@ use App\Factories\Models\PlayerSpiritFactory;
 use App\Factories\Models\PlayerStatFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class DeleteGameTest extends TestCase
@@ -49,6 +52,23 @@ class DeleteGameTest extends TestCase
 
         $this->assertNull($gameLogA->fresh());
         $this->assertNull($gameLogB->fresh());
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_delete_any_external_games_associated_with_the_game()
+    {
+        $game = GameFactory::new()->create();
+        $externalGame = ExternalGame::query()->create([
+            'game_id' => $game->id,
+            'integration_type_id' => StatsIntegrationType::query()->inRandomOrder()->first()->id,
+            'external_id' => (string) Str::random()
+        ]);
+
+        $this->getDomainAction()->execute($game);
+
+        $this->assertNull($externalGame->fresh());
     }
 
     /**
