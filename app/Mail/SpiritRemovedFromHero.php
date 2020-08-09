@@ -15,9 +15,9 @@ class SpiritRemovedFromHero extends SquadNotification
     use Queueable, SerializesModels;
 
     /**
-     * @var PlayerSpirit
+     * @var string
      */
-    public $playerSpirit;
+    public $playerSpiritName;
     /**
      * @var Hero
      */
@@ -26,10 +26,10 @@ class SpiritRemovedFromHero extends SquadNotification
     /** @var Squad */
     public $squad;
 
-    public function __construct(PlayerSpirit $playerSpirit, Hero $hero)
+    public function __construct(string $playerSpiritName, Hero $hero)
     {
         parent::__construct();
-        $this->playerSpirit = $playerSpirit;
+        $this->playerSpiritName = $playerSpiritName;
         $this->hero = $hero;
         $this->squad = $hero->squad;
         $this->setSubject();
@@ -37,7 +37,7 @@ class SpiritRemovedFromHero extends SquadNotification
 
     protected function setSubject()
     {
-        $this->subject = $this->playerSpirit->playerFullName() . ' removed from hero, ' . $this->hero->name;
+        $this->subject = $this->playerSpiritName . ' removed from hero, ' . $this->hero->name;
     }
 
     /**
