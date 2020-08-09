@@ -61,6 +61,8 @@ class DeleteGameCommand extends Command
             }
         }
 
-        return $deleteGame->execute($game);
+        $result = $deleteGame->execute($game);
+        $this->info('Game with ID: ' . $game->id . ' deleted');
+        return $result;
     }
 }
