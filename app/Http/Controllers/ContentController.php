@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Admin\Content\ViewModels\AttackContentViewModel;
+use App\Admin\Content\ViewModels\ItemTypeContentViewModel;
 use Illuminate\Http\Request;
 
 class ContentController extends Controller
@@ -12,6 +13,7 @@ class ContentController extends Controller
         return view('admin.content.main', [
             'contentViewModels' => collect([
                 new AttackContentViewModel(),
+                new ItemTypeContentViewModel()
             ])
         ]);
     }

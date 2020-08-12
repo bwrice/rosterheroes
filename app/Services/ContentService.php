@@ -56,11 +56,12 @@ class ContentService
         });
     }
 
-    public function itemTypesLastUpdated()
+    public function attacksLastUpdated()
     {
-        $dataArray = $this->getItemTypeDataFromJSON();
+        $dataArray = $this->getAttackDataFromJSON();
         return Date::createFromTimestamp($dataArray['last_updated']);
     }
+
     protected function getItemTypeDataFromJSON()
     {
         return json_decode(file_get_contents($this->itemTypesPath()), true);
@@ -102,9 +103,9 @@ class ContentService
         });
     }
 
-    public function attacksLastUpdated()
+    public function itemTypesLastUpdated()
     {
-        $dataArray = $this->getAttackDataFromJSON();
+        $dataArray = $this->getItemTypeDataFromJSON();
         return Date::createFromTimestamp($dataArray['last_updated']);
     }
 }
