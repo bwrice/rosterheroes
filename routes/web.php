@@ -119,6 +119,7 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->group(function () 
         Route::prefix('item-types')->group(function () {
 
             Route::get('/', [ItemTypeContentController::class, 'index']);
+            Route::get('/{itemTypeUuid}/edit', [ItemTypeContentController::class, 'edit']);
         });
     });
 });

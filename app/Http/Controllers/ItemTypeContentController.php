@@ -29,20 +29,16 @@ class ItemTypeContentController extends Controller
     }
 
 
-    /**
-     * @param $attackUuid
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     *
-     * TODO add associated view and route
-     */
-    public function edit($attackUuid)
+    public function edit($itemTypeUuid)
     {
-        $itemTypeSource =Content::attacks()->first(function (ItemTypeSource $itemTypeSource) use ($attackUuid) {
-            return $attackUuid === (string) $itemTypeSource->getUuid();
+        $itemTypeSource = Content::itemTypes()->first(function (ItemTypeSource $itemTypeSource) use ($itemTypeUuid) {
+            return $itemTypeUuid === (string) $itemTypeSource->getUuid();
         });
 
         return view('admin.content.itemTypes.edit', [
-            'itemTypeSource' => $itemTypeSource
+            'itemTypeSource' => $itemTypeSource,
+            'itemBases' => ItemBase::all(),
+            'attackSources' => Content::attacks(),
         ]);
     }
 }
