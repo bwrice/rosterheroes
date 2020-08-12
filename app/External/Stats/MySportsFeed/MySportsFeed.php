@@ -20,6 +20,9 @@ use App\Domain\Models\Player;
 use App\Domain\Models\StatType;
 use App\Domain\Models\Team;
 use App\Domain\DataTransferObjects\TeamDTO;
+use App\External\Stats\MySportsFeed\APIs\GameAPI;
+use App\External\Stats\MySportsFeed\APIs\PlayerAPI;
+use App\External\Stats\MySportsFeed\APIs\TeamAPI;
 use App\External\Stats\MySportsFeed\StatAmountDTOs\StatAmountDTOBuilderFactory;
 use App\External\Stats\StatsIntegration;
 use App\Domain\Models\League;
@@ -160,13 +163,13 @@ class MySportsFeed implements StatsIntegration
         });
     }
 
-    public function getGameDTOs(League $league, int $yearDelta = 0): Collection
+    public function getGameDTOs(League $league, int $yearDelta = 0, bool $regularSeason = true): Collection
     {
         /** @var TeamCollection $teams */
         $teams = $league->teams()->with('externalTeams')->get();
-        $data = $this->gameAPI->getData($league, $yearDelta);
+        $data = $this->gameAPI->getData($league, $yearDelta, $regularSeason);
         $integrationType = $this->getIntegrationType();
-        return collect($data)->map(function ($gameData) use ($teams, $integrationType) {
+        return collect($data)->map(function ($gameData) use ($teams, $integrationType, $regularSeason) {
             try {
                 $scheduleData = $gameData['schedule'];
                 $homeAndAwayTeams = $this->getTeamsFromSchedule($scheduleData, $teams, $integrationType);
@@ -176,7 +179,8 @@ class MySportsFeed implements StatsIntegration
                     $homeAndAwayTeams['home_team'],
                     $homeAndAwayTeams['away_team'],
                     $scheduleData['id'],
-                    $scheduleData['scheduleStatus']
+                    $scheduleData['scheduleStatus'],
+                    $regularSeason ? Game::SEASON_TYPE_REGULAR : Game::SEASON_TYPE_POSTSEASON
                 );
 
             } catch (\Exception $exception) {

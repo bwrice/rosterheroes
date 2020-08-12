@@ -12,6 +12,7 @@ import currentLocationModule from "./currentLocationModule";
 import travelModule from "./travelModule";
 import referenceModule from "./referenceModule";
 import shopModule from "./shopModule";
+import recruitmentCampModule from "./recruitmentCampModule";
 
 export const store = new Vuex.Store({
 
@@ -24,6 +25,7 @@ export const store = new Vuex.Store({
         snackBarModule,
         overlayModule,
         referenceModule,
-        shopModule
+        shopModule,
+        recruitmentCampModule
     }
 });

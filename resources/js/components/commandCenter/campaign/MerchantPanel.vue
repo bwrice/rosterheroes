@@ -8,8 +8,8 @@
         <v-row no-gutters justify="space-between" align="center" class="px-4 py-2">
             <v-icon
                 large
-                :color="iconColor"
-            >{{iconName}}</v-icon>
+                :color="merchant.iconColor"
+            >{{merchant.iconName}}</v-icon>
             <v-spacer></v-spacer>
             <span class="title rh-op-90">{{merchant.name}}</span>
             <v-spacer></v-spacer>
@@ -30,31 +30,7 @@
         },
         methods: {
             handleClick() {
-                this.$router.push(this.merchantRoute);
-            }
-        },
-        computed: {
-            iconName() {
-                if (this.merchant.type === 'shop') {
-                    return 'storefront';
-                }
-            },
-            iconColor() {
-                if (this.merchant.type === 'shop') {
-                    return 'accent';
-                }
-            },
-            merchantRoute() {
-                if (this.merchant.type === 'shop') {
-                    return {
-                        name: 'shop',
-                        params: {
-                            squadSlug: this.$route.params.squadSlug,
-                            shopSlug: this.merchant.slug
-                        }
-                    }
-                }
-                return {};
+                this.$router.push(this.merchant.getRoute(this.$route.params.squadSlug));
             }
         }
     }

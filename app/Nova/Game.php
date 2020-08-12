@@ -37,8 +37,7 @@ class Game extends Resource
      * @var array
      */
     public static $search = [
-        'id',
-        'external_id'
+        'id'
     ];
 
     public static $with = [

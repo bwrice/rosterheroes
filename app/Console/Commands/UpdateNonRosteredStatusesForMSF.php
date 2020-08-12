@@ -6,7 +6,7 @@ use App\Domain\Models\League;
 use App\Domain\Models\Player;
 use App\Domain\Models\StatsIntegrationType;
 use App\External\Stats\MySportsFeed\MySportsFeed;
-use App\External\Stats\MySportsFeed\PlayerAPI;
+use App\External\Stats\MySportsFeed\APIs\PlayerAPI;
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -52,7 +52,7 @@ class UpdateNonRosteredStatusesForMSF extends Command
                 Player::STATUS_FREE_AGENT => 'UFA'
             ];
 
-            if ($league->abbreviation === League::MLB) {
+            if (in_array($league->abbreviation, [League::MLB, League::NHL])) {
                 $playerStatuses[Player::STATUS_MINORS] = 'ASSIGNED-TO-MINORS';
             }
 

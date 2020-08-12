@@ -6,10 +6,12 @@
  * Time: 9:58 PM
  */
 
-namespace App\External\Stats\MySportsFeed;
+namespace App\External\Stats\MySportsFeed\APIs;
 
 
 use App\Domain\Models\League;
+use App\External\Stats\MySportsFeed\LeagueSeasonConverter;
+use App\External\Stats\MySportsFeed\MSFClient;
 
 class GameAPI
 {
@@ -28,10 +30,12 @@ class GameAPI
         $this->leagueSeasonConverter = $leagueSeasonConverter;
     }
 
-    public function getData(League $league, int $yearDelta = 0)
+    public function getData(League $league, int $yearDelta = 0, $regularSeason = true)
     {
-        $season = $this->leagueSeasonConverter->getSeason($league, $yearDelta);
-        $subURL = strtolower($league->abbreviation) . '/'. $season . '-regular/games.json';
+        $season = $this->leagueSeasonConverter->getSeason($league, $yearDelta, $regularSeason);
+        $subURL = strtolower($league->abbreviation) . '/'. $season;
+        $subURL .= $regularSeason ? '-regular' : '-playoff';
+        $subURL .= '/games.json';
         $responseData = $this->client->getData($subURL);
         return $responseData['games'];
     }

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Aggregates\UserAggregate;
 use App\Domain\Actions\CreateUserAction;
 use App\Http\Controllers\Controller;
 use App\Domain\Models\User;
+use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -46,9 +46,7 @@ class LoginController extends Controller
     }
 
     /**
-     * Redirect the user to the GitHub authentication page.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function redirectToProvider()
     {
@@ -64,20 +62,22 @@ class LoginController extends Controller
      */
     public function handleProviderCallback(CreateUserAction $createUserAction)
     {
+        /** @var \Laravel\Socialite\Two\User $googleUser */
         $googleUser = Socialite::driver('google')->user();
 
-        if ( $googleUser ) {
+        if ($googleUser) {
 
-            $user = User::where('email', '=', $googleUser->email)->first();
+            $user = User::query()->where('email', '=', $googleUser->email)->first();
 
             if (! $user) {
                 $user = $createUserAction->execute($googleUser->email, $googleUser->name);
+                $user->markEmailAsVerified();
+                event(new Verified($user));
             }
-            Auth::login($user);
+            Auth::login($user, true);
             return redirect('/');
         }
 
-        //TODO log login error
         return redirect('/');
     }
 }

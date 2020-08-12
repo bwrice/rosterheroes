@@ -252,7 +252,7 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
     {
         $value = (5 * $this->itemTypeTier())**1.5;
         $value *= $this->material->getValueModifier();
-        $value *= 1 + $this->enchantments->boostLevelSum()**.5/8;
+        $value *= 1 + ($this->enchantments->boostLevelSum()**1.25)/40;
         return (int) ceil($value);
     }
 

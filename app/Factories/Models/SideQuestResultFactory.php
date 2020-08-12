@@ -30,6 +30,8 @@ class SideQuestResultFactory
     /** @var CarbonInterface|null */
     protected $sideEffectsProcessedAt = null;
 
+    protected $campaignStopID;
+
     public static function new(): self
     {
         return new self();
@@ -40,7 +42,7 @@ class SideQuestResultFactory
         /** @var SideQuestResult $sideQuestResult */
         $sideQuestResult = SideQuestResult::query()->create(array_merge([
             'uuid' => Str::uuid()->toString(),
-            'campaign_stop_id' => $this->getCampaignStop()->id,
+            'campaign_stop_id' => $this->getCampaignStopID(),
             'side_quest_id' => $this->getSideQuest()->id,
             'combat_processed_at' => $this->combatProcessedAt,
             'rewards_processed_at' => $this->rewardsProcessedAt,
@@ -111,5 +113,20 @@ class SideQuestResultFactory
         $clone = clone $this;
         $clone->sideEffectsProcessedAt = $processedAt;
         return $clone;
+    }
+
+    public function withCampaignStopID(int $campaignStopID)
+    {
+        $clone = clone $this;
+        $clone->campaignStopID = $campaignStopID;
+        return $clone;
+    }
+
+    protected function getCampaignStopID()
+    {
+        if ($this->campaignStopID) {
+            return $this->campaignStopID;
+        }
+        return $this->getCampaignStop()->id;
     }
 }

@@ -17,7 +17,7 @@ class ShopsSeeder extends Seeder
             ->inRandomOrder()->take(15)->get();
 
         /** @var ItemBlueprint $blueprint */
-        $blueprint = ItemBlueprint::query()->where('reference_id', '=', ItemBlueprint::RANDOM_ENCHANTED_LOW_TIER_ITEM)->first();
+        $blueprint = ItemBlueprint::query()->first();
         $shopFactory = \App\Factories\Models\ShopFactory::new();
 
         $provinces->each(function (Province $province) use ($generateItemFromBlueprintAction, $blueprint, $shopFactory) {

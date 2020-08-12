@@ -47,6 +47,17 @@
                     Log In
                 </button>
 
+                <div class="w-full mt-4 mb-1">
+                    <div class="h-1 mx-auto bg-teal-800 opacity-50 my-0 py-0 rounded"></div>
+                </div>
+
+                <div class="flex pt-2 flex-col w-full justify-center">
+
+                    <a class="mx-auto w-2/3 sm:w-3/4" href="/login/google">
+                        <img alt="signup through google" src="{{asset('/images/btn_google_signin_dark_normal_web@2x.png')}}">
+                    </a>
+                </div>
+
                 <div class="text-center text-sm text-grey-dark mt-4">
                     <a class="no-underline border-b border-teal-900 text-teal-900" href="{{ route('password.request') }}">
                         Forgot Your Password?
