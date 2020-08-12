@@ -28,14 +28,4 @@ class AttackContentViewModel implements ContentViewModel
     {
         return Content::attacksLastUpdated();
     }
-
-    public function createURL(): string
-    {
-        return '/admin/content/attacks/create';
-    }
-
-    public function syncActionURL(): string
-    {
-        return '/admin/content/attacks/sync';
-    }
 }

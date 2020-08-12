@@ -29,14 +29,4 @@ class ItemTypeContentViewModel implements ContentViewModel
     {
         return Content::itemTypesLastUpdated();
     }
-
-    public function createURL(): string
-    {
-        return '/admin/content/item-types/create';
-    }
-
-    public function syncActionURL(): string
-    {
-        return '/admin/content/item-types/sync';
-    }
 }

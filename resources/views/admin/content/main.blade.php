@@ -22,8 +22,9 @@
                             <h6 class="card-subtitle mb-2 text-muted">Out of Sync: {{$viewModel->outOfSynCount()}}</h6>
                             <h6 class="card-subtitle mb-2 text-muted">Last Updated: {{$viewModel->lastUpdated()->diffForHumans()}}</h6>
 
-                            <a href="{{$viewModel->createURL()}}" class="btn btn-primary btn-block mb-2">Create</a>
-                            <form method="post" action="{{$viewModel->syncActionURL()}}">
+                            <a href="{{\App\Facades\Content::viewURL($viewModel)}}" class="btn btn-primary btn-block mb-2">View</a>
+                            <a href="{{\App\Facades\Content::createURL($viewModel)}}" class="btn btn-outline-primary btn-block mb-2">Create</a>
+                            <form method="post" action="{{\App\Facades\Content::syncURL($viewModel)}}">
                                 @csrf
                                 <button type="submit" class="btn btn-outline-info btn-block" {{ $viewModel->outOfSynCount() > 0 ? '' : 'disabled' }}>Sync</button>
                             </form>
