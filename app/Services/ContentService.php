@@ -6,6 +6,7 @@ namespace App\Services;
 
 use App\Admin\Content\Sources\AttackSource;
 use App\Admin\Content\Sources\ItemTypeSource;
+use App\Admin\Content\ViewModels\ContentViewModel;
 use App\Domain\Models\Attack;
 use App\Domain\Models\ItemType;
 use Illuminate\Support\Facades\Date;
@@ -107,5 +108,20 @@ class ContentService
     {
         $dataArray = $this->getItemTypeDataFromJSON();
         return Date::createFromTimestamp($dataArray['last_updated']);
+    }
+
+    public function viewURL(ContentViewModel $viewModel)
+    {
+        return url('/admin/content/' . str_replace(' ', '-', strtolower($viewModel->getTitle())));
+    }
+
+    public function createURL(ContentViewModel $viewModel)
+    {
+        return url('/admin/content/' . str_replace(' ', '-', strtolower($viewModel->getTitle())) . '/create');
+    }
+
+    public function syncURL(ContentViewModel $viewModel)
+    {
+        return url('/admin/content/' . str_replace(' ', '-', strtolower($viewModel->getTitle())) . '/sync');
     }
 }
