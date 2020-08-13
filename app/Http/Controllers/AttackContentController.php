@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Admin\Content\Actions\CreateAttack;
 use App\Admin\Content\Actions\UpdateAttack;
+use App\Admin\Content\Actions\UpdateContent;
 use App\Admin\Content\Sources\AttackSource;
 use App\Domain\Models\Attack;
 use App\Domain\Models\CombatPosition;
@@ -61,12 +62,12 @@ class AttackContentController extends Controller
         return redirect('admin/content/attacks/create');
     }
 
-    public function update($attackUuid, Request $request, UpdateAttack $updateAttack)
+    public function update($attackUuid, Request $request, UpdateContent $updateContent)
     {
         $attackSource = $this->buildAttackSourceFromRequest($request);
         $attackSource->setUuid($attackUuid);
 
-        $updateAttack->execute($attackSource);
+        $updateContent->execute($attackSource, Content::attacks(), Content::attacksPath());
 
         $request->session()->flash('success', $attackSource->getName() . ' updated');
         return redirect('admin/content/attacks');
