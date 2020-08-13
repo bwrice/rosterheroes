@@ -6,11 +6,9 @@ namespace App\Admin\Content\Sources;
 
 use App\Domain\Models\Attack;
 use App\Domain\Models\ItemType;
-use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Str;
 
-class ItemTypeSource implements Arrayable, Jsonable
+class ItemTypeSource implements ContentSource
 {
 
     /**

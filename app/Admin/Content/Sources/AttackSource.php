@@ -6,11 +6,9 @@ namespace App\Admin\Content\Sources;
 
 
 use App\Domain\Models\Attack;
-use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Str;
 
-class AttackSource implements Arrayable, Jsonable
+class AttackSource implements ContentSource
 {
     /**
      * @var string
