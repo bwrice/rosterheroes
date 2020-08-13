@@ -92,7 +92,7 @@ class ContentService
     public function unSyncedItemTypes()
     {
         $itemTypeSources = $this->itemTypes();
-        $itemTypes = ItemType::all();
+        $itemTypes = ItemType::query()->with('attacks')->get();
         return $itemTypeSources->filter(function (ItemTypeSource $itemTypeSource) use ($itemTypes) {
             $match = $itemTypes->first(function (ItemType $itemType) use ($itemTypeSource) {
                 return $itemTypeSource->getUuid() === (string) $itemType->uuid;
