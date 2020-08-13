@@ -13,20 +13,20 @@ class UpdateAttack
     {
         $attacks = Content::attacks();
         /** @var AttackSource $match */
-        $match = $attacks->first(function (AttackSource $originalAttackSource) use ($attackSource) {
+        $matchingKey = $attacks->search(function (AttackSource $originalAttackSource) use ($attackSource) {
             return (string) $originalAttackSource->getUuid() === (string) $attackSource->getUuid();
         });
 
-        if (! $match) {
+        if ($matchingKey === false) {
             throw new \Exception("Attack with uuid: " . $attackSource->getUuid() . " not found in sources");
         }
 
-        $match->update($attackSource);
+        $updatedAttacks = $attacks->replace([$matchingKey => $attackSource]);
         $lastUpdated = now()->timestamp;
 
         file_put_contents(Content::attacksPath(), json_encode([
             'last_updated' => $lastUpdated,
-            'data' => $attacks->toArray()
+            'data' => $updatedAttacks->toArray()
         ], JSON_PRETTY_PRINT));
     }
 }
