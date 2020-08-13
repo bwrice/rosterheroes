@@ -120,6 +120,7 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->group(function () 
 
             Route::get('/', [ItemTypeContentController::class, 'index']);
             Route::get('/{itemTypeUuid}/edit', [ItemTypeContentController::class, 'edit']);
+            Route::put('/{itemTypeUuid}', [ItemTypeContentController::class, 'update']);
         });
     });
 });
