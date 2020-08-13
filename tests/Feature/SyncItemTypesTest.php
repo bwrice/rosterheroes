@@ -3,10 +3,14 @@
 namespace Tests\Feature;
 
 use App\Admin\Content\Actions\SyncItemTypes;
+use App\Admin\Content\Sources\AttackSource;
 use App\Admin\Content\Sources\ItemTypeSource;
 use App\Domain\Models\Attack;
+use App\Domain\Models\CombatPosition;
+use App\Domain\Models\DamageType;
 use App\Domain\Models\ItemBase;
 use App\Domain\Models\ItemType;
+use App\Domain\Models\TargetPriority;
 use App\Facades\Content;
 use App\Factories\Models\AttackFactory;
 use App\Factories\Models\ItemTypeFactory;
@@ -23,6 +27,9 @@ class SyncItemTypesTest extends TestCase
     use DatabaseTransactions;
 
 
+    /**
+     * @return SyncItemTypes
+     */
     protected function getDomainAction()
     {
         return app(SyncItemTypes::class);
@@ -50,8 +57,6 @@ class SyncItemTypesTest extends TestCase
         );
 
         $sourceUuid = $itemTypesSource->getUuid();
-
-
 
         Content::partialMock()->shouldReceive('unSyncedItemTypes')->andReturn(collect([$itemTypesSource]));
 
@@ -152,5 +157,45 @@ class SyncItemTypesTest extends TestCase
         $attacks->each(function (Attack $attack) use ($updatedAttackUuids) {
             $this->assertTrue(in_array((string) $attack->uuid, $updatedAttackUuids));
         });
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_throw_an_exception_if_the_attacks_are_out_of_sync()
+    {
+        $unSyncedAttackSource = AttackSource::build(
+            Str::random(),
+            CombatPosition::query()->inRandomOrder()->first()->id,
+            CombatPosition::query()->inRandomOrder()->first()->id,
+            TargetPriority::query()->inRandomOrder()->first()->id,
+            DamageType::query()->inRandomOrder()->first()->id,
+            rand(1,6),
+            rand(1,3)
+        );
+
+
+        Content::partialMock()->shouldReceive('unSyncedAttacks')->andReturn(collect([$unSyncedAttackSource]));
+
+        $unSyncedItemSource = ItemTypeSource::build(
+            'Test ItemType ' . Str::random(),
+            rand(1,6),
+            ItemBase::query()->inRandomOrder()->first()->id,
+            []
+        );
+
+        $itemSourceUuid = $unSyncedItemSource->getUuid();
+
+        Content::partialMock()->shouldReceive('unSyncedItemTypes')->andReturn(collect([$unSyncedItemSource]));
+
+        try {
+            $this->getDomainAction()->execute();
+        } catch (\Exception $exception) {
+            $itemType = ItemType::query()->where('uuid', '=', $itemSourceUuid)->first();
+            $this->assertNull($itemType);
+            return;
+        }
+
+        $this->fail("Exception not thrown");
     }
 }
