@@ -46,8 +46,8 @@
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="attacks">Attacks</label>
-                                <select multiple class="form-control" name="attacks" id="attacks" style="height: 800px">
-                                    @foreach($attackSources as $attackSource)
+                                <select multiple size="12" class="form-control" name="attacks[]" id="attacks">
+                                    @foreach($attackSources as $key => $attackSource)
                                         <?php /** @var \App\Admin\Content\Sources\AttackSource $attackSource */ ?>
                                         <option value="{{$attackSource->getUuid()}}" {{in_array($attackSource->getUuid(), $itemTypeSource->getAttackUuids()) ? "selected" : ""}}>{{$attackSource->getName()}}</option>
                                     @endforeach
