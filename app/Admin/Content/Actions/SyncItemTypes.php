@@ -29,5 +29,7 @@ class SyncItemTypes
 
             $itemType->attacks()->sync($attacks->pluck('id')->toArray());
         });
+
+        return $unSyncedSources;
     }
 }

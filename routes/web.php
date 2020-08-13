@@ -14,6 +14,7 @@ use App\Http\Controllers\AttackContentController;
 use App\Domain\Models\Game;
 use App\Facades\CurrentWeek;
 use App\Http\Controllers\ItemTypeContentController;
+use App\Http\Controllers\SyncItemTypesController;
 use App\Http\Controllers\UnsubscribeToEmailsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\ForgotPasswordController;
@@ -103,8 +104,6 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->group(function () 
         Route::prefix('attacks')->group(function () {
 
             Route::get('/', [AttackContentController::class, 'index']);
-            Route::get('/create', [AttackContentController::class, 'create']);
-
             Route::post('/sync', SyncAttacksController::class);
 
             Route::middleware([ContentMiddleware::class])->group(function () {
@@ -119,8 +118,13 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->group(function () 
         Route::prefix('item-types')->group(function () {
 
             Route::get('/', [ItemTypeContentController::class, 'index']);
-            Route::get('/{itemTypeUuid}/edit', [ItemTypeContentController::class, 'edit']);
-            Route::put('/{itemTypeUuid}', [ItemTypeContentController::class, 'update']);
+            Route::post('/sync', SyncItemTypesController::class);
+
+            Route::middleware([ContentMiddleware::class])->group(function () {
+                
+                Route::get('/{itemTypeUuid}/edit', [ItemTypeContentController::class, 'edit']);
+                Route::put('/{itemTypeUuid}', [ItemTypeContentController::class, 'update']);
+            });
         });
     });
 });
