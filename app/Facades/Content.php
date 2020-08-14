@@ -27,6 +27,11 @@ use Illuminate\Support\Facades\Facade;
  * @method static CarbonInterface itemTypesLastUpdated()
  * @method static string itemTypesPath()
  *
+ * @method static Collection itemBlueprints()
+ * @method static Collection unSyncedItemBlueprints()
+ * @method static CarbonInterface itemBlueprintsLastUpdated()
+ * @method static string itemBlueprintsPath()
+ *
  * @see ContentService
  */
 class Content extends Facade

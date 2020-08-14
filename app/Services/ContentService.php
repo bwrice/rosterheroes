@@ -5,9 +5,11 @@ namespace App\Services;
 
 
 use App\Admin\Content\Sources\AttackSource;
+use App\Admin\Content\Sources\ItemBlueprintSource;
 use App\Admin\Content\Sources\ItemTypeSource;
 use App\Admin\Content\ViewModels\ContentViewModel;
 use App\Domain\Models\Attack;
+use App\Domain\Models\ItemBlueprint;
 use App\Domain\Models\ItemType;
 use Illuminate\Support\Facades\Date;
 
@@ -107,6 +109,65 @@ class ContentService
     public function itemTypesLastUpdated()
     {
         $dataArray = $this->getItemTypeDataFromJSON();
+        return Date::createFromTimestamp($dataArray['last_updated']);
+    }
+
+    protected function getItemBlueprintsDataFromJSON()
+    {
+        return json_decode(file_get_contents($this->itemBlueprintsPath()), true);
+    }
+
+    public function itemBlueprintsPath()
+    {
+        return resource_path('json/content/item_blueprints.json');
+    }
+
+    public function itemBlueprints()
+    {
+        $dataArray = $this->getItemBlueprintsDataFromJSON();
+
+        return collect($dataArray['data'])->map(function ($itemBlueprintData) {
+
+            return new ItemBlueprintSource(
+                $itemBlueprintData['uuid'],
+                $itemBlueprintData['item_name'],
+                $itemBlueprintData['description'],
+                $itemBlueprintData['enchantment_power'],
+                $itemBlueprintData['item_bases'],
+                $itemBlueprintData['item_classes'],
+                $itemBlueprintData['item_types'],
+                $itemBlueprintData['attacks'],
+                $itemBlueprintData['materials'],
+                $itemBlueprintData['enchantments']
+            );
+        });
+    }
+
+    public function unSyncedItemBlueprints()
+    {
+        $itemBlueprintSources = $this->itemBlueprints();
+        $itemBlueprints = ItemBlueprint::query()->with([
+            'itemBases',
+            'itemClasses',
+            'itemTypes',
+            'attacks',
+            'materials',
+            'enchantments'
+        ])->get();
+        return $itemBlueprintSources->filter(function (ItemBlueprintSource $itemBlueprintSource) use ($itemBlueprints) {
+            $match = $itemBlueprints->first(function (ItemBlueprint $itemBlueprint) use ($itemBlueprintSource) {
+                return $itemBlueprintSource->getUuid() === (string) $itemBlueprint->uuid;
+            });
+            if (! $match) {
+                return true;
+            }
+            return ! $itemBlueprintSource->isSynced($match);
+        });
+    }
+
+    public function itemBlueprintsLastUpdated()
+    {
+        $dataArray = $this->getItemBlueprintsDataFromJSON();
         return Date::createFromTimestamp($dataArray['last_updated']);
     }
 
