@@ -43,13 +43,56 @@
                         @foreach($itemBlueprint->getItemTypes() as $itemTypeUuid)
                             <?php
                             /** @var \Illuminate\Database\Eloquent\Collection $itemTypes */
-                            /** @var \App\Domain\Models\ItemType $itemType */
-                            /** @var int $itemTypeID */
-                            $itemType = $itemTypes->first(function (\App\Domain\Models\ItemType $itemType) use ($itemTypeID) {
-                                return $itemType->id === $itemTypeID;
+                            /** @var \App\Admin\Content\Sources\ItemTypeSource $itemType */
+                            /** @var string $itemTypeUuid */
+                            $itemType = $itemTypes->first(function (\App\Admin\Content\Sources\ItemTypeSource $itemType) use ($itemTypeUuid) {
+                                return $itemType->getUuid() === $itemTypeUuid;
                             });
                             ?>
-                            <li class="list-group-item">{{$itemType->name}}</li>
+                            <li class="list-group-item">{{$itemType->getName()}}</li>
+                        @endforeach
+                    </ul>
+                    <h6 class="card-subtitle mb-2 text-muted">Attacks:</h6>
+                    <ul class="list-group mb-4">
+                        @foreach($itemBlueprint->getAttacks() as $attackUuid)
+                            <?php
+                            /** @var \Illuminate\Database\Eloquent\Collection $attacks */
+                            /** @var \App\Admin\Content\Sources\AttackSource $attack */
+                            /** @var string $attackUuid */
+                            $attack = $itemTypes->first(function (\App\Admin\Content\Sources\AttackSource $attack) use ($attackUuid) {
+                                return $attack->getUuid() === $attackUuid;
+                            });
+                            ?>
+                            <li class="list-group-item">{{$attack->getName()}}</li>
+                        @endforeach
+                    </ul>
+                    <h6 class="card-subtitle mb-2 text-muted">Materials:</h6>
+                    <ul class="list-group mb-4">
+                        @foreach($itemBlueprint->getMaterials() as $materialUuid)
+                            <?php
+                            /** @var \Illuminate\Database\Eloquent\Collection $materials */
+                            /** @var \App\Domain\Models\Material $material */
+                            /** @var string $materialUuid */
+                            $material = $materials->first(function (\App\Domain\Models\Material $material) use ($materialUuid) {
+                                return $material->uuid === $materialUuid;
+                            });
+                            ?>
+                            <li class="list-group-item">{{$material->name}}</li>
+                        @endforeach
+                    </ul>
+                    <h6 class="card-subtitle mb-2 text-muted">Enchantments:</h6>
+                    <ul class="list-group mb-4">
+                        @foreach($itemBlueprint->getEnchantments() as $enchantmentUuid)
+                            <?php
+                            /** @var \Illuminate\Database\Eloquent\Collection $enchantments */
+                            /** @var \App\Domain\Models\Enchantment $enchantment */
+                            /** @var string $enchantmentUuid */
+                            $enchantment = $enchantments->first(function (\App\Domain\Models\Enchantment $enchantment) use ($enchantmentUuid) {
+                                return $enchantment->uuid === $enchantmentUuid;
+                            });
+                            ?>
+
+                            <li class="list-group-item">{{$enchantment->name}}</li>
                         @endforeach
                     </ul>
                     <a href="/admin/content/item-blueprints/{{$itemBlueprint->getUuid()}}/edit" class="btn btn-block btn-outline-primary">Edit</a>
