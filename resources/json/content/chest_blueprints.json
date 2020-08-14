@@ -1,0 +1,4423 @@
+{
+    "last_updated": 1597433609,
+    "data": [
+        {
+            "uuid": "5a7a65c3-044d-487b-a641-c7290b54278a",
+            "description": null,
+            "quality": 1,
+            "size": 2,
+            "min_gold": 50,
+            "max_gold": 250,
+            "item_blueprints": [
+                {
+                    "uuid": "5dbfef28-d4e7-478a-92e2-a81996bbe9f2",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "712ee4d7-fecf-4811-89bc-14f17886b895",
+                    "count": 1,
+                    "chance": 10
+                },
+                {
+                    "uuid": "a4a60db4-237a-475a-9be1-76fea70522b5",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "48ccf656-8412-4c5b-8be8-93340bb1c6ad",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "f1dec318-2d1b-488f-9578-e116eddb9063",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "81550fc2-e139-443a-bc56-02decd22801e",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "d775fc38-899c-4ad2-8add-460a106288aa",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "e48e434a-7f41-4b9b-b539-dcc3d817ef78",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "211f44c9-cef1-4734-abb7-ccb2fda25c42",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "261efae9-e270-4908-9900-119e8a7000c6",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "d8cf925b-99a7-4255-8aaa-18d23a5cf3e9",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "d8ab9d75-da25-43a6-8d3e-19be759921b6",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "edc414ee-1689-4afb-b660-987499050242",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "e1cea9fc-1c72-4e9f-98b2-8b652b3f468e",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "3ee4cfa8-4cce-4a0e-bc26-b56695b5155e",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "5d2efe90-c2d3-4e2e-a72b-8e00f59c67cf",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "ca0cd8cc-7d8a-417f-9f24-a4c04c25e0fe",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "fcc652df-d9e3-4ee3-9385-a5b69d8725f5",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "c0bf62aa-a220-424d-8c15-2aad1db6c39a",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "1dc645c5-8764-4458-9031-ed77f91594fb",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "7e10d8e0-0d16-4b2c-aa6b-4aca778a5ed9",
+                    "count": 1,
+                    "chance": 35
+                },
+                {
+                    "uuid": "8d6a64df-9765-4185-9440-351644c84104",
+                    "count": 1,
+                    "chance": 15
+                },
+                {
+                    "uuid": "2abfae5a-d65a-4a74-af31-2465bed4116a",
+                    "count": 1,
+                    "chance": 15
+                },
+                {
+                    "uuid": "e1d21467-1ad3-4ee8-ae22-67479ef2d52e",
+                    "count": 1,
+                    "chance": 15
+                },
+                {
+                    "uuid": "350472b1-227d-4d69-997f-1a96f448a6b5",
+                    "count": 1,
+                    "chance": 15
+                },
+                {
+                    "uuid": "a0d09ccb-34c0-43c4-b030-677a6636c2ba",
+                    "count": 1,
+                    "chance": 15
+                },
+                {
+                    "uuid": "0088d7e3-f72d-49ff-8e70-9bdbcbb27047",
+                    "count": 1,
+                    "chance": 10
+                },
+                {
+                    "uuid": "0be5a575-038c-4db9-a0af-d414113ecad9",
+                    "count": 1,
+                    "chance": 10
+                },
+                {
+                    "uuid": "fe7124e5-f6d1-4802-a69c-336d89e92468",
+                    "count": 1,
+                    "chance": 10
+                },
+                {
+                    "uuid": "69126b5d-0238-4f6f-a725-092820aa5a87",
+                    "count": 1,
+                    "chance": 10
+                }
+            ]
+        },
+        {
+            "uuid": "4f5c5102-10fd-4da0-b43f-549fe8cec7eb",
+            "description": null,
+            "quality": 1,
+            "size": 2,
+            "min_gold": 50,
+            "max_gold": 250,
+            "item_blueprints": [
+                {
+                    "uuid": "5dbfef28-d4e7-478a-92e2-a81996bbe9f2",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "712ee4d7-fecf-4811-89bc-14f17886b895",
+                    "count": 1,
+                    "chance": 10
+                },
+                {
+                    "uuid": "abd769ee-e483-4c22-9f23-f7eee6c7a629",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "1589de49-f486-4f25-8e31-7285536aad9f",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "2c05881d-a06b-46e3-8a2a-1bfc71e053fa",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "fa7054ad-c098-43ce-9b41-1cdb866db528",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "261efae9-e270-4908-9900-119e8a7000c6",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "80ad3cf6-1c85-40e0-a100-3499648b32ba",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "382836be-90d2-4f2e-ae31-9c916c5f79f1",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "d8ab9d75-da25-43a6-8d3e-19be759921b6",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "e1cea9fc-1c72-4e9f-98b2-8b652b3f468e",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "aa2baff9-5236-41c0-967d-0bab5c30bc62",
+                    "count": 1,
+                    "chance": 25
+                },
+                {
+                    "uuid": "7758d912-6fce-466c-9241-a703038041f4",
+                    "count": 1,
+                    "chance": 40
+                },
+                {
+                    "uuid": "c80e6ff3-c557-49ef-96fd-70ae164142e9",
+                    "count": 1,
+                    "chance": 40
+                },
+                {
+                    "uuid": "d7c048a6-9be4-4fb4-9edc-a987cfb8a56f",
+                    "count": 1,
+                    "chance": 15
+                },
+                {
+                    "uuid": "8d6a64df-9765-4185-9440-351644c84104",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "8f8f39ae-26a6-4ede-b62b-95591bfaaa78",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "3a59fe9d-b2d4-4de0-9fa0-9385c6ce805c",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "e1d21467-1ad3-4ee8-ae22-67479ef2d52e",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "a0d09ccb-34c0-43c4-b030-677a6636c2ba",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "0088d7e3-f72d-49ff-8e70-9bdbcbb27047",
+                    "count": 1,
+                    "chance": 10
+                },
+                {
+                    "uuid": "0be5a575-038c-4db9-a0af-d414113ecad9",
+                    "count": 1,
+                    "chance": 10
+                },
+                {
+                    "uuid": "fe7124e5-f6d1-4802-a69c-336d89e92468",
+                    "count": 1,
+                    "chance": 10
+                },
+                {
+                    "uuid": "69126b5d-0238-4f6f-a725-092820aa5a87",
+                    "count": 1,
+                    "chance": 10
+                }
+            ]
+        },
+        {
+            "uuid": "0a0fcac6-54fe-4926-990c-db44a0e86080",
+            "description": null,
+            "quality": 1,
+            "size": 2,
+            "min_gold": 50,
+            "max_gold": 250,
+            "item_blueprints": [
+                {
+                    "uuid": "5dbfef28-d4e7-478a-92e2-a81996bbe9f2",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "712ee4d7-fecf-4811-89bc-14f17886b895",
+                    "count": 1,
+                    "chance": 10
+                },
+                {
+                    "uuid": "4d0af9db-1c8e-4cc0-b880-e60d4e33b44a",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "7a402c91-3904-4306-a84f-a0bac6aa06d8",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "9540605a-50f4-4ccc-9af6-b31b78b3d5ce",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "70373752-953b-4bb6-a184-fd7660eb3b68",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "393dc8cd-8e26-4610-a46e-0a7caf85db23",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "fec8e5cc-64d1-49fe-af8f-d46ac8c86532",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "a12dbc9c-a5b3-4962-8086-e56a3f9346fa",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "13fffe11-d035-4913-a4f9-4456af2a4cab",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "c2a95539-855a-4b30-b79b-284c483beaf0",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "2af06bd0-0b95-431c-b86b-a7c6809ce623",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "77c33997-4b83-43fc-8663-97dfa069cca8",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "674c2c95-7555-49ad-853f-b729558448ac",
+                    "count": 1,
+                    "chance": 30
+                },
+                {
+                    "uuid": "df7b280e-97d9-4865-bcde-dd2e6cbec028",
+                    "count": 1,
+                    "chance": 30
+                },
+                {
+                    "uuid": "8832590a-7af5-4d32-ac4e-7e574cf875fc",
+                    "count": 1,
+                    "chance": 30
+                },
+                {
+                    "uuid": "73fb5437-c66e-48ca-8566-a87dd7f9394f",
+                    "count": 1,
+                    "chance": 15
+                },
+                {
+                    "uuid": "a3cfa6ac-f0e6-4cbb-9f53-7e22b26e16de",
+                    "count": 1,
+                    "chance": 15
+                },
+                {
+                    "uuid": "74b574ee-420b-42ae-803a-6217212240dc",
+                    "count": 1,
+                    "chance": 15
+                },
+                {
+                    "uuid": "7e5d53ad-8e9d-4c6f-93e1-09c16fe62f47",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "f78b4438-1f23-4e1f-91c3-70a730fe83a3",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "cf7d4c97-4076-4172-8c67-303ab7115097",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "399b1588-ea3e-4943-a73c-ee01bfc537db",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "020fc143-c828-4792-86ca-82933c9f377d",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "0be5a575-038c-4db9-a0af-d414113ecad9",
+                    "count": 1,
+                    "chance": 15
+                },
+                {
+                    "uuid": "fe7124e5-f6d1-4802-a69c-336d89e92468",
+                    "count": 1,
+                    "chance": 15
+                },
+                {
+                    "uuid": "69126b5d-0238-4f6f-a725-092820aa5a87",
+                    "count": 1,
+                    "chance": 15
+                }
+            ]
+        },
+        {
+            "uuid": "64522188-2da8-4414-8a8f-031b894648f2",
+            "description": null,
+            "quality": 1,
+            "size": 3,
+            "min_gold": 75,
+            "max_gold": 750,
+            "item_blueprints": [
+                {
+                    "uuid": "5dbfef28-d4e7-478a-92e2-a81996bbe9f2",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "712ee4d7-fecf-4811-89bc-14f17886b895",
+                    "count": 2,
+                    "chance": 10
+                },
+                {
+                    "uuid": "a4a60db4-237a-475a-9be1-76fea70522b5",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "48ccf656-8412-4c5b-8be8-93340bb1c6ad",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "f1dec318-2d1b-488f-9578-e116eddb9063",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "81550fc2-e139-443a-bc56-02decd22801e",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "d775fc38-899c-4ad2-8add-460a106288aa",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "e48e434a-7f41-4b9b-b539-dcc3d817ef78",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "211f44c9-cef1-4734-abb7-ccb2fda25c42",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "261efae9-e270-4908-9900-119e8a7000c6",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "d8cf925b-99a7-4255-8aaa-18d23a5cf3e9",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "d8ab9d75-da25-43a6-8d3e-19be759921b6",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "edc414ee-1689-4afb-b660-987499050242",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "e1cea9fc-1c72-4e9f-98b2-8b652b3f468e",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "3ee4cfa8-4cce-4a0e-bc26-b56695b5155e",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "5d2efe90-c2d3-4e2e-a72b-8e00f59c67cf",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "ca0cd8cc-7d8a-417f-9f24-a4c04c25e0fe",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "fcc652df-d9e3-4ee3-9385-a5b69d8725f5",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "c0bf62aa-a220-424d-8c15-2aad1db6c39a",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "1dc645c5-8764-4458-9031-ed77f91594fb",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "7e10d8e0-0d16-4b2c-aa6b-4aca778a5ed9",
+                    "count": 2,
+                    "chance": 35
+                },
+                {
+                    "uuid": "8d6a64df-9765-4185-9440-351644c84104",
+                    "count": 2,
+                    "chance": 15
+                },
+                {
+                    "uuid": "2abfae5a-d65a-4a74-af31-2465bed4116a",
+                    "count": 2,
+                    "chance": 15
+                },
+                {
+                    "uuid": "e1d21467-1ad3-4ee8-ae22-67479ef2d52e",
+                    "count": 2,
+                    "chance": 15
+                },
+                {
+                    "uuid": "350472b1-227d-4d69-997f-1a96f448a6b5",
+                    "count": 2,
+                    "chance": 15
+                },
+                {
+                    "uuid": "a0d09ccb-34c0-43c4-b030-677a6636c2ba",
+                    "count": 2,
+                    "chance": 15
+                },
+                {
+                    "uuid": "0088d7e3-f72d-49ff-8e70-9bdbcbb27047",
+                    "count": 2,
+                    "chance": 10
+                },
+                {
+                    "uuid": "0be5a575-038c-4db9-a0af-d414113ecad9",
+                    "count": 2,
+                    "chance": 10
+                },
+                {
+                    "uuid": "fe7124e5-f6d1-4802-a69c-336d89e92468",
+                    "count": 2,
+                    "chance": 10
+                },
+                {
+                    "uuid": "69126b5d-0238-4f6f-a725-092820aa5a87",
+                    "count": 2,
+                    "chance": 10
+                }
+            ]
+        },
+        {
+            "uuid": "f01c5370-67b3-4af7-8897-eedd5854d84b",
+            "description": null,
+            "quality": 1,
+            "size": 3,
+            "min_gold": 75,
+            "max_gold": 750,
+            "item_blueprints": [
+                {
+                    "uuid": "5dbfef28-d4e7-478a-92e2-a81996bbe9f2",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "712ee4d7-fecf-4811-89bc-14f17886b895",
+                    "count": 2,
+                    "chance": 10
+                },
+                {
+                    "uuid": "abd769ee-e483-4c22-9f23-f7eee6c7a629",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "1589de49-f486-4f25-8e31-7285536aad9f",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "2c05881d-a06b-46e3-8a2a-1bfc71e053fa",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "fa7054ad-c098-43ce-9b41-1cdb866db528",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "261efae9-e270-4908-9900-119e8a7000c6",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "80ad3cf6-1c85-40e0-a100-3499648b32ba",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "382836be-90d2-4f2e-ae31-9c916c5f79f1",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "d8ab9d75-da25-43a6-8d3e-19be759921b6",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "e1cea9fc-1c72-4e9f-98b2-8b652b3f468e",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "aa2baff9-5236-41c0-967d-0bab5c30bc62",
+                    "count": 2,
+                    "chance": 25
+                },
+                {
+                    "uuid": "7758d912-6fce-466c-9241-a703038041f4",
+                    "count": 2,
+                    "chance": 40
+                },
+                {
+                    "uuid": "c80e6ff3-c557-49ef-96fd-70ae164142e9",
+                    "count": 2,
+                    "chance": 40
+                },
+                {
+                    "uuid": "d7c048a6-9be4-4fb4-9edc-a987cfb8a56f",
+                    "count": 2,
+                    "chance": 15
+                },
+                {
+                    "uuid": "8d6a64df-9765-4185-9440-351644c84104",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "8f8f39ae-26a6-4ede-b62b-95591bfaaa78",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "3a59fe9d-b2d4-4de0-9fa0-9385c6ce805c",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "e1d21467-1ad3-4ee8-ae22-67479ef2d52e",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "a0d09ccb-34c0-43c4-b030-677a6636c2ba",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "0088d7e3-f72d-49ff-8e70-9bdbcbb27047",
+                    "count": 2,
+                    "chance": 10
+                },
+                {
+                    "uuid": "0be5a575-038c-4db9-a0af-d414113ecad9",
+                    "count": 2,
+                    "chance": 10
+                },
+                {
+                    "uuid": "fe7124e5-f6d1-4802-a69c-336d89e92468",
+                    "count": 2,
+                    "chance": 10
+                },
+                {
+                    "uuid": "69126b5d-0238-4f6f-a725-092820aa5a87",
+                    "count": 2,
+                    "chance": 10
+                }
+            ]
+        },
+        {
+            "uuid": "f432a7ad-c86d-4364-a033-8f3b18a55956",
+            "description": null,
+            "quality": 1,
+            "size": 3,
+            "min_gold": 75,
+            "max_gold": 750,
+            "item_blueprints": [
+                {
+                    "uuid": "5dbfef28-d4e7-478a-92e2-a81996bbe9f2",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "712ee4d7-fecf-4811-89bc-14f17886b895",
+                    "count": 2,
+                    "chance": 10
+                },
+                {
+                    "uuid": "4d0af9db-1c8e-4cc0-b880-e60d4e33b44a",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "7a402c91-3904-4306-a84f-a0bac6aa06d8",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "9540605a-50f4-4ccc-9af6-b31b78b3d5ce",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "70373752-953b-4bb6-a184-fd7660eb3b68",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "393dc8cd-8e26-4610-a46e-0a7caf85db23",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "fec8e5cc-64d1-49fe-af8f-d46ac8c86532",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "a12dbc9c-a5b3-4962-8086-e56a3f9346fa",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "13fffe11-d035-4913-a4f9-4456af2a4cab",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "c2a95539-855a-4b30-b79b-284c483beaf0",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "2af06bd0-0b95-431c-b86b-a7c6809ce623",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "77c33997-4b83-43fc-8663-97dfa069cca8",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "674c2c95-7555-49ad-853f-b729558448ac",
+                    "count": 2,
+                    "chance": 30
+                },
+                {
+                    "uuid": "df7b280e-97d9-4865-bcde-dd2e6cbec028",
+                    "count": 2,
+                    "chance": 30
+                },
+                {
+                    "uuid": "8832590a-7af5-4d32-ac4e-7e574cf875fc",
+                    "count": 2,
+                    "chance": 30
+                },
+                {
+                    "uuid": "73fb5437-c66e-48ca-8566-a87dd7f9394f",
+                    "count": 2,
+                    "chance": 15
+                },
+                {
+                    "uuid": "a3cfa6ac-f0e6-4cbb-9f53-7e22b26e16de",
+                    "count": 2,
+                    "chance": 15
+                },
+                {
+                    "uuid": "74b574ee-420b-42ae-803a-6217212240dc",
+                    "count": 2,
+                    "chance": 15
+                },
+                {
+                    "uuid": "7e5d53ad-8e9d-4c6f-93e1-09c16fe62f47",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "f78b4438-1f23-4e1f-91c3-70a730fe83a3",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "cf7d4c97-4076-4172-8c67-303ab7115097",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "399b1588-ea3e-4943-a73c-ee01bfc537db",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "020fc143-c828-4792-86ca-82933c9f377d",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "0be5a575-038c-4db9-a0af-d414113ecad9",
+                    "count": 2,
+                    "chance": 15
+                },
+                {
+                    "uuid": "fe7124e5-f6d1-4802-a69c-336d89e92468",
+                    "count": 2,
+                    "chance": 15
+                },
+                {
+                    "uuid": "69126b5d-0238-4f6f-a725-092820aa5a87",
+                    "count": 2,
+                    "chance": 15
+                }
+            ]
+        },
+        {
+            "uuid": "a1c05da1-9284-4395-b086-bb8b7dd04f47",
+            "description": null,
+            "quality": 1,
+            "size": 4,
+            "min_gold": 100,
+            "max_gold": 1500,
+            "item_blueprints": [
+                {
+                    "uuid": "5dbfef28-d4e7-478a-92e2-a81996bbe9f2",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "712ee4d7-fecf-4811-89bc-14f17886b895",
+                    "count": 3,
+                    "chance": 10
+                },
+                {
+                    "uuid": "a4a60db4-237a-475a-9be1-76fea70522b5",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "48ccf656-8412-4c5b-8be8-93340bb1c6ad",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "f1dec318-2d1b-488f-9578-e116eddb9063",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "81550fc2-e139-443a-bc56-02decd22801e",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "d775fc38-899c-4ad2-8add-460a106288aa",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "e48e434a-7f41-4b9b-b539-dcc3d817ef78",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "211f44c9-cef1-4734-abb7-ccb2fda25c42",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "261efae9-e270-4908-9900-119e8a7000c6",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "d8cf925b-99a7-4255-8aaa-18d23a5cf3e9",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "d8ab9d75-da25-43a6-8d3e-19be759921b6",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "edc414ee-1689-4afb-b660-987499050242",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "e1cea9fc-1c72-4e9f-98b2-8b652b3f468e",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "3ee4cfa8-4cce-4a0e-bc26-b56695b5155e",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "5d2efe90-c2d3-4e2e-a72b-8e00f59c67cf",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "ca0cd8cc-7d8a-417f-9f24-a4c04c25e0fe",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "fcc652df-d9e3-4ee3-9385-a5b69d8725f5",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "c0bf62aa-a220-424d-8c15-2aad1db6c39a",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "1dc645c5-8764-4458-9031-ed77f91594fb",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "7e10d8e0-0d16-4b2c-aa6b-4aca778a5ed9",
+                    "count": 3,
+                    "chance": 35
+                },
+                {
+                    "uuid": "8d6a64df-9765-4185-9440-351644c84104",
+                    "count": 3,
+                    "chance": 15
+                },
+                {
+                    "uuid": "2abfae5a-d65a-4a74-af31-2465bed4116a",
+                    "count": 3,
+                    "chance": 15
+                },
+                {
+                    "uuid": "e1d21467-1ad3-4ee8-ae22-67479ef2d52e",
+                    "count": 3,
+                    "chance": 15
+                },
+                {
+                    "uuid": "350472b1-227d-4d69-997f-1a96f448a6b5",
+                    "count": 3,
+                    "chance": 15
+                },
+                {
+                    "uuid": "a0d09ccb-34c0-43c4-b030-677a6636c2ba",
+                    "count": 3,
+                    "chance": 15
+                },
+                {
+                    "uuid": "0088d7e3-f72d-49ff-8e70-9bdbcbb27047",
+                    "count": 3,
+                    "chance": 10
+                },
+                {
+                    "uuid": "0be5a575-038c-4db9-a0af-d414113ecad9",
+                    "count": 3,
+                    "chance": 10
+                },
+                {
+                    "uuid": "fe7124e5-f6d1-4802-a69c-336d89e92468",
+                    "count": 3,
+                    "chance": 10
+                },
+                {
+                    "uuid": "69126b5d-0238-4f6f-a725-092820aa5a87",
+                    "count": 3,
+                    "chance": 10
+                }
+            ]
+        },
+        {
+            "uuid": "45e58c90-d43a-4777-ad29-bff03763fa20",
+            "description": null,
+            "quality": 1,
+            "size": 4,
+            "min_gold": 100,
+            "max_gold": 1500,
+            "item_blueprints": [
+                {
+                    "uuid": "5dbfef28-d4e7-478a-92e2-a81996bbe9f2",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "712ee4d7-fecf-4811-89bc-14f17886b895",
+                    "count": 3,
+                    "chance": 10
+                },
+                {
+                    "uuid": "abd769ee-e483-4c22-9f23-f7eee6c7a629",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "1589de49-f486-4f25-8e31-7285536aad9f",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "2c05881d-a06b-46e3-8a2a-1bfc71e053fa",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "fa7054ad-c098-43ce-9b41-1cdb866db528",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "261efae9-e270-4908-9900-119e8a7000c6",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "80ad3cf6-1c85-40e0-a100-3499648b32ba",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "382836be-90d2-4f2e-ae31-9c916c5f79f1",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "d8ab9d75-da25-43a6-8d3e-19be759921b6",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "e1cea9fc-1c72-4e9f-98b2-8b652b3f468e",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "aa2baff9-5236-41c0-967d-0bab5c30bc62",
+                    "count": 3,
+                    "chance": 25
+                },
+                {
+                    "uuid": "7758d912-6fce-466c-9241-a703038041f4",
+                    "count": 3,
+                    "chance": 40
+                },
+                {
+                    "uuid": "c80e6ff3-c557-49ef-96fd-70ae164142e9",
+                    "count": 3,
+                    "chance": 40
+                },
+                {
+                    "uuid": "d7c048a6-9be4-4fb4-9edc-a987cfb8a56f",
+                    "count": 3,
+                    "chance": 15
+                },
+                {
+                    "uuid": "8d6a64df-9765-4185-9440-351644c84104",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "8f8f39ae-26a6-4ede-b62b-95591bfaaa78",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "3a59fe9d-b2d4-4de0-9fa0-9385c6ce805c",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "e1d21467-1ad3-4ee8-ae22-67479ef2d52e",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "a0d09ccb-34c0-43c4-b030-677a6636c2ba",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "0088d7e3-f72d-49ff-8e70-9bdbcbb27047",
+                    "count": 3,
+                    "chance": 10
+                },
+                {
+                    "uuid": "0be5a575-038c-4db9-a0af-d414113ecad9",
+                    "count": 3,
+                    "chance": 10
+                },
+                {
+                    "uuid": "fe7124e5-f6d1-4802-a69c-336d89e92468",
+                    "count": 3,
+                    "chance": 10
+                },
+                {
+                    "uuid": "69126b5d-0238-4f6f-a725-092820aa5a87",
+                    "count": 3,
+                    "chance": 10
+                }
+            ]
+        },
+        {
+            "uuid": "1e900057-bb5d-445a-980e-f16b141275d8",
+            "description": null,
+            "quality": 1,
+            "size": 4,
+            "min_gold": 100,
+            "max_gold": 1500,
+            "item_blueprints": [
+                {
+                    "uuid": "5dbfef28-d4e7-478a-92e2-a81996bbe9f2",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "712ee4d7-fecf-4811-89bc-14f17886b895",
+                    "count": 3,
+                    "chance": 10
+                },
+                {
+                    "uuid": "4d0af9db-1c8e-4cc0-b880-e60d4e33b44a",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "7a402c91-3904-4306-a84f-a0bac6aa06d8",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "9540605a-50f4-4ccc-9af6-b31b78b3d5ce",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "70373752-953b-4bb6-a184-fd7660eb3b68",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "393dc8cd-8e26-4610-a46e-0a7caf85db23",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "fec8e5cc-64d1-49fe-af8f-d46ac8c86532",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "a12dbc9c-a5b3-4962-8086-e56a3f9346fa",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "13fffe11-d035-4913-a4f9-4456af2a4cab",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "c2a95539-855a-4b30-b79b-284c483beaf0",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "2af06bd0-0b95-431c-b86b-a7c6809ce623",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "77c33997-4b83-43fc-8663-97dfa069cca8",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "674c2c95-7555-49ad-853f-b729558448ac",
+                    "count": 3,
+                    "chance": 30
+                },
+                {
+                    "uuid": "df7b280e-97d9-4865-bcde-dd2e6cbec028",
+                    "count": 3,
+                    "chance": 30
+                },
+                {
+                    "uuid": "8832590a-7af5-4d32-ac4e-7e574cf875fc",
+                    "count": 3,
+                    "chance": 30
+                },
+                {
+                    "uuid": "73fb5437-c66e-48ca-8566-a87dd7f9394f",
+                    "count": 3,
+                    "chance": 15
+                },
+                {
+                    "uuid": "a3cfa6ac-f0e6-4cbb-9f53-7e22b26e16de",
+                    "count": 3,
+                    "chance": 15
+                },
+                {
+                    "uuid": "74b574ee-420b-42ae-803a-6217212240dc",
+                    "count": 3,
+                    "chance": 15
+                },
+                {
+                    "uuid": "7e5d53ad-8e9d-4c6f-93e1-09c16fe62f47",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "f78b4438-1f23-4e1f-91c3-70a730fe83a3",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "cf7d4c97-4076-4172-8c67-303ab7115097",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "399b1588-ea3e-4943-a73c-ee01bfc537db",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "020fc143-c828-4792-86ca-82933c9f377d",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "0be5a575-038c-4db9-a0af-d414113ecad9",
+                    "count": 3,
+                    "chance": 15
+                },
+                {
+                    "uuid": "fe7124e5-f6d1-4802-a69c-336d89e92468",
+                    "count": 3,
+                    "chance": 15
+                },
+                {
+                    "uuid": "69126b5d-0238-4f6f-a725-092820aa5a87",
+                    "count": 3,
+                    "chance": 15
+                }
+            ]
+        },
+        {
+            "uuid": "d6ac8a7f-d860-4099-b496-f960832c93eb",
+            "description": null,
+            "quality": 2,
+            "size": 2,
+            "min_gold": 200,
+            "max_gold": 2000,
+            "item_blueprints": [
+                {
+                    "uuid": "5dbfef28-d4e7-478a-92e2-a81996bbe9f2",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "f7b6f673-95e5-43b9-b3b8-e992960132f1",
+                    "count": 1,
+                    "chance": 10
+                },
+                {
+                    "uuid": "a4a60db4-237a-475a-9be1-76fea70522b5",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "48ccf656-8412-4c5b-8be8-93340bb1c6ad",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "f1dec318-2d1b-488f-9578-e116eddb9063",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "81550fc2-e139-443a-bc56-02decd22801e",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "d775fc38-899c-4ad2-8add-460a106288aa",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "e48e434a-7f41-4b9b-b539-dcc3d817ef78",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "211f44c9-cef1-4734-abb7-ccb2fda25c42",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "261efae9-e270-4908-9900-119e8a7000c6",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "d8cf925b-99a7-4255-8aaa-18d23a5cf3e9",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "d8ab9d75-da25-43a6-8d3e-19be759921b6",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "edc414ee-1689-4afb-b660-987499050242",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "e1cea9fc-1c72-4e9f-98b2-8b652b3f468e",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "356543a2-a7d6-4131-b3e0-9f66113408a7",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "3783fded-180c-44d4-8ce7-db25de2aea2c",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "7292e884-3b4c-460f-8fe0-18d9bc471049",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "dab53a2f-1f84-48b9-a98c-9d291b3b4950",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "32196403-02de-4283-a7f0-6a7471cfd70e",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "29e47dd4-3560-4c0e-b1b9-7e3df7a660a8",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "a71865b8-fe4e-405a-9ba7-c00fcf516bdd",
+                    "count": 1,
+                    "chance": 35
+                },
+                {
+                    "uuid": "7c06d27a-fd28-44f0-91f8-f8427d2ab956",
+                    "count": 1,
+                    "chance": 15
+                },
+                {
+                    "uuid": "82a2329f-56c1-4bf8-92dd-175ef1144195",
+                    "count": 1,
+                    "chance": 15
+                },
+                {
+                    "uuid": "6ec581ad-f2c3-44fd-ac71-19180874b4f6",
+                    "count": 1,
+                    "chance": 15
+                },
+                {
+                    "uuid": "86a99bc0-0095-4091-bc20-e7e1dea9d890",
+                    "count": 1,
+                    "chance": 15
+                },
+                {
+                    "uuid": "edf35601-cca4-47f8-8f95-b79bf6a025a2",
+                    "count": 1,
+                    "chance": 15
+                },
+                {
+                    "uuid": "3ca223f0-6260-46b4-b709-d771a0c9b84f",
+                    "count": 1,
+                    "chance": 10
+                },
+                {
+                    "uuid": "378bb64e-99eb-44ef-8f9e-d1ad1b9a6c9f",
+                    "count": 1,
+                    "chance": 10
+                },
+                {
+                    "uuid": "088e40e5-f20c-4b7a-ade4-0b4a912ebc38",
+                    "count": 1,
+                    "chance": 10
+                },
+                {
+                    "uuid": "ca27d74f-da9d-46c0-a42e-8e53c5d79da7",
+                    "count": 1,
+                    "chance": 10
+                }
+            ]
+        },
+        {
+            "uuid": "423024f7-db15-40ae-8621-1fccdacac7ef",
+            "description": null,
+            "quality": 2,
+            "size": 2,
+            "min_gold": 200,
+            "max_gold": 2000,
+            "item_blueprints": [
+                {
+                    "uuid": "5dbfef28-d4e7-478a-92e2-a81996bbe9f2",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "f7b6f673-95e5-43b9-b3b8-e992960132f1",
+                    "count": 1,
+                    "chance": 10
+                },
+                {
+                    "uuid": "abd769ee-e483-4c22-9f23-f7eee6c7a629",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "1589de49-f486-4f25-8e31-7285536aad9f",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "2c05881d-a06b-46e3-8a2a-1bfc71e053fa",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "fa7054ad-c098-43ce-9b41-1cdb866db528",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "261efae9-e270-4908-9900-119e8a7000c6",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "80ad3cf6-1c85-40e0-a100-3499648b32ba",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "382836be-90d2-4f2e-ae31-9c916c5f79f1",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "d8ab9d75-da25-43a6-8d3e-19be759921b6",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "e1cea9fc-1c72-4e9f-98b2-8b652b3f468e",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "337484d1-b78b-414e-a06a-673b89acf2ef",
+                    "count": 1,
+                    "chance": 25
+                },
+                {
+                    "uuid": "85a213db-e7a2-4be5-bda8-d8e3228bf2ce",
+                    "count": 1,
+                    "chance": 40
+                },
+                {
+                    "uuid": "15ea36d9-b440-4bd6-ab6d-47738d88f5ff",
+                    "count": 1,
+                    "chance": 40
+                },
+                {
+                    "uuid": "4d7f8bad-d7dd-4617-a7f3-62c0a977e65f",
+                    "count": 1,
+                    "chance": 15
+                },
+                {
+                    "uuid": "7c06d27a-fd28-44f0-91f8-f8427d2ab956",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "52080eea-af4b-40fe-8e3f-1e5f056da3ff",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "9ed53028-d54b-4456-9a04-30bc8a81caa2",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "6ec581ad-f2c3-44fd-ac71-19180874b4f6",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "edf35601-cca4-47f8-8f95-b79bf6a025a2",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "3ca223f0-6260-46b4-b709-d771a0c9b84f",
+                    "count": 1,
+                    "chance": 10
+                },
+                {
+                    "uuid": "378bb64e-99eb-44ef-8f9e-d1ad1b9a6c9f",
+                    "count": 1,
+                    "chance": 10
+                },
+                {
+                    "uuid": "088e40e5-f20c-4b7a-ade4-0b4a912ebc38",
+                    "count": 1,
+                    "chance": 10
+                },
+                {
+                    "uuid": "ca27d74f-da9d-46c0-a42e-8e53c5d79da7",
+                    "count": 1,
+                    "chance": 10
+                }
+            ]
+        },
+        {
+            "uuid": "041f21b9-1a37-4f42-97f3-f3019c58acd4",
+            "description": null,
+            "quality": 2,
+            "size": 2,
+            "min_gold": 200,
+            "max_gold": 2000,
+            "item_blueprints": [
+                {
+                    "uuid": "5dbfef28-d4e7-478a-92e2-a81996bbe9f2",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "f7b6f673-95e5-43b9-b3b8-e992960132f1",
+                    "count": 1,
+                    "chance": 10
+                },
+                {
+                    "uuid": "4d0af9db-1c8e-4cc0-b880-e60d4e33b44a",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "7a402c91-3904-4306-a84f-a0bac6aa06d8",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "9540605a-50f4-4ccc-9af6-b31b78b3d5ce",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "70373752-953b-4bb6-a184-fd7660eb3b68",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "393dc8cd-8e26-4610-a46e-0a7caf85db23",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "fec8e5cc-64d1-49fe-af8f-d46ac8c86532",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "a12dbc9c-a5b3-4962-8086-e56a3f9346fa",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "13fffe11-d035-4913-a4f9-4456af2a4cab",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "c2a95539-855a-4b30-b79b-284c483beaf0",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "2af06bd0-0b95-431c-b86b-a7c6809ce623",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "77c33997-4b83-43fc-8663-97dfa069cca8",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "421cf443-1951-47b5-98e0-c424a9edf30d",
+                    "count": 1,
+                    "chance": 30
+                },
+                {
+                    "uuid": "b67dabc2-4d86-479e-bdb0-c7bbcde39d3a",
+                    "count": 1,
+                    "chance": 30
+                },
+                {
+                    "uuid": "66299b55-a13e-4a46-bd2c-7ea3a35e96d2",
+                    "count": 1,
+                    "chance": 30
+                },
+                {
+                    "uuid": "a793a96e-1ead-4f74-a358-cf1f35c86a91",
+                    "count": 1,
+                    "chance": 15
+                },
+                {
+                    "uuid": "a90a9a1c-8aa7-4d0a-8d4b-5e5bda553eb8",
+                    "count": 1,
+                    "chance": 15
+                },
+                {
+                    "uuid": "f1499fa6-9900-4d7f-9457-c4f63dee4870",
+                    "count": 1,
+                    "chance": 15
+                },
+                {
+                    "uuid": "1f3a533e-8f34-4c61-ab51-5b780ce7b082",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "c0a59be1-8c5a-4653-b163-b32bd9f97509",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "da6582e8-5610-475b-8c15-b3c57e2366eb",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "b2e5833e-6f2d-45f4-8833-941fe6d42c24",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "829593f4-0788-465e-b482-74a875235ca9",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "378bb64e-99eb-44ef-8f9e-d1ad1b9a6c9f",
+                    "count": 1,
+                    "chance": 15
+                },
+                {
+                    "uuid": "088e40e5-f20c-4b7a-ade4-0b4a912ebc38",
+                    "count": 1,
+                    "chance": 15
+                },
+                {
+                    "uuid": "ca27d74f-da9d-46c0-a42e-8e53c5d79da7",
+                    "count": 1,
+                    "chance": 15
+                }
+            ]
+        },
+        {
+            "uuid": "2abf91de-e722-46ec-9839-2d0f2c0952fb",
+            "description": null,
+            "quality": 2,
+            "size": 3,
+            "min_gold": 300,
+            "max_gold": 4500,
+            "item_blueprints": [
+                {
+                    "uuid": "5dbfef28-d4e7-478a-92e2-a81996bbe9f2",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "f7b6f673-95e5-43b9-b3b8-e992960132f1",
+                    "count": 2,
+                    "chance": 10
+                },
+                {
+                    "uuid": "a4a60db4-237a-475a-9be1-76fea70522b5",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "48ccf656-8412-4c5b-8be8-93340bb1c6ad",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "f1dec318-2d1b-488f-9578-e116eddb9063",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "81550fc2-e139-443a-bc56-02decd22801e",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "d775fc38-899c-4ad2-8add-460a106288aa",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "e48e434a-7f41-4b9b-b539-dcc3d817ef78",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "211f44c9-cef1-4734-abb7-ccb2fda25c42",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "261efae9-e270-4908-9900-119e8a7000c6",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "d8cf925b-99a7-4255-8aaa-18d23a5cf3e9",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "d8ab9d75-da25-43a6-8d3e-19be759921b6",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "edc414ee-1689-4afb-b660-987499050242",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "e1cea9fc-1c72-4e9f-98b2-8b652b3f468e",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "356543a2-a7d6-4131-b3e0-9f66113408a7",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "3783fded-180c-44d4-8ce7-db25de2aea2c",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "7292e884-3b4c-460f-8fe0-18d9bc471049",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "dab53a2f-1f84-48b9-a98c-9d291b3b4950",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "32196403-02de-4283-a7f0-6a7471cfd70e",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "29e47dd4-3560-4c0e-b1b9-7e3df7a660a8",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "a71865b8-fe4e-405a-9ba7-c00fcf516bdd",
+                    "count": 2,
+                    "chance": 35
+                },
+                {
+                    "uuid": "7c06d27a-fd28-44f0-91f8-f8427d2ab956",
+                    "count": 2,
+                    "chance": 15
+                },
+                {
+                    "uuid": "82a2329f-56c1-4bf8-92dd-175ef1144195",
+                    "count": 2,
+                    "chance": 15
+                },
+                {
+                    "uuid": "6ec581ad-f2c3-44fd-ac71-19180874b4f6",
+                    "count": 2,
+                    "chance": 15
+                },
+                {
+                    "uuid": "86a99bc0-0095-4091-bc20-e7e1dea9d890",
+                    "count": 2,
+                    "chance": 15
+                },
+                {
+                    "uuid": "edf35601-cca4-47f8-8f95-b79bf6a025a2",
+                    "count": 2,
+                    "chance": 15
+                },
+                {
+                    "uuid": "3ca223f0-6260-46b4-b709-d771a0c9b84f",
+                    "count": 2,
+                    "chance": 10
+                },
+                {
+                    "uuid": "378bb64e-99eb-44ef-8f9e-d1ad1b9a6c9f",
+                    "count": 2,
+                    "chance": 10
+                },
+                {
+                    "uuid": "088e40e5-f20c-4b7a-ade4-0b4a912ebc38",
+                    "count": 2,
+                    "chance": 10
+                },
+                {
+                    "uuid": "ca27d74f-da9d-46c0-a42e-8e53c5d79da7",
+                    "count": 2,
+                    "chance": 10
+                }
+            ]
+        },
+        {
+            "uuid": "0e9841a3-d77a-411c-a8af-459cc29253dd",
+            "description": null,
+            "quality": 2,
+            "size": 3,
+            "min_gold": 300,
+            "max_gold": 4500,
+            "item_blueprints": [
+                {
+                    "uuid": "5dbfef28-d4e7-478a-92e2-a81996bbe9f2",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "f7b6f673-95e5-43b9-b3b8-e992960132f1",
+                    "count": 2,
+                    "chance": 10
+                },
+                {
+                    "uuid": "abd769ee-e483-4c22-9f23-f7eee6c7a629",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "1589de49-f486-4f25-8e31-7285536aad9f",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "2c05881d-a06b-46e3-8a2a-1bfc71e053fa",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "fa7054ad-c098-43ce-9b41-1cdb866db528",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "261efae9-e270-4908-9900-119e8a7000c6",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "80ad3cf6-1c85-40e0-a100-3499648b32ba",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "382836be-90d2-4f2e-ae31-9c916c5f79f1",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "d8ab9d75-da25-43a6-8d3e-19be759921b6",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "e1cea9fc-1c72-4e9f-98b2-8b652b3f468e",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "337484d1-b78b-414e-a06a-673b89acf2ef",
+                    "count": 2,
+                    "chance": 25
+                },
+                {
+                    "uuid": "85a213db-e7a2-4be5-bda8-d8e3228bf2ce",
+                    "count": 2,
+                    "chance": 40
+                },
+                {
+                    "uuid": "15ea36d9-b440-4bd6-ab6d-47738d88f5ff",
+                    "count": 2,
+                    "chance": 40
+                },
+                {
+                    "uuid": "4d7f8bad-d7dd-4617-a7f3-62c0a977e65f",
+                    "count": 2,
+                    "chance": 15
+                },
+                {
+                    "uuid": "7c06d27a-fd28-44f0-91f8-f8427d2ab956",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "52080eea-af4b-40fe-8e3f-1e5f056da3ff",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "9ed53028-d54b-4456-9a04-30bc8a81caa2",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "6ec581ad-f2c3-44fd-ac71-19180874b4f6",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "edf35601-cca4-47f8-8f95-b79bf6a025a2",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "3ca223f0-6260-46b4-b709-d771a0c9b84f",
+                    "count": 2,
+                    "chance": 10
+                },
+                {
+                    "uuid": "378bb64e-99eb-44ef-8f9e-d1ad1b9a6c9f",
+                    "count": 2,
+                    "chance": 10
+                },
+                {
+                    "uuid": "088e40e5-f20c-4b7a-ade4-0b4a912ebc38",
+                    "count": 2,
+                    "chance": 10
+                },
+                {
+                    "uuid": "ca27d74f-da9d-46c0-a42e-8e53c5d79da7",
+                    "count": 2,
+                    "chance": 10
+                }
+            ]
+        },
+        {
+            "uuid": "9e3fd0b0-0bcd-4cc7-bda9-f556ac3b5c69",
+            "description": null,
+            "quality": 2,
+            "size": 3,
+            "min_gold": 300,
+            "max_gold": 4500,
+            "item_blueprints": [
+                {
+                    "uuid": "5dbfef28-d4e7-478a-92e2-a81996bbe9f2",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "f7b6f673-95e5-43b9-b3b8-e992960132f1",
+                    "count": 2,
+                    "chance": 10
+                },
+                {
+                    "uuid": "4d0af9db-1c8e-4cc0-b880-e60d4e33b44a",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "7a402c91-3904-4306-a84f-a0bac6aa06d8",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "9540605a-50f4-4ccc-9af6-b31b78b3d5ce",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "70373752-953b-4bb6-a184-fd7660eb3b68",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "393dc8cd-8e26-4610-a46e-0a7caf85db23",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "fec8e5cc-64d1-49fe-af8f-d46ac8c86532",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "a12dbc9c-a5b3-4962-8086-e56a3f9346fa",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "13fffe11-d035-4913-a4f9-4456af2a4cab",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "c2a95539-855a-4b30-b79b-284c483beaf0",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "2af06bd0-0b95-431c-b86b-a7c6809ce623",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "77c33997-4b83-43fc-8663-97dfa069cca8",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "421cf443-1951-47b5-98e0-c424a9edf30d",
+                    "count": 2,
+                    "chance": 30
+                },
+                {
+                    "uuid": "b67dabc2-4d86-479e-bdb0-c7bbcde39d3a",
+                    "count": 2,
+                    "chance": 30
+                },
+                {
+                    "uuid": "66299b55-a13e-4a46-bd2c-7ea3a35e96d2",
+                    "count": 2,
+                    "chance": 30
+                },
+                {
+                    "uuid": "a793a96e-1ead-4f74-a358-cf1f35c86a91",
+                    "count": 2,
+                    "chance": 15
+                },
+                {
+                    "uuid": "a90a9a1c-8aa7-4d0a-8d4b-5e5bda553eb8",
+                    "count": 2,
+                    "chance": 15
+                },
+                {
+                    "uuid": "f1499fa6-9900-4d7f-9457-c4f63dee4870",
+                    "count": 2,
+                    "chance": 15
+                },
+                {
+                    "uuid": "1f3a533e-8f34-4c61-ab51-5b780ce7b082",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "c0a59be1-8c5a-4653-b163-b32bd9f97509",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "da6582e8-5610-475b-8c15-b3c57e2366eb",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "b2e5833e-6f2d-45f4-8833-941fe6d42c24",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "829593f4-0788-465e-b482-74a875235ca9",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "378bb64e-99eb-44ef-8f9e-d1ad1b9a6c9f",
+                    "count": 2,
+                    "chance": 15
+                },
+                {
+                    "uuid": "088e40e5-f20c-4b7a-ade4-0b4a912ebc38",
+                    "count": 2,
+                    "chance": 15
+                },
+                {
+                    "uuid": "ca27d74f-da9d-46c0-a42e-8e53c5d79da7",
+                    "count": 2,
+                    "chance": 15
+                }
+            ]
+        },
+        {
+            "uuid": "fb750542-87eb-4e37-aa78-f0bf4cd927c0",
+            "description": null,
+            "quality": 2,
+            "size": 4,
+            "min_gold": 400,
+            "max_gold": 8000,
+            "item_blueprints": [
+                {
+                    "uuid": "5dbfef28-d4e7-478a-92e2-a81996bbe9f2",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "f7b6f673-95e5-43b9-b3b8-e992960132f1",
+                    "count": 3,
+                    "chance": 10
+                },
+                {
+                    "uuid": "a4a60db4-237a-475a-9be1-76fea70522b5",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "48ccf656-8412-4c5b-8be8-93340bb1c6ad",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "f1dec318-2d1b-488f-9578-e116eddb9063",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "81550fc2-e139-443a-bc56-02decd22801e",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "d775fc38-899c-4ad2-8add-460a106288aa",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "e48e434a-7f41-4b9b-b539-dcc3d817ef78",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "211f44c9-cef1-4734-abb7-ccb2fda25c42",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "261efae9-e270-4908-9900-119e8a7000c6",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "d8cf925b-99a7-4255-8aaa-18d23a5cf3e9",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "d8ab9d75-da25-43a6-8d3e-19be759921b6",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "edc414ee-1689-4afb-b660-987499050242",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "e1cea9fc-1c72-4e9f-98b2-8b652b3f468e",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "356543a2-a7d6-4131-b3e0-9f66113408a7",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "3783fded-180c-44d4-8ce7-db25de2aea2c",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "7292e884-3b4c-460f-8fe0-18d9bc471049",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "dab53a2f-1f84-48b9-a98c-9d291b3b4950",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "32196403-02de-4283-a7f0-6a7471cfd70e",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "29e47dd4-3560-4c0e-b1b9-7e3df7a660a8",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "a71865b8-fe4e-405a-9ba7-c00fcf516bdd",
+                    "count": 3,
+                    "chance": 35
+                },
+                {
+                    "uuid": "7c06d27a-fd28-44f0-91f8-f8427d2ab956",
+                    "count": 3,
+                    "chance": 15
+                },
+                {
+                    "uuid": "82a2329f-56c1-4bf8-92dd-175ef1144195",
+                    "count": 3,
+                    "chance": 15
+                },
+                {
+                    "uuid": "6ec581ad-f2c3-44fd-ac71-19180874b4f6",
+                    "count": 3,
+                    "chance": 15
+                },
+                {
+                    "uuid": "86a99bc0-0095-4091-bc20-e7e1dea9d890",
+                    "count": 3,
+                    "chance": 15
+                },
+                {
+                    "uuid": "edf35601-cca4-47f8-8f95-b79bf6a025a2",
+                    "count": 3,
+                    "chance": 15
+                },
+                {
+                    "uuid": "3ca223f0-6260-46b4-b709-d771a0c9b84f",
+                    "count": 3,
+                    "chance": 10
+                },
+                {
+                    "uuid": "378bb64e-99eb-44ef-8f9e-d1ad1b9a6c9f",
+                    "count": 3,
+                    "chance": 10
+                },
+                {
+                    "uuid": "088e40e5-f20c-4b7a-ade4-0b4a912ebc38",
+                    "count": 3,
+                    "chance": 10
+                },
+                {
+                    "uuid": "ca27d74f-da9d-46c0-a42e-8e53c5d79da7",
+                    "count": 3,
+                    "chance": 10
+                }
+            ]
+        },
+        {
+            "uuid": "bc1ee4af-1cd0-4d7c-8cd1-88b03cf253c1",
+            "description": null,
+            "quality": 2,
+            "size": 4,
+            "min_gold": 400,
+            "max_gold": 8000,
+            "item_blueprints": [
+                {
+                    "uuid": "5dbfef28-d4e7-478a-92e2-a81996bbe9f2",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "f7b6f673-95e5-43b9-b3b8-e992960132f1",
+                    "count": 3,
+                    "chance": 10
+                },
+                {
+                    "uuid": "abd769ee-e483-4c22-9f23-f7eee6c7a629",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "1589de49-f486-4f25-8e31-7285536aad9f",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "2c05881d-a06b-46e3-8a2a-1bfc71e053fa",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "fa7054ad-c098-43ce-9b41-1cdb866db528",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "261efae9-e270-4908-9900-119e8a7000c6",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "80ad3cf6-1c85-40e0-a100-3499648b32ba",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "382836be-90d2-4f2e-ae31-9c916c5f79f1",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "d8ab9d75-da25-43a6-8d3e-19be759921b6",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "e1cea9fc-1c72-4e9f-98b2-8b652b3f468e",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "337484d1-b78b-414e-a06a-673b89acf2ef",
+                    "count": 3,
+                    "chance": 25
+                },
+                {
+                    "uuid": "85a213db-e7a2-4be5-bda8-d8e3228bf2ce",
+                    "count": 3,
+                    "chance": 40
+                },
+                {
+                    "uuid": "15ea36d9-b440-4bd6-ab6d-47738d88f5ff",
+                    "count": 3,
+                    "chance": 40
+                },
+                {
+                    "uuid": "4d7f8bad-d7dd-4617-a7f3-62c0a977e65f",
+                    "count": 3,
+                    "chance": 15
+                },
+                {
+                    "uuid": "7c06d27a-fd28-44f0-91f8-f8427d2ab956",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "52080eea-af4b-40fe-8e3f-1e5f056da3ff",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "9ed53028-d54b-4456-9a04-30bc8a81caa2",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "6ec581ad-f2c3-44fd-ac71-19180874b4f6",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "edf35601-cca4-47f8-8f95-b79bf6a025a2",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "3ca223f0-6260-46b4-b709-d771a0c9b84f",
+                    "count": 3,
+                    "chance": 10
+                },
+                {
+                    "uuid": "378bb64e-99eb-44ef-8f9e-d1ad1b9a6c9f",
+                    "count": 3,
+                    "chance": 10
+                },
+                {
+                    "uuid": "088e40e5-f20c-4b7a-ade4-0b4a912ebc38",
+                    "count": 3,
+                    "chance": 10
+                },
+                {
+                    "uuid": "ca27d74f-da9d-46c0-a42e-8e53c5d79da7",
+                    "count": 3,
+                    "chance": 10
+                }
+            ]
+        },
+        {
+            "uuid": "8267bd54-8c76-41a9-b78c-ad12e3773d1e",
+            "description": null,
+            "quality": 2,
+            "size": 4,
+            "min_gold": 400,
+            "max_gold": 8000,
+            "item_blueprints": [
+                {
+                    "uuid": "5dbfef28-d4e7-478a-92e2-a81996bbe9f2",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "f7b6f673-95e5-43b9-b3b8-e992960132f1",
+                    "count": 3,
+                    "chance": 10
+                },
+                {
+                    "uuid": "4d0af9db-1c8e-4cc0-b880-e60d4e33b44a",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "7a402c91-3904-4306-a84f-a0bac6aa06d8",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "9540605a-50f4-4ccc-9af6-b31b78b3d5ce",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "70373752-953b-4bb6-a184-fd7660eb3b68",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "393dc8cd-8e26-4610-a46e-0a7caf85db23",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "fec8e5cc-64d1-49fe-af8f-d46ac8c86532",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "a12dbc9c-a5b3-4962-8086-e56a3f9346fa",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "13fffe11-d035-4913-a4f9-4456af2a4cab",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "c2a95539-855a-4b30-b79b-284c483beaf0",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "2af06bd0-0b95-431c-b86b-a7c6809ce623",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "77c33997-4b83-43fc-8663-97dfa069cca8",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "421cf443-1951-47b5-98e0-c424a9edf30d",
+                    "count": 3,
+                    "chance": 30
+                },
+                {
+                    "uuid": "b67dabc2-4d86-479e-bdb0-c7bbcde39d3a",
+                    "count": 3,
+                    "chance": 30
+                },
+                {
+                    "uuid": "66299b55-a13e-4a46-bd2c-7ea3a35e96d2",
+                    "count": 3,
+                    "chance": 30
+                },
+                {
+                    "uuid": "a793a96e-1ead-4f74-a358-cf1f35c86a91",
+                    "count": 3,
+                    "chance": 15
+                },
+                {
+                    "uuid": "a90a9a1c-8aa7-4d0a-8d4b-5e5bda553eb8",
+                    "count": 3,
+                    "chance": 15
+                },
+                {
+                    "uuid": "f1499fa6-9900-4d7f-9457-c4f63dee4870",
+                    "count": 3,
+                    "chance": 15
+                },
+                {
+                    "uuid": "1f3a533e-8f34-4c61-ab51-5b780ce7b082",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "c0a59be1-8c5a-4653-b163-b32bd9f97509",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "da6582e8-5610-475b-8c15-b3c57e2366eb",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "b2e5833e-6f2d-45f4-8833-941fe6d42c24",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "829593f4-0788-465e-b482-74a875235ca9",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "378bb64e-99eb-44ef-8f9e-d1ad1b9a6c9f",
+                    "count": 3,
+                    "chance": 15
+                },
+                {
+                    "uuid": "088e40e5-f20c-4b7a-ade4-0b4a912ebc38",
+                    "count": 3,
+                    "chance": 15
+                },
+                {
+                    "uuid": "ca27d74f-da9d-46c0-a42e-8e53c5d79da7",
+                    "count": 3,
+                    "chance": 15
+                }
+            ]
+        },
+        {
+            "uuid": "5d00b5ca-2262-4fdb-bcbd-440eb8511cf9",
+            "description": null,
+            "quality": 3,
+            "size": 2,
+            "min_gold": 450,
+            "max_gold": 6750,
+            "item_blueprints": [
+                {
+                    "uuid": "5dbfef28-d4e7-478a-92e2-a81996bbe9f2",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "b518b4d9-7fc4-4436-8aa1-7cb81916545d",
+                    "count": 1,
+                    "chance": 10
+                },
+                {
+                    "uuid": "a4a60db4-237a-475a-9be1-76fea70522b5",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "48ccf656-8412-4c5b-8be8-93340bb1c6ad",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "f1dec318-2d1b-488f-9578-e116eddb9063",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "81550fc2-e139-443a-bc56-02decd22801e",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "d775fc38-899c-4ad2-8add-460a106288aa",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "e48e434a-7f41-4b9b-b539-dcc3d817ef78",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "211f44c9-cef1-4734-abb7-ccb2fda25c42",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "261efae9-e270-4908-9900-119e8a7000c6",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "d8cf925b-99a7-4255-8aaa-18d23a5cf3e9",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "d8ab9d75-da25-43a6-8d3e-19be759921b6",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "edc414ee-1689-4afb-b660-987499050242",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "e1cea9fc-1c72-4e9f-98b2-8b652b3f468e",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "1db3c544-7343-48c9-ae78-1a09925070d5",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "ee94bb7a-c4ca-44c6-b35e-cf33c06ef877",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "3c9c99ea-41bf-4ef7-aa9d-944c1345da65",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "ebd111b9-6f92-4402-8a5a-b4f356bc422e",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "ed1f97dd-ecfa-4174-9448-190d3eed4a22",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "bf933aac-3ca9-4cc2-9a17-0284e0498f88",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "3cf07a68-3756-4160-982d-5c5128c11943",
+                    "count": 1,
+                    "chance": 35
+                },
+                {
+                    "uuid": "6529aa9e-3e10-4441-8fe2-e46525c7740d",
+                    "count": 1,
+                    "chance": 15
+                },
+                {
+                    "uuid": "fca0d269-6a95-4731-870c-c2d570f01f48",
+                    "count": 1,
+                    "chance": 15
+                },
+                {
+                    "uuid": "86c81551-f864-4256-be68-5e5e2f21865a",
+                    "count": 1,
+                    "chance": 15
+                },
+                {
+                    "uuid": "ca8a7d19-7b32-4351-bafa-df1bf1a03528",
+                    "count": 1,
+                    "chance": 15
+                },
+                {
+                    "uuid": "d1cf906b-9184-444c-9cc5-ba3633842e99",
+                    "count": 1,
+                    "chance": 15
+                },
+                {
+                    "uuid": "ac786440-d327-49e7-9afb-ca3831665030",
+                    "count": 1,
+                    "chance": 10
+                },
+                {
+                    "uuid": "27c062c3-b04a-4378-8225-9245cfea3323",
+                    "count": 1,
+                    "chance": 10
+                },
+                {
+                    "uuid": "869b0c3e-d339-4a3a-992b-e80e64614652",
+                    "count": 1,
+                    "chance": 10
+                },
+                {
+                    "uuid": "ff6bbdcd-c8c6-440c-8585-1551baacd37e",
+                    "count": 1,
+                    "chance": 10
+                }
+            ]
+        },
+        {
+            "uuid": "91cad269-b0e0-426e-9850-e69654604749",
+            "description": null,
+            "quality": 3,
+            "size": 2,
+            "min_gold": 450,
+            "max_gold": 6750,
+            "item_blueprints": [
+                {
+                    "uuid": "5dbfef28-d4e7-478a-92e2-a81996bbe9f2",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "b518b4d9-7fc4-4436-8aa1-7cb81916545d",
+                    "count": 1,
+                    "chance": 10
+                },
+                {
+                    "uuid": "abd769ee-e483-4c22-9f23-f7eee6c7a629",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "1589de49-f486-4f25-8e31-7285536aad9f",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "2c05881d-a06b-46e3-8a2a-1bfc71e053fa",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "fa7054ad-c098-43ce-9b41-1cdb866db528",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "261efae9-e270-4908-9900-119e8a7000c6",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "80ad3cf6-1c85-40e0-a100-3499648b32ba",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "382836be-90d2-4f2e-ae31-9c916c5f79f1",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "d8ab9d75-da25-43a6-8d3e-19be759921b6",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "e1cea9fc-1c72-4e9f-98b2-8b652b3f468e",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "8b985354-c5b4-4ac4-ba99-c5c070201a87",
+                    "count": 1,
+                    "chance": 25
+                },
+                {
+                    "uuid": "cf0cc910-bb2f-4843-9ba6-3abee2ceb230",
+                    "count": 1,
+                    "chance": 40
+                },
+                {
+                    "uuid": "53a4dc8d-0909-439f-a6d0-99947b81eb0f",
+                    "count": 1,
+                    "chance": 40
+                },
+                {
+                    "uuid": "241aab47-9354-4318-92eb-3b04704bc9ec",
+                    "count": 1,
+                    "chance": 15
+                },
+                {
+                    "uuid": "6529aa9e-3e10-4441-8fe2-e46525c7740d",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "dd47e5a1-4973-46aa-ac77-32698b3975d8",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "b026330d-44e9-482a-bcd5-82a475aa0674",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "86c81551-f864-4256-be68-5e5e2f21865a",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "d1cf906b-9184-444c-9cc5-ba3633842e99",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "ac786440-d327-49e7-9afb-ca3831665030",
+                    "count": 1,
+                    "chance": 10
+                },
+                {
+                    "uuid": "27c062c3-b04a-4378-8225-9245cfea3323",
+                    "count": 1,
+                    "chance": 10
+                },
+                {
+                    "uuid": "869b0c3e-d339-4a3a-992b-e80e64614652",
+                    "count": 1,
+                    "chance": 10
+                },
+                {
+                    "uuid": "ff6bbdcd-c8c6-440c-8585-1551baacd37e",
+                    "count": 1,
+                    "chance": 10
+                }
+            ]
+        },
+        {
+            "uuid": "3c8d0250-0bbb-40f6-9c26-6950f1defc3d",
+            "description": null,
+            "quality": 3,
+            "size": 2,
+            "min_gold": 450,
+            "max_gold": 6750,
+            "item_blueprints": [
+                {
+                    "uuid": "5dbfef28-d4e7-478a-92e2-a81996bbe9f2",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "b518b4d9-7fc4-4436-8aa1-7cb81916545d",
+                    "count": 1,
+                    "chance": 10
+                },
+                {
+                    "uuid": "4d0af9db-1c8e-4cc0-b880-e60d4e33b44a",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "7a402c91-3904-4306-a84f-a0bac6aa06d8",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "9540605a-50f4-4ccc-9af6-b31b78b3d5ce",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "70373752-953b-4bb6-a184-fd7660eb3b68",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "393dc8cd-8e26-4610-a46e-0a7caf85db23",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "fec8e5cc-64d1-49fe-af8f-d46ac8c86532",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "a12dbc9c-a5b3-4962-8086-e56a3f9346fa",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "13fffe11-d035-4913-a4f9-4456af2a4cab",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "c2a95539-855a-4b30-b79b-284c483beaf0",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "2af06bd0-0b95-431c-b86b-a7c6809ce623",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "77c33997-4b83-43fc-8663-97dfa069cca8",
+                    "count": 1,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "5b6901e5-e28b-4842-9dc0-fd2e8f70e139",
+                    "count": 1,
+                    "chance": 30
+                },
+                {
+                    "uuid": "a146d868-bca9-4435-86cd-c1ddb3d10ca6",
+                    "count": 1,
+                    "chance": 30
+                },
+                {
+                    "uuid": "4586fcf6-cb8a-4981-bb7c-7cb46dd4b84f",
+                    "count": 1,
+                    "chance": 30
+                },
+                {
+                    "uuid": "4f8b4a58-ef1e-4b12-a8e6-ee2ebef15071",
+                    "count": 1,
+                    "chance": 15
+                },
+                {
+                    "uuid": "35d4ba46-4123-4d17-90e8-6ecfe0c64687",
+                    "count": 1,
+                    "chance": 15
+                },
+                {
+                    "uuid": "0f51be01-b3ca-4d1e-baef-a42bde0558df",
+                    "count": 1,
+                    "chance": 15
+                },
+                {
+                    "uuid": "3f43d2b2-d040-4bf8-9c0c-05cc1b05a419",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "6c693ef5-14e9-4435-a6dd-0c5480043f1d",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "30d840af-41e5-4904-b1ce-5ef0964e0ebd",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "9ac59434-618a-4b63-be55-1f5bd099ba3d",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "ba60c4fa-ed72-4417-93f6-09e84e82630c",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "27c062c3-b04a-4378-8225-9245cfea3323",
+                    "count": 1,
+                    "chance": 15
+                },
+                {
+                    "uuid": "869b0c3e-d339-4a3a-992b-e80e64614652",
+                    "count": 1,
+                    "chance": 15
+                },
+                {
+                    "uuid": "ff6bbdcd-c8c6-440c-8585-1551baacd37e",
+                    "count": 1,
+                    "chance": 15
+                }
+            ]
+        },
+        {
+            "uuid": "db028c2e-a21b-4c0c-94f6-e863b771a57f",
+            "description": null,
+            "quality": 3,
+            "size": 3,
+            "min_gold": 675,
+            "max_gold": 13500,
+            "item_blueprints": [
+                {
+                    "uuid": "5dbfef28-d4e7-478a-92e2-a81996bbe9f2",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "b518b4d9-7fc4-4436-8aa1-7cb81916545d",
+                    "count": 2,
+                    "chance": 10
+                },
+                {
+                    "uuid": "a4a60db4-237a-475a-9be1-76fea70522b5",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "48ccf656-8412-4c5b-8be8-93340bb1c6ad",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "f1dec318-2d1b-488f-9578-e116eddb9063",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "81550fc2-e139-443a-bc56-02decd22801e",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "d775fc38-899c-4ad2-8add-460a106288aa",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "e48e434a-7f41-4b9b-b539-dcc3d817ef78",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "211f44c9-cef1-4734-abb7-ccb2fda25c42",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "261efae9-e270-4908-9900-119e8a7000c6",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "d8cf925b-99a7-4255-8aaa-18d23a5cf3e9",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "d8ab9d75-da25-43a6-8d3e-19be759921b6",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "edc414ee-1689-4afb-b660-987499050242",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "e1cea9fc-1c72-4e9f-98b2-8b652b3f468e",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "1db3c544-7343-48c9-ae78-1a09925070d5",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "ee94bb7a-c4ca-44c6-b35e-cf33c06ef877",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "3c9c99ea-41bf-4ef7-aa9d-944c1345da65",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "ebd111b9-6f92-4402-8a5a-b4f356bc422e",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "ed1f97dd-ecfa-4174-9448-190d3eed4a22",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "bf933aac-3ca9-4cc2-9a17-0284e0498f88",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "3cf07a68-3756-4160-982d-5c5128c11943",
+                    "count": 2,
+                    "chance": 35
+                },
+                {
+                    "uuid": "6529aa9e-3e10-4441-8fe2-e46525c7740d",
+                    "count": 2,
+                    "chance": 15
+                },
+                {
+                    "uuid": "fca0d269-6a95-4731-870c-c2d570f01f48",
+                    "count": 2,
+                    "chance": 15
+                },
+                {
+                    "uuid": "86c81551-f864-4256-be68-5e5e2f21865a",
+                    "count": 2,
+                    "chance": 15
+                },
+                {
+                    "uuid": "ca8a7d19-7b32-4351-bafa-df1bf1a03528",
+                    "count": 2,
+                    "chance": 15
+                },
+                {
+                    "uuid": "d1cf906b-9184-444c-9cc5-ba3633842e99",
+                    "count": 2,
+                    "chance": 15
+                },
+                {
+                    "uuid": "ac786440-d327-49e7-9afb-ca3831665030",
+                    "count": 2,
+                    "chance": 10
+                },
+                {
+                    "uuid": "27c062c3-b04a-4378-8225-9245cfea3323",
+                    "count": 2,
+                    "chance": 10
+                },
+                {
+                    "uuid": "869b0c3e-d339-4a3a-992b-e80e64614652",
+                    "count": 2,
+                    "chance": 10
+                },
+                {
+                    "uuid": "ff6bbdcd-c8c6-440c-8585-1551baacd37e",
+                    "count": 2,
+                    "chance": 10
+                }
+            ]
+        },
+        {
+            "uuid": "d21d6ab1-a6fb-4748-99ed-dd908adff45e",
+            "description": null,
+            "quality": 3,
+            "size": 3,
+            "min_gold": 675,
+            "max_gold": 13500,
+            "item_blueprints": [
+                {
+                    "uuid": "5dbfef28-d4e7-478a-92e2-a81996bbe9f2",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "b518b4d9-7fc4-4436-8aa1-7cb81916545d",
+                    "count": 2,
+                    "chance": 10
+                },
+                {
+                    "uuid": "abd769ee-e483-4c22-9f23-f7eee6c7a629",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "1589de49-f486-4f25-8e31-7285536aad9f",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "2c05881d-a06b-46e3-8a2a-1bfc71e053fa",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "fa7054ad-c098-43ce-9b41-1cdb866db528",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "261efae9-e270-4908-9900-119e8a7000c6",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "80ad3cf6-1c85-40e0-a100-3499648b32ba",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "382836be-90d2-4f2e-ae31-9c916c5f79f1",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "d8ab9d75-da25-43a6-8d3e-19be759921b6",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "e1cea9fc-1c72-4e9f-98b2-8b652b3f468e",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "8b985354-c5b4-4ac4-ba99-c5c070201a87",
+                    "count": 2,
+                    "chance": 25
+                },
+                {
+                    "uuid": "cf0cc910-bb2f-4843-9ba6-3abee2ceb230",
+                    "count": 2,
+                    "chance": 40
+                },
+                {
+                    "uuid": "53a4dc8d-0909-439f-a6d0-99947b81eb0f",
+                    "count": 2,
+                    "chance": 40
+                },
+                {
+                    "uuid": "241aab47-9354-4318-92eb-3b04704bc9ec",
+                    "count": 2,
+                    "chance": 15
+                },
+                {
+                    "uuid": "6529aa9e-3e10-4441-8fe2-e46525c7740d",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "dd47e5a1-4973-46aa-ac77-32698b3975d8",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "b026330d-44e9-482a-bcd5-82a475aa0674",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "86c81551-f864-4256-be68-5e5e2f21865a",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "d1cf906b-9184-444c-9cc5-ba3633842e99",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "ac786440-d327-49e7-9afb-ca3831665030",
+                    "count": 2,
+                    "chance": 10
+                },
+                {
+                    "uuid": "27c062c3-b04a-4378-8225-9245cfea3323",
+                    "count": 2,
+                    "chance": 10
+                },
+                {
+                    "uuid": "869b0c3e-d339-4a3a-992b-e80e64614652",
+                    "count": 2,
+                    "chance": 10
+                },
+                {
+                    "uuid": "ff6bbdcd-c8c6-440c-8585-1551baacd37e",
+                    "count": 2,
+                    "chance": 10
+                }
+            ]
+        },
+        {
+            "uuid": "7f1ce607-2e90-4380-b983-819d44504988",
+            "description": null,
+            "quality": 3,
+            "size": 3,
+            "min_gold": 675,
+            "max_gold": 13500,
+            "item_blueprints": [
+                {
+                    "uuid": "5dbfef28-d4e7-478a-92e2-a81996bbe9f2",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "b518b4d9-7fc4-4436-8aa1-7cb81916545d",
+                    "count": 2,
+                    "chance": 10
+                },
+                {
+                    "uuid": "4d0af9db-1c8e-4cc0-b880-e60d4e33b44a",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "7a402c91-3904-4306-a84f-a0bac6aa06d8",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "9540605a-50f4-4ccc-9af6-b31b78b3d5ce",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "70373752-953b-4bb6-a184-fd7660eb3b68",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "393dc8cd-8e26-4610-a46e-0a7caf85db23",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "fec8e5cc-64d1-49fe-af8f-d46ac8c86532",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "a12dbc9c-a5b3-4962-8086-e56a3f9346fa",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "13fffe11-d035-4913-a4f9-4456af2a4cab",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "c2a95539-855a-4b30-b79b-284c483beaf0",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "2af06bd0-0b95-431c-b86b-a7c6809ce623",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "77c33997-4b83-43fc-8663-97dfa069cca8",
+                    "count": 2,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "5b6901e5-e28b-4842-9dc0-fd2e8f70e139",
+                    "count": 2,
+                    "chance": 30
+                },
+                {
+                    "uuid": "a146d868-bca9-4435-86cd-c1ddb3d10ca6",
+                    "count": 2,
+                    "chance": 30
+                },
+                {
+                    "uuid": "4586fcf6-cb8a-4981-bb7c-7cb46dd4b84f",
+                    "count": 2,
+                    "chance": 30
+                },
+                {
+                    "uuid": "4f8b4a58-ef1e-4b12-a8e6-ee2ebef15071",
+                    "count": 2,
+                    "chance": 15
+                },
+                {
+                    "uuid": "35d4ba46-4123-4d17-90e8-6ecfe0c64687",
+                    "count": 2,
+                    "chance": 15
+                },
+                {
+                    "uuid": "0f51be01-b3ca-4d1e-baef-a42bde0558df",
+                    "count": 2,
+                    "chance": 15
+                },
+                {
+                    "uuid": "3f43d2b2-d040-4bf8-9c0c-05cc1b05a419",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "6c693ef5-14e9-4435-a6dd-0c5480043f1d",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "30d840af-41e5-4904-b1ce-5ef0964e0ebd",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "9ac59434-618a-4b63-be55-1f5bd099ba3d",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "ba60c4fa-ed72-4417-93f6-09e84e82630c",
+                    "count": 2,
+                    "chance": 20
+                },
+                {
+                    "uuid": "27c062c3-b04a-4378-8225-9245cfea3323",
+                    "count": 2,
+                    "chance": 15
+                },
+                {
+                    "uuid": "869b0c3e-d339-4a3a-992b-e80e64614652",
+                    "count": 2,
+                    "chance": 15
+                },
+                {
+                    "uuid": "ff6bbdcd-c8c6-440c-8585-1551baacd37e",
+                    "count": 2,
+                    "chance": 15
+                }
+            ]
+        },
+        {
+            "uuid": "1485119e-4a88-433c-bdda-df44a4d8aefe",
+            "description": null,
+            "quality": 3,
+            "size": 4,
+            "min_gold": 900,
+            "max_gold": 22500,
+            "item_blueprints": [
+                {
+                    "uuid": "5dbfef28-d4e7-478a-92e2-a81996bbe9f2",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "b518b4d9-7fc4-4436-8aa1-7cb81916545d",
+                    "count": 3,
+                    "chance": 10
+                },
+                {
+                    "uuid": "a4a60db4-237a-475a-9be1-76fea70522b5",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "48ccf656-8412-4c5b-8be8-93340bb1c6ad",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "f1dec318-2d1b-488f-9578-e116eddb9063",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "81550fc2-e139-443a-bc56-02decd22801e",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "d775fc38-899c-4ad2-8add-460a106288aa",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "e48e434a-7f41-4b9b-b539-dcc3d817ef78",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "211f44c9-cef1-4734-abb7-ccb2fda25c42",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "261efae9-e270-4908-9900-119e8a7000c6",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "d8cf925b-99a7-4255-8aaa-18d23a5cf3e9",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "d8ab9d75-da25-43a6-8d3e-19be759921b6",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "edc414ee-1689-4afb-b660-987499050242",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "e1cea9fc-1c72-4e9f-98b2-8b652b3f468e",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "1db3c544-7343-48c9-ae78-1a09925070d5",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "ee94bb7a-c4ca-44c6-b35e-cf33c06ef877",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "3c9c99ea-41bf-4ef7-aa9d-944c1345da65",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "ebd111b9-6f92-4402-8a5a-b4f356bc422e",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "ed1f97dd-ecfa-4174-9448-190d3eed4a22",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "bf933aac-3ca9-4cc2-9a17-0284e0498f88",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "3cf07a68-3756-4160-982d-5c5128c11943",
+                    "count": 3,
+                    "chance": 35
+                },
+                {
+                    "uuid": "6529aa9e-3e10-4441-8fe2-e46525c7740d",
+                    "count": 3,
+                    "chance": 15
+                },
+                {
+                    "uuid": "fca0d269-6a95-4731-870c-c2d570f01f48",
+                    "count": 3,
+                    "chance": 15
+                },
+                {
+                    "uuid": "86c81551-f864-4256-be68-5e5e2f21865a",
+                    "count": 3,
+                    "chance": 15
+                },
+                {
+                    "uuid": "ca8a7d19-7b32-4351-bafa-df1bf1a03528",
+                    "count": 3,
+                    "chance": 15
+                },
+                {
+                    "uuid": "d1cf906b-9184-444c-9cc5-ba3633842e99",
+                    "count": 3,
+                    "chance": 15
+                },
+                {
+                    "uuid": "ac786440-d327-49e7-9afb-ca3831665030",
+                    "count": 3,
+                    "chance": 10
+                },
+                {
+                    "uuid": "27c062c3-b04a-4378-8225-9245cfea3323",
+                    "count": 3,
+                    "chance": 10
+                },
+                {
+                    "uuid": "869b0c3e-d339-4a3a-992b-e80e64614652",
+                    "count": 3,
+                    "chance": 10
+                },
+                {
+                    "uuid": "ff6bbdcd-c8c6-440c-8585-1551baacd37e",
+                    "count": 3,
+                    "chance": 10
+                }
+            ]
+        },
+        {
+            "uuid": "806ae76e-35df-43e4-8866-343ad96012e8",
+            "description": null,
+            "quality": 3,
+            "size": 4,
+            "min_gold": 900,
+            "max_gold": 22500,
+            "item_blueprints": [
+                {
+                    "uuid": "5dbfef28-d4e7-478a-92e2-a81996bbe9f2",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "b518b4d9-7fc4-4436-8aa1-7cb81916545d",
+                    "count": 3,
+                    "chance": 10
+                },
+                {
+                    "uuid": "abd769ee-e483-4c22-9f23-f7eee6c7a629",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "1589de49-f486-4f25-8e31-7285536aad9f",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "2c05881d-a06b-46e3-8a2a-1bfc71e053fa",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "fa7054ad-c098-43ce-9b41-1cdb866db528",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "261efae9-e270-4908-9900-119e8a7000c6",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "80ad3cf6-1c85-40e0-a100-3499648b32ba",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "382836be-90d2-4f2e-ae31-9c916c5f79f1",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "d8ab9d75-da25-43a6-8d3e-19be759921b6",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "e1cea9fc-1c72-4e9f-98b2-8b652b3f468e",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "8b985354-c5b4-4ac4-ba99-c5c070201a87",
+                    "count": 3,
+                    "chance": 25
+                },
+                {
+                    "uuid": "cf0cc910-bb2f-4843-9ba6-3abee2ceb230",
+                    "count": 3,
+                    "chance": 40
+                },
+                {
+                    "uuid": "53a4dc8d-0909-439f-a6d0-99947b81eb0f",
+                    "count": 3,
+                    "chance": 40
+                },
+                {
+                    "uuid": "241aab47-9354-4318-92eb-3b04704bc9ec",
+                    "count": 3,
+                    "chance": 15
+                },
+                {
+                    "uuid": "6529aa9e-3e10-4441-8fe2-e46525c7740d",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "dd47e5a1-4973-46aa-ac77-32698b3975d8",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "b026330d-44e9-482a-bcd5-82a475aa0674",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "86c81551-f864-4256-be68-5e5e2f21865a",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "d1cf906b-9184-444c-9cc5-ba3633842e99",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "ac786440-d327-49e7-9afb-ca3831665030",
+                    "count": 3,
+                    "chance": 10
+                },
+                {
+                    "uuid": "27c062c3-b04a-4378-8225-9245cfea3323",
+                    "count": 3,
+                    "chance": 10
+                },
+                {
+                    "uuid": "869b0c3e-d339-4a3a-992b-e80e64614652",
+                    "count": 3,
+                    "chance": 10
+                },
+                {
+                    "uuid": "ff6bbdcd-c8c6-440c-8585-1551baacd37e",
+                    "count": 3,
+                    "chance": 10
+                }
+            ]
+        },
+        {
+            "uuid": "a81dbb2b-4d9f-45e6-ae90-a2c67b255f0f",
+            "description": null,
+            "quality": 3,
+            "size": 4,
+            "min_gold": 900,
+            "max_gold": 22500,
+            "item_blueprints": [
+                {
+                    "uuid": "5dbfef28-d4e7-478a-92e2-a81996bbe9f2",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "b518b4d9-7fc4-4436-8aa1-7cb81916545d",
+                    "count": 3,
+                    "chance": 10
+                },
+                {
+                    "uuid": "4d0af9db-1c8e-4cc0-b880-e60d4e33b44a",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "7a402c91-3904-4306-a84f-a0bac6aa06d8",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "9540605a-50f4-4ccc-9af6-b31b78b3d5ce",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "70373752-953b-4bb6-a184-fd7660eb3b68",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "393dc8cd-8e26-4610-a46e-0a7caf85db23",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "fec8e5cc-64d1-49fe-af8f-d46ac8c86532",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "a12dbc9c-a5b3-4962-8086-e56a3f9346fa",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "13fffe11-d035-4913-a4f9-4456af2a4cab",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "c2a95539-855a-4b30-b79b-284c483beaf0",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "2af06bd0-0b95-431c-b86b-a7c6809ce623",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "77c33997-4b83-43fc-8663-97dfa069cca8",
+                    "count": 3,
+                    "chance": 2.5
+                },
+                {
+                    "uuid": "5b6901e5-e28b-4842-9dc0-fd2e8f70e139",
+                    "count": 3,
+                    "chance": 30
+                },
+                {
+                    "uuid": "a146d868-bca9-4435-86cd-c1ddb3d10ca6",
+                    "count": 3,
+                    "chance": 30
+                },
+                {
+                    "uuid": "4586fcf6-cb8a-4981-bb7c-7cb46dd4b84f",
+                    "count": 3,
+                    "chance": 30
+                },
+                {
+                    "uuid": "4f8b4a58-ef1e-4b12-a8e6-ee2ebef15071",
+                    "count": 3,
+                    "chance": 15
+                },
+                {
+                    "uuid": "35d4ba46-4123-4d17-90e8-6ecfe0c64687",
+                    "count": 3,
+                    "chance": 15
+                },
+                {
+                    "uuid": "0f51be01-b3ca-4d1e-baef-a42bde0558df",
+                    "count": 3,
+                    "chance": 15
+                },
+                {
+                    "uuid": "3f43d2b2-d040-4bf8-9c0c-05cc1b05a419",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "6c693ef5-14e9-4435-a6dd-0c5480043f1d",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "30d840af-41e5-4904-b1ce-5ef0964e0ebd",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "9ac59434-618a-4b63-be55-1f5bd099ba3d",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "ba60c4fa-ed72-4417-93f6-09e84e82630c",
+                    "count": 3,
+                    "chance": 20
+                },
+                {
+                    "uuid": "27c062c3-b04a-4378-8225-9245cfea3323",
+                    "count": 3,
+                    "chance": 15
+                },
+                {
+                    "uuid": "869b0c3e-d339-4a3a-992b-e80e64614652",
+                    "count": 3,
+                    "chance": 15
+                },
+                {
+                    "uuid": "ff6bbdcd-c8c6-440c-8585-1551baacd37e",
+                    "count": 3,
+                    "chance": 15
+                }
+            ]
+        },
+        {
+            "uuid": "38ca78da-bffd-4c34-a4df-ae118f6fcaf5",
+            "description": null,
+            "quality": 1,
+            "size": 1,
+            "min_gold": 100,
+            "max_gold": 500,
+            "item_blueprints": []
+        },
+        {
+            "uuid": "8b775102-141b-4a00-a8f0-fc5147834b34",
+            "description": null,
+            "quality": 1,
+            "size": 1,
+            "min_gold": 400,
+            "max_gold": 2000,
+            "item_blueprints": []
+        },
+        {
+            "uuid": "2886e707-953b-4c44-86af-66b67ef3bdd7",
+            "description": null,
+            "quality": 2,
+            "size": 1,
+            "min_gold": 900,
+            "max_gold": 4500,
+            "item_blueprints": []
+        },
+        {
+            "uuid": "77b81174-7685-45be-af88-231cbe4d788a",
+            "description": null,
+            "quality": 2,
+            "size": 1,
+            "min_gold": 1600,
+            "max_gold": 8000,
+            "item_blueprints": []
+        },
+        {
+            "uuid": "86a4ebc5-fc31-420a-8a2d-7d8962ca1373",
+            "description": null,
+            "quality": 3,
+            "size": 1,
+            "min_gold": 2500,
+            "max_gold": 25000,
+            "item_blueprints": []
+        },
+        {
+            "uuid": "ad45104d-34b6-4d2e-841b-2a8e60517354",
+            "description": null,
+            "quality": 3,
+            "size": 1,
+            "min_gold": 3600,
+            "max_gold": 36000,
+            "item_blueprints": []
+        },
+        {
+            "uuid": "817041a4-37db-4653-b74a-02e108b760dc",
+            "description": null,
+            "quality": 4,
+            "size": 1,
+            "min_gold": 4900,
+            "max_gold": 49000,
+            "item_blueprints": []
+        },
+        {
+            "uuid": "7bdc20da-1c0b-4dc5-85e8-42e8e8387fab",
+            "description": null,
+            "quality": 4,
+            "size": 1,
+            "min_gold": 6400,
+            "max_gold": 64000,
+            "item_blueprints": []
+        },
+        {
+            "uuid": "f33d9ce0-8ff7-4c74-aa3a-7b4a9eca4439",
+            "description": null,
+            "quality": 5,
+            "size": 1,
+            "min_gold": 8100,
+            "max_gold": 121500,
+            "item_blueprints": []
+        },
+        {
+            "uuid": "9df84349-cbfa-4223-be14-7a4eff5420be",
+            "description": null,
+            "quality": 5,
+            "size": 1,
+            "min_gold": 10000,
+            "max_gold": 150000,
+            "item_blueprints": []
+        },
+        {
+            "uuid": "4f559c60-c138-4608-b072-eb5217e13516",
+            "description": null,
+            "quality": 6,
+            "size": 1,
+            "min_gold": 12100,
+            "max_gold": 181500,
+            "item_blueprints": []
+        },
+        {
+            "uuid": "40d01a0a-647d-4703-bbeb-3758514cd9b4",
+            "description": null,
+            "quality": 6,
+            "size": 1,
+            "min_gold": 14400,
+            "max_gold": 216000,
+            "item_blueprints": []
+        },
+        {
+            "uuid": "423428e8-a5aa-4266-b09f-ddbc629d72b9",
+            "description": null,
+            "quality": 3,
+            "size": 1,
+            "min_gold": 5,
+            "max_gold": 25,
+            "item_blueprints": [
+                {
+                    "uuid": "5dbfef28-d4e7-478a-92e2-a81996bbe9f2",
+                    "count": 3,
+                    "chance": 40
+                }
+            ]
+        },
+        {
+            "uuid": "0bba39d7-7a16-4ec6-b941-4a41fc85a10b",
+            "description": null,
+            "quality": 3,
+            "size": 2,
+            "min_gold": 20,
+            "max_gold": 100,
+            "item_blueprints": [
+                {
+                    "uuid": "5dbfef28-d4e7-478a-92e2-a81996bbe9f2",
+                    "count": 9,
+                    "chance": 40
+                }
+            ]
+        },
+        {
+            "uuid": "81e85f96-1be9-46a3-bcea-b54a25357bff",
+            "description": null,
+            "quality": 3,
+            "size": 3,
+            "min_gold": 45,
+            "max_gold": 225,
+            "item_blueprints": [
+                {
+                    "uuid": "5dbfef28-d4e7-478a-92e2-a81996bbe9f2",
+                    "count": 16,
+                    "chance": 40
+                }
+            ]
+        },
+        {
+            "uuid": "630c0a53-7a59-4dab-8ece-ac677a530b16",
+            "description": null,
+            "quality": 3,
+            "size": 4,
+            "min_gold": 80,
+            "max_gold": 400,
+            "item_blueprints": [
+                {
+                    "uuid": "5dbfef28-d4e7-478a-92e2-a81996bbe9f2",
+                    "count": 24,
+                    "chance": 40
+                }
+            ]
+        },
+        {
+            "uuid": "09b31929-238a-438a-9678-cb45ce7ca310",
+            "description": null,
+            "quality": 3,
+            "size": 5,
+            "min_gold": 125,
+            "max_gold": 625,
+            "item_blueprints": [
+                {
+                    "uuid": "5dbfef28-d4e7-478a-92e2-a81996bbe9f2",
+                    "count": 34,
+                    "chance": 40
+                }
+            ]
+        },
+        {
+            "uuid": "3d6bbe60-aa90-4bb1-9ef4-2b5365c98227",
+            "description": null,
+            "quality": 3,
+            "size": 6,
+            "min_gold": 180,
+            "max_gold": 900,
+            "item_blueprints": [
+                {
+                    "uuid": "5dbfef28-d4e7-478a-92e2-a81996bbe9f2",
+                    "count": 45,
+                    "chance": 40
+                }
+            ]
+        },
+        {
+            "uuid": "7c3bc8a9-739c-49f2-b310-5dc1279fc3f2",
+            "description": null,
+            "quality": 1,
+            "size": 1,
+            "min_gold": 100,
+            "max_gold": 400,
+            "item_blueprints": [
+                {
+                    "uuid": "712ee4d7-fecf-4811-89bc-14f17886b895",
+                    "count": 3,
+                    "chance": 40
+                }
+            ]
+        },
+        {
+            "uuid": "e757c02b-f364-4c14-8d52-4988b9b6ee27",
+            "description": null,
+            "quality": 1,
+            "size": 2,
+            "min_gold": 250,
+            "max_gold": 1500,
+            "item_blueprints": [
+                {
+                    "uuid": "712ee4d7-fecf-4811-89bc-14f17886b895",
+                    "count": 9,
+                    "chance": 40
+                }
+            ]
+        },
+        {
+            "uuid": "cf08e4cb-a3d1-4e9e-9a24-44a19a10bd9a",
+            "description": null,
+            "quality": 1,
+            "size": 3,
+            "min_gold": 500,
+            "max_gold": 4000,
+            "item_blueprints": [
+                {
+                    "uuid": "712ee4d7-fecf-4811-89bc-14f17886b895",
+                    "count": 16,
+                    "chance": 40
+                }
+            ]
+        },
+        {
+            "uuid": "760f8ddb-9637-45b3-873f-96b0ca438bd4",
+            "description": null,
+            "quality": 1,
+            "size": 4,
+            "min_gold": 850,
+            "max_gold": 8500,
+            "item_blueprints": [
+                {
+                    "uuid": "712ee4d7-fecf-4811-89bc-14f17886b895",
+                    "count": 24,
+                    "chance": 40
+                }
+            ]
+        },
+        {
+            "uuid": "83882c91-bf5e-4152-8677-d91eb1708bd3",
+            "description": null,
+            "quality": 1,
+            "size": 5,
+            "min_gold": 1300,
+            "max_gold": 15600,
+            "item_blueprints": [
+                {
+                    "uuid": "712ee4d7-fecf-4811-89bc-14f17886b895",
+                    "count": 34,
+                    "chance": 40
+                }
+            ]
+        },
+        {
+            "uuid": "7f3f9d91-31bf-49f3-b073-5ee8645b456b",
+            "description": null,
+            "quality": 1,
+            "size": 6,
+            "min_gold": 1850,
+            "max_gold": 25900,
+            "item_blueprints": [
+                {
+                    "uuid": "712ee4d7-fecf-4811-89bc-14f17886b895",
+                    "count": 45,
+                    "chance": 40
+                }
+            ]
+        },
+        {
+            "uuid": "cce14534-6857-45cb-a4a3-4e452eea40f4",
+            "description": null,
+            "quality": 2,
+            "size": 1,
+            "min_gold": 250,
+            "max_gold": 1500,
+            "item_blueprints": [
+                {
+                    "uuid": "f7b6f673-95e5-43b9-b3b8-e992960132f1",
+                    "count": 3,
+                    "chance": 40
+                }
+            ]
+        },
+        {
+            "uuid": "1a7480b4-825c-4292-9bd6-168fdeff3b06",
+            "description": null,
+            "quality": 2,
+            "size": 2,
+            "min_gold": 400,
+            "max_gold": 3200,
+            "item_blueprints": [
+                {
+                    "uuid": "f7b6f673-95e5-43b9-b3b8-e992960132f1",
+                    "count": 9,
+                    "chance": 40
+                }
+            ]
+        },
+        {
+            "uuid": "b87354c3-d6a6-4b27-bbc5-5aaa551eefd6",
+            "description": null,
+            "quality": 2,
+            "size": 3,
+            "min_gold": 650,
+            "max_gold": 6500,
+            "item_blueprints": [
+                {
+                    "uuid": "f7b6f673-95e5-43b9-b3b8-e992960132f1",
+                    "count": 16,
+                    "chance": 40
+                }
+            ]
+        },
+        {
+            "uuid": "7942fe67-2a4d-4dae-9431-068aa74a00bf",
+            "description": null,
+            "quality": 2,
+            "size": 4,
+            "min_gold": 1000,
+            "max_gold": 12000,
+            "item_blueprints": [
+                {
+                    "uuid": "f7b6f673-95e5-43b9-b3b8-e992960132f1",
+                    "count": 24,
+                    "chance": 40
+                }
+            ]
+        },
+        {
+            "uuid": "4e47b721-6a57-4dd4-b5ea-d380fdc50f87",
+            "description": null,
+            "quality": 2,
+            "size": 5,
+            "min_gold": 1450,
+            "max_gold": 20300,
+            "item_blueprints": [
+                {
+                    "uuid": "f7b6f673-95e5-43b9-b3b8-e992960132f1",
+                    "count": 34,
+                    "chance": 40
+                }
+            ]
+        },
+        {
+            "uuid": "7cde7891-2c1d-48c5-848a-3af21884fc9a",
+            "description": null,
+            "quality": 2,
+            "size": 6,
+            "min_gold": 2000,
+            "max_gold": 32000,
+            "item_blueprints": [
+                {
+                    "uuid": "f7b6f673-95e5-43b9-b3b8-e992960132f1",
+                    "count": 45,
+                    "chance": 40
+                }
+            ]
+        },
+        {
+            "uuid": "d266702f-25d8-4183-8246-b29bfd7400de",
+            "description": null,
+            "quality": 3,
+            "size": 1,
+            "min_gold": 500,
+            "max_gold": 4000,
+            "item_blueprints": [
+                {
+                    "uuid": "b518b4d9-7fc4-4436-8aa1-7cb81916545d",
+                    "count": 3,
+                    "chance": 40
+                }
+            ]
+        },
+        {
+            "uuid": "3b09967d-6f46-4aaa-943d-07d61d4f4ac5",
+            "description": null,
+            "quality": 3,
+            "size": 2,
+            "min_gold": 650,
+            "max_gold": 6500,
+            "item_blueprints": [
+                {
+                    "uuid": "b518b4d9-7fc4-4436-8aa1-7cb81916545d",
+                    "count": 9,
+                    "chance": 40
+                }
+            ]
+        },
+        {
+            "uuid": "3e6b60e8-de3a-45db-9039-67c9f1cf01e5",
+            "description": null,
+            "quality": 3,
+            "size": 3,
+            "min_gold": 900,
+            "max_gold": 10800,
+            "item_blueprints": [
+                {
+                    "uuid": "b518b4d9-7fc4-4436-8aa1-7cb81916545d",
+                    "count": 16,
+                    "chance": 40
+                }
+            ]
+        },
+        {
+            "uuid": "e064ad2e-98e7-4a70-8fa0-0e2e6f4b23b4",
+            "description": null,
+            "quality": 3,
+            "size": 4,
+            "min_gold": 1250,
+            "max_gold": 17500,
+            "item_blueprints": [
+                {
+                    "uuid": "b518b4d9-7fc4-4436-8aa1-7cb81916545d",
+                    "count": 24,
+                    "chance": 40
+                }
+            ]
+        },
+        {
+            "uuid": "e9c99d6a-d590-4422-93db-5086e8aa9766",
+            "description": null,
+            "quality": 3,
+            "size": 5,
+            "min_gold": 1700,
+            "max_gold": 27200,
+            "item_blueprints": [
+                {
+                    "uuid": "b518b4d9-7fc4-4436-8aa1-7cb81916545d",
+                    "count": 34,
+                    "chance": 40
+                }
+            ]
+        },
+        {
+            "uuid": "52607383-166b-40ad-b59c-80e2b3b1a489",
+            "description": null,
+            "quality": 3,
+            "size": 6,
+            "min_gold": 2250,
+            "max_gold": 40500,
+            "item_blueprints": [
+                {
+                    "uuid": "b518b4d9-7fc4-4436-8aa1-7cb81916545d",
+                    "count": 45,
+                    "chance": 40
+                }
+            ]
+        },
+        {
+            "uuid": "0dc31ed4-ee3c-4758-b0be-5c78ca9459db",
+            "description": "Newcomer Chest",
+            "quality": 1,
+            "size": 1,
+            "min_gold": 250,
+            "max_gold": 250,
+            "item_blueprints": [
+                {
+                    "uuid": "e8cd736f-67c9-44ec-b5fc-f376f0b859f5",
+                    "count": 1,
+                    "chance": 100
+                },
+                {
+                    "uuid": "66bec513-7650-43b4-b3f7-5ec86c05084a",
+                    "count": 1,
+                    "chance": 100
+                },
+                {
+                    "uuid": "9fc75fbc-821e-466b-a53f-c83c6c06f5fa",
+                    "count": 1,
+                    "chance": 100
+                },
+                {
+                    "uuid": "c1276c6f-edc5-4a62-b110-b819eea60b90",
+                    "count": 1,
+                    "chance": 100
+                },
+                {
+                    "uuid": "0ca8c639-31e2-4dba-a9d7-0bd6eee48e6f",
+                    "count": 1,
+                    "chance": 100
+                }
+            ]
+        }
+    ]
+}
