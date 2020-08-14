@@ -5,10 +5,12 @@ namespace App\Services;
 
 
 use App\Admin\Content\Sources\AttackSource;
+use App\Admin\Content\Sources\ChestBlueprintSource;
 use App\Admin\Content\Sources\ItemBlueprintSource;
 use App\Admin\Content\Sources\ItemTypeSource;
 use App\Admin\Content\ViewModels\ContentViewModel;
 use App\Domain\Models\Attack;
+use App\Domain\Models\ChestBlueprint;
 use App\Domain\Models\ItemBlueprint;
 use App\Domain\Models\ItemType;
 use Illuminate\Support\Facades\Date;
@@ -168,6 +170,57 @@ class ContentService
     public function itemBlueprintsLastUpdated()
     {
         $dataArray = $this->getItemBlueprintsDataFromJSON();
+        return Date::createFromTimestamp($dataArray['last_updated']);
+    }
+
+    protected function getChestBlueprintsDataFromJSON()
+    {
+        return json_decode(file_get_contents($this->chestBlueprintsPath()), true);
+    }
+
+    public function chestBlueprintsPath()
+    {
+        return resource_path('json/content/chest_blueprints.json');
+    }
+
+    public function chestBlueprints()
+    {
+        $dataArray = $this->getChestBlueprintsDataFromJSON();
+
+        return collect($dataArray['data'])->map(function ($itemBlueprintData) {
+
+            return new ChestBlueprintSource(
+                $itemBlueprintData['uuid'],
+                $itemBlueprintData['description'],
+                $itemBlueprintData['quality'],
+                $itemBlueprintData['size'],
+                $itemBlueprintData['min_gold'],
+                $itemBlueprintData['max_gold'],
+                $itemBlueprintData['item_blueprints']
+            );
+        });
+    }
+
+    public function unSyncedChestBlueprints()
+    {
+        $itemBlueprintSources = $this->chestBlueprints();
+        $chestBlueprints = ChestBlueprint::query()->with([
+            'itemBlueprints'
+        ])->get();
+        return $itemBlueprintSources->filter(function (ChestBlueprintSource $chestBlueprintSource) use ($chestBlueprints) {
+            $match = $chestBlueprints->first(function (ChestBlueprint $chestBlueprint) use ($chestBlueprintSource) {
+                return $chestBlueprintSource->getUuid() === (string) $chestBlueprint->uuid;
+            });
+            if (! $match) {
+                return true;
+            }
+            return ! $chestBlueprintSource->isSynced($match);
+        });
+    }
+
+    public function chestBlueprintsLastUpdated()
+    {
+        $dataArray = $this->getChestBlueprintsDataFromJSON();
         return Date::createFromTimestamp($dataArray['last_updated']);
     }
 

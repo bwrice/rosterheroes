@@ -32,6 +32,11 @@ use Illuminate\Support\Facades\Facade;
  * @method static CarbonInterface itemBlueprintsLastUpdated()
  * @method static string itemBlueprintsPath()
  *
+ * @method static Collection chestBlueprints()
+ * @method static Collection unSyncedChestBlueprints()
+ * @method static CarbonInterface chestBlueprintsLastUpdated()
+ * @method static string chestBlueprintsPath()
+ *
  * @see ContentService
  */
 class Content extends Facade
