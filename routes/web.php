@@ -13,6 +13,7 @@
 use App\Http\Controllers\AttackContentController;
 use App\Domain\Models\Game;
 use App\Facades\CurrentWeek;
+use App\Http\Controllers\ItemBlueprintContentController;
 use App\Http\Controllers\ItemTypeContentController;
 use App\Http\Controllers\SyncItemTypesController;
 use App\Http\Controllers\UnsubscribeToEmailsController;
@@ -121,9 +122,18 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->group(function () 
             Route::post('/sync', SyncItemTypesController::class);
 
             Route::middleware([ContentMiddleware::class])->group(function () {
-                
+
                 Route::get('/{itemTypeUuid}/edit', [ItemTypeContentController::class, 'edit']);
                 Route::put('/{itemTypeUuid}', [ItemTypeContentController::class, 'update']);
+            });
+        });
+
+        Route::prefix('item-blueprints')->group(function () {
+
+            Route::get('/', [ItemBlueprintContentController::class, 'index']);
+
+            Route::middleware([ContentMiddleware::class])->group(function () {
+                //
             });
         });
     });
