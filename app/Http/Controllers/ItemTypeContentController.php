@@ -25,7 +25,7 @@ class ItemTypeContentController extends Controller
             'itemTypes' => $itemTypesSources->forPage($page, 9),
             'page' => $page,
             'totalPages' => $totalPages,
-            'attacks' => Attack::all(),
+            'attacks' => Content::attacks(),
             'itemBases' => ItemBase::all()
         ]);
     }

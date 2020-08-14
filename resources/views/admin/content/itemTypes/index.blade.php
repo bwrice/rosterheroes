@@ -15,11 +15,12 @@
                             <?php
                             /** @var \Illuminate\Database\Eloquent\Collection $attacks */
                             /** @var string $attackUuid */
-                            $attack = $attacks->first(function (\App\Domain\Models\Attack $attack) use ($attackUuid) {
-                                return (string) $attack->uuid === $attackUuid;
+                            /** @var \App\Admin\Content\Sources\AttackSource $attackSource */
+                            $attackSource = $attacks->first(function (\App\Admin\Content\Sources\AttackSource $attack) use ($attackUuid) {
+                                return (string) $attack->getUuid() === $attackUuid;
                             });
                             ?>
-                            <li class="list-group-item">{{$attack->name}}</li>
+                            <li class="list-group-item">{{$attackSource->getName()}}</li>
                         @endforeach
                     </ul>
                     <a href="/admin/content/item-types/{{$itemType->getUuid()}}/edit" class="btn btn-block btn-outline-primary">Edit</a>
