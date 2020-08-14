@@ -25,7 +25,7 @@ class ItemBlueprintContentController extends Controller
             'totalPages' => $totalPages,
             'itemBases' => ItemBase::all(),
             'itemClasses' => ItemClass::all(),
-            'itemTypes' => ItemType::all(),
+            'itemTypes' => Content::itemTypes(),
             'attacks' => Content::attacks(),
             // TODO: use content for materials and enchantments
             'materials' => Material::all(),
