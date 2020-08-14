@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Admin\Content\ViewModels\AttackContentViewModel;
+use App\Admin\Content\ViewModels\ChestBlueprintContentViewModel;
 use App\Admin\Content\ViewModels\ItemBlueprintContentViewModel;
 use App\Admin\Content\ViewModels\ItemTypeContentViewModel;
 use Illuminate\Http\Request;
@@ -15,7 +16,8 @@ class ContentController extends Controller
             'contentViewModels' => collect([
                 new AttackContentViewModel(),
                 new ItemTypeContentViewModel(),
-                new ItemBlueprintContentViewModel()
+                new ItemBlueprintContentViewModel(),
+                new ChestBlueprintContentViewModel()
             ])
         ]);
     }
