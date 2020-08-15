@@ -6,6 +6,7 @@ use App\Admin\Content\ViewModels\AttackContentViewModel;
 use App\Admin\Content\ViewModels\ChestBlueprintContentViewModel;
 use App\Admin\Content\ViewModels\ItemBlueprintContentViewModel;
 use App\Admin\Content\ViewModels\ItemTypeContentViewModel;
+use App\Admin\Content\ViewModels\MinionContentViewModel;
 use Illuminate\Http\Request;
 
 class ContentController extends Controller
@@ -17,7 +18,8 @@ class ContentController extends Controller
                 new AttackContentViewModel(),
                 new ItemTypeContentViewModel(),
                 new ItemBlueprintContentViewModel(),
-                new ChestBlueprintContentViewModel()
+                new ChestBlueprintContentViewModel(),
+                new MinionContentViewModel()
             ])
         ]);
     }
