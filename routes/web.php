@@ -13,6 +13,7 @@
 use App\Http\Controllers\AttackContentController;
 use App\Domain\Models\Game;
 use App\Facades\CurrentWeek;
+use App\Http\Controllers\ChestBlueprintContentController;
 use App\Http\Controllers\ItemBlueprintContentController;
 use App\Http\Controllers\ItemTypeContentController;
 use App\Http\Controllers\SyncItemTypesController;
@@ -131,6 +132,15 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->group(function () 
         Route::prefix('item-blueprints')->group(function () {
 
             Route::get('/', [ItemBlueprintContentController::class, 'index']);
+
+            Route::middleware([ContentMiddleware::class])->group(function () {
+                //
+            });
+        });
+
+        Route::prefix('chest-blueprints')->group(function () {
+
+            Route::get('/', [ChestBlueprintContentController::class, 'index']);
 
             Route::middleware([ContentMiddleware::class])->group(function () {
                 //
