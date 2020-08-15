@@ -37,6 +37,11 @@ use Illuminate\Support\Facades\Facade;
  * @method static CarbonInterface chestBlueprintsLastUpdated()
  * @method static string chestBlueprintsPath()
  *
+ * @method static Collection minions()
+ * @method static Collection unSyncedMinions()
+ * @method static CarbonInterface minionsLastUpdated()
+ * @method static string minionsPath()
+ *
  * @see ContentService
  */
 class Content extends Facade

@@ -8,11 +8,13 @@ use App\Admin\Content\Sources\AttackSource;
 use App\Admin\Content\Sources\ChestBlueprintSource;
 use App\Admin\Content\Sources\ItemBlueprintSource;
 use App\Admin\Content\Sources\ItemTypeSource;
+use App\Admin\Content\Sources\MinionSource;
 use App\Admin\Content\ViewModels\ContentViewModel;
 use App\Domain\Models\Attack;
 use App\Domain\Models\ChestBlueprint;
 use App\Domain\Models\ItemBlueprint;
 use App\Domain\Models\ItemType;
+use App\Domain\Models\Minion;
 use Illuminate\Support\Facades\Date;
 
 class ContentService
@@ -220,7 +222,59 @@ class ContentService
 
     public function chestBlueprintsLastUpdated()
     {
-        $dataArray = $this->getChestBlueprintsDataFromJSON();
+        $dataArray = $this->getMinionsDataFromJSON();
+        return Date::createFromTimestamp($dataArray['last_updated']);
+    }
+
+    protected function getMinionsDataFromJSON()
+    {
+        return json_decode(file_get_contents($this->minionsPath()), true);
+    }
+
+    public function minionsPath()
+    {
+        return resource_path('json/content/minions.json');
+    }
+
+    public function minions()
+    {
+        $dataArray = $this->getMinionsDataFromJSON();
+
+        return collect($dataArray['data'])->map(function ($itemBlueprintData) {
+
+            return new MinionSource(
+                $itemBlueprintData['uuid'],
+                $itemBlueprintData['name'],
+                $itemBlueprintData['level'],
+                $itemBlueprintData['enemy_type'],
+                $itemBlueprintData['combat_position'],
+                $itemBlueprintData['attacks'],
+                $itemBlueprintData['chest_blueprints']
+            );
+        });
+    }
+
+    public function unSyncedMinions()
+    {
+        $minionSources = $this->minions();
+        $minions = Minion::query()->with([
+            'attacks',
+            'chestBlueprints'
+        ])->get();
+        return $minionSources->filter(function (MinionSource $minionSource) use ($minions) {
+            $match = $minions->first(function (Minion $minion) use ($minionSource) {
+                return $minionSource->getUuid() === (string) $minion->uuid;
+            });
+            if (! $match) {
+                return true;
+            }
+            return ! $minionSource->isSynced($match);
+        });
+    }
+
+    public function minionsLastUpdated()
+    {
+        $dataArray = $this->getMinionsDataFromJSON();
         return Date::createFromTimestamp($dataArray['last_updated']);
     }
 
