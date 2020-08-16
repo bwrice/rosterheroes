@@ -16,6 +16,7 @@ use App\Facades\CurrentWeek;
 use App\Http\Controllers\ChestBlueprintContentController;
 use App\Http\Controllers\ItemBlueprintContentController;
 use App\Http\Controllers\ItemTypeContentController;
+use App\Http\Controllers\MinionContentController;
 use App\Http\Controllers\SyncItemTypesController;
 use App\Http\Controllers\UnsubscribeToEmailsController;
 use Illuminate\Support\Facades\Route;
@@ -97,6 +98,10 @@ Route::get('/squads/create', [SquadController::class, 'create'])->name('create-s
 
 Route::get('/command-center/{squadSlug}/{subPage?}', [CommandCenterController::class, 'show'])->where('subPage', '.*')->name('command-center');
 
+
+/*
+ * ADMIN
+ */
 Route::middleware([AdminMiddleware::class])->prefix('admin')->group(function () {
 
     Route::prefix('content')->group(function () {
@@ -141,6 +146,15 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->group(function () 
         Route::prefix('chest-blueprints')->group(function () {
 
             Route::get('/', [ChestBlueprintContentController::class, 'index']);
+
+            Route::middleware([ContentMiddleware::class])->group(function () {
+                //
+            });
+        });
+
+        Route::prefix('minions')->group(function () {
+
+            Route::get('/', [MinionContentController::class, 'index']);
 
             Route::middleware([ContentMiddleware::class])->group(function () {
                 //
