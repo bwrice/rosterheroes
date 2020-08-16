@@ -23,7 +23,7 @@
                                 return $itemBlueprintSource->getUuid() === $itemBlueprintArray['uuid'];
                             });
                             ?>
-                            <li class="list-group-item">{{$itemBlueprint->getDescription()}}</li>
+                            <li class="list-group-item">{{$itemBlueprint->getDescription()}} ({{$itemBlueprintArray['count'] . ' x ' . $itemBlueprintArray['chance']}}%)</li>
                         @endforeach
                     </ul>
                     <a href="/admin/content/chest-blueprints/{{$chestBlueprint->getUuid()}}/edit" class="btn btn-block btn-outline-primary">Edit</a>
