@@ -121,4 +121,77 @@ class SyncChestBlueprintsTest extends TestCase
         $this->assertEquals($updateChestBlueprintSource->getMinGold(), $updatedModel->min_gold);
         $this->assertEquals($updateChestBlueprintSource->getMaxGold(), $updatedModel->max_gold);
     }
+
+    /**
+     * @test
+     */
+    public function it_will_sync_item_blueprints_based_on_the_chest_blueprint_source()
+    {
+        $itemBlueprintFactory = ItemBlueprintFactory::new();
+
+        $unchangedItemBlueprint = $itemBlueprintFactory->create();
+        $itemBlueprintToRemove = $itemBlueprintFactory->create();
+
+        $chestBlueprint = ChestBlueprintFactory::new()->create();
+
+        $chestBlueprint->itemBlueprints()->save($unchangedItemBlueprint, [
+            'count' => $unchangedCount = rand(1,3),
+            'chance' => $unchangedChance = rand(1,100) * .5
+        ]);
+        $chestBlueprint->itemBlueprints()->save($itemBlueprintToRemove, [
+            'count' => rand(1,3),
+            'chance' => rand(1,100) * .5
+        ]);
+
+        $newlyAddedItemBlueprint = $itemBlueprintFactory->create();
+
+        $updatedSource = new ChestBlueprintSource(
+            $chestBlueprint->uuid,
+            $chestBlueprint->description,
+            $chestBlueprint->quality,
+            $chestBlueprint->size,
+            $chestBlueprint->min_gold,
+            $chestBlueprint->max_gold,
+            [
+                [
+                    'uuid' => $unchangedItemBlueprint->uuid,
+                    'count' => $unchangedCount,
+                    'chance' => $unchangedChance
+                ],
+                [
+                    'uuid' => $newlyAddedItemBlueprint->uuid,
+                    'count' => $newlyAddedCount = rand(1, 3),
+                    'chance' => $newlyAddedChance = rand(1, 100) * .5
+                ],
+            ]
+        );
+
+        Content::partialMock()->shouldReceive('unSyncedItemBlueprints')->andReturn(collect());
+        Content::partialMock()->shouldReceive('unSyncedChestBlueprints')->andReturn(collect([$updatedSource]));
+
+        $this->getDomainAction()->execute();
+
+        $query = ChestBlueprint::query()->where('uuid', '=', $updatedSource->getUuid());
+        $this->assertEquals(1, $query->count());
+
+        /** @var ChestBlueprint $updatedModel */
+        $updatedModel = $query->first();
+
+        $itemBlueprintArrays = collect($updatedSource->getItemBlueprints());
+
+        $attachedItemBlueprints = $updatedModel->itemBlueprints;
+        $this->assertEquals($itemBlueprintArrays->count(), $attachedItemBlueprints->count());
+
+        /** @var ItemBlueprint $unchangedMatch */
+        $unchangedMatch = $attachedItemBlueprints->firstWhere('uuid', '=', $unchangedItemBlueprint->uuid);
+        $this->assertNotNull($unchangedMatch);
+        $this->assertEquals($unchangedCount, $unchangedMatch->pivot->count);
+        $this->assertTrue(abs($unchangedMatch->pivot->chance - $unchangedChance) < PHP_FLOAT_EPSILON);
+
+        /** @var ItemBlueprint $newlyAddedMatch */
+        $newlyAddedMatch = $attachedItemBlueprints->firstWhere('uuid', '=', $newlyAddedItemBlueprint->uuid);
+        $this->assertNotNull($newlyAddedMatch);
+        $this->assertEquals($newlyAddedCount, $newlyAddedMatch->pivot->count);
+        $this->assertTrue(abs($newlyAddedMatch->pivot->chance - $newlyAddedChance) < PHP_FLOAT_EPSILON);
+    }
 }

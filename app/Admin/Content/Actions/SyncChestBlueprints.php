@@ -54,14 +54,17 @@ class SyncChestBlueprints extends SyncContent
                     }
 
                     // Attach item blueprints with count and chance pivot values
-                    $itemBlueprintArrays->each(function ($itemBlueprintArray) use ($itemBlueprints, $chestBlueprint) {
+                    $syncArray = $itemBlueprintArrays->mapWithKeys(function ($itemBlueprintArray) use ($itemBlueprints, $chestBlueprint) {
                         /** @var ItemBlueprint $itemBlueprint */
                         $itemBlueprint = $itemBlueprints->firstWhere('uuid', '=', $itemBlueprintArray['uuid']);
-                        $chestBlueprint->itemBlueprints()->save($itemBlueprint, [
+
+                        return [$itemBlueprint->id => [
                             'count' => $itemBlueprintArray['count'],
                             'chance' => $itemBlueprintArray['chance']
-                        ]);
+                        ]];
                     });
+
+                    $chestBlueprint->itemBlueprints()->sync($syncArray);
                 });
 
             } catch (\Exception $exception) {
