@@ -10,13 +10,19 @@ use App\Domain\Models\ItemType;
 use App\Facades\Content;
 use Illuminate\Support\Facades\DB;
 
-class SyncItemTypes
+class SyncItemTypes extends SyncContent
 {
+    protected $dependencies = [
+        self::ATTACKS_DEPENDENCY
+    ];
+
+    /**
+     * @return mixed
+     * @throws \App\Exceptions\SyncContentException
+     */
     public function execute()
     {
-        if (Content::unSyncedAttacks()->isNotEmpty()) {
-            throw new \Exception("Cannot sync item-types while attacks are out of sync");
-        }
+        $this->checkDependencies();
 
         return DB::transaction(function () {
 

@@ -11,6 +11,7 @@ use App\Domain\Models\DamageType;
 use App\Domain\Models\ItemBase;
 use App\Domain\Models\ItemType;
 use App\Domain\Models\TargetPriority;
+use App\Exceptions\SyncContentException;
 use App\Facades\Content;
 use App\Factories\Models\AttackFactory;
 use App\Factories\Models\ItemTypeFactory;
@@ -180,22 +181,10 @@ class SyncItemTypesTest extends TestCase
 
         Content::partialMock()->shouldReceive('unSyncedAttacks')->andReturn(collect([$unSyncedAttackSource]));
 
-        $unSyncedItemSource = ItemTypeSource::build(
-            'Test ItemType ' . Str::random(),
-            rand(1,6),
-            ItemBase::query()->inRandomOrder()->first()->id,
-            []
-        );
-
-        $itemSourceUuid = $unSyncedItemSource->getUuid();
-
-        Content::partialMock()->shouldReceive('unSyncedItemTypes')->andReturn(collect([$unSyncedItemSource]));
-
         try {
             $this->getDomainAction()->execute();
-        } catch (\Exception $exception) {
-            $itemType = ItemType::query()->where('uuid', '=', $itemSourceUuid)->first();
-            $this->assertNull($itemType);
+        } catch (SyncContentException $exception) {
+            $this->assertEquals(SyncContentException::CODE_ATTACKS_NOT_SYNCED, $exception->getCode());
             return;
         }
 
