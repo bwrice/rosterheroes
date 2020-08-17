@@ -11,6 +11,7 @@ abstract class SyncContent
 {
     public const ATTACKS_DEPENDENCY = 'attacks';
     public const ITEM_TYPES_DEPENDENCY = 'item-types';
+    public const ITEM_BLUEPRINTS_DEPENDENCY = 'item-blueprints';
 
     protected $dependencies = [];
 
@@ -29,6 +30,11 @@ abstract class SyncContent
                 case self::ITEM_TYPES_DEPENDENCY;
                     if (Content::unSyncedItemTypes()->isNotEmpty()) {
                         throw new SyncContentException("Item Types dependency not synced", SyncContentException::CODE_ITEM_TYPES_NOT_SYNCED);
+                    }
+                    break;
+                case self::ITEM_BLUEPRINTS_DEPENDENCY;
+                    if (Content::unSyncedItemBlueprints()->isNotEmpty()) {
+                        throw new SyncContentException("Item Blueprints dependency not synced", SyncContentException::CODE_ITEM_BLUEPRINTS_NOT_SYNCED);
                     }
                     break;
                 default:
