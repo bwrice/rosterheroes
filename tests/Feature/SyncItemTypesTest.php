@@ -58,6 +58,7 @@ class SyncItemTypesTest extends TestCase
 
         $sourceUuid = $itemTypesSource->getUuid();
 
+        Content::partialMock()->shouldReceive('unSyncedAttacks')->andReturn(collect());
         Content::partialMock()->shouldReceive('unSyncedItemTypes')->andReturn(collect([$itemTypesSource]));
 
         $this->getDomainAction()->execute();
@@ -98,6 +99,7 @@ class SyncItemTypesTest extends TestCase
         $uuid = (string) $itemType->uuid;
         $updatedItemSource->setUuid($uuid);
 
+        Content::partialMock()->shouldReceive('unSyncedAttacks')->andReturn(collect());
         Content::partialMock()->shouldReceive('unSyncedItemTypes')->andReturn(collect([$updatedItemSource]));
 
         $this->getDomainAction()->execute();
@@ -142,6 +144,7 @@ class SyncItemTypesTest extends TestCase
         $updatedItemSource->setUuid($uuid);
 
 
+        Content::partialMock()->shouldReceive('unSyncedAttacks')->andReturn(collect());
         Content::partialMock()->shouldReceive('unSyncedItemTypes')->andReturn(collect([$updatedItemSource]));
 
         $this->getDomainAction()->execute();
