@@ -16,6 +16,10 @@ class SyncChestBlueprints extends SyncContent
         self::ITEM_BLUEPRINTS_DEPENDENCY
     ];
 
+    /**
+     * @return \Illuminate\Support\Collection
+     * @throws \App\Exceptions\SyncContentException
+     */
     public function execute()
     {
         $this->checkDependencies();

@@ -6,10 +6,10 @@ use App\Admin\Content\Actions\SyncChestBlueprints;
 use App\Admin\Content\Sources\ChestBlueprintSource;
 use App\Domain\Models\ChestBlueprint;
 use App\Domain\Models\ItemBlueprint;
+use App\Exceptions\SyncContentException;
 use App\Facades\Content;
 use App\Factories\Models\ChestBlueprintFactory;
 use App\Factories\Models\ItemBlueprintFactory;
-use App\Factories\Models\ItemTypeFactory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -193,5 +193,64 @@ class SyncChestBlueprintsTest extends TestCase
         $this->assertNotNull($newlyAddedMatch);
         $this->assertEquals($newlyAddedCount, $newlyAddedMatch->pivot->count);
         $this->assertTrue(abs($newlyAddedMatch->pivot->chance - $newlyAddedChance) < PHP_FLOAT_EPSILON);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_throw_an_exception_when_syncing_chest_blueprints_if_the_item_blueprints_are_out_of_sync()
+    {
+
+        Content::partialMock()->shouldReceive('unSyncedItemBlueprints')->andReturn(collect(['anything']));
+
+        try {
+            $this->getDomainAction()->execute();
+        } catch (SyncContentException $syncContentException) {
+            $this->assertEquals(SyncContentException::CODE_ITEM_BLUEPRINTS_NOT_SYNCED, $syncContentException->getCode());
+            return;
+        }
+
+        $this->fail("Exception not thrown");
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_sync_chest_blueprints_while_returning_sources_that_failed()
+    {
+        $unknownItemBlueprintUuid = Str::uuid();
+
+        $failedSource = new ChestBlueprintSource(
+            Str::uuid(),
+            'Test Chest Blueprint ' . Str::random(),
+            rand(1,6),
+            rand(1,6),
+            rand(50, 200),
+            rand(201, 10000),
+            [
+                [
+                'uuid' => $unknownItemBlueprintUuid,
+                'count' => rand(1, 3),
+                'chance' => rand(1, 200) * .25
+                ]
+            ]
+        );
+
+        $successfulSource = new ChestBlueprintSource(
+            Str::uuid(),
+            'Test Chest Blueprint ' . Str::random(),
+            rand(1,6),
+            rand(1,6),
+            rand(50, 200),
+            rand(201, 10000),
+            []
+        );
+
+        Content::partialMock()->shouldReceive('unSyncedItemBlueprints')->andReturn(collect());
+        Content::partialMock()->shouldReceive('unSyncedChestBlueprints')->andReturn(collect([$failedSource, $successfulSource]));
+
+        $failedSources = $this->getDomainAction()->execute();
+        $this->assertEquals(1, $failedSources->count());
+        $this->assertEquals($failedSource->getUuid(), $failedSources->first()['source']->getUuid());
     }
 }
