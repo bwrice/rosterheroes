@@ -271,6 +271,53 @@ class SyncItemBlueprintsTest extends TestCase
         $this->fail("Exception not thrown");
     }
 
+    /**
+     * @test
+     */
+    public function it_will_sync_item_blueprints_while_returning_sources_that_failed()
+    {
+
+        $unknownItemTypeUuid = (string) Str::uuid();
+        $failedSource = new ItemBlueprintSource(
+            Str::uuid(),
+            'Test ItemBlueprint ' . Str::random(),
+            'Test Description ' . Str::random(),
+            rand(1,6),
+            [],
+            [],
+            [$unknownItemTypeUuid],
+            [],
+            [],
+            []
+        );
+
+        $successfulSource = new ItemBlueprintSource(
+            Str::uuid(),
+            'Test ItemBlueprint ' . Str::random(),
+            'Test Description ' . Str::random(),
+            rand(1,6),
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
+        );
+
+        Content::partialMock()->shouldReceive('unSyncedAttacks')->andReturn(collect());
+        Content::partialMock()->shouldReceive('unSyncedItemTypes')->andReturn(collect());
+        Content::partialMock()->shouldReceive('unSyncedItemBlueprints')->andReturn(collect([$failedSource, $successfulSource]));
+
+        $unSyncedSources = $this->getDomainAction()->execute();
+
+        $this->assertEquals(1, $unSyncedSources->count());
+        $this->assertEquals($failedSource->getUuid(), $unSyncedSources->first()['source']->getUuid());
+
+        $this->assertNull(ItemBlueprint::query()->where('uuid', '=', $failedSource->getUuid())->first());
+        $this->assertNotNull(ItemBlueprint::query()->where('uuid', '=', $successfulSource->getUuid())->first());
+
+    }
+
     protected function assertArrayElementsEqual(array $arrayOne, array $arrayTwo)
     {
         sort($arrayOne);

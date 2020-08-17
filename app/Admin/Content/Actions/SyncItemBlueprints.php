@@ -27,31 +27,40 @@ class SyncItemBlueprints extends SyncContent
     public function execute()
     {
         $this->checkDependencies();
+        $notSynced = collect();
+        $itemBlueprintSources = Content::unSyncedItemBlueprints();
 
-        return DB::transaction(function () {
+        $itemBlueprintSources->each(function (ItemBlueprintSource $itemBlueprintSource) use ($notSynced) {
 
-            $itemBlueprintSources = Content::unSyncedItemBlueprints();
+            try {
+                DB::transaction(function () use ($itemBlueprintSource) {
 
-            $itemBlueprintSources->each(function (ItemBlueprintSource $itemBlueprintSource) {
-                /** @var ItemBlueprint $itemBlueprint */
-                $itemBlueprint = ItemBlueprint::query()->updateOrCreate([
-                    'uuid' => $itemBlueprintSource->getUuid()
-                ], [
-                    'item_name' => $itemBlueprintSource->getItemName(),
-                    'description' => $itemBlueprintSource->getDescription(),
-                    'enchantment_power' => $itemBlueprintSource->getEnchantmentPower()
+                    /** @var ItemBlueprint $itemBlueprint */
+                    $itemBlueprint = ItemBlueprint::query()->updateOrCreate([
+                        'uuid' => $itemBlueprintSource->getUuid()
+                    ], [
+                        'item_name' => $itemBlueprintSource->getItemName(),
+                        'description' => $itemBlueprintSource->getDescription(),
+                        'enchantment_power' => $itemBlueprintSource->getEnchantmentPower()
+                    ]);
+
+                    $itemBlueprint->itemBases()->sync($itemBlueprintSource->getItemBases());
+                    $itemBlueprint->itemClasses()->sync($itemBlueprintSource->getItemClasses());
+                    $this->syncItemTypes($itemBlueprint, $itemBlueprintSource);
+                    $this->syncAttacks($itemBlueprint, $itemBlueprintSource);
+                    $this->syncMaterials($itemBlueprint, $itemBlueprintSource);
+                    $this->syncEnchantments($itemBlueprint, $itemBlueprintSource);
+                });
+
+            } catch (\Exception $exception) {
+                $notSynced->push([
+                    'source' => $itemBlueprintSource,
+                    'exception' => $exception
                 ]);
-
-                $itemBlueprint->itemBases()->sync($itemBlueprintSource->getItemBases());
-                $itemBlueprint->itemClasses()->sync($itemBlueprintSource->getItemClasses());
-                $this->syncItemTypes($itemBlueprint, $itemBlueprintSource);
-                $this->syncAttacks($itemBlueprint, $itemBlueprintSource);
-                $this->syncMaterials($itemBlueprint, $itemBlueprintSource);
-                $this->syncEnchantments($itemBlueprint, $itemBlueprintSource);
-            });
-
-            return $itemBlueprintSources;
+            }
         });
+
+        return $notSynced;
     }
 
     protected function syncItemTypes(ItemBlueprint $itemBlueprint, ItemBlueprintSource $itemBlueprintSource)
