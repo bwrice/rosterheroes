@@ -315,13 +315,5 @@ class SyncItemBlueprintsTest extends TestCase
 
         $this->assertNull(ItemBlueprint::query()->where('uuid', '=', $failedSource->getUuid())->first());
         $this->assertNotNull(ItemBlueprint::query()->where('uuid', '=', $successfulSource->getUuid())->first());
-
-    }
-
-    protected function assertArrayElementsEqual(array $arrayOne, array $arrayTwo)
-    {
-        sort($arrayOne);
-        sort($arrayTwo);
-        $this->assertEquals($arrayOne, $arrayTwo);
     }
 }
