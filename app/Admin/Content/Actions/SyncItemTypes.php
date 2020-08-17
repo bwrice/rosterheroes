@@ -24,30 +24,42 @@ class SyncItemTypes extends SyncContent
     {
         $this->checkDependencies();
 
-        return DB::transaction(function () {
+        $unSyncedSources = Content::unSyncedItemTypes();
+        $notSynced = collect();
 
-            $unSyncedSources = Content::unSyncedItemTypes();
+        $unSyncedSources->each(function (ItemTypeSource $itemTypeSource) use ($notSynced) {
 
-            $unSyncedSources->each(function (ItemTypeSource $itemTypeSource) {
-                /** @var ItemType $itemType */
-                $itemType = ItemType::query()->updateOrCreate([
-                    'uuid' => $itemTypeSource->getUuid()
-                ], [
-                    'name' => $itemTypeSource->getName(),
-                    'tier' => $itemTypeSource->getTier(),
-                    'item_base_id' => $itemTypeSource->getItemBaseID()
+            try {
+
+                DB::transaction(function () use ($itemTypeSource, $notSynced) {
+
+
+                    /** @var ItemType $itemType */
+                    $itemType = ItemType::query()->updateOrCreate([
+                        'uuid' => $itemTypeSource->getUuid()
+                    ], [
+                        'name' => $itemTypeSource->getName(),
+                        'tier' => $itemTypeSource->getTier(),
+                        'item_base_id' => $itemTypeSource->getItemBaseID()
+                    ]);
+
+                    $attacks = Attack::query()->whereIn('uuid', $itemTypeSource->getAttackUuids())->get();
+
+                    if ($attacks->count() !== count($itemTypeSource->getAttackUuids())) {
+                        throw new \Exception("Not all attacks found for item-type: " . $itemType->name);
+                    }
+
+                    $itemType->attacks()->sync($attacks->pluck('id')->toArray());
+                });
+
+            } catch (\Exception $exception) {
+                $notSynced->push([
+                    'source' => $itemTypeSource,
+                    'exception' => $exception
                 ]);
-
-                $attacks = Attack::query()->whereIn('uuid', $itemTypeSource->getAttackUuids())->get();
-
-                if ($attacks->count() !== count($itemTypeSource->getAttackUuids())) {
-                    throw new \Exception("Not all attacks found for item-type: " . $itemType->name);
-                }
-
-                $itemType->attacks()->sync($attacks->pluck('id')->toArray());
-            });
-
-            return $unSyncedSources;
+            }
         });
+
+        return $notSynced;
     }
 }

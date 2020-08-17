@@ -190,4 +190,40 @@ class SyncItemTypesTest extends TestCase
 
         $this->fail("Exception not thrown");
     }
+
+    /**
+     * @test
+     */
+    public function it_will_sync_item_types_while_returning_sources_that_failed()
+    {
+
+        $unknownAttackUuid = (string) Str::uuid();
+
+        $failedSource = new ItemTypeSource(
+            Str::uuid(),
+            'Test ItemType ' . Str::random(),
+            rand(1,6),
+            ItemBase::query()->inRandomOrder()->first()->id,
+            [$unknownAttackUuid]
+        );
+
+        $successfulSource = new ItemTypeSource(
+            Str::uuid(),
+            'Test ItemType ' . Str::random(),
+            rand(1,6),
+            ItemBase::query()->inRandomOrder()->first()->id,
+            []
+        );
+
+        Content::partialMock()->shouldReceive('unSyncedAttacks')->andReturn(collect());
+        Content::partialMock()->shouldReceive('unSyncedItemTypes')->andReturn(collect([$failedSource, $successfulSource]));
+
+        $unSyncedSources = $this->getDomainAction()->execute();
+
+        $this->assertEquals(1, $unSyncedSources->count());
+        $this->assertEquals($failedSource->getUuid(), $unSyncedSources->first()['source']->getUuid());
+
+        $this->assertNull(ItemType::query()->where('uuid', '=', $failedSource->getUuid())->first());
+        $this->assertNotNull(ItemType::query()->where('uuid', '=', $successfulSource->getUuid())->first());
+    }
 }
