@@ -9,8 +9,10 @@ use App\Domain\Models\ItemBase;
 use App\Domain\Models\ItemBlueprint;
 use App\Domain\Models\ItemClass;
 use App\Domain\Models\Material;
+use App\Exceptions\SyncContentException;
 use App\Facades\Content;
 use App\Factories\Models\AttackFactory;
+use App\Factories\Models\ItemBlueprintFactory;
 use App\Factories\Models\ItemTypeFactory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -72,6 +74,7 @@ class SyncItemBlueprintsTest extends TestCase
 
 
         Content::partialMock()->shouldReceive('unSyncedAttacks')->andReturn(collect());
+        Content::partialMock()->shouldReceive('unSyncedItemTypes')->andReturn(collect());
         Content::partialMock()->shouldReceive('unSyncedItemBlueprints')->andReturn(collect([$itemBlueprintSource]));
 
         $this->getDomainAction()->execute();
@@ -89,6 +92,183 @@ class SyncItemBlueprintsTest extends TestCase
         $this->assertArrayElementsEqual($itemBlueprintSource->getAttacks(), $createdItemBlueprint->attacks()->pluck('uuid')->toArray());
         $this->assertArrayElementsEqual($itemBlueprintSource->getMaterials(), $createdItemBlueprint->materials()->pluck('uuid')->toArray());
         $this->assertArrayElementsEqual($itemBlueprintSource->getEnchantments(), $createdItemBlueprint->enchantments()->pluck('uuid')->toArray());
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_update_a_changed_item_blueprint()
+    {
+
+        $itemBlueprint = ItemBlueprintFactory::new()->create();
+
+        $diffItemName = 'Test ItemBlueprint ' . Str::random();
+
+        $updatedItemSource = new ItemBlueprintSource(
+            $itemBlueprint->uuid,
+            $diffItemName,
+            $itemBlueprint->description,
+            $itemBlueprint->enchantment_power,
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
+        );
+
+        Content::partialMock()->shouldReceive('unSyncedAttacks')->andReturn(collect());
+        Content::partialMock()->shouldReceive('unSyncedItemTypes')->andReturn(collect());
+        Content::partialMock()->shouldReceive('unSyncedItemBlueprints')->andReturn(collect([$updatedItemSource]));
+
+        $this->getDomainAction()->execute();
+
+        /** @var ItemBlueprint $itemBlueprint */
+        $query = ItemBlueprint::query()->where('uuid', '=', $itemBlueprint->uuid);
+        $this->assertEquals(1, $query->count());
+        /** @var ItemBlueprint $updatedItemBlueprint */
+        $updatedItemBlueprint = $query->first();
+        $this->assertEquals($diffItemName, $updatedItemBlueprint->item_name);
+    }
+
+
+    /**
+     * @test
+     */
+    public function it_will_sync_attacks_based_on_item_blueprint_source()
+    {
+        $attackFactory = AttackFactory::new();
+
+        $unchangedAttack = $attackFactory->create();
+        $attackToRemove = $attackFactory->create();
+
+        $itemBlueprint = ItemBlueprintFactory::new()->create();
+
+        $itemBlueprint->attacks()->save($unchangedAttack);
+        $itemBlueprint->attacks()->save($attackToRemove);
+
+        $newlyAddedAttack = $attackFactory->create();
+
+        $updatedAttackUuids = [
+            $unchangedAttack->uuid,
+            $newlyAddedAttack->uuid
+        ];
+
+        $updatedItemSource = new ItemBlueprintSource(
+            $itemBlueprint->uuid,
+            $itemBlueprint->item_name,
+            $itemBlueprint->description,
+            $itemBlueprint->enchantment_power,
+            $itemBlueprint->itemBases()->pluck('id')->toArray(),
+            $itemBlueprint->itemClasses()->pluck('id')->toArray(),
+            $itemBlueprint->itemTypes()->pluck('uuid')->toArray(),
+            $updatedAttackUuids,
+            $itemBlueprint->materials()->pluck('uuid')->toArray(),
+            $itemBlueprint->enchantments()->pluck('uuid')->toArray()
+        );
+
+        Content::partialMock()->shouldReceive('unSyncedAttacks')->andReturn(collect());
+        Content::partialMock()->shouldReceive('unSyncedItemTypes')->andReturn(collect());
+        Content::partialMock()->shouldReceive('unSyncedItemBlueprints')->andReturn(collect([$updatedItemSource]));
+
+        $this->getDomainAction()->execute();
+
+        /** @var ItemBlueprint $updatedItemBlueprint */
+        $query = ItemBlueprint::query()->where('uuid', '=', $itemBlueprint->uuid);
+        $this->assertEquals(1, $query->count());
+        $updatedItemBlueprint = $query->first();
+
+        $attacks = $updatedItemBlueprint->attacks;
+        $this->assertEquals(2, $attacks->count());
+
+        $this->assertArrayElementsEqual($updatedItemSource->getAttacks(), $attacks->pluck('uuid')->toArray());
+    }
+    /**
+     * @test
+     */
+    public function it_will_sync_item_types_based_on_item_blueprint_source()
+    {
+        $itemTypeFactory = ItemTypeFactory::new();
+
+        $unchangedItemType = $itemTypeFactory->create();
+        $itemTypeToRemove = $itemTypeFactory->create();
+
+        $itemBlueprint = ItemBlueprintFactory::new()->create();
+
+        $itemBlueprint->itemTypes()->save($unchangedItemType);
+        $itemBlueprint->itemTypes()->save($itemTypeToRemove);
+
+        $newlyAddedItemType = $itemTypeFactory->create();
+
+        $updatedItemTypes = [
+            $unchangedItemType->uuid,
+            $newlyAddedItemType->uuid
+        ];
+
+        $updatedItemSource = new ItemBlueprintSource(
+            $itemBlueprint->uuid,
+            $itemBlueprint->item_name,
+            $itemBlueprint->description,
+            $itemBlueprint->enchantment_power,
+            $itemBlueprint->itemBases()->pluck('id')->toArray(),
+            $itemBlueprint->itemClasses()->pluck('id')->toArray(),
+            $updatedItemTypes,
+            $itemBlueprint->attacks()->pluck('uuid')->toArray(),
+            $itemBlueprint->materials()->pluck('uuid')->toArray(),
+            $itemBlueprint->enchantments()->pluck('uuid')->toArray()
+        );
+
+        Content::partialMock()->shouldReceive('unSyncedAttacks')->andReturn(collect());
+        Content::partialMock()->shouldReceive('unSyncedItemTypes')->andReturn(collect());
+        Content::partialMock()->shouldReceive('unSyncedItemBlueprints')->andReturn(collect([$updatedItemSource]));
+
+        $this->getDomainAction()->execute();
+
+        /** @var ItemBlueprint $updatedItemBlueprint */
+        $query = ItemBlueprint::query()->where('uuid', '=', $itemBlueprint->uuid);
+        $this->assertEquals(1, $query->count());
+        $updatedItemBlueprint = $query->first();
+
+        $itemTypes = $updatedItemBlueprint->itemTypes;
+        $this->assertEquals(2, $itemTypes->count());
+
+        $this->assertArrayElementsEqual($updatedItemSource->getItemTypes(), $itemTypes->pluck('uuid')->toArray());
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_throw_an_exception_when_syncing_item_blueprints_if_attacks_are_out_of_sync()
+    {
+        Content::partialMock()->shouldReceive('unSyncedAttacks')->andReturn(collect(['anything']));
+        Content::partialMock()->shouldReceive('unSyncedItemTypes')->andReturn(collect());
+
+        try {
+            $this->getDomainAction()->execute();
+        } catch (SyncContentException $syncContentException) {
+            $this->assertEquals(SyncContentException::CODE_ATTACKS_NOT_SYNCED, $syncContentException->getCode());
+            return;
+        }
+
+        $this->fail("Exception not thrown");
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_throw_an_exception_when_syncing_item_blueprints_if_item_types_are_out_of_sync()
+    {
+        Content::partialMock()->shouldReceive('unSyncedAttacks')->andReturn(collect());
+        Content::partialMock()->shouldReceive('unSyncedItemTypes')->andReturn(collect(['anything']));
+
+        try {
+            $this->getDomainAction()->execute();
+        } catch (SyncContentException $syncContentException) {
+            $this->assertEquals(SyncContentException::CODE_ITEM_TYPES_NOT_SYNCED, $syncContentException->getCode());
+            return;
+        }
+
+        $this->fail("Exception not thrown");
     }
 
     protected function assertArrayElementsEqual(array $arrayOne, array $arrayTwo)
