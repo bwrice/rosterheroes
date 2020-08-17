@@ -5,7 +5,6 @@ namespace App\Admin\Content\Actions;
 
 
 use App\Admin\Content\Sources\ItemBlueprintSource;
-use App\Admin\Content\Sources\ItemTypeSource;
 use App\Domain\Models\Attack;
 use App\Domain\Models\Enchantment;
 use App\Domain\Models\ItemBlueprint;
@@ -14,13 +13,20 @@ use App\Domain\Models\Material;
 use App\Facades\Content;
 use Illuminate\Support\Facades\DB;
 
-class SyncItemBlueprints
+class SyncItemBlueprints extends SyncContent
 {
+    protected $dependencies = [
+        self::ATTACKS_DEPENDENCY,
+        self::ITEM_TYPES_DEPENDENCY
+    ];
+
+    /**
+     * @return mixed
+     * @throws \App\Exceptions\SyncContentException
+     */
     public function execute()
     {
-        if (Content::unSyncedAttacks()->isNotEmpty()) {
-            throw new \Exception("Cannot sync item-blueprints while attacks are out of sync");
-        }
+        $this->checkDependencies();
 
         return DB::transaction(function () {
 
