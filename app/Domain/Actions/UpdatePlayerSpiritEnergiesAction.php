@@ -10,7 +10,6 @@ use App\Domain\Models\Hero;
 use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\Week;
 use App\Domain\QueryBuilders\PlayerSpiritQueryBuilder;
-use App\Events\SpiritEnergiesUpdated;
 use App\Facades\Admin;
 use App\Notifications\SpiritEnergiesUpdatedNotification;
 use Illuminate\Support\Facades\Date;
@@ -138,7 +137,7 @@ class UpdatePlayerSpiritEnergiesAction
 
         $deltaRatio = abs($essenceCostRatio - $essencePaidForRatio);
 
-        $coefficient = 10 * ((5000 * $spiritsInUseCount) ** .35);
+        $coefficient = 2 * (5000 * $spiritsInUseCount) ** .35;
 
         $energyDelta = $coefficient * $deltaRatio;
 

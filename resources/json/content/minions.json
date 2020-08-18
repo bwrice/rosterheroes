@@ -1,0 +1,1187 @@
+{
+    "last_updated": 1597460960,
+    "data": [
+        {
+            "name": "Skeleton Scout",
+            "uuid": "9c77b2a9-7a03-4518-ac78-dd241a6e06d6",
+            "level": 8,
+            "enemy_type": 4,
+            "combat_position": 3,
+            "attacks": [
+                "990706e1-27a3-4199-836b-1e9710d27cca",
+                "5bcee573-7a5f-4279-a429-330a904b07ae"
+            ],
+            "chest_blueprints": [
+                {
+                    "uuid": "4f5c5102-10fd-4da0-b43f-549fe8cec7eb",
+                    "count": 1,
+                    "chance": 10
+                }
+            ]
+        },
+        {
+            "name": "Skeleton Guard",
+            "uuid": "8bc7dc70-dee2-430f-877e-cdb474be17b9",
+            "level": 13,
+            "enemy_type": 4,
+            "combat_position": 1,
+            "attacks": [
+                "990706e1-27a3-4199-836b-1e9710d27cca",
+                "7bd31ef6-5855-4f78-a9f7-79bcfcfc55a2"
+            ],
+            "chest_blueprints": [
+                {
+                    "uuid": "5a7a65c3-044d-487b-a641-c7290b54278a",
+                    "count": 1,
+                    "chance": 12
+                }
+            ]
+        },
+        {
+            "name": "Skeleton Archer",
+            "uuid": "1507485e-c75c-42a1-8366-b2097778b6af",
+            "level": 17,
+            "enemy_type": 4,
+            "combat_position": 3,
+            "attacks": [
+                "5bcee573-7a5f-4279-a429-330a904b07ae",
+                "09ac698f-3a50-4f12-9b4b-41e665cb521e",
+                "afd9b19e-58b2-4aa8-bcf2-3cffa5605e1f"
+            ],
+            "chest_blueprints": [
+                {
+                    "uuid": "4f5c5102-10fd-4da0-b43f-549fe8cec7eb",
+                    "count": 1,
+                    "chance": 14
+                }
+            ]
+        },
+        {
+            "name": "Skeleton Mage",
+            "uuid": "fadf9b6c-cd38-42b4-b52d-2e5d0929f420",
+            "level": 18,
+            "enemy_type": 4,
+            "combat_position": 2,
+            "attacks": [
+                "6b247145-4892-4ce6-bd41-d595bd6e4722",
+                "5f2ee6f3-b30c-4e70-bb50-9eae54e078a0",
+                "99e1b0ec-6c10-4940-adbe-86e2961c073d"
+            ],
+            "chest_blueprints": [
+                {
+                    "uuid": "0a0fcac6-54fe-4926-990c-db44a0e86080",
+                    "count": 1,
+                    "chance": 15
+                }
+            ]
+        },
+        {
+            "name": "Skeleton Soldier",
+            "uuid": "8a40540d-c758-4644-ae8b-de7dd7a94757",
+            "level": 21,
+            "enemy_type": 4,
+            "combat_position": 1,
+            "attacks": [
+                "990706e1-27a3-4199-836b-1e9710d27cca",
+                "7bd31ef6-5855-4f78-a9f7-79bcfcfc55a2",
+                "71c0a6f9-7021-4c0f-b5aa-6720f5aa3cbd",
+                "24dc88d8-d944-4510-9619-532990a40121"
+            ],
+            "chest_blueprints": [
+                {
+                    "uuid": "5a7a65c3-044d-487b-a641-c7290b54278a",
+                    "count": 1,
+                    "chance": 12
+                },
+                {
+                    "uuid": "38ca78da-bffd-4c34-a4df-ae118f6fcaf5",
+                    "count": 1,
+                    "chance": 10
+                }
+            ]
+        },
+        {
+            "name": "Skeleton Marksman",
+            "uuid": "7d872d3f-4037-4492-9ab5-0055f84d22d9",
+            "level": 23,
+            "enemy_type": 4,
+            "combat_position": 3,
+            "attacks": [
+                "5bcee573-7a5f-4279-a429-330a904b07ae",
+                "09ac698f-3a50-4f12-9b4b-41e665cb521e",
+                "9422dae3-5b6b-4140-96b7-e4f8a1df2144",
+                "afd9b19e-58b2-4aa8-bcf2-3cffa5605e1f"
+            ],
+            "chest_blueprints": [
+                {
+                    "uuid": "4f5c5102-10fd-4da0-b43f-549fe8cec7eb",
+                    "count": 1,
+                    "chance": 13
+                },
+                {
+                    "uuid": "38ca78da-bffd-4c34-a4df-ae118f6fcaf5",
+                    "count": 1,
+                    "chance": 10
+                }
+            ]
+        },
+        {
+            "name": "Skeleton Battler",
+            "uuid": "d07327c2-2e1c-42c4-ba98-8d5db1b869e3",
+            "level": 31,
+            "enemy_type": 4,
+            "combat_position": 1,
+            "attacks": [
+                "32f1cc6b-bbdb-491b-a3f8-c9cc2e69dbe2",
+                "50db70a7-6d2d-4186-ae5c-129486366c96",
+                "9e1ce40d-87cb-4d9e-b4dd-afb88ea53ad0",
+                "f011241a-5841-4a1e-9e43-b6ccfff07231",
+                "f100fe8e-1e1e-4895-b058-6948ab96eee2",
+                "4a316724-bbe1-4821-87dd-8973beb3950f"
+            ],
+            "chest_blueprints": [
+                {
+                    "uuid": "5a7a65c3-044d-487b-a641-c7290b54278a",
+                    "count": 1,
+                    "chance": 15
+                },
+                {
+                    "uuid": "38ca78da-bffd-4c34-a4df-ae118f6fcaf5",
+                    "count": 1,
+                    "chance": 12
+                }
+            ]
+        },
+        {
+            "name": "Skeleton Captain",
+            "uuid": "3970ad11-f4a1-4653-ae6f-8518829d9817",
+            "level": 40,
+            "enemy_type": 4,
+            "combat_position": 1,
+            "attacks": [
+                "c152b9e6-f500-46d0-81f0-f68e030f19bf",
+                "4ae9e265-be50-443f-a30d-1b8659ea4aed",
+                "f562ebf9-0d18-416b-b95b-80d753b66732",
+                "2fe460b2-0dd3-4a0c-b133-ed51c6759407",
+                "e8f156c3-a994-4653-b88e-a1f58fdceee7",
+                "e669187c-96b6-464d-ba75-17570f4d0860"
+            ],
+            "chest_blueprints": [
+                {
+                    "uuid": "5a7a65c3-044d-487b-a641-c7290b54278a",
+                    "count": 1,
+                    "chance": 100
+                },
+                {
+                    "uuid": "64522188-2da8-4414-8a8f-031b894648f2",
+                    "count": 1,
+                    "chance": 5
+                },
+                {
+                    "uuid": "38ca78da-bffd-4c34-a4df-ae118f6fcaf5",
+                    "count": 1,
+                    "chance": 10
+                }
+            ]
+        },
+        {
+            "name": "Young Werewolf",
+            "uuid": "ecaf5a2b-c7fb-4407-a7a4-5853741f4561",
+            "level": 15,
+            "enemy_type": 6,
+            "combat_position": 1,
+            "attacks": [
+                "a77880e7-261e-43d3-b70e-81219dcb620e",
+                "078c958a-d90e-477a-85bc-bfc4e4d1acb3",
+                "1165630d-1dbf-4970-8e95-7d46c038478a"
+            ],
+            "chest_blueprints": [
+                {
+                    "uuid": "38ca78da-bffd-4c34-a4df-ae118f6fcaf5",
+                    "count": 1,
+                    "chance": 13
+                }
+            ]
+        },
+        {
+            "name": "Werewolf",
+            "uuid": "5d1fe7c7-5c60-4b9b-80d7-25cd6f4102b1",
+            "level": 21,
+            "enemy_type": 6,
+            "combat_position": 1,
+            "attacks": [
+                "a77880e7-261e-43d3-b70e-81219dcb620e",
+                "078c958a-d90e-477a-85bc-bfc4e4d1acb3",
+                "1165630d-1dbf-4970-8e95-7d46c038478a"
+            ],
+            "chest_blueprints": [
+                {
+                    "uuid": "8b775102-141b-4a00-a8f0-fc5147834b34",
+                    "count": 1,
+                    "chance": 18
+                }
+            ]
+        },
+        {
+            "name": "Werewolf Thrasher",
+            "uuid": "dfef92cb-ca76-4bff-b5f5-2a7cddaa4c9e",
+            "level": 28,
+            "enemy_type": 6,
+            "combat_position": 1,
+            "attacks": [
+                "a77880e7-261e-43d3-b70e-81219dcb620e",
+                "db12c3ab-12e6-46bd-b2c0-673fcce8d8a3",
+                "078c958a-d90e-477a-85bc-bfc4e4d1acb3",
+                "1165630d-1dbf-4970-8e95-7d46c038478a"
+            ],
+            "chest_blueprints": [
+                {
+                    "uuid": "5a7a65c3-044d-487b-a641-c7290b54278a",
+                    "count": 1,
+                    "chance": 10
+                },
+                {
+                    "uuid": "38ca78da-bffd-4c34-a4df-ae118f6fcaf5",
+                    "count": 1,
+                    "chance": 22
+                }
+            ]
+        },
+        {
+            "name": "Werewolf Mangler",
+            "uuid": "55399c08-6870-4587-9751-4c8b97b3f368",
+            "level": 37,
+            "enemy_type": 6,
+            "combat_position": 1,
+            "attacks": [
+                "a77880e7-261e-43d3-b70e-81219dcb620e",
+                "db12c3ab-12e6-46bd-b2c0-673fcce8d8a3",
+                "078c958a-d90e-477a-85bc-bfc4e4d1acb3",
+                "1165630d-1dbf-4970-8e95-7d46c038478a"
+            ],
+            "chest_blueprints": [
+                {
+                    "uuid": "8b775102-141b-4a00-a8f0-fc5147834b34",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "423428e8-a5aa-4266-b09f-ddbc629d72b9",
+                    "count": 1,
+                    "chance": 5
+                }
+            ]
+        },
+        {
+            "name": "Werewolf Ravager",
+            "uuid": "4f591bfd-f0f1-4fe3-8942-8f89ff02d9f0",
+            "level": 45,
+            "enemy_type": 6,
+            "combat_position": 1,
+            "attacks": [
+                "a77880e7-261e-43d3-b70e-81219dcb620e",
+                "db12c3ab-12e6-46bd-b2c0-673fcce8d8a3",
+                "078c958a-d90e-477a-85bc-bfc4e4d1acb3",
+                "1165630d-1dbf-4970-8e95-7d46c038478a"
+            ],
+            "chest_blueprints": [
+                {
+                    "uuid": "8b775102-141b-4a00-a8f0-fc5147834b34",
+                    "count": 1,
+                    "chance": 25
+                },
+                {
+                    "uuid": "423428e8-a5aa-4266-b09f-ddbc629d72b9",
+                    "count": 1,
+                    "chance": 5
+                }
+            ]
+        },
+        {
+            "name": "Werewolf Mauler",
+            "uuid": "f4609056-ed93-4d4d-94ef-530ebf444c28",
+            "level": 51,
+            "enemy_type": 6,
+            "combat_position": 1,
+            "attacks": [
+                "a77880e7-261e-43d3-b70e-81219dcb620e",
+                "db12c3ab-12e6-46bd-b2c0-673fcce8d8a3",
+                "078c958a-d90e-477a-85bc-bfc4e4d1acb3",
+                "1165630d-1dbf-4970-8e95-7d46c038478a"
+            ],
+            "chest_blueprints": [
+                {
+                    "uuid": "5a7a65c3-044d-487b-a641-c7290b54278a",
+                    "count": 1,
+                    "chance": 10
+                },
+                {
+                    "uuid": "8b775102-141b-4a00-a8f0-fc5147834b34",
+                    "count": 1,
+                    "chance": 25
+                },
+                {
+                    "uuid": "423428e8-a5aa-4266-b09f-ddbc629d72b9",
+                    "count": 1,
+                    "chance": 6
+                }
+            ]
+        },
+        {
+            "name": "Werewolf Maimer",
+            "uuid": "d29e0a29-838f-49bd-8477-e38b983204a5",
+            "level": 59,
+            "enemy_type": 6,
+            "combat_position": 1,
+            "attacks": [
+                "a77880e7-261e-43d3-b70e-81219dcb620e",
+                "db12c3ab-12e6-46bd-b2c0-673fcce8d8a3",
+                "078c958a-d90e-477a-85bc-bfc4e4d1acb3",
+                "1165630d-1dbf-4970-8e95-7d46c038478a"
+            ],
+            "chest_blueprints": [
+                {
+                    "uuid": "4f5c5102-10fd-4da0-b43f-549fe8cec7eb",
+                    "count": 1,
+                    "chance": 12
+                },
+                {
+                    "uuid": "8b775102-141b-4a00-a8f0-fc5147834b34",
+                    "count": 1,
+                    "chance": 25
+                },
+                {
+                    "uuid": "423428e8-a5aa-4266-b09f-ddbc629d72b9",
+                    "count": 1,
+                    "chance": 7
+                }
+            ]
+        },
+        {
+            "name": "Werewolf Eviscerator",
+            "uuid": "754ded53-7f5b-4813-aedf-888ebd202531",
+            "level": 90,
+            "enemy_type": 6,
+            "combat_position": 1,
+            "attacks": [
+                "a77880e7-261e-43d3-b70e-81219dcb620e",
+                "db12c3ab-12e6-46bd-b2c0-673fcce8d8a3",
+                "078c958a-d90e-477a-85bc-bfc4e4d1acb3",
+                "1165630d-1dbf-4970-8e95-7d46c038478a"
+            ],
+            "chest_blueprints": [
+                {
+                    "uuid": "4f5c5102-10fd-4da0-b43f-549fe8cec7eb",
+                    "count": 1,
+                    "chance": 25
+                },
+                {
+                    "uuid": "8b775102-141b-4a00-a8f0-fc5147834b34",
+                    "count": 1,
+                    "chance": 100
+                },
+                {
+                    "uuid": "423428e8-a5aa-4266-b09f-ddbc629d72b9",
+                    "count": 1,
+                    "chance": 15
+                }
+            ]
+        },
+        {
+            "name": "Amber Golem",
+            "uuid": "a1eda3d4-7f47-4d5d-b6a4-e8a8b9b4fe43",
+            "level": 42,
+            "enemy_type": 3,
+            "combat_position": 1,
+            "attacks": [
+                "c152b9e6-f500-46d0-81f0-f68e030f19bf",
+                "20524eed-8fea-4848-8436-563f34394cb5",
+                "6d8d58dd-871e-46c9-9c57-8151f96a048d"
+            ],
+            "chest_blueprints": [
+                {
+                    "uuid": "041f21b9-1a37-4f42-97f3-f3019c58acd4",
+                    "count": 1,
+                    "chance": 12
+                },
+                {
+                    "uuid": "8b775102-141b-4a00-a8f0-fc5147834b34",
+                    "count": 1,
+                    "chance": 15
+                }
+            ]
+        },
+        {
+            "name": "Coral Golem",
+            "uuid": "b24465d0-8d0f-4be2-9f2f-8be54ec0d8c3",
+            "level": 56,
+            "enemy_type": 3,
+            "combat_position": 1,
+            "attacks": [
+                "c152b9e6-f500-46d0-81f0-f68e030f19bf",
+                "20524eed-8fea-4848-8436-563f34394cb5",
+                "6d8d58dd-871e-46c9-9c57-8151f96a048d"
+            ],
+            "chest_blueprints": [
+                {
+                    "uuid": "041f21b9-1a37-4f42-97f3-f3019c58acd4",
+                    "count": 1,
+                    "chance": 15
+                },
+                {
+                    "uuid": "8b775102-141b-4a00-a8f0-fc5147834b34",
+                    "count": 1,
+                    "chance": 15
+                }
+            ]
+        },
+        {
+            "name": "Malachite Golem",
+            "uuid": "66a7c759-b159-4025-9c03-f175f8e82609",
+            "level": 60,
+            "enemy_type": 3,
+            "combat_position": 1,
+            "attacks": [
+                "c152b9e6-f500-46d0-81f0-f68e030f19bf",
+                "20524eed-8fea-4848-8436-563f34394cb5",
+                "6d8d58dd-871e-46c9-9c57-8151f96a048d"
+            ],
+            "chest_blueprints": [
+                {
+                    "uuid": "041f21b9-1a37-4f42-97f3-f3019c58acd4",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "8b775102-141b-4a00-a8f0-fc5147834b34",
+                    "count": 1,
+                    "chance": 16
+                }
+            ]
+        },
+        {
+            "name": "Turquoise Golem",
+            "uuid": "c9bf9345-c4b7-4db6-b602-1250be3a988e",
+            "level": 87,
+            "enemy_type": 3,
+            "combat_position": 1,
+            "attacks": [
+                "c152b9e6-f500-46d0-81f0-f68e030f19bf",
+                "20524eed-8fea-4848-8436-563f34394cb5",
+                "6d8d58dd-871e-46c9-9c57-8151f96a048d",
+                "985a422d-62b7-4834-ae6e-1c56deca2e7c"
+            ],
+            "chest_blueprints": [
+                {
+                    "uuid": "9e3fd0b0-0bcd-4cc7-bda9-f556ac3b5c69",
+                    "count": 1,
+                    "chance": 15
+                },
+                {
+                    "uuid": "2886e707-953b-4c44-86af-66b67ef3bdd7",
+                    "count": 1,
+                    "chance": 15
+                }
+            ]
+        },
+        {
+            "name": "Opal Golem",
+            "uuid": "4b421b25-b84d-4897-9ddf-700691fe1948",
+            "level": 109,
+            "enemy_type": 3,
+            "combat_position": 1,
+            "attacks": [
+                "c152b9e6-f500-46d0-81f0-f68e030f19bf",
+                "20524eed-8fea-4848-8436-563f34394cb5",
+                "6d8d58dd-871e-46c9-9c57-8151f96a048d",
+                "985a422d-62b7-4834-ae6e-1c56deca2e7c",
+                "7b7fc4c9-6977-46a7-9961-633f8daca73b"
+            ],
+            "chest_blueprints": [
+                {
+                    "uuid": "9e3fd0b0-0bcd-4cc7-bda9-f556ac3b5c69",
+                    "count": 1,
+                    "chance": 25
+                },
+                {
+                    "uuid": "2886e707-953b-4c44-86af-66b67ef3bdd7",
+                    "count": 1,
+                    "chance": 16
+                }
+            ]
+        },
+        {
+            "name": "Hematite Golem",
+            "uuid": "62bfc992-7f87-4ff3-be8c-709dfc69277d",
+            "level": 114,
+            "enemy_type": 3,
+            "combat_position": 1,
+            "attacks": [
+                "c152b9e6-f500-46d0-81f0-f68e030f19bf",
+                "20524eed-8fea-4848-8436-563f34394cb5",
+                "6d8d58dd-871e-46c9-9c57-8151f96a048d",
+                "985a422d-62b7-4834-ae6e-1c56deca2e7c",
+                "7b7fc4c9-6977-46a7-9961-633f8daca73b"
+            ],
+            "chest_blueprints": [
+                {
+                    "uuid": "9e3fd0b0-0bcd-4cc7-bda9-f556ac3b5c69",
+                    "count": 1,
+                    "chance": 28
+                },
+                {
+                    "uuid": "2886e707-953b-4c44-86af-66b67ef3bdd7",
+                    "count": 1,
+                    "chance": 18
+                }
+            ]
+        },
+        {
+            "name": "Gray Imp",
+            "uuid": "c801a2ea-768f-414f-b63e-47c6991b8e5c",
+            "level": 8,
+            "enemy_type": 8,
+            "combat_position": 1,
+            "attacks": [
+                "a77880e7-261e-43d3-b70e-81219dcb620e",
+                "078c958a-d90e-477a-85bc-bfc4e4d1acb3",
+                "1165630d-1dbf-4970-8e95-7d46c038478a"
+            ],
+            "chest_blueprints": [
+                {
+                    "uuid": "38ca78da-bffd-4c34-a4df-ae118f6fcaf5",
+                    "count": 1,
+                    "chance": 2
+                },
+                {
+                    "uuid": "7c3bc8a9-739c-49f2-b310-5dc1279fc3f2",
+                    "count": 1,
+                    "chance": 2
+                }
+            ]
+        },
+        {
+            "name": "Yellow Imp",
+            "uuid": "9def1b51-d168-4891-82c0-1c4599c1f664",
+            "level": 11,
+            "enemy_type": 8,
+            "combat_position": 1,
+            "attacks": [
+                "a77880e7-261e-43d3-b70e-81219dcb620e",
+                "078c958a-d90e-477a-85bc-bfc4e4d1acb3",
+                "1165630d-1dbf-4970-8e95-7d46c038478a"
+            ],
+            "chest_blueprints": [
+                {
+                    "uuid": "38ca78da-bffd-4c34-a4df-ae118f6fcaf5",
+                    "count": 1,
+                    "chance": 2.1
+                },
+                {
+                    "uuid": "7c3bc8a9-739c-49f2-b310-5dc1279fc3f2",
+                    "count": 1,
+                    "chance": 2.1
+                }
+            ]
+        },
+        {
+            "name": "Green Imp",
+            "uuid": "70ac9f42-8801-4506-b384-4739096073f9",
+            "level": 13,
+            "enemy_type": 8,
+            "combat_position": 1,
+            "attacks": [
+                "a77880e7-261e-43d3-b70e-81219dcb620e",
+                "078c958a-d90e-477a-85bc-bfc4e4d1acb3",
+                "1165630d-1dbf-4970-8e95-7d46c038478a"
+            ],
+            "chest_blueprints": [
+                {
+                    "uuid": "38ca78da-bffd-4c34-a4df-ae118f6fcaf5",
+                    "count": 1,
+                    "chance": 2.2
+                },
+                {
+                    "uuid": "7c3bc8a9-739c-49f2-b310-5dc1279fc3f2",
+                    "count": 1,
+                    "chance": 2.2
+                }
+            ]
+        },
+        {
+            "name": "Orange Imp",
+            "uuid": "4e255e43-55ca-4714-91c9-a54681c7dd34",
+            "level": 15,
+            "enemy_type": 8,
+            "combat_position": 1,
+            "attacks": [
+                "a77880e7-261e-43d3-b70e-81219dcb620e",
+                "078c958a-d90e-477a-85bc-bfc4e4d1acb3",
+                "1165630d-1dbf-4970-8e95-7d46c038478a"
+            ],
+            "chest_blueprints": [
+                {
+                    "uuid": "38ca78da-bffd-4c34-a4df-ae118f6fcaf5",
+                    "count": 1,
+                    "chance": 2.3
+                },
+                {
+                    "uuid": "7c3bc8a9-739c-49f2-b310-5dc1279fc3f2",
+                    "count": 1,
+                    "chance": 2.3
+                }
+            ]
+        },
+        {
+            "name": "Young Vampire",
+            "uuid": "db8524a7-e5ed-431f-a68c-803d84ff7d5c",
+            "level": 34,
+            "enemy_type": 5,
+            "combat_position": 1,
+            "attacks": [
+                "32f1cc6b-bbdb-491b-a3f8-c9cc2e69dbe2",
+                "50db70a7-6d2d-4186-ae5c-129486366c96",
+                "db12c3ab-12e6-46bd-b2c0-673fcce8d8a3"
+            ],
+            "chest_blueprints": [
+                {
+                    "uuid": "8b775102-141b-4a00-a8f0-fc5147834b34",
+                    "count": 1,
+                    "chance": 5
+                },
+                {
+                    "uuid": "cce14534-6857-45cb-a4a3-4e452eea40f4",
+                    "count": 1,
+                    "chance": 5
+                }
+            ]
+        },
+        {
+            "name": "Vampire",
+            "uuid": "a6fb2443-3fd3-4d61-83ed-6cc605632f08",
+            "level": 47,
+            "enemy_type": 5,
+            "combat_position": 1,
+            "attacks": [
+                "990706e1-27a3-4199-836b-1e9710d27cca",
+                "7bd31ef6-5855-4f78-a9f7-79bcfcfc55a2",
+                "24dc88d8-d944-4510-9619-532990a40121",
+                "db12c3ab-12e6-46bd-b2c0-673fcce8d8a3",
+                "75db93b9-a8bb-4d9d-a91f-ede615162b38"
+            ],
+            "chest_blueprints": [
+                {
+                    "uuid": "8b775102-141b-4a00-a8f0-fc5147834b34",
+                    "count": 1,
+                    "chance": 12
+                },
+                {
+                    "uuid": "cce14534-6857-45cb-a4a3-4e452eea40f4",
+                    "count": 1,
+                    "chance": 8
+                }
+            ]
+        },
+        {
+            "name": "Vampire Veteran",
+            "uuid": "6350c2fd-cb17-4b8c-8b36-aac0a4523815",
+            "level": 63,
+            "enemy_type": 5,
+            "combat_position": 1,
+            "attacks": [
+                "abc3f72f-5fd1-45ef-bf35-29bbd575fd19",
+                "6c13e43d-522c-4b1f-aac3-6f2f953276b9",
+                "24dc88d8-d944-4510-9619-532990a40121",
+                "db12c3ab-12e6-46bd-b2c0-673fcce8d8a3",
+                "75db93b9-a8bb-4d9d-a91f-ede615162b38"
+            ],
+            "chest_blueprints": [
+                {
+                    "uuid": "2886e707-953b-4c44-86af-66b67ef3bdd7",
+                    "count": 1,
+                    "chance": 12
+                },
+                {
+                    "uuid": "cce14534-6857-45cb-a4a3-4e452eea40f4",
+                    "count": 1,
+                    "chance": 8
+                }
+            ]
+        },
+        {
+            "name": "Vampire Magus",
+            "uuid": "00c1e046-f8e0-4e18-966c-a6926c682d2b",
+            "level": 87,
+            "enemy_type": 5,
+            "combat_position": 2,
+            "attacks": [
+                "bdf08ebf-ae5f-4b10-8cbb-b763ce112458",
+                "77385463-7a51-4fe9-abe8-b7e09f302347",
+                "4b574453-56cd-472a-a80f-14e237479175",
+                "db12c3ab-12e6-46bd-b2c0-673fcce8d8a3",
+                "75db93b9-a8bb-4d9d-a91f-ede615162b38",
+                "f7d4d34f-f09b-4222-ae9d-bfd165e1b56a",
+                "6d0a736c-7686-460a-a077-8fac9194a45c"
+            ],
+            "chest_blueprints": [
+                {
+                    "uuid": "2886e707-953b-4c44-86af-66b67ef3bdd7",
+                    "count": 1,
+                    "chance": 15
+                },
+                {
+                    "uuid": "cce14534-6857-45cb-a4a3-4e452eea40f4",
+                    "count": 1,
+                    "chance": 20
+                }
+            ]
+        },
+        {
+            "name": "Vampire Knight",
+            "uuid": "966a802d-16a2-4ac7-bbc5-14472bff7db5",
+            "level": 93,
+            "enemy_type": 5,
+            "combat_position": 1,
+            "attacks": [
+                "c788fb6e-74aa-4528-bea3-e36b7995e776",
+                "8c941260-0f5c-48f2-af0b-2ef1e2a62bdc",
+                "2d674a28-5873-43d3-8673-7e9d67c9d250",
+                "24dc88d8-d944-4510-9619-532990a40121",
+                "76b75ca9-fdb7-4381-88ac-47f703eee2fb",
+                "75db93b9-a8bb-4d9d-a91f-ede615162b38",
+                "f7d4d34f-f09b-4222-ae9d-bfd165e1b56a"
+            ],
+            "chest_blueprints": [
+                {
+                    "uuid": "2886e707-953b-4c44-86af-66b67ef3bdd7",
+                    "count": 1,
+                    "chance": 16
+                },
+                {
+                    "uuid": "cce14534-6857-45cb-a4a3-4e452eea40f4",
+                    "count": 1,
+                    "chance": 22
+                }
+            ]
+        },
+        {
+            "name": "Lich",
+            "uuid": "946b309c-8073-4c37-a59d-2150af6df5cb",
+            "level": 53,
+            "enemy_type": 4,
+            "combat_position": 1,
+            "attacks": [
+                "990706e1-27a3-4199-836b-1e9710d27cca",
+                "7bd31ef6-5855-4f78-a9f7-79bcfcfc55a2",
+                "71c0a6f9-7021-4c0f-b5aa-6720f5aa3cbd",
+                "abc3f72f-5fd1-45ef-bf35-29bbd575fd19",
+                "6c13e43d-522c-4b1f-aac3-6f2f953276b9",
+                "24dc88d8-d944-4510-9619-532990a40121"
+            ],
+            "chest_blueprints": [
+                {
+                    "uuid": "5a7a65c3-044d-487b-a641-c7290b54278a",
+                    "count": 1,
+                    "chance": 50
+                },
+                {
+                    "uuid": "64522188-2da8-4414-8a8f-031b894648f2",
+                    "count": 1,
+                    "chance": 5
+                },
+                {
+                    "uuid": "8b775102-141b-4a00-a8f0-fc5147834b34",
+                    "count": 1,
+                    "chance": 10
+                }
+            ]
+        },
+        {
+            "name": "Lich Fighter",
+            "uuid": "85106884-7c07-44c5-b127-d4175c829fc0",
+            "level": 72,
+            "enemy_type": 4,
+            "combat_position": 1,
+            "attacks": [
+                "7bd31ef6-5855-4f78-a9f7-79bcfcfc55a2",
+                "71c0a6f9-7021-4c0f-b5aa-6720f5aa3cbd",
+                "abc3f72f-5fd1-45ef-bf35-29bbd575fd19",
+                "6c13e43d-522c-4b1f-aac3-6f2f953276b9",
+                "eb9afa58-7108-49a6-9e46-864b37b09d90",
+                "24dc88d8-d944-4510-9619-532990a40121"
+            ],
+            "chest_blueprints": [
+                {
+                    "uuid": "5a7a65c3-044d-487b-a641-c7290b54278a",
+                    "count": 1,
+                    "chance": 50
+                },
+                {
+                    "uuid": "64522188-2da8-4414-8a8f-031b894648f2",
+                    "count": 1,
+                    "chance": 10
+                },
+                {
+                    "uuid": "8b775102-141b-4a00-a8f0-fc5147834b34",
+                    "count": 1,
+                    "chance": 10
+                }
+            ]
+        },
+        {
+            "name": "Lich Archer",
+            "uuid": "b50a5a7e-a14c-4b1f-8c9d-28285d36fec1",
+            "level": 76,
+            "enemy_type": 4,
+            "combat_position": 3,
+            "attacks": [
+                "5bcee573-7a5f-4279-a429-330a904b07ae",
+                "09ac698f-3a50-4f12-9b4b-41e665cb521e",
+                "9422dae3-5b6b-4140-96b7-e4f8a1df2144",
+                "cc4e9b8a-6ab2-460e-a6fb-f24b69fee842",
+                "afd9b19e-58b2-4aa8-bcf2-3cffa5605e1f",
+                "c48b41ef-ce00-478d-8efe-185ddd5ad07c"
+            ],
+            "chest_blueprints": [
+                {
+                    "uuid": "4f5c5102-10fd-4da0-b43f-549fe8cec7eb",
+                    "count": 1,
+                    "chance": 50
+                },
+                {
+                    "uuid": "f01c5370-67b3-4af7-8897-eedd5854d84b",
+                    "count": 1,
+                    "chance": 11
+                },
+                {
+                    "uuid": "8b775102-141b-4a00-a8f0-fc5147834b34",
+                    "count": 1,
+                    "chance": 10
+                }
+            ]
+        },
+        {
+            "name": "Lich Mage",
+            "uuid": "e8b00d87-1439-484a-ba88-023457da4cb4",
+            "level": 77,
+            "enemy_type": 4,
+            "combat_position": 2,
+            "attacks": [
+                "6b247145-4892-4ce6-bd41-d595bd6e4722",
+                "5f2ee6f3-b30c-4e70-bb50-9eae54e078a0",
+                "bdf08ebf-ae5f-4b10-8cbb-b763ce112458",
+                "77385463-7a51-4fe9-abe8-b7e09f302347",
+                "99e1b0ec-6c10-4940-adbe-86e2961c073d"
+            ],
+            "chest_blueprints": [
+                {
+                    "uuid": "0a0fcac6-54fe-4926-990c-db44a0e86080",
+                    "count": 1,
+                    "chance": 50
+                },
+                {
+                    "uuid": "f432a7ad-c86d-4364-a033-8f3b18a55956",
+                    "count": 1,
+                    "chance": 12
+                },
+                {
+                    "uuid": "8b775102-141b-4a00-a8f0-fc5147834b34",
+                    "count": 1,
+                    "chance": 10
+                }
+            ]
+        },
+        {
+            "name": "Gargoyle",
+            "uuid": "daaa3c4d-5e24-4c6d-b4a0-41546e75bd56",
+            "level": 56,
+            "enemy_type": 2,
+            "combat_position": 1,
+            "attacks": [
+                "75db93b9-a8bb-4d9d-a91f-ede615162b38",
+                "74dfe082-ae95-4abc-b87e-020551e56389",
+                "b3e2ad67-227a-4daf-9a2c-72c5b371d5a1",
+                "3a817f2d-4835-4421-86e7-a8b70308d79d"
+            ],
+            "chest_blueprints": [
+                {
+                    "uuid": "2886e707-953b-4c44-86af-66b67ef3bdd7",
+                    "count": 1,
+                    "chance": 15
+                },
+                {
+                    "uuid": "423428e8-a5aa-4266-b09f-ddbc629d72b9",
+                    "count": 1,
+                    "chance": 6
+                },
+                {
+                    "uuid": "cce14534-6857-45cb-a4a3-4e452eea40f4",
+                    "count": 1,
+                    "chance": 25
+                }
+            ]
+        },
+        {
+            "name": "Gargoyle Flanker",
+            "uuid": "3396136f-99a6-433a-8f07-04734650627e",
+            "level": 64,
+            "enemy_type": 2,
+            "combat_position": 2,
+            "attacks": [
+                "75db93b9-a8bb-4d9d-a91f-ede615162b38",
+                "74dfe082-ae95-4abc-b87e-020551e56389",
+                "b3e2ad67-227a-4daf-9a2c-72c5b371d5a1",
+                "25ea1bfa-2de3-47ce-a53e-0b21593eee92",
+                "abf5f343-45b5-4d29-b826-1d10c8730766",
+                "f3831efb-5d3a-4b83-89c1-63f53988ece2"
+            ],
+            "chest_blueprints": [
+                {
+                    "uuid": "2886e707-953b-4c44-86af-66b67ef3bdd7",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "423428e8-a5aa-4266-b09f-ddbc629d72b9",
+                    "count": 1,
+                    "chance": 8
+                },
+                {
+                    "uuid": "cce14534-6857-45cb-a4a3-4e452eea40f4",
+                    "count": 1,
+                    "chance": 25
+                }
+            ]
+        },
+        {
+            "name": "Gargoyle Pummeler",
+            "uuid": "68333783-df31-4d9c-ba1d-8cf696442fbc",
+            "level": 75,
+            "enemy_type": 2,
+            "combat_position": 1,
+            "attacks": [
+                "f7d4d34f-f09b-4222-ae9d-bfd165e1b56a",
+                "74dfe082-ae95-4abc-b87e-020551e56389",
+                "b3e2ad67-227a-4daf-9a2c-72c5b371d5a1",
+                "b60281d9-e8d0-4b23-a59d-0dd41875789b",
+                "3a817f2d-4835-4421-86e7-a8b70308d79d"
+            ],
+            "chest_blueprints": [
+                {
+                    "uuid": "2886e707-953b-4c44-86af-66b67ef3bdd7",
+                    "count": 1,
+                    "chance": 25
+                },
+                {
+                    "uuid": "423428e8-a5aa-4266-b09f-ddbc629d72b9",
+                    "count": 1,
+                    "chance": 10
+                },
+                {
+                    "uuid": "cce14534-6857-45cb-a4a3-4e452eea40f4",
+                    "count": 1,
+                    "chance": 25
+                }
+            ]
+        },
+        {
+            "name": "Gargoyle Bludgeoner",
+            "uuid": "fe610f5d-24a9-4abe-a006-cec5454df3a1",
+            "level": 90,
+            "enemy_type": 2,
+            "combat_position": 1,
+            "attacks": [
+                "f7d4d34f-f09b-4222-ae9d-bfd165e1b56a",
+                "74dfe082-ae95-4abc-b87e-020551e56389",
+                "b3e2ad67-227a-4daf-9a2c-72c5b371d5a1",
+                "b60281d9-e8d0-4b23-a59d-0dd41875789b",
+                "3a817f2d-4835-4421-86e7-a8b70308d79d"
+            ],
+            "chest_blueprints": [
+                {
+                    "uuid": "2886e707-953b-4c44-86af-66b67ef3bdd7",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "423428e8-a5aa-4266-b09f-ddbc629d72b9",
+                    "count": 1,
+                    "chance": 15
+                },
+                {
+                    "uuid": "cce14534-6857-45cb-a4a3-4e452eea40f4",
+                    "count": 1,
+                    "chance": 25
+                }
+            ]
+        },
+        {
+            "name": "Gargoyle Sentinel",
+            "uuid": "a9b1b1f9-3f36-463d-bd7f-178125cd785d",
+            "level": 106,
+            "enemy_type": 2,
+            "combat_position": 1,
+            "attacks": [
+                "8e60c33b-814f-44a7-8d0a-e06c095b28f7",
+                "74dfe082-ae95-4abc-b87e-020551e56389",
+                "b3e2ad67-227a-4daf-9a2c-72c5b371d5a1",
+                "b60281d9-e8d0-4b23-a59d-0dd41875789b",
+                "3a817f2d-4835-4421-86e7-a8b70308d79d"
+            ],
+            "chest_blueprints": [
+                {
+                    "uuid": "2886e707-953b-4c44-86af-66b67ef3bdd7",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "423428e8-a5aa-4266-b09f-ddbc629d72b9",
+                    "count": 1,
+                    "chance": 15
+                },
+                {
+                    "uuid": "cce14534-6857-45cb-a4a3-4e452eea40f4",
+                    "count": 1,
+                    "chance": 25
+                }
+            ]
+        },
+        {
+            "name": "Vampire Guard",
+            "uuid": "acb74480-5970-4a43-a80f-96e75cd5467e",
+            "level": 51,
+            "enemy_type": 5,
+            "combat_position": 1,
+            "attacks": [
+                "9e1ce40d-87cb-4d9e-b4dd-afb88ea53ad0",
+                "f011241a-5841-4a1e-9e43-b6ccfff07231",
+                "7ed84be6-7831-4027-8ca4-6abc2121b9e3",
+                "4a316724-bbe1-4821-87dd-8973beb3950f",
+                "db849cfd-4347-4e66-bc0b-046bb8423f81",
+                "75db93b9-a8bb-4d9d-a91f-ede615162b38",
+                "f7d4d34f-f09b-4222-ae9d-bfd165e1b56a"
+            ],
+            "chest_blueprints": [
+                {
+                    "uuid": "2886e707-953b-4c44-86af-66b67ef3bdd7",
+                    "count": 1,
+                    "chance": 20
+                },
+                {
+                    "uuid": "423428e8-a5aa-4266-b09f-ddbc629d72b9",
+                    "count": 1,
+                    "chance": 5
+                },
+                {
+                    "uuid": "cce14534-6857-45cb-a4a3-4e452eea40f4",
+                    "count": 1,
+                    "chance": 10
+                }
+            ]
+        },
+        {
+            "name": "Vampire Marksman",
+            "uuid": "4a6abea8-ed0d-4e73-9562-3cee1cea8aa2",
+            "level": 72,
+            "enemy_type": 5,
+            "combat_position": 3,
+            "attacks": [
+                "e2b30075-2a21-40d4-add2-5462e54bef6c",
+                "7ed84be6-7831-4027-8ca4-6abc2121b9e3",
+                "82c94812-a82d-45ff-a107-9e1e167e187f",
+                "4a634a66-69c2-4d5f-a441-89e01386a5ae",
+                "66a3a2fd-6001-4003-bb1e-44a943a4263b",
+                "75db93b9-a8bb-4d9d-a91f-ede615162b38",
+                "f7d4d34f-f09b-4222-ae9d-bfd165e1b56a"
+            ],
+            "chest_blueprints": [
+                {
+                    "uuid": "2886e707-953b-4c44-86af-66b67ef3bdd7",
+                    "count": 1,
+                    "chance": 25
+                },
+                {
+                    "uuid": "423428e8-a5aa-4266-b09f-ddbc629d72b9",
+                    "count": 1,
+                    "chance": 8
+                },
+                {
+                    "uuid": "cce14534-6857-45cb-a4a3-4e452eea40f4",
+                    "count": 1,
+                    "chance": 15
+                }
+            ]
+        },
+        {
+            "name": "Vampire Elder",
+            "uuid": "191ef941-381d-4186-8ac2-bdf0bca0baf9",
+            "level": 120,
+            "enemy_type": 5,
+            "combat_position": 2,
+            "attacks": [
+                "bdf08ebf-ae5f-4b10-8cbb-b763ce112458",
+                "77385463-7a51-4fe9-abe8-b7e09f302347",
+                "4b574453-56cd-472a-a80f-14e237479175",
+                "c788fb6e-74aa-4528-bea3-e36b7995e776",
+                "8c941260-0f5c-48f2-af0b-2ef1e2a62bdc",
+                "1a4680e0-aeac-4fc7-a913-7ec480bbf9b5",
+                "75db93b9-a8bb-4d9d-a91f-ede615162b38",
+                "f7d4d34f-f09b-4222-ae9d-bfd165e1b56a",
+                "df7b8005-c26f-49ec-bfee-812fa52dc4f1",
+                "6d0a736c-7686-460a-a077-8fac9194a45c",
+                "b462d9cc-006c-4bd6-bc7c-6a3b2ccd2e80"
+            ],
+            "chest_blueprints": [
+                {
+                    "uuid": "77b81174-7685-45be-af88-231cbe4d788a",
+                    "count": 1,
+                    "chance": 25
+                },
+                {
+                    "uuid": "423428e8-a5aa-4266-b09f-ddbc629d72b9",
+                    "count": 1,
+                    "chance": 40
+                },
+                {
+                    "uuid": "d266702f-25d8-4183-8246-b29bfd7400de",
+                    "count": 1,
+                    "chance": 25
+                }
+            ]
+        },
+        {
+            "name": "Vampire Captain",
+            "uuid": "0404b256-8db2-43bd-bf07-81c2fe3ec178",
+            "level": 113,
+            "enemy_type": 5,
+            "combat_position": 1,
+            "attacks": [
+                "2fe460b2-0dd3-4a0c-b133-ed51c6759407",
+                "e8f156c3-a994-4653-b88e-a1f58fdceee7",
+                "90bbeb5e-5289-46c9-8433-f93aa4fab8cc",
+                "1d29b333-a73e-415b-8810-d8b3353a8b9d",
+                "c9b841f5-7dec-4f83-a5dd-c056ebc655b4",
+                "75db93b9-a8bb-4d9d-a91f-ede615162b38",
+                "f7d4d34f-f09b-4222-ae9d-bfd165e1b56a",
+                "df7b8005-c26f-49ec-bfee-812fa52dc4f1"
+            ],
+            "chest_blueprints": [
+                {
+                    "uuid": "2886e707-953b-4c44-86af-66b67ef3bdd7",
+                    "count": 1,
+                    "chance": 25
+                },
+                {
+                    "uuid": "423428e8-a5aa-4266-b09f-ddbc629d72b9",
+                    "count": 1,
+                    "chance": 35
+                },
+                {
+                    "uuid": "d266702f-25d8-4183-8246-b29bfd7400de",
+                    "count": 1,
+                    "chance": 25
+                }
+            ]
+        }
+    ]
+}

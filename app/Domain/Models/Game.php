@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $away_team_id
  * @property string $external_id
  * @property string $schedule_status
+ * @property string $season_type
  * @property CarbonImmutable $starts_at
  * @property CarbonImmutable|null $finalized_at
  *
@@ -35,7 +36,12 @@ use Illuminate\Database\Eloquent\Model;
 class Game extends Model
 {
     public const SCHEDULE_STATUS_NORMAL = 'NORMAL';
+    public const SCHEDULE_STATUS_POSTPONED = 'POSTPONED';
+    public const SCHEDULE_STATUS_CANCELED = 'CANCELED';
     public const SCHEDULE_STATUS_DELAYED = 'DELAYED';
+
+    public const SEASON_TYPE_REGULAR = 'REGULAR';
+    public const SEASON_TYPE_POSTSEASON = 'POSTSEASON';
 
     protected $guarded = [];
 

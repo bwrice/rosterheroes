@@ -2,11 +2,15 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Behaviors\HeroPostTypes\DwarfPostTypeBehavior;
+use App\Domain\Behaviors\HeroPostTypes\ElfPostTypeBehavior;
+use App\Domain\Behaviors\HeroPostTypes\HeroPostTypeBehavior;
+use App\Domain\Behaviors\HeroPostTypes\HumanPostTypeBehavior;
+use App\Domain\Behaviors\HeroPostTypes\OrcPostTypeBehavior;
 use App\Domain\Collections\HeroRaceCollection;
-use App\Domain\Models\HeroRace;
+use App\Exceptions\UnknownBehaviorException;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use phpDocumentor\Reflection\Types\Self_;
 
 
 /**
@@ -24,6 +28,9 @@ class HeroPostType extends Model
     public const ELF = 'elf';
     public const DWARF = 'dwarf';
     public const ORC = 'orc';
+
+    public $recruitmentCost = 0;
+    public $recruitmentBonusSpiritEssence = 0;
 
     public const SQUAD_STARTING_HERO_POST_TYPES = [
         [
@@ -60,5 +67,71 @@ class HeroPostType extends Model
     public static function squadStarting()
     {
         return collect(self::SQUAD_STARTING_HERO_POST_TYPES);
+    }
+
+    /**
+     * @return HeroPostTypeBehavior
+     */
+    public function getBehavior(): HeroPostTypeBehavior
+    {
+        switch ($this->name) {
+            case self::HUMAN:
+                return app(HumanPostTypeBehavior::class);
+            case self::ELF:
+                return app(ElfPostTypeBehavior::class);
+            case self::DWARF:
+                return app(DwarfPostTypeBehavior::class);
+            case self::ORC:
+                return app(OrcPostTypeBehavior::class);
+        }
+        throw new UnknownBehaviorException($this->name, HeroPostTypeBehavior::class);
+    }
+
+    /**
+     * @param Squad $squad
+     * @return int
+     */
+    public function getRecruitmentCost(Squad $squad)
+    {
+        $overInitialOwnershipCount = $this->getOverInitialOwnershipCount($squad);
+        return $this->getBehavior()->getRecruitmentCost($overInitialOwnershipCount);
+    }
+
+    public function setRecruitmentCost(Squad $squad)
+    {
+        $this->recruitmentCost = $this->getRecruitmentCost($squad);
+    }
+
+    public function setRecruitmentBonusSpiritEssence(Squad $squad)
+    {
+        $this->recruitmentBonusSpiritEssence = $this->getRecruitmentBonusSpiritEssence($squad);
+    }
+
+    public function getRecruitmentBonusSpiritEssence(Squad $squad)
+    {
+        $overInitialOwnershipCount = $this->getOverInitialOwnershipCount($squad);
+        return $this->getBehavior()->getRecruitmentBonusSpiritEssence($overInitialOwnershipCount);
+    }
+
+    public function getOverInitialOwnershipCount(Squad $squad)
+    {
+        $matches = $squad->heroPosts->filter(function (HeroPost $heroPost) {
+            return $heroPost->hero_post_type_id === $this->id;
+        });
+
+        if ($matches->isEmpty()) {
+            return 0;
+        }
+
+        return $matches->count() - $this->squadStartingCount();
+    }
+
+    public function squadStartingCount()
+    {
+        $match = self::squadStarting()->first(function ($starting) {
+            return $this->name === $starting['name'];
+        });
+
+        return $match ? $match['count'] : 0;
     }
 }

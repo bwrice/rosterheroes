@@ -3,16 +3,11 @@
 namespace App\Mail;
 
 use App\Domain\Models\Squad;
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Mail\Mailable;
-use Illuminate\Queue\SerializesModels;
 
-class TreasuresPending extends Mailable
+class TreasuresPending extends SquadNotification
 {
-    use Queueable, SerializesModels;
 
-    public $subject = 'You Have Treasures Chests Waiting To Be Opened!';
+    public $subject = '';
 
     /**
      * @var Squad
@@ -29,10 +24,17 @@ class TreasuresPending extends Mailable
 
     public function __construct(Squad $squad, int $unopenedChestsCount)
     {
+        parent::__construct();
         $this->squad = $squad;
         $this->unopenedChestsCount = $unopenedChestsCount;
+        $this->setSubject();
         $this->title = $this->buildTitle();
         $this->message = $this->buildMessage();
+    }
+
+    protected function setSubject()
+    {
+        $this->subject = $this->squad->name . ' has Treasures Chests Waiting to be Opened!';
     }
 
     protected function buildTitle()
@@ -51,7 +53,7 @@ class TreasuresPending extends Mailable
         } else {
             $message .= "has " . $this->unopenedChestsCount . " treasure chests that were earned from campaigns and still haven't been opened. ";
         }
-        $message .= "There's loot to be had!. Visit " . $this->squad->name . "'s command center and " ;
+        $message .= "There's loot to be had! Visit " . $this->squad->name . "'s command center and " ;
 
         if ($this->unopenedChestsCount === 1) {
             $message .= "open that chest!";

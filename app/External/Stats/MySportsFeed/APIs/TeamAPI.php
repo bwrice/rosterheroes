@@ -6,9 +6,11 @@
  * Time: 10:07 PM
  */
 
-namespace App\External\Stats\MySportsFeed;
+namespace App\External\Stats\MySportsFeed\APIs;
 
 use App\Domain\Models\League;
+use App\External\Stats\MySportsFeed\LeagueSeasonConverter;
+use App\External\Stats\MySportsFeed\MSFClient;
 
 class TeamAPI
 {

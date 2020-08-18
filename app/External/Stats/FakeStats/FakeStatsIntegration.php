@@ -39,7 +39,7 @@ class FakeStatsIntegration implements StatsIntegration
         return collect();
     }
 
-    public function getGameDTOs(League $league, int $yearDelta): Collection
+    public function getGameDTOs(League $league, int $yearDelta, bool $regularSeason): Collection
     {
         return collect();
     }

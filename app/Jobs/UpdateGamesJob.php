@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Domain\Actions\UpdateGames;
 use App\Domain\DataTransferObjects\GameDTO;
 use App\Domain\Models\Game;
 use App\Domain\Models\League;
@@ -21,67 +22,25 @@ class UpdateGamesJob implements ShouldQueue
     /**
      * @var League
      */
-    private $league;
+    public $league;
     /**
      * @var int
      */
-    private $yearDelta;
+    public $yearDelta;
+    /**
+     * @var bool
+     */
+    public $regularSeason;
 
-    public function __construct(League $league, int $yearDelta = 0)
+    public function __construct(League $league, int $yearDelta = 0, $regularSeason = true)
     {
-        if ( $yearDelta > 0 ) {
-            throw new \RuntimeException("Year delta must be negative, " . $yearDelta . " was passed");
-        }
         $this->league = $league;
         $this->yearDelta = $yearDelta;
+        $this->regularSeason = $regularSeason;
     }
 
-    public function handle(StatsIntegration $statsIntegration)
+    public function handle(UpdateGames $domainAction)
     {
-        $gameDTOs = $statsIntegration->getGameDTOs($this->league, $this->yearDelta);
-        $integrationType = $statsIntegration->getIntegrationType();
-        $count = 0;
-        $gameDTOs->each(function (GameDTO $gameDTO) use ($integrationType, &$count) {
-
-            $game = Game::query()->forIntegration($integrationType->id, $gameDTO->getExternalID())->first();
-
-            if ($game) {
-                $this->updateGame($game, $gameDTO);
-
-            } else {
-                /** @var Game $game */
-                $game = Game::query()->create([
-                    'starts_at' => $gameDTO->getStartsAt(),
-                    'home_team_id' => $gameDTO->getHomeTeam()->id,
-                    'away_team_id' => $gameDTO->getAwayTeam()->id,
-                ]);
-
-                $game->externalGames()->create([
-                    'integration_type_id' => $integrationType->id,
-                    'external_id' => $gameDTO->getExternalID()
-                ]);
-
-                $count++;
-            }
-        });
-        if ($count > 0) {
-            Log::alert($count . " new games created for league: " . $this->league->abbreviation);
-        }
-    }
-
-    protected function updateGame(Game $game, GameDTO $gameDTO)
-    {
-        if ($game->starts_at->timestamp !== $gameDTO->getStartsAt()->timestamp) {
-            // TODO: Handle disabling player spirits no longer valid for week
-            $game->starts_at = $gameDTO->getStartsAt();
-            $game->save();
-        }
-
-        if ($game->schedule_status !== $gameDTO->getStatus()) {
-            $game->schedule_status = $gameDTO->getStatus();
-            $game->save();
-        }
-
-        return $game;
+        $domainAction->execute($this->league, $this->yearDelta, $this->regularSeason);
     }
 }

@@ -1,0 +1,2083 @@
+{
+    "last_updated": 1595206117,
+    "data": [
+        {
+            "uuid": "ae062d16-5835-4c2e-80a1-722a33c48b51",
+            "name": "Knife",
+            "tier": 1,
+            "item_base_id": 1,
+            "attacks": [
+                "32f1cc6b-bbdb-491b-a3f8-c9cc2e69dbe2",
+                "50db70a7-6d2d-4186-ae5c-129486366c96",
+                "9bde94ff-fd1f-4919-ba35-87b808f5baeb",
+                "24dc88d8-d944-4510-9619-532990a40121"
+            ]
+        },
+        {
+            "uuid": "102cbb59-1984-4cce-b307-ed6d00f9ced5",
+            "name": "Kris",
+            "tier": 2,
+            "item_base_id": 1,
+            "attacks": [
+                "32f1cc6b-bbdb-491b-a3f8-c9cc2e69dbe2",
+                "50db70a7-6d2d-4186-ae5c-129486366c96",
+                "9bde94ff-fd1f-4919-ba35-87b808f5baeb",
+                "9e1ce40d-87cb-4d9e-b4dd-afb88ea53ad0",
+                "f011241a-5841-4a1e-9e43-b6ccfff07231",
+                "24dc88d8-d944-4510-9619-532990a40121",
+                "76b75ca9-fdb7-4381-88ac-47f703eee2fb"
+            ]
+        },
+        {
+            "uuid": "bf486cf2-9749-4be6-8c92-3877dbf0590e",
+            "name": "Dirk",
+            "tier": 3,
+            "item_base_id": 1,
+            "attacks": [
+                "32f1cc6b-bbdb-491b-a3f8-c9cc2e69dbe2",
+                "50db70a7-6d2d-4186-ae5c-129486366c96",
+                "9bde94ff-fd1f-4919-ba35-87b808f5baeb",
+                "9e1ce40d-87cb-4d9e-b4dd-afb88ea53ad0",
+                "f011241a-5841-4a1e-9e43-b6ccfff07231",
+                "24dc88d8-d944-4510-9619-532990a40121",
+                "76b75ca9-fdb7-4381-88ac-47f703eee2fb"
+            ]
+        },
+        {
+            "uuid": "1a349051-3763-4183-8115-26166e9ad7da",
+            "name": "Katar",
+            "tier": 4,
+            "item_base_id": 1,
+            "attacks": [
+                "32f1cc6b-bbdb-491b-a3f8-c9cc2e69dbe2",
+                "50db70a7-6d2d-4186-ae5c-129486366c96",
+                "9bde94ff-fd1f-4919-ba35-87b808f5baeb",
+                "9e1ce40d-87cb-4d9e-b4dd-afb88ea53ad0",
+                "f011241a-5841-4a1e-9e43-b6ccfff07231",
+                "f100fe8e-1e1e-4895-b058-6948ab96eee2",
+                "24dc88d8-d944-4510-9619-532990a40121",
+                "76b75ca9-fdb7-4381-88ac-47f703eee2fb"
+            ]
+        },
+        {
+            "uuid": "3057294d-3733-42d6-9ef1-6ed3ef872f65",
+            "name": "Stiletto",
+            "tier": 5,
+            "item_base_id": 1,
+            "attacks": [
+                "32f1cc6b-bbdb-491b-a3f8-c9cc2e69dbe2",
+                "50db70a7-6d2d-4186-ae5c-129486366c96",
+                "9bde94ff-fd1f-4919-ba35-87b808f5baeb",
+                "9e1ce40d-87cb-4d9e-b4dd-afb88ea53ad0",
+                "f011241a-5841-4a1e-9e43-b6ccfff07231",
+                "f100fe8e-1e1e-4895-b058-6948ab96eee2",
+                "7280cc2d-5853-4c54-8708-aa813ad082f0",
+                "109b41e0-5274-40d4-919d-628f2936d4ba",
+                "24dc88d8-d944-4510-9619-532990a40121",
+                "76b75ca9-fdb7-4381-88ac-47f703eee2fb",
+                "ae90c56d-566d-420c-8732-debc02c90b60"
+            ]
+        },
+        {
+            "uuid": "809792f0-939a-4422-82a5-160bf59a2037",
+            "name": "Gladius",
+            "tier": 6,
+            "item_base_id": 1,
+            "attacks": [
+                "32f1cc6b-bbdb-491b-a3f8-c9cc2e69dbe2",
+                "50db70a7-6d2d-4186-ae5c-129486366c96",
+                "9bde94ff-fd1f-4919-ba35-87b808f5baeb",
+                "9e1ce40d-87cb-4d9e-b4dd-afb88ea53ad0",
+                "f011241a-5841-4a1e-9e43-b6ccfff07231",
+                "f100fe8e-1e1e-4895-b058-6948ab96eee2",
+                "7280cc2d-5853-4c54-8708-aa813ad082f0",
+                "109b41e0-5274-40d4-919d-628f2936d4ba",
+                "ce0a1933-3fcb-4e3e-aea6-0675d05066eb",
+                "24dc88d8-d944-4510-9619-532990a40121",
+                "76b75ca9-fdb7-4381-88ac-47f703eee2fb",
+                "ae90c56d-566d-420c-8732-debc02c90b60"
+            ]
+        },
+        {
+            "uuid": "f964fd93-7a3f-4a98-84c4-077308fb68b1",
+            "name": "Short Sword",
+            "tier": 1,
+            "item_base_id": 2,
+            "attacks": [
+                "990706e1-27a3-4199-836b-1e9710d27cca",
+                "7bd31ef6-5855-4f78-a9f7-79bcfcfc55a2",
+                "71c0a6f9-7021-4c0f-b5aa-6720f5aa3cbd",
+                "24dc88d8-d944-4510-9619-532990a40121"
+            ]
+        },
+        {
+            "uuid": "0a22ef0e-952f-4662-acda-de9b923d4e95",
+            "name": "Falchion",
+            "tier": 2,
+            "item_base_id": 2,
+            "attacks": [
+                "990706e1-27a3-4199-836b-1e9710d27cca",
+                "7bd31ef6-5855-4f78-a9f7-79bcfcfc55a2",
+                "71c0a6f9-7021-4c0f-b5aa-6720f5aa3cbd",
+                "abc3f72f-5fd1-45ef-bf35-29bbd575fd19",
+                "6c13e43d-522c-4b1f-aac3-6f2f953276b9",
+                "24dc88d8-d944-4510-9619-532990a40121",
+                "76b75ca9-fdb7-4381-88ac-47f703eee2fb"
+            ]
+        },
+        {
+            "uuid": "3c9bcbe3-16b1-424f-8b10-19e0aecae5a9",
+            "name": "Scimitar",
+            "tier": 3,
+            "item_base_id": 2,
+            "attacks": [
+                "990706e1-27a3-4199-836b-1e9710d27cca",
+                "7bd31ef6-5855-4f78-a9f7-79bcfcfc55a2",
+                "71c0a6f9-7021-4c0f-b5aa-6720f5aa3cbd",
+                "abc3f72f-5fd1-45ef-bf35-29bbd575fd19",
+                "6c13e43d-522c-4b1f-aac3-6f2f953276b9",
+                "24dc88d8-d944-4510-9619-532990a40121",
+                "76b75ca9-fdb7-4381-88ac-47f703eee2fb"
+            ]
+        },
+        {
+            "uuid": "6dad9266-7a6e-4d89-af14-ebc6d859d01d",
+            "name": "Sabre",
+            "tier": 4,
+            "item_base_id": 2,
+            "attacks": [
+                "990706e1-27a3-4199-836b-1e9710d27cca",
+                "7bd31ef6-5855-4f78-a9f7-79bcfcfc55a2",
+                "71c0a6f9-7021-4c0f-b5aa-6720f5aa3cbd",
+                "abc3f72f-5fd1-45ef-bf35-29bbd575fd19",
+                "6c13e43d-522c-4b1f-aac3-6f2f953276b9",
+                "eb9afa58-7108-49a6-9e46-864b37b09d90",
+                "24dc88d8-d944-4510-9619-532990a40121",
+                "76b75ca9-fdb7-4381-88ac-47f703eee2fb"
+            ]
+        },
+        {
+            "uuid": "796be8ff-0b85-4162-926e-51f3ee7f33b8",
+            "name": "Rapier",
+            "tier": 5,
+            "item_base_id": 2,
+            "attacks": [
+                "990706e1-27a3-4199-836b-1e9710d27cca",
+                "7bd31ef6-5855-4f78-a9f7-79bcfcfc55a2",
+                "71c0a6f9-7021-4c0f-b5aa-6720f5aa3cbd",
+                "abc3f72f-5fd1-45ef-bf35-29bbd575fd19",
+                "6c13e43d-522c-4b1f-aac3-6f2f953276b9",
+                "eb9afa58-7108-49a6-9e46-864b37b09d90",
+                "c788fb6e-74aa-4528-bea3-e36b7995e776",
+                "8c941260-0f5c-48f2-af0b-2ef1e2a62bdc",
+                "24dc88d8-d944-4510-9619-532990a40121",
+                "76b75ca9-fdb7-4381-88ac-47f703eee2fb",
+                "ae90c56d-566d-420c-8732-debc02c90b60"
+            ]
+        },
+        {
+            "uuid": "48de5031-a9b8-405b-87bd-30381c263e5f",
+            "name": "Ninjato",
+            "tier": 6,
+            "item_base_id": 2,
+            "attacks": [
+                "990706e1-27a3-4199-836b-1e9710d27cca",
+                "7bd31ef6-5855-4f78-a9f7-79bcfcfc55a2",
+                "71c0a6f9-7021-4c0f-b5aa-6720f5aa3cbd",
+                "abc3f72f-5fd1-45ef-bf35-29bbd575fd19",
+                "6c13e43d-522c-4b1f-aac3-6f2f953276b9",
+                "eb9afa58-7108-49a6-9e46-864b37b09d90",
+                "c788fb6e-74aa-4528-bea3-e36b7995e776",
+                "8c941260-0f5c-48f2-af0b-2ef1e2a62bdc",
+                "2d674a28-5873-43d3-8673-7e9d67c9d250",
+                "24dc88d8-d944-4510-9619-532990a40121",
+                "76b75ca9-fdb7-4381-88ac-47f703eee2fb",
+                "ae90c56d-566d-420c-8732-debc02c90b60"
+            ]
+        },
+        {
+            "uuid": "4d5fb182-7f46-4a8f-8391-b8f9595c299d",
+            "name": "Hatchet",
+            "tier": 1,
+            "item_base_id": 3,
+            "attacks": [
+                "990706e1-27a3-4199-836b-1e9710d27cca",
+                "7bd31ef6-5855-4f78-a9f7-79bcfcfc55a2",
+                "71c0a6f9-7021-4c0f-b5aa-6720f5aa3cbd",
+                "24dc88d8-d944-4510-9619-532990a40121"
+            ]
+        },
+        {
+            "uuid": "abc421ca-3054-416a-925a-cc85a34cb2fd",
+            "name": "Hand Axe",
+            "tier": 2,
+            "item_base_id": 3,
+            "attacks": [
+                "990706e1-27a3-4199-836b-1e9710d27cca",
+                "7bd31ef6-5855-4f78-a9f7-79bcfcfc55a2",
+                "71c0a6f9-7021-4c0f-b5aa-6720f5aa3cbd",
+                "abc3f72f-5fd1-45ef-bf35-29bbd575fd19",
+                "6c13e43d-522c-4b1f-aac3-6f2f953276b9",
+                "24dc88d8-d944-4510-9619-532990a40121",
+                "76b75ca9-fdb7-4381-88ac-47f703eee2fb"
+            ]
+        },
+        {
+            "uuid": "30507f3d-618f-411f-be34-67662c0e8a08",
+            "name": "Ono",
+            "tier": 3,
+            "item_base_id": 3,
+            "attacks": [
+                "990706e1-27a3-4199-836b-1e9710d27cca",
+                "7bd31ef6-5855-4f78-a9f7-79bcfcfc55a2",
+                "71c0a6f9-7021-4c0f-b5aa-6720f5aa3cbd",
+                "abc3f72f-5fd1-45ef-bf35-29bbd575fd19",
+                "6c13e43d-522c-4b1f-aac3-6f2f953276b9",
+                "24dc88d8-d944-4510-9619-532990a40121",
+                "76b75ca9-fdb7-4381-88ac-47f703eee2fb"
+            ]
+        },
+        {
+            "uuid": "4cd3ad89-f37b-4188-baa8-0144b42c9f66",
+            "name": "Broad Axe",
+            "tier": 4,
+            "item_base_id": 3,
+            "attacks": [
+                "990706e1-27a3-4199-836b-1e9710d27cca",
+                "7bd31ef6-5855-4f78-a9f7-79bcfcfc55a2",
+                "71c0a6f9-7021-4c0f-b5aa-6720f5aa3cbd",
+                "abc3f72f-5fd1-45ef-bf35-29bbd575fd19",
+                "6c13e43d-522c-4b1f-aac3-6f2f953276b9",
+                "eb9afa58-7108-49a6-9e46-864b37b09d90",
+                "24dc88d8-d944-4510-9619-532990a40121",
+                "76b75ca9-fdb7-4381-88ac-47f703eee2fb"
+            ]
+        },
+        {
+            "uuid": "b424d300-ea0e-4f01-af57-d0c5cff78b48",
+            "name": "Sagaris",
+            "tier": 5,
+            "item_base_id": 3,
+            "attacks": [
+                "990706e1-27a3-4199-836b-1e9710d27cca",
+                "7bd31ef6-5855-4f78-a9f7-79bcfcfc55a2",
+                "71c0a6f9-7021-4c0f-b5aa-6720f5aa3cbd",
+                "abc3f72f-5fd1-45ef-bf35-29bbd575fd19",
+                "6c13e43d-522c-4b1f-aac3-6f2f953276b9",
+                "eb9afa58-7108-49a6-9e46-864b37b09d90",
+                "c788fb6e-74aa-4528-bea3-e36b7995e776",
+                "8c941260-0f5c-48f2-af0b-2ef1e2a62bdc",
+                "24dc88d8-d944-4510-9619-532990a40121",
+                "76b75ca9-fdb7-4381-88ac-47f703eee2fb",
+                "ae90c56d-566d-420c-8732-debc02c90b60"
+            ]
+        },
+        {
+            "uuid": "035c64b1-4fde-4ec9-b77f-62dff67d23df",
+            "name": "Battle Axe",
+            "tier": 6,
+            "item_base_id": 3,
+            "attacks": [
+                "990706e1-27a3-4199-836b-1e9710d27cca",
+                "7bd31ef6-5855-4f78-a9f7-79bcfcfc55a2",
+                "71c0a6f9-7021-4c0f-b5aa-6720f5aa3cbd",
+                "abc3f72f-5fd1-45ef-bf35-29bbd575fd19",
+                "6c13e43d-522c-4b1f-aac3-6f2f953276b9",
+                "eb9afa58-7108-49a6-9e46-864b37b09d90",
+                "c788fb6e-74aa-4528-bea3-e36b7995e776",
+                "8c941260-0f5c-48f2-af0b-2ef1e2a62bdc",
+                "2d674a28-5873-43d3-8673-7e9d67c9d250",
+                "24dc88d8-d944-4510-9619-532990a40121",
+                "76b75ca9-fdb7-4381-88ac-47f703eee2fb",
+                "ae90c56d-566d-420c-8732-debc02c90b60"
+            ]
+        },
+        {
+            "uuid": "be7111a7-8959-4b4d-9014-d127f6c958e3",
+            "name": "Club",
+            "tier": 1,
+            "item_base_id": 4,
+            "attacks": [
+                "b12842c8-702b-4059-a3e9-1edcaf03dee6",
+                "8271b8cf-e2f6-4676-a26b-f3bf5737208e",
+                "e3711cee-7543-419d-b1c1-b9ef0008d27f",
+                "e669187c-96b6-464d-ba75-17570f4d0860"
+            ]
+        },
+        {
+            "uuid": "7fd520bf-00bf-4ae3-a4e2-e32200dcbd65",
+            "name": "Cudgel",
+            "tier": 2,
+            "item_base_id": 4,
+            "attacks": [
+                "b12842c8-702b-4059-a3e9-1edcaf03dee6",
+                "8271b8cf-e2f6-4676-a26b-f3bf5737208e",
+                "e3711cee-7543-419d-b1c1-b9ef0008d27f",
+                "c152b9e6-f500-46d0-81f0-f68e030f19bf",
+                "4ae9e265-be50-443f-a30d-1b8659ea4aed",
+                "e669187c-96b6-464d-ba75-17570f4d0860",
+                "1d29b333-a73e-415b-8810-d8b3353a8b9d"
+            ]
+        },
+        {
+            "uuid": "dc602260-c399-4f4a-a995-5a1ec9297a45",
+            "name": "Flail",
+            "tier": 3,
+            "item_base_id": 4,
+            "attacks": [
+                "b12842c8-702b-4059-a3e9-1edcaf03dee6",
+                "8271b8cf-e2f6-4676-a26b-f3bf5737208e",
+                "e3711cee-7543-419d-b1c1-b9ef0008d27f",
+                "c152b9e6-f500-46d0-81f0-f68e030f19bf",
+                "4ae9e265-be50-443f-a30d-1b8659ea4aed",
+                "e669187c-96b6-464d-ba75-17570f4d0860",
+                "1d29b333-a73e-415b-8810-d8b3353a8b9d"
+            ]
+        },
+        {
+            "uuid": "bf70fe88-7869-46a6-8ad4-7e04d7754e93",
+            "name": "Battle Mace",
+            "tier": 4,
+            "item_base_id": 4,
+            "attacks": [
+                "b12842c8-702b-4059-a3e9-1edcaf03dee6",
+                "8271b8cf-e2f6-4676-a26b-f3bf5737208e",
+                "e3711cee-7543-419d-b1c1-b9ef0008d27f",
+                "c152b9e6-f500-46d0-81f0-f68e030f19bf",
+                "4ae9e265-be50-443f-a30d-1b8659ea4aed",
+                "f562ebf9-0d18-416b-b95b-80d753b66732",
+                "e669187c-96b6-464d-ba75-17570f4d0860",
+                "1d29b333-a73e-415b-8810-d8b3353a8b9d"
+            ]
+        },
+        {
+            "uuid": "5538acd0-bb7b-4942-a050-269aef4fd635",
+            "name": "Morning Star",
+            "tier": 5,
+            "item_base_id": 4,
+            "attacks": [
+                "b12842c8-702b-4059-a3e9-1edcaf03dee6",
+                "8271b8cf-e2f6-4676-a26b-f3bf5737208e",
+                "e3711cee-7543-419d-b1c1-b9ef0008d27f",
+                "c152b9e6-f500-46d0-81f0-f68e030f19bf",
+                "4ae9e265-be50-443f-a30d-1b8659ea4aed",
+                "f562ebf9-0d18-416b-b95b-80d753b66732",
+                "2fe460b2-0dd3-4a0c-b133-ed51c6759407",
+                "e8f156c3-a994-4653-b88e-a1f58fdceee7",
+                "e669187c-96b6-464d-ba75-17570f4d0860",
+                "1d29b333-a73e-415b-8810-d8b3353a8b9d",
+                "c9b841f5-7dec-4f83-a5dd-c056ebc655b4"
+            ]
+        },
+        {
+            "uuid": "433fc1fc-16da-49cd-a8a6-0701c91c64c5",
+            "name": "War Hammer",
+            "tier": 6,
+            "item_base_id": 4,
+            "attacks": [
+                "b12842c8-702b-4059-a3e9-1edcaf03dee6",
+                "8271b8cf-e2f6-4676-a26b-f3bf5737208e",
+                "e3711cee-7543-419d-b1c1-b9ef0008d27f",
+                "c152b9e6-f500-46d0-81f0-f68e030f19bf",
+                "4ae9e265-be50-443f-a30d-1b8659ea4aed",
+                "f562ebf9-0d18-416b-b95b-80d753b66732",
+                "2fe460b2-0dd3-4a0c-b133-ed51c6759407",
+                "e8f156c3-a994-4653-b88e-a1f58fdceee7",
+                "90bbeb5e-5289-46c9-8433-f93aa4fab8cc",
+                "e669187c-96b6-464d-ba75-17570f4d0860",
+                "1d29b333-a73e-415b-8810-d8b3353a8b9d",
+                "c9b841f5-7dec-4f83-a5dd-c056ebc655b4"
+            ]
+        },
+        {
+            "uuid": "298acf46-a863-4549-93a9-a29a0bcb561d",
+            "name": "Straight Bow",
+            "tier": 1,
+            "item_base_id": 5,
+            "attacks": [
+                "5bcee573-7a5f-4279-a429-330a904b07ae",
+                "09ac698f-3a50-4f12-9b4b-41e665cb521e",
+                "9422dae3-5b6b-4140-96b7-e4f8a1df2144",
+                "afd9b19e-58b2-4aa8-bcf2-3cffa5605e1f"
+            ]
+        },
+        {
+            "uuid": "2d60ec0e-6630-4896-afa0-cba2f85f6c20",
+            "name": "Longbow",
+            "tier": 2,
+            "item_base_id": 5,
+            "attacks": [
+                "5bcee573-7a5f-4279-a429-330a904b07ae",
+                "09ac698f-3a50-4f12-9b4b-41e665cb521e",
+                "9422dae3-5b6b-4140-96b7-e4f8a1df2144",
+                "cc4e9b8a-6ab2-460e-a6fb-f24b69fee842",
+                "dde52822-11e0-4eed-ace7-c57153a2c469",
+                "afd9b19e-58b2-4aa8-bcf2-3cffa5605e1f",
+                "c48b41ef-ce00-478d-8efe-185ddd5ad07c"
+            ]
+        },
+        {
+            "uuid": "cd301d8c-9e9c-4152-86c9-900b6a942ec5",
+            "name": "Recurve Bow",
+            "tier": 3,
+            "item_base_id": 5,
+            "attacks": [
+                "5bcee573-7a5f-4279-a429-330a904b07ae",
+                "09ac698f-3a50-4f12-9b4b-41e665cb521e",
+                "9422dae3-5b6b-4140-96b7-e4f8a1df2144",
+                "cc4e9b8a-6ab2-460e-a6fb-f24b69fee842",
+                "dde52822-11e0-4eed-ace7-c57153a2c469",
+                "afd9b19e-58b2-4aa8-bcf2-3cffa5605e1f",
+                "c48b41ef-ce00-478d-8efe-185ddd5ad07c"
+            ]
+        },
+        {
+            "uuid": "258873f4-c896-4313-90fc-6e3bd9fcfa3e",
+            "name": "Reflex Bow",
+            "tier": 4,
+            "item_base_id": 5,
+            "attacks": [
+                "5bcee573-7a5f-4279-a429-330a904b07ae",
+                "09ac698f-3a50-4f12-9b4b-41e665cb521e",
+                "9422dae3-5b6b-4140-96b7-e4f8a1df2144",
+                "cc4e9b8a-6ab2-460e-a6fb-f24b69fee842",
+                "dde52822-11e0-4eed-ace7-c57153a2c469",
+                "66bff351-52ec-49cc-8707-e09bb543b83c",
+                "afd9b19e-58b2-4aa8-bcf2-3cffa5605e1f",
+                "c48b41ef-ce00-478d-8efe-185ddd5ad07c"
+            ]
+        },
+        {
+            "uuid": "8eb4d7fc-fbc2-4d07-81d5-6db6cf0fe0e9",
+            "name": "Composite Bow",
+            "tier": 5,
+            "item_base_id": 5,
+            "attacks": [
+                "5bcee573-7a5f-4279-a429-330a904b07ae",
+                "09ac698f-3a50-4f12-9b4b-41e665cb521e",
+                "9422dae3-5b6b-4140-96b7-e4f8a1df2144",
+                "cc4e9b8a-6ab2-460e-a6fb-f24b69fee842",
+                "dde52822-11e0-4eed-ace7-c57153a2c469",
+                "66bff351-52ec-49cc-8707-e09bb543b83c",
+                "92c794a3-bdb0-4a6a-9164-2f80f4ab2398",
+                "b14257f9-8a3b-4386-833b-70a642240ec8",
+                "afd9b19e-58b2-4aa8-bcf2-3cffa5605e1f",
+                "c48b41ef-ce00-478d-8efe-185ddd5ad07c",
+                "babefcfb-8e78-44fa-8198-aea36c6ce718"
+            ]
+        },
+        {
+            "uuid": "542ba26d-af04-470e-9987-b5da08fc1271",
+            "name": "Compound Bow",
+            "tier": 6,
+            "item_base_id": 5,
+            "attacks": [
+                "5bcee573-7a5f-4279-a429-330a904b07ae",
+                "09ac698f-3a50-4f12-9b4b-41e665cb521e",
+                "9422dae3-5b6b-4140-96b7-e4f8a1df2144",
+                "cc4e9b8a-6ab2-460e-a6fb-f24b69fee842",
+                "dde52822-11e0-4eed-ace7-c57153a2c469",
+                "66bff351-52ec-49cc-8707-e09bb543b83c",
+                "92c794a3-bdb0-4a6a-9164-2f80f4ab2398",
+                "b14257f9-8a3b-4386-833b-70a642240ec8",
+                "bfa6cfff-3180-4e1f-8568-dd8dcb7f59f6",
+                "afd9b19e-58b2-4aa8-bcf2-3cffa5605e1f",
+                "c48b41ef-ce00-478d-8efe-185ddd5ad07c",
+                "babefcfb-8e78-44fa-8198-aea36c6ce718"
+            ]
+        },
+        {
+            "uuid": "13b306fb-3df3-4818-bf1c-855c0bd9feee",
+            "name": "Light Crossbow",
+            "tier": 1,
+            "item_base_id": 6,
+            "attacks": [
+                "8e617785-8bb7-41ce-adde-6cc489e0d210",
+                "4b7ceb50-b612-4522-a1bc-1ef82202d982",
+                "e2b30075-2a21-40d4-add2-5462e54bef6c",
+                "4a634a66-69c2-4d5f-a441-89e01386a5ae"
+            ]
+        },
+        {
+            "uuid": "774342e8-941e-4347-86ec-f1f80708f407",
+            "name": "Heavy Crossbow",
+            "tier": 2,
+            "item_base_id": 6,
+            "attacks": [
+                "8e617785-8bb7-41ce-adde-6cc489e0d210",
+                "4b7ceb50-b612-4522-a1bc-1ef82202d982",
+                "e2b30075-2a21-40d4-add2-5462e54bef6c",
+                "7ed84be6-7831-4027-8ca4-6abc2121b9e3",
+                "82c94812-a82d-45ff-a107-9e1e167e187f",
+                "4a634a66-69c2-4d5f-a441-89e01386a5ae",
+                "66a3a2fd-6001-4003-bb1e-44a943a4263b"
+            ]
+        },
+        {
+            "uuid": "82b238be-2453-4a52-a7c9-e985df7bf71a",
+            "name": "Arbalest",
+            "tier": 3,
+            "item_base_id": 6,
+            "attacks": [
+                "8e617785-8bb7-41ce-adde-6cc489e0d210",
+                "4b7ceb50-b612-4522-a1bc-1ef82202d982",
+                "e2b30075-2a21-40d4-add2-5462e54bef6c",
+                "7ed84be6-7831-4027-8ca4-6abc2121b9e3",
+                "82c94812-a82d-45ff-a107-9e1e167e187f",
+                "4a634a66-69c2-4d5f-a441-89e01386a5ae",
+                "66a3a2fd-6001-4003-bb1e-44a943a4263b"
+            ]
+        },
+        {
+            "uuid": "061eb4d7-ac72-4376-9fad-8fe8e7340f23",
+            "name": "Repeating Crossbow",
+            "tier": 4,
+            "item_base_id": 6,
+            "attacks": [
+                "8e617785-8bb7-41ce-adde-6cc489e0d210",
+                "4b7ceb50-b612-4522-a1bc-1ef82202d982",
+                "e2b30075-2a21-40d4-add2-5462e54bef6c",
+                "7ed84be6-7831-4027-8ca4-6abc2121b9e3",
+                "82c94812-a82d-45ff-a107-9e1e167e187f",
+                "0a88d73b-5f27-4266-9e9f-32e1111d55fe",
+                "4a634a66-69c2-4d5f-a441-89e01386a5ae",
+                "66a3a2fd-6001-4003-bb1e-44a943a4263b"
+            ]
+        },
+        {
+            "uuid": "7780c28b-fe17-4b46-bb3e-78bf4690d6a3",
+            "name": "Heavy Arbalest",
+            "tier": 5,
+            "item_base_id": 6,
+            "attacks": [
+                "8e617785-8bb7-41ce-adde-6cc489e0d210",
+                "4b7ceb50-b612-4522-a1bc-1ef82202d982",
+                "e2b30075-2a21-40d4-add2-5462e54bef6c",
+                "7ed84be6-7831-4027-8ca4-6abc2121b9e3",
+                "82c94812-a82d-45ff-a107-9e1e167e187f",
+                "0a88d73b-5f27-4266-9e9f-32e1111d55fe",
+                "ec479f52-e7d1-486e-bcd3-c5ed41d28222",
+                "25afc099-dc9b-4a0f-a6e4-9c345d786f25",
+                "4a634a66-69c2-4d5f-a441-89e01386a5ae",
+                "66a3a2fd-6001-4003-bb1e-44a943a4263b",
+                "087c7806-c107-492f-a0bd-29fa28b04d5e"
+            ]
+        },
+        {
+            "uuid": "ac258134-7d8f-471d-b207-ad78fbfe44c9",
+            "name": "Giant's Crossbow",
+            "tier": 6,
+            "item_base_id": 6,
+            "attacks": [
+                "8e617785-8bb7-41ce-adde-6cc489e0d210",
+                "4b7ceb50-b612-4522-a1bc-1ef82202d982",
+                "e2b30075-2a21-40d4-add2-5462e54bef6c",
+                "7ed84be6-7831-4027-8ca4-6abc2121b9e3",
+                "82c94812-a82d-45ff-a107-9e1e167e187f",
+                "0a88d73b-5f27-4266-9e9f-32e1111d55fe",
+                "ec479f52-e7d1-486e-bcd3-c5ed41d28222",
+                "25afc099-dc9b-4a0f-a6e4-9c345d786f25",
+                "399df768-3eed-4419-a678-e1d99af97b2d",
+                "4a634a66-69c2-4d5f-a441-89e01386a5ae",
+                "66a3a2fd-6001-4003-bb1e-44a943a4263b",
+                "087c7806-c107-492f-a0bd-29fa28b04d5e"
+            ]
+        },
+        {
+            "uuid": "0e92dbf4-e2bb-4bdd-94e2-808dd382b54d",
+            "name": "Throwing Darts",
+            "tier": 1,
+            "item_base_id": 7,
+            "attacks": [
+                "be3b5218-52f1-49f6-84b5-54b2794b3520",
+                "944b8a21-b709-42c4-83c6-962da3c7cd1f",
+                "a7f7026b-3e83-4d19-91a6-49e2c64e1cca",
+                "7d2ca989-a619-4442-a558-1cd97569b4c9"
+            ]
+        },
+        {
+            "uuid": "b677ef23-3df8-4fca-b388-ab261f71aef4",
+            "name": "Throwing Knives",
+            "tier": 2,
+            "item_base_id": 7,
+            "attacks": [
+                "be3b5218-52f1-49f6-84b5-54b2794b3520",
+                "944b8a21-b709-42c4-83c6-962da3c7cd1f",
+                "a7f7026b-3e83-4d19-91a6-49e2c64e1cca",
+                "6d567772-9992-4004-8b4a-2560b1df674f",
+                "d7d2a081-1578-447a-9200-f47f9842e183",
+                "7d2ca989-a619-4442-a558-1cd97569b4c9",
+                "38c7d0d5-a600-4c98-b68c-8cb7efdf756a"
+            ]
+        },
+        {
+            "uuid": "b321057f-9f46-4aec-b8b9-bdfcfaa5dc5f",
+            "name": "Throwing Stars",
+            "tier": 3,
+            "item_base_id": 7,
+            "attacks": [
+                "be3b5218-52f1-49f6-84b5-54b2794b3520",
+                "944b8a21-b709-42c4-83c6-962da3c7cd1f",
+                "a7f7026b-3e83-4d19-91a6-49e2c64e1cca",
+                "6d567772-9992-4004-8b4a-2560b1df674f",
+                "d7d2a081-1578-447a-9200-f47f9842e183",
+                "7d2ca989-a619-4442-a558-1cd97569b4c9",
+                "38c7d0d5-a600-4c98-b68c-8cb7efdf756a"
+            ]
+        },
+        {
+            "uuid": "1686d3d0-1eea-4255-9d69-cb778df4c430",
+            "name": "Javelins",
+            "tier": 4,
+            "item_base_id": 7,
+            "attacks": [
+                "be3b5218-52f1-49f6-84b5-54b2794b3520",
+                "944b8a21-b709-42c4-83c6-962da3c7cd1f",
+                "a7f7026b-3e83-4d19-91a6-49e2c64e1cca",
+                "6d567772-9992-4004-8b4a-2560b1df674f",
+                "d7d2a081-1578-447a-9200-f47f9842e183",
+                "f66926d4-3888-48f4-a981-59bee54870aa",
+                "7d2ca989-a619-4442-a558-1cd97569b4c9",
+                "38c7d0d5-a600-4c98-b68c-8cb7efdf756a"
+            ]
+        },
+        {
+            "uuid": "b6a2d818-8111-43b2-8740-a3d3ea784d0c",
+            "name": "Throwing Axes",
+            "tier": 5,
+            "item_base_id": 7,
+            "attacks": [
+                "be3b5218-52f1-49f6-84b5-54b2794b3520",
+                "944b8a21-b709-42c4-83c6-962da3c7cd1f",
+                "a7f7026b-3e83-4d19-91a6-49e2c64e1cca",
+                "6d567772-9992-4004-8b4a-2560b1df674f",
+                "d7d2a081-1578-447a-9200-f47f9842e183",
+                "f66926d4-3888-48f4-a981-59bee54870aa",
+                "c89eaf78-97f4-4739-9466-19a64b194f57",
+                "f5d57f9e-d78e-454f-a351-25479d23a3a2",
+                "7d2ca989-a619-4442-a558-1cd97569b4c9",
+                "38c7d0d5-a600-4c98-b68c-8cb7efdf756a",
+                "9061b93a-f01a-47d1-a860-311a3f0415e2"
+            ]
+        },
+        {
+            "uuid": "4c15c2bc-c1f8-4f66-b158-600727bba936",
+            "name": "Exploding Flasks",
+            "tier": 6,
+            "item_base_id": 7,
+            "attacks": [
+                "be3b5218-52f1-49f6-84b5-54b2794b3520",
+                "944b8a21-b709-42c4-83c6-962da3c7cd1f",
+                "a7f7026b-3e83-4d19-91a6-49e2c64e1cca",
+                "6d567772-9992-4004-8b4a-2560b1df674f",
+                "d7d2a081-1578-447a-9200-f47f9842e183",
+                "f66926d4-3888-48f4-a981-59bee54870aa",
+                "c89eaf78-97f4-4739-9466-19a64b194f57",
+                "f5d57f9e-d78e-454f-a351-25479d23a3a2",
+                "b522f8b4-3b32-4d87-a128-d3eb1b083b9a",
+                "7d2ca989-a619-4442-a558-1cd97569b4c9",
+                "38c7d0d5-a600-4c98-b68c-8cb7efdf756a",
+                "9061b93a-f01a-47d1-a860-311a3f0415e2"
+            ]
+        },
+        {
+            "uuid": "92892742-d478-4384-a406-66a64b9d66fe",
+            "name": "Spear",
+            "tier": 1,
+            "item_base_id": 8,
+            "attacks": [
+                "32f1cc6b-bbdb-491b-a3f8-c9cc2e69dbe2",
+                "50db70a7-6d2d-4186-ae5c-129486366c96",
+                "9bde94ff-fd1f-4919-ba35-87b808f5baeb",
+                "4a316724-bbe1-4821-87dd-8973beb3950f"
+            ]
+        },
+        {
+            "uuid": "65cbd2e1-b8de-421f-9494-c8a7d22aefe3",
+            "name": "Glaive",
+            "tier": 2,
+            "item_base_id": 8,
+            "attacks": [
+                "32f1cc6b-bbdb-491b-a3f8-c9cc2e69dbe2",
+                "50db70a7-6d2d-4186-ae5c-129486366c96",
+                "9bde94ff-fd1f-4919-ba35-87b808f5baeb",
+                "9e1ce40d-87cb-4d9e-b4dd-afb88ea53ad0",
+                "f011241a-5841-4a1e-9e43-b6ccfff07231",
+                "4a316724-bbe1-4821-87dd-8973beb3950f",
+                "db849cfd-4347-4e66-bc0b-046bb8423f81"
+            ]
+        },
+        {
+            "uuid": "5a267326-e0bc-46c0-a5c0-6a423f185fe2",
+            "name": "Trident",
+            "tier": 3,
+            "item_base_id": 8,
+            "attacks": [
+                "32f1cc6b-bbdb-491b-a3f8-c9cc2e69dbe2",
+                "50db70a7-6d2d-4186-ae5c-129486366c96",
+                "9bde94ff-fd1f-4919-ba35-87b808f5baeb",
+                "9e1ce40d-87cb-4d9e-b4dd-afb88ea53ad0",
+                "f011241a-5841-4a1e-9e43-b6ccfff07231",
+                "4a316724-bbe1-4821-87dd-8973beb3950f",
+                "db849cfd-4347-4e66-bc0b-046bb8423f81"
+            ]
+        },
+        {
+            "uuid": "1b04b665-0b91-49f4-9555-fe6f2a5181df",
+            "name": "War Scythe",
+            "tier": 4,
+            "item_base_id": 8,
+            "attacks": [
+                "32f1cc6b-bbdb-491b-a3f8-c9cc2e69dbe2",
+                "50db70a7-6d2d-4186-ae5c-129486366c96",
+                "9bde94ff-fd1f-4919-ba35-87b808f5baeb",
+                "9e1ce40d-87cb-4d9e-b4dd-afb88ea53ad0",
+                "f011241a-5841-4a1e-9e43-b6ccfff07231",
+                "f100fe8e-1e1e-4895-b058-6948ab96eee2",
+                "4a316724-bbe1-4821-87dd-8973beb3950f",
+                "db849cfd-4347-4e66-bc0b-046bb8423f81"
+            ]
+        },
+        {
+            "uuid": "c74c4942-5ec5-400d-8737-8ffbc5b8ea2b",
+            "name": "Naginata",
+            "tier": 5,
+            "item_base_id": 8,
+            "attacks": [
+                "32f1cc6b-bbdb-491b-a3f8-c9cc2e69dbe2",
+                "50db70a7-6d2d-4186-ae5c-129486366c96",
+                "9bde94ff-fd1f-4919-ba35-87b808f5baeb",
+                "9e1ce40d-87cb-4d9e-b4dd-afb88ea53ad0",
+                "f011241a-5841-4a1e-9e43-b6ccfff07231",
+                "f100fe8e-1e1e-4895-b058-6948ab96eee2",
+                "7280cc2d-5853-4c54-8708-aa813ad082f0",
+                "109b41e0-5274-40d4-919d-628f2936d4ba",
+                "4a316724-bbe1-4821-87dd-8973beb3950f",
+                "db849cfd-4347-4e66-bc0b-046bb8423f81",
+                "b638acb6-d266-4704-9979-d2714a555f8d"
+            ]
+        },
+        {
+            "uuid": "cee3d6e3-5b6b-4379-b45f-8547790d34db",
+            "name": "Halberd",
+            "tier": 6,
+            "item_base_id": 8,
+            "attacks": [
+                "32f1cc6b-bbdb-491b-a3f8-c9cc2e69dbe2",
+                "50db70a7-6d2d-4186-ae5c-129486366c96",
+                "9bde94ff-fd1f-4919-ba35-87b808f5baeb",
+                "9e1ce40d-87cb-4d9e-b4dd-afb88ea53ad0",
+                "f011241a-5841-4a1e-9e43-b6ccfff07231",
+                "f100fe8e-1e1e-4895-b058-6948ab96eee2",
+                "7280cc2d-5853-4c54-8708-aa813ad082f0",
+                "109b41e0-5274-40d4-919d-628f2936d4ba",
+                "ce0a1933-3fcb-4e3e-aea6-0675d05066eb",
+                "4a316724-bbe1-4821-87dd-8973beb3950f",
+                "db849cfd-4347-4e66-bc0b-046bb8423f81",
+                "b638acb6-d266-4704-9979-d2714a555f8d"
+            ]
+        },
+        {
+            "uuid": "725a6f33-b760-4aa6-aa78-ad190b747473",
+            "name": "Longsword",
+            "tier": 1,
+            "item_base_id": 9,
+            "attacks": [
+                "990706e1-27a3-4199-836b-1e9710d27cca",
+                "7bd31ef6-5855-4f78-a9f7-79bcfcfc55a2",
+                "71c0a6f9-7021-4c0f-b5aa-6720f5aa3cbd",
+                "24dc88d8-d944-4510-9619-532990a40121"
+            ]
+        },
+        {
+            "uuid": "ba7e33cf-557d-4a80-8bbe-aa5e8619d2bb",
+            "name": "Bastard Sword",
+            "tier": 2,
+            "item_base_id": 9,
+            "attacks": [
+                "990706e1-27a3-4199-836b-1e9710d27cca",
+                "7bd31ef6-5855-4f78-a9f7-79bcfcfc55a2",
+                "71c0a6f9-7021-4c0f-b5aa-6720f5aa3cbd",
+                "abc3f72f-5fd1-45ef-bf35-29bbd575fd19",
+                "6c13e43d-522c-4b1f-aac3-6f2f953276b9",
+                "24dc88d8-d944-4510-9619-532990a40121",
+                "76b75ca9-fdb7-4381-88ac-47f703eee2fb"
+            ]
+        },
+        {
+            "uuid": "79b5db9e-fe71-4149-9d1d-f258aca0c35f",
+            "name": "Claymore",
+            "tier": 3,
+            "item_base_id": 9,
+            "attacks": [
+                "990706e1-27a3-4199-836b-1e9710d27cca",
+                "7bd31ef6-5855-4f78-a9f7-79bcfcfc55a2",
+                "71c0a6f9-7021-4c0f-b5aa-6720f5aa3cbd",
+                "abc3f72f-5fd1-45ef-bf35-29bbd575fd19",
+                "6c13e43d-522c-4b1f-aac3-6f2f953276b9",
+                "24dc88d8-d944-4510-9619-532990a40121",
+                "76b75ca9-fdb7-4381-88ac-47f703eee2fb"
+            ]
+        },
+        {
+            "uuid": "49a571f8-c363-40d0-b789-51df24c1a29f",
+            "name": "Greatsword",
+            "tier": 4,
+            "item_base_id": 9,
+            "attacks": [
+                "990706e1-27a3-4199-836b-1e9710d27cca",
+                "7bd31ef6-5855-4f78-a9f7-79bcfcfc55a2",
+                "71c0a6f9-7021-4c0f-b5aa-6720f5aa3cbd",
+                "abc3f72f-5fd1-45ef-bf35-29bbd575fd19",
+                "6c13e43d-522c-4b1f-aac3-6f2f953276b9",
+                "eb9afa58-7108-49a6-9e46-864b37b09d90",
+                "24dc88d8-d944-4510-9619-532990a40121",
+                "76b75ca9-fdb7-4381-88ac-47f703eee2fb"
+            ]
+        },
+        {
+            "uuid": "b4166f1b-dd31-4cf5-b4a5-9fe5692a8de5",
+            "name": "Katana",
+            "tier": 5,
+            "item_base_id": 9,
+            "attacks": [
+                "990706e1-27a3-4199-836b-1e9710d27cca",
+                "7bd31ef6-5855-4f78-a9f7-79bcfcfc55a2",
+                "71c0a6f9-7021-4c0f-b5aa-6720f5aa3cbd",
+                "abc3f72f-5fd1-45ef-bf35-29bbd575fd19",
+                "6c13e43d-522c-4b1f-aac3-6f2f953276b9",
+                "eb9afa58-7108-49a6-9e46-864b37b09d90",
+                "c788fb6e-74aa-4528-bea3-e36b7995e776",
+                "8c941260-0f5c-48f2-af0b-2ef1e2a62bdc",
+                "24dc88d8-d944-4510-9619-532990a40121",
+                "76b75ca9-fdb7-4381-88ac-47f703eee2fb",
+                "ae90c56d-566d-420c-8732-debc02c90b60"
+            ]
+        },
+        {
+            "uuid": "ef5c217a-d34c-4099-b3eb-8bbe61f6d786",
+            "name": "Giant's Sword",
+            "tier": 6,
+            "item_base_id": 9,
+            "attacks": [
+                "990706e1-27a3-4199-836b-1e9710d27cca",
+                "7bd31ef6-5855-4f78-a9f7-79bcfcfc55a2",
+                "71c0a6f9-7021-4c0f-b5aa-6720f5aa3cbd",
+                "abc3f72f-5fd1-45ef-bf35-29bbd575fd19",
+                "6c13e43d-522c-4b1f-aac3-6f2f953276b9",
+                "eb9afa58-7108-49a6-9e46-864b37b09d90",
+                "c788fb6e-74aa-4528-bea3-e36b7995e776",
+                "8c941260-0f5c-48f2-af0b-2ef1e2a62bdc",
+                "2d674a28-5873-43d3-8673-7e9d67c9d250",
+                "24dc88d8-d944-4510-9619-532990a40121",
+                "76b75ca9-fdb7-4381-88ac-47f703eee2fb",
+                "ae90c56d-566d-420c-8732-debc02c90b60"
+            ]
+        },
+        {
+            "uuid": "485b0f8a-c0aa-44d3-9d41-44fd3c15fd56",
+            "name": "Long Axe",
+            "tier": 1,
+            "item_base_id": 10,
+            "attacks": [
+                "990706e1-27a3-4199-836b-1e9710d27cca",
+                "7bd31ef6-5855-4f78-a9f7-79bcfcfc55a2",
+                "71c0a6f9-7021-4c0f-b5aa-6720f5aa3cbd",
+                "24dc88d8-d944-4510-9619-532990a40121"
+            ]
+        },
+        {
+            "uuid": "9f0132ab-403f-4fa0-a00c-0c703d05b1c9",
+            "name": "Bardiche",
+            "tier": 2,
+            "item_base_id": 10,
+            "attacks": [
+                "990706e1-27a3-4199-836b-1e9710d27cca",
+                "7bd31ef6-5855-4f78-a9f7-79bcfcfc55a2",
+                "71c0a6f9-7021-4c0f-b5aa-6720f5aa3cbd",
+                "abc3f72f-5fd1-45ef-bf35-29bbd575fd19",
+                "6c13e43d-522c-4b1f-aac3-6f2f953276b9",
+                "24dc88d8-d944-4510-9619-532990a40121",
+                "76b75ca9-fdb7-4381-88ac-47f703eee2fb"
+            ]
+        },
+        {
+            "uuid": "6d05ad70-bfb1-4ca2-8526-c22256d3f86b",
+            "name": "Lance",
+            "tier": 3,
+            "item_base_id": 10,
+            "attacks": [
+                "990706e1-27a3-4199-836b-1e9710d27cca",
+                "7bd31ef6-5855-4f78-a9f7-79bcfcfc55a2",
+                "71c0a6f9-7021-4c0f-b5aa-6720f5aa3cbd",
+                "abc3f72f-5fd1-45ef-bf35-29bbd575fd19",
+                "6c13e43d-522c-4b1f-aac3-6f2f953276b9",
+                "24dc88d8-d944-4510-9619-532990a40121",
+                "76b75ca9-fdb7-4381-88ac-47f703eee2fb"
+            ]
+        },
+        {
+            "uuid": "9df4bc3d-64ae-4f29-bb78-dcca134190b0",
+            "name": "Great Axe",
+            "tier": 4,
+            "item_base_id": 10,
+            "attacks": [
+                "990706e1-27a3-4199-836b-1e9710d27cca",
+                "7bd31ef6-5855-4f78-a9f7-79bcfcfc55a2",
+                "71c0a6f9-7021-4c0f-b5aa-6720f5aa3cbd",
+                "abc3f72f-5fd1-45ef-bf35-29bbd575fd19",
+                "6c13e43d-522c-4b1f-aac3-6f2f953276b9",
+                "eb9afa58-7108-49a6-9e46-864b37b09d90",
+                "24dc88d8-d944-4510-9619-532990a40121",
+                "76b75ca9-fdb7-4381-88ac-47f703eee2fb"
+            ]
+        },
+        {
+            "uuid": "f9475ead-94f5-4230-b61b-98d6be0d7cc6",
+            "name": "Labrys",
+            "tier": 5,
+            "item_base_id": 10,
+            "attacks": [
+                "990706e1-27a3-4199-836b-1e9710d27cca",
+                "7bd31ef6-5855-4f78-a9f7-79bcfcfc55a2",
+                "71c0a6f9-7021-4c0f-b5aa-6720f5aa3cbd",
+                "abc3f72f-5fd1-45ef-bf35-29bbd575fd19",
+                "6c13e43d-522c-4b1f-aac3-6f2f953276b9",
+                "eb9afa58-7108-49a6-9e46-864b37b09d90",
+                "c788fb6e-74aa-4528-bea3-e36b7995e776",
+                "8c941260-0f5c-48f2-af0b-2ef1e2a62bdc",
+                "24dc88d8-d944-4510-9619-532990a40121",
+                "76b75ca9-fdb7-4381-88ac-47f703eee2fb",
+                "ae90c56d-566d-420c-8732-debc02c90b60"
+            ]
+        },
+        {
+            "uuid": "ae1cd7cb-bf8a-4627-8071-60154d79de0f",
+            "name": "Giant's Axe",
+            "tier": 6,
+            "item_base_id": 10,
+            "attacks": [
+                "990706e1-27a3-4199-836b-1e9710d27cca",
+                "7bd31ef6-5855-4f78-a9f7-79bcfcfc55a2",
+                "71c0a6f9-7021-4c0f-b5aa-6720f5aa3cbd",
+                "abc3f72f-5fd1-45ef-bf35-29bbd575fd19",
+                "6c13e43d-522c-4b1f-aac3-6f2f953276b9",
+                "eb9afa58-7108-49a6-9e46-864b37b09d90",
+                "c788fb6e-74aa-4528-bea3-e36b7995e776",
+                "8c941260-0f5c-48f2-af0b-2ef1e2a62bdc",
+                "2d674a28-5873-43d3-8673-7e9d67c9d250",
+                "24dc88d8-d944-4510-9619-532990a40121",
+                "76b75ca9-fdb7-4381-88ac-47f703eee2fb",
+                "ae90c56d-566d-420c-8732-debc02c90b60"
+            ]
+        },
+        {
+            "uuid": "4dad1047-ca70-4948-ba5f-b0cbddff58cc",
+            "name": "Sprig",
+            "tier": 1,
+            "item_base_id": 11,
+            "attacks": [
+                "6b247145-4892-4ce6-bd41-d595bd6e4722",
+                "5f2ee6f3-b30c-4e70-bb50-9eae54e078a0",
+                "4d358446-4a33-4836-88df-29b3803c567b",
+                "99e1b0ec-6c10-4940-adbe-86e2961c073d"
+            ]
+        },
+        {
+            "uuid": "14cae4b2-32c0-41f1-87ac-c3327ab5e920",
+            "name": "Lesser Wand",
+            "tier": 2,
+            "item_base_id": 11,
+            "attacks": [
+                "6b247145-4892-4ce6-bd41-d595bd6e4722",
+                "5f2ee6f3-b30c-4e70-bb50-9eae54e078a0",
+                "4d358446-4a33-4836-88df-29b3803c567b",
+                "bdf08ebf-ae5f-4b10-8cbb-b763ce112458",
+                "77385463-7a51-4fe9-abe8-b7e09f302347",
+                "99e1b0ec-6c10-4940-adbe-86e2961c073d",
+                "c0f00280-1657-4392-aecf-7a054f5e9a3d"
+            ]
+        },
+        {
+            "uuid": "abe676cb-7a35-4b1a-a944-0804f7255701",
+            "name": "Scepter",
+            "tier": 3,
+            "item_base_id": 11,
+            "attacks": [
+                "6b247145-4892-4ce6-bd41-d595bd6e4722",
+                "5f2ee6f3-b30c-4e70-bb50-9eae54e078a0",
+                "4d358446-4a33-4836-88df-29b3803c567b",
+                "bdf08ebf-ae5f-4b10-8cbb-b763ce112458",
+                "77385463-7a51-4fe9-abe8-b7e09f302347",
+                "99e1b0ec-6c10-4940-adbe-86e2961c073d",
+                "c0f00280-1657-4392-aecf-7a054f5e9a3d"
+            ]
+        },
+        {
+            "uuid": "c12c59a5-d969-4430-b7a0-777ba7fe797e",
+            "name": "Greater Wand",
+            "tier": 4,
+            "item_base_id": 11,
+            "attacks": [
+                "6b247145-4892-4ce6-bd41-d595bd6e4722",
+                "5f2ee6f3-b30c-4e70-bb50-9eae54e078a0",
+                "4d358446-4a33-4836-88df-29b3803c567b",
+                "bdf08ebf-ae5f-4b10-8cbb-b763ce112458",
+                "77385463-7a51-4fe9-abe8-b7e09f302347",
+                "4b574453-56cd-472a-a80f-14e237479175",
+                "99e1b0ec-6c10-4940-adbe-86e2961c073d",
+                "c0f00280-1657-4392-aecf-7a054f5e9a3d"
+            ]
+        },
+        {
+            "uuid": "5ff2450d-82a0-4f2c-8e10-86da82861619",
+            "name": "Greater Scepter",
+            "tier": 5,
+            "item_base_id": 11,
+            "attacks": [
+                "6b247145-4892-4ce6-bd41-d595bd6e4722",
+                "5f2ee6f3-b30c-4e70-bb50-9eae54e078a0",
+                "4d358446-4a33-4836-88df-29b3803c567b",
+                "bdf08ebf-ae5f-4b10-8cbb-b763ce112458",
+                "77385463-7a51-4fe9-abe8-b7e09f302347",
+                "4b574453-56cd-472a-a80f-14e237479175",
+                "1a4680e0-aeac-4fc7-a913-7ec480bbf9b5",
+                "4863a834-e38d-404e-a3ad-e1fea0f018d8",
+                "99e1b0ec-6c10-4940-adbe-86e2961c073d",
+                "c0f00280-1657-4392-aecf-7a054f5e9a3d",
+                "14e117fe-8d21-4153-98cc-1504286ad8bd"
+            ]
+        },
+        {
+            "uuid": "fcfb78f9-5b91-4ce4-a06b-3cda46be9b4e",
+            "name": "Magus Scepter",
+            "tier": 6,
+            "item_base_id": 11,
+            "attacks": [
+                "6b247145-4892-4ce6-bd41-d595bd6e4722",
+                "5f2ee6f3-b30c-4e70-bb50-9eae54e078a0",
+                "4d358446-4a33-4836-88df-29b3803c567b",
+                "bdf08ebf-ae5f-4b10-8cbb-b763ce112458",
+                "77385463-7a51-4fe9-abe8-b7e09f302347",
+                "4b574453-56cd-472a-a80f-14e237479175",
+                "1a4680e0-aeac-4fc7-a913-7ec480bbf9b5",
+                "4863a834-e38d-404e-a3ad-e1fea0f018d8",
+                "cbc7e345-c718-4f1b-8353-8ca999574ba3",
+                "99e1b0ec-6c10-4940-adbe-86e2961c073d",
+                "c0f00280-1657-4392-aecf-7a054f5e9a3d",
+                "14e117fe-8d21-4153-98cc-1504286ad8bd"
+            ]
+        },
+        {
+            "uuid": "ded550bc-78f9-4b87-b940-678a14eca7b2",
+            "name": "Lesser Orb",
+            "tier": 1,
+            "item_base_id": 12,
+            "attacks": [
+                "6b247145-4892-4ce6-bd41-d595bd6e4722",
+                "5f2ee6f3-b30c-4e70-bb50-9eae54e078a0",
+                "4d358446-4a33-4836-88df-29b3803c567b",
+                "99e1b0ec-6c10-4940-adbe-86e2961c073d"
+            ]
+        },
+        {
+            "uuid": "724a980a-4925-4cbc-bd20-961b7ec98c8e",
+            "name": "Polished Orb",
+            "tier": 2,
+            "item_base_id": 12,
+            "attacks": [
+                "6b247145-4892-4ce6-bd41-d595bd6e4722",
+                "5f2ee6f3-b30c-4e70-bb50-9eae54e078a0",
+                "4d358446-4a33-4836-88df-29b3803c567b",
+                "bdf08ebf-ae5f-4b10-8cbb-b763ce112458",
+                "77385463-7a51-4fe9-abe8-b7e09f302347",
+                "99e1b0ec-6c10-4940-adbe-86e2961c073d",
+                "c0f00280-1657-4392-aecf-7a054f5e9a3d"
+            ]
+        },
+        {
+            "uuid": "41764146-e12a-4058-9a53-e6b78e8a905a",
+            "name": "Greater Orb",
+            "tier": 3,
+            "item_base_id": 12,
+            "attacks": [
+                "6b247145-4892-4ce6-bd41-d595bd6e4722",
+                "5f2ee6f3-b30c-4e70-bb50-9eae54e078a0",
+                "4d358446-4a33-4836-88df-29b3803c567b",
+                "bdf08ebf-ae5f-4b10-8cbb-b763ce112458",
+                "77385463-7a51-4fe9-abe8-b7e09f302347",
+                "99e1b0ec-6c10-4940-adbe-86e2961c073d",
+                "c0f00280-1657-4392-aecf-7a054f5e9a3d"
+            ]
+        },
+        {
+            "uuid": "f88aa3be-7a20-4715-85e0-86033c218401",
+            "name": "Seer's Sphere",
+            "tier": 4,
+            "item_base_id": 12,
+            "attacks": [
+                "6b247145-4892-4ce6-bd41-d595bd6e4722",
+                "5f2ee6f3-b30c-4e70-bb50-9eae54e078a0",
+                "4d358446-4a33-4836-88df-29b3803c567b",
+                "bdf08ebf-ae5f-4b10-8cbb-b763ce112458",
+                "77385463-7a51-4fe9-abe8-b7e09f302347",
+                "4b574453-56cd-472a-a80f-14e237479175",
+                "99e1b0ec-6c10-4940-adbe-86e2961c073d",
+                "c0f00280-1657-4392-aecf-7a054f5e9a3d"
+            ]
+        },
+        {
+            "uuid": "0eec791c-71cf-49a6-b6e9-6e4fc0388f10",
+            "name": "Magus Orb",
+            "tier": 5,
+            "item_base_id": 12,
+            "attacks": [
+                "6b247145-4892-4ce6-bd41-d595bd6e4722",
+                "5f2ee6f3-b30c-4e70-bb50-9eae54e078a0",
+                "4d358446-4a33-4836-88df-29b3803c567b",
+                "bdf08ebf-ae5f-4b10-8cbb-b763ce112458",
+                "77385463-7a51-4fe9-abe8-b7e09f302347",
+                "4b574453-56cd-472a-a80f-14e237479175",
+                "1a4680e0-aeac-4fc7-a913-7ec480bbf9b5",
+                "4863a834-e38d-404e-a3ad-e1fea0f018d8",
+                "99e1b0ec-6c10-4940-adbe-86e2961c073d",
+                "c0f00280-1657-4392-aecf-7a054f5e9a3d",
+                "14e117fe-8d21-4153-98cc-1504286ad8bd"
+            ]
+        },
+        {
+            "uuid": "ed0cbd0d-61c6-41b3-bd19-d0e62b788a30",
+            "name": "Wizard's Eye",
+            "tier": 6,
+            "item_base_id": 12,
+            "attacks": [
+                "6b247145-4892-4ce6-bd41-d595bd6e4722",
+                "5f2ee6f3-b30c-4e70-bb50-9eae54e078a0",
+                "4d358446-4a33-4836-88df-29b3803c567b",
+                "bdf08ebf-ae5f-4b10-8cbb-b763ce112458",
+                "77385463-7a51-4fe9-abe8-b7e09f302347",
+                "4b574453-56cd-472a-a80f-14e237479175",
+                "1a4680e0-aeac-4fc7-a913-7ec480bbf9b5",
+                "4863a834-e38d-404e-a3ad-e1fea0f018d8",
+                "cbc7e345-c718-4f1b-8353-8ca999574ba3",
+                "99e1b0ec-6c10-4940-adbe-86e2961c073d",
+                "c0f00280-1657-4392-aecf-7a054f5e9a3d",
+                "14e117fe-8d21-4153-98cc-1504286ad8bd"
+            ]
+        },
+        {
+            "uuid": "5874ca17-3e25-41ae-ac22-70f7a960bf1f",
+            "name": "Lesser Staff",
+            "tier": 1,
+            "item_base_id": 13,
+            "attacks": [
+                "6b247145-4892-4ce6-bd41-d595bd6e4722",
+                "5f2ee6f3-b30c-4e70-bb50-9eae54e078a0",
+                "4d358446-4a33-4836-88df-29b3803c567b",
+                "99e1b0ec-6c10-4940-adbe-86e2961c073d"
+            ]
+        },
+        {
+            "uuid": "b9eda714-6f9d-4d1e-acca-904cef69d586",
+            "name": "Rod",
+            "tier": 2,
+            "item_base_id": 13,
+            "attacks": [
+                "6b247145-4892-4ce6-bd41-d595bd6e4722",
+                "5f2ee6f3-b30c-4e70-bb50-9eae54e078a0",
+                "4d358446-4a33-4836-88df-29b3803c567b",
+                "bdf08ebf-ae5f-4b10-8cbb-b763ce112458",
+                "77385463-7a51-4fe9-abe8-b7e09f302347",
+                "99e1b0ec-6c10-4940-adbe-86e2961c073d",
+                "c0f00280-1657-4392-aecf-7a054f5e9a3d"
+            ]
+        },
+        {
+            "uuid": "039ce46f-371b-4068-9ae7-0102870a98f8",
+            "name": "Greater Staff",
+            "tier": 3,
+            "item_base_id": 13,
+            "attacks": [
+                "6b247145-4892-4ce6-bd41-d595bd6e4722",
+                "5f2ee6f3-b30c-4e70-bb50-9eae54e078a0",
+                "4d358446-4a33-4836-88df-29b3803c567b",
+                "bdf08ebf-ae5f-4b10-8cbb-b763ce112458",
+                "77385463-7a51-4fe9-abe8-b7e09f302347",
+                "99e1b0ec-6c10-4940-adbe-86e2961c073d",
+                "c0f00280-1657-4392-aecf-7a054f5e9a3d"
+            ]
+        },
+        {
+            "uuid": "f2e42bc2-0e45-45b5-aa2a-970ad82966f9",
+            "name": "Master's Rod",
+            "tier": 4,
+            "item_base_id": 13,
+            "attacks": [
+                "6b247145-4892-4ce6-bd41-d595bd6e4722",
+                "5f2ee6f3-b30c-4e70-bb50-9eae54e078a0",
+                "4d358446-4a33-4836-88df-29b3803c567b",
+                "bdf08ebf-ae5f-4b10-8cbb-b763ce112458",
+                "77385463-7a51-4fe9-abe8-b7e09f302347",
+                "4b574453-56cd-472a-a80f-14e237479175",
+                "99e1b0ec-6c10-4940-adbe-86e2961c073d",
+                "c0f00280-1657-4392-aecf-7a054f5e9a3d"
+            ]
+        },
+        {
+            "uuid": "4ceeaa60-9194-4109-922d-980c87488f5b",
+            "name": "Battle Staff",
+            "tier": 5,
+            "item_base_id": 13,
+            "attacks": [
+                "6b247145-4892-4ce6-bd41-d595bd6e4722",
+                "5f2ee6f3-b30c-4e70-bb50-9eae54e078a0",
+                "4d358446-4a33-4836-88df-29b3803c567b",
+                "bdf08ebf-ae5f-4b10-8cbb-b763ce112458",
+                "77385463-7a51-4fe9-abe8-b7e09f302347",
+                "4b574453-56cd-472a-a80f-14e237479175",
+                "1a4680e0-aeac-4fc7-a913-7ec480bbf9b5",
+                "4863a834-e38d-404e-a3ad-e1fea0f018d8",
+                "99e1b0ec-6c10-4940-adbe-86e2961c073d",
+                "c0f00280-1657-4392-aecf-7a054f5e9a3d",
+                "14e117fe-8d21-4153-98cc-1504286ad8bd"
+            ]
+        },
+        {
+            "uuid": "f142c761-1414-4dc4-a4d6-bee18fa1554a",
+            "name": "Magus Staff",
+            "tier": 6,
+            "item_base_id": 13,
+            "attacks": [
+                "6b247145-4892-4ce6-bd41-d595bd6e4722",
+                "5f2ee6f3-b30c-4e70-bb50-9eae54e078a0",
+                "4d358446-4a33-4836-88df-29b3803c567b",
+                "bdf08ebf-ae5f-4b10-8cbb-b763ce112458",
+                "77385463-7a51-4fe9-abe8-b7e09f302347",
+                "4b574453-56cd-472a-a80f-14e237479175",
+                "1a4680e0-aeac-4fc7-a913-7ec480bbf9b5",
+                "4863a834-e38d-404e-a3ad-e1fea0f018d8",
+                "cbc7e345-c718-4f1b-8353-8ca999574ba3",
+                "99e1b0ec-6c10-4940-adbe-86e2961c073d",
+                "c0f00280-1657-4392-aecf-7a054f5e9a3d",
+                "14e117fe-8d21-4153-98cc-1504286ad8bd"
+            ]
+        },
+        {
+            "uuid": "67e2198d-a453-42f8-bdd1-21187057bcd7",
+            "name": "Spell Blade",
+            "tier": 1,
+            "item_base_id": 14,
+            "attacks": [
+                "c6c67c9a-1fa8-468e-9d86-d49c48c81490",
+                "b12eec27-9f0c-4223-bec8-d47892df019b",
+                "87644a5c-5cdc-4119-b27d-fa0fa09b9fd3",
+                "24dc88d8-d944-4510-9619-532990a40121"
+            ]
+        },
+        {
+            "uuid": "00af130d-dd35-4a33-afe1-b464d10ebdc7",
+            "name": "Mind Blade",
+            "tier": 2,
+            "item_base_id": 14,
+            "attacks": [
+                "c6c67c9a-1fa8-468e-9d86-d49c48c81490",
+                "b12eec27-9f0c-4223-bec8-d47892df019b",
+                "87644a5c-5cdc-4119-b27d-fa0fa09b9fd3",
+                "5147106e-8774-4164-9a38-873681c35493",
+                "95da6b3c-d1b1-4743-9d53-32d63c733548",
+                "24dc88d8-d944-4510-9619-532990a40121",
+                "76b75ca9-fdb7-4381-88ac-47f703eee2fb"
+            ]
+        },
+        {
+            "uuid": "27c2fc76-211d-4c42-8870-47a49991414b",
+            "name": "Conjure Blade",
+            "tier": 3,
+            "item_base_id": 14,
+            "attacks": [
+                "c6c67c9a-1fa8-468e-9d86-d49c48c81490",
+                "b12eec27-9f0c-4223-bec8-d47892df019b",
+                "87644a5c-5cdc-4119-b27d-fa0fa09b9fd3",
+                "5147106e-8774-4164-9a38-873681c35493",
+                "95da6b3c-d1b1-4743-9d53-32d63c733548",
+                "24dc88d8-d944-4510-9619-532990a40121",
+                "76b75ca9-fdb7-4381-88ac-47f703eee2fb"
+            ]
+        },
+        {
+            "uuid": "a3883465-23e3-4f5c-b51d-47ceb0a2bad8",
+            "name": "Vision Blade",
+            "tier": 4,
+            "item_base_id": 14,
+            "attacks": [
+                "c6c67c9a-1fa8-468e-9d86-d49c48c81490",
+                "b12eec27-9f0c-4223-bec8-d47892df019b",
+                "87644a5c-5cdc-4119-b27d-fa0fa09b9fd3",
+                "5147106e-8774-4164-9a38-873681c35493",
+                "95da6b3c-d1b1-4743-9d53-32d63c733548",
+                "08a8086b-a8d4-4e27-abb1-332db2e5baaa",
+                "24dc88d8-d944-4510-9619-532990a40121",
+                "76b75ca9-fdb7-4381-88ac-47f703eee2fb"
+            ]
+        },
+        {
+            "uuid": "63d20376-bb16-45e2-be41-73bcf511354a",
+            "name": "Rune Blade",
+            "tier": 5,
+            "item_base_id": 14,
+            "attacks": [
+                "c6c67c9a-1fa8-468e-9d86-d49c48c81490",
+                "b12eec27-9f0c-4223-bec8-d47892df019b",
+                "87644a5c-5cdc-4119-b27d-fa0fa09b9fd3",
+                "5147106e-8774-4164-9a38-873681c35493",
+                "95da6b3c-d1b1-4743-9d53-32d63c733548",
+                "08a8086b-a8d4-4e27-abb1-332db2e5baaa",
+                "c6756b52-92be-48e8-a012-0b52e24dc8d9",
+                "f480f2b6-458e-4584-a7db-9a583ce7f510",
+                "24dc88d8-d944-4510-9619-532990a40121",
+                "76b75ca9-fdb7-4381-88ac-47f703eee2fb",
+                "ae90c56d-566d-420c-8732-debc02c90b60"
+            ]
+        },
+        {
+            "uuid": "cd1e6cdc-bb80-4532-a4bf-a30876f4d06c",
+            "name": "Magus Blade",
+            "tier": 6,
+            "item_base_id": 14,
+            "attacks": [
+                "c6c67c9a-1fa8-468e-9d86-d49c48c81490",
+                "b12eec27-9f0c-4223-bec8-d47892df019b",
+                "87644a5c-5cdc-4119-b27d-fa0fa09b9fd3",
+                "5147106e-8774-4164-9a38-873681c35493",
+                "95da6b3c-d1b1-4743-9d53-32d63c733548",
+                "08a8086b-a8d4-4e27-abb1-332db2e5baaa",
+                "c6756b52-92be-48e8-a012-0b52e24dc8d9",
+                "f480f2b6-458e-4584-a7db-9a583ce7f510",
+                "884f974f-3309-4fb3-93fc-79e05f52a6c2",
+                "24dc88d8-d944-4510-9619-532990a40121",
+                "76b75ca9-fdb7-4381-88ac-47f703eee2fb",
+                "ae90c56d-566d-420c-8732-debc02c90b60"
+            ]
+        },
+        {
+            "uuid": "3e3309e6-f9f1-436b-b2fc-c96c980ecfdf",
+            "name": "Spell Cleaver",
+            "tier": 1,
+            "item_base_id": 15,
+            "attacks": [
+                "c6c67c9a-1fa8-468e-9d86-d49c48c81490",
+                "b12eec27-9f0c-4223-bec8-d47892df019b",
+                "87644a5c-5cdc-4119-b27d-fa0fa09b9fd3",
+                "24dc88d8-d944-4510-9619-532990a40121"
+            ]
+        },
+        {
+            "uuid": "9e53f94b-a0ea-4bba-ac8e-54f9fe0b4d03",
+            "name": "Mind Cleaver",
+            "tier": 2,
+            "item_base_id": 15,
+            "attacks": [
+                "c6c67c9a-1fa8-468e-9d86-d49c48c81490",
+                "b12eec27-9f0c-4223-bec8-d47892df019b",
+                "87644a5c-5cdc-4119-b27d-fa0fa09b9fd3",
+                "5147106e-8774-4164-9a38-873681c35493",
+                "95da6b3c-d1b1-4743-9d53-32d63c733548",
+                "24dc88d8-d944-4510-9619-532990a40121",
+                "76b75ca9-fdb7-4381-88ac-47f703eee2fb"
+            ]
+        },
+        {
+            "uuid": "d038efc4-c5fc-4a14-81f1-76edc522f38c",
+            "name": "Conjure Cleaver",
+            "tier": 3,
+            "item_base_id": 15,
+            "attacks": [
+                "c6c67c9a-1fa8-468e-9d86-d49c48c81490",
+                "b12eec27-9f0c-4223-bec8-d47892df019b",
+                "87644a5c-5cdc-4119-b27d-fa0fa09b9fd3",
+                "5147106e-8774-4164-9a38-873681c35493",
+                "95da6b3c-d1b1-4743-9d53-32d63c733548",
+                "24dc88d8-d944-4510-9619-532990a40121",
+                "76b75ca9-fdb7-4381-88ac-47f703eee2fb"
+            ]
+        },
+        {
+            "uuid": "d06f1315-81b2-43f2-980f-9862712c1cb3",
+            "name": "Vision Cleaver",
+            "tier": 4,
+            "item_base_id": 15,
+            "attacks": [
+                "c6c67c9a-1fa8-468e-9d86-d49c48c81490",
+                "b12eec27-9f0c-4223-bec8-d47892df019b",
+                "87644a5c-5cdc-4119-b27d-fa0fa09b9fd3",
+                "5147106e-8774-4164-9a38-873681c35493",
+                "95da6b3c-d1b1-4743-9d53-32d63c733548",
+                "08a8086b-a8d4-4e27-abb1-332db2e5baaa",
+                "24dc88d8-d944-4510-9619-532990a40121",
+                "76b75ca9-fdb7-4381-88ac-47f703eee2fb"
+            ]
+        },
+        {
+            "uuid": "ae35ef31-c041-47e5-b51b-56b29423954f",
+            "name": "Rune Cleaver",
+            "tier": 5,
+            "item_base_id": 15,
+            "attacks": [
+                "c6c67c9a-1fa8-468e-9d86-d49c48c81490",
+                "b12eec27-9f0c-4223-bec8-d47892df019b",
+                "87644a5c-5cdc-4119-b27d-fa0fa09b9fd3",
+                "5147106e-8774-4164-9a38-873681c35493",
+                "95da6b3c-d1b1-4743-9d53-32d63c733548",
+                "08a8086b-a8d4-4e27-abb1-332db2e5baaa",
+                "c6756b52-92be-48e8-a012-0b52e24dc8d9",
+                "f480f2b6-458e-4584-a7db-9a583ce7f510",
+                "24dc88d8-d944-4510-9619-532990a40121",
+                "76b75ca9-fdb7-4381-88ac-47f703eee2fb",
+                "ae90c56d-566d-420c-8732-debc02c90b60"
+            ]
+        },
+        {
+            "uuid": "e418f465-0a03-409d-b1d7-8b3ef5a2f32b",
+            "name": "Magus Cleaver",
+            "tier": 6,
+            "item_base_id": 15,
+            "attacks": [
+                "c6c67c9a-1fa8-468e-9d86-d49c48c81490",
+                "b12eec27-9f0c-4223-bec8-d47892df019b",
+                "87644a5c-5cdc-4119-b27d-fa0fa09b9fd3",
+                "5147106e-8774-4164-9a38-873681c35493",
+                "95da6b3c-d1b1-4743-9d53-32d63c733548",
+                "08a8086b-a8d4-4e27-abb1-332db2e5baaa",
+                "c6756b52-92be-48e8-a012-0b52e24dc8d9",
+                "f480f2b6-458e-4584-a7db-9a583ce7f510",
+                "884f974f-3309-4fb3-93fc-79e05f52a6c2",
+                "24dc88d8-d944-4510-9619-532990a40121",
+                "76b75ca9-fdb7-4381-88ac-47f703eee2fb",
+                "ae90c56d-566d-420c-8732-debc02c90b60"
+            ]
+        },
+        {
+            "uuid": "55e69654-8103-4d5c-822c-d1c64faf3da8",
+            "name": "Buckler",
+            "tier": 1,
+            "item_base_id": 16,
+            "attacks": []
+        },
+        {
+            "uuid": "afd81f79-cc85-4b76-85c3-e61e409cbbee",
+            "name": "Rondache",
+            "tier": 2,
+            "item_base_id": 16,
+            "attacks": []
+        },
+        {
+            "uuid": "7ac82760-3bd8-4001-a648-8fd5364da138",
+            "name": "Heater Shield",
+            "tier": 3,
+            "item_base_id": 16,
+            "attacks": []
+        },
+        {
+            "uuid": "a5166c0b-399f-4ac2-9564-21cd8750bf59",
+            "name": "Kite Shield",
+            "tier": 4,
+            "item_base_id": 16,
+            "attacks": []
+        },
+        {
+            "uuid": "539ee52e-85af-42c8-98ae-14385f16ae56",
+            "name": "Gothic Shield",
+            "tier": 5,
+            "item_base_id": 16,
+            "attacks": []
+        },
+        {
+            "uuid": "714db07a-23cd-4ad3-9c1d-5beac309c75a",
+            "name": "Tower Shield",
+            "tier": 6,
+            "item_base_id": 16,
+            "attacks": []
+        },
+        {
+            "uuid": "03913774-591d-4d3a-a2e9-feb0b3808225",
+            "name": "Barrier",
+            "tier": 3,
+            "item_base_id": 17,
+            "attacks": []
+        },
+        {
+            "uuid": "1f663d7b-ed72-4724-9aff-0eb1ea9dc247",
+            "name": "Force-field",
+            "tier": 4,
+            "item_base_id": 17,
+            "attacks": []
+        },
+        {
+            "uuid": "778a69f2-a111-4102-8ddf-497877756bfa",
+            "name": "Citadel",
+            "tier": 5,
+            "item_base_id": 17,
+            "attacks": []
+        },
+        {
+            "uuid": "419c7dfa-867b-4c0e-b910-d1d664135713",
+            "name": "Fez",
+            "tier": 1,
+            "item_base_id": 19,
+            "attacks": []
+        },
+        {
+            "uuid": "d67b4cc4-cf8e-47dc-9424-d0a204b8dbdb",
+            "name": "Beret",
+            "tier": 2,
+            "item_base_id": 19,
+            "attacks": []
+        },
+        {
+            "uuid": "732b926d-a8cf-4e4a-acbb-42dbac6b3618",
+            "name": "Trilby",
+            "tier": 3,
+            "item_base_id": 19,
+            "attacks": []
+        },
+        {
+            "uuid": "ff3d1d70-e79a-41ab-9ecb-01a5746bf46c",
+            "name": "Apprentice Cap",
+            "tier": 4,
+            "item_base_id": 19,
+            "attacks": []
+        },
+        {
+            "uuid": "ef86bf07-d154-4932-8068-37103e0febfc",
+            "name": "Wizard's Cap",
+            "tier": 5,
+            "item_base_id": 19,
+            "attacks": []
+        },
+        {
+            "uuid": "595e3e48-d758-4427-9afc-2ba7b16d3389",
+            "name": "Sorcerer's Hat",
+            "tier": 6,
+            "item_base_id": 19,
+            "attacks": []
+        },
+        {
+            "uuid": "122924e0-bdcd-4832-8197-d92718d03620",
+            "name": "Frock",
+            "tier": 1,
+            "item_base_id": 23,
+            "attacks": []
+        },
+        {
+            "uuid": "849b52f2-f856-429b-8a11-8565d17959e5",
+            "name": "Coat",
+            "tier": 2,
+            "item_base_id": 23,
+            "attacks": []
+        },
+        {
+            "uuid": "7fb6ec2b-a391-4d72-afe2-16e7bbc7775c",
+            "name": "Mantle",
+            "tier": 3,
+            "item_base_id": 23,
+            "attacks": []
+        },
+        {
+            "uuid": "dee0a93f-9108-489e-9c4c-3401372f62b7",
+            "name": "Cape",
+            "tier": 4,
+            "item_base_id": 23,
+            "attacks": []
+        },
+        {
+            "uuid": "843f40e1-5d3a-48de-bb36-922ccea9196d",
+            "name": "Cloak",
+            "tier": 5,
+            "item_base_id": 23,
+            "attacks": []
+        },
+        {
+            "uuid": "66e1ed6a-be81-4b62-8350-3e0705fc3af3",
+            "name": "Magus Cloak",
+            "tier": 6,
+            "item_base_id": 23,
+            "attacks": []
+        },
+        {
+            "uuid": "48ace603-c075-43c5-9512-cf0e6d77f70e",
+            "name": "Slippers",
+            "tier": 1,
+            "item_base_id": 26,
+            "attacks": []
+        },
+        {
+            "uuid": "f8aef95f-e704-47da-8f72-ed26e8f77206",
+            "name": "Clogs",
+            "tier": 2,
+            "item_base_id": 26,
+            "attacks": []
+        },
+        {
+            "uuid": "82f7a239-00fc-4b06-95df-450f5b0fcc74",
+            "name": "Pantofles",
+            "tier": 3,
+            "item_base_id": 26,
+            "attacks": []
+        },
+        {
+            "uuid": "4307219d-83e5-4b79-9f37-4910312d8ad2",
+            "name": "Skullcap",
+            "tier": 1,
+            "item_base_id": 18,
+            "attacks": []
+        },
+        {
+            "uuid": "9a5f7a82-2229-4b7a-bd42-fa01c1f96dfa",
+            "name": "Kettle Hat",
+            "tier": 2,
+            "item_base_id": 18,
+            "attacks": []
+        },
+        {
+            "uuid": "88f6034d-4c04-454b-a0ad-387179b0562f",
+            "name": "Helm",
+            "tier": 3,
+            "item_base_id": 18,
+            "attacks": []
+        },
+        {
+            "uuid": "06fe4772-095d-4a7f-b0ba-10c4c9d2b8d1",
+            "name": "Bascinet",
+            "tier": 4,
+            "item_base_id": 18,
+            "attacks": []
+        },
+        {
+            "uuid": "d1214d80-8e50-4bf8-9d1e-464b90917bdd",
+            "name": "Armet",
+            "tier": 5,
+            "item_base_id": 18,
+            "attacks": []
+        },
+        {
+            "uuid": "770fcf0c-1556-4508-9d4b-50deec6e84ad",
+            "name": "Sallet",
+            "tier": 6,
+            "item_base_id": 18,
+            "attacks": []
+        },
+        {
+            "uuid": "cf57d7c2-97f0-491a-84ad-d996e1114650",
+            "name": "Light Boots",
+            "tier": 1,
+            "item_base_id": 27,
+            "attacks": []
+        },
+        {
+            "uuid": "a0607477-a8be-47e8-b3b4-c378b326db9a",
+            "name": "Heavy Boots",
+            "tier": 2,
+            "item_base_id": 27,
+            "attacks": []
+        },
+        {
+            "uuid": "f81dee04-fdb3-477e-a9ef-c404987e564a",
+            "name": "Combat Boots",
+            "tier": 3,
+            "item_base_id": 27,
+            "attacks": []
+        },
+        {
+            "uuid": "1d80d87e-c4d1-4d59-9cb7-c62454e7ed28",
+            "name": "Spartan Sandals",
+            "tier": 4,
+            "item_base_id": 27,
+            "attacks": []
+        },
+        {
+            "uuid": "7867809b-a48c-4d0d-a212-f1ba1885b4ad",
+            "name": "Light Gloves",
+            "tier": 1,
+            "item_base_id": 24,
+            "attacks": []
+        },
+        {
+            "uuid": "9b16c9b8-e262-437b-9692-7afd932f5052",
+            "name": "Heavy Gloves",
+            "tier": 3,
+            "item_base_id": 24,
+            "attacks": []
+        },
+        {
+            "uuid": "258dce2a-3707-4cf2-9f49-ea3e19fbf528",
+            "name": "Wizard Hands",
+            "tier": 5,
+            "item_base_id": 24,
+            "attacks": []
+        },
+        {
+            "uuid": "2d8f4420-489a-4672-b3fc-7c1420f245ee",
+            "name": "Sorcerer Palms",
+            "tier": 6,
+            "item_base_id": 24,
+            "attacks": []
+        },
+        {
+            "uuid": "cfdb2541-30fc-41d4-87fe-b8d68242b30a",
+            "name": "Light Cuirass",
+            "tier": 1,
+            "item_base_id": 21,
+            "attacks": []
+        },
+        {
+            "uuid": "69f05a89-b91b-4f6a-bfae-eecaa661a37e",
+            "name": "Plackart",
+            "tier": 2,
+            "item_base_id": 21,
+            "attacks": []
+        },
+        {
+            "uuid": "08ef50fc-f019-4566-9519-d2dd03f6b029",
+            "name": "Heavy Cuirass",
+            "tier": 3,
+            "item_base_id": 21,
+            "attacks": []
+        },
+        {
+            "uuid": "a2537d3d-7358-4bfe-85ca-9715b3c17fab",
+            "name": "Heavy Plackart",
+            "tier": 4,
+            "item_base_id": 21,
+            "attacks": []
+        },
+        {
+            "uuid": "d4cec9cb-0318-4879-9f06-7104c5ddafee",
+            "name": "Hauberk",
+            "tier": 5,
+            "item_base_id": 21,
+            "attacks": []
+        },
+        {
+            "uuid": "2fd2d495-4327-479f-b0db-5e1ea0fd01ff",
+            "name": "Ranger's Suit",
+            "tier": 6,
+            "item_base_id": 21,
+            "attacks": []
+        },
+        {
+            "uuid": "8519e566-b9f1-41b4-b287-cac2260df20c",
+            "name": "Light Gauntlets",
+            "tier": 1,
+            "item_base_id": 25,
+            "attacks": []
+        },
+        {
+            "uuid": "f8150d4c-47ce-4836-a0b1-7c884837a834",
+            "name": "Heavy Gauntlets",
+            "tier": 4,
+            "item_base_id": 25,
+            "attacks": []
+        },
+        {
+            "uuid": "3870e285-4594-41bd-9fbf-b35c5ba17225",
+            "name": "Battle Gauntlets",
+            "tier": 5,
+            "item_base_id": 25,
+            "attacks": []
+        },
+        {
+            "uuid": "2cf22cfc-23ea-483f-a835-39a855e7ecad",
+            "name": "War Gauntlets",
+            "tier": 6,
+            "item_base_id": 25,
+            "attacks": []
+        },
+        {
+            "uuid": "bd070a10-0ab6-47e1-9b8c-c33422f80ec4",
+            "name": "Breastplate",
+            "tier": 1,
+            "item_base_id": 20,
+            "attacks": []
+        },
+        {
+            "uuid": "cfb22c49-dba4-416e-8c2e-f73ae1999732",
+            "name": "Chainmail",
+            "tier": 2,
+            "item_base_id": 20,
+            "attacks": []
+        },
+        {
+            "uuid": "e35dd7c5-1325-4a1b-ab35-d5093c7fa564",
+            "name": "Scalemail",
+            "tier": 3,
+            "item_base_id": 20,
+            "attacks": []
+        },
+        {
+            "uuid": "5c3f98db-045e-4790-92da-87d874261970",
+            "name": "Platemail",
+            "tier": 4,
+            "item_base_id": 20,
+            "attacks": []
+        },
+        {
+            "uuid": "3b550da6-b1ef-468a-9bd3-eef6a2500d8b",
+            "name": "Heavy Hauberk",
+            "tier": 5,
+            "item_base_id": 20,
+            "attacks": []
+        },
+        {
+            "uuid": "5c2e51b1-ded2-4752-ba48-c936d6b369e7",
+            "name": "Phalanx Suit",
+            "tier": 6,
+            "item_base_id": 20,
+            "attacks": []
+        },
+        {
+            "uuid": "cbb60e35-64fd-4eab-bcd6-a17bf52e4e63",
+            "name": "Light Belt",
+            "tier": 1,
+            "item_base_id": 28,
+            "attacks": []
+        },
+        {
+            "uuid": "9277dbb2-938b-43c8-9873-160a6f84c880",
+            "name": "Heavy Belt",
+            "tier": 2,
+            "item_base_id": 28,
+            "attacks": []
+        },
+        {
+            "uuid": "b668bd2f-872f-4fd1-b12d-3c6820bffe2d",
+            "name": "Captain's Belt",
+            "tier": 5,
+            "item_base_id": 28,
+            "attacks": []
+        },
+        {
+            "uuid": "fa79b27a-ee24-4313-9eb0-df4e561bd97f",
+            "name": "Giant's Belt",
+            "tier": 6,
+            "item_base_id": 28,
+            "attacks": []
+        },
+        {
+            "uuid": "d85cdb21-cf98-4dbf-b795-d9740b058796",
+            "name": "Greaves",
+            "tier": 1,
+            "item_base_id": 22,
+            "attacks": []
+        },
+        {
+            "uuid": "3ded3c0b-eb14-4a3e-92c5-6d4d54edd084",
+            "name": "Tassets",
+            "tier": 2,
+            "item_base_id": 22,
+            "attacks": []
+        },
+        {
+            "uuid": "f4d56769-6e7c-4e4e-a31d-cad811872fc1",
+            "name": "Cuisses",
+            "tier": 3,
+            "item_base_id": 22,
+            "attacks": []
+        },
+        {
+            "uuid": "8e0a4710-0308-4660-9a1c-8227f0f0ab57",
+            "name": "Chausses",
+            "tier": 4,
+            "item_base_id": 22,
+            "attacks": []
+        },
+        {
+            "uuid": "37cefed8-6bb5-4222-a0e6-b8ba5ca80123",
+            "name": "Pupil's Sash",
+            "tier": 1,
+            "item_base_id": 29,
+            "attacks": []
+        },
+        {
+            "uuid": "e45b6c21-79dc-4534-b0c3-88b7b9128032",
+            "name": "Apprentice's Sash",
+            "tier": 2,
+            "item_base_id": 29,
+            "attacks": []
+        },
+        {
+            "uuid": "c493754b-fe24-443b-b161-970681f69106",
+            "name": "Scholar's Sash",
+            "tier": 3,
+            "item_base_id": 29,
+            "attacks": []
+        },
+        {
+            "uuid": "8a8bfe47-7ea8-4114-986a-e429a197df2c",
+            "name": "Veteran's Sash",
+            "tier": 4,
+            "item_base_id": 29,
+            "attacks": []
+        },
+        {
+            "uuid": "3cba87b5-272d-4716-9c60-451ea12d3270",
+            "name": "Master's Sash",
+            "tier": 5,
+            "item_base_id": 29,
+            "attacks": []
+        },
+        {
+            "uuid": "a05904ee-29a5-47b2-971e-f494f3d6669b",
+            "name": "Magus Sash",
+            "tier": 6,
+            "item_base_id": 29,
+            "attacks": []
+        },
+        {
+            "uuid": "89efd542-6c68-4efa-82b4-ed097b77ae48",
+            "name": "Band",
+            "tier": 1,
+            "item_base_id": 32,
+            "attacks": []
+        },
+        {
+            "uuid": "2c8e948b-72de-49a8-ac23-c4a14b8b5f33",
+            "name": "Ring",
+            "tier": 2,
+            "item_base_id": 32,
+            "attacks": []
+        },
+        {
+            "uuid": "9760a75b-2a95-4e85-9fc6-d38538700695",
+            "name": "Heavy Band",
+            "tier": 3,
+            "item_base_id": 32,
+            "attacks": []
+        },
+        {
+            "uuid": "81ff7d90-7179-43f4-b9c7-f6283cedf648",
+            "name": "Signet",
+            "tier": 4,
+            "item_base_id": 32,
+            "attacks": []
+        },
+        {
+            "uuid": "92d39520-9280-469b-a774-59e2136fe06a",
+            "name": "Royal Signet",
+            "tier": 5,
+            "item_base_id": 32,
+            "attacks": []
+        },
+        {
+            "uuid": "a4a74687-41d1-49b9-877f-a6a06c7bd582",
+            "name": "Shackle",
+            "tier": 1,
+            "item_base_id": 31,
+            "attacks": []
+        },
+        {
+            "uuid": "2a9b1236-78bf-4efb-bb80-1f263cf33624",
+            "name": "Bracelet",
+            "tier": 2,
+            "item_base_id": 31,
+            "attacks": []
+        },
+        {
+            "uuid": "128e7c6a-61a9-44fb-88c1-0b124b7aed26",
+            "name": "Arm Band",
+            "tier": 3,
+            "item_base_id": 31,
+            "attacks": []
+        },
+        {
+            "uuid": "c5e7f88a-a70b-4c50-8b52-877c946670f0",
+            "name": "Bangle",
+            "tier": 4,
+            "item_base_id": 31,
+            "attacks": []
+        },
+        {
+            "uuid": "7121ea63-1a6e-49bd-bdda-f226a4bb7163",
+            "name": "Armlet",
+            "tier": 5,
+            "item_base_id": 31,
+            "attacks": []
+        },
+        {
+            "uuid": "05035c3a-015b-4aa0-b3fe-d4ed29f59539",
+            "name": "Beads",
+            "tier": 1,
+            "item_base_id": 30,
+            "attacks": []
+        },
+        {
+            "uuid": "5128ad97-6e3f-4ae7-bb55-ecd88bae68e3",
+            "name": "Necklace",
+            "tier": 2,
+            "item_base_id": 30,
+            "attacks": []
+        },
+        {
+            "uuid": "c45475c7-3085-4e79-8a7d-3b6353f64d49",
+            "name": "Locket",
+            "tier": 3,
+            "item_base_id": 30,
+            "attacks": []
+        },
+        {
+            "uuid": "994380e6-7fd5-41b6-9c59-b2617e239122",
+            "name": "Pendant",
+            "tier": 4,
+            "item_base_id": 30,
+            "attacks": []
+        },
+        {
+            "uuid": "5d296081-5fce-4a58-a1d5-9876521865fa",
+            "name": "Amulet",
+            "tier": 5,
+            "item_base_id": 30,
+            "attacks": []
+        },
+        {
+            "uuid": "a9c1858c-7257-4940-956e-f3027a45a8f3",
+            "name": "Headband",
+            "tier": 1,
+            "item_base_id": 33,
+            "attacks": []
+        },
+        {
+            "uuid": "c25f19ce-e357-4b0d-b547-9b9fc45c6f36",
+            "name": "Circlet",
+            "tier": 2,
+            "item_base_id": 33,
+            "attacks": []
+        },
+        {
+            "uuid": "b7a1fea6-835e-47dd-be90-68d3fffc7fab",
+            "name": "Chaplet",
+            "tier": 3,
+            "item_base_id": 33,
+            "attacks": []
+        },
+        {
+            "uuid": "e92126fb-1719-41da-82b6-51e37fbff39e",
+            "name": "Coronet",
+            "tier": 4,
+            "item_base_id": 33,
+            "attacks": []
+        },
+        {
+            "uuid": "55b85c8b-3b23-437d-bc70-42fc90fd7e80",
+            "name": "Queen's Crown",
+            "tier": 5,
+            "item_base_id": 33,
+            "attacks": []
+        },
+        {
+            "uuid": "112b1573-3b9b-4903-8b73-13b5c6023980",
+            "name": "King's Crown",
+            "tier": 6,
+            "item_base_id": 33,
+            "attacks": []
+        }
+    ]
+}

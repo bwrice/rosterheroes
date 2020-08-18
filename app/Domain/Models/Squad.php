@@ -45,7 +45,6 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $experience
  * @property int $gold
  * @property int $favor
- * @property int $hero_posts
  * @property int $damage_dealt
  * @property int $minion_damage_dealt
  * @property int $titan_damage_dealt

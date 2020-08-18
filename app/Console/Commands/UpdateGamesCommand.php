@@ -51,13 +51,14 @@ class UpdateGamesCommand extends Command
      */
     protected function dispatchJobs()
     {
-        $count = 0;
+        $now = now();
         // convert positive years-ago to negative
         $yearDelta = - (int) $this->argument('yearsAgo');
-        $this->getLeagues()->each(function (League $league) use (&$count, $yearDelta) {
+        $this->getLeagues()->each(function (League $league) use (&$count, $yearDelta, $now) {
 
-            UpdateGamesJob::dispatch($league, $yearDelta)->onQueue('stats-integration')->delay($count * 5);
-            $count++;
+            UpdateGamesJob::dispatch($league, $yearDelta, true)->onQueue('stats-integration')->delay($now->clone()->addSeconds($count * 30));
+            UpdateGamesJob::dispatch($league, $yearDelta, false)->onQueue('stats-integration')->delay($now->clone()->addSeconds(($count * 30) + 15));
+            $count += 2;
         });
 
         return $count;
@@ -73,6 +74,6 @@ class UpdateGamesCommand extends Command
             return League::abbreviation($leagueAbbreviations)->get();
 
         }
-        return League::live();
+        return League::all();
     }
 }

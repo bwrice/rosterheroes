@@ -1,0 +1,1175 @@
+{
+    "last_updated": 1594407483,
+    "data": [
+        {
+            "uuid": "990706e1-27a3-4199-836b-1e9710d27cca",
+            "name": "Slash",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 1,
+            "targets_count": 1
+        },
+        {
+            "uuid": "7bd31ef6-5855-4f78-a9f7-79bcfcfc55a2",
+            "name": "Double Slash",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 1,
+            "targets_count": 2
+        },
+        {
+            "uuid": "71c0a6f9-7021-4c0f-b5aa-6720f5aa3cbd",
+            "name": "Triple Slash",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 1,
+            "targets_count": 3
+        },
+        {
+            "uuid": "32f1cc6b-bbdb-491b-a3f8-c9cc2e69dbe2",
+            "name": "Pierce",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 1,
+            "targets_count": 1
+        },
+        {
+            "uuid": "50db70a7-6d2d-4186-ae5c-129486366c96",
+            "name": "Double Pierce",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 1,
+            "targets_count": 2
+        },
+        {
+            "uuid": "9bde94ff-fd1f-4919-ba35-87b808f5baeb",
+            "name": "Triple Pierce",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 1,
+            "targets_count": 3
+        },
+        {
+            "uuid": "b12842c8-702b-4059-a3e9-1edcaf03dee6",
+            "name": "Whack",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 1,
+            "targets_count": 1
+        },
+        {
+            "uuid": "8271b8cf-e2f6-4676-a26b-f3bf5737208e",
+            "name": "Double Whack",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 1,
+            "targets_count": 2
+        },
+        {
+            "uuid": "e3711cee-7543-419d-b1c1-b9ef0008d27f",
+            "name": "Triple Whack",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 1,
+            "targets_count": 3
+        },
+        {
+            "uuid": "5bcee573-7a5f-4279-a429-330a904b07ae",
+            "name": "Arrow Release",
+            "attacker_position_id": 3,
+            "target_position_id": 2,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 1,
+            "targets_count": 1
+        },
+        {
+            "uuid": "09ac698f-3a50-4f12-9b4b-41e665cb521e",
+            "name": "Double Arrow Release",
+            "attacker_position_id": 3,
+            "target_position_id": 2,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 1,
+            "targets_count": 2
+        },
+        {
+            "uuid": "9422dae3-5b6b-4140-96b7-e4f8a1df2144",
+            "name": "Triple Arrow Release",
+            "attacker_position_id": 3,
+            "target_position_id": 2,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 1,
+            "targets_count": 3
+        },
+        {
+            "uuid": "8e617785-8bb7-41ce-adde-6cc489e0d210",
+            "name": "Bolt Release",
+            "attacker_position_id": 3,
+            "target_position_id": 2,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 1,
+            "targets_count": 1
+        },
+        {
+            "uuid": "4b7ceb50-b612-4522-a1bc-1ef82202d982",
+            "name": "Double Bolt Release",
+            "attacker_position_id": 3,
+            "target_position_id": 2,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 1,
+            "targets_count": 2
+        },
+        {
+            "uuid": "e2b30075-2a21-40d4-add2-5462e54bef6c",
+            "name": "Triple Bolt Release",
+            "attacker_position_id": 3,
+            "target_position_id": 2,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 1,
+            "targets_count": 3
+        },
+        {
+            "uuid": "6b247145-4892-4ce6-bd41-d595bd6e4722",
+            "name": "Magic Dart",
+            "attacker_position_id": 2,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 1,
+            "targets_count": 1
+        },
+        {
+            "uuid": "5f2ee6f3-b30c-4e70-bb50-9eae54e078a0",
+            "name": "Double Magic Dart",
+            "attacker_position_id": 2,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 1,
+            "targets_count": 2
+        },
+        {
+            "uuid": "4d358446-4a33-4836-88df-29b3803c567b",
+            "name": "Triple Magic Dart",
+            "attacker_position_id": 2,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 1,
+            "targets_count": 3
+        },
+        {
+            "uuid": "be3b5218-52f1-49f6-84b5-54b2794b3520",
+            "name": "Chuck",
+            "attacker_position_id": 2,
+            "target_position_id": 2,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 1,
+            "targets_count": 1
+        },
+        {
+            "uuid": "944b8a21-b709-42c4-83c6-962da3c7cd1f",
+            "name": "Double Chuck",
+            "attacker_position_id": 2,
+            "target_position_id": 2,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 1,
+            "targets_count": 2
+        },
+        {
+            "uuid": "a7f7026b-3e83-4d19-91a6-49e2c64e1cca",
+            "name": "Triple Chuck",
+            "attacker_position_id": 2,
+            "target_position_id": 2,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 1,
+            "targets_count": 3
+        },
+        {
+            "uuid": "c6c67c9a-1fa8-468e-9d86-d49c48c81490",
+            "name": "Singe",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 1,
+            "targets_count": 1
+        },
+        {
+            "uuid": "b12eec27-9f0c-4223-bec8-d47892df019b",
+            "name": "Double Singe",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 1,
+            "targets_count": 3
+        },
+        {
+            "uuid": "87644a5c-5cdc-4119-b27d-fa0fa09b9fd3",
+            "name": "Triple Singe",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 1,
+            "targets_count": 2
+        },
+        {
+            "uuid": "9e1ce40d-87cb-4d9e-b4dd-afb88ea53ad0",
+            "name": "Stab",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 2,
+            "targets_count": 1
+        },
+        {
+            "uuid": "f011241a-5841-4a1e-9e43-b6ccfff07231",
+            "name": "Double Stab",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 2,
+            "targets_count": 2
+        },
+        {
+            "uuid": "f100fe8e-1e1e-4895-b058-6948ab96eee2",
+            "name": "Triple Stab",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 2,
+            "targets_count": 3
+        },
+        {
+            "uuid": "abc3f72f-5fd1-45ef-bf35-29bbd575fd19",
+            "name": "Slice",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 2,
+            "targets_count": 1
+        },
+        {
+            "uuid": "6c13e43d-522c-4b1f-aac3-6f2f953276b9",
+            "name": "Double Slice",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 2,
+            "targets_count": 2
+        },
+        {
+            "uuid": "eb9afa58-7108-49a6-9e46-864b37b09d90",
+            "name": "Triple Slice",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 2,
+            "targets_count": 3
+        },
+        {
+            "uuid": "c152b9e6-f500-46d0-81f0-f68e030f19bf",
+            "name": "Smash",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 2,
+            "targets_count": 1
+        },
+        {
+            "uuid": "4ae9e265-be50-443f-a30d-1b8659ea4aed",
+            "name": "Double Smash",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 2,
+            "targets_count": 2
+        },
+        {
+            "uuid": "f562ebf9-0d18-416b-b95b-80d753b66732",
+            "name": "Triple Smash",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 2,
+            "targets_count": 3
+        },
+        {
+            "uuid": "cc4e9b8a-6ab2-460e-a6fb-f24b69fee842",
+            "name": "Arrow Shot",
+            "attacker_position_id": 3,
+            "target_position_id": 2,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 2,
+            "targets_count": 1
+        },
+        {
+            "uuid": "dde52822-11e0-4eed-ace7-c57153a2c469",
+            "name": "Double Arrow Shot",
+            "attacker_position_id": 3,
+            "target_position_id": 2,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 2,
+            "targets_count": 2
+        },
+        {
+            "uuid": "66bff351-52ec-49cc-8707-e09bb543b83c",
+            "name": "Triple Arrow Shot",
+            "attacker_position_id": 3,
+            "target_position_id": 2,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 2,
+            "targets_count": 3
+        },
+        {
+            "uuid": "7ed84be6-7831-4027-8ca4-6abc2121b9e3",
+            "name": "Bolt Shot",
+            "attacker_position_id": 3,
+            "target_position_id": 2,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 2,
+            "targets_count": 1
+        },
+        {
+            "uuid": "82c94812-a82d-45ff-a107-9e1e167e187f",
+            "name": "Double Bolt Shot",
+            "attacker_position_id": 3,
+            "target_position_id": 2,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 2,
+            "targets_count": 2
+        },
+        {
+            "uuid": "0a88d73b-5f27-4266-9e9f-32e1111d55fe",
+            "name": "Triple Bolt Shot",
+            "attacker_position_id": 3,
+            "target_position_id": 2,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 2,
+            "targets_count": 3
+        },
+        {
+            "uuid": "bdf08ebf-ae5f-4b10-8cbb-b763ce112458",
+            "name": "Magic Bullet",
+            "attacker_position_id": 2,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 2,
+            "targets_count": 1
+        },
+        {
+            "uuid": "77385463-7a51-4fe9-abe8-b7e09f302347",
+            "name": "Double Magic Bullet",
+            "attacker_position_id": 2,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 2,
+            "targets_count": 2
+        },
+        {
+            "uuid": "4b574453-56cd-472a-a80f-14e237479175",
+            "name": "Triple Magic Bullet",
+            "attacker_position_id": 2,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 2,
+            "targets_count": 3
+        },
+        {
+            "uuid": "6d567772-9992-4004-8b4a-2560b1df674f",
+            "name": "Hurl",
+            "attacker_position_id": 2,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 2,
+            "targets_count": 1
+        },
+        {
+            "uuid": "d7d2a081-1578-447a-9200-f47f9842e183",
+            "name": "Double Hurl",
+            "attacker_position_id": 2,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 2,
+            "targets_count": 2
+        },
+        {
+            "uuid": "f66926d4-3888-48f4-a981-59bee54870aa",
+            "name": "Triple Hurl",
+            "attacker_position_id": 2,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 2,
+            "targets_count": 3
+        },
+        {
+            "uuid": "5147106e-8774-4164-9a38-873681c35493",
+            "name": "Sear",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 2,
+            "targets_count": 1
+        },
+        {
+            "uuid": "95da6b3c-d1b1-4743-9d53-32d63c733548",
+            "name": "Double Sear",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 2,
+            "targets_count": 2
+        },
+        {
+            "uuid": "08a8086b-a8d4-4e27-abb1-332db2e5baaa",
+            "name": "Triple Sear",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 2,
+            "targets_count": 3
+        },
+        {
+            "uuid": "7280cc2d-5853-4c54-8708-aa813ad082f0",
+            "name": "Impale",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 3,
+            "targets_count": 1
+        },
+        {
+            "uuid": "109b41e0-5274-40d4-919d-628f2936d4ba",
+            "name": "Double Impale",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 3,
+            "targets_count": 2
+        },
+        {
+            "uuid": "ce0a1933-3fcb-4e3e-aea6-0675d05066eb",
+            "name": "Triple Impale",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 3,
+            "targets_count": 3
+        },
+        {
+            "uuid": "c788fb6e-74aa-4528-bea3-e36b7995e776",
+            "name": "Cleave",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 3,
+            "targets_count": 1
+        },
+        {
+            "uuid": "8c941260-0f5c-48f2-af0b-2ef1e2a62bdc",
+            "name": "Double Cleave",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 3,
+            "targets_count": 2
+        },
+        {
+            "uuid": "2d674a28-5873-43d3-8673-7e9d67c9d250",
+            "name": "Triple Cleave",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 3,
+            "targets_count": 3
+        },
+        {
+            "uuid": "2fe460b2-0dd3-4a0c-b133-ed51c6759407",
+            "name": "Clobber",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 3,
+            "targets_count": 1
+        },
+        {
+            "uuid": "e8f156c3-a994-4653-b88e-a1f58fdceee7",
+            "name": "Double Clobber",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 3,
+            "targets_count": 2
+        },
+        {
+            "uuid": "90bbeb5e-5289-46c9-8433-f93aa4fab8cc",
+            "name": "Triple Clobber",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 3,
+            "targets_count": 3
+        },
+        {
+            "uuid": "92c794a3-bdb0-4a6a-9164-2f80f4ab2398",
+            "name": "Arrow Missile",
+            "attacker_position_id": 3,
+            "target_position_id": 2,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 3,
+            "targets_count": 1
+        },
+        {
+            "uuid": "b14257f9-8a3b-4386-833b-70a642240ec8",
+            "name": "Double Arrow Missile",
+            "attacker_position_id": 3,
+            "target_position_id": 2,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 3,
+            "targets_count": 2
+        },
+        {
+            "uuid": "bfa6cfff-3180-4e1f-8568-dd8dcb7f59f6",
+            "name": "Triple Arrow Missile",
+            "attacker_position_id": 3,
+            "target_position_id": 2,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 3,
+            "targets_count": 3
+        },
+        {
+            "uuid": "ec479f52-e7d1-486e-bcd3-c5ed41d28222",
+            "name": "Bolt Missile",
+            "attacker_position_id": 3,
+            "target_position_id": 2,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 3,
+            "targets_count": 1
+        },
+        {
+            "uuid": "25afc099-dc9b-4a0f-a6e4-9c345d786f25",
+            "name": "Double Bolt Missile",
+            "attacker_position_id": 3,
+            "target_position_id": 2,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 3,
+            "targets_count": 2
+        },
+        {
+            "uuid": "399df768-3eed-4419-a678-e1d99af97b2d",
+            "name": "Triple Bolt Missile",
+            "attacker_position_id": 3,
+            "target_position_id": 2,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 3,
+            "targets_count": 3
+        },
+        {
+            "uuid": "1a4680e0-aeac-4fc7-a913-7ec480bbf9b5",
+            "name": "Magic Torpedo",
+            "attacker_position_id": 2,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 3,
+            "targets_count": 1
+        },
+        {
+            "uuid": "4863a834-e38d-404e-a3ad-e1fea0f018d8",
+            "name": "Double Magic Torpedo",
+            "attacker_position_id": 2,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 3,
+            "targets_count": 2
+        },
+        {
+            "uuid": "cbc7e345-c718-4f1b-8353-8ca999574ba3",
+            "name": "Triple Magic Torpedo",
+            "attacker_position_id": 2,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 3,
+            "targets_count": 3
+        },
+        {
+            "uuid": "c89eaf78-97f4-4739-9466-19a64b194f57",
+            "name": "Launch",
+            "attacker_position_id": 2,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 3,
+            "targets_count": 1
+        },
+        {
+            "uuid": "f5d57f9e-d78e-454f-a351-25479d23a3a2",
+            "name": "Double Launch",
+            "attacker_position_id": 2,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 3,
+            "targets_count": 2
+        },
+        {
+            "uuid": "b522f8b4-3b32-4d87-a128-d3eb1b083b9a",
+            "name": "Triple Launch",
+            "attacker_position_id": 2,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 3,
+            "targets_count": 3
+        },
+        {
+            "uuid": "c6756b52-92be-48e8-a012-0b52e24dc8d9",
+            "name": "Scorch",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 3,
+            "targets_count": 1
+        },
+        {
+            "uuid": "f480f2b6-458e-4584-a7db-9a583ce7f510",
+            "name": "Double Scorch",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 3,
+            "targets_count": 2
+        },
+        {
+            "uuid": "884f974f-3309-4fb3-93fc-79e05f52a6c2",
+            "name": "Triple Scorch",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 3,
+            "targets_count": 3
+        },
+        {
+            "uuid": "24dc88d8-d944-4510-9619-532990a40121",
+            "name": "Blade Sweep",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 2,
+            "tier": 1,
+            "targets_count": null
+        },
+        {
+            "uuid": "e669187c-96b6-464d-ba75-17570f4d0860",
+            "name": "Mace Sweep",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 2,
+            "tier": 1,
+            "targets_count": null
+        },
+        {
+            "uuid": "4a316724-bbe1-4821-87dd-8973beb3950f",
+            "name": "Polearm Strike",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 2,
+            "tier": 1,
+            "targets_count": null
+        },
+        {
+            "uuid": "afd9b19e-58b2-4aa8-bcf2-3cffa5605e1f",
+            "name": "Arrow Spray",
+            "attacker_position_id": 3,
+            "target_position_id": 2,
+            "target_priority_id": 1,
+            "damage_type_id": 2,
+            "tier": 1,
+            "targets_count": null
+        },
+        {
+            "uuid": "4a634a66-69c2-4d5f-a441-89e01386a5ae",
+            "name": "Bolt Spray",
+            "attacker_position_id": 3,
+            "target_position_id": 2,
+            "target_priority_id": 1,
+            "damage_type_id": 2,
+            "tier": 1,
+            "targets_count": null
+        },
+        {
+            "uuid": "99e1b0ec-6c10-4940-adbe-86e2961c073d",
+            "name": "Magic Burst",
+            "attacker_position_id": 2,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 2,
+            "tier": 1,
+            "targets_count": null
+        },
+        {
+            "uuid": "7d2ca989-a619-4442-a558-1cd97569b4c9",
+            "name": "Throwing Shower",
+            "attacker_position_id": 2,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 2,
+            "tier": 1,
+            "targets_count": null
+        },
+        {
+            "uuid": "76b75ca9-fdb7-4381-88ac-47f703eee2fb",
+            "name": "Blade Whirlwind",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 2,
+            "tier": 2,
+            "targets_count": null
+        },
+        {
+            "uuid": "1d29b333-a73e-415b-8810-d8b3353a8b9d",
+            "name": "Mace Whirlwind",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 2,
+            "tier": 2,
+            "targets_count": null
+        },
+        {
+            "uuid": "db849cfd-4347-4e66-bc0b-046bb8423f81",
+            "name": "Polearm Blitz",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 2,
+            "tier": 2,
+            "targets_count": null
+        },
+        {
+            "uuid": "c48b41ef-ce00-478d-8efe-185ddd5ad07c",
+            "name": "Arrow Assault",
+            "attacker_position_id": 3,
+            "target_position_id": 2,
+            "target_priority_id": 1,
+            "damage_type_id": 2,
+            "tier": 2,
+            "targets_count": null
+        },
+        {
+            "uuid": "66a3a2fd-6001-4003-bb1e-44a943a4263b",
+            "name": "Bolt Barrage",
+            "attacker_position_id": 3,
+            "target_position_id": 2,
+            "target_priority_id": 1,
+            "damage_type_id": 2,
+            "tier": 2,
+            "targets_count": null
+        },
+        {
+            "uuid": "c0f00280-1657-4392-aecf-7a054f5e9a3d",
+            "name": "Magic Blast",
+            "attacker_position_id": 2,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 2,
+            "tier": 2,
+            "targets_count": null
+        },
+        {
+            "uuid": "38c7d0d5-a600-4c98-b68c-8cb7efdf756a",
+            "name": "Throwing Downpour",
+            "attacker_position_id": 2,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 2,
+            "tier": 2,
+            "targets_count": null
+        },
+        {
+            "uuid": "ae90c56d-566d-420c-8732-debc02c90b60",
+            "name": "Blade Tornado",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 2,
+            "tier": 3,
+            "targets_count": null
+        },
+        {
+            "uuid": "c9b841f5-7dec-4f83-a5dd-c056ebc655b4",
+            "name": "Mace Tornado",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 2,
+            "tier": 3,
+            "targets_count": null
+        },
+        {
+            "uuid": "b638acb6-d266-4704-9979-d2714a555f8d",
+            "name": "Polearm Onslaught",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 2,
+            "tier": 3,
+            "targets_count": null
+        },
+        {
+            "uuid": "babefcfb-8e78-44fa-8198-aea36c6ce718",
+            "name": "Hail of Arrows",
+            "attacker_position_id": 3,
+            "target_position_id": 2,
+            "target_priority_id": 1,
+            "damage_type_id": 2,
+            "tier": 3,
+            "targets_count": null
+        },
+        {
+            "uuid": "087c7806-c107-492f-a0bd-29fa28b04d5e",
+            "name": "Bolt Bombardment",
+            "attacker_position_id": 3,
+            "target_position_id": 2,
+            "target_priority_id": 1,
+            "damage_type_id": 2,
+            "tier": 3,
+            "targets_count": null
+        },
+        {
+            "uuid": "14e117fe-8d21-4153-98cc-1504286ad8bd",
+            "name": "Magic Storm",
+            "attacker_position_id": 2,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 2,
+            "tier": 3,
+            "targets_count": null
+        },
+        {
+            "uuid": "9061b93a-f01a-47d1-a860-311a3f0415e2",
+            "name": "Throwing Torrent",
+            "attacker_position_id": 2,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 2,
+            "tier": 3,
+            "targets_count": null
+        },
+        {
+            "uuid": "a77880e7-261e-43d3-b70e-81219dcb620e",
+            "name": "Bite",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 1,
+            "targets_count": 1
+        },
+        {
+            "uuid": "db12c3ab-12e6-46bd-b2c0-673fcce8d8a3",
+            "name": "Fanged Bite",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 2,
+            "targets_count": 1
+        },
+        {
+            "uuid": "75db93b9-a8bb-4d9d-a91f-ede615162b38",
+            "name": "Severe Bite",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 3,
+            "targets_count": 1
+        },
+        {
+            "uuid": "f7d4d34f-f09b-4222-ae9d-bfd165e1b56a",
+            "name": "Vicious Bite",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 4,
+            "targets_count": 1
+        },
+        {
+            "uuid": "df7b8005-c26f-49ec-bfee-812fa52dc4f1",
+            "name": "Vampiric Bite",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 5,
+            "targets_count": 1
+        },
+        {
+            "uuid": "8e60c33b-814f-44a7-8d0a-e06c095b28f7",
+            "name": "Lethal Bite",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 6,
+            "targets_count": 1
+        },
+        {
+            "uuid": "078c958a-d90e-477a-85bc-bfc4e4d1acb3",
+            "name": "Scratch",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 1,
+            "targets_count": 1
+        },
+        {
+            "uuid": "1165630d-1dbf-4970-8e95-7d46c038478a",
+            "name": "Double Scratch",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 1,
+            "targets_count": 2
+        },
+        {
+            "uuid": "dc1fcc09-d39a-4b40-a62f-55bf33bbd4a3",
+            "name": "Triple Scratch",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 1,
+            "targets_count": 3
+        },
+        {
+            "uuid": "74dfe082-ae95-4abc-b87e-020551e56389",
+            "name": "Claw",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 2,
+            "targets_count": 1
+        },
+        {
+            "uuid": "b3e2ad67-227a-4daf-9a2c-72c5b371d5a1",
+            "name": "Double Claw",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 2,
+            "targets_count": 2
+        },
+        {
+            "uuid": "b60281d9-e8d0-4b23-a59d-0dd41875789b",
+            "name": "Triple Claw",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 2,
+            "targets_count": 3
+        },
+        {
+            "uuid": "25ea1bfa-2de3-47ce-a53e-0b21593eee92",
+            "name": "Pounce",
+            "attacker_position_id": 1,
+            "target_position_id": 2,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 3,
+            "targets_count": 1
+        },
+        {
+            "uuid": "abf5f343-45b5-4d29-b826-1d10c8730766",
+            "name": "Double Pounce",
+            "attacker_position_id": 1,
+            "target_position_id": 2,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 3,
+            "targets_count": 2
+        },
+        {
+            "uuid": "f3831efb-5d3a-4b83-89c1-63f53988ece2",
+            "name": "Triple Pounce",
+            "attacker_position_id": 1,
+            "target_position_id": 2,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 3,
+            "targets_count": 3
+        },
+        {
+            "uuid": "3a817f2d-4835-4421-86e7-a8b70308d79d",
+            "name": "Maul",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 3,
+            "tier": 5,
+            "targets_count": null
+        },
+        {
+            "uuid": "6d0a736c-7686-460a-a077-8fac9194a45c",
+            "name": "Blood Swell",
+            "attacker_position_id": 2,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 2,
+            "tier": 4,
+            "targets_count": null
+        },
+        {
+            "uuid": "b462d9cc-006c-4bd6-bc7c-6a3b2ccd2e80",
+            "name": "Blood Boil",
+            "attacker_position_id": 2,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 2,
+            "tier": 5,
+            "targets_count": null
+        },
+        {
+            "uuid": "2ccbbc91-0a77-445c-907d-02a2521a6b8b",
+            "name": "Blood Conflagrate",
+            "attacker_position_id": 2,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 2,
+            "tier": 6,
+            "targets_count": null
+        },
+        {
+            "uuid": "20524eed-8fea-4848-8436-563f34394cb5",
+            "name": "Bash",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 1,
+            "targets_count": 1
+        },
+        {
+            "uuid": "9ad6abf3-6221-4029-8db5-f3992faadd6a",
+            "name": "Crush",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 2,
+            "targets_count": 1
+        },
+        {
+            "uuid": "6d8d58dd-871e-46c9-9c57-8151f96a048d",
+            "name": "Ground Stomp",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 2,
+            "tier": 2,
+            "targets_count": null
+        },
+        {
+            "uuid": "985a422d-62b7-4834-ae6e-1c56deca2e7c",
+            "name": "Pummel",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 1,
+            "tier": 3,
+            "targets_count": 1
+        },
+        {
+            "uuid": "7b7fc4c9-6977-46a7-9961-633f8daca73b",
+            "name": "Ground Slam",
+            "attacker_position_id": 1,
+            "target_position_id": 1,
+            "target_priority_id": 1,
+            "damage_type_id": 2,
+            "tier": 3,
+            "targets_count": null
+        }
+    ]
+}

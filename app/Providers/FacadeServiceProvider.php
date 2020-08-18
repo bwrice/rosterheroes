@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Services\Admin;
+use App\Services\ContentService;
 use App\Services\CurrentWeek;
 use App\Services\ModelServices\AttackService;
 use App\Services\ModelServices\HeroService;
@@ -36,6 +37,9 @@ class FacadeServiceProvider extends ServiceProvider
         });
         $this->app->bind('admin', function () {
             return new Admin();
+        });
+        $this->app->bind('content', function () {
+            return new ContentService();
         });
     }
 
