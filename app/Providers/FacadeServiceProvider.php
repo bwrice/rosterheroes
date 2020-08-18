@@ -8,6 +8,7 @@ use App\Services\ModelServices\AttackService;
 use App\Services\ModelServices\HeroService;
 use App\Services\ModelServices\SquadService;
 use App\Services\ModelServices\WeekService;
+use App\Services\NPCService;
 use Illuminate\Support\ServiceProvider;
 
 class FacadeServiceProvider extends ServiceProvider
@@ -36,6 +37,9 @@ class FacadeServiceProvider extends ServiceProvider
         });
         $this->app->bind('admin', function () {
             return new Admin();
+        });
+        $this->app->bind('npc', function () {
+            return new NPCService();
         });
     }
 
