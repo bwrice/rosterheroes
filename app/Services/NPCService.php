@@ -4,21 +4,30 @@
 namespace App\Services;
 
 
+use App\Domain\Models\User;
+
 class NPCService
 {
-    public function squadNames()
+    public function squadName()
     {
-        $squadArrays = collect(config($this->getBaseConfigKey() . '.squads'));
+        $squads = $this->getSquads()->random();
+        return $squads['name'];
+    }
+
+    public function user()
+    {
+        return User::query()->where('email', '=', config('npc.user.email'))->firstOrFail();
     }
 
     protected function getBaseConfigKey()
     {
-        if (app()->environment('production')) {
-            return 'npc.production';
-        } elseif (app()->environment('beta')) {
-            return 'npc.local';
-        }
-        return 'npc.development';
+        return 'npc.' . app()->environment();
+    }
+
+    protected function getSquads()
+    {
+        $key = $this->getBaseConfigKey() . '.squads';
+        return collect(config($key));
     }
 
 
