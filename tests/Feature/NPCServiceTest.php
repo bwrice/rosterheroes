@@ -4,6 +4,8 @@ namespace Tests\Feature;
 
 use App\Domain\Models\User;
 use App\Facades\NPC;
+use App\Factories\Models\HeroFactory;
+use App\Factories\Models\SquadFactory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -60,6 +62,107 @@ class NPCServiceTest extends TestCase
                 'diffEnv' => 'beta'
             ]
         ];
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_return_a_hero_name_associated_to_the_squad_based_on_the_config()
+    {
+        $squad = SquadFactory::new()->create();
+        $expectedHeroNames = [
+            Str::random(),
+            Str::random(),
+            Str::random(),
+            Str::random(),
+        ];
+
+        Config::set('npc.testing.squads', [
+            [
+                'name' => Str::random(),
+                'heroes' => [
+                    Str::random(),
+                    Str::random(),
+                    Str::random(),
+                    Str::random()
+                ]
+            ],
+            [
+                'name' => $squad->name,
+                'heroes' => $expectedHeroNames
+            ],
+            [
+                'name' => Str::random(),
+                'heroes' => [
+                    Str::random(),
+                    Str::random(),
+                    Str::random(),
+                    Str::random()
+                ]
+            ],
+            [
+                'name' => Str::random(),
+                'heroes' => [
+                    Str::random(),
+                    Str::random(),
+                    Str::random(),
+                    Str::random()
+                ]
+            ],
+        ]);
+
+        $heroName = NPC::heroName($squad);
+        $this->assertTrue(in_array($heroName, $expectedHeroNames));
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_return_a_hero_name_not_already_used()
+    {
+
+        $squad = SquadFactory::new()->create();
+        $heroFactory = HeroFactory::new()->forSquad($squad);
+        $heroNames = [
+            $heroFactory->create()->name,
+            $expectedName = Str::random(),
+            $heroFactory->create()->name,
+            $heroFactory->create()->name
+        ];
+
+        Config::set('npc.testing.squads', [
+            [
+                'name' => $squad->name,
+                'heroes' => $heroNames
+            ],
+        ]);
+
+        $heroName = NPC::heroName($squad);
+        $this->assertEquals($expectedName, $heroName);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_add_character_if_no_available_hero_names()
+    {
+        $squad = SquadFactory::new()->create();
+        $hero = HeroFactory::new()->forSquad($squad)->create([
+            'name' => Str::random(15)
+        ]);
+        $heroNames = [
+            $alreadyUsedName = $hero->name,
+        ];
+
+        Config::set('npc.testing.squads', [
+            [
+                'name' => $squad->name,
+                'heroes' => $heroNames
+            ],
+        ]);
+
+        $heroName = NPC::heroName($squad);
+        $this->assertEquals($alreadyUsedName, substr($heroName, 0, -1));
     }
 
     /**
