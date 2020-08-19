@@ -7,6 +7,7 @@ namespace App\Domain\Actions\NPC;
 use App\Domain\Actions\CreateHeroAction;
 use App\Domain\Models\HeroClass;
 use App\Domain\Models\HeroRace;
+use App\Domain\Models\HeroRank;
 use App\Domain\Models\Squad;
 use App\Facades\NPC;
 
@@ -34,6 +35,8 @@ class CreateNPCHero
             throw new \Exception("NPC Squad: " . $squad->name . " cannot create hero when not in creation state", self::EXCEPTION_CODE_SQUAD_INVALID_STATE);
         }
 
-        return $this->createHeroAction->execute();
+        $heroName = NPC::heroName($squad);
+        $heroRank = HeroRank::getStarting();
+        return $this->createHeroAction->execute($heroName, $squad, $heroClass, $heroRace, $heroRank);
     }
 }

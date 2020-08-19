@@ -30,7 +30,6 @@ class NPCService
     protected function getSquads()
     {
         $key = $this->getBaseConfigKey() . '.squads';
-        $squads = config($key);
         return collect(config($key));
     }
 

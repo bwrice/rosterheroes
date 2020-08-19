@@ -11,6 +11,7 @@ use App\Factories\Models\SquadFactory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class CreateNPCHeroTest extends TestCase
@@ -61,7 +62,7 @@ class CreateNPCHeroTest extends TestCase
         $heroClass = HeroClass::query()->inRandomOrder()->first();
 
         NPC::partialMock()->shouldReceive('isNPC')->andReturn(true);
-        SquadFacade::partialMock()->shouldReceive('inCreationState')->andReturn(true);
+        SquadFacade::partialMock()->shouldReceive('inCreationState')->andReturn(false);
 
         try {
             $this->getDomainAction()->execute($squad, $heroRace, $heroClass);
@@ -70,5 +71,26 @@ class CreateNPCHeroTest extends TestCase
             return;
         }
         $this->fail("Exception not thrown");
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_create_a_hero_with_an_npc_hero_name()
+    {
+        $squad = SquadFactory::new()->create();
+        /** @var HeroRace $heroRace */
+        $heroRace = HeroRace::query()->inRandomOrder()->first();
+        /** @var HeroClass $heroClass */
+        $heroClass = HeroClass::query()->inRandomOrder()->first();
+
+        NPC::partialMock()->shouldReceive('isNPC')->andReturn(true);
+        SquadFacade::partialMock()->shouldReceive('inCreationState')->andReturn(true);
+
+        $heroName = Str::random();
+        NPC::partialMock()->shouldReceive('heroName')->andReturn($heroName);
+
+        $hero = $this->getDomainAction()->execute($squad, $heroRace, $heroClass);
+        $this->assertEquals($heroName, $hero->name);
     }
 }
