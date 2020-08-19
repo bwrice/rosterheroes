@@ -4,6 +4,7 @@
 namespace App\Services;
 
 
+use App\Domain\Models\Squad;
 use App\Domain\Models\User;
 
 class NPCService
@@ -30,5 +31,8 @@ class NPCService
         return collect(config($key));
     }
 
-
+    public function isNPC(Squad $squad)
+    {
+        return $squad->user_id === $this->user()->id;
+    }
 }
