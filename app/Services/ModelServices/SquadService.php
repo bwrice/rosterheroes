@@ -16,4 +16,9 @@ class SquadService
         });
         return ! is_null($readyHero);
     }
+
+    public function inCreationState(Squad $squad)
+    {
+        return $squad->heroes()->count() < Squad::getStartingHeroesCount();
+    }
 }

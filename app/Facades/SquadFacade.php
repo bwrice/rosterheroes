@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Facade;
  * @package App\Facades
  *
  * @method static bool combatReady(Squad $squad)
+ * @method static bool inCreationState(Squad $squad)
  *
  * @see \App\Services\ModelServices\SquadService
  */

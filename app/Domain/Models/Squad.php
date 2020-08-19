@@ -319,7 +319,7 @@ class Squad extends EventSourcedModel implements HasItems
      */
     public function inCreationState()
     {
-        return $this->heroes()->count() < self::getStartingHeroesCount();
+        return SquadFacade::inCreationState($this);
     }
 
     public function getHeroRaceAvailability()
