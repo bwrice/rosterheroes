@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Facade;
  *
  * @see \App\Services\ModelServices\SquadService
  */
-class SquadService extends Facade
+class SquadFacade extends Facade
 {
 
     protected static function getFacadeAccessor()
