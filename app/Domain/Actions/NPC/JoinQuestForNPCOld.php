@@ -11,7 +11,7 @@ use App\Domain\Models\Quest;
 use App\Domain\Models\Squad;
 use App\Facades\NPC;
 
-class JoinQuestForNPC
+class JoinQuestForNPCOld
 {
     /**
      * @var FindPathBetweenProvinces

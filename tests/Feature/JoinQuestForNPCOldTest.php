@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Domain\Actions\NPC\JoinQuestForNPC;
+use App\Domain\Actions\NPC\JoinQuestForNPCOld;
 use App\Domain\Models\CampaignStop;
 use App\Domain\Models\Continent;
 use App\Domain\Models\Province;
@@ -17,7 +17,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class JoinQuestForNPCTest extends TestCase
+class JoinQuestForNPCOldTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -45,11 +45,11 @@ class JoinQuestForNPCTest extends TestCase
     }
 
     /**
-     * @return JoinQuestForNPC
+     * @return JoinQuestForNPCOld
      */
     protected function getDomainAction()
     {
-        return app(JoinQuestForNPC::class);
+        return app(JoinQuestForNPCOld::class);
     }
 
     /**
@@ -61,7 +61,7 @@ class JoinQuestForNPCTest extends TestCase
         try {
             $this->getDomainAction()->execute($this->squad, $this->quest);
         } catch (\Exception $exception) {
-            $this->assertEquals(JoinQuestForNPC::EXCEPTION_CODE_NOT_NPC, $exception->getCode());
+            $this->assertEquals(JoinQuestForNPCOld::EXCEPTION_CODE_NOT_NPC, $exception->getCode());
             return;
         }
 
