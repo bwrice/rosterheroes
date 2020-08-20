@@ -6,6 +6,7 @@ namespace App\Domain\Actions;
 
 use App\AStar\ProvinceNode;
 use App\AStar\RealmAStarAlgorithm;
+use App\Domain\Collections\ProvinceCollection;
 use App\Domain\Models\Province;
 
 class FindPathBetweenProvinces
@@ -20,9 +21,11 @@ class FindPathBetweenProvinces
         $algorithm = new RealmAStarAlgorithm($realmNodes);
 
         $nodes = collect($algorithm->run($this->getProvinceNode($start), $this->getProvinceNode($end)));
-        return $nodes->map(function (ProvinceNode $provinceNode) use ($provinces) {
+        $provinces = $nodes->map(function (ProvinceNode $provinceNode) use ($provinces) {
             return $provinces->firstWhere('id', '=', (int) $provinceNode->getID());
         });
+
+        return new ProvinceCollection($provinces);
     }
 
     protected function getProvinceNode(Province $province)
