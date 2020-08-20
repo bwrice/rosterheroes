@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use App\Domain\Actions\NPC\MoveNPCToProvince;
-use App\Domain\Actions\NPC\NPCAction;
 use App\Domain\Models\Continent;
 use App\Domain\Models\Province;
 use App\Facades\NPC;
@@ -14,9 +13,8 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class MoveNPCToProvinceTest extends TestCase
+class MoveNPCToProvinceTest extends NPCActionTest
 {
-    use DatabaseTransactions;
 
     /**
      * @return MoveNPCToProvince
@@ -24,25 +22,6 @@ class MoveNPCToProvinceTest extends TestCase
     protected function getDomainAction()
     {
         return app(MoveNPCToProvince::class);
-    }
-
-    /**
-     * @test
-     */
-    public function it_will_throw_an_exception_if_the_moving_squad_is_not_an_npc()
-    {
-        $squad = SquadFactory::new()->create();
-        $province = Province::query()->inRandomOrder()->first();
-
-        NPC::shouldReceive('isNPC')->andReturn(false);
-
-        try {
-            $this->getDomainAction()->execute($squad, $province);
-        } catch (\Exception $exception) {
-            $this->assertEquals(NPCAction::EXCEPTION_CODE_NOT_NPC, $exception->getCode());
-            return;
-        }
-        $this->fail("Exception not thrown");
     }
 
     /**
