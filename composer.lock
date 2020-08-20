@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "072e416b14eeea8cb96554ab8bdf57b2",
+    "content-hash": "628eb45fb410771c97c3873a0ab874d0",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -1184,6 +1184,55 @@
             "description": "Highlight PHP code in terminal",
             "abandoned": "php-parallel-lint/php-console-highlighter",
             "time": "2018-09-29T18:48:56+00:00"
+        },
+        {
+            "name": "jmgq/a-star",
+            "version": "v1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jmgq/php-a-star.git",
+                "reference": "130a8422f8a4b4b65c2f8197fb9efc07ec32babf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jmgq/php-a-star/zipball/130a8422f8a4b4b65c2f8197fb9efc07ec32babf",
+                "reference": "130a8422f8a4b4b65c2f8197fb9efc07ec32babf",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "php-coveralls/php-coveralls": "^1.0",
+                "phpunit/phpunit": "^4.0",
+                "squizlabs/php_codesniffer": "^1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "JMGQ\\AStar\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jose Gonzalez",
+                    "email": "jmgq@jmgq.es",
+                    "homepage": "http://www.jmgq.es"
+                }
+            ],
+            "description": "A* (A Star) algorithm for PHP",
+            "keywords": [
+                "Algorithm",
+                "a",
+                "a star",
+                "pathfinding",
+                "search"
+            ],
+            "time": "2018-06-03T19:17:15+00:00"
         },
         {
             "name": "laravel/framework",
@@ -2667,6 +2716,7 @@
                     "email": "adam.wathan@gmail.com"
                 }
             ],
+            "abandoned": "blade-ui-kit/blade-icons",
             "time": "2020-03-03T13:55:12+00:00"
         },
         {
@@ -2984,12 +3034,12 @@
             "version": "v1.1.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/nrk/predis.git",
+                "url": "https://github.com/predis/predis.git",
                 "reference": "f0210e38881631afeafb56ab43405a92cafd9fd1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nrk/predis/zipball/f0210e38881631afeafb56ab43405a92cafd9fd1",
+                "url": "https://api.github.com/repos/predis/predis/zipball/f0210e38881631afeafb56ab43405a92cafd9fd1",
                 "reference": "f0210e38881631afeafb56ab43405a92cafd9fd1",
                 "shasum": ""
             },
