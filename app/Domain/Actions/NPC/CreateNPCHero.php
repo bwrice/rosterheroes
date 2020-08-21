@@ -11,7 +11,7 @@ use App\Domain\Models\HeroRank;
 use App\Domain\Models\Squad;
 use App\Facades\NPC;
 
-class CreateNPCHero
+class CreateNPCHero extends NPCAction
 {
     /**
      * @var CreateHeroAction
@@ -26,17 +26,21 @@ class CreateNPCHero
     public const EXCEPTION_CODE_INVALID_NPC = 1;
     public const EXCEPTION_CODE_SQUAD_INVALID_STATE = 2;
 
-    public function execute(Squad $squad, HeroRace $heroRace, HeroClass $heroClass)
+    /**
+     * @param Squad $squad
+     * @param HeroRace $heroRace
+     * @param HeroClass $heroClass
+     * @return \App\Domain\Models\Hero
+     * @throws \Exception
+     */
+    public function handleExecute(HeroRace $heroRace, HeroClass $heroClass)
     {
-        if (! NPC::isNPC($squad)) {
-            throw new \Exception($squad->name . " is not an NPC Squad", self::EXCEPTION_CODE_INVALID_NPC);
-        }
-        if (! $squad->inCreationState()) {
-            throw new \Exception("NPC Squad: " . $squad->name . " cannot create hero when not in creation state", self::EXCEPTION_CODE_SQUAD_INVALID_STATE);
+        if (! $this->npc->inCreationState()) {
+            throw new \Exception("NPC Squad: " . $this->npc->name . " cannot create hero when not in creation state", self::EXCEPTION_CODE_SQUAD_INVALID_STATE);
         }
 
-        $heroName = NPC::heroName($squad);
+        $heroName = NPC::heroName($this->npc);
         $heroRank = HeroRank::getStarting();
-        return $this->createHeroAction->execute($heroName, $squad, $heroClass, $heroRace, $heroRank);
+        return $this->createHeroAction->execute($heroName, $this->npc, $heroClass, $heroRace, $heroRank);
     }
 }

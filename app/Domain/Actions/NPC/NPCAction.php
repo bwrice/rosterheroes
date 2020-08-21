@@ -17,6 +17,7 @@ abstract class NPCAction
     /**
      * @param Squad $squad
      * @param mixed ...$extra
+     * @return mixed
      * @throws \Exception
      */
     public function execute(Squad $squad, ...$extra)
@@ -27,6 +28,6 @@ abstract class NPCAction
 
         $this->npc = $squad;
 
-        call_user_func([$this, 'handleExecute'], ...$extra);
+        return call_user_func([$this, 'handleExecute'], ...$extra);
     }
 }

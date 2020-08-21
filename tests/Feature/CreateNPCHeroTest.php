@@ -14,7 +14,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
-class CreateNPCHeroTest extends TestCase
+class CreateNPCHeroTest extends NPCActionTest
 {
     use DatabaseTransactions;
 
@@ -24,30 +24,6 @@ class CreateNPCHeroTest extends TestCase
     protected function getDomainAction()
     {
         return app(CreateNPCHero::class);
-    }
-
-    /**
-     * @test
-     */
-    public function it_will_throw_an_exception_if_the_squad_is_not_an_npc()
-    {
-        $squad = SquadFactory::new()->create();
-        /** @var HeroRace $heroRace */
-        $heroRace = HeroRace::query()->inRandomOrder()->first();
-        /** @var HeroClass $heroClass */
-        $heroClass = HeroClass::query()->inRandomOrder()->first();
-
-        NPC::partialMock()->shouldReceive('isNPC')->andReturn(false);
-        SquadFacade::partialMock()->shouldReceive('inCreationState')->andReturn(false);
-
-        try {
-            $this->getDomainAction()->execute($squad, $heroRace, $heroClass);
-        } catch (\Exception $exception) {
-            $this->assertEquals(CreateNPCHero::EXCEPTION_CODE_INVALID_NPC, $exception->getCode());
-            $this->assertEquals(0, $squad->heroes()->count());
-            return;
-        }
-        $this->fail("Exception not thrown");
     }
 
     /**
