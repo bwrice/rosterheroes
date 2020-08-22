@@ -15,8 +15,9 @@ use Illuminate\Support\Facades\Facade;
  *
  * @method static User user
  * @method static string squadName
- * @method static string heroName(Squad $squad)
+ * @method static string heroName(Squad $npc)
  * @method static bool isNPC(Squad $squad)
+ * @method static Collection questsToJoin(Squad $npc)
  *
  * @see NPCService
  */
