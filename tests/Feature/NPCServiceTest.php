@@ -2,9 +2,15 @@
 
 namespace Tests\Feature;
 
+use App\Domain\Models\Continent;
+use App\Domain\Models\Province;
+use App\Domain\Models\Quest;
+use App\Domain\Models\SideQuest;
 use App\Domain\Models\User;
 use App\Facades\NPC;
 use App\Factories\Models\HeroFactory;
+use App\Factories\Models\QuestFactory;
+use App\Factories\Models\SideQuestFactory;
 use App\Factories\Models\SquadFactory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -176,5 +182,39 @@ class NPCServiceTest extends TestCase
 
         $npcUser = NPC::user();
         $this->assertEquals($user->id, $npcUser->id);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_return_quests_with_side_quests_from_fetroya_for_a_new_npc()
+    {
+        $squad = SquadFactory::new()->create();
+
+        /** @var Continent $fetroya */
+        $fetroya = Continent::query()->where('name', '=', Continent::FETROYA)->first();
+        $provinces = Province::query()->where('continent_id', '=', $fetroya->id)->inRandomOrder()->get();
+
+        for ($i = 1; $i <= $squad->getQuestsPerWeek() + 1; $i++) {
+            $quest = QuestFactory::new()->withProvinceID($provinces->shift()->id)->create();
+            for ($j = 1; $j <= $squad->getSideQuestsPerQuest() + 1; $j++) {
+                SideQuestFactory::new()->forQuestID($quest->id)->create();
+            }
+        }
+
+        $questsToJoin = NPC::questsToJoin($squad);
+        $this->assertEquals($squad->getQuestsPerWeek(), $questsToJoin->count());
+
+        $questsToJoin->each(function ($questToJoinArray) use ($fetroya, $squad) {
+            /** @var Quest $quest */
+            $quest = $questToJoinArray['quest'];
+            $this->assertEquals($fetroya->id, $quest->province->continent_id);
+
+            $this->assertEquals($squad->getSideQuestsPerQuest(), count($questToJoinArray['side_quests']));
+            foreach ($questToJoinArray['side_quests'] as $sideQuest) {
+                /** @var SideQuest $sideQuest */
+                $this->assertEquals($quest->id, $sideQuest->quest_id);
+            }
+        });
     }
 }
