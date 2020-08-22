@@ -15,9 +15,6 @@ abstract class NPCActionTest extends TestCase
 {
     use DatabaseTransactions;
 
-    /** @var Squad */
-    protected $squad;
-
     /**
      * @return NPCAction
      */
