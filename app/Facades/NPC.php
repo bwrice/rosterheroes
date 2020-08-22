@@ -3,6 +3,8 @@
 
 namespace App\Facades;
 
+use App\Domain\Models\Hero;
+use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\Squad;
 use App\Domain\Models\User;
 use App\Services\NPCService;
@@ -18,6 +20,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static string heroName(Squad $npc)
  * @method static bool isNPC(Squad $squad)
  * @method static Collection questsToJoin(Squad $npc)
+ * @method static PlayerSpirit heroSpirit(Hero $npcHero)
  *
  * @see NPCService
  */
