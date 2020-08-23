@@ -6,7 +6,7 @@ use App\Domain\Models\Hero;
 use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\Squad;
 use App\Facades\HeroService;
-use App\Facades\SquadService;
+use App\Facades\SquadFacade;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -24,7 +24,7 @@ class SquadServiceTest extends TestCase
         /** @var Squad $squad */
         $squad = factory(Squad::class)->create();
         $this->assertEquals(0, $squad->heroes->count());
-        $this->assertFalse(SquadService::combatReady($squad));
+        $this->assertFalse(SquadFacade::combatReady($squad));
     }
 
     /**
@@ -42,7 +42,7 @@ class SquadServiceTest extends TestCase
             'squad_id' => $squad->id,
         ]);
         HeroService::partialMock()->shouldReceive('combatReady')->andReturn(false);
-        $this->assertFalse(SquadService::combatReady($squad));
+        $this->assertFalse(SquadFacade::combatReady($squad));
     }
 
     /**
@@ -65,6 +65,6 @@ class SquadServiceTest extends TestCase
             }
             return false;
         });
-        $this->assertTrue(SquadService::combatReady($squad));
+        $this->assertTrue(SquadFacade::combatReady($squad));
     }
 }

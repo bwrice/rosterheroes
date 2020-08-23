@@ -12,10 +12,11 @@ use Illuminate\Support\Facades\Facade;
  * @package App\Facades
  *
  * @method static bool combatReady(Squad $squad)
+ * @method static bool inCreationState(Squad $squad)
  *
  * @see \App\Services\ModelServices\SquadService
  */
-class SquadService extends Facade
+class SquadFacade extends Facade
 {
 
     protected static function getFacadeAccessor()
