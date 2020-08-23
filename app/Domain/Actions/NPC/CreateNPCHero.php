@@ -4,23 +4,22 @@
 namespace App\Domain\Actions\NPC;
 
 
-use App\Domain\Actions\CreateHeroAction;
+use App\Domain\Actions\AddNewHeroToSquadAction;
 use App\Domain\Models\HeroClass;
 use App\Domain\Models\HeroRace;
-use App\Domain\Models\HeroRank;
 use App\Domain\Models\Squad;
 use App\Facades\NPC;
 
 class CreateNPCHero extends NPCAction
 {
     /**
-     * @var CreateHeroAction
+     * @var AddNewHeroToSquadAction
      */
-    private $createHeroAction;
+    private $addNewHeroToSquadAction;
 
-    public function __construct(CreateHeroAction $createHeroAction)
+    public function __construct(AddNewHeroToSquadAction $addNewHeroToSquadAction)
     {
-        $this->createHeroAction = $createHeroAction;
+        $this->addNewHeroToSquadAction = $addNewHeroToSquadAction;
     }
 
     public const EXCEPTION_CODE_INVALID_NPC = 1;
@@ -40,7 +39,6 @@ class CreateNPCHero extends NPCAction
         }
 
         $heroName = NPC::heroName($this->npc);
-        $heroRank = HeroRank::getStarting();
-        return $this->createHeroAction->execute($heroName, $this->npc, $heroClass, $heroRace, $heroRank);
+        return $this->addNewHeroToSquadAction->execute($this->npc, $heroName, $heroClass, $heroRace);
     }
 }

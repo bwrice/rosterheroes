@@ -2,11 +2,13 @@
 
 namespace Tests\Feature;
 
+use App\Domain\Actions\AddNewHeroToSquadAction;
 use App\Domain\Actions\NPC\CreateNPCHero;
 use App\Domain\Models\HeroClass;
 use App\Domain\Models\HeroRace;
 use App\Facades\NPC;
 use App\Facades\SquadFacade;
+use App\Factories\Models\HeroFactory;
 use App\Factories\Models\SquadFactory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -52,7 +54,7 @@ class CreateNPCHeroTest extends NPCActionTest
     /**
      * @test
      */
-    public function it_will_create_a_hero_with_an_npc_hero_name()
+    public function it_will_execute_add_new_hero_to_squad_domain_action()
     {
         $squad = SquadFactory::new()->create();
         /** @var HeroRace $heroRace */
@@ -66,7 +68,17 @@ class CreateNPCHeroTest extends NPCActionTest
         $heroName = Str::random();
         NPC::partialMock()->shouldReceive('heroName')->andReturn($heroName);
 
+        $returnValue = HeroFactory::new()->create();
+
+        $mock = \Mockery::spy(AddNewHeroToSquadAction::class)
+            ->shouldReceive('execute')
+            ->with($squad, $heroName, $heroClass, $heroRace)
+            ->andReturn($returnValue)
+            ->getMock();
+
+        $this->instance(AddNewHeroToSquadAction::class, $mock);
+
         $hero = $this->getDomainAction()->execute($squad, $heroRace, $heroClass);
-        $this->assertEquals($heroName, $hero->name);
+        $this->assertEquals($returnValue->id, $hero->id);
     }
 }
