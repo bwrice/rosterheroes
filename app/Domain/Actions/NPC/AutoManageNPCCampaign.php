@@ -25,7 +25,7 @@ class AutoManageNPCCampaign extends NPCAction
         }
 
         $adventuringLocksAt = CurrentWeek::adventuringLocksAt();
-        if ($adventuringLocksAt->isBefore(now()->addHours(1)->addMinutes(5))) {
+        if ($adventuringLocksAt->isBefore(now()->addMinutes(25))) {
             $message = "Cannot manage campaign of NPC, " . $this->npc->name;
             $message .= ", because adventuring locks in " . $adventuringLocksAt->diffInMinutes(now()) . " minutes";
             throw new \Exception($message, self::EXCEPTION_CODE_WEEK_LOCKS_TOO_SOON);
@@ -45,9 +45,12 @@ class AutoManageNPCCampaign extends NPCAction
 
         $now = now();
         $hoursBeforeLock = CurrentWeek::adventuringLocksAt()->diffInHours($now);
-        $chainedJobs->each(function (PendingDispatch $chainedJob) use ($now, $hoursBeforeLock) {
-            $delay = $now->clone()->addHours(rand(0, $hoursBeforeLock))->addMinutes(rand(0,60))->addSeconds(rand(0,60));
+        $count = 0;
+        $chainedJobs->each(function (PendingDispatch $chainedJob) use ($now, $hoursBeforeLock, &$count) {
+//            $delay = $now->clone()->addHours(rand(0, $hoursBeforeLock))->addMinutes(rand(0,60))->addSeconds(rand(0,60));
+            $delay = $now->clone()->addSeconds(rand(40, 60) * $count);
             $chainedJob->delay($delay);
+            $count++;
         });
     }
 }
