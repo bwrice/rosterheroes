@@ -28,6 +28,8 @@ class CreateNPCUser extends Command
     {
         $user = $createUserAction->execute(config('npc.user.email'), 'NPC', config('npc.user.password'));
         $user->markEmailAsVerified();
+        // clear email subs
+        $user->emailSubscriptions()->sync([]);
         $this->info("NPC User Created with email: " . $user->email);
     }
 }
