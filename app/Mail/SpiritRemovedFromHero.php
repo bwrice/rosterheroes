@@ -17,7 +17,7 @@ class SpiritRemovedFromHero extends SquadNotification
     /**
      * @var string
      */
-    public $playerSpiritName;
+    public $spiritDescription;
     /**
      * @var Hero
      */
@@ -26,10 +26,10 @@ class SpiritRemovedFromHero extends SquadNotification
     /** @var Squad */
     public $squad;
 
-    public function __construct(string $playerSpiritName, Hero $hero)
+    public function __construct(string $spiritDescription, Hero $hero)
     {
         parent::__construct();
-        $this->playerSpiritName = $playerSpiritName;
+        $this->spiritDescription = $spiritDescription;
         $this->hero = $hero;
         $this->squad = $hero->squad;
         $this->setSubject();
@@ -37,7 +37,7 @@ class SpiritRemovedFromHero extends SquadNotification
 
     protected function setSubject()
     {
-        $this->subject = $this->playerSpiritName . ' removed from hero, ' . $this->hero->name;
+        $this->subject = $this->spiritDescription . ' removed from hero, ' . $this->hero->name;
     }
 
     /**

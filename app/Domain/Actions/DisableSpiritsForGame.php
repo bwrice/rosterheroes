@@ -25,7 +25,7 @@ class DisableSpiritsForGame
         $spiritsCount = $spirits->count();
         $heroesCount = 0;
 
-        $spirits->each(function (PlayerSpirit $playerSpirit) use (&$heroesCount, $notifyUser) {
+        $spirits->with('playerGameLog.game')->each(function (PlayerSpirit $playerSpirit) use (&$heroesCount, $notifyUser) {
             $playerSpirit->heroes()->with('squad.user')->chunk(200, function (Collection $heroes) use (&$heroesCount, $playerSpirit, $notifyUser) {
 
                 $heroes->each(function (Hero $hero) use ($playerSpirit, $notifyUser) {
@@ -35,7 +35,8 @@ class DisableSpiritsForGame
 
                     // Notify user to replace spirit on hero
                     if ($notifyUser) {
-                        Mail::to($hero->squad->user)->queue(new SpiritRemovedFromHero($playerSpirit, $hero));
+                        $spiritDescription = $playerSpirit->playerFullName() . ' (' . $playerSpirit->playerGameLog->game->getSimpleDescription() . ')';
+                        Mail::to($hero->squad->user)->queue(new SpiritRemovedFromHero($spiritDescription, $hero));
                     }
                 });
                 $heroesCount += $heroes->count();
