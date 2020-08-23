@@ -249,6 +249,11 @@ export default {
             let updatedSquad = _.cloneDeep(state.squad);
             updatedSquad.gold -= amount;
             state.squad = updatedSquad;
+        },
+        INCREASE_SQUAD_ESSENCE(state, amount) {
+            let updatedSquad = _.cloneDeep(state.squad);
+            updatedSquad.spiritEssence += amount;
+            state.squad = updatedSquad;
         }
     },
 

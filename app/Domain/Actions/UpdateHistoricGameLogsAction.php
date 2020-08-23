@@ -42,12 +42,12 @@ class UpdateHistoricGameLogsAction
      */
     protected function getGameQuery(Collection $leagues = null, $force = false)
     {
-        $query = Game::query()->whereDate('starts_at', '<', now()->subHours(6));
+        $query = Game::query()->where('starts_at', '<', now()->subHours(8));
         if ($leagues) {
             $query = $query->forLeagues($leagues->pluck('id')->toArray());
         }
         if (! $force) {
-            $query = $query->whereNull('finalized_at')->where('schedule_status', '=', Game::SCHEDULE_STATUS_NORMAL);
+            $query = $query->whereNull('finalized_at');
         }
         return $query;
     }

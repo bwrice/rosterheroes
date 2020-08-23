@@ -152,4 +152,14 @@ class Shop extends Model implements HasItems, Merchant
     {
         return $this->itemBlueprints;
     }
+
+    public function getProvince(): Province
+    {
+        return $this->province;
+    }
+
+    public function getProvinceID(): int
+    {
+        return $this->province_id;
+    }
 }

@@ -45,7 +45,8 @@ class UpdateSingleGame
                 'starts_at' => $gameDTO->getStartsAt(),
                 'home_team_id' => $gameDTO->getHomeTeam()->id,
                 'away_team_id' => $gameDTO->getAwayTeam()->id,
-                'schedule_status' => $gameDTO->getStatus()
+                'schedule_status' => $gameDTO->getStatus(),
+                'season_type' => $gameDTO->getSeasonType()
             ]);
 
             $game->externalGames()->create([
@@ -94,6 +95,9 @@ class UpdateSingleGame
         if (!$originalGameShouldHaveSpirits && $this->gameShouldHaveSpirits($game)) {
             CreateSpiritsForGameJob::dispatch($game, CurrentWeek::get());
         }
+
+        $game->season_type = $gameDTO->getSeasonType();
+        $game->save();
 
         return $game;
     }

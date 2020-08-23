@@ -23,9 +23,15 @@
                         Merchants
                     </span>
                 </v-row>
-                <template v-if="mapProvince.hasShops">
+                <template v-if="mapProvince.availableMerchants.length">
                     <v-row no-gutters justify="center" align="center">
-                        <v-icon color="accent">storefront</v-icon>
+                        <v-icon
+                            v-for="(availableMerchant, id) in mapProvince.availableMerchants"
+                            :key="id"
+                            :color="getAvailableMerchantColor(availableMerchant)"
+                        >
+                            {{getAvailableMerchantIcon(availableMerchant)}}
+                        </v-icon>
                     </v-row>
                 </template>
                 <template v-else>
@@ -82,6 +88,19 @@
                         squadSlug: this.$route.params.squadSlug
                     }
                 })
+            },
+            getAvailableMerchantColor(availableMerchant) {
+                console.log(availableMerchant);
+                if (availableMerchant === 'recruitment-camp') {
+                    return '#a461d4'
+                }
+                return 'accent'
+            },
+            getAvailableMerchantIcon(availableMerchant) {
+                if (availableMerchant === 'recruitment-camp') {
+                    return 'details'
+                }
+                return 'storefront'
             }
         },
         computed: {

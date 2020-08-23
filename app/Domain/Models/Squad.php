@@ -21,7 +21,7 @@ use App\Domain\Collections\HeroPostCollection;
 use App\Domain\Interfaces\HasSlots;
 use App\Domain\Collections\SlotCollection;
 use App\Domain\Traits\HasNameSlug;
-use App\Facades\SquadService;
+use App\Facades\SquadFacade;
 use App\Http\Resources\MobileStorageResource;
 use App\Http\Resources\SquadResource;
 use Illuminate\Database\Eloquent\Collection;
@@ -45,7 +45,6 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $experience
  * @property int $gold
  * @property int $favor
- * @property int $hero_posts
  * @property int $damage_dealt
  * @property int $minion_damage_dealt
  * @property int $titan_damage_dealt
@@ -320,7 +319,7 @@ class Squad extends EventSourcedModel implements HasItems
      */
     public function inCreationState()
     {
-        return $this->heroes()->count() < self::getStartingHeroesCount();
+        return SquadFacade::inCreationState($this);
     }
 
     public function getHeroRaceAvailability()
@@ -452,7 +451,7 @@ class Squad extends EventSourcedModel implements HasItems
 
     public function combatReady()
     {
-        return SquadService::combatReady($this);
+        return SquadFacade::combatReady($this);
     }
 
     /**
