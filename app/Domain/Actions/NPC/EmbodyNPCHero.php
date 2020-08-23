@@ -22,6 +22,8 @@ class EmbodyNPCHero extends NPCHeroAction
     public function handleExecute()
     {
         $playerSpirit = NPC::heroSpirit($this->hero);
-        $this->addSpiritToHeroAction->execute($this->hero, $playerSpirit);
+        if ($playerSpirit) {
+            $this->addSpiritToHeroAction->execute($this->hero, $playerSpirit);
+        }
     }
 }
