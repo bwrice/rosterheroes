@@ -77,6 +77,28 @@ class NPCServiceTest extends TestCase
     /**
      * @test
      */
+    public function it_will_not_return_a_squad_name_already_in_use()
+    {
+        $this->app->detectEnvironment(function () {
+            return 'development';
+        });
+        $npcArrays = [];
+        for ($i = 1; $i <= 10; $i++) {
+            $npcArrays[]['name'] = SquadFactory::new()->create()->name;
+        }
+
+        $unusedName = Str::random();
+        $npcArrays[]['name'] = $unusedName;
+
+        Config::set('npc.development.squads', $npcArrays);
+
+        $squadName = NPC::squadName();
+        $this->assertEquals($unusedName, $squadName);
+    }
+
+    /**
+     * @test
+     */
     public function it_will_return_a_hero_name_associated_to_the_squad_based_on_the_config()
     {
         $squad = SquadFactory::new()->create();

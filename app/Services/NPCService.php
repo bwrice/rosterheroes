@@ -18,8 +18,13 @@ class NPCService
 {
     public function squadName()
     {
-        $squads = $this->getSquads()->random();
-        return $squads['name'];
+        $squadNames = $this->getSquads()->map(function ($squadArray) {
+            return $squadArray['name'];
+        });
+
+        $existingSquadNames = Squad::query()->whereIn('name', $squadNames->toArray())->pluck('name');
+
+        return $squadNames->diff($existingSquadNames)->random();
     }
 
     public function user()
