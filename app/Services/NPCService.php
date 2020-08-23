@@ -131,11 +131,14 @@ class NPCService
 
     public function heroSpirit(Hero $npcHero)
     {
-        $spiritIDsInUseBySquad = $npcHero->squad->heroes()->pluck('player_spirit_id')->toArray();
+        $spiritIDsInUseBySquad = $npcHero->squad->heroes()
+            ->whereNotNull('player_spirit_id')
+            ->pluck('player_spirit_id')->toArray();
 
         $currentWeek = \App\Facades\CurrentWeek::get();
 
         $validPositionIDs = $npcHero->heroRace->positions()->pluck('id')->toArray();
+
         $query = PlayerSpirit::query()->forWeek($currentWeek)->whereHas('playerGameLog', function (Builder $builder) use ($validPositionIDs) {
             $builder->whereHas('player', function (Builder $builder) use ($validPositionIDs) {
                 $builder->whereHas('positions', function (Builder $builder) use ($validPositionIDs) {

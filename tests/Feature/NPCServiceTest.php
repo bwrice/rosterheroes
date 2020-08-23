@@ -276,6 +276,22 @@ class NPCServiceTest extends TestCase
         $this->assertNull($heroSpirit);
     }
 
+    /**
+     * @test
+     */
+    public function it_will_return_a_valid_spirit_for_the_npc_hero()
+    {
+
+        $hero = HeroFactory::new()->create();
+        $week = factory(Week::class)->states('as-current')->create();
+
+        $spirit = $this->getValidPlayerSpiritForHeroAndWeek($hero, $week);
+
+        $heroSpirit = NPC::heroSpirit($hero);
+
+        $this->assertEquals($spirit->id, $heroSpirit->id);
+    }
+
     protected function getValidPlayerSpiritForHeroAndWeek(Hero $hero, Week $week)
     {
         $spirit = PlayerSpiritFactory::new()->forWeek($week)->create();
