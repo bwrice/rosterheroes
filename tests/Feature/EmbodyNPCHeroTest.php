@@ -43,6 +43,6 @@ class EmbodyNPCHeroTest extends NPCHeroActionTest
         $this->getDomainAction()->execute($npcHero, $playerSpirit);
 
         $mock->shouldHaveReceived('execute')
-            ->with($npcHero, null);
+            ->with($npcHero, $playerSpirit);
     }
 }
