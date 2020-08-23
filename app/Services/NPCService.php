@@ -157,7 +157,8 @@ class NPCService
         $availableSpiritEssence = $npcHero->squad->availableSpiritEssence();
         $heroesWithoutSpirits = $npcHero->squad->heroes()->whereNull('player_spirit_id')->count();
         $maxSpiritEssence = $heroesWithoutSpirits > 0 ? (int) ceil($availableSpiritEssence/$heroesWithoutSpirits) + 4000 : $availableSpiritEssence;
-        $query->where('essence_cost', '<=', $maxSpiritEssence);
+        $minSpiritEssence = min(7500, $maxSpiritEssence - 2000);
+        $query->whereBetween('essence_cost', [$minSpiritEssence, $maxSpiritEssence]);
 
         // filter out spirits with flat prices (usually have no game logs)
         $query->whereNotIn('essence_cost', [9000, 8000, 6000, 5000, 4000, 3000]);
