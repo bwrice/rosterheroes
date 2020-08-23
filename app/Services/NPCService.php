@@ -6,6 +6,7 @@ namespace App\Services;
 
 use App\Domain\Models\Continent;
 use App\Domain\Models\Hero;
+use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\Quest;
 use App\Domain\Models\SideQuest;
 use App\Domain\Models\Squad;
@@ -126,5 +127,23 @@ class NPCService
                 'side_quests' =>  $sideQuestsToJoin->values()->all()
             ];
         });
+    }
+
+    public function heroSpirit(Hero $npcHero)
+    {
+        $spiritIDsInUseBySquad = $npcHero->squad->heroes()->pluck('player_spirit_id')->toArray();
+
+        $currentWeek = \App\Facades\CurrentWeek::get();
+
+        $validPositionIDs = $npcHero->heroRace->positions()->pluck('id')->toArray();
+        $query = PlayerSpirit::query()->forWeek($currentWeek)->whereHas('playerGameLog', function (Builder $builder) use ($validPositionIDs) {
+            $builder->whereHas('player', function (Builder $builder) use ($validPositionIDs) {
+                $builder->whereHas('positions', function (Builder $builder) use ($validPositionIDs) {
+                    $builder->whereIn('id', $validPositionIDs);
+                });
+            });
+        })->whereNotIn('id', $spiritIDsInUseBySquad);
+
+        return $query->inRandomOrder()->first();
     }
 }
