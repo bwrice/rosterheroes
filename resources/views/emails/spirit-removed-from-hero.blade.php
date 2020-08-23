@@ -1,6 +1,6 @@
 <?php
 /**
- * @var string $playerSpiritName
+ * @var string $spiritDescription
  * @var \App\Domain\Models\Hero $hero
  * @var \App\Domain\Models\EmailSubscription $emailSub
  * @var string $title
@@ -10,7 +10,7 @@
 
 @component('mail::message')
 
-# {{$playerSpiritName}} is no longer valid for this week's campaigns
+# {{$spiritDescription}} is no longer valid for this week's campaigns
 
 Visit {{$hero->squad->name}}'s command center and embody {{$hero->name}} with a new player spirit!
 
