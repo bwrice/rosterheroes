@@ -12,7 +12,7 @@ class CreateNPCUser extends Command
      *
      * @var string
      */
-    protected $signature = 'rh:npc-user';
+    protected $signature = 'npc:create-user';
 
     /**
      * The console command description.
