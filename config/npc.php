@@ -195,5 +195,9 @@ return [
                 ]
             ],
         ]
+    ],
+    'user' => [
+        'email' => env('NPC_USER_EMAIL'),
+        'password' => env('NPC_USER_PASSWORD')
     ]
 ];
