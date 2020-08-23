@@ -157,7 +157,7 @@ class NPCService
         // get spirit with a reasonable essence cost based on remaining spirit essence of the npc
         $availableSpiritEssence = $npcHero->squad->availableSpiritEssence();
         $heroesWithoutSpirits = $npcHero->squad->heroes()->whereNull('player_spirit_id')->count();
-        $maxSpiritEssence = $heroesWithoutSpirits > 0 ? (int) ceil($availableSpiritEssence/$heroesWithoutSpirits) + 4000 : $availableSpiritEssence;
+        $maxSpiritEssence = $heroesWithoutSpirits > 1 ? (int) ceil($availableSpiritEssence/$heroesWithoutSpirits) + 4000 : $availableSpiritEssence;
         $minSpiritEssence = min(7500, $maxSpiritEssence - 2000);
         $query->whereBetween('essence_cost', [$minSpiritEssence, $maxSpiritEssence]);
 

@@ -307,7 +307,7 @@ class NPCServiceTest extends TestCase
         $week = factory(Week::class)->states('as-current')->create();
 
         $spirit = $this->getValidPlayerSpiritForHeroAndWeek($hero, $week);
-        $spirit->essence_cost = 11111;
+        $spirit->essence_cost = 9111;
         $spirit->save();
 
         // Set npc total essence and attach a spirit to another hero costing more than half of the essence
@@ -315,7 +315,7 @@ class NPCServiceTest extends TestCase
         $npc->spirit_essence = 18000;
         $otherSquadHero = HeroFactory::new()->forSquad($npc)->create();
 
-        $otherSquadHero->player_spirit_id = PlayerSpiritFactory::new()->withEssenceCost(11111)->create()->id;
+        $otherSquadHero->player_spirit_id = PlayerSpiritFactory::new()->withEssenceCost(9111)->create()->id;
         $otherSquadHero->save();
 
         $heroSpirit = NPC::heroSpirit($hero);
