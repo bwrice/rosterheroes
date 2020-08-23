@@ -51,7 +51,7 @@ class AutoManageNPCCampaignTest extends NPCActionTest
     {
         NPC::shouldReceive('isNPC')->andReturn(true);
         CurrentWeek::shouldReceive('adventuringLocked')->andReturn(false);
-        CurrentWeek::shouldReceive('adventuringLocksAt')->andReturn(now()->addMinutes(45));
+        CurrentWeek::shouldReceive('adventuringLocksAt')->andReturn(now()->addMinutes(15));
 
         $squad = SquadFactory::new()->create();
         try {

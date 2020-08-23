@@ -7,6 +7,7 @@ namespace App\Services;
 use App\Domain\Models\Continent;
 use App\Domain\Models\Hero;
 use App\Domain\Models\PlayerSpirit;
+use App\Domain\Models\Position;
 use App\Domain\Models\Quest;
 use App\Domain\Models\SideQuest;
 use App\Domain\Models\Squad;
@@ -160,8 +161,11 @@ class NPCService
         $minSpiritEssence = min(7500, $maxSpiritEssence - 2000);
         $query->whereBetween('essence_cost', [$minSpiritEssence, $maxSpiritEssence]);
 
-        // filter out spirits with flat prices (usually have no game logs)
-        $query->whereNotIn('essence_cost', [9000, 8000, 6000, 5000, 4000, 3000]);
+        // filter out spirits with minimum essence cost because they are likely not playing
+        $flatCosts = Position::query()->get()->map(function (Position $position) {
+            return $position->getDefaultEssenceCost();
+        })->unique()->toArray();
+        $query->whereNotIn('essence_cost', $flatCosts);
 
         return $query->inRandomOrder()->first();
     }

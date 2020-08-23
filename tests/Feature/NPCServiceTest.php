@@ -341,7 +341,7 @@ class NPCServiceTest extends TestCase
 
     protected function getValidPlayerSpiritForHeroAndWeek(Hero $hero, Week $week)
     {
-        $spirit = PlayerSpiritFactory::new()->forWeek($week)->withEssenceCost('5555')->create();
+        $spirit = PlayerSpiritFactory::new()->forWeek($week)->withEssenceCost('8888')->create();
         $player = $spirit->playerGameLog->player;
         $positions = $hero->heroRace->positions;
         $positionsToAttach = $positions->shuffle()->take(rand(1,3));
