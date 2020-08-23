@@ -3,12 +3,16 @@
 namespace Tests\Feature;
 
 use App\Domain\Models\Continent;
+use App\Domain\Models\Hero;
+use App\Domain\Models\Position;
 use App\Domain\Models\Province;
 use App\Domain\Models\Quest;
 use App\Domain\Models\SideQuest;
 use App\Domain\Models\User;
+use App\Domain\Models\Week;
 use App\Facades\NPC;
 use App\Factories\Models\HeroFactory;
+use App\Factories\Models\PlayerSpiritFactory;
 use App\Factories\Models\QuestFactory;
 use App\Factories\Models\SideQuestFactory;
 use App\Factories\Models\SquadFactory;
@@ -216,5 +220,69 @@ class NPCServiceTest extends TestCase
                 $this->assertEquals($quest->id, $sideQuest->quest_id);
             }
         });
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_not_return_a_spirit_for_a_non_current_week()
+    {
+        $hero = HeroFactory::new()->create();
+        $week = factory(Week::class)->states('as-current')->create();
+        $diffWeek = factory(Week::class)->create();
+
+        // Create valid spirit, but for a different week
+        $spirit = $this->getValidPlayerSpiritForHeroAndWeek($hero, $diffWeek);
+        $heroSpirit = NPC::heroSpirit($hero);
+
+        $this->assertNull($heroSpirit);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_not_return_a_spirit_with_an_invalid_position()
+    {
+        $hero = HeroFactory::new()->create();
+        $week = factory(Week::class)->states('as-current')->create();
+
+        $spirit = $this->getValidPlayerSpiritForHeroAndWeek($hero, $week);
+
+        // Reset the player's positions to invalid ones for our hero
+        $invalidPositionIDs = Position::query()->whereNotIn('id', $hero->heroRace->positions()->pluck('id')->toArray())->pluck('id')->toArray();
+        $spirit->playerGameLog->player->positions()->sync($invalidPositionIDs);
+
+        $heroSpirit = NPC::heroSpirit($hero);
+
+        $this->assertNull($heroSpirit);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_not_return_a_spirit_already_used_by_the_same_squad()
+    {
+        $hero = HeroFactory::new()->create();
+        $week = factory(Week::class)->states('as-current')->create();
+
+        $spirit = $this->getValidPlayerSpiritForHeroAndWeek($hero, $week);
+
+        $otherSquadHero = HeroFactory::new()->forSquad($hero->squad)->create();
+        $otherSquadHero->player_spirit_id = $spirit->id;
+        $otherSquadHero->save();
+
+        $heroSpirit = NPC::heroSpirit($hero);
+
+        $this->assertNull($heroSpirit);
+    }
+
+    protected function getValidPlayerSpiritForHeroAndWeek(Hero $hero, Week $week)
+    {
+        $spirit = PlayerSpiritFactory::new()->forWeek($week)->create();
+        $player = $spirit->playerGameLog->player;
+        $positions = $hero->heroRace->positions;
+        $positionsToAttach = $positions->shuffle()->take(rand(1,3));
+        $player->positions()->saveMany($positionsToAttach);
+        return $spirit->fresh();
     }
 }
