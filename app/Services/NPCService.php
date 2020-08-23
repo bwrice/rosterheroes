@@ -131,21 +131,31 @@ class NPCService
 
     public function heroSpirit(Hero $npcHero)
     {
-        $spiritIDsInUseBySquad = $npcHero->squad->heroes()
-            ->whereNotNull('player_spirit_id')
-            ->pluck('player_spirit_id')->toArray();
-
+        // Build initial query for spirits for current week with valid positions for hero's race
         $currentWeek = \App\Facades\CurrentWeek::get();
-
         $validPositionIDs = $npcHero->heroRace->positions()->pluck('id')->toArray();
-
         $query = PlayerSpirit::query()->forWeek($currentWeek)->whereHas('playerGameLog', function (Builder $builder) use ($validPositionIDs) {
             $builder->whereHas('player', function (Builder $builder) use ($validPositionIDs) {
                 $builder->whereHas('positions', function (Builder $builder) use ($validPositionIDs) {
                     $builder->whereIn('id', $validPositionIDs);
                 });
             });
-        })->whereNotIn('id', $spiritIDsInUseBySquad);
+        });
+
+        // filter out spirits already in use by squad
+        $spiritIDsInUseBySquad = $npcHero->squad->heroes()
+            ->whereNotNull('player_spirit_id')
+            ->pluck('player_spirit_id')->toArray();
+        $query->whereNotIn('id', $spiritIDsInUseBySquad);
+
+        // get spirit with a reasonable essence cost based on remaining spirit essence of the npc
+        $availableSpiritEssence = $npcHero->squad->availableSpiritEssence();
+        $heroesWithoutSpirits = $npcHero->squad->heroes()->whereNull('player_spirit_id')->count();
+        $maxSpiritEssence = $heroesWithoutSpirits > 0 ? (int) ceil($availableSpiritEssence/$heroesWithoutSpirits) + 4000 : $availableSpiritEssence;
+        $query->where('essence_cost', '<=', $maxSpiritEssence);
+
+        // filter out spirits with flat prices (usually have no game logs)
+        $query->whereNotIn('essence_cost', [9000, 8000, 6000, 5000, 4000, 3000]);
 
         return $query->inRandomOrder()->first();
     }

@@ -279,6 +279,31 @@ class NPCServiceTest extends TestCase
     /**
      * @test
      */
+    public function it_will_not_return_a_spirit_with_higher_essence_cost_than_npc_has_available()
+    {
+        $hero = HeroFactory::new()->create();
+        $week = factory(Week::class)->states('as-current')->create();
+
+        $spirit = $this->getValidPlayerSpiritForHeroAndWeek($hero, $week);
+        $spirit->essence_cost = 11111;
+        $spirit->save();
+
+        // Set npc total essence and attach a spirit to another hero costing more than half of the essence
+        $npc = $hero->squad;
+        $npc->spirit_essence = 18000;
+        $otherSquadHero = HeroFactory::new()->forSquad($npc)->create();
+
+        $otherSquadHero->player_spirit_id = PlayerSpiritFactory::new()->withEssenceCost(11111)->create()->id;
+        $otherSquadHero->save();
+
+        $heroSpirit = NPC::heroSpirit($hero);
+
+        $this->assertNull($heroSpirit);
+    }
+
+    /**
+     * @test
+     */
     public function it_will_return_a_valid_spirit_for_the_npc_hero()
     {
 
@@ -294,7 +319,7 @@ class NPCServiceTest extends TestCase
 
     protected function getValidPlayerSpiritForHeroAndWeek(Hero $hero, Week $week)
     {
-        $spirit = PlayerSpiritFactory::new()->forWeek($week)->create();
+        $spirit = PlayerSpiritFactory::new()->forWeek($week)->withEssenceCost('5555')->create();
         $player = $spirit->playerGameLog->player;
         $positions = $hero->heroRace->positions;
         $positionsToAttach = $positions->shuffle()->take(rand(1,3));
