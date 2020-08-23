@@ -179,6 +179,7 @@ if (! function_exists('getDefaultNPCConfig')) {
 
 return [
     'development' => getDefaultNPCConfig(),
+    'local' => getDefaultNPCConfig(),
     'beta' => getDefaultNPCConfig(),
     'production' => [
         'squads' => [
