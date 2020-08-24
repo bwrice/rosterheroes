@@ -195,6 +195,38 @@ return [
                     'Kevin Smith'
                 ]
             ],
+            [
+                'name' => 'Mike n Ikes',
+                'heroes' => [
+                    'Mike J',
+                    'Mike R',
+                    'Ike Z',
+                    'Ike B',
+                    'Ike C',
+                    'Mike T',
+                    'Mike D',
+                    'Ike F'
+                ]
+            ],
+            [
+                'name' => 'SINergy',
+                'heroes' => [
+                    'Dark Angel',
+                    'Deathbringer',
+                    'Blaze Razor',
+                    'Fearmaker',
+                    'Life Ender'
+                ]
+            ],
+            [
+                'name' => 'Hellglades',
+                'heroes' => [
+                    'Devilsblood',
+                    'Satan Strike',
+                    'Grave Maker',
+                    'Fallen Angel'
+                ]
+            ],
         ]
     ],
     'user' => [
