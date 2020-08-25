@@ -1,5 +1,5 @@
 {
-    "last_updated": 1598331500,
+    "last_updated": 1598394266,
     "data": [
         {
             "uuid": "ae062d16-5835-4c2e-80a1-722a33c48b51",
@@ -94,10 +94,7 @@
                 "990706e1-27a3-4199-836b-1e9710d27cca",
                 "7bd31ef6-5855-4f78-a9f7-79bcfcfc55a2",
                 "71c0a6f9-7021-4c0f-b5aa-6720f5aa3cbd",
-                "abc3f72f-5fd1-45ef-bf35-29bbd575fd19",
-                "6c13e43d-522c-4b1f-aac3-6f2f953276b9",
-                "24dc88d8-d944-4510-9619-532990a40121",
-                "76b75ca9-fdb7-4381-88ac-47f703eee2fb"
+                "24dc88d8-d944-4510-9619-532990a40121"
             ]
         },
         {
@@ -106,12 +103,9 @@
             "tier": 3,
             "item_base_id": 2,
             "attacks": [
-                "990706e1-27a3-4199-836b-1e9710d27cca",
-                "7bd31ef6-5855-4f78-a9f7-79bcfcfc55a2",
-                "71c0a6f9-7021-4c0f-b5aa-6720f5aa3cbd",
                 "abc3f72f-5fd1-45ef-bf35-29bbd575fd19",
                 "6c13e43d-522c-4b1f-aac3-6f2f953276b9",
-                "24dc88d8-d944-4510-9619-532990a40121",
+                "eb9afa58-7108-49a6-9e46-864b37b09d90",
                 "76b75ca9-fdb7-4381-88ac-47f703eee2fb"
             ]
         },
@@ -121,13 +115,9 @@
             "tier": 4,
             "item_base_id": 2,
             "attacks": [
-                "990706e1-27a3-4199-836b-1e9710d27cca",
-                "7bd31ef6-5855-4f78-a9f7-79bcfcfc55a2",
-                "71c0a6f9-7021-4c0f-b5aa-6720f5aa3cbd",
                 "abc3f72f-5fd1-45ef-bf35-29bbd575fd19",
                 "6c13e43d-522c-4b1f-aac3-6f2f953276b9",
                 "eb9afa58-7108-49a6-9e46-864b37b09d90",
-                "24dc88d8-d944-4510-9619-532990a40121",
                 "76b75ca9-fdb7-4381-88ac-47f703eee2fb"
             ]
         },
@@ -137,16 +127,9 @@
             "tier": 5,
             "item_base_id": 2,
             "attacks": [
-                "990706e1-27a3-4199-836b-1e9710d27cca",
-                "7bd31ef6-5855-4f78-a9f7-79bcfcfc55a2",
-                "71c0a6f9-7021-4c0f-b5aa-6720f5aa3cbd",
-                "abc3f72f-5fd1-45ef-bf35-29bbd575fd19",
-                "6c13e43d-522c-4b1f-aac3-6f2f953276b9",
-                "eb9afa58-7108-49a6-9e46-864b37b09d90",
                 "c788fb6e-74aa-4528-bea3-e36b7995e776",
                 "8c941260-0f5c-48f2-af0b-2ef1e2a62bdc",
-                "24dc88d8-d944-4510-9619-532990a40121",
-                "76b75ca9-fdb7-4381-88ac-47f703eee2fb",
+                "2d674a28-5873-43d3-8673-7e9d67c9d250",
                 "ae90c56d-566d-420c-8732-debc02c90b60"
             ]
         },
@@ -156,17 +139,9 @@
             "tier": 6,
             "item_base_id": 2,
             "attacks": [
-                "990706e1-27a3-4199-836b-1e9710d27cca",
-                "7bd31ef6-5855-4f78-a9f7-79bcfcfc55a2",
-                "71c0a6f9-7021-4c0f-b5aa-6720f5aa3cbd",
-                "abc3f72f-5fd1-45ef-bf35-29bbd575fd19",
-                "6c13e43d-522c-4b1f-aac3-6f2f953276b9",
-                "eb9afa58-7108-49a6-9e46-864b37b09d90",
                 "c788fb6e-74aa-4528-bea3-e36b7995e776",
                 "8c941260-0f5c-48f2-af0b-2ef1e2a62bdc",
                 "2d674a28-5873-43d3-8673-7e9d67c9d250",
-                "24dc88d8-d944-4510-9619-532990a40121",
-                "76b75ca9-fdb7-4381-88ac-47f703eee2fb",
                 "ae90c56d-566d-420c-8732-debc02c90b60"
             ]
         },
@@ -191,10 +166,7 @@
                 "990706e1-27a3-4199-836b-1e9710d27cca",
                 "7bd31ef6-5855-4f78-a9f7-79bcfcfc55a2",
                 "71c0a6f9-7021-4c0f-b5aa-6720f5aa3cbd",
-                "abc3f72f-5fd1-45ef-bf35-29bbd575fd19",
-                "6c13e43d-522c-4b1f-aac3-6f2f953276b9",
-                "24dc88d8-d944-4510-9619-532990a40121",
-                "76b75ca9-fdb7-4381-88ac-47f703eee2fb"
+                "24dc88d8-d944-4510-9619-532990a40121"
             ]
         },
         {
@@ -203,12 +175,9 @@
             "tier": 3,
             "item_base_id": 3,
             "attacks": [
-                "990706e1-27a3-4199-836b-1e9710d27cca",
-                "7bd31ef6-5855-4f78-a9f7-79bcfcfc55a2",
-                "71c0a6f9-7021-4c0f-b5aa-6720f5aa3cbd",
                 "abc3f72f-5fd1-45ef-bf35-29bbd575fd19",
                 "6c13e43d-522c-4b1f-aac3-6f2f953276b9",
-                "24dc88d8-d944-4510-9619-532990a40121",
+                "eb9afa58-7108-49a6-9e46-864b37b09d90",
                 "76b75ca9-fdb7-4381-88ac-47f703eee2fb"
             ]
         },
@@ -218,13 +187,9 @@
             "tier": 4,
             "item_base_id": 3,
             "attacks": [
-                "990706e1-27a3-4199-836b-1e9710d27cca",
-                "7bd31ef6-5855-4f78-a9f7-79bcfcfc55a2",
-                "71c0a6f9-7021-4c0f-b5aa-6720f5aa3cbd",
                 "abc3f72f-5fd1-45ef-bf35-29bbd575fd19",
                 "6c13e43d-522c-4b1f-aac3-6f2f953276b9",
                 "eb9afa58-7108-49a6-9e46-864b37b09d90",
-                "24dc88d8-d944-4510-9619-532990a40121",
                 "76b75ca9-fdb7-4381-88ac-47f703eee2fb"
             ]
         },
@@ -234,16 +199,9 @@
             "tier": 5,
             "item_base_id": 3,
             "attacks": [
-                "990706e1-27a3-4199-836b-1e9710d27cca",
-                "7bd31ef6-5855-4f78-a9f7-79bcfcfc55a2",
-                "71c0a6f9-7021-4c0f-b5aa-6720f5aa3cbd",
-                "abc3f72f-5fd1-45ef-bf35-29bbd575fd19",
-                "6c13e43d-522c-4b1f-aac3-6f2f953276b9",
-                "eb9afa58-7108-49a6-9e46-864b37b09d90",
                 "c788fb6e-74aa-4528-bea3-e36b7995e776",
                 "8c941260-0f5c-48f2-af0b-2ef1e2a62bdc",
-                "24dc88d8-d944-4510-9619-532990a40121",
-                "76b75ca9-fdb7-4381-88ac-47f703eee2fb",
+                "2d674a28-5873-43d3-8673-7e9d67c9d250",
                 "ae90c56d-566d-420c-8732-debc02c90b60"
             ]
         },
@@ -253,17 +211,9 @@
             "tier": 6,
             "item_base_id": 3,
             "attacks": [
-                "990706e1-27a3-4199-836b-1e9710d27cca",
-                "7bd31ef6-5855-4f78-a9f7-79bcfcfc55a2",
-                "71c0a6f9-7021-4c0f-b5aa-6720f5aa3cbd",
-                "abc3f72f-5fd1-45ef-bf35-29bbd575fd19",
-                "6c13e43d-522c-4b1f-aac3-6f2f953276b9",
-                "eb9afa58-7108-49a6-9e46-864b37b09d90",
                 "c788fb6e-74aa-4528-bea3-e36b7995e776",
                 "8c941260-0f5c-48f2-af0b-2ef1e2a62bdc",
                 "2d674a28-5873-43d3-8673-7e9d67c9d250",
-                "24dc88d8-d944-4510-9619-532990a40121",
-                "76b75ca9-fdb7-4381-88ac-47f703eee2fb",
                 "ae90c56d-566d-420c-8732-debc02c90b60"
             ]
         },
@@ -288,10 +238,7 @@
                 "b12842c8-702b-4059-a3e9-1edcaf03dee6",
                 "8271b8cf-e2f6-4676-a26b-f3bf5737208e",
                 "e3711cee-7543-419d-b1c1-b9ef0008d27f",
-                "c152b9e6-f500-46d0-81f0-f68e030f19bf",
-                "4ae9e265-be50-443f-a30d-1b8659ea4aed",
-                "e669187c-96b6-464d-ba75-17570f4d0860",
-                "1d29b333-a73e-415b-8810-d8b3353a8b9d"
+                "e669187c-96b6-464d-ba75-17570f4d0860"
             ]
         },
         {
@@ -300,12 +247,9 @@
             "tier": 3,
             "item_base_id": 4,
             "attacks": [
-                "b12842c8-702b-4059-a3e9-1edcaf03dee6",
-                "8271b8cf-e2f6-4676-a26b-f3bf5737208e",
-                "e3711cee-7543-419d-b1c1-b9ef0008d27f",
                 "c152b9e6-f500-46d0-81f0-f68e030f19bf",
                 "4ae9e265-be50-443f-a30d-1b8659ea4aed",
-                "e669187c-96b6-464d-ba75-17570f4d0860",
+                "f562ebf9-0d18-416b-b95b-80d753b66732",
                 "1d29b333-a73e-415b-8810-d8b3353a8b9d"
             ]
         },
@@ -315,13 +259,9 @@
             "tier": 4,
             "item_base_id": 4,
             "attacks": [
-                "b12842c8-702b-4059-a3e9-1edcaf03dee6",
-                "8271b8cf-e2f6-4676-a26b-f3bf5737208e",
-                "e3711cee-7543-419d-b1c1-b9ef0008d27f",
                 "c152b9e6-f500-46d0-81f0-f68e030f19bf",
                 "4ae9e265-be50-443f-a30d-1b8659ea4aed",
                 "f562ebf9-0d18-416b-b95b-80d753b66732",
-                "e669187c-96b6-464d-ba75-17570f4d0860",
                 "1d29b333-a73e-415b-8810-d8b3353a8b9d"
             ]
         },
@@ -331,16 +271,9 @@
             "tier": 5,
             "item_base_id": 4,
             "attacks": [
-                "b12842c8-702b-4059-a3e9-1edcaf03dee6",
-                "8271b8cf-e2f6-4676-a26b-f3bf5737208e",
-                "e3711cee-7543-419d-b1c1-b9ef0008d27f",
-                "c152b9e6-f500-46d0-81f0-f68e030f19bf",
-                "4ae9e265-be50-443f-a30d-1b8659ea4aed",
-                "f562ebf9-0d18-416b-b95b-80d753b66732",
                 "2fe460b2-0dd3-4a0c-b133-ed51c6759407",
                 "e8f156c3-a994-4653-b88e-a1f58fdceee7",
-                "e669187c-96b6-464d-ba75-17570f4d0860",
-                "1d29b333-a73e-415b-8810-d8b3353a8b9d",
+                "90bbeb5e-5289-46c9-8433-f93aa4fab8cc",
                 "c9b841f5-7dec-4f83-a5dd-c056ebc655b4"
             ]
         },
@@ -350,17 +283,9 @@
             "tier": 6,
             "item_base_id": 4,
             "attacks": [
-                "b12842c8-702b-4059-a3e9-1edcaf03dee6",
-                "8271b8cf-e2f6-4676-a26b-f3bf5737208e",
-                "e3711cee-7543-419d-b1c1-b9ef0008d27f",
-                "c152b9e6-f500-46d0-81f0-f68e030f19bf",
-                "4ae9e265-be50-443f-a30d-1b8659ea4aed",
-                "f562ebf9-0d18-416b-b95b-80d753b66732",
                 "2fe460b2-0dd3-4a0c-b133-ed51c6759407",
                 "e8f156c3-a994-4653-b88e-a1f58fdceee7",
                 "90bbeb5e-5289-46c9-8433-f93aa4fab8cc",
-                "e669187c-96b6-464d-ba75-17570f4d0860",
-                "1d29b333-a73e-415b-8810-d8b3353a8b9d",
                 "c9b841f5-7dec-4f83-a5dd-c056ebc655b4"
             ]
         },
@@ -385,10 +310,7 @@
                 "5bcee573-7a5f-4279-a429-330a904b07ae",
                 "09ac698f-3a50-4f12-9b4b-41e665cb521e",
                 "9422dae3-5b6b-4140-96b7-e4f8a1df2144",
-                "cc4e9b8a-6ab2-460e-a6fb-f24b69fee842",
-                "dde52822-11e0-4eed-ace7-c57153a2c469",
-                "afd9b19e-58b2-4aa8-bcf2-3cffa5605e1f",
-                "c48b41ef-ce00-478d-8efe-185ddd5ad07c"
+                "afd9b19e-58b2-4aa8-bcf2-3cffa5605e1f"
             ]
         },
         {
@@ -397,12 +319,9 @@
             "tier": 3,
             "item_base_id": 5,
             "attacks": [
-                "5bcee573-7a5f-4279-a429-330a904b07ae",
-                "09ac698f-3a50-4f12-9b4b-41e665cb521e",
-                "9422dae3-5b6b-4140-96b7-e4f8a1df2144",
                 "cc4e9b8a-6ab2-460e-a6fb-f24b69fee842",
                 "dde52822-11e0-4eed-ace7-c57153a2c469",
-                "afd9b19e-58b2-4aa8-bcf2-3cffa5605e1f",
+                "66bff351-52ec-49cc-8707-e09bb543b83c",
                 "c48b41ef-ce00-478d-8efe-185ddd5ad07c"
             ]
         },
@@ -412,13 +331,9 @@
             "tier": 4,
             "item_base_id": 5,
             "attacks": [
-                "5bcee573-7a5f-4279-a429-330a904b07ae",
-                "09ac698f-3a50-4f12-9b4b-41e665cb521e",
-                "9422dae3-5b6b-4140-96b7-e4f8a1df2144",
                 "cc4e9b8a-6ab2-460e-a6fb-f24b69fee842",
                 "dde52822-11e0-4eed-ace7-c57153a2c469",
                 "66bff351-52ec-49cc-8707-e09bb543b83c",
-                "afd9b19e-58b2-4aa8-bcf2-3cffa5605e1f",
                 "c48b41ef-ce00-478d-8efe-185ddd5ad07c"
             ]
         },
@@ -428,16 +343,9 @@
             "tier": 5,
             "item_base_id": 5,
             "attacks": [
-                "5bcee573-7a5f-4279-a429-330a904b07ae",
-                "09ac698f-3a50-4f12-9b4b-41e665cb521e",
-                "9422dae3-5b6b-4140-96b7-e4f8a1df2144",
-                "cc4e9b8a-6ab2-460e-a6fb-f24b69fee842",
-                "dde52822-11e0-4eed-ace7-c57153a2c469",
-                "66bff351-52ec-49cc-8707-e09bb543b83c",
                 "92c794a3-bdb0-4a6a-9164-2f80f4ab2398",
                 "b14257f9-8a3b-4386-833b-70a642240ec8",
-                "afd9b19e-58b2-4aa8-bcf2-3cffa5605e1f",
-                "c48b41ef-ce00-478d-8efe-185ddd5ad07c",
+                "bfa6cfff-3180-4e1f-8568-dd8dcb7f59f6",
                 "babefcfb-8e78-44fa-8198-aea36c6ce718"
             ]
         },
@@ -447,17 +355,9 @@
             "tier": 6,
             "item_base_id": 5,
             "attacks": [
-                "5bcee573-7a5f-4279-a429-330a904b07ae",
-                "09ac698f-3a50-4f12-9b4b-41e665cb521e",
-                "9422dae3-5b6b-4140-96b7-e4f8a1df2144",
-                "cc4e9b8a-6ab2-460e-a6fb-f24b69fee842",
-                "dde52822-11e0-4eed-ace7-c57153a2c469",
-                "66bff351-52ec-49cc-8707-e09bb543b83c",
                 "92c794a3-bdb0-4a6a-9164-2f80f4ab2398",
                 "b14257f9-8a3b-4386-833b-70a642240ec8",
                 "bfa6cfff-3180-4e1f-8568-dd8dcb7f59f6",
-                "afd9b19e-58b2-4aa8-bcf2-3cffa5605e1f",
-                "c48b41ef-ce00-478d-8efe-185ddd5ad07c",
                 "babefcfb-8e78-44fa-8198-aea36c6ce718"
             ]
         },
@@ -482,10 +382,7 @@
                 "8e617785-8bb7-41ce-adde-6cc489e0d210",
                 "4b7ceb50-b612-4522-a1bc-1ef82202d982",
                 "e2b30075-2a21-40d4-add2-5462e54bef6c",
-                "7ed84be6-7831-4027-8ca4-6abc2121b9e3",
-                "82c94812-a82d-45ff-a107-9e1e167e187f",
-                "4a634a66-69c2-4d5f-a441-89e01386a5ae",
-                "66a3a2fd-6001-4003-bb1e-44a943a4263b"
+                "4a634a66-69c2-4d5f-a441-89e01386a5ae"
             ]
         },
         {
@@ -494,12 +391,9 @@
             "tier": 3,
             "item_base_id": 6,
             "attacks": [
-                "8e617785-8bb7-41ce-adde-6cc489e0d210",
-                "4b7ceb50-b612-4522-a1bc-1ef82202d982",
-                "e2b30075-2a21-40d4-add2-5462e54bef6c",
                 "7ed84be6-7831-4027-8ca4-6abc2121b9e3",
                 "82c94812-a82d-45ff-a107-9e1e167e187f",
-                "4a634a66-69c2-4d5f-a441-89e01386a5ae",
+                "0a88d73b-5f27-4266-9e9f-32e1111d55fe",
                 "66a3a2fd-6001-4003-bb1e-44a943a4263b"
             ]
         },
@@ -509,13 +403,9 @@
             "tier": 4,
             "item_base_id": 6,
             "attacks": [
-                "8e617785-8bb7-41ce-adde-6cc489e0d210",
-                "4b7ceb50-b612-4522-a1bc-1ef82202d982",
-                "e2b30075-2a21-40d4-add2-5462e54bef6c",
                 "7ed84be6-7831-4027-8ca4-6abc2121b9e3",
                 "82c94812-a82d-45ff-a107-9e1e167e187f",
                 "0a88d73b-5f27-4266-9e9f-32e1111d55fe",
-                "4a634a66-69c2-4d5f-a441-89e01386a5ae",
                 "66a3a2fd-6001-4003-bb1e-44a943a4263b"
             ]
         },
@@ -525,16 +415,9 @@
             "tier": 5,
             "item_base_id": 6,
             "attacks": [
-                "8e617785-8bb7-41ce-adde-6cc489e0d210",
-                "4b7ceb50-b612-4522-a1bc-1ef82202d982",
-                "e2b30075-2a21-40d4-add2-5462e54bef6c",
-                "7ed84be6-7831-4027-8ca4-6abc2121b9e3",
-                "82c94812-a82d-45ff-a107-9e1e167e187f",
-                "0a88d73b-5f27-4266-9e9f-32e1111d55fe",
                 "ec479f52-e7d1-486e-bcd3-c5ed41d28222",
                 "25afc099-dc9b-4a0f-a6e4-9c345d786f25",
-                "4a634a66-69c2-4d5f-a441-89e01386a5ae",
-                "66a3a2fd-6001-4003-bb1e-44a943a4263b",
+                "399df768-3eed-4419-a678-e1d99af97b2d",
                 "087c7806-c107-492f-a0bd-29fa28b04d5e"
             ]
         },
@@ -544,17 +427,9 @@
             "tier": 6,
             "item_base_id": 6,
             "attacks": [
-                "8e617785-8bb7-41ce-adde-6cc489e0d210",
-                "4b7ceb50-b612-4522-a1bc-1ef82202d982",
-                "e2b30075-2a21-40d4-add2-5462e54bef6c",
-                "7ed84be6-7831-4027-8ca4-6abc2121b9e3",
-                "82c94812-a82d-45ff-a107-9e1e167e187f",
-                "0a88d73b-5f27-4266-9e9f-32e1111d55fe",
                 "ec479f52-e7d1-486e-bcd3-c5ed41d28222",
                 "25afc099-dc9b-4a0f-a6e4-9c345d786f25",
                 "399df768-3eed-4419-a678-e1d99af97b2d",
-                "4a634a66-69c2-4d5f-a441-89e01386a5ae",
-                "66a3a2fd-6001-4003-bb1e-44a943a4263b",
                 "087c7806-c107-492f-a0bd-29fa28b04d5e"
             ]
         },
