@@ -90,6 +90,13 @@ class SquadFactory
         return $squad;
     }
 
+    public function atProvince(int $provinceID)
+    {
+        $clone = clone $this;
+        $clone->provinceID = $provinceID;
+        return $clone;
+    }
+
     public function withHeroes(Collection $heroFactories)
     {
         $clone = clone $this;

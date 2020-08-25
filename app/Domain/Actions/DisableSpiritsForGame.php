@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Mail;
 
 class DisableSpiritsForGame
 {
-    public function execute(Game $game, string $reason = 'N/A')
+    public function execute(Game $game, string $reason = 'N/A', $notifyUser = true)
     {
         $spirits = PlayerSpirit::query()->whereHas('playerGameLog', function (Builder $builder) use ($game) {
             return $builder->where('game_id', '=', $game->id);
@@ -25,15 +25,19 @@ class DisableSpiritsForGame
         $spiritsCount = $spirits->count();
         $heroesCount = 0;
 
-        $spirits->each(function (PlayerSpirit $playerSpirit) use (&$heroesCount) {
-            $playerSpirit->heroes()->with('squad.user')->chunk(200, function (Collection $heroes) use (&$heroesCount, $playerSpirit) {
+        $spirits->with('playerGameLog.game')->each(function (PlayerSpirit $playerSpirit) use (&$heroesCount, $notifyUser) {
+            $playerSpirit->heroes()->with('squad.user')->chunk(200, function (Collection $heroes) use (&$heroesCount, $playerSpirit, $notifyUser) {
 
-                $heroes->each(function (Hero $hero) use ($playerSpirit) {
+                $heroes->each(function (Hero $hero) use ($playerSpirit, $notifyUser) {
                     // Clear spirit from hero
                     $hero->player_spirit_id = null;
                     $hero->save();
+
                     // Notify user to replace spirit on hero
-                    Mail::to($hero->squad->user)->queue(new SpiritRemovedFromHero($playerSpirit, $hero));
+                    if ($notifyUser) {
+                        $spiritDescription = $playerSpirit->playerFullName() . ' (' . $playerSpirit->playerGameLog->game->getSimpleDescription() . ')';
+                        Mail::to($hero->squad->user)->queue(new SpiritRemovedFromHero($spiritDescription, $hero));
+                    }
                 });
                 $heroesCount += $heroes->count();
             });

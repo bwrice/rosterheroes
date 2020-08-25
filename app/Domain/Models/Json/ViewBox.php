@@ -62,4 +62,20 @@ class ViewBox
     {
         return $this->zoomY;
     }
+
+    /**
+     * @return float|int
+     */
+    public function getCenterX()
+    {
+        return $this->panX + ($this->zoomX/2);
+    }
+
+    /**
+     * @return float|int
+     */
+    public function getCenterY()
+    {
+        return $this->panY + ($this->zoomY/2);
+    }
 }

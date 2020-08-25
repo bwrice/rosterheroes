@@ -21,7 +21,7 @@ use App\Domain\Collections\HeroPostCollection;
 use App\Domain\Interfaces\HasSlots;
 use App\Domain\Collections\SlotCollection;
 use App\Domain\Traits\HasNameSlug;
-use App\Facades\SquadService;
+use App\Facades\SquadFacade;
 use App\Http\Resources\MobileStorageResource;
 use App\Http\Resources\SquadResource;
 use Illuminate\Database\Eloquent\Collection;
@@ -319,7 +319,7 @@ class Squad extends EventSourcedModel implements HasItems
      */
     public function inCreationState()
     {
-        return $this->heroes()->count() < self::getStartingHeroesCount();
+        return SquadFacade::inCreationState($this);
     }
 
     public function getHeroRaceAvailability()
@@ -451,7 +451,7 @@ class Squad extends EventSourcedModel implements HasItems
 
     public function combatReady()
     {
-        return SquadService::combatReady($this);
+        return SquadFacade::combatReady($this);
     }
 
     /**

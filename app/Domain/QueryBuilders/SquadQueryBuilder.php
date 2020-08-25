@@ -4,6 +4,7 @@
 namespace App\Domain\QueryBuilders;
 
 
+use App\Facades\NPC;
 use Illuminate\Database\Eloquent\Builder;
 
 class SquadQueryBuilder extends Builder
@@ -20,6 +21,13 @@ class SquadQueryBuilder extends Builder
         return $this->where('name', 'like', 'TestSquad%')
             ->whereHas('user', function (Builder $builder) {
                 return $builder->where('email', 'like', '%@test.com');
+        });
+    }
+
+    public function npc()
+    {
+        return $this->whereHas('user', function (Builder $builder) {
+            $builder->where('email', '=', NPC::user()->email);
         });
     }
 }
