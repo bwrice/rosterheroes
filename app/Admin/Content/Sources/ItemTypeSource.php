@@ -147,7 +147,7 @@ class ItemTypeSource implements ContentSource
             'name' => $this->getName(),
             'tier' => $this->getTier(),
             'item_base_id' => $this->getItemBaseID(),
-            'attackUuids' => $this->getAttackUuids()
+            'attacks' => $this->getAttackUuids()
         ];
     }
 
