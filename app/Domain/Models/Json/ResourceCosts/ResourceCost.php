@@ -36,6 +36,8 @@ abstract class ResourceCost implements Arrayable
 
     abstract public function getManCost(SpendsResources $spendsResources): int;
 
+    abstract public function adjustCost($coefficient);
+
     /**
      * @return string
      */

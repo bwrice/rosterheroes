@@ -68,4 +68,9 @@ class FixedResourceCost extends ResourceCost
     {
         return $this->getFixedManaCost();
     }
+
+    public function adjustCost($coefficient)
+    {
+        $this->amount = (int) floor($coefficient * $this->amount);
+    }
 }
