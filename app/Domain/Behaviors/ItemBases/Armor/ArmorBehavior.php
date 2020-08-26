@@ -52,4 +52,9 @@ abstract class ArmorBehavior extends ItemBaseBehavior
     {
         return new ResourceCostsCollection();
     }
+
+    public function adjustResourceCosts(ResourceCostsCollection $resourceCosts): ResourceCostsCollection
+    {
+        return $resourceCosts;
+    }
 }

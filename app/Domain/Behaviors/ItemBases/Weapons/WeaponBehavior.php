@@ -10,6 +10,7 @@ use App\Domain\Behaviors\ItemGroup\WeaponGroup;
 use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Interfaces\UsesItems;
 use App\Domain\Models\Json\ResourceCosts\FixedResourceCost;
+use App\Domain\Models\Json\ResourceCosts\ResourceCost;
 use App\Domain\Models\MeasurableType;
 use App\Domain\Models\Support\GearSlots\GearSlot;
 
@@ -23,6 +24,9 @@ abstract class WeaponBehavior extends ItemBaseBehavior
 
     protected $staminaCostBase = 1;
     protected $manaCostBase = 1;
+
+    protected $staminaCostAdjustmentCoefficient;
+    protected $manaCostAdjustmentCoefficient;
 
     protected $validGearSlotTypes = [
         GearSlot::PRIMARY_ARM,
@@ -103,6 +107,19 @@ abstract class WeaponBehavior extends ItemBaseBehavior
             $manaResourceCost = new FixedResourceCost(MeasurableType::MANA, $manaAmount);
             $resourceCosts->push($manaResourceCost);
         }
+        return $resourceCosts;
+    }
+
+    public function adjustResourceCosts(ResourceCostsCollection $resourceCosts): ResourceCostsCollection
+    {
+        $resourceCosts->each(function (ResourceCost $resourceCost) {
+            if ($resourceCost->getResourceName() === MeasurableType::STAMINA) {
+                $resourceCost->adjustCost($this->staminaCostAdjustmentCoefficient);
+            }
+            if ($resourceCost->getResourceName() === MeasurableType::MANA) {
+                $resourceCost->adjustCost($this->manaCostAdjustmentCoefficient);
+            }
+        });
         return $resourceCosts;
     }
 }

@@ -9,6 +9,7 @@
 namespace App\Domain\Behaviors\ItemBases;
 
 use App\Domain\Behaviors\ItemGroup\ItemGroup;
+use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Interfaces\UsesItems;
 
 abstract class ItemBaseBehavior
@@ -79,4 +80,6 @@ abstract class ItemBaseBehavior
     abstract public function adjustCombatSpeed(float $combatSpeed, UsesItems $hasItems = null): float;
 
     abstract public function getResourceCosts(int $attackTier, float $resourceCostMagnitude);
+
+    abstract public function adjustResourceCosts(ResourceCostsCollection $resourceCosts): ResourceCostsCollection;
 }
