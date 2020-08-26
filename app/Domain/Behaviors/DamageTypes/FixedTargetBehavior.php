@@ -4,6 +4,10 @@
 namespace App\Domain\Behaviors\DamageTypes;
 
 
+use App\Domain\Collections\ResourceCostsCollection;
+use App\Domain\Models\Json\ResourceCosts\FixedResourceCost;
+use App\Domain\Models\MeasurableType;
+
 class FixedTargetBehavior extends DamageTypeBehavior
 {
     public function getMaxTargetCount(int $grade, ?int $fixedTargetCount)
@@ -43,5 +47,26 @@ class FixedTargetBehavior extends DamageTypeBehavior
     public function getResourceCostMagnitude(int $tier, ?int $targetsCount): float
     {
         return $tier * sqrt($targetsCount);
+    }
+
+    public function getResourceCosts(int $tier, ?int $targetsCount): ResourceCostsCollection
+    {
+        $resourceCosts = new ResourceCostsCollection();
+
+        if ($targetsCount === 1) {
+            return $resourceCosts;
+        }
+
+        $staminaAmount = 5 + ($tier * ($targetsCount**3));
+        $staminaCost = new FixedResourceCost(MeasurableType::STAMINA, $staminaAmount);
+        $resourceCosts->push($staminaCost);
+
+        if ($tier > 1) {
+            $manaAmount = 3 + ($tier * ($targetsCount**2));
+            $manaCost = new FixedResourceCost(MeasurableType::MANA, $manaAmount);
+            $resourceCosts->push($manaCost);
+        }
+
+        return $resourceCosts;
     }
 }
