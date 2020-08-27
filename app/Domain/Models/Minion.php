@@ -132,15 +132,6 @@ class Minion extends Model implements HasAttacks, RewardsChests
         return (int) ceil(sqrt($this->level)/4);
     }
 
-    public function getResourceCosts(int $attackTier, DamageTypeBehavior $damageTypeBehavior, ?int $targetsCount): ResourceCostsCollection
-    {
-        /*
-         * Minions don't spend resources on attacks since they don't have stamina or mana
-         * Might have to update this if we add attacks that cost health
-         */
-        return new ResourceCostsCollection();
-    }
-
     public function getMorphType(): string
     {
         return self::RELATION_MORPH_MAP_KEY;
