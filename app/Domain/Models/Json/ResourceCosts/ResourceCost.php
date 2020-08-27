@@ -6,8 +6,9 @@ namespace App\Domain\Models\Json\ResourceCosts;
 
 use App\Domain\Interfaces\SpendsResources;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
 
-abstract class ResourceCost implements Arrayable
+abstract class ResourceCost implements Arrayable, Jsonable
 {
     public const FIXED = 'fixed';
     public const PERCENT_AVAILABLE = 'percent-available';
@@ -54,5 +55,16 @@ abstract class ResourceCost implements Arrayable
     abstract public function getExpectedStaminaCost(): float;
 
     abstract public function getExpectedManaCost(): float;
+
+    /**
+     * Convert the object to its JSON representation.
+     *
+     * @param int $options
+     * @return string
+     */
+    public function toJson($options = 0)
+    {
+        return json_encode($this->toArray(), $options);
+    }
 
 }
