@@ -161,14 +161,6 @@ class Attack extends Model
         return $resourceCosts;
     }
 
-    public function getResourceCostsOld()
-    {
-        if ($this->hasAttacks) {
-            return $this->hasAttacks->getResourceCosts($this->tier, $this->damageType->getBehavior(), $this->targets_count);
-        }
-        return new ResourceCostsCollection();
-    }
-
     public function getRequirements()
     {
         // TODO

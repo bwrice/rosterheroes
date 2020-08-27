@@ -325,16 +325,6 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
             && $this->has_items_id === $hasItems->getMorphID();
     }
 
-    public function getResourceCosts(int $attackTier, DamageTypeBehavior $damageTypeBehavior, ?int $targetsCount): ResourceCostsCollection
-    {
-        if ($attackTier === 1 && $targetsCount === 1) {
-            return new ResourceCostsCollection();
-        }
-
-        $costMagnitude = $damageTypeBehavior->getResourceCostMagnitude($attackTier, $targetsCount);
-        return $this->getItemBaseBehavior()->getResourceCosts($attackTier, $costMagnitude);
-    }
-
     public function adjustResourceCosts(ResourceCostsCollection $resourceCosts): ResourceCostsCollection
     {
         return $this->getItemBaseBehavior()->adjustResourceCosts($resourceCosts);
