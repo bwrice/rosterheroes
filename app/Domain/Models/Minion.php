@@ -160,4 +160,9 @@ class Minion extends Model implements HasAttacks, RewardsChests
     {
         return 'Minion';
     }
+
+    public function adjustResourceCosts(ResourceCostsCollection $resourceCosts): ResourceCostsCollection
+    {
+        return $resourceCosts;
+    }
 }
