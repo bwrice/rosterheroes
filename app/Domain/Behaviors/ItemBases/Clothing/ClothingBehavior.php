@@ -52,4 +52,9 @@ abstract class ClothingBehavior extends ItemBaseBehavior
     {
         return new ResourceCostsCollection();
     }
+
+    public function adjustResourceCosts(ResourceCostsCollection $resourceCosts): ResourceCostsCollection
+    {
+        return $resourceCosts;
+    }
 }
