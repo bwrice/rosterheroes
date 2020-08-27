@@ -21,4 +21,6 @@ interface HasAttacks
     public function adjustResourceCostPercent(float $amount): float;
 
     public function getResourceCosts(int $attackTier, DamageTypeBehavior $damageTypeBehavior, ?int $targetsCount): ResourceCostsCollection;
+
+    public function adjustResourceCosts(ResourceCostsCollection $resourceCosts): ResourceCostsCollection;
 }
