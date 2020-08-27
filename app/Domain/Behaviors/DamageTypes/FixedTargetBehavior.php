@@ -61,11 +61,9 @@ class FixedTargetBehavior extends DamageTypeBehavior
         $staminaCost = new FixedResourceCost(MeasurableType::STAMINA, $staminaAmount);
         $resourceCosts->push($staminaCost);
 
-        if ($tier > 1) {
-            $manaAmount = 3 + ($tier * ($targetsCount**2));
-            $manaCost = new FixedResourceCost(MeasurableType::MANA, $manaAmount);
-            $resourceCosts->push($manaCost);
-        }
+        $manaAmount = 3 + ($tier * ($targetsCount**2));
+        $manaCost = new FixedResourceCost(MeasurableType::MANA, $manaAmount);
+        $resourceCosts->push($manaCost);
 
         return $resourceCosts;
     }
