@@ -45,11 +45,11 @@ class AreaOfEffectBehavior extends DamageTypeBehavior
     {
         $resourceCosts = new ResourceCostsCollection();
 
-        $staminaAmount = 10 + (2 * ($tier ** 2));
+        $staminaAmount = (int) ceil(10 + (25 * $tier**1.5));
         $staminaCost = new FixedResourceCost(MeasurableType::STAMINA, $staminaAmount);
         $resourceCosts->push($staminaCost);
 
-        $manaAmount = ceil(8 + (1.5 * ($tier ** 2)));
+        $manaAmount = (int) ceil(8 + (20 * $tier**1.5));
         $manaCost = new FixedResourceCost(MeasurableType::MANA, $manaAmount);
         $resourceCosts->push($manaCost);
 
