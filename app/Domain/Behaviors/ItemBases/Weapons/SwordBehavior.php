@@ -27,6 +27,9 @@ class SwordBehavior extends WeaponBehavior
     protected $staminaCostBase = 7.5;
     protected $manaCostBase = 2.3;
 
+    protected $staminaCostAdjustmentCoefficient = 1;
+    protected $manaCostAdjustmentCoefficient = 1;
+
     public function __construct(WeaponGroup $weaponGroup, SingleArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);

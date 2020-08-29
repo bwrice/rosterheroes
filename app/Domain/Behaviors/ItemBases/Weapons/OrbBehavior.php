@@ -27,6 +27,9 @@ class OrbBehavior extends WeaponBehavior
     protected $staminaCostBase = 4.8;
     protected $manaCostBase = 9;
 
+    protected $staminaCostAdjustmentCoefficient = .6;
+    protected $manaCostAdjustmentCoefficient = 1.55;
+
     public function __construct(WeaponGroup $weaponGroup, TwoArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);

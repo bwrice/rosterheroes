@@ -27,6 +27,9 @@ class DaggerBehavior extends WeaponBehavior
     protected $staminaCostBase = 5;
     protected $manaCostBase = 1.5;
 
+    protected $staminaCostAdjustmentCoefficient = .6;
+    protected $manaCostAdjustmentCoefficient = .6;
+
     public function __construct(WeaponGroup $weaponGroup, SingleArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);

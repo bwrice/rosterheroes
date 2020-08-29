@@ -26,6 +26,9 @@ class BowBehavior extends WeaponBehavior
     protected $staminaCostBase = 15;
     protected $manaCostBase = 4;
 
+    protected $staminaCostAdjustmentCoefficient = 2;
+    protected $manaCostAdjustmentCoefficient = 2;
+
     public function __construct(WeaponGroup $weaponGroup, TwoArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);

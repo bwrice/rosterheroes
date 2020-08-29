@@ -27,6 +27,9 @@ class TwoHandAxeBehavior extends WeaponBehavior
     protected $staminaCostBase = 14;
     protected $manaCostBase = 3.9;
 
+    protected $staminaCostAdjustmentCoefficient = 1.9;
+    protected $manaCostAdjustmentCoefficient = 1.9;
+
     public function __construct(WeaponGroup $weaponGroup, TwoArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);

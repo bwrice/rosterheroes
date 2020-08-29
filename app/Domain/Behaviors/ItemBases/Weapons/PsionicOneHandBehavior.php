@@ -27,6 +27,9 @@ class PsionicOneHandBehavior extends WeaponBehavior
     protected $staminaCostBase = 5.5;
     protected $manaCostBase = 6;
 
+    protected $staminaCostAdjustmentCoefficient = .75;
+    protected $manaCostAdjustmentCoefficient = 1.4;
+
     public function __construct(WeaponGroup $weaponGroup, SingleArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);

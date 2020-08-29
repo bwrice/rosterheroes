@@ -27,6 +27,9 @@ class AxeBehavior extends WeaponBehavior
     protected $staminaCostBase = 8;
     protected $manaCostBase = 2.5;
 
+    protected $staminaCostAdjustmentCoefficient = 1.25;
+    protected $manaCostAdjustmentCoefficient = 1.25;
+
     public function __construct(WeaponGroup $weaponGroup, SingleArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);

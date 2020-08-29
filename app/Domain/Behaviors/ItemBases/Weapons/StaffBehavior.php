@@ -27,6 +27,9 @@ class StaffBehavior extends WeaponBehavior
     protected $staminaCostBase = 6;
     protected $manaCostBase = 12;
 
+    protected $staminaCostAdjustmentCoefficient = 1.3;
+    protected $manaCostAdjustmentCoefficient = 2.85;
+
     public function __construct(WeaponGroup $weaponGroup, TwoArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);

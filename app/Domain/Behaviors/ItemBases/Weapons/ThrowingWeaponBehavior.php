@@ -28,6 +28,9 @@ class ThrowingWeaponBehavior extends WeaponBehavior
     protected $staminaCostBase = 8;
     protected $manaCostBase = 2.2;
 
+    protected $staminaCostAdjustmentCoefficient = 1.8;
+    protected $manaCostAdjustmentCoefficient = 1.8;
+
     public function __construct(WeaponGroup $weaponGroup, SingleArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);

@@ -27,6 +27,9 @@ class MaceBehavior extends WeaponBehavior
     protected $staminaCostBase = 9;
     protected $manaCostBase = 2.8;
 
+    protected $staminaCostAdjustmentCoefficient = 1.4;
+    protected $manaCostAdjustmentCoefficient = 1.4;
+
     public function __construct(WeaponGroup $weaponGroup, SingleArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);

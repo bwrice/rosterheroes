@@ -27,6 +27,9 @@ class CrossbowBehavior extends WeaponBehavior
     protected $staminaCostBase = 18;
     protected $manaCostBase = 4.5;
 
+    protected $staminaCostAdjustmentCoefficient = 2.2;
+    protected $manaCostAdjustmentCoefficient = 2.2;
+
     public function __construct(WeaponGroup $weaponGroup, TwoArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);

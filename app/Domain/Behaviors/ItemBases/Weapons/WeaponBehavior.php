@@ -25,8 +25,8 @@ abstract class WeaponBehavior extends ItemBaseBehavior
     protected $staminaCostBase = 1;
     protected $manaCostBase = 1;
 
-    protected $staminaCostAdjustmentCoefficient;
-    protected $manaCostAdjustmentCoefficient;
+    protected $staminaCostAdjustmentCoefficient = 1;
+    protected $manaCostAdjustmentCoefficient = 1;
 
     protected $validGearSlotTypes = [
         GearSlot::PRIMARY_ARM,

@@ -27,6 +27,9 @@ class PoleArmBehavior extends WeaponBehavior
     protected $staminaCostBase = 10;
     protected $manaCostBase = 3;
 
+    protected $staminaCostAdjustmentCoefficient = 1.7;
+    protected $manaCostAdjustmentCoefficient = 1.7;
+
     public function __construct(WeaponGroup $weaponGroup, TwoArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);
