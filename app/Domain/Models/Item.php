@@ -182,9 +182,8 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
 
     public function adjustCombatSpeed(float $speed): float
     {
-        $tierBonus = ($this->itemTypeTier() ** .5)/2;
         $materialBonus = $this->material->getSpeedModifierBonus();
-        $combatSpeed = $speed * (1 + $tierBonus + $materialBonus);
+        $combatSpeed = $speed * (1 + $materialBonus);
         $combatSpeed = $this->getItemBaseBehavior()->adjustCombatSpeed($combatSpeed, $this->getUsesItems());
         return $combatSpeed;
     }
