@@ -36,8 +36,8 @@ class WandBehavior extends WeaponBehavior
 
     protected function getMeasurablesDamageBonus(UsesItems $usesItems): float
     {
-        $aptitudeBonus = .0125 * $usesItems->getBuffedMeasurableAmount(MeasurableType::APTITUDE);
-        $intelligenceBonus = .0125 * $usesItems->getBuffedMeasurableAmount(MeasurableType::INTELLIGENCE);
+        $aptitudeBonus = .025 * $usesItems->getBuffedMeasurableAmount(MeasurableType::APTITUDE);
+        $intelligenceBonus = .025 * $usesItems->getBuffedMeasurableAmount(MeasurableType::INTELLIGENCE);
         return $aptitudeBonus + $intelligenceBonus;
     }
 }
