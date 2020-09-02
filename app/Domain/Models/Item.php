@@ -191,7 +191,7 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
 
     public function adjustBaseDamage(float $baseDamage): float
     {
-        $gradeBonus = $this->itemTypeTier()/10;
+        $gradeBonus = $this->itemTypeTier()/25;
         $materialBonus = $this->material->getBaseDamageModifierBonus();
         $baseDamage = $baseDamage * (1 + $gradeBonus + $materialBonus);
         $baseDamage = $this->getItemBaseBehavior()->adjustBaseDamage($baseDamage, $this->getUsesItems());
@@ -200,7 +200,7 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
 
     public function adjustDamageMultiplier(float $damageMultiplier): float
     {
-        $gradeBonus = $this->itemTypeTier()/10;
+        $gradeBonus = $this->itemTypeTier()/25;
         $materialBonus = $this->material->getDamageMultiplierModifierBonus();
         $damageMultiplier = $damageMultiplier * (1 + $gradeBonus + $materialBonus);
         $damageMultiplier = $this->getItemBaseBehavior()->adjustDamageMultiplier($damageMultiplier, $this->getUsesItems());
