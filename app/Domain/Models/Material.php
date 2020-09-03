@@ -26,17 +26,17 @@ class Material extends Model
 
     public function getSpeedModifierBonus()
     {
-        return ($this->grade**1.05)/300;
+        return log($this->grade, 100)/10;
     }
 
     public function getBaseDamageModifierBonus()
     {
-        return ($this->grade**1.05)/250;
+        return log($this->grade, 100)/4;
     }
 
     public function getDamageMultiplierModifierBonus()
     {
-        return ($this->grade**1.05)/250;
+        return log($this->grade, 100)/4;
     }
 
     public function getWeightModifier()
