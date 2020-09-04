@@ -50,11 +50,6 @@ abstract class ShieldGroupBehavior extends ItemBaseBehavior
         return $combatSpeed;
     }
 
-    public function getResourceCosts(int $attackTier, float $resourceCostMagnitude)
-    {
-        return new ResourceCostsCollection();
-    }
-
     public function adjustResourceCosts(ResourceCostsCollection $resourceCosts): ResourceCostsCollection
     {
         return $resourceCosts;

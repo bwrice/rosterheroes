@@ -78,8 +78,6 @@ abstract class ItemBaseBehavior
     abstract public function adjustDamageMultiplier(float $damageMultiplier, UsesItems $usesItems = null): float;
 
     abstract public function adjustCombatSpeed(float $combatSpeed, UsesItems $hasItems = null): float;
-
-    abstract public function getResourceCosts(int $attackTier, float $resourceCostMagnitude);
-
+    
     abstract public function adjustResourceCosts(ResourceCostsCollection $resourceCosts): ResourceCostsCollection;
 }

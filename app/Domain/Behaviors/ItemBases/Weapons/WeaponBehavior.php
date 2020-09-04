@@ -90,25 +90,10 @@ abstract class WeaponBehavior extends ItemBaseBehavior
 
     protected function getDamageMultiplierMeasurablesBonus(UsesItems $usesItems)
     {
-        return 2 * $this->getMeasurablesDamageBonus($usesItems);
+        return 4 * $this->getMeasurablesDamageBonus($usesItems);
     }
 
     abstract protected function getMeasurablesDamageBonus(UsesItems $usesItems): float;
-
-    public function getResourceCosts(int $attackTier, float $resourceCostMagnitude)
-    {
-        $staminaAmount = (int) ceil($this->staminaCostBase * $attackTier * $resourceCostMagnitude);
-        $staminaResourceCost = new FixedResourceCost(MeasurableType::STAMINA, $staminaAmount);
-        $resourceCosts = new ResourceCostsCollection([
-            $staminaResourceCost
-        ]);
-        if ($attackTier >= 2) {
-            $manaAmount = (int) ceil($this->manaCostBase * $attackTier * $resourceCostMagnitude);
-            $manaResourceCost = new FixedResourceCost(MeasurableType::MANA, $manaAmount);
-            $resourceCosts->push($manaResourceCost);
-        }
-        return $resourceCosts;
-    }
 
     public function adjustResourceCosts(ResourceCostsCollection $resourceCosts): ResourceCostsCollection
     {
