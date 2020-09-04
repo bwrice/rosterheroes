@@ -307,7 +307,7 @@ class ProcessCombatForSideQuestResultTest extends TestCase
         $sideQuestResult = $domainAction->execute($sideQuestResult);
         $this->assertNotNull($sideQuestResult);
         $victoryEvent = $sideQuestResult->sideQuestEvents()->where('event_type', '=', SideQuestEvent::TYPE_SIDE_QUEST_VICTORY)->first();
-        $this->assertNotNull($victoryEvent);
+        $this->assertNotNull($victoryEvent, "No victory event found");
         $events = $sideQuestResult->sideQuestEvents;
         foreach([
             SideQuestEvent::TYPE_HERO_DAMAGES_MINION,
@@ -389,72 +389,144 @@ class ProcessCombatForSideQuestResultTest extends TestCase
         ];
     }
 
-//    /**
-//     * @test
-//     * @param $referenceID
-//     * @throws \Throwable
-//     * @dataProvider provides_a_beginner_squad_will_be_defeated_by_medium_difficulty_side_quests
-//     */
-//    public function a_beginner_squad_will_be_defeated_by_medium_difficulty_side_quests($referenceID)
-//    {
-//        $heroFactory = HeroFactory::new();
-//        $squad = SquadFactory::new()->withHeroes(collect([
-//            $heroFactory->beginnerWarrior()->withCompletedGamePlayerSpirit(),
-//            $heroFactory->beginnerWarrior()->withCompletedGamePlayerSpirit(),
-//            $heroFactory->beginnerRanger()->withCompletedGamePlayerSpirit(),
-//            $heroFactory->beginnerSorcerer()->withCompletedGamePlayerSpirit(),
-//        ]))->create();
-//
-//        $campaignStop = CampaignStopFactory::new()->withCampaign(CampaignFactory::new()->withSquadID($squad->id))->create();
-//
-//        /** @var SideQuest $sideQuest */
-//        $sideQuest = SideQuest::query()->whereHas('sideQuestBlueprint', function (Builder $builder) use ($referenceID) {
-//            return $builder->where('reference_id', '=', $referenceID);
-//        })->first();
-//
-//        $sideQuestResult = SideQuestResultFactory::new()->create([
-//            'campaign_stop_id' => $campaignStop->id,
-//            'side_quest_id' => $sideQuest->id
-//        ]);
-//
-//        /** @var ProcessCombatForSideQuestResult $domainAction */
-//        $domainAction = app(ProcessCombatForSideQuestResult::class);
-//        $sideQuestResult = $domainAction->execute($sideQuestResult);
-//        $this->assertNotNull($sideQuestResult);
-//        $defeatEvent = $sideQuestResult->sideQuestEvents()->where('event_type', '=', SideQuestEvent::TYPE_SIDE_QUEST_DEFEAT)->first();
-//        $this->assertNotNull($defeatEvent);
-//        $events = $sideQuestResult->sideQuestEvents;
-//        foreach([
-//                    SideQuestEvent::TYPE_HERO_DAMAGES_MINION,
-//                    SideQuestEvent::TYPE_MINION_DAMAGES_HERO,
-//                    SideQuestEvent::TYPE_MINION_KILLS_HERO
-//                ] as $eventType) {
-//            $filtered = $events->filter(function (SideQuestEvent $event) use ($eventType) {
-//                return $event->event_type === $eventType;
-//            });
-//            $this->assertGreaterThan(0, $filtered->count(), 'Has events of type: ' . $eventType);
-//        }
-//        $this->assertGreaterThan(15, $events->count());
-//        $this->assertLessThan(250, $events->count());
-//    }
-//
-//    public function provides_a_beginner_squad_will_be_defeated_by_medium_difficulty_side_quests()
-//    {
-//        return [
-//            [
-//                'referenceID' => 'H',
-//            ],
-//            [
-//                'referenceID' => 'L',
-//            ],
-//            [
-//                'referenceID' => 'T',
-//            ],
-//            [
-//                'referenceID' => 'V',
-//            ],
-//        ];
-//    }
+    /**
+     * @test
+     * @param $minionsArrays
+     * @throws \Throwable
+     * @dataProvider provides_a_beginner_squad_will_be_defeated_by_medium_difficulty_side_quests
+     */
+    public function a_beginner_squad_will_be_defeated_by_medium_difficulty_side_quests($minionsArrays)
+    {
+        $heroFactory = HeroFactory::new();
+        $squad = SquadFactory::new()->withHeroes(collect([
+            $heroFactory->beginnerWarrior()->withCompletedGamePlayerSpirit(),
+            $heroFactory->beginnerWarrior()->withCompletedGamePlayerSpirit(),
+            $heroFactory->beginnerRanger()->withCompletedGamePlayerSpirit(),
+            $heroFactory->beginnerSorcerer()->withCompletedGamePlayerSpirit(),
+        ]))->create();
+
+        $campaignStop = CampaignStopFactory::new()->withCampaign(CampaignFactory::new()->withSquadID($squad->id))->create();
+
+        $sideQuest = SideQuestFactory::new()->forQuestID($campaignStop->quest_id)->create();
+
+        collect($minionsArrays)->each(function ($minionArray) use ($sideQuest) {
+            $minion = Minion::query()->where('name', '=', $minionArray['name'])->firstOrFail();
+            $sideQuest->minions()->save($minion, [
+                'count' => $minionArray['count']
+            ]);
+        });
+
+        $sideQuestResult = SideQuestResultFactory::new()->create([
+            'campaign_stop_id' => $campaignStop->id,
+            'side_quest_id' => $sideQuest->id
+        ]);
+
+        /** @var ProcessCombatForSideQuestResult $domainAction */
+        $domainAction = app(ProcessCombatForSideQuestResult::class);
+        $sideQuestResult = $domainAction->execute($sideQuestResult);
+        $this->assertNotNull($sideQuestResult);
+        $defeatEvent = $sideQuestResult->sideQuestEvents()->where('event_type', '=', SideQuestEvent::TYPE_SIDE_QUEST_DEFEAT)->first();
+        $this->assertNotNull($defeatEvent, "No defeat event found");
+        $events = $sideQuestResult->sideQuestEvents;
+        foreach([
+                    SideQuestEvent::TYPE_HERO_DAMAGES_MINION,
+                    SideQuestEvent::TYPE_MINION_DAMAGES_HERO,
+                    SideQuestEvent::TYPE_MINION_KILLS_HERO
+                ] as $eventType) {
+            $filtered = $events->filter(function (SideQuestEvent $event) use ($eventType) {
+                return $event->event_type === $eventType;
+            });
+            $this->assertGreaterThan(0, $filtered->count(), 'Has events of type: ' . $eventType);
+        }
+        $this->assertGreaterThan(15, $events->count());
+        $this->assertLessThan(250, $events->count());
+    }
+
+    public function provides_a_beginner_squad_will_be_defeated_by_medium_difficulty_side_quests()
+    {
+        return [
+            'medium skeleton group' => [
+                'minionsArrays' => [
+                    [
+                        'name' => 'Skeleton Guard',
+                        'count' => 2
+                    ],
+                    [
+                        'name' => 'Skeleton Soldier',
+                        'count' => 3
+                    ],
+                    [
+                        'name' => 'Skeleton Archer',
+                        'count' => 2
+                    ],
+                    [
+                        'name' => 'Skeleton Mage',
+                        'count' => 2
+                    ]
+                ]
+            ],
+            'medium werewolves' => [
+                'minionsArrays' => [
+                    [
+                        'name' => 'Werewolf',
+                        'count' => 3
+                    ],
+                    [
+                        'name' => 'Werewolf Thrasher',
+                        'count' => 2
+                    ],
+                    [
+                        'name' => 'Werewolf Mangler',
+                        'count' => 2
+                    ]
+                ]
+            ],
+            'multiple golems' => [
+                'minionsArrays' => [
+                    [
+                        'name' => 'Amber Golem',
+                        'count' => 3
+                    ],
+                    [
+                        'name' => 'Coral Golem',
+                        'count' => 2
+                    ]
+                ]
+            ],
+            'medium vampires' => [
+                'minionsArrays' => [
+                    [
+                        'name' => 'Vampire',
+                        'count' => 2
+                    ],
+                    [
+                        'name' => 'Vampire Veteran',
+                        'count' => 2
+                    ]
+                ]
+            ],
+            'medium group of imps' => [
+                'minionsArrays' => [
+                    [
+                        'name' => 'Gray Imp',
+                        'count' => 6
+                    ],
+                    [
+                        'name' => 'Yellow Imp',
+                        'count' => 5
+                    ],
+                    [
+                        'name' => 'Green Imp',
+                        'count' => 4
+                    ],
+                    [
+                        'name' => 'Orange Imp',
+                        'count' => 3
+                    ]
+                ]
+            ]
+        ];
+    }
 
     /**
      * @test
