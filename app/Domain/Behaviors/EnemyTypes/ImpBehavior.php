@@ -15,7 +15,7 @@ class ImpBehavior extends EnemyTypeBehavior
      */
     public function getStartingHealth(int $enemyLevel, CombatPosition $startingCombatPosition): int
     {
-        $base = 80;
+        $base = 120;
         $levelModifier = 14;
         return $base + ($levelModifier * ($enemyLevel ** 1.15));
     }
@@ -39,7 +39,7 @@ class ImpBehavior extends EnemyTypeBehavior
      */
     protected function adjustDamageProperty(float $damageProperty, int $enemyLevel)
     {
-        return $damageProperty * (1 + (.038 * ($enemyLevel ** 1.28)));
+        return $damageProperty * (1 + (.045 * ($enemyLevel ** 1.28)));
     }
 
     /**
@@ -72,7 +72,7 @@ class ImpBehavior extends EnemyTypeBehavior
      */
     public function adjustCombatSpeed(float $combatSpeed, int $enemyLevel, CombatPosition $startingCombatPosition): float
     {
-        return $combatSpeed * (1.32 + $enemyLevel/225);
+        return $combatSpeed * (1.5 + $enemyLevel/225);
     }
 
     /**
