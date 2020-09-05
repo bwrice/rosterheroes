@@ -5,6 +5,7 @@ namespace App\Domain\Models;
 use App\Domain\Models\Squad;
 use App\Domain\Models\SquadRank;
 use App\Domain\Models\Week;
+use App\Domain\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -22,6 +23,10 @@ use Illuminate\Database\Eloquent\Model;
  */
 class SquadSnapshot extends Model
 {
+    use HasUuid;
+
+    protected $guarded = [];
+
     public function week()
     {
         return $this->belongsTo(Week::class);
