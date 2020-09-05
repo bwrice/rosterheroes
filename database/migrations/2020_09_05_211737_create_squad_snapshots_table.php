@@ -15,6 +15,7 @@ class CreateSquadSnapshotsTable extends Migration
     {
         Schema::create('squad_snapshots', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->uuid('uuid');
             $table->integer('week_id')->unsigned();
             $table->bigInteger('squad_id')->unsigned();
             $table->bigInteger('experience')->unsigned();
