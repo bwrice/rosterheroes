@@ -48,11 +48,11 @@ class DispersedBehavior extends DamageTypeBehavior
     {
         $resourceCosts = new ResourceCostsCollection();
 
-        $staminaAmount = 14 + (2 * ($tier ** 2));
+        $staminaAmount = 14 + (2 * ($tier ** 2.5));
         $staminaCost = new FixedResourceCost(MeasurableType::STAMINA, $staminaAmount);
         $resourceCosts->push($staminaCost);
 
-        $manaAmount = ceil(10 + (1.5 * ($tier ** 2)));
+        $manaAmount = ceil(10 + (1.5 * ($tier ** 2.5)));
         $manaCost = new FixedResourceCost(MeasurableType::MANA, $manaAmount);
         $resourceCosts->push($manaCost);
 
