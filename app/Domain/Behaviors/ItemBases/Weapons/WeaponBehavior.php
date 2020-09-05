@@ -9,7 +9,6 @@ use App\Domain\Behaviors\ItemBases\Weapons\ArmBehaviors\ArmBehaviorInterface;
 use App\Domain\Behaviors\ItemGroup\WeaponGroup;
 use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Interfaces\UsesItems;
-use App\Domain\Models\Json\ResourceCosts\FixedResourceCost;
 use App\Domain\Models\Json\ResourceCosts\ResourceCost;
 use App\Domain\Models\MeasurableType;
 use App\Domain\Models\Support\GearSlots\GearSlot;
