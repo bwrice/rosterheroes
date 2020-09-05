@@ -44,6 +44,6 @@ class SetupNextWeekAction
         /*
          * Make next week current, but delay to allow other jobs to catch up
          */
-        MakeWeekCurrentJob::dispatch($nextWeek)->delay(now()->addMinutes(15));
+        MakeWeekCurrentJob::dispatch($nextWeek)->delay(now()->addMinutes(5));
     }
 }
