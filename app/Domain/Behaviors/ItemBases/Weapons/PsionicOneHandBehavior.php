@@ -27,6 +27,9 @@ class PsionicOneHandBehavior extends WeaponBehavior
     protected $staminaCostBase = 5.5;
     protected $manaCostBase = 6;
 
+    protected $staminaCostAdjustmentCoefficient = .75;
+    protected $manaCostAdjustmentCoefficient = 1.4;
+
     public function __construct(WeaponGroup $weaponGroup, SingleArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);
@@ -34,9 +37,9 @@ class PsionicOneHandBehavior extends WeaponBehavior
 
     protected function getMeasurablesDamageBonus(UsesItems $usesItems): float
     {
-        $agilityBonus = .007 * $usesItems->getBuffedMeasurableAmount(MeasurableType::AGILITY);
-        $aptitudeBonus = .007 * $usesItems->getBuffedMeasurableAmount(MeasurableType::APTITUDE);
-        $intelligenceBonus = .007 * $usesItems->getBuffedMeasurableAmount(MeasurableType::INTELLIGENCE);
+        $agilityBonus = .014 * $usesItems->getBuffedMeasurableAmount(MeasurableType::AGILITY);
+        $aptitudeBonus = .014 * $usesItems->getBuffedMeasurableAmount(MeasurableType::APTITUDE);
+        $intelligenceBonus = .014 * $usesItems->getBuffedMeasurableAmount(MeasurableType::INTELLIGENCE);
         return $agilityBonus + $aptitudeBonus + $intelligenceBonus;
     }
 }

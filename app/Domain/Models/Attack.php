@@ -13,6 +13,7 @@ use App\Domain\Models\Json\ResourceCosts\PercentResourceCost;
 use App\Domain\Models\Json\ResourceCosts\ResourceCost;
 use App\Domain\QueryBuilders\AttackQueryBuilder;
 use App\Domain\Traits\HasConfigAttributes;
+use App\Domain\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Symfony\Component\Yaml\Yaml;
@@ -40,6 +41,7 @@ use Symfony\Component\Yaml\Yaml;
  */
 class Attack extends Model
 {
+    use HasUuid;
     use HasConfigAttributes;
 
     protected $guarded = [];
@@ -152,10 +154,11 @@ class Attack extends Model
 
     public function getResourceCosts()
     {
+        $resourceCosts = $this->damageType->getBehavior()->getResourceCosts($this->tier, $this->targets_count);
         if ($this->hasAttacks) {
-            return $this->hasAttacks->getResourceCosts($this->tier, $this->damageType->getBehavior(), $this->targets_count);
+            return $this->hasAttacks->adjustResourceCosts($resourceCosts);
         }
-        return new ResourceCostsCollection();
+        return $resourceCosts;
     }
 
     public function getRequirements()

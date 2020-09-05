@@ -10,7 +10,6 @@ use App\Domain\Collections\ItemCollection;
 use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Interfaces\FillsGearSlots;
 use App\Domain\Interfaces\HasAttacks;
-use App\Domain\Interfaces\HasExpectedFantasyPoints;
 use App\Domain\Interfaces\HasItems;
 use App\Domain\Interfaces\Morphable;
 use App\Domain\Interfaces\UsesItems;
@@ -183,16 +182,15 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
 
     public function adjustCombatSpeed(float $speed): float
     {
-        $tierBonus = ($this->itemTypeTier() ** .5)/2;
         $materialBonus = $this->material->getSpeedModifierBonus();
-        $combatSpeed = $speed * (1 + $tierBonus + $materialBonus);
+        $combatSpeed = $speed * (1 + $materialBonus);
         $combatSpeed = $this->getItemBaseBehavior()->adjustCombatSpeed($combatSpeed, $this->getUsesItems());
         return $combatSpeed;
     }
 
     public function adjustBaseDamage(float $baseDamage): float
     {
-        $gradeBonus = $this->itemTypeTier()/10;
+        $gradeBonus = $this->itemTypeTier()/25;
         $materialBonus = $this->material->getBaseDamageModifierBonus();
         $baseDamage = $baseDamage * (1 + $gradeBonus + $materialBonus);
         $baseDamage = $this->getItemBaseBehavior()->adjustBaseDamage($baseDamage, $this->getUsesItems());
@@ -201,7 +199,7 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
 
     public function adjustDamageMultiplier(float $damageMultiplier): float
     {
-        $gradeBonus = $this->itemTypeTier()/10;
+        $gradeBonus = $this->itemTypeTier()/25;
         $materialBonus = $this->material->getDamageMultiplierModifierBonus();
         $damageMultiplier = $damageMultiplier * (1 + $gradeBonus + $materialBonus);
         $damageMultiplier = $this->getItemBaseBehavior()->adjustDamageMultiplier($damageMultiplier, $this->getUsesItems());
@@ -326,14 +324,9 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
             && $this->has_items_id === $hasItems->getMorphID();
     }
 
-    public function getResourceCosts(int $attackTier, DamageTypeBehavior $damageTypeBehavior, ?int $targetsCount): ResourceCostsCollection
+    public function adjustResourceCosts(ResourceCostsCollection $resourceCosts): ResourceCostsCollection
     {
-        if ($attackTier === 1 && $targetsCount === 1) {
-            return new ResourceCostsCollection();
-        }
-
-        $costMagnitude = $damageTypeBehavior->getResourceCostMagnitude($attackTier, $targetsCount);
-        return $this->getItemBaseBehavior()->getResourceCosts($attackTier, $costMagnitude);
+        return $this->getItemBaseBehavior()->adjustResourceCosts($resourceCosts);
     }
 
     /**

@@ -27,6 +27,9 @@ class TwoHandSwordBehavior extends WeaponBehavior
     protected $staminaCostBase = 13;
     protected $manaCostBase = 3.7;
 
+    protected $staminaCostAdjustmentCoefficient = 1.8;
+    protected $manaCostAdjustmentCoefficient = 1.8;
+
     public function __construct(WeaponGroup $weaponGroup, TwoArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);
@@ -34,8 +37,8 @@ class TwoHandSwordBehavior extends WeaponBehavior
 
     protected function getMeasurablesDamageBonus(UsesItems $usesItems): float
     {
-        $strengthBonus = .007 * $usesItems->getBuffedMeasurableAmount(MeasurableType::STRENGTH);
-        $valorBonus = .02 * $usesItems->getBuffedMeasurableAmount(MeasurableType::VALOR);
+        $strengthBonus = .014 * $usesItems->getBuffedMeasurableAmount(MeasurableType::STRENGTH);
+        $valorBonus = .04 * $usesItems->getBuffedMeasurableAmount(MeasurableType::VALOR);
         return $strengthBonus + $valorBonus;
     }
 }

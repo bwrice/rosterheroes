@@ -16,7 +16,7 @@ class WitchBehavior extends EnemyTypeBehavior
     public function getStartingHealth(int $enemyLevel, CombatPosition $startingCombatPosition): int
     {
         $base = 250;
-        $levelModifier = 7;
+        $levelModifier = 10;
         switch ($startingCombatPosition->name) {
             case CombatPosition::FRONT_LINE:
                 $base += 450;
@@ -27,7 +27,7 @@ class WitchBehavior extends EnemyTypeBehavior
                 $levelModifier += 5;
                 break;
         }
-        return $base + ($levelModifier * ($enemyLevel ** 1.15));
+        return $base + ($levelModifier * ($enemyLevel ** 1.16));
     }
 
     /**

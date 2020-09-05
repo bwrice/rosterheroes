@@ -53,9 +53,4 @@ class EyeWearBehavior extends ItemBaseBehavior
     {
         return $combatSpeed;
     }
-
-    public function getResourceCosts(int $attackTier, float $resourceCostMagnitude)
-    {
-        return new ResourceCostsCollection();
-    }
 }

@@ -26,42 +26,42 @@ class Material extends Model
 
     public function getSpeedModifierBonus()
     {
-        return $this->grade/400;
+        return log($this->grade, 100)/10;
     }
 
     public function getBaseDamageModifierBonus()
     {
-        return $this->grade/50;
+        return log($this->grade, 100)/4;
     }
 
     public function getDamageMultiplierModifierBonus()
     {
-        return $this->grade/200;
+        return log($this->grade, 100)/4;
     }
 
     public function getWeightModifier()
     {
-        $weightModifier = 1 + $this->grade/100;
+        $weightModifier = 1 + ($this->grade**1.2)/200;
         $weightModifier *=  $this->materialType->getWeightModifier();
         return $weightModifier;
     }
 
     public function getProtectionModifier()
     {
-        $protectionModifier = 1 + $this->grade/200;
+        $protectionModifier = 1 + ($this->grade**1.12)/200;
         $protectionModifier *= $this->materialType->getProtectionModifier();
         return $protectionModifier;
     }
 
     public function getBlockChanceModifier()
     {
-        $blockChanceModifier = 1 + $this->grade/300;
+        $blockChanceModifier = 1 + ($this->grade**1.1)/250;
         return $blockChanceModifier;
     }
 
     public function getValueModifier()
     {
-        $valueModifier = 1 + $this->grade/100;
+        $valueModifier = 1 + ($this->grade**1.2)/100;
         return $valueModifier;
     }
 }

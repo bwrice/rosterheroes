@@ -27,6 +27,9 @@ class StaffBehavior extends WeaponBehavior
     protected $staminaCostBase = 6;
     protected $manaCostBase = 12;
 
+    protected $staminaCostAdjustmentCoefficient = 1.3;
+    protected $manaCostAdjustmentCoefficient = 2.85;
+
     public function __construct(WeaponGroup $weaponGroup, TwoArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);
@@ -34,9 +37,9 @@ class StaffBehavior extends WeaponBehavior
 
     protected function getMeasurablesDamageBonus(UsesItems $usesItems): float
     {
-        $valorBonus = .006 * $usesItems->getBuffedMeasurableAmount(MeasurableType::VALOR);
-        $aptitudeBonus = .006 * $usesItems->getBuffedMeasurableAmount(MeasurableType::APTITUDE);
-        $intelligenceBonus = .012 * $usesItems->getBuffedMeasurableAmount(MeasurableType::INTELLIGENCE);
+        $valorBonus = .012 * $usesItems->getBuffedMeasurableAmount(MeasurableType::VALOR);
+        $aptitudeBonus = .012 * $usesItems->getBuffedMeasurableAmount(MeasurableType::APTITUDE);
+        $intelligenceBonus = .022 * $usesItems->getBuffedMeasurableAmount(MeasurableType::INTELLIGENCE);
         return $valorBonus + $aptitudeBonus + $intelligenceBonus;
     }
 }

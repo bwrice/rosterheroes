@@ -10,8 +10,14 @@
 |
 */
 
+use App\Http\Controllers\AttackContentController;
 use App\Domain\Models\Game;
 use App\Facades\CurrentWeek;
+use App\Http\Controllers\ChestBlueprintContentController;
+use App\Http\Controllers\ItemBlueprintContentController;
+use App\Http\Controllers\ItemTypeContentController;
+use App\Http\Controllers\MinionContentController;
+use App\Http\Controllers\SyncItemTypesController;
 use App\Http\Controllers\UnsubscribeToEmailsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\ForgotPasswordController;
@@ -21,8 +27,12 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\CommandCenterController;
 use App\Http\Controllers\ContactSubmissionController;
+use App\Http\Controllers\ContentController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\SquadController;
+use App\Http\Controllers\SyncAttacksController;
+use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\ContentMiddleware;
 
 
 /*
@@ -99,6 +109,71 @@ Route::get('/faq', [PagesController::class, 'faq'])->name('faq');
 Route::get('/squads/create', [SquadController::class, 'create'])->name('create-squad');
 
 Route::get('/command-center/{squadSlug}/{subPage?}', [CommandCenterController::class, 'show'])->where('subPage', '.*')->name('command-center');
+
+
+/*
+ * ADMIN
+ */
+Route::middleware([AdminMiddleware::class])->prefix('admin')->group(function () {
+
+    Route::prefix('content')->group(function () {
+
+        Route::get('/', [ContentController::class, 'show']);
+
+        Route::prefix('attacks')->group(function () {
+
+            Route::get('/', [AttackContentController::class, 'index']);
+            Route::post('/sync', SyncAttacksController::class);
+
+            Route::middleware([ContentMiddleware::class])->group(function () {
+
+                Route::get('/create', [AttackContentController::class, 'create']);
+                Route::post('/', [AttackContentController::class, 'store']);
+                Route::get('/{attackUuid}/edit', [AttackContentController::class, 'edit']);
+                Route::put('/{attackUuid}', [AttackContentController::class, 'update']);
+            });
+        });
+
+        Route::prefix('item-types')->group(function () {
+
+            Route::get('/', [ItemTypeContentController::class, 'index']);
+            Route::post('/sync', SyncItemTypesController::class);
+
+            Route::middleware([ContentMiddleware::class])->group(function () {
+
+                Route::get('/{itemTypeUuid}/edit', [ItemTypeContentController::class, 'edit']);
+                Route::put('/{itemTypeUuid}', [ItemTypeContentController::class, 'update']);
+            });
+        });
+
+        Route::prefix('item-blueprints')->group(function () {
+
+            Route::get('/', [ItemBlueprintContentController::class, 'index']);
+
+            Route::middleware([ContentMiddleware::class])->group(function () {
+                //
+            });
+        });
+
+        Route::prefix('chest-blueprints')->group(function () {
+
+            Route::get('/', [ChestBlueprintContentController::class, 'index']);
+
+            Route::middleware([ContentMiddleware::class])->group(function () {
+                //
+            });
+        });
+
+        Route::prefix('minions')->group(function () {
+
+            Route::get('/', [MinionContentController::class, 'index']);
+
+            Route::middleware([ContentMiddleware::class])->group(function () {
+                //
+            });
+        });
+    });
+});
 
 if (! function_exists('myHelper')) {
     function myHelper() {

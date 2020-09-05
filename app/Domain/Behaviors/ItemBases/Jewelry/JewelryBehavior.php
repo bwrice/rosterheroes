@@ -48,8 +48,8 @@ abstract class JewelryBehavior extends ItemBaseBehavior
         return $combatSpeed;
     }
 
-    public function getResourceCosts(int $attackTier, float $resourceCostMagnitude)
+    public function adjustResourceCosts(ResourceCostsCollection $resourceCosts): ResourceCostsCollection
     {
-        return new ResourceCostsCollection();
+        return $resourceCosts;
     }
 }

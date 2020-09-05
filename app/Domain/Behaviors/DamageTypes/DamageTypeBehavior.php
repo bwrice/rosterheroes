@@ -4,6 +4,8 @@
 namespace App\Domain\Behaviors\DamageTypes;
 
 
+use App\Domain\Collections\ResourceCostsCollection;
+
 abstract class DamageTypeBehavior
 {
     abstract public function getMaxTargetCount(int $grade, ?int $fixedTargetCount);
@@ -17,4 +19,6 @@ abstract class DamageTypeBehavior
     abstract public function getInitialCombatSpeed(int $tier, ?int $targetsCount): float;
 
     abstract public function getResourceCostMagnitude(int $tier, ?int $targetsCount): float;
+
+    abstract public function getResourceCosts(int $tier, ?int $targetsCount): ResourceCostsCollection;
 }

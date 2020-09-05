@@ -27,6 +27,9 @@ class SwordBehavior extends WeaponBehavior
     protected $staminaCostBase = 7.5;
     protected $manaCostBase = 2.3;
 
+    protected $staminaCostAdjustmentCoefficient = 1;
+    protected $manaCostAdjustmentCoefficient = 1;
+
     public function __construct(WeaponGroup $weaponGroup, SingleArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);
@@ -34,9 +37,9 @@ class SwordBehavior extends WeaponBehavior
 
     protected function getMeasurablesDamageBonus(UsesItems $usesItems): float
     {
-        $strengthBonus = .007 * $usesItems->getBuffedMeasurableAmount(MeasurableType::STRENGTH);
-        $valorBonus = .007 * $usesItems->getBuffedMeasurableAmount(MeasurableType::VALOR);
-        $agilityBonus = .007 * $usesItems->getBuffedMeasurableAmount(MeasurableType::AGILITY);
+        $strengthBonus = .014 * $usesItems->getBuffedMeasurableAmount(MeasurableType::STRENGTH);
+        $valorBonus = .014 * $usesItems->getBuffedMeasurableAmount(MeasurableType::VALOR);
+        $agilityBonus = .014 * $usesItems->getBuffedMeasurableAmount(MeasurableType::AGILITY);
         return $strengthBonus + $valorBonus + $agilityBonus;
     }
 }

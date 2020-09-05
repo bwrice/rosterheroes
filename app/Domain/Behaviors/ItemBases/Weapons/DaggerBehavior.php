@@ -27,6 +27,9 @@ class DaggerBehavior extends WeaponBehavior
     protected $staminaCostBase = 5;
     protected $manaCostBase = 1.5;
 
+    protected $staminaCostAdjustmentCoefficient = .6;
+    protected $manaCostAdjustmentCoefficient = .6;
+
     public function __construct(WeaponGroup $weaponGroup, SingleArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);
@@ -34,8 +37,8 @@ class DaggerBehavior extends WeaponBehavior
 
     protected function getMeasurablesDamageBonus(UsesItems $usesItems): float
     {
-        $agilityBonus = .0125 * $usesItems->getBuffedMeasurableAmount(MeasurableType::AGILITY);
-        $focusBonus = .0125 * $usesItems->getBuffedMeasurableAmount(MeasurableType::FOCUS);
+        $agilityBonus = .025 * $usesItems->getBuffedMeasurableAmount(MeasurableType::AGILITY);
+        $focusBonus = .025 * $usesItems->getBuffedMeasurableAmount(MeasurableType::FOCUS);
         return $agilityBonus + $focusBonus;
     }
 }

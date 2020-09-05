@@ -26,6 +26,9 @@ class WandBehavior extends WeaponBehavior
     protected $staminaCostBase = 3.2;
     protected $manaCostBase = 7;
 
+    protected $staminaCostAdjustmentCoefficient = .65;
+    protected $manaCostAdjustmentCoefficient = 1.25;
+
     public function __construct(WeaponGroup $weaponGroup, SingleArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);
@@ -33,8 +36,8 @@ class WandBehavior extends WeaponBehavior
 
     protected function getMeasurablesDamageBonus(UsesItems $usesItems): float
     {
-        $aptitudeBonus = .0125 * $usesItems->getBuffedMeasurableAmount(MeasurableType::APTITUDE);
-        $intelligenceBonus = .0125 * $usesItems->getBuffedMeasurableAmount(MeasurableType::INTELLIGENCE);
+        $aptitudeBonus = .025 * $usesItems->getBuffedMeasurableAmount(MeasurableType::APTITUDE);
+        $intelligenceBonus = .025 * $usesItems->getBuffedMeasurableAmount(MeasurableType::INTELLIGENCE);
         return $aptitudeBonus + $intelligenceBonus;
     }
 }

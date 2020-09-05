@@ -27,6 +27,9 @@ class AxeBehavior extends WeaponBehavior
     protected $staminaCostBase = 8;
     protected $manaCostBase = 2.5;
 
+    protected $staminaCostAdjustmentCoefficient = 1.25;
+    protected $manaCostAdjustmentCoefficient = 1.25;
+
     public function __construct(WeaponGroup $weaponGroup, SingleArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);
@@ -34,8 +37,8 @@ class AxeBehavior extends WeaponBehavior
 
     protected function getMeasurablesDamageBonus(UsesItems $usesItems): float
     {
-        $strengthBonus = .0125 * $usesItems->getBuffedMeasurableAmount(MeasurableType::STRENGTH);
-        $valorBonus = .0125 * $usesItems->getBuffedMeasurableAmount(MeasurableType::VALOR);
+        $strengthBonus = .025 * $usesItems->getBuffedMeasurableAmount(MeasurableType::STRENGTH);
+        $valorBonus = .025 * $usesItems->getBuffedMeasurableAmount(MeasurableType::VALOR);
         return $strengthBonus + $valorBonus;
     }
 }

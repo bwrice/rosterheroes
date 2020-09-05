@@ -26,6 +26,9 @@ class BowBehavior extends WeaponBehavior
     protected $staminaCostBase = 15;
     protected $manaCostBase = 4;
 
+    protected $staminaCostAdjustmentCoefficient = 2;
+    protected $manaCostAdjustmentCoefficient = 2;
+
     public function __construct(WeaponGroup $weaponGroup, TwoArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);
@@ -33,9 +36,9 @@ class BowBehavior extends WeaponBehavior
 
     protected function getMeasurablesDamageBonus(UsesItems $usesItems): float
     {
-        $strengthBonus = .006 * $usesItems->getBuffedMeasurableAmount(MeasurableType::STRENGTH);
-        $agilityBonus = .008 * $usesItems->getBuffedMeasurableAmount(MeasurableType::AGILITY);
-        $focusBonus = .008 * $usesItems->getBuffedMeasurableAmount(MeasurableType::FOCUS);
+        $strengthBonus = .012 * $usesItems->getBuffedMeasurableAmount(MeasurableType::STRENGTH);
+        $agilityBonus = .015 * $usesItems->getBuffedMeasurableAmount(MeasurableType::AGILITY);
+        $focusBonus = .015 * $usesItems->getBuffedMeasurableAmount(MeasurableType::FOCUS);
         return $strengthBonus + $agilityBonus + $focusBonus;
     }
 }

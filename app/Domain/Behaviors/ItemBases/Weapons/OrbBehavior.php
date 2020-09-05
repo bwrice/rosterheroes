@@ -27,6 +27,9 @@ class OrbBehavior extends WeaponBehavior
     protected $staminaCostBase = 4.8;
     protected $manaCostBase = 9;
 
+    protected $staminaCostAdjustmentCoefficient = .6;
+    protected $manaCostAdjustmentCoefficient = 1.55;
+
     public function __construct(WeaponGroup $weaponGroup, TwoArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);
@@ -34,9 +37,9 @@ class OrbBehavior extends WeaponBehavior
 
     protected function getMeasurablesDamageBonus(UsesItems $usesItems): float
     {
-        $focusBonus = .007 * $usesItems->getBuffedMeasurableAmount(MeasurableType::FOCUS);
-        $aptitudeBonus = .007 * $usesItems->getBuffedMeasurableAmount(MeasurableType::APTITUDE);
-        $intelligenceBonus = .007 * $usesItems->getBuffedMeasurableAmount(MeasurableType::INTELLIGENCE);
+        $focusBonus = .014 * $usesItems->getBuffedMeasurableAmount(MeasurableType::FOCUS);
+        $aptitudeBonus = .014 * $usesItems->getBuffedMeasurableAmount(MeasurableType::APTITUDE);
+        $intelligenceBonus = .014 * $usesItems->getBuffedMeasurableAmount(MeasurableType::INTELLIGENCE);
         return $focusBonus + $aptitudeBonus + $intelligenceBonus;
     }
 }

@@ -171,6 +171,60 @@ if (! function_exists('getDefaultNPCConfig')) {
                         'h12345'
                     ]
                 ],
+                [
+                    'name' => 'skull crushers',
+                    'heroes' => [
+                        'hammer man',
+                        'smash guy',
+                        'crusher',
+                        'puncher',
+                        'skuller'
+                    ]
+                ],
+                [
+                    'name' => 'Silver Foxes',
+                    'heroes' => [
+                        'Vycter',
+                        'Davith',
+                        'Brensom',
+                        'Malakye',
+                        'Jenzen',
+                        'Armanix'
+                    ]
+                ],
+                [
+                    'name' => 'spearheads',
+                    'heroes' => [
+                        'walter',
+                        'dave the brave',
+                        'merry',
+                        'emerald',
+                        'magnus master',
+                        'reggie wrecker'
+                    ]
+                ],
+                [
+                    'name' => 'Oath of the Cosmos',
+                    'heroes' => [
+                        'Doryen',
+                        'Zaeden',
+                        'Emex',
+                        'Aebram',
+                        'Bentlix',
+                        'Apollox'
+                    ]
+                ],
+                [
+                    'name' => 'Nightfury',
+                    'heroes' => [
+                        'The Darkness',
+                        'Shadow',
+                        'Grimald',
+                        'Thornburrow',
+                        'Gawkroger',
+                        'Zaragamba'
+                    ]
+                ],
             ],
         ];
     }

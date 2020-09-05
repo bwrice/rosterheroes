@@ -27,6 +27,9 @@ class MaceBehavior extends WeaponBehavior
     protected $staminaCostBase = 9;
     protected $manaCostBase = 2.8;
 
+    protected $staminaCostAdjustmentCoefficient = 1.4;
+    protected $manaCostAdjustmentCoefficient = 1.4;
+
     public function __construct(WeaponGroup $weaponGroup, SingleArmBehavior $armBehavior)
     {
         parent::__construct($weaponGroup, $armBehavior);
@@ -34,8 +37,8 @@ class MaceBehavior extends WeaponBehavior
 
     protected function getMeasurablesDamageBonus(UsesItems $usesItems): float
     {
-        $strengthBonus = .02 * $usesItems->getBuffedMeasurableAmount(MeasurableType::STRENGTH);
-        $valorBonus = .006 * $usesItems->getBuffedMeasurableAmount(MeasurableType::VALOR);
+        $strengthBonus = .04 * $usesItems->getBuffedMeasurableAmount(MeasurableType::STRENGTH);
+        $valorBonus = .012 * $usesItems->getBuffedMeasurableAmount(MeasurableType::VALOR);
         return $strengthBonus + $valorBonus;
     }
 }

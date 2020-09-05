@@ -61,4 +61,9 @@ class PercentResourceCost extends ResourceCost
     {
         return 250 * ($this->percent/100);
     }
+
+    public function adjustCost($coefficient)
+    {
+        $this->percent = (int) floor($coefficient * $this->percent);
+    }
 }

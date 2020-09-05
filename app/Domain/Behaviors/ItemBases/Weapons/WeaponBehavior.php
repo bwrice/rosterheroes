@@ -9,7 +9,7 @@ use App\Domain\Behaviors\ItemBases\Weapons\ArmBehaviors\ArmBehaviorInterface;
 use App\Domain\Behaviors\ItemGroup\WeaponGroup;
 use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Interfaces\UsesItems;
-use App\Domain\Models\Json\ResourceCosts\FixedResourceCost;
+use App\Domain\Models\Json\ResourceCosts\ResourceCost;
 use App\Domain\Models\MeasurableType;
 use App\Domain\Models\Support\GearSlots\GearSlot;
 
@@ -23,6 +23,9 @@ abstract class WeaponBehavior extends ItemBaseBehavior
 
     protected $staminaCostBase = 1;
     protected $manaCostBase = 1;
+
+    protected $staminaCostAdjustmentCoefficient = 1;
+    protected $manaCostAdjustmentCoefficient = 1;
 
     protected $validGearSlotTypes = [
         GearSlot::PRIMARY_ARM,
@@ -86,23 +89,21 @@ abstract class WeaponBehavior extends ItemBaseBehavior
 
     protected function getDamageMultiplierMeasurablesBonus(UsesItems $usesItems)
     {
-        return 2 * $this->getMeasurablesDamageBonus($usesItems);
+        return 4 * $this->getMeasurablesDamageBonus($usesItems);
     }
 
     abstract protected function getMeasurablesDamageBonus(UsesItems $usesItems): float;
 
-    public function getResourceCosts(int $attackTier, float $resourceCostMagnitude)
+    public function adjustResourceCosts(ResourceCostsCollection $resourceCosts): ResourceCostsCollection
     {
-        $staminaAmount = (int) ceil($this->staminaCostBase * $attackTier * $resourceCostMagnitude);
-        $staminaResourceCost = new FixedResourceCost(MeasurableType::STAMINA, $staminaAmount);
-        $resourceCosts = new ResourceCostsCollection([
-            $staminaResourceCost
-        ]);
-        if ($attackTier >= 2) {
-            $manaAmount = (int) ceil($this->manaCostBase * $attackTier * $resourceCostMagnitude);
-            $manaResourceCost = new FixedResourceCost(MeasurableType::MANA, $manaAmount);
-            $resourceCosts->push($manaResourceCost);
-        }
+        $resourceCosts->each(function (ResourceCost $resourceCost) {
+            if ($resourceCost->getResourceName() === MeasurableType::STAMINA) {
+                $resourceCost->adjustCost($this->staminaCostAdjustmentCoefficient);
+            }
+            if ($resourceCost->getResourceName() === MeasurableType::MANA) {
+                $resourceCost->adjustCost($this->manaCostAdjustmentCoefficient);
+            }
+        });
         return $resourceCosts;
     }
 }
