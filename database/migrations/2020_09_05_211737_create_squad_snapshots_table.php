@@ -20,6 +20,7 @@ class CreateSquadSnapshotsTable extends Migration
             $table->bigInteger('squad_id')->unsigned();
             $table->bigInteger('experience')->unsigned();
             $table->integer('squad_rank_id')->unsigned();
+            $table->unique(['week_id', 'squad_id']);
             $table->timestamps();
         });
 
