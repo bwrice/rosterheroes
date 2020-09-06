@@ -64,4 +64,22 @@ class BuildSquadSnapshotTest extends TestCase
         }
         $this->fail("Exception not thrown");
     }
+
+    /**
+     * @test
+     */
+    public function it_will_create_a_squad_snapshot()
+    {
+        /** @var Week $week */
+        $week = factory(Week::class)->create();
+        $finalizingStartsAt = WeekService::finalizingStartsAt($week->adventuring_locks_at);
+        Date::setTestNow($finalizingStartsAt->addHour());
+        $squad = SquadFactory::new()->create();
+        $squadSnapshot = $this->getDomainAction()->execute($squad, $week);
+
+        $this->assertEquals($squad->id, $squadSnapshot->squad_id);
+        $this->assertEquals($week->id, $squadSnapshot->week_id);
+        $this->assertEquals($squad->experience, $squadSnapshot->experience);
+        $this->assertEquals($squad->squad_rank_id, $squadSnapshot->squad_rank_id);
+    }
 }

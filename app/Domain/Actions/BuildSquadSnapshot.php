@@ -18,9 +18,10 @@ class BuildSquadSnapshot
     /**
      * @param Squad $squad
      * @param Week $week
+     * @return SquadSnapshot
      * @throws \Exception
      */
-    public function execute(Squad $squad, Week $week)
+    public function execute(Squad $squad, Week $week): SquadSnapshot
     {
         if (now()->isBefore(WeekService::finalizingStartsAt($week->adventuring_locks_at))) {
             throw new \Exception("Too early to create Squad Snapshot", self::EXCEPTION_CODE_WEEK_NOT_FINALIZING);
@@ -34,5 +35,16 @@ class BuildSquadSnapshot
         if ($existingSnapshot) {
             throw new \Exception("Snapshot for squad and week already exists", self::EXCEPTION_CODE_SNAPSHOT_EXISTS);
         }
+
+        /** @var SquadSnapshot $squadSnapshot */
+        $squadSnapshot = SquadSnapshot::query()->create([
+            'uuid' => Str::uuid(),
+            'week_id' => $week->id,
+            'squad_id' => $squad->id,
+            'squad_rank_id' => $squad->squad_rank_id,
+            'experience' => $squad->experience
+        ]);
+
+        return $squadSnapshot;
     }
 }
