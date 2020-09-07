@@ -95,7 +95,7 @@ class BuildSquadSnapshotTest extends TestCase
     /**
      * @test
      */
-    public function it_will_execute_build_hero_snapshots_for_ready_heroes()
+    public function it_will_execute_build_hero_snapshots_for_a_squads_heroes()
     {
         /** @var Week $week */
         $week = factory(Week::class)->states('as-current')->create();
@@ -103,22 +103,22 @@ class BuildSquadSnapshotTest extends TestCase
         Date::setTestNow($finalizingStartsAt->addHour());
         $squad = SquadFactory::new()->create();
 
+        $heroIDs = collect();
         /** @var Hero $heroOne */
         $heroOne = HeroFactory::new()->forSquad($squad)->create();
+        $heroIDs->push($heroOne->id);
         $heroTwo = HeroFactory::new()->forSquad($squad)->create();
-
-        HeroService::partialMock()->shouldReceive('combatReady')->andReturnUsing(function (Hero $hero) use ($heroTwo) {
-            if ($hero->id === $heroTwo->id) {
-                return true;
-            }
-            return false;
-        });
+        $heroIDs->push($heroTwo->id);
 
         $mock = $this->getMockBuilder(BuildHeroSnapshot::class)->getMock();
-        $mock->expects($this->once())->method('execute')->with($this->callback(function (SquadSnapshot $squadSnapshot) use ($squad) {
+        $mock->expects($this->exactly(2))->method('execute')->with($this->callback(function (SquadSnapshot $squadSnapshot) use ($squad) {
             return $squadSnapshot->squad_id === $squad->id;
-        }), $this->callback(function (Hero $hero) use ($heroTwo) {
-            return $hero->id === $heroTwo->id;
+        }), $this->callback(function (Hero $hero) use (&$heroIDs) {
+            $returnValue = in_array($hero->id, $heroIDs->toArray());
+            $heroIDs = $heroIDs->reject(function ($id) use ($hero) {
+                return $id === $hero->id;
+            });
+            return $returnValue;
         }));
 
         $this->instance(BuildHeroSnapshot::class, $mock);

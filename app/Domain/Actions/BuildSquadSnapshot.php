@@ -57,7 +57,7 @@ class BuildSquadSnapshot
             'experience' => $squad->experience
         ]);
 
-        $squad->heroes->combatReady()->each(function (Hero $hero) use ($squadSnapshot) {
+        $squad->heroes->each(function (Hero $hero) use ($squadSnapshot) {
             $this->buildHeroSnapshot->execute($squadSnapshot, $hero);
         });
 
