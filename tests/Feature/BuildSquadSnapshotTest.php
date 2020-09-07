@@ -38,12 +38,14 @@ class BuildSquadSnapshotTest extends TestCase
     public function it_will_throw_an_exception_if_there_is_an_existing_snapshot_for_the_squad_and_week()
     {
         /** @var Week $week */
-        $week = factory(Week::class)->create();
+        $week = factory(Week::class)->states('as-current')->create();
+        $finalizingStartsAt = WeekService::finalizingStartsAt($week->adventuring_locks_at);
+        Date::setTestNow($finalizingStartsAt->addHour());
         $squad = SquadFactory::new()->create();
         $existingSnapshot = SquadSnapshotFactory::new()->withSquadID($squad->id)->withWeekID($week->id)->create();
 
         try {
-            $this->getDomainAction()->execute($squad, $week);
+            $this->getDomainAction()->execute($squad);
         } catch (\Exception $exception) {
             $this->assertEquals(BuildSquadSnapshot::EXCEPTION_CODE_SNAPSHOT_EXISTS, $exception->getCode());
             return;
@@ -57,14 +59,14 @@ class BuildSquadSnapshotTest extends TestCase
     public function it_will_throw_an_exception_if_the_week_is_not_past_finalizing()
     {
         /** @var Week $week */
-        $week = factory(Week::class)->create();
+        $week = factory(Week::class)->states('as-current')->create();
         $finalizingStartsAt = WeekService::finalizingStartsAt($week->adventuring_locks_at);
         Date::setTestNow($finalizingStartsAt->subHour());
 
         $squad = SquadFactory::new()->create();
 
         try {
-            $this->getDomainAction()->execute($squad, $week);
+            $this->getDomainAction()->execute($squad);
         } catch (\Exception $exception) {
             $this->assertEquals(BuildSquadSnapshot::EXCEPTION_CODE_WEEK_NOT_FINALIZING, $exception->getCode());
             return;
@@ -78,11 +80,11 @@ class BuildSquadSnapshotTest extends TestCase
     public function it_will_create_a_squad_snapshot()
     {
         /** @var Week $week */
-        $week = factory(Week::class)->create();
+        $week = factory(Week::class)->states('as-current')->create();
         $finalizingStartsAt = WeekService::finalizingStartsAt($week->adventuring_locks_at);
         Date::setTestNow($finalizingStartsAt->addHour());
         $squad = SquadFactory::new()->create();
-        $squadSnapshot = $this->getDomainAction()->execute($squad, $week);
+        $squadSnapshot = $this->getDomainAction()->execute($squad);
 
         $this->assertEquals($squad->id, $squadSnapshot->squad_id);
         $this->assertEquals($week->id, $squadSnapshot->week_id);
@@ -96,7 +98,7 @@ class BuildSquadSnapshotTest extends TestCase
     public function it_will_execute_build_hero_snapshots_for_ready_heroes()
     {
         /** @var Week $week */
-        $week = factory(Week::class)->create();
+        $week = factory(Week::class)->states('as-current')->create();
         $finalizingStartsAt = WeekService::finalizingStartsAt($week->adventuring_locks_at);
         Date::setTestNow($finalizingStartsAt->addHour());
         $squad = SquadFactory::new()->create();
@@ -121,6 +123,6 @@ class BuildSquadSnapshotTest extends TestCase
 
         $this->instance(BuildHeroSnapshot::class, $mock);
 
-        $this->getDomainAction()->execute($squad, $week);
+        $this->getDomainAction()->execute($squad);
     }
 }
