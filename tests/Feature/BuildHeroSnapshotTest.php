@@ -68,8 +68,34 @@ class BuildHeroSnapshotTest extends TestCase
     /**
      * @test
      */
+    public function it_will_throw_an_exception_if_building_a_hero_snapshot_when_week_not_finalizing()
+    {
+        Date::setTestNow(WeekService::finalizingStartsAt($this->currentWeek->adventuring_locks_at)->subHour());
+
+        try {
+            $this->getDomainAction()->execute($this->squadSnapshot, $this->hero);
+        } catch (\Exception $exception) {
+            $this->assertEquals(BuildHeroSnapshot::EXCEPTION_CODE_WEEK_NOT_FINALIZING, $exception->getCode());
+            return;
+        }
+
+        $this->fail("exception not thrown");
+    }
+
+    /**
+     * @test
+     */
     public function it_will_throw_an_exception_if_the_hero_does_belong_to_the_squad_snapshots_squad()
     {
+        $misMatchedHero = HeroFactory::new()->create();
 
+        try {
+            $this->getDomainAction()->execute($this->squadSnapshot, $misMatchedHero);
+        } catch (\Exception $exception) {
+            $this->assertEquals(BuildHeroSnapshot::EXCEPTION_CODE_SNAPSHOT_MISMATCH, $exception->getCode());
+            return;
+        }
+
+        $this->fail("exception not thrown");
     }
 }
