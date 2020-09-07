@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  * Class SquadSnapshot
  * @package App
  *
+ * @property int $id
  * @property int $week_id
  * @property int $squad_id
  * @property int $experience
