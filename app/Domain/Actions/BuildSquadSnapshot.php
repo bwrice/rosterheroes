@@ -4,6 +4,7 @@
 namespace App\Domain\Actions;
 
 
+use App\Domain\Models\Hero;
 use App\Domain\Models\Squad;
 use App\Domain\Models\SquadSnapshot;
 use App\Domain\Models\Week;
@@ -14,6 +15,16 @@ class BuildSquadSnapshot
 {
     public const EXCEPTION_CODE_SNAPSHOT_EXISTS = 1;
     public const EXCEPTION_CODE_WEEK_NOT_FINALIZING = 2;
+
+    /**
+     * @var BuildHeroSnapshot
+     */
+    protected $buildHeroSnapshot;
+
+    public function __construct(BuildHeroSnapshot $buildHeroSnapshot)
+    {
+        $this->buildHeroSnapshot = $buildHeroSnapshot;
+    }
 
     /**
      * @param Squad $squad
@@ -44,6 +55,10 @@ class BuildSquadSnapshot
             'squad_rank_id' => $squad->squad_rank_id,
             'experience' => $squad->experience
         ]);
+
+        $squad->heroes->combatReady()->each(function (Hero $hero) use ($squadSnapshot) {
+            $this->buildHeroSnapshot->execute($squadSnapshot, $hero);
+        });
 
         return $squadSnapshot;
     }
