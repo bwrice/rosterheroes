@@ -169,6 +169,13 @@ class HeroFactory
         return $clone;
     }
 
+    public function withSquadID(int $squadID)
+    {
+        $clone = clone $this;
+        $clone->squadID = $squadID;
+        return $clone;
+    }
+
     public function squad(SquadFactory $squadFactory)
     {
         $clone = clone $this;
