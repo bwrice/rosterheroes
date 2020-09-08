@@ -38,9 +38,6 @@ class BuildHeroSnapshot
             'hero_id' => $hero->id,
             'player_spirit_id' => $hero->player_spirit_id,
             'combat_position_id' => $hero->combat_position_id,
-            'health' => $hero->getCurrentMeasurableAmount(MeasurableType::HEALTH),
-            'stamina' => $hero->getCurrentMeasurableAmount(MeasurableType::STAMINA),
-            'mana' => $hero->getCurrentMeasurableAmount(MeasurableType::MANA),
             'protection' => $hero->getProtection(),
             'block_chance' => $hero->getBlockChance()
         ]);
