@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Domain\Actions\BuildHeroSnapshot;
 use App\Domain\Models\Hero;
+use App\Domain\Models\Measurable;
 use App\Domain\Models\MeasurableType;
 use App\Domain\Models\PlayerGameLog;
 use App\Domain\Models\SquadSnapshot;
@@ -13,6 +14,7 @@ use App\Factories\Models\HeroFactory;
 use App\Factories\Models\PlayerGameLogFactory;
 use App\Factories\Models\PlayerSpiritFactory;
 use App\Factories\Models\SquadSnapshotFactory;
+use App\MeasurableSnapshot;
 use App\Nova\PlayerSpirit;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -126,7 +128,33 @@ class BuildHeroSnapshotTest extends TestCase
 
         $this->assertEquals($this->hero->getProtection(), $heroSnapshot->protection);
         $this->assertTrue(abs($this->hero->getBlockChance() - $heroSnapshot->block_chance) < PHP_FLOAT_EPSILON);
+    }
 
+    /**
+     * @test
+     */
+    public function it_will_create_measurable_snapshots_for_the_hero_snapshot_that_match_the_hero_measurables()
+    {
+        $heroSnapshot = $this->getDomainAction()->execute($this->squadSnapshot, $this->hero);
+        $measurableSnapshots = $heroSnapshot->measurableSnapshots()->with('measurable')->get();
+        $measurableTypes = MeasurableType::all();
+
+        $heroMeasurables = $this->hero->measurables;
+        $measurableTypes->each(function (MeasurableType $measurableType) use ($measurableSnapshots, $heroMeasurables) {
+            /** @var MeasurableSnapshot $matchingMeasurableSnapshot */
+            $matchingMeasurableSnapshot = $measurableSnapshots->first(function (MeasurableSnapshot $measurableSnapshot) use ($measurableType) {
+                return $measurableSnapshot->measurable->measurable_type_id === $measurableType->id;
+            });
+            $this->assertNotNull($matchingMeasurableSnapshot, "No snapshot for type: ". $measurableType->name);
+            /** @var Measurable $matchingHeroMeasurable */
+            $matchingHeroMeasurable = $heroMeasurables->first(function (Measurable $measurable) use ($measurableType) {
+                return $measurable->measurable_type_id === $measurableType->id;
+            });
+            $this->assertNotNull($matchingHeroMeasurable, "No hero measurable for type: " . $measurableType->name);
+            $this->assertEquals($matchingHeroMeasurable->getPreBuffedAmount(), $matchingMeasurableSnapshot->pre_buffed_amount);
+            $this->assertEquals($matchingHeroMeasurable->getBuffedAmount(), $matchingMeasurableSnapshot->buffed_amount);
+            $this->assertEquals($matchingHeroMeasurable->getCurrentAmount(), $matchingMeasurableSnapshot->final_amount);
+        });
     }
 
 }

@@ -5,6 +5,7 @@ namespace App\Domain\Actions;
 
 
 use App\Domain\Models\Hero;
+use App\Domain\Models\Measurable;
 use App\Domain\Models\MeasurableType;
 use App\Domain\Models\SquadSnapshot;
 use App\Facades\CurrentWeek;
@@ -42,6 +43,16 @@ class BuildHeroSnapshot
             'block_chance' => $hero->getBlockChance()
         ]);
 
-        return $heroSnapshot;
+        $hero->measurables->each(function (Measurable $measurable) use ($heroSnapshot) {
+            $heroSnapshot->measurableSnapshots()->create([
+                'uuid' => Str::uuid(),
+                'measurable_id' => $measurable->id,
+                'pre_buffed_amount' => $measurable->getPreBuffedAmount(),
+                'buffed_amount' => $measurable->getBuffedAmount(),
+                'final_amount' => $measurable->getCurrentAmount()
+            ]);
+        });
+
+        return $heroSnapshot->fresh();
     }
 }
