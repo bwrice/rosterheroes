@@ -18,9 +18,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $hero_id
  * @property int|null $player_spirit_id
  * @property int $combat_position_id
- * @property int $health
- * @property int $stamina
- * @property int $mana
  * @property int $protection
  * @property float $block_chance
  *
