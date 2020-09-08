@@ -24,6 +24,11 @@ class CreateMeasurableSnapshotsTable extends Migration
             $table->integer('current_amount')->unsigned();
             $table->timestamps();
         });
+
+        Schema::table('measurable_snapshots', function (Blueprint $table) {
+            $table->foreign('measurable_id')->references('id')->on('measurables');
+            $table->foreign('hero_snapshot_id')->references('id')->on('hero_snapshots');
+        });
     }
 
     /**
