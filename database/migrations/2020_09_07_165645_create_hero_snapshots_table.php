@@ -19,7 +19,7 @@ class CreateHeroSnapshotsTable extends Migration
             $table->bigInteger('squad_snapshot_id')->unsigned();
             $table->bigInteger('hero_id')->unsigned();
             $table->bigInteger('player_spirit_id')->unsigned()->nullable();
-            $table->bigInteger('combat_position_id')->unsigned();
+            $table->integer('combat_position_id')->unsigned();
             $table->integer('health')->unsigned();
             $table->integer('stamina')->unsigned();
             $table->integer('mana')->unsigned();

@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Domain\Actions\BuildHeroSnapshot;
 use App\Domain\Models\Hero;
+use App\Domain\Models\MeasurableType;
 use App\Domain\Models\PlayerGameLog;
 use App\Domain\Models\SquadSnapshot;
 use App\Domain\Models\Week;
@@ -115,8 +116,21 @@ class BuildHeroSnapshotTest extends TestCase
     public function it_will_create_a_hero_snapshot_matching_a_hero_expected_properties()
     {
         $heroSnapshot = $this->getDomainAction()->execute($this->squadSnapshot, $this->hero);
-        $this->assertEquals($heroSnapshot->squad_snapshot_id, $this->squadSnapshot->id);
-        $this->assertEquals($heroSnapshot->hero_id, $this->hero->id);
+        $this->assertEquals($this->squadSnapshot->id, $heroSnapshot->squad_snapshot_id);
+        $this->assertEquals($this->hero->id, $heroSnapshot->hero_id);
+
+        $this->assertNotNull($this->hero->player_spirit_id);
+        $this->assertEquals($this->hero->player_spirit_id, $heroSnapshot->player_spirit_id);
+
+        $this->assertEquals($this->hero->combat_position_id, $heroSnapshot->combat_position_id);
+
+        $this->assertEquals($this->hero->getCurrentMeasurableAmount(MeasurableType::HEALTH), $heroSnapshot->health);
+        $this->assertEquals($this->hero->getCurrentMeasurableAmount(MeasurableType::STAMINA), $heroSnapshot->stamina);
+        $this->assertEquals($this->hero->getCurrentMeasurableAmount(MeasurableType::MANA), $heroSnapshot->mana);
+
+        $this->assertEquals($this->hero->getProtection(), $heroSnapshot->protection);
+        $this->assertTrue(abs($this->hero->getBlockChance() - $heroSnapshot->block_chance) < PHP_FLOAT_EPSILON);
+
     }
 
 }
