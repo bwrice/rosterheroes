@@ -21,7 +21,7 @@ class CreateMeasurableSnapshotsTable extends Migration
             $table->unique(['measurable_id', 'hero_snapshot_id']);
             $table->integer('pre_buffed_amount')->unsigned();
             $table->integer('buffed_amount')->unsigned();
-            $table->integer('current_amount')->unsigned();
+            $table->integer('final_amount')->unsigned();
             $table->timestamps();
         });
 

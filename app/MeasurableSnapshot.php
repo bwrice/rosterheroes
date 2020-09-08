@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $hero_snapshot_id
  * @property int $pre_buffed_amount
  * @property int $buffed_amount
- * @property int $current_amount
+ * @property int $final_amount
  *
  * @property Measurable $measurable
  * @property HeroSnapshot $heroSnapshot
