@@ -6,6 +6,7 @@ use App\Domain\Models\CombatPosition;
 use App\Domain\Models\Hero;
 use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\SquadSnapshot;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -25,6 +26,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property SquadSnapshot $squadSnapshot
  * @property PlayerSpirit|null $playerSpirit
  * @property CombatPosition $combatPosition
+ *
+ * @property Collection $measurableSnapshots
  */
 class HeroSnapshot extends Model
 {
@@ -38,5 +41,10 @@ class HeroSnapshot extends Model
     public function hero()
     {
         return $this->belongsTo(Hero::class);
+    }
+
+    public function measurableSnapshots()
+    {
+        return $this->hasMany(MeasurableSnapshot::class);
     }
 }
