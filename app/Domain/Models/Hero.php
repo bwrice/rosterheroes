@@ -438,26 +438,25 @@ class Hero extends EventSourcedModel implements UsesItems, SpellCaster
         $calculateFantasyPower = app(CalculateFantasyPower::class);
         $fantasyPower = $calculateFantasyPower->execute($this->getExpectedFantasyPoints());
 
-        return $this->items->sum(function (Item $item) use ($fantasyPower) {
-            $item->setUsesItems($this);
-            $attacks = $item->getAttacks()->each(function (Attack $attack) use ($item) {
-                $attack->setHasAttacks($item);
-            });
-            $filteredAttacks = $this->filterCombatReadyAttacks($attacks);
-            return $filteredAttacks->getDamagePerMoment($fantasyPower);
-        });
+        return $this->getAttacks()->combatReadyForHero($this)->getDamagePerMoment($fantasyPower);
     }
 
-    protected function filterCombatReadyAttacks(AttackCollection $attacks)
+    public function getAttacks()
     {
-        return $attacks->withAttackerPosition($this->combatPosition);
+        $attacks = new AttackCollection();
+        $this->items->each(function (Item $item) use ($attacks) {
+            $item->setUsesItems($this);
+            $item->getAttacks()->each(function (Attack $attack) use ($item, $attacks) {
+                $attack->setHasAttacks($item);
+                $attacks->push($attack);
+            });
+        });
+        return $attacks;
     }
 
     public function staminaPerMoment()
     {
-        return $this->items->sum(function (Item $item) {
-            return $this->filterCombatReadyAttacks($item->getAttacks())->staminaPerMoment();
-        });
+        return $this->getAttacks()->combatReadyForHero($this)->staminaPerMoment();
     }
 
     public function momentsWithStamina()
@@ -472,9 +471,7 @@ class Hero extends EventSourcedModel implements UsesItems, SpellCaster
 
     public function manaPerMoment()
     {
-        return $this->items->sum(function (Item $item) {
-            return $this->filterCombatReadyAttacks($item->getAttacks())->manaPerMoment();
-        });
+        return $this->getAttacks()->combatReadyForHero($this)->manaPerMoment();
     }
 
     public function momentsWithMana()

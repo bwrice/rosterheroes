@@ -7,6 +7,7 @@ namespace App\Domain\Collections;
 use App\Domain\Interfaces\HasAttacks;
 use App\Domain\Models\Attack;
 use App\Domain\Models\CombatPosition;
+use App\Domain\Models\Hero;
 use Illuminate\Database\Eloquent\Collection;
 
 class AttackCollection extends Collection
@@ -37,6 +38,11 @@ class AttackCollection extends Collection
         return $this->sum(function (Attack $attack) {
             return $attack->getManaPerMoment();
         });
+    }
+
+    public function combatReadyForHero(Hero $hero)
+    {
+        return $this->withAttackerPosition($hero->combatPosition);
     }
 
 }
