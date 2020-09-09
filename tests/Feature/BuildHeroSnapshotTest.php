@@ -157,4 +157,21 @@ class BuildHeroSnapshotTest extends TestCase
         });
     }
 
+    /**
+     * @test
+     */
+    public function the_hero_snapshot_will_belong_to_items_the_hero_has_equipped_at_the_time()
+    {
+        $heroSnapshot = $this->getDomainAction()->execute($this->squadSnapshot, $this->hero);
+
+        $heroItems = $this->hero->items;
+        $this->assertTrue($heroItems->isNotEmpty());
+
+        $heroSnapshotItems = $heroSnapshot->items;
+        $this->assertTrue($heroSnapshotItems->isNotEmpty());
+
+        $this->assertEquals($heroItems->count(), $heroSnapshotItems->count());
+        $this->assertEquals($heroItems->sortBy('id')->pluck('id')->values()->toArray(), $heroSnapshotItems->sortBy('id')->pluck('id')->values()->toArray());
+    }
+
 }

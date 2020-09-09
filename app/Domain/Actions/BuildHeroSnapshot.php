@@ -53,6 +53,9 @@ class BuildHeroSnapshot
             ]);
         });
 
+        $items = $hero->items;
+        $heroSnapshot->items()->saveMany($items);
+
         return $heroSnapshot->fresh();
     }
 }
