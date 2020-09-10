@@ -20,7 +20,7 @@ class CreateAttackSnapshotsTable extends Migration
             $table->bigInteger('hero_snapshot_id')->unsigned();
             $table->integer('damage')->unsigned();
             $table->float('combat_speed');
-            $table->string('name')->unique();
+            $table->string('name');
             $table->integer('attacker_position_id')->unsigned();
             $table->integer('target_position_id')->unsigned();
             $table->integer('damage_type_id')->unsigned();
