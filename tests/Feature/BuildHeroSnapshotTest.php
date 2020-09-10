@@ -12,6 +12,7 @@ use App\Domain\Models\Hero;
 use App\Domain\Models\Measurable;
 use App\Domain\Models\MeasurableType;
 use App\Domain\Models\PlayerGameLog;
+use App\Domain\Models\Spell;
 use App\Domain\Models\SquadSnapshot;
 use App\Domain\Models\Week;
 use App\Facades\WeekService;
@@ -224,6 +225,26 @@ class BuildHeroSnapshotTest extends TestCase
 
         $this->assertEquals($heroItems->count(), $heroSnapshotItems->count());
         $this->assertEquals($heroItems->sortBy('id')->pluck('id')->values()->toArray(), $heroSnapshotItems->sortBy('id')->pluck('id')->values()->toArray());
+    }
+
+    /**
+     * @test
+     */
+    public function the_hero_snapshot_will_belong_to_spells_that_the_hero_had_casted()
+    {
+        $spellsToAttach = Spell::query()->inRandomOrder()->take(rand(1, 4))->get();
+        $this->hero->spells()->saveMany($spellsToAttach);
+        $this->hero = $this->hero->fresh();
+        $heroSnapshot = $this->getDomainAction()->execute($this->squadSnapshot, $this->hero);
+
+        $heroSpells = $this->hero->spells;
+        $this->assertTrue($heroSpells->isNotEmpty());
+
+        $heroSnapshotSpells = $heroSnapshot->spells;
+        $this->assertTrue($heroSnapshotSpells->isNotEmpty());
+
+        $this->assertEquals($heroSpells->count(), $heroSnapshotSpells->count());
+        $this->assertEquals($heroSpells->sortBy('id')->pluck('id')->values()->toArray(), $heroSnapshotSpells->sortBy('id')->pluck('id')->values()->toArray());
     }
 
 }

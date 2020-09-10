@@ -90,8 +90,11 @@ class BuildHeroSnapshot
             ]);
         });
 
-        $items = $hero->items;
-        $heroSnapshot->items()->saveMany($items);
+        // Save equipped items to snapshot
+        $heroSnapshot->items()->saveMany($hero->items);
+
+        // Save spells to snapshot
+        $heroSnapshot->spells()->saveMany($hero->spells);
 
         return $heroSnapshot->fresh();
     }

@@ -3,10 +3,12 @@
 namespace App;
 
 use App\Domain\Collections\ItemCollection;
+use App\Domain\Collections\SpellCollection;
 use App\Domain\Models\CombatPosition;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Item;
 use App\Domain\Models\PlayerSpirit;
+use App\Domain\Models\Spell;
 use App\Domain\Models\SquadSnapshot;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -33,6 +35,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Collection $measurableSnapshots
  * @property ItemCollection $items
  * @property Collection $attackSnapshots
+ * @property SpellCollection $spells
  */
 class HeroSnapshot extends Model
 {
@@ -56,6 +59,11 @@ class HeroSnapshot extends Model
     public function items()
     {
         return $this->belongsToMany(Item::class)->withTimestamps();
+    }
+
+    public function spells()
+    {
+        return $this->belongsToMany(Spell::class)->withTimestamps();
     }
 
     public function attackSnapshots()
