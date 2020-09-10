@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $attack_id
  * @property int $hero_snapshot_id
  * @property int $damage
+ * @property float $combat_speed
  * @property string $name
  * @property int $attacker_position_id
  * @property int $target_position_id

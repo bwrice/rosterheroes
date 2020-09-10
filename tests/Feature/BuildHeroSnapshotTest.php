@@ -2,7 +2,12 @@
 
 namespace Tests\Feature;
 
+use App\AttackSnapshot;
 use App\Domain\Actions\BuildHeroSnapshot;
+use App\Domain\Actions\CalculateFantasyPower;
+use App\Domain\Actions\CalculateHeroFantasyPower;
+use App\Domain\Actions\Combat\CalculateCombatDamage;
+use App\Domain\Models\Attack;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Measurable;
 use App\Domain\Models\MeasurableType;
@@ -24,7 +29,7 @@ use Tests\TestCase;
 
 class BuildHeroSnapshotTest extends TestCase
 {
-    use DatabaseTransactions;
+//    use DatabaseTransactions;
 
     /** @var Week */
     protected $currentWeek;
@@ -160,6 +165,47 @@ class BuildHeroSnapshotTest extends TestCase
             $this->assertEquals($matchingHeroMeasurable->getPreBuffedAmount(), $matchingMeasurableSnapshot->pre_buffed_amount);
             $this->assertEquals($matchingHeroMeasurable->getBuffedAmount(), $matchingMeasurableSnapshot->buffed_amount);
             $this->assertEquals($matchingHeroMeasurable->getCurrentAmount(), $matchingMeasurableSnapshot->final_amount);
+        });
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_create_attack_snapshots_for_the_hero_snapshot_matching_the_attacks_of_the_hero()
+    {
+        $heroSnapshot = $this->getDomainAction()->execute($this->squadSnapshot, $this->hero);
+
+        $heroAttacks = $this->hero->items->getAttacks();
+
+        $this->assertTrue($heroAttacks->isNotEmpty());
+        $this->assertEquals($heroAttacks->count(), $heroSnapshot->attackSnapshots->count());
+
+        /** @var CalculateHeroFantasyPower $calculateFantasyPower */
+        $calculateFantasyPower = app(CalculateHeroFantasyPower::class);
+        $fantasyPower = $calculateFantasyPower->execute($this->hero);
+        $this->assertGreaterThan(1, $fantasyPower);
+
+        /** @var CalculateCombatDamage $calculateDamage */
+        $damageCalculator = app(CalculateCombatDamage::class);
+        $heroSnapshot->attackSnapshots->each(function (AttackSnapshot $attackSnapshot) use ($heroAttacks, $fantasyPower, $damageCalculator) {
+            /** @var Attack $matchingAttack */
+            $matchingAttack = $heroAttacks->first(function (Attack $attack) use ($attackSnapshot) {
+                return $attack->id === $attackSnapshot->attack_id;
+            });
+
+            $this->assertEquals($matchingAttack->name, $attackSnapshot->name);
+            $this->assertEquals($matchingAttack->attacker_position_id, $attackSnapshot->attacker_position_id);
+            $this->assertEquals($matchingAttack->target_priority_id, $attackSnapshot->target_priority_id);
+            $this->assertEquals($matchingAttack->damage_type_id, $attackSnapshot->damage_type_id);
+            $this->assertEquals($matchingAttack->target_priority_id, $attackSnapshot->target_priority_id);
+            $this->assertEquals($matchingAttack->tier, $attackSnapshot->tier);
+            $this->assertEquals($matchingAttack->targets_count, $attackSnapshot->targets_count);
+
+            $this->assertNotNull($matchingAttack);
+            $this->assertTrue(abs($matchingAttack->getCombatSpeed() - $attackSnapshot->combat_speed) < 0.01);
+
+            $damage = $damageCalculator->execute($matchingAttack, $fantasyPower);
+            $this->assertEquals($damage, $attackSnapshot->damage);
         });
     }
 

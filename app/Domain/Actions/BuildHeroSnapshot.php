@@ -5,6 +5,7 @@ namespace App\Domain\Actions;
 
 
 use App\Domain\Actions\Combat\CalculateCombatDamage;
+use App\Domain\Models\Attack;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Measurable;
 use App\Domain\Models\MeasurableType;
@@ -73,7 +74,21 @@ class BuildHeroSnapshot
             ]);
         });
 
-
+        $hero->getAttacks()->each(function (Attack $attack) use ($heroSnapshot, $fantasyPower) {
+            $heroSnapshot->attackSnapshots()->create([
+                'uuid' => Str::uuid(),
+                'attack_id' => $attack->id,
+                'damage' => $this->calculateCombatDamage->execute($attack, $fantasyPower),
+                'combat_speed' => $attack->getCombatSpeed(),
+                'name' => $attack->name,
+                'attacker_position_id' => $attack->attacker_position_id,
+                'target_position_id' => $attack->target_priority_id,
+                'damage_type_id' => $attack->damage_type_id,
+                'target_priority_id' => $attack->target_priority_id,
+                'tier' => $attack->tier,
+                'targets_count' => $attack->targets_count
+            ]);
+        });
 
         $items = $hero->items;
         $heroSnapshot->items()->saveMany($items);
