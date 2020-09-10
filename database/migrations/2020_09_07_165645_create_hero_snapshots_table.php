@@ -22,6 +22,7 @@ class CreateHeroSnapshotsTable extends Migration
             $table->integer('combat_position_id')->unsigned();
             $table->integer('protection');
             $table->float('block_chance');
+            $table->float('fantasy_power');
             $table->unique(['squad_snapshot_id', 'hero_id']);
             $table->timestamps();
         });

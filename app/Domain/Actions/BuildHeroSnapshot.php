@@ -4,6 +4,7 @@
 namespace App\Domain\Actions;
 
 
+use App\Domain\Actions\Combat\CalculateCombatDamage;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Measurable;
 use App\Domain\Models\MeasurableType;
@@ -14,6 +15,22 @@ use Illuminate\Support\Str;
 
 class BuildHeroSnapshot
 {
+    /**
+     * @var CalculateHeroFantasyPower
+     */
+    protected $calculateFantasyPower;
+    /**
+     * @var CalculateCombatDamage
+     */
+    protected $calculateCombatDamage;
+
+    public function __construct(CalculateHeroFantasyPower $calculateFantasyPower, CalculateCombatDamage $calculateCombatDamage)
+    {
+        $this->calculateFantasyPower = $calculateFantasyPower;
+        $this->calculateCombatDamage = $calculateCombatDamage;
+    }
+
+
     public const EXCEPTION_CODE_SNAPSHOT_WEEK_NOT_CURRENT = 1;
     public const EXCEPTION_CODE_WEEK_NOT_FINALIZING = 2;
     public const EXCEPTION_CODE_SNAPSHOT_MISMATCH = 3;
@@ -32,6 +49,8 @@ class BuildHeroSnapshot
             throw new \Exception("Squad snapshot and Hero have mismatched squads", self::EXCEPTION_CODE_SNAPSHOT_MISMATCH);
         }
 
+        $fantasyPower = round($this->calculateFantasyPower->execute($hero), 2);
+
         /** @var HeroSnapshot $heroSnapshot */
         $heroSnapshot = HeroSnapshot::query()->create([
             'uuid' => Str::uuid(),
@@ -39,8 +58,9 @@ class BuildHeroSnapshot
             'hero_id' => $hero->id,
             'player_spirit_id' => $hero->player_spirit_id,
             'combat_position_id' => $hero->combat_position_id,
-            'protection' => $hero->getProtection(),
-            'block_chance' => $hero->getBlockChance()
+            'protection' => round($hero->getProtection(), 2),
+            'block_chance' => round($hero->getBlockChance(), 2),
+            'fantasy_power' => $fantasyPower
         ]);
 
         $hero->measurables->each(function (Measurable $measurable) use ($heroSnapshot) {
@@ -52,6 +72,8 @@ class BuildHeroSnapshot
                 'final_amount' => $measurable->getCurrentAmount()
             ]);
         });
+
+
 
         $items = $hero->items;
         $heroSnapshot->items()->saveMany($items);

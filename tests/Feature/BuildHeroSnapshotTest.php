@@ -127,7 +127,13 @@ class BuildHeroSnapshotTest extends TestCase
         $this->assertEquals($this->hero->combat_position_id, $heroSnapshot->combat_position_id);
 
         $this->assertEquals($this->hero->getProtection(), $heroSnapshot->protection);
-        $this->assertTrue(abs($this->hero->getBlockChance() - $heroSnapshot->block_chance) < PHP_FLOAT_EPSILON);
+
+        $this->assertTrue(abs($this->hero->getBlockChance() - $heroSnapshot->block_chance) < 0.01);
+
+        /** @var CalculateHeroFantasyPower $calculateFantasyPower */
+        $calculateFantasyPower = app(CalculateHeroFantasyPower::class);
+        $fantasyPower = $calculateFantasyPower->execute($this->hero);
+        $this->assertTrue(abs($fantasyPower - $heroSnapshot->fantasy_power) < 0.01);
     }
 
     /**

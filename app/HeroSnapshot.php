@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $combat_position_id
  * @property int $protection
  * @property float $block_chance
+ * @property float $fantasy_power
  *
  * @property Hero $hero
  * @property SquadSnapshot $squadSnapshot
@@ -31,6 +32,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property Collection $measurableSnapshots
  * @property ItemCollection $items
+ * @property Collection $attackSnapshots
  */
 class HeroSnapshot extends Model
 {
@@ -54,5 +56,10 @@ class HeroSnapshot extends Model
     public function items()
     {
         return $this->belongsToMany(Item::class)->withTimestamps();
+    }
+
+    public function attackSnapshots()
+    {
+        return $this->hasMany(AttackSnapshot::class);
     }
 }
