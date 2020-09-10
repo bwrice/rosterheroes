@@ -68,6 +68,6 @@ class HeroSnapshot extends Model
 
     public function attackSnapshots()
     {
-        return $this->hasMany(AttackSnapshot::class);
+        return $this->morphMany(AttackSnapshot::class, 'attacker');
     }
 }

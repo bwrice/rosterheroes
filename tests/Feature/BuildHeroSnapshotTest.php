@@ -30,7 +30,7 @@ use Tests\TestCase;
 
 class BuildHeroSnapshotTest extends TestCase
 {
-//    use DatabaseTransactions;
+    use DatabaseTransactions;
 
     /** @var Week */
     protected $currentWeek;

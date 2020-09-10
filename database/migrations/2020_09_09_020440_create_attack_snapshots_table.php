@@ -17,7 +17,7 @@ class CreateAttackSnapshotsTable extends Migration
             $table->bigIncrements('id');
             $table->uuid('uuid');
             $table->integer('attack_id')->unsigned();
-            $table->bigInteger('hero_snapshot_id')->unsigned();
+            $table->morphs('attacker');
             $table->integer('damage')->unsigned();
             $table->float('combat_speed');
             $table->string('name');
@@ -32,7 +32,6 @@ class CreateAttackSnapshotsTable extends Migration
 
         Schema::table('attack_snapshots', function (Blueprint $table) {
             $table->foreign('attack_id')->references('id')->on('attacks');
-            $table->foreign('hero_snapshot_id')->references('id')->on('hero_snapshots');
             $table->foreign('attacker_position_id')->references('id')->on('combat_positions');
             $table->foreign('target_position_id')->references('id')->on('combat_positions');
             $table->foreign('damage_type_id')->references('id')->on('damage_types');
