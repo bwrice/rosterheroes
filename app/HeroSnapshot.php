@@ -4,6 +4,7 @@ namespace App;
 
 use App\Domain\Collections\ItemCollection;
 use App\Domain\Collections\SpellCollection;
+use App\Domain\Interfaces\HasAttackSnapshots;
 use App\Domain\Models\CombatPosition;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Item;
@@ -12,6 +13,7 @@ use App\Domain\Models\Spell;
 use App\Domain\Models\SquadSnapshot;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 /**
  * Class HeroSnapshot
@@ -37,7 +39,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Collection $attackSnapshots
  * @property SpellCollection $spells
  */
-class HeroSnapshot extends Model
+class HeroSnapshot extends Model implements HasAttackSnapshots
 {
     protected $guarded = [];
 
@@ -66,7 +68,7 @@ class HeroSnapshot extends Model
         return $this->belongsToMany(Spell::class)->withTimestamps();
     }
 
-    public function attackSnapshots()
+    public function attackSnapshots(): MorphMany
     {
         return $this->morphMany(AttackSnapshot::class, 'attacker');
     }
