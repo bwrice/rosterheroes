@@ -37,14 +37,14 @@ class SquadSnapshotFactory
     public function create(array $extra = [])
     {
         /** @var SquadSnapshot $squadSnapshot */
-        $team = SquadSnapshot::query()->create(array_merge([
+        $squadSnapshot = SquadSnapshot::query()->create(array_merge([
             'uuid' => (string) Str::uuid(),
             'week_id' => $this->getWeekID(),
             'squad_id' => $this->getSquadID(),
             'squad_rank_id' => $this->getSquadRankID(),
             'experience' => $this->experience
         ], $extra));
-        return $team;
+        return $squadSnapshot;
     }
 
     protected function getSquadID()
