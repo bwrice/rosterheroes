@@ -21,14 +21,14 @@ class BuildHeroSnapshot
      */
     protected $calculateFantasyPower;
     /**
-     * @var CalculateCombatDamage
+     * @var BuildAttackSnapshot
      */
-    protected $calculateCombatDamage;
+    protected $buildAttackSnapshot;
 
-    public function __construct(CalculateHeroFantasyPower $calculateFantasyPower, CalculateCombatDamage $calculateCombatDamage)
+    public function __construct(CalculateHeroFantasyPower $calculateFantasyPower, BuildAttackSnapshot $buildAttackSnapshot)
     {
         $this->calculateFantasyPower = $calculateFantasyPower;
-        $this->calculateCombatDamage = $calculateCombatDamage;
+        $this->buildAttackSnapshot = $buildAttackSnapshot;
     }
 
 
@@ -75,19 +75,7 @@ class BuildHeroSnapshot
         });
 
         $hero->getAttacks()->each(function (Attack $attack) use ($heroSnapshot, $fantasyPower) {
-            $heroSnapshot->attackSnapshots()->create([
-                'uuid' => Str::uuid(),
-                'attack_id' => $attack->id,
-                'damage' => $this->calculateCombatDamage->execute($attack, $fantasyPower),
-                'combat_speed' => $attack->getCombatSpeed(),
-                'name' => $attack->name,
-                'attacker_position_id' => $attack->attacker_position_id,
-                'target_position_id' => $attack->target_priority_id,
-                'damage_type_id' => $attack->damage_type_id,
-                'target_priority_id' => $attack->target_priority_id,
-                'tier' => $attack->tier,
-                'targets_count' => $attack->targets_count
-            ]);
+            $this->buildAttackSnapshot->execute($attack, $heroSnapshot, $fantasyPower);
         });
 
         // Save equipped items to snapshot
