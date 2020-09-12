@@ -26,13 +26,13 @@ class StashFactory
 
     public function create(array $extra = [])
     {
-        /** @var Stash $team */
-        $team = Stash::query()->create(array_merge([
+        /** @var Stash $stash */
+        $stash = Stash::query()->create(array_merge([
             'uuid' => (string) Str::uuid(),
             'squad_id' => $this->getSquadID(),
             'province_id' => $this->getProvinceID()
         ], $extra));
-        return $team;
+        return $stash;
     }
 
     protected function getSquadID()

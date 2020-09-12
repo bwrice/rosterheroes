@@ -36,7 +36,7 @@ class SquadSnapshotFactory
 
     public function create(array $extra = [])
     {
-        /** @var Stash $team */
+        /** @var SquadSnapshot $squadSnapshot */
         $team = SquadSnapshot::query()->create(array_merge([
             'uuid' => (string) Str::uuid(),
             'week_id' => $this->getWeekID(),
