@@ -6,12 +6,15 @@ use App\Domain\Actions\BuildAttackSnapshot;
 use App\Domain\Actions\Combat\CalculateCombatDamage;
 use App\Factories\Models\AttackFactory;
 use App\Factories\Models\HeroSnapshotFactory;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class BuildAttackSnapshotTest extends TestCase
 {
+    use DatabaseTransactions;
+    
     /**
      * @return BuildAttackSnapshot
      */
