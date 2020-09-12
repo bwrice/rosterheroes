@@ -110,7 +110,7 @@ class BuildSquadSnapshotTest extends TestCase
         $heroTwo = HeroFactory::new()->forSquad($squad)->create();
         $heroIDs->push($heroTwo->id);
 
-        $mock = $this->getMockBuilder(BuildHeroSnapshot::class)->getMock();
+        $mock = $this->getMockBuilder(BuildHeroSnapshot::class)->disableOriginalConstructor()->getMock();
         $mock->expects($this->exactly(2))->method('execute')->with($this->callback(function (SquadSnapshot $squadSnapshot) use ($squad) {
             return $squadSnapshot->squad_id === $squad->id;
         }), $this->callback(function (Hero $hero) use (&$heroIDs) {
