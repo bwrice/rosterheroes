@@ -42,4 +42,21 @@ class BuildItemSnapshotTest extends TestCase
         }
         $this->fail("Exception not thrown");
     }
+
+    /**
+     * @test
+     */
+    public function it_will_create_an_item_snapshot_for_the_hero_snapshot()
+    {
+        $heroSnapshot = HeroSnapshotFactory::new()->create();
+        $item = ItemFactory::new()->forHero($heroSnapshot->hero)->create();
+
+        $itemSnapshot = $this->getDomainAction()->execute($item, $heroSnapshot);
+
+        $this->assertEquals($heroSnapshot->id, $itemSnapshot->hero_snapshot_id);
+        $this->assertEquals($item->id, $itemSnapshot->item_id);
+        $this->assertEquals($item->name, $itemSnapshot->name);
+        $this->assertEquals($item->item_type_id, $itemSnapshot->item_type_id);
+        $this->assertEquals($item->material_id, $itemSnapshot->material_id);
+    }
 }
