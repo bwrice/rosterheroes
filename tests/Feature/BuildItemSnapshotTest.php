@@ -73,6 +73,10 @@ class BuildItemSnapshotTest extends TestCase
         $this->assertEquals($item->name, $itemSnapshot->name);
         $this->assertEquals($item->item_type_id, $itemSnapshot->item_type_id);
         $this->assertEquals($item->material_id, $itemSnapshot->material_id);
+        $this->assertEquals($item->getProtection(), $itemSnapshot->protection);
+        $this->assertEquals($item->weight(), $itemSnapshot->weight);
+        $this->assertEquals($item->getValue(), $itemSnapshot->value);
+        $this->assertTrue(abs($item->getBlockChance() - $itemSnapshot->block_chance) < 0.01);
     }
 
     /**

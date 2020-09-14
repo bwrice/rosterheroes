@@ -37,7 +37,11 @@ class BuildItemSnapshot
             'item_id' => $item->id,
             'item_type_id' => $item->item_type_id,
             'material_id' => $item->material_id,
-            'name' => $item->name
+            'name' => $item->name,
+            'protection' => $item->getProtection(),
+            'weight' => $item->weight(),
+            'value' => $item->getValue(),
+            'block_chance' => $item->getBlockChance()
         ]);
         $fantasyPower = $heroSnapshot->fantasy_power;
         $item->getAttacks()->each(function (Attack $attack) use ($itemSnapshot, $fantasyPower) {
