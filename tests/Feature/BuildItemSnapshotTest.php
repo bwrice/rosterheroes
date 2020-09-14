@@ -54,7 +54,7 @@ class BuildItemSnapshotTest extends TestCase
      */
     public function it_will_create_an_item_snapshot_for_the_hero_snapshot()
     {
-        $heroSnapshot = HeroSnapshotFactory::new()->create();
+        $heroSnapshot = HeroSnapshotFactory::new()->withHeroFactory(HeroFactory::new()->withMeasurables())->create();
         // get an item-type without attacks
         /** @var ItemType $itemType */
         $itemType = ItemType::query()->whereHas('itemBase', function (Builder $builder) {
@@ -80,7 +80,7 @@ class BuildItemSnapshotTest extends TestCase
      */
     public function it_will_execute_build_attack_snapshot_for_each_item_attack()
     {
-        $heroSnapshot = HeroSnapshotFactory::new()->create();
+        $heroSnapshot = HeroSnapshotFactory::new()->withHeroFactory(HeroFactory::new()->withMeasurables())->create();
         // get an item-type without attacks
         /** @var ItemType $itemType */
         $itemType = ItemType::query()->whereHas('itemBase', function (Builder $builder) {
@@ -122,7 +122,7 @@ class BuildItemSnapshotTest extends TestCase
      */
     public function it_will_attach_the_item_snapshot_to_the_same_enchantments_as_the_item()
     {
-        $heroSnapshot = HeroSnapshotFactory::new()->create();
+        $heroSnapshot = HeroSnapshotFactory::new()->withHeroFactory(HeroFactory::new()->withMeasurables())->create();
         // get an item-type without attacks
         /** @var ItemType $itemType */
         $itemType = ItemType::query()->whereHas('itemBase', function (Builder $builder) {
