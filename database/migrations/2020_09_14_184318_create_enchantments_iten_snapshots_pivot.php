@@ -16,7 +16,7 @@ class CreateEnchantmentsItenSnapshotsPivot extends Migration
         Schema::create('enchantment_item_snapshot', function (Blueprint $table) {
             $table->integer('enchantment_id')->unsigned();
             $table->bigInteger('item_snapshot_id')->unsigned();
-            $table->primary(['enchantment_id', 'item_snapshot_id', 'enchantment_item_snapshot_primary']);
+            $table->primary(['enchantment_id', 'item_snapshot_id'],'enchantment_item_snapshot_primary');
             $table->timestamps();
         });
 
