@@ -4,7 +4,7 @@
 namespace App\Domain\Actions;
 
 
-use App\AttackSnapshot;
+use App\Domain\Models\AttackSnapshot;
 use App\Domain\Actions\Combat\CalculateCombatDamage;
 use App\Domain\Interfaces\HasAttackSnapshots;
 use App\Domain\Models\Attack;
@@ -38,7 +38,7 @@ class BuildAttackSnapshot
             'combat_speed' => $attack->getCombatSpeed(),
             'name' => $attack->name,
             'attacker_position_id' => $attack->attacker_position_id,
-            'target_position_id' => $attack->target_priority_id,
+            'target_position_id' => $attack->target_position_id,
             'damage_type_id' => $attack->damage_type_id,
             'target_priority_id' => $attack->target_priority_id,
             'tier' => $attack->tier,

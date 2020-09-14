@@ -11,7 +11,7 @@ use App\Domain\Models\Measurable;
 use App\Domain\Models\MeasurableType;
 use App\Domain\Models\SquadSnapshot;
 use App\Facades\CurrentWeek;
-use App\HeroSnapshot;
+use App\Domain\Models\HeroSnapshot;
 use Illuminate\Support\Str;
 
 class BuildHeroSnapshot
