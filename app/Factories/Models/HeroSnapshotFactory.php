@@ -8,7 +8,7 @@ use App\Domain\Models\CombatPosition;
 use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\SquadSnapshot;
 use App\Domain\Models\Stash;
-use App\HeroSnapshot;
+use App\Domain\Models\HeroSnapshot;
 use Illuminate\Support\Str;
 
 class HeroSnapshotFactory
@@ -68,6 +68,13 @@ class HeroSnapshotFactory
             return $this->combatPositionID;
         }
         return CombatPosition::query()->inRandomOrder()->first()->id;
+    }
+
+    public function withPlayerSpirit(PlayerSpirit $playerSpirit)
+    {
+        $clone = clone $this;
+        $clone->playerSpirit = $playerSpirit;
+        return $clone;
     }
 
 }
