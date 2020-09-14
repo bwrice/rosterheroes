@@ -21,6 +21,10 @@ class CreateItemSnapshotsTable extends Migration
             $table->integer('item_type_id')->unsigned();
             $table->integer('material_id')->unsigned();
             $table->string('name')->nullable();
+            $table->integer('weight');
+            $table->integer('protection');
+            $table->float('block_chance');
+            $table->integer('value');
             $table->unique(['item_id', 'hero_snapshot_id']);
             $table->timestamps();
         });

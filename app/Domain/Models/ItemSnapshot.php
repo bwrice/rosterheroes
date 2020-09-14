@@ -19,6 +19,10 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * @property int $item_type_id
  * @property int $material_id
  * @property string|null $name
+ * @property int $protection
+ * @property int $weight
+ * @property int $value
+ * @property float $block_chance
  *
  * @property Item $item
  * @property HeroSnapshot $heroSnapshot
