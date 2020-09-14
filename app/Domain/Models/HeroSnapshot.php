@@ -50,11 +50,6 @@ class HeroSnapshot extends Model
         return $this->hasMany(MeasurableSnapshot::class);
     }
 
-    public function items()
-    {
-        return $this->belongsToMany(Item::class)->withTimestamps();
-    }
-
     public function spells()
     {
         return $this->belongsToMany(Spell::class)->withTimestamps();
