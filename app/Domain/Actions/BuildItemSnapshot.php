@@ -4,15 +4,26 @@
 namespace App\Domain\Actions;
 
 
+use App\Domain\Models\Attack;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Item;
 use App\Domain\Models\ItemSnapshot;
-use App\HeroSnapshot;
+use App\Domain\Models\HeroSnapshot;
 use Illuminate\Support\Str;
 
 class BuildItemSnapshot
 {
     public const EXCEPTION_CODE_HERO_MISMATCH = 1;
+
+    /**
+     * @var BuildAttackSnapshot
+     */
+    protected $buildAttackSnapshot;
+
+    public function __construct(BuildAttackSnapshot $buildAttackSnapshot)
+    {
+        $this->buildAttackSnapshot = $buildAttackSnapshot;
+    }
 
     public function execute(Item $item, HeroSnapshot $heroSnapshot)
     {
@@ -28,6 +39,10 @@ class BuildItemSnapshot
             'material_id' => $item->material_id,
             'name' => $item->name
         ]);
+        $fantasyPower = $heroSnapshot->fantasy_power;
+        $item->getAttacks()->each(function (Attack $attack) use ($itemSnapshot, $fantasyPower) {
+            $this->buildAttackSnapshot->execute($attack, $itemSnapshot, $fantasyPower);
+        });
 
         return $itemSnapshot;
     }
