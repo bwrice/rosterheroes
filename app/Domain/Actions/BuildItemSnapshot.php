@@ -44,6 +44,8 @@ class BuildItemSnapshot
             $this->buildAttackSnapshot->execute($attack, $itemSnapshot, $fantasyPower);
         });
 
+        $itemSnapshot->enchantments()->saveMany($item->enchantments);
+
         return $itemSnapshot;
     }
 }

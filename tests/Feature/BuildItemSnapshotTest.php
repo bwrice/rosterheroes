@@ -116,4 +116,31 @@ class BuildItemSnapshotTest extends TestCase
 
         $itemSnapshot = $this->getDomainAction()->execute($item, $heroSnapshot);
     }
+
+    /**
+     * @test
+     */
+    public function it_will_attach_the_item_snapshot_to_the_same_enchantments_as_the_item()
+    {
+        $heroSnapshot = HeroSnapshotFactory::new()->create();
+        // get an item-type without attacks
+        /** @var ItemType $itemType */
+        $itemType = ItemType::query()->whereHas('itemBase', function (Builder $builder) {
+            $builder->whereIn('name', [
+                ItemBase::NECKLACE,
+                ItemBase::LIGHT_ARMOR,
+                ItemBase::BELT
+            ]);
+        })->inRandomOrder()->first();
+        $item = ItemFactory::new()->withItemType($itemType)->forHero($heroSnapshot->hero)->withEnchantments()->create();
+
+        $itemEnchantments = $item->enchantments;
+        $this->assertTrue($itemEnchantments->isNotEmpty());
+
+        $itemSnapshot = $this->getDomainAction()->execute($item, $heroSnapshot);
+        $this->assertEquals(
+            $itemEnchantments->sortBy('id')->pluck('id')->values()->toArray(),
+            $itemSnapshot->enchantments->sortBy('id')->pluck('id')->values()->toArray()
+        );
+    }
 }
