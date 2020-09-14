@@ -2,21 +2,15 @@
 
 namespace Tests\Feature;
 
-use App\AttackSnapshot;
-use App\Domain\Actions\BuildAttackSnapshot;
+use App\Domain\Actions\BuildItemSnapshot;
 use App\Domain\Actions\BuildHeroSnapshot;
-use App\Domain\Actions\CalculateFantasyPower;
 use App\Domain\Actions\CalculateHeroFantasyPower;
-use App\Domain\Actions\Combat\CalculateCombatDamage;
-use App\Domain\Models\Attack;
-use App\Domain\Models\Hero;
+use App\Domain\Models\Item;
 use App\Domain\Models\ItemBase;
 use App\Domain\Models\ItemType;
 use App\Domain\Models\Measurable;
 use App\Domain\Models\MeasurableType;
-use App\Domain\Models\PlayerGameLog;
 use App\Domain\Models\Spell;
-use App\Domain\Models\SquadSnapshot;
 use App\Domain\Models\Week;
 use App\Facades\WeekService;
 use App\Factories\Models\HeroFactory;
@@ -25,9 +19,8 @@ use App\Factories\Models\PlayerGameLogFactory;
 use App\Factories\Models\PlayerSpiritFactory;
 use App\Factories\Models\SquadFactory;
 use App\Factories\Models\SquadSnapshotFactory;
-use App\HeroSnapshot;
-use App\MeasurableSnapshot;
-use App\Nova\PlayerSpirit;
+use App\Domain\Models\HeroSnapshot;
+use App\Domain\Models\MeasurableSnapshot;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -220,93 +213,7 @@ class BuildHeroSnapshotTest extends TestCase
     /**
      * @test
      */
-    public function it_will_execute_create_attack_snapshot_for_each_hero_attack()
-    {
-        /** @var Week $currentWeek */
-        $currentWeek = factory(Week::class)->states('as-current')->create();
-        Date::setTestNow(WeekService::finalizingStartsAt($currentWeek->adventuring_locks_at)->addHour());
-
-        $squadSnapshot = SquadSnapshotFactory::new()->withWeekID($currentWeek->id)->create();
-        $hero = HeroFactory::new()->withSquadID($squadSnapshot->squad_id)
-            ->withMeasurables()
-            ->withPlayerSpirit(PlayerSpiritFactory::new()
-                ->withPlayerGameLog(PlayerGameLogFactory::new()->withStats()))
-            ->create();
-
-        /** @var ItemType $itemType */
-        $itemType = ItemType::query()->whereHas('itemBase', function (Builder $builder) {
-            $builder->whereIn('name', [
-                ItemBase::TWO_HAND_AXE,
-                ItemBase::BOW,
-                ItemBase::WAND
-            ]);
-        })->inRandomOrder()->first();
-
-        $item = ItemFactory::new()->withItemType($itemType)->create();
-        $item->hasItems()->associate($hero);
-        $item->save();
-
-        $heroAttacks = $hero->fresh()->getAttacks();
-        $this->assertTrue($heroAttacks->isNotEmpty());
-
-        $heroAttackIDs = $heroAttacks->pluck('id')->values();
-
-        $mock = $this->getMockBuilder(BuildAttackSnapshot::class)->disableOriginalConstructor()->getMock();
-        $mock->expects($this->exactly($heroAttacks->count()))->method('execute')->with($this->callback(function (Attack $attack) use ($heroAttackIDs) {
-
-            $matchingKey = $heroAttackIDs->search($attack->id);
-            if ($matchingKey === false) {
-                return false;
-            }
-            $heroAttackIDs->forget($matchingKey);
-            return true;
-
-        }), $this->callback(function (HeroSnapshot $heroSnapshot) use ($hero) {
-            return $heroSnapshot->hero_id === $hero->id;
-        }));
-
-        $this->instance(BuildAttackSnapshot::class, $mock);
-
-        $this->getDomainAction()->execute($squadSnapshot, $hero);
-
-//        $heroAttacks = $hero->items->getAttacks();
-//
-//        $this->assertTrue($heroAttacks->isNotEmpty());
-//        $this->assertEquals($heroAttacks->count(), $heroSnapshot->attackSnapshots->count());
-//
-//        /** @var CalculateHeroFantasyPower $calculateFantasyPower */
-//        $calculateFantasyPower = app(CalculateHeroFantasyPower::class);
-//        $fantasyPower = $calculateFantasyPower->execute($hero);
-//        $this->assertGreaterThan(1, $fantasyPower);
-//
-//        /** @var CalculateCombatDamage $calculateDamage */
-//        $damageCalculator = app(CalculateCombatDamage::class);
-//        $heroSnapshot->attackSnapshots->each(function (AttackSnapshot $attackSnapshot) use ($heroAttacks, $fantasyPower, $damageCalculator) {
-//            /** @var Attack $matchingAttack */
-//            $matchingAttack = $heroAttacks->first(function (Attack $attack) use ($attackSnapshot) {
-//                return $attack->id === $attackSnapshot->attack_id;
-//            });
-//
-//            $this->assertEquals($matchingAttack->name, $attackSnapshot->name);
-//            $this->assertEquals($matchingAttack->attacker_position_id, $attackSnapshot->attacker_position_id);
-//            $this->assertEquals($matchingAttack->target_priority_id, $attackSnapshot->target_priority_id);
-//            $this->assertEquals($matchingAttack->damage_type_id, $attackSnapshot->damage_type_id);
-//            $this->assertEquals($matchingAttack->target_priority_id, $attackSnapshot->target_priority_id);
-//            $this->assertEquals($matchingAttack->tier, $attackSnapshot->tier);
-//            $this->assertEquals($matchingAttack->targets_count, $attackSnapshot->targets_count);
-//
-//            $this->assertNotNull($matchingAttack);
-//            $this->assertTrue(abs($matchingAttack->getCombatSpeed() - $attackSnapshot->combat_speed) < 0.01);
-//
-//            $damage = $damageCalculator->execute($matchingAttack, $fantasyPower);
-//            $this->assertEquals($damage, $attackSnapshot->damage);
-//        });
-    }
-
-    /**
-     * @test
-     */
-    public function the_hero_snapshot_will_belong_to_items_the_hero_has_equipped_at_the_time()
+    public function it_will_execute_build_item_snapshot_for_each_item_equipped_on_the_hero()
     {
         /** @var Week $currentWeek */
         $currentWeek = factory(Week::class)->states('as-current')->create();
@@ -337,17 +244,28 @@ class BuildHeroSnapshotTest extends TestCase
             $item->save();
         });
 
-
-        $heroSnapshot = $this->getDomainAction()->execute($squadSnapshot, $hero);
-
         $heroItems = $hero->items;
         $this->assertTrue($heroItems->isNotEmpty());
 
-        $heroSnapshotItems = $heroSnapshot->items;
-        $this->assertTrue($heroSnapshotItems->isNotEmpty());
+        $heroItemIDs = $heroItems->pluck('id')->values();
 
-        $this->assertEquals($heroItems->count(), $heroSnapshotItems->count());
-        $this->assertEquals($heroItems->sortBy('id')->pluck('id')->values()->toArray(), $heroSnapshotItems->sortBy('id')->pluck('id')->values()->toArray());
+        $mock = $this->getMockBuilder(BuildItemSnapshot::class)->disableOriginalConstructor()->getMock();
+        $mock->expects($this->exactly($heroItemIDs->count()))->method('execute')->with($this->callback(function (Item $item) use ($heroItemIDs) {
+
+            $matchingKey = $heroItemIDs->search($item->id);
+            if ($matchingKey === false) {
+                return false;
+            }
+            $heroItemIDs->forget($matchingKey);
+            return true;
+
+        }), $this->callback(function (HeroSnapshot $heroSnapshot) use ($hero) {
+            return $heroSnapshot->hero_id === $hero->id;
+        }));
+
+        $this->instance(BuildItemSnapshot::class, $mock);
+
+        $this->getDomainAction()->execute($squadSnapshot, $hero);
     }
 
     /**

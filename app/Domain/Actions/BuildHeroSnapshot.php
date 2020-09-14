@@ -3,12 +3,9 @@
 
 namespace App\Domain\Actions;
 
-
-use App\Domain\Actions\Combat\CalculateCombatDamage;
-use App\Domain\Models\Attack;
 use App\Domain\Models\Hero;
+use App\Domain\Models\Item;
 use App\Domain\Models\Measurable;
-use App\Domain\Models\MeasurableType;
 use App\Domain\Models\SquadSnapshot;
 use App\Facades\CurrentWeek;
 use App\Domain\Models\HeroSnapshot;
@@ -21,14 +18,14 @@ class BuildHeroSnapshot
      */
     protected $calculateFantasyPower;
     /**
-     * @var BuildAttackSnapshot
+     * @var BuildItemSnapshot
      */
-    protected $buildAttackSnapshot;
+    protected $buildItemSnapshot;
 
-    public function __construct(CalculateHeroFantasyPower $calculateFantasyPower, BuildAttackSnapshot $buildAttackSnapshot)
+    public function __construct(CalculateHeroFantasyPower $calculateFantasyPower, BuildItemSnapshot $buildItemSnapshot)
     {
         $this->calculateFantasyPower = $calculateFantasyPower;
-        $this->buildAttackSnapshot = $buildAttackSnapshot;
+        $this->buildItemSnapshot = $buildItemSnapshot;
     }
 
 
@@ -74,12 +71,9 @@ class BuildHeroSnapshot
             ]);
         });
 
-        $hero->getAttacks()->each(function (Attack $attack) use ($heroSnapshot, $fantasyPower) {
-            $this->buildAttackSnapshot->execute($attack, $heroSnapshot, $fantasyPower);
+        $hero->items->each(function (Item $item) use ($heroSnapshot) {
+            $this->buildItemSnapshot->execute($item, $heroSnapshot);
         });
-
-        // Save equipped items to snapshot
-        $heroSnapshot->items()->saveMany($hero->items);
 
         // Save spells to snapshot
         $heroSnapshot->spells()->saveMany($hero->spells);
