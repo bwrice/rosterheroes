@@ -3,6 +3,7 @@
 namespace App\Domain\Models;
 
 use App\Domain\Interfaces\HasAttackSnapshots;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
@@ -22,6 +23,8 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * @property HeroSnapshot $heroSnapshot
  * @property ItemType $itemType
  * @property Material $material
+ *
+ * @property Collection $attackSnapshots
  *
  */
 class ItemSnapshot extends Model implements HasAttackSnapshots
@@ -47,6 +50,7 @@ class ItemSnapshot extends Model implements HasAttackSnapshots
     {
         return $this->belongsTo(Material::class);
     }
+
     public function attackSnapshots(): MorphMany
     {
         return $this->morphMany(AttackSnapshot::class, 'attacker');

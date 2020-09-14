@@ -4,7 +4,7 @@ namespace App\Domain\Models;
 
 use App\Domain\Collections\ItemCollection;
 use App\Domain\Collections\SpellCollection;
-use App\MeasurableSnapshot;
+use App\Domain\Models\MeasurableSnapshot;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -28,8 +28,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property CombatPosition $combatPosition
  *
  * @property Collection $measurableSnapshots
- * @property ItemCollection $items
- * @property Collection $attackSnapshots
+ * @property Collection $itemSnapshots
  * @property SpellCollection $spells
  */
 class HeroSnapshot extends Model
