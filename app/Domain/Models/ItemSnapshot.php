@@ -29,6 +29,8 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  */
 class ItemSnapshot extends Model implements HasAttackSnapshots
 {
+    public const RELATION_MORPH_MAP_KEY = 'item-snapshots';
+
     protected $guarded = [];
 
     public function item()
