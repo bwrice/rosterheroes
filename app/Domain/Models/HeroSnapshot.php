@@ -1,20 +1,12 @@
 <?php
 
-namespace App;
+namespace App\Domain\Models;
 
 use App\Domain\Collections\ItemCollection;
 use App\Domain\Collections\SpellCollection;
-use App\Domain\Interfaces\HasAttackSnapshots;
-use App\Domain\Models\CombatPosition;
-use App\Domain\Models\Hero;
-use App\Domain\Models\Item;
-use App\Domain\Models\ItemSnapshot;
-use App\Domain\Models\PlayerSpirit;
-use App\Domain\Models\Spell;
-use App\Domain\Models\SquadSnapshot;
+use App\MeasurableSnapshot;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 /**
  * Class HeroSnapshot
@@ -40,7 +32,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * @property Collection $attackSnapshots
  * @property SpellCollection $spells
  */
-class HeroSnapshot extends Model implements HasAttackSnapshots
+class HeroSnapshot extends Model
 {
     protected $guarded = [];
 
@@ -67,11 +59,6 @@ class HeroSnapshot extends Model implements HasAttackSnapshots
     public function spells()
     {
         return $this->belongsToMany(Spell::class)->withTimestamps();
-    }
-
-    public function attackSnapshots(): MorphMany
-    {
-        return $this->morphMany(AttackSnapshot::class, 'attacker');
     }
 
     public function itemSnapshots()
