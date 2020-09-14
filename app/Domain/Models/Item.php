@@ -140,9 +140,9 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
         return $this->belongsTo(Material::class);
     }
 
-    public function getSlotTypeIDs(): array
+    public function itemSnapshots()
     {
-        return $this->getItemBaseBehavior()->getSlotTypeIDs();
+        return $this->hasMany(ItemSnapshot::class);
     }
 
     public function getSlotsCount(): int

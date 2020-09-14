@@ -8,6 +8,7 @@ use App\Domain\Interfaces\HasAttackSnapshots;
 use App\Domain\Models\CombatPosition;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Item;
+use App\Domain\Models\ItemSnapshot;
 use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\Spell;
 use App\Domain\Models\SquadSnapshot;
@@ -71,5 +72,10 @@ class HeroSnapshot extends Model implements HasAttackSnapshots
     public function attackSnapshots(): MorphMany
     {
         return $this->morphMany(AttackSnapshot::class, 'attacker');
+    }
+
+    public function itemSnapshots()
+    {
+        return $this->hasMany(ItemSnapshot::class);
     }
 }
