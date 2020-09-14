@@ -2,8 +2,9 @@
 
 namespace App\Domain\Models;
 
-use App\HeroSnapshot;
+use App\Domain\Interfaces\HasAttackSnapshots;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 /**
  * Class ItemSnapshot
@@ -23,7 +24,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Material $material
  *
  */
-class ItemSnapshot extends Model
+class ItemSnapshot extends Model implements HasAttackSnapshots
 {
     protected $guarded = [];
 
@@ -45,5 +46,9 @@ class ItemSnapshot extends Model
     public function material()
     {
         return $this->belongsTo(Material::class);
+    }
+    public function attackSnapshots(): MorphMany
+    {
+        return $this->morphMany(AttackSnapshot::class, 'attacker');
     }
 }
