@@ -21,6 +21,8 @@ class HeroSnapshotFactory
     protected $combatPositionID;
     /** @var PlayerSpirit|null */
     protected $playerSpirit;
+    /** @var HeroFactory */
+    protected $heroFactory;
 
     public static function new()
     {
@@ -54,12 +56,20 @@ class HeroSnapshotFactory
         return SquadSnapshotFactory::new()->create();
     }
 
+    public function withHeroFactory(HeroFactory $heroFactory)
+    {
+        $clone = clone $this;
+        $clone->heroFactory = $heroFactory;
+        return $clone;
+    }
+
     protected function getHeroID(int $squadID)
     {
         if ($this->heroID) {
             return $this->heroID;
         }
-        return HeroFactory::new()->withSquadID($squadID)->create()->id;
+        $heroFactory = $this->heroFactory ?: HeroFactory::new();
+        return $heroFactory->withSquadID($squadID)->create()->id;
     }
 
     protected function getCombatPositionID()
