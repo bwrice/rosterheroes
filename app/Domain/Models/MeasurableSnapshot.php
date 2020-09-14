@@ -1,8 +1,7 @@
 <?php
 
-namespace App;
+namespace App\Domain\Models;
 
-use App\Domain\Models\Measurable;
 use Illuminate\Database\Eloquent\Model;
 
 /**

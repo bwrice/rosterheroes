@@ -1,11 +1,7 @@
 <?php
 
-namespace App;
+namespace App\Domain\Models;
 
-use App\Domain\Models\Attack;
-use App\Domain\Models\CombatPosition;
-use App\Domain\Models\DamageType;
-use App\Domain\Models\TargetPriority;
 use Illuminate\Database\Eloquent\Model;
 
 /**
