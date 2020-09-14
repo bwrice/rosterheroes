@@ -22,8 +22,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $tier
  * @property int $targets_count
  *
+ * @property int $attacker_id
+ * @property string $attacker_type
+ *
  * @property Attack $attack
- * @property HeroSnapshot $heroSnapshot
  * @property CombatPosition $attackerPosition
  * @property CombatPosition $targetPosition
  * @property DamageType $damageType
@@ -36,11 +38,6 @@ class AttackSnapshot extends Model
     public function attack()
     {
         return $this->belongsTo(Attack::class);
-    }
-
-    public function heroSnapshot()
-    {
-        return $this->belongsTo(HeroSnapshot::class);
     }
 
     public function damageType()
