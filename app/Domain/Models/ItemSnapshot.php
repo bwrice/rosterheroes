@@ -2,6 +2,7 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Collections\EnchantmentCollection;
 use App\Domain\Interfaces\HasAttackSnapshots;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -25,6 +26,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * @property Material $material
  *
  * @property Collection $attackSnapshots
+ * @property EnchantmentCollection $enchantments
  *
  */
 class ItemSnapshot extends Model implements HasAttackSnapshots
@@ -56,5 +58,10 @@ class ItemSnapshot extends Model implements HasAttackSnapshots
     public function attackSnapshots(): MorphMany
     {
         return $this->morphMany(AttackSnapshot::class, 'attacker');
+    }
+
+    public function enchantments()
+    {
+        return $this->belongsToMany(Enchantment::class)->withTimestamps();
     }
 }
