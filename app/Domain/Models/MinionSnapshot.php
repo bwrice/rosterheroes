@@ -59,4 +59,9 @@ class MinionSnapshot extends Model implements HasAttackSnapshots
     {
         return $this->morphMany(AttackSnapshot::class, 'attacker');
     }
+
+    public function chestBlueprints()
+    {
+        return $this->belongsToMany(ChestBlueprint::class)->withPivot(['chance', 'count'])->withTimestamps();
+    }
 }
