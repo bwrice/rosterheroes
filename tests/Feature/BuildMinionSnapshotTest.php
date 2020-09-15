@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Domain\Actions\BuildAttackSnapshot;
+use App\Domain\Actions\Snapshots\BuildAttackSnapshot;
 use App\Domain\Actions\CalculateFantasyPower;
 use App\Domain\Actions\Snapshots\BuildMinionSnapshot;
 use App\Domain\Models\Attack;

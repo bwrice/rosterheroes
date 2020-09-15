@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Domain\Actions\BuildAttackSnapshot;
+use App\Domain\Actions\Snapshots\BuildAttackSnapshot;
 use App\Domain\Actions\Combat\CalculateCombatDamage;
 use App\Domain\Models\ItemSnapshot;
 use App\Factories\Models\AttackFactory;

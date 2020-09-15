@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\Domain\Actions\BuildAttackSnapshot;
-use App\Domain\Actions\BuildItemSnapshot;
+use App\Domain\Actions\Snapshots\BuildAttackSnapshot;
+use App\Domain\Actions\Snapshots\BuildItemSnapshot;
 use App\Domain\Models\Attack;
 use App\Domain\Models\Item;
 use App\Domain\Models\ItemBase;

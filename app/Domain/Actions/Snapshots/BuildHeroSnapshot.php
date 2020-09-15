@@ -1,8 +1,9 @@
 <?php
 
 
-namespace App\Domain\Actions;
+namespace App\Domain\Actions\Snapshots;
 
+use App\Domain\Actions\CalculateHeroFantasyPower;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Item;
 use App\Domain\Models\Measurable;

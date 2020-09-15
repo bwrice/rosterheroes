@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\Domain\Actions\BuildHeroSnapshot;
-use App\Domain\Actions\BuildSquadSnapshot;
+use App\Domain\Actions\Snapshots\BuildHeroSnapshot;
+use App\Domain\Actions\Snapshots\BuildSquadSnapshot;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Squad;
 use App\Domain\Models\SquadSnapshot;

@@ -1,8 +1,7 @@
 <?php
 
 
-namespace App\Domain\Actions;
-
+namespace App\Domain\Actions\Snapshots;
 
 use App\Domain\Models\Attack;
 use App\Domain\Models\Hero;

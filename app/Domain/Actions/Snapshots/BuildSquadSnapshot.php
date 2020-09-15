@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Domain\Actions;
+namespace App\Domain\Actions\Snapshots;
 
 
 use App\Domain\Models\Hero;
@@ -9,7 +9,6 @@ use App\Domain\Models\Squad;
 use App\Domain\Models\SquadSnapshot;
 use App\Domain\Models\Week;
 use App\Facades\CurrentWeek;
-use App\Facades\WeekService;
 use Illuminate\Support\Str;
 
 class BuildSquadSnapshot
