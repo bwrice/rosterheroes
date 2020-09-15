@@ -2,7 +2,9 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Interfaces\HasAttackSnapshots;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 /**
  * Class MinionSnapshot
@@ -27,7 +29,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property CombatPosition $combatPosition
  * @property EnemyType $enemyType
  */
-class MinionSnapshot extends Model
+class MinionSnapshot extends Model implements HasAttackSnapshots
 {
     protected $guarded = [];
 
@@ -51,5 +53,10 @@ class MinionSnapshot extends Model
     public function enemyType()
     {
         return $this->belongsTo(EnemyType::class);
+    }
+
+    public function attackSnapshots(): MorphMany
+    {
+        return $this->morphMany(AttackSnapshot::class, 'attacker');
     }
 }
