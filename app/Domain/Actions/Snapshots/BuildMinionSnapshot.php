@@ -4,7 +4,9 @@
 namespace App\Domain\Actions\Snapshots;
 
 
+use App\Domain\Actions\BuildAttackSnapshot;
 use App\Domain\Actions\CalculateFantasyPower;
+use App\Domain\Models\Attack;
 use App\Domain\Models\Minion;
 use App\Domain\Models\MinionSnapshot;
 use App\Domain\Models\Week;
@@ -20,10 +22,15 @@ class BuildMinionSnapshot
      * @var CalculateFantasyPower
      */
     protected $calculateFantasyPower;
+    /**
+     * @var BuildAttackSnapshot
+     */
+    protected $buildAttackSnapshot;
 
-    public function __construct(CalculateFantasyPower $calculateFantasyPower)
+    public function __construct(CalculateFantasyPower $calculateFantasyPower, BuildAttackSnapshot $buildAttackSnapshot)
     {
         $this->calculateFantasyPower = $calculateFantasyPower;
+        $this->buildAttackSnapshot = $buildAttackSnapshot;
     }
 
     public function execute(Minion $minion, Week $week)
@@ -36,6 +43,8 @@ class BuildMinionSnapshot
             throw new \Exception("Cannot build minion snapshot when week is not finalizing", self::EXCEPTION_CODE_WEEK_NOT_FINALIZING);
         }
 
+        $fantasyPower = $this->calculateFantasyPower->execute($minion->getFantasyPoints());
+
         /** @var MinionSnapshot $minionSnapshot */
         $minionSnapshot = $minion->minionSnapshots()->create([
             'uuid' => Str::uuid(),
@@ -46,10 +55,14 @@ class BuildMinionSnapshot
             'starting_health' => $minion->getStartingHealth(),
             'protection' => $minion->getProtection(),
             'block_chance' => $minion->getBlockChance(),
-            'fantasy_power' => $this->calculateFantasyPower->execute($minion->getFantasyPoints()),
+            'fantasy_power' => $fantasyPower,
             'experience_reward' => $minion->getExperienceReward(),
             'favor_reward' => $minion->getFavorReward()
         ]);
+
+        $minion->attacks->each(function (Attack $attack) use ($minionSnapshot, $fantasyPower) {
+            $this->buildAttackSnapshot->execute($attack, $minionSnapshot, $fantasyPower);
+        });
 
         return $minionSnapshot;
     }

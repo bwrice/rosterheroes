@@ -2,10 +2,12 @@
 
 namespace Tests\Feature;
 
+use App\Domain\Actions\BuildAttackSnapshot;
 use App\Domain\Actions\CalculateFantasyPower;
 use App\Domain\Actions\Snapshots\BuildMinionSnapshot;
+use App\Domain\Models\Attack;
+use App\Domain\Models\MinionSnapshot;
 use App\Domain\Models\Week;
-use App\Facades\CurrentWeek;
 use App\Facades\WeekService;
 use App\Factories\Models\MinionFactory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -93,5 +95,44 @@ class BuildMinionSnapshotTest extends TestCase
         $calculateFantasyPower = app(CalculateFantasyPower::class);
         $fantasyPower = $calculateFantasyPower->execute($minion->getFantasyPoints());
         $this->assertTrue(abs($fantasyPower - $minionSnapshot->fantasy_power) < 0.01);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_execute_build_attack_snapshot_for_each_minion_attack()
+    {
+        $minion = MinionFactory::new()->withAttacks()->create();
+        /** @var Week $currentWeek */
+        $currentWeek = factory(Week::class)->state('as-current')->create();
+        Date::setTestNow(WeekService::finalizingStartsAt($currentWeek->adventuring_locks_at)->addHour());
+
+        $minionAttacks = $minion->attacks;
+        $this->assertTrue($minionAttacks->isNotEmpty());
+
+        $minionAttackIDs = $minionAttacks->pluck('id')->values();
+
+        /** @var CalculateFantasyPower $calculateFantasyPower */
+        $calculateFantasyPower = app(CalculateFantasyPower::class);
+        $minionFantasyPower = $calculateFantasyPower->execute($minion->getFantasyPoints());
+
+        $mock = $this->getMockBuilder(BuildAttackSnapshot::class)->disableOriginalConstructor()->getMock();
+        $mock->expects($this->exactly($minionAttacks->count()))->method('execute')->with($this->callback(function (Attack $attack) use ($minionAttackIDs) {
+            $matchingKey = $minionAttackIDs->search($attack->id);
+            if ($matchingKey === false) {
+                return false;
+            }
+            $minionAttackIDs->forget($matchingKey);
+            return true;
+
+        }), $this->callback(function (MinionSnapshot $minionSnapshot) use ($minion) {
+            return $minionSnapshot->minion_id === $minion->id;
+        }), $this->callback(function ($fantasyPower) use ($minionFantasyPower) {
+            return abs($fantasyPower - $minionFantasyPower) < 0.01;
+        }));
+
+        app()->instance(BuildAttackSnapshot::class, $mock);
+
+        $this->getDomainAction()->execute($minion, $currentWeek);
     }
 }
