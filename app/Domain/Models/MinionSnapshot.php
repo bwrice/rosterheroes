@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $level
  * @property int $combat_position_id
  * @property int $enemy_type_id
- * @property int $health
+ * @property int $starting_health
  * @property int $protection
  * @property float $block_chance
  * @property float $fantasy_power

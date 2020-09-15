@@ -21,7 +21,7 @@ class CreateMinionSnapshotsTable extends Migration
             $table->integer('level');
             $table->integer('combat_position_id')->unsigned();
             $table->integer('enemy_type_id')->unsigned();
-            $table->integer('health');
+            $table->integer('starting_health');
             $table->integer('protection');
             $table->float('block_chance');
             $table->float('fantasy_power');
