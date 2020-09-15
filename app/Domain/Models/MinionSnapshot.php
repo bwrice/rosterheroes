@@ -31,6 +31,8 @@ class MinionSnapshot extends Model
 {
     protected $guarded = [];
 
+    public const RELATION_MORPH_MAP_KEY = 'minion-snapshots';
+
     public function week()
     {
         return $this->belongsTo(Week::class);
