@@ -6,9 +6,11 @@ use App\Domain\Actions\BuildAttackSnapshot;
 use App\Domain\Actions\CalculateFantasyPower;
 use App\Domain\Actions\Snapshots\BuildMinionSnapshot;
 use App\Domain\Models\Attack;
+use App\Domain\Models\ChestBlueprint;
 use App\Domain\Models\MinionSnapshot;
 use App\Domain\Models\Week;
 use App\Facades\WeekService;
+use App\Factories\Models\ChestBlueprintFactory;
 use App\Factories\Models\MinionFactory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -134,5 +136,43 @@ class BuildMinionSnapshotTest extends TestCase
         app()->instance(BuildAttackSnapshot::class, $mock);
 
         $this->getDomainAction()->execute($minion, $currentWeek);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_attach_chest_blueprints_of_the_minion_to_the_minion_snapshot()
+    {
+        $minion = MinionFactory::new()->create();
+
+        for ($i = 1; $i <= rand(2, 4); $i++) {
+            $chestBlueprint = ChestBlueprintFactory::new()->create();
+            $minion->chestBlueprints()->save($chestBlueprint, [
+                'chance' => round(rand(100, 10000)/100, 2),
+                'count' => rand(1, 3)
+            ]);
+        }
+
+        $minionChestBlueprints = $minion->chestBlueprints;
+        $this->assertTrue($minionChestBlueprints->isNotEmpty());
+
+        /** @var Week $currentWeek */
+        $currentWeek = factory(Week::class)->state('as-current')->create();
+        Date::setTestNow(WeekService::finalizingStartsAt($currentWeek->adventuring_locks_at)->addHour());
+
+        $minionSnapshot = $this->getDomainAction()->execute($minion, $currentWeek);
+
+        $snapshotChestBlueprints = $minionSnapshot->chestBlueprints;
+        $this->assertEquals($snapshotChestBlueprints->count(), $minionChestBlueprints->count());
+
+        $snapshotChestBlueprints->each(function (ChestBlueprint $snapshotChestBlueprint) use ($minionChestBlueprints) {
+            $matchingBlueprint = $minionChestBlueprints->first(function (ChestBlueprint $minionChestBlueprint) use ($snapshotChestBlueprint) {
+                return $minionChestBlueprint->id === $snapshotChestBlueprint->id;
+            });
+
+            $this->assertNotNull($matchingBlueprint);
+            $this->assertEquals($matchingBlueprint->pivot->count, $snapshotChestBlueprint->pivot->count);
+            $this->assertTrue(abs($matchingBlueprint->pivot->chance - $snapshotChestBlueprint->pivot->chance) < 0.01);
+        });
     }
 }

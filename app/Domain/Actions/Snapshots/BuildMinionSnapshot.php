@@ -7,6 +7,7 @@ namespace App\Domain\Actions\Snapshots;
 use App\Domain\Actions\BuildAttackSnapshot;
 use App\Domain\Actions\CalculateFantasyPower;
 use App\Domain\Models\Attack;
+use App\Domain\Models\ChestBlueprint;
 use App\Domain\Models\Minion;
 use App\Domain\Models\MinionSnapshot;
 use App\Domain\Models\Week;
@@ -62,6 +63,13 @@ class BuildMinionSnapshot
 
         $minion->attacks->each(function (Attack $attack) use ($minionSnapshot, $fantasyPower) {
             $this->buildAttackSnapshot->execute($attack, $minionSnapshot, $fantasyPower);
+        });
+
+        $minion->chestBlueprints->each(function (ChestBlueprint $chestBlueprint) use ($minionSnapshot) {
+            $minionSnapshot->chestBlueprints()->save($chestBlueprint, [
+                'chance' => $chestBlueprint->pivot->chance,
+                'count' => $chestBlueprint->pivot->count
+            ]);
         });
 
         return $minionSnapshot;
