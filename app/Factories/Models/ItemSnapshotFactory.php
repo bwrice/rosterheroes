@@ -22,16 +22,20 @@ class ItemSnapshotFactory
     {
         $item = $this->getItem();
 
-        /** @var ItemSnapshot $attackSnapshot */
-        $attackSnapshot = ItemSnapshot::query()->create(array_merge([
+        /** @var ItemSnapshot $itemSnapshot */
+        $itemSnapshot = ItemSnapshot::query()->create(array_merge([
             'uuid' => Str::uuid(),
             'item_id' => $item->id,
             'hero_snapshot_id' => HeroSnapshotFactory::new()->create()->id,
             'item_type_id' => $item->item_type_id,
             'material_id' => $item->material_id,
-            'name' => $item->name
+            'name' => $item->name,
+            'weight' => rand(10, 200),
+            'protection' => rand(0, 500),
+            'block_chance' => round(rand(0, 3000)/100, 2),
+            'value' => rand(50, 1000)
         ], $extra));
-        return $attackSnapshot;
+        return $itemSnapshot;
     }
 
     protected function getItem()
