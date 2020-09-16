@@ -12,7 +12,7 @@ use App\Facades\CurrentWeek;
 use App\Domain\Models\HeroSnapshot;
 use Illuminate\Support\Str;
 
-class BuildHeroSnapshot
+class BuildHeroSnapshot extends BuildWeeklySnapshot
 {
     /**
      * @var CalculateHeroFantasyPower
@@ -29,19 +29,13 @@ class BuildHeroSnapshot
         $this->buildItemSnapshot = $buildItemSnapshot;
     }
 
-
-    public const EXCEPTION_CODE_SNAPSHOT_WEEK_NOT_CURRENT = 1;
-    public const EXCEPTION_CODE_WEEK_NOT_FINALIZING = 2;
+    public const EXCEPTION_CODE_SNAPSHOT_WEEK_NOT_CURRENT = 2;
     public const EXCEPTION_CODE_SNAPSHOT_MISMATCH = 3;
 
-    public function execute(SquadSnapshot $squadSnapshot, Hero $hero): HeroSnapshot
+    public function handle(SquadSnapshot $squadSnapshot, Hero $hero): HeroSnapshot
     {
         if ($squadSnapshot->week_id !== CurrentWeek::id()) {
             throw new \Exception("Squad snapshot does not match current week", self::EXCEPTION_CODE_SNAPSHOT_WEEK_NOT_CURRENT);
-        }
-
-        if (! CurrentWeek::finalizing()) {
-            throw new \Exception("Current Week not finalizing", self::EXCEPTION_CODE_WEEK_NOT_FINALIZING);
         }
 
         if ($squadSnapshot->squad_id !== $hero->squad_id) {

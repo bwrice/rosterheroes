@@ -26,9 +26,8 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Date;
-use Tests\TestCase;
 
-class BuildHeroSnapshotTest extends TestCase
+class BuildHeroSnapshotTest extends BuildWeeklySnapshotTest
 {
     use DatabaseTransactions;
 
@@ -58,28 +57,6 @@ class BuildHeroSnapshotTest extends TestCase
             $this->getDomainAction()->execute($squadSnapshot, $hero);
         } catch (\Exception $exception) {
             $this->assertEquals(BuildHeroSnapshot::EXCEPTION_CODE_SNAPSHOT_WEEK_NOT_CURRENT, $exception->getCode());
-            return;
-        }
-
-        $this->fail("exception not thrown");
-    }
-
-    /**
-     * @test
-     */
-    public function it_will_throw_an_exception_if_building_a_hero_snapshot_when_week_not_finalizing()
-    {
-        /** @var Week $currentWeek */
-        $currentWeek = factory(Week::class)->states('as-current')->create();
-        $squadSnapshot = SquadSnapshotFactory::new()->withWeekID($currentWeek->id)->create();
-        $hero = HeroFactory::new()->withSquadID($squadSnapshot->squad_id)->create();
-
-        Date::setTestNow(WeekService::finalizingStartsAt($currentWeek->adventuring_locks_at)->subHour());
-
-        try {
-            $this->getDomainAction()->execute($squadSnapshot, $hero);
-        } catch (\Exception $exception) {
-            $this->assertEquals(BuildHeroSnapshot::EXCEPTION_CODE_WEEK_NOT_FINALIZING, $exception->getCode());
             return;
         }
 

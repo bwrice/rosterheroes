@@ -10,9 +10,9 @@ use App\Domain\Models\ItemSnapshot;
 use App\Domain\Models\HeroSnapshot;
 use Illuminate\Support\Str;
 
-class BuildItemSnapshot
+class BuildItemSnapshot extends BuildWeeklySnapshot
 {
-    public const EXCEPTION_CODE_HERO_MISMATCH = 1;
+    public const EXCEPTION_CODE_HERO_MISMATCH = 2;
 
     /**
      * @var BuildAttackSnapshot
@@ -24,7 +24,7 @@ class BuildItemSnapshot
         $this->buildAttackSnapshot = $buildAttackSnapshot;
     }
 
-    public function execute(Item $item, HeroSnapshot $heroSnapshot)
+    public function handle(Item $item, HeroSnapshot $heroSnapshot)
     {
         if ($item->has_items_id !== $heroSnapshot->hero_id || $item->has_items_type !== Hero::RELATION_MORPH_MAP_KEY) {
             throw new \Exception("Item is not equipped by hero of hero snapshot", self::EXCEPTION_CODE_HERO_MISMATCH);

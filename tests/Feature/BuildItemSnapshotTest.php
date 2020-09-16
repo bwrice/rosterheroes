@@ -5,20 +5,20 @@ namespace Tests\Feature;
 use App\Domain\Actions\Snapshots\BuildAttackSnapshot;
 use App\Domain\Actions\Snapshots\BuildItemSnapshot;
 use App\Domain\Models\Attack;
-use App\Domain\Models\Item;
 use App\Domain\Models\ItemBase;
 use App\Domain\Models\ItemSnapshot;
 use App\Domain\Models\ItemType;
+use App\Domain\Models\Week;
+use App\Facades\WeekService;
 use App\Factories\Models\HeroFactory;
 use App\Factories\Models\HeroSnapshotFactory;
 use App\Factories\Models\ItemFactory;
-use App\Domain\Models\HeroSnapshot;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
+use Illuminate\Support\Facades\Date;
 
-class BuildItemSnapshotTest extends TestCase
+class BuildItemSnapshotTest extends BuildWeeklySnapshotTest
 {
     /**
      * @return BuildItemSnapshot
@@ -33,6 +33,10 @@ class BuildItemSnapshotTest extends TestCase
      */
     public function it_will_throw_an_exception_if_the_item_and_hero_snapshot_dont_belong_to_the_same_hero()
     {
+        /** @var Week $currentWeek */
+        $currentWeek = factory(Week::class)->states('as-current')->create();
+        Date::setTestNow(WeekService::finalizingStartsAt($currentWeek->adventuring_locks_at)->addHour());
+
         $heroSnapshot = HeroSnapshotFactory::new()->create();
 
         $diffHero = HeroFactory::new()->create();
@@ -54,6 +58,10 @@ class BuildItemSnapshotTest extends TestCase
      */
     public function it_will_create_an_item_snapshot_for_the_hero_snapshot()
     {
+        /** @var Week $currentWeek */
+        $currentWeek = factory(Week::class)->states('as-current')->create();
+        Date::setTestNow(WeekService::finalizingStartsAt($currentWeek->adventuring_locks_at)->addHour());
+
         $heroSnapshot = HeroSnapshotFactory::new()->withHeroFactory(HeroFactory::new()->withMeasurables())->create();
         // get an item-type without attacks
         /** @var ItemType $itemType */
@@ -84,6 +92,11 @@ class BuildItemSnapshotTest extends TestCase
      */
     public function it_will_execute_build_attack_snapshot_for_each_item_attack()
     {
+
+        /** @var Week $currentWeek */
+        $currentWeek = factory(Week::class)->states('as-current')->create();
+        Date::setTestNow(WeekService::finalizingStartsAt($currentWeek->adventuring_locks_at)->addHour());
+
         $heroSnapshot = HeroSnapshotFactory::new()->withHeroFactory(HeroFactory::new()->withMeasurables())->create();
         // get an item-type without attacks
         /** @var ItemType $itemType */
@@ -118,7 +131,7 @@ class BuildItemSnapshotTest extends TestCase
 
         app()->instance(BuildAttackSnapshot::class, $mock);
 
-        $itemSnapshot = $this->getDomainAction()->execute($item, $heroSnapshot);
+        $this->getDomainAction()->execute($item, $heroSnapshot);
     }
 
     /**
@@ -126,6 +139,10 @@ class BuildItemSnapshotTest extends TestCase
      */
     public function it_will_attach_the_item_snapshot_to_the_same_enchantments_as_the_item()
     {
+        /** @var Week $currentWeek */
+        $currentWeek = factory(Week::class)->states('as-current')->create();
+        Date::setTestNow(WeekService::finalizingStartsAt($currentWeek->adventuring_locks_at)->addHour());
+
         $heroSnapshot = HeroSnapshotFactory::new()->withHeroFactory(HeroFactory::new()->withMeasurables())->create();
         // get an item-type without attacks
         /** @var ItemType $itemType */

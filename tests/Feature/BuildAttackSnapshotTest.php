@@ -5,15 +5,18 @@ namespace Tests\Feature;
 use App\Domain\Actions\Snapshots\BuildAttackSnapshot;
 use App\Domain\Actions\Combat\CalculateCombatDamage;
 use App\Domain\Models\ItemSnapshot;
+use App\Domain\Models\Week;
+use App\Facades\WeekService;
 use App\Factories\Models\AttackFactory;
 use App\Factories\Models\HeroSnapshotFactory;
 use App\Factories\Models\ItemSnapshotFactory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Date;
 use Tests\TestCase;
 
-class BuildAttackSnapshotTest extends TestCase
+class BuildAttackSnapshotTest extends BuildWeeklySnapshotTest
 {
     use DatabaseTransactions;
 
@@ -30,6 +33,10 @@ class BuildAttackSnapshotTest extends TestCase
      */
     public function it_will_build_an_attack_snapshot_for_an_attack_and_hero_snapshot()
     {
+        /** @var Week $currentWeek */
+        $currentWeek = factory(Week::class)->states('as-current')->create();
+        Date::setTestNow(WeekService::finalizingStartsAt($currentWeek->adventuring_locks_at)->addHour());
+
         $attack = AttackFactory::new()->create();
         $itemSnapshot = ItemSnapshotFactory::new()->create();
         $fantasyPower = round(rand(100, 5000)/100, 2);
@@ -51,6 +58,10 @@ class BuildAttackSnapshotTest extends TestCase
      */
     public function the_attack_snapshot_will_belong_to_the_item_snapshot()
     {
+        /** @var Week $currentWeek */
+        $currentWeek = factory(Week::class)->states('as-current')->create();
+        Date::setTestNow(WeekService::finalizingStartsAt($currentWeek->adventuring_locks_at)->addHour());
+
         $attack = AttackFactory::new()->create();
         $itemSnapshot = ItemSnapshotFactory::new()->create();
         $fantasyPower = round(rand(100, 5000)/100, 2);
@@ -66,6 +77,10 @@ class BuildAttackSnapshotTest extends TestCase
      */
     public function it_will_build_a_snapshot_attack_with_the_expected_damage()
     {
+        /** @var Week $currentWeek */
+        $currentWeek = factory(Week::class)->states('as-current')->create();
+        Date::setTestNow(WeekService::finalizingStartsAt($currentWeek->adventuring_locks_at)->addHour());
+
         $attack = AttackFactory::new()->create();
         $itemSnapshot = ItemSnapshotFactory::new()->create();
         $fantasyPower = round(rand(100, 5000)/100, 2);

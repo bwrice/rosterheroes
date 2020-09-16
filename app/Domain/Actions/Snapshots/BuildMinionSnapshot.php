@@ -9,11 +9,10 @@ use App\Domain\Models\Attack;
 use App\Domain\Models\ChestBlueprint;
 use App\Domain\Models\Minion;
 use App\Domain\Models\MinionSnapshot;
-use App\Domain\Models\Week;
 use App\Facades\CurrentWeek;
 use Illuminate\Support\Str;
 
-class BuildMinionSnapshot
+class BuildMinionSnapshot extends BuildWeeklySnapshot
 {
     public const EXCEPTION_CODE_INVALID_WEEK = 1;
     public const EXCEPTION_CODE_WEEK_NOT_FINALIZING = 2;
@@ -33,22 +32,14 @@ class BuildMinionSnapshot
         $this->buildAttackSnapshot = $buildAttackSnapshot;
     }
 
-    public function execute(Minion $minion, Week $week)
+    public function handle(Minion $minion)
     {
-        if (CurrentWeek::id() !== $week->id) {
-            throw new \Exception("Cannot build minion snapshot from non-current week", self::EXCEPTION_CODE_INVALID_WEEK);
-        }
-
-        if (! CurrentWeek::finalizing()) {
-            throw new \Exception("Cannot build minion snapshot when week is not finalizing", self::EXCEPTION_CODE_WEEK_NOT_FINALIZING);
-        }
-
         $fantasyPower = $this->calculateFantasyPower->execute($minion->getFantasyPoints());
 
         /** @var MinionSnapshot $minionSnapshot */
         $minionSnapshot = $minion->minionSnapshots()->create([
             'uuid' => Str::uuid(),
-            'week_id' => $week->id,
+            'week_id' => CurrentWeek::id(),
             'combat_position_id' => $minion->combat_position_id,
             'enemy_type_id' => $minion->enemy_type_id,
             'level' => $minion->level,
