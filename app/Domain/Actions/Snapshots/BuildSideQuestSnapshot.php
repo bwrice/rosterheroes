@@ -45,6 +45,10 @@ class BuildSideQuestSnapshot extends BuildWeeklySnapshot
                 if (is_null($minionSnapshot)) {
                     throw new \Exception("Minion snapshot for minion: " . $minion->name . " not found", self::EXCEPTION_MINION_SNAPSHOT_NOT_FOUND);
                 }
+
+                $sideQuestSnapshot->minionSnapshots()->save($minionSnapshot, [
+                    'count' => $minion->pivot->count
+                ]);
             });
 
             return $sideQuestSnapshot;

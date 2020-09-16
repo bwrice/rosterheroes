@@ -3,6 +3,8 @@
 namespace Tests\Feature;
 
 use App\Domain\Actions\Snapshots\BuildSideQuestSnapshot;
+use App\Domain\Models\Minion;
+use App\Domain\Models\MinionSnapshot;
 use App\Domain\Models\SideQuestSnapshot;
 use App\Domain\Models\Week;
 use App\Facades\WeekService;
@@ -86,6 +88,41 @@ class BuildSideQuestSnapshotTest extends BuildWeeklySnapshotTest
             return;
         }
         $this->fail("Exception not thrown");
+    }
 
+    /**
+     * @test
+     */
+    public function it_will_save_minion_snapshot_of_minions_that_belong_to_the_side_quest_to_the_side_quest_snapshot()
+    {
+        /** @var Week $currentWeek */
+        $currentWeek = factory(Week::class)->state('as-current')->create();
+        Date::setTestNow(WeekService::finalizingStartsAt($currentWeek->adventuring_locks_at)->addHour());
+        $sideQuest = SideQuestFactory::new()->create();
+
+        for ($i = 1; $i <= rand(2, 4); $i++) {
+            $minion = MinionFactory::new()->create();
+            MinionSnapshotFactory::new()->withWeekID($currentWeek->id)->withMinionID($minion->id)->create();
+            $sideQuest->minions()->save($minion, [
+                'count' => rand(1, 3)
+            ]);
+        }
+
+        $sideQuestMinions = $sideQuest->minions;
+        $this->assertTrue($sideQuestMinions->isNotEmpty());
+
+        /** @var SideQuestSnapshot $sideQuestSnapshot */
+        $sideQuestSnapshot = $this->getDomainAction()->execute($sideQuest);
+
+        $minionSnapshots = $sideQuestSnapshot->minionSnapshots;
+        $this->assertEquals($sideQuestMinions->count(), $minionSnapshots->count());
+
+        $sideQuestMinions->each(function (Minion $minion) use ($minionSnapshots) {
+            $matchingSnapshot = $minionSnapshots->first(function (MinionSnapshot $minionSnapshot) use ($minion) {
+                return $minion->id === $minionSnapshot->minion_id;
+            });
+            $this->assertNotNull($matchingSnapshot);
+            $this->assertEquals($minion->pivot->count, $matchingSnapshot->pivot->count);
+        });
     }
 }
