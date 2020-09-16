@@ -2,6 +2,7 @@
 
 namespace App\Domain\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -20,6 +21,8 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property Week $week
  * @property SideQuest $sideQuest
+ *
+ * @property Collection $minionSnapshots
  */
 class SideQuestSnapshot extends Model
 {
@@ -33,5 +36,10 @@ class SideQuestSnapshot extends Model
     public function sideQuest()
     {
         return $this->belongsTo(SideQuest::class);
+    }
+
+    public function minionSnapshots()
+    {
+        return $this->belongsToMany(MinionSnapshot::class, 'm_snapshot_sq_snapshot')->withTimestamps();
     }
 }
