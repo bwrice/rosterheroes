@@ -40,6 +40,6 @@ class SideQuestSnapshot extends Model
 
     public function minionSnapshots()
     {
-        return $this->belongsToMany(MinionSnapshot::class, 'm_snapshot_sq_snapshot')->withTimestamps();
+        return $this->belongsToMany(MinionSnapshot::class, 'm_snapshot_sq_snapshot')->withPivot(['count'])->withTimestamps();
     }
 }

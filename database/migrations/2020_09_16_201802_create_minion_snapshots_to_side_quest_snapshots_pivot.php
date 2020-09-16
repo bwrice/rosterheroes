@@ -17,6 +17,7 @@ class CreateMinionSnapshotsToSideQuestSnapshotsPivot extends Migration
             $table->bigInteger('minion_snapshot_id')->unsigned();
             $table->bigInteger('side_quest_snapshot_id')->unsigned();
             $table->primary(['minion_snapshot_id', 'side_quest_snapshot_id'], 'm_snapshot_sq_snapshot_primary');
+            $table->integer('count');
             $table->timestamps();
         });
 
