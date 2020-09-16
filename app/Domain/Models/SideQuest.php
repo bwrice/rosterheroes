@@ -63,6 +63,11 @@ class SideQuest extends Model implements RewardsChests
         return $this->belongsTo(SideQuestBlueprint::class);
     }
 
+    public function sideQuestSnapshots()
+    {
+        return $this->hasMany(SideQuestSnapshot::class);
+    }
+
     public function difficulty(): int
     {
         return (int) $this->floatDifficulty();
