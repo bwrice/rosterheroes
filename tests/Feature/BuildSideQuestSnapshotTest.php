@@ -6,6 +6,8 @@ use App\Domain\Actions\Snapshots\BuildSideQuestSnapshot;
 use App\Domain\Models\SideQuestSnapshot;
 use App\Domain\Models\Week;
 use App\Facades\WeekService;
+use App\Factories\Models\MinionFactory;
+use App\Factories\Models\MinionSnapshotFactory;
 use App\Factories\Models\SideQuestFactory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -45,5 +47,45 @@ class BuildSideQuestSnapshotTest extends BuildWeeklySnapshotTest
         $this->assertEquals($sideQuest->getExperienceReward(), $sideQuestSnapshot->experience_reward);
         $this->assertEquals($sideQuest->getFavorReward(), $sideQuestSnapshot->favor_reward);
         $this->assertTrue(abs($sideQuest->getExperiencePerMoment() - $sideQuestSnapshot->experience_per_moment) < 0.01);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_throw_an_exception_if_the_side_quest_has_a_minion_with_no_snapshot_for_current_week()
+    {
+        /** @var Week $currentWeek */
+        $currentWeek = factory(Week::class)->state('as-current')->create();
+        Date::setTestNow(WeekService::finalizingStartsAt($currentWeek->adventuring_locks_at)->addHour());
+        $sideQuest = SideQuestFactory::new()->create();
+        $minionWithValidSnapshot = MinionFactory::new()->create();
+        MinionSnapshotFactory::new()->withWeekID($currentWeek->id)->withMinionID($minionWithValidSnapshot->id)->create();
+        $sideQuest->minions()->save($minionWithValidSnapshot, [
+            'count' => 1
+        ]);
+
+        $minionMissingSnapshot = MinionFactory::new()->create();
+        // Create minion snapshot but for different week
+        MinionSnapshotFactory::new()
+            ->withWeekID(factory(Week::class)->create()->id)
+            ->withMinionID($minionWithValidSnapshot->id)
+            ->create();
+        $sideQuest->minions()->save($minionMissingSnapshot, [
+            'count' => 1
+        ]);
+
+        try {
+            $this->getDomainAction()->execute($sideQuest);
+        } catch (\Exception $exception) {
+            $this->assertEquals(BuildSideQuestSnapshot::EXCEPTION_MINION_SNAPSHOT_NOT_FOUND, $exception->getCode());
+            $snapshotCreated = SideQuestSnapshot::query()
+                ->where('week_id', '=', $currentWeek->id)
+                ->where('side_quest_id', '=', $sideQuest->id)
+                ->first();
+            $this->assertNull($snapshotCreated);
+            return;
+        }
+        $this->fail("Exception not thrown");
+
     }
 }
