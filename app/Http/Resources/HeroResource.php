@@ -6,7 +6,6 @@ use App\Domain\Models\Attack;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Item;
 use Illuminate\Http\Resources\Json\JsonResource;
-use function foo\func;
 
 /**
  * Class BarracksHeroResource
