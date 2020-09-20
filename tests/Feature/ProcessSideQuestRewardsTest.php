@@ -34,15 +34,18 @@ class ProcessSideQuestRewardsTest extends TestCase
             $eventFactory
         ]))->create();
 
-        $processVictoryMock = \Mockery::spy(ProcessSideQuestVictoryRewards::class);
+        $processVictoryMock = \Mockery::spy(ProcessSideQuestVictoryRewards::class)
+            ->shouldReceive('execute')
+            ->andReturn([
+                'experience' => rand(1, 1000),
+                'favor' => rand(1, 1000)
+            ])->getMock();
 
         app()->instance(ProcessSideQuestVictoryRewards::class, $processVictoryMock);
 
         /** @var ProcessSideQuestRewards $domainAction */
         $domainAction = app(ProcessSideQuestRewards::class);
         $domainAction->execute($sideQuestResult);
-
-        $processVictoryMock->shouldHaveReceived('execute');
     }
 
     /**
@@ -84,6 +87,10 @@ class ProcessSideQuestRewardsTest extends TestCase
         $rewardMinionKillAction = \Mockery::spy(RewardSquadForMinionKill::class)
             ->shouldReceive('execute')
             ->times(3)
+            ->andReturn([
+                'experience' => rand(1, 1000),
+                'favor' => rand(1, 1000)
+            ])
             ->getMock();
 
         app()->instance(RewardSquadForMinionKill::class, $rewardMinionKillAction);
