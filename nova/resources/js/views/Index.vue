@@ -58,6 +58,7 @@
 
         <!-- Create / Attach Button -->
         <create-resource-button
+          :label="createButtonLabel"
           :singular-name="singularName"
           :resource-name="resourceName"
           :via-resource="viaResource"
@@ -132,9 +133,9 @@
         <div class="flex items-center ml-auto px-3">
           <!-- Action Selector -->
           <action-selector
-            v-if="selectedResources.length > 0"
+            v-if="selectedResources.length > 0 || haveStandaloneActions"
             :resource-name="resourceName"
-            :actions="actions"
+            :actions="availableActions"
             :pivot-actions="pivotActions"
             :pivot-name="pivotName"
             :query-string="{
@@ -177,6 +178,10 @@
             :trashed="trashed"
             :per-page="perPage"
             :per-page-options="perPageOptions"
+            :show-trashed-option="
+              authorizedToForceDeleteAnyResources ||
+              authorizedToRestoreAnyResources
+            "
             @clear-selected-filters="clearSelectedFilters"
             @filter-changed="filterChanged"
             @trashed-changed="trashedChanged"
@@ -248,6 +253,7 @@
 
             <create-resource-button
               classes="btn btn-sm btn-outline inline-flex items-center focus:outline-none focus:shadow-outline active:outline-none active:shadow-outline"
+              :label="createButtonLabel"
               :singular-name="singularName"
               :resource-name="resourceName"
               :via-resource="viaResource"
@@ -278,6 +284,7 @@
             :relationship-type="relationshipType"
             :update-selection-status="updateSelectionStatus"
             @order="orderByField"
+            @reset-order-by="resetOrderBy"
             @delete="deleteResources"
             @restore="restoreResources"
             @actionExecuted="getResources"
@@ -327,6 +334,7 @@ import {
   PerPageable,
   InteractsWithQueryString,
   InteractsWithResourceInformation,
+  mapProps,
 } from 'laravel-nova'
 
 export default {
@@ -344,23 +352,19 @@ export default {
     field: {
       type: Object,
     },
-    resourceName: {
-      type: String,
-      required: true,
-    },
-    viaResource: {
-      default: '',
-    },
-    viaResourceId: {
-      default: '',
-    },
-    viaRelationship: {
-      default: '',
-    },
+
+    ...mapProps([
+      'resourceName',
+      'viaResource',
+      'viaResourceId',
+      'viaRelationship',
+    ]),
+
     relationshipType: {
       type: String,
       default: '',
     },
+
     disablePagination: {
       type: Boolean,
       default: false,
@@ -368,7 +372,8 @@ export default {
   },
 
   data: () => ({
-    actionEventsRefresher: null,
+    debouncer: null,
+    pollingListener: null,
     initialLoading: true,
     loading: true,
 
@@ -401,6 +406,11 @@ export default {
    * Mount the component and retrieve its initial data.
    */
   async created() {
+    this.debouncer = _.debounce(
+      callback => callback(),
+      this.resourceInformation.debounce
+    )
+
     if (Nova.missingResource(this.resourceName))
       return this.$router.push({ name: '404' })
 
@@ -444,17 +454,16 @@ export default {
       }
     )
 
-    // Refresh the action events
-    if (this.resourceName === 'action-events') {
-      Nova.$on('refresh-action-events', () => {
-        this.getResources()
-      })
+    Nova.$on('refresh-resources', () => {
+      this.getResources()
+    })
 
-      this.actionEventsRefresher = setInterval(() => {
+    if (this.resourceInformation.polling) {
+      this.pollingListener = setInterval(() => {
         if (document.hasFocus()) {
           this.getResources()
         }
-      }, 15 * 1000)
+      }, this.resourceInformation.pollingInterval)
     }
   },
 
@@ -467,8 +476,8 @@ export default {
    * Unbind the keydown even listener when the component is destroyed
    */
   destroyed() {
-    if (this.actionEventsRefresher) {
-      clearInterval(this.actionEventsRefresher)
+    if (this.pollingListener) {
+      clearInterval(this.pollingListener)
     }
 
     document.removeEventListener('keydown', this.handleKeydown)
@@ -625,6 +634,7 @@ export default {
     getActions() {
       this.actions = []
       this.pivotActions = null
+
       return Nova.request()
         .get(`/nova-api/${this.resourceName}/actions`, {
           params: {
@@ -654,8 +664,6 @@ export default {
         }
       })
     },
-
-    debouncer: _.debounce(callback => callback(), 500),
 
     /**
      * Clear the selected resouces and the "select all" states.
@@ -691,6 +699,16 @@ export default {
       this.updateQueryString({
         [this.orderByParameter]: field.sortableUriKey,
         [this.orderByDirectionParameter]: direction,
+      })
+    },
+
+    /**
+     * Reset the order by to its default state
+     */
+    resetOrderBy(field) {
+      this.updateQueryString({
+        [this.orderByParameter]: field.sortableUriKey,
+        [this.orderByDirectionParameter]: null,
       })
     },
 
@@ -784,6 +802,24 @@ export default {
       return this.$store.getters[`${this.resourceName}/hasFilters`]
     },
 
+    haveStandaloneActions() {
+      return this.standaloneActions.length > 0
+    },
+
+    nonStandaloneActions() {
+      return _.filter(this.allActions, a => a.standalone == false)
+    },
+
+    standaloneActions() {
+      return _.filter(this.allActions, a => a.standalone == true)
+    },
+
+    availableActions() {
+      return this.selectedResources.length > 0
+        ? this.nonStandaloneActions
+        : this.standaloneActions
+    },
+
     /**
      * Determine if the resource should show any cards
      */
@@ -806,7 +842,9 @@ export default {
      * Get the name of the search query string variable.
      */
     searchParameter() {
-      return this.viaRelationship + '_search'
+      return this.viaRelationship
+        ? this.viaRelationship + '_search'
+        : this.resourceName + '_search'
     },
 
     /**
@@ -946,7 +984,7 @@ export default {
      * Get the current order by direction from the query string.
      */
     currentOrderByDirection() {
-      return this.$route.query[this.orderByDirectionParameter] || 'desc'
+      return this.$route.query[this.orderByDirectionParameter] || null
     },
 
     /**
@@ -991,6 +1029,13 @@ export default {
       }
 
       return Capitalize(this.resourceInformation.singularLabel)
+    },
+
+    /**
+     * Get the default label for the create button
+     */
+    createButtonLabel() {
+      return this.resourceInformation.createButtonLabel
     },
 
     /**
@@ -1093,7 +1138,7 @@ export default {
     },
 
     /**
-     * Determinw whether the delete menu should be shown to the user
+     * Determine whether the delete menu should be shown to the user
      */
     shouldShowDeleteMenu() {
       return (
@@ -1139,9 +1184,9 @@ export default {
 
       return (
         this.resources.length &&
-        `${first + 1}-${first + this.resources.length} ${this.__('of')} ${
-          this.allMatchingResourceCount
-        }`
+        `${Nova.formatNumber(first + 1)}-${Nova.formatNumber(
+          first + this.resources.length
+        )} ${this.__('of')} ${Nova.formatNumber(this.allMatchingResourceCount)}`
       )
     },
 

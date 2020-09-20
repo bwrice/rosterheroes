@@ -7,7 +7,7 @@ use Laravel\Nova\Tests\IntegrationTest;
 
 class ActionTest extends IntegrationTest
 {
-    public function setUp() : void
+    public function setUp(): void
     {
         parent::setUp();
     }
@@ -192,6 +192,18 @@ class ActionTest extends IntegrationTest
         $action->confirmText('Are you sure!');
 
         $this->assertSubset(['confirmText' => 'Are you sure!'], $action->jsonSerialize());
+    }
+
+    public function test_actions_can_use_custom_css_classes_for_the_buttons()
+    {
+        $action = new class extends Action {
+            public function actionClass()
+            {
+                return 'bg-warning text-warning-dark';
+            }
+        };
+
+        $this->assertSubset(['class' => 'bg-warning text-warning-dark'], $action->jsonSerialize());
     }
 
     protected function assertShownOnIndex(Action $action)

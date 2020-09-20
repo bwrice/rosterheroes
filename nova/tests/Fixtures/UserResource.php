@@ -22,9 +22,7 @@ class UserResource extends Resource
      *
      * @var string
      */
-    public static $model = \Laravel\Nova\Tests\Fixtures\User::class;
-
-    /**
+    public static $model = \Laravel\Nova\Tests\Fixtures\User::class; /**
      * The columns that should be searched.
      *
      * @var array
@@ -44,6 +42,26 @@ class UserResource extends Resource
     }
 
     /**
+     * Determine whether to show borders for each column on the X-axis.
+     *
+     * @return string
+     */
+    public static function showColumnBorders()
+    {
+        return $_SERVER['nova.user.showColumnBorders'] ?? static::$showColumnBorders;
+    }
+
+    /**
+     * Get the visual style that should be used for the table.
+     *
+     * @return string
+     */
+    public static function tableStyle()
+    {
+        return $_SERVER['nova.user.tableStyle'] ?? static::$tableStyle;
+    }
+
+    /**
      * Determine if the user can add / associate models of the given type to the resource.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
@@ -53,6 +71,17 @@ class UserResource extends Resource
     public function authorizedToAdd(NovaRequest $request, $model)
     {
         return $_SERVER['nova.user.relatable'] ?? parent::authorizedToAdd($request, $model);
+    }
+
+    /**
+     * Indicates whether Nova should check for modifications between viewing and updating a resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return  bool
+     */
+    public static function trafficCop(Request $request)
+    {
+        return $_SERVER['nova.user.trafficCop'] ?? static::$trafficCop;
     }
 
     /**
@@ -69,7 +98,11 @@ class UserResource extends Resource
 
                 Text::make('Name')
                             ->creationRules('required', 'string', 'max:255')
-                            ->updateRules('required', 'string', 'max:255'),
+                            ->updateRules('required', 'string', 'max:255')
+                            ->rules(function () {
+                                return ($_SERVER['nova.user.fixedValuesOnUpdate'] ?? false) && $this->resource->email === 'taylor@laravel.com'
+                                    ? ['in:Taylor Otwell'] : [];
+                            }),
             ]),
 
             Text::make('Email')
@@ -85,8 +118,12 @@ class UserResource extends Resource
                 }),
 
             Text::make('Password')
-                                ->onlyOnForms()
-                                ->rules('required', 'string', 'min:8'),
+                ->onlyOnForms()
+                ->rules('required', 'string', 'min:8')
+                ->updateRules(function () {
+                    return ($_SERVER['nova.user.fixedValuesOnUpdate'] ?? false) && $this->resource->email === 'taylor@laravel.com'
+                        ? ['in:taylorotwell'] : [];
+                }),
 
             Text::make('Restricted')->canSee(function () {
                 return false;
@@ -96,20 +133,7 @@ class UserResource extends Resource
             HasOne::make('Profile', 'profile', ProfileResource::class)->nullable(),
             HasMany::make('Posts', 'posts', PostResource::class),
 
-            BelongsToMany::make('Roles', 'roles', RoleResource::class)->referToPivotAs($_SERVER['nova.user.rolePivotName'] ?? null)->fields(function () {
-                return [
-                    Text::make('Admin', 'admin')->rules('required'),
-                    Text::make('Admin', 'pivot-update')->rules('required')->onlyOnForms()->hideWhenCreating(),
-
-                    $this->when($_SERVER['__nova.user.pivotFile'] ?? false, function () {
-                        return File::make('Photo', 'photo');
-                    }),
-
-                    Text::make('Restricted', 'restricted')->canSee(function () {
-                        return false;
-                    }),
-                ];
-            }),
+            $this->rolesFields(),
 
             BelongsToMany::make('Related Users', 'relatedUsers', self::class),
 
@@ -142,6 +166,37 @@ class UserResource extends Resource
 
             KeyValue::make('Meta'),
         ];
+    }
+
+    public function rolesFields()
+    {
+        if ($_SERVER['nova.useRolesCustomAttribute'] ?? false) {
+            return BelongsToMany::make('Roles', 'userRoles', RoleResource::class)->rules('required');
+        }
+
+        return BelongsToMany::make('Roles', 'roles', RoleResource::class)->referToPivotAs($_SERVER['nova.user.rolePivotName'] ?? null)->fields(function () {
+            return [
+                tap(Text::make('Admin', 'admin')->rules('required'), function ($field) {
+                    if ($_SERVER['nova.roles.hidingAdminPivotField'] ?? false) {
+                        $field->onlyOnForms();
+                    }
+
+                    if ($_SERVER['nova.roles.hideAdminWhenCreating'] ?? false) {
+                        $field->hideWhenCreating();
+                    }
+                }),
+
+                Text::make('Admin', 'pivot-update')->rules('required')->onlyOnForms()->hideWhenCreating(),
+
+                $this->when($_SERVER['__nova.user.pivotFile'] ?? false, function () {
+                    return File::make('Photo', 'photo');
+                }),
+
+                Text::make('Restricted', 'restricted')->canSee(function () {
+                    return false;
+                }),
+            ];
+        });
     }
 
     /**
@@ -193,6 +248,7 @@ class UserResource extends Resource
             new ExceptionAction,
             new FailingAction,
             new NoopAction,
+            StandaloneAction::make()->standalone(),
             tap(new QueuedAction, function (QueuedAction $action) {
                 if ($_SERVER['nova.user.actionCallbacks'] ?? false) {
                     $action->canRun(function ($request, $model) {

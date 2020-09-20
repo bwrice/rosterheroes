@@ -1,14 +1,27 @@
 <template>
-  <default-field :field="field" :errors="errors">
+  <default-field :field="field" :errors="errors" :show-help-text="showHelpText">
     <template slot="field">
       <input
         class="w-full form-control form-input form-input-bordered"
+        @input="handleChange"
+        :value="value"
         :id="field.attribute"
         :dusk="field.attribute"
-        v-model="value"
         v-bind="extraAttributes"
         :disabled="isReadonly"
+        :list="`${field.attribute}-list`"
       />
+
+      <datalist
+        v-if="field.suggestions && field.suggestions.length > 0"
+        :id="`${field.attribute}-list`"
+      >
+        <option
+          :key="suggestion"
+          v-for="suggestion in field.suggestions"
+          :value="suggestion"
+        />
+      </datalist>
     </template>
   </default-field>
 </template>

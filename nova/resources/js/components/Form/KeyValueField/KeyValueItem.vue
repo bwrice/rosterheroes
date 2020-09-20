@@ -1,7 +1,10 @@
 <template>
   <div v-if="isNotObject" class="flex items-center key-value-item">
     <div class="flex flex-grow border-b border-50 key-value-fields">
-      <div class="w-48 cursor-text">
+      <div
+        class="w-48 cursor-text"
+        :class="{ 'bg-30': readOnlyKeys || !isEditable }"
+      >
         <textarea
           :dusk="`key-value-key-${index}`"
           v-model="item.key"
@@ -9,11 +12,11 @@
           ref="keyField"
           type="text"
           class="font-mono text-sm resize-none block min-h-input w-full form-control form-input form-input-row py-4 text-90"
-          :disabled="disabled"
-          style="background-clip: border-box;"
+          :disabled="!isEditable || readOnlyKeys"
+          style="background-clip: border-box"
           :class="{
-            '!bg-white': disabled,
-            'hover:bg-20 focus:bg-white': !disabled,
+            'bg-white': !isEditable || readOnlyKeys,
+            'hover:bg-20 focus:bg-white': isEditable && !readOnlyKeys,
           }"
         />
       </div>
@@ -25,18 +28,18 @@
           @focus="handleValueFieldFocus"
           ref="valueField"
           type="text"
-          class="font-mono text-sm hover:bg-20 focus:bg-white block min-h-input w-full form-control form-input form-input-row py-4 text-90"
-          :disabled="disabled"
+          class="font-mono text-sm block min-h-input w-full form-control form-input form-input-row py-4 text-90"
+          :disabled="!isEditable"
           :class="{
-            '!bg-white': disabled,
-            'hover:bg-20 focus:bg-white': !disabled,
+            'bg-white': !isEditable,
+            'hover:bg-20 focus:bg-white': isEditable,
           }"
         />
       </div>
     </div>
 
     <div
-      v-if="!disabled"
+      v-if="isEditable && canDeleteRow"
       class="flex justify-center h-11 w-11 absolute"
       style="right: -50px"
     >
@@ -64,6 +67,18 @@ export default {
       type: Boolean,
       default: false,
     },
+    readOnly: {
+      type: Boolean,
+      default: false,
+    },
+    readOnlyKeys: {
+      type: Boolean,
+      default: false,
+    },
+    canDeleteRow: {
+      type: Boolean,
+      default: true,
+    },
   },
 
   mounted() {
@@ -84,6 +99,9 @@ export default {
   computed: {
     isNotObject() {
       return !(this.item.value instanceof Object)
+    },
+    isEditable() {
+      return !this.readOnly && !this.disabled
     },
   },
 }

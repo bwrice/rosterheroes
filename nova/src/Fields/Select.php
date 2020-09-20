@@ -2,10 +2,10 @@
 
 namespace Laravel\Nova\Fields;
 
-use Illuminate\Support\Arr;
-
 class Select extends Field
 {
+    use Searchable;
+
     /**
      * The field's component.
      *
@@ -21,25 +21,22 @@ class Select extends Field
      */
     public function options($options)
     {
-        if (is_callable($options) || $this->isCallableArray($options)) {
+        if (is_callable($options)) {
             $options = $options();
         }
 
         return $this->withMeta([
             'options' => collect($options ?? [])->map(function ($label, $value) {
+                if ($this->searchable && isset($label['group'])) {
+                    return [
+                        'label' => $label['group'].' - '.$label['label'],
+                        'value' => $value,
+                    ];
+                }
+
                 return is_array($label) ? $label + ['value' => $value] : ['label' => $label, 'value' => $value];
             })->values()->all(),
         ]);
-    }
-
-    protected function isCallableArray($options)
-    {
-        return $this->isCountable($options) && ! Arr::isAssoc($options) && method_exists($options[0], $options[1]);
-    }
-
-    protected function isCountable($options)
-    {
-        return is_countable($options) && count($options) === 2;
     }
 
     /**
@@ -54,5 +51,28 @@ class Select extends Field
                     ->where('value', $value)
                     ->first()['label'] ?? $value;
         });
+    }
+
+    /**
+     * Enable subtitles within the related search results.
+     *
+     * @return $this
+     * @throws \Exception
+     */
+    public function withSubtitles()
+    {
+        throw new \Exception('The `withSubtitles` option is not available on Select fields.');
+    }
+
+    /**
+     * Prepare the field for JSON serialization.
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return array_merge(parent::jsonSerialize(), [
+            'searchable' => $this->searchable,
+        ]);
     }
 }

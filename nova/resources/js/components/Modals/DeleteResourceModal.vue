@@ -54,7 +54,7 @@ export default {
     mode: {
       type: String,
       default: 'delete',
-      validator: function(value) {
+      validator: function (value) {
         return ['force delete', 'delete', 'detach'].indexOf(value) !== -1
       },
     },

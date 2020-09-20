@@ -107,12 +107,24 @@ export default {
      */
     async fetchFilters({ commit, state }, options) {
       let { resourceName, lens = false } = options
+      let { viaResource, viaResourceId, viaRelationship } = options
+      let params = {
+        params: {
+          viaResource,
+          viaResourceId,
+          viaRelationship,
+        },
+      }
 
       const { data } = lens
         ? await Nova.request().get(
-            '/nova-api/' + resourceName + '/lens/' + lens + '/filters'
+            '/nova-api/' + resourceName + '/lens/' + lens + '/filters',
+            params
           )
-        : await Nova.request().get('/nova-api/' + resourceName + '/filters')
+        : await Nova.request().get(
+            '/nova-api/' + resourceName + '/filters',
+            params
+          )
 
       commit('storeFilters', data)
     },

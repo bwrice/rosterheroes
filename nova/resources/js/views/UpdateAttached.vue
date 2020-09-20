@@ -13,6 +13,7 @@
     <form
       v-if="field"
       @submit.prevent="updateAttachedResource"
+      @change="onUpdateFormStatus"
       autocomplete="off"
     >
       <card class="overflow-hidden mb-8">
@@ -32,9 +33,9 @@
               :label="'display'"
               :selected="selectedResourceId"
             >
-              <option value="" disabled selected>{{
-                __('Choose :field', { field: field.name })
-              }}</option>
+              <option value="" disabled selected>
+                {{ __('Choose :field', { field: field.name }) }}
+              </option>
             </select-control>
           </template>
         </default-field>
@@ -57,7 +58,7 @@
       </card>
       <!-- Attach Button -->
       <div class="flex items-center">
-        <cancel-button />
+        <cancel-button @click="$router.back()" />
 
         <progress-button
           class="mr-3"
@@ -88,10 +89,15 @@
 
 <script>
 import _ from 'lodash'
-import { PerformsSearches, TogglesTrashed, Errors } from 'laravel-nova'
+import {
+  PerformsSearches,
+  TogglesTrashed,
+  Errors,
+  PreventsFormAbandonment,
+} from 'laravel-nova'
 
 export default {
-  mixins: [PerformsSearches, TogglesTrashed],
+  mixins: [PerformsSearches, TogglesTrashed, PreventsFormAbandonment],
 
   props: {
     resourceName: {
@@ -265,6 +271,7 @@ export default {
         await this.updateRequest()
 
         this.submittedViaUpdateAttachedResource = false
+        this.canLeave = true
 
         Nova.success(this.__('The resource was updated!'))
 
@@ -276,7 +283,12 @@ export default {
           },
         })
       } catch (error) {
+        window.scrollTo(0, 0)
+
         this.submittedViaUpdateAttachedResource = false
+        if (this.resourceInformation.preventFormAbandonment) {
+          this.canLeave = false
+        }
 
         if (error.response.status == 422) {
           this.validationErrors = new Errors(error.response.data.errors)
@@ -378,6 +390,15 @@ export default {
      */
     updateLastRetrievedAtTimestamp() {
       this.lastRetrievedAt = Math.floor(new Date().getTime() / 1000)
+    },
+
+    /**
+     * Prevent accidental abandonment only if form was changed.
+     */
+    onUpdateFormStatus() {
+      if (this.resourceInformation.preventFormAbandonment) {
+        this.updateFormStatus()
+      }
     },
   },
 

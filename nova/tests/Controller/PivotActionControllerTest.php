@@ -21,14 +21,14 @@ use Laravel\Nova\Tests\IntegrationTest;
 
 class PivotActionControllerTest extends IntegrationTest
 {
-    public function setUp() : void
+    public function setUp(): void
     {
         parent::setUp();
 
         $this->authenticate();
     }
 
-    public function tearDown() : void
+    public function tearDown(): void
     {
         unset($_SERVER['queuedAction.applied']);
         unset($_SERVER['queuedAction.appliedFields']);

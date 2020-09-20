@@ -9,12 +9,15 @@
     <form
       v-if="panels"
       @submit="submitViaUpdateResource"
+      @change="onUpdateFormStatus"
       autocomplete="off"
       ref="form"
     >
       <form-panel
         v-for="panel in panelsWithFields"
         @update-last-retrieved-at-timestamp="updateLastRetrievedAtTimestamp"
+        @file-upload-started="handleFileUploadStarted"
+        @file-upload-finished="handleFileUploadFinished"
         :panel="panel"
         :name="panel.name"
         :key="panel.name"
@@ -31,7 +34,7 @@
 
       <!-- Update Button -->
       <div class="flex items-center">
-        <cancel-button />
+        <cancel-button @click="$router.back()" />
 
         <progress-button
           class="mr-3"
@@ -49,7 +52,7 @@
           :disabled="isWorking"
           :processing="wasSubmittedViaUpdateResource"
         >
-          {{ __('Update :resource', { resource: singularName }) }}
+          {{ updateButtonLabel }}
         </progress-button>
       </div>
     </form>
@@ -57,29 +60,28 @@
 </template>
 
 <script>
-import { Errors, InteractsWithResourceInformation } from 'laravel-nova'
+import {
+  mapProps,
+  Errors,
+  InteractsWithResourceInformation,
+  PreventsFormAbandonment,
+} from 'laravel-nova'
+import HandlesUploads from '@/mixins/HandlesUploads'
 
 export default {
-  mixins: [InteractsWithResourceInformation],
+  mixins: [
+    InteractsWithResourceInformation,
+    HandlesUploads,
+    PreventsFormAbandonment,
+  ],
 
-  props: {
-    resourceName: {
-      type: String,
-      required: true,
-    },
-    resourceId: {
-      required: true,
-    },
-    viaResource: {
-      default: '',
-    },
-    viaResourceId: {
-      default: '',
-    },
-    viaRelationship: {
-      default: '',
-    },
-  },
+  props: mapProps([
+    'resourceName',
+    'resourceId',
+    'viaResource',
+    'viaResourceId',
+    'viaRelationship',
+  ]),
 
   data: () => ({
     relationResponse: null,
@@ -90,7 +92,6 @@ export default {
     panels: [],
     validationErrors: new Errors(),
     lastRetrievedAt: null,
-    isWorking: false,
   }),
 
   async created() {
@@ -153,12 +154,14 @@ export default {
       e.preventDefault()
       this.submittedViaUpdateResource = true
       this.submittedViaUpdateResourceAndContinueEditing = false
+      this.canLeave = true
       await this.updateResource()
     },
 
     async submitViaUpdateResourceAndContinueEditing() {
       this.submittedViaUpdateResourceAndContinueEditing = true
       this.submittedViaUpdateResource = false
+      this.canLeave = true
       await this.updateResource()
     },
 
@@ -195,8 +198,14 @@ export default {
             return
           }
         } catch (error) {
+          window.scrollTo(0, 0)
+
           this.submittedViaUpdateResource = false
           this.submittedViaUpdateResourceAndContinueEditing = false
+
+          if (this.resourceInformation.preventFormAbandonment) {
+            this.canLeave = false
+          }
 
           if (error.response.status == 422) {
             this.validationErrors = new Errors(error.response.data.errors)
@@ -243,6 +252,15 @@ export default {
     updateLastRetrievedAtTimestamp() {
       this.lastRetrievedAt = Math.floor(new Date().getTime() / 1000)
     },
+
+    /**
+     * Prevent accidental abandonment only if form was changed.
+     */
+    onUpdateFormStatus() {
+      if (this.resourceInformation.preventFormAbandonment) {
+        this.updateFormStatus()
+      }
+    },
   },
 
   computed: {
@@ -276,6 +294,10 @@ export default {
       return this.resourceInformation.singularLabel
     },
 
+    updateButtonLabel() {
+      return this.resourceInformation.updateButtonLabel
+    },
+
     isRelation() {
       return Boolean(this.viaResourceId && this.viaRelationship)
     },
@@ -283,7 +305,7 @@ export default {
     panelsWithFields() {
       return _.map(this.panels, panel => {
         return {
-          name: panel.name,
+          ...panel,
           fields: _.filter(this.fields, field => field.panel == panel.name),
         }
       })

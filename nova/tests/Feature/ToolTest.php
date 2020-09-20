@@ -9,7 +9,7 @@ use Laravel\Nova\Tool;
 
 class ToolTest extends IntegrationTest
 {
-    public function setUp() : void
+    public function setUp(): void
     {
         parent::setUp();
     }

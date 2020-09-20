@@ -10,7 +10,7 @@ use Laravel\Nova\Tests\IntegrationTest;
 
 class LensMetricControllerTest extends IntegrationTest
 {
-    public function setUp() : void
+    public function setUp(): void
     {
         parent::setUp();
 

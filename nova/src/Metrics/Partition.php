@@ -15,6 +15,20 @@ abstract class Partition extends Metric
     public $component = 'partition-metric';
 
     /**
+     * Rounding precision.
+     *
+     * @var int
+     */
+    public $roundingPrecision = 0;
+
+    /**
+     * Rounding mode.
+     *
+     * @var int
+     */
+    public $roundingMode = PHP_ROUND_HALF_UP;
+
+    /**
      * Return a partition result showing the segments of a count aggregate.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -122,7 +136,7 @@ abstract class Partition extends Metric
     {
         $key = $result->{last(explode('.', $groupBy))};
 
-        return [$key => round($result->aggregate, 0)];
+        return [$key => $result->aggregate];
     }
 
     /**
@@ -133,6 +147,8 @@ abstract class Partition extends Metric
      */
     public function result(array $value)
     {
-        return new PartitionResult($value);
+        return new PartitionResult(collect($value)->map(function ($number) {
+            return round($number, $this->roundingPrecision, $this->roundingMode);
+        })->toArray());
     }
 }

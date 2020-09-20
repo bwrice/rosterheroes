@@ -3,6 +3,7 @@
 namespace Laravel\Nova\Tests\Fixtures;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\ID;
@@ -50,28 +51,37 @@ class RoleResource extends Resource
         return [
             ID::make('ID', 'id'),
 
-            BelongsToMany::make('Users', 'users', UserResource::class)->fields(function () {
-                return [
-                    Text::make('Admin', 'admin')->rules('required'),
+            BelongsTo::make('Created By', 'createdBy', UserResource::class),
 
-                    $this->when($_SERVER['__nova.role.pivotFile'] ?? false, function () {
-                        return File::make('Photo', 'photo');
-                    }),
+            BelongsToMany::make('Users', 'users', UserResource::class)
+                ->actions(function ($request) {
+                    return [
+                        new FailingPivotAction,
+                        new NoopAction,
+                        new NoopActionWithPivotHandle,
+                        new QueuedAction,
+                        new QueuedUpdateStatusAction,
+                        new UpdateStatusAction,
+                    ];
+                })
+                ->prunable($_SERVER['__nova.role.prunable'] ?? false)
+                ->fields(function () {
+                    return [
+                        $this->when($_SERVER['__nova.role.pivotFile'] ?? false, function () {
+                            return File::make('Photo', 'photo');
+                        }),
 
-                    Text::make('Restricted', 'restricted')->canSee(function () {
-                        return false;
-                    }),
-                ];
-            })->actions(function ($request) {
-                return [
-                    new FailingPivotAction,
-                    new NoopAction,
-                    new NoopActionWithPivotHandle,
-                    new QueuedAction,
-                    new QueuedUpdateStatusAction,
-                    new UpdateStatusAction,
-                ];
-            })->prunable($_SERVER['__nova.role.prunable'] ?? false),
+                        tap(Text::make('Admin', 'admin')->rules('required'), function ($field) {
+                            if ($_SERVER['nova.roles.hidingAdminPivotField'] ?? false) {
+                                $field->onlyOnForms();
+                            }
+                        }),
+
+                        Text::make('Restricted', 'restricted')->canSee(function () {
+                            return false;
+                        }),
+                    ];
+                }),
 
             Text::make('Name', 'name')->rules('required', 'string', 'max:255'),
         ];

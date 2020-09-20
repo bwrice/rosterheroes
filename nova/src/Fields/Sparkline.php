@@ -30,6 +30,20 @@ class Sparkline extends Field
     public $chartStyle = 'Line';
 
     /**
+     * Indicates if the element should be shown on the creation view.
+     *
+     * @var \Closure|bool
+     */
+    public $showOnCreation = false;
+
+    /**
+     * Indicates if the element should be shown on the update view.
+     *
+     * @var \Closure|bool
+     */
+    public $showOnUpdate = false;
+
+    /**
      * Set the data for the Spark Line.
      *
      * @param  array|\Closure|\Laravel\Nova\Metrics\Trend  $data

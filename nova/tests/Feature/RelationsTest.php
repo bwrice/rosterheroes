@@ -3,6 +3,7 @@
 namespace Laravel\Nova\Tests\Feature;
 
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\MorphTo;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Tests\Fixtures\Comment;
@@ -14,7 +15,7 @@ use Laravel\Nova\Tests\IntegrationTest;
 
 class RelationsTest extends IntegrationTest
 {
-    public function setUp() : void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -61,5 +62,12 @@ class RelationsTest extends IntegrationTest
         $this->assertFalse($comment->relationLoaded('commentable'));
 
         $this->assertEquals($comment->commentable_id, $post2->id);
+    }
+
+    public function test_changing_field_attribute_by_meta()
+    {
+        $field = HasMany::make('Post', 'posts', UserResource::class)->withMeta(['listable' => false]);
+
+        $this->assertFalse($field->jsonSerialize()['listable']);
     }
 }

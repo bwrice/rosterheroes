@@ -3,7 +3,10 @@
 namespace Laravel\Nova\Tests\Controller;
 
 use Illuminate\Support\Facades\Gate;
+use Laravel\Nova\Actions\ActionEvent;
 use Laravel\Nova\ResourceToolElement;
+use Laravel\Nova\Tests\Fixtures\Boolean;
+use Laravel\Nova\Tests\Fixtures\DeniedActionPolicy;
 use Laravel\Nova\Tests\Fixtures\Post;
 use Laravel\Nova\Tests\Fixtures\Role;
 use Laravel\Nova\Tests\Fixtures\User;
@@ -12,14 +15,14 @@ use Laravel\Nova\Tests\IntegrationTest;
 
 class ResourceShowTest extends IntegrationTest
 {
-    public function setUp() : void
+    public function setUp(): void
     {
         parent::setUp();
 
         $this->authenticate();
     }
 
-    public function tearDown() : void
+    public function tearDown(): void
     {
         parent::tearDown();
 
@@ -198,5 +201,35 @@ class ResourceShowTest extends IntegrationTest
 
         $this->assertNotEmpty($panel);
         $this->assertEquals('panel', $panel->component);
+    }
+
+    public function test_actions_field_is_added()
+    {
+        $boolean = Boolean::create();
+
+        $response = $this->withExceptionHandling()
+                         ->getJson('/nova-api/booleans/'.$boolean->id);
+
+        $response->assertStatus(200);
+
+        $fields = $response->original['resource']['fields'];
+
+        $this->assertCount(3, $fields);
+    }
+
+    public function test_actions_are_hidden_when_policy_forbids()
+    {
+        $boolean = Boolean::create();
+
+        Gate::policy(ActionEvent::class, DeniedActionPolicy::class);
+
+        $response = $this->withExceptionHandling()
+            ->getJson('/nova-api/booleans/'.$boolean->id);
+
+        $response->assertStatus(200);
+
+        $fields = $response->original['resource']['fields'];
+
+        $this->assertCount(2, $fields);
     }
 }

@@ -16,22 +16,22 @@
           <button
             dusk="cancel-upload-delete-button"
             type="button"
-            data-testid="cancel-button"
             @click.prevent="handleClose"
             class="btn text-80 font-normal h-9 px-3 mr-3 btn-link"
           >
             {{ __('Cancel') }}
           </button>
 
-          <button
-            dusk="confirm-upload-delete-button"
+          <progress-button
+            @click.prevent.native="handleConfirm"
             ref="confirmButton"
-            data-testid="confirm-button"
-            @click.prevent="handleConfirm"
-            class="btn btn-default btn-danger"
+            dusk="confirm-upload-delete-button"
+            :disabled="clicked"
+            :processing="clicked"
+            class="btn-danger"
           >
             {{ __('Delete') }}
-          </button>
+          </progress-button>
         </div>
       </div>
     </div>
@@ -47,12 +47,15 @@ export default {
     this.$refs.confirmButton.focus()
   },
 
+  data: () => ({ clicked: false }),
+
   methods: {
     handleClose() {
       this.$emit('close')
     },
 
     handleConfirm() {
+      this.clicked = true
       this.$emit('confirm')
     },
   },
