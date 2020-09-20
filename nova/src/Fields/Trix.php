@@ -118,7 +118,7 @@ class Trix extends Field implements StorableContract, DeletableContract
     }
 
     /**
-     * Specify that file uploads should not be allowed.
+     * Specify that file uploads should be allowed.
      *
      * @param  string  $disk
      * @param  string  $path
@@ -158,7 +158,7 @@ class Trix extends Field implements StorableContract, DeletableContract
         }
 
         if ($request->{$this->attribute.'DraftId'} && $this->withFiles) {
-            $callbacks[] = function () use ($request, $model, $attribute) {
+            $callbacks[] = function () use ($request, $model) {
                 PendingAttachment::persistDraft(
                     $request->{$this->attribute.'DraftId'},
                     $this,
@@ -172,6 +172,15 @@ class Trix extends Field implements StorableContract, DeletableContract
                 collect($callbacks)->each->__invoke();
             };
         }
+    }
+
+    /**
+     * Get the full path that the field is stored at on disk.
+     *
+     * @return string|null
+     */
+    public function getStoragePath()
+    {
     }
 
     /**

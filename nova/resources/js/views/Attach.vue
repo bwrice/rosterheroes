@@ -10,7 +10,12 @@
       __('Attach :resource', { resource: relatedResourceLabel })
     }}</heading>
 
-    <form v-if="field" @submit.prevent="attachResource" autocomplete="off">
+    <form
+      v-if="field"
+      @submit.prevent="attachResource"
+      @change="onUpdateFormStatus"
+      autocomplete="off"
+    >
       <card class="overflow-hidden mb-8">
         <!-- Related Resource -->
         <default-field :field="field" :errors="validationErrors">
@@ -21,10 +26,10 @@
               @input="performSearch"
               @clear="clearSelection"
               @selected="selectResource"
+              :debounce="field.debounce"
               :value="selectedResource"
               :data="availableResources"
               trackBy="value"
-              searchBy="display"
               class="mb-3"
             >
               <div
@@ -54,7 +59,23 @@
                   />
                 </div>
 
-                {{ option.display }}
+                <div>
+                  <div
+                    class="text-sm font-semibold leading-5 text-90"
+                    :class="{ 'text-white': selected }"
+                  >
+                    {{ option.display }}
+                  </div>
+
+                  <div
+                    v-if="field.withSubtitles"
+                    class="mt-1 text-xs font-semibold leading-5 text-80"
+                    :class="{ 'text-white': selected }"
+                  >
+                    <span v-if="option.subtitle">{{ option.subtitle }}</span>
+                    <span v-else>{{ __('No additional information...') }}</span>
+                  </div>
+                </div>
               </div>
             </search-input>
 
@@ -71,11 +92,13 @@
               :label="'display'"
               :selected="selectedResourceId"
             >
-              <option value="" disabled selected>{{
-                __('Choose :resource', {
-                  resource: relatedResourceLabel,
-                })
-              }}</option>
+              <option value="" disabled selected>
+                {{
+                  __('Choose :resource', {
+                    resource: relatedResourceLabel,
+                  })
+                }}
+              </option>
             </select-control>
 
             <!-- Trashed State -->
@@ -83,7 +106,7 @@
               <checkbox-with-label
                 :dusk="field.resourceName + '-with-trashed-checkbox'"
                 :checked="withTrashed"
-                @change="toggleWithTrashed"
+                @input="toggleWithTrashed"
               >
                 {{ __('With Trashed') }}
               </checkbox-with-label>
@@ -107,7 +130,7 @@
 
       <!-- Attach Button -->
       <div class="flex items-center">
-        <cancel-button />
+        <cancel-button @click="$router.back()" />
 
         <progress-button
           class="mr-3"
@@ -137,10 +160,15 @@
 </template>
 
 <script>
-import { PerformsSearches, TogglesTrashed, Errors } from 'laravel-nova'
+import {
+  PerformsSearches,
+  TogglesTrashed,
+  Errors,
+  PreventsFormAbandonment,
+} from 'laravel-nova'
 
 export default {
-  mixins: [PerformsSearches, TogglesTrashed],
+  mixins: [PerformsSearches, TogglesTrashed, PreventsFormAbandonment],
 
   props: {
     resourceName: {
@@ -299,6 +327,7 @@ export default {
         await this.attachRequest()
 
         this.submittedViaAttachResource = false
+        this.canLeave = true
 
         this.$router.push({
           name: 'detail',
@@ -308,7 +337,12 @@ export default {
           },
         })
       } catch (error) {
+        window.scrollTo(0, 0)
+
         this.submittedViaAttachResource = false
+        if (this.resourceInformation.preventFormAbandonment) {
+          this.canLeave = false
+        }
 
         if (error.response.status == 422) {
           this.validationErrors = new Errors(error.response.data.errors)
@@ -383,6 +417,15 @@ export default {
       // Reload the data if the component doesn't support searching
       if (!this.isSearchable) {
         this.getAvailableResources()
+      }
+    },
+
+    /**
+     * Prevent accidental abandonment only if form was changed.
+     */
+    onUpdateFormStatus() {
+      if (this.resourceInformation.preventFormAbandonment) {
+        this.updateFormStatus()
       }
     },
   },

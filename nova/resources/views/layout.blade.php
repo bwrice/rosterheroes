@@ -22,11 +22,11 @@
     @include('nova::partials.meta')
 
     <!-- Theme Styles -->
-    @foreach(Nova::themeStyles() as $publicPath)
+    @foreach(\Laravel\Nova\Nova::themeStyles() as $publicPath)
         <link rel="stylesheet" href="{{ $publicPath }}">
     @endforeach
 </head>
-<body class="min-w-site bg-40 text-black min-h-full">
+<body class="min-w-site bg-40 text-90 font-medium min-h-full">
     <div id="nova">
         <div v-cloak class="flex min-h-screen">
             <!-- Sidebar -->
@@ -44,7 +44,7 @@
 
             <!-- Content -->
             <div class="content">
-                <div class="flex items-center relative shadow h-header bg-white z-20 px-6">
+                <div class="flex items-center relative shadow h-header bg-white z-20 px-view">
                     <a v-if="@json(\Laravel\Nova\Nova::name() !== null)" href="{{ \Illuminate\Support\Facades\Config::get('nova.url') }}" class="no-underline dim font-bold text-90 mr-6">
                         {{ \Laravel\Nova\Nova::name() }}
                     </a>

@@ -1,7 +1,8 @@
 <template>
-  <default-field :field="field" :errors="errors">
+  <default-field :field="field" :errors="errors" :show-help-text="showHelpText">
     <template slot="field">
       <input
+        :ref="field.attribute"
         :id="field.attribute"
         :dusk="field.attribute"
         type="text"
@@ -48,7 +49,7 @@ export default {
       const config = {
         appId: Nova.config.algoliaAppId,
         apiKey: Nova.config.algoliaApiKey,
-        container: document.querySelector('#' + this.field.attribute),
+        container: this.$refs[this.field.attribute],
         type: this.field.placeType ? this.field.placeType : 'address',
         templates: {
           value(suggestion) {
@@ -59,6 +60,10 @@ export default {
 
       if (this.field.countries) {
         config.countries = this.field.countries
+      }
+
+      if (this.field.language) {
+        config.language = this.field.language
       }
 
       const placesAutocomplete = places(config)

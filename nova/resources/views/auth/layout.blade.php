@@ -17,7 +17,7 @@
     @include('nova::partials.meta')
 
     <!-- Theme Styles -->
-    @foreach(Nova::themeStyles() as $publicPath)
+    @foreach(\Laravel\Nova\Nova::themeStyles() as $publicPath)
         <link rel="stylesheet" href="{{ $publicPath }}">
     @endforeach
 </head>

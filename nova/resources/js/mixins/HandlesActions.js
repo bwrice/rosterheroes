@@ -79,11 +79,6 @@ export default {
     executeAction() {
       this.working = true
 
-      if (this.selectedResources.length == 0) {
-        alert(this.__('Please select a resource to perform this action on.'))
-        return
-      }
-
       Nova.request({
         method: 'post',
         url: this.endpoint || `/nova-api/${this.resourceName}/action`,

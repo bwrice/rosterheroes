@@ -1,5 +1,7 @@
 <template>
   <loading-view :loading="initialLoading" :dusk="lens + '-lens-component'">
+    <custom-lens-header class="mb-3" :resource-name="resourceName" />
+
     <div v-if="shouldShowCards">
       <cards
         v-if="smallCards.length > 0"
@@ -111,6 +113,10 @@
             :trashed="trashed"
             :per-page="perPage"
             :per-page-options="perPageOptions"
+            :show-trashed-option="
+              authorizedToForceDeleteAnyResources ||
+              authorizedToRestoreAnyResources
+            "
             :lens="lens"
             @clear-selected-filters="clearSelectedFilters(lens)"
             @filter-changed="filterChanged"
@@ -214,6 +220,7 @@
             @order="orderByField"
             @delete="deleteResources"
             @restore="restoreResources"
+            @actionExecuted="getResources"
             ref="resourceTable"
           />
         </div>
@@ -431,11 +438,6 @@ export default {
 
           this.getAllMatchingResourceCount()
 
-          if (!this.hasId) {
-            this.selectAllMatchingResources = true
-            this.selectAllResources()
-          }
-
           Nova.$emit('resources-loaded')
         })
       })
@@ -490,12 +492,14 @@ export default {
      * Sort the resources by the given field.
      */
     orderByField(field) {
-      var direction = this.currentOrderByDirection == 'asc' ? 'desc' : 'asc'
-      if (this.currentOrderBy != field.attribute) {
+      let direction = this.currentOrderByDirection == 'asc' ? 'desc' : 'asc'
+
+      if (this.currentOrderBy != field.sortableUriKey) {
         direction = 'asc'
       }
+
       this.updateQueryString({
-        [this.orderByParameter]: field.attribute,
+        [this.orderByParameter]: field.sortableUriKey,
         [this.orderByDirectionParameter]: direction,
       })
     },
@@ -802,7 +806,7 @@ export default {
      */
     shouldShowCheckBoxes() {
       return (
-        Boolean(this.hasId && this.hasResources && !this.viaHasOne) &&
+        Boolean(this.hasResources && !this.viaHasOne) &&
         Boolean(
           this.actionsAreAvailable ||
             this.authorizedToDeleteAnyResources ||
@@ -812,7 +816,7 @@ export default {
     },
 
     /**
-     * Determinw whether the delete menu should be shown to the user
+     * Determine whether the delete menu should be shown to the user
      */
     shouldShowDeleteMenu() {
       return (
@@ -885,7 +889,7 @@ export default {
     },
 
     /**
-     * Determinw whether the user is authorized to perform actions on the delete menu
+     * Determine whether the user is authorized to perform actions on the delete menu
      */
     canShowDeleteMenu() {
       return (

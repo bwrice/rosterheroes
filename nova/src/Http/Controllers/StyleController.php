@@ -2,11 +2,11 @@
 
 namespace Laravel\Nova\Http\Controllers;
 
+use DateTime;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Arr;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Nova;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class StyleController extends Controller
 {
@@ -14,7 +14,7 @@ class StyleController extends Controller
      * Serve the requested stylesheet.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
-     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     * @return \Illuminate\Http\Response
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
@@ -24,7 +24,12 @@ class StyleController extends Controller
 
         abort_if(is_null($path), 404);
 
-        return BinaryFileResponse::create($path, 200, ['Content-Type' => 'text/css'], false)
-                                 ->setAutoLastModified();
+        return response(
+            file_get_contents($path),
+            200,
+            [
+                'Content-Type' => 'text/css',
+            ]
+        )->setLastModified(DateTime::createFromFormat('U', filemtime($path)));
     }
 }

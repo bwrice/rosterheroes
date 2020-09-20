@@ -107,12 +107,12 @@ class HasMany extends Field implements ListableField, RelatableField
      */
     public function jsonSerialize()
     {
-        return array_merge(parent::jsonSerialize(), [
+        return array_merge([
             'hasManyRelationship' => $this->hasManyRelationship,
             'listable' => true,
             'perPage'=> $this->resourceClass::$perPageViaRelationship,
             'resourceName' => $this->resourceName,
             'singularLabel' => $this->singularLabel ?? Str::singular($this->name),
-        ]);
+        ], parent::jsonSerialize());
     }
 }

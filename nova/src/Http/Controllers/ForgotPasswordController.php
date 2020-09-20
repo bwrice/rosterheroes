@@ -32,7 +32,7 @@ class ForgotPasswordController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('nova.guest:'.config('nova.guard'));
 
         ResetPassword::toMailUsing(function ($notifiable, $token) {
             return (new MailMessage)

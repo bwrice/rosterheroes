@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import { mapProps } from 'laravel-nova'
 import { HandlesValidationErrors, Errors } from 'laravel-nova'
 
 export default {
@@ -40,9 +41,9 @@ export default {
   props: {
     field: { type: Object, required: true },
     fieldName: { type: String },
-    showHelpText: { type: Boolean, default: true },
     showErrors: { type: Boolean, default: true },
     fullWidthContent: { type: Boolean, default: false },
+    ...mapProps(['showHelpText']),
   },
 
   computed: {
@@ -55,7 +56,7 @@ export default {
         return ''
       }
 
-      return this.fieldName || this.field.singularLabel || this.field.name
+      return this.fieldName || this.field.name || this.field.singularLabel
     },
 
     /**

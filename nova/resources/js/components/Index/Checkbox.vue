@@ -4,7 +4,7 @@
     class="checkbox"
     :disabled="disabled"
     :checked="checked"
-    @input="$emit('input', $event)"
+    @change="$emit('input', $event)"
   />
 </template>
 

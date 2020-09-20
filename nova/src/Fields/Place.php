@@ -147,6 +147,17 @@ class Place extends Text
     }
 
     /**
+     * Specify the language that places.js should use.
+     *
+     * @param  string  $language
+     * @return $this
+     */
+    public function language($language)
+    {
+        return $this->withMeta([__FUNCTION__ => $language]);
+    }
+
+    /**
      * Specify the field that contains the longitude.
      *
      * @param  string  $field

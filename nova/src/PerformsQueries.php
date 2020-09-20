@@ -65,7 +65,7 @@ trait PerformsQueries
 
             $canSearchPrimaryKey = is_numeric($search) &&
                                    in_array($query->getModel()->getKeyType(), ['int', 'integer']) &&
-                                   ($connectionType != 'pgsql' || $search <= PHP_INT_MAX) &&
+                                   ($connectionType != 'pgsql' || $search <= static::maxPrimaryKeySize()) &&
                                    in_array($query->getModel()->getKeyName(), static::$search);
 
             if ($canSearchPrimaryKey) {
@@ -95,7 +95,7 @@ trait PerformsQueries
             static::newModel()->search($search), $withTrashed
         ), function ($scoutBuilder) use ($request) {
             static::scoutQuery($request, $scoutBuilder);
-        })->take(200)->get()->map->getKey();
+        })->take(static::$scoutSearchResults)->get()->map->getKey();
 
         return static::applySoftDeleteConstraint(
             $query->whereIn(static::newModel()->getQualifiedKeyName(), $keys->all()), $withTrashed
@@ -140,6 +140,8 @@ trait PerformsQueries
      */
     protected static function applyOrderings($query, array $orderings)
     {
+        $orderings = array_filter($orderings);
+
         if (empty($orderings)) {
             return empty($query->getQuery()->orders)
                         ? $query->latest($query->getModel()->getQualifiedKeyName())

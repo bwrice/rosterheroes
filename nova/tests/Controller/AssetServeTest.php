@@ -4,11 +4,10 @@ namespace Laravel\Nova\Tests\Controller;
 
 use Laravel\Nova\Nova;
 use Laravel\Nova\Tests\IntegrationTest;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class AssetServeTest extends IntegrationTest
 {
-    public function setUp() : void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -26,7 +25,6 @@ class AssetServeTest extends IntegrationTest
         $response->assertHeader('Content-Type', 'application/javascript');
         $this->assertTrue($response->isValidateable());
         $this->assertTrue($response->mustRevalidate());
-        $this->assertInstanceOf(BinaryFileResponse::class, $response->baseResponse);
 
         $this->withExceptionHandling()
              ->get('/nova-api/scripts/nova-tool', ['If-Modified-Since' => $response->headers->get('Last-Modified')])
@@ -41,10 +39,9 @@ class AssetServeTest extends IntegrationTest
                         ->get('/nova-api/styles/nova-tool');
 
         $response->assertStatus(200);
-        $response->assertHeader('Content-Type', 'text/css');
+        $response->assertHeader('Content-Type', 'text/css; charset=UTF-8');
         $this->assertTrue($response->isValidateable());
         $this->assertTrue($response->mustRevalidate());
-        $this->assertInstanceOf(BinaryFileResponse::class, $response->baseResponse);
 
         $this->withExceptionHandling()
              ->get('/nova-api/styles/nova-tool', ['If-Modified-Since' => $response->headers->get('Last-Modified')])
