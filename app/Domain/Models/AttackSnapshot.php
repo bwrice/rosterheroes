@@ -2,6 +2,7 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Models\Casts\CastResourceCosts;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -33,6 +34,10 @@ use Illuminate\Database\Eloquent\Model;
 class AttackSnapshot extends Model
 {
     protected $guarded = [];
+
+    protected $casts = [
+        'resource_costs' => CastResourceCosts::class
+    ];
 
     public function attack()
     {
