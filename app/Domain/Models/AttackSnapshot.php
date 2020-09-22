@@ -3,6 +3,7 @@
 namespace App\Domain\Models;
 
 use App\Domain\Collections\ResourceCostsCollection;
+use App\Domain\Interfaces\HasAttackSnapshots;
 use App\Domain\Models\Casts\CastResourceCosts;
 use Illuminate\Database\Eloquent\Model;
 
@@ -31,6 +32,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property CombatPosition $targetPosition
  * @property DamageType $damageType
  * @property TargetPriority $targetPriority
+ * @property HasAttackSnapshots $attacker
  *
  * @property ResourceCostsCollection $resource_costs
  */
@@ -65,5 +67,10 @@ class AttackSnapshot extends Model
     public function targetPriority()
     {
         return $this->belongsTo(TargetPriority::class);
+    }
+
+    public function attacker()
+    {
+        return $this->morphTo();
     }
 }
