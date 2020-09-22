@@ -27,6 +27,7 @@ class CreateAttackSnapshotsTable extends Migration
             $table->integer('target_priority_id')->unsigned();
             $table->smallInteger('tier')->unsigned();
             $table->smallInteger('targets_count')->unsigned()->nullable();
+            $table->json('resource_costs');
             $table->timestamps();
         });
 
