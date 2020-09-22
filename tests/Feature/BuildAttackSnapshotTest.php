@@ -4,7 +4,11 @@ namespace Tests\Feature;
 
 use App\Domain\Actions\Snapshots\BuildAttackSnapshot;
 use App\Domain\Actions\Combat\CalculateCombatDamage;
+use App\Domain\Models\AttackSnapshot;
 use App\Domain\Models\ItemSnapshot;
+use App\Domain\Models\Json\ResourceCosts\FixedResourceCost;
+use App\Domain\Models\Json\ResourceCosts\PercentResourceCost;
+use App\Domain\Models\Json\ResourceCosts\ResourceCost;
 use App\Domain\Models\Week;
 use App\Facades\WeekService;
 use App\Factories\Models\AttackFactory;
@@ -92,5 +96,49 @@ class BuildAttackSnapshotTest extends BuildWeeklySnapshotTest
         $attackSnapshot = $this->getDomainAction()->execute($attack, $itemSnapshot, $fantasyPower);
 
         $this->assertEquals($damage, $attackSnapshot->damage);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_build_an_attack_snapshot_with_matching_resource_costs()
+    {
+        /** @var Week $currentWeek */
+        $currentWeek = factory(Week::class)->states('as-current')->create();
+        Date::setTestNow(WeekService::finalizingStartsAt($currentWeek->adventuring_locks_at)->addHour());
+
+        $attack = AttackFactory::new()->create(['tier' => 3]);
+        $attackResourceCosts = $attack->getResourceCosts();
+        $this->assertTrue($attackResourceCosts->isNotEmpty());
+
+        $itemSnapshot = ItemSnapshotFactory::new()->create();
+        $fantasyPower = round(rand(100, 5000)/100, 2);
+
+        /** @var AttackSnapshot $attackSnapshot */
+        $attackSnapshot = $this->getDomainAction()->execute($attack, $itemSnapshot, $fantasyPower);
+
+        $snapshotResourceCosts = $attackSnapshot->resource_costs;
+        $this->assertTrue($snapshotResourceCosts->isNotEmpty());
+
+        $snapshotResourceCosts->each(function (ResourceCost $resourceCost) use ($attackResourceCosts) {
+            $match = $attackResourceCosts->first(function (ResourceCost $attackResourceCost) use ($resourceCost) {
+                if ($attackResourceCost instanceof FixedResourceCost) {
+                    if (! $resourceCost instanceof FixedResourceCost) {
+                        return false;
+                    }
+                    return $attackResourceCost->getAmount() === $resourceCost->getAmount()
+                        && $attackResourceCost->getResourceName() === $resourceCost->getResourceName();
+                } else {
+                    /** @var PercentResourceCost $attackResourceCost */
+                    if (! $resourceCost instanceof PercentResourceCost) {
+                        return false;
+                    }
+                    return abs($attackResourceCost->getPercent() - $resourceCost->getPercent()) < PHP_FLOAT_EPSILON
+                        && $attackResourceCost->getResourceName() === $resourceCost->getResourceName();
+                }
+            });
+            $this->assertNotNull($match);
+        });
+
     }
 }
