@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static CarbonPeriod getValidGamePeriod(CarbonInterface $adventuringLocksAt)
  * @method static CarbonImmutable finalizingStartsAt(CarbonInterface $adventuringLocksAt)
  *
- * @see \App\Services\ModelServices\WeekService
+ * @see \App\Services\Models\WeekService
  */
 class WeekService extends Facade
 {

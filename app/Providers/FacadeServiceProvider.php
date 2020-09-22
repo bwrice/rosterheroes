@@ -5,10 +5,10 @@ namespace App\Providers;
 use App\Services\Admin;
 use App\Services\ContentService;
 use App\Services\CurrentWeek;
-use App\Services\ModelServices\AttackService;
-use App\Services\ModelServices\HeroService;
-use App\Services\ModelServices\SquadService;
-use App\Services\ModelServices\WeekService;
+use App\Services\Models\AttackService;
+use App\Services\Models\HeroService;
+use App\Services\Models\SquadService;
+use App\Services\Models\WeekService;
 use App\Services\NPCService;
 use Illuminate\Support\ServiceProvider;
 

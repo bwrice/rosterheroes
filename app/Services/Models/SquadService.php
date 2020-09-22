@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Services\ModelServices;
+namespace App\Services\Models;
 
 
 use App\Domain\Models\Hero;

@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static bool combatReady(Squad $squad)
  * @method static bool inCreationState(Squad $squad)
  *
- * @see \App\Services\ModelServices\SquadService
+ * @see \App\Services\Models\SquadService
  */
 class SquadFacade extends Facade
 {
