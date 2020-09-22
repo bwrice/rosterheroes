@@ -73,4 +73,9 @@ class FixedResourceCost extends ResourceCost
     {
         $this->amount = (int) floor($coefficient * $this->amount);
     }
+
+    public function getAmount()
+    {
+        return $this->amount;
+    }
 }

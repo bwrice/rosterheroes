@@ -66,4 +66,12 @@ class PercentResourceCost extends ResourceCost
     {
         $this->percent = (int) floor($coefficient * $this->percent);
     }
+
+    /**
+     * @return float
+     */
+    public function getPercent(): float
+    {
+        return $this->percent;
+    }
 }
