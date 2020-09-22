@@ -2,6 +2,7 @@
 
 namespace App\Domain\Models;
 
+use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Models\Casts\CastResourceCosts;
 use Illuminate\Database\Eloquent\Model;
 
@@ -30,6 +31,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property CombatPosition $targetPosition
  * @property DamageType $damageType
  * @property TargetPriority $targetPriority
+ *
+ * @property ResourceCostsCollection $resource_costs
  */
 class AttackSnapshot extends Model
 {
