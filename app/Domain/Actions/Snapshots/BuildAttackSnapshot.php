@@ -12,10 +12,7 @@ use Illuminate\Support\Str;
 
 class BuildAttackSnapshot extends BuildWeeklySnapshot
 {
-    /**
-     * @var CalculateCombatDamage
-     */
-    protected $calculateCombatDamage;
+    protected CalculateCombatDamage $calculateCombatDamage;
 
     public function __construct(CalculateCombatDamage $calculateCombatDamage)
     {
@@ -42,7 +39,8 @@ class BuildAttackSnapshot extends BuildWeeklySnapshot
             'damage_type_id' => $attack->damage_type_id,
             'target_priority_id' => $attack->target_priority_id,
             'tier' => $attack->tier,
-            'targets_count' => $attack->targets_count
+            'targets_count' => $attack->targets_count,
+            'resource_costs' => $attack->getResourceCosts()
         ]);
 
         return $attackSnapshot;
