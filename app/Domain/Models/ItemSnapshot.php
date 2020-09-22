@@ -68,4 +68,9 @@ class ItemSnapshot extends Model implements HasAttackSnapshots
     {
         return $this->belongsToMany(Enchantment::class)->withTimestamps();
     }
+
+    public function getUuid(): string
+    {
+        return $this->uuid;
+    }
 }

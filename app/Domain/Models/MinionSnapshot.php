@@ -68,4 +68,9 @@ class MinionSnapshot extends Model implements HasAttackSnapshots
     {
         return $this->belongsToMany(ChestBlueprint::class)->withPivot(['chance', 'count'])->withTimestamps();
     }
+
+    public function getUuid(): string
+    {
+        return $this->uuid;
+    }
 }
