@@ -19,7 +19,6 @@ class DamageType extends Model
     use HasUniqueNames;
 
     public const FIXED_TARGET = 'Fixed Target';
-    public const MULTI_TARGET = 'multi-target';
     public const AREA_OF_EFFECT = 'Area of Effect';
     public const DISPERSED = 'Dispersed';
 
