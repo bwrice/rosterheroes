@@ -7,6 +7,7 @@ use App\Services\ContentService;
 use App\Services\CurrentWeek;
 use App\Services\Models\AttackService;
 use App\Services\Models\HeroService;
+use App\Services\Models\Reference\DamageTypeService;
 use App\Services\Models\SquadService;
 use App\Services\Models\WeekService;
 use App\Services\NPCService;
@@ -45,6 +46,7 @@ class FacadeServiceProvider extends ServiceProvider
         $this->app->bind('npc', function () {
             return new NPCService();
         });
+        $this->app->bind(DamageTypeService::class, fn() => new DamageTypeService());
     }
 
     /**
