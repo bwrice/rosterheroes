@@ -2,12 +2,15 @@
 
 namespace App\Providers;
 
+use App\Domain\Models\TargetPriority;
 use App\Services\Admin;
 use App\Services\ContentService;
 use App\Services\CurrentWeek;
 use App\Services\Models\AttackService;
 use App\Services\Models\HeroService;
+use App\Services\Models\Reference\CombatPositionService;
 use App\Services\Models\Reference\DamageTypeService;
+use App\Services\Models\Reference\TargetPriorityService;
 use App\Services\Models\SquadService;
 use App\Services\Models\WeekService;
 use App\Services\NPCService;
@@ -47,6 +50,8 @@ class FacadeServiceProvider extends ServiceProvider
             return new NPCService();
         });
         $this->app->bind(DamageTypeService::class, fn() => new DamageTypeService());
+        $this->app->bind(TargetPriority::class, fn() => new TargetPriorityService());
+        $this->app->bind(CombatPositionService::class, fn() => new CombatPositionService());
     }
 
     /**
