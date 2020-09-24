@@ -10,7 +10,7 @@ use App\Domain\Models\ItemSnapshot;
 use App\Domain\Models\HeroSnapshot;
 use Illuminate\Support\Str;
 
-class BuildItemSnapshot extends BuildWeeklySnapshot
+class BuildItemSnapshot extends BuildSnapshot
 {
     public const EXCEPTION_CODE_HERO_MISMATCH = 2;
 

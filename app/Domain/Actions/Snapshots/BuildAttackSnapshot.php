@@ -10,7 +10,7 @@ use App\Domain\Interfaces\HasAttackSnapshots;
 use App\Domain\Models\Attack;
 use Illuminate\Support\Str;
 
-class BuildAttackSnapshot extends BuildWeeklySnapshot
+class BuildAttackSnapshot extends BuildSnapshot
 {
     protected CalculateCombatDamage $calculateCombatDamage;
 

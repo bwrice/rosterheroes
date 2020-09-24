@@ -12,7 +12,7 @@ use App\Domain\Models\MinionSnapshot;
 use App\Facades\CurrentWeek;
 use Illuminate\Support\Str;
 
-class BuildMinionSnapshot extends BuildWeeklySnapshot
+class BuildMinionSnapshot extends BuildSnapshot
 {
     public const EXCEPTION_CODE_INVALID_WEEK = 1;
     public const EXCEPTION_CODE_WEEK_NOT_FINALIZING = 2;

@@ -12,7 +12,7 @@ use App\Facades\CurrentWeek;
 use App\Domain\Models\HeroSnapshot;
 use Illuminate\Support\Str;
 
-class BuildHeroSnapshot extends BuildWeeklySnapshot
+class BuildHeroSnapshot extends BuildSnapshot
 {
     /**
      * @var CalculateHeroFantasyPower

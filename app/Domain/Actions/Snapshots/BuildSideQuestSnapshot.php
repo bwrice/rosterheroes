@@ -12,7 +12,7 @@ use App\Facades\CurrentWeek;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
-class BuildSideQuestSnapshot extends BuildWeeklySnapshot
+class BuildSideQuestSnapshot extends BuildSnapshot
 {
     public const EXCEPTION_MINION_SNAPSHOT_NOT_FOUND = 6;
 
