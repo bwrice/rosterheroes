@@ -16,11 +16,10 @@ class CreateSquadSnapshotsTable extends Migration
         Schema::create('squad_snapshots', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->uuid('uuid');
-            $table->integer('week_id')->unsigned();
+            $table->integer('week_id')->unsigned()->nullable();
             $table->bigInteger('squad_id')->unsigned();
             $table->bigInteger('experience')->unsigned();
             $table->integer('squad_rank_id')->unsigned();
-            $table->unique(['week_id', 'squad_id']);
             $table->timestamps();
         });
 

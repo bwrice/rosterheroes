@@ -13,12 +13,12 @@ use Illuminate\Database\Eloquent\Model;
  * @package App
  *
  * @property int $id
- * @property int $week_id
+ * @property int|null $week_id
  * @property int $squad_id
  * @property int $experience
  * @property int $squad_rank_id
  *
- * @property Week $week
+ * @property Week|null $week
  * @property Squad $squad
  * @property SquadRank $squadRank
  */
