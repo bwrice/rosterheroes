@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Domain\Actions\Snapshots\BuildWeeklySnapshot;
+use App\Domain\Actions\Snapshots\BuildSnapshot;
 use App\Domain\Models\Week;
 use App\Facades\WeekService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -24,7 +24,7 @@ abstract class BuildWeeklySnapshotTest extends TestCase
         try {
             $this->getDomainAction()->execute();
         } catch (\Exception $exception) {
-            $this->assertEquals(BuildWeeklySnapshot::EXCEPTION_CODE_WEEK_NOT_FINALIZING, $exception->getCode());
+            $this->assertEquals(BuildSnapshot::EXCEPTION_CODE_WEEK_NOT_FINALIZING, $exception->getCode());
             return;
         }
         $this->fail("Exception not thrown");
