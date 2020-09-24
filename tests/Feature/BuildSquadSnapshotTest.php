@@ -10,6 +10,7 @@ use App\Domain\Models\Week;
 use App\Facades\WeekService;
 use App\Factories\Models\HeroFactory;
 use App\Factories\Models\SquadFactory;
+use App\Factories\Models\SquadSnapshotFactory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -25,6 +26,29 @@ class BuildSquadSnapshotTest extends BuildWeeklySnapshotTest
     protected function getDomainAction()
     {
         return app(BuildSquadSnapshot::class);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_throw_an_exception_when_building_a_weekly_squad_snapshot_that_already_exists()
+    {
+        /** @var Week $week */
+        $week = factory(Week::class)->states('as-current')->create();
+        $finalizingStartsAt = WeekService::finalizingStartsAt($week->adventuring_locks_at);
+        Date::setTestNow($finalizingStartsAt->addHour());
+        $squad = SquadFactory::new()->create();
+
+        $existingSquadSnapshot = SquadSnapshotFactory::new()->withWeekID($week->id)->withSquadID($squad->id)->create();
+
+        try {
+            $squadSnapshot = $this->getDomainAction()->execute($squad);
+        } catch (\Exception $exception) {
+            $this->assertEquals(BuildSquadSnapshot::EXCEPTION_CODE_SNAPSHOT_EXISTS, $exception->getCode());
+            return;
+        }
+
+        $this->fail("Exception not thrown");
     }
 
     /**
