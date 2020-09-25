@@ -4,60 +4,28 @@
 namespace App\Domain\Combat\Combatants;
 
 
-use App\Domain\Collections\AbstractCombatAttackCollection;
-use App\Domain\Collections\CombatPositionCollection;
+use App\Domain\Collections\CombatAttackCollection;
 use App\Domain\Combat\Attacks\CombatAttackInterface;
-use App\Domain\Models\CombatPosition;
 use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Support\Collection;
 
 abstract class AbstractCombatant implements Combatant, Arrayable
 {
-    /**
-     * @var int
-     */
-    protected $initialHealth;
-    /**
-     * @var int
-     */
-    protected $currentHealth;
-    /**
-     * @var int
-     */
-    protected $protection;
-    /**
-     * @var float
-     */
-    protected $blockChancePercent;
-    /**
-     * @var CombatPosition
-     */
-    protected $combatPosition;
-    /**
-     * @var Collection
-     */
-    protected $combatAttacks;
-    /**
-     * @var CombatPosition
-     */
-    protected $initialCombatPosition;
-    /**
-     * @var Collection
-     */
-    protected $inheritedCombatPositions;
+    protected int $initialHealth, $currentHealth, $protection, $initialCombatPositionID;
+    protected float $blockChancePercent;
+    protected CombatAttackCollection $combatAttacks;
+    protected array $inheritedCombatPositionIDs = [];
 
     public function __construct(
         int $health,
         int $protection,
         float $blockChancePercent,
-        CombatPosition $combatPosition,
-        AbstractCombatAttackCollection $combatAttacks)
+        int $combatPositionID,
+        CombatAttackCollection $combatAttacks)
     {
         $this->initialHealth = $this->currentHealth = $health;
         $this->protection = $protection;
         $this->blockChancePercent = $blockChancePercent;
-        $this->initialCombatPosition = $combatPosition;
-        $this->inheritedCombatPositions = new CombatPositionCollection();
+        $this->initialCombatPositionID = $combatPositionID;
         $this->combatAttacks = $combatAttacks;
     }
 
@@ -95,46 +63,47 @@ abstract class AbstractCombatant implements Combatant, Arrayable
     }
 
     /**
-     * @param CombatPosition $combatPositionToCompare
+     * @param int $combatPositionID
      * @return bool
      */
-    public function hasCombatPosition(CombatPosition $combatPositionToCompare): bool
+    public function hasCombatPosition(int $combatPositionID): bool
     {
-        $match = $this->allCombatPositions()->first(function (CombatPosition $combatPosition) use ($combatPositionToCompare) {
-            return $combatPosition->id === $combatPositionToCompare->id;
-        });
-        return ! is_null($match);
-    }
-
-    public function allCombatPositions()
-    {
-        $inheritedCombatPositions = clone $this->inheritedCombatPositions;
-        return $inheritedCombatPositions->push($this->initialCombatPosition);
+        return in_array($combatPositionID, $this->allCombatPositions());
     }
 
     /**
-     * @return AbstractCombatAttackCollection
+     * @return array
      */
-    public function getCombatAttacks(): AbstractCombatAttackCollection
+    public function allCombatPositions()
+    {
+        $combatPositions = $this->inheritedCombatPositionIDs;
+        $combatPositions[] = $this->initialCombatPositionID;
+        return $combatPositions;
+    }
+
+    /**
+     * @return CombatAttackCollection
+     */
+    public function getCombatAttacks(): CombatAttackCollection
     {
         return $this->combatAttacks;
     }
 
     /**
-     * @return CombatPosition
+     * @return int
      */
-    public function getInitialCombatPosition(): CombatPosition
+    public function getInitialCombatPositionID()
     {
-        return $this->initialCombatPosition;
+        return $this->initialCombatPositionID;
     }
 
     /**
-     * @param CombatPositionCollection $inheritedCombatPositions
-     * @return static
+     * @param array $inheritedCombatPositionIDs
+     * @return $this
      */
-    public function setInheritedCombatPositions(CombatPositionCollection $inheritedCombatPositions)
+    public function setInheritedCombatPositions(array $inheritedCombatPositionIDs)
     {
-        $this->inheritedCombatPositions = $inheritedCombatPositions;
+        $this->inheritedCombatPositionIDs = $inheritedCombatPositionIDs;
         return $this;
     }
 
@@ -156,8 +125,8 @@ abstract class AbstractCombatant implements Combatant, Arrayable
             'protection' => $this->protection,
             'blockChancePercent' => $this->blockChancePercent,
             'combatAttacks' => $this->combatAttacks->toArray(),
-            'initialCombatPositionID' => $this->initialCombatPosition->id,
-            'inheritedCombatPositionIDs' => $this->inheritedCombatPositions->pluck('id')->toArray()
+            'initialCombatPositionID' => $this->initialCombatPositionID,
+            'inheritedCombatPositionIDs' => $this->inheritedCombatPositionIDs
         ];
     }
 
@@ -171,5 +140,5 @@ abstract class AbstractCombatant implements Combatant, Arrayable
         return $this;
     }
 
-    abstract public function getReadyAttacks(): AbstractCombatAttackCollection;
+    abstract public function getReadyAttacks(): CombatAttackCollection;
 }
