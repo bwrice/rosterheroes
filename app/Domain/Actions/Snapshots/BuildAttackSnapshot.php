@@ -10,7 +10,7 @@ use App\Domain\Interfaces\HasAttackSnapshots;
 use App\Domain\Models\Attack;
 use Illuminate\Support\Str;
 
-class BuildAttackSnapshot extends BuildSnapshot
+class BuildAttackSnapshot
 {
     protected CalculateCombatDamage $calculateCombatDamage;
 
@@ -25,7 +25,7 @@ class BuildAttackSnapshot extends BuildSnapshot
      * @param float $fantasyPower
      * @return AttackSnapshot
      */
-    public function handle(Attack $attack, HasAttackSnapshots $hasAttackSnapshots, float $fantasyPower)
+    public function execute(Attack $attack, HasAttackSnapshots $hasAttackSnapshots, float $fantasyPower)
     {
         /** @var AttackSnapshot $attackSnapshot */
         $attackSnapshot = $hasAttackSnapshots->attackSnapshots()->create([
