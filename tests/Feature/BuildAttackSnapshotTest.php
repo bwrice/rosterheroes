@@ -20,7 +20,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Date;
 use Tests\TestCase;
 
-class BuildAttackSnapshotTest extends BuildWeeklySnapshotTest
+class BuildAttackSnapshotTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -37,10 +37,6 @@ class BuildAttackSnapshotTest extends BuildWeeklySnapshotTest
      */
     public function it_will_build_an_attack_snapshot_for_an_attack_and_hero_snapshot()
     {
-        /** @var Week $currentWeek */
-        $currentWeek = factory(Week::class)->states('as-current')->create();
-        Date::setTestNow(WeekService::finalizingStartsAt($currentWeek->adventuring_locks_at)->addHour());
-
         $attack = AttackFactory::new()->create();
         $itemSnapshot = ItemSnapshotFactory::new()->create();
         $fantasyPower = round(rand(100, 5000)/100, 2);
@@ -62,10 +58,6 @@ class BuildAttackSnapshotTest extends BuildWeeklySnapshotTest
      */
     public function the_attack_snapshot_will_belong_to_the_item_snapshot()
     {
-        /** @var Week $currentWeek */
-        $currentWeek = factory(Week::class)->states('as-current')->create();
-        Date::setTestNow(WeekService::finalizingStartsAt($currentWeek->adventuring_locks_at)->addHour());
-
         $attack = AttackFactory::new()->create();
         $itemSnapshot = ItemSnapshotFactory::new()->create();
         $fantasyPower = round(rand(100, 5000)/100, 2);
@@ -81,10 +73,6 @@ class BuildAttackSnapshotTest extends BuildWeeklySnapshotTest
      */
     public function it_will_build_a_snapshot_attack_with_the_expected_damage()
     {
-        /** @var Week $currentWeek */
-        $currentWeek = factory(Week::class)->states('as-current')->create();
-        Date::setTestNow(WeekService::finalizingStartsAt($currentWeek->adventuring_locks_at)->addHour());
-
         $attack = AttackFactory::new()->create();
         $itemSnapshot = ItemSnapshotFactory::new()->create();
         $fantasyPower = round(rand(100, 5000)/100, 2);
@@ -103,10 +91,6 @@ class BuildAttackSnapshotTest extends BuildWeeklySnapshotTest
      */
     public function it_will_build_an_attack_snapshot_with_matching_resource_costs()
     {
-        /** @var Week $currentWeek */
-        $currentWeek = factory(Week::class)->states('as-current')->create();
-        Date::setTestNow(WeekService::finalizingStartsAt($currentWeek->adventuring_locks_at)->addHour());
-
         $attack = AttackFactory::new()->create(['tier' => 3]);
         $attackResourceCosts = $attack->getResourceCosts();
         $this->assertTrue($attackResourceCosts->isNotEmpty());
