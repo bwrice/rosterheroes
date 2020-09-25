@@ -26,8 +26,9 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Date;
+use Tests\TestCase;
 
-class BuildHeroSnapshotTest extends BuildWeeklySnapshotTest
+class BuildHeroSnapshotTest extends TestCase
 {
     use DatabaseTransactions;
 

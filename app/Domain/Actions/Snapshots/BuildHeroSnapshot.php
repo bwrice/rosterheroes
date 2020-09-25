@@ -12,29 +12,33 @@ use App\Facades\CurrentWeek;
 use App\Domain\Models\HeroSnapshot;
 use Illuminate\Support\Str;
 
-class BuildHeroSnapshot extends BuildSnapshot
+class BuildHeroSnapshot
 {
-    /**
-     * @var CalculateHeroFantasyPower
-     */
-    protected $calculateFantasyPower;
-    /**
-     * @var BuildItemSnapshot
-     */
-    protected $buildItemSnapshot;
 
-    public function __construct(CalculateHeroFantasyPower $calculateFantasyPower, BuildItemSnapshot $buildItemSnapshot)
+    protected CalculateHeroFantasyPower $calculateFantasyPower;
+    protected BuildItemSnapshot $buildItemSnapshot;
+
+    public function __construct(
+        CalculateHeroFantasyPower $calculateFantasyPower,
+        BuildItemSnapshot $buildItemSnapshot
+    )
     {
         $this->calculateFantasyPower = $calculateFantasyPower;
         $this->buildItemSnapshot = $buildItemSnapshot;
     }
 
-    public const EXCEPTION_CODE_SNAPSHOT_WEEK_NOT_CURRENT = 2;
-    public const EXCEPTION_CODE_SNAPSHOT_MISMATCH = 3;
+    public const EXCEPTION_CODE_SNAPSHOT_WEEK_NOT_CURRENT = 1;
+    public const EXCEPTION_CODE_SNAPSHOT_MISMATCH = 2;
 
-    public function handle(SquadSnapshot $squadSnapshot, Hero $hero): HeroSnapshot
+    /**
+     * @param SquadSnapshot $squadSnapshot
+     * @param Hero $hero
+     * @return HeroSnapshot
+     * @throws \Exception
+     */
+    public function execute(SquadSnapshot $squadSnapshot, Hero $hero): HeroSnapshot
     {
-        if ($squadSnapshot->week_id !== CurrentWeek::id()) {
+        if ($squadSnapshot->week_id && $squadSnapshot->week_id !== CurrentWeek::id()) {
             throw new \Exception("Squad snapshot does not match current week", self::EXCEPTION_CODE_SNAPSHOT_WEEK_NOT_CURRENT);
         }
 
