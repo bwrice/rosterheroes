@@ -10,21 +10,18 @@ use App\Domain\Models\ItemSnapshot;
 use App\Domain\Models\HeroSnapshot;
 use Illuminate\Support\Str;
 
-class BuildItemSnapshot extends BuildSnapshot
+class BuildItemSnapshot
 {
-    public const EXCEPTION_CODE_HERO_MISMATCH = 2;
+    public const EXCEPTION_CODE_HERO_MISMATCH = 1;
 
-    /**
-     * @var BuildAttackSnapshot
-     */
-    protected $buildAttackSnapshot;
+    protected BuildAttackSnapshot $buildAttackSnapshot;
 
     public function __construct(BuildAttackSnapshot $buildAttackSnapshot)
     {
         $this->buildAttackSnapshot = $buildAttackSnapshot;
     }
 
-    public function handle(Item $item, HeroSnapshot $heroSnapshot)
+    public function execute(Item $item, HeroSnapshot $heroSnapshot)
     {
         if ($item->has_items_id !== $heroSnapshot->hero_id || $item->has_items_type !== Hero::RELATION_MORPH_MAP_KEY) {
             throw new \Exception("Item is not equipped by hero of hero snapshot", self::EXCEPTION_CODE_HERO_MISMATCH);

@@ -14,12 +14,16 @@ use App\Factories\Models\HeroFactory;
 use App\Factories\Models\HeroSnapshotFactory;
 use App\Factories\Models\ItemFactory;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Date;
+use Tests\TestCase;
 
-class BuildItemSnapshotTest extends BuildWeeklySnapshotTest
+class BuildItemSnapshotTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /**
      * @return BuildItemSnapshot
      */
@@ -33,10 +37,6 @@ class BuildItemSnapshotTest extends BuildWeeklySnapshotTest
      */
     public function it_will_throw_an_exception_if_the_item_and_hero_snapshot_dont_belong_to_the_same_hero()
     {
-        /** @var Week $currentWeek */
-        $currentWeek = factory(Week::class)->states('as-current')->create();
-        Date::setTestNow(WeekService::finalizingStartsAt($currentWeek->adventuring_locks_at)->addHour());
-
         $heroSnapshot = HeroSnapshotFactory::new()->create();
 
         $diffHero = HeroFactory::new()->create();
@@ -58,10 +58,6 @@ class BuildItemSnapshotTest extends BuildWeeklySnapshotTest
      */
     public function it_will_create_an_item_snapshot_for_the_hero_snapshot()
     {
-        /** @var Week $currentWeek */
-        $currentWeek = factory(Week::class)->states('as-current')->create();
-        Date::setTestNow(WeekService::finalizingStartsAt($currentWeek->adventuring_locks_at)->addHour());
-
         $heroSnapshot = HeroSnapshotFactory::new()->withHeroFactory(HeroFactory::new()->withMeasurables())->create();
         // get an item-type without attacks
         /** @var ItemType $itemType */
@@ -92,11 +88,6 @@ class BuildItemSnapshotTest extends BuildWeeklySnapshotTest
      */
     public function it_will_execute_build_attack_snapshot_for_each_item_attack()
     {
-
-        /** @var Week $currentWeek */
-        $currentWeek = factory(Week::class)->states('as-current')->create();
-        Date::setTestNow(WeekService::finalizingStartsAt($currentWeek->adventuring_locks_at)->addHour());
-
         $heroSnapshot = HeroSnapshotFactory::new()->withHeroFactory(HeroFactory::new()->withMeasurables())->create();
         // get an item-type without attacks
         /** @var ItemType $itemType */
@@ -139,10 +130,6 @@ class BuildItemSnapshotTest extends BuildWeeklySnapshotTest
      */
     public function it_will_attach_the_item_snapshot_to_the_same_enchantments_as_the_item()
     {
-        /** @var Week $currentWeek */
-        $currentWeek = factory(Week::class)->states('as-current')->create();
-        Date::setTestNow(WeekService::finalizingStartsAt($currentWeek->adventuring_locks_at)->addHour());
-
         $heroSnapshot = HeroSnapshotFactory::new()->withHeroFactory(HeroFactory::new()->withMeasurables())->create();
         // get an item-type without attacks
         /** @var ItemType $itemType */
