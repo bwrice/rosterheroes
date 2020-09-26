@@ -10,8 +10,7 @@ use Illuminate\Support\Str;
 
 class ItemSnapshotFactory
 {
-    /** @var Item|null */
-    protected $item;
+    protected ?Item $item = null;
 
     public static function new()
     {

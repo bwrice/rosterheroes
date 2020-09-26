@@ -34,6 +34,13 @@ class MeasurableSnapshotFactory
         return $measurableSnapshot;
     }
 
+    public function withHeroSnapshotID(int $heroSnapshotID)
+    {
+        $clone = clone $this;
+        $clone->heroSnapshotID = $heroSnapshotID;
+        return $clone;
+    }
+
     protected function getHeroSnapshotID()
     {
         if ($this->heroSnapshotID) {

@@ -5,6 +5,7 @@ namespace App\Factories\Models;
 
 
 use App\Domain\Models\CombatPosition;
+use App\Domain\Models\MeasurableType;
 use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\SquadSnapshot;
 use App\Domain\Models\Stash;
@@ -23,6 +24,8 @@ class HeroSnapshotFactory
     protected $playerSpirit;
     /** @var HeroFactory */
     protected $heroFactory;
+
+    protected bool $withMeasurableSnapshots = false;
 
     public static function new()
     {
@@ -44,6 +47,16 @@ class HeroSnapshotFactory
             'block_chance' => round(rand(0, 2000)/100, 2),
             'fantasy_power' => $this->playerSpirit ? round(rand(500, 4000)/100, 2) : 0
         ], $extra));
+
+        if ($this->withMeasurableSnapshots) {
+            MeasurableType::all()->each(function (MeasurableType $measurableType) use ($heroSnapshot) {
+                $measurableFactory = MeasurableFactory::new()->forMeasurableType($measurableType);
+                MeasurableSnapshotFactory::new()
+                    ->withMeasurableFactory($measurableFactory)
+                    ->withHeroSnapshotID($heroSnapshot->id)
+                    ->create();
+            });
+        }
         return $heroSnapshot;
     }
 
@@ -84,6 +97,13 @@ class HeroSnapshotFactory
     {
         $clone = clone $this;
         $clone->playerSpirit = $playerSpirit;
+        return $clone;
+    }
+
+    public function withMeasurableSnapshots()
+    {
+        $clone = clone $this;
+        $clone->withMeasurableSnapshots = true;
         return $clone;
     }
 
