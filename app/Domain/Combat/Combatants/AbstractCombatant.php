@@ -141,4 +141,20 @@ abstract class AbstractCombatant implements Combatant, Arrayable
     }
 
     abstract public function getReadyAttacks(): CombatAttackCollection;
+
+    /**
+     * @return int
+     */
+    public function getProtection(): int
+    {
+        return $this->protection;
+    }
+
+    /**
+     * @return float
+     */
+    public function getBlockChancePercent(): float
+    {
+        return $this->blockChancePercent;
+    }
 }
