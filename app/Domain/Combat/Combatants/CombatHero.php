@@ -4,71 +4,39 @@
 namespace App\Domain\Combat\Combatants;
 
 
-use App\Domain\Collections\AbstractCombatAttackCollection;
+use App\Domain\Collections\CombatAttackCollection;
 use App\Domain\Combat\Attacks\HeroCombatAttack;
 use App\Domain\Interfaces\SpendsResources;
-use App\Domain\Models\CombatPosition;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Json\ResourceCosts\ResourceCost;
 use App\Domain\Models\MeasurableType;
-use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Support\Collection;
+use App\Facades\CombatPositionFacade;
 
 class CombatHero extends AbstractCombatant implements SpendsResources
 {
-    /**
-     * @var string
-     */
-    protected $heroUuid;
-    /**
-     * @var int
-     */
-    protected $initialStamina;
-    /**
-     * @var int
-     */
-    protected $initialMana;
-    /**
-     * @var int
-     */
-    protected $currentStamina;
-    /**
-     * @var int
-     */
-    protected $currentMana;
-
-    protected $damagesDealt = [];
-
-    protected $damagesReceived = [];
-
-    protected $minionKills = 0;
-
-    protected $blocks = 0;
-    /**
-     * @var string
-     */
-    private $playerSpiritUuid;
+    protected string $sourceUuid;
+    protected int $initialStamina, $initialMana, $currentStamina, $currentMana;
+    protected array $damagesDealt, $damagesReceived = [];
+    protected int $minionKills, $blocks = 0;
 
     public function __construct(
-        string $heroUuid,
+        string $sourceUuid,
         int $health,
         int $stamina,
         int $mana,
         int $protection,
         float $blockChancePercent,
-        CombatPosition $combatPosition,
-        AbstractCombatAttackCollection $combatAttacks,
-        string $playerSpiritUuid)
+        int $combatPositionID,
+        CombatAttackCollection $combatAttacks)
     {
-        $this->heroUuid = $heroUuid;
+        $this->sourceUuid = $sourceUuid;
         $this->initialStamina = $this->currentStamina = $stamina;
         $this->initialMana = $this->currentMana = $mana;
-        $this->playerSpiritUuid = $playerSpiritUuid;
         parent::__construct(
             $health,
             $protection,
             $blockChancePercent,
-            $combatPosition,
+            $combatPositionID,
             $combatAttacks
         );
     }
@@ -152,9 +120,9 @@ class CombatHero extends AbstractCombatant implements SpendsResources
     /**
      * @return string
      */
-    public function getHeroUuid(): string
+    public function getSourceUuid(): string
     {
-        return $this->heroUuid;
+        return $this->sourceUuid;
     }
 
     public function getCurrentStamina(): int
@@ -180,20 +148,18 @@ class CombatHero extends AbstractCombatant implements SpendsResources
     public function toArray()
     {
         return array_merge([
-            'heroUuid' => $this->heroUuid,
+            'heroUuid' => $this->sourceUuid,
             'initialStamina' => $this->initialStamina,
             'currentStamina' => $this->currentStamina,
             'initialMana' => $this->initialMana,
-            'currentMana' => $this->currentMana,
-            'playerSpiritUuid' => $this->playerSpiritUuid,
+            'currentMana' => $this->currentMana
         ], parent::toArray());
     }
 
-    public function getReadyAttacks(): AbstractCombatAttackCollection
+    public function getReadyAttacks(): CombatAttackCollection
     {
-        $closestProximityPosition = $this->allCombatPositions()->closestProximity();
         $combatAttacks = $this->combatAttacks
-            ->withinAttackerProximity($closestProximityPosition->getProximity())
+            ->withinAttackerProximity(CombatPositionFacade::closestProximity($this->allCombatPositions())->getProximity())
             ->ready();
 
         if ($this->currentStamina <= 0) {
@@ -218,7 +184,7 @@ class CombatHero extends AbstractCombatant implements SpendsResources
 
     public function getHero()
     {
-        return Hero::findUuidOrFail($this->getHeroUuid());
+        return Hero::findUuidOrFail($this->getSourceUuid());
     }
     /**
      * @return array

@@ -41,5 +41,5 @@ interface Combatant
      * @param CombatPosition $combatPositionToCompare
      * @return bool
      */
-    public function hasCombatPosition(CombatPosition $combatPositionToCompare): bool;
+    public function hasCombatPosition(int $combatPositionID): bool;
 }
