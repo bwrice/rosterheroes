@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 class ItemSnapshotFactory
 {
     protected ?Item $item = null;
+    protected ?int $heroSnapshotID = null;
 
     public static function new()
     {
@@ -25,7 +26,7 @@ class ItemSnapshotFactory
         $itemSnapshot = ItemSnapshot::query()->create(array_merge([
             'uuid' => Str::uuid(),
             'item_id' => $item->id,
-            'hero_snapshot_id' => HeroSnapshotFactory::new()->create()->id,
+            'hero_snapshot_id' => $this->getHeroSnapshotID(),
             'item_type_id' => $item->item_type_id,
             'material_id' => $item->material_id,
             'name' => $item->name,
@@ -35,6 +36,22 @@ class ItemSnapshotFactory
             'value' => rand(50, 1000)
         ], $extra));
         return $itemSnapshot;
+    }
+
+    public function withHeroSnapshotID(int $heroSnapshotID)
+    {
+        $clone = clone $this;
+        $clone->heroSnapshotID = $heroSnapshotID;
+        return $clone;
+    }
+
+    protected function getHeroSnapshotID()
+    {
+        if ($this->heroSnapshotID) {
+            return $this->heroSnapshotID;
+        }
+
+        return HeroSnapshotFactory::new()->create()->id;
     }
 
     protected function getItem()

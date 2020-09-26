@@ -66,6 +66,13 @@ class AttackSnapshotFactory
         return ItemSnapshotFactory::new()->create();
     }
 
+    public function withAttacker(HasAttackSnapshots $attacker)
+    {
+        $clone = clone $this;
+        $clone->attacker = $attacker;
+        return $clone;
+    }
+
     protected function getResourceCosts()
     {
         if ($this->resourceCosts) {
