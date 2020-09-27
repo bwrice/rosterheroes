@@ -4,7 +4,7 @@
 namespace App\Domain\Actions\Combat;
 
 
-use App\Domain\Collections\AbstractCombatAttackCollection;
+use App\Domain\Collections\CombatAttackCollection;
 use App\Domain\Combat\Combatants\CombatMinion;
 use App\Domain\Models\Attack;
 use App\Domain\Models\CombatPosition;
@@ -46,7 +46,7 @@ class BuildCombatMinion
             $minion->getProtection(),
             $minion->getBlockChance(),
             $minionCombatPosition,
-            new AbstractCombatAttackCollection($combatAttacks)
+            new CombatAttackCollection($combatAttacks)
         );
     }
 }
