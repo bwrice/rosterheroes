@@ -4,7 +4,7 @@
 namespace App\Factories\Combat;
 
 
-use App\Domain\Collections\AbstractCombatAttackCollection;
+use App\Domain\Collections\CombatAttackCollection;
 use App\Domain\Combat\Combatants\CombatMinion;
 use App\Domain\Models\CombatPosition;
 use App\Factories\Models\MinionFactory;
@@ -37,7 +37,7 @@ class CombatMinionFactory extends AbstractCombatantFactory
             250,
             20,
             $combatPosition,
-            new AbstractCombatAttackCollection($combatAttacks)
+            new CombatAttackCollection($combatAttacks)
         );
     }
 

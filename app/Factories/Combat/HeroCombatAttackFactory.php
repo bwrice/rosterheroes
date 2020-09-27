@@ -5,7 +5,7 @@ namespace App\Factories\Combat;
 
 
 use App\Domain\Collections\ResourceCostsCollection;
-use App\Domain\Combat\Attacks\AbstractCombatAttack;
+use App\Domain\Combat\Attacks\CombatAttack;
 use App\Domain\Combat\Combatants\CombatHero;
 use App\Domain\Combat\Attacks\HeroCombatAttack;
 use App\Domain\QueryBuilders\Filters\HeroRaceFilter;
@@ -22,7 +22,7 @@ class HeroCombatAttackFactory extends AbstractCombatAttackFactory
     /** @var AbstractCombatAttackFactory */
     protected $combatAttackFactory;
 
-    /** @var AbstractCombatAttack */
+    /** @var CombatAttack */
     protected $combatAttack;
 
     /** @var HeroFactory */
@@ -68,7 +68,7 @@ class HeroCombatAttackFactory extends AbstractCombatAttackFactory
         return $clone;
     }
 
-    public function withCombatAttack(AbstractCombatAttack $combatAttack)
+    public function withCombatAttack(CombatAttack $combatAttack)
     {
         $clone = clone $this;
         $clone->combatAttack = $combatAttack;

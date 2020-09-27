@@ -4,7 +4,7 @@
 namespace App\Domain\Combat\Combatants;
 
 
-use App\Domain\Collections\AbstractCombatAttackCollection;
+use App\Domain\Collections\CombatAttackCollection;
 use App\Domain\Combat\Attacks\CombatAttackInterface;
 use App\Domain\Combat\Combatants\Combatant;
 use App\Domain\Models\CombatPosition;
@@ -30,7 +30,7 @@ class CombatMinion extends AbstractCombatant
         int $protection,
         int $blockChancePercent,
         CombatPosition $combatPosition,
-        AbstractCombatAttackCollection $combatAttacks)
+        CombatAttackCollection $combatAttacks)
     {
         $this->minionUuid = $minionUuid;
         // We need a local uuid because a quest/side-quest can have multiples of the same minion
@@ -74,7 +74,7 @@ class CombatMinion extends AbstractCombatant
         ], parent::toArray());
     }
 
-    public function getReadyAttacks(): AbstractCombatAttackCollection
+    public function getReadyAttacks(): CombatAttackCollection
     {
         $closestProximityPosition = $this->allCombatPositions()->closestProximity();
         return $this->combatAttacks

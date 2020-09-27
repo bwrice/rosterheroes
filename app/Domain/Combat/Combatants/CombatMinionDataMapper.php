@@ -4,7 +4,7 @@
 namespace App\Domain\Combat\Combatants;
 
 
-use App\Domain\Collections\AbstractCombatAttackCollection;
+use App\Domain\Collections\CombatAttackCollection;
 use App\Domain\Combat\Attacks\MinionCombatAttackDataMapper;
 use App\Domain\Models\CombatPosition;
 use Illuminate\Support\Collection;
@@ -36,7 +36,7 @@ class CombatMinionDataMapper extends AbstractCombatantDataMapper
             $this->getProtection($data),
             $this->getBlockChancePercent($data),
             $this->getInitialCombatPosition($data, $combatPositions),
-            new AbstractCombatAttackCollection($combatAttacks)
+            new CombatAttackCollection($combatAttacks)
         );
 
         $combatMinion = $this->setCombatantCurrentHealth($combatMinion, $data);

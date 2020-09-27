@@ -4,7 +4,7 @@
 namespace App\Factories\Combat;
 
 
-use App\Domain\Combat\Attacks\AbstractCombatAttack;
+use App\Domain\Combat\Attacks\CombatAttack;
 use App\Domain\Models\CombatPosition;
 use App\Domain\Models\DamageType;
 use App\Domain\Models\TargetPriority;
