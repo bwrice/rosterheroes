@@ -9,7 +9,7 @@ use App\Domain\Models\CombatPosition;
 use App\Domain\Models\DamageType;
 use App\Domain\Models\TargetPriority;
 
-class MinionCombatAttack extends AbstractCombatAttack
+class MinionCombatAttack extends CombatAttack
 {
     /**
      * @var string

@@ -6,14 +6,14 @@ namespace App\Domain\Combat\Attacks;
 
 use App\Domain\Collections\CombatantCollection;
 use App\Domain\Collections\ResourceCostsCollection;
-use App\Domain\Combat\Attacks\AbstractCombatAttack;
+use App\Domain\Combat\Attacks\CombatAttack;
 use App\Domain\Combat\Attacks\CombatAttackInterface;
 use App\Domain\Models\CombatPosition;
 use App\Domain\Models\DamageType;
 use App\Domain\Models\TargetPriority;
 use Illuminate\Contracts\Support\Arrayable;
 
-class HeroCombatAttack extends AbstractCombatAttack
+class HeroCombatAttack extends CombatAttack
 {
     /**
      * @var string
@@ -24,7 +24,7 @@ class HeroCombatAttack extends AbstractCombatAttack
      */
     protected $itemUuid;
     /**
-     * @var AbstractCombatAttack
+     * @var CombatAttack
      */
     protected $combatAttack;
     /**
@@ -85,9 +85,9 @@ class HeroCombatAttack extends AbstractCombatAttack
     }
 
     /**
-     * @return AbstractCombatAttack
+     * @return CombatAttack
      */
-    public function getCombatAttack(): AbstractCombatAttack
+    public function getCombatAttack(): CombatAttack
     {
         return $this->combatAttack;
     }
