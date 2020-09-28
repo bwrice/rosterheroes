@@ -14,32 +14,25 @@ use Illuminate\Support\Str;
 
 class CombatMinion extends AbstractCombatant
 {
-    /**
-     * @var string
-     */
-    protected $minionUuid;
-    /**
-     * @var string
-     */
-    protected $combatantUuid;
+    protected string $sourceUuid;
+    protected string $combatantUuid;
 
     public function __construct(
-        string $minionUuid,
-        string $combatantUuid,
+        string $sourceUuid,
         int $health,
         int $protection,
-        int $blockChancePercent,
-        CombatPosition $combatPosition,
+        float $blockChancePercent,
+        int $combatPositionID,
         CombatAttackCollection $combatAttacks)
     {
-        $this->minionUuid = $minionUuid;
+        $this->sourceUuid = $sourceUuid;
         // We need a local uuid because a quest/side-quest can have multiples of the same minion
-        $this->combatantUuid = $combatantUuid;
+        $this->combatantUuid = (string) Str::uuid();
         parent::__construct(
             $health,
             $protection,
             $blockChancePercent,
-            $combatPosition,
+            $combatPositionID,
             $combatAttacks
         );
     }
@@ -47,9 +40,9 @@ class CombatMinion extends AbstractCombatant
     /**
      * @return string
      */
-    public function getMinionUuid(): string
+    public function getSourceUuid(): string
     {
-        return $this->minionUuid;
+        return $this->sourceUuid;
     }
 
     /**
@@ -69,7 +62,7 @@ class CombatMinion extends AbstractCombatant
     public function toArray()
     {
         return array_merge([
-            'minionUuid' => $this->minionUuid,
+            'minionUuid' => $this->sourceUuid,
             'combatantUuid' => $this->combatantUuid
         ], parent::toArray());
     }
@@ -84,6 +77,6 @@ class CombatMinion extends AbstractCombatant
 
     public function getMinion()
     {
-        return Minion::findUuidOrFail($this->getMinionUuid());
+        return Minion::findUuidOrFail($this->getSourceUuid());
     }
 }
