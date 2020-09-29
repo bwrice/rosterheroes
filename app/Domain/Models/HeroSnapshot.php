@@ -59,4 +59,15 @@ class HeroSnapshot extends Model
     {
         return $this->hasMany(ItemSnapshot::class);
     }
+
+    /**
+     * @param string $measurableTypeName
+     * @return MeasurableSnapshot
+     */
+    public function getMeasurableSnapshot(string $measurableTypeName)
+    {
+        return $this->measurableSnapshots->first(function (MeasurableSnapshot $measurableSnapshot) use ($measurableTypeName) {
+            return $measurableSnapshot->measurable->measurableType->name === $measurableTypeName;
+        });
+    }
 }
