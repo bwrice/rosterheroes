@@ -69,6 +69,13 @@ class HeroSnapshotFactory
         return SquadSnapshotFactory::new()->create();
     }
 
+    public function forSquadSnapshot(SquadSnapshot $squadSnapshot)
+    {
+        $clone = clone $this;
+        $clone->squadSnapshot = $squadSnapshot;
+        return $clone;
+    }
+
     public function withHeroFactory(HeroFactory $heroFactory)
     {
         $clone = clone $this;
