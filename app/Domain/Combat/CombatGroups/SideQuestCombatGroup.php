@@ -8,28 +8,16 @@ use App\Domain\Collections\AbstractCombatantCollection;
 use App\Domain\Collections\CombatantCollection;
 use App\Domain\Collections\CombatPositionCollection;
 use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
 
-class SideQuestGroup implements CombatGroup, Arrayable
+class SideQuestCombatGroup implements CombatGroup, Arrayable
 {
-    /**
-     * @var string
-     */
-    protected $sideQuestName;
-    /**
-     * @var string
-     */
-    protected $sideQuestUuid;
-    /**
-     * @var AbstractCombatantCollection
-     */
-    protected $combatMinions;
+    protected string $sourceUuid;
+    protected AbstractCombatantCollection $combatMinions;
 
-    public function __construct(string $sideQuestName, string $sideQuestUuid, AbstractCombatantCollection $combatMinions)
+    public function __construct( string $sideQuestUuid, AbstractCombatantCollection $combatMinions)
     {
-        $this->sideQuestName = $sideQuestName;
-        $this->sideQuestUuid = $sideQuestUuid;
+        $this->sourceUuid = $sideQuestUuid;
         $this->combatMinions = $combatMinions;
     }
 
@@ -64,8 +52,7 @@ class SideQuestGroup implements CombatGroup, Arrayable
     public function toArray()
     {
         return [
-            'sideQuestName' => $this->sideQuestName,
-            'sideQuestUuid' => $this->sideQuestUuid,
+            'sideQuestUuid' => $this->sourceUuid,
             'combatMinions' => $this->combatMinions->toArray()
         ];
     }
