@@ -30,6 +30,8 @@ use PhpParser\Node\Expr\AssignOp\Mod;
  *
  * @property SideQuest $sideQuest
  * @property CampaignStop $campaignStop
+ * @property SquadSnapshot $squadSnapshot
+ * @property SideQuestSnapshot $sideQuestSnapshot
  *
  * @property Collection $sideQuestEvents
  */
@@ -63,5 +65,15 @@ class SideQuestResult extends Model
     public function campaignStop()
     {
         return $this->belongsTo(CampaignStop::class);
+    }
+
+    public function squadSnapshot()
+    {
+        return $this->belongsTo(SquadSnapshot::class);
+    }
+
+    public function sideQuestSnapshot()
+    {
+        return $this->belongsTo(SideQuestSnapshot::class);
     }
 }
