@@ -13,6 +13,11 @@ use App\Domain\Models\TargetPriority;
 use App\Facades\HeroService;
 use Illuminate\Support\Collection;
 
+/**
+ * Class BuildCombatSquad
+ * @package App\Domain\Actions\Combat
+ * @deprecated
+ */
 class BuildCombatSquad
 {
     /**

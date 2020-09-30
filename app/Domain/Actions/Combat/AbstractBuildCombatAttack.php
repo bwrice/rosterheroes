@@ -12,6 +12,11 @@ use App\Domain\Models\TargetPriority;
 use App\Services\FantasyPower;
 use Illuminate\Database\Eloquent\Collection;
 
+/**
+ * Class AbstractBuildCombatAttack
+ * @package App\Domain\Actions\Combat
+ * @deprecated
+ */
 abstract class AbstractBuildCombatAttack
 {
 

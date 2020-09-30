@@ -13,6 +13,11 @@ use App\Domain\Models\Item;
 use App\Domain\Models\TargetPriority;
 use Illuminate\Database\Eloquent\Collection;
 
+/**
+ * Class BuildHeroCombatAttack
+ * @package App\Domain\Actions\Combat
+ * @deprecated
+ */
 class BuildHeroCombatAttack extends AbstractBuildCombatAttack
 {
     public function execute(

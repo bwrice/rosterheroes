@@ -14,6 +14,11 @@ use App\Domain\Models\TargetPriority;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
 
+/**
+ * Class BuildCombatMinion
+ * @package App\Domain\Actions\Combat
+ * @deprecated
+ */
 class BuildCombatMinion
 {
     /**

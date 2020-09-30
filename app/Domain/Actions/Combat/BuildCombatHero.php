@@ -16,6 +16,11 @@ use App\Domain\Models\MeasurableType;
 use App\Domain\Models\TargetPriority;
 use Illuminate\Database\Eloquent\Collection;
 
+/**
+ * Class BuildCombatHero
+ * @package App\Domain\Actions\Combat
+ * @deprecated
+ */
 class BuildCombatHero
 {
     /**
