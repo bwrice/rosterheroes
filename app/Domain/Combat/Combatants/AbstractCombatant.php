@@ -36,12 +36,13 @@ abstract class AbstractCombatant implements Combatant, Arrayable
     }
 
     /**
-     * @param int $damage
+     * @param int $amount
      * @return mixed|void
      */
-    public function receiveDamage(int $damage)
+    public function updateCurrentHealth(int $amount)
     {
-        $this->currentHealth = (int) max($this->currentHealth - $damage, 0);
+        $this->currentHealth = $amount;
+        return $this;
     }
 
     /**
