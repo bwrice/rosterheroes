@@ -62,9 +62,8 @@ class CombatHeroFactory extends AbstractCombatantFactory
             is_null($this->mana) ? 400 : $this->mana,
             is_null($this->protection) ? 100 : $this->protection,
             is_null($this->blockChancePercent) ? 10: $this->blockChancePercent,
-            $combatPosition,
-            $heroCombatAttacks,
-            PlayerSpiritFactory::new()->create()->uuid
+            $combatPosition->id,
+            $heroCombatAttacks
         );
     }
 
