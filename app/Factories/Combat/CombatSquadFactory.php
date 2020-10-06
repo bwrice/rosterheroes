@@ -6,16 +6,14 @@ namespace App\Factories\Combat;
 
 use App\Domain\Collections\AbstractCombatantCollection;
 use App\Domain\Combat\CombatGroups\CombatSquad;
+use App\Domain\Models\SquadRank;
 use App\Factories\Models\SquadFactory;
 use Illuminate\Support\Collection;
 
 class CombatSquadFactory
 {
-    /** @var SquadFactory|null */
-    protected $squadFactory;
-
-    /** @var Collection */
-    protected $combatHeroFactories;
+    protected ?SquadFactory $squadFactory = null;
+    protected ?Collection $combatHeroFactories = null;
 
     public static function new()
     {
@@ -31,15 +29,16 @@ class CombatSquadFactory
         $combatHeroes = $combatHeroFactories->map(function (CombatHeroFactory $combatHeroFactory) use ($squad) {
             return $combatHeroFactory->forSquad($squad)->create();
         });
+
         return new CombatSquad(
             $squad->name,
             $squad->uuid,
-            $squad->experience,
+            SquadRank::getStarting()->id,
             new AbstractCombatantCollection($combatHeroes)
         );
     }
 
-    public function withCombatHeroes(Collection $combatHeroFactories = null)
+    public function withCombatHeroFactories(Collection $combatHeroFactories = null)
     {
         if (! $combatHeroFactories) {
             $heroCount = rand(4, 6);
