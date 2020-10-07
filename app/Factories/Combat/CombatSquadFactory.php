@@ -6,6 +6,7 @@ namespace App\Factories\Combat;
 
 use App\Domain\Collections\AbstractCombatantCollection;
 use App\Domain\Combat\CombatGroups\CombatSquad;
+use App\Domain\Models\Squad;
 use App\Domain\Models\SquadRank;
 use App\Factories\Models\SquadFactory;
 use Illuminate\Support\Collection;
@@ -14,6 +15,7 @@ class CombatSquadFactory
 {
     protected ?SquadFactory $squadFactory = null;
     protected ?Collection $combatHeroFactories = null;
+    protected ?Collection $combatHeroes = null;
 
     public static function new()
     {
@@ -25,16 +27,11 @@ class CombatSquadFactory
         $squadFactory = $this->squadFactory ?: new SquadFactory();
         $squad = $squadFactory->create();
 
-        $combatHeroFactories = $this->combatHeroFactories ?: collect();
-        $combatHeroes = $combatHeroFactories->map(function (CombatHeroFactory $combatHeroFactory) use ($squad) {
-            return $combatHeroFactory->forSquad($squad)->create();
-        });
-
         return new CombatSquad(
             $squad->name,
             $squad->uuid,
             SquadRank::getStarting()->id,
-            new AbstractCombatantCollection($combatHeroes)
+            $this->getCombatHeroes($squad)
         );
     }
 
@@ -50,5 +47,23 @@ class CombatSquadFactory
         $clone = clone $this;
         $clone->combatHeroFactories = $combatHeroFactories;
         return $clone;
+    }
+
+    public function withCombatHeroes(AbstractCombatantCollection $combatHeroes)
+    {
+        $clone = clone $this;
+        $clone->combatHeroes = $combatHeroes;
+        return $clone;
+    }
+
+    protected function getCombatHeroes(Squad $squad)
+    {
+        if ($this->combatHeroes) {
+            return $this->combatHeroes;
+        }
+        $combatHeroFactories = $this->combatHeroFactories ?: new AbstractCombatantCollection;
+       return $combatHeroFactories->map(function (CombatHeroFactory $combatHeroFactory) use ($squad) {
+            return $combatHeroFactory->forSquad($squad)->create();
+        });
     }
 }
