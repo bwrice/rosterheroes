@@ -66,14 +66,6 @@ class Combatant implements CombatantInterface, Arrayable
     }
 
     /**
-     * @return int
-     */
-    public function getCurrentHealth(): int
-    {
-        return $this->currentHealth;
-    }
-
-    /**
      * @param int $combatPositionID
      * @return bool
      */
@@ -145,19 +137,35 @@ class Combatant implements CombatantInterface, Arrayable
         ];
     }
 
-    /**
-     * @param int $currentHealth
-     * @return $this
-     */
+    public function getInitialHealth(): int
+    {
+        return $this->initialHealth;
+    }
+
+    public function getCurrentHealth(): int
+    {
+        return $this->currentHealth;
+    }
+
     public function setCurrentHealth(int $currentHealth)
     {
         $this->currentHealth = $currentHealth;
         return $this;
     }
 
+    public function getInitialStamina(): int
+    {
+        return $this->initialStamina;
+    }
+
     public function getCurrentStamina(): int
     {
         return $this->currentStamina;
+    }
+
+    public function getInitialMana(): int
+    {
+        return $this->initialMana;
     }
 
     public function getCurrentMana(): int
