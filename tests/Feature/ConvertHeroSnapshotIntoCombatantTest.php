@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use App\Domain\Actions\Combat\ConvertAttackSnapshotToCombatAttack;
-use App\Domain\Actions\ConvertHeroSnapshotToCombatHero;
+use App\Domain\Actions\ConvertHeroSnapshotIntoCombatant;
 use App\Domain\Combat\Attacks\CombatAttack;
 use App\Domain\Models\AttackSnapshot;
 use App\Domain\Models\MeasurableType;
@@ -15,16 +15,16 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class ConvertHeroSnapshotToCombatHeroTest extends TestCase
+class ConvertHeroSnapshotIntoCombatantTest extends TestCase
 {
     use DatabaseTransactions;
 
     /**
-     * @return ConvertHeroSnapshotToCombatHero
+     * @return ConvertHeroSnapshotIntoCombatant
      */
     protected function getDomainAction()
     {
-        return app(ConvertHeroSnapshotToCombatHero::class);
+        return app(ConvertHeroSnapshotIntoCombatant::class);
     }
 
     /**
@@ -33,12 +33,12 @@ class ConvertHeroSnapshotToCombatHeroTest extends TestCase
     public function it_will_convert_a_hero_snapshot_into_a_combat_hero_with_matching_properties()
     {
         $heroSnapshot = HeroSnapshotFactory::new()->withMeasurableSnapshots()->create();
-        $combatHero = $this->getDomainAction()->execute($heroSnapshot);
+        $combatant = $this->getDomainAction()->execute($heroSnapshot);
 
-        $this->assertEquals($combatHero->getSourceUuid(), $heroSnapshot->uuid);
-        $this->assertEquals($combatHero->getProtection(), $heroSnapshot->protection);
-        $this->assertEquals($combatHero->getInitialCombatPositionID(), $heroSnapshot->combat_position_id);
-        $this->assertTrue(abs($combatHero->getBlockChancePercent() - $heroSnapshot->block_chance) < 0.01);
+        $this->assertEquals($combatant->getSourceUuid(), $heroSnapshot->uuid);
+        $this->assertEquals($combatant->getProtection(), $heroSnapshot->protection);
+        $this->assertEquals($combatant->getInitialCombatPositionID(), $heroSnapshot->combat_position_id);
+        $this->assertTrue(abs($combatant->getBlockChancePercent() - $heroSnapshot->block_chance) < 0.01);
     }
 
     /**
@@ -47,11 +47,14 @@ class ConvertHeroSnapshotToCombatHeroTest extends TestCase
     public function it_will_create_a_combat_hero_with_matching_resource_amounts_for_the_hero_snapshot()
     {
         $heroSnapshot = HeroSnapshotFactory::new()->withMeasurableSnapshots()->create();
-        $combatHero = $this->getDomainAction()->execute($heroSnapshot);
+        $combatant = $this->getDomainAction()->execute($heroSnapshot);
 
-        $this->assertEquals($combatHero->getCurrentHealth(), $heroSnapshot->getMeasurableSnapshot(MeasurableType::HEALTH)->final_amount);
-        $this->assertEquals($combatHero->getCurrentStamina(), $heroSnapshot->getMeasurableSnapshot(MeasurableType::STAMINA)->final_amount);
-        $this->assertEquals($combatHero->getCurrentMana(), $heroSnapshot->getMeasurableSnapshot(MeasurableType::MANA)->final_amount);
+        $this->assertEquals($combatant->getInitialHealth(), $heroSnapshot->getMeasurableSnapshot(MeasurableType::HEALTH)->final_amount);
+        $this->assertEquals($combatant->getCurrentHealth(), $heroSnapshot->getMeasurableSnapshot(MeasurableType::HEALTH)->final_amount);
+        $this->assertEquals($combatant->getInitialStamina(), $heroSnapshot->getMeasurableSnapshot(MeasurableType::STAMINA)->final_amount);
+        $this->assertEquals($combatant->getCurrentStamina(), $heroSnapshot->getMeasurableSnapshot(MeasurableType::STAMINA)->final_amount);
+        $this->assertEquals($combatant->getInitialMana(), $heroSnapshot->getMeasurableSnapshot(MeasurableType::MANA)->final_amount);
+        $this->assertEquals($combatant->getCurrentMana(), $heroSnapshot->getMeasurableSnapshot(MeasurableType::MANA)->final_amount);
     }
 
     /**
