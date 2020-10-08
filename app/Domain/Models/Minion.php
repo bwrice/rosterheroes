@@ -87,6 +87,16 @@ class Minion extends Model implements HasAttacks, RewardsChests
         return $this->getEnemyTypeBehavior()->getStartingHealth($this->level, $this->combatPosition);
     }
 
+    public function getStartingStamina(): int
+    {
+        return 999999;
+    }
+
+    public function getStartingMana(): int
+    {
+        return 999999;
+    }
+
     public function getProtection(): int
     {
         return $this->getEnemyTypeBehavior()->getProtection($this->level, $this->combatPosition);
