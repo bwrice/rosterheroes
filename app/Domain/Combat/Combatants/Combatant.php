@@ -205,4 +205,20 @@ class Combatant implements CombatantInterface, Arrayable
     {
         // TODO: Implement getReadyAttacks() method.
     }
+
+    /**
+     * @return string
+     */
+    public function getSourceUuid(): string
+    {
+        return $this->sourceUuid;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCombatantUuid(): string
+    {
+        return $this->combatantUuid;
+    }
 }
