@@ -44,6 +44,8 @@ class BuildMinionSnapshot extends BuildSnapshot
             'enemy_type_id' => $minion->enemy_type_id,
             'level' => $minion->level,
             'starting_health' => $minion->getStartingHealth(),
+            'starting_stamina' => $minion->getStartingStamina(),
+            'starting_mana' => $minion->getStartingMana(),
             'protection' => $minion->getProtection(),
             'block_chance' => $minion->getBlockChance(),
             'fantasy_power' => $fantasyPower,
