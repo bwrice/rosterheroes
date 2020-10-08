@@ -6,13 +6,14 @@ namespace App\Domain\Actions;
 
 use App\Domain\Actions\Combat\ConvertAttackSnapshotToCombatAttack;
 use App\Domain\Collections\CombatAttackCollection;
+use App\Domain\Combat\Combatants\Combatant;
 use App\Domain\Combat\Combatants\CombatHero;
 use App\Domain\Models\AttackSnapshot;
 use App\Domain\Models\HeroSnapshot;
 use App\Domain\Models\ItemSnapshot;
 use App\Domain\Models\MeasurableType;
 
-class ConvertHeroSnapshotToCombatHero
+class ConvertHeroSnapshotIntoCombatant
 {
     protected ConvertAttackSnapshotToCombatAttack $convertAttackSnapshotToCombatAttack;
 
@@ -23,7 +24,7 @@ class ConvertHeroSnapshotToCombatHero
 
     /**
      * @param HeroSnapshot $heroSnapshot
-     * @return CombatHero
+     * @return Combatant
      */
     public function execute(HeroSnapshot $heroSnapshot)
     {
@@ -35,7 +36,7 @@ class ConvertHeroSnapshotToCombatHero
             });
         });
 
-        return new CombatHero(
+        return new Combatant(
             $heroSnapshot->uuid,
             $heroSnapshot->getMeasurableSnapshot(MeasurableType::HEALTH)->final_amount,
             $heroSnapshot->getMeasurableSnapshot(MeasurableType::STAMINA)->final_amount,
