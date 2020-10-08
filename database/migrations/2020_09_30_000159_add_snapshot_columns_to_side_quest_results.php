@@ -14,8 +14,8 @@ class AddSnapshotColumnsToSideQuestResults extends Migration
     public function up()
     {
         Schema::table('side_quest_results', function (Blueprint $table) {
-            $table->bigInteger('squad_snapshot_id')->nullable();
-            $table->bigInteger('side_quest_snapshot_id')->nullable();
+            $table->bigInteger('squad_snapshot_id')->unsigned()->nullable();
+            $table->bigInteger('side_quest_snapshot_id')->unsigned()->nullable();
         });
 
         Schema::table('side_quest_results', function (Blueprint $table) {
