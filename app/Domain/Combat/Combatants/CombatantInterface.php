@@ -7,7 +7,7 @@ namespace App\Domain\Combat\Combatants;
 use App\Domain\Combat\Attacks\CombatAttackInterface;
 use App\Domain\Models\CombatPosition;
 
-interface Combatant
+interface CombatantInterface
 {
     /**
      * @param int $initialDamage
