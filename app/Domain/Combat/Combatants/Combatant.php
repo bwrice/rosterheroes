@@ -4,42 +4,197 @@
 namespace App\Domain\Combat\Combatants;
 
 
+use App\Domain\Collections\CombatAttackCollection;
 use App\Domain\Combat\Attacks\CombatAttackInterface;
-use App\Domain\Models\CombatPosition;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Support\Str;
 
-interface Combatant
+class Combatant implements CombatantInterface, Arrayable
 {
-    /**
-     * @param int $initialDamage
-     * @return int
-     */
-    public function calculateDamageToReceive(int $initialDamage): int;
+    protected string $sourceUuid, $combatantUuid;
+    protected int $initialHealth, $currentHealth, $initialStamina, $currentStamina, $initialMana, $currentMana,
+        $protection, $initialCombatPositionID;
+    protected float $blockChancePercent;
+    protected CombatAttackCollection $combatAttacks;
+    protected array $inheritedCombatPositionIDs = [];
+
+    public function __construct(
+        string $sourceUuid,
+        int $initialHealth,
+        int $initialStamina,
+        int $initialMana,
+        int $protection,
+        float $blockChancePercent,
+        int $combatPositionID,
+        CombatAttackCollection $combatAttacks)
+    {
+        $this->sourceUuid = $sourceUuid;
+        $this->combatantUuid = (string) Str::uuid();
+        $this->initialHealth = $this->currentHealth = $initialHealth;
+        $this->initialStamina = $this->currentStamina = $initialStamina;
+        $this->initialMana = $this->currentMana = $initialMana;
+        $this->protection = $protection;
+        $this->blockChancePercent = $blockChancePercent;
+        $this->initialCombatPositionID = $combatPositionID;
+        $this->combatAttacks = $combatAttacks;
+    }
+
+    public function calculateDamageToReceive(int $initialDamage): int
+    {
+        $multiplier = 500 / (500 + $this->protection);
+        return (int) min(ceil($multiplier * $initialDamage), $this->currentHealth);
+    }
 
     /**
      * @param int $amount
-     * @return mixed
+     * @return mixed|void
      */
-    public function updateCurrentHealth(int $amount);
+    public function updateCurrentHealth(int $amount)
+    {
+        $this->currentHealth = $amount;
+        return $this;
+    }
 
     /**
      * @param CombatAttackInterface $combatAttack
-     * @return mixed
+     * @return bool|mixed
      */
-    public function attackBlocked(CombatAttackInterface $combatAttack);
+    public function attackBlocked(CombatAttackInterface $combatAttack)
+    {
+        $rand = rand(1, 100);
+        return $rand <= $this->blockChancePercent;
+    }
 
     /**
      * @return int
      */
-    public function getCurrentHealth(): int;
+    public function getCurrentHealth(): int
+    {
+        return $this->currentHealth;
+    }
+
+    /**
+     * @param int $combatPositionID
+     * @return bool
+     */
+    public function hasCombatPosition(int $combatPositionID): bool
+    {
+        return in_array($combatPositionID, $this->allCombatPositions());
+    }
+
+    /**
+     * @return array
+     */
+    public function allCombatPositions()
+    {
+        $combatPositions = $this->inheritedCombatPositionIDs;
+        $combatPositions[] = $this->initialCombatPositionID;
+        return $combatPositions;
+    }
+
+    /**
+     * @return CombatAttackCollection
+     */
+    public function getCombatAttacks(): CombatAttackCollection
+    {
+        return $this->combatAttacks;
+    }
+
+    /**
+     * @return int
+     */
+    public function getInitialCombatPositionID()
+    {
+        return $this->initialCombatPositionID;
+    }
+
+    /**
+     * @param array $inheritedCombatPositionIDs
+     * @return $this
+     */
+    public function setInheritedCombatPositions(array $inheritedCombatPositionIDs)
+    {
+        $this->inheritedCombatPositionIDs = $inheritedCombatPositionIDs;
+        return $this;
+    }
 
     /**
      * @return float
      */
-    public function getThreatLevel(): float;
+    public function getThreatLevel(): float
+    {
+        return $this->getDPS();
+    }
+
+    protected function getDPS()
+    {
+        // TODO;
+        return 1;
+    }
+
+    public function toArray()
+    {
+        return [
+            'initialHealth' => $this->initialHealth,
+            'currentHealth' => $this->currentHealth,
+            'protection' => $this->protection,
+            'blockChancePercent' => $this->blockChancePercent,
+            'combatAttacks' => $this->combatAttacks->toArray(),
+            'initialCombatPositionID' => $this->initialCombatPositionID,
+            'inheritedCombatPositionIDs' => $this->inheritedCombatPositionIDs
+        ];
+    }
 
     /**
-     * @param CombatPosition $combatPositionToCompare
-     * @return bool
+     * @param int $currentHealth
+     * @return $this
      */
-    public function hasCombatPosition(int $combatPositionID): bool;
+    public function setCurrentHealth(int $currentHealth)
+    {
+        $this->currentHealth = $currentHealth;
+        return $this;
+    }
+
+    public function getCurrentStamina(): int
+    {
+        return $this->currentStamina;
+    }
+
+    public function getCurrentMana(): int
+    {
+        return $this->currentMana;
+    }
+
+    public function setCurrentStamina(int $amount)
+    {
+        $this->currentStamina = $amount;
+        return $this;
+    }
+
+    public function setCurrentMana(int $amount)
+    {
+        $this->currentMana = $amount;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getProtection(): int
+    {
+        return $this->protection;
+    }
+
+    /**
+     * @return float
+     */
+    public function getBlockChancePercent(): float
+    {
+        return $this->blockChancePercent;
+    }
+
+    public function getReadyAttacks(): CombatAttackCollection
+    {
+        // TODO: Implement getReadyAttacks() method.
+    }
 }
