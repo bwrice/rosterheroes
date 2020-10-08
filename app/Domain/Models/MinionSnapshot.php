@@ -19,6 +19,8 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * @property int $combat_position_id
  * @property int $enemy_type_id
  * @property int $starting_health
+ * @property int $starting_stamina
+ * @property int $starting_mana
  * @property int $protection
  * @property float $block_chance
  * @property float $fantasy_power
