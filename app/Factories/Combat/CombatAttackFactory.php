@@ -4,34 +4,43 @@
 namespace App\Factories\Combat;
 
 
+use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Combat\Attacks\CombatAttack;
 use App\Domain\Models\CombatPosition;
 use App\Domain\Models\DamageType;
 use App\Domain\Models\TargetPriority;
 use App\Factories\Models\AttackFactory;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
-abstract class AbstractCombatAttackFactory
+class CombatAttackFactory
 {
-    protected $attackerPositionName;
-
-    protected $targetPositionName;
-
-    protected $targetPriorityName;
-
-    protected $damageTypeName;
-
-    protected $damage;
-
-    protected $combatSpeed;
-
-    protected $grade;
-
-    protected $maxTargetCount;
+    protected ?string $attackerPositionName = null, $targetPositionName = null, $targetPriorityName = null, $damageTypeName = null;
+    protected ?int $damage = null, $grade = null, $maxTargetsCount = null;
+    protected ?float $combatSpeed = null;
+    protected ?Collection $resourceCostsCollection = null;
 
     public static function new()
     {
         return new static();
+    }
+
+    public function create()
+    {
+        return new CombatAttack(
+            'Test Combat Attack',
+            (string) Str::uuid(),
+            (string) Str::uuid(),
+            $this->getDamage(),
+            $this->getCombatSpeed(),
+            $this->getGrade(),
+            $this->getMaxTargetsCount(),
+            $this->getAttackerPosition()->id,
+            $this->getTargetPosition()->id,
+            $this->getTargetPriority()->id,
+            $this->getDamageType()->id,
+            $this->resourceCostsCollection ?: new ResourceCostsCollection()
+        );
     }
 
     protected function getDamage()
@@ -51,7 +60,7 @@ abstract class AbstractCombatAttackFactory
 
     protected function getMaxTargetsCount()
     {
-        return $this->maxTargetCount ?: rand(1, 8);
+        return $this->maxTargetsCount ?: rand(1, 8);
     }
 
     protected function getAttackUuid()
@@ -119,7 +128,7 @@ abstract class AbstractCombatAttackFactory
     public function withMaxTargetCount(int $maxTargetCount)
     {
         $clone = clone $this;
-        $clone->maxTargetCount;
+        $clone->maxTargetsCount;
         return $clone;
     }
 
@@ -141,7 +150,7 @@ abstract class AbstractCombatAttackFactory
 
     protected function getTargetPriority()
     {
-        if ($this->targetPositionName) {
+        if ($this->targetPriorityName) {
             return TargetPriority::query()->where('name', '=', $this->targetPriorityName)->first();
         }
         return TargetPriority::query()->inRandomOrder()->first();
@@ -149,7 +158,7 @@ abstract class AbstractCombatAttackFactory
 
     protected function getDamageType()
     {
-        if ($this->targetPositionName) {
+        if ($this->damageTypeName) {
             return DamageType::query()->where('name', '=', $this->damageTypeName)->first();
         }
         return DamageType::query()->inRandomOrder()->first();
