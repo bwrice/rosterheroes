@@ -34,6 +34,8 @@ class MinionSnapshotFactory
             'combat_position_id' => CombatPosition::query()->inRandomOrder()->first()->id,
             'enemy_type_id' => EnemyType::query()->inRandomOrder()->first()->id,
             'starting_health' => rand(400, 10000),
+            'starting_stamina' => rand(5000, 20000),
+            'starting_mana' => rand(5000, 20000),
             'protection' => rand(0, 2000),
             'block_chance' => round(rand(0, 3000)/100, 2),
             'fantasy_power' => rand(5, 40),
