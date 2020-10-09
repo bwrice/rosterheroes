@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use App\Domain\Actions\Combat\ConvertAttackSnapshotToCombatAttack;
-use App\Domain\Actions\ConvertMinionSnapshotIntoCombatMinion;
+use App\Domain\Actions\ConvertMinionSnapshotIntoCombatant;
 use App\Domain\Models\AttackSnapshot;
 use App\Factories\Models\AttackSnapshotFactory;
 use App\Factories\Models\HeroSnapshotFactory;
@@ -14,16 +14,16 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class ConvertMinionSnapshotIntoCombatMinionTest extends TestCase
+class ConvertMinionSnapshotIntoCombatantTest extends TestCase
 {
     use DatabaseTransactions;
 
     /**
-     * @return ConvertMinionSnapshotIntoCombatMinion
+     * @return ConvertMinionSnapshotIntoCombatant
      */
     protected function getDomainAction()
     {
-        return app(ConvertMinionSnapshotIntoCombatMinion::class);
+        return app(ConvertMinionSnapshotIntoCombatant::class);
     }
 
     /**
@@ -33,13 +33,18 @@ class ConvertMinionSnapshotIntoCombatMinionTest extends TestCase
     {
         $minionSnapshot = MinionSnapshotFactory::new()->create();
 
-        $combatMinion = $this->getDomainAction()->execute($minionSnapshot);
+        $combatant = $this->getDomainAction()->execute($minionSnapshot);
 
-        $this->assertEquals($minionSnapshot->uuid, $combatMinion->getSourceUuid());
-        $this->assertEquals($minionSnapshot->protection, $combatMinion->getProtection());
-        $this->assertEquals($minionSnapshot->starting_health, $combatMinion->getCurrentHealth());
-        $this->assertEquals($minionSnapshot->combat_position_id, $combatMinion->getInitialCombatPositionID());
-        $this->assertTrue(abs($minionSnapshot->block_chance - $combatMinion->getBlockChancePercent()) < 0.01);
+        $this->assertEquals($minionSnapshot->uuid, $combatant->getSourceUuid());
+        $this->assertEquals($minionSnapshot->protection, $combatant->getProtection());
+        $this->assertEquals($minionSnapshot->starting_health, $combatant->getInitialHealth());
+        $this->assertEquals($minionSnapshot->starting_health, $combatant->getCurrentHealth());
+        $this->assertEquals($minionSnapshot->starting_stamina, $combatant->getInitialStamina());
+        $this->assertEquals($minionSnapshot->starting_stamina, $combatant->getCurrentStamina());
+        $this->assertEquals($minionSnapshot->starting_mana, $combatant->getInitialMana());
+        $this->assertEquals($minionSnapshot->starting_mana, $combatant->getCurrentMana());
+        $this->assertEquals($minionSnapshot->combat_position_id, $combatant->getInitialCombatPositionID());
+        $this->assertTrue(abs($minionSnapshot->block_chance - $combatant->getBlockChancePercent()) < 0.01);
     }
 
     /**
@@ -79,7 +84,7 @@ class ConvertMinionSnapshotIntoCombatMinionTest extends TestCase
 
         $this->instance(ConvertAttackSnapshotToCombatAttack::class, $convertCombatAttackMock);
 
-        $combatHero = $this->getDomainAction()->execute($minionSnapshot);
-        $this->assertEquals($attackSnapshots->count(), $combatHero->getCombatAttacks()->count());
+        $combatant = $this->getDomainAction()->execute($minionSnapshot);
+        $this->assertEquals($attackSnapshots->count(), $combatant->getCombatAttacks()->count());
     }
 }

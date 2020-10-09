@@ -6,11 +6,11 @@ namespace App\Domain\Actions;
 
 use App\Domain\Actions\Combat\ConvertAttackSnapshotToCombatAttack;
 use App\Domain\Collections\CombatAttackCollection;
-use App\Domain\Combat\Combatants\CombatMinion;
+use App\Domain\Combat\Combatants\Combatant;
 use App\Domain\Models\AttackSnapshot;
 use App\Domain\Models\MinionSnapshot;
 
-class ConvertMinionSnapshotIntoCombatMinion
+class ConvertMinionSnapshotIntoCombatant
 {
     protected ConvertAttackSnapshotToCombatAttack $convertAttackSnapshotToCombatAttack;
 
@@ -21,7 +21,7 @@ class ConvertMinionSnapshotIntoCombatMinion
 
     /**
      * @param MinionSnapshot $minionSnapshot
-     * @return CombatMinion
+     * @return Combatant
      */
     public function execute(MinionSnapshot $minionSnapshot)
     {
@@ -30,9 +30,11 @@ class ConvertMinionSnapshotIntoCombatMinion
             $combatAttacks->push($this->convertAttackSnapshotToCombatAttack->execute($attackSnapshot));
         });
 
-        return new CombatMinion(
+        return new Combatant(
             $minionSnapshot->uuid,
             $minionSnapshot->starting_health,
+            $minionSnapshot->starting_stamina,
+            $minionSnapshot->starting_mana,
             $minionSnapshot->protection,
             $minionSnapshot->block_chance,
             $minionSnapshot->combat_position_id,
