@@ -38,7 +38,7 @@ class CombatSquadTest extends TestCase
 
         $backLineHeroFactory = CombatHeroFactory::new()->withCombatPosition(CombatPosition::BACK_LINE);
 
-        $combatSquad = CombatSquadFactory::new()->withCombatHeroes(collect([
+        $combatSquad = CombatSquadFactory::new()->withCombatHeroFactories(collect([
             $frontLineHeroFactory,
             $backLineHeroFactory
         ]))->create();
@@ -68,7 +68,7 @@ class CombatSquadTest extends TestCase
 
         $backLineHeroFactory = CombatHeroFactory::new()->withCombatPosition(CombatPosition::FRONT_LINE);
 
-        $combatSquad = CombatSquadFactory::new()->withCombatHeroes(collect([
+        $combatSquad = CombatSquadFactory::new()->withCombatHeroFactories(collect([
             $frontLineHeroFactory,
             $backLineHeroFactory
         ]))->create();
@@ -99,7 +99,7 @@ class CombatSquadTest extends TestCase
         // Another high-ground hero
         $backLineHeroFactory = CombatHeroFactory::new()->withCombatPosition(CombatPosition::HIGH_GROUND);
 
-        $combatSquad = CombatSquadFactory::new()->withCombatHeroes(collect([
+        $combatSquad = CombatSquadFactory::new()->withCombatHeroFactories(collect([
             $frontLineHeroFactory,
             $backLineHeroFactory
         ]))->create();
@@ -136,7 +136,7 @@ class CombatSquadTest extends TestCase
             ]))
             ->withCombatPosition(CombatPosition::FRONT_LINE);
 
-        $combatSquad = CombatSquadFactory::new()->withCombatHeroes(collect([
+        $combatSquad = CombatSquadFactory::new()->withCombatHeroFactories(collect([
             $combatHeroFactory
         ]))->create();
 
@@ -175,7 +175,7 @@ class CombatSquadTest extends TestCase
             ]))
             ->withCombatPosition(CombatPosition::FRONT_LINE);
 
-        $combatSquad = CombatSquadFactory::new()->withCombatHeroes(collect([
+        $combatSquad = CombatSquadFactory::new()->withCombatHeroFactories(collect([
             $combatHeroFactory
         ]))->create();
 
@@ -216,7 +216,7 @@ class CombatSquadTest extends TestCase
             ]))
             ->withCombatPosition(CombatPosition::FRONT_LINE);
 
-        $combatSquad = CombatSquadFactory::new()->withCombatHeroes(collect([
+        $combatSquad = CombatSquadFactory::new()->withCombatHeroFactories(collect([
             $combatHeroFactory
         ]))->create();
 
