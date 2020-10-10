@@ -67,5 +67,12 @@ abstract class ReferenceService
         return $this->referenceModels;
     }
 
+    protected function mapIDsToModels(array $referenceIDs)
+    {
+        return collect($referenceIDs)->map(function ($ID) {
+            return $this->getReferenceModelByID($ID);
+        });
+    }
+
     abstract protected function all(): Collection;
 }
