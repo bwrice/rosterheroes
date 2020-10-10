@@ -36,23 +36,23 @@ class FindTargetsForAttackTest extends TestCase
             ->withtargetPosition($targetPositionName)
             ->withMaxTargetCount(1)
             ->create();
-        $frontLineCombatant = CombatantFactory::new()
+        $expectedTargetCombatant = CombatantFactory::new()
             ->withCombatPosition($targetPositionName)
             ->create();
-        $backLineCombatant = CombatantFactory::new()
+        $otherTargetCombatant = CombatantFactory::new()
             ->withCombatPosition($extraCombatantPositionName)
             ->create();
 
         $combatants = collect([
-            $frontLineCombatant,
-            $backLineCombatant
+            $expectedTargetCombatant,
+            $otherTargetCombatant
         ]);
 
         $targets = $this->getDomainAction()->execute($attack, $combatants);
         $this->assertEquals(1, $targets->count());
         /** @var CombatHero $combatant */
         $combatant = $targets->first();
-        $this->assertEquals($frontLineCombatant->getSourceUuid(), $combatant->getSourceUuid());
+        $this->assertEquals($expectedTargetCombatant->getSourceUuid(), $combatant->getSourceUuid());
     }
 
     public function provides_it_will_return_front_line_heroes_for_a_front_line_attack()
@@ -70,6 +70,66 @@ class FindTargetsForAttackTest extends TestCase
                 'targetPositionName' => CombatPosition::HIGH_GROUND,
                 'extraCombatantPositionName' => CombatPosition::BACK_LINE,
             ],
+        ];
+    }
+
+    /**
+     * @test
+     * @param $attackTargetPositionName
+     * @param $expectedCombatantTargetPosition
+     * @param $otherCombatantTargetPosition
+     * @dataProvider provides_it_will_return_targets_from_the_closest_proximity_combat_position_if_non_match_the_target_position
+     */
+    public function it_will_return_targets_from_the_closest_proximity_combat_position_if_non_match_the_target_position(
+        $attackTargetPositionName,
+        $expectedCombatantTargetPosition,
+        $otherCombatantTargetPosition
+    )
+    {
+        $attack = CombatAttackFactory::new()
+            ->withtargetPosition($attackTargetPositionName)
+            ->withMaxTargetCount(1)
+            ->create();
+
+        $combatants = collect();
+
+        $expectedTargetCombatant = CombatantFactory::new()
+            ->withCombatPosition($expectedCombatantTargetPosition)
+            ->create();
+        $combatants->push($expectedTargetCombatant);
+
+        if ($otherCombatantTargetPosition) {
+            $otherTargetCombatant = CombatantFactory::new()
+                ->withCombatPosition($otherCombatantTargetPosition)
+                ->create();
+            $combatants->push($otherTargetCombatant);
+        }
+
+        $targets = $this->getDomainAction()->execute($attack, $combatants);
+        $this->assertEquals(1, $targets->count());
+        /** @var CombatHero $combatant */
+        $combatant = $targets->first();
+        $this->assertEquals($expectedTargetCombatant->getSourceUuid(), $combatant->getSourceUuid());
+    }
+
+    public function provides_it_will_return_targets_from_the_closest_proximity_combat_position_if_non_match_the_target_position()
+    {
+        return [
+            [
+                'attackTargetPositionName' => CombatPosition::FRONT_LINE,
+                'expectedCombatantTargetPosition' => CombatPosition::BACK_LINE,
+                'otherCombatantTargetPosition' => CombatPosition::HIGH_GROUND,
+            ],
+            [
+                'attackTargetPositionName' => CombatPosition::BACK_LINE,
+                'expectedCombatantTargetPosition' => CombatPosition::FRONT_LINE,
+                'otherCombatantTargetPosition' => CombatPosition::HIGH_GROUND,
+            ],
+            [
+                'attackTargetPositionName' => CombatPosition::HIGH_GROUND,
+                'expectedCombatantTargetPosition' => CombatPosition::BACK_LINE,
+                'otherCombatantTargetPosition' => null,
+            ]
         ];
     }
 }
