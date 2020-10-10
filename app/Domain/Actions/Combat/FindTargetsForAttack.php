@@ -40,7 +40,7 @@ class FindTargetsForAttack
 
         $maxTargetsCount = DamageTypeFacade::maxTargetsCount($combatAttack->getDamageTypeID(), $combatAttack->getTier(), $combatAttack->getTargetsCount());
 
-        $targets = $possibleTargets->take($maxTargetsCount);
+        $targets = $possibleTargets->shuffle()->take($maxTargetsCount);
         return $targets;
     }
 }
