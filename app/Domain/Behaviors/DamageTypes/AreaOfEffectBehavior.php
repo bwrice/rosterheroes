@@ -11,9 +11,9 @@ use App\Domain\Models\MeasurableType;
 class AreaOfEffectBehavior extends DamageTypeBehavior
 {
 
-    public function getMaxTargetCount(int $grade, ?int $fixedTargetCount)
+    public function getMaxTargetCount(int $tier, ?int $fixedTargetCount)
     {
-        return (int) (3 + ceil($grade/30));
+        return (int) (3 + ceil($tier/30));
     }
 
     public function getDamagePerTarget(int $damage, int $targetsCount)

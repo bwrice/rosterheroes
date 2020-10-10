@@ -8,7 +8,7 @@ use App\Domain\Collections\ResourceCostsCollection;
 
 abstract class DamageTypeBehavior
 {
-    abstract public function getMaxTargetCount(int $grade, ?int $fixedTargetCount);
+    abstract public function getMaxTargetCount(int $tier, ?int $fixedTargetCount);
 
     abstract public function getDamagePerTarget(int $damage, int $targetsCount);
 

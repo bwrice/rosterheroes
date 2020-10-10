@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Password;
 
 class FixedTargetBehavior extends DamageTypeBehavior
 {
-    public function getMaxTargetCount(int $grade, ?int $fixedTargetCount)
+    public function getMaxTargetCount(int $tier, ?int $fixedTargetCount)
     {
         return $fixedTargetCount ?: 1;
     }

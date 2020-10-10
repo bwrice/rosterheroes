@@ -11,9 +11,9 @@ use App\Domain\Models\MeasurableType;
 class DispersedBehavior extends DamageTypeBehavior
 {
 
-    public function getMaxTargetCount(int $grade, ?int $fixedTargetCount)
+    public function getMaxTargetCount(int $tier, ?int $fixedTargetCount)
     {
-        return (int) (4 + ceil($grade/15));
+        return (int) (4 + ceil($tier/15));
     }
 
     public function getDamagePerTarget(int $damage, int $targetsCount)
