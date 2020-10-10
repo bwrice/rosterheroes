@@ -8,8 +8,6 @@ use App\Domain\Collections\CombatantCollection;
 
 interface CombatAttackInterface
 {
-    public function getDamagePerTarget(int $targetsCount): int;
-
     public function getTargetPositionID(): int;
 
     public function getTargetPriorityID(): int;
@@ -19,4 +17,6 @@ interface CombatAttackInterface
     public function getTargetsCount(): ?int;
 
     public function getTier(): int;
+
+    public function getDamage(): int;
 }
