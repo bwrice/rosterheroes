@@ -4,11 +4,11 @@
 namespace App\Domain\Behaviors\TargetPriorities;
 
 
-use App\Domain\Combat\Combatants\Combatant;
+use App\Domain\Combat\Combatants\CombatantInterface;
 
 class HighestThreatPriorityBehavior extends TargetPriorityBehavior
 {
-    public function getCombatantValue(Combatant $combatant)
+    public function getCombatantValue(CombatantInterface $combatant)
     {
         return $combatant->getThreatLevel();
     }
