@@ -5,17 +5,17 @@ namespace App\Domain\Combat\Events;
 
 
 use App\Domain\Combat\Attacks\CombatAttackInterface;
-use App\Domain\Combat\Combatants\Combatant;
+use App\Domain\Combat\Combatants\CombatantInterface;
 
 class AttackDamagesCombatant implements CombatEvent
 {
     public const EVENT_STREAM = 'attack-damages-combatant';
 
     protected CombatAttackInterface $combatAttack;
-    protected Combatant $combatant;
+    protected CombatantInterface $combatant;
     protected int $moment, $damage;
 
-    public function __construct(CombatAttackInterface $combatAttack, Combatant $combatant, int $damage, int $moment)
+    public function __construct(CombatAttackInterface $combatAttack, CombatantInterface $combatant, int $damage, int $moment)
     {
         $this->combatAttack = $combatAttack;
         $this->combatant = $combatant;
