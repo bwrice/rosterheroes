@@ -16,7 +16,7 @@ use Illuminate\Support\Str;
 class CombatAttackFactory
 {
     protected ?string $attackerPositionName = null, $targetPositionName = null, $targetPriorityName = null, $damageTypeName = null;
-    protected ?int $damage = null, $grade = null, $maxTargetsCount = null;
+    protected ?int $damage = null, $tier = null, $targetCount = null;
     protected ?float $combatSpeed = null;
     protected ?Collection $resourceCostsCollection = null;
 
@@ -33,8 +33,8 @@ class CombatAttackFactory
             (string) Str::uuid(),
             $this->getDamage(),
             $this->getCombatSpeed(),
-            $this->getGrade(),
-            $this->getMaxTargetsCount(),
+            $this->getTier(),
+            $this->getTargetCount(),
             $this->getAttackerPosition()->id,
             $this->getTargetPosition()->id,
             $this->getTargetPriority()->id,
@@ -53,14 +53,14 @@ class CombatAttackFactory
         return $this->combatSpeed ?: 10;
     }
 
-    protected function getGrade()
+    protected function getTier()
     {
-        return $this->grade ?: 10;
+        return $this->tier ?: 10;
     }
 
-    protected function getMaxTargetsCount()
+    protected function getTargetCount()
     {
-        return $this->maxTargetsCount ?: rand(1, 8);
+        return $this->targetCount ?: rand(1, 8);
     }
 
     protected function getAttackUuid()
@@ -118,17 +118,17 @@ class CombatAttackFactory
         return $clone;
     }
 
-    public function withGrade(int $grade)
+    public function withTier(int $tier)
     {
         $clone = clone $this;
-        $clone->grade = $grade;
+        $clone->tier = $tier;
         return $clone;
     }
 
-    public function withMaxTargetCount(int $maxTargetCount)
+    public function withTargetsCount(int $targetsCount)
     {
         $clone = clone $this;
-        $clone->maxTargetsCount;
+        $clone->targetCount = $targetsCount;
         return $clone;
     }
 
