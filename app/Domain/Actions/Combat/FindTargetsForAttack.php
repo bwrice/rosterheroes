@@ -37,6 +37,9 @@ class FindTargetsForAttack
             })->first();
         }
 
-        return $possibleTargets->take($combatAttack->getMaxTargetsCount());
+        // TODO: Target Priority
+
+        $targets = $possibleTargets->take($combatAttack->getMaxTargetsCount());
+        return $targets;
     }
 }

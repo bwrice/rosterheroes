@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Domain\Actions\Combat\FindTargetsForAttack;
 use App\Domain\Combat\Combatants\CombatHero;
 use App\Domain\Models\CombatPosition;
+use App\Facades\DamageTypeFacade;
 use App\Factories\Combat\CombatantFactory;
 use App\Factories\Combat\CombatAttackFactory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -34,7 +35,7 @@ class FindTargetsForAttackTest extends TestCase
     {
         $attack = CombatAttackFactory::new()
             ->withtargetPosition($targetPositionName)
-            ->withMaxTargetCount(1)
+            ->withTargetsCount(1)
             ->create();
         $expectedTargetCombatant = CombatantFactory::new()
             ->withCombatPosition($targetPositionName)
@@ -88,7 +89,7 @@ class FindTargetsForAttackTest extends TestCase
     {
         $attack = CombatAttackFactory::new()
             ->withtargetPosition($attackTargetPositionName)
-            ->withMaxTargetCount(1)
+            ->withTargetsCount(1)
             ->create();
 
         $combatants = collect();
@@ -131,5 +132,29 @@ class FindTargetsForAttackTest extends TestCase
                 'otherCombatantTargetPosition' => null,
             ]
         ];
+    }
+
+    /**
+     * @test
+     */
+    public function if_enough_targets_are_available_it_will_return_the_max_target_count_of_targets()
+    {
+        $targetsCount = rand(2, 4);
+
+        $attack = CombatAttackFactory::new()
+            ->withtargetPosition(CombatPosition::FRONT_LINE)
+            ->withTargetsCount($targetsCount)
+            ->create();
+
+        $maxTargetsCount = DamageTypeFacade::maxTargetsCount($attack->getDamageTypeID(), $attack->getTier(), $targetsCount);
+
+        $combatants = collect();
+        $combatantFactory = CombatantFactory::new()->withCombatPosition(CombatPosition::FRONT_LINE);
+        for ($i = 1; $i <= $maxTargetsCount + 2; $i++) {
+            $combatants->push($combatantFactory->create());
+        }
+
+        $targets = $this->getDomainAction()->execute($attack, $combatants);
+        $this->assertEquals($maxTargetsCount, $targets->count());
     }
 }
