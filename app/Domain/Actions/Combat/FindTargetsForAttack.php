@@ -7,6 +7,7 @@ namespace App\Domain\Actions\Combat;
 use App\Domain\Combat\Attacks\CombatAttackInterface;
 use App\Domain\Combat\Combatants\Combatant;
 use App\Facades\CombatPositionFacade;
+use App\Facades\DamageTypeFacade;
 use Illuminate\Support\Collection;
 
 class FindTargetsForAttack
@@ -37,9 +38,9 @@ class FindTargetsForAttack
             })->first();
         }
 
-        // TODO: Target Priority
+        $maxTargetsCount = DamageTypeFacade::maxTargetsCount($combatAttack->getDamageTypeID(), $combatAttack->getTier(), $combatAttack->getTargetsCount());
 
-        $targets = $possibleTargets->take($combatAttack->getMaxTargetsCount());
+        $targets = $possibleTargets->take($maxTargetsCount);
         return $targets;
     }
 }
