@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Domain\Actions\Combat\FindTargetsForAttack;
+use App\Domain\Combat\Combatants\Combatant;
 use App\Domain\Combat\Combatants\CombatHero;
 use App\Domain\Models\CombatPosition;
 use App\Facades\DamageTypeFacade;
@@ -156,5 +157,40 @@ class FindTargetsForAttackTest extends TestCase
 
         $targets = $this->getDomainAction()->execute($attack, $combatants);
         $this->assertEquals($maxTargetsCount, $targets->count());
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_not_pull_targets_from_other_combat_positions_to_reach_max_targets_count()
+    {
+        $targetsCount = rand(3, 5);
+
+        $attack = CombatAttackFactory::new()
+            ->withtargetPosition(CombatPosition::BACK_LINE)
+            ->withTargetsCount($targetsCount)
+            ->create();
+
+        $maxTargetsCount = DamageTypeFacade::maxTargetsCount($attack->getDamageTypeID(), $attack->getTier(), $targetsCount);
+
+        $combatants = collect();
+        $combatantFactory = CombatantFactory::new()->withCombatPosition(CombatPosition::BACK_LINE);
+        for ($i = 1; $i <= $maxTargetsCount - 1; $i++) {
+            $combatants->push($combatantFactory->create());
+        }
+
+        $backLineCombatantsCount = $combatants->count();
+
+        $frontLineCombatant = CombatantFactory::new()->withCombatPosition(CombatPosition::FRONT_LINE)->create();
+        $combatants->push($frontLineCombatant);
+
+        $targets = $this->getDomainAction()->execute($attack, $combatants);
+        $this->assertEquals($backLineCombatantsCount, $targets->count());
+
+        $targetsUuids = $targets->map(function (Combatant $target) {
+            return $target->getSourceUuid();
+        });
+
+        $this->assertFalse(in_array($frontLineCombatant->getSourceUuid(), $targetsUuids->toArray()));
     }
 }
