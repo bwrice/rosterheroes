@@ -1,14 +1,19 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Feature;
 
+use App\Domain\Actions\Combat\DetermineIfAttackIsBlocked;
 use App\Domain\Actions\Combat\ExecuteCombatAttackOnCombatant;
+use App\Domain\Combat\Attacks\AdjustDamageForProtection;
 use App\Domain\Combat\Attacks\CombatAttackInterface;
-use App\Domain\Combat\Combatants\Combatant;
+use App\Domain\Combat\Combatants\CombatantInterface;
 use App\Domain\Combat\Events\AttackBlocked;
 use App\Domain\Combat\Events\AttackDamagesCombatant;
 use App\Domain\Combat\Events\AttackKillsCombatant;
-use PHPUnit\Framework\TestCase;
+use App\Facades\DamageTypeFacade;
+use App\Factories\Combat\CombatantFactory;
+use App\Factories\Combat\CombatAttackFactory;
+use Tests\TestCase;
 
 class ExecuteCombatAttackOnCombatantTest extends TestCase
 {
@@ -26,11 +31,14 @@ class ExecuteCombatAttackOnCombatantTest extends TestCase
     public function it_will_return_a_blocked_event_if_the_combatant_blocks_the_attack()
     {
         $moment = rand(1, 100);
-        $combatAttack = \Mockery::mock(CombatAttackInterface::class);
-        $combatant = \Mockery::mock(Combatant::class)
-            ->shouldReceive('attackBlocked')
+        $combatant = CombatantFactory::new()->create();
+        $combatAttack = CombatAttackFactory::new()->create();
+
+        $mock = \Mockery::mock(DetermineIfAttackIsBlocked::class)
+            ->shouldReceive('execute')
             ->andReturn(true)
             ->getMock();
+        $this->app->instance(DetermineIfAttackIsBlocked::class, $mock);
 
         $event = $this->getDomainAction()->execute($combatAttack, $combatant, $moment, 1);
         $this->assertTrue($event instanceof AttackBlocked);
@@ -46,25 +54,29 @@ class ExecuteCombatAttackOnCombatantTest extends TestCase
         $initialDamage = rand(101, 500);
         $damageToReceive = $initialDamage - rand(1, 100);
         $currentHealth = $damageToReceive + rand(1, 1000);
-        $targetsCount = rand(1, 5);
 
-        $combatAttack = \Mockery::mock(CombatAttackInterface::class);
-        $combatAttack->shouldReceive('getDamagePerTarget')
-            ->with($targetsCount)
-            ->andReturn($initialDamage);
+        $mock = \Mockery::mock(DetermineIfAttackIsBlocked::class)
+            ->shouldReceive('execute')
+            ->andReturn(false)
+            ->getMock();
+        $this->app->instance(DetermineIfAttackIsBlocked::class, $mock);
+
+        DamageTypeFacade::shouldReceive('damagePerTarget')->andReturn($initialDamage);
+
+        $mock = \Mockery::mock(AdjustDamageForProtection::class)
+            ->shouldReceive('execute')
+            ->andReturn($damageToReceive)
+            ->getMock();
+        $this->app->instance(AdjustDamageForProtection::class, $mock);
+
+        $combatAttack = CombatAttackFactory::new()->create();
 
 
-        $combatant = \Mockery::spy(Combatant::class);
-        $combatant->shouldReceive('attackBlocked')
-            ->andReturn(false);
-        $combatant->shouldReceive('calculateDamageToReceive')
-            ->with($initialDamage)
-            ->andReturn($damageToReceive);
-        $combatant->shouldReceive('getCurrentHealth')
-            ->andReturn($currentHealth);
+        $combatant = \Mockery::spy(CombatantInterface::class);
+        $combatant->shouldReceive('getCurrentHealth')->andReturn($currentHealth);
 
         /** @var AttackDamagesCombatant $combatEvent */
-        $combatEvent = $this->getDomainAction()->execute($combatAttack, $combatant, $moment, $targetsCount);
+        $combatEvent = $this->getDomainAction()->execute($combatAttack, $combatant, $moment, rand(1, 5));
 
         $combatant->shouldHaveReceived('updateCurrentHealth')->with($currentHealth - $damageToReceive);
 
@@ -82,25 +94,29 @@ class ExecuteCombatAttackOnCombatantTest extends TestCase
         $initialDamage = rand(101, 500);
         $damageToReceive = $initialDamage - rand(1, 100);
         $currentHealth = $damageToReceive - rand(1, 50);
-        $targetsCount = rand(1, 5);
 
-        $combatAttack = \Mockery::mock(CombatAttackInterface::class);
-        $combatAttack->shouldReceive('getDamagePerTarget')
-            ->with($targetsCount)
-            ->andReturn($initialDamage);
+        $mock = \Mockery::mock(DetermineIfAttackIsBlocked::class)
+            ->shouldReceive('execute')
+            ->andReturn(false)
+            ->getMock();
+        $this->app->instance(DetermineIfAttackIsBlocked::class, $mock);
+
+        DamageTypeFacade::shouldReceive('damagePerTarget')->andReturn($initialDamage);
+
+        $mock = \Mockery::mock(AdjustDamageForProtection::class)
+            ->shouldReceive('execute')
+            ->andReturn($damageToReceive)
+            ->getMock();
+        $this->app->instance(AdjustDamageForProtection::class, $mock);
+
+        $combatAttack = CombatAttackFactory::new()->create();
 
 
-        $combatant = \Mockery::spy(Combatant::class);
-        $combatant->shouldReceive('attackBlocked')
-            ->andReturn(false);
-        $combatant->shouldReceive('calculateDamageToReceive')
-            ->with($initialDamage)
-            ->andReturn($damageToReceive);
-        $combatant->shouldReceive('getCurrentHealth')
-            ->andReturn($currentHealth);
+        $combatant = \Mockery::spy(CombatantInterface::class);
+        $combatant->shouldReceive('getCurrentHealth')->andReturn($currentHealth);
 
         /** @var AttackKillsCombatant $combatEvent */
-        $combatEvent = $this->getDomainAction()->execute($combatAttack, $combatant, $moment, $targetsCount);
+        $combatEvent = $this->getDomainAction()->execute($combatAttack, $combatant, $moment, rand(1, 5));
 
         $combatant->shouldHaveReceived('updateCurrentHealth')->with(0);
 
