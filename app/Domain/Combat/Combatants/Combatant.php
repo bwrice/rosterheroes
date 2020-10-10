@@ -13,7 +13,7 @@ class Combatant implements CombatantInterface, Arrayable
 {
     protected string $sourceUuid, $combatantUuid;
     protected int $initialHealth, $currentHealth, $initialStamina, $currentStamina, $initialMana, $currentMana,
-        $protection, $initialCombatPositionID;
+        $protection, $combatPositionID;
     protected float $blockChancePercent;
     protected CombatAttackCollection $combatAttacks;
     protected array $inheritedCombatPositionIDs = [];
@@ -35,7 +35,7 @@ class Combatant implements CombatantInterface, Arrayable
         $this->initialMana = $this->currentMana = $initialMana;
         $this->protection = $protection;
         $this->blockChancePercent = $blockChancePercent;
-        $this->initialCombatPositionID = $combatPositionID;
+        $this->combatPositionID = $combatPositionID;
         $this->combatAttacks = $combatAttacks;
     }
 
@@ -80,7 +80,7 @@ class Combatant implements CombatantInterface, Arrayable
     public function allCombatPositions()
     {
         $combatPositions = $this->inheritedCombatPositionIDs;
-        $combatPositions[] = $this->initialCombatPositionID;
+        $combatPositions[] = $this->combatPositionID;
         return $combatPositions;
     }
 
@@ -95,9 +95,9 @@ class Combatant implements CombatantInterface, Arrayable
     /**
      * @return int
      */
-    public function getInitialCombatPositionID()
+    public function getCombatPositionID()
     {
-        return $this->initialCombatPositionID;
+        return $this->combatPositionID;
     }
 
     /**
@@ -132,7 +132,7 @@ class Combatant implements CombatantInterface, Arrayable
             'protection' => $this->protection,
             'blockChancePercent' => $this->blockChancePercent,
             'combatAttacks' => $this->combatAttacks->toArray(),
-            'initialCombatPositionID' => $this->initialCombatPositionID,
+            'initialCombatPositionID' => $this->combatPositionID,
             'inheritedCombatPositionIDs' => $this->inheritedCombatPositionIDs
         ];
     }
