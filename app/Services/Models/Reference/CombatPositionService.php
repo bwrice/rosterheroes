@@ -11,6 +11,12 @@ use App\Domain\Behaviors\TargetRanges\HighGroundBehavior;
 use App\Domain\Models\CombatPosition;
 use Illuminate\Database\Eloquent\Collection;
 
+/**
+ * Class CombatPositionService
+ * @package App\Services\Models\Reference
+ *
+ * @method CombatPositionBehavior getBehavior($identifier)
+ */
 class CombatPositionService extends ReferenceService
 {
 
@@ -25,4 +31,22 @@ class CombatPositionService extends ReferenceService
     {
         return CombatPosition::all();
     }
+
+    /**
+     * @param array $combatPositionIDs
+     * @return CombatPosition
+     */
+    public function closestProximity(array $combatPositionIDs)
+    {
+        return $this->mapIDsToModels($combatPositionIDs)->sortBy(function (CombatPosition $combatPosition) {
+            return $combatPosition->getBehavior()->getProximity();
+        })->first();
+    }
+
+    public function proximity(int $combatPositionID)
+    {
+        return $this->getBehavior($combatPositionID)->getProximity();
+    }
+
+
 }
