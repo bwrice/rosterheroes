@@ -4,6 +4,7 @@
 namespace App\Domain\Actions\Combat;
 
 
+use App\Domain\Combat\Attacks\AdjustDamageForProtection;
 use App\Domain\Combat\Attacks\CombatAttackInterface;
 use App\Domain\Combat\Combatants\CombatantInterface;
 use App\Domain\Combat\Events\AttackBlocked;
@@ -14,6 +15,17 @@ use App\Facades\DamageTypeFacade;
 
 class ExecuteCombatAttackOnCombatant
 {
+    protected DetermineIfAttackIsBlocked $determineIfAttackIsBlocked;
+    protected AdjustDamageForProtection $adjustDamageForProtection;
+
+    public function __construct(
+        DetermineIfAttackIsBlocked $determineIfAttackIsBlocked,
+        AdjustDamageForProtection $adjustDamageForProtection)
+    {
+        $this->determineIfAttackIsBlocked = $determineIfAttackIsBlocked;
+        $this->adjustDamageForProtection = $adjustDamageForProtection;
+    }
+
     /**
      * @param CombatAttackInterface $combatAttack
      * @param CombatantInterface $combatant
@@ -23,12 +35,12 @@ class ExecuteCombatAttackOnCombatant
      */
     public function execute(CombatAttackInterface $combatAttack, CombatantInterface $combatant, int $moment, int $targetsCount)
     {
-        if ($combatant->attackBlocked($combatAttack)) {
+        if ($this->determineIfAttackIsBlocked->execute($combatant->getBlockChancePercent())) {
             return new AttackBlocked($combatAttack, $combatant, $moment);
         }
 
         $initialDamage = DamageTypeFacade::damagePerTarget($combatAttack->getDamageTypeID(), $combatAttack->getDamage(), $targetsCount);
-        $damageToReceive = $combatant->calculateDamageToReceive($initialDamage);
+        $damageToReceive = $this->adjustDamageForProtection->execute($initialDamage, $combatant->getProtection());
         $currentHealth = $combatant->getCurrentHealth();
         $updatedHealth = max($currentHealth - $damageToReceive, 0);
         $combatant->updateCurrentHealth($updatedHealth);
