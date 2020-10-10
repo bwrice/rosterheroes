@@ -44,12 +44,6 @@ class CombatAttack implements CombatAttackInterface
         $this->resourceCosts = $resourceCosts;
     }
 
-    public function getDamagePerTarget(int $targetsCount): int
-    {
-        return DamageTypeFacade::getBehavior($this->damageTypeID)
-            ->getDamagePerTarget($this->damage, $targetsCount);
-    }
-
     /**
      * @return string
      */
