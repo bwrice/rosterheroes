@@ -50,20 +50,6 @@ class CombatAttack implements CombatAttackInterface
             ->getDamagePerTarget($this->damage, $targetsCount);
     }
 
-    public function getTargets(CombatantCollection $possibleTargets): CombatantCollection
-    {
-        return $possibleTargets
-            ->filterByCombatPosition($this->targetPosition)
-            ->sortByTargetPriority($this->targetPriority)
-            ->take($this->getMaxTargetsCount());
-    }
-
-    protected function getMaxTargetsCount()
-    {
-        return DamageTypeFacade::getBehavior($this->damageTypeID)
-            ->getMaxTargetCount($this->tier, $this->targetsCount);
-    }
-
     /**
      * @return string
      */

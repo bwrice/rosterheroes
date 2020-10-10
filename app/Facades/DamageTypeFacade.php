@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Facade;
  * @package App\Facades
  *
  * @method static DamageTypeBehavior getBehavior(int|string $identifier)
+ * @method static int maxTargetsCount(int|string $identifier, int $tier, int $targetsCount = null)
+ * @method static int damagePerTarget(int|string $identifier, int $totalDamage, int $targetsCount)
  *
  * @see DamageTypeService
  */
