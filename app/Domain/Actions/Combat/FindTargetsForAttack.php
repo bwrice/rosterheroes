@@ -6,6 +6,7 @@ namespace App\Domain\Actions\Combat;
 
 use App\Domain\Combat\Attacks\CombatAttackInterface;
 use App\Domain\Combat\Combatants\Combatant;
+use App\Facades\CombatPositionFacade;
 use Illuminate\Support\Collection;
 
 class FindTargetsForAttack
@@ -18,10 +19,24 @@ class FindTargetsForAttack
     public function execute(CombatAttackInterface $combatAttack, Collection $combatants)
     {
         $attackTargetPositionID = $combatAttack->getTargetPositionID();
-        $targets = $combatants->filter(function (Combatant $combatant) use ($attackTargetPositionID) {
+        $possibleTargets = $combatants->filter(function (Combatant $combatant) use ($attackTargetPositionID) {
             return $combatant->getCombatPositionID() === $attackTargetPositionID;
         });
 
-        return $targets->take($combatAttack->getMaxTargetsCount());
+        if ($possibleTargets->isEmpty()) {
+            /*
+             * Group combatants by proximity and return those belonging
+             * to the group with the closest proximity
+             */
+            $grouped = $combatants->groupBy(function (Combatant $combatant) {
+                return CombatPositionFacade::proximity($combatant->getCombatPositionID());
+            });
+
+            $possibleTargets = $grouped->sortBy(function ($combatants, $proximity) {
+                return $proximity;
+            })->first();
+        }
+
+        return $possibleTargets->take($combatAttack->getMaxTargetsCount());
     }
 }
