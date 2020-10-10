@@ -16,9 +16,9 @@ class FixedTargetBehavior extends DamageTypeBehavior
         return $fixedTargetCount ?: 1;
     }
 
-    public function getDamagePerTarget(int $damage, int $targetsCount)
+    public function getDamagePerTarget(int $totalDamage, int $targetsCount)
     {
-        return $damage;
+        return $totalDamage;
     }
 
     public function getInitialBaseDamage(int $tier, ?int $targetsCount): float

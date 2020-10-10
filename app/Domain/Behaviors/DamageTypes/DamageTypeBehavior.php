@@ -10,7 +10,7 @@ abstract class DamageTypeBehavior
 {
     abstract public function getMaxTargetCount(int $tier, ?int $fixedTargetCount);
 
-    abstract public function getDamagePerTarget(int $damage, int $targetsCount);
+    abstract public function getDamagePerTarget(int $totalDamage, int $targetsCount);
 
     abstract public function getInitialBaseDamage(int $tier, ?int $targetsCount): float;
 

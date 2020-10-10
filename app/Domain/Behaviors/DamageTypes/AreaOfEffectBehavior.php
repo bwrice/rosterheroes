@@ -16,9 +16,9 @@ class AreaOfEffectBehavior extends DamageTypeBehavior
         return (int) (3 + ceil($tier/30));
     }
 
-    public function getDamagePerTarget(int $damage, int $targetsCount)
+    public function getDamagePerTarget(int $totalDamage, int $targetsCount)
     {
-        return $damage;
+        return $totalDamage;
     }
 
     public function getInitialBaseDamage(int $tier, ?int $targetsCount): float

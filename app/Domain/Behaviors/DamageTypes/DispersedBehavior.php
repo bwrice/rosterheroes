@@ -16,10 +16,10 @@ class DispersedBehavior extends DamageTypeBehavior
         return (int) (4 + ceil($tier/15));
     }
 
-    public function getDamagePerTarget(int $damage, int $targetsCount)
+    public function getDamagePerTarget(int $totalDamage, int $targetsCount)
     {
         if ($targetsCount > 0) {
-            return (int) ceil($damage/$targetsCount);
+            return (int) ceil($totalDamage/$targetsCount);
         }
         return 0;
     }
