@@ -56,16 +56,6 @@ class Combatant implements CombatantInterface, Arrayable
     }
 
     /**
-     * @param CombatAttackInterface $combatAttack
-     * @return bool|mixed
-     */
-    public function attackBlocked(CombatAttackInterface $combatAttack)
-    {
-        $rand = rand(1, 100);
-        return $rand <= $this->blockChancePercent;
-    }
-
-    /**
      * @param int $combatPositionID
      * @return bool
      */

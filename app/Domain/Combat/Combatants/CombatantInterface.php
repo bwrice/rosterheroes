@@ -22,15 +22,19 @@ interface CombatantInterface
     public function updateCurrentHealth(int $amount);
 
     /**
-     * @param CombatAttackInterface $combatAttack
-     * @return mixed
+     * @return int
      */
-    public function attackBlocked(CombatAttackInterface $combatAttack);
+    public function getCurrentHealth(): int;
 
     /**
      * @return int
      */
-    public function getCurrentHealth(): int;
+    public function getProtection(): int;
+
+    /**
+     * @return float
+     */
+    public function getBlockChancePercent(): float;
 
     /**
      * @return float
