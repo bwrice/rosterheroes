@@ -6,6 +6,6 @@ namespace App\Domain\Behaviors\Leagues;
 
 class NHLBehavior extends LeagueBehavior
 {
-    // October 11th
-    protected $seasonChangeOverDayOfYear = 285;
+    // October 16th
+    protected $seasonChangeOverDayOfYear = 290;
 }
