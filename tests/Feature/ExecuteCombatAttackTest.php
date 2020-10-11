@@ -13,6 +13,7 @@ use App\Factories\Combat\CombatAttackFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class ExecuteCombatAttackTest extends TestCase
@@ -78,5 +79,40 @@ class ExecuteCombatAttackTest extends TestCase
         $combatAttack = CombatAttackFactory::new()->create();
 
         $this->getDomainAction()->execute($combatAttack, $combatants, $moment);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_return_a_collection_of_return_values_from_execute_on_combatant_action()
+    {
+        $dummyCombatant = CombatantFactory::new()->create();
+        $findTargetsMock = \Mockery::mock(FindTargetsForAttack::class)
+            ->shouldReceive('execute')
+            ->andReturn(collect([
+                $dummyCombatant,
+                $dummyCombatant,
+                $dummyCombatant
+            ]))->getMock();
+
+        $this->instance(FindTargetsForAttack::class, $findTargetsMock);
+
+        // create a fake uuid return value that would normally be a combat event
+        $uuid = (string) Str::uuid();
+        $executeOnCombatantMock = \Mockery::mock(ExecuteCombatAttackOnCombatant::class)
+            ->shouldReceive('execute')
+            ->times(3)
+            ->andReturn($uuid)
+            ->getMock();
+
+        $this->instance(ExecuteCombatAttackOnCombatant::class, $executeOnCombatantMock);
+
+        $combatAttack = CombatAttackFactory::new()->create();
+
+        $returnedCollection = $this->getDomainAction()->execute($combatAttack, collect(), 1);
+        $this->assertEquals(3, $returnedCollection->count());
+        $returnedCollection->each(function ($value) use ($uuid) {
+            $this->assertEquals($uuid, $value);
+        });
     }
 }
