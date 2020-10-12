@@ -21,7 +21,11 @@ class GetReadyAttacksForCombatant
         $proximity = CombatPositionFacade::proximity($proximityID);
         return $combatant->getCombatAttacks()->filter((function (CombatAttack $combatAttack) use ($proximity) {
             $attackProximity = CombatPositionFacade::proximity($combatAttack->getAttackerPositionID());
-            return $proximity <= $attackProximity;
+            if ($proximity > $attackProximity) {
+                return false;
+            }
+            $combatSpeed = $combatAttack->getCombatSpeed();
+            return rand(1, 10000) <= ceil($combatSpeed * 100);
         }));
     }
 }

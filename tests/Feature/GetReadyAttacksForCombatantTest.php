@@ -101,4 +101,23 @@ class GetReadyAttacksForCombatantTest extends TestCase
             $this->assertNotNull($match);
         });
     }
+
+    /**
+     * @test
+     */
+    public function it_will_not_return_attacks_that_are_not_ready()
+    {
+        $neverReadyAttackFactory = CombatAttackFactory::new()->withCombatSpeed(0);
+        $combatAttacks = collect();
+        $combatAttacks->push($neverReadyAttackFactory->withAttackerPosition(CombatPosition::FRONT_LINE)->create());
+        $combatAttacks->push($neverReadyAttackFactory->withAttackerPosition(CombatPosition::BACK_LINE)->create());
+        $combatAttacks->push($neverReadyAttackFactory->withAttackerPosition(CombatPosition::HIGH_GROUND)->create());
+
+        $combatant = CombatantFactory::new()->withCombatAttacks($combatAttacks)->create();
+        $frontLineProximityID = CombatPositionFacade::id(CombatPosition::FRONT_LINE);
+
+        $readyAttacks = $this->getDomainAction()->execute($combatant, $frontLineProximityID);
+
+        $this->assertEquals(0, $readyAttacks->count());
+    }
 }
