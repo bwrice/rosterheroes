@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Domain\Collections\GetReadyAttacksForCombatant;
+use App\Domain\Actions\Combat\GetReadyAttacksForCombatant;
 use App\Domain\Combat\Attacks\CombatAttack;
 use App\Domain\Models\CombatPosition;
 use App\Facades\CombatPositionFacade;
