@@ -18,6 +18,7 @@ class CombatantFactory
     protected ?string $combatPositionName = null, $sourceUuid = null;
     protected ?int $initialHealth = null, $initialStamina = null, $initialMana = null, $protection = null;
     protected ?float $blockChancePercent = null;
+    protected ?Collection $combatAttacks = null;
     /**
      * @return static
      */
@@ -38,7 +39,7 @@ class CombatantFactory
             is_null($this->protection) ? 100 : $this->protection,
             is_null($this->blockChancePercent) ? 10: $this->blockChancePercent,
             $combatPosition->id,
-            new CombatAttackCollection()
+            $this->combatAttacks ?: collect()
         );
     }
 
@@ -91,6 +92,13 @@ class CombatantFactory
     {
         $clone = clone $this;
         $clone->combatPositionName = $combatPositionName;
+        return $clone;
+    }
+
+    public function withCombatAttacks(Collection $combatAttacks)
+    {
+        $clone = clone $this;
+        $clone->combatAttacks = $combatAttacks;
         return $clone;
     }
 
