@@ -6,6 +6,7 @@ namespace App\Domain\Actions\Combat;
 
 use App\Domain\Combat\Attacks\CombatAttackInterface;
 use App\Domain\Combat\Combatants\Combatant;
+use App\Domain\Combat\Combatants\CombatantInterface;
 use Illuminate\Support\Collection;
 
 class ExecuteCombatAttack
@@ -23,19 +24,20 @@ class ExecuteCombatAttack
 
     /**
      * @param CombatAttackInterface $combatAttack
+     * @param CombatantInterface $attacker;
      * @param Collection $possibleTargets
      * @param int $moment
      * @return Collection
      */
-    public function execute(CombatAttackInterface $combatAttack, Collection $possibleTargets, int $moment)
+    public function execute(CombatAttackInterface $combatAttack, CombatantInterface $attacker, Collection $possibleTargets, int $moment)
     {
         $targets = $this->findTargetsForAttack->execute($combatAttack, $possibleTargets);
 
         $targetsCount = $targets->count();
         $combatEvents = collect();
 
-        $targets->each(function (Combatant $target) use ($combatAttack, $moment, $targetsCount, $combatEvents) {
-            $event = $this->executeCombatAttackOnCombatant->execute($combatAttack, $target, $moment, $targetsCount);
+        $targets->each(function (Combatant $target) use ($combatAttack, $attacker, $moment, $targetsCount, $combatEvents) {
+            $event = $this->executeCombatAttackOnCombatant->execute($combatAttack, $attacker, $target, $moment, $targetsCount);
             $combatEvents->push($event);
         });
 

@@ -33,6 +33,7 @@ class ExecuteCombatAttackTest extends TestCase
     {
         $combatants = collect();
         $combatantFactory = CombatantFactory::new();
+        $attacker = $combatantFactory->create();
         for ($i = 1; $i <= rand(2, 4); $i++) {
             $combatants->push($combatantFactory->create());
         }
@@ -64,8 +65,13 @@ class ExecuteCombatAttackTest extends TestCase
             ->expects($this->exactly($combatants->count()))
             ->method('execute')
             ->with($this->callback(function ($combatAttack) {
+                // combat-attack
                 return $combatAttack instanceof CombatAttackInterface;
+            }) , $this->callback(function (Combatant $combatant) use ($attacker) {
+                // attacker
+                return $combatant->getSourceUuid() === $attacker->getSourceUuid();
             }), $this->callback(function (Combatant $combatant) use ($combatantUuids) {
+                // target
                 $matchingKey = $combatantUuids->search($combatant->getSourceUuid());
                 if ($matchingKey === false) {
                     return false;
@@ -78,7 +84,7 @@ class ExecuteCombatAttackTest extends TestCase
 
         $combatAttack = CombatAttackFactory::new()->create();
 
-        $this->getDomainAction()->execute($combatAttack, $combatants, $moment);
+        $this->getDomainAction()->execute($combatAttack, $attacker, $combatants, $moment);
     }
 
     /**
@@ -86,6 +92,7 @@ class ExecuteCombatAttackTest extends TestCase
      */
     public function it_will_return_a_collection_of_return_values_from_execute_on_combatant_action()
     {
+        $attacker = CombatantFactory::new()->create();
         $dummyCombatant = CombatantFactory::new()->create();
         $findTargetsMock = \Mockery::mock(FindTargetsForAttack::class)
             ->shouldReceive('execute')
@@ -109,7 +116,7 @@ class ExecuteCombatAttackTest extends TestCase
 
         $combatAttack = CombatAttackFactory::new()->create();
 
-        $returnedCollection = $this->getDomainAction()->execute($combatAttack, collect(), 1);
+        $returnedCollection = $this->getDomainAction()->execute($combatAttack, $attacker, collect(), 1);
         $this->assertEquals(3, $returnedCollection->count());
         $returnedCollection->each(function ($value) use ($uuid) {
             $this->assertEquals($uuid, $value);
