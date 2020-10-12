@@ -12,13 +12,15 @@ class AttackDamagesCombatant implements CombatEvent
     public const EVENT_STREAM = 'attack-damages-combatant';
 
     protected CombatAttackInterface $combatAttack;
-    protected CombatantInterface $combatant;
+    protected CombatantInterface $attacker;
+    protected CombatantInterface $target;
     protected int $moment, $damage;
 
-    public function __construct(CombatAttackInterface $combatAttack, CombatantInterface $combatant, int $damage, int $moment)
+    public function __construct(CombatAttackInterface $combatAttack, CombatantInterface $attacker, CombatantInterface $target, int $damage, int $moment)
     {
         $this->combatAttack = $combatAttack;
-        $this->combatant = $combatant;
+        $this->attacker = $attacker;
+        $this->target = $target;
         $this->damage = $damage;
         $this->moment = $moment;
     }

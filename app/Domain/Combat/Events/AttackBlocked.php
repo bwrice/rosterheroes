@@ -12,13 +12,15 @@ class AttackBlocked implements CombatEvent
     public const EVENT_STREAM = 'attack-blocked';
 
     protected CombatAttackInterface $combatAttack;
-    protected CombatantInterface $combatant;
+    protected CombatantInterface $attacker;
+    protected CombatantInterface $target;
     protected int $moment;
 
-    public function __construct(CombatAttackInterface $combatAttack, CombatantInterface $combatant, int $moment)
+    public function __construct(CombatAttackInterface $combatAttack, CombatantInterface $attacker, CombatantInterface $combatant, int $moment)
     {
         $this->combatAttack = $combatAttack;
-        $this->combatant = $combatant;
+        $this->target = $combatant;
+        $this->attacker = $attacker;
         $this->moment = $moment;
     }
 
