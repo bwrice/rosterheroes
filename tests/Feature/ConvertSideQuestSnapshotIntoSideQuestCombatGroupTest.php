@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\Domain\Actions\ConvertHeroSnapshotToCombatHero;
-use App\Domain\Actions\ConvertMinionSnapshotIntoCombatMinion;
+use App\Domain\Actions\ConvertHeroSnapshotIntoCombatant;
+use App\Domain\Actions\ConvertMinionSnapshotIntoCombatant;
 use App\Domain\Actions\ConvertSideQuestSnapshotIntoSideQuestCombatGroup;
 use App\Domain\Models\HeroSnapshot;
 use App\Domain\Models\MinionSnapshot;
@@ -65,7 +65,7 @@ class ConvertSideQuestSnapshotIntoSideQuestCombatGroupTest extends TestCase
             return $minionSnapshot->uuid;
         });
 
-        $convertCombatHeroMock = $this->getMockBuilder(ConvertMinionSnapshotIntoCombatMinion::class)
+        $convertCombatHeroMock = $this->getMockBuilder(ConvertMinionSnapshotIntoCombatant::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -81,7 +81,7 @@ class ConvertSideQuestSnapshotIntoSideQuestCombatGroupTest extends TestCase
             }))
             ->willReturn('anything');
 
-        $this->instance(ConvertMinionSnapshotIntoCombatMinion::class, $convertCombatHeroMock);
+        $this->instance(ConvertMinionSnapshotIntoCombatant::class, $convertCombatHeroMock);
 
         $sideQuestCombatGroup = $this->getDomainAction()->execute($sideQuestSnapshot);
         $this->assertEquals($minionSnapshots->count(), $sideQuestCombatGroup->getCombatMinions()->count());
