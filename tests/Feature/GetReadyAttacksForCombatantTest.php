@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Domain\Actions\Combat\GetClosestInheritedCombatPosition;
 use App\Domain\Actions\Combat\GetReadyAttacksForCombatant;
 use App\Domain\Combat\Attacks\CombatAttack;
 use App\Domain\Models\CombatPosition;
@@ -34,9 +35,15 @@ class GetReadyAttacksForCombatantTest extends TestCase
         $combatAttacks->push($alwaysReadyAttackFactory->withAttackerPosition(CombatPosition::HIGH_GROUND)->create());
 
         $combatant = CombatantFactory::new()->withCombatAttacks($combatAttacks)->create();
-        $frontLineProximityID = CombatPositionFacade::id(CombatPosition::FRONT_LINE);
 
-        $readyAttacks = $this->getDomainAction()->execute($combatant, $frontLineProximityID);
+        $frontLine = CombatPositionFacade::getReferenceModelByName(CombatPosition::FRONT_LINE);
+        $mock = \Mockery::mock(GetClosestInheritedCombatPosition::class)
+            ->shouldReceive('execute')
+            ->andReturn($frontLine)
+            ->getMock();
+        $this->app->instance(GetClosestInheritedCombatPosition::class, $mock);
+
+        $readyAttacks = $this->getDomainAction()->execute($combatant, collect());
 
         $this->assertEquals($combatAttacks->count(), $readyAttacks->count());
         $combatAttacks->each(function (CombatAttack $combatAttack) use ($readyAttacks) {
@@ -62,9 +69,15 @@ class GetReadyAttacksForCombatantTest extends TestCase
         $totalCombatAttacks->push($alwaysReadyAttackFactory->withAttackerPosition(CombatPosition::FRONT_LINE)->create());
 
         $combatant = CombatantFactory::new()->withCombatAttacks($totalCombatAttacks)->create();
-        $backLineProximity = CombatPositionFacade::id(CombatPosition::BACK_LINE);
 
-        $readyAttacks = $this->getDomainAction()->execute($combatant, $backLineProximity);
+        $backLine = CombatPositionFacade::getReferenceModelByName(CombatPosition::BACK_LINE);
+        $mock = \Mockery::mock(GetClosestInheritedCombatPosition::class)
+            ->shouldReceive('execute')
+            ->andReturn($backLine)
+            ->getMock();
+        $this->app->instance(GetClosestInheritedCombatPosition::class, $mock);
+
+        $readyAttacks = $this->getDomainAction()->execute($combatant, collect());
 
         $this->assertEquals($expectedReadyAttacks->count(), $readyAttacks->count());
         $expectedReadyAttacks->each(function (CombatAttack $expectedAttack) use ($readyAttacks) {
@@ -89,9 +102,15 @@ class GetReadyAttacksForCombatantTest extends TestCase
         $totalCombatAttacks->push($alwaysReadyAttackFactory->withAttackerPosition(CombatPosition::BACK_LINE)->create());
 
         $combatant = CombatantFactory::new()->withCombatAttacks($totalCombatAttacks)->create();
-        $highGroundProximity = CombatPositionFacade::id(CombatPosition::HIGH_GROUND);
 
-        $readyAttacks = $this->getDomainAction()->execute($combatant, $highGroundProximity);
+        $highGround = CombatPositionFacade::getReferenceModelByName(CombatPosition::HIGH_GROUND);
+        $mock = \Mockery::mock(GetClosestInheritedCombatPosition::class)
+            ->shouldReceive('execute')
+            ->andReturn($highGround)
+            ->getMock();
+        $this->app->instance(GetClosestInheritedCombatPosition::class, $mock);
+
+        $readyAttacks = $this->getDomainAction()->execute($combatant, collect());
 
         $this->assertEquals($expectedReadyAttacks->count(), $readyAttacks->count());
         $expectedReadyAttacks->each(function (CombatAttack $expectedAttack) use ($readyAttacks) {
@@ -114,9 +133,15 @@ class GetReadyAttacksForCombatantTest extends TestCase
         $combatAttacks->push($neverReadyAttackFactory->withAttackerPosition(CombatPosition::HIGH_GROUND)->create());
 
         $combatant = CombatantFactory::new()->withCombatAttacks($combatAttacks)->create();
-        $frontLineProximityID = CombatPositionFacade::id(CombatPosition::FRONT_LINE);
 
-        $readyAttacks = $this->getDomainAction()->execute($combatant, $frontLineProximityID);
+        $frontLine = CombatPositionFacade::getReferenceModelByName(CombatPosition::FRONT_LINE);
+        $mock = \Mockery::mock(GetClosestInheritedCombatPosition::class)
+            ->shouldReceive('execute')
+            ->andReturn($frontLine)
+            ->getMock();
+        $this->app->instance(GetClosestInheritedCombatPosition::class, $mock);
+
+        $readyAttacks = $this->getDomainAction()->execute($combatant, collect());
 
         $this->assertEquals(0, $readyAttacks->count());
     }

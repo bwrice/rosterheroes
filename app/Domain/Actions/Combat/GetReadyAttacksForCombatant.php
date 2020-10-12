@@ -11,14 +11,22 @@ use Illuminate\Support\Collection;
 
 class GetReadyAttacksForCombatant
 {
+    protected GetClosestInheritedCombatPosition $getClosestInheritedCombatPosition;
+
+    public function __construct(GetClosestInheritedCombatPosition $getClosestInheritedCombatPosition)
+    {
+        $this->getClosestInheritedCombatPosition = $getClosestInheritedCombatPosition;
+    }
+
     /**
      * @param Combatant $combatant
-     * @param int $proximityID
+     * @param Collection $combatants
      * @return Collection
      */
-    public function execute(Combatant $combatant, int $proximityID)
+    public function execute(Combatant $combatant, Collection $combatants)
     {
-        $proximity = CombatPositionFacade::proximity($proximityID);
+        $combatPosition = $this->getClosestInheritedCombatPosition->execute($combatant, $combatants);
+        $proximity = CombatPositionFacade::proximity($combatPosition->id);
         return $combatant->getCombatAttacks()->filter((function (CombatAttack $combatAttack) use ($proximity) {
             $attackProximity = CombatPositionFacade::proximity($combatAttack->getAttackerPositionID());
             if ($proximity > $attackProximity) {
