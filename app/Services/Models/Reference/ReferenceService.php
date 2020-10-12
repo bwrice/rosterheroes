@@ -58,6 +58,16 @@ abstract class ReferenceService
             return $referenceModel->id === $id;
         });
     }
+    /**
+     * @param string $name
+     * @return Model|null
+     */
+    public function getReferenceModelByName(string $name)
+    {
+        return $this->getReferenceModels()->first(function (Model $referenceModel) use ($name) {
+            return $referenceModel->name === $name;
+        });
+    }
 
     public function getReferenceModels()
     {
@@ -72,6 +82,11 @@ abstract class ReferenceService
         return collect($referenceIDs)->map(function ($ID) {
             return $this->getReferenceModelByID($ID);
         });
+    }
+
+    public function id(string $referenceName)
+    {
+        return $this->getReferenceModelByName($referenceName)->id;
     }
 
     abstract protected function all(): Collection;
