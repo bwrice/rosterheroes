@@ -7,6 +7,7 @@ namespace App\Domain\Combat\Combatants;
 use App\Domain\Collections\CombatAttackCollection;
 use App\Domain\Combat\Attacks\CombatAttackInterface;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 class Combatant implements CombatantInterface, Arrayable
@@ -15,7 +16,7 @@ class Combatant implements CombatantInterface, Arrayable
     protected int $initialHealth, $currentHealth, $initialStamina, $currentStamina, $initialMana, $currentMana,
         $protection, $combatPositionID;
     protected float $blockChancePercent;
-    protected CombatAttackCollection $combatAttacks;
+    protected Collection $combatAttacks;
     protected array $inheritedCombatPositionIDs = [];
 
     public function __construct(
@@ -26,7 +27,7 @@ class Combatant implements CombatantInterface, Arrayable
         int $protection,
         float $blockChancePercent,
         int $combatPositionID,
-        CombatAttackCollection $combatAttacks)
+        Collection $combatAttacks)
     {
         $this->sourceUuid = $sourceUuid;
         $this->combatantUuid = (string) Str::uuid();
@@ -75,9 +76,9 @@ class Combatant implements CombatantInterface, Arrayable
     }
 
     /**
-     * @return CombatAttackCollection
+     * @return Collection
      */
-    public function getCombatAttacks(): CombatAttackCollection
+    public function getCombatAttacks(): Collection
     {
         return $this->combatAttacks;
     }
