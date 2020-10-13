@@ -39,7 +39,7 @@ class SideQuestCombatGroup implements CombatGroup, Arrayable
         return $this->combatMinions;
     }
 
-    public function isDefeated()
+    public function isDefeated(int $moment): bool
     {
         return ! $this->combatMinions->hasSurvivors();
     }
@@ -60,5 +60,13 @@ class SideQuestCombatGroup implements CombatGroup, Arrayable
     public function updateCombatPositions(CombatPositionCollection $combatPositions)
     {
         $this->combatMinions->updateCombatPositions($combatPositions);
+    }
+
+    /**
+     * @return string
+     */
+    public function getSourceUuid(): string
+    {
+        return $this->sourceUuid;
     }
 }

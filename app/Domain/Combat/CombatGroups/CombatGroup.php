@@ -15,4 +15,6 @@ interface CombatGroup
     public function getReadyAttacks(int $moment): Collection;
 
     public function getPossibleTargets($moment): CombatantCollection;
+
+    public function isDefeated(int $moment): bool;
 }
