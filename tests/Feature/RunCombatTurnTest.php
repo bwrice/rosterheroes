@@ -7,6 +7,7 @@ use App\Domain\Actions\Combat\GetReadyAttacksForCombatant;
 use App\Domain\Actions\Combat\RunCombatTurn;
 use App\Domain\Combat\Attacks\CombatAttackInterface;
 use App\Domain\Combat\Combatants\Combatant;
+use App\Domain\Combat\CombatGroups\CombatGroup;
 use App\Factories\Combat\CombatantFactory;
 use App\Factories\Combat\CombatAttackFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -55,7 +56,16 @@ class RunCombatTurnTest extends TestCase
 
         $this->instance(GetReadyAttacksForCombatant::class, $mock);
 
-        $this->getDomainAction()->execute($combatants, collect(), 1);
+        $attackingGroupMock = \Mockery::mock(CombatGroup::class)
+            ->shouldReceive('getPossibleAttackers')
+            ->andReturn($combatants)
+            ->getMock();
+        $targetedGroupMock = \Mockery::mock(CombatGroup::class)
+            ->shouldReceive('getPossibleTargets')
+            ->andReturn(collect())
+            ->getMock();
+
+        $this->getDomainAction()->execute($attackingGroupMock, $targetedGroupMock, 1);
     }
 
     /**
@@ -98,7 +108,16 @@ class RunCombatTurnTest extends TestCase
 
         $this->instance(ExecuteCombatAttack::class, $executeCombatAttackMock);
 
-        $this->getDomainAction()->execute(collect([$attackerOne, $attackerTwo]), collect(), 1);
+        $attackingGroupMock = \Mockery::mock(CombatGroup::class)
+            ->shouldReceive('getPossibleAttackers')
+            ->andReturn(collect([$attackerOne, $attackerTwo]))
+            ->getMock();
+        $targetedGroupMock = \Mockery::mock(CombatGroup::class)
+            ->shouldReceive('getPossibleTargets')
+            ->andReturn(collect())
+            ->getMock();
+
+        $this->getDomainAction()->execute($attackingGroupMock, $targetedGroupMock, 1);
     }
 
     /**
@@ -172,7 +191,16 @@ class RunCombatTurnTest extends TestCase
 
         $this->instance(ExecuteCombatAttack::class, $executeCombatAttackMock);
 
-        $returnCollection = $this->getDomainAction()->execute(collect([$attackerOne, $attackerTwo]), collect(), 1);
+        $attackingGroupMock = \Mockery::mock(CombatGroup::class)
+            ->shouldReceive('getPossibleAttackers')
+            ->andReturn(collect([$attackerOne, $attackerTwo]))
+            ->getMock();
+        $targetedGroupMock = \Mockery::mock(CombatGroup::class)
+            ->shouldReceive('getPossibleTargets')
+            ->andReturn(collect())
+            ->getMock();
+
+        $returnCollection = $this->getDomainAction()->execute($attackingGroupMock, $targetedGroupMock, 1);
         $this->assertEquals($expectedReturnCollection->count(), $returnCollection->count());
         $returnCollection->each(function ($returnValue) use ($expectedReturnCollection) {
             $match = $expectedReturnCollection->first(function ($expectedValue) use ($returnValue) {
