@@ -15,28 +15,16 @@ use Illuminate\Support\Collection;
 
 class CombatSquad implements CombatGroup, Arrayable
 {
-    /**
-     * @var string
-     */
-    protected $squadName;
-    /**
-     * @var string
-     */
-    protected $squadUuid;
-    /**
-     * @var int
-     */
-    protected $experience;
-    /**
-     * @var AbstractCombatantCollection
-     */
-    protected $combatHeroes;
+    protected string $squadName;
+    protected string $sourceUuid;
+    protected int $experience, $squadRankID;
+    protected AbstractCombatantCollection $combatHeroes;
 
-    public function __construct(string $squadName, string $squadUuid, int $experience, AbstractCombatantCollection $combatHeroes)
+    public function __construct(string $sourceUuid, int $experience, int $squadRankID, AbstractCombatantCollection $combatHeroes)
     {
-        $this->squadName = $squadName;
-        $this->squadUuid = $squadUuid;
+        $this->sourceUuid = $sourceUuid;
         $this->experience = $experience;
+        $this->squadRankID = $squadRankID;
         $this->combatHeroes = $combatHeroes;
     }
 
@@ -57,9 +45,9 @@ class CombatSquad implements CombatGroup, Arrayable
     /**
      * @return string
      */
-    public function getSquadUuid(): string
+    public function getSourceUuid(): string
     {
-        return $this->squadUuid;
+        return $this->sourceUuid;
     }
 
     /**
@@ -78,7 +66,7 @@ class CombatSquad implements CombatGroup, Arrayable
         return $this->combatHeroes;
     }
 
-    public function isDefeated()
+    public function isDefeated(int $moment): bool
     {
         return ! $this->combatHeroes->hasSurvivors();
     }
@@ -98,9 +86,25 @@ class CombatSquad implements CombatGroup, Arrayable
     {
         return [
             'squadName' => $this->squadName,
-            'squadUuid' => $this->squadUuid,
+            'squadUuid' => $this->sourceUuid,
             'experience' => $this->experience,
             'combatHeroes' => $this->combatHeroes->toArray()
         ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getSquadName(): string
+    {
+        return $this->squadName;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSquadRankID(): int
+    {
+        return $this->squadRankID;
     }
 }
