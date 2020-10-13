@@ -10,11 +10,9 @@ use Illuminate\Support\Collection;
 
 interface CombatGroup
 {
-    public function updateCombatPositions(CombatPositionCollection $combatPositions);
+    public function getPossibleTargets($moment): Collection;
 
-    public function getReadyAttacks(int $moment): Collection;
-
-    public function getPossibleTargets($moment): CombatantCollection;
+    public function getPossibleAttackers($moment): Collection;
 
     public function isDefeated(int $moment): bool;
 }

@@ -7,41 +7,24 @@ namespace App\Domain\Combat\CombatGroups;
 use App\Domain\Collections\AbstractCombatantCollection;
 use App\Domain\Collections\CombatantCollection;
 use App\Domain\Collections\CombatPositionCollection;
+use App\Domain\Combat\Combatants\CombatMinion;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
 
 class SideQuestCombatGroup implements CombatGroup, Arrayable
 {
     protected string $sourceUuid;
-    protected AbstractCombatantCollection $combatMinions;
+    protected Collection $combatMinions;
 
-    public function __construct( string $sideQuestUuid, AbstractCombatantCollection $combatMinions)
+    public function __construct(string $sideQuestUuid, Collection $combatMinions)
     {
         $this->sourceUuid = $sideQuestUuid;
         $this->combatMinions = $combatMinions;
     }
 
-    public function getReadyAttacks(int $moment): Collection
-    {
-        return $this->combatMinions->getReadyAttacks();
-    }
-
-    public function getPossibleTargets($moment): CombatantCollection
-    {
-        return $this->getCombatMinions()->getPossibleTargets();
-    }
-
-    /**
-     * @return AbstractCombatantCollection
-     */
-    public function getCombatMinions(): AbstractCombatantCollection
-    {
-        return $this->combatMinions;
-    }
-
     public function isDefeated(int $moment): bool
     {
-        return ! $this->combatMinions->hasSurvivors();
+        return $this->getSurvivors()->isEmpty();
     }
 
     /**
@@ -57,16 +40,28 @@ class SideQuestCombatGroup implements CombatGroup, Arrayable
         ];
     }
 
-    public function updateCombatPositions(CombatPositionCollection $combatPositions)
-    {
-        $this->combatMinions->updateCombatPositions($combatPositions);
-    }
-
     /**
      * @return string
      */
     public function getSourceUuid(): string
     {
         return $this->sourceUuid;
+    }
+
+    public function getPossibleAttackers($moment): Collection
+    {
+        return $this->getSurvivors();
+    }
+
+    public function getPossibleTargets($moment): Collection
+    {
+        return $this->getSurvivors();
+    }
+
+    public function getSurvivors()
+    {
+        return $this->combatMinions->filter(function (CombatMinion $combatMinion) {
+            return $combatMinion->getCurrentHealth() > 0;
+        });
     }
 }
