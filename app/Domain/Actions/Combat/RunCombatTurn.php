@@ -29,19 +29,21 @@ class RunCombatTurn
     }
 
     /**
-     * @param Collection $attackers
-     * @param Collection $defenders
+     * @param CombatGroup $attackingGroup
+     * @param CombatGroup $targetedGroup
      * @param int $moment
      * @return Collection
      */
-    public function execute(Collection $attackers, Collection $defenders, int $moment)
+    public function execute(CombatGroup $attackingGroup, CombatGroup $targetedGroup, int $moment)
     {
+        $attackers = $attackingGroup->getPossibleAttackers($moment);
+        $targets = $targetedGroup->getPossibleTargets($moment);
         $combatEvents = collect();
-        $attackers->each(function (Combatant $attackingCombatant) use ($attackers, $defenders, $moment, &$combatEvents) {
+        $attackers->each(function (Combatant $attackingCombatant) use ($attackers, $targets, $moment, &$combatEvents) {
 
             $readyAttacks = $this->getReadyAttacksForCombatant->execute($attackingCombatant, $attackers);
-            $readyAttacks->each(function (CombatAttackInterface $readyAttack) use ($attackingCombatant, $defenders, $moment, &$combatEvents) {
-                $eventsForAttack = $this->executeCombatAttack->execute($readyAttack, $attackingCombatant, $defenders, $moment);
+            $readyAttacks->each(function (CombatAttackInterface $readyAttack) use ($attackingCombatant, $targets, $moment, &$combatEvents) {
+                $eventsForAttack = $this->executeCombatAttack->execute($readyAttack, $attackingCombatant, $targets, $moment);
                 $combatEvents = $combatEvents->merge($eventsForAttack);
             });
         });
