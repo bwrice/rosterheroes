@@ -76,7 +76,7 @@ class CombatRunner
 
         return [
             'victorious_side' => $victoriousSide,
-            'moment' => $moment
+            'moment' => $moment - 1 // Subtract the last increment to get final moment count
         ];
     }
 
