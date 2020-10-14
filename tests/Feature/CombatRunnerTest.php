@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Domain\Actions\Combat\CombatEventHandler;
+use App\Domain\Combat\Events\Handlers\CombatEventHandler;
 use App\Domain\Actions\Combat\RunCombatTurn;
 use App\Domain\Combat\CombatGroups\CombatGroup;
 use App\Domain\Combat\CombatRunner;

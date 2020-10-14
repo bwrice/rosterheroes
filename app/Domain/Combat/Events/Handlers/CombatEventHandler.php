@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Domain\Actions\Combat;
+namespace App\Domain\Combat\Events\Handlers;
 
 
 use App\Domain\Combat\Events\CombatEvent;
