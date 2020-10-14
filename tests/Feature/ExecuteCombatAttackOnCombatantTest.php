@@ -124,7 +124,6 @@ class ExecuteCombatAttackOnCombatantTest extends TestCase
 
         $this->assertTrue($combatEvent instanceof AttackKillsCombatant);
         $this->assertEquals($moment, $combatEvent->moment());
-        $this->assertEquals($damageToReceive, $combatEvent->getInitialDamageToReceive());
-        $this->assertEquals($currentHealth, $combatEvent->getActualDamageReceived());
+        $this->assertEquals($currentHealth, $combatEvent->getDamage());
     }
 }
