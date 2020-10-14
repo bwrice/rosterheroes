@@ -8,6 +8,8 @@ use App\Domain\Collections\CombatantCollection;
 
 interface CombatAttackInterface
 {
+    public function getUuid();
+
     public function getTargetPositionID(): int;
 
     public function getTargetPriorityID(): int;

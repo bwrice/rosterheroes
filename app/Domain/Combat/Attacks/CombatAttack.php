@@ -7,10 +7,11 @@ namespace App\Domain\Combat\Attacks;
 use App\Domain\Collections\CombatantCollection;
 use App\Domain\Collections\ResourceCostsCollection;
 use App\Facades\DamageTypeFacade;
+use Illuminate\Support\Str;
 
 class CombatAttack implements CombatAttackInterface
 {
-    protected string $name, $sourceUuid, $attackerUuid;
+    protected string $name, $uuid, $sourceUuid, $attackerUuid;
     protected int $damage, $tier, $attackerPositionID, $targetPositionID, $targetPriorityID, $damageTypeID;
     protected ?int $targetsCount;
     protected float $combatSpeed;
@@ -31,6 +32,7 @@ class CombatAttack implements CombatAttackInterface
         ResourceCostsCollection $resourceCosts)
     {
         $this->name = $name;
+        $this->uuid = (string) Str::uuid();
         $this->sourceUuid = $sourceUuid;
         $this->attackerUuid = $attackerUuid;
         $this->damage = $damage;
@@ -138,5 +140,13 @@ class CombatAttack implements CombatAttackInterface
     public function getTargetPositionID(): int
     {
         return $this->targetPositionID;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUuid(): string
+    {
+        return $this->uuid;
     }
 }
