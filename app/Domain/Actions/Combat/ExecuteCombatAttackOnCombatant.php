@@ -50,6 +50,7 @@ class ExecuteCombatAttackOnCombatant
             return new AttackDamagesCombatant($combatAttack, $attacker, $target, $damageToReceive, $moment);
         }
 
-        return new AttackKillsCombatant($combatAttack, $attacker, $target, $damageToReceive, $currentHealth, $moment);
+        // If attack kills the combatant, the actual damage received would be the health before the attack
+        return new AttackKillsCombatant($combatAttack, $attacker, $target, $currentHealth, $moment);
     }
 }

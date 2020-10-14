@@ -14,21 +14,19 @@ class AttackKillsCombatant implements CombatEvent
     protected CombatAttackInterface $combatAttack;
     protected CombatantInterface $attacker;
     protected CombatantInterface $target;
-    protected int $moment, $initialDamageToReceive, $actualDamageReceived;
+    protected int $moment, $damage;
 
     public function __construct(
         CombatAttackInterface $combatAttack,
         CombatantInterface $attacker,
         CombatantInterface $target,
-        int $initialDamageToReceive,
-        int $actualDamageReceived,
+        int $damage,
         int $moment)
     {
         $this->combatAttack = $combatAttack;
         $this->attacker = $attacker;
         $this->target = $target;
-        $this->initialDamageToReceive = $initialDamageToReceive;
-        $this->actualDamageReceived = $actualDamageReceived;
+        $this->damage = $damage;
         $this->moment = $moment;
     }
 
@@ -42,13 +40,8 @@ class AttackKillsCombatant implements CombatEvent
         return self::EVENT_STREAM;
     }
 
-    public function getInitialDamageToReceive(): int
+    public function getDamage(): int
     {
-        return $this->initialDamageToReceive;
-    }
-
-    public function getActualDamageReceived(): int
-    {
-        return $this->actualDamageReceived;
+        return $this->damage;
     }
 }
