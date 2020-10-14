@@ -83,10 +83,12 @@ class CombatRunner
     public function registerTurnAHandler(CombatEventHandler $combatEventHandler)
     {
         $this->turnAHandlers->push($combatEventHandler);
+        return $this;
     }
 
     public function registerTurnBHandler(CombatEventHandler $combatEventHandler)
     {
         $this->turnBHandlers->push($combatEventHandler);
+        return $this;
     }
 }
