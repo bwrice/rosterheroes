@@ -118,13 +118,16 @@ class Combatant implements CombatantInterface, Arrayable
     public function toArray()
     {
         return [
-            'initialHealth' => $this->initialHealth,
-            'currentHealth' => $this->currentHealth,
+            'source_uuid' => $this->sourceUuid,
+            'combatant_uuid' => $this->combatantUuid,
+            'initial_health' => $this->initialHealth,
+            'current_health' => $this->currentHealth,
+            'initial_stamina' => $this->initialHealth,
+            'current_stamina' => $this->currentHealth,
             'protection' => $this->protection,
-            'blockChancePercent' => $this->blockChancePercent,
-            'combatAttacks' => $this->combatAttacks->toArray(),
-            'initialCombatPositionID' => $this->combatPositionID,
-            'inheritedCombatPositionIDs' => $this->inheritedCombatPositionIDs
+            'block_chance_percent' => $this->blockChancePercent,
+            'combat_attacks' => $this->combatAttacks->toArray(),
+            'combat_position_id' => $this->combatPositionID
         ];
     }
 
