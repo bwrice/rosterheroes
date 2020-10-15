@@ -33,4 +33,28 @@ class AttackBlocked implements CombatEvent
     {
         return self::EVENT_STREAM;
     }
+
+    /**
+     * @return CombatAttackInterface
+     */
+    public function getCombatAttack(): CombatAttackInterface
+    {
+        return $this->combatAttack;
+    }
+
+    /**
+     * @return CombatantInterface
+     */
+    public function getAttacker(): CombatantInterface
+    {
+        return $this->attacker;
+    }
+
+    /**
+     * @return CombatantInterface
+     */
+    public function getTarget(): CombatantInterface
+    {
+        return $this->target;
+    }
 }
