@@ -7,9 +7,10 @@ namespace App\Domain\Combat\Attacks;
 use App\Domain\Collections\CombatantCollection;
 use App\Domain\Collections\ResourceCostsCollection;
 use App\Facades\DamageTypeFacade;
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Str;
 
-class CombatAttack implements CombatAttackInterface
+class CombatAttack implements CombatAttackInterface, Arrayable
 {
     protected string $name, $uuid, $sourceUuid, $attackerUuid;
     protected int $damage, $tier, $attackerPositionID, $targetPositionID, $targetPriorityID, $damageTypeID;
@@ -148,5 +149,28 @@ class CombatAttack implements CombatAttackInterface
     public function getUuid(): string
     {
         return $this->uuid;
+    }
+
+    /**
+     * Get the instance as an array.
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        return [
+            'combat_attack_uuid' => $this->uuid,
+            'source_uuid' => $this->sourceUuid,
+            'attacker_uuid' => $this->attackerUuid,
+            'damage' => $this->damage,
+            'combat_speed' => $this->combatSpeed,
+            'tier' => $this->tier,
+            'targets_count' => $this->targetsCount,
+            'attacker_position_id' => $this->attackerPositionID,
+            'target_position_id' => $this->targetPositionID,
+            'target_priority_id' => $this->targetPriorityID,
+            'damage_type_id' => $this->damageTypeID,
+            'resource_costs' => $this->resourceCosts->toArray()
+        ];
     }
 }
