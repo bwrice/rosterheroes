@@ -9,7 +9,7 @@ use App\Domain\Combat\Combatants\CombatantInterface;
 
 class AttackKillsCombatant implements CombatEvent
 {
-    public const EVENT_STREAM = 'attack-damages-combatant';
+    public const EVENT_STREAM = 'attack-kills-combatant';
 
     protected CombatAttackInterface $combatAttack;
     protected CombatantInterface $attacker;
