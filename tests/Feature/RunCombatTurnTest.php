@@ -114,7 +114,7 @@ class RunCombatTurnTest extends TestCase
             ->getMock();
         $targetedGroupMock = \Mockery::mock(CombatGroup::class)
             ->shouldReceive('getPossibleTargets')
-            ->andReturn(collect())
+            ->andReturn(collect(['anything']))
             ->getMock();
 
         $this->getDomainAction()->execute($attackingGroupMock, $targetedGroupMock, 1);
@@ -197,7 +197,7 @@ class RunCombatTurnTest extends TestCase
             ->getMock();
         $targetedGroupMock = \Mockery::mock(CombatGroup::class)
             ->shouldReceive('getPossibleTargets')
-            ->andReturn(collect())
+            ->andReturn(collect(['anything']))
             ->getMock();
 
         $returnCollection = $this->getDomainAction()->execute($attackingGroupMock, $targetedGroupMock, 1);
