@@ -170,4 +170,35 @@ class GetReadyAttacksForCombatantTest extends TestCase
 
         $this->assertEquals(0, $readyAttacks->count());
     }
+
+    /**
+     * @test
+     */
+    public function it_will_not_return_attacks_if_verify_resource_costs_fails()
+    {
+        $neverReadyAttackFactory = CombatAttackFactory::new()->withCombatSpeed(100);
+        $combatAttacks = collect();
+        $combatAttacks->push($neverReadyAttackFactory->withAttackerPosition(CombatPosition::FRONT_LINE)->create());
+        $combatAttacks->push($neverReadyAttackFactory->withAttackerPosition(CombatPosition::BACK_LINE)->create());
+        $combatAttacks->push($neverReadyAttackFactory->withAttackerPosition(CombatPosition::HIGH_GROUND)->create());
+
+        $combatant = CombatantFactory::new()->withCombatAttacks($combatAttacks)->create();
+
+        $frontLine = CombatPositionFacade::getReferenceModelByName(CombatPosition::FRONT_LINE);
+        $mock = \Mockery::mock(GetClosestInheritedCombatPosition::class)
+            ->shouldReceive('execute')
+            ->andReturn($frontLine)
+            ->getMock();
+        $this->app->instance(GetClosestInheritedCombatPosition::class, $mock);
+
+        $verifyMock = \Mockery::mock(VerifyResourcesAvailable::class)
+            ->shouldReceive('execute')
+            ->andReturn(false) // What we're actually testing
+            ->getMock();
+        $this->app->instance(VerifyResourcesAvailable::class, $verifyMock);
+
+        $readyAttacks = $this->getDomainAction()->execute($combatant, collect());
+
+        $this->assertEquals(0, $readyAttacks->count());
+    }
 }
