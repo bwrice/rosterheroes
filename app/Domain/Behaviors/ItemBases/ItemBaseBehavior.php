@@ -9,8 +9,8 @@
 namespace App\Domain\Behaviors\ItemBases;
 
 use App\Domain\Behaviors\ItemGroup\ItemGroup;
-use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Interfaces\UsesItems;
+use Illuminate\Support\Collection;
 
 abstract class ItemBaseBehavior
 {
@@ -78,6 +78,6 @@ abstract class ItemBaseBehavior
     abstract public function adjustDamageMultiplier(float $damageMultiplier, UsesItems $usesItems = null): float;
 
     abstract public function adjustCombatSpeed(float $combatSpeed, UsesItems $hasItems = null): float;
-    
-    abstract public function adjustResourceCosts(ResourceCostsCollection $resourceCosts): ResourceCostsCollection;
+
+    abstract public function adjustResourceCosts(Collection $resourceCosts): Collection;
 }

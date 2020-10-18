@@ -5,9 +5,9 @@ namespace App\Domain\Behaviors\ItemBases\Shields;
 
 use App\Domain\Behaviors\ItemBases\ItemBaseBehavior;
 use App\Domain\Behaviors\ItemGroup\ShieldGroup;
-use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Interfaces\UsesItems;
 use App\Domain\Models\Support\GearSlots\GearSlot;
+use Illuminate\Support\Collection;
 
 abstract class ShieldGroupBehavior extends ItemBaseBehavior
 {
@@ -50,7 +50,7 @@ abstract class ShieldGroupBehavior extends ItemBaseBehavior
         return $combatSpeed;
     }
 
-    public function adjustResourceCosts(ResourceCostsCollection $resourceCosts): ResourceCostsCollection
+    public function adjustResourceCosts(Collection $resourceCosts): Collection
     {
         return $resourceCosts;
     }

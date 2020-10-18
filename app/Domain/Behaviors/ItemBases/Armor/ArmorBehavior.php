@@ -6,8 +6,8 @@ namespace App\Domain\Behaviors\ItemBases\Armor;
 
 use App\Domain\Behaviors\ItemBases\ItemBaseBehavior;
 use App\Domain\Behaviors\ItemGroup\ArmorGroup;
-use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Interfaces\UsesItems;
+use Illuminate\Support\Collection;
 
 abstract class ArmorBehavior extends ItemBaseBehavior
 {
@@ -48,7 +48,7 @@ abstract class ArmorBehavior extends ItemBaseBehavior
         return $combatSpeed;
     }
 
-    public function adjustResourceCosts(ResourceCostsCollection $resourceCosts): ResourceCostsCollection
+    public function adjustResourceCosts(Collection $resourceCosts): Collection
     {
         return $resourceCosts;
     }

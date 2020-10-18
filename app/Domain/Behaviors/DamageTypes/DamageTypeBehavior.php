@@ -4,7 +4,7 @@
 namespace App\Domain\Behaviors\DamageTypes;
 
 
-use App\Domain\Collections\ResourceCostsCollection;
+use Illuminate\Support\Collection;
 
 abstract class DamageTypeBehavior
 {
@@ -20,5 +20,5 @@ abstract class DamageTypeBehavior
 
     abstract public function getResourceCostMagnitude(int $tier, ?int $targetsCount): float;
 
-    abstract public function getResourceCosts(int $tier, ?int $targetsCount): ResourceCostsCollection;
+    abstract public function getResourceCosts(int $tier, ?int $targetsCount): Collection;
 }

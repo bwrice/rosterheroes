@@ -4,9 +4,9 @@
 namespace App\Domain\Behaviors\DamageTypes;
 
 
-use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Models\Json\ResourceCosts\FixedResourceCost;
 use App\Domain\Models\MeasurableType;
+use Illuminate\Support\Collection;
 
 class DispersedBehavior extends DamageTypeBehavior
 {
@@ -44,9 +44,9 @@ class DispersedBehavior extends DamageTypeBehavior
         return 2.5 * $tier;
     }
 
-    public function getResourceCosts(int $tier, ?int $targetsCount): ResourceCostsCollection
+    public function getResourceCosts(int $tier, ?int $targetsCount): Collection
     {
-        $resourceCosts = new ResourceCostsCollection();
+        $resourceCosts = collect();
 
         $staminaAmount = 14 + (2 * ($tier ** 2.5));
         $staminaCost = new FixedResourceCost(MeasurableType::STAMINA, $staminaAmount);

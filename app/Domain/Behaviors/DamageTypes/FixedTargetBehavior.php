@@ -4,10 +4,9 @@
 namespace App\Domain\Behaviors\DamageTypes;
 
 
-use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Models\Json\ResourceCosts\FixedResourceCost;
 use App\Domain\Models\MeasurableType;
-use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Collection;
 
 class FixedTargetBehavior extends DamageTypeBehavior
 {
@@ -49,9 +48,9 @@ class FixedTargetBehavior extends DamageTypeBehavior
         return $tier * sqrt($targetsCount);
     }
 
-    public function getResourceCosts(int $tier, ?int $targetsCount): ResourceCostsCollection
+    public function getResourceCosts(int $tier, ?int $targetsCount): Collection
     {
-        $resourceCosts = new ResourceCostsCollection();
+        $resourceCosts = collect();
 
         if ($targetsCount === 1) {
             return $resourceCosts;

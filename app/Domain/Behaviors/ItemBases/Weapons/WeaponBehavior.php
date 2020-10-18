@@ -7,11 +7,11 @@ namespace App\Domain\Behaviors\ItemBases\Weapons;
 use App\Domain\Behaviors\ItemBases\ItemBaseBehavior;
 use App\Domain\Behaviors\ItemBases\Weapons\ArmBehaviors\ArmBehaviorInterface;
 use App\Domain\Behaviors\ItemGroup\WeaponGroup;
-use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Interfaces\UsesItems;
 use App\Domain\Models\Json\ResourceCosts\ResourceCost;
 use App\Domain\Models\MeasurableType;
 use App\Domain\Models\Support\GearSlots\GearSlot;
+use Illuminate\Support\Collection;
 
 abstract class WeaponBehavior extends ItemBaseBehavior
 {
@@ -94,7 +94,7 @@ abstract class WeaponBehavior extends ItemBaseBehavior
 
     abstract protected function getMeasurablesDamageBonus(UsesItems $usesItems): float;
 
-    public function adjustResourceCosts(ResourceCostsCollection $resourceCosts): ResourceCostsCollection
+    public function adjustResourceCosts(Collection $resourceCosts): Collection
     {
         $resourceCosts->each(function (ResourceCost $resourceCost) {
             if ($resourceCost->getResourceName() === MeasurableType::STAMINA) {
