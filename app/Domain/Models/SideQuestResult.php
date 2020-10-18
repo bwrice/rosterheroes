@@ -27,11 +27,13 @@ use PhpParser\Node\Expr\AssignOp\Mod;
  * @property CarbonInterface|null $side_effects_processed_at
  * @property int|null $experience_rewarded
  * @property int|null $favor_rewarded
+ * @property int|null $squad_snapshot_id
+ * @property int|null $side_quest_snapshot_id
  *
  * @property SideQuest $sideQuest
  * @property CampaignStop $campaignStop
- * @property SquadSnapshot $squadSnapshot
- * @property SideQuestSnapshot $sideQuestSnapshot
+ * @property SquadSnapshot|null $squadSnapshot
+ * @property SideQuestSnapshot|null $sideQuestSnapshot
  *
  * @property Collection $sideQuestEvents
  */
