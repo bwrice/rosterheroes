@@ -5,7 +5,6 @@ namespace App\Domain\Combat\Combatants;
 
 
 use App\Domain\Collections\CombatAttackCollection;
-use App\Domain\Combat\Attacks\CombatAttackInterface;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -122,8 +121,10 @@ class Combatant implements CombatantInterface, Arrayable
             'combatant_uuid' => $this->combatantUuid,
             'initial_health' => $this->initialHealth,
             'current_health' => $this->currentHealth,
-            'initial_stamina' => $this->initialHealth,
-            'current_stamina' => $this->currentHealth,
+            'initial_stamina' => $this->initialStamina,
+            'current_stamina' => $this->currentStamina,
+            'initial_mana' => $this->initialMana,
+            'current_mana' => $this->currentMana,
             'protection' => $this->protection,
             'block_chance_percent' => $this->blockChancePercent,
             'combat_attacks' => $this->combatAttacks->toArray(),
