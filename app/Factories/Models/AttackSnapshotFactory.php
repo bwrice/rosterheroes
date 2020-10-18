@@ -4,7 +4,6 @@
 namespace App\Factories\Models;
 
 
-use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Interfaces\HasAttackSnapshots;
 use App\Domain\Models\AttackSnapshot;
 use App\Domain\Models\CombatPosition;
@@ -13,13 +12,14 @@ use App\Domain\Models\Json\ResourceCosts\FixedResourceCost;
 use App\Domain\Models\Json\ResourceCosts\PercentResourceCost;
 use App\Domain\Models\MeasurableType;
 use App\Domain\Models\TargetPriority;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 class AttackSnapshotFactory
 {
     protected ?int $attackID = null;
     protected ?HasAttackSnapshots $attacker = null;
-    protected ?ResourceCostsCollection $resourceCosts = null;
+    protected ?Collection $resourceCosts = null;
 
     public static function new()
     {
@@ -78,10 +78,10 @@ class AttackSnapshotFactory
         if ($this->resourceCosts) {
             return $this->resourceCosts;
         }
-        return new ResourceCostsCollection();
+        return collect();
     }
 
-    public function withResourceCosts(ResourceCostsCollection $resourceCostsCollection = null)
+    public function withResourceCosts(Collection $resourceCostsCollection = null)
     {
         $clone = clone $this;
         if ($resourceCostsCollection) {
@@ -89,7 +89,7 @@ class AttackSnapshotFactory
             return $clone;
         }
 
-        $resourceCosts = new ResourceCostsCollection();
+        $resourceCosts = collect();
 
         for ($i = 1; $i <= rand(1, 3); $i++) {
             $resourceTypeName = rand(0,1) == 1 ? MeasurableType::STAMINA : MeasurableType::MANA;

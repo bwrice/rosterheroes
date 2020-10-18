@@ -2,10 +2,10 @@
 
 namespace App\Domain\Models;
 
-use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Interfaces\HasAttackSnapshots;
 use App\Domain\Models\Casts\CastResourceCosts;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 /**
  * Class AttackSnapshot
@@ -34,7 +34,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property TargetPriority $targetPriority
  * @property HasAttackSnapshots $attacker
  *
- * @property ResourceCostsCollection $resource_costs
+ * @property Collection $resource_costs
  */
 class AttackSnapshot extends Model
 {

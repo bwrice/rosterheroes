@@ -5,6 +5,7 @@ namespace App\Domain\Combat\Attacks;
 
 
 use App\Domain\Collections\CombatantCollection;
+use Illuminate\Support\Collection;
 
 interface CombatAttackInterface
 {
@@ -21,4 +22,6 @@ interface CombatAttackInterface
     public function getTier(): int;
 
     public function getDamage(): int;
+
+    public function getResourceCosts(): Collection;
 }

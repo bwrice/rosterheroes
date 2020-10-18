@@ -4,7 +4,6 @@
 namespace App\Factories\Combat;
 
 
-use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Combat\Attacks\CombatAttack;
 use App\Domain\Models\CombatPosition;
 use App\Domain\Models\DamageType;
@@ -39,7 +38,7 @@ class CombatAttackFactory
             $this->getTargetPosition()->id,
             $this->getTargetPriority()->id,
             $this->getDamageType()->id,
-            $this->resourceCostsCollection ?: new ResourceCostsCollection()
+            $this->resourceCostsCollection ?: collect()
         );
     }
 
@@ -50,7 +49,7 @@ class CombatAttackFactory
 
     protected function getCombatSpeed()
     {
-        return $this->combatSpeed ?: 10;
+        return is_null($this->combatSpeed) ? 10 : $this->combatSpeed;
     }
 
     protected function getTier()

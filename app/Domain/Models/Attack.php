@@ -2,21 +2,16 @@
 
 namespace App\Domain\Models;
 
-use App\Domain\Actions\CalculateFantasyPower;
 use App\Domain\Actions\Combat\CalculateCombatDamage;
 use App\Domain\Collections\AttackCollection;
 use App\Domain\Collections\ItemCollection;
-use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Interfaces\HasAttacks;
-use App\Domain\Models\Json\ResourceCosts\FixedResourceCost;
-use App\Domain\Models\Json\ResourceCosts\PercentResourceCost;
 use App\Domain\Models\Json\ResourceCosts\ResourceCost;
 use App\Domain\QueryBuilders\AttackQueryBuilder;
 use App\Domain\Traits\HasConfigAttributes;
 use App\Domain\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Symfony\Component\Yaml\Yaml;
 
 /**
  * Class Attack

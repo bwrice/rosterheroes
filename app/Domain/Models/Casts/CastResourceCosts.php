@@ -4,7 +4,6 @@
 namespace App\Domain\Models\Casts;
 
 
-use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Models\Json\ResourceCosts\FixedResourceCost;
 use App\Domain\Models\Json\ResourceCosts\PercentResourceCost;
 use App\Domain\Models\Json\ResourceCosts\ResourceCost;
@@ -25,11 +24,11 @@ class CastResourceCosts implements CastsAttributes
      */
     public function get($model, string $key, $resourceCosts, array $attributes)
     {
-        return (new ResourceCostsCollection(json_decode($resourceCosts, true)))->map(function ($resourceCostArray) {
+        return (collect(json_decode($resourceCosts, true)))->map(function ($resourceCostArray) {
             if ($resourceCostArray['type'] === ResourceCost::FIXED) {
-                return new FixedResourceCost($resourceCostArray['resource_name'], $resourceCostArray['amount']);
+                return new FixedResourceCost($resourceCostArray['resource'], $resourceCostArray['amount']);
             }
-            return new PercentResourceCost($resourceCostArray['resource_name'], $resourceCostArray['percent']);
+            return new PercentResourceCost($resourceCostArray['resource'], $resourceCostArray['percent']);
         });
     }
 

@@ -3,11 +3,8 @@
 
 namespace App\Domain\Combat\Attacks;
 
-
-use App\Domain\Collections\CombatantCollection;
-use App\Domain\Collections\ResourceCostsCollection;
-use App\Facades\DamageTypeFacade;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 class CombatAttack implements CombatAttackInterface, Arrayable
@@ -16,7 +13,7 @@ class CombatAttack implements CombatAttackInterface, Arrayable
     protected int $damage, $tier, $attackerPositionID, $targetPositionID, $targetPriorityID, $damageTypeID;
     protected ?int $targetsCount;
     protected float $combatSpeed;
-    protected ResourceCostsCollection $resourceCosts;
+    protected Collection $resourceCosts;
 
     public function __construct(
         string $name,
@@ -30,7 +27,7 @@ class CombatAttack implements CombatAttackInterface, Arrayable
         int $targetPositionID,
         int $targetPriorityID,
         int $damageTypeID,
-        ResourceCostsCollection $resourceCosts)
+        Collection $resourceCosts)
     {
         $this->name = $name;
         $this->uuid = (string) Str::uuid();
@@ -120,9 +117,9 @@ class CombatAttack implements CombatAttackInterface, Arrayable
     }
 
     /**
-     * @return ResourceCostsCollection
+     * @return Collection
      */
-    public function getResourceCosts(): ResourceCostsCollection
+    public function getResourceCosts(): Collection
     {
         return $this->resourceCosts;
     }
