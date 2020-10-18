@@ -5,9 +5,10 @@ namespace App\Domain\Combat\Combatants;
 
 
 use App\Domain\Combat\Attacks\CombatAttackInterface;
+use App\Domain\Interfaces\SpendsResources;
 use App\Domain\Models\CombatPosition;
 
-interface CombatantInterface
+interface CombatantInterface extends SpendsResources
 {
     /**
      * @param int $initialDamage
