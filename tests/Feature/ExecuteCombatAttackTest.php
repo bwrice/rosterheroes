@@ -5,9 +5,12 @@ namespace Tests\Feature;
 use App\Domain\Actions\Combat\ExecuteCombatAttack;
 use App\Domain\Actions\Combat\ExecuteCombatAttackOnCombatant;
 use App\Domain\Actions\Combat\FindTargetsForAttack;
+use App\Domain\Actions\Combat\SpendResourceCosts;
 use App\Domain\Combat\Attacks\CombatAttack;
 use App\Domain\Combat\Attacks\CombatAttackInterface;
 use App\Domain\Combat\Combatants\Combatant;
+use App\Domain\Models\Json\ResourceCosts\FixedResourceCost;
+use App\Domain\Models\MeasurableType;
 use App\Factories\Combat\CombatantFactory;
 use App\Factories\Combat\CombatAttackFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -121,5 +124,43 @@ class ExecuteCombatAttackTest extends TestCase
         $returnedCollection->each(function ($value) use ($uuid) {
             $this->assertEquals($uuid, $value);
         });
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_execute_spend_resources_for_each_resource_cost()
+    {
+
+        $attacker = CombatantFactory::new()->create();
+        $dummyCombatant = CombatantFactory::new()->create();
+        $findTargetsMock = \Mockery::mock(FindTargetsForAttack::class)
+            ->shouldReceive('execute')
+            ->andReturn(collect([
+                $dummyCombatant
+            ]))->getMock();
+
+        $this->instance(FindTargetsForAttack::class, $findTargetsMock);
+
+        $executeOnCombatantMock = \Mockery::mock(ExecuteCombatAttackOnCombatant::class)
+            ->shouldReceive('execute')
+            ->andReturn('anything')
+            ->getMock();
+
+        $this->instance(ExecuteCombatAttackOnCombatant::class, $executeOnCombatantMock);
+
+        $combatAttack = CombatAttackFactory::new()->withResourceCosts(collect([
+            new FixedResourceCost(MeasurableType::STAMINA, rand(1, 100)),
+            new FixedResourceCost(MeasurableType::MANA, rand(1, 100))
+        ]))->create();
+
+        // What we're testing
+        $spendResourcesMock = \Mockery::mock(SpendResourceCosts::class)
+            ->shouldReceive('execute')
+            ->times(2)
+            ->getMock();
+        $this->app->instance(SpendResourceCosts::class, $spendResourcesMock);
+
+        $this->getDomainAction()->execute($combatAttack, $attacker, collect(), 1);
     }
 }
