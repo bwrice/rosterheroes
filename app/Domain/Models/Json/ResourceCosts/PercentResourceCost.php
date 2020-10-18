@@ -35,7 +35,7 @@ class PercentResourceCost extends ResourceCost
         return 0;
     }
 
-    public function getManCost(SpendsResources $spendsResources): int
+    public function getManaCost(SpendsResources $spendsResources): int
     {
         if ($this->matchesResourceType(MeasurableType::MANA)) {
             $currentMana = $spendsResources->getCurrentMana();

@@ -19,7 +19,7 @@ class SpendResourceCosts
         $staminaCost = $resourceCost->getStaminaCost($spendsResources);
         $currentStamina = max(0, $spendsResources->getCurrentStamina() - $staminaCost);
         $spendsResources->setCurrentStamina($currentStamina);
-        $manaCost = $resourceCost->getManCost($spendsResources);
+        $manaCost = $resourceCost->getManaCost($spendsResources);
         $currentMana = max(0, $spendsResources->getCurrentMana() - $manaCost);
         $spendsResources->setCurrentMana($currentMana);
 
