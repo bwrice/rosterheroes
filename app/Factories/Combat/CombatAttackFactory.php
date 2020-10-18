@@ -17,7 +17,7 @@ class CombatAttackFactory
     protected ?string $attackerPositionName = null, $targetPositionName = null, $targetPriorityName = null, $damageTypeName = null;
     protected ?int $damage = null, $tier = null, $targetCount = null;
     protected ?float $combatSpeed = null;
-    protected ?Collection $resourceCostsCollection = null;
+    protected ?Collection $resourceCosts = null;
 
     public static function new()
     {
@@ -38,7 +38,7 @@ class CombatAttackFactory
             $this->getTargetPosition()->id,
             $this->getTargetPriority()->id,
             $this->getDamageType()->id,
-            $this->resourceCostsCollection ?: collect()
+            $this->resourceCosts ?: collect()
         );
     }
 
@@ -128,6 +128,13 @@ class CombatAttackFactory
     {
         $clone = clone $this;
         $clone->targetCount = $targetsCount;
+        return $clone;
+    }
+
+    public function withResourceCosts(Collection $resourceCosts)
+    {
+        $clone = clone $this;
+        $clone->resourceCosts = $resourceCosts;
         return $clone;
     }
 
