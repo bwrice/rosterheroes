@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Domain\Actions\Combat\GetClosestInheritedCombatPosition;
 use App\Domain\Actions\Combat\GetReadyAttacksForCombatant;
+use App\Domain\Actions\Combat\VerifyResourcesAvailable;
 use App\Domain\Combat\Attacks\CombatAttack;
 use App\Domain\Models\CombatPosition;
 use App\Facades\CombatPositionFacade;
@@ -43,6 +44,12 @@ class GetReadyAttacksForCombatantTest extends TestCase
             ->getMock();
         $this->app->instance(GetClosestInheritedCombatPosition::class, $mock);
 
+        $verifyMock = \Mockery::mock(VerifyResourcesAvailable::class)
+            ->shouldReceive('execute')
+            ->andReturn(true)
+            ->getMock();
+        $this->app->instance(VerifyResourcesAvailable::class, $verifyMock);
+
         $readyAttacks = $this->getDomainAction()->execute($combatant, collect());
 
         $this->assertEquals($combatAttacks->count(), $readyAttacks->count());
@@ -58,7 +65,7 @@ class GetReadyAttacksForCombatantTest extends TestCase
     /**
      * @test
      */
-    public function it_will_return_only_back_line_and_high_ground_attacks_from_high_ground_proximity()
+    public function it_will_return_only_back_line_and_high_ground_attacks_from_back_line_proximity()
     {
         $alwaysReadyAttackFactory = CombatAttackFactory::new()->withCombatSpeed(100);
         $expectedReadyAttacks = collect();
@@ -76,6 +83,12 @@ class GetReadyAttacksForCombatantTest extends TestCase
             ->andReturn($backLine)
             ->getMock();
         $this->app->instance(GetClosestInheritedCombatPosition::class, $mock);
+
+        $verifyMock = \Mockery::mock(VerifyResourcesAvailable::class)
+            ->shouldReceive('execute')
+            ->andReturn(true)
+            ->getMock();
+        $this->app->instance(VerifyResourcesAvailable::class, $verifyMock);
 
         $readyAttacks = $this->getDomainAction()->execute($combatant, collect());
 
@@ -110,6 +123,12 @@ class GetReadyAttacksForCombatantTest extends TestCase
             ->getMock();
         $this->app->instance(GetClosestInheritedCombatPosition::class, $mock);
 
+        $verifyMock = \Mockery::mock(VerifyResourcesAvailable::class)
+            ->shouldReceive('execute')
+            ->andReturn(true)
+            ->getMock();
+        $this->app->instance(VerifyResourcesAvailable::class, $verifyMock);
+
         $readyAttacks = $this->getDomainAction()->execute($combatant, collect());
 
         $this->assertEquals($expectedReadyAttacks->count(), $readyAttacks->count());
@@ -124,7 +143,7 @@ class GetReadyAttacksForCombatantTest extends TestCase
     /**
      * @test
      */
-    public function it_will_not_return_attacks_that_are_not_ready()
+    public function it_will_not_return_attacks_that_are_not_ready_based_on_combat_speed()
     {
         $neverReadyAttackFactory = CombatAttackFactory::new()->withCombatSpeed(0);
         $combatAttacks = collect();
@@ -140,6 +159,12 @@ class GetReadyAttacksForCombatantTest extends TestCase
             ->andReturn($frontLine)
             ->getMock();
         $this->app->instance(GetClosestInheritedCombatPosition::class, $mock);
+
+        $verifyMock = \Mockery::mock(VerifyResourcesAvailable::class)
+            ->shouldReceive('execute')
+            ->andReturn(true)
+            ->getMock();
+        $this->app->instance(VerifyResourcesAvailable::class, $verifyMock);
 
         $readyAttacks = $this->getDomainAction()->execute($combatant, collect());
 
