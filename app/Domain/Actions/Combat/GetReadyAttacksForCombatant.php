@@ -12,10 +12,14 @@ use Illuminate\Support\Collection;
 class GetReadyAttacksForCombatant
 {
     protected GetClosestInheritedCombatPosition $getClosestInheritedCombatPosition;
+    protected VerifyResourcesAvailable $verifyResourcesAvailable;
 
-    public function __construct(GetClosestInheritedCombatPosition $getClosestInheritedCombatPosition)
+    public function __construct(
+        GetClosestInheritedCombatPosition $getClosestInheritedCombatPosition,
+        VerifyResourcesAvailable $verifyResourcesAvailable)
     {
         $this->getClosestInheritedCombatPosition = $getClosestInheritedCombatPosition;
+        $this->verifyResourcesAvailable = $verifyResourcesAvailable;
     }
 
     /**
@@ -27,11 +31,15 @@ class GetReadyAttacksForCombatant
     {
         $combatPosition = $this->getClosestInheritedCombatPosition->execute($combatant, $combatants);
         $proximity = CombatPositionFacade::proximity($combatPosition->id);
-        return $combatant->getCombatAttacks()->filter((function (CombatAttack $combatAttack) use ($proximity) {
+        return $combatant->getCombatAttacks()->filter((function (CombatAttack $combatAttack) use ($combatant) {
+            // Check combatant has resources
+            return $this->verifyResourcesAvailable->execute($combatAttack->getResourceCosts(), $combatant);
+        }))->filter((function (CombatAttack $combatAttack) use ($proximity) {
+            // Check attack within combatant combat position range
             $attackProximity = CombatPositionFacade::proximity($combatAttack->getAttackerPositionID());
-            if ($proximity > $attackProximity) {
-                return false;
-            }
+            return $attackProximity >= $proximity;
+        }))->filter((function (CombatAttack $combatAttack) {
+            // Check if attack is ready based on speed and randomness
             $combatSpeed = $combatAttack->getCombatSpeed();
             return rand(1, 10000) <= ceil($combatSpeed * 100);
         }));
