@@ -2,12 +2,10 @@
 
 namespace App\Domain\Models;
 
-use App\Domain\Behaviors\DamageTypes\DamageTypeBehavior;
 use App\Domain\Behaviors\ItemBases\ItemBaseBehavior;
 use App\Domain\Collections\AttackCollection;
 use App\Domain\Collections\EnchantmentCollection;
 use App\Domain\Collections\ItemCollection;
-use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Interfaces\FillsGearSlots;
 use App\Domain\Interfaces\HasAttacks;
 use App\Domain\Interfaces\HasItems;
@@ -16,6 +14,7 @@ use App\Domain\Interfaces\UsesItems;
 use App\Domain\Models\Support\Items\ItemNameBuilder;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Collection;
 
 /**
  * Class Item
@@ -324,7 +323,7 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
             && $this->has_items_id === $hasItems->getMorphID();
     }
 
-    public function adjustResourceCosts(ResourceCostsCollection $resourceCosts): ResourceCostsCollection
+    public function adjustResourceCosts(Collection $resourceCosts): Collection
     {
         return $this->getItemBaseBehavior()->adjustResourceCosts($resourceCosts);
     }

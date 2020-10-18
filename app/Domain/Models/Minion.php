@@ -2,21 +2,17 @@
 
 namespace App\Domain\Models;
 
-use App\Domain\Actions\CalculateFantasyPower;
-use App\Domain\Models\ChestBlueprint;
-use App\Domain\Behaviors\DamageTypes\DamageTypeBehavior;
 use App\Domain\Behaviors\EnemyTypes\EnemyTypeBehavior;
 use App\Domain\Collections\AttackCollection;
 use App\Domain\Collections\MinionCollection;
-use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Interfaces\HasAttacks;
-use App\Domain\Interfaces\Morphable;
 use App\Domain\Interfaces\RewardsChests;
 use App\Domain\Traits\HasConfigAttributes;
 use App\Domain\Traits\HasNameSlug;
 use App\Domain\Traits\HasUuid;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 /**
  * Class Minion
@@ -35,7 +31,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property AttackCollection $attacks
  *
- * @property Collection $chestBlueprints
+ * @property EloquentCollection $chestBlueprints
  */
 class Minion extends Model implements HasAttacks, RewardsChests
 {
@@ -167,7 +163,7 @@ class Minion extends Model implements HasAttacks, RewardsChests
         return 'Minion';
     }
 
-    public function adjustResourceCosts(ResourceCostsCollection $resourceCosts): ResourceCostsCollection
+    public function adjustResourceCosts(Collection $resourceCosts): Collection
     {
         return $resourceCosts;
     }
