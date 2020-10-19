@@ -36,9 +36,10 @@ class CombatPositionService extends ReferenceService
      * @param array $combatPositionIDs
      * @return CombatPosition
      */
-    public function closestProximity(array $combatPositionIDs)
+    public function closestProximity(array $combatPositionIDs = null)
     {
-        return $this->mapIDsToModels($combatPositionIDs)->sortBy(function (CombatPosition $combatPosition) {
+        $referenceModels = $combatPositionIDs ? $this->mapIDsToModels($combatPositionIDs) : $this->getReferenceModels();
+        return $referenceModels->sortBy(function (CombatPosition $combatPosition) {
             return $combatPosition->getBehavior()->getProximity();
         })->first();
     }
@@ -47,6 +48,5 @@ class CombatPositionService extends ReferenceService
     {
         return $this->getBehavior($combatPositionID)->getProximity();
     }
-
 
 }
