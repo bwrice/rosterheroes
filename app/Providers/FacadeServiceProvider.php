@@ -9,6 +9,7 @@ use App\Services\Models\AttackService;
 use App\Services\Models\HeroService;
 use App\Services\Models\Reference\CombatPositionService;
 use App\Services\Models\Reference\DamageTypeService;
+use App\Services\Models\Reference\ItemTypeService;
 use App\Services\Models\Reference\TargetPriorityService;
 use App\Services\Models\SquadService;
 use App\Services\Models\WeekService;
@@ -35,6 +36,7 @@ class FacadeServiceProvider extends ServiceProvider
         $this->app->bind(DamageTypeService::class, fn() => new DamageTypeService());
         $this->app->bind(TargetPriorityService::class, fn() => new TargetPriorityService());
         $this->app->bind(CombatPositionService::class, fn() => new CombatPositionService());
+        $this->app->bind(ItemTypeService::class, fn() => new ItemTypeService());
     }
 
     /**
