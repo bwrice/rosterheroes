@@ -48,6 +48,26 @@ class ItemStatsCalculator
         return $damageMultiplier;
     }
 
+    public function adjustResourceCostAmount(float $amount): int
+    {
+        return (int) floor($amount * $this->getItemBaseBehavior()->getResourceCostAmountModifier());
+    }
+
+    public function adjustResourceCostPercent(float $amount): float
+    {
+        return $amount * $this->getItemBaseBehavior()->getResourceCostPercentModifier();
+    }
+
+    public function getValidGearSlotTypes(): array
+    {
+        return $this->getItemBaseBehavior()->getValidGearSlotTypes();
+    }
+
+    public function getGearSlotsNeededCount(): int
+    {
+        return $this->getItemBaseBehavior()->getGearSlotsCount();
+    }
+
     public function getItemBaseBehavior(): ItemBaseBehavior
     {
         return ItemTypeFacade::baseBehavior($this->itemTypeID);

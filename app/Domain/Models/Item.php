@@ -266,22 +266,22 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
 
     public function adjustResourceCostAmount(float $amount): int
     {
-        return (int) floor($amount * $this->getItemBaseBehavior()->getResourceCostAmountModifier());
+        return $this->getStatsCalculator()->adjustResourceCostAmount($amount);
     }
 
     public function adjustResourceCostPercent(float $amount): float
     {
-        return $amount * $this->getItemBaseBehavior()->getResourceCostPercentModifier();
+        return $this->getStatsCalculator()->adjustResourceCostPercent($amount);
     }
 
     public function getValidGearSlotTypes(): array
     {
-        return $this->getItemBaseBehavior()->getValidGearSlotTypes();
+        return $this->getStatsCalculator()->getValidGearSlotTypes();
     }
 
     public function getGearSlotsNeededCount(): int
     {
-        return $this->getItemBaseBehavior()->getGearSlotsCount();
+        return $this->getStatsCalculator()->getGearSlotsNeededCount();
     }
 
     public function getUuid()
