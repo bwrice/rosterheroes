@@ -3,9 +3,11 @@
 namespace App\Domain\Models;
 
 use App\Domain\Interfaces\HasAttackSnapshots;
-use Illuminate\Database\Eloquent\Collection;
+use App\Domain\Models\Traits\UsesEnemyStatsCalculator;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Collection;
 
 /**
  * Class MinionSnapshot
@@ -32,11 +34,13 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * @property CombatPosition $combatPosition
  * @property EnemyType $enemyType
  *
- * @property Collection $attackSnapshots
- * @property Collection $chestBlueprints
+ * @property EloquentCollection $attackSnapshots
+ * @property EloquentCollection $chestBlueprints
  */
 class MinionSnapshot extends Model implements HasAttackSnapshots
 {
+    use UsesEnemyStatsCalculator;
+
     protected $guarded = [];
 
     public const RELATION_MORPH_MAP_KEY = 'minion-snapshots';
