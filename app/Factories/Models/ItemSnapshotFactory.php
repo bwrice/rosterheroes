@@ -12,6 +12,8 @@ class ItemSnapshotFactory
 {
     protected ?Item $item = null;
     protected ?int $heroSnapshotID = null;
+    protected ?int $materialID = null;
+    protected ?int $itemTypeID = null;
 
     public static function new()
     {
@@ -27,8 +29,8 @@ class ItemSnapshotFactory
             'uuid' => Str::uuid(),
             'item_id' => $item->id,
             'hero_snapshot_id' => $this->getHeroSnapshotID(),
-            'item_type_id' => $item->item_type_id,
-            'material_id' => $item->material_id,
+            'item_type_id' => $this->getItemTypeID(),
+            'material_id' => $this->getMaterialID(),
             'name' => $item->name,
             'weight' => rand(10, 200),
             'protection' => rand(0, 500),
@@ -45,6 +47,20 @@ class ItemSnapshotFactory
         return $clone;
     }
 
+    public function withMaterialID(int $materialID)
+    {
+        $clone = clone $this;
+        $clone->materialID = $materialID;
+        return $clone;
+    }
+
+    public function withItemTypeID(int $itemTypeID)
+    {
+        $clone = clone $this;
+        $clone->itemTypeID = $itemTypeID;
+        return $clone;
+    }
+
     protected function getHeroSnapshotID()
     {
         if ($this->heroSnapshotID) {
@@ -52,6 +68,16 @@ class ItemSnapshotFactory
         }
 
         return HeroSnapshotFactory::new()->create()->id;
+    }
+
+    protected function getMaterialID()
+    {
+        return $this->materialID ?: $this->getItem()->material_id;
+    }
+
+    protected function getItemTypeID()
+    {
+        return $this->itemTypeID ?: $this->getItem()->item_type_id;
     }
 
     protected function getItem()
