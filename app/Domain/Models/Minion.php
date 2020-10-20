@@ -7,6 +7,8 @@ use App\Domain\Collections\AttackCollection;
 use App\Domain\Collections\MinionCollection;
 use App\Domain\Interfaces\HasAttacks;
 use App\Domain\Interfaces\RewardsChests;
+use App\Domain\Models\Support\Enemies\EnemyStatsCalculator;
+use App\Domain\Models\Traits\UsesEnemyStatsCalculator;
 use App\Domain\Traits\HasConfigAttributes;
 use App\Domain\Traits\HasNameSlug;
 use App\Domain\Traits\HasUuid;
@@ -37,9 +39,7 @@ class Minion extends Model implements HasAttacks, RewardsChests
 {
     public const RELATION_MORPH_MAP_KEY = 'minions';
 
-    use HasConfigAttributes;
-    use HasNameSlug;
-    use HasUuid;
+    use HasConfigAttributes, HasNameSlug, HasUuid, UsesEnemyStatsCalculator;
 
     protected $guarded = [];
 
@@ -71,61 +71,6 @@ class Minion extends Model implements HasAttacks, RewardsChests
     public function minionSnapshots()
     {
         return $this->hasMany(MinionSnapshot::class);
-    }
-
-    protected function getEnemyTypeBehavior(): EnemyTypeBehavior
-    {
-        return $this->enemyType->getBehavior();
-    }
-
-    public function getStartingHealth(): int
-    {
-        return $this->getEnemyTypeBehavior()->getStartingHealth($this->level, $this->combatPosition);
-    }
-
-    public function getStartingStamina(): int
-    {
-        return 999999;
-    }
-
-    public function getStartingMana(): int
-    {
-        return 999999;
-    }
-
-    public function getProtection(): int
-    {
-        return $this->getEnemyTypeBehavior()->getProtection($this->level, $this->combatPosition);
-    }
-
-    public function getBlockChance(): float
-    {
-        return $this->getEnemyTypeBehavior()->getBlockChancePercent($this->level, $this->combatPosition);
-    }
-
-    public function adjustBaseDamage(float $baseDamage): float
-    {
-        return $this->getEnemyTypeBehavior()->adjustBaseDamage($baseDamage, $this->level, $this->combatPosition);
-    }
-
-    public function adjustCombatSpeed(float $speed): float
-    {
-        return $this->getEnemyTypeBehavior()->adjustCombatSpeed($speed, $this->level, $this->combatPosition);
-    }
-
-    public function adjustDamageMultiplier(float $damageMultiplier): float
-    {
-        return $this->getEnemyTypeBehavior()->adjustDamageMultiplier($damageMultiplier, $this->level, $this->combatPosition);
-    }
-
-    public function adjustResourceCostAmount(float $amount): int
-    {
-        return 0;
-    }
-
-    public function adjustResourceCostPercent(float $amount): float
-    {
-        return 0;
     }
 
     public function getFantasyPoints(): float
@@ -161,10 +106,5 @@ class Minion extends Model implements HasAttacks, RewardsChests
     public function getChestSourceType(): string
     {
         return 'Minion';
-    }
-
-    public function adjustResourceCosts(Collection $resourceCosts): Collection
-    {
-        return $resourceCosts;
     }
 }
