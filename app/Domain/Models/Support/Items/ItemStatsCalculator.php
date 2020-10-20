@@ -8,6 +8,7 @@ use App\Domain\Behaviors\ItemBases\ItemBaseBehavior;
 use App\Domain\Interfaces\UsesItems;
 use App\Facades\ItemTypeFacade;
 use App\Facades\MaterialFacade;
+use Illuminate\Support\Collection;
 
 class ItemStatsCalculator
 {
@@ -56,6 +57,11 @@ class ItemStatsCalculator
     public function adjustResourceCostPercent(float $amount): float
     {
         return $amount * $this->getItemBaseBehavior()->getResourceCostPercentModifier();
+    }
+
+    public function adjustResourceCosts(Collection $resourceCosts): Collection
+    {
+        return $this->getItemBaseBehavior()->adjustResourceCosts($resourceCosts);
     }
 
     public function getValidGearSlotTypes(): array
