@@ -3,7 +3,10 @@
 namespace App\Domain\Models;
 
 use App\Domain\Collections\EnchantmentCollection;
+use App\Domain\Interfaces\HasAttacks;
 use App\Domain\Interfaces\HasAttackSnapshots;
+use App\Domain\Interfaces\UsesItems;
+use App\Domain\Models\Traits\UsesItemStatsCalculator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -33,8 +36,12 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * @property EnchantmentCollection $enchantments
  *
  */
-class ItemSnapshot extends Model implements HasAttackSnapshots
+class ItemSnapshot extends Model implements HasAttackSnapshots, HasAttacks
 {
+    use UsesItemStatsCalculator;
+
+    protected ?UsesItems $usesItems = null;
+
     public const RELATION_MORPH_MAP_KEY = 'item-snapshots';
 
     protected $guarded = [];
@@ -72,5 +79,23 @@ class ItemSnapshot extends Model implements HasAttackSnapshots
     public function getUuid(): string
     {
         return $this->uuid;
+    }
+
+    /**
+     * @return UsesItems|null
+     */
+    public function getUsesItems(): ?UsesItems
+    {
+        return $this->usesItems;
+    }
+
+    /**
+     * @param UsesItems|null $usesItems
+     * @return ItemSnapshot
+     */
+    public function setUsesItems(?UsesItems $usesItems): ItemSnapshot
+    {
+        $this->usesItems = $usesItems;
+        return $this;
     }
 }

@@ -13,6 +13,7 @@ use App\Domain\Interfaces\Morphable;
 use App\Domain\Interfaces\UsesItems;
 use App\Domain\Models\Support\Items\ItemStatsCalculator;
 use App\Domain\Models\Support\Items\ItemNameBuilder;
+use App\Domain\Models\Traits\UsesItemStatsCalculator;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Collection;
@@ -57,12 +58,13 @@ use Illuminate\Support\Collection;
  */
 class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
 {
+    use UsesItemStatsCalculator;
+
     const RELATION_MORPH_MAP_KEY = 'items';
 
     protected $guarded = [];
 
-    /** @var UsesItems|null */
-    protected $usesItems;
+    protected ?UsesItems $usesItems = null;
 
     protected $dates = [
         'updated_at',
@@ -180,26 +182,6 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
         return $this->itemType->attacks->merge($this->attacks);
     }
 
-    protected function getStatsCalculator()
-    {
-        return new ItemStatsCalculator($this->item_type_id, $this->material_id, $this->getUsesItems());
-    }
-
-    public function adjustCombatSpeed(float $speed): float
-    {
-        return $this->getStatsCalculator()->adjustCombatSpeed($speed);
-    }
-
-    public function adjustBaseDamage(float $baseDamage): float
-    {
-        return $this->getStatsCalculator()->adjustBaseDamage($baseDamage);
-    }
-
-    public function adjustDamageMultiplier(float $damageMultiplier): float
-    {
-        return $this->getStatsCalculator()->adjustDamageMultiplier($damageMultiplier);
-    }
-
     public function getUsesItems(): ?UsesItems
     {
         if ($this->usesItems) {
@@ -264,26 +246,6 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
         return $this;
     }
 
-    public function adjustResourceCostAmount(float $amount): int
-    {
-        return $this->getStatsCalculator()->adjustResourceCostAmount($amount);
-    }
-
-    public function adjustResourceCostPercent(float $amount): float
-    {
-        return $this->getStatsCalculator()->adjustResourceCostPercent($amount);
-    }
-
-    public function getValidGearSlotTypes(): array
-    {
-        return $this->getStatsCalculator()->getValidGearSlotTypes();
-    }
-
-    public function getGearSlotsNeededCount(): int
-    {
-        return $this->getStatsCalculator()->getGearSlotsNeededCount();
-    }
-
     public function getUuid()
     {
         return $this->uuid;
@@ -316,11 +278,6 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
         }
         return $this->has_items_type === $hasItems->getMorphType()
             && $this->has_items_id === $hasItems->getMorphID();
-    }
-
-    public function adjustResourceCosts(Collection $resourceCosts): Collection
-    {
-        return $this->getItemBaseBehavior()->adjustResourceCosts($resourceCosts);
     }
 
     /**
