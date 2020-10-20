@@ -21,6 +21,7 @@ use phpDocumentor\Reflection\Types\Integer;
  * @method static int id(string $combatPositionName)
  * @method static Collection getReferenceModels()
  * @method static CombatPosition getReferenceModelByID(int $id)
+ * @method static CombatPosition getNameByID(int $id)
  * @method static CombatPosition getReferenceModelByName(string $name)
  *
  * @see CombatPositionService

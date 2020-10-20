@@ -89,5 +89,10 @@ abstract class ReferenceService
         return $this->getReferenceModelByName($referenceName)->id;
     }
 
+    public function getNameByID(int $id)
+    {
+        return$this->getReferenceModelByID($id)->name;
+    }
+
     abstract protected function all(): Collection;
 }
