@@ -324,7 +324,7 @@ class HeroFactory
         $clone = $this
             ->heroClass(HeroClass::RANGER)
             ->withMeasurables()
-            ->combatPosition(CombatPosition::BACK_LINE)
+            ->combatPosition(CombatPosition::HIGH_GROUND)
             ->withItems(collect([
             $itemFactory->beginnerBow(),
             $itemFactory->beginnerLightArmor(),
