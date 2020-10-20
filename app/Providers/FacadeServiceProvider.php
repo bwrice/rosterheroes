@@ -9,6 +9,7 @@ use App\Services\Models\AttackService;
 use App\Services\Models\HeroService;
 use App\Services\Models\Reference\CombatPositionService;
 use App\Services\Models\Reference\DamageTypeService;
+use App\Services\Models\Reference\EnemyTypeService;
 use App\Services\Models\Reference\ItemBaseService;
 use App\Services\Models\Reference\ItemTypeService;
 use App\Services\Models\Reference\MaterialService;
@@ -35,12 +36,15 @@ class FacadeServiceProvider extends ServiceProvider
         $this->app->bind('admin', fn() => new Admin());
         $this->app->bind('content', fn() => new ContentService());
         $this->app->bind('npc', fn() => new NPCService());
+
+        // Reference model services
         $this->app->bind(DamageTypeService::class, fn() => new DamageTypeService());
         $this->app->bind(TargetPriorityService::class, fn() => new TargetPriorityService());
         $this->app->bind(CombatPositionService::class, fn() => new CombatPositionService());
         $this->app->bind(ItemTypeService::class, fn() => new ItemTypeService());
         $this->app->bind(ItemBaseService::class, fn() => new ItemBaseService());
         $this->app->bind(MaterialService::class, fn() => new MaterialService());
+        $this->app->bind(EnemyTypeService::class, fn() => new EnemyTypeService());
     }
 
     /**
