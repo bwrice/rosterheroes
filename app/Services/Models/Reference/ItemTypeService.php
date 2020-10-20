@@ -21,8 +21,8 @@ class ItemTypeService extends ReferenceService
         return ItemType::all();
     }
 
-    public function tier(int $id)
+    public function tier(int $itemTypeID)
     {
-        return $this->getReferenceModelByID($id)->tier;
+        return $this->getReferenceModelByID($itemTypeID)->tier;
     }
 }

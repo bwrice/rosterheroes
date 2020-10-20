@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Facade;
  * Class ItemTypeFacade
  * @package App\Facades
  *
- * @method static int tier(int $id)
+ * @method static int tier(int $itemTypeID)
  */
 class ItemTypeFacade extends Facade
 {

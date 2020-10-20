@@ -11,6 +11,7 @@ use App\Services\Models\Reference\CombatPositionService;
 use App\Services\Models\Reference\DamageTypeService;
 use App\Services\Models\Reference\ItemBaseService;
 use App\Services\Models\Reference\ItemTypeService;
+use App\Services\Models\Reference\MaterialService;
 use App\Services\Models\Reference\TargetPriorityService;
 use App\Services\Models\SquadService;
 use App\Services\Models\WeekService;
@@ -39,6 +40,7 @@ class FacadeServiceProvider extends ServiceProvider
         $this->app->bind(CombatPositionService::class, fn() => new CombatPositionService());
         $this->app->bind(ItemTypeService::class, fn() => new ItemTypeService());
         $this->app->bind(ItemBaseService::class, fn() => new ItemBaseService());
+        $this->app->bind(MaterialService::class, fn() => new MaterialService());
     }
 
     /**
