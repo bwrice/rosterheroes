@@ -27,6 +27,8 @@ class BuildAttackSnapshot
      */
     public function execute(Attack $attack, HasAttackSnapshots $hasAttackSnapshots, float $fantasyPower)
     {
+        $attack->setHasAttacks($hasAttackSnapshots);
+
         /** @var AttackSnapshot $attackSnapshot */
         $attackSnapshot = $hasAttackSnapshots->attackSnapshots()->create([
             'uuid' => Str::uuid(),
