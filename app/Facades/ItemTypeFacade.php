@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Facade;
  *
  * @method static int tier(int $itemTypeID)
  * @method static float baseDamageBonus(int $itemTypeID)
+ * @method static float damageMultiplierBonus(int $itemTypeID)
  * @method static ItemBaseBehavior baseBehavior(int $itemTypeID)
  */
 class ItemTypeFacade extends Facade

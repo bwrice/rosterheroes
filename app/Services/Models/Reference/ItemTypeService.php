@@ -32,6 +32,11 @@ class ItemTypeService extends ReferenceService
         return $this->tier($itemTypeID)/25;
     }
 
+    public function damageMultiplierBonus(int $itemTypeID)
+    {
+        return $this->tier($itemTypeID)/25;
+    }
+
     public function baseBehavior(int $itemTypeID)
     {
         $itemType = $this->getReferenceModelByID($itemTypeID);
