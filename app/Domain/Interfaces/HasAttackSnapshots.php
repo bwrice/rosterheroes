@@ -6,7 +6,7 @@ namespace App\Domain\Interfaces;
 
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
-interface HasAttackSnapshots
+interface HasAttackSnapshots extends HasAttacks
 {
     public function attackSnapshots(): MorphMany;
 
