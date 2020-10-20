@@ -11,6 +11,7 @@ use App\Domain\Interfaces\HasAttacks;
 use App\Domain\Interfaces\HasItems;
 use App\Domain\Interfaces\Morphable;
 use App\Domain\Interfaces\UsesItems;
+use App\Domain\Models\Support\Items\ItemStatsCalculator;
 use App\Domain\Models\Support\Items\ItemNameBuilder;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -179,30 +180,24 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
         return $this->itemType->attacks->merge($this->attacks);
     }
 
+    protected function getStatsCalculator()
+    {
+        return new ItemStatsCalculator($this->item_type_id, $this->material_id, $this->getUsesItems());
+    }
+
     public function adjustCombatSpeed(float $speed): float
     {
-        $materialBonus = $this->material->getSpeedModifierBonus();
-        $combatSpeed = $speed * (1 + $materialBonus);
-        $combatSpeed = $this->getItemBaseBehavior()->adjustCombatSpeed($combatSpeed, $this->getUsesItems());
-        return $combatSpeed;
+        return $this->getStatsCalculator()->adjustCombatSpeed($speed);
     }
 
     public function adjustBaseDamage(float $baseDamage): float
     {
-        $gradeBonus = $this->itemTypeTier()/25;
-        $materialBonus = $this->material->getBaseDamageModifierBonus();
-        $baseDamage = $baseDamage * (1 + $gradeBonus + $materialBonus);
-        $baseDamage = $this->getItemBaseBehavior()->adjustBaseDamage($baseDamage, $this->getUsesItems());
-        return $baseDamage;
+        return $this->getStatsCalculator()->adjustBaseDamage($baseDamage);
     }
 
     public function adjustDamageMultiplier(float $damageMultiplier): float
     {
-        $gradeBonus = $this->itemTypeTier()/25;
-        $materialBonus = $this->material->getDamageMultiplierModifierBonus();
-        $damageMultiplier = $damageMultiplier * (1 + $gradeBonus + $materialBonus);
-        $damageMultiplier = $this->getItemBaseBehavior()->adjustDamageMultiplier($damageMultiplier, $this->getUsesItems());
-        return $damageMultiplier;
+        return $this->getStatsCalculator()->adjustDamageMultiplier($damageMultiplier);
     }
 
     public function getUsesItems(): ?UsesItems
