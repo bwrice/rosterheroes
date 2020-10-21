@@ -73,7 +73,7 @@ use Illuminate\Support\Facades\Log;
  *
  * @method static HeroQueryBuilder query();
  */
-class Hero extends EventSourcedModel implements UsesItems, SpellCaster
+class Hero extends EventSourcedModel implements UsesItems, HasItems, SpellCaster
 {
     use HasNameSlug;
 

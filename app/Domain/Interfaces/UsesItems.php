@@ -4,9 +4,7 @@
 namespace App\Domain\Interfaces;
 
 
-use App\Domain\Collections\AttackCollection;
-
-interface UsesItems extends HasItems
+interface UsesItems
 {
     public function getBuffedMeasurableAmount(string $measurableTypeName): int;
 }
