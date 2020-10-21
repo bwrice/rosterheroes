@@ -7,9 +7,11 @@ use App\Domain\Actions\Combat\CalculateCombatDamage;
 use App\Domain\Models\AttackSnapshot;
 use App\Domain\Models\ItemBase;
 use App\Domain\Models\ItemSnapshot;
+use App\Domain\Models\ItemType;
 use App\Domain\Models\Json\ResourceCosts\FixedResourceCost;
 use App\Domain\Models\Json\ResourceCosts\PercentResourceCost;
 use App\Domain\Models\Json\ResourceCosts\ResourceCost;
+use App\Domain\Models\MeasurableType;
 use App\Domain\Models\Week;
 use App\Facades\WeekService;
 use App\Factories\Models\AttackFactory;
@@ -183,6 +185,34 @@ class BuildAttackSnapshotTest extends TestCase
         $highLevelMinionAttackSnapshot = $this->getDomainAction()->execute($attack, $highLevelMinionSnapshot, $fantasyPower);
 
         $this->assertGreaterThan($lowLevelMinionAttackSnapshot->damage, $highLevelMinionAttackSnapshot->damage);
+    }
+
+
+    /**
+     * @test
+     */
+    public function it_will_build_an_attack_snapshot_affected_by_the_hero_snapshot_of_the_item_snapshot()
+    {
+
+        /** @var ItemBase $bowBase */
+        $bowBase = ItemBase::query()->where('name', '=', ItemBase::BOW)->first();
+        /** @var ItemType $bowType */
+        $bowType = $bowBase->itemTypes()->inRandomOrder()->first();
+        $heroSnapshot = HeroSnapshotFactory::new()->withMeasurableSnapshots()->create();
+        $bowItemSnapshot = ItemSnapshotFactory::new()->withHeroSnapshotID($heroSnapshot->id)->withItemTypeID($bowType->id)->create();
+
+        $attack = AttackFactory::new()->create();
+        $fantasyPower = round(rand(100, 5000)/100, 2);
+
+        $lowAgilityAttackSnapshot = $this->getDomainAction()->execute($attack, $bowItemSnapshot, $fantasyPower);
+
+        $agilityMeasurableSnapshot = $heroSnapshot->getMeasurableSnapshot(MeasurableType::AGILITY);
+        $agilityMeasurableSnapshot->buffed_amount += 100;
+        $agilityMeasurableSnapshot->save();
+
+        $highAgilityAttackSnapshot = $this->getDomainAction()->execute($attack, $bowItemSnapshot->fresh(), $fantasyPower);
+
+        $this->assertGreaterThan($lowAgilityAttackSnapshot->damage, $highAgilityAttackSnapshot->damage);
     }
 
 }
