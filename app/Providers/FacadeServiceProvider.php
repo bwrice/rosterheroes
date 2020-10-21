@@ -13,6 +13,7 @@ use App\Services\Models\Reference\EnemyTypeService;
 use App\Services\Models\Reference\ItemBaseService;
 use App\Services\Models\Reference\ItemTypeService;
 use App\Services\Models\Reference\MaterialService;
+use App\Services\Models\Reference\MeasurableTypeService;
 use App\Services\Models\Reference\TargetPriorityService;
 use App\Services\Models\SquadService;
 use App\Services\Models\WeekService;
@@ -45,6 +46,7 @@ class FacadeServiceProvider extends ServiceProvider
         $this->app->bind(ItemBaseService::class, fn() => new ItemBaseService());
         $this->app->bind(MaterialService::class, fn() => new MaterialService());
         $this->app->bind(EnemyTypeService::class, fn() => new EnemyTypeService());
+        $this->app->bind(MeasurableTypeService::class, fn() => new MeasurableTypeService());
     }
 
     /**
