@@ -11,9 +11,9 @@ use App\Domain\Models\SquadSnapshot;
 
 class ConvertSquadSnapshotIntoCombatSquad
 {
-    protected ConvertHeroSnapshotToCombatHero $convertHeroSnapshotToCombatHero;
+    protected ConvertHeroSnapshotIntoCombatant $convertHeroSnapshotToCombatHero;
 
-    public function __construct(ConvertHeroSnapshotToCombatHero $convertHeroSnapshotToCombatHero)
+    public function __construct(ConvertHeroSnapshotIntoCombatant $convertHeroSnapshotToCombatHero)
     {
         $this->convertHeroSnapshotToCombatHero = $convertHeroSnapshotToCombatHero;
     }
