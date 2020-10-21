@@ -86,6 +86,7 @@ class ItemSnapshotFactory
             return $this->item;
         }
 
-        return ItemFactory::new()->create();
+        $this->item = ItemFactory::new()->create();
+        return $this->item;
     }
 }
