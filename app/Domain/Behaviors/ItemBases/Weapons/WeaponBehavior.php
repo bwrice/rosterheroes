@@ -84,12 +84,12 @@ abstract class WeaponBehavior extends ItemBaseBehavior
 
     protected function getBaseDamageMeasurablesBonus(UsesItems $usesItems): float
     {
-        return 5 * $this->getMeasurablesDamageBonus($usesItems);
+        return 1.5 * $this->getMeasurablesDamageBonus($usesItems);
     }
 
     protected function getDamageMultiplierMeasurablesBonus(UsesItems $usesItems)
     {
-        return 4 * $this->getMeasurablesDamageBonus($usesItems);
+        return 2.5 * $this->getMeasurablesDamageBonus($usesItems);
     }
 
     abstract protected function getMeasurablesDamageBonus(UsesItems $usesItems): float;
