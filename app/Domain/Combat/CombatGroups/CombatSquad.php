@@ -10,7 +10,6 @@ use Illuminate\Support\Collection;
 
 class CombatSquad implements CombatGroup, Arrayable
 {
-    protected string $squadName;
     protected string $sourceUuid;
     protected int $experience, $squadRankID;
     protected Collection $combatHeroes;
@@ -58,19 +57,11 @@ class CombatSquad implements CombatGroup, Arrayable
     public function toArray()
     {
         return [
-            'squadName' => $this->squadName,
-            'squadUuid' => $this->sourceUuid,
+            'squad_snapshot_uuid' => $this->sourceUuid,
             'experience' => $this->experience,
-            'combatHeroes' => $this->combatHeroes->toArray()
+            'rank_id' => $this->squadRankID,
+            'combat_heroes' => $this->combatHeroes->toArray()
         ];
-    }
-
-    /**
-     * @return string
-     */
-    public function getSquadName(): string
-    {
-        return $this->squadName;
     }
 
     /**
