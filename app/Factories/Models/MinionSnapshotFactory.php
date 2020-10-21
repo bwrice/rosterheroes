@@ -6,16 +6,19 @@ namespace App\Factories\Models;
 
 use App\Domain\Models\CombatPosition;
 use App\Domain\Models\EnemyType;
+use App\Domain\Models\Minion;
 use App\Domain\Models\MinionSnapshot;
 use App\Domain\Models\Week;
 use Illuminate\Support\Str;
 
 class MinionSnapshotFactory
 {
-    /** @var int|null */
-    protected $weekID;
-    /** @var int|null */
-    protected $minionID;
+    protected ?Minion $minion = null;
+    protected ?int $weekID = null;
+    protected ?int $minionID = null;
+    protected ?int $level = null;
+    protected ?int $combatPositionID = null;
+    protected ?int $enemyTypeID = null;
 
 
     public static function new()
@@ -29,10 +32,10 @@ class MinionSnapshotFactory
         $minionSnapshot = MinionSnapshot::query()->create(array_merge([
             'uuid' => Str::uuid(),
             'week_id' => $this->getWeekID(),
-            'minion_id' => $this->getMinionID(),
-            'level' => rand(1, 100),
-            'combat_position_id' => CombatPosition::query()->inRandomOrder()->first()->id,
-            'enemy_type_id' => EnemyType::query()->inRandomOrder()->first()->id,
+            'minion_id' => $this->minionID ?: $this->getMinion()->id,
+            'level' => $this->level ?: $this->getMinion()->level,
+            'combat_position_id' => $this->combatPositionID ?: $this->getMinion()->combat_position_id,
+            'enemy_type_id' => $this->enemyTypeID ?: $this->getMinion()->enemy_type_id,
             'starting_health' => rand(400, 10000),
             'starting_stamina' => rand(5000, 20000),
             'starting_mana' => rand(5000, 20000),
@@ -53,12 +56,13 @@ class MinionSnapshotFactory
         return factory(Week::class)->create()->id;
     }
 
-    protected function getMinionID()
+    protected function getMinion()
     {
-        if ($this->minionID) {
-            return $this->minionID;
+        if ($this->minion) {
+            return $this->minion;
         }
-        return MinionFactory::new()->create()->id;
+        $this->minion = MinionFactory::new()->create();
+        return $this->minion;
     }
 
     public function withWeekID(int $weekID)
@@ -72,6 +76,27 @@ class MinionSnapshotFactory
     {
         $clone = clone $this;
         $clone->minionID = $minionID;
+        return $clone;
+    }
+
+    public function withLevel(int $level)
+    {
+        $clone = clone $this;
+        $clone->level = $level;
+        return $clone;
+    }
+
+    public function withCombatPositionID(int $combatPositionID)
+    {
+        $clone = clone $this;
+        $clone->combatPositionID = $combatPositionID;
+        return $clone;
+    }
+
+    public function withEnemyTypeID(int $enemyTypeID)
+    {
+        $clone = clone $this;
+        $clone->enemyTypeID = $enemyTypeID;
         return $clone;
     }
 }
