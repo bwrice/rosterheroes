@@ -9,7 +9,7 @@ use App\Domain\Combat\Attacks\MinionCombatAttack;
 use App\Domain\Combat\Combatants\CombatHero;
 use App\Domain\Combat\Combatants\CombatMinion;
 use App\Domain\Combat\CombatGroups\CombatSquad;
-use App\Domain\Combat\CombatGroups\SideQuestGroup;
+use App\Domain\Combat\CombatGroups\SideQuestCombatGroup;
 use App\Factories\Combat\CombatHeroFactory;
 use App\Factories\Combat\CombatMinionFactory;
 use App\Factories\Combat\CombatSquadFactory;
@@ -77,25 +77,25 @@ class SideQuestEventFactory
         return SideQuestResultFactory::new()->create()->id;
     }
 
-    public function sideQuestVictory(CombatSquad $combatSquad = null, SideQuestGroup $sideQuestGroup = null)
+    public function sideQuestVictory(CombatSquad $combatSquad = null, SideQuestCombatGroup $sideQuestGroup = null)
     {
         $eventType = SideQuestEvent::TYPE_SIDE_QUEST_VICTORY;
         return $this->sideQuestEndEvent($eventType, $combatSquad, $sideQuestGroup);
     }
 
-    public function sideQuestDefeat(CombatSquad $combatSquad = null, SideQuestGroup $sideQuestGroup = null)
+    public function sideQuestDefeat(CombatSquad $combatSquad = null, SideQuestCombatGroup $sideQuestGroup = null)
     {
         $eventType = SideQuestEvent::TYPE_SIDE_QUEST_DEFEAT;
         return $this->sideQuestEndEvent($eventType, $combatSquad, $sideQuestGroup);
     }
 
-    public function sideQuestDraw(CombatSquad $combatSquad = null, SideQuestGroup $sideQuestGroup = null)
+    public function sideQuestDraw(CombatSquad $combatSquad = null, SideQuestCombatGroup $sideQuestGroup = null)
     {
         $eventType = SideQuestEvent::TYPE_SIDE_QUEST_DRAW;
         return $this->sideQuestEndEvent($eventType, $combatSquad, $sideQuestGroup);
     }
 
-    protected function sideQuestEndEvent(string $eventType, CombatSquad $combatSquad = null, SideQuestGroup $sideQuestGroup = null)
+    protected function sideQuestEndEvent(string $eventType, CombatSquad $combatSquad = null, SideQuestCombatGroup $sideQuestGroup = null)
     {
         $combatSquad = $combatSquad ?: CombatSquadFactory::new()->create();
         $sideQuestGroup = $sideQuestGroup ?: SideQuestGroupFactory::new()->create();

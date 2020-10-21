@@ -5,7 +5,7 @@ namespace App\Factories\Combat;
 
 
 use App\Domain\Collections\AbstractCombatantCollection;
-use App\Domain\Combat\CombatGroups\SideQuestGroup;
+use App\Domain\Combat\CombatGroups\SideQuestCombatGroup;
 use App\Factories\Models\SideQuestFactory;
 use Illuminate\Support\Collection;
 
@@ -35,7 +35,7 @@ class SideQuestGroupFactory
             $combatMinions = collect();
         }
 
-        return new SideQuestGroup(
+        return new SideQuestCombatGroup(
             $sideQuest->name,
             $sideQuest->uuid,
             new AbstractCombatantCollection($combatMinions)
