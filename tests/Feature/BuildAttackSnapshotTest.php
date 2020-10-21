@@ -15,6 +15,7 @@ use App\Facades\WeekService;
 use App\Factories\Models\AttackFactory;
 use App\Factories\Models\HeroSnapshotFactory;
 use App\Factories\Models\ItemSnapshotFactory;
+use App\Factories\Models\MinionSnapshotFactory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -141,7 +142,6 @@ class BuildAttackSnapshotTest extends TestCase
         $attack = AttackFactory::new()->create();
         $fantasyPower = round(rand(100, 5000)/100, 2);
 
-        /** @var AttackSnapshot $attackSnapshot */
         $lowGradeAttackSnapshot = $this->getDomainAction()->execute($attack, $lowGradeSnapshot, $fantasyPower);
 
         $highGradeSwordType = $swordTypes->first();
@@ -153,6 +153,29 @@ class BuildAttackSnapshotTest extends TestCase
         $highGradeAttackSnapshot = $this->getDomainAction()->execute($attack, $highGradeSnapshot, $fantasyPower);
 
         $this->assertGreaterThan($lowGradeAttackSnapshot->damage, $highGradeAttackSnapshot->damage);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_build_an_attack_snapshot_with_higher_damage_from_a_higher_level_minion()
+    {
+        $lowLevel = rand(3, 8);
+        $lowLevelMinionSnapshot = MinionSnapshotFactory::new()->withLevel($lowLevel)->create();
+        $attack = AttackFactory::new()->create();
+        $fantasyPower = round(rand(100, 5000)/100, 2);
+
+        $lowLevelMinionAttackSnapshot = $this->getDomainAction()->execute($attack, $lowLevelMinionSnapshot, $fantasyPower);
+
+        $highLevelMinionSnapshot = MinionSnapshotFactory::new()
+            ->withLevel($lowLevel + 50)
+            ->withCombatPositionID($lowLevelMinionSnapshot->combat_position_id)
+            ->withEnemyTypeID($lowLevelMinionSnapshot->enemy_type_id)
+            ->create();
+
+        $highLevelMinionAttackSnapshot = $this->getDomainAction()->execute($attack, $highLevelMinionSnapshot, $fantasyPower);
+
+        $this->assertGreaterThan($lowLevelMinionAttackSnapshot->damage, $highLevelMinionAttackSnapshot->damage);
     }
 
 }
