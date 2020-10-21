@@ -40,7 +40,8 @@ class BuildAttackSnapshotTest extends TestCase
     public function it_will_build_an_attack_snapshot_for_an_attack_and_hero_snapshot()
     {
         $attack = AttackFactory::new()->create();
-        $itemSnapshot = ItemSnapshotFactory::new()->create();
+        $heroSnapshot = HeroSnapshotFactory::new()->withMeasurableSnapshots()->create();
+        $itemSnapshot = ItemSnapshotFactory::new()->withHeroSnapshotID($heroSnapshot->id)->create();
         $fantasyPower = round(rand(100, 5000)/100, 2);
 
         $attackSnapshot = $this->getDomainAction()->execute($attack, $itemSnapshot, $fantasyPower);
@@ -61,7 +62,8 @@ class BuildAttackSnapshotTest extends TestCase
     public function the_attack_snapshot_will_belong_to_the_item_snapshot()
     {
         $attack = AttackFactory::new()->create();
-        $itemSnapshot = ItemSnapshotFactory::new()->create();
+        $heroSnapshot = HeroSnapshotFactory::new()->withMeasurableSnapshots()->create();
+        $itemSnapshot = ItemSnapshotFactory::new()->withHeroSnapshotID($heroSnapshot->id)->create();
         $fantasyPower = round(rand(100, 5000)/100, 2);
 
         $attackSnapshot = $this->getDomainAction()->execute($attack, $itemSnapshot, $fantasyPower);
@@ -76,11 +78,13 @@ class BuildAttackSnapshotTest extends TestCase
     public function it_will_build_a_snapshot_attack_with_the_expected_damage()
     {
         $attack = AttackFactory::new()->create();
-        $itemSnapshot = ItemSnapshotFactory::new()->create();
+        $heroSnapshot = HeroSnapshotFactory::new()->withMeasurableSnapshots()->create();
+        $itemSnapshot = ItemSnapshotFactory::new()->withHeroSnapshotID($heroSnapshot->id)->create();
         $fantasyPower = round(rand(100, 5000)/100, 2);
 
         /** @var CalculateCombatDamage $calculateDamage */
         $calculateDamage = app(CalculateCombatDamage::class);
+        $attack->setHasAttacks($itemSnapshot);
         $damage = $calculateDamage->execute($attack, $fantasyPower);
 
         $attackSnapshot = $this->getDomainAction()->execute($attack, $itemSnapshot, $fantasyPower);
@@ -93,12 +97,14 @@ class BuildAttackSnapshotTest extends TestCase
      */
     public function it_will_build_an_attack_snapshot_with_matching_resource_costs()
     {
+        $heroSnapshot = HeroSnapshotFactory::new()->withMeasurableSnapshots()->create();
+        $itemSnapshot = ItemSnapshotFactory::new()->withHeroSnapshotID($heroSnapshot->id)->create();
+        $fantasyPower = round(rand(100, 5000)/100, 2);
+
         $attack = AttackFactory::new()->create(['tier' => 3]);
+        $attack->setHasAttacks($itemSnapshot);
         $attackResourceCosts = $attack->getResourceCosts();
         $this->assertTrue($attackResourceCosts->isNotEmpty());
-
-        $itemSnapshot = ItemSnapshotFactory::new()->create();
-        $fantasyPower = round(rand(100, 5000)/100, 2);
 
         /** @var AttackSnapshot $attackSnapshot */
         $attackSnapshot = $this->getDomainAction()->execute($attack, $itemSnapshot, $fantasyPower);
@@ -137,7 +143,8 @@ class BuildAttackSnapshotTest extends TestCase
         $swordTypes = $swordBase->itemTypes->sortByDesc('tier');
         $lowGradeSwordType = $swordTypes->last();
 
-        $lowGradeSnapshot = ItemSnapshotFactory::new()->withItemTypeID($lowGradeSwordType->id)->create();
+        $heroSnapshot = HeroSnapshotFactory::new()->withMeasurableSnapshots()->create();
+        $lowGradeSnapshot = ItemSnapshotFactory::new()->withHeroSnapshotID($heroSnapshot->id)->withItemTypeID($lowGradeSwordType->id)->create();
 
         $attack = AttackFactory::new()->create();
         $fantasyPower = round(rand(100, 5000)/100, 2);
