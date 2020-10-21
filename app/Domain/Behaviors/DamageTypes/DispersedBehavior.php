@@ -36,7 +36,7 @@ class DispersedBehavior extends DamageTypeBehavior
 
     public function getInitialCombatSpeed(int $tier, ?int $targetsCount): float
     {
-        return 1;
+        return .8;
     }
 
     public function getResourceCostMagnitude(int $tier, ?int $targetsCount): float

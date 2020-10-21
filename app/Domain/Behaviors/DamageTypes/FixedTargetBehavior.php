@@ -39,8 +39,8 @@ class FixedTargetBehavior extends DamageTypeBehavior
     public function getInitialCombatSpeed(int $tier, ?int $targetsCount): float
     {
         $targetsCount = $targetsCount ?: 1;
-        $targetsCountMultiplier = 1/(1 + .5 * ($targetsCount - 1));
-        return 10 * $targetsCountMultiplier;
+        $targetsCountMultiplier = 1/(1 + 2 * ($targetsCount - 1));
+        return 5 * $targetsCountMultiplier;
     }
 
     public function getResourceCostMagnitude(int $tier, ?int $targetsCount): float

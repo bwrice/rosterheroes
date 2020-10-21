@@ -33,7 +33,7 @@ class AreaOfEffectBehavior extends DamageTypeBehavior
 
     public function getInitialCombatSpeed(int $tier, ?int $targetsCount): float
     {
-        return 1.5;
+        return 1;
     }
 
     public function getResourceCostMagnitude(int $tier, ?int $targetsCount): float
