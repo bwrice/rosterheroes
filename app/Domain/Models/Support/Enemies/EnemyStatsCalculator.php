@@ -5,6 +5,7 @@ namespace App\Domain\Models\Support\Enemies;
 
 use App\Facades\CombatPositionFacade;
 use App\Facades\EnemyTypeFacade;
+use Illuminate\Support\Collection;
 
 class EnemyStatsCalculator
 {
@@ -77,5 +78,10 @@ class EnemyStatsCalculator
     public function adjustResourceCostPercent(float $amount): float
     {
         return 0;
+    }
+
+    public function adjustResourceCosts(Collection $resourceCosts): Collection
+    {
+        return $resourceCosts;
     }
 }
