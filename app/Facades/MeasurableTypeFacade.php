@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Facade;
  * @package App\Facades
  *
  * @method static string name(int $id)
+ * @method static int id(string $name)
  * @method static MeasurableTypeBehavior getBehavior($identifier)
  *
  */

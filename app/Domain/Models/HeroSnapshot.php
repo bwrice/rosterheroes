@@ -4,7 +4,10 @@ namespace App\Domain\Models;
 
 use App\Domain\Collections\ItemCollection;
 use App\Domain\Collections\SpellCollection;
+use App\Domain\Interfaces\HasItems;
+use App\Domain\Interfaces\UsesItems;
 use App\Domain\Models\MeasurableSnapshot;
+use App\Facades\MeasurableTypeFacade;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -31,7 +34,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Collection $itemSnapshots
  * @property SpellCollection $spells
  */
-class HeroSnapshot extends Model
+class HeroSnapshot extends Model implements UsesItems
 {
     protected $guarded = [];
 
@@ -66,8 +69,13 @@ class HeroSnapshot extends Model
      */
     public function getMeasurableSnapshot(string $measurableTypeName)
     {
-        return $this->measurableSnapshots->first(function (MeasurableSnapshot $measurableSnapshot) use ($measurableTypeName) {
-            return $measurableSnapshot->measurable->measurableType->name === $measurableTypeName;
+        return $this->measurableSnapshots->load('measurable')->first(function (MeasurableSnapshot $measurableSnapshot) use ($measurableTypeName) {
+            return $measurableSnapshot->measurable->measurable_type_id === MeasurableTypeFacade::id($measurableTypeName);
         });
+    }
+
+    public function getBuffedMeasurableAmount(string $measurableTypeName): int
+    {
+        return $this->getMeasurableSnapshot($measurableTypeName)->buffed_amount;
     }
 }
