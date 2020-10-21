@@ -36,10 +36,9 @@ class WerewolfBehavior extends EnemyTypeBehavior
     /**
      * @param float $damageProperty
      * @param int $enemyLevel
-     * @param CombatPosition $startingCombatPosition
      * @return int|float
      */
-    protected function adjustDamageProperty(float $damageProperty, int $enemyLevel, CombatPosition $startingCombatPosition)
+    protected function adjustDamageProperty(float $damageProperty, int $enemyLevel)
     {
         return $damageProperty * (1 + (.028 * ($enemyLevel ** 1.19)));
     }
@@ -52,7 +51,7 @@ class WerewolfBehavior extends EnemyTypeBehavior
      */
     public function adjustBaseDamage(float $baseDamage, int $enemyLevel, string $combatPositionName): float
     {
-        return $this->adjustDamageProperty($baseDamage, $enemyLevel, $combatPositionName);
+        return $this->adjustDamageProperty($baseDamage, $enemyLevel);
     }
 
     /**
@@ -63,7 +62,7 @@ class WerewolfBehavior extends EnemyTypeBehavior
      */
     public function adjustDamageMultiplier(float $damageMultiplier, int $enemyLevel, string $combatPositionName): float
     {
-        return $this->adjustDamageProperty($damageMultiplier, $enemyLevel, $combatPositionName);
+        return $this->adjustDamageProperty($damageMultiplier, $enemyLevel);
     }
 
     /**
