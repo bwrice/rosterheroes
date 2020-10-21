@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Domain\Actions\Snapshots\BuildAttackSnapshot;
 use App\Domain\Actions\Combat\CalculateCombatDamage;
 use App\Domain\Models\AttackSnapshot;
+use App\Domain\Models\ItemBase;
 use App\Domain\Models\ItemSnapshot;
 use App\Domain\Models\Json\ResourceCosts\FixedResourceCost;
 use App\Domain\Models\Json\ResourceCosts\PercentResourceCost;
@@ -123,6 +124,35 @@ class BuildAttackSnapshotTest extends TestCase
             });
             $this->assertNotNull($match);
         });
-
     }
+
+    /**
+     * @test
+     */
+    public function it_will_build_an_attack_snapshot_with_higher_damage_with_a_higher_quality_item_snapshot()
+    {
+        /** @var ItemBase $swordBase */
+        $swordBase = ItemBase::query()->where('name', '=', ItemBase::SWORD)->first();
+        $swordTypes = $swordBase->itemTypes->sortByDesc('tier');
+        $lowGradeSwordType = $swordTypes->last();
+
+        $lowGradeSnapshot = ItemSnapshotFactory::new()->withItemTypeID($lowGradeSwordType->id)->create();
+
+        $attack = AttackFactory::new()->create();
+        $fantasyPower = round(rand(100, 5000)/100, 2);
+
+        /** @var AttackSnapshot $attackSnapshot */
+        $lowGradeAttackSnapshot = $this->getDomainAction()->execute($attack, $lowGradeSnapshot, $fantasyPower);
+
+        $highGradeSwordType = $swordTypes->first();
+        $highGradeSnapshot = ItemSnapshotFactory::new()
+            ->withItemTypeID($highGradeSwordType->id)
+            ->withHeroSnapshotID($lowGradeSnapshot->hero_snapshot_id)
+            ->withMaterialID($lowGradeSnapshot->material_id)->create();
+
+        $highGradeAttackSnapshot = $this->getDomainAction()->execute($attack, $highGradeSnapshot, $fantasyPower);
+
+        $this->assertGreaterThan($lowGradeAttackSnapshot->damage, $highGradeAttackSnapshot->damage);
+    }
+
 }
