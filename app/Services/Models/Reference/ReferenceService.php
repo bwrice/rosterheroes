@@ -89,7 +89,7 @@ abstract class ReferenceService
         return $this->getReferenceModelByName($referenceName)->id;
     }
 
-    public function getNameByID(int $id)
+    public function name(int $id)
     {
         return$this->getReferenceModelByID($id)->name;
     }

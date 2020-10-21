@@ -67,7 +67,7 @@ class EnemyStatsCalculator
 
     protected function getCombatPositionName()
     {
-        return CombatPositionFacade::getNameByID($this->combatPositionID);
+        return CombatPositionFacade::name($this->combatPositionID);
     }
 
     public function adjustResourceCostAmount(float $amount): int
