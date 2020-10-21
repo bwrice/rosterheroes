@@ -4,7 +4,7 @@
 namespace App\Domain\Combat\CombatGroups;
 
 use App\Domain\Collections\CombatPositionCollection;
-use App\Domain\Combat\Combatants\CombatHero;
+use App\Domain\Combat\Combatants\Combatant;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
 
@@ -84,8 +84,15 @@ class CombatSquad implements CombatGroup, Arrayable
 
     protected function getSurvivingHeroes()
     {
-        return $this->combatHeroes->filter(function (CombatHero $combatHero) {
+        return $this->combatHeroes->filter(function (Combatant $combatHero) {
             return $combatHero->getCurrentHealth() > 0;
         });
+    }
+    /**
+     * @return Collection
+     */
+    public function getCombatHeroes(): Collection
+    {
+        return $this->combatHeroes;
     }
 }
