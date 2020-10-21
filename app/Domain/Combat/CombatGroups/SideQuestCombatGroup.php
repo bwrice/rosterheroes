@@ -4,10 +4,7 @@
 namespace App\Domain\Combat\CombatGroups;
 
 
-use App\Domain\Collections\AbstractCombatantCollection;
-use App\Domain\Collections\CombatantCollection;
-use App\Domain\Collections\CombatPositionCollection;
-use App\Domain\Combat\Combatants\CombatMinion;
+use App\Domain\Combat\Combatants\Combatant;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
 
@@ -35,8 +32,8 @@ class SideQuestCombatGroup implements CombatGroup, Arrayable
     public function toArray()
     {
         return [
-            'sideQuestUuid' => $this->sourceUuid,
-            'combatMinions' => $this->combatMinions->toArray()
+            'side_quest_snapshot_uuid' => $this->sourceUuid,
+            'combat_minions' => $this->combatMinions->toArray()
         ];
     }
 
@@ -60,7 +57,7 @@ class SideQuestCombatGroup implements CombatGroup, Arrayable
 
     public function getSurvivors()
     {
-        return $this->combatMinions->filter(function (CombatMinion $combatMinion) {
+        return $this->combatMinions->filter(function (Combatant $combatMinion) {
             return $combatMinion->getCurrentHealth() > 0;
         });
     }
