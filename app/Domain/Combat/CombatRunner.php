@@ -32,7 +32,7 @@ class CombatRunner
      * @param int $maxMoments
      * @return array
      */
-    public function execute(CombatGroup $sideA, CombatGroup $sideB, int $maxMoments = 500)
+    public function execute(CombatGroup $sideA, CombatGroup $sideB, int $maxMoments = 5000)
     {
         $moment = 1;
         $victoriousSide = null;
