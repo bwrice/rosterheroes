@@ -11,9 +11,9 @@ use App\Domain\Models\SideQuestSnapshot;
 
 class ConvertSideQuestSnapshotIntoSideQuestCombatGroup
 {
-    protected ConvertMinionSnapshotIntoCombatMinion $convertMinionSnapshotIntoCombatMinion;
+    protected ConvertMinionSnapshotIntoCombatant $convertMinionSnapshotIntoCombatMinion;
 
-    public function __construct(ConvertMinionSnapshotIntoCombatMinion $convertMinionSnapshotIntoCombatMinion)
+    public function __construct(ConvertMinionSnapshotIntoCombatant $convertMinionSnapshotIntoCombatMinion)
     {
         $this->convertMinionSnapshotIntoCombatMinion = $convertMinionSnapshotIntoCombatMinion;
     }
