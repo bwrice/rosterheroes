@@ -4,8 +4,6 @@
 namespace App\Domain\Combat\CombatGroups;
 
 
-use App\Domain\Collections\CombatantCollection;
-use App\Domain\Collections\CombatPositionCollection;
 use Illuminate\Support\Collection;
 
 interface CombatGroup

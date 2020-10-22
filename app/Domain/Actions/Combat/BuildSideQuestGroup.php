@@ -4,8 +4,6 @@
 namespace App\Domain\Actions\Combat;
 
 
-use App\Domain\Collections\AbstractCombatantCollection;
-use App\Domain\Collections\CombatantCollection;
 use App\Domain\Combat\CombatGroups\SideQuestCombatGroup;
 use App\Domain\Models\CombatPosition;
 use App\Domain\Models\DamageType;

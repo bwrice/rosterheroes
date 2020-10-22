@@ -4,7 +4,6 @@
 namespace App\Domain\Actions;
 
 
-use App\Domain\Collections\AbstractCombatantCollection;
 use App\Domain\Combat\CombatGroups\CombatSquad;
 use App\Domain\Models\HeroSnapshot;
 use App\Domain\Models\SquadSnapshot;
@@ -24,7 +23,7 @@ class ConvertSquadSnapshotIntoCombatSquad
      */
     public function execute(SquadSnapshot $squadSnapshot)
     {
-        $combatHeroes = new AbstractCombatantCollection();
+        $combatHeroes = collect();
         $squadSnapshot->heroSnapshots->each(function (HeroSnapshot $heroSnapshot) use ($combatHeroes) {
             $combatHeroes->push($this->convertHeroSnapshotToCombatHero->execute($heroSnapshot));
         });

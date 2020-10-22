@@ -4,7 +4,6 @@
 namespace App\Domain\Actions;
 
 
-use App\Domain\Collections\AbstractCombatantCollection;
 use App\Domain\Combat\CombatGroups\SideQuestCombatGroup;
 use App\Domain\Models\MinionSnapshot;
 use App\Domain\Models\SideQuestSnapshot;
@@ -24,7 +23,7 @@ class ConvertSideQuestSnapshotIntoSideQuestCombatGroup
      */
     public function execute(SideQuestSnapshot $sideQuestSnapshot)
     {
-        $combatMinions = new AbstractCombatantCollection();
+        $combatMinions = collect();
         $sideQuestSnapshot->minionSnapshots->each(function (MinionSnapshot $minionSnapshot) use ($combatMinions) {
             for ($i = 1; $i <= $minionSnapshot->pivot->count; $i++) {
                 $combatMinions->push($this->convertMinionSnapshotIntoCombatMinion->execute($minionSnapshot));

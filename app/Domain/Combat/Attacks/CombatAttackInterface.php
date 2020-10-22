@@ -4,7 +4,6 @@
 namespace App\Domain\Combat\Attacks;
 
 
-use App\Domain\Collections\CombatantCollection;
 use Illuminate\Support\Collection;
 
 interface CombatAttackInterface
