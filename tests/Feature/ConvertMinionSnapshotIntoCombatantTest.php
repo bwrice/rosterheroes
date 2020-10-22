@@ -43,7 +43,7 @@ class ConvertMinionSnapshotIntoCombatantTest extends TestCase
         $this->assertEquals($minionSnapshot->starting_stamina, $combatant->getCurrentStamina());
         $this->assertEquals($minionSnapshot->starting_mana, $combatant->getInitialMana());
         $this->assertEquals($minionSnapshot->starting_mana, $combatant->getCurrentMana());
-        $this->assertEquals($minionSnapshot->combat_position_id, $combatant->getInitialCombatPositionID());
+        $this->assertEquals($minionSnapshot->combat_position_id, $combatant->getCombatPositionID());
         $this->assertTrue(abs($minionSnapshot->block_chance - $combatant->getBlockChancePercent()) < 0.01);
     }
 

@@ -37,7 +37,7 @@ class ConvertHeroSnapshotIntoCombatantTest extends TestCase
 
         $this->assertEquals($combatant->getSourceUuid(), $heroSnapshot->uuid);
         $this->assertEquals($combatant->getProtection(), $heroSnapshot->protection);
-        $this->assertEquals($combatant->getInitialCombatPositionID(), $heroSnapshot->combat_position_id);
+        $this->assertEquals($combatant->getCombatPositionID(), $heroSnapshot->combat_position_id);
         $this->assertTrue(abs($combatant->getBlockChancePercent() - $heroSnapshot->block_chance) < 0.01);
     }
 
