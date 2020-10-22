@@ -113,7 +113,7 @@ class TrollBehavior extends EnemyTypeBehavior
      */
     public function getBlockChancePercent(int $enemyLevel, string $combatPositionName): float
     {
-        switch ($$combatPositionName) {
+        switch ($combatPositionName) {
             case CombatPosition::HIGH_GROUND:
             case CombatPosition::BACK_LINE:
                 return 0;
