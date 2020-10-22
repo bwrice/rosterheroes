@@ -17,14 +17,8 @@ class BuildMinionSnapshot extends BuildSnapshot
     public const EXCEPTION_CODE_INVALID_WEEK = 1;
     public const EXCEPTION_CODE_WEEK_NOT_FINALIZING = 2;
 
-    /**
-     * @var CalculateFantasyPower
-     */
-    protected $calculateFantasyPower;
-    /**
-     * @var BuildAttackSnapshot
-     */
-    protected $buildAttackSnapshot;
+    protected CalculateFantasyPower $calculateFantasyPower;
+    protected BuildAttackSnapshot $buildAttackSnapshot;
 
     public function __construct(CalculateFantasyPower $calculateFantasyPower, BuildAttackSnapshot $buildAttackSnapshot)
     {
@@ -42,6 +36,7 @@ class BuildMinionSnapshot extends BuildSnapshot
             'week_id' => CurrentWeek::id(),
             'combat_position_id' => $minion->combat_position_id,
             'enemy_type_id' => $minion->enemy_type_id,
+            'name' => $minion->name,
             'level' => $minion->level,
             'starting_health' => $minion->getStartingHealth(),
             'starting_stamina' => $minion->getStartingStamina(),

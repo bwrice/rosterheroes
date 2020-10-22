@@ -18,6 +18,7 @@ class CreateMinionSnapshotsTable extends Migration
             $table->uuid('uuid');
             $table->integer('week_id')->unsigned();
             $table->integer('minion_id')->unsigned();
+            $table->string('name');
             $table->integer('level');
             $table->integer('combat_position_id')->unsigned();
             $table->integer('enemy_type_id')->unsigned();

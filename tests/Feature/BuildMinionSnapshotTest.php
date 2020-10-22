@@ -46,6 +46,7 @@ class BuildMinionSnapshotTest extends TestCase
         $this->assertEquals($currentWeek->id, $minionSnapshot->week_id);
         $this->assertEquals($minion->combat_position_id, $minionSnapshot->combat_position_id);
         $this->assertEquals($minion->enemy_type_id, $minionSnapshot->enemy_type_id);
+        $this->assertEquals($minion->name, $minionSnapshot->name);
         $this->assertEquals($minion->level, $minionSnapshot->level);
         $this->assertEquals($minion->getStartingHealth(), $minionSnapshot->starting_health);
         $this->assertEquals($minion->getStartingStamina(), $minionSnapshot->starting_stamina);

@@ -33,6 +33,7 @@ class MinionSnapshotFactory
             'uuid' => Str::uuid(),
             'week_id' => $this->getWeekID(),
             'minion_id' => $this->minionID ?: $this->getMinion()->id,
+            'name' => $this->getMinion()->name,
             'level' => $this->level ?: $this->getMinion()->level,
             'combat_position_id' => $this->combatPositionID ?: $this->getMinion()->combat_position_id,
             'enemy_type_id' => $this->enemyTypeID ?: $this->getMinion()->enemy_type_id,

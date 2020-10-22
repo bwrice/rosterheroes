@@ -3,7 +3,9 @@
 namespace App\Domain\Models;
 
 use App\Domain\Interfaces\HasAttackSnapshots;
+use App\Domain\Interfaces\RewardsChests;
 use App\Domain\Models\Traits\UsesEnemyStatsCalculator;
+use App\Domain\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -17,6 +19,7 @@ use Illuminate\Support\Collection;
  * @property string $uuid
  * @property int $week_id
  * @property int $minion_id
+ * @property string $name
  * @property int $level
  * @property int $combat_position_id
  * @property int $enemy_type_id
@@ -37,9 +40,9 @@ use Illuminate\Support\Collection;
  * @property EloquentCollection $attackSnapshots
  * @property EloquentCollection $chestBlueprints
  */
-class MinionSnapshot extends Model implements HasAttackSnapshots
+class MinionSnapshot extends Model implements HasAttackSnapshots, RewardsChests
 {
-    use UsesEnemyStatsCalculator;
+    use UsesEnemyStatsCalculator, HasUuid;
 
     protected $guarded = [];
 
@@ -78,5 +81,25 @@ class MinionSnapshot extends Model implements HasAttackSnapshots
     public function getUuid(): string
     {
         return $this->uuid;
+    }
+
+    public function getMorphType(): string
+    {
+        return self::RELATION_MORPH_MAP_KEY;
+    }
+
+    public function getMorphID(): int
+    {
+        return $this->id;
+    }
+
+    public function getChestSourceName(): string
+    {
+        return $this->minion->name;
+    }
+
+    public function getChestSourceType(): string
+    {
+        return 'Minion';
     }
 }
