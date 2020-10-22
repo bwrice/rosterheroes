@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Domain\Actions\ConvertHeroSnapshotToCombatHero;
+use App\Domain\Actions\ConvertHeroSnapshotIntoCombatant;
 use App\Domain\Actions\ConvertSquadSnapshotIntoCombatSquad;
 use App\Domain\Models\HeroSnapshot;
 use App\Factories\Models\HeroSnapshotFactory;
@@ -56,7 +56,7 @@ class ConvertSquadSnapshotIntoCombatSquadTest extends TestCase
             return $heroSnapshot->uuid;
         });
 
-        $convertCombatHeroMock = $this->getMockBuilder(ConvertHeroSnapshotToCombatHero::class)
+        $convertCombatHeroMock = $this->getMockBuilder(ConvertHeroSnapshotIntoCombatant::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -72,7 +72,7 @@ class ConvertSquadSnapshotIntoCombatSquadTest extends TestCase
             }))
             ->willReturn('anything');
 
-        $this->instance(ConvertHeroSnapshotToCombatHero::class, $convertCombatHeroMock);
+        $this->instance(ConvertHeroSnapshotIntoCombatant::class, $convertCombatHeroMock);
 
         $combatSquad = $this->getDomainAction()->execute($squadSnapshot);
         $this->assertEquals($heroSnapshots->count(), $combatSquad->getCombatHeroes()->count());
