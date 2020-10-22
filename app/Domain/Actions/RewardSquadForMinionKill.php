@@ -6,29 +6,27 @@ namespace App\Domain\Actions;
 
 use App\Domain\Models\ChestBlueprint;
 use App\Domain\Models\Minion;
+use App\Domain\Models\MinionSnapshot;
 use App\Domain\Models\Squad;
 
 class RewardSquadForMinionKill
 {
-    /**
-     * @var RewardChestToSquad
-     */
-    protected $rewardChestToSquad;
+    protected RewardChestToSquad $rewardChestToSquad;
 
     public function __construct(RewardChestToSquad $rewardChestToSquad)
     {
         $this->rewardChestToSquad = $rewardChestToSquad;
     }
 
-    public function execute(Squad $squad, Minion $minion)
+    public function execute(Squad $squad, MinionSnapshot $minionSnapshot)
     {
-        $experienceReward = $minion->getExperienceReward();
-        $favorReward = $minion->getFavorReward();
+        $experienceReward = $minionSnapshot->experience_reward;
+        $favorReward = $minionSnapshot->favor_reward;
         $squad->experience += $experienceReward;
         $squad->favor += $favorReward;
         $squad->save();
 
-        $minion->chestBlueprints->each(function (ChestBlueprint $chestBlueprint) use ($squad, $minion) {
+        $minionSnapshot->chestBlueprints->each(function (ChestBlueprint $chestBlueprint) use ($squad, $minionSnapshot) {
 
             $count = $chestBlueprint->pivot->count;
             /*
@@ -42,7 +40,7 @@ class RewardSquadForMinionKill
 
                 $rewardChest = (rand(1, 10000) <= $percentChanceTimes100);
                 if ($rewardChest) {
-                    $this->rewardChestToSquad->execute($chestBlueprint, $squad, $minion);
+                    $this->rewardChestToSquad->execute($chestBlueprint, $squad, $minionSnapshot);
                 }
             }
         });
