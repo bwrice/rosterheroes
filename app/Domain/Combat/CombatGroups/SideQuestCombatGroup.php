@@ -61,4 +61,12 @@ class SideQuestCombatGroup implements CombatGroup, Arrayable
             return $combatMinion->getCurrentHealth() > 0;
         });
     }
+
+    /**
+     * @return Collection
+     */
+    public function getCombatMinions(): Collection
+    {
+        return $this->combatMinions;
+    }
 }
