@@ -4,12 +4,8 @@
 namespace App\Factories\Combat;
 
 
-use App\Domain\Collections\CombatAttackCollection;
 use App\Domain\Combat\Combatants\Combatant;
-use App\Domain\Combat\Combatants\CombatHero;
 use App\Domain\Models\CombatPosition;
-use App\Domain\Models\Squad;
-use App\Factories\Models\HeroFactory;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
@@ -41,6 +37,13 @@ class CombatantFactory
             $combatPosition->id,
             $this->combatAttacks ?: collect()
         );
+    }
+
+    public function withSourceUuid(string $sourceUuid)
+    {
+        $clone = clone $this;
+        $clone->sourceUuid = $sourceUuid;
+        return $clone;
     }
 
     public function withInitialMana(int $initialMana)
