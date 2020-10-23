@@ -4,9 +4,7 @@
 namespace App\Factories\Combat;
 
 
-use App\Domain\Collections\AbstractCombatantCollection;
 use App\Domain\Combat\CombatGroups\CombatSquad;
-use App\Domain\Models\Squad;
 use App\Domain\Models\SquadRank;
 use App\Factories\Models\SquadFactory;
 use Illuminate\Support\Collection;
@@ -28,10 +26,10 @@ class CombatSquadFactory
         $squad = $squadFactory->create();
 
         return new CombatSquad(
-            $squad->name,
             $squad->uuid,
+            $squad->experience,
             SquadRank::getStarting()->id,
-            $this->getCombatHeroes($squad)
+            $this->getCombatHeroes()
         );
     }
 
@@ -41,7 +39,7 @@ class CombatSquadFactory
             $heroCount = rand(4, 6);
             $combatHeroFactories = collect();
             foreach(range(1, $heroCount) as $count) {
-                $combatHeroFactories->push(CombatHeroFactory::new());
+                $combatHeroFactories->push(CombatantFactory::new());
             }
         }
         $clone = clone $this;
@@ -49,21 +47,21 @@ class CombatSquadFactory
         return $clone;
     }
 
-    public function withCombatHeroes(AbstractCombatantCollection $combatHeroes)
+    public function withCombatHeroes(Collection $combatHeroes)
     {
         $clone = clone $this;
         $clone->combatHeroes = $combatHeroes;
         return $clone;
     }
 
-    protected function getCombatHeroes(Squad $squad)
+    protected function getCombatHeroes()
     {
         if ($this->combatHeroes) {
             return $this->combatHeroes;
         }
-        $combatHeroFactories = $this->combatHeroFactories ?: new AbstractCombatantCollection;
-       return $combatHeroFactories->map(function (CombatHeroFactory $combatHeroFactory) use ($squad) {
-            return $combatHeroFactory->forSquad($squad)->create();
+        $combatHeroFactories = $this->combatHeroFactories ?: collect();
+       return $combatHeroFactories->map(function (CombatantFactory $combatantFactory) {
+            return $combatantFactory->create();
         });
     }
 }
