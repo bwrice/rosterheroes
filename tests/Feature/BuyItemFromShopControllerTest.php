@@ -40,7 +40,7 @@ class BuyItemFromShopControllerTest extends TestCase
      */
     public function buying_an_item_will_return_an_item_collection_response_with_transactions()
     {
-        $squad = SquadFactory::new()->create();
+        $squad = SquadFactory::new()->withGold(9999999)->create();
         $shop = ShopFactory::new()->withProvinceID($squad->province_id)->create();
         $item = ItemFactory::new()->forHasItems($shop)->shopAvailable()->create();
 
