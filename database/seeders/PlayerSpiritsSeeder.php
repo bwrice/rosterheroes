@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use App\Domain\Actions\BuildNewCurrentWeekAction;
 use App\Domain\Collections\PositionCollection;
 use App\Domain\Models\Game;

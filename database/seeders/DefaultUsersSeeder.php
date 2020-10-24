@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use App\Domain\Actions\AddNewHeroToSquadAction;
 use App\Domain\Actions\CreateSquadAction;
 use App\Domain\Actions\CreateUserAction;

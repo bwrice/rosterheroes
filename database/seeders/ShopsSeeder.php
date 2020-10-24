@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use App\Domain\Actions\GenerateItemFromBlueprintAction;
 use App\Domain\Models\ItemBlueprint;
 use App\Domain\Models\Province;
