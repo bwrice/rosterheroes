@@ -4,9 +4,9 @@ namespace App\StorableEvents;
 
 use App\Domain\Models\SideQuest;
 use Illuminate\Queue\SerializesModels;
-use Spatie\EventSourcing\ShouldBeStored;
+use Spatie\EventSourcing\StoredEvents\ShouldBeStored;
 
-final class SquadDefeatedInSideQuest implements ShouldBeStored
+final class SquadDefeatedInSideQuest extends ShouldBeStored
 {
     use SerializesModels;
 
