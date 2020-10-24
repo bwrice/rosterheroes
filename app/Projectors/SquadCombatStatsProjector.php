@@ -10,13 +10,11 @@ use App\StorableEvents\SquadKillsSideQuestMinion;
 use App\StorableEvents\SquadMemberBlocksSideQuestMinion;
 use App\StorableEvents\SquadTakesDamageFromSideQuestMinion;
 use App\StorableEvents\SquadVictoriousInSideQuest;
-use Spatie\EventSourcing\Projectors\ProjectsEvents;
-use Spatie\EventSourcing\Projectors\QueuedProjector;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Spatie\EventSourcing\EventHandlers\Projectors\Projector;
 
-final class SquadCombatStatsProjector implements QueuedProjector
+final class SquadCombatStatsProjector extends Projector implements ShouldQueue
 {
-    use ProjectsEvents;
-
     public function onSquadDealsDamageToMinion(SquadDealsDamageToSideQuestMinion $event, string $aggregateUuid)
     {
         $squad = Squad::findUuidOrFail($aggregateUuid);
