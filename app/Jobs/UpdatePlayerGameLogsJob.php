@@ -16,7 +16,7 @@ class UpdatePlayerGameLogsJob implements ShouldQueue
 
     public $timeout = 60;
 
-    public $retry_after = 30;
+    public $backoff = 30;
 
     public $tries = 3;
 
