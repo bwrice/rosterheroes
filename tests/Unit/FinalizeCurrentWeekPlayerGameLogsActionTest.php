@@ -11,6 +11,7 @@ use App\Facades\CurrentWeek;
 use App\Factories\Models\PlayerGameLogFactory;
 use App\Factories\Models\PlayerSpiritFactory;
 use App\Jobs\FinalizeWeekJob;
+use App\Jobs\UpdatePlayerGameLogsJob;
 use Bwrice\LaravelJobChainGroups\Jobs\AsyncChainedJob;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -90,13 +91,11 @@ class FinalizeCurrentWeekPlayerGameLogsActionTest extends TestCase
     /**
     * @test
     */
-    public function it_will_queue_jobs_to_finalize_stats_for_games_chained_with_step_two()
+    public function it_will_queue_batched_jobs_to_finalize_stats_for_games()
     {
         Queue::fake();
 
         $step = rand(1, 10);
-        $nextStep = $step + 1;
-
         $this->domainAction->execute($step);
 
         foreach ([
@@ -105,12 +104,25 @@ class FinalizeCurrentWeekPlayerGameLogsActionTest extends TestCase
                  ] as $playerSpirit) {
 
             /** @var PlayerSpirit $playerSpirit */
-            Queue::assertPushedWithChain(AsyncChainedJob::class, [
-                new FinalizeWeekJob($nextStep)
-            ], function (AsyncChainedJob $chainedJob) use ($playerSpirit) {
-                return $chainedJob->getDecoratedJob()->getGame()->id === $playerSpirit->playerGameLog->game_id;
+            Queue::assertPushed(function (UpdatePlayerGameLogsJob $job) use ($playerSpirit) {
+                return $job->getGame()->id === $playerSpirit->playerGameLog->game_id;
             });
         }
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_dispatch_finalize_week_job_with_next_step()
+    {
+        Queue::fake();
+
+        $step = rand(1, 10);
+        $this->domainAction->execute($step);
+
+        Queue::assertPushed(function (FinalizeWeekJob $job) use ($step) {
+            return $job->step = $step + 1;
+        });
     }
 
 }

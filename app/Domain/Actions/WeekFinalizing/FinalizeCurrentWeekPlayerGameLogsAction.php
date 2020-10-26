@@ -9,18 +9,25 @@ use App\Exceptions\FinalizeWeekException;
 use App\Facades\CurrentWeek;
 use App\Jobs\FinalizeWeekJob;
 use App\Jobs\UpdatePlayerGameLogsJob;
-use Bwrice\LaravelJobChainGroups\Facades\JobChainGroups;
+use Carbon\CarbonInterface;
+use Illuminate\Support\Facades\Bus;
 
 class FinalizeCurrentWeekPlayerGameLogsAction implements FinalizeWeekDomainAction
 {
+    /**
+     * @param int $finalizeWeekStep
+     * @param array $extra
+     * @throws \Throwable
+     */
     public function execute(int $finalizeWeekStep, array $extra = [])
     {
         if (! CurrentWeek::finalizing()) {
             throw new FinalizeWeekException(CurrentWeek::get(), "Week is not ready to be finalized", FinalizeWeekException::INVALID_TIME_TO_FINALIZE);
         }
-        JobChainGroups::create($this->getUpdatePlayerGameLogsForGameJobs(), [
-            new FinalizeWeekJob($finalizeWeekStep + 1)
-        ])->dispatch();
+        $jobs = $this->getUpdatePlayerGameLogsForGameJobs();
+        Bus::Batch($jobs->toArray())->then(function () use ($finalizeWeekStep) {
+            FinalizeWeekJob::dispatch($finalizeWeekStep);
+        })->dispatch();
     }
 
     protected function getUpdatePlayerGameLogsForGameJobs()
@@ -33,7 +40,9 @@ class FinalizeCurrentWeekPlayerGameLogsAction implements FinalizeWeekDomainActio
         $now = now();
         $secondsDelay = 0;
         return $jobs->each(function (UpdatePlayerGameLogsJob $job) use ($now, &$secondsDelay) {
-            $job->delay($now->addSeconds($secondsDelay));
+            /** @var CarbonInterface $delay */
+            $delay = $now->addSeconds($secondsDelay);
+            $job->delay($delay);
             $secondsDelay += 15;
         });
     }
