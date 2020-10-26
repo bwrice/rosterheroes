@@ -45,7 +45,7 @@ class BuildSquadSnapshot extends BuildSnapshot
         /** @var SquadSnapshot $squadSnapshot */
         $squadSnapshot = SquadSnapshot::query()->create([
             'uuid' => Str::uuid(),
-            'week_id' => CurrentWeek::id(),
+            'week_id' => $weekID,
             'squad_id' => $squad->id,
             'squad_rank_id' => $squad->squad_rank_id,
             'experience' => $squad->experience
