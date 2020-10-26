@@ -22,6 +22,6 @@ class FinalizeCurrentWeekSpiritEnergiesAction implements FinalizeWeekDomainActio
 
         UpdatePlayerSpiritEnergiesJob::withChain([
             new FinalizeWeekJob($finalizeWeekStep + 1)
-        ])->dispatch()->onQueue('long');
+        ])->onQueue('long')->dispatch();
     }
 }
