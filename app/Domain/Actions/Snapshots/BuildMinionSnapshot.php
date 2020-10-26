@@ -10,13 +10,11 @@ use App\Domain\Models\ChestBlueprint;
 use App\Domain\Models\Minion;
 use App\Domain\Models\MinionSnapshot;
 use App\Facades\CurrentWeek;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class BuildMinionSnapshot extends BuildSnapshot
 {
-    public const EXCEPTION_CODE_INVALID_WEEK = 1;
-    public const EXCEPTION_CODE_WEEK_NOT_FINALIZING = 2;
-
     protected CalculateFantasyPower $calculateFantasyPower;
     protected BuildAttackSnapshot $buildAttackSnapshot;
 
@@ -30,35 +28,38 @@ class BuildMinionSnapshot extends BuildSnapshot
     {
         $fantasyPower = $this->calculateFantasyPower->execute($minion->getFantasyPoints());
 
-        /** @var MinionSnapshot $minionSnapshot */
-        $minionSnapshot = $minion->minionSnapshots()->create([
-            'uuid' => Str::uuid(),
-            'week_id' => CurrentWeek::id(),
-            'combat_position_id' => $minion->combat_position_id,
-            'enemy_type_id' => $minion->enemy_type_id,
-            'name' => $minion->name,
-            'level' => $minion->level,
-            'starting_health' => $minion->getStartingHealth(),
-            'starting_stamina' => $minion->getStartingStamina(),
-            'starting_mana' => $minion->getStartingMana(),
-            'protection' => $minion->getProtection(),
-            'block_chance' => $minion->getBlockChance(),
-            'fantasy_power' => $fantasyPower,
-            'experience_reward' => $minion->getExperienceReward(),
-            'favor_reward' => $minion->getFavorReward()
-        ]);
+        return DB::transaction(function () use ($minion, $fantasyPower) {
 
-        $minion->attacks->each(function (Attack $attack) use ($minionSnapshot, $fantasyPower) {
-            $this->buildAttackSnapshot->execute($attack, $minionSnapshot, $fantasyPower);
-        });
-
-        $minion->chestBlueprints->each(function (ChestBlueprint $chestBlueprint) use ($minionSnapshot) {
-            $minionSnapshot->chestBlueprints()->save($chestBlueprint, [
-                'chance' => $chestBlueprint->pivot->chance,
-                'count' => $chestBlueprint->pivot->count
+            /** @var MinionSnapshot $minionSnapshot */
+            $minionSnapshot = $minion->minionSnapshots()->create([
+                'uuid' => Str::uuid(),
+                'week_id' => CurrentWeek::id(),
+                'combat_position_id' => $minion->combat_position_id,
+                'enemy_type_id' => $minion->enemy_type_id,
+                'name' => $minion->name,
+                'level' => $minion->level,
+                'starting_health' => $minion->getStartingHealth(),
+                'starting_stamina' => $minion->getStartingStamina(),
+                'starting_mana' => $minion->getStartingMana(),
+                'protection' => $minion->getProtection(),
+                'block_chance' => $minion->getBlockChance(),
+                'fantasy_power' => $fantasyPower,
+                'experience_reward' => $minion->getExperienceReward(),
+                'favor_reward' => $minion->getFavorReward()
             ]);
-        });
 
-        return $minionSnapshot;
+            $minion->attacks->each(function (Attack $attack) use ($minionSnapshot, $fantasyPower) {
+                $this->buildAttackSnapshot->execute($attack, $minionSnapshot, $fantasyPower);
+            });
+
+            $minion->chestBlueprints->each(function (ChestBlueprint $chestBlueprint) use ($minionSnapshot) {
+                $minionSnapshot->chestBlueprints()->save($chestBlueprint, [
+                    'chance' => $chestBlueprint->pivot->chance,
+                    'count' => $chestBlueprint->pivot->count
+                ]);
+            });
+
+            return $minionSnapshot;
+        });
     }
 }
