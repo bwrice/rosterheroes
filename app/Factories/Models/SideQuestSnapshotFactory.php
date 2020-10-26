@@ -10,7 +10,9 @@ use Illuminate\Support\Str;
 
 class SideQuestSnapshotFactory
 {
-    
+    protected ?int $sideQuestID = null;
+    protected ?int $weekID = null;
+
     public static function new(): self
     {
         return new self();
@@ -25,8 +27,8 @@ class SideQuestSnapshotFactory
         /** @var SideQuestSnapshot $sideQuestSnapshot */
         $sideQuestSnapshot = SideQuestSnapshot::query()->create(array_merge([
             'uuid' => (string) Str::uuid(),
-            'week_id' => factory(Week::class)->create()->id,
-            'side_quest_id' => SideQuestFactory::new()->create()->id,
+            'week_id' => $this->weekID ?: factory(Week::class)->create()->id,
+            'side_quest_id' => $this->sideQuestID ?: SideQuestFactory::new()->create()->id,
             'name' => 'Test SideQuest Snapshot ' . rand(1, 99999),
             'difficulty' => rand(10, 250),
             'experience_reward' => rand(250, 99999),
@@ -35,5 +37,19 @@ class SideQuestSnapshotFactory
         ], $extra));
 
         return $sideQuestSnapshot;
+    }
+
+    public function withSideQuestID(int $sideQuestID)
+    {
+        $clone = clone $this;
+        $clone->sideQuestID = $sideQuestID;
+        return $clone;
+    }
+
+    public function withWeekID(int $weekID)
+    {
+        $clone = clone $this;
+        $clone->weekID = $weekID;
+        return $clone;
     }
 }
