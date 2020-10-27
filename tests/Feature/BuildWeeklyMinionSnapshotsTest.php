@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use App\Domain\Actions\WeekFinalizing\BuildWeeklyMinionSnapshots;
-use App\Domain\Models\Minion;
 use App\Domain\Models\Week;
 use App\Factories\Models\MinionFactory;
 use App\Factories\Models\MinionSnapshotFactory;
