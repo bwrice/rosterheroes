@@ -78,6 +78,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property Collection $chests
  * @property Collection $stashes
  * @property Collection $campaigns
+ * @property Collection $squadSnapshots
  * @property Collection $unopenedChests
  *
  * @method static SquadQueryBuilder query()
@@ -234,6 +235,11 @@ class Squad extends EventSourcedModel implements HasItems
     public function chests()
     {
         return $this->hasMany(Chest::class);
+    }
+
+    public function squadSnapshots()
+    {
+        return $this->hasMany(SquadSnapshot::class);
     }
 
     public function unopenedChests()
