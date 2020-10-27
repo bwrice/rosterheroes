@@ -2,13 +2,10 @@
 
 namespace App\Jobs;
 
-use App\Domain\Actions\Snapshots\BuildSquadSnapshot;
-use App\Domain\Models\Squad;
-use App\Facades\CurrentWeek;
+use App\Domain\Actions\AddBuildSquadSnapshotJobsToBatch;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
@@ -28,23 +25,10 @@ class BuildSquadSnapshotsForGroupJob implements ShouldQueue
     }
 
     /**
-     * Execute the job.
-     *
-     * @return void
+     * @param AddBuildSquadSnapshotJobsToBatch $addBuildSquadSnapshotJobsToBatch
      */
-    public function handle()
+    public function handle(AddBuildSquadSnapshotJobsToBatch $addBuildSquadSnapshotJobsToBatch)
     {
-        if ($this->batch()->cancelled()) {
-            return;
-        }
-
-        $jobs = Squad::query()->whereIn('id', [$this->startRangeID, $this->endRangeID])
-            ->whereHas('campaigns', function (Builder $builder) {
-                $builder->where('week_id', '=', CurrentWeek::id());
-            })->get()->map(function (Squad $squad) {
-                return new BuildSquadSnapshotJob($squad);
-            });
-
-        $this->batch()->add($jobs);
+        $addBuildSquadSnapshotJobsToBatch->execute($this->batch(), $this->startRangeID, $this->endRangeID);
     }
 }
