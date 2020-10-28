@@ -2,13 +2,13 @@
 
 namespace Tests\Feature;
 
-use App\Domain\Actions\SetupNextWeekAction;
+use App\Domain\Actions\WeekFinalizing\AttachWeeklySnapshotsToSideQuestResults;
+use App\Domain\Actions\WeekFinalizing\BuildWeeklyMinionSnapshots;
+use App\Domain\Actions\WeekFinalizing\BuildWeeklySideQuestSnapshots;
+use App\Domain\Actions\WeekFinalizing\BuildWeeklySquadSnapshots;
 use App\Domain\Actions\WeekFinalizing\FinalizeCurrentWeekPlayerGameLogsAction;
 use App\Domain\Actions\WeekFinalizing\FinalizeCurrentWeekSpiritEnergiesAction;
 use App\Domain\Actions\WeekFinalizing\FinalizeWeekFinalStep;
-use App\Domain\Actions\WeekFinalizing\ProcessWeeklySideQuestCombat;
-use App\Domain\Actions\WeekFinalizing\ProcessWeeklySideQuestRewards;
-use App\Domain\Actions\WeekFinalizing\ProcessWeeklySideQuestSideEffects;
 use App\Domain\Actions\WeekFinalizing\SetupAllQuestsForNextWeek;
 use App\Jobs\FinalizeWeekJob;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -48,22 +48,26 @@ class FinalizeWeekJobTest extends TestCase
             ],
             'Step 3' => [
                 'step' => 3,
-                'domainAction' => ProcessWeeklySideQuestCombat::class
+                'domainAction' => BuildWeeklyMinionSnapshots::class
             ],
             'Step 4' => [
                 'step' => 4,
-                'domainAction' => ProcessWeeklySideQuestRewards::class
+                'domainAction' => BuildWeeklySideQuestSnapshots::class
             ],
             'Step 5' => [
                 'step' => 5,
-                'domainAction' => ProcessWeeklySideQuestSideEffects::class
+                'domainAction' => BuildWeeklySquadSnapshots::class
             ],
             'Step 6' => [
                 'step' => 6,
-                'domainAction' => SetupAllQuestsForNextWeek::class
+                'domainAction' => AttachWeeklySnapshotsToSideQuestResults::class
             ],
             'Step 7' => [
                 'step' => 7,
+                'domainAction' => SetupAllQuestsForNextWeek::class
+            ],
+            'Step 8' => [
+                'step' => 8,
                 'domainAction' => FinalizeWeekFinalStep::class
             ],
         ];
