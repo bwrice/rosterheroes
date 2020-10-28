@@ -32,7 +32,7 @@ class BuildWeeklySquadSnapshots implements FinalizeWeekDomainAction
                 $jobs->push(new BuildSquadSnapshotsForGroupJob($startRangeID, $endRangeID));
             });
 
-        Bus::batch($jobs->toArray())->then(function () use ($finalizeWeekStep) {
+        Bus::batch($jobs)->then(function () use ($finalizeWeekStep) {
             FinalizeWeekJob::dispatch($finalizeWeekStep + 1);
         })->dispatch();
     }
