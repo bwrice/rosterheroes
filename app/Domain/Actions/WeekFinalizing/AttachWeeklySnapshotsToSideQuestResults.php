@@ -26,10 +26,8 @@ class AttachWeeklySnapshotsToSideQuestResults implements FinalizeWeekDomainActio
         $jobs = collect();
 
         SideQuestResult::query()
-            ->whereHas('campaignStop', function (Builder $builder) {
-                $builder->whereHas('campaign', function (Builder $builder) {
-                    $builder->where('week_id', '=', CurrentWeek::id());
-                });
+            ->whereHas('campaignStop.campaign', function (Builder $builder) {
+                $builder->where('week_id', '=', CurrentWeek::id());
             })->orderBy('id')
             ->select(['id'])
             ->chunk($this->groupSize, function (Collection $sideQuestResults) use ($jobs) {
