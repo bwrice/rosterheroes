@@ -110,19 +110,4 @@ class FinalizeCurrentWeekPlayerGameLogsActionTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     */
-    public function it_will_dispatch_finalize_week_job_with_next_step()
-    {
-        Queue::fake();
-
-        $step = rand(1, 10);
-        $this->domainAction->execute($step);
-
-        Queue::assertPushed(function (FinalizeWeekJob $job) use ($step) {
-            return $job->step = $step + 1;
-        });
-    }
-
 }

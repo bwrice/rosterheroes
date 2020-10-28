@@ -25,7 +25,7 @@ class FinalizeCurrentWeekPlayerGameLogsAction implements FinalizeWeekDomainActio
             throw new FinalizeWeekException(CurrentWeek::get(), "Week is not ready to be finalized", FinalizeWeekException::INVALID_TIME_TO_FINALIZE);
         }
         $jobs = $this->getUpdatePlayerGameLogsForGameJobs();
-        Bus::Batch($jobs->toArray())->then(function () use ($finalizeWeekStep) {
+        Bus::Batch($jobs)->then(function () use ($finalizeWeekStep) {
             FinalizeWeekJob::dispatch($finalizeWeekStep);
         })->dispatch();
     }
