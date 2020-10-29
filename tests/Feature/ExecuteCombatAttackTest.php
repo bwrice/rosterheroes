@@ -9,6 +9,7 @@ use App\Domain\Actions\Combat\SpendResourceCosts;
 use App\Domain\Combat\Attacks\CombatAttack;
 use App\Domain\Combat\Attacks\CombatAttackInterface;
 use App\Domain\Combat\Combatants\Combatant;
+use App\Domain\Combat\Events\CombatantAttacks;
 use App\Domain\Models\Json\ResourceCosts\FixedResourceCost;
 use App\Domain\Models\MeasurableType;
 use App\Factories\Combat\CombatantFactory;
@@ -112,7 +113,7 @@ class ExecuteCombatAttackTest extends TestCase
         $executeOnCombatantMock = \Mockery::mock(ExecuteCombatAttackOnCombatant::class)
             ->shouldReceive('execute')
             ->times(3)
-            ->andReturn($uuid)
+            ->andReturn(collect([$uuid]))
             ->getMock();
 
         $this->instance(ExecuteCombatAttackOnCombatant::class, $executeOnCombatantMock);
@@ -145,7 +146,7 @@ class ExecuteCombatAttackTest extends TestCase
 
         $executeOnCombatantMock = \Mockery::mock(ExecuteCombatAttackOnCombatant::class)
             ->shouldReceive('execute')
-            ->andReturn('anything')
+            ->andReturn(collect())
             ->getMock();
 
         $this->instance(ExecuteCombatAttackOnCombatant::class, $executeOnCombatantMock);
@@ -163,5 +164,51 @@ class ExecuteCombatAttackTest extends TestCase
         $this->app->instance(SpendResourceCosts::class, $spendResourcesMock);
 
         $this->getDomainAction()->execute($combatAttack, $attacker, collect(), 1);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_add_a_combatant_attacks_event_to_the_returned_collection()
+    {
+        $attacker = CombatantFactory::new()->create();
+        $dummyCombatantOne = CombatantFactory::new()->create();
+        $dummyCombatantTwo = CombatantFactory::new()->create();
+        $targetsFound = collect([
+            $dummyCombatantOne,
+            $dummyCombatantTwo
+        ]);
+        $findTargetsMock = \Mockery::mock(FindTargetsForAttack::class)
+            ->shouldReceive('execute')
+            ->andReturn($targetsFound)->getMock();
+
+        $this->instance(FindTargetsForAttack::class, $findTargetsMock);
+
+        $executeOnCombatantMock = \Mockery::mock(ExecuteCombatAttackOnCombatant::class)
+            ->shouldReceive('execute')
+            ->andReturn(collect())
+            ->getMock();
+
+        $this->instance(ExecuteCombatAttackOnCombatant::class, $executeOnCombatantMock);
+
+        $combatAttack = CombatAttackFactory::new()->create();
+
+        $moment = rand(2, 99);
+        $events = $this->getDomainAction()->execute($combatAttack, $attacker, collect(), $moment);
+
+        /** @var CombatantAttacks $combatantAttacksEvent */
+        $combatantAttacksEvent = $events->shift();
+        $this->assertTrue($combatantAttacksEvent instanceof CombatantAttacks);
+        $this->assertEquals($combatAttack->getUuid(), $combatantAttacksEvent->getCombatAttack()->getUuid());
+        $this->assertEquals($attacker->getCombatantUuid(), $combatantAttacksEvent->getCombatant()->getCombatantUuid());
+        $eventTargets = $combatantAttacksEvent->getTargets();
+        $this->assertEquals($targetsFound->count(), $eventTargets->count());
+        $targetsFound->each(function (Combatant $targetFound) use ($eventTargets) {
+            $match = $eventTargets->first(function (Combatant $eventTarget) use ($targetFound) {
+                return $eventTarget->getCombatantUuid() === $targetFound->getCombatantUuid();
+            });
+            $this->assertNotNull($match);
+        });
+        $this->assertEquals($moment, $combatantAttacksEvent->moment());
     }
 }
