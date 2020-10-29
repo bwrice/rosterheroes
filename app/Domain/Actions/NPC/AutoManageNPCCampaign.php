@@ -10,7 +10,9 @@ use App\Facades\NPC;
 use App\Jobs\JoinQuestForNPCJob;
 use App\Jobs\JoinSideQuestForNPCJob;
 use App\Jobs\MoveNPCToProvinceJob;
+use Carbon\CarbonInterface;
 use Illuminate\Foundation\Bus\PendingDispatch;
+use Illuminate\Support\Facades\Bus;
 
 class AutoManageNPCCampaign extends NPCAction
 {
@@ -33,24 +35,23 @@ class AutoManageNPCCampaign extends NPCAction
 
         $questsToJoin = NPC::questsToJoin($this->npc);
 
-        $chainedJobs = $questsToJoin->map(function ($questsToJoinArray) {
+        $now = now();
+        // TODO: delay based on time before week locks
+        $hoursBeforeLock = CurrentWeek::adventuringLocksAt()->diffInHours($now);
+        $count = 0;
+
+        $questsToJoin->map(function ($questsToJoinArray)  use ($now, &$count) {
             /** @var Quest $quest */
             $quest = $questsToJoinArray['quest'];
             $chainedJobs = collect([new JoinQuestForNPCJob($this->npc, $quest)]);
             foreach ($questsToJoinArray['side_quests'] as $sideQuestToJoin) {
                 $chainedJobs->push(new JoinSideQuestForNPCJob($this->npc, $sideQuestToJoin));
             }
-            return MoveNPCToProvinceJob::withChain($chainedJobs->toArray())->dispatch($this->npc, $quest->province);
-        });
-
-        $now = now();
-        $hoursBeforeLock = CurrentWeek::adventuringLocksAt()->diffInHours($now);
-        $count = 0;
-        $chainedJobs->each(function (PendingDispatch $chainedJob) use ($now, $hoursBeforeLock, &$count) {
-//            $delay = $now->clone()->addHours(rand(0, $hoursBeforeLock))->addMinutes(rand(0,60))->addSeconds(rand(0,60));
+            /** @var CarbonInterface $delay */
             $delay = $now->clone()->addSeconds(rand(40, 60) * $count);
-            $chainedJob->delay($delay);
-            $count++;
+            return MoveNPCToProvinceJob::withChain($chainedJobs->toArray())
+                ->delay($delay)
+                ->dispatch($this->npc, $quest->province);
         });
     }
 }
