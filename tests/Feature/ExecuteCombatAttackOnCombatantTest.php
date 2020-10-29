@@ -10,6 +10,7 @@ use App\Domain\Combat\Combatants\CombatantInterface;
 use App\Domain\Combat\Events\AttackBlocked;
 use App\Domain\Combat\Events\AttackDamagesCombatant;
 use App\Domain\Combat\Events\AttackKillsCombatant;
+use App\Domain\Combat\Events\CombatEvent;
 use App\Facades\DamageTypeFacade;
 use App\Factories\Combat\CombatantFactory;
 use App\Factories\Combat\CombatAttackFactory;
@@ -41,7 +42,10 @@ class ExecuteCombatAttackOnCombatantTest extends TestCase
             ->getMock();
         $this->app->instance(DetermineIfAttackIsBlocked::class, $mock);
 
-        $event = $this->getDomainAction()->execute($combatAttack, $attacker, $target, $moment, 1);
+        $events = $this->getDomainAction()->execute($combatAttack, $attacker, $target, $moment, 1);
+        $this->assertEquals(1, $events->count());
+        /** @var CombatEvent $event */
+        $event = $events->first();
         $this->assertTrue($event instanceof AttackBlocked);
         $this->assertEquals($moment, $event->moment());
     }
@@ -76,14 +80,16 @@ class ExecuteCombatAttackOnCombatantTest extends TestCase
         $target = \Mockery::spy(CombatantInterface::class);
         $target->shouldReceive('getCurrentHealth')->andReturn($currentHealth);
 
-        /** @var AttackDamagesCombatant $combatEvent */
-        $combatEvent = $this->getDomainAction()->execute($combatAttack, $attacker, $target, $moment, rand(1, 5));
+        $events = $this->getDomainAction()->execute($combatAttack, $attacker, $target, $moment, rand(1, 5));
 
         $target->shouldHaveReceived('updateCurrentHealth')->with($currentHealth - $damageToReceive);
 
-        $this->assertTrue($combatEvent instanceof AttackDamagesCombatant);
-        $this->assertEquals($moment, $combatEvent->moment());
-        $this->assertEquals($damageToReceive, $combatEvent->getDamage());
+        $this->assertEquals(1, $events->count());
+        /** @var AttackDamagesCombatant $event */
+        $event = $events->first();
+        $this->assertTrue($event instanceof AttackDamagesCombatant);
+        $this->assertEquals($damageToReceive, $event->getDamage());
+        $this->assertEquals($moment, $event->moment());
     }
 
     /**
@@ -117,13 +123,24 @@ class ExecuteCombatAttackOnCombatantTest extends TestCase
         $target = \Mockery::spy(CombatantInterface::class);
         $target->shouldReceive('getCurrentHealth')->andReturn($currentHealth);
 
-        /** @var AttackKillsCombatant $combatEvent */
-        $combatEvent = $this->getDomainAction()->execute($combatAttack, $attacker, $target, $moment, rand(1, 5));
+        $events = $this->getDomainAction()->execute($combatAttack, $attacker, $target, $moment, rand(1, 5));
 
         $target->shouldHaveReceived('updateCurrentHealth')->with(0);
 
-        $this->assertTrue($combatEvent instanceof AttackKillsCombatant);
-        $this->assertEquals($moment, $combatEvent->moment());
-        $this->assertEquals($currentHealth, $combatEvent->getDamage());
+        $this->assertEquals(2, $events->count());
+
+        /** @var AttackKillsCombatant $killEvent */
+        $damageEvent = $events->first(function (CombatEvent $event) use ($moment, $currentHealth) {
+            return $event instanceof AttackDamagesCombatant;
+        });
+        $this->assertEquals($moment, $damageEvent->moment());
+        $this->assertEquals($currentHealth, $damageEvent->getDamage());
+
+        /** @var AttackKillsCombatant $killEvent */
+        $killEvent = $events->first(function (CombatEvent $event) use ($moment, $currentHealth) {
+            return $event instanceof AttackKillsCombatant;
+        });
+
+        $this->assertEquals($moment, $killEvent->moment());
     }
 }
