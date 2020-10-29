@@ -7,6 +7,7 @@ namespace App\Domain\Actions\Combat;
 use App\Domain\Combat\Attacks\CombatAttackInterface;
 use App\Domain\Combat\Combatants\Combatant;
 use App\Domain\Combat\Combatants\CombatantInterface;
+use App\Domain\Combat\Events\CombatantAttacks;
 use App\Domain\Models\Json\ResourceCosts\ResourceCost;
 use Illuminate\Support\Collection;
 
@@ -40,6 +41,10 @@ class ExecuteCombatAttack
         $targetsCount = $targets->count();
         $combatEvents = collect();
 
+        // We always add the combatant attacks event
+        $combatEvents->push(new CombatantAttacks($attacker, $combatAttack, $targets, $moment));
+
+        // Cycle through targets and add any individual events like attack kills combatant, attack damages combatant, etc.
         $targets->each(function (Combatant $target) use ($combatAttack, $attacker, $moment, $targetsCount, &$combatEvents) {
             $events = $this->executeCombatAttackOnCombatant->execute($combatAttack, $attacker, $target, $moment, $targetsCount);
             $combatEvents = $combatEvents->merge($events);

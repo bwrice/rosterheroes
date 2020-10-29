@@ -120,6 +120,7 @@ class ExecuteCombatAttackTest extends TestCase
         $combatAttack = CombatAttackFactory::new()->create();
 
         $returnedCollection = $this->getDomainAction()->execute($combatAttack, $attacker, collect(), 1);
+        $returnedCollection->shift(); // remove attack event added directly by action
         $this->assertEquals(3, $returnedCollection->count());
         $returnedCollection->each(function ($value) use ($uuid) {
             $this->assertEquals($uuid, $value);
