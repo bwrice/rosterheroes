@@ -40,9 +40,9 @@ class ExecuteCombatAttack
         $targetsCount = $targets->count();
         $combatEvents = collect();
 
-        $targets->each(function (Combatant $target) use ($combatAttack, $attacker, $moment, $targetsCount, $combatEvents) {
-            $event = $this->executeCombatAttackOnCombatant->execute($combatAttack, $attacker, $target, $moment, $targetsCount);
-            $combatEvents->push($event);
+        $targets->each(function (Combatant $target) use ($combatAttack, $attacker, $moment, $targetsCount, &$combatEvents) {
+            $events = $this->executeCombatAttackOnCombatant->execute($combatAttack, $attacker, $target, $moment, $targetsCount);
+            $combatEvents = $combatEvents->merge($events);
         });
 
         $combatAttack->getResourceCosts()->each(function (ResourceCost $resourceCost) use ($attacker) {
