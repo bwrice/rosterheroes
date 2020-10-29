@@ -26,7 +26,7 @@ class FinalizeCurrentWeekPlayerGameLogsAction implements FinalizeWeekDomainActio
         }
         $jobs = $this->getUpdatePlayerGameLogsForGameJobs();
         Bus::Batch($jobs)->then(function () use ($finalizeWeekStep) {
-            FinalizeWeekJob::dispatch($finalizeWeekStep);
+            FinalizeWeekJob::dispatch($finalizeWeekStep + 1);
         })->dispatch();
     }
 
