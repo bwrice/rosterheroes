@@ -4,7 +4,6 @@
 namespace App\Domain\Combat\Combatants;
 
 
-use App\Domain\Combat\Attacks\CombatAttackInterface;
 use App\Domain\Interfaces\SpendsResources;
 use App\Domain\Models\CombatPosition;
 
@@ -43,8 +42,8 @@ interface CombatantInterface extends SpendsResources
     public function getThreatLevel(): float;
 
     /**
-     * @param CombatPosition $combatPositionToCompare
-     * @return bool
+     * @return string
      */
-    public function hasCombatPosition(int $combatPositionID): bool;
+    public function getCombatantUuid(): string;
+
 }
