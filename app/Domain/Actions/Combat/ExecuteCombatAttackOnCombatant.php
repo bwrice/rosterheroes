@@ -56,7 +56,7 @@ class ExecuteCombatAttackOnCombatant
         // If attack kills the combatant, the actual damage received would be the health before the attack
         $damageTaken = $currentHealth;
         $events->push(new AttackDamagesCombatant($combatAttack, $attacker, $target, $damageTaken, $moment));
-        $events->push(new AttackKillsCombatant($combatAttack, $attacker, $target, $currentHealth, $moment));
+        $events->push(new AttackKillsCombatant($combatAttack, $attacker, $target, $moment));
         return $events;
     }
 }

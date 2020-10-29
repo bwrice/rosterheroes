@@ -20,13 +20,11 @@ class AttackKillsCombatant implements CombatEvent
         CombatAttackInterface $combatAttack,
         CombatantInterface $attacker,
         CombatantInterface $target,
-        int $damage,
         int $moment)
     {
         $this->combatAttack = $combatAttack;
         $this->attacker = $attacker;
         $this->target = $target;
-        $this->damage = $damage;
         $this->moment = $moment;
     }
 
@@ -38,11 +36,6 @@ class AttackKillsCombatant implements CombatEvent
     public function eventStream(): string
     {
         return self::EVENT_STREAM;
-    }
-
-    public function getDamage(): int
-    {
-        return $this->damage;
     }
 
     /**
