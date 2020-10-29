@@ -16,7 +16,6 @@ class Combatant implements CombatantInterface, Arrayable
         $protection, $combatPositionID;
     protected float $blockChancePercent;
     protected Collection $combatAttacks;
-    protected array $inheritedCombatPositionIDs = [];
 
     public function __construct(
         string $sourceUuid,
@@ -56,25 +55,6 @@ class Combatant implements CombatantInterface, Arrayable
     }
 
     /**
-     * @param int $combatPositionID
-     * @return bool
-     */
-    public function hasCombatPosition(int $combatPositionID): bool
-    {
-        return in_array($combatPositionID, $this->allCombatPositions());
-    }
-
-    /**
-     * @return array
-     */
-    public function allCombatPositions()
-    {
-        $combatPositions = $this->inheritedCombatPositionIDs;
-        $combatPositions[] = $this->combatPositionID;
-        return $combatPositions;
-    }
-
-    /**
      * @return Collection
      */
     public function getCombatAttacks(): Collection
@@ -88,16 +68,6 @@ class Combatant implements CombatantInterface, Arrayable
     public function getCombatPositionID()
     {
         return $this->combatPositionID;
-    }
-
-    /**
-     * @param array $inheritedCombatPositionIDs
-     * @return $this
-     */
-    public function setInheritedCombatPositions(array $inheritedCombatPositionIDs)
-    {
-        $this->inheritedCombatPositionIDs = $inheritedCombatPositionIDs;
-        return $this;
     }
 
     /**
@@ -194,11 +164,6 @@ class Combatant implements CombatantInterface, Arrayable
     public function getBlockChancePercent(): float
     {
         return $this->blockChancePercent;
-    }
-
-    public function getReadyAttacks(): CombatAttackCollection
-    {
-        // TODO: Implement getReadyAttacks() method.
     }
 
     /**
