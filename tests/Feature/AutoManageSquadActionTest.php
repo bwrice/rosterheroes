@@ -7,8 +7,7 @@ use App\Domain\Models\Hero;
 use App\Domain\Models\Squad;
 use App\Exceptions\AutoManageSquadException;
 use App\Facades\CurrentWeek;
-use App\Jobs\AutoManageCampaignJob;
-use Bwrice\LaravelJobChainGroups\Jobs\AsyncChainedJob;
+use App\Jobs\AutoManageHeroJob;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -95,10 +94,8 @@ class AutoManageSquadActionTest extends TestCase
                      $this->heroTwo
                  ] as $hero) {
 
-            Queue::assertPushedWithChain(AsyncChainedJob::class, [
-                new AutoManageCampaignJob($this->squad)
-            ], function (AsyncChainedJob $chainedJob) use ($hero) {
-                return $chainedJob->getDecoratedJob()->hero->id === $hero->id;
+            Queue::assertPushed(function (AutoManageHeroJob $job) use ($hero) {
+                return $job->hero->id === $hero->id;
             });
         }
     }
