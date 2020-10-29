@@ -15,16 +15,16 @@ class VampireBehavior extends EnemyTypeBehavior
      */
     public function getStartingHealth(int $enemyLevel, string $combatPositionName): int
     {
-        $base = 300;
-        $levelModifier = 11;
+        $base = 250;
+        $levelModifier = 15;
         switch ($combatPositionName) {
             case CombatPosition::FRONT_LINE:
-                $base += 300;
-                $levelModifier += 22;
+                $base += 150;
+                $levelModifier += 17;
                 break;
             case CombatPosition::BACK_LINE:
-                $base += 125;
-                $levelModifier += 11;
+                $base += 50;
+                $levelModifier += 6;
                 break;
         }
         return $base + ($levelModifier * ($enemyLevel ** 1.22));
@@ -41,11 +41,11 @@ class VampireBehavior extends EnemyTypeBehavior
         $levelModifier = 2;
         switch ($combatPositionName) {
             case CombatPosition::FRONT_LINE:
-                $base += 120;
+                $base += 100;
                 $levelModifier += 3;
                 break;
             case CombatPosition::BACK_LINE:
-                $base += 20;
+                $base += 25;
                 $levelModifier += 1;
                 break;
         }
@@ -60,7 +60,7 @@ class VampireBehavior extends EnemyTypeBehavior
      */
     protected function adjustDamageProperty(float $damageProperty, int $enemyLevel, string $combatPositionName)
     {
-        $modifier = 1 + (.028 * ($enemyLevel ** 1.25));
+        $modifier = 1 + (.026 * ($enemyLevel ** 1.25));
         switch ($combatPositionName) {
             case CombatPosition::HIGH_GROUND:
                 $modifier *= 1.8;
