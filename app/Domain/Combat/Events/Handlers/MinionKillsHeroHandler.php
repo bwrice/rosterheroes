@@ -25,7 +25,7 @@ class MinionKillsHeroHandler extends SideQuestEventHandler
             'uuid' => (string) Str::uuid(),
             'event_type' => SideQuestEvent::TYPE_MINION_KILLS_HERO,
             'moment' => $combatEvent->moment(),
-            'data' => $this->getAttackDataArray($combatEvent->getCombatAttack(), $combatEvent->getTarget(), $combatEvent->getAttacker(), $combatEvent->getDamage())
+            'data' => $this->getAttackDataArray($combatEvent->getCombatAttack(), $combatEvent->getTarget(), $combatEvent->getAttacker(), null)
         ]);
     }
 }
