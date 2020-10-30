@@ -53,7 +53,9 @@
         <div class="flex pt-2 flex-col w-full md:w-1/3 justify-center items-start text-center lg:text-left">
             <p class="uppercase tracking-wider w-full text-center">Where Fantasy Sports meet MMORPGs</p>
             <div class="flex flex-col w-full justify-center">
-                @svg('rh-hero-logo', 'my-4 h-40 lg:h-64 lg:mt-5 lg:mb-6')
+                <div class="my-4 h-40 lg:h-64 lg:mt-5 lg:mb-6">
+                    @svg('rh-hero-logo')
+                </div>
             </div>
 
             <p class="leading-normal text-center text-2xl mb-8 w-full">Register today and start playing. <br/>It's free!</p>
