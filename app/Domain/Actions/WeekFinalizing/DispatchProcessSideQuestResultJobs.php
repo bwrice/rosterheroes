@@ -26,7 +26,7 @@ class DispatchProcessSideQuestResultJobs
                         new ProcessCombatForSideQuestResultJob($sideQuestResult),
                         new ProcessSideQuestRewardsJob($sideQuestResult)
                         // TODO: Process Side Effects
-                    ])->dispatch();
+                    ])->onQueue('long')->dispatch();
                 });
             });
     }
