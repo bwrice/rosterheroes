@@ -10,7 +10,7 @@ use Illuminate\Notifications\Messages\SlackAttachment;
 use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Notification;
 
-class BatchFailed extends Notification
+class BatchFailed extends Notification implements ShouldQueue
 {
     use Queueable;
 
