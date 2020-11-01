@@ -6,10 +6,13 @@ namespace App\Domain\Actions\WeekFinalizing;
 
 use App\Domain\Models\Game;
 use App\Exceptions\FinalizeWeekException;
+use App\Facades\Admin;
 use App\Facades\CurrentWeek;
 use App\Jobs\FinalizeWeekJob;
 use App\Jobs\UpdatePlayerGameLogsJob;
+use App\Notifications\BatchCompleted;
 use Carbon\CarbonInterface;
+use Illuminate\Bus\Batch;
 use Illuminate\Support\Facades\Bus;
 
 class FinalizeCurrentWeekPlayerGameLogsAction implements FinalizeWeekDomainAction
@@ -25,8 +28,9 @@ class FinalizeCurrentWeekPlayerGameLogsAction implements FinalizeWeekDomainActio
             throw new FinalizeWeekException(CurrentWeek::get(), "Week is not ready to be finalized", FinalizeWeekException::INVALID_TIME_TO_FINALIZE);
         }
         $jobs = $this->getUpdatePlayerGameLogsForGameJobs();
-        Bus::Batch($jobs)->then(function () use ($finalizeWeekStep) {
+        Bus::Batch($jobs)->then(function (Batch $batch) use ($finalizeWeekStep) {
             FinalizeWeekJob::dispatch($finalizeWeekStep + 1);
+            Admin::notify(new BatchCompleted($batch));
         })->dispatch();
     }
 
