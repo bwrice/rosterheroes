@@ -32,9 +32,6 @@ class BuildMinionSnapshotJob implements ShouldQueue
      */
     public function handle(BuildMinionSnapshot $buildMinionSnapshot)
     {
-        if (rand(1, 8) === 4) {
-            throw new \Exception("Failed Batch Test");
-        }
         $buildMinionSnapshot->execute($this->minion);
     }
 }
