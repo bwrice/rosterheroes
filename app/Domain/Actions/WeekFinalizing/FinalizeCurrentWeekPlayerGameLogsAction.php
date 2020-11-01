@@ -31,7 +31,7 @@ class FinalizeCurrentWeekPlayerGameLogsAction implements FinalizeWeekDomainActio
         Bus::Batch($jobs)->then(function (Batch $batch) use ($finalizeWeekStep) {
             FinalizeWeekJob::dispatch($finalizeWeekStep + 1);
             Admin::notify(new BatchCompleted($batch));
-        })->dispatch();
+        })->name($this->getBatchName())->dispatch();
     }
 
     protected function getUpdatePlayerGameLogsForGameJobs()
@@ -49,5 +49,10 @@ class FinalizeCurrentWeekPlayerGameLogsAction implements FinalizeWeekDomainActio
             $job->delay($delay);
             $secondsDelay += 15;
         });
+    }
+
+    protected function getBatchName()
+    {
+        return "Finalize Game Logs for Week: " . CurrentWeek::id();
     }
 }
