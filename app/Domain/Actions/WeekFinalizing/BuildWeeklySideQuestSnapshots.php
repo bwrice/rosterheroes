@@ -4,13 +4,13 @@
 namespace App\Domain\Actions\WeekFinalizing;
 
 
-use App\Domain\Models\Minion;
 use App\Domain\Models\SideQuest;
-use App\Domain\Models\SideQuestSnapshot;
+use App\Facades\Admin;
 use App\Facades\CurrentWeek;
-use App\Jobs\BuildMinionSnapshotJob;
 use App\Jobs\BuildSideQuestSnapshotJob;
 use App\Jobs\FinalizeWeekJob;
+use App\Notifications\BatchCompleted;
+use Illuminate\Bus\Batch;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Bus;
 
@@ -29,8 +29,14 @@ class BuildWeeklySideQuestSnapshots implements FinalizeWeekDomainAction
             return new BuildSideQuestSnapshotJob($sideQuest);
         });
 
-        Bus::batch($jobs->toArray())->then(function () use ($weekFinalizingStep) {
+        Bus::batch($jobs)->then(function (Batch $batch) use ($weekFinalizingStep) {
             FinalizeWeekJob::dispatch($weekFinalizingStep + 1);
-        })->dispatch();
+            Admin::notify(new BatchCompleted($batch));
+        })->name($this->getBatchName())->dispatch();
+    }
+
+    protected function getBatchName()
+    {
+        return "Build Side Quest Snapshots For Week: " . CurrentWeek::id();
     }
 }
