@@ -5,6 +5,7 @@ namespace App\Domain\Actions\WeekFinalizing;
 
 
 use App\Domain\Models\Game;
+use App\Exceptions\FinalizeWeekException;
 use App\Facades\CurrentWeek;
 use App\Jobs\UpdatePlayerGameLogsJob;
 use Carbon\CarbonInterface;
@@ -16,6 +17,10 @@ class FinalizeCurrentWeekPlayerGameLogsAction extends BatchedWeeklyAction
 
     protected function jobs(): Collection
     {
+        if (! CurrentWeek::finalizing()) {
+            throw new FinalizeWeekException(CurrentWeek::get(), "Week is not ready to be finalized", FinalizeWeekException::INVALID_TIME_TO_FINALIZE);
+        }
+
         $currentWeekID = CurrentWeek::id();
         $games = Game::query()->withPlayerSpiritsForWeeks([$currentWeekID])->get();
         $jobs = $games->map(function (Game $game) {
