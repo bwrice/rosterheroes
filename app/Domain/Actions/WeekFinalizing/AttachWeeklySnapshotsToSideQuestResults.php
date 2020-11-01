@@ -7,21 +7,25 @@ namespace App\Domain\Actions\WeekFinalizing;
 use App\Domain\Models\SideQuestResult;
 use App\Facades\CurrentWeek;
 use App\Jobs\AttachSnapshotsToSideQuestResultsForGroupJob;
-use App\Jobs\FinalizeWeekJob;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Bus;
 
-class AttachWeeklySnapshotsToSideQuestResults implements FinalizeWeekDomainAction
+class AttachWeeklySnapshotsToSideQuestResults extends BatchedWeeklyAction
 {
     protected int $groupSize = 200;
+    protected string $name = 'Attach Snapshots to Side Quests';
 
     /**
-     * @param int $finalizeWeekStep
-     * @param array $extra
-     * @throws \Throwable
+     * @param int $groupSize
+     * @return AttachWeeklySnapshotsToSideQuestResults
      */
-    public function execute(int $finalizeWeekStep, array $extra = [])
+    public function setGroupSize(int $groupSize): AttachWeeklySnapshotsToSideQuestResults
+    {
+        $this->groupSize = $groupSize;
+        return $this;
+    }
+
+    protected function jobs(): \Illuminate\Support\Collection
     {
         $jobs = collect();
 
@@ -36,19 +40,7 @@ class AttachWeeklySnapshotsToSideQuestResults implements FinalizeWeekDomainActio
                 $jobs->push(new AttachSnapshotsToSideQuestResultsForGroupJob($startRangeID, $endRangeID));
             });
 
-        Bus::batch($jobs)->then(function () use ($finalizeWeekStep) {
-            FinalizeWeekJob::dispatch($finalizeWeekStep + 1);
-        })->dispatch();
-    }
-
-    /**
-     * @param int $groupSize
-     * @return AttachWeeklySnapshotsToSideQuestResults
-     */
-    public function setGroupSize(int $groupSize): AttachWeeklySnapshotsToSideQuestResults
-    {
-        $this->groupSize = $groupSize;
-        return $this;
+        return $jobs;
     }
 
 }

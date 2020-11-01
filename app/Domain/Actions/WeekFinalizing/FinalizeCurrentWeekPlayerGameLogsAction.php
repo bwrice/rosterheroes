@@ -5,36 +5,16 @@ namespace App\Domain\Actions\WeekFinalizing;
 
 
 use App\Domain\Models\Game;
-use App\Exceptions\FinalizeWeekException;
-use App\Facades\Admin;
 use App\Facades\CurrentWeek;
-use App\Jobs\FinalizeWeekJob;
 use App\Jobs\UpdatePlayerGameLogsJob;
-use App\Notifications\BatchCompleted;
 use Carbon\CarbonInterface;
-use Illuminate\Bus\Batch;
-use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Collection;
 
-class FinalizeCurrentWeekPlayerGameLogsAction implements FinalizeWeekDomainAction
+class FinalizeCurrentWeekPlayerGameLogsAction extends BatchedWeeklyAction
 {
-    /**
-     * @param int $finalizeWeekStep
-     * @param array $extra
-     * @throws \Throwable
-     */
-    public function execute(int $finalizeWeekStep, array $extra = [])
-    {
-        if (! CurrentWeek::finalizing()) {
-            throw new FinalizeWeekException(CurrentWeek::get(), "Week is not ready to be finalized", FinalizeWeekException::INVALID_TIME_TO_FINALIZE);
-        }
-        $jobs = $this->getUpdatePlayerGameLogsForGameJobs();
-        Bus::Batch($jobs)->then(function (Batch $batch) use ($finalizeWeekStep) {
-            FinalizeWeekJob::dispatch($finalizeWeekStep + 1);
-            Admin::notify(new BatchCompleted($batch));
-        })->name($this->getBatchName())->dispatch();
-    }
+    protected string $name = 'Finalize Player Game Logs';
 
-    protected function getUpdatePlayerGameLogsForGameJobs()
+    protected function jobs(): Collection
     {
         $currentWeekID = CurrentWeek::id();
         $games = Game::query()->withPlayerSpiritsForWeeks([$currentWeekID])->get();
@@ -49,10 +29,5 @@ class FinalizeCurrentWeekPlayerGameLogsAction implements FinalizeWeekDomainActio
             $job->delay($delay);
             $secondsDelay += 15;
         });
-    }
-
-    protected function getBatchName()
-    {
-        return "Finalize Game Logs for Week: " . CurrentWeek::id();
     }
 }

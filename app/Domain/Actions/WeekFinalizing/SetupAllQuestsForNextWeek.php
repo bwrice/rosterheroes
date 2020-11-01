@@ -5,26 +5,17 @@ namespace App\Domain\Actions\WeekFinalizing;
 
 
 use App\Domain\Models\Quest;
-use App\Jobs\FinalizeWeekJob;
 use App\Jobs\SetupQuestForNextWeekJob;
-use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Collection;
 
-class SetupAllQuestsForNextWeek implements FinalizeWeekDomainAction
+class SetupAllQuestsForNextWeek extends BatchedWeeklyAction
 {
+    protected string $name = 'Setup Quests';
 
-    /**
-     * @param int $finalizeWeekStep
-     * @param array $extra
-     * @throws \Throwable
-     */
-    public function execute(int $finalizeWeekStep, array $extra = [])
+    protected function jobs(): Collection
     {
-        $jobs = Quest::all()->map(function (Quest $quest) {
+        return Quest::all()->map(function (Quest $quest) {
             return new SetupQuestForNextWeekJob($quest);
-        })->toArray();
-
-        Bus::batch($jobs)->then(function () use ($finalizeWeekStep) {
-            FinalizeWeekJob::dispatch($finalizeWeekStep + 1);
-        })->dispatch();
+        });
     }
 }

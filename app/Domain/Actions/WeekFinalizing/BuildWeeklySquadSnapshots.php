@@ -6,20 +6,14 @@ namespace App\Domain\Actions\WeekFinalizing;
 
 use App\Domain\Models\Squad;
 use App\Jobs\BuildSquadSnapshotsForGroupJob;
-use App\Jobs\FinalizeWeekJob;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Bus;
 
-class BuildWeeklySquadSnapshots implements FinalizeWeekDomainAction
+class BuildWeeklySquadSnapshots extends BatchedWeeklyAction
 {
     protected int $groupSize = 100;
+    protected string $name = 'Build Squad Snapshots';
 
-    /**
-     * @param int $finalizeWeekStep
-     * @param array $extra
-     * @throws \Throwable
-     */
-    public function execute(int $finalizeWeekStep, array $extra = [])
+    protected function jobs(): \Illuminate\Support\Collection
     {
         $jobs = collect();
 
@@ -32,9 +26,7 @@ class BuildWeeklySquadSnapshots implements FinalizeWeekDomainAction
                 $jobs->push(new BuildSquadSnapshotsForGroupJob($startRangeID, $endRangeID));
             });
 
-        Bus::batch($jobs)->then(function () use ($finalizeWeekStep) {
-            FinalizeWeekJob::dispatch($finalizeWeekStep + 1);
-        })->dispatch();
+        return $jobs;
     }
 
     /**
