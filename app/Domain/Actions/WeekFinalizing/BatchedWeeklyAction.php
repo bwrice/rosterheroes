@@ -25,10 +25,10 @@ abstract class BatchedWeeklyAction implements FinalizeWeekDomainAction
     public function execute(int $finalizeWeekStep, array $extra = [])
     {
         Bus::batch($this->jobs())->catch(function (Batch $batch, \Throwable $throwable) {
-                Admin::notify(new BatchFailed($batch, $throwable));
+//                Admin::notify(new BatchFailed($batch, $throwable));
             })->then(function (Batch $batch) use ($finalizeWeekStep) {
                 FinalizeWeekJob::dispatch($finalizeWeekStep + 1);
-                Admin::notify(new BatchCompleted($batch));
+//                Admin::notify(new BatchCompleted($batch));
             })->name($this->batchName())->dispatch();
     }
 
